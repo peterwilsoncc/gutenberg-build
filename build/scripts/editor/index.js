@@ -392,7 +392,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState165({
+          cachedValue = useState164({
             inst: { value, getSnapshot: getSnapshot2 }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -430,7 +430,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React105 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState165 = React105.useState, useEffect125 = React105.useEffect, useLayoutEffect18 = React105.useLayoutEffect, useDebugValue2 = React105.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React105 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState164 = React105.useState, useEffect125 = React105.useEffect, useLayoutEffect18 = React105.useLayoutEffect, useDebugValue2 = React105.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React105.useSyncExternalStore ? React105.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -458,14 +458,14 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React105 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef128 = React105.useRef, useEffect125 = React105.useEffect, useMemo161 = React105.useMemo, useDebugValue2 = React105.useDebugValue;
+        var React105 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef129 = React105.useRef, useEffect125 = React105.useEffect, useMemo162 = React105.useMemo, useDebugValue2 = React105.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe5, getSnapshot2, getServerSnapshot2, selector2, isEqual2) {
-          var instRef = useRef128(null);
+          var instRef = useRef129(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo161(
+          instRef = useMemo162(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -43617,7 +43617,11 @@ var wp;
   }
   function removeUndefinedValues(obj) {
     const result = {};
-    for (const key in obj) if (obj[key] !== void 0) result[key] = obj[key];
+    for (const key in obj) {
+      if (!hasOwnProperty(obj, key)) continue;
+      if (key === "__proto__") continue;
+      if (obj[key] !== void 0) result[key] = obj[key];
+    }
     return result;
   }
   function defaultValue(...values) {
@@ -43917,17 +43921,6 @@ var wp;
     if (activeDescendant === element.id) return true;
     return !!element.querySelector(`#${CSS.escape(activeDescendant)}`);
   }
-  function focusIntoView(element, options) {
-    if (!("scrollIntoView" in element)) element.focus();
-    else {
-      element.focus({ preventScroll: true });
-      element.scrollIntoView({
-        block: "nearest",
-        inline: "nearest",
-        ...options
-      });
-    }
-  }
   function createUndoCallback(callback) {
     return async () => {
       const redo2 = await callback?.();
@@ -44007,6 +44000,7 @@ var wp;
     const props = { ...base };
     for (const key in overrides) {
       if (!hasOwnProperty(overrides, key)) continue;
+      if (key === "__proto__") continue;
       if (key === "className") {
         const prop = "className";
         const baseClass = base[prop];
@@ -44024,6 +44018,7 @@ var wp;
         continue;
       }
       const overrideValue = overrides[key];
+      if (overrideValue === void 0) continue;
       if (key.startsWith("on")) {
         if (typeof overrideValue !== "function") continue;
         const baseValue = base[key];
@@ -44216,10 +44211,10 @@ var wp;
     mouseMoving = false;
   }
   function forwardRef67(render5) {
-    const Role = React103.forwardRef((props, ref) => render5({
+    const Role = React103.forwardRef((props, ref) => render5(removeUndefinedValues({
       ...props,
       ref
-    }));
+    })));
     Role.displayName = render5.displayName || render5.name;
     return Role;
   }
@@ -44251,16 +44246,16 @@ var wp;
   function createStoreContext(providers = [], scopedProviders = []) {
     const context = React103.createContext(void 0);
     const scopedContext = React103.createContext(void 0);
-    const useContext75 = () => React103.useContext(context);
+    const useContext76 = () => React103.useContext(context);
     const useScopedContext = (onlyScoped = false) => {
       const scoped = React103.useContext(scopedContext);
-      const store4 = useContext75();
+      const store4 = useContext76();
       if (onlyScoped) return scoped;
       return scoped || store4;
     };
     const useProviderContext = () => {
       const scoped = React103.useContext(scopedContext);
-      const store4 = useContext75();
+      const store4 = useContext76();
       if (scoped && scoped === store4) return;
       return store4;
     };
@@ -44282,7 +44277,7 @@ var wp;
     return {
       context,
       scopedContext,
-      useContext: useContext75,
+      useContext: useContext76,
       useScopedContext,
       useProviderContext,
       ContextProvider,
@@ -44290,8 +44285,11 @@ var wp;
     };
   }
 
-  // node_modules/@ariakit/react-components/dist/focusable/focusable.js
+  // node_modules/@ariakit/react-components/dist/__chunks/CKgCZrim.js
   var import_react56 = __toESM(require_react(), 1);
+  function isCompositeMoveKey(key) {
+    return key === "ArrowUp" || key === "ArrowRight" || key === "ArrowDown" || key === "ArrowLeft" || key === "Home" || key === "End" || key === "PageUp" || key === "PageDown";
+  }
   var TagName = "div";
   var accessibleWhenDisabledSymbol = /* @__PURE__ */ Symbol("accessibleWhenDisabled");
   var isSafariBrowser = isSafari();
@@ -44376,9 +44374,16 @@ var wp;
     if (isElement2(target) && !target.hasAttribute("data-focus-visible")) isKeyboardModality = false;
   }
   function onGlobalKeyDown(event) {
+    if (isCompositeMoveKey(event.key)) {
+      isKeyboardModality = true;
+      return;
+    }
     if (event.metaKey) return;
     if (event.ctrlKey) return;
-    if (event.altKey) return;
+    if (event.altKey) {
+      if (!isSafariBrowser) return;
+      if (event.key !== "Tab") return;
+    }
     isKeyboardModality = true;
   }
   var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = true, accessibleWhenDisabled, autoFocus, onFocusVisible, ...props }) {
@@ -44466,9 +44471,7 @@ var wp;
       if (!focusable2) return;
       if (focusVisible) return;
       if (focusVisibleRef.current) return;
-      if (event.metaKey) return;
-      if (event.altKey) return;
-      if (event.ctrlKey) return;
+      if ((event.metaKey || event.altKey || event.ctrlKey) && !isCompositeMoveKey(event.key)) return;
       if (!isSelfTarget(event)) return;
       const element = event.currentTarget;
       const applyFocusVisible = () => handleFocusVisible(event, element);
@@ -44715,7 +44718,7 @@ var wp;
       ...props,
       ref: useMergeRefs3(ref, props.ref)
     };
-    return removeUndefinedValues(props);
+    return props;
   });
   var CollectionItem = forwardRef67(function CollectionItem2(props) {
     const htmlProps = useCollectionItem(props);
@@ -44732,6 +44735,9 @@ var wp;
   var CompositeScopedContextProvider = ctx3.ScopedContextProvider;
   var CompositeItemContext = (0, import_react59.createContext)(void 0);
   var CompositeRowContext = (0, import_react59.createContext)(void 0);
+
+  // node_modules/@ariakit/react-components/dist/composite/utils.js
+  var import_react60 = __toESM(require_react(), 1);
 
   // node_modules/@ariakit/store/dist/index.js
   function getInternal(store4, key) {
@@ -45407,8 +45413,10 @@ If there's a particular need for this, please submit a feature request at https:
           return nextItems;
         });
         const unmergeItem = () => {
-          if (registeredItems2) if (previousRegisteredItem) registeredItems2.set(item.id, previousRegisteredItem);
-          else registeredItems2.delete(item.id);
+          if (registeredItems2) {
+            if (previousRegisteredItem) registeredItems2.set(item.id, previousRegisteredItem);
+            else registeredItems2.delete(item.id);
+          }
           privateStore.setState(key, (items2) => {
             const ids = cache.ids ? getCachedItemIds(items2, cache) : void 0;
             if (!prevItem) {
@@ -45580,12 +45588,16 @@ If there's a particular need for this, please submit a feature request at https:
     const syncState = props.store?.getState();
     const collection = createCollectionStore(props);
     const activeId = defaultValue(props.activeId, syncState?.activeId, props.defaultActiveId);
-    const composite = createStore({
+    const compositeElement = defaultValue(syncState?.compositeElement, syncState?.baseElement, null);
+    const compositeElementInFocusOrder = defaultValue(props.compositeElementInFocusOrder, props.includesBaseElement, syncState?.compositeElementInFocusOrder, syncState?.includesBaseElement, activeId === null);
+    const initialState = {
       ...collection.getState(),
       id: defaultValue(props.id, syncState?.id) ?? `id-${Math.random().toString(36).slice(2, 8)}`,
       activeId,
-      baseElement: defaultValue(syncState?.baseElement, null),
-      includesBaseElement: defaultValue(props.includesBaseElement, syncState?.includesBaseElement, activeId === null),
+      compositeElement,
+      baseElement: compositeElement,
+      compositeElementInFocusOrder,
+      includesBaseElement: compositeElementInFocusOrder,
       moves: defaultValue(syncState?.moves, 0),
       orientation: defaultValue(props.orientation, syncState?.orientation, "both"),
       rtl: defaultValue(props.rtl, syncState?.rtl, false),
@@ -45593,7 +45605,17 @@ If there's a particular need for this, please submit a feature request at https:
       focusLoop: defaultValue(props.focusLoop, syncState?.focusLoop, false),
       focusWrap: defaultValue(props.focusWrap, syncState?.focusWrap, false),
       focusShift: defaultValue(props.focusShift, syncState?.focusShift, false)
-    }, collection, props.store);
+    };
+    const composite = createStore(initialState, collection, props.store);
+    setup(composite, () => chain(sync2(composite, ["compositeElement"], (state2) => {
+      composite.setState("baseElement", state2.compositeElement);
+    }), sync2(composite, ["baseElement"], (state2) => {
+      composite.setState("compositeElement", state2.baseElement);
+    }), sync2(composite, ["compositeElementInFocusOrder"], (state2) => {
+      composite.setState("includesBaseElement", state2.compositeElementInFocusOrder);
+    }), sync2(composite, ["includesBaseElement"], (state2) => {
+      composite.setState("compositeElementInFocusOrder", state2.includesBaseElement);
+    })));
     setup(composite, () => sync2(composite, ["renderedItems", "activeId"], (state2) => {
       composite.setState("activeId", (activeId2) => {
         if (activeId2 !== void 0) return activeId2;
@@ -45602,12 +45624,13 @@ If there's a particular need for this, please submit a feature request at https:
     }));
     const getNextId = (direction = "next", options = {}) => {
       const defaultState = composite.getState();
-      const { skip = 0, activeId: activeId2 = defaultState.activeId, focusShift = defaultState.focusShift, focusLoop = defaultState.focusLoop, focusWrap = defaultState.focusWrap, includesBaseElement = defaultState.includesBaseElement, renderedItems = defaultState.renderedItems, rtl = defaultState.rtl } = options;
+      const compositeElementInFocusOrder2 = defaultValue(options.compositeElementInFocusOrder, options.includesBaseElement, defaultState.compositeElementInFocusOrder);
+      const { skip = 0, activeId: activeId2 = defaultState.activeId, focusShift = defaultState.focusShift, focusLoop = defaultState.focusLoop, focusWrap = defaultState.focusWrap, renderedItems = defaultState.renderedItems, rtl = defaultState.rtl } = options;
       const isVerticalDirection = direction === "up" || direction === "down";
       const isNextDirection = direction === "next" || direction === "down";
       const canReverse = isNextDirection ? rtl && !isVerticalDirection : !rtl || isVerticalDirection;
       const canShift = focusShift && !skip;
-      if (!skip && !focusWrap && !includesBaseElement && activeId2 != null) {
+      if (!skip && !focusWrap && !compositeElementInFocusOrder2 && activeId2 != null) {
         if (!isVerticalDirection ? true : !canShift && !renderedItems.some((item) => item.rowId != null)) {
           let activeIndex2 = -1;
           if (renderedItems === defaultState.renderedItems) {
@@ -45656,7 +45679,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const canLoop = focusLoop && (isVerticalDirection ? focusLoop !== "horizontal" : focusLoop !== "vertical");
       const canWrap = isGrid2 && focusWrap && (isVerticalDirection ? focusWrap !== "horizontal" : focusWrap !== "vertical");
-      const hasNullItem = isNextDirection ? (!isGrid2 || isVerticalDirection) && canLoop && includesBaseElement : isVerticalDirection ? includesBaseElement : false;
+      const hasNullItem = isNextDirection ? (!isGrid2 || isVerticalDirection) && canLoop && compositeElementInFocusOrder2 : isVerticalDirection ? compositeElementInFocusOrder2 : false;
       if (canLoop) return findFirstEnabledItem(flipItems(canWrap && !hasNullItem ? items : getItemsInRow(items, activeItem.rowId), activeId2, hasNullItem), activeId2)?.id;
       if (canWrap) {
         const nextItem2 = findFirstEnabledItem(hasNullItem ? nextItemsInRow : nextItems, activeId2);
@@ -45673,7 +45696,8 @@ If there's a particular need for this, please submit a feature request at https:
     return {
       ...collection,
       ...composite,
-      setBaseElement: (element) => composite.setState("baseElement", element),
+      setCompositeElement: (element) => composite.setState("compositeElement", element),
+      setBaseElement: (element) => composite.setState("compositeElement", element),
       setActiveId: (id) => composite.setState("activeId", id),
       move: (id) => {
         if (id === void 0) return;
@@ -45692,6 +45716,188 @@ If there's a particular need for this, please submit a feature request at https:
   // node_modules/@ariakit/react-components/dist/composite/utils.js
   var findFirstEnabledItem2 = findFirstEnabledItem;
   var groupItemsByRows2 = groupItemsByRows;
+  var unmountingItems = /* @__PURE__ */ new WeakSet();
+  function markItemUnmounting(element) {
+    if (getActiveElement(element) !== element) return;
+    unmountingItems.add(element);
+    queueMicrotask(() => unmountingItems.delete(element));
+  }
+  function markItemMounted(element) {
+    unmountingItems.delete(element);
+  }
+  function withCompositeScrollPreserved(store4, callback) {
+    const { virtualFocus, compositeElement } = store4.getState();
+    if (!virtualFocus || !compositeElement || !isTextField(compositeElement)) {
+      callback();
+      return;
+    }
+    const savedScrollLeft = compositeElement.scrollLeft;
+    const savedScrollTop = compositeElement.scrollTop;
+    callback();
+    compositeElement.scrollLeft = savedScrollLeft;
+    compositeElement.scrollTop = savedScrollTop;
+  }
+  function getPopupElement(store4) {
+    const state2 = store4.getState();
+    if (!("contentElement" in state2)) return null;
+    return state2.contentElement;
+  }
+  function ownsFocus(store4) {
+    const { compositeElement } = store4.getState();
+    const activeElement2 = getActiveElement(compositeElement);
+    if (!activeElement2) return false;
+    if (compositeElement?.contains(activeElement2)) return true;
+    if (isItem(store4, activeElement2)) return true;
+    return !!getPopupElement(store4)?.contains(activeElement2);
+  }
+  function presentItem({ store: store4, id, focus: focus2, markedOnly, requireFocus, scrollIntoView }) {
+    let element = null;
+    let resolvedId;
+    let focused = false;
+    let focusLeftElement = false;
+    let done = false;
+    let wasMounted = false;
+    let wasOpen = false;
+    const compositeAtStart = store4.getState().compositeElement;
+    const activeAtStart = getActiveElement(compositeAtStart);
+    const owner = requireFocus ? activeAtStart : null;
+    const startedOnComposite = !!compositeAtStart?.contains(activeAtStart);
+    const stillOwnsFocus = (target) => {
+      if (!owner) return true;
+      const activeElement2 = getActiveElement(owner);
+      if (activeElement2 === owner) return true;
+      if (activeElement2 === target) return true;
+      return ownsFocus(store4);
+    };
+    const abandonedByState = (state2) => {
+      if ("mounted" in state2) {
+        if (state2.mounted) wasMounted = true;
+        else if (wasMounted) return true;
+      }
+      if ("open" in state2) {
+        if (state2.open) wasOpen = true;
+        else if (wasOpen) return true;
+      }
+      return id != null && state2.activeId != null && state2.activeId !== id;
+    };
+    const entersClosedPopup = (state2, target) => {
+      if (!("open" in state2)) return false;
+      if (state2.open) return false;
+      const popup = getPopupElement(store4);
+      if (!popup?.contains(target)) return false;
+      const { compositeElement } = state2;
+      if (!compositeElement) return false;
+      if (popup.contains(compositeElement)) return false;
+      return isVisible(target);
+    };
+    const resolveElement = (state2) => {
+      const item = getEnabledItem(store4, resolvedId ?? (id === void 0 ? state2.activeId : id));
+      if (!item?.element?.isConnected) return null;
+      resolvedId = item.id;
+      return item.element;
+    };
+    let removeFocusListeners;
+    let unsubscribe;
+    const cancel = () => {
+      done = true;
+      removeFocusListeners?.();
+      unsubscribe?.();
+    };
+    const present = () => {
+      if (done) return;
+      const state2 = store4.getState();
+      if (abandonedByState(state2)) return cancel();
+      let restoreFocus = false;
+      if (!element) {
+        element = resolveElement(state2);
+        if (!element) return;
+      } else if (!element.isConnected) {
+        restoreFocus = focused && !focusLeftElement && getActiveElement(element) === getDocument(element).body;
+        element = resolveElement(state2);
+        if (!element) return cancel();
+      }
+      if (restoreFocus) focused = false;
+      else if (!stillOwnsFocus(element)) return cancel();
+      const focusWithheld = focus2 && startedOnComposite && entersClosedPopup(state2, element);
+      if (focusWithheld) {
+        const { activeId } = state2;
+        if (activeId != null && activeId !== resolvedId) return cancel();
+      }
+      if (focus2 && !focused && !focusWithheld) {
+        focused = true;
+        focusLeftElement = false;
+        const itemElement = element;
+        removeFocusListeners?.();
+        const onBlur = () => {
+          focusLeftElement = !unmountingItems.has(itemElement);
+        };
+        const onFocus = () => {
+          focusLeftElement = false;
+        };
+        itemElement.addEventListener("blur", onBlur);
+        itemElement.addEventListener("focus", onFocus);
+        removeFocusListeners = () => {
+          itemElement.removeEventListener("blur", onBlur);
+          itemElement.removeEventListener("focus", onFocus);
+        };
+        withCompositeScrollPreserved(store4, () => {
+          itemElement.focus({ preventScroll: true });
+        });
+        if (done) return;
+      }
+      if (markedOnly && !element.hasAttribute("data-autofocus")) {
+        if (focusWithheld) return;
+        return cancel();
+      }
+      if (!isVisible(element)) return;
+      if ("unstable_placing" in state2 && state2.unstable_placing) return;
+      if (!focusWithheld) cancel();
+      if (scrollIntoView) {
+        scrollIntoView(element);
+        return;
+      }
+      element.scrollIntoView({
+        block: "nearest",
+        inline: "nearest"
+      });
+    };
+    unsubscribe = subscribe2(store4, [
+      "activeId",
+      "items",
+      "mounted",
+      "open",
+      "unstable_placing"
+    ], present);
+    present();
+    return cancel;
+  }
+  function usePresentItem(store4) {
+    const cancelRef = (0, import_react60.useRef)(null);
+    const ownerRef = (0, import_react60.useRef)(store4);
+    const cancel = (0, import_react60.useCallback)(() => {
+      cancelRef.current?.();
+      cancelRef.current = null;
+    }, []);
+    const present = (0, import_react60.useCallback)((params) => {
+      if (!store4) return;
+      if (ownerRef.current !== store4) return;
+      cancel();
+      const cancelCurrent = presentItem({
+        store: store4,
+        ...params
+      });
+      cancelRef.current = cancelCurrent;
+      return cancelCurrent;
+    }, [store4, cancel]);
+    useSafeLayoutEffect(() => {
+      ownerRef.current = store4;
+      return () => {
+        ownerRef.current = void 0;
+        cancel();
+      };
+    }, [store4, cancel]);
+    return present;
+  }
   function getEnabledItem(store4, id) {
     if (!id) return null;
     return store4.item(id) || null;
@@ -45724,7 +45930,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/composite/composite-item.js
-  var import_react60 = __toESM(require_react(), 1);
+  var import_react61 = __toESM(require_react(), 1);
   var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
 
   // node_modules/@ariakit/react-store/dist/index.js
@@ -45868,11 +46074,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore2(createStore2, props) {
     const [store4, setStore] = React104.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store4), [store4]);
-    const useState165 = React104.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
+    const useState164 = React104.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
     return [React104.useMemo(() => ({
       ...store4,
-      useState: useState165
-    }), [store4, useState165]), useEvent2(() => {
+      useState: useState164
+    }), [store4, useState164]), useEvent2(() => {
       setStore((store5) => createStore2({
         ...props,
         ...store5.getState()
@@ -45929,38 +46135,45 @@ If there's a particular need for this, please submit a feature request at https:
     if (isSelfTarget(event)) return false;
     return isItem(store4, event.target);
   }
-  var useCompositeItem2 = createHook(function useCompositeItem3({ store: store4, rowId: rowIdProp, preventScrollOnKeyDown = false, moveOnKeyPress = true, tabbable: tabbable2 = false, getItem: getItemProp, typeaheadText, "aria-setsize": ariaSetSizeProp, "aria-posinset": ariaPosInSetProp, ...props }) {
+  var useCompositeItem2 = createHook(function useCompositeItem3({ store: store4, rowId: rowIdProp, preventScrollOnKeyDown = false, moveOnKeyPress = true, tabbable: tabbable2 = false, getItem: getItemProp, typeaheadText, "aria-setsize": ariaSetSizeProp, "aria-posinset": ariaPosInSetProp, unstable_scrollIntoView: scrollIntoView, ...props }) {
     const context = useCompositeScopedContext();
     store4 = store4 || context;
     const id = useId7(props.id);
-    const ref = (0, import_react60.useRef)(null);
-    const row = (0, import_react60.useContext)(CompositeRowContext);
+    const ref = (0, import_react61.useRef)(null);
+    const mountedElementRef = (0, import_react61.useRef)(null);
+    const markUnmountingRef = (0, import_react61.useCallback)((element) => {
+      const mountedElement = mountedElementRef.current;
+      if (!element && mountedElement) markItemUnmounting(mountedElement);
+      if (element) markItemMounted(element);
+      mountedElementRef.current = element;
+    }, []);
+    const row = (0, import_react61.useContext)(CompositeRowContext);
     const trulyDisabled = disabledFromProps(props) && !props.accessibleWhenDisabled;
     const shouldRegisterItem = props.shouldRegisterItem;
     const getRowId = (state2) => {
       if (rowIdProp) return rowIdProp;
       if (!state2) return;
-      if (!row?.baseElement) return;
-      if (row.baseElement !== state2.baseElement) return;
+      if (!row?.compositeElement) return;
+      if (row.compositeElement !== state2.compositeElement) return;
       return row.id;
     };
-    const { rowId, baseElement, ariaSetSize, ariaPosInSet } = useStoreStateObject(store4, ["baseElement", "renderedItems"], {
+    const { rowId, compositeElement, ariaSetSize, ariaPosInSet } = useStoreStateObject(store4, ["compositeElement", "renderedItems"], {
       rowId: getRowId,
-      baseElement(state2) {
-        return state2?.baseElement || void 0;
+      compositeElement(state2) {
+        return state2?.compositeElement || void 0;
       },
       ariaSetSize(state2) {
         if (ariaSetSizeProp != null) return ariaSetSizeProp;
         if (!state2) return;
         if (!row?.ariaSetSize) return;
-        if (row.baseElement !== state2.baseElement) return;
+        if (row.compositeElement !== state2.compositeElement) return;
         return row.ariaSetSize;
       },
       ariaPosInSet(state2) {
         if (ariaPosInSetProp != null) return ariaPosInSetProp;
         if (!state2) return;
         if (!row?.ariaPosInSet) return;
-        if (row.baseElement !== state2.baseElement) return;
+        if (row.compositeElement !== state2.compositeElement) return;
         const rowId2 = getRowId(state2);
         const itemsInRow = state2.renderedItems.filter((item) => item.rowId === rowId2);
         return row.ariaPosInSet + itemsInRow.findIndex((item) => item.id === id);
@@ -45968,6 +46181,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const { isActiveItem, isTabbable } = useStoreStateObject(store4, [
       "activeId",
+      "compositeElement",
       "renderedItems",
       "virtualFocus",
       "items"
@@ -45976,8 +46190,10 @@ If there's a particular need for this, please submit a feature request at https:
         return !!state2 && state2.activeId === id;
       },
       isTabbable(state2) {
-        if (!state2?.renderedItems.length) return true;
+        if (!state2) return true;
+        if (!state2.compositeElement && !state2.renderedItems.length) return true;
         if (state2.virtualFocus) return false;
+        if (!state2.renderedItems.length) return true;
         if (tabbable2) return true;
         if (state2.activeId === null) return false;
         const item = store4?.item(state2.activeId);
@@ -45986,7 +46202,7 @@ If there's a particular need for this, please submit a feature request at https:
         return state2.activeId === id;
       }
     });
-    const getItem = (0, import_react60.useCallback)((item) => {
+    const getItem = (0, import_react61.useCallback)((item) => {
       const nextItem = {
         ...item,
         id: id || item.id,
@@ -46005,8 +46221,9 @@ If there's a particular need for this, please submit a feature request at https:
       getItemProp
     ]);
     const onFocusProp = props.onFocus;
-    const hasFocusedComposite = (0, import_react60.useRef)(false);
-    const cancelScheduledFocusRedirectRef = (0, import_react60.useRef)(null);
+    const hasFocusedComposite = (0, import_react61.useRef)(false);
+    const cancelScheduledFocusRedirectRef = (0, import_react61.useRef)(null);
+    const present = usePresentItem(store4);
     const onFocus = useEvent2((event) => {
       onFocusProp?.(event);
       if (event.defaultPrevented) return;
@@ -46014,27 +46231,38 @@ If there's a particular need for this, please submit a feature request at https:
       if (!id) return;
       if (!store4) return;
       if (targetIsAnotherItem(event, store4)) return;
-      const { virtualFocus, baseElement: baseElement2 } = store4.getState();
+      const { virtualFocus, compositeElement: compositeElement2 } = store4.getState();
       store4.setActiveId(id);
       if (isTextbox(event.currentTarget)) selectTextField(event.currentTarget);
-      if (!virtualFocus) return;
+      if (!virtualFocus) {
+        if (isSelfTarget(event) && store4.item(id)) present({
+          id,
+          markedOnly: true,
+          requireFocus: true,
+          scrollIntoView
+        });
+        return;
+      }
       if (!isSelfTarget(event)) return;
       if (isEditableElement(event.currentTarget)) return;
-      const redirectFocusToBaseElement = (currentTarget2, relatedTarget2, baseElement3) => {
-        if (!isFocusable(baseElement3)) {
-          if (true) warnOnce("A composite widget with `virtualFocus` enabled requires a focusable composite element. Set the `focusable` prop to `true` or the `virtualFocus` option to `false`.", baseElement3);
+      const redirectFocusToCompositeElement = (relatedTarget2, compositeElement3) => {
+        if (!isFocusable(compositeElement3)) {
+          if (true) warnOnce("A composite widget with `virtualFocus` enabled requires a focusable composite element. Set the `focusable` prop to `true` or the `virtualFocus` option to `false`.", compositeElement3);
           return;
         }
-        if (isSafari() && currentTarget2.hasAttribute("data-autofocus")) currentTarget2.scrollIntoView({
-          block: "nearest",
-          inline: "nearest"
+        const fromComposite = relatedTarget2 === compositeElement3 || isItem(store4, relatedTarget2);
+        if (store4.item(id)) present({
+          id,
+          markedOnly: true,
+          requireFocus: true,
+          scrollIntoView
         });
         hasFocusedComposite.current = true;
-        if (relatedTarget2 === baseElement3 || isItem(store4, relatedTarget2)) focusSilently(baseElement3);
-        else baseElement3.focus();
+        if (fromComposite) focusSilently(compositeElement3);
+        else compositeElement3.focus({ preventScroll: true });
       };
-      if (baseElement2?.isConnected) {
-        redirectFocusToBaseElement(event.currentTarget, event.relatedTarget, baseElement2);
+      if (compositeElement2?.isConnected) {
+        redirectFocusToCompositeElement(event.relatedTarget, compositeElement2);
         return;
       }
       if (shouldRegisterItem === false) return;
@@ -46050,11 +46278,11 @@ If there's a particular need for this, please submit a feature request at https:
           return;
         }
         const state2 = store4.getState();
-        const nextBaseElement = state2.baseElement;
-        if (!nextBaseElement?.isConnected) return;
+        const nextCompositeElement = state2.compositeElement;
+        if (!nextCompositeElement?.isConnected) return;
         cancelScheduledFocusRedirect();
         if (!state2.virtualFocus) return;
-        redirectFocusToBaseElement(currentTarget, relatedTarget, nextBaseElement);
+        redirectFocusToCompositeElement(relatedTarget, nextCompositeElement);
       });
     });
     const onBlurCaptureProp = props.onBlurCapture;
@@ -46083,8 +46311,8 @@ If there's a particular need for this, please submit a feature request at https:
       const canHomeEnd = () => {
         if (isGrid2) return true;
         if (isHorizontal) return true;
-        if (!state2.baseElement) return true;
-        if (!isTextField(state2.baseElement)) return true;
+        if (!state2.compositeElement) return true;
+        if (!isTextField(state2.compositeElement)) return true;
         return false;
       };
       const action = {
@@ -46129,10 +46357,10 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     });
-    const providerValue = (0, import_react60.useMemo)(() => ({
+    const providerValue = (0, import_react61.useMemo)(() => ({
       id,
-      baseElement
-    }), [id, baseElement]);
+      compositeElement
+    }), [id, compositeElement]);
     props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(CompositeItemContext.Provider, {
       value: providerValue,
       children: element
@@ -46141,7 +46369,7 @@ If there's a particular need for this, please submit a feature request at https:
       "data-active-item": isActiveItem || void 0,
       ...props,
       id,
-      ref: useMergeRefs3(ref, props.ref),
+      ref: useMergeRefs3(ref, markUnmountingRef, props.ref),
       tabIndex: isTabbable ? props.tabIndex : -1,
       onFocus,
       onBlurCapture,
@@ -46154,11 +46382,11 @@ If there's a particular need for this, please submit a feature request at https:
       getItem,
       shouldRegisterItem: id ? shouldRegisterItem : false
     });
-    return removeUndefinedValues({
+    return {
       ...props,
       "aria-setsize": ariaSetSize,
       "aria-posinset": ariaPosInSet
-    });
+    };
   });
   var CompositeItem = memo4(forwardRef67(function CompositeItem2(props) {
     const htmlProps = useCompositeItem2(withDefaultButtonType(props));
@@ -46166,7 +46394,7 @@ If there's a particular need for this, please submit a feature request at https:
   }));
 
   // node_modules/@ariakit/react-components/dist/composite/composite.js
-  var import_react61 = __toESM(require_react(), 1);
+  var import_react62 = __toESM(require_react(), 1);
   var import_jsx_runtime221 = __toESM(require_jsx_runtime(), 1);
   var TagName5 = "div";
   function isGrid(items) {
@@ -46188,10 +46416,11 @@ If there's a particular need for this, please submit a feature request at https:
       if (!isSelfTarget(event)) return;
       if (isModifierKey(event)) return;
       if (isPrintableKey(event)) return;
-      const activeElement2 = getEnabledItem(store4, store4.getState().activeId)?.element;
+      const state2 = store4.getState();
+      const activeElement2 = getEnabledItem(store4, state2.activeId)?.element;
       if (!activeElement2) return;
       const { view, ...eventInit } = event;
-      if (activeElement2 !== previousElementRef?.current) activeElement2.focus();
+      if (activeElement2 !== previousElementRef?.current) activeElement2.focus({ preventScroll: true });
       if (!fireKeyboardEvent(activeElement2, event.type, eventInit)) event.preventDefault();
       if (event.currentTarget.contains(activeElement2)) event.stopPropagation();
     });
@@ -46199,76 +46428,58 @@ If there's a particular need for this, please submit a feature request at https:
   function findFirstEnabledItemInTheLastRow(items) {
     return findFirstEnabledItem2(flatten2DArray(reverseArray(groupItemsByRows2(items))));
   }
-  function withBaseScrollPreserved(store4, callback) {
-    const { virtualFocus, baseElement } = store4.getState();
-    if (!virtualFocus || !baseElement || !isTextField(baseElement)) {
-      callback();
-      return;
-    }
-    const savedScrollLeft = baseElement.scrollLeft;
-    const savedScrollTop = baseElement.scrollTop;
-    callback();
-    baseElement.scrollLeft = savedScrollLeft;
-    baseElement.scrollTop = savedScrollTop;
-  }
-  function useScheduleFocus(store4) {
-    const [scheduled, setScheduled] = (0, import_react61.useState)(false);
-    const schedule2 = (0, import_react61.useCallback)(() => setScheduled(true), []);
-    const activeItem = useStoreState(store4, scheduled ? ["activeId", "items"] : [], (state2) => scheduled ? getEnabledItem(store4, state2.activeId) : null);
-    (0, import_react61.useEffect)(() => {
-      const activeElement2 = activeItem?.element;
-      if (!scheduled) return;
-      if (!activeElement2) return;
-      setScheduled(false);
-      withBaseScrollPreserved(store4, () => {
-        activeElement2.focus({ preventScroll: true });
-      });
-    }, [
-      store4,
-      activeItem,
-      scheduled
-    ]);
-    return schedule2;
-  }
-  var CompositeFocusOnMove = memo4(function CompositeFocusOnMove2({ store: store4, focusOnMove, previousElementRef }) {
+  var CompositeFocusOnMove = memo4(function CompositeFocusOnMove2({ store: store4, focusOnMove, previousElementRef, present, scrollIntoView }) {
     const moves = useStoreState(store4, "moves");
-    const baseElement = useStoreState(store4, "baseElement");
-    (0, import_react61.useEffect)(() => {
+    const compositeElement = useStoreState(store4, "compositeElement");
+    (0, import_react62.useEffect)(() => {
       if (!moves) return;
       if (!focusOnMove) return;
       const { activeId } = store4.getState();
-      const itemElement = getEnabledItem(store4, activeId)?.element;
-      if (!itemElement) return;
-      withBaseScrollPreserved(store4, () => focusIntoView(itemElement));
+      if (activeId == null) return;
+      return present({
+        id: activeId,
+        requireFocus: ownsFocus(store4),
+        focus: true,
+        scrollIntoView
+      });
     }, [
       store4,
       moves,
-      focusOnMove
+      focusOnMove,
+      compositeElement,
+      present,
+      scrollIntoView
     ]);
     useSafeLayoutEffect(() => {
       if (!moves) return;
-      if (!baseElement) return;
+      if (!compositeElement) return;
       const { activeId } = store4.getState();
       if (!(activeId === null)) return;
       const previousElement = previousElementRef.current;
       previousElementRef.current = null;
-      if (previousElement) fireBlurEvent(previousElement, { relatedTarget: baseElement });
-      if (!hasFocus(baseElement)) baseElement.focus();
+      if (previousElement) fireBlurEvent(previousElement, { relatedTarget: compositeElement });
+      if (!hasFocus(compositeElement)) {
+        if (isFocusable(compositeElement)) compositeElement.scrollIntoView({
+          block: "nearest",
+          inline: "nearest"
+        });
+        compositeElement.focus({ preventScroll: true });
+      }
     }, [
       store4,
       moves,
-      baseElement
+      compositeElement
     ]);
     return null;
   });
-  var useComposite = createHook(function useComposite2({ store: store4, composite = true, focusOnMove = composite, moveOnKeyPress = true, ...props }) {
+  var useComposite = createHook(function useComposite2({ store: store4, composite = true, focusOnMove = composite, moveOnKeyPress = true, unstable_scrollIntoView: scrollIntoView, ...props }) {
     const context = useCompositeProviderContext();
     store4 = store4 || context;
     invariant(store4, "Composite must receive a `store` prop or be wrapped in a CompositeProvider component.");
-    const ref = (0, import_react61.useRef)(null);
-    const previousElementRef = (0, import_react61.useRef)(null);
-    const scheduleFocus = useScheduleFocus(store4);
-    const [, setBaseElement] = useTransactionState(composite ? store4.setBaseElement : null);
+    const ref = (0, import_react62.useRef)(null);
+    const previousElementRef = (0, import_react62.useRef)(null);
+    const present = usePresentItem(store4);
+    const [, setCompositeElement] = useTransactionState(composite ? store4.setCompositeElement : null);
     const virtualFocus = useStoreState(store4, "virtualFocus");
     const activeId = useStoreState(store4, composite && virtualFocus ? ["activeId"] : [], (state2) => composite && virtualFocus ? state2.activeId : null);
     useSafeLayoutEffect(() => {
@@ -46312,16 +46523,33 @@ If there's a particular need for this, please submit a feature request at https:
       const { relatedTarget } = event;
       const { virtualFocus: virtualFocus2 } = store4.getState();
       if (virtualFocus2) {
-        if (isSelfTarget(event) && !isItem(store4, relatedTarget)) queueMicrotask(scheduleFocus);
-      } else if (isSelfTarget(event)) store4.setActiveId(null);
+        if (isSelfTarget(event) && !isItem(store4, relatedTarget)) queueMicrotask(() => present({
+          focus: true,
+          markedOnly: true,
+          requireFocus: true,
+          scrollIntoView
+        }));
+      } else if (isSelfTarget(event)) {
+        if (!isItem(store4, relatedTarget)) {
+          const { activeId: activeId2 } = store4.getState();
+          if (activeId2 != null) present({
+            id: activeId2,
+            markedOnly: true,
+            requireFocus: true,
+            scrollIntoView
+          });
+        }
+        store4.setActiveId(null);
+      }
     });
     const onBlurCaptureProp = props.onBlurCapture;
     const onBlurCapture = useEvent2((event) => {
       onBlurCaptureProp?.(event);
       if (event.defaultPrevented) return;
       if (!store4) return;
-      const { virtualFocus: virtualFocus2, activeId: activeId2 } = store4.getState();
+      const { virtualFocus: virtualFocus2, activeId: activeId2, compositeElement } = store4.getState();
       if (!virtualFocus2) return;
+      if (event.currentTarget !== compositeElement) return;
       const activeElement2 = getEnabledItem(store4, activeId2)?.element;
       const nextActiveElement = event.relatedTarget;
       const nextActiveElementIsItem = isItem(store4, nextActiveElement);
@@ -46343,21 +46571,49 @@ If there's a particular need for this, please submit a feature request at https:
       if (event.defaultPrevented) return;
       if (!store4) return;
       if (!isSelfTarget(event)) return;
-      const { orientation, renderedItems, activeId: activeId2, rtl } = store4.getState();
-      if (getEnabledItem(store4, activeId2)?.element?.isConnected) return;
+      const { orientation, items, renderedItems, activeId: activeId2, rtl } = store4.getState();
+      const activeItem = getEnabledItem(store4, activeId2);
+      if (activeItem?.element?.isConnected) return;
+      const elementlessActiveItem = activeItem && activeId2 != null;
+      const movementItems = elementlessActiveItem ? items : renderedItems;
       const isVertical = orientation !== "horizontal";
       const isHorizontal = orientation !== "vertical";
-      const grid = isGrid(renderedItems);
+      const grid = isGrid(movementItems);
       if ((event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "Home" || event.key === "End") && isTextField(event.currentTarget)) return;
       const up = () => {
+        if (elementlessActiveItem) return store4.up({
+          activeId: activeId2,
+          renderedItems: movementItems
+        });
         if (grid) return findFirstEnabledItemInTheLastRow(renderedItems)?.id;
         return store4?.last();
       };
+      const right = () => {
+        if (elementlessActiveItem) return store4.next({
+          activeId: activeId2,
+          renderedItems: movementItems
+        });
+        return rtl ? store4.last() : store4.first();
+      };
+      const down = () => {
+        if (elementlessActiveItem) return store4.down({
+          activeId: activeId2,
+          renderedItems: movementItems
+        });
+        return store4.first();
+      };
+      const left = () => {
+        if (elementlessActiveItem) return store4.previous({
+          activeId: activeId2,
+          renderedItems: movementItems
+        });
+        return rtl ? store4.first() : store4.last();
+      };
       const action = {
         ArrowUp: (grid || isVertical) && up,
-        ArrowRight: (grid || isHorizontal) && (rtl ? store4.last : store4.first),
-        ArrowDown: (grid || isVertical) && store4.first,
-        ArrowLeft: (grid || isHorizontal) && (rtl ? store4.first : store4.last),
+        ArrowRight: (grid || isHorizontal) && right,
+        ArrowDown: (grid || isVertical) && down,
+        ArrowLeft: (grid || isHorizontal) && left,
         Home: store4.first,
         End: store4.last,
         PageUp: store4.first,
@@ -46377,12 +46633,15 @@ If there's a particular need for this, please submit a feature request at https:
       children: [element, composite && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(CompositeFocusOnMove, {
         store: store4,
         focusOnMove,
-        previousElementRef
+        previousElementRef,
+        present,
+        scrollIntoView
       })]
     }), [
       store4,
       composite,
-      focusOnMove
+      focusOnMove,
+      present
     ]);
     props = {
       "aria-activedescendant": useStoreState(store4, composite && virtualFocus ? ["items"] : [], () => {
@@ -46392,7 +46651,7 @@ If there's a particular need for this, please submit a feature request at https:
         return getEnabledItem(store4, activeId)?.id;
       }),
       ...props,
-      ref: useMergeRefs3(ref, setBaseElement, props.ref),
+      ref: useMergeRefs3(ref, setCompositeElement, props.ref),
       onKeyDownCapture,
       onKeyUpCapture,
       onFocusCapture,
@@ -46400,8 +46659,9 @@ If there's a particular need for this, please submit a feature request at https:
       onBlurCapture,
       onKeyDown
     };
+    const focusable2 = useStoreState(store4, composite && !virtualFocus ? ["activeId"] : [], (state2) => composite && (virtualFocus || state2.activeId === null));
     props = useFocusable({
-      focusable: useStoreState(store4, composite && !virtualFocus ? ["activeId"] : [], (state2) => composite && (virtualFocus || state2.activeId === null)),
+      focusable: focusable2,
       ...props
     });
     return props;
@@ -46420,18 +46680,18 @@ If there's a particular need for this, please submit a feature request at https:
   var DisclosureScopedContextProvider = ctx4.ScopedContextProvider;
 
   // node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
-  var import_react62 = __toESM(require_react(), 1);
+  var import_react63 = __toESM(require_react(), 1);
   var ctx5 = createStoreContext([DisclosureContextProvider], [DisclosureScopedContextProvider]);
   var useDialogContext = ctx5.useContext;
   var useDialogScopedContext = ctx5.useScopedContext;
   var useDialogProviderContext = ctx5.useProviderContext;
   var DialogContextProvider = ctx5.ContextProvider;
   var DialogScopedContextProvider = ctx5.ScopedContextProvider;
-  var DialogHeadingContext = (0, import_react62.createContext)(void 0);
-  var DialogDescriptionContext = (0, import_react62.createContext)(void 0);
+  var DialogHeadingContext = (0, import_react63.createContext)(void 0);
+  var DialogDescriptionContext = (0, import_react63.createContext)(void 0);
 
   // node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
-  var import_react63 = __toESM(require_react(), 1);
+  var import_react64 = __toESM(require_react(), 1);
   var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
   var import_react_dom4 = __toESM(require_react_dom(), 1);
   var TagName6 = "div";
@@ -46469,9 +46729,9 @@ If there's a particular need for this, please submit a feature request at https:
     const context = useDisclosureProviderContext();
     store4 = store4 || context;
     invariant(store4, "DisclosureContent must receive a `store` prop or be wrapped in a DisclosureProvider component.");
-    const ref = (0, import_react63.useRef)(null);
+    const ref = (0, import_react64.useRef)(null);
     const id = useId7(props.id);
-    const [transition, setTransition] = (0, import_react63.useState)(null);
+    const [transition, setTransition] = (0, import_react64.useState)(null);
     const { open, mounted, animated: animated2, contentElement } = useStoreStateObject(store4, {
       open: "open",
       mounted: "mounted",
@@ -46479,7 +46739,7 @@ If there's a particular need for this, please submit a feature request at https:
       contentElement: "contentElement"
     });
     const otherElement = useStoreState(store4.disclosure, "contentElement");
-    const hasClosedRef = (0, import_react63.useRef)(false);
+    const hasClosedRef = (0, import_react64.useRef)(false);
     useSafeLayoutEffect(() => {
       if (!ref.current) return;
       store4?.setContentElement(ref.current);
@@ -46555,7 +46815,7 @@ If there's a particular need for this, please submit a feature request at https:
     }), [store4]);
     const hidden = isHidden(mounted, props.hidden, alwaysVisible);
     const styleProp = props.style;
-    const style = (0, import_react63.useMemo)(() => {
+    const style = (0, import_react64.useMemo)(() => {
       if (hidden) return {
         ...styleProp,
         display: "none"
@@ -46580,7 +46840,8 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var DisclosureContent = forwardRef67(function DisclosureContent2({ unmountOnHide, ...props }) {
     const context = useDisclosureProviderContext();
-    if (useStoreState(props.store || context, ["mounted"], (state2) => !unmountOnHide || state2?.mounted) === false) return null;
+    const store4 = props.store || context;
+    if (useStoreState(store4, ["mounted"], (state2) => !unmountOnHide || state2?.mounted) === false) return null;
     return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(DisclosureContentImpl, { ...props });
   });
 
@@ -46642,16 +46903,17 @@ If there's a particular need for this, please submit a feature request at https:
   var PopoverScopedContextProvider = ctx6.ScopedContextProvider;
 
   // node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
-  var import_react64 = __toESM(require_react(), 1);
-  var ComboboxListRoleContext = (0, import_react64.createContext)(void 0);
+  var import_react65 = __toESM(require_react(), 1);
+  var ComboboxListRoleContext = (0, import_react65.createContext)(void 0);
   var ctx7 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
   var useComboboxContext = ctx7.useContext;
   var useComboboxScopedContext = ctx7.useScopedContext;
   var useComboboxProviderContext = ctx7.useProviderContext;
   var ComboboxContextProvider = ctx7.ContextProvider;
   var ComboboxScopedContextProvider = ctx7.ScopedContextProvider;
-  var ComboboxItemValueContext = (0, import_react64.createContext)(void 0);
-  var ComboboxItemCheckedContext = (0, import_react64.createContext)(false);
+  var ComboboxItemValueContext = (0, import_react65.createContext)(void 0);
+  var ComboboxItemCheckedContext = (0, import_react65.createContext)(false);
+  var ComboboxHeadingContext = (0, import_react65.createContext)(null);
 
   // node_modules/@ariakit/react-components/dist/collection/collection-store.js
   function useCollectionStoreProps(store4, update4, props) {
@@ -46670,7 +46932,8 @@ If there's a particular need for this, please submit a feature request at https:
   function useCompositeStoreProps(store4, update4, props) {
     store4 = useCollectionStoreProps(store4, update4, props);
     useStoreProps(store4, props, "activeId", "setActiveId");
-    useStoreProps(store4, props, "includesBaseElement");
+    const focusOrderProps = { compositeElementInFocusOrder: props.compositeElementInFocusOrder ?? props.includesBaseElement };
+    useStoreProps(store4, focusOrderProps, "compositeElementInFocusOrder");
     useStoreProps(store4, props, "virtualFocus");
     useStoreProps(store4, props, "orientation");
     useStoreProps(store4, props, "rtl");
@@ -46697,7 +46960,8 @@ If there's a particular need for this, please submit a feature request at https:
       "anchorElement",
       "contentElement",
       "popoverElement",
-      "disclosureElement"
+      "disclosureElement",
+      "unstable_placing"
     ]));
     throwOnConflictingProps(props, store4);
     const syncState = store4?.getState();
@@ -46706,15 +46970,26 @@ If there's a particular need for this, please submit a feature request at https:
       store: store4
     });
     const placement = defaultValue(props.placement, syncState?.placement, "bottom");
-    const popover = createStore({
+    const initialState = {
       ...dialog.getState(),
       placement,
       currentPlacement: placement,
       anchorElement: defaultValue(syncState?.anchorElement, null),
       popoverElement: defaultValue(syncState?.popoverElement, null),
       arrowElement: defaultValue(syncState?.arrowElement, null),
-      rendered: /* @__PURE__ */ Symbol("rendered")
-    }, dialog, store4);
+      rendered: /* @__PURE__ */ Symbol("rendered"),
+      unstable_placing: false
+    };
+    const popover = createStore(initialState, dialog, store4);
+    let syncedAnchorElement = initialState.anchorElement === initialState.disclosureElement ? initialState.anchorElement : null;
+    setup(popover, () => sync2(popover, ["anchorElement", "disclosureElement"], (state2) => {
+      if (state2.anchorElement && state2.anchorElement !== syncedAnchorElement) {
+        syncedAnchorElement = null;
+        return;
+      }
+      syncedAnchorElement = state2.disclosureElement;
+      popover.setState("anchorElement", syncedAnchorElement);
+    }));
     return {
       ...dialog,
       ...popover,
@@ -46732,25 +47007,9 @@ If there's a particular need for this, please submit a feature request at https:
     return useDialogStoreProps(store4, update4, props);
   }
 
-  // node_modules/@ariakit/react-components/dist/popover/popover-anchor.js
-  var TagName7 = "div";
-  var usePopoverAnchor = createHook(function usePopoverAnchor2({ store: store4, ...props }) {
-    const context = usePopoverProviderContext();
-    store4 = store4 || context;
-    props = {
-      ...props,
-      ref: useMergeRefs3(store4?.setAnchorElement, props.ref)
-    };
-    return props;
-  });
-  var PopoverAnchor = forwardRef67(function PopoverAnchor2(props) {
-    const htmlProps = usePopoverAnchor(props);
-    return createElement5(TagName7, htmlProps);
-  });
-
   // node_modules/@ariakit/react-components/dist/composite/composite-hover.js
-  var import_react65 = __toESM(require_react(), 1);
-  var TagName8 = "div";
+  var import_react66 = __toESM(require_react(), 1);
+  var TagName7 = "div";
   function hoveringInside(event) {
     const nextElement = event.relatedTarget;
     if (!isElement2(nextElement)) return false;
@@ -46780,8 +47039,8 @@ If there's a particular need for this, please submit a feature request at https:
       if (!isMouseMoving()) return;
       if (!focusOnHoverProp(event)) return;
       if (!hasFocusWithin(event.currentTarget)) {
-        const baseElement = store4?.getState().baseElement;
-        if (baseElement && !hasFocus(baseElement)) baseElement.focus();
+        const compositeElement = store4?.getState().compositeElement;
+        if (compositeElement && !hasFocus(compositeElement)) compositeElement.focus({ preventScroll: true });
       }
       store4?.setActiveId(event.currentTarget.id);
     });
@@ -46796,9 +47055,9 @@ If there's a particular need for this, please submit a feature request at https:
       if (!focusOnHoverProp(event)) return;
       if (!blurOnHoverEndProp(event)) return;
       store4?.setActiveId(null);
-      store4?.getState().baseElement?.focus();
+      store4?.getState().compositeElement?.focus({ preventScroll: true });
     });
-    const ref = (0, import_react65.useCallback)((element) => {
+    const ref = (0, import_react66.useCallback)((element) => {
       if (!element) return;
       element[symbol2] = true;
     }, []);
@@ -46808,17 +47067,87 @@ If there's a particular need for this, please submit a feature request at https:
       onMouseMove,
       onMouseLeave
     };
-    return removeUndefinedValues(props);
+    return props;
   });
   var CompositeHover = memo4(forwardRef67(function CompositeHover2(props) {
     const htmlProps = useCompositeHover(props);
-    return createElement5(TagName8, htmlProps);
+    return createElement5(TagName7, htmlProps);
   }));
 
+  // node_modules/@ariakit/react-components/dist/__chunks/DSBYX_BC.js
+  var openingMovesByStore = /* @__PURE__ */ new WeakMap();
+  var scrollItemIntoViewByStore = /* @__PURE__ */ new WeakMap();
+  function scrollIntoViewNearest(element) {
+    element.scrollIntoView({
+      block: "nearest",
+      inline: "nearest"
+    });
+  }
+  function getSingleVerticalScrollport(element, popup) {
+    const view = element.ownerDocument.defaultView;
+    if (!view) return null;
+    if (!view.getComputedStyle(popup).writingMode.startsWith("horizontal")) return null;
+    let scrollport = null;
+    let inlineScrollport = null;
+    let current = element.parentElement;
+    while (current && popup.contains(current)) {
+      const style = view.getComputedStyle(current);
+      if (style.overflowY !== "visible" && style.overflowY !== "clip" && current.scrollHeight > current.clientHeight) {
+        if (scrollport) return null;
+        scrollport = current;
+      }
+      if (style.overflowX !== "visible" && style.overflowX !== "clip" && current.scrollWidth > current.clientWidth) {
+        if (inlineScrollport) return null;
+        inlineScrollport = current;
+      }
+      if (current === popup) break;
+      current = current.parentElement;
+    }
+    if (inlineScrollport && inlineScrollport !== scrollport) return null;
+    return scrollport;
+  }
+  function centerItemInScrollport(element, scrollport) {
+    const elementRect = element.getBoundingClientRect();
+    const scrollportRect = scrollport.getBoundingClientRect();
+    const scaleX = scrollportRect.width / scrollport.offsetWidth || 1;
+    const scrollportLeft = scrollportRect.left + scrollport.clientLeft * scaleX;
+    const scrollportRight = scrollportLeft + scrollport.clientWidth * scaleX;
+    const scrollportWidth = scrollport.clientWidth * scaleX;
+    const elementLeftOutside = elementRect.left < scrollportLeft;
+    const elementRightOutside = elementRect.right > scrollportRight;
+    const alignLeft = elementLeftOutside && !elementRightOutside && elementRect.width < scrollportWidth || elementRightOutside && !elementLeftOutside && elementRect.width > scrollportWidth;
+    const alignRight = elementLeftOutside && !elementRightOutside && elementRect.width > scrollportWidth || elementRightOutside && !elementLeftOutside && elementRect.width < scrollportWidth;
+    let left = 0;
+    if (alignLeft) left = (elementRect.left - scrollportLeft) / scaleX;
+    else if (alignRight) left = (elementRect.right - scrollportRight) / scaleX;
+    const scaleY = scrollportRect.height / scrollport.offsetHeight || 1;
+    const top = (elementRect.top + elementRect.height / 2 - (scrollportRect.top + (scrollport.clientTop + scrollport.clientHeight / 2) * scaleY)) / scaleY;
+    scrollport.scrollBy({
+      left,
+      top
+    });
+  }
+  function getScrollItemIntoView(store4) {
+    if (!store4) return scrollIntoViewNearest;
+    const cached = scrollItemIntoViewByStore.get(store4);
+    if (cached) return cached;
+    const scrollItemIntoView = (element) => {
+      const { contentElement, moves, selectElement } = store4.getState();
+      if (!selectElement) return scrollIntoViewNearest(element);
+      if (moves !== openingMovesByStore.get(store4)) return scrollIntoViewNearest(element);
+      if (!contentElement?.contains(element)) return scrollIntoViewNearest(element);
+      const scrollport = getSingleVerticalScrollport(element, contentElement);
+      if (!scrollport) return scrollIntoViewNearest(element);
+      centerItemInScrollport(element, scrollport);
+    };
+    scrollItemIntoViewByStore.set(store4, scrollItemIntoView);
+    return scrollItemIntoView;
+  }
+
   // node_modules/@ariakit/react-components/dist/combobox/combobox.js
-  var import_react66 = __toESM(require_react(), 1);
+  var import_react67 = __toESM(require_react(), 1);
   var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
-  var TagName9 = "input";
+  var TagName8 = "input";
   function isFirstItemAutoSelected(items, activeValue, autoSelect) {
     if (!autoSelect) return false;
     return items.find((item) => !item.disabled && item.value)?.value === activeValue;
@@ -46842,14 +47171,15 @@ If there's a particular need for this, please submit a feature request at https:
     })?.id;
   }
   var useCombobox = createHook(function useCombobox2({ store: store4, focusable: focusable2 = true, autoSelect: autoSelectProp = false, getAutoSelectId, setValueOnChange, showMinLength = 0, showOnChange, showOnMouseDown, showOnClick = showOnMouseDown, showOnKeyDown, showOnKeyPress = showOnKeyDown, blurActiveItemOnClick, setValueOnClick = true, moveOnKeyPress = true, autoComplete = "list", name: name2, form, disabled: disabled2, ...props }) {
+    const scopedContext = useComboboxScopedContext(true);
     const context = useComboboxProviderContext();
-    store4 = store4 || context;
+    store4 = store4 || context || scopedContext;
     invariant(store4, "Combobox must receive a `store` prop or be wrapped in a ComboboxProvider component.");
-    const ref = (0, import_react66.useRef)(null);
+    const ref = (0, import_react67.useRef)(null);
     const [valueUpdated, forceValueUpdate] = useForceUpdate2();
-    const canAutoSelectRef = (0, import_react66.useRef)(false);
-    const composingRef = (0, import_react66.useRef)(false);
-    const compositionEndFrameRef = (0, import_react66.useRef)(null);
+    const canAutoSelectRef = (0, import_react67.useRef)(false);
+    const composingRef = (0, import_react67.useRef)(false);
+    const compositionEndFrameRef = (0, import_react67.useRef)(null);
     const cancelCompositionEndFrame = () => {
       const frame = compositionEndFrameRef.current;
       if (frame == null) return;
@@ -46858,20 +47188,20 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const autoSelect = useStoreState(store4, ["virtualFocus"], (state2) => state2.virtualFocus && autoSelectProp);
     const inline4 = autoComplete === "inline" || autoComplete === "both";
-    const [canInline, setCanInline] = (0, import_react66.useState)(inline4);
+    const [canInline, setCanInline] = (0, import_react67.useState)(inline4);
     useUpdateLayoutEffect(() => {
       if (!inline4) return;
       setCanInline(true);
     }, [inline4]);
-    const storeValue = useStoreState(store4, "value");
+    const storeInputValue = useStoreState(store4, "inputValue");
     const selectedValue = useStoreState(store4, ["selectedValue"], (state2) => {
       if (!name2) return;
       if (!Array.isArray(state2.selectedValue)) return;
       return state2.selectedValue;
     });
     const multiSelectable = Array.isArray(selectedValue);
-    const prevSelectedValueRef = (0, import_react66.useRef)(void 0);
-    (0, import_react66.useEffect)(() => {
+    const prevSelectedValueRef = (0, import_react67.useRef)(void 0);
+    (0, import_react67.useEffect)(() => {
       return sync2(store4, ["selectedValue", "activeId"], (_, prev) => {
         prevSelectedValueRef.current = prev.selectedValue;
       });
@@ -46892,26 +47222,27 @@ If there's a particular need for this, please submit a feature request at https:
     const items = useStoreState(store4, "renderedItems");
     const open = useStoreState(store4, "open");
     const contentElement = useStoreState(store4, "contentElement");
-    const value = (0, import_react66.useMemo)(() => {
-      if (!inline4) return storeValue;
-      if (!canInline) return storeValue;
-      if (isFirstItemAutoSelected(items, inlineActiveValue, autoSelect)) {
-        if (hasCompletionString(storeValue, inlineActiveValue)) {
-          const slice2 = inlineActiveValue?.slice(storeValue.length) || "";
-          return storeValue + slice2;
+    const placing = useStoreState(store4, "unstable_placing");
+    const firstItemAutoSelected = isFirstItemAutoSelected(items, inlineActiveValue, autoSelect);
+    const inputValue = (0, import_react67.useMemo)(() => {
+      if (!inline4) return storeInputValue;
+      if (!canInline) return storeInputValue;
+      if (firstItemAutoSelected) {
+        if (hasCompletionString(storeInputValue, inlineActiveValue)) {
+          const slice2 = inlineActiveValue?.slice(storeInputValue.length) || "";
+          return storeInputValue + slice2;
         }
-        return storeValue;
+        return storeInputValue;
       }
-      return inlineActiveValue || storeValue;
+      return inlineActiveValue || storeInputValue;
     }, [
       inline4,
       canInline,
-      items,
+      firstItemAutoSelected,
       inlineActiveValue,
-      autoSelect,
-      storeValue
+      storeInputValue
     ]);
-    (0, import_react66.useEffect)(() => {
+    (0, import_react67.useEffect)(() => {
       const element = ref.current;
       if (!element) return;
       const onCompositeItemMove = () => setCanInline(true);
@@ -46920,18 +47251,18 @@ If there's a particular need for this, please submit a feature request at https:
         element.removeEventListener("combobox-item-move", onCompositeItemMove);
       };
     }, []);
-    (0, import_react66.useEffect)(() => {
+    (0, import_react67.useEffect)(() => {
       if (!inline4) return;
       if (!canInline) return;
       if (!inlineActiveValue) return;
-      if (!isFirstItemAutoSelected(items, inlineActiveValue, autoSelect)) return;
-      if (!hasCompletionString(storeValue, inlineActiveValue)) return;
+      if (!firstItemAutoSelected) return;
+      if (!hasCompletionString(storeInputValue, inlineActiveValue)) return;
       let cleanup = noop5;
       queueMicrotask(() => {
         const element = ref.current;
         if (!element) return;
         const { start: prevStart, end: prevEnd } = getTextboxSelection(element);
-        const nextStart = storeValue.length;
+        const nextStart = storeInputValue.length;
         const nextEnd = inlineActiveValue.length;
         setSelectionRange(element, nextStart, nextEnd);
         cleanup = () => {
@@ -46948,16 +47279,15 @@ If there's a particular need for this, please submit a feature request at https:
       inline4,
       canInline,
       inlineActiveValue,
-      items,
-      autoSelect,
-      storeValue
+      firstItemAutoSelected,
+      storeInputValue
     ]);
     const getAutoSelectIdProp = useEvent2(getAutoSelectId);
-    const autoSelectIdRef = (0, import_react66.useRef)(null);
-    const autoSelectMovedRef = (0, import_react66.useRef)(void 0);
-    const userScrolledRef = (0, import_react66.useRef)(false);
-    const isAutoScrollingRef = (0, import_react66.useRef)(false);
-    (0, import_react66.useEffect)(() => {
+    const autoSelectIdRef = (0, import_react67.useRef)(null);
+    const autoSelectMovedRef = (0, import_react67.useRef)(void 0);
+    const userScrolledRef = (0, import_react67.useRef)(false);
+    const isAutoScrollingRef = (0, import_react67.useRef)(false);
+    (0, import_react67.useEffect)(() => {
       if (!open) return;
       if (!contentElement) return;
       const scrollingElement = getScrollingElement(contentElement);
@@ -46994,10 +47324,10 @@ If there's a particular need for this, please submit a feature request at https:
     ]);
     useSafeLayoutEffect(() => {
       userScrolledRef.current = false;
-      if (!storeValue) return;
+      if (!storeInputValue) return;
       if (composingRef.current) return;
       canAutoSelectRef.current = true;
-    }, [storeValue]);
+    }, [storeInputValue]);
     useSafeLayoutEffect(() => {
       if (autoSelect !== "always" && open) return;
       canAutoSelectRef.current = open;
@@ -47013,14 +47343,13 @@ If there's a particular need for this, please submit a feature request at https:
       if (!open) return;
       if (composingRef.current) return;
       if (!canAutoSelect && (!resetValueOnSelect || userScrolledRef.current)) return;
-      const { baseElement: baseElement2, contentElement: contentElement2, activeId } = store4.getState();
-      if (baseElement2 && !hasFocus(baseElement2)) return;
-      if (contentElement2?.hasAttribute("data-placing")) {
-        const observer = new MutationObserver(forceValueUpdate);
-        observer.observe(contentElement2, { attributeFilter: ["data-placing"] });
-        return () => observer.disconnect();
-      }
-      if (autoSelect && canAutoSelect) {
+      const state2 = store4.getState();
+      const { compositeElement: compositeElement2, activeId, selectElement, selectedValue: selectedValue2 } = state2;
+      if (compositeElement2 && !hasFocus(compositeElement2)) return;
+      if (state2.unstable_placing) return;
+      const activeValue = store4.item(activeId)?.value;
+      const activeValueSelected = activeValue != null && (Array.isArray(selectedValue2) ? selectedValue2.includes(activeValue) : selectedValue2 === activeValue);
+      if (autoSelect && canAutoSelect && !(!!selectElement && !storeInputValue && activeValueSelected)) {
         const userAutoSelectId = getAutoSelectIdProp(items);
         const autoSelectId = userAutoSelectId !== void 0 ? userAutoSelectId : getDefaultAutoSelectId(items) ?? store4.first();
         autoSelectIdRef.current = autoSelectId;
@@ -47050,20 +47379,21 @@ If there's a particular need for this, please submit a feature request at https:
     }, [
       store4,
       open,
+      placing,
       valueUpdated,
-      storeValue,
+      storeInputValue,
       autoSelect,
       resetValueOnSelect,
       getAutoSelectIdProp,
       items
     ]);
-    (0, import_react66.useEffect)(() => {
+    (0, import_react67.useEffect)(() => {
       if (!inline4) return;
       const combobox = ref.current;
       if (!combobox) return;
-      const elements2 = [combobox, contentElement].filter((value2) => !!value2);
+      const elements2 = [combobox, contentElement].filter((value) => !!value);
       const onBlur2 = (event) => {
-        if (elements2.every((el) => isFocusEventOutside(event, el))) store4?.setValue(value);
+        if (elements2.every((el) => isFocusEventOutside(event, el))) store4?.setInputValue(inputValue);
       };
       for (const element of elements2) element.addEventListener("focusout", onBlur2);
       return () => {
@@ -47073,7 +47403,7 @@ If there's a particular need for this, please submit a feature request at https:
       inline4,
       contentElement,
       store4,
-      value
+      inputValue
     ]);
     const canShow = (event) => {
       return event.currentTarget.value.length >= showMinLength;
@@ -47086,7 +47416,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (event.defaultPrevented) return;
       if (!store4) return;
       const currentTarget = event.currentTarget;
-      const { value: value2, selectionStart, selectionEnd } = currentTarget;
+      const { value, selectionStart, selectionEnd } = currentTarget;
       const nativeEvent = event.nativeEvent;
       canAutoSelectRef.current = true;
       if (isInputEvent(nativeEvent)) {
@@ -47096,13 +47426,13 @@ If there's a particular need for this, please submit a feature request at https:
         }
         if (inline4) {
           const textInserted = nativeEvent.inputType === "insertText" || nativeEvent.inputType === "insertCompositionText";
-          const caretAtEnd = selectionStart === value2.length;
+          const caretAtEnd = selectionStart === value.length;
           setCanInline(textInserted && caretAtEnd);
         }
       }
       if (setValueOnChangeProp(event)) {
-        const isSameValue3 = value2 === store4.getState().value;
-        store4.setValue(value2);
+        const isSameValue3 = value === store4.getState().inputValue;
+        store4.setInputValue(value);
         queueMicrotask(() => {
           setSelectionRange(currentTarget, selectionStart, selectionEnd);
         });
@@ -47111,7 +47441,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (showOnChangeProp(event)) store4.show();
       if (!autoSelect || !canAutoSelectRef.current) store4.setActiveId(null);
     });
-    (0, import_react66.useEffect)(() => cancelCompositionEndFrame, []);
+    (0, import_react67.useEffect)(() => cancelCompositionEndFrame, []);
     const onCompositionStartProp = props.onCompositionStart;
     const onCompositionStart = useEvent2((event) => {
       cancelCompositionEndFrame();
@@ -47134,7 +47464,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
     });
     const onMouseDownProp = props.onMouseDown;
-    const blurActiveItemOnClickProp = useBooleanEvent(blurActiveItemOnClick ?? (() => store4.getState().includesBaseElement));
+    const blurActiveItemOnClickProp = useBooleanEvent(blurActiveItemOnClick ?? (() => store4.getState().compositeElementInFocusOrder));
     const setValueOnClickProp = useBooleanEvent(setValueOnClick);
     const showOnClickProp = useBooleanEvent(showOnClick ?? canShow);
     const onMouseDown = useEvent2((event) => {
@@ -47144,7 +47474,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (event.ctrlKey) return;
       if (!store4) return;
       if (blurActiveItemOnClickProp(event)) store4.setActiveId(null);
-      if (setValueOnClickProp(event)) store4.setValue(value);
+      if (setValueOnClickProp(event)) store4.setInputValue(inputValue);
       if (showOnClickProp(event)) queueBeforeEvent(event.currentTarget, "mouseup", store4.show);
     });
     const onKeyDownProp = props.onKeyDown;
@@ -47184,24 +47514,25 @@ If there's a particular need for this, please submit a feature request at https:
       "aria-disabled": props["aria-disabled"]
     });
     const composite = props.composite !== false;
-    const baseElement = useStoreState(store4, multiSelectable ? ["baseElement"] : [], (state2) => multiSelectable ? state2.baseElement : null);
+    const [, setCompositeElement] = useTransactionState(composite ? null : store4.setCompositeElement);
+    const compositeElement = useStoreState(store4, multiSelectable ? ["compositeElement"] : [], (state2) => multiSelectable ? state2.compositeElement : null);
     props = useWrapElement(props, (element) => {
       if (!name2) return element;
       if (!Array.isArray(selectedValue)) return element;
-      if (composite && !baseElement) return element;
-      return /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(import_jsx_runtime223.Fragment, { children: [element, selectedValue.map((value2, index2) => /* @__PURE__ */ (0, import_jsx_runtime223.jsx)("input", {
+      if (composite && !compositeElement) return element;
+      return /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(import_jsx_runtime223.Fragment, { children: [element, selectedValue.map((value, index2) => /* @__PURE__ */ (0, import_jsx_runtime223.jsx)("input", {
         type: "hidden",
         name: name2,
         form,
         disabled: formDisabled,
-        value: value2
+        value
       }, index2))] });
     }, [
       name2,
       form,
       formDisabled,
       composite,
-      baseElement,
+      compositeElement,
       selectedValue
     ]);
     props = {
@@ -47211,13 +47542,13 @@ If there's a particular need for this, please submit a feature request at https:
       "aria-expanded": open,
       "aria-controls": contentElement?.id,
       "data-active-item": isActiveItem || void 0,
-      value,
+      value: inputValue,
       ...props,
       id,
       name: multiSelectable ? void 0 : name2,
       form,
       disabled: disabled2,
-      ref: useMergeRefs3(ref, props.ref),
+      ref: useMergeRefs3(ref, store4.setInputElement, composite ? void 0 : setCompositeElement, props.ref),
       onChange,
       onCompositionStart,
       onCompositionEnd,
@@ -47225,8 +47556,10 @@ If there's a particular need for this, please submit a feature request at https:
       onKeyDown,
       onBlur
     };
+    const scrollItemIntoView = getScrollItemIntoView(store4);
     props = useComposite({
       store: store4,
+      unstable_scrollIntoView: scrollItemIntoView,
       focusable: focusable2,
       ...props,
       moveOnKeyPress: (event) => {
@@ -47235,10 +47568,6 @@ If there's a particular need for this, please submit a feature request at https:
         return true;
       }
     });
-    props = usePopoverAnchor({
-      store: store4,
-      ...props
-    });
     return {
       autoComplete: "off",
       ...props
@@ -47246,13 +47575,13 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var Combobox = forwardRef67(function Combobox2(props) {
     const htmlProps = useCombobox(props);
-    return createElement5(TagName9, htmlProps);
+    return createElement5(TagName8, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/combobox/combobox-item.js
-  var import_react67 = __toESM(require_react(), 1);
+  var import_react68 = __toESM(require_react(), 1);
   var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
-  var TagName10 = "div";
+  var TagName9 = "div";
   function isSelected(storeValue, itemValue) {
     if (itemValue == null) return;
     if (storeValue == null) return false;
@@ -47262,33 +47591,50 @@ If there's a particular need for this, please submit a feature request at https:
   function getItemRole(popupRole) {
     return getItemRoleByPopupRole(popupRole) ?? "option";
   }
-  var useComboboxItem = createHook(function useComboboxItem2({ store: store4, value, hideOnClick, setValueOnClick, selectValueOnClick = true, resetValueOnSelect, focusOnHover = false, moveOnKeyPress = true, getItem: getItemProp, ...props }) {
+  var useComboboxItem = createHook(function useComboboxItem2({ store: store4, value, hideOnClick, setValueOnClick, selectValueOnClick = true, resetValueOnSelect, focusOnHover, moveOnKeyPress = true, preventScrollOnKeyDown, getItem: getItemProp, ...props }) {
     const context = useComboboxScopedContext();
     store4 = store4 || context;
     invariant(store4, "ComboboxItem must be wrapped in a ComboboxList or ComboboxPopover component.");
-    const { resetValueOnSelectState, multiSelectable, selected } = useStoreStateObject(store4, ["selectedValue"], {
+    const id = useId7(props.id);
+    const { resetValueOnSelectState, multiSelectable, selected, autoFocusSelected, selectElement } = useStoreStateObject(store4, ["selectedValue"], {
       resetValueOnSelectState: "resetValueOnSelect",
       multiSelectable(state2) {
         return Array.isArray(state2.selectedValue);
       },
       selected(state2) {
         return isSelected(state2.selectedValue, value);
-      }
+      },
+      autoFocusSelected(state2) {
+        if (value == null) return false;
+        if (!Array.isArray(state2.selectedValue)) return state2.selectedValue === value;
+        return state2.selectedValue[state2.selectedValue.length - 1] === value;
+      },
+      selectElement: "selectElement"
     });
-    const getItem = (0, import_react67.useCallback)((item) => {
+    const autoFocusSelectedItem = !!selectElement;
+    const selectMode = !!selectElement;
+    const disabled2 = disabledFromProps(props);
+    const getItem = (0, import_react68.useCallback)((item) => {
       const nextItem = {
         ...item,
-        value
+        value: selectMode && disabled2 ? void 0 : value
       };
       if (getItemProp) return getItemProp(nextItem);
       return nextItem;
-    }, [value, getItemProp]);
-    setValueOnClick = setValueOnClick ?? !multiSelectable;
+    }, [
+      selectMode,
+      disabled2,
+      value,
+      getItemProp
+    ]);
+    setValueOnClick = setValueOnClick ?? (!selectMode && !multiSelectable);
     hideOnClick = hideOnClick ?? (value != null && !multiSelectable);
+    preventScrollOnKeyDown = preventScrollOnKeyDown ?? selectMode;
+    const role = getItemRole((0, import_react68.useContext)(ComboboxListRoleContext));
     const onClickProp = props.onClick;
     const setValueOnClickProp = useBooleanEvent(setValueOnClick);
     const selectValueOnClickProp = useBooleanEvent(selectValueOnClick);
-    const resetValueOnSelectProp = useBooleanEvent(resetValueOnSelect ?? resetValueOnSelectState ?? multiSelectable);
+    const resetValueOnSelectProp = useBooleanEvent(resetValueOnSelect ?? resetValueOnSelectState);
     const hideOnClickProp = useBooleanEvent(hideOnClick);
     const onClick = useEvent2((event) => {
       onClickProp?.(event);
@@ -47297,14 +47643,14 @@ If there's a particular need for this, please submit a feature request at https:
       if (isOpeningInNewTab(event)) return;
       if (value != null) {
         if (selectValueOnClickProp(event)) {
-          if (resetValueOnSelectProp(event)) store4?.resetValue();
+          if (resetValueOnSelectProp(event)) store4?.resetInputValue();
           store4?.setSelectedValue((prevValue) => {
             if (!Array.isArray(prevValue)) return value;
             if (prevValue.includes(value)) return prevValue.filter((v3) => v3 !== value);
             return [...prevValue, value];
           });
         }
-        if (setValueOnClickProp(event)) store4?.setValue(value);
+        if (setValueOnClickProp(event)) store4?.setInputValue(value);
       }
       if (hideOnClickProp(event)) store4?.hide();
     });
@@ -47312,18 +47658,24 @@ If there's a particular need for this, please submit a feature request at https:
     const onKeyDown = useEvent2((event) => {
       onKeyDownProp?.(event);
       if (event.defaultPrevented) return;
-      const baseElement = store4?.getState().baseElement;
-      if (!baseElement) return;
-      if (hasFocus(baseElement)) return;
+      const compositeElement = store4?.getState().compositeElement;
+      if (!compositeElement) return;
+      if (hasFocus(compositeElement)) return;
       const printable = event.key.length === 1 && !event.ctrlKey && !event.metaKey;
       const paste = (!isApple() ? event.ctrlKey : event.metaKey) && event.key.toLowerCase() === "v";
       const deleteKey = event.key === "Backspace" || event.key === "Delete";
       if (printable || paste || deleteKey) {
-        queueMicrotask(() => baseElement.focus());
-        if (isTextField(baseElement)) store4?.setValue(baseElement.value);
+        if (compositeElement === selectElement) return;
+        if (isTextField(compositeElement)) {
+          queueMicrotask(() => compositeElement.focus());
+          store4?.setInputValue(compositeElement.value);
+          return;
+        }
+        compositeElement.focus();
+        if ("value" in compositeElement && typeof compositeElement.value === "string") store4?.setInputValue(compositeElement.value);
       }
     });
-    if (multiSelectable && selected != null) props = {
+    if ((selectMode || multiSelectable) && selected != null) props = {
       "aria-selected": selected,
       ...props
     };
@@ -47334,41 +47686,54 @@ If there's a particular need for this, please submit a feature request at https:
         children: element
       })
     }), [value, selected]);
+    const defaultAutoFocus = autoFocusSelectedItem ? autoFocusSelected : void 0;
     props = {
-      role: getItemRole((0, import_react67.useContext)(ComboboxListRoleContext)),
+      role,
       children: value,
       ...props,
+      id,
       onClick,
       onKeyDown
     };
+    if (props.autoFocus === void 0 && defaultAutoFocus !== void 0) {
+      props.autoFocus = false;
+      props["data-autofocus"] = defaultAutoFocus || void 0;
+    }
     const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
+    const scrollItemIntoView = getScrollItemIntoView(store4);
     props = useCompositeItem2({
       store: store4,
+      unstable_scrollIntoView: scrollItemIntoView,
       ...props,
       getItem,
+      preventScrollOnKeyDown,
       moveOnKeyPress: (event) => {
         if (!moveOnKeyPressProp(event)) return false;
         const moveEvent = new Event("combobox-item-move");
-        store4?.getState().baseElement?.dispatchEvent(moveEvent);
+        store4?.getState().compositeElement?.dispatchEvent(moveEvent);
         return true;
       }
     });
+    const focusOnHoverProp = useBooleanEvent(focusOnHover ?? false);
     props = useCompositeHover({
       store: store4,
-      focusOnHover,
-      ...props
+      ...props,
+      focusOnHover(event) {
+        if (focusOnHover !== void 0) return focusOnHoverProp(event);
+        return selectMode && store4.getState().open;
+      }
     });
     return props;
   });
   var ComboboxItem = memo4(forwardRef67(function ComboboxItem2(props) {
     const htmlProps = useComboboxItem(props);
-    return createElement5(TagName10, htmlProps);
+    return createElement5(TagName9, htmlProps);
   }));
 
   // node_modules/@ariakit/react-components/dist/combobox/combobox-item-value.js
-  var import_react68 = __toESM(require_react(), 1);
+  var import_react69 = __toESM(require_react(), 1);
   var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
-  var TagName11 = "span";
+  var TagName10 = "span";
   function normalizeValue2(value) {
     return normalizeString(value).toLowerCase();
   }
@@ -47466,54 +47831,73 @@ If there's a particular need for this, please submit a feature request at https:
   var useComboboxItemValue = createHook(function useComboboxItemValue2({ store: store4, value, userValue, ...props }) {
     const context = useComboboxScopedContext();
     store4 = store4 || context;
-    const itemContext = (0, import_react68.useContext)(ComboboxItemValueContext);
+    const itemContext = (0, import_react69.useContext)(ComboboxItemValueContext);
     const itemValue = value ?? itemContext;
-    const inputValue = useStoreState(store4, ["value"], (state2) => userValue ?? state2?.value);
+    const inputValue = useStoreState(store4, ["inputValue"], (state2) => userValue ?? state2?.inputValue);
     props = {
-      children: (0, import_react68.useMemo)(() => {
+      children: (0, import_react69.useMemo)(() => {
         if (!itemValue) return;
         if (!inputValue) return itemValue;
         return splitValue(itemValue, inputValue);
       }, [itemValue, inputValue]),
       ...props
     };
-    return removeUndefinedValues(props);
+    return props;
   });
   var ComboboxItemValue = forwardRef67(function ComboboxItemValue2(props) {
     const htmlProps = useComboboxItemValue(props);
-    return createElement5(TagName11, htmlProps);
+    return createElement5(TagName10, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/combobox/combobox-label.js
-  var TagName12 = "label";
+  var TagName11 = "label";
   var useComboboxLabel = createHook(function useComboboxLabel2({ store: store4, ...props }) {
+    const scopedContext = useComboboxScopedContext(true);
     const context = useComboboxProviderContext();
-    store4 = store4 || context;
+    store4 = store4 || context || scopedContext;
     invariant(store4, "ComboboxLabel must receive a `store` prop or be wrapped in a ComboboxProvider component.");
-    const baseElement = useStoreState(store4, "baseElement");
-    useAttribute(baseElement, "id");
+    const inputElement = useStoreState(store4, "inputElement");
+    useAttribute(inputElement, "id");
+    const comboboxId = inputElement?.id;
+    const id = useId7(props.id);
     props = {
-      htmlFor: baseElement?.id,
-      ...props
+      htmlFor: comboboxId,
+      ...props,
+      id,
+      ref: useMergeRefs3(store4.setLabelElement, props.ref)
     };
-    return removeUndefinedValues(props);
+    return props;
   });
   var ComboboxLabel = memo4(forwardRef67(function ComboboxLabel2(props) {
     const htmlProps = useComboboxLabel(props);
-    return createElement5(TagName12, htmlProps);
+    return createElement5(TagName11, htmlProps);
   }));
 
   // node_modules/@ariakit/react-components/dist/combobox/combobox-list.js
-  var import_react69 = __toESM(require_react(), 1);
+  var import_react70 = __toESM(require_react(), 1);
   var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
-  var TagName13 = "div";
+  var TagName12 = "div";
   var useComboboxList = createHook(function useComboboxList2({ store: store4, alwaysVisible, ...props }) {
     const scopedContext = useComboboxScopedContext(true);
     const context = useComboboxContext();
     store4 = store4 || context;
     const scopedContextSameStore = !!store4 && store4 === scopedContext;
     invariant(store4, "ComboboxList must receive a `store` prop or be wrapped in a ComboboxProvider component.");
-    const ref = (0, import_react69.useRef)(null);
+    const onFocusProp = props.onFocus;
+    const onFocus = useEvent2((event) => {
+      onFocusProp?.(event);
+      if (event.defaultPrevented) return;
+      if (!isSelfTarget(event)) return;
+      const compositeElement = store4.getState().compositeElement;
+      if (!compositeElement) return;
+      if (!isFocusable(compositeElement)) return;
+      const list = event.currentTarget;
+      queueMicrotask(() => {
+        if (getDocument(list).activeElement !== list) return;
+        compositeElement.focus();
+      });
+    });
+    const ref = (0, import_react70.useRef)(null);
     const id = useId7(props.id);
     const mounted = useStoreState(store4, "mounted");
     const hidden = isHidden(mounted, props.hidden, alwaysVisible);
@@ -47524,8 +47908,12 @@ If there's a particular need for this, please submit a feature request at https:
     const multiSelectable = useStoreState(store4, ["selectedValue"], (state2) => Array.isArray(state2.selectedValue));
     const role = useAttribute(ref, "role", props.role);
     const ariaMultiSelectable = role === "listbox" || role === "tree" || role === "grid" ? multiSelectable || void 0 : void 0;
-    const [hasListboxInside, setHasListboxInside] = (0, import_react69.useState)(false);
+    const [hasListboxInside, setHasListboxInside] = (0, import_react70.useState)(false);
     const contentElement = useStoreState(store4, "contentElement");
+    const parentHeadingContext = (0, import_react70.useContext)(ComboboxHeadingContext);
+    const headingState = (0, import_react70.useState)();
+    const [headingId, setHeadingId] = parentHeadingContext || headingState;
+    const headingContext = (0, import_react70.useMemo)(() => [headingId, setHeadingId], [headingId, setHeadingId]);
     useSafeLayoutEffect(() => {
       if (!mounted) return;
       const element = ref.current;
@@ -47550,30 +47938,49 @@ If there's a particular need for this, please submit a feature request at https:
     };
     props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(ComboboxScopedContextProvider, {
       value: store4,
-      children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(ComboboxListRoleContext.Provider, {
-        value: role,
-        children: element
+      children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(ComboboxHeadingContext.Provider, {
+        value: headingContext,
+        children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(DialogHeadingContext.Provider, {
+          value: setHeadingId,
+          children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(ComboboxListRoleContext.Provider, {
+            value: role,
+            children: element
+          })
+        })
       })
-    }), [store4, role]);
+    }), [
+      store4,
+      role,
+      headingContext
+    ]);
     const setContentElement = id && (!scopedContext || !scopedContextSameStore) ? store4.setContentElement : null;
+    const labelElement = useStoreState(store4, ["labelElement", "selectLabelElement"], (state2) => {
+      if (headingId) return null;
+      return state2.selectLabelElement || state2.labelElement;
+    });
+    useAttribute(labelElement, "id");
+    const labelId = headingId || labelElement?.id;
     props = {
+      "aria-labelledby": props["aria-label"] != null ? void 0 : labelId,
       hidden,
       ...props,
       id,
+      onFocus,
       ref: useMergeRefs3(setContentElement, ref, props.ref),
-      style
+      style,
+      tabIndex: -1
     };
-    return removeUndefinedValues(props);
+    return props;
   });
   var ComboboxList = forwardRef67(function ComboboxList2(props) {
     const htmlProps = useComboboxList(props);
-    return createElement5(TagName13, htmlProps);
+    return createElement5(TagName12, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/tag/tag-context.js
-  var import_react70 = __toESM(require_react(), 1);
-  var TagValueContext = (0, import_react70.createContext)(null);
-  var TagRemoveIdContext = (0, import_react70.createContext)(null);
+  var import_react71 = __toESM(require_react(), 1);
+  var TagValueContext = (0, import_react71.createContext)(null);
+  var TagRemoveIdContext = (0, import_react71.createContext)(null);
   var ctx8 = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
   var useTagContext = ctx8.useContext;
   var useTagScopedContext = ctx8.useScopedContext;
@@ -47585,14 +47992,19 @@ If there's a particular need for this, please submit a feature request at https:
   var isTouchSafari = isSafari() && isTouchDevice();
   function createComboboxStore({ tag, ...props } = {}) {
     const store4 = mergeStore(props.store, pick2(tag, ["value", "rtl"]));
-    throwOnConflictingProps(props, store4);
+    const defaultInputValue = defaultValue(props.defaultInputValue, props.defaultValue);
+    throwOnConflictingProps({
+      ...props,
+      defaultInputValue,
+      defaultValue: defaultInputValue
+    }, store4);
     const tagState = tag?.getState();
     const syncState = store4?.getState();
     const activeId = defaultValue(props.activeId, syncState?.activeId, props.defaultActiveId, null);
     const composite = createCompositeStore({
       ...props,
       activeId,
-      includesBaseElement: defaultValue(props.includesBaseElement, syncState?.includesBaseElement, true),
+      compositeElementInFocusOrder: defaultValue(props.compositeElementInFocusOrder, props.includesBaseElement, syncState?.compositeElementInFocusOrder, syncState?.includesBaseElement, true),
       orientation: defaultValue(props.orientation, syncState?.orientation, "vertical"),
       focusLoop: defaultValue(props.focusLoop, syncState?.focusLoop, true),
       focusWrap: defaultValue(props.focusWrap, syncState?.focusWrap, true),
@@ -47602,19 +48014,102 @@ If there's a particular need for this, please submit a feature request at https:
       ...props,
       placement: defaultValue(props.placement, syncState?.placement, "bottom-start")
     });
-    const value = defaultValue(props.value, syncState?.value, props.defaultValue, "");
+    const inputValue = defaultValue(props.inputValue, props.value, syncState?.inputValue, syncState?.value, defaultInputValue, "");
     const selectedValue = defaultValue(props.selectedValue, syncState?.selectedValue, tagState?.values, props.defaultSelectedValue, "");
+    let shouldSetDefaultSelectedValue = props.selectedValue === void 0 && syncState?.selectedValue === void 0 && tagState?.values === void 0 && props.defaultSelectedValue === void 0;
     const multiSelectable = Array.isArray(selectedValue);
     const initialState = {
       ...composite.getState(),
       ...popover.getState(),
-      value,
+      inputValue,
+      value: inputValue,
       selectedValue,
       resetValueOnSelect: defaultValue(props.resetValueOnSelect, syncState?.resetValueOnSelect, multiSelectable),
       resetValueOnHide: defaultValue(props.resetValueOnHide, syncState?.resetValueOnHide, multiSelectable && !tag),
-      activeValue: syncState?.activeValue
+      selectOnMove: defaultValue(props.selectOnMove, syncState?.selectOnMove, false),
+      activeValue: syncState?.activeValue,
+      inputElement: defaultValue(syncState?.inputElement, null),
+      labelElement: defaultValue(syncState?.labelElement, null),
+      selectElement: defaultValue(syncState?.selectElement, null),
+      selectLabelElement: defaultValue(syncState?.selectLabelElement, null)
     };
     const combobox = createStore(initialState, composite, popover, store4);
+    setup(combobox, () => chain(sync2(combobox, ["inputValue"], (state2) => {
+      combobox.setState("value", state2.inputValue);
+    }), sync2(combobox, ["value"], (state2) => {
+      combobox.setState("inputValue", state2.value);
+    })));
+    let resolveSelectedItemOnOpen = false;
+    const selectDefaultOptions = /* @__PURE__ */ new Set();
+    if (props.focusLoop === void 0 && syncState?.focusLoop === void 0) selectDefaultOptions.add("focusLoop");
+    if (props.focusWrap === void 0 && syncState?.focusWrap === void 0) selectDefaultOptions.add("focusWrap");
+    if (props.compositeElementInFocusOrder === void 0 && props.includesBaseElement === void 0 && syncState?.compositeElementInFocusOrder === void 0 && syncState?.includesBaseElement === void 0) selectDefaultOptions.add("compositeElementInFocusOrder");
+    if (props.resetValueOnSelect === void 0 && syncState?.resetValueOnSelect === void 0) selectDefaultOptions.add("resetValueOnSelect");
+    let syncedSelectElement = initialState.compositeElement === initialState.selectElement ? initialState.selectElement : null;
+    const initialFallback = initialState.selectElement || initialState.compositeElement || initialState.disclosureElement;
+    let syncedAnchorElement = initialState.anchorElement === initialFallback ? initialState.anchorElement : null;
+    setup(combobox, () => sync2(combobox, ["compositeElement", "selectElement"], (state2) => {
+      if (!state2.selectElement && !syncedSelectElement) return;
+      if (state2.compositeElement && state2.compositeElement === state2.selectElement) {
+        syncedSelectElement = state2.selectElement;
+        return;
+      }
+      if (state2.compositeElement && state2.compositeElement !== syncedSelectElement) {
+        syncedSelectElement = null;
+        return;
+      }
+      syncedSelectElement = state2.selectElement;
+      combobox.setState("compositeElement", syncedSelectElement);
+    }));
+    setup(combobox, () => sync2(combobox, ["selectElement"], (state2) => {
+      if (!state2.selectElement) return;
+      const { focusLoop, focusWrap, compositeElementInFocusOrder, resetValueOnSelect } = combobox.getState();
+      if (selectDefaultOptions.has("focusLoop")) composite.setState("focusLoop", false);
+      if (selectDefaultOptions.has("focusWrap")) composite.setState("focusWrap", false);
+      if (selectDefaultOptions.has("compositeElementInFocusOrder")) composite.setState("compositeElementInFocusOrder", false);
+      if (selectDefaultOptions.has("resetValueOnSelect")) combobox.setState("resetValueOnSelect", true);
+      return () => {
+        const current = combobox.getState();
+        if (selectDefaultOptions.has("focusLoop") && !current.focusLoop) composite.setState("focusLoop", focusLoop);
+        if (selectDefaultOptions.has("focusWrap") && !current.focusWrap) composite.setState("focusWrap", focusWrap);
+        if (selectDefaultOptions.has("compositeElementInFocusOrder") && !current.compositeElementInFocusOrder) composite.setState("compositeElementInFocusOrder", compositeElementInFocusOrder);
+        if (selectDefaultOptions.has("resetValueOnSelect") && current.resetValueOnSelect) combobox.setState("resetValueOnSelect", resetValueOnSelect);
+      };
+    }));
+    setup(combobox, () => sync2(combobox, [
+      "anchorElement",
+      "compositeElement",
+      "disclosureElement",
+      "selectElement"
+    ], (state2) => {
+      if (state2.anchorElement && state2.anchorElement !== syncedAnchorElement) {
+        syncedAnchorElement = null;
+        return;
+      }
+      syncedAnchorElement = state2.selectElement || state2.compositeElement || state2.disclosureElement;
+      combobox.setState("anchorElement", syncedAnchorElement);
+    }));
+    setup(combobox, () => sync2(combobox, [
+      "items",
+      "selectedValue",
+      "selectElement"
+    ], (state2, prevState) => {
+      if (!shouldSetDefaultSelectedValue) return;
+      if (state2.selectedValue !== prevState.selectedValue) {
+        shouldSetDefaultSelectedValue = false;
+        return;
+      }
+      if (!state2.selectElement) return;
+      queueMicrotask(() => {
+        if (!shouldSetDefaultSelectedValue) return;
+        const state3 = combobox.getState();
+        if (!state3.selectElement) return;
+        const item = state3.items.find((item2) => !item2.disabled && item2.value != null);
+        if (item?.value == null) return;
+        shouldSetDefaultSelectedValue = false;
+        combobox.setState("selectedValue", item.value);
+      });
+    }));
     if (isTouchSafari) setup(combobox, () => sync2(combobox, ["virtualFocus"], () => {
       combobox.setState("virtualFocus", false);
     }));
@@ -47630,14 +48125,20 @@ If there's a particular need for this, please submit a feature request at https:
     setup(combobox, () => sync2(combobox, ["resetValueOnHide", "mounted"], (state2) => {
       if (!state2.resetValueOnHide) return;
       if (state2.mounted) return;
-      combobox.setState("value", value);
+      combobox.setState("inputValue", inputValue);
     }));
     setup(combobox, () => sync2(combobox, ["open"], (state2) => {
-      if (state2.open) return;
+      if (state2.open) {
+        resolveSelectedItemOnOpen = true;
+        return;
+      }
+      resolveSelectedItemOnOpen = false;
       combobox.setState("activeId", activeId);
       combobox.setState("moves", 0);
     }));
     setup(combobox, () => sync2(combobox, ["moves", "activeId"], (state2, prevState) => {
+      if (state2.moves !== prevState.moves) resolveSelectedItemOnOpen = false;
+      if (state2.activeId !== prevState.activeId) resolveSelectedItemOnOpen = false;
       if (state2.moves === prevState.moves) combobox.setState("activeValue", void 0);
     }));
     setup(combobox, () => batch(combobox, ["moves", "renderedItems"], (state2, prev) => {
@@ -47646,14 +48147,59 @@ If there's a particular need for this, please submit a feature request at https:
       const activeItem = composite.item(activeId2);
       combobox.setState("activeValue", activeItem?.value);
     }));
+    setup(combobox, () => sync2(combobox, [
+      "items",
+      "mounted",
+      "open",
+      "selectedValue",
+      "selectElement"
+    ], (state2) => {
+      if (!state2.selectElement) return;
+      if (state2.mounted && !resolveSelectedItemOnOpen) return;
+      const values = Array.isArray(state2.selectedValue) ? state2.selectedValue : [state2.selectedValue];
+      const lastValue = values[values.length - 1];
+      if (lastValue == null) return;
+      const item = state2.items.find((item2) => !item2.disabled && item2.value === lastValue);
+      if (!item) return;
+      resolveSelectedItemOnOpen = false;
+      combobox.setState("activeId", item.id);
+    }));
+    setup(combobox, () => batch(combobox, ["selectOnMove", "moves"], (state2) => {
+      const { activeId: activeId2, open, selectedValue: selectedValue2, selectElement } = combobox.getState();
+      if (!selectElement) return;
+      if (!state2.selectOnMove && open) return;
+      if (Array.isArray(selectedValue2)) return;
+      if (!state2.moves) return;
+      if (!activeId2) return;
+      const item = composite.item(activeId2);
+      if (!item || item.disabled || item.value == null) return;
+      combobox.setState("selectedValue", item.value);
+    }));
+    const setInputValue = (value) => {
+      combobox.setState("inputValue", value);
+    };
+    const resetInputValue = () => setInputValue(initialState.inputValue);
+    const setState = (key, value) => {
+      selectDefaultOptions.delete(key);
+      if (key === "includesBaseElement") selectDefaultOptions.delete("compositeElementInFocusOrder");
+      if (key === "selectedValue") shouldSetDefaultSelectedValue = false;
+      combobox.setState(key, value);
+    };
     return {
       ...popover,
       ...composite,
       ...combobox,
+      setState,
       tag,
-      setValue: (value2) => combobox.setState("value", value2),
-      resetValue: () => combobox.setState("value", initialState.value),
-      setSelectedValue: (selectedValue2) => combobox.setState("selectedValue", selectedValue2)
+      setInputValue,
+      resetInputValue,
+      setValue: setInputValue,
+      resetValue: resetInputValue,
+      setSelectedValue: (selectedValue2) => setState("selectedValue", selectedValue2),
+      setInputElement: (element) => combobox.setState("inputElement", element),
+      setLabelElement: (element) => combobox.setState("labelElement", element),
+      setSelectElement: (element) => combobox.setState("selectElement", element),
+      setSelectLabelElement: (element) => combobox.setState("selectLabelElement", element)
     };
   }
 
@@ -47668,8 +48214,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useComboboxStoreProps(store4, update4, props) {
     useUpdateEffect(update4, [props.tag]);
-    useStoreProps(store4, props, "value", "setValue");
+    const inputValueProps = {
+      inputValue: props.inputValue ?? props.value,
+      setInputValue: props.setInputValue ?? props.setValue
+    };
+    useStoreProps(store4, inputValueProps, "inputValue", "setInputValue");
     useStoreProps(store4, props, "selectedValue", "setSelectedValue");
+    useStoreProps(store4, props, "selectOnMove");
     useStoreProps(store4, props, "resetValueOnHide");
     useStoreProps(store4, props, "resetValueOnSelect");
     return Object.assign(useCompositeStoreProps(usePopoverStoreProps(store4, update4, props), update4, props), { tag: props.tag });
@@ -47683,8 +48234,9 @@ If there's a particular need for this, please submit a feature request at https:
   // node_modules/@ariakit/react-components/dist/combobox/combobox-provider.js
   var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
   function ComboboxProvider(props = {}) {
+    const store4 = useComboboxStore(props);
     return /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(ComboboxContextProvider, {
-      value: useComboboxStore(props),
+      value: store4,
       children: props.children
     });
   }
@@ -106584,7 +107136,7 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/rich-text-control/format-edit.mjs
   var import_rich_text7 = __toESM(require_rich_text(), 1);
   var import_jsx_runtime573 = __toESM(require_jsx_runtime(), 1);
-  var import_react71 = __toESM(require_react(), 1);
+  var import_react72 = __toESM(require_react(), 1);
   var EMPTY_CONTEXT = {};
   function Edit({
     onChange,
@@ -106623,7 +107175,7 @@ ${content}
     formatTypes,
     ...props
   }) {
-    return formatTypes.map((settings) => /* @__PURE__ */ (0, import_react71.createElement)(Edit, { settings, ...props, key: settings.name }));
+    return formatTypes.map((settings) => /* @__PURE__ */ (0, import_react72.createElement)(Edit, { settings, ...props, key: settings.name }));
   }
 
   // packages/editor/build-module/components/collab-sidebar/rich-text-control/index.mjs

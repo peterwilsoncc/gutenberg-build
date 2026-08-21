@@ -97,7 +97,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState75({
+          cachedValue = useState73({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -135,7 +135,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React17 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState75 = React17.useState, useEffect71 = React17.useEffect, useLayoutEffect24 = React17.useLayoutEffect, useDebugValue = React17.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React17 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState73 = React17.useState, useEffect71 = React17.useEffect, useLayoutEffect24 = React17.useLayoutEffect, useDebugValue = React17.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React17.useSyncExternalStore ? React17.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -2296,7 +2296,11 @@ var wp;
   }
   function removeUndefinedValues(obj) {
     const result = {};
-    for (const key in obj) if (obj[key] !== void 0) result[key] = obj[key];
+    for (const key in obj) {
+      if (!hasOwnProperty(obj, key)) continue;
+      if (key === "__proto__") continue;
+      if (obj[key] !== void 0) result[key] = obj[key];
+    }
     return result;
   }
   function defaultValue(...values) {
@@ -2732,17 +2736,6 @@ var wp;
     if (container.hasAttribute("data-tabindex")) restoreTabIndex(container);
     for (const element of elements2) restoreTabIndex(element);
   }
-  function focusIntoView(element, options2) {
-    if (!("scrollIntoView" in element)) element.focus();
-    else {
-      element.focus({ preventScroll: true });
-      element.scrollIntoView({
-        block: "nearest",
-        inline: "nearest",
-        ...options2
-      });
-    }
-  }
   function createUndoCallback(callback) {
     return async () => {
       const redo = await callback?.();
@@ -2822,6 +2815,7 @@ var wp;
     const props = { ...base };
     for (const key in overrides) {
       if (!hasOwnProperty(overrides, key)) continue;
+      if (key === "__proto__") continue;
       if (key === "className") {
         const prop = "className";
         const baseClass = base[prop];
@@ -2839,6 +2833,7 @@ var wp;
         continue;
       }
       const overrideValue = overrides[key];
+      if (overrideValue === void 0) continue;
       if (key.startsWith("on")) {
         if (typeof overrideValue !== "function") continue;
         const baseValue = base[key];
@@ -3041,10 +3036,10 @@ var wp;
     mouseMoving = false;
   }
   function forwardRef2(render) {
-    const Role3 = React.forwardRef((props, ref) => render({
+    const Role3 = React.forwardRef((props, ref) => render(removeUndefinedValues({
       ...props,
       ref
-    }));
+    })));
     Role3.displayName = render.displayName || render.name;
     return Role3;
   }
@@ -3115,8 +3110,11 @@ var wp;
     };
   }
 
-  // node_modules/@ariakit/react-components/dist/focusable/focusable.js
+  // node_modules/@ariakit/react-components/dist/__chunks/CKgCZrim.js
   var import_react3 = __toESM(require_react(), 1);
+  function isCompositeMoveKey(key) {
+    return key === "ArrowUp" || key === "ArrowRight" || key === "ArrowDown" || key === "ArrowLeft" || key === "Home" || key === "End" || key === "PageUp" || key === "PageDown";
+  }
   var TagName = "div";
   var accessibleWhenDisabledSymbol = /* @__PURE__ */ Symbol("accessibleWhenDisabled");
   var isSafariBrowser = isSafari();
@@ -3201,9 +3199,16 @@ var wp;
     if (isElement(target) && !target.hasAttribute("data-focus-visible")) isKeyboardModality = false;
   }
   function onGlobalKeyDown(event) {
+    if (isCompositeMoveKey(event.key)) {
+      isKeyboardModality = true;
+      return;
+    }
     if (event.metaKey) return;
     if (event.ctrlKey) return;
-    if (event.altKey) return;
+    if (event.altKey) {
+      if (!isSafariBrowser) return;
+      if (event.key !== "Tab") return;
+    }
     isKeyboardModality = true;
   }
   var useFocusable = createHook(function useFocusable2({ focusable = true, accessibleWhenDisabled, autoFocus, onFocusVisible, ...props }) {
@@ -3291,9 +3296,7 @@ var wp;
       if (!focusable) return;
       if (focusVisible) return;
       if (focusVisibleRef.current) return;
-      if (event.metaKey) return;
-      if (event.altKey) return;
-      if (event.ctrlKey) return;
+      if ((event.metaKey || event.altKey || event.ctrlKey) && !isCompositeMoveKey(event.key)) return;
       if (!isSelfTarget(event)) return;
       const element = event.currentTarget;
       const applyFocusVisible = () => handleFocusVisible(event, element);
@@ -3540,7 +3543,7 @@ var wp;
       ...props,
       ref: useMergeRefs(ref, props.ref)
     };
-    return removeUndefinedValues(props);
+    return props;
   });
   var CollectionItem = forwardRef2(function CollectionItem2(props) {
     const htmlProps = useCollectionItem(props);
@@ -3557,6 +3560,9 @@ var wp;
   var CompositeScopedContextProvider = ctx2.ScopedContextProvider;
   var CompositeItemContext = (0, import_react6.createContext)(void 0);
   var CompositeRowContext = (0, import_react6.createContext)(void 0);
+
+  // node_modules/@ariakit/react-components/dist/composite/utils.js
+  var import_react7 = __toESM(require_react(), 1);
 
   // node_modules/@ariakit/store/dist/index.js
   function getInternal(store, key) {
@@ -4232,8 +4238,10 @@ If there's a particular need for this, please submit a feature request at https:
           return nextItems;
         });
         const unmergeItem = () => {
-          if (registeredItems2) if (previousRegisteredItem) registeredItems2.set(item.id, previousRegisteredItem);
-          else registeredItems2.delete(item.id);
+          if (registeredItems2) {
+            if (previousRegisteredItem) registeredItems2.set(item.id, previousRegisteredItem);
+            else registeredItems2.delete(item.id);
+          }
           privateStore.setState(key, (items2) => {
             const ids = cache2.ids ? getCachedItemIds(items2, cache2) : void 0;
             if (!prevItem) {
@@ -4405,12 +4413,16 @@ If there's a particular need for this, please submit a feature request at https:
     const syncState = props.store?.getState();
     const collection = createCollectionStore(props);
     const activeId = defaultValue(props.activeId, syncState?.activeId, props.defaultActiveId);
-    const composite = createStore({
+    const compositeElement = defaultValue(syncState?.compositeElement, syncState?.baseElement, null);
+    const compositeElementInFocusOrder = defaultValue(props.compositeElementInFocusOrder, props.includesBaseElement, syncState?.compositeElementInFocusOrder, syncState?.includesBaseElement, activeId === null);
+    const initialState2 = {
       ...collection.getState(),
       id: defaultValue(props.id, syncState?.id) ?? `id-${Math.random().toString(36).slice(2, 8)}`,
       activeId,
-      baseElement: defaultValue(syncState?.baseElement, null),
-      includesBaseElement: defaultValue(props.includesBaseElement, syncState?.includesBaseElement, activeId === null),
+      compositeElement,
+      baseElement: compositeElement,
+      compositeElementInFocusOrder,
+      includesBaseElement: compositeElementInFocusOrder,
       moves: defaultValue(syncState?.moves, 0),
       orientation: defaultValue(props.orientation, syncState?.orientation, "both"),
       rtl: defaultValue(props.rtl, syncState?.rtl, false),
@@ -4418,7 +4430,17 @@ If there's a particular need for this, please submit a feature request at https:
       focusLoop: defaultValue(props.focusLoop, syncState?.focusLoop, false),
       focusWrap: defaultValue(props.focusWrap, syncState?.focusWrap, false),
       focusShift: defaultValue(props.focusShift, syncState?.focusShift, false)
-    }, collection, props.store);
+    };
+    const composite = createStore(initialState2, collection, props.store);
+    setup(composite, () => chain(sync(composite, ["compositeElement"], (state) => {
+      composite.setState("baseElement", state.compositeElement);
+    }), sync(composite, ["baseElement"], (state) => {
+      composite.setState("compositeElement", state.baseElement);
+    }), sync(composite, ["compositeElementInFocusOrder"], (state) => {
+      composite.setState("includesBaseElement", state.compositeElementInFocusOrder);
+    }), sync(composite, ["includesBaseElement"], (state) => {
+      composite.setState("compositeElementInFocusOrder", state.includesBaseElement);
+    })));
     setup(composite, () => sync(composite, ["renderedItems", "activeId"], (state) => {
       composite.setState("activeId", (activeId2) => {
         if (activeId2 !== void 0) return activeId2;
@@ -4427,12 +4449,13 @@ If there's a particular need for this, please submit a feature request at https:
     }));
     const getNextId = (direction = "next", options2 = {}) => {
       const defaultState = composite.getState();
-      const { skip = 0, activeId: activeId2 = defaultState.activeId, focusShift = defaultState.focusShift, focusLoop = defaultState.focusLoop, focusWrap = defaultState.focusWrap, includesBaseElement = defaultState.includesBaseElement, renderedItems = defaultState.renderedItems, rtl: rtl2 = defaultState.rtl } = options2;
+      const compositeElementInFocusOrder2 = defaultValue(options2.compositeElementInFocusOrder, options2.includesBaseElement, defaultState.compositeElementInFocusOrder);
+      const { skip = 0, activeId: activeId2 = defaultState.activeId, focusShift = defaultState.focusShift, focusLoop = defaultState.focusLoop, focusWrap = defaultState.focusWrap, renderedItems = defaultState.renderedItems, rtl: rtl2 = defaultState.rtl } = options2;
       const isVerticalDirection = direction === "up" || direction === "down";
       const isNextDirection = direction === "next" || direction === "down";
       const canReverse = isNextDirection ? rtl2 && !isVerticalDirection : !rtl2 || isVerticalDirection;
       const canShift = focusShift && !skip;
-      if (!skip && !focusWrap && !includesBaseElement && activeId2 != null) {
+      if (!skip && !focusWrap && !compositeElementInFocusOrder2 && activeId2 != null) {
         if (!isVerticalDirection ? true : !canShift && !renderedItems.some((item) => item.rowId != null)) {
           let activeIndex2 = -1;
           if (renderedItems === defaultState.renderedItems) {
@@ -4481,7 +4504,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const canLoop = focusLoop && (isVerticalDirection ? focusLoop !== "horizontal" : focusLoop !== "vertical");
       const canWrap = isGrid2 && focusWrap && (isVerticalDirection ? focusWrap !== "horizontal" : focusWrap !== "vertical");
-      const hasNullItem = isNextDirection ? (!isGrid2 || isVerticalDirection) && canLoop && includesBaseElement : isVerticalDirection ? includesBaseElement : false;
+      const hasNullItem = isNextDirection ? (!isGrid2 || isVerticalDirection) && canLoop && compositeElementInFocusOrder2 : isVerticalDirection ? compositeElementInFocusOrder2 : false;
       if (canLoop) return findFirstEnabledItem(flipItems(canWrap && !hasNullItem ? items : getItemsInRow(items, activeItem.rowId), activeId2, hasNullItem), activeId2)?.id;
       if (canWrap) {
         const nextItem2 = findFirstEnabledItem(hasNullItem ? nextItemsInRow : nextItems, activeId2);
@@ -4498,7 +4521,8 @@ If there's a particular need for this, please submit a feature request at https:
     return {
       ...collection,
       ...composite,
-      setBaseElement: (element) => composite.setState("baseElement", element),
+      setCompositeElement: (element) => composite.setState("compositeElement", element),
+      setBaseElement: (element) => composite.setState("compositeElement", element),
       setActiveId: (id3) => composite.setState("activeId", id3),
       move: (id3) => {
         if (id3 === void 0) return;
@@ -4518,6 +4542,188 @@ If there's a particular need for this, please submit a feature request at https:
   var flipItems2 = flipItems;
   var findFirstEnabledItem2 = findFirstEnabledItem;
   var groupItemsByRows2 = groupItemsByRows;
+  var unmountingItems = /* @__PURE__ */ new WeakSet();
+  function markItemUnmounting(element) {
+    if (getActiveElement(element) !== element) return;
+    unmountingItems.add(element);
+    queueMicrotask(() => unmountingItems.delete(element));
+  }
+  function markItemMounted(element) {
+    unmountingItems.delete(element);
+  }
+  function withCompositeScrollPreserved(store, callback) {
+    const { virtualFocus, compositeElement } = store.getState();
+    if (!virtualFocus || !compositeElement || !isTextField(compositeElement)) {
+      callback();
+      return;
+    }
+    const savedScrollLeft = compositeElement.scrollLeft;
+    const savedScrollTop = compositeElement.scrollTop;
+    callback();
+    compositeElement.scrollLeft = savedScrollLeft;
+    compositeElement.scrollTop = savedScrollTop;
+  }
+  function getPopupElement(store) {
+    const state = store.getState();
+    if (!("contentElement" in state)) return null;
+    return state.contentElement;
+  }
+  function ownsFocus(store) {
+    const { compositeElement } = store.getState();
+    const activeElement = getActiveElement(compositeElement);
+    if (!activeElement) return false;
+    if (compositeElement?.contains(activeElement)) return true;
+    if (isItem(store, activeElement)) return true;
+    return !!getPopupElement(store)?.contains(activeElement);
+  }
+  function presentItem({ store, id: id3, focus: focus4, markedOnly, requireFocus, scrollIntoView }) {
+    let element = null;
+    let resolvedId;
+    let focused = false;
+    let focusLeftElement = false;
+    let done = false;
+    let wasMounted = false;
+    let wasOpen = false;
+    const compositeAtStart = store.getState().compositeElement;
+    const activeAtStart = getActiveElement(compositeAtStart);
+    const owner = requireFocus ? activeAtStart : null;
+    const startedOnComposite = !!compositeAtStart?.contains(activeAtStart);
+    const stillOwnsFocus = (target) => {
+      if (!owner) return true;
+      const activeElement = getActiveElement(owner);
+      if (activeElement === owner) return true;
+      if (activeElement === target) return true;
+      return ownsFocus(store);
+    };
+    const abandonedByState = (state) => {
+      if ("mounted" in state) {
+        if (state.mounted) wasMounted = true;
+        else if (wasMounted) return true;
+      }
+      if ("open" in state) {
+        if (state.open) wasOpen = true;
+        else if (wasOpen) return true;
+      }
+      return id3 != null && state.activeId != null && state.activeId !== id3;
+    };
+    const entersClosedPopup = (state, target) => {
+      if (!("open" in state)) return false;
+      if (state.open) return false;
+      const popup = getPopupElement(store);
+      if (!popup?.contains(target)) return false;
+      const { compositeElement } = state;
+      if (!compositeElement) return false;
+      if (popup.contains(compositeElement)) return false;
+      return isVisible(target);
+    };
+    const resolveElement = (state) => {
+      const item = getEnabledItem(store, resolvedId ?? (id3 === void 0 ? state.activeId : id3));
+      if (!item?.element?.isConnected) return null;
+      resolvedId = item.id;
+      return item.element;
+    };
+    let removeFocusListeners;
+    let unsubscribe;
+    const cancel = () => {
+      done = true;
+      removeFocusListeners?.();
+      unsubscribe?.();
+    };
+    const present = () => {
+      if (done) return;
+      const state = store.getState();
+      if (abandonedByState(state)) return cancel();
+      let restoreFocus = false;
+      if (!element) {
+        element = resolveElement(state);
+        if (!element) return;
+      } else if (!element.isConnected) {
+        restoreFocus = focused && !focusLeftElement && getActiveElement(element) === getDocument(element).body;
+        element = resolveElement(state);
+        if (!element) return cancel();
+      }
+      if (restoreFocus) focused = false;
+      else if (!stillOwnsFocus(element)) return cancel();
+      const focusWithheld = focus4 && startedOnComposite && entersClosedPopup(state, element);
+      if (focusWithheld) {
+        const { activeId } = state;
+        if (activeId != null && activeId !== resolvedId) return cancel();
+      }
+      if (focus4 && !focused && !focusWithheld) {
+        focused = true;
+        focusLeftElement = false;
+        const itemElement = element;
+        removeFocusListeners?.();
+        const onBlur = () => {
+          focusLeftElement = !unmountingItems.has(itemElement);
+        };
+        const onFocus = () => {
+          focusLeftElement = false;
+        };
+        itemElement.addEventListener("blur", onBlur);
+        itemElement.addEventListener("focus", onFocus);
+        removeFocusListeners = () => {
+          itemElement.removeEventListener("blur", onBlur);
+          itemElement.removeEventListener("focus", onFocus);
+        };
+        withCompositeScrollPreserved(store, () => {
+          itemElement.focus({ preventScroll: true });
+        });
+        if (done) return;
+      }
+      if (markedOnly && !element.hasAttribute("data-autofocus")) {
+        if (focusWithheld) return;
+        return cancel();
+      }
+      if (!isVisible(element)) return;
+      if ("unstable_placing" in state && state.unstable_placing) return;
+      if (!focusWithheld) cancel();
+      if (scrollIntoView) {
+        scrollIntoView(element);
+        return;
+      }
+      element.scrollIntoView({
+        block: "nearest",
+        inline: "nearest"
+      });
+    };
+    unsubscribe = subscribe(store, [
+      "activeId",
+      "items",
+      "mounted",
+      "open",
+      "unstable_placing"
+    ], present);
+    present();
+    return cancel;
+  }
+  function usePresentItem(store) {
+    const cancelRef = (0, import_react7.useRef)(null);
+    const ownerRef = (0, import_react7.useRef)(store);
+    const cancel = (0, import_react7.useCallback)(() => {
+      cancelRef.current?.();
+      cancelRef.current = null;
+    }, []);
+    const present = (0, import_react7.useCallback)((params) => {
+      if (!store) return;
+      if (ownerRef.current !== store) return;
+      cancel();
+      const cancelCurrent = presentItem({
+        store,
+        ...params
+      });
+      cancelRef.current = cancelCurrent;
+      return cancelCurrent;
+    }, [store, cancel]);
+    useSafeLayoutEffect(() => {
+      ownerRef.current = store;
+      return () => {
+        ownerRef.current = void 0;
+        cancel();
+      };
+    }, [store, cancel]);
+    return present;
+  }
   function getEnabledItem(store, id3) {
     if (!id3) return null;
     return store.item(id3) || null;
@@ -4550,7 +4756,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/composite/composite-item.js
-  var import_react7 = __toESM(require_react(), 1);
+  var import_react8 = __toESM(require_react(), 1);
   var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
 
   // node_modules/@ariakit/react-store/dist/index.js
@@ -4694,11 +4900,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore(createStore2, props) {
     const [store, setStore] = React2.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store), [store]);
-    const useState75 = React2.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+    const useState73 = React2.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
     return [React2.useMemo(() => ({
       ...store,
-      useState: useState75
-    }), [store, useState75]), useEvent(() => {
+      useState: useState73
+    }), [store, useState73]), useEvent(() => {
       setStore((store2) => createStore2({
         ...props,
         ...store2.getState()
@@ -4755,38 +4961,45 @@ If there's a particular need for this, please submit a feature request at https:
     if (isSelfTarget(event)) return false;
     return isItem(store, event.target);
   }
-  var useCompositeItem = createHook(function useCompositeItem2({ store, rowId: rowIdProp, preventScrollOnKeyDown = false, moveOnKeyPress = true, tabbable = false, getItem: getItemProp, typeaheadText, "aria-setsize": ariaSetSizeProp, "aria-posinset": ariaPosInSetProp, ...props }) {
+  var useCompositeItem = createHook(function useCompositeItem2({ store, rowId: rowIdProp, preventScrollOnKeyDown = false, moveOnKeyPress = true, tabbable = false, getItem: getItemProp, typeaheadText, "aria-setsize": ariaSetSizeProp, "aria-posinset": ariaPosInSetProp, unstable_scrollIntoView: scrollIntoView, ...props }) {
     const context = useCompositeScopedContext();
     store = store || context;
     const id3 = useId(props.id);
-    const ref = (0, import_react7.useRef)(null);
-    const row = (0, import_react7.useContext)(CompositeRowContext);
+    const ref = (0, import_react8.useRef)(null);
+    const mountedElementRef = (0, import_react8.useRef)(null);
+    const markUnmountingRef = (0, import_react8.useCallback)((element) => {
+      const mountedElement = mountedElementRef.current;
+      if (!element && mountedElement) markItemUnmounting(mountedElement);
+      if (element) markItemMounted(element);
+      mountedElementRef.current = element;
+    }, []);
+    const row = (0, import_react8.useContext)(CompositeRowContext);
     const trulyDisabled = disabledFromProps(props) && !props.accessibleWhenDisabled;
     const shouldRegisterItem = props.shouldRegisterItem;
     const getRowId = (state) => {
       if (rowIdProp) return rowIdProp;
       if (!state) return;
-      if (!row?.baseElement) return;
-      if (row.baseElement !== state.baseElement) return;
+      if (!row?.compositeElement) return;
+      if (row.compositeElement !== state.compositeElement) return;
       return row.id;
     };
-    const { rowId, baseElement, ariaSetSize, ariaPosInSet } = useStoreStateObject(store, ["baseElement", "renderedItems"], {
+    const { rowId, compositeElement, ariaSetSize, ariaPosInSet } = useStoreStateObject(store, ["compositeElement", "renderedItems"], {
       rowId: getRowId,
-      baseElement(state) {
-        return state?.baseElement || void 0;
+      compositeElement(state) {
+        return state?.compositeElement || void 0;
       },
       ariaSetSize(state) {
         if (ariaSetSizeProp != null) return ariaSetSizeProp;
         if (!state) return;
         if (!row?.ariaSetSize) return;
-        if (row.baseElement !== state.baseElement) return;
+        if (row.compositeElement !== state.compositeElement) return;
         return row.ariaSetSize;
       },
       ariaPosInSet(state) {
         if (ariaPosInSetProp != null) return ariaPosInSetProp;
         if (!state) return;
         if (!row?.ariaPosInSet) return;
-        if (row.baseElement !== state.baseElement) return;
+        if (row.compositeElement !== state.compositeElement) return;
         const rowId2 = getRowId(state);
         const itemsInRow = state.renderedItems.filter((item) => item.rowId === rowId2);
         return row.ariaPosInSet + itemsInRow.findIndex((item) => item.id === id3);
@@ -4794,6 +5007,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const { isActiveItem, isTabbable: isTabbable2 } = useStoreStateObject(store, [
       "activeId",
+      "compositeElement",
       "renderedItems",
       "virtualFocus",
       "items"
@@ -4802,8 +5016,10 @@ If there's a particular need for this, please submit a feature request at https:
         return !!state && state.activeId === id3;
       },
       isTabbable(state) {
-        if (!state?.renderedItems.length) return true;
+        if (!state) return true;
+        if (!state.compositeElement && !state.renderedItems.length) return true;
         if (state.virtualFocus) return false;
+        if (!state.renderedItems.length) return true;
         if (tabbable) return true;
         if (state.activeId === null) return false;
         const item = store?.item(state.activeId);
@@ -4812,7 +5028,7 @@ If there's a particular need for this, please submit a feature request at https:
         return state.activeId === id3;
       }
     });
-    const getItem = (0, import_react7.useCallback)((item) => {
+    const getItem = (0, import_react8.useCallback)((item) => {
       const nextItem = {
         ...item,
         id: id3 || item.id,
@@ -4831,8 +5047,9 @@ If there's a particular need for this, please submit a feature request at https:
       getItemProp
     ]);
     const onFocusProp = props.onFocus;
-    const hasFocusedComposite = (0, import_react7.useRef)(false);
-    const cancelScheduledFocusRedirectRef = (0, import_react7.useRef)(null);
+    const hasFocusedComposite = (0, import_react8.useRef)(false);
+    const cancelScheduledFocusRedirectRef = (0, import_react8.useRef)(null);
+    const present = usePresentItem(store);
     const onFocus = useEvent((event) => {
       onFocusProp?.(event);
       if (event.defaultPrevented) return;
@@ -4840,27 +5057,38 @@ If there's a particular need for this, please submit a feature request at https:
       if (!id3) return;
       if (!store) return;
       if (targetIsAnotherItem(event, store)) return;
-      const { virtualFocus, baseElement: baseElement2 } = store.getState();
+      const { virtualFocus, compositeElement: compositeElement2 } = store.getState();
       store.setActiveId(id3);
       if (isTextbox(event.currentTarget)) selectTextField(event.currentTarget);
-      if (!virtualFocus) return;
+      if (!virtualFocus) {
+        if (isSelfTarget(event) && store.item(id3)) present({
+          id: id3,
+          markedOnly: true,
+          requireFocus: true,
+          scrollIntoView
+        });
+        return;
+      }
       if (!isSelfTarget(event)) return;
       if (isEditableElement(event.currentTarget)) return;
-      const redirectFocusToBaseElement = (currentTarget2, relatedTarget2, baseElement3) => {
-        if (!isFocusable(baseElement3)) {
-          if (true) warnOnce("A composite widget with `virtualFocus` enabled requires a focusable composite element. Set the `focusable` prop to `true` or the `virtualFocus` option to `false`.", baseElement3);
+      const redirectFocusToCompositeElement = (relatedTarget2, compositeElement3) => {
+        if (!isFocusable(compositeElement3)) {
+          if (true) warnOnce("A composite widget with `virtualFocus` enabled requires a focusable composite element. Set the `focusable` prop to `true` or the `virtualFocus` option to `false`.", compositeElement3);
           return;
         }
-        if (isSafari() && currentTarget2.hasAttribute("data-autofocus")) currentTarget2.scrollIntoView({
-          block: "nearest",
-          inline: "nearest"
+        const fromComposite = relatedTarget2 === compositeElement3 || isItem(store, relatedTarget2);
+        if (store.item(id3)) present({
+          id: id3,
+          markedOnly: true,
+          requireFocus: true,
+          scrollIntoView
         });
         hasFocusedComposite.current = true;
-        if (relatedTarget2 === baseElement3 || isItem(store, relatedTarget2)) focusSilently(baseElement3);
-        else baseElement3.focus();
+        if (fromComposite) focusSilently(compositeElement3);
+        else compositeElement3.focus({ preventScroll: true });
       };
-      if (baseElement2?.isConnected) {
-        redirectFocusToBaseElement(event.currentTarget, event.relatedTarget, baseElement2);
+      if (compositeElement2?.isConnected) {
+        redirectFocusToCompositeElement(event.relatedTarget, compositeElement2);
         return;
       }
       if (shouldRegisterItem === false) return;
@@ -4876,11 +5104,11 @@ If there's a particular need for this, please submit a feature request at https:
           return;
         }
         const state = store.getState();
-        const nextBaseElement = state.baseElement;
-        if (!nextBaseElement?.isConnected) return;
+        const nextCompositeElement = state.compositeElement;
+        if (!nextCompositeElement?.isConnected) return;
         cancelScheduledFocusRedirect();
         if (!state.virtualFocus) return;
-        redirectFocusToBaseElement(currentTarget, relatedTarget, nextBaseElement);
+        redirectFocusToCompositeElement(relatedTarget, nextCompositeElement);
       });
     });
     const onBlurCaptureProp = props.onBlurCapture;
@@ -4909,8 +5137,8 @@ If there's a particular need for this, please submit a feature request at https:
       const canHomeEnd = () => {
         if (isGrid2) return true;
         if (isHorizontal) return true;
-        if (!state.baseElement) return true;
-        if (!isTextField(state.baseElement)) return true;
+        if (!state.compositeElement) return true;
+        if (!isTextField(state.compositeElement)) return true;
         return false;
       };
       const action = {
@@ -4955,10 +5183,10 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     });
-    const providerValue = (0, import_react7.useMemo)(() => ({
+    const providerValue = (0, import_react8.useMemo)(() => ({
       id: id3,
-      baseElement
-    }), [id3, baseElement]);
+      compositeElement
+    }), [id3, compositeElement]);
     props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(CompositeItemContext.Provider, {
       value: providerValue,
       children: element
@@ -4967,7 +5195,7 @@ If there's a particular need for this, please submit a feature request at https:
       "data-active-item": isActiveItem || void 0,
       ...props,
       id: id3,
-      ref: useMergeRefs(ref, props.ref),
+      ref: useMergeRefs(ref, markUnmountingRef, props.ref),
       tabIndex: isTabbable2 ? props.tabIndex : -1,
       onFocus,
       onBlurCapture,
@@ -4980,11 +5208,11 @@ If there's a particular need for this, please submit a feature request at https:
       getItem,
       shouldRegisterItem: id3 ? shouldRegisterItem : false
     });
-    return removeUndefinedValues({
+    return {
       ...props,
       "aria-setsize": ariaSetSize,
       "aria-posinset": ariaPosInSet
-    });
+    };
   });
   var CompositeItem = memo2(forwardRef2(function CompositeItem2(props) {
     const htmlProps = useCompositeItem(withDefaultButtonType(props));
@@ -5000,7 +5228,7 @@ If there's a particular need for this, please submit a feature request at https:
   var TabScopedContextProvider = ctx3.ScopedContextProvider;
 
   // node_modules/@ariakit/react-components/dist/tab/tab.js
-  var import_react8 = __toESM(require_react(), 1);
+  var import_react9 = __toESM(require_react(), 1);
   var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
   var TagName5 = "button";
   var useTab = createHook(function useTab2({ store, getItem: getItemProp, ...props }) {
@@ -5010,7 +5238,7 @@ If there's a particular need for this, please submit a feature request at https:
     const defaultId = useId();
     const id3 = props.id || defaultId;
     const dimmed = disabledFromProps(props);
-    const getItem = (0, import_react8.useCallback)((item) => {
+    const getItem = (0, import_react9.useCallback)((item) => {
       const nextItem = {
         ...item,
         dimmed
@@ -5086,7 +5314,7 @@ If there's a particular need for this, please submit a feature request at https:
   }));
 
   // node_modules/@ariakit/react-components/dist/composite/composite.js
-  var import_react9 = __toESM(require_react(), 1);
+  var import_react10 = __toESM(require_react(), 1);
   var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
   var TagName6 = "div";
   function isGrid(items) {
@@ -5108,10 +5336,11 @@ If there's a particular need for this, please submit a feature request at https:
       if (!isSelfTarget(event)) return;
       if (isModifierKey(event)) return;
       if (isPrintableKey(event)) return;
-      const activeElement = getEnabledItem(store, store.getState().activeId)?.element;
+      const state = store.getState();
+      const activeElement = getEnabledItem(store, state.activeId)?.element;
       if (!activeElement) return;
       const { view, ...eventInit } = event;
-      if (activeElement !== previousElementRef?.current) activeElement.focus();
+      if (activeElement !== previousElementRef?.current) activeElement.focus({ preventScroll: true });
       if (!fireKeyboardEvent(activeElement, event.type, eventInit)) event.preventDefault();
       if (event.currentTarget.contains(activeElement)) event.stopPropagation();
     });
@@ -5119,76 +5348,58 @@ If there's a particular need for this, please submit a feature request at https:
   function findFirstEnabledItemInTheLastRow(items) {
     return findFirstEnabledItem2(flatten2DArray(reverseArray(groupItemsByRows2(items))));
   }
-  function withBaseScrollPreserved(store, callback) {
-    const { virtualFocus, baseElement } = store.getState();
-    if (!virtualFocus || !baseElement || !isTextField(baseElement)) {
-      callback();
-      return;
-    }
-    const savedScrollLeft = baseElement.scrollLeft;
-    const savedScrollTop = baseElement.scrollTop;
-    callback();
-    baseElement.scrollLeft = savedScrollLeft;
-    baseElement.scrollTop = savedScrollTop;
-  }
-  function useScheduleFocus(store) {
-    const [scheduled, setScheduled] = (0, import_react9.useState)(false);
-    const schedule = (0, import_react9.useCallback)(() => setScheduled(true), []);
-    const activeItem = useStoreState(store, scheduled ? ["activeId", "items"] : [], (state) => scheduled ? getEnabledItem(store, state.activeId) : null);
-    (0, import_react9.useEffect)(() => {
-      const activeElement = activeItem?.element;
-      if (!scheduled) return;
-      if (!activeElement) return;
-      setScheduled(false);
-      withBaseScrollPreserved(store, () => {
-        activeElement.focus({ preventScroll: true });
-      });
-    }, [
-      store,
-      activeItem,
-      scheduled
-    ]);
-    return schedule;
-  }
-  var CompositeFocusOnMove = memo2(function CompositeFocusOnMove2({ store, focusOnMove, previousElementRef }) {
+  var CompositeFocusOnMove = memo2(function CompositeFocusOnMove2({ store, focusOnMove, previousElementRef, present, scrollIntoView }) {
     const moves = useStoreState(store, "moves");
-    const baseElement = useStoreState(store, "baseElement");
-    (0, import_react9.useEffect)(() => {
+    const compositeElement = useStoreState(store, "compositeElement");
+    (0, import_react10.useEffect)(() => {
       if (!moves) return;
       if (!focusOnMove) return;
       const { activeId } = store.getState();
-      const itemElement = getEnabledItem(store, activeId)?.element;
-      if (!itemElement) return;
-      withBaseScrollPreserved(store, () => focusIntoView(itemElement));
+      if (activeId == null) return;
+      return present({
+        id: activeId,
+        requireFocus: ownsFocus(store),
+        focus: true,
+        scrollIntoView
+      });
     }, [
       store,
       moves,
-      focusOnMove
+      focusOnMove,
+      compositeElement,
+      present,
+      scrollIntoView
     ]);
     useSafeLayoutEffect(() => {
       if (!moves) return;
-      if (!baseElement) return;
+      if (!compositeElement) return;
       const { activeId } = store.getState();
       if (!(activeId === null)) return;
       const previousElement = previousElementRef.current;
       previousElementRef.current = null;
-      if (previousElement) fireBlurEvent(previousElement, { relatedTarget: baseElement });
-      if (!hasFocus(baseElement)) baseElement.focus();
+      if (previousElement) fireBlurEvent(previousElement, { relatedTarget: compositeElement });
+      if (!hasFocus(compositeElement)) {
+        if (isFocusable(compositeElement)) compositeElement.scrollIntoView({
+          block: "nearest",
+          inline: "nearest"
+        });
+        compositeElement.focus({ preventScroll: true });
+      }
     }, [
       store,
       moves,
-      baseElement
+      compositeElement
     ]);
     return null;
   });
-  var useComposite = createHook(function useComposite2({ store, composite = true, focusOnMove = composite, moveOnKeyPress = true, ...props }) {
+  var useComposite = createHook(function useComposite2({ store, composite = true, focusOnMove = composite, moveOnKeyPress = true, unstable_scrollIntoView: scrollIntoView, ...props }) {
     const context = useCompositeProviderContext();
     store = store || context;
     invariant(store, "Composite must receive a `store` prop or be wrapped in a CompositeProvider component.");
-    const ref = (0, import_react9.useRef)(null);
-    const previousElementRef = (0, import_react9.useRef)(null);
-    const scheduleFocus = useScheduleFocus(store);
-    const [, setBaseElement] = useTransactionState(composite ? store.setBaseElement : null);
+    const ref = (0, import_react10.useRef)(null);
+    const previousElementRef = (0, import_react10.useRef)(null);
+    const present = usePresentItem(store);
+    const [, setCompositeElement] = useTransactionState(composite ? store.setCompositeElement : null);
     const virtualFocus = useStoreState(store, "virtualFocus");
     const activeId = useStoreState(store, composite && virtualFocus ? ["activeId"] : [], (state) => composite && virtualFocus ? state.activeId : null);
     useSafeLayoutEffect(() => {
@@ -5232,16 +5443,33 @@ If there's a particular need for this, please submit a feature request at https:
       const { relatedTarget } = event;
       const { virtualFocus: virtualFocus2 } = store.getState();
       if (virtualFocus2) {
-        if (isSelfTarget(event) && !isItem(store, relatedTarget)) queueMicrotask(scheduleFocus);
-      } else if (isSelfTarget(event)) store.setActiveId(null);
+        if (isSelfTarget(event) && !isItem(store, relatedTarget)) queueMicrotask(() => present({
+          focus: true,
+          markedOnly: true,
+          requireFocus: true,
+          scrollIntoView
+        }));
+      } else if (isSelfTarget(event)) {
+        if (!isItem(store, relatedTarget)) {
+          const { activeId: activeId2 } = store.getState();
+          if (activeId2 != null) present({
+            id: activeId2,
+            markedOnly: true,
+            requireFocus: true,
+            scrollIntoView
+          });
+        }
+        store.setActiveId(null);
+      }
     });
     const onBlurCaptureProp = props.onBlurCapture;
     const onBlurCapture = useEvent((event) => {
       onBlurCaptureProp?.(event);
       if (event.defaultPrevented) return;
       if (!store) return;
-      const { virtualFocus: virtualFocus2, activeId: activeId2 } = store.getState();
+      const { virtualFocus: virtualFocus2, activeId: activeId2, compositeElement } = store.getState();
       if (!virtualFocus2) return;
+      if (event.currentTarget !== compositeElement) return;
       const activeElement = getEnabledItem(store, activeId2)?.element;
       const nextActiveElement = event.relatedTarget;
       const nextActiveElementIsItem = isItem(store, nextActiveElement);
@@ -5263,21 +5491,49 @@ If there's a particular need for this, please submit a feature request at https:
       if (event.defaultPrevented) return;
       if (!store) return;
       if (!isSelfTarget(event)) return;
-      const { orientation, renderedItems, activeId: activeId2, rtl: rtl2 } = store.getState();
-      if (getEnabledItem(store, activeId2)?.element?.isConnected) return;
+      const { orientation, items, renderedItems, activeId: activeId2, rtl: rtl2 } = store.getState();
+      const activeItem = getEnabledItem(store, activeId2);
+      if (activeItem?.element?.isConnected) return;
+      const elementlessActiveItem = activeItem && activeId2 != null;
+      const movementItems = elementlessActiveItem ? items : renderedItems;
       const isVertical = orientation !== "horizontal";
       const isHorizontal = orientation !== "vertical";
-      const grid = isGrid(renderedItems);
+      const grid = isGrid(movementItems);
       if ((event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "Home" || event.key === "End") && isTextField(event.currentTarget)) return;
       const up = () => {
+        if (elementlessActiveItem) return store.up({
+          activeId: activeId2,
+          renderedItems: movementItems
+        });
         if (grid) return findFirstEnabledItemInTheLastRow(renderedItems)?.id;
         return store?.last();
       };
+      const right = () => {
+        if (elementlessActiveItem) return store.next({
+          activeId: activeId2,
+          renderedItems: movementItems
+        });
+        return rtl2 ? store.last() : store.first();
+      };
+      const down = () => {
+        if (elementlessActiveItem) return store.down({
+          activeId: activeId2,
+          renderedItems: movementItems
+        });
+        return store.first();
+      };
+      const left = () => {
+        if (elementlessActiveItem) return store.previous({
+          activeId: activeId2,
+          renderedItems: movementItems
+        });
+        return rtl2 ? store.first() : store.last();
+      };
       const action = {
         ArrowUp: (grid || isVertical) && up,
-        ArrowRight: (grid || isHorizontal) && (rtl2 ? store.last : store.first),
-        ArrowDown: (grid || isVertical) && store.first,
-        ArrowLeft: (grid || isHorizontal) && (rtl2 ? store.first : store.last),
+        ArrowRight: (grid || isHorizontal) && right,
+        ArrowDown: (grid || isVertical) && down,
+        ArrowLeft: (grid || isHorizontal) && left,
         Home: store.first,
         End: store.last,
         PageUp: store.first,
@@ -5297,12 +5553,15 @@ If there's a particular need for this, please submit a feature request at https:
       children: [element, composite && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CompositeFocusOnMove, {
         store,
         focusOnMove,
-        previousElementRef
+        previousElementRef,
+        present,
+        scrollIntoView
       })]
     }), [
       store,
       composite,
-      focusOnMove
+      focusOnMove,
+      present
     ]);
     props = {
       "aria-activedescendant": useStoreState(store, composite && virtualFocus ? ["items"] : [], () => {
@@ -5312,7 +5571,7 @@ If there's a particular need for this, please submit a feature request at https:
         return getEnabledItem(store, activeId)?.id;
       }),
       ...props,
-      ref: useMergeRefs(ref, setBaseElement, props.ref),
+      ref: useMergeRefs(ref, setCompositeElement, props.ref),
       onKeyDownCapture,
       onKeyUpCapture,
       onFocusCapture,
@@ -5320,8 +5579,9 @@ If there's a particular need for this, please submit a feature request at https:
       onBlurCapture,
       onKeyDown
     };
+    const focusable = useStoreState(store, composite && !virtualFocus ? ["activeId"] : [], (state) => composite && (virtualFocus || state.activeId === null));
     props = useFocusable({
-      focusable: useStoreState(store, composite && !virtualFocus ? ["activeId"] : [], (state) => composite && (virtualFocus || state.activeId === null)),
+      focusable,
       ...props
     });
     return props;
@@ -5372,18 +5632,18 @@ If there's a particular need for this, please submit a feature request at https:
   var DisclosureScopedContextProvider = ctx4.ScopedContextProvider;
 
   // node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
-  var import_react10 = __toESM(require_react(), 1);
+  var import_react11 = __toESM(require_react(), 1);
   var ctx5 = createStoreContext([DisclosureContextProvider], [DisclosureScopedContextProvider]);
   var useDialogContext = ctx5.useContext;
   var useDialogScopedContext = ctx5.useScopedContext;
   var useDialogProviderContext = ctx5.useProviderContext;
   var DialogContextProvider = ctx5.ContextProvider;
   var DialogScopedContextProvider = ctx5.ScopedContextProvider;
-  var DialogHeadingContext = (0, import_react10.createContext)(void 0);
-  var DialogDescriptionContext = (0, import_react10.createContext)(void 0);
+  var DialogHeadingContext = (0, import_react11.createContext)(void 0);
+  var DialogDescriptionContext = (0, import_react11.createContext)(void 0);
 
   // node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
-  var import_react11 = __toESM(require_react(), 1);
+  var import_react12 = __toESM(require_react(), 1);
   var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
   var import_react_dom = __toESM(require_react_dom(), 1);
   var TagName8 = "div";
@@ -5421,9 +5681,9 @@ If there's a particular need for this, please submit a feature request at https:
     const context = useDisclosureProviderContext();
     store = store || context;
     invariant(store, "DisclosureContent must receive a `store` prop or be wrapped in a DisclosureProvider component.");
-    const ref = (0, import_react11.useRef)(null);
+    const ref = (0, import_react12.useRef)(null);
     const id3 = useId(props.id);
-    const [transition, setTransition] = (0, import_react11.useState)(null);
+    const [transition, setTransition] = (0, import_react12.useState)(null);
     const { open, mounted, animated, contentElement } = useStoreStateObject(store, {
       open: "open",
       mounted: "mounted",
@@ -5431,7 +5691,7 @@ If there's a particular need for this, please submit a feature request at https:
       contentElement: "contentElement"
     });
     const otherElement = useStoreState(store.disclosure, "contentElement");
-    const hasClosedRef = (0, import_react11.useRef)(false);
+    const hasClosedRef = (0, import_react12.useRef)(false);
     useSafeLayoutEffect(() => {
       if (!ref.current) return;
       store?.setContentElement(ref.current);
@@ -5507,7 +5767,7 @@ If there's a particular need for this, please submit a feature request at https:
     }), [store]);
     const hidden = isHidden(mounted, props.hidden, alwaysVisible);
     const styleProp = props.style;
-    const style2 = (0, import_react11.useMemo)(() => {
+    const style2 = (0, import_react12.useMemo)(() => {
       if (hidden) return {
         ...styleProp,
         display: "none"
@@ -5532,7 +5792,8 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var DisclosureContent = forwardRef2(function DisclosureContent2({ unmountOnHide, ...props }) {
     const context = useDisclosureProviderContext();
-    if (useStoreState(props.store || context, ["mounted"], (state) => !unmountOnHide || state?.mounted) === false) return null;
+    const store = props.store || context;
+    if (useStoreState(store, ["mounted"], (state) => !unmountOnHide || state?.mounted) === false) return null;
     return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(DisclosureContentImpl, { ...props });
   });
 
@@ -5590,19 +5851,20 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/tab/tab-panel.js
-  var import_react12 = __toESM(require_react(), 1);
+  var import_react13 = __toESM(require_react(), 1);
   var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
   var TagName9 = "div";
   var useTabPanel = createHook(function useTabPanel2({ store, unmountOnHide, tabId: tabIdProp, getItem: getItemProp, scrollRestoration, scrollElement, ...props }) {
     const context = useTabProviderContext();
     store = store || context;
     invariant(store, "TabPanel must receive a `store` prop or be wrapped in a TabProvider component.");
-    const ref = (0, import_react12.useRef)(null);
+    const ref = (0, import_react13.useRef)(null);
     const id3 = useId(props.id);
     const tabId = useStoreState(tabIdProp ? void 0 : store.panels, ["items"], () => tabIdProp || store?.panels.item(id3)?.tabId);
-    const disclosure = useDisclosureStore({ open: useStoreState(store, ["selectedId"], (state) => !!tabId && state.selectedId === tabId) });
+    const open = useStoreState(store, ["selectedId"], (state) => !!tabId && state.selectedId === tabId);
+    const disclosure = useDisclosureStore({ open });
     const mounted = useStoreState(disclosure, "mounted");
-    const scrollPositionRef = (0, import_react12.useRef)(null);
+    const scrollPositionRef = (0, import_react13.useRef)(null);
     const getScrollElement = useEvent(() => {
       const panelElement = ref.current;
       if (!panelElement) return null;
@@ -5611,7 +5873,7 @@ If there's a particular need for this, please submit a feature request at https:
       if ("current" in scrollElement) return scrollElement.current;
       return scrollElement;
     });
-    (0, import_react12.useEffect)(() => {
+    (0, import_react13.useEffect)(() => {
       if (!scrollRestoration) return;
       if (!mounted) return;
       const element = getScrollElement();
@@ -5644,14 +5906,14 @@ If there's a particular need for this, please submit a feature request at https:
       tabId,
       getScrollElement
     ]);
-    const [hasTabbableChildren, setHasTabbableChildren] = (0, import_react12.useState)(false);
+    const [hasTabbableChildren, setHasTabbableChildren] = (0, import_react13.useState)(false);
     useSafeLayoutEffect(() => {
       if (!mounted) return;
       const element = ref.current;
       if (!element) return;
       setHasTabbableChildren(!!getFirstTabbableIn(element));
     }, [mounted, tabId]);
-    const getItem = (0, import_react12.useCallback)((item) => {
+    const getItem = (0, import_react13.useCallback)((item) => {
       const nextItem = {
         ...item,
         id: id3 || item.id,
@@ -5724,16 +5986,17 @@ If there's a particular need for this, please submit a feature request at https:
   var PopoverScopedContextProvider = ctx6.ScopedContextProvider;
 
   // node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
-  var import_react13 = __toESM(require_react(), 1);
-  var ComboboxListRoleContext = (0, import_react13.createContext)(void 0);
+  var import_react14 = __toESM(require_react(), 1);
+  var ComboboxListRoleContext = (0, import_react14.createContext)(void 0);
   var ctx7 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
   var useComboboxContext = ctx7.useContext;
   var useComboboxScopedContext = ctx7.useScopedContext;
   var useComboboxProviderContext = ctx7.useProviderContext;
   var ComboboxContextProvider = ctx7.ContextProvider;
   var ComboboxScopedContextProvider = ctx7.ScopedContextProvider;
-  var ComboboxItemValueContext = (0, import_react13.createContext)(void 0);
-  var ComboboxItemCheckedContext = (0, import_react13.createContext)(false);
+  var ComboboxItemValueContext = (0, import_react14.createContext)(void 0);
+  var ComboboxItemCheckedContext = (0, import_react14.createContext)(false);
+  var ComboboxHeadingContext = (0, import_react14.createContext)(null);
 
   // node_modules/@ariakit/react-components/dist/collection/collection-store.js
   function useCollectionStoreProps(store, update2, props) {
@@ -5752,7 +6015,8 @@ If there's a particular need for this, please submit a feature request at https:
   function useCompositeStoreProps(store, update2, props) {
     store = useCollectionStoreProps(store, update2, props);
     useStoreProps(store, props, "activeId", "setActiveId");
-    useStoreProps(store, props, "includesBaseElement");
+    const focusOrderProps = { compositeElementInFocusOrder: props.compositeElementInFocusOrder ?? props.includesBaseElement };
+    useStoreProps(store, focusOrderProps, "compositeElementInFocusOrder");
     useStoreProps(store, props, "virtualFocus");
     useStoreProps(store, props, "orientation");
     useStoreProps(store, props, "rtl");
@@ -5768,18 +6032,18 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/select/select-context.js
-  var import_react14 = __toESM(require_react(), 1);
+  var import_react15 = __toESM(require_react(), 1);
   var ctx8 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
   var useSelectContext = ctx8.useContext;
   var useSelectScopedContext = ctx8.useScopedContext;
   var useSelectProviderContext = ctx8.useProviderContext;
   var SelectContextProvider = ctx8.ContextProvider;
   var SelectScopedContextProvider = ctx8.ScopedContextProvider;
-  var SelectItemCheckedContext = (0, import_react14.createContext)(false);
-  var SelectHeadingContext = (0, import_react14.createContext)(null);
+  var SelectItemCheckedContext = (0, import_react15.createContext)(false);
+  var SelectHeadingContext = (0, import_react15.createContext)(null);
 
   // node_modules/@ariakit/react-components/dist/tab/tab-store.js
-  var import_react15 = __toESM(require_react(), 1);
+  var import_react16 = __toESM(require_react(), 1);
 
   // node_modules/@ariakit/components/dist/tab/tab-store.js
   function getFocusedTab(items) {
@@ -5824,27 +6088,31 @@ If there's a particular need for this, please submit a feature request at https:
       "moves",
       "orientation",
       "virtualFocus",
+      "compositeElementInFocusOrder",
       "includesBaseElement",
+      "compositeElement",
       "baseElement",
       "focusLoop",
       "focusShift",
-      "focusWrap"
+      "focusWrap",
+      "selectOnMove"
     ];
     const store = mergeStore(props.store, omit2(parentComposite, independentKeys), omit2(combobox, independentKeys));
     const syncState = store?.getState();
     const composite = createCompositeStore({
       ...props,
       store,
-      includesBaseElement: defaultValue(props.includesBaseElement, syncState?.includesBaseElement, false),
+      compositeElementInFocusOrder: defaultValue(props.compositeElementInFocusOrder, props.includesBaseElement, syncState?.compositeElementInFocusOrder, syncState?.includesBaseElement, false),
       orientation: defaultValue(props.orientation, syncState?.orientation, "horizontal"),
       focusLoop: defaultValue(props.focusLoop, syncState?.focusLoop, true)
     });
     const { panels, panel } = createPanelsStore();
-    const tab = createStore({
+    const initialState2 = {
       ...composite.getState(),
       selectedId: defaultValue(props.selectedId, syncState?.selectedId, props.defaultSelectedId),
       selectOnMove: defaultValue(props.selectOnMove, syncState?.selectOnMove, true)
-    }, composite, store);
+    };
+    const tab = createStore(initialState2, composite, store);
     setup(tab, () => sync(tab, ["moves"], () => {
       const { activeId, selectOnMove } = tab.getState();
       if (!selectOnMove) return;
@@ -5913,9 +6181,11 @@ If there's a particular need for this, please submit a feature request at https:
         restoredSelectedId = selectedIdFromSelectedValue;
         tab.setState("selectedId", selectedIdFromSelectedValue);
       };
-      if (parentComposite && "setSelectElement" in parentComposite) return chain(sync(parentComposite, ["value"], backupSelectedId), sync(parentComposite, ["mounted"], restoreSelectedId));
-      if (!combobox) return;
-      return chain(sync(combobox, ["selectedValue"], backupSelectedId), sync(combobox, ["mounted"], restoreSelectedId));
+      const isParentCombobox = !!parentComposite && "setSelectedValue" in parentComposite;
+      const parentCombobox = isParentCombobox ? parentComposite : combobox;
+      if (parentComposite && !isParentCombobox && "setSelectElement" in parentComposite) return chain(sync(parentComposite, ["value"], backupSelectedId), sync(parentComposite, ["mounted"], restoreSelectedId));
+      if (!parentCombobox) return;
+      return chain(sync(parentCombobox, ["selectedValue"], backupSelectedId), sync(parentCombobox, ["mounted"], restoreSelectedId));
     });
     return {
       ...composite,
@@ -5938,7 +6208,7 @@ If there's a particular need for this, please submit a feature request at https:
     useStoreProps(compositeStore, props, "selectOnMove");
     const [panels, updatePanels] = useStore(() => compositeStore.panels, {});
     useUpdateEffect(updatePanels, [compositeStore, updatePanels]);
-    return Object.assign((0, import_react15.useMemo)(() => ({
+    return Object.assign((0, import_react16.useMemo)(() => ({
       ...compositeStore,
       panels
     }), [compositeStore, panels]), {
@@ -6084,14 +6354,14 @@ If there's a particular need for this, please submit a feature request at https:
   });
 
   // node_modules/@ariakit/react-components/dist/heading/heading-context.js
-  var import_react16 = __toESM(require_react(), 1);
-  var HeadingContext = (0, import_react16.createContext)(0);
+  var import_react17 = __toESM(require_react(), 1);
+  var HeadingContext = (0, import_react17.createContext)(0);
 
   // node_modules/@ariakit/react-components/dist/heading/heading-level.js
-  var import_react17 = __toESM(require_react(), 1);
+  var import_react18 = __toESM(require_react(), 1);
   var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
   function HeadingLevel({ level, children }) {
-    const contextLevel = (0, import_react17.useContext)(HeadingContext);
+    const contextLevel = (0, import_react18.useContext)(HeadingContext);
     const nextLevel = Math.max(Math.min(level || contextLevel + 1, 6), 1);
     return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(HeadingContext.Provider, {
       value: nextLevel,
@@ -6151,11 +6421,11 @@ If there's a particular need for this, please submit a feature request at https:
   });
 
   // node_modules/@ariakit/react-components/dist/portal/portal-context.js
-  var import_react18 = __toESM(require_react(), 1);
-  var PortalContext = (0, import_react18.createContext)(null);
+  var import_react19 = __toESM(require_react(), 1);
+  var PortalContext = (0, import_react19.createContext)(null);
 
   // node_modules/@ariakit/react-components/dist/portal/portal.js
-  var import_react19 = __toESM(require_react(), 1);
+  var import_react20 = __toESM(require_react(), 1);
   var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
   var import_react_dom2 = __toESM(require_react_dom(), 1);
   var TagName17 = "div";
@@ -6191,17 +6461,17 @@ If there's a particular need for this, please submit a feature request at https:
     else setRef(attached.ref, null);
   }
   var usePortal = createHook(function usePortal2({ preserveTabOrder, preserveTabOrderAnchor, portalElement, portalRef, portal = true, ...props }) {
-    const ref = (0, import_react19.useRef)(null);
+    const ref = (0, import_react20.useRef)(null);
     const refProp = useMergeRefs(ref, props.ref);
-    const context = (0, import_react19.useContext)(PortalContext);
-    const [portalNode, setPortalNode] = (0, import_react19.useState)(null);
-    const [anchorPortalNode, setAnchorPortalNode] = (0, import_react19.useState)(null);
-    const outerBeforeRef = (0, import_react19.useRef)(null);
-    const innerBeforeRef = (0, import_react19.useRef)(null);
-    const innerAfterRef = (0, import_react19.useRef)(null);
-    const outerAfterRef = (0, import_react19.useRef)(null);
+    const context = (0, import_react20.useContext)(PortalContext);
+    const [portalNode, setPortalNode] = (0, import_react20.useState)(null);
+    const [anchorPortalNode, setAnchorPortalNode] = (0, import_react20.useState)(null);
+    const outerBeforeRef = (0, import_react20.useRef)(null);
+    const innerBeforeRef = (0, import_react20.useRef)(null);
+    const innerAfterRef = (0, import_react20.useRef)(null);
+    const outerAfterRef = (0, import_react20.useRef)(null);
     const portalRefProp = useLiveRef(portalRef);
-    const attachedPortalRefRef = (0, import_react19.useRef)(null);
+    const attachedPortalRefRef = (0, import_react20.useRef)(null);
     useSafeLayoutEffect(() => {
       const element = ref.current;
       if (!element || !portal) {
@@ -6238,7 +6508,7 @@ If there's a particular need for this, please submit a feature request at https:
       detachPortalRef(attached);
       attachedPortalRefRef.current = attachPortalRef(portalRef, attached.node);
     }, [portalRef]);
-    (0, import_react19.useEffect)(() => {
+    (0, import_react20.useEffect)(() => {
       if (!portalNode) return;
       if (context) return;
       if (portalElement) return;
@@ -6274,7 +6544,7 @@ If there's a particular need for this, please submit a feature request at https:
       preserveTabOrder,
       preserveTabOrderAnchor
     ]);
-    (0, import_react19.useEffect)(() => {
+    (0, import_react20.useEffect)(() => {
       if (!portalNode) return;
       if (!preserveTabOrder) return;
       let raf = 0;
@@ -6649,10 +6919,10 @@ If there's a particular need for this, please submit a feature request at https:
   }, {}));
 
   // node_modules/@ariakit/react-components/dist/dialog/dialog-backdrop.js
-  var import_react20 = __toESM(require_react(), 1);
+  var import_react21 = __toESM(require_react(), 1);
   var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
   function DialogBackdrop({ store, backdrop, backdropRef, alwaysVisible, hidden }) {
-    const ref = (0, import_react20.useRef)(null);
+    const ref = (0, import_react21.useRef)(null);
     const disclosure = useDisclosureStore({ disclosure: store });
     const contentElement = useStoreState(store, "contentElement");
     useSafeLayoutEffect(() => {
@@ -6685,7 +6955,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     });
     if (!backdrop) return null;
-    if ((0, import_react20.isValidElement)(backdrop)) return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Role, {
+    if ((0, import_react21.isValidElement)(backdrop)) return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Role, {
       ...props,
       render: backdrop
     });
@@ -6734,7 +7004,7 @@ If there's a particular need for this, please submit a feature request at https:
   function disableTree(element, ignoredElements) {
     if (!("style" in element)) return noop;
     if (supportsInert()) return setProperty(element, "inert", true);
-    return chain(...getAllTabbableIn(element, true).map((element2) => {
+    const enableElements = getAllTabbableIn(element, true).map((element2) => {
       if (ignoredElements?.some((el) => el && contains(el, element2))) return noop;
       const restoreFocusMethod = orchestrate(element2, "focus", () => {
         element2.focus = noop;
@@ -6743,7 +7013,8 @@ If there's a particular need for this, please submit a feature request at https:
         };
       });
       return chain(setAttribute(element2, "tabindex", "-1"), restoreFocusMethod);
-    }), hideElementFromAccessibilityTree(element), assignStyle(element, {
+    });
+    return chain(...enableElements, hideElementFromAccessibilityTree(element), assignStyle(element, {
       pointerEvents: "none",
       userSelect: "none",
       cursor: "default"
@@ -6807,10 +7078,28 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/dialog/utils/use-previous-mouse-down-ref.js
-  var import_react21 = __toESM(require_react(), 1);
+  var import_react22 = __toESM(require_react(), 1);
+  function getFrameChain(element) {
+    const chain3 = [element];
+    while (true) {
+      let frameElement;
+      try {
+        frameElement = getWindow(element).frameElement;
+      } catch {
+        return chain3;
+      }
+      if (!isElement(frameElement)) return chain3;
+      chain3.push(frameElement);
+      element = frameElement;
+    }
+  }
   function getEventTargets(event, referenceElement) {
     const elements2 = event.composedPath().filter(isElement);
     if (!elements2.length && isElement(event.target)) elements2.push(event.target);
+    const composedTarget = elements2[0];
+    if (composedTarget) {
+      for (const frameElement of getFrameChain(composedTarget).slice(1)) if (!elements2.includes(frameElement)) elements2.push(frameElement);
+    }
     const root = referenceElement?.getRootNode();
     return {
       elements: elements2,
@@ -6818,8 +7107,8 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function usePreviousMouseDownRef(enabled, scope, referenceElement) {
-    const previousMouseDownRef = (0, import_react21.useRef)(null);
-    (0, import_react21.useEffect)(() => {
+    const previousMouseDownRef = (0, import_react22.useRef)(null);
+    (0, import_react22.useEffect)(() => {
       if (!enabled) {
         previousMouseDownRef.current = null;
         return;
@@ -6837,7 +7126,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/dialog/utils/use-hide-on-interact-outside.js
-  var import_react22 = __toESM(require_react(), 1);
+  var import_react23 = __toESM(require_react(), 1);
+  function getHighestReadableWindow(element) {
+    const highestElement = getFrameChain(element).at(-1);
+    return getWindow(highestElement ?? element);
+  }
   function isInDocument(target) {
     return target.isConnected;
   }
@@ -6846,7 +7139,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (contains(disclosure, target)) return true;
     const activeId = target.getAttribute("aria-activedescendant");
     if (activeId) {
-      const activeElement = getDocument(disclosure).getElementById(activeId);
+      const activeElement = getDocument(target).getElementById(activeId);
       if (activeElement) return contains(disclosure, activeElement);
     }
     return false;
@@ -6868,7 +7161,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useEventOutside({ store, type, listener, capture, open, contentElement, focusedRef }) {
     const callListener = useEvent(listener);
-    (0, import_react22.useEffect)(() => {
+    (0, import_react23.useEffect)(() => {
       if (!open) return;
       const onEvent = (event) => {
         const { contentElement: contentElement2, disclosureElement } = store.getState();
@@ -6880,11 +7173,17 @@ If there's a particular need for this, please submit a feature request at https:
         if (composedTarget && !isInDocument(composedTarget)) return;
         if (!isInDocument(target)) return;
         if (isEventInsideDialog(targets, contentElement2, disclosureElement)) return;
-        if (isMouseEventOnDialog(event, contentElement2)) return;
+        const contentDocument = getDocument(contentElement2);
+        if (getDocument(target) !== contentDocument) {
+          callListener(event);
+          return;
+        }
+        if (getDocument(composedTarget ?? target) === contentDocument && isMouseEventOnDialog(event, contentElement2)) return;
         if (focusedRef.current && !isElementMarked(target, contentElement2.id)) return;
         callListener(event);
       };
-      return addGlobalEventListener(type, onEvent, capture, contentElement ? getWindow(contentElement) : void 0);
+      const win = contentElement ? getHighestReadableWindow(contentElement) : void 0;
+      return addGlobalEventListener(type, onEvent, capture, win);
     }, [
       open,
       capture,
@@ -6899,11 +7198,12 @@ If there's a particular need for this, please submit a feature request at https:
     if (typeof hideOnInteractOutside === "function") return hideOnInteractOutside(event);
     return !!hideOnInteractOutside;
   }
-  function useHideOnInteractOutside(store, hideOnInteractOutside, domReady, interactedOutsideRef) {
+  function useHideOnInteractOutside({ store, hideOnInteractOutside, domReady, interactedOutsideRef, focusedStoreRef }) {
     const open = useStoreState(store, "open");
     const contentElement = useStoreState(store, "contentElement");
-    const previousMouseDownRef = usePreviousMouseDownRef(open, contentElement ? getWindow(contentElement) : void 0, contentElement);
-    const focusedRef = (0, import_react22.useRef)(false);
+    const eventWindow = contentElement ? getHighestReadableWindow(contentElement) : void 0;
+    const previousMouseDownRef = usePreviousMouseDownRef(open, eventWindow, contentElement);
+    const focusedRef = (0, import_react23.useRef)(false);
     useSafeLayoutEffect(() => {
       if (!open) return;
       if (!domReady) return;
@@ -6911,13 +7211,15 @@ If there's a particular need for this, please submit a feature request at https:
       focusedRef.current = false;
       const onFocus = () => {
         focusedRef.current = true;
+        focusedStoreRef.current = store;
       };
       contentElement.addEventListener("focusin", onFocus, true);
       return () => contentElement.removeEventListener("focusin", onFocus, true);
     }, [
       open,
       domReady,
-      contentElement
+      contentElement,
+      store
     ]);
     const props = {
       store,
@@ -6937,9 +7239,9 @@ If there's a particular need for this, please submit a feature request at https:
         if (isEventInsideDialog(previousMouseDown, contentElement2, disclosureElement)) return;
         const previousRootTarget = previousMouseDown.rootTarget;
         if (!isElement(previousRootTarget)) return;
-        if (!isElementMarked(previousRootTarget, contentElement2.id)) return;
+        if (getDocument(previousRootTarget) === getDocument(contentElement2) && !isElementMarked(previousRootTarget, contentElement2.id)) return;
         if (!shouldHideOnInteractOutside(hideOnInteractOutside, event)) return;
-        if (interactedOutsideRef) interactedOutsideRef.current = true;
+        interactedOutsideRef.current = true;
         store.hide();
       }
     });
@@ -6951,6 +7253,8 @@ If there's a particular need for this, please submit a feature request at https:
         if (!contentElement2) return;
         if (event.target === getDocument(contentElement2)) return;
         if (!shouldHideOnInteractOutside(hideOnInteractOutside, event)) return;
+        const target = event.target;
+        if (isElement(target) && getDocument(target) !== getDocument(contentElement2)) interactedOutsideRef.current = true;
         store.hide();
       }
     });
@@ -6959,20 +7263,20 @@ If there's a particular need for this, please submit a feature request at https:
       type: "contextmenu",
       listener: (event) => {
         if (!shouldHideOnInteractOutside(hideOnInteractOutside, event)) return;
-        if (interactedOutsideRef) interactedOutsideRef.current = true;
+        interactedOutsideRef.current = true;
         store.hide();
       }
     });
   }
 
   // node_modules/@ariakit/react-components/dist/dialog/utils/use-nested-dialogs.js
-  var import_react23 = __toESM(require_react(), 1);
+  var import_react24 = __toESM(require_react(), 1);
   var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-  var NestedDialogsContext = (0, import_react23.createContext)({});
+  var NestedDialogsContext = (0, import_react24.createContext)({});
   function useNestedDialogs(store) {
-    const context = (0, import_react23.useContext)(NestedDialogsContext);
-    const [dialogs, setDialogs] = (0, import_react23.useState)([]);
-    const add2 = (0, import_react23.useCallback)((dialog) => {
+    const context = (0, import_react24.useContext)(NestedDialogsContext);
+    const [dialogs, setDialogs] = (0, import_react24.useState)([]);
+    const add2 = (0, import_react24.useCallback)((dialog) => {
       setDialogs((dialogs2) => [...dialogs2, dialog]);
       return chain(context.add?.(dialog), () => {
         setDialogs((dialogs2) => dialogs2.filter((d3) => d3 !== dialog));
@@ -6985,12 +7289,12 @@ If there's a particular need for this, please submit a feature request at https:
         return context.add?.(store);
       });
     }, [store, context]);
-    const providerValue = (0, import_react23.useMemo)(() => ({
+    const providerValue = (0, import_react24.useMemo)(() => ({
       store,
       add: add2
     }), [store, add2]);
     return {
-      wrapElement: (0, import_react23.useCallback)((element) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(NestedDialogsContext.Provider, {
+      wrapElement: (0, import_react24.useCallback)((element) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(NestedDialogsContext.Provider, {
         value: providerValue,
         children: element
       }), [providerValue]),
@@ -6999,11 +7303,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/dialog/utils/use-root-dialog.js
-  var import_react24 = __toESM(require_react(), 1);
+  var import_react25 = __toESM(require_react(), 1);
   var import_react_dom3 = __toESM(require_react_dom(), 1);
   function useRootDialog({ attribute, contentId, contentElement, enabled }) {
     const [updated, retry] = useForceUpdate();
-    const isRootDialog = (0, import_react24.useCallback)(() => {
+    const isRootDialog = (0, import_react25.useCallback)(() => {
       if (!enabled) return false;
       if (!contentElement) return false;
       const { body } = getDocument(contentElement);
@@ -7040,7 +7344,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/dialog/utils/use-prevent-body-scroll.js
-  var import_react25 = __toESM(require_react(), 1);
+  var import_react26 = __toESM(require_react(), 1);
   var isIOS = isApple() && !isMac();
   function supportsScrollbarGutter(win) {
     const { CSS: CSS2 } = win;
@@ -7057,7 +7361,7 @@ If there's a particular need for this, please submit a feature request at https:
       contentId,
       enabled
     });
-    (isIOS ? import_react25.useEffect : useSafeLayoutEffect)(() => {
+    (isIOS ? import_react26.useEffect : useSafeLayoutEffect)(() => {
       if (!isRootDialog()) return;
       if (!contentElement) return;
       const doc = getDocument(contentElement);
@@ -7113,17 +7417,32 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/dialog/dialog.js
-  var import_react26 = __toESM(require_react(), 1);
+  var import_react27 = __toESM(require_react(), 1);
   var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
   var TagName19 = "div";
   var isSafariBrowser2 = isSafari();
   var openModalPortals = /* @__PURE__ */ new WeakSet();
+  var capturedDisclosures = /* @__PURE__ */ new WeakSet();
   function isAlreadyFocusingAnotherElement(dialog) {
     const activeElement = getActiveElement(dialog);
     if (!activeElement) return false;
     if (dialog && contains(dialog, activeElement)) return false;
     if (isFocusable(activeElement)) return true;
     return false;
+  }
+  function getDeepestActiveElement(element) {
+    let activeElement = element;
+    while (activeElement.shadowRoot) {
+      const nextElement = activeElement.shadowRoot.activeElement;
+      if (!isElement(nextElement)) break;
+      activeElement = nextElement;
+    }
+    return activeElement;
+  }
+  function isElementInDialog(element, dialog, disclosureElement) {
+    if (contains(dialog, element)) return true;
+    if (disclosureElement && contains(disclosureElement, element)) return true;
+    return isElementInside(element, dialog);
   }
   function getElementFromProp(prop, focusable = false) {
     if (!prop) return null;
@@ -7155,8 +7474,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var useDialog = createHook(function useDialog2({ store: storeProp, open: openProp, onClose, focusable = true, modal = true, portal = modal, backdrop = modal, hideOnEscape = true, hideOnInteractOutside = true, getPersistentElements, preventBodyScroll = modal, autoFocusOnShow = true, autoFocusOnHide = true, initialFocus, finalFocus, unmountOnHide, unstable_treeSnapshotKey, ...props }) {
     const context = useDialogProviderContext();
-    const ref = (0, import_react26.useRef)(null);
-    const backdropRef = (0, import_react26.useRef)(null);
+    const ref = (0, import_react27.useRef)(null);
+    const backdropRef = (0, import_react27.useRef)(null);
     const hasDefaultModalPortal = modal && portal && !props.portalElement;
     const store = useDialogStore({
       store: storeProp || context,
@@ -7184,18 +7503,30 @@ If there's a particular need for this, please submit a feature request at https:
     const contentElement = useStoreState(store, "contentElement");
     const hidden = isHidden(mounted, props.hidden, props.alwaysVisible);
     usePreventBodyScroll(contentElement, id3, preventBodyScroll && !hidden);
-    const interactedOutsideRef = (0, import_react26.useRef)(false);
+    const interactedOutsideRef = (0, import_react27.useRef)(false);
+    const focusedStoreRef = (0, import_react27.useRef)(null);
     useSafeLayoutEffect(() => {
       return sync(store, ["open"], (state) => {
-        if (!state.open) return;
+        if (!state.open) {
+          focusedStoreRef.current = null;
+          return;
+        }
         interactedOutsideRef.current = false;
+        if (focusedStoreRef.current === store) return;
+        focusedStoreRef.current = null;
       });
     }, [store]);
-    useHideOnInteractOutside(store, hideOnInteractOutside, domReady, interactedOutsideRef);
+    useHideOnInteractOutside({
+      store,
+      hideOnInteractOutside,
+      domReady,
+      interactedOutsideRef,
+      focusedStoreRef
+    });
     const { wrapElement, nestedDialogs } = useNestedDialogs(store);
     props = useWrapElement(props, wrapElement, [wrapElement]);
-    const lastMousedownRef = (0, import_react26.useRef)(null);
-    if (isSafariBrowser2) (0, import_react26.useEffect)(() => {
+    const lastMousedownRef = (0, import_react27.useRef)(null);
+    if (isSafariBrowser2) (0, import_react27.useEffect)(() => {
       if (!domReady) return;
       const dialog = ref.current;
       if (!dialog) return;
@@ -7210,7 +7541,21 @@ If there's a particular need for this, please submit a feature request at https:
     }, [domReady]);
     useSafeLayoutEffect(() => {
       if (!open) return;
+      if (focusedStoreRef.current === store) return;
       const dialog = ref.current;
+      const hasNamedDisclosure = () => {
+        const { disclosureElement } = store.getState();
+        if (!disclosureElement) return false;
+        if (capturedDisclosures.has(disclosureElement)) return false;
+        if (!disclosureElement.isConnected) return false;
+        if (dialog && contains(dialog, disclosureElement)) return false;
+        return true;
+      };
+      if (hasNamedDisclosure()) return;
+      const captureDisclosure = (element) => {
+        capturedDisclosures.add(element);
+        store.setDisclosureElement(element);
+      };
       const activeElement = getActiveElement(dialog, true);
       if (!activeElement) return;
       if (activeElement.tagName === "BODY") {
@@ -7219,13 +7564,13 @@ If there's a particular need for this, please submit a feature request at https:
         if (!fallback?.isConnected) return;
         if (!isFocusable(fallback)) return;
         if (dialog && contains(dialog, fallback)) return;
-        store.setDisclosureElement(fallback);
+        captureDisclosure(fallback);
         return;
       }
       if (dialog && contains(dialog, activeElement)) return;
-      store.setDisclosureElement(activeElement);
+      captureDisclosure(activeElement);
     }, [store, open]);
-    (0, import_react26.useEffect)(() => {
+    (0, import_react27.useEffect)(() => {
       if (!mounted) return;
       if (!domReady) return;
       const dialog = ref.current;
@@ -7242,7 +7587,7 @@ If there's a particular need for this, please submit a feature request at https:
         viewport.removeEventListener("resize", setViewportHeight);
       };
     }, [mounted, domReady]);
-    (0, import_react26.useEffect)(() => {
+    (0, import_react27.useEffect)(() => {
       if (!modal) return;
       if (!mounted) return;
       if (!domReady) return;
@@ -7270,7 +7615,7 @@ If there's a particular need for this, please submit a feature request at https:
       domReady
     ]);
     const canTakeTreeSnapshot = open && domReady;
-    const openingCohortRef = (0, import_react26.useRef)(null);
+    const openingCohortRef = (0, import_react27.useRef)(null);
     useSafeLayoutEffect(() => {
       if (!id3 || !hasDefaultModalPortal || !canTakeTreeSnapshot || !portalNode) {
         openingCohortRef.current = null;
@@ -7334,8 +7679,8 @@ If there's a particular need for this, please submit a feature request at https:
     ]);
     const mayAutoFocusOnShow = !!autoFocusOnShow;
     const autoFocusOnShowProp = useBooleanEvent(autoFocusOnShow);
-    const [autoFocusEnabled, setAutoFocusEnabled] = (0, import_react26.useState)(false);
-    (0, import_react26.useEffect)(() => {
+    const [autoFocusEnabled, setAutoFocusEnabled] = (0, import_react27.useState)(false);
+    (0, import_react27.useEffect)(() => {
       if (!open) return;
       if (!mayAutoFocusOnShow) return;
       if (!domReady) return;
@@ -7345,14 +7690,17 @@ If there's a particular need for this, please submit a feature request at https:
       if (!autoFocusOnShowProp(isElementFocusable ? element : null)) return;
       setAutoFocusEnabled(true);
       queueMicrotask(() => {
-        if (!store.getState().open) return;
-        element.focus();
-        if (!isSafariBrowser2) return;
-        if (!isElementFocusable) return;
-        element.scrollIntoView({
+        const { open: open2, disclosureElement } = store.getState();
+        if (!open2) return;
+        const documentActiveElement = getDocument(contentElement).activeElement;
+        const activeElement = isElement(documentActiveElement) ? documentActiveElement : null;
+        const deepestActiveElement = activeElement && getDeepestActiveElement(activeElement);
+        if (focusedStoreRef.current === store && activeElement && deepestActiveElement && isFocusable(deepestActiveElement) && !isElementInDialog(activeElement, contentElement, disclosureElement) && !isElementInDialog(deepestActiveElement, contentElement, disclosureElement)) return;
+        if (isFocusable(element)) element.scrollIntoView({
           block: "nearest",
           inline: "nearest"
         });
+        element.focus({ preventScroll: true });
       });
     }, [
       open,
@@ -7363,17 +7711,18 @@ If there's a particular need for this, please submit a feature request at https:
       portal,
       preserveTabOrder,
       store,
-      autoFocusOnShowProp
+      autoFocusOnShowProp,
+      focusedStoreRef
     ]);
     const mayAutoFocusOnHide = !!autoFocusOnHide;
     const autoFocusOnHideProp = useBooleanEvent(autoFocusOnHide);
-    const [hasOpened, setHasOpened] = (0, import_react26.useState)(false);
+    const [hasOpened, setHasOpened] = (0, import_react27.useState)(false);
     useSafeLayoutEffect(() => {
       if (!open) return;
       setHasOpened(true);
       return () => setHasOpened(false);
     }, [open]);
-    const focusOnHide = (0, import_react26.useCallback)((dialog, retry = true) => {
+    const focusOnHide = (0, import_react27.useCallback)((dialog, retry = true) => {
       if (interactedOutsideRef.current) return;
       const { disclosureElement } = store.getState();
       if (isAlreadyFocusingAnotherElement(dialog)) return;
@@ -7406,7 +7755,7 @@ If there's a particular need for this, please submit a feature request at https:
       finalFocus,
       autoFocusOnHideProp
     ]);
-    const focusedOnHideRef = (0, import_react26.useRef)(false);
+    const focusedOnHideRef = (0, import_react27.useRef)(false);
     useSafeLayoutEffect(() => {
       if (open) return;
       if (!hasOpened) return;
@@ -7421,7 +7770,7 @@ If there's a particular need for this, please submit a feature request at https:
       mayAutoFocusOnHide,
       focusOnHide
     ]);
-    (0, import_react26.useEffect)(() => {
+    (0, import_react27.useEffect)(() => {
       if (!hasOpened) return;
       if (!mayAutoFocusOnHide) return;
       const dialog = ref.current;
@@ -7438,9 +7787,18 @@ If there's a particular need for this, please submit a feature request at https:
       focusOnHide
     ]);
     const hideOnEscapeProp = useBooleanEvent(hideOnEscape);
-    const [escapeEvents] = (0, import_react26.useState)(() => /* @__PURE__ */ new WeakMap());
+    const [escapeEvents] = (0, import_react27.useState)(() => /* @__PURE__ */ new WeakMap());
     const onKeyDownProp = props.onKeyDown;
     const onKeyDownCaptureProp = props.onKeyDownCapture;
+    const onFocusCaptureProp = props.onFocusCapture;
+    const onFocusCapture = useEvent((event) => {
+      onFocusCaptureProp?.(event);
+      if (!store.getState().open) return;
+      const target = event.target;
+      if (!isNode(target)) return;
+      if (!contains(event.currentTarget, target)) return;
+      focusedStoreRef.current = store;
+    });
     const acceptEscape = useEvent((event) => {
       if (event.key !== "Escape") return false;
       if (!event.bubbles) return false;
@@ -7490,7 +7848,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!(event.isPropagationStopped() || nativeEvent.cancelBubble)) return;
       hideOnEscapeEvent(nativeEvent);
     });
-    (0, import_react26.useEffect)(() => {
+    (0, import_react27.useEffect)(() => {
       if (!domReady) return;
       if (!mounted) return;
       const onDocumentKeyDownCapture = (event) => {
@@ -7560,8 +7918,8 @@ If there's a particular need for this, please submit a feature request at https:
       hiddenProp,
       alwaysVisible
     ]);
-    const [headingId, setHeadingId] = (0, import_react26.useState)();
-    const [descriptionId, setDescriptionId] = (0, import_react26.useState)();
+    const [headingId, setHeadingId] = (0, import_react27.useState)();
+    const [descriptionId, setDescriptionId] = (0, import_react27.useState)();
     props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(DialogScopedContextProvider, {
       value: store,
       children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(DialogHeadingContext.Provider, {
@@ -7582,6 +7940,7 @@ If there's a particular need for this, please submit a feature request at https:
       "data-dialog-portal": hasDefaultModalPortal ? portalNode?.id : void 0,
       id: id3,
       ref: useMergeRefs(ref, props.ref),
+      onFocusCapture,
       onKeyDown,
       onKeyDownCapture
     };
@@ -7609,7 +7968,8 @@ If there's a particular need for this, please submit a feature request at https:
   function createDialogComponent(Component7, useProviderContext = useDialogProviderContext) {
     return forwardRef2(function DialogComponent(props) {
       const context = useProviderContext();
-      if (!useStoreState(props.store || context, ["mounted"], (state) => !props.unmountOnHide || state?.mounted || !!props.open)) return null;
+      const store = props.store || context;
+      if (!useStoreState(store, ["mounted"], (state) => !props.unmountOnHide || state?.mounted || !!props.open)) return null;
       return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Component7, { ...props });
     });
   }
@@ -7636,7 +7996,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/popover/popover.js
-  var import_react27 = __toESM(require_react(), 1);
+  var import_react28 = __toESM(require_react(), 1);
   var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
 
   // node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs
@@ -9170,6 +9530,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/@ariakit/react-components/dist/popover/popover.js
   var TagName20 = "div";
+  var placingWriters = /* @__PURE__ */ new WeakMap();
   function createDOMRect(x2 = 0, y3 = 0, width = 0, height = 0) {
     if (typeof DOMRect === "function") return new DOMRect(x2, y3, width, height);
     const rect = {
@@ -9279,12 +9640,13 @@ If there's a particular need for this, please submit a feature request at https:
     const shouldPreserveTabOrder = preserveTabOrder && portal && !modal;
     const disclosureElement = useStoreState(store, shouldPreserveTabOrder ? ["disclosureElement"] : [], (state) => shouldPreserveTabOrder ? state.disclosureElement : null);
     const popoverElement = useStoreState(store, "popoverElement");
+    const placing = useStoreState(store, "unstable_placing");
     const contentElement = useStoreState(store, "contentElement");
     const placement = useStoreState(store, "placement");
     const mounted = useStoreState(store, "mounted");
     const rendered = useStoreState(store, "rendered");
-    const defaultArrowElementRef = (0, import_react27.useRef)(null);
-    const [positioned, setPositioned] = (0, import_react27.useState)(false);
+    const defaultArrowElementRef = (0, import_react28.useRef)(null);
+    const positioned = !placing;
     const { portalRef, domReady } = usePortalRef(portal, props.portalRef);
     const getAnchorRectProp = useEvent(getAnchorRect);
     const updatePositionProp = useEvent(updatePosition);
@@ -9295,6 +9657,7 @@ If there's a particular need for this, please submit a feature request at https:
     const overflowPaddingLeft = typeof overflowPadding === "number" ? overflowPadding : overflowPadding.left ?? 0;
     const hiddenWhileUnmounted = !mounted && isHidden(mounted, props.hidden, props.alwaysVisible);
     useSafeLayoutEffect(() => {
+      if (mounted) store?.setState("unstable_placing", true);
       if (!popoverElement?.isConnected) return;
       const positioningPadding = {
         top: overflowPaddingTop,
@@ -9306,6 +9669,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (hiddenWhileUnmounted && !hasCustomUpdatePosition) return;
       const anchor = getAnchorElement(anchorElement, getAnchorRectProp);
       let canceled = false;
+      let placed = false;
       const shouldCancelUpdate = () => {
         if (canceled) return true;
         if (!popoverElement.isConnected) return true;
@@ -9345,7 +9709,6 @@ If there's a particular need for this, please submit a feature request at https:
         });
         if (shouldCancelUpdate()) return;
         store?.setState("currentPlacement", pos.placement);
-        setPositioned(true);
         const x2 = roundByDPR(pos.x);
         const y3 = roundByDPR(pos.y);
         Object.assign(popoverElement.style, {
@@ -9353,6 +9716,7 @@ If there's a particular need for this, please submit a feature request at https:
           left: "0",
           transform: `translate3d(${x2}px,${y3}px,0)`
         });
+        placed = true;
         if (arrow4 && pos.middlewareData.arrow) {
           const { x: arrowX, y: arrowY } = pos.middlewareData.arrow;
           const side = getBasePlacement(pos.placement);
@@ -9377,16 +9741,19 @@ If there's a particular need for this, please submit a feature request at https:
       };
       const update2 = async () => {
         if (shouldCancelUpdate()) return;
-        if (hasCustomUpdatePosition) {
-          await updatePositionProp({ updatePosition: updatePosition2 });
-          if (shouldCancelUpdate()) return;
-          setPositioned(true);
-        } else await updatePosition2();
+        try {
+          if (hasCustomUpdatePosition) await updatePositionProp({ updatePosition: updatePosition2 });
+          else await updatePosition2();
+        } catch (error) {
+          if (placed && !shouldCancelUpdate()) store?.setState("unstable_placing", false);
+          throw error;
+        }
+        if (shouldCancelUpdate()) return;
+        store?.setState("unstable_placing", false);
       };
       const cancelAutoUpdate = autoUpdate(anchor, popoverElement, update2, { elementResize: typeof ResizeObserver === "function" });
       return () => {
         canceled = true;
-        setPositioned(false);
         cancelAutoUpdate();
       };
     }, [
@@ -9435,6 +9802,22 @@ If there's a particular need for this, please submit a feature request at https:
       popoverElement,
       contentElement
     ]);
+    useSafeLayoutEffect(() => {
+      if (!store) return;
+      const currentStore = store;
+      placingWriters.set(currentStore, (placingWriters.get(currentStore) ?? 0) + 1);
+      const desync = sync(currentStore, ["mounted"], (state) => {
+        currentStore.setState("unstable_placing", state.mounted);
+      });
+      return () => {
+        desync();
+        placingWriters.set(currentStore, (placingWriters.get(currentStore) ?? 1) - 1);
+        queueMicrotask(() => {
+          if (placingWriters.get(currentStore)) return;
+          currentStore.setState("unstable_placing", false);
+        });
+      };
+    }, [store]);
     const position2 = fixed ? "fixed" : "absolute";
     props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", {
       ...wrapperProps,
@@ -9457,7 +9840,7 @@ If there's a particular need for this, please submit a feature request at https:
       children: element
     }), [store]);
     props = {
-      "data-placing": !positioned || void 0,
+      "data-placing": placing || void 0,
       ...props,
       style: {
         position: "relative",
@@ -9511,16 +9894,20 @@ If there's a particular need for this, please submit a feature request at https:
       if (yj < yi) {
         if (y3 >= yj && y3 < yi) {
           if (where === 0) return true;
-          if (where > 0) if (y3 === yj) {
-            if (y3 > vy) inside = !inside;
-          } else inside = !inside;
+          if (where > 0) {
+            if (y3 === yj) {
+              if (y3 > vy) inside = !inside;
+            } else inside = !inside;
+          }
         }
       } else if (yi < yj) {
         if (y3 > yi && y3 <= yj) {
           if (where === 0) return true;
-          if (where < 0) if (y3 === yj) {
-            if (y3 < vy) inside = !inside;
-          } else inside = !inside;
+          if (where < 0) {
+            if (y3 === yj) {
+              if (y3 < vy) inside = !inside;
+            } else inside = !inside;
+          }
         }
       } else if (y3 === yi && (x2 >= xj && x2 <= xi || x2 >= xi && x2 <= xj)) return true;
     }
@@ -9556,13 +9943,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/hovercard/hovercard.js
-  var import_react28 = __toESM(require_react(), 1);
+  var import_react29 = __toESM(require_react(), 1);
   var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
   var TagName21 = "div";
-  function isMovingOnHovercard(path, card, anchor, nested) {
+  function isMovingOnHovercard(path, card, hoverElements, nested) {
     if (hasFocusWithin(card)) return true;
     if (path.includes(card)) return true;
-    if (anchor && path.includes(anchor)) return true;
+    if (hoverElements.some((element) => element && path.includes(element))) return true;
     if (nested?.some((card2) => hasFocusWithin(card2) || path.includes(card2))) return true;
     return false;
   }
@@ -9570,7 +9957,8 @@ If there's a particular need for this, please submit a feature request at https:
     const enterPoint = enterPointRef.current;
     if (!enterPoint) return false;
     const currentPoint = getEventPoint(event);
-    if (!isPointInPolygon(currentPoint, getElementPolygon(element, enterPoint))) return false;
+    const polygon = getElementPolygon(element, enterPoint);
+    if (!isPointInPolygon(currentPoint, polygon)) return false;
     if (refreshEnterPoint) enterPointRef.current = currentPoint;
     if (disablePointerEvents(event)) {
       event.preventDefault();
@@ -9579,9 +9967,9 @@ If there's a particular need for this, please submit a feature request at https:
     return true;
   }
   function useAutoFocusOnHide({ store, ...props }) {
-    const [autoFocusOnHide, setAutoFocusOnHide] = (0, import_react28.useState)(false);
+    const [autoFocusOnHide, setAutoFocusOnHide] = (0, import_react29.useState)(false);
     const mounted = useStoreState(store, "mounted");
-    (0, import_react28.useEffect)(() => {
+    (0, import_react29.useEffect)(() => {
       if (!mounted) setAutoFocusOnHide(false);
     }, [mounted]);
     const onFocusProp = props.onFocus;
@@ -9590,8 +9978,8 @@ If there's a particular need for this, please submit a feature request at https:
       if (event.defaultPrevented) return;
       setAutoFocusOnHide(true);
     });
-    const finalFocusRef = (0, import_react28.useRef)(null);
-    (0, import_react28.useEffect)(() => {
+    const finalFocusRef = (0, import_react29.useRef)(null);
+    (0, import_react29.useEffect)(() => {
       return sync(store, ["anchorElement"], (state) => {
         finalFocusRef.current = state.anchorElement;
       });
@@ -9604,15 +9992,15 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return props;
   }
-  var NestedHovercardContext = (0, import_react28.createContext)(null);
+  var NestedHovercardContext = (0, import_react29.createContext)(null);
   var useHovercard = createHook(function useHovercard2({ store, modal = false, portal = modal, hideOnEscape = true, hideOnHoverOutside = true, disablePointerEventsOnApproach = !!hideOnHoverOutside, ...props }) {
     const context = useHovercardProviderContext();
     store = store || context;
     invariant(store, "Hovercard must receive a `store` prop or be wrapped in a HovercardProvider component.");
-    const ref = (0, import_react28.useRef)(null);
-    const nestedHovercardsRef = (0, import_react28.useRef)([]);
-    const hideTimeoutRef = (0, import_react28.useRef)(0);
-    const enterPointRef = (0, import_react28.useRef)(null);
+    const ref = (0, import_react29.useRef)(null);
+    const nestedHovercardsRef = (0, import_react29.useRef)([]);
+    const hideTimeoutRef = (0, import_react29.useRef)(0);
+    const enterPointRef = (0, import_react29.useRef)(null);
     const { portalRef, domReady } = usePortalRef(portal, props.portalRef);
     const isMouseMoving = useIsMouseMoving();
     const mayHideOnHoverOutside = !!hideOnHoverOutside;
@@ -9621,11 +10009,11 @@ If there's a particular need for this, please submit a feature request at https:
     const disablePointerEventsProp = useBooleanEvent(disablePointerEventsOnApproach);
     const open = useStoreState(store, "open");
     const mounted = useStoreState(store, "mounted");
-    const clearHideTimeout = (0, import_react28.useCallback)(() => {
+    const clearHideTimeout = (0, import_react29.useCallback)(() => {
       window.clearTimeout(hideTimeoutRef.current);
       hideTimeoutRef.current = 0;
     }, []);
-    (0, import_react28.useEffect)(() => {
+    (0, import_react29.useEffect)(() => {
       if (!domReady) return;
       if (!mounted) return;
       if (!mayHideOnHoverOutside && !mayDisablePointerEvents) return;
@@ -9634,11 +10022,12 @@ If there's a particular need for this, please submit a feature request at https:
       const onMouseMove = (event) => {
         if (!store) return;
         if (!isMouseMoving()) return;
-        const { anchorElement, hideTimeout, timeout } = store.getState();
+        const { anchorElement, disclosureElement, hideTimeout, timeout } = store.getState();
         const path = event.composedPath();
-        const anchor = anchorElement;
-        if (isMovingOnHovercard(path, element, anchor, nestedHovercardsRef.current)) {
-          enterPointRef.current = anchor && path.includes(anchor) ? getEventPoint(event) : null;
+        const hoverElements = [anchorElement, disclosureElement];
+        const hoveredElement = hoverElements.find((element2) => element2 && path.includes(element2));
+        if (isMovingOnHovercard(path, element, hoverElements, nestedHovercardsRef.current)) {
+          enterPointRef.current = hoveredElement ? getEventPoint(event) : null;
           clearHideTimeout();
           return;
         }
@@ -9669,7 +10058,7 @@ If there's a particular need for this, please submit a feature request at https:
       disablePointerEventsProp,
       hideOnHoverOutsideProp
     ]);
-    (0, import_react28.useEffect)(() => {
+    (0, import_react29.useEffect)(() => {
       if (!domReady) return;
       if (!mounted) return;
       if (!mayDisablePointerEvents) return;
@@ -9690,7 +10079,7 @@ If there's a particular need for this, please submit a feature request at https:
       mayDisablePointerEvents,
       disablePointerEventsProp
     ]);
-    (0, import_react28.useEffect)(() => {
+    (0, import_react29.useEffect)(() => {
       if (!domReady) return;
       if (open) return;
       store?.setAutoFocusOnShow(false);
@@ -9700,13 +10089,13 @@ If there's a particular need for this, please submit a feature request at https:
       open
     ]);
     const openRef = useLiveRef(open);
-    (0, import_react28.useEffect)(() => {
+    (0, import_react29.useEffect)(() => {
       if (!domReady) return;
       return () => {
         if (!openRef.current) store?.setAutoFocusOnShow(false);
       };
     }, [store, domReady]);
-    const registerOnParent = (0, import_react28.useContext)(NestedHovercardContext);
+    const registerOnParent = (0, import_react29.useContext)(NestedHovercardContext);
     useSafeLayoutEffect(() => {
       if (modal) return;
       if (!portal) return;
@@ -9721,7 +10110,7 @@ If there's a particular need for this, please submit a feature request at https:
       mounted,
       domReady
     ]);
-    const registerNestedHovercard = (0, import_react28.useCallback)((element) => {
+    const registerNestedHovercard = (0, import_react29.useCallback)((element) => {
       clearHideTimeout();
       nestedHovercardsRef.current = [...nestedHovercardsRef.current, element];
       const parentUnregister = registerOnParent?.(element);
@@ -9822,49 +10211,44 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName22, htmlProps);
   }), useTooltipProviderContext);
 
-  // node_modules/@ariakit/react-components/dist/hovercard/hovercard-anchor.js
-  var import_react29 = __toESM(require_react(), 1);
-  var TagName23 = "a";
-  var useHovercardAnchor = createHook(function useHovercardAnchor2({ store, showOnHover = true, ...props }) {
-    const context = useHovercardProviderContext();
-    store = store || context;
-    invariant(store, "HovercardAnchor must receive a `store` prop or be wrapped in a HovercardProvider component.");
+  // node_modules/@ariakit/react-components/dist/__chunks/BnO18VWs.js
+  var import_react30 = __toESM(require_react(), 1);
+  var useHovercardTrigger = createHook(function useHovercardTrigger2({ store, showOnHover = true, setAnchorElement = false, ...props }) {
     const disabled = disabledFromProps(props);
-    const showTimeoutRef = (0, import_react29.useRef)(0);
-    (0, import_react29.useEffect)(() => () => window.clearTimeout(showTimeoutRef.current), []);
-    (0, import_react29.useEffect)(() => {
+    const triggerRef = (0, import_react30.useRef)(null);
+    const showTimeoutRef = (0, import_react30.useRef)(0);
+    (0, import_react30.useEffect)(() => () => window.clearTimeout(showTimeoutRef.current), []);
+    (0, import_react30.useEffect)(() => {
       const onMouseLeave = (event) => {
-        if (!store) return;
-        const { anchorElement } = store.getState();
-        if (!anchorElement) return;
-        if (event.target !== anchorElement) return;
+        const trigger = triggerRef.current;
+        if (!trigger) return;
+        if (event.target !== trigger) return;
         window.clearTimeout(showTimeoutRef.current);
         showTimeoutRef.current = 0;
       };
       return addGlobalEventListener("mouseleave", onMouseLeave, true);
-    }, [store]);
+    }, []);
     const onMouseMoveProp = props.onMouseMove;
     const showOnHoverProp = useBooleanEvent(showOnHover);
     const isMouseMoving = useIsMouseMoving();
     const onMouseMove = useEvent((event) => {
       onMouseMoveProp?.(event);
       if (disabled) return;
-      if (!store) return;
       if (event.defaultPrevented) return;
       if (showTimeoutRef.current) return;
       if (!isMouseMoving()) return;
       if (!showOnHoverProp(event)) return;
       const element = event.currentTarget;
-      store.setAnchorElement(element);
+      if (setAnchorElement) store.setAnchorElement(element);
       store.setDisclosureElement(element);
       const { showTimeout, timeout } = store.getState();
       const showHovercard = () => {
         showTimeoutRef.current = 0;
         if (!isMouseMoving()) return;
-        store?.setAnchorElement(element);
-        store?.show();
+        if (setAnchorElement) store.setAnchorElement(element);
+        store.show();
         queueMicrotask(() => {
-          store?.setDisclosureElement(element);
+          store.setDisclosureElement(element);
         });
       };
       const timeoutMs = showTimeout ?? timeout;
@@ -9874,16 +10258,16 @@ If there's a particular need for this, please submit a feature request at https:
     const onClickProp = props.onClick;
     const onClick = useEvent((event) => {
       onClickProp?.(event);
-      if (!store) return;
       window.clearTimeout(showTimeoutRef.current);
       showTimeoutRef.current = 0;
     });
-    const ref = (0, import_react29.useCallback)((element) => {
-      if (!store) return;
+    const ref = (0, import_react30.useCallback)((element) => {
+      triggerRef.current = element;
+      if (!setAnchorElement) return;
       const { anchorElement } = store.getState();
       if (anchorElement?.isConnected) return;
       store.setAnchorElement(element);
-    }, [store]);
+    }, [store, setAnchorElement]);
     props = {
       ...props,
       ref: useMergeRefs(ref, props.ref),
@@ -9893,13 +10277,27 @@ If there's a particular need for this, please submit a feature request at https:
     props = useFocusable(props);
     return props;
   });
+
+  // node_modules/@ariakit/react-components/dist/hovercard/hovercard-anchor.js
+  var TagName23 = "a";
+  var useHovercardAnchor = createHook(function useHovercardAnchor2({ store, showOnHover = true, ...props }) {
+    const context = useHovercardProviderContext();
+    store = store || context;
+    invariant(store, "HovercardAnchor must receive a `store` prop or be wrapped in a HovercardProvider component.");
+    return useHovercardTrigger({
+      store,
+      showOnHover,
+      setAnchorElement: true,
+      ...props
+    });
+  });
   var HovercardAnchor = forwardRef2(function HovercardAnchor2(props) {
     const htmlProps = useHovercardAnchor(props);
     return createElement(TagName23, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/tooltip/tooltip-anchor.js
-  var import_react30 = __toESM(require_react(), 1);
+  var import_react31 = __toESM(require_react(), 1);
   var TagName24 = "div";
   var globalStore = createStore({ activeStore: null });
   var hidingStores = /* @__PURE__ */ new WeakSet();
@@ -9920,14 +10318,14 @@ If there's a particular need for this, please submit a feature request at https:
     const context = useTooltipProviderContext();
     store = store || context;
     invariant(store, "TooltipAnchor must receive a `store` prop or be wrapped in a TooltipProvider component.");
-    const canShowOnHoverRef = (0, import_react30.useRef)(false);
-    (0, import_react30.useEffect)(() => {
+    const canShowOnHoverRef = (0, import_react31.useRef)(false);
+    (0, import_react31.useEffect)(() => {
       return sync(store, ["mounted"], (state) => {
         if (state.mounted) return;
         canShowOnHoverRef.current = false;
       });
     }, [store]);
-    (0, import_react30.useEffect)(() => {
+    (0, import_react31.useEffect)(() => {
       if (!store) return;
       const removeStore = createRemoveStoreCallback(store);
       return chain(removeStore, sync(store, ["mounted"], (state) => {
@@ -10000,7 +10398,8 @@ If there's a particular need for this, please submit a feature request at https:
       "anchorElement",
       "contentElement",
       "popoverElement",
-      "disclosureElement"
+      "disclosureElement",
+      "unstable_placing"
     ]));
     throwOnConflictingProps(props, store);
     const syncState = store?.getState();
@@ -10009,15 +10408,26 @@ If there's a particular need for this, please submit a feature request at https:
       store
     });
     const placement = defaultValue(props.placement, syncState?.placement, "bottom");
-    const popover = createStore({
+    const initialState2 = {
       ...dialog.getState(),
       placement,
       currentPlacement: placement,
       anchorElement: defaultValue(syncState?.anchorElement, null),
       popoverElement: defaultValue(syncState?.popoverElement, null),
       arrowElement: defaultValue(syncState?.arrowElement, null),
-      rendered: /* @__PURE__ */ Symbol("rendered")
-    }, dialog, store);
+      rendered: /* @__PURE__ */ Symbol("rendered"),
+      unstable_placing: false
+    };
+    const popover = createStore(initialState2, dialog, store);
+    let syncedAnchorElement = initialState2.anchorElement === initialState2.disclosureElement ? initialState2.anchorElement : null;
+    setup(popover, () => sync(popover, ["anchorElement", "disclosureElement"], (state) => {
+      if (state.anchorElement && state.anchorElement !== syncedAnchorElement) {
+        syncedAnchorElement = null;
+        return;
+      }
+      syncedAnchorElement = state.disclosureElement;
+      popover.setState("anchorElement", syncedAnchorElement);
+    }));
     return {
       ...dialog,
       ...popover,
@@ -10043,13 +10453,14 @@ If there's a particular need for this, please submit a feature request at https:
       placement: defaultValue(props.placement, syncState?.placement, "bottom")
     });
     const timeout = defaultValue(props.timeout, syncState?.timeout, 500);
-    const hovercard = createStore({
+    const initialState2 = {
       ...popover.getState(),
       timeout,
       showTimeout: defaultValue(props.showTimeout, syncState?.showTimeout),
       hideTimeout: defaultValue(props.hideTimeout, syncState?.hideTimeout),
       autoFocusOnShow: defaultValue(syncState?.autoFocusOnShow, false)
-    }, popover, props.store);
+    };
+    const hovercard = createStore(initialState2, popover, props.store);
     return {
       ...popover,
       ...hovercard,
@@ -10076,11 +10487,12 @@ If there's a particular need for this, please submit a feature request at https:
       placement: defaultValue(props.placement, syncState?.placement, "top"),
       hideTimeout: defaultValue(props.hideTimeout, syncState?.hideTimeout, 0)
     });
-    const tooltip = createStore({
+    const initialState2 = {
       ...hovercard.getState(),
       type: defaultValue(props.type, syncState?.type, "description"),
       skipTimeout: defaultValue(props.skipTimeout, syncState?.skipTimeout, 300)
-    }, hovercard, props.store);
+    };
+    const tooltip = createStore(initialState2, hovercard, props.store);
     return {
       ...hovercard,
       ...tooltip
@@ -10106,33 +10518,17 @@ If there's a particular need for this, please submit a feature request at https:
   var MenubarContextProvider = menubar.ContextProvider;
   var MenubarScopedContextProvider = menubar.ScopedContextProvider;
 
-  // node_modules/@ariakit/react-components/dist/popover/popover-anchor.js
-  var TagName25 = "div";
-  var usePopoverAnchor = createHook(function usePopoverAnchor2({ store, ...props }) {
-    const context = usePopoverProviderContext();
-    store = store || context;
-    props = {
-      ...props,
-      ref: useMergeRefs(store?.setAnchorElement, props.ref)
-    };
-    return props;
-  });
-  var PopoverAnchor = forwardRef2(function PopoverAnchor2(props) {
-    const htmlProps = usePopoverAnchor(props);
-    return createElement(TagName25, htmlProps);
-  });
-
   // node_modules/@ariakit/react-components/dist/button/button.js
-  var import_react31 = __toESM(require_react(), 1);
-  var TagName26 = "button";
+  var import_react32 = __toESM(require_react(), 1);
+  var TagName25 = "button";
   var useButton = createHook(function useButton2(props) {
-    const ref = (0, import_react31.useRef)(null);
-    const tagName = useTagName(ref, TagName26);
-    const [isNativeButton, setIsNativeButton] = (0, import_react31.useState)(() => !!tagName && isButton({
+    const ref = (0, import_react32.useRef)(null);
+    const tagName = useTagName(ref, TagName25);
+    const [isNativeButton, setIsNativeButton] = (0, import_react32.useState)(() => !!tagName && isButton({
       tagName,
       type: props.type
     }));
-    (0, import_react31.useEffect)(() => {
+    (0, import_react32.useEffect)(() => {
       if (!ref.current) return;
       setIsNativeButton(isButton(ref.current));
     }, []);
@@ -10146,22 +10542,32 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var Button = forwardRef2(function Button2(props) {
     const htmlProps = useButton(withDefaultButtonType(props));
-    return createElement(TagName26, htmlProps);
+    return createElement(TagName25, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/disclosure/disclosure.js
-  var import_react32 = __toESM(require_react(), 1);
-  var TagName27 = "button";
+  var import_react33 = __toESM(require_react(), 1);
+  var TagName26 = "button";
   var symbol2 = /* @__PURE__ */ Symbol("disclosure");
   var useDisclosure = createHook(function useDisclosure2({ store, toggleOnClick = true, ...props }) {
     const context = useDisclosureProviderContext();
     store = store || context;
     invariant(store, "Disclosure must receive a `store` prop or be wrapped in a DisclosureProvider component.");
-    const ref = (0, import_react32.useRef)(null);
-    const [expanded, setExpanded] = (0, import_react32.useState)(false);
+    const ref = (0, import_react33.useRef)(null);
+    const [expanded, setExpanded] = (0, import_react33.useState)(false);
     const disclosureElement = useStoreState(store, "disclosureElement");
     const open = useStoreState(store, "open");
-    (0, import_react32.useEffect)(() => {
+    const setDisclosureElement = (0, import_react33.useCallback)((element) => {
+      const previousElement = ref.current;
+      ref.current = element;
+      if (element) {
+        if (!store?.getState().disclosureElement?.isConnected) store.setDisclosureElement(element);
+        return;
+      }
+      if (store?.getState().disclosureElement !== previousElement) return;
+      store.setDisclosureElement(null);
+    }, [store]);
+    (0, import_react33.useEffect)(() => {
       let isCurrentDisclosure = disclosureElement === ref.current;
       if (!disclosureElement?.isConnected) {
         store?.setDisclosureElement(ref.current);
@@ -10189,7 +10595,7 @@ If there's a particular need for this, please submit a feature request at https:
       "aria-controls": useStoreState(store, "contentElement")?.id,
       ...metadataProps,
       ...props,
-      ref: useMergeRefs(ref, props.ref),
+      ref: useMergeRefs(setDisclosureElement, props.ref),
       onClick
     };
     props = useButton(props);
@@ -10197,17 +10603,18 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var Disclosure = forwardRef2(function Disclosure2(props) {
     const htmlProps = useDisclosure(withDefaultButtonType(props));
-    return createElement(TagName27, htmlProps);
+    return createElement(TagName26, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/dialog/dialog-disclosure.js
-  var TagName28 = "button";
+  var TagName27 = "button";
   var useDialogDisclosure = createHook(function useDialogDisclosure2({ store, ...props }) {
     const context = useDialogProviderContext();
     store = store || context;
     invariant(store, "DialogDisclosure must receive a `store` prop or be wrapped in a DialogProvider component.");
+    const contentElement = useStoreState(store, "contentElement");
     props = {
-      "aria-haspopup": getPopupRole(useStoreState(store, "contentElement"), "dialog"),
+      "aria-haspopup": getPopupRole(contentElement, "dialog"),
       ...props
     };
     props = useDisclosure({
@@ -10218,33 +10625,20 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var DialogDisclosure = forwardRef2(function DialogDisclosure2(props) {
     const htmlProps = useDialogDisclosure(withDefaultButtonType(props));
-    return createElement(TagName28, htmlProps);
+    return createElement(TagName27, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/popover/popover-disclosure.js
   var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
-  var TagName29 = "button";
+  var TagName28 = "button";
   var usePopoverDisclosure = createHook(function usePopoverDisclosure2({ store, ...props }) {
     const context = usePopoverProviderContext();
     store = store || context;
     invariant(store, "PopoverDisclosure must receive a `store` prop or be wrapped in a PopoverProvider component.");
-    const onClickProp = props.onClick;
-    const onClick = useEvent((event) => {
-      store?.setAnchorElement(event.currentTarget);
-      onClickProp?.(event);
-    });
     props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(PopoverScopedContextProvider, {
       value: store,
       children: element
     }), [store]);
-    props = {
-      ...props,
-      onClick
-    };
-    props = usePopoverAnchor({
-      store,
-      ...props
-    });
     props = useDialogDisclosure({
       store,
       ...props
@@ -10253,13 +10647,13 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var PopoverDisclosure = forwardRef2(function PopoverDisclosure2(props) {
     const htmlProps = usePopoverDisclosure(withDefaultButtonType(props));
-    return createElement(TagName29, htmlProps);
+    return createElement(TagName28, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/popover/popover-disclosure-arrow.js
-  var import_react33 = __toESM(require_react(), 1);
+  var import_react34 = __toESM(require_react(), 1);
   var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
-  var TagName30 = "span";
+  var TagName29 = "span";
   var pointsMap = {
     top: "4,10 8,6 12,10",
     right: "6,4 10,8 6,12",
@@ -10270,10 +10664,11 @@ If there's a particular need for this, please submit a feature request at https:
     const context = usePopoverContext();
     store = store || context;
     invariant(store, "PopoverDisclosureArrow must be wrapped in a PopoverDisclosure component.");
-    const dir = getBasePlacement(useStoreState(store, ["placement"], (state) => placement || state.placement));
+    const position2 = useStoreState(store, ["placement"], (state) => placement || state.placement);
+    const dir = getBasePlacement(position2);
     const points = pointsMap[dir];
     props = {
-      children: (0, import_react33.useMemo)(() => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("svg", {
+      children: (0, import_react34.useMemo)(() => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("svg", {
         display: "block",
         fill: "none",
         stroke: "currentColor",
@@ -10294,26 +10689,26 @@ If there's a particular need for this, please submit a feature request at https:
         ...props.style
       }
     };
-    return removeUndefinedValues(props);
+    return props;
   });
   var PopoverDisclosureArrow = forwardRef2(function PopoverDisclosureArrow2(props) {
     const htmlProps = usePopoverDisclosureArrow(props);
-    return createElement(TagName30, htmlProps);
+    return createElement(TagName29, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/radio/radio-context.js
-  var import_react34 = __toESM(require_react(), 1);
+  var import_react35 = __toESM(require_react(), 1);
   var ctx12 = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
   var useRadioContext = ctx12.useContext;
   var useRadioScopedContext = ctx12.useScopedContext;
   var useRadioProviderContext = ctx12.useProviderContext;
   var RadioContextProvider = ctx12.ContextProvider;
   var RadioScopedContextProvider = ctx12.ScopedContextProvider;
-  var RadioGroupDisabledContext = (0, import_react34.createContext)(false);
+  var RadioGroupDisabledContext = (0, import_react35.createContext)(false);
 
   // node_modules/@ariakit/react-components/dist/radio/radio.js
-  var import_react35 = __toESM(require_react(), 1);
-  var TagName31 = "input";
+  var import_react36 = __toESM(require_react(), 1);
+  var TagName30 = "input";
   function getIsChecked(value, storeValue) {
     if (storeValue === void 0) return;
     if (value != null && storeValue != null) return storeValue === value;
@@ -10325,13 +10720,13 @@ If there's a particular need for this, please submit a feature request at https:
   var useRadio = createHook(function useRadio2({ store, name: nameProp, value, checked, ...props }) {
     const context = useRadioContext();
     store = store || context;
-    const groupDisabled = (0, import_react35.useContext)(RadioGroupDisabledContext);
+    const groupDisabled = (0, import_react36.useContext)(RadioGroupDisabledContext);
     const id3 = useId(props.id);
-    const ref = (0, import_react35.useRef)(null);
+    const ref = (0, import_react36.useRef)(null);
     const isChecked = useStoreState(store, ["value"], (state) => checked ?? getIsChecked(value, state?.value));
     const storeId = useStoreState(store, "id");
     const name = nameProp ?? storeId;
-    (0, import_react35.useEffect)(() => {
+    (0, import_react36.useEffect)(() => {
       if (!id3) return;
       if (!isChecked) return;
       if (store?.getState().activeId === id3) return;
@@ -10342,10 +10737,10 @@ If there's a particular need for this, please submit a feature request at https:
       id3
     ]);
     const onChangeProp = props.onChange;
-    const nativeRadio = isNativeRadio(useTagName(ref, TagName31), props.type);
+    const nativeRadio = isNativeRadio(useTagName(ref, TagName30), props.type);
     const disabled = groupDisabled || disabledFromProps(props);
     const [propertyUpdated, schedulePropertyUpdate] = useForceUpdate();
-    (0, import_react35.useEffect)(() => {
+    (0, import_react36.useEffect)(() => {
       const element = ref.current;
       if (!element) return;
       if (nativeRadio) return;
@@ -10420,13 +10815,13 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var Radio = memo2(forwardRef2(function Radio2(props) {
     const htmlProps = useRadio(props);
-    return createElement(TagName31, htmlProps);
+    return createElement(TagName30, htmlProps);
   }));
 
   // node_modules/@ariakit/react-components/dist/radio/radio-group.js
-  var import_react36 = __toESM(require_react(), 1);
+  var import_react37 = __toESM(require_react(), 1);
   var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
-  var TagName32 = "div";
+  var TagName31 = "div";
   function isCheckedRadio(element) {
     if (!element) return false;
     if (element.tagName === "INPUT") {
@@ -10443,7 +10838,7 @@ If there's a particular need for this, please submit a feature request at https:
   var useRadioGroup = createHook(function useRadioGroup2({ store, ...props }) {
     const context = useRadioProviderContext();
     store = store || context;
-    const disabled = (0, import_react36.useContext)(RadioGroupDisabledContext) || disabledFromProps(props);
+    const disabled = (0, import_react37.useContext)(RadioGroupDisabledContext) || disabledFromProps(props);
     invariant(store, "RadioGroup must receive a `store` prop or be wrapped in a RadioProvider component.");
     props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(RadioScopedContextProvider, {
       value: store,
@@ -10475,7 +10870,7 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var RadioGroup = forwardRef2(function RadioGroup2(props) {
     const htmlProps = useRadioGroup(props);
-    return createElement(TagName32, htmlProps);
+    return createElement(TagName31, htmlProps);
   });
 
   // node_modules/@ariakit/components/dist/radio/radio-store.js
@@ -10485,10 +10880,11 @@ If there's a particular need for this, please submit a feature request at https:
       ...props,
       focusLoop: defaultValue(props.focusLoop, syncState?.focusLoop, true)
     });
-    const radio = createStore({
+    const initialState2 = {
       ...composite.getState(),
       value: defaultValue(props.value, syncState?.value, props.defaultValue, null)
-    }, composite, props.store);
+    };
+    const radio = createStore(initialState2, composite, props.store);
     return {
       ...composite,
       ...radio,
@@ -10509,7 +10905,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/composite/composite-typeahead.js
-  var TagName33 = "div";
+  var TagName32 = "div";
   var typeaheadStates = /* @__PURE__ */ new WeakMap();
   function getTypeaheadState(store) {
     let typeaheadState = typeaheadStates.get(store);
@@ -10567,21 +10963,8 @@ If there's a particular need for this, please submit a feature request at https:
       if (!store) return;
       const typeaheadState = getTypeaheadState(store);
       if (!isValidTypeaheadEvent(event, typeaheadState)) return clearChars(typeaheadState);
-      const { renderedItems, items, activeId, id: id3 } = store.getState();
+      const { renderedItems, items, activeId } = store.getState();
       let enabledItems = getEnabledItems2(items.length > renderedItems.length ? items : renderedItems);
-      const document2 = getDocument(event.currentTarget);
-      const selector2 = `[data-offscreen-id="${id3}"]`;
-      const offscreenItems = document2.querySelectorAll(selector2);
-      for (const element of offscreenItems) {
-        if (element.hasAttribute("data-disabled")) continue;
-        if ("disabled" in element && !!element.disabled) continue;
-        enabledItems.push({
-          id: element.id,
-          element,
-          typeaheadText: element.dataset.typeaheadText
-        });
-      }
-      if (offscreenItems.length) enabledItems = sortBasedOnDOMPosition(enabledItems, (i3) => i3.element);
       if (!isSelfTargetOrItem(event, enabledItems)) return clearChars(typeaheadState);
       event.preventDefault();
       window.clearTimeout(typeaheadState.cleanupTimeout);
@@ -10608,11 +10991,11 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var CompositeTypeahead = forwardRef2(function CompositeTypeahead2(props) {
     const htmlProps = useCompositeTypeahead(props);
-    return createElement(TagName33, htmlProps);
+    return createElement(TagName32, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/select/select-arrow.js
-  var TagName34 = "span";
+  var TagName33 = "span";
   var useSelectArrow = createHook(function useSelectArrow2({ store, ...props }) {
     const context = useSelectContext();
     store = store || context;
@@ -10624,13 +11007,13 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var SelectArrow = forwardRef2(function SelectArrow2(props) {
     const htmlProps = useSelectArrow(props);
-    return createElement(TagName34, htmlProps);
+    return createElement(TagName33, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/select/select.js
-  var import_react37 = __toESM(require_react(), 1);
+  var import_react38 = __toESM(require_react(), 1);
   var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
-  var TagName35 = "button";
+  var TagName34 = "button";
   function getSelectedValues(select) {
     return Array.from(select.selectedOptions).map((option) => option.value);
   }
@@ -10653,9 +11036,11 @@ If there's a particular need for this, please submit a feature request at https:
     store = store || context;
     invariant(store, "Select must receive a `store` prop or be wrapped in a SelectProvider component.");
     const onKeyDownProp = props.onKeyDown;
+    const disabledProp = disabledFromProps(props);
     const showOnKeyDownProp = useBooleanEvent(showOnKeyDown);
     const moveOnKeyDownProp = useBooleanEvent(moveOnKeyDown);
-    const dir = getBasePlacement(useStoreState(store, "placement"));
+    const placement = useStoreState(store, "placement");
+    const dir = getBasePlacement(placement);
     const value = useStoreState(store, "value");
     const multiSelectable = Array.isArray(value);
     const onKeyDown = useEvent((event) => {
@@ -10692,9 +11077,9 @@ If there's a particular need for this, please submit a feature request at https:
       value: store,
       children: element
     }), [store]);
-    const [autofill, setAutofill] = (0, import_react37.useState)(false);
-    const nativeSelectChangedRef = (0, import_react37.useRef)(false);
-    (0, import_react37.useEffect)(() => {
+    const [autofill, setAutofill] = (0, import_react38.useState)(false);
+    const nativeSelectChangedRef = (0, import_react38.useRef)(false);
+    (0, import_react38.useEffect)(() => {
       const nativeSelectChanged = nativeSelectChangedRef.current;
       nativeSelectChangedRef.current = false;
       if (nativeSelectChanged) return;
@@ -10709,7 +11094,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!name) return;
       return state.items;
     });
-    const values = (0, import_react37.useMemo)(() => {
+    const values = (0, import_react38.useMemo)(() => {
       const itemValues = items?.flatMap((item) => item.value ?? []);
       return [...new Set(itemValues)];
     }, [items]);
@@ -10724,7 +11109,7 @@ If there's a particular need for this, please submit a feature request at https:
         name,
         form,
         required,
-        disabled: props.disabled,
+        disabled: disabledProp,
         value,
         multiple: multiSelectable,
         onFocus: () => store?.getState().selectElement?.focus(),
@@ -10755,7 +11140,7 @@ If there's a particular need for this, please submit a feature request at https:
       value,
       multiSelectable,
       values,
-      props.disabled
+      disabledProp
     ]);
     const children = /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [value, /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(SelectArrow, {})] });
     const contentElement = useStoreState(store, "contentElement");
@@ -10784,19 +11169,19 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var Select = forwardRef2(function Select2(props) {
     const htmlProps = useSelect(withDefaultButtonType(props));
-    return createElement(TagName35, htmlProps);
+    return createElement(TagName34, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/group/group-label-context.js
-  var import_react38 = __toESM(require_react(), 1);
-  var GroupLabelContext = (0, import_react38.createContext)(void 0);
+  var import_react39 = __toESM(require_react(), 1);
+  var GroupLabelContext = (0, import_react39.createContext)(void 0);
 
   // node_modules/@ariakit/react-components/dist/group/group.js
-  var import_react39 = __toESM(require_react(), 1);
+  var import_react40 = __toESM(require_react(), 1);
   var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
-  var TagName36 = "div";
+  var TagName35 = "div";
   var useGroup = createHook(function useGroup2(props) {
-    const [labelId, setLabelId] = (0, import_react39.useState)();
+    const [labelId, setLabelId] = (0, import_react40.useState)();
     props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(GroupLabelContext.Provider, {
       value: setLabelId,
       children: element
@@ -10806,29 +11191,29 @@ If there's a particular need for this, please submit a feature request at https:
       "aria-labelledby": props["aria-label"] != null ? void 0 : labelId,
       ...props
     };
-    return removeUndefinedValues(props);
+    return props;
   });
   var Group = forwardRef2(function Group2(props) {
     const htmlProps = useGroup(props);
-    return createElement(TagName36, htmlProps);
+    return createElement(TagName35, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/composite/composite-group.js
-  var TagName37 = "div";
+  var TagName36 = "div";
   var useCompositeGroup = createHook(function useCompositeGroup2({ store, ...props }) {
     props = useGroup(props);
     return props;
   });
   var CompositeGroup = forwardRef2(function CompositeGroup2(props) {
     const htmlProps = useCompositeGroup(props);
-    return createElement(TagName37, htmlProps);
+    return createElement(TagName36, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/group/group-label.js
-  var import_react40 = __toESM(require_react(), 1);
-  var TagName38 = "div";
+  var import_react41 = __toESM(require_react(), 1);
+  var TagName37 = "div";
   var useGroupLabel = createHook(function useGroupLabel2(props) {
-    const setLabelId = (0, import_react40.useContext)(GroupLabelContext);
+    const setLabelId = (0, import_react41.useContext)(GroupLabelContext);
     const id3 = useId(props.id);
     useSafeLayoutEffect(() => {
       setLabelId?.(id3);
@@ -10839,27 +11224,27 @@ If there's a particular need for this, please submit a feature request at https:
       ...props,
       id: id3
     };
-    return removeUndefinedValues(props);
+    return props;
   });
   var GroupLabel = forwardRef2(function GroupLabel2(props) {
     const htmlProps = useGroupLabel(props);
-    return createElement(TagName38, htmlProps);
+    return createElement(TagName37, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/composite/composite-group-label.js
-  var TagName39 = "div";
+  var TagName38 = "div";
   var useCompositeGroupLabel = createHook(function useCompositeGroupLabel2({ store, ...props }) {
     props = useGroupLabel(props);
     return props;
   });
   var CompositeGroupLabel = forwardRef2(function CompositeGroupLabel2(props) {
     const htmlProps = useCompositeGroupLabel(props);
-    return createElement(TagName39, htmlProps);
+    return createElement(TagName38, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/composite/composite-hover.js
-  var import_react41 = __toESM(require_react(), 1);
-  var TagName40 = "div";
+  var import_react42 = __toESM(require_react(), 1);
+  var TagName39 = "div";
   function hoveringInside(event) {
     const nextElement = event.relatedTarget;
     if (!isElement(nextElement)) return false;
@@ -10889,8 +11274,8 @@ If there's a particular need for this, please submit a feature request at https:
       if (!isMouseMoving()) return;
       if (!focusOnHoverProp(event)) return;
       if (!hasFocusWithin(event.currentTarget)) {
-        const baseElement = store?.getState().baseElement;
-        if (baseElement && !hasFocus(baseElement)) baseElement.focus();
+        const compositeElement = store?.getState().compositeElement;
+        if (compositeElement && !hasFocus(compositeElement)) compositeElement.focus({ preventScroll: true });
       }
       store?.setActiveId(event.currentTarget.id);
     });
@@ -10905,9 +11290,9 @@ If there's a particular need for this, please submit a feature request at https:
       if (!focusOnHoverProp(event)) return;
       if (!blurOnHoverEndProp(event)) return;
       store?.setActiveId(null);
-      store?.getState().baseElement?.focus();
+      store?.getState().compositeElement?.focus({ preventScroll: true });
     });
-    const ref = (0, import_react41.useCallback)((element) => {
+    const ref = (0, import_react42.useCallback)((element) => {
       if (!element) return;
       element[symbol3] = true;
     }, []);
@@ -10917,17 +11302,17 @@ If there's a particular need for this, please submit a feature request at https:
       onMouseMove,
       onMouseLeave
     };
-    return removeUndefinedValues(props);
+    return props;
   });
   var CompositeHover = memo2(forwardRef2(function CompositeHover2(props) {
     const htmlProps = useCompositeHover(props);
-    return createElement(TagName40, htmlProps);
+    return createElement(TagName39, htmlProps);
   }));
 
   // node_modules/@ariakit/react-components/dist/select/select-item.js
-  var import_react42 = __toESM(require_react(), 1);
+  var import_react43 = __toESM(require_react(), 1);
   var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
-  var TagName41 = "div";
+  var TagName40 = "div";
   function isSelected(storeValue, itemValue) {
     if (itemValue == null) return;
     if (storeValue == null) return false;
@@ -10961,7 +11346,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     });
     const virtualFocus = useStoreState(store?.combobox, "virtualFocus");
-    const getItem = (0, import_react42.useCallback)((item) => {
+    const getItem = (0, import_react43.useCallback)((item) => {
       const nextItem = {
         ...item,
         value: disabled ? void 0 : value
@@ -11023,17 +11408,17 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var SelectItem = memo2(forwardRef2(function SelectItem2(props) {
     const htmlProps = useSelectItem(props);
-    return createElement(TagName41, htmlProps);
+    return createElement(TagName40, htmlProps);
   }));
 
   // node_modules/@ariakit/react-components/dist/checkbox/checkbox-checked-context.js
-  var import_react43 = __toESM(require_react(), 1);
-  var CheckboxCheckedContext = (0, import_react43.createContext)(false);
+  var import_react44 = __toESM(require_react(), 1);
+  var CheckboxCheckedContext = (0, import_react44.createContext)(false);
 
   // node_modules/@ariakit/react-components/dist/checkbox/checkbox-check.js
-  var import_react44 = __toESM(require_react(), 1);
+  var import_react45 = __toESM(require_react(), 1);
   var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
-  var TagName42 = "span";
+  var TagName41 = "span";
   var checkmark = /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("svg", {
     display: "block",
     fill: "none",
@@ -11051,7 +11436,7 @@ If there's a particular need for this, please submit a feature request at https:
     return null;
   }
   var useCheckboxCheck = createHook(function useCheckboxCheck2({ store, checked, ...props }) {
-    const context = (0, import_react44.useContext)(CheckboxCheckedContext);
+    const context = (0, import_react45.useContext)(CheckboxCheckedContext);
     checked = checked ?? context;
     const children = getChildren({
       checked,
@@ -11068,18 +11453,18 @@ If there's a particular need for this, please submit a feature request at https:
         ...props.style
       }
     };
-    return removeUndefinedValues(props);
+    return props;
   });
   var CheckboxCheck = forwardRef2(function CheckboxCheck2(props) {
     const htmlProps = useCheckboxCheck(props);
-    return createElement(TagName42, htmlProps);
+    return createElement(TagName41, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/select/select-item-check.js
-  var import_react45 = __toESM(require_react(), 1);
-  var TagName43 = "span";
+  var import_react46 = __toESM(require_react(), 1);
+  var TagName42 = "span";
   var useSelectItemCheck = createHook(function useSelectItemCheck2({ store, checked, ...props }) {
-    const context = (0, import_react45.useContext)(SelectItemCheckedContext);
+    const context = (0, import_react46.useContext)(SelectItemCheckedContext);
     checked = checked ?? context;
     props = useCheckboxCheck({
       ...props,
@@ -11089,11 +11474,11 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var SelectItemCheck = forwardRef2(function SelectItemCheck2(props) {
     const htmlProps = useSelectItemCheck(props);
-    return createElement(TagName43, htmlProps);
+    return createElement(TagName42, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/select/select-label.js
-  var TagName44 = "div";
+  var TagName43 = "div";
   var useSelectLabel = createHook(function useSelectLabel2({ store, ...props }) {
     const context = useSelectProviderContext();
     store = store || context;
@@ -11117,18 +11502,18 @@ If there's a particular need for this, please submit a feature request at https:
         ...props.style
       }
     };
-    return removeUndefinedValues(props);
+    return props;
   });
   var SelectLabel = memo2(forwardRef2(function SelectLabel2(props) {
     const htmlProps = useSelectLabel(props);
-    return createElement(TagName44, htmlProps);
+    return createElement(TagName43, htmlProps);
   }));
 
   // node_modules/@ariakit/react-components/dist/select/select-list.js
-  var import_react46 = __toESM(require_react(), 1);
+  var import_react47 = __toESM(require_react(), 1);
   var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
-  var TagName45 = "div";
-  var SelectListContext = (0, import_react46.createContext)(null);
+  var TagName44 = "div";
+  var SelectListContext = (0, import_react47.createContext)(null);
   var useSelectList = createHook(function useSelectList2({ store, resetOnEscape = true, hideOnEnter = true, composite, alwaysVisible, ...props }) {
     const context = useSelectContext();
     store = store || context;
@@ -11136,9 +11521,9 @@ If there's a particular need for this, please submit a feature request at https:
     const id3 = useId(props.id);
     const value = useStoreState(store, "value");
     const multiSelectable = Array.isArray(value);
-    const [defaultValue2, setDefaultValue] = (0, import_react46.useState)(value);
+    const [defaultValue2, setDefaultValue] = (0, import_react47.useState)(value);
     const mounted = useStoreState(store, "mounted");
-    (0, import_react46.useEffect)(() => {
+    (0, import_react47.useEffect)(() => {
       if (mounted) return;
       setDefaultValue(value);
     }, [mounted, value]);
@@ -11157,13 +11542,13 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     });
-    const headingContext = (0, import_react46.useContext)(SelectHeadingContext);
-    const headingState = (0, import_react46.useState)();
+    const headingContext = (0, import_react47.useContext)(SelectHeadingContext);
+    const headingState = (0, import_react47.useState)();
     const [headingId, setHeadingId] = headingContext || headingState;
-    const headingContextValue = (0, import_react46.useMemo)(() => [headingId, setHeadingId], [headingId, setHeadingId]);
-    const [childStore, setChildStore] = (0, import_react46.useState)(null);
-    const setStore = (0, import_react46.useContext)(SelectListContext);
-    (0, import_react46.useEffect)(() => {
+    const headingContextValue = (0, import_react47.useMemo)(() => [headingId, setHeadingId], [headingId, setHeadingId]);
+    const [childStore, setChildStore] = (0, import_react47.useState)(null);
+    const setStore = (0, import_react47.useContext)(SelectListContext);
+    (0, import_react47.useEffect)(() => {
       if (!setStore) return;
       setStore(store);
       return () => setStore(null);
@@ -11217,11 +11602,11 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var SelectList = forwardRef2(function SelectList2(props) {
     const htmlProps = useSelectList(props);
-    return createElement(TagName45, htmlProps);
+    return createElement(TagName44, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/select/select-popover.js
-  var TagName46 = "div";
+  var TagName45 = "div";
   var useSelectPopover = createHook(function useSelectPopover2({ store, alwaysVisible, ...props }) {
     const context = useSelectProviderContext();
     store = store || context;
@@ -11239,7 +11624,7 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var SelectPopover = createDialogComponent(forwardRef2(function SelectPopover2(props) {
     const htmlProps = useSelectPopover(props);
-    return createElement(TagName46, htmlProps);
+    return createElement(TagName45, htmlProps);
   }), useSelectProviderContext);
 
   // node_modules/@ariakit/components/dist/select/select-store.js
@@ -11248,12 +11633,17 @@ If there's a particular need for this, please submit a feature request at https:
       "value",
       "items",
       "renderedItems",
+      "compositeElement",
       "baseElement",
       "arrowElement",
       "anchorElement",
       "contentElement",
       "popoverElement",
-      "disclosureElement"
+      "disclosureElement",
+      "inputElement",
+      "labelElement",
+      "selectElement",
+      "selectLabelElement"
     ]));
     throwOnConflictingProps(props, store);
     const syncState = store.getState();
@@ -11261,7 +11651,7 @@ If there's a particular need for this, please submit a feature request at https:
       ...props,
       store,
       virtualFocus: defaultValue(props.virtualFocus, syncState.virtualFocus, true),
-      includesBaseElement: defaultValue(props.includesBaseElement, syncState.includesBaseElement, false),
+      compositeElementInFocusOrder: defaultValue(props.compositeElementInFocusOrder, props.includesBaseElement, syncState.compositeElementInFocusOrder, syncState.includesBaseElement, false),
       activeId: defaultValue(props.activeId, syncState.activeId, props.defaultActiveId, null),
       orientation: defaultValue(props.orientation, syncState.orientation, "vertical")
     });
@@ -11322,7 +11712,10 @@ If there's a particular need for this, please submit a feature request at https:
       ...select,
       combobox,
       setValue: (value) => select.setState("value", value),
-      setLabelElement: (element) => select.setState("labelElement", element),
+      setLabelElement: (element) => {
+        select.setState("labelElement", element);
+        combobox?.setSelectLabelElement(element);
+      },
       setSelectElement: (element) => select.setState("selectElement", element),
       setListElement: (element) => select.setState("listElement", element)
     };
@@ -11350,23 +11743,23 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/composite/composite-row.js
-  var import_react47 = __toESM(require_react(), 1);
+  var import_react48 = __toESM(require_react(), 1);
   var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
-  var TagName47 = "div";
+  var TagName46 = "div";
   var useCompositeRow = createHook(function useCompositeRow2({ store, "aria-setsize": ariaSetSize, "aria-posinset": ariaPosInSet, ...props }) {
     const context = useCompositeScopedContext();
     store = store || context;
     invariant(store, "CompositeRow must be wrapped in a Composite component.");
     const id3 = useId(props.id);
-    const baseElement = useStoreState(store, "baseElement") || void 0;
-    const providerValue = (0, import_react47.useMemo)(() => ({
+    const compositeElement = useStoreState(store, "compositeElement") || void 0;
+    const providerValue = (0, import_react48.useMemo)(() => ({
       id: id3,
-      baseElement,
+      compositeElement,
       ariaSetSize,
       ariaPosInSet
     }), [
       id3,
-      baseElement,
+      compositeElement,
       ariaSetSize,
       ariaPosInSet
     ]);
@@ -11378,18 +11771,19 @@ If there's a particular need for this, please submit a feature request at https:
       ...props,
       id: id3
     };
-    return removeUndefinedValues(props);
+    return props;
   });
   var CompositeRow = forwardRef2(function CompositeRow2(props) {
     const htmlProps = useCompositeRow(props);
-    return createElement(TagName47, htmlProps);
+    return createElement(TagName46, htmlProps);
   });
 
   // node_modules/@ariakit/components/dist/checkbox/checkbox-store.js
   function createCheckboxStore(props = {}) {
     throwOnConflictingProps(props, props.store);
     const syncState = props.store?.getState();
-    const checkbox = createStore({ value: defaultValue(props.value, syncState?.value, props.defaultValue, false) }, props.store);
+    const initialState2 = { value: defaultValue(props.value, syncState?.value, props.defaultValue, false) };
+    const checkbox = createStore(initialState2, props.store);
     return {
       ...checkbox,
       setValue: (value) => checkbox.setState("value", value)
@@ -11416,13 +11810,13 @@ If there's a particular need for this, please submit a feature request at https:
   var CheckboxScopedContextProvider = ctx13.ScopedContextProvider;
 
   // node_modules/@ariakit/react-components/dist/__chunks/DjvJNLSl.js
-  var import_react48 = __toESM(require_react(), 1);
+  var import_react49 = __toESM(require_react(), 1);
   var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
   function getPrimitiveValue(value) {
     if (Array.isArray(value)) return value.toString();
     return value;
   }
-  var TagName48 = "input";
+  var TagName47 = "input";
   function setMixed(element, mixed) {
     if (mixed) element.indeterminate = true;
     else if (element.indeterminate) element.indeterminate = false;
@@ -11433,7 +11827,7 @@ If there's a particular need for this, please submit a feature request at https:
   var useCheckbox = createHook(function useCheckbox2({ store, name, value: valueProp, checked: checkedProp, defaultChecked, ...props }) {
     const context = useCheckboxContext();
     store = store || context;
-    const [_checked, setChecked] = (0, import_react48.useState)(defaultChecked ?? false);
+    const [_checked, setChecked] = (0, import_react49.useState)(defaultChecked ?? false);
     const checked = useStoreState(store, ["value"], (state) => {
       if (checkedProp !== void 0) return checkedProp;
       if (state?.value === void 0) return _checked;
@@ -11448,13 +11842,13 @@ If there's a particular need for this, please submit a feature request at https:
       if (typeof state.value === "boolean") return state.value;
       return false;
     });
-    const ref = (0, import_react48.useRef)(null);
-    const nativeCheckbox = isNativeCheckbox(useTagName(ref, TagName48), props.type);
+    const ref = (0, import_react49.useRef)(null);
+    const nativeCheckbox = isNativeCheckbox(useTagName(ref, TagName47), props.type);
     const mixed = checked ? checked === "mixed" : void 0;
     const isChecked = checked === "mixed" ? false : checked;
     const disabled = disabledFromProps(props);
     const [propertyUpdated, schedulePropertyUpdate] = useForceUpdate();
-    (0, import_react48.useEffect)(() => {
+    (0, import_react49.useEffect)(() => {
       const element = ref.current;
       if (!element) return;
       setMixed(element, mixed);
@@ -11530,30 +11924,30 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var Checkbox = forwardRef2(function Checkbox2(props) {
     const htmlProps = useCheckbox(props);
-    return createElement(TagName48, htmlProps);
+    return createElement(TagName47, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/menu/menu-context.js
-  var import_react49 = __toESM(require_react(), 1);
+  var import_react50 = __toESM(require_react(), 1);
   var menu = createStoreContext([CompositeContextProvider, HovercardContextProvider], [CompositeScopedContextProvider, HovercardScopedContextProvider]);
   var useMenuContext = menu.useContext;
   var useMenuScopedContext = menu.useScopedContext;
   var useMenuProviderContext = menu.useProviderContext;
   var MenuContextProvider = menu.ContextProvider;
   var MenuScopedContextProvider = menu.ScopedContextProvider;
-  var MenuItemCheckedContext = (0, import_react49.createContext)(void 0);
-  var MenuListHiddenContext = (0, import_react49.createContext)(false);
+  var MenuItemCheckedContext = (0, import_react50.createContext)(void 0);
+  var MenuListHiddenContext = (0, import_react50.createContext)(false);
 
   // node_modules/@ariakit/react-components/dist/menu/menu-list.js
-  var import_react50 = __toESM(require_react(), 1);
+  var import_react51 = __toESM(require_react(), 1);
   var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
-  var TagName49 = "div";
+  var TagName48 = "div";
   function useAriaLabelledBy({ store, ...props }) {
-    const [id3, setId] = (0, import_react50.useState)(void 0);
+    const [id3, setId] = (0, import_react51.useState)(void 0);
     const label = props["aria-label"];
     const disclosureElement = useStoreState(store, "disclosureElement");
     const contentElement = useStoreState(store, "contentElement");
-    (0, import_react50.useEffect)(() => {
+    (0, import_react51.useEffect)(() => {
       const disclosure = disclosureElement;
       if (!disclosure) return;
       const menu2 = contentElement;
@@ -11631,7 +12025,8 @@ If there's a particular need for this, please submit a feature request at https:
       store,
       ...props
     });
-    const hidden = isHidden(useStoreState(store, "mounted"), props.hidden, alwaysVisible);
+    const mounted = useStoreState(store, "mounted");
+    const hidden = isHidden(mounted, props.hidden, alwaysVisible);
     const style2 = hidden ? {
       ...props.style,
       display: "none"
@@ -11670,17 +12065,17 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var MenuList = forwardRef2(function MenuList2(props) {
     const htmlProps = useMenuList(props);
-    return createElement(TagName49, htmlProps);
+    return createElement(TagName48, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/menu/menu.js
-  var import_react51 = __toESM(require_react(), 1);
-  var TagName50 = "div";
+  var import_react52 = __toESM(require_react(), 1);
+  var TagName49 = "div";
   var useMenu = createHook(function useMenu2({ store, modal: modalProp = false, portal = modalProp, hideOnEscape = true, autoFocusOnShow = true, hideOnHoverOutside, alwaysVisible, ...props }) {
     const context = useMenuProviderContext();
     store = store || context;
     invariant(store, "Menu must receive a `store` prop or be wrapped in a MenuProvider component.");
-    const ref = (0, import_react51.useRef)(null);
+    const ref = (0, import_react52.useRef)(null);
     const parentMenu = store.parent;
     const parentMenubar = store.menubar;
     const hasParentMenu = !!parentMenu;
@@ -11696,12 +12091,12 @@ If there's a particular need for this, please submit a feature request at https:
       ...props
     });
     props = menuListProps;
-    const [initialFocusRef, setInitialFocusRef] = (0, import_react51.useState)();
+    const [initialFocusRef, setInitialFocusRef] = (0, import_react52.useState)();
     const initialFocusElement = useStoreState(store, [
       "autoFocusOnShow",
       "initialFocus",
       "renderedItems",
-      "baseElement"
+      "compositeElement"
     ], (state) => {
       if (!state.autoFocusOnShow) return;
       const isEnabled = (item) => !item.disabled && !!item.element;
@@ -11715,17 +12110,17 @@ If there's a particular need for this, please submit a feature request at https:
           }
           return null;
         default:
-          return state.baseElement;
+          return state.compositeElement;
       }
     });
-    (0, import_react51.useEffect)(() => {
+    (0, import_react52.useEffect)(() => {
       let cleaning = false;
       setInitialFocusRef((prevInitialFocusRef) => {
         if (cleaning) return;
         if (modal && prevInitialFocusRef?.current?.isConnected) return prevInitialFocusRef;
         if (initialFocusElement === void 0) return;
         if (initialFocusElement && initialFocusElement === prevInitialFocusRef?.current) return prevInitialFocusRef;
-        const ref2 = (0, import_react51.createRef)();
+        const ref2 = (0, import_react52.createRef)();
         ref2.current = initialFocusElement;
         return ref2;
       });
@@ -11735,9 +12130,10 @@ If there's a particular need for this, please submit a feature request at https:
     }, [modal, initialFocusElement]);
     const canAutoFocusOnShow = !!initialFocusRef || !!props.initialFocus || modal;
     const autoFocusOnShowProp = autoFocusOnShow === false ? false : canAutoFocusOnShow && autoFocusOnShow;
+    const finalFocusElement = useStoreState(store, ["disclosureElement", "anchorElement"], (state) => state.disclosureElement || state.anchorElement);
     const contentElement = useStoreState(store.combobox || store, "contentElement");
     const parentContentElement = useStoreState(parentMenu?.combobox || parentMenu, "contentElement");
-    const preserveTabOrderAnchor = (0, import_react51.useMemo)(() => {
+    const preserveTabOrderAnchor = (0, import_react52.useMemo)(() => {
       if (!parentContentElement) return;
       if (!contentElement) return;
       const role = contentElement.getAttribute("role");
@@ -11754,6 +12150,7 @@ If there's a particular need for this, please submit a feature request at https:
       alwaysVisible,
       initialFocus: initialFocusRef,
       autoFocusOnShow: autoFocusOnShowProp,
+      finalFocus: finalFocusElement,
       ...props,
       hideOnEscape(event) {
         if (isFalsyBooleanCallback(hideOnEscape, event)) return false;
@@ -11795,13 +12192,13 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var Menu = createDialogComponent(forwardRef2(function Menu2(props) {
     const htmlProps = useMenu(props);
-    return createElement(TagName50, htmlProps);
+    return createElement(TagName49, htmlProps);
   }), useMenuProviderContext);
 
   // node_modules/@ariakit/react-components/dist/menu/menu-button.js
-  var import_react52 = __toESM(require_react(), 1);
+  var import_react53 = __toESM(require_react(), 1);
   var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
-  var TagName51 = "button";
+  var TagName50 = "button";
   function getInitialFocus(event, dir) {
     return {
       ArrowDown: dir === "bottom" || dir === "top" ? "first" : false,
@@ -11821,7 +12218,7 @@ If there's a particular need for this, please submit a feature request at https:
     const context = useMenuProviderContext();
     store = store || context;
     invariant(store, "MenuButton must receive a `store` prop or be wrapped in a MenuProvider component.");
-    const ref = (0, import_react52.useRef)(null);
+    const ref = (0, import_react53.useRef)(null);
     const parentMenu = store.parent;
     const parentMenubar = store.menubar;
     const hasParentMenu = !!parentMenu;
@@ -11832,7 +12229,6 @@ If there's a particular need for this, please submit a feature request at https:
       const trigger = ref.current;
       if (!trigger) return;
       store?.setDisclosureElement(trigger);
-      store?.setAnchorElement(trigger);
       store?.show();
     };
     const onFocusProp = props.onFocus;
@@ -11890,9 +12286,12 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const id3 = useId(props.id);
     const parentContentElement = useStoreState(parentMenu?.combobox || parentMenu, "contentElement");
+    const role = hasParentMenu || parentIsMenubar ? getPopupItemRole(parentContentElement, "menuitem") : void 0;
+    const contentElement = useStoreState(store, "contentElement");
+    const hasCombobox = !!store.combobox;
     props = {
-      role: hasParentMenu || parentIsMenubar ? getPopupItemRole(parentContentElement, "menuitem") : void 0,
-      "aria-haspopup": getPopupRole(useStoreState(store, "contentElement"), !!store.combobox ? "dialog" : "menu"),
+      role,
+      "aria-haspopup": getPopupRole(contentElement, hasCombobox ? "dialog" : "menu"),
       ...props,
       id: id3,
       ref: useMergeRefs(ref, props.ref),
@@ -11900,7 +12299,7 @@ If there's a particular need for this, please submit a feature request at https:
       onKeyDown,
       onClick
     };
-    props = useHovercardAnchor({
+    props = useHovercardTrigger({
       store,
       focusable,
       accessibleWhenDisabled,
@@ -11937,43 +12336,43 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var MenuButton = forwardRef2(function MenuButton2(props) {
     const htmlProps = useMenuButton(props);
-    return createElement(TagName51, withDefaultButtonType(htmlProps));
+    return createElement(TagName50, withDefaultButtonType(htmlProps));
   });
 
   // node_modules/@ariakit/react-components/dist/menu/menu-group.js
-  var TagName52 = "div";
+  var TagName51 = "div";
   var useMenuGroup = createHook(function useMenuGroup2(props) {
     props = useCompositeGroup(props);
     return props;
   });
   var MenuGroup = forwardRef2(function MenuGroup2(props) {
     const htmlProps = useMenuGroup(props);
-    return createElement(TagName52, htmlProps);
+    return createElement(TagName51, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/menu/menu-group-label.js
-  var TagName53 = "div";
+  var TagName52 = "div";
   var useMenuGroupLabel = createHook(function useMenuGroupLabel2(props) {
     props = useCompositeGroupLabel(props);
     return props;
   });
   var MenuGroupLabel = forwardRef2(function MenuGroupLabel2(props) {
     const htmlProps = useMenuGroupLabel(props);
-    return createElement(TagName53, htmlProps);
+    return createElement(TagName52, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/menu/menu-item.js
-  var import_react53 = __toESM(require_react(), 1);
-  var TagName54 = "div";
-  function menuHasFocus(baseElement, items, currentTarget) {
-    if (!baseElement) return false;
-    if (hasFocusWithin(baseElement)) return true;
+  var import_react54 = __toESM(require_react(), 1);
+  var TagName53 = "div";
+  function menuHasFocus(compositeElement, items, currentTarget) {
+    if (!compositeElement) return false;
+    if (hasFocusWithin(compositeElement)) return true;
     const expandedMenuId = items?.find((item) => {
       if (item.element === currentTarget) return false;
       return item.element?.getAttribute("aria-expanded") === "true";
     })?.element?.getAttribute("aria-controls");
     if (!expandedMenuId) return false;
-    const expandedMenu = getDocument(baseElement).getElementById(expandedMenuId);
+    const expandedMenu = getDocument(compositeElement).getElementById(expandedMenuId);
     if (!expandedMenu) return false;
     if (hasFocusWithin(expandedMenu)) return true;
     return !!expandedMenu.querySelector("[role=menuitem][aria-expanded=true]");
@@ -11999,7 +12398,7 @@ If there's a particular need for this, please submit a feature request at https:
       hideMenu();
     });
     const contentElement = useStoreState(store, ["contentElement"], (state) => "contentElement" in state ? state.contentElement : null);
-    const menuListHidden = (0, import_react53.useContext)(MenuListHiddenContext);
+    const menuListHidden = (0, import_react54.useContext)(MenuListHiddenContext);
     props = {
       role: getPopupItemRole(contentElement, "menuitem"),
       ...props,
@@ -12022,13 +12421,13 @@ If there's a particular need for this, please submit a feature request at https:
         };
         if (!store) return false;
         if (!getFocusOnHover()) return false;
-        const { baseElement, items } = store.getState();
+        const { compositeElement, items } = store.getState();
         if (isWithinMenu) {
-          if (event.currentTarget.hasAttribute("aria-expanded")) event.currentTarget.focus();
+          if (event.currentTarget.hasAttribute("aria-expanded")) event.currentTarget.focus({ preventScroll: true });
           return true;
         }
-        if (menuHasFocus(baseElement, items, event.currentTarget)) {
-          event.currentTarget.focus();
+        if (menuHasFocus(compositeElement, items, event.currentTarget)) {
+          event.currentTarget.focus({ preventScroll: true });
           return true;
         }
         return false;
@@ -12043,14 +12442,14 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var MenuItem = memo2(forwardRef2(function MenuItem2(props) {
     const htmlProps = useMenuItem(props);
-    return createElement(TagName54, htmlProps);
+    return createElement(TagName53, htmlProps);
   }));
 
   // node_modules/@ariakit/react-components/dist/menu/menu-item-check.js
-  var import_react54 = __toESM(require_react(), 1);
-  var TagName55 = "span";
+  var import_react55 = __toESM(require_react(), 1);
+  var TagName54 = "span";
   var useMenuItemCheck = createHook(function useMenuItemCheck2({ store, checked, ...props }) {
-    const context = (0, import_react54.useContext)(MenuItemCheckedContext);
+    const context = (0, import_react55.useContext)(MenuItemCheckedContext);
     checked = checked ?? context;
     props = useCheckboxCheck({
       ...props,
@@ -12060,12 +12459,12 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var MenuItemCheck = forwardRef2(function MenuItemCheck2(props) {
     const htmlProps = useMenuItemCheck(props);
-    return createElement(TagName55, htmlProps);
+    return createElement(TagName54, htmlProps);
   });
 
   // node_modules/@ariakit/react-components/dist/menu/menu-item-checkbox.js
-  var import_react55 = __toESM(require_react(), 1);
-  var TagName56 = "div";
+  var import_react56 = __toESM(require_react(), 1);
+  var TagName55 = "div";
   function getValue(storeValue, value, checked) {
     if (value === void 0) {
       if (Array.isArray(storeValue)) return storeValue;
@@ -12087,7 +12486,7 @@ If there's a particular need for this, please submit a feature request at https:
     store = store || context;
     invariant(store, "MenuItemCheckbox must be wrapped in a MenuList or Menu component");
     const defaultChecked = useInitialValue(defaultCheckedProp);
-    (0, import_react55.useEffect)(() => {
+    (0, import_react56.useEffect)(() => {
       store?.setValue(name, (prevValue = value !== void 0 ? [] : false) => {
         if (!defaultChecked) return prevValue;
         return getValue(prevValue, value, true);
@@ -12098,7 +12497,7 @@ If there's a particular need for this, please submit a feature request at https:
       value,
       defaultChecked
     ]);
-    (0, import_react55.useEffect)(() => {
+    (0, import_react56.useEffect)(() => {
       if (checked === void 0) return;
       store?.setValue(name, (prevValue) => {
         return getValue(prevValue, value, checked);
@@ -12142,13 +12541,13 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var MenuItemCheckbox = memo2(forwardRef2(function MenuItemCheckbox2(props) {
     const htmlProps = useMenuItemCheckbox(props);
-    return createElement(TagName56, htmlProps);
+    return createElement(TagName55, htmlProps);
   }));
 
   // node_modules/@ariakit/react-components/dist/menu/menu-item-radio.js
-  var import_react56 = __toESM(require_react(), 1);
+  var import_react57 = __toESM(require_react(), 1);
   var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
-  var TagName57 = "div";
+  var TagName56 = "div";
   function getValue2(prevValue, value, checked) {
     if (checked === void 0) return prevValue;
     if (checked) return value;
@@ -12159,7 +12558,7 @@ If there's a particular need for this, please submit a feature request at https:
     store = store || context;
     invariant(store, "MenuItemRadio must be wrapped in a MenuList or Menu component");
     const defaultChecked = useInitialValue(defaultCheckedProp);
-    (0, import_react56.useEffect)(() => {
+    (0, import_react57.useEffect)(() => {
       store?.setValue(name, (prevValue = false) => {
         return getValue2(prevValue, value, defaultChecked);
       });
@@ -12169,7 +12568,7 @@ If there's a particular need for this, please submit a feature request at https:
       value,
       defaultChecked
     ]);
-    (0, import_react56.useEffect)(() => {
+    (0, import_react57.useEffect)(() => {
       if (checked === void 0) return;
       store?.setValue(name, (prevValue) => {
         return getValue2(prevValue, value, checked);
@@ -12212,7 +12611,7 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var MenuItemRadio = memo2(forwardRef2(function MenuItemRadio2(props) {
     const htmlProps = useMenuItemRadio(props);
-    return createElement(TagName57, htmlProps);
+    return createElement(TagName56, htmlProps);
   }));
 
   // node_modules/@ariakit/components/dist/menu/menu-store.js
@@ -12239,12 +12638,13 @@ If there's a particular need for this, please submit a feature request at https:
       timeout: defaultValue(props.timeout, syncState.timeout, parentIsMenubar ? 0 : 150),
       hideTimeout: defaultValue(props.hideTimeout, syncState.hideTimeout, 0)
     });
-    const menu2 = createStore({
+    const initialState2 = {
       ...composite.getState(),
       ...hovercard.getState(),
       initialFocus: defaultValue(syncState.initialFocus, "container"),
       values: defaultValue(props.values, syncState.values, props.defaultValues, {})
-    }, composite, hovercard, store);
+    };
+    const menu2 = createStore(initialState2, composite, hovercard, store);
     setup(menu2, () => sync(menu2, ["mounted"], (state) => {
       if (state.mounted) return;
       menu2.setState("activeId", null);
@@ -12311,7 +12711,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/menu/menu-separator.js
-  var TagName58 = "hr";
+  var TagName57 = "hr";
   var useMenuSeparator = createHook(function useMenuSeparator2({ store, ...props }) {
     const context = useMenuContext();
     store = store || context;
@@ -12323,7 +12723,7 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var MenuSeparator = forwardRef2(function MenuSeparator2(props) {
     const htmlProps = useMenuSeparator(props);
-    return createElement(TagName58, htmlProps);
+    return createElement(TagName57, htmlProps);
   });
 
   // packages/components/build-module/composite/index.mjs
@@ -17109,34 +17509,34 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/node_modules/framer-motion/dist/es/motion/features/layout/MeasureLayout.mjs
   var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
-  var import_react61 = __toESM(require_react(), 1);
+  var import_react62 = __toESM(require_react(), 1);
 
   // packages/components/node_modules/framer-motion/dist/es/components/AnimatePresence/use-presence.mjs
-  var import_react58 = __toESM(require_react(), 1);
+  var import_react59 = __toESM(require_react(), 1);
 
   // packages/components/node_modules/framer-motion/dist/es/context/PresenceContext.mjs
-  var import_react57 = __toESM(require_react(), 1);
-  var PresenceContext = (0, import_react57.createContext)(null);
+  var import_react58 = __toESM(require_react(), 1);
+  var PresenceContext = (0, import_react58.createContext)(null);
 
   // packages/components/node_modules/framer-motion/dist/es/components/AnimatePresence/use-presence.mjs
   function usePresence() {
-    const context = (0, import_react58.useContext)(PresenceContext);
+    const context = (0, import_react59.useContext)(PresenceContext);
     if (context === null)
       return [true, null];
     const { isPresent, onExitComplete, register } = context;
-    const id3 = (0, import_react58.useId)();
-    (0, import_react58.useEffect)(() => register(id3), []);
-    const safeToRemove = (0, import_react58.useCallback)(() => onExitComplete && onExitComplete(id3), [id3, onExitComplete]);
+    const id3 = (0, import_react59.useId)();
+    (0, import_react59.useEffect)(() => register(id3), []);
+    const safeToRemove = (0, import_react59.useCallback)(() => onExitComplete && onExitComplete(id3), [id3, onExitComplete]);
     return !isPresent && onExitComplete ? [false, safeToRemove] : [true];
   }
 
   // packages/components/node_modules/framer-motion/dist/es/context/LayoutGroupContext.mjs
-  var import_react59 = __toESM(require_react(), 1);
-  var LayoutGroupContext = (0, import_react59.createContext)({});
+  var import_react60 = __toESM(require_react(), 1);
+  var LayoutGroupContext = (0, import_react60.createContext)({});
 
   // packages/components/node_modules/framer-motion/dist/es/context/SwitchLayoutGroupContext.mjs
-  var import_react60 = __toESM(require_react(), 1);
-  var SwitchLayoutGroupContext = (0, import_react60.createContext)({});
+  var import_react61 = __toESM(require_react(), 1);
+  var SwitchLayoutGroupContext = (0, import_react61.createContext)({});
 
   // packages/components/node_modules/framer-motion/dist/es/projection/node/state.mjs
   var globalProjectionState = {
@@ -17207,7 +17607,7 @@ If there's a particular need for this, please submit a feature request at https:
   var { schedule: microtask, cancel: cancelMicrotask } = createRenderBatcher(queueMicrotask, false);
 
   // packages/components/node_modules/framer-motion/dist/es/motion/features/layout/MeasureLayout.mjs
-  var MeasureLayoutWithContext = class extends import_react61.Component {
+  var MeasureLayoutWithContext = class extends import_react62.Component {
     /**
      * This only mounts projection nodes for components that
      * need measuring, we might want to do it for all components
@@ -17291,8 +17691,8 @@ If there's a particular need for this, please submit a feature request at https:
   };
   function MeasureLayout(props) {
     const [isPresent, safeToRemove] = usePresence();
-    const layoutGroup = (0, import_react61.useContext)(LayoutGroupContext);
-    return (0, import_jsx_runtime39.jsx)(MeasureLayoutWithContext, { ...props, layoutGroup, switchLayoutGroup: (0, import_react61.useContext)(SwitchLayoutGroupContext), isPresent, safeToRemove });
+    const layoutGroup = (0, import_react62.useContext)(LayoutGroupContext);
+    return (0, import_jsx_runtime39.jsx)(MeasureLayoutWithContext, { ...props, layoutGroup, switchLayoutGroup: (0, import_react62.useContext)(SwitchLayoutGroupContext), isPresent, safeToRemove });
   }
   var defaultScaleCorrectors = {
     borderRadius: {
@@ -18921,44 +19321,44 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/node_modules/framer-motion/dist/es/motion/index.mjs
   var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
-  var import_react69 = __toESM(require_react(), 1);
+  var import_react70 = __toESM(require_react(), 1);
 
   // packages/components/node_modules/framer-motion/dist/es/context/MotionConfigContext.mjs
-  var import_react62 = __toESM(require_react(), 1);
-  var MotionConfigContext = (0, import_react62.createContext)({
+  var import_react63 = __toESM(require_react(), 1);
+  var MotionConfigContext = (0, import_react63.createContext)({
     transformPagePoint: (p3) => p3,
     isStatic: false,
     reducedMotion: "never"
   });
 
   // packages/components/node_modules/framer-motion/dist/es/context/MotionContext/index.mjs
-  var import_react63 = __toESM(require_react(), 1);
-  var MotionContext = (0, import_react63.createContext)({});
+  var import_react64 = __toESM(require_react(), 1);
+  var MotionContext = (0, import_react64.createContext)({});
 
   // packages/components/node_modules/framer-motion/dist/es/motion/utils/use-visual-element.mjs
-  var import_react66 = __toESM(require_react(), 1);
+  var import_react67 = __toESM(require_react(), 1);
 
   // packages/components/node_modules/framer-motion/dist/es/utils/use-isomorphic-effect.mjs
-  var import_react64 = __toESM(require_react(), 1);
+  var import_react65 = __toESM(require_react(), 1);
 
   // packages/components/node_modules/framer-motion/dist/es/utils/is-browser.mjs
   var isBrowser = typeof window !== "undefined";
 
   // packages/components/node_modules/framer-motion/dist/es/utils/use-isomorphic-effect.mjs
-  var useIsomorphicLayoutEffect = isBrowser ? import_react64.useLayoutEffect : import_react64.useEffect;
+  var useIsomorphicLayoutEffect = isBrowser ? import_react65.useLayoutEffect : import_react65.useEffect;
 
   // packages/components/node_modules/framer-motion/dist/es/context/LazyContext.mjs
-  var import_react65 = __toESM(require_react(), 1);
-  var LazyContext = (0, import_react65.createContext)({ strict: false });
+  var import_react66 = __toESM(require_react(), 1);
+  var LazyContext = (0, import_react66.createContext)({ strict: false });
 
   // packages/components/node_modules/framer-motion/dist/es/motion/utils/use-visual-element.mjs
   function useVisualElement(Component7, visualState, props, createVisualElement, ProjectionNodeConstructor) {
     var _a, _b;
-    const { visualElement: parent } = (0, import_react66.useContext)(MotionContext);
-    const lazyContext = (0, import_react66.useContext)(LazyContext);
-    const presenceContext = (0, import_react66.useContext)(PresenceContext);
-    const reducedMotionConfig = (0, import_react66.useContext)(MotionConfigContext).reducedMotion;
-    const visualElementRef = (0, import_react66.useRef)(null);
+    const { visualElement: parent } = (0, import_react67.useContext)(MotionContext);
+    const lazyContext = (0, import_react67.useContext)(LazyContext);
+    const presenceContext = (0, import_react67.useContext)(PresenceContext);
+    const reducedMotionConfig = (0, import_react67.useContext)(MotionConfigContext).reducedMotion;
+    const visualElementRef = (0, import_react67.useRef)(null);
     createVisualElement = createVisualElement || lazyContext.renderer;
     if (!visualElementRef.current && createVisualElement) {
       visualElementRef.current = createVisualElement(Component7, {
@@ -18971,18 +19371,18 @@ If there's a particular need for this, please submit a feature request at https:
       });
     }
     const visualElement = visualElementRef.current;
-    const initialLayoutGroupConfig = (0, import_react66.useContext)(SwitchLayoutGroupContext);
+    const initialLayoutGroupConfig = (0, import_react67.useContext)(SwitchLayoutGroupContext);
     if (visualElement && !visualElement.projection && ProjectionNodeConstructor && (visualElement.type === "html" || visualElement.type === "svg")) {
       createProjectionNode2(visualElementRef.current, props, ProjectionNodeConstructor, initialLayoutGroupConfig);
     }
-    const isMounted = (0, import_react66.useRef)(false);
-    (0, import_react66.useInsertionEffect)(() => {
+    const isMounted = (0, import_react67.useRef)(false);
+    (0, import_react67.useInsertionEffect)(() => {
       if (visualElement && isMounted.current) {
         visualElement.update(props, presenceContext);
       }
     });
     const optimisedAppearId = props[optimizedAppearDataAttribute];
-    const wantsHandoff = (0, import_react66.useRef)(Boolean(optimisedAppearId) && !((_a = window.MotionHandoffIsComplete) === null || _a === void 0 ? void 0 : _a.call(window, optimisedAppearId)) && ((_b = window.MotionHasOptimisedAnimation) === null || _b === void 0 ? void 0 : _b.call(window, optimisedAppearId)));
+    const wantsHandoff = (0, import_react67.useRef)(Boolean(optimisedAppearId) && !((_a = window.MotionHandoffIsComplete) === null || _a === void 0 ? void 0 : _a.call(window, optimisedAppearId)) && ((_b = window.MotionHasOptimisedAnimation) === null || _b === void 0 ? void 0 : _b.call(window, optimisedAppearId)));
     useIsomorphicLayoutEffect(() => {
       if (!visualElement)
         return;
@@ -18994,7 +19394,7 @@ If there's a particular need for this, please submit a feature request at https:
         visualElement.animationState.animateChanges();
       }
     });
-    (0, import_react66.useEffect)(() => {
+    (0, import_react67.useEffect)(() => {
       if (!visualElement)
         return;
       if (!wantsHandoff.current && visualElement.animationState) {
@@ -19038,9 +19438,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/components/node_modules/framer-motion/dist/es/motion/utils/use-motion-ref.mjs
-  var import_react67 = __toESM(require_react(), 1);
+  var import_react68 = __toESM(require_react(), 1);
   function useMotionRef(visualState, visualElement, externalRef) {
-    return (0, import_react67.useCallback)(
+    return (0, import_react68.useCallback)(
       (instance) => {
         instance && visualState.mount && visualState.mount(instance);
         if (visualElement) {
@@ -19068,7 +19468,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/components/node_modules/framer-motion/dist/es/context/MotionContext/create.mjs
-  var import_react68 = __toESM(require_react(), 1);
+  var import_react69 = __toESM(require_react(), 1);
 
   // packages/components/node_modules/framer-motion/dist/es/render/utils/is-controlling-variants.mjs
   function isControllingVariants(props) {
@@ -19092,8 +19492,8 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/node_modules/framer-motion/dist/es/context/MotionContext/create.mjs
   function useCreateMotionContext(props) {
-    const { initial, animate } = getCurrentTreeVariants(props, (0, import_react68.useContext)(MotionContext));
-    return (0, import_react68.useMemo)(() => ({ initial, animate }), [variantLabelsAsDependency(initial), variantLabelsAsDependency(animate)]);
+    const { initial, animate } = getCurrentTreeVariants(props, (0, import_react69.useContext)(MotionContext));
+    return (0, import_react69.useMemo)(() => ({ initial, animate }), [variantLabelsAsDependency(initial), variantLabelsAsDependency(animate)]);
   }
   function variantLabelsAsDependency(prop) {
     return Array.isArray(prop) ? prop.join(" ") : prop;
@@ -19146,7 +19546,7 @@ If there's a particular need for this, please submit a feature request at https:
     function MotionComponent(props, externalRef) {
       let MeasureLayout2;
       const configAndProps = {
-        ...(0, import_react69.useContext)(MotionConfigContext),
+        ...(0, import_react70.useContext)(MotionConfigContext),
         ...props,
         layoutId: useLayoutId(props)
       };
@@ -19161,16 +19561,16 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return (0, import_jsx_runtime40.jsxs)(MotionContext.Provider, { value: context, children: [MeasureLayout2 && context.visualElement ? (0, import_jsx_runtime40.jsx)(MeasureLayout2, { visualElement: context.visualElement, ...configAndProps }) : null, useRender2(Component7, props, useMotionRef(visualState, context.visualElement, externalRef), visualState, isStatic, context.visualElement)] });
     }
-    const ForwardRefMotionComponent = (0, import_react69.forwardRef)(MotionComponent);
+    const ForwardRefMotionComponent = (0, import_react70.forwardRef)(MotionComponent);
     ForwardRefMotionComponent[motionComponentSymbol] = Component7;
     return ForwardRefMotionComponent;
   }
   function useLayoutId({ layoutId }) {
-    const layoutGroupId = (0, import_react69.useContext)(LayoutGroupContext).id;
+    const layoutGroupId = (0, import_react70.useContext)(LayoutGroupContext).id;
     return layoutGroupId && layoutId !== void 0 ? layoutGroupId + "-" + layoutId : layoutId;
   }
   function useStrictMode(configAndProps, preloadedFeatures) {
-    const isStrict = (0, import_react69.useContext)(LazyContext).strict;
+    const isStrict = (0, import_react70.useContext)(LazyContext).strict;
     if (preloadedFeatures && isStrict) {
       const strictMessage = "You have rendered a `motion` component within a `LazyMotion` component. This will break tree shaking. Import and render a `m` component instead.";
       configAndProps.ignoreStrict ? warning(false, strictMessage) : invariant2(false, strictMessage);
@@ -19317,12 +19717,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/components/node_modules/framer-motion/dist/es/motion/utils/use-visual-state.mjs
-  var import_react71 = __toESM(require_react(), 1);
+  var import_react72 = __toESM(require_react(), 1);
 
   // packages/components/node_modules/framer-motion/dist/es/utils/use-constant.mjs
-  var import_react70 = __toESM(require_react(), 1);
+  var import_react71 = __toESM(require_react(), 1);
   function useConstant(init2) {
-    const ref = (0, import_react70.useRef)(null);
+    const ref = (0, import_react71.useRef)(null);
     if (ref.current === null) {
       ref.current = init2();
     }
@@ -19341,8 +19741,8 @@ If there's a particular need for this, please submit a feature request at https:
     return state;
   }
   var makeUseVisualState = (config) => (props, isStatic) => {
-    const context = (0, import_react71.useContext)(MotionContext);
-    const presenceContext = (0, import_react71.useContext)(PresenceContext);
+    const context = (0, import_react72.useContext)(MotionContext);
+    const presenceContext = (0, import_react72.useContext)(PresenceContext);
     const make = () => makeState(config, props, context, presenceContext);
     return isStatic ? make() : useConstant(make);
   };
@@ -19595,10 +19995,10 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/components/node_modules/framer-motion/dist/es/render/dom/use-render.mjs
-  var import_react74 = __toESM(require_react(), 1);
+  var import_react75 = __toESM(require_react(), 1);
 
   // packages/components/node_modules/framer-motion/dist/es/render/html/use-props.mjs
-  var import_react72 = __toESM(require_react(), 1);
+  var import_react73 = __toESM(require_react(), 1);
   function copyRawValuesOnly(target, source, props) {
     for (const key in source) {
       if (!isMotionValue(source[key]) && !isForcedMotionValue(key, props)) {
@@ -19607,7 +20007,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
   function useInitialMotionValues({ transformTemplate }, visualState) {
-    return (0, import_react72.useMemo)(() => {
+    return (0, import_react73.useMemo)(() => {
       const state = createHtmlRenderState();
       buildHTMLStyles(state, visualState, transformTemplate);
       return Object.assign({}, state.vars, state.style);
@@ -19697,9 +20097,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/components/node_modules/framer-motion/dist/es/render/svg/use-props.mjs
-  var import_react73 = __toESM(require_react(), 1);
+  var import_react74 = __toESM(require_react(), 1);
   function useSVGProps(props, visualState, _isStatic, Component7) {
-    const visualProps = (0, import_react73.useMemo)(() => {
+    const visualProps = (0, import_react74.useMemo)(() => {
       const state = createSvgRenderState();
       buildSVGAttrs(state, visualState, isSVGTag(Component7), props.transformTemplate);
       return {
@@ -19721,10 +20121,10 @@ If there's a particular need for this, please submit a feature request at https:
       const useVisualProps = isSVGComponent(Component7) ? useSVGProps : useHTMLProps;
       const visualProps = useVisualProps(props, latestValues, isStatic, Component7);
       const filteredProps = filterProps(props, typeof Component7 === "string", forwardMotionProps);
-      const elementProps = Component7 !== import_react74.Fragment ? { ...filteredProps, ...visualProps, ref } : {};
+      const elementProps = Component7 !== import_react75.Fragment ? { ...filteredProps, ...visualProps, ref } : {};
       const { children } = props;
-      const renderedChildren = (0, import_react74.useMemo)(() => isMotionValue(children) ? children.get() : children, [children]);
-      return (0, import_react74.createElement)(Component7, {
+      const renderedChildren = (0, import_react75.useMemo)(() => isMotionValue(children) ? children.get() : children, [children]);
+      return (0, import_react75.createElement)(Component7, {
         ...elementProps,
         children: renderedChildren
       });
@@ -19748,7 +20148,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/components/node_modules/framer-motion/dist/es/render/dom/create-visual-element.mjs
-  var import_react75 = __toESM(require_react(), 1);
+  var import_react76 = __toESM(require_react(), 1);
 
   // packages/components/node_modules/framer-motion/dist/es/utils/reduced-motion/state.mjs
   var prefersReducedMotion = { current: null };
@@ -20259,7 +20659,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/components/node_modules/framer-motion/dist/es/render/dom/create-visual-element.mjs
   var createDomVisualElement = (Component7, options2) => {
     return isSVGComponent(Component7) ? new SVGVisualElement(options2) : new HTMLVisualElement(options2, {
-      allowProjection: Component7 !== import_react75.Fragment
+      allowProjection: Component7 !== import_react76.Fragment
     });
   };
 
@@ -20276,17 +20676,17 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs
   var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
-  var import_react79 = __toESM(require_react(), 1);
+  var import_react80 = __toESM(require_react(), 1);
 
   // packages/components/node_modules/framer-motion/dist/es/components/AnimatePresence/PresenceChild.mjs
   var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
   var React4 = __toESM(require_react(), 1);
-  var import_react77 = __toESM(require_react(), 1);
+  var import_react78 = __toESM(require_react(), 1);
 
   // packages/components/node_modules/framer-motion/dist/es/components/AnimatePresence/PopChild.mjs
   var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
   var React3 = __toESM(require_react(), 1);
-  var import_react76 = __toESM(require_react(), 1);
+  var import_react77 = __toESM(require_react(), 1);
   var PopChildMeasure = class extends React3.Component {
     getSnapshotBeforeUpdate(prevProps) {
       const element = this.props.childRef.current;
@@ -20309,16 +20709,16 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
   function PopChild({ children, isPresent }) {
-    const id3 = (0, import_react76.useId)();
-    const ref = (0, import_react76.useRef)(null);
-    const size4 = (0, import_react76.useRef)({
+    const id3 = (0, import_react77.useId)();
+    const ref = (0, import_react77.useRef)(null);
+    const size4 = (0, import_react77.useRef)({
       width: 0,
       height: 0,
       top: 0,
       left: 0
     });
-    const { nonce } = (0, import_react76.useContext)(MotionConfigContext);
-    (0, import_react76.useInsertionEffect)(() => {
+    const { nonce } = (0, import_react77.useContext)(MotionConfigContext);
+    (0, import_react77.useInsertionEffect)(() => {
       const { width, height, top, left } = size4.current;
       if (isPresent || !ref.current || !width || !height)
         return;
@@ -20348,8 +20748,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/components/node_modules/framer-motion/dist/es/components/AnimatePresence/PresenceChild.mjs
   var PresenceChild = ({ children, initial, isPresent, onExitComplete, custom, presenceAffectsLayout, mode: mode2 }) => {
     const presenceChildren = useConstant(newChildrenMap);
-    const id3 = (0, import_react77.useId)();
-    const memoizedOnExitComplete = (0, import_react77.useCallback)((childId) => {
+    const id3 = (0, import_react78.useId)();
+    const memoizedOnExitComplete = (0, import_react78.useCallback)((childId) => {
       presenceChildren.set(childId, true);
       for (const isComplete of presenceChildren.values()) {
         if (!isComplete)
@@ -20357,7 +20757,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       onExitComplete && onExitComplete();
     }, [presenceChildren, onExitComplete]);
-    const context = (0, import_react77.useMemo)(
+    const context = (0, import_react78.useMemo)(
       () => ({
         id: id3,
         initial,
@@ -20376,7 +20776,7 @@ If there's a particular need for this, please submit a feature request at https:
        */
       presenceAffectsLayout ? [Math.random(), memoizedOnExitComplete] : [isPresent, memoizedOnExitComplete]
     );
-    (0, import_react77.useMemo)(() => {
+    (0, import_react78.useMemo)(() => {
       presenceChildren.forEach((_2, key) => presenceChildren.set(key, false));
     }, [isPresent]);
     React4.useEffect(() => {
@@ -20392,12 +20792,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/components/node_modules/framer-motion/dist/es/components/AnimatePresence/utils.mjs
-  var import_react78 = __toESM(require_react(), 1);
+  var import_react79 = __toESM(require_react(), 1);
   var getChildKey = (child) => child.key || "";
   function onlyElements(children) {
     const filtered = [];
-    import_react78.Children.forEach(children, (child) => {
-      if ((0, import_react78.isValidElement)(child))
+    import_react79.Children.forEach(children, (child) => {
+      if ((0, import_react79.isValidElement)(child))
         filtered.push(child);
     });
     return filtered;
@@ -20406,13 +20806,13 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/components/node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs
   var AnimatePresence = ({ children, exitBeforeEnter, custom, initial = true, onExitComplete, presenceAffectsLayout = true, mode: mode2 = "sync" }) => {
     invariant2(!exitBeforeEnter, "Replace exitBeforeEnter with mode='wait'");
-    const presentChildren = (0, import_react79.useMemo)(() => onlyElements(children), [children]);
+    const presentChildren = (0, import_react80.useMemo)(() => onlyElements(children), [children]);
     const presentKeys = presentChildren.map(getChildKey);
-    const isInitialRender = (0, import_react79.useRef)(true);
-    const pendingPresentChildren = (0, import_react79.useRef)(presentChildren);
+    const isInitialRender = (0, import_react80.useRef)(true);
+    const pendingPresentChildren = (0, import_react80.useRef)(presentChildren);
     const exitComplete = useConstant(() => /* @__PURE__ */ new Map());
-    const [diffedChildren, setDiffedChildren] = (0, import_react79.useState)(presentChildren);
-    const [renderedChildren, setRenderedChildren] = (0, import_react79.useState)(presentChildren);
+    const [diffedChildren, setDiffedChildren] = (0, import_react80.useState)(presentChildren);
+    const [renderedChildren, setRenderedChildren] = (0, import_react80.useState)(presentChildren);
     useIsomorphicLayoutEffect(() => {
       isInitialRender.current = false;
       pendingPresentChildren.current = presentChildren;
@@ -20448,7 +20848,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (mode2 === "wait" && renderedChildren.length > 1) {
       console.warn(`You're attempting to animate multiple children within AnimatePresence, but its mode is set to "wait". This will lead to odd visual behaviour.`);
     }
-    const { forceRender } = (0, import_react79.useContext)(LayoutGroupContext);
+    const { forceRender } = (0, import_react80.useContext)(LayoutGroupContext);
     return (0, import_jsx_runtime43.jsx)(import_jsx_runtime43.Fragment, { children: renderedChildren.map((child) => {
       const key = getChildKey(child);
       const isPresent = presentChildren === renderedChildren || presentKeys.includes(key);
@@ -20573,7 +20973,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/@emotion/react/dist/emotion-element-f0de968e.browser.esm.js
   var React6 = __toESM(require_react());
-  var import_react80 = __toESM(require_react());
+  var import_react81 = __toESM(require_react());
 
   // node_modules/@emotion/sheet/dist/emotion-sheet.esm.js
   var isDevelopment = false;
@@ -21707,11 +22107,11 @@ If there's a particular need for this, please submit a feature request at https:
   );
   var CacheProvider = EmotionCacheContext.Provider;
   var __unsafe_useEmotionCache = function useEmotionCache() {
-    return (0, import_react80.useContext)(EmotionCacheContext);
+    return (0, import_react81.useContext)(EmotionCacheContext);
   };
   var withEmotionCache = function withEmotionCache2(func) {
-    return /* @__PURE__ */ (0, import_react80.forwardRef)(function(props, ref) {
-      var cache2 = (0, import_react80.useContext)(EmotionCacheContext);
+    return /* @__PURE__ */ (0, import_react81.forwardRef)(function(props, ref) {
+      var cache2 = (0, import_react81.useContext)(EmotionCacheContext);
       return func(props, cache2, ref);
     });
   };
@@ -26310,7 +26710,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // node_modules/@use-gesture/react/dist/use-gesture-react.esm.js
-  var import_react88 = __toESM(require_react());
+  var import_react89 = __toESM(require_react());
 
   // node_modules/@use-gesture/core/dist/use-gesture-core.esm.js
   function _objectWithoutPropertiesLoose(source, excluded) {
@@ -26584,11 +26984,11 @@ This message will only show in development mode. It won't appear in production. 
 
   // node_modules/@use-gesture/react/dist/use-gesture-react.esm.js
   function useRecognizers(handlers, config = {}, gestureKey, nativeHandlers) {
-    const ctrl = import_react88.default.useMemo(() => new Controller(handlers), []);
+    const ctrl = import_react89.default.useMemo(() => new Controller(handlers), []);
     ctrl.applyHandlers(handlers, nativeHandlers);
     ctrl.applyConfig(config, gestureKey);
-    import_react88.default.useEffect(ctrl.effect.bind(ctrl));
-    import_react88.default.useEffect(() => {
+    import_react89.default.useEffect(ctrl.effect.bind(ctrl));
+    import_react89.default.useEffect(() => {
       return ctrl.clean.bind(ctrl);
     }, []);
     if (config.target === void 0) {
@@ -28276,12 +28676,12 @@ This message will only show in development mode. It won't appear in production. 
 
   // node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
   var React10 = __toESM(require_react(), 1);
-  var import_react92 = __toESM(require_react(), 1);
+  var import_react93 = __toESM(require_react(), 1);
   var ReactDOM = __toESM(require_react_dom(), 1);
   var isClient = typeof document !== "undefined";
   var noop7 = function noop8() {
   };
-  var index = isClient ? import_react92.useLayoutEffect : noop7;
+  var index = isClient ? import_react93.useLayoutEffect : noop7;
   function deepEqual(a3, b3) {
     if (a3 === b3) {
       return true;
@@ -31566,7 +31966,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/range-control/rail.mjs
   var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
-  var import_react97 = __toESM(require_react(), 1);
+  var import_react98 = __toESM(require_react(), 1);
   function RangeRail(props) {
     const {
       disabled = false,
@@ -31611,7 +32011,7 @@ This message will only show in development mode. It won't appear in production. 
     return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(MarksWrapper, {
       "aria-hidden": "true",
       className: "components-range-control__marks",
-      children: marksData.map((mark) => /* @__PURE__ */ (0, import_react97.createElement)(RangeMark, {
+      children: marksData.map((mark) => /* @__PURE__ */ (0, import_react98.createElement)(RangeMark, {
         ...mark,
         key: mark.key,
         "aria-hidden": "true",
@@ -32316,7 +32716,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_element74 = __toESM(require_element(), 1);
 
   // packages/components/node_modules/react-colorful/dist/index.mjs
-  var import_react98 = __toESM(require_react(), 1);
+  var import_react99 = __toESM(require_react(), 1);
   function u2() {
     return (u2 = Object.assign || function(e3) {
       for (var r4 = 1; r4 < arguments.length; r4++) {
@@ -32333,7 +32733,7 @@ This message will only show in development mode. It won't appear in production. 
     return o4;
   }
   function i2(e3) {
-    var t4 = (0, import_react98.useRef)(e3), n3 = (0, import_react98.useRef)(function(e4) {
+    var t4 = (0, import_react99.useRef)(e3), n3 = (0, import_react99.useRef)(function(e4) {
       t4.current && t4.current(e4);
     });
     return t4.current = e3, n3.current;
@@ -32357,8 +32757,8 @@ This message will only show in development mode. It won't appear in production. 
   var h2 = function(e3) {
     !f2(e3) && e3.preventDefault();
   };
-  var m2 = import_react98.default.memo(function(o4) {
-    var a3 = o4.onMove, l3 = o4.onKey, s3 = c2(o4, ["onMove", "onKey"]), m3 = (0, import_react98.useRef)(null), g3 = i2(a3), p3 = i2(l3), b3 = (0, import_react98.useRef)(null), _2 = (0, import_react98.useRef)(false), x2 = (0, import_react98.useMemo)(function() {
+  var m2 = import_react99.default.memo(function(o4) {
+    var a3 = o4.onMove, l3 = o4.onKey, s3 = c2(o4, ["onMove", "onKey"]), m3 = (0, import_react99.useRef)(null), g3 = i2(a3), p3 = i2(l3), b3 = (0, import_react99.useRef)(null), _2 = (0, import_react99.useRef)(false), x2 = (0, import_react99.useMemo)(function() {
       var e3 = function(e4) {
         h2(e4), (f2(e4) ? e4.touches.length > 0 : e4.buttons > 0) && m3.current ? g3(d2(m3.current, e4, b3.current)) : t4(false);
       }, r4 = function() {
@@ -32385,16 +32785,16 @@ This message will only show in development mode. It won't appear in production. 
         r5 < 37 || r5 > 40 || (e4.preventDefault(), p3({ left: 39 === r5 ? 0.05 : 37 === r5 ? -0.05 : 0, top: 40 === r5 ? 0.05 : 38 === r5 ? -0.05 : 0 }));
       }, t4];
     }, [p3, g3]), C = x2[0], E = x2[1], H2 = x2[2];
-    return (0, import_react98.useEffect)(function() {
+    return (0, import_react99.useEffect)(function() {
       return H2;
-    }, [H2]), import_react98.default.createElement("div", u2({}, s3, { onTouchStart: C, onMouseDown: C, className: "react-colorful__interactive", ref: m3, onKeyDown: E, tabIndex: 0, role: "slider" }));
+    }, [H2]), import_react99.default.createElement("div", u2({}, s3, { onTouchStart: C, onMouseDown: C, className: "react-colorful__interactive", ref: m3, onKeyDown: E, tabIndex: 0, role: "slider" }));
   });
   var g2 = function(e3) {
     return e3.filter(Boolean).join(" ");
   };
   var p2 = function(r4) {
     var t4 = r4.color, n3 = r4.left, o4 = r4.top, a3 = void 0 === o4 ? 0.5 : o4, l3 = g2(["react-colorful__pointer", r4.className]);
-    return import_react98.default.createElement("div", { className: l3, style: { top: 100 * a3 + "%", left: 100 * n3 + "%" } }, import_react98.default.createElement("div", { className: "react-colorful__pointer-fill", style: { backgroundColor: t4 } }));
+    return import_react99.default.createElement("div", { className: l3, style: { top: 100 * a3 + "%", left: 100 * n3 + "%" } }, import_react99.default.createElement("div", { className: "react-colorful__pointer-fill", style: { backgroundColor: t4 } }));
   };
   var b2 = function(e3, r4, t4) {
     return void 0 === r4 && (r4 = 0), void 0 === t4 && (t4 = Math.pow(10, r4)), Math.round(t4 * e3) / t4;
@@ -32415,21 +32815,21 @@ This message will only show in development mode. It won't appear in production. 
   var A = function(e3) {
     return { h: b2(e3.h), s: b2(e3.s), v: b2(e3.v), a: b2(e3.a, 2) };
   };
-  var S2 = import_react98.default.memo(function(r4) {
+  var S2 = import_react99.default.memo(function(r4) {
     var t4 = r4.hue, n3 = r4.onChange, o4 = g2(["react-colorful__hue", r4.className]);
-    return import_react98.default.createElement("div", { className: o4 }, import_react98.default.createElement(m2, { onMove: function(e3) {
+    return import_react99.default.createElement("div", { className: o4 }, import_react99.default.createElement(m2, { onMove: function(e3) {
       n3({ h: 360 * e3.left });
     }, onKey: function(e3) {
       n3({ h: s2(t4 + 360 * e3.left, 0, 360) });
-    }, "aria-label": "Hue", "aria-valuenow": b2(t4), "aria-valuemax": "360", "aria-valuemin": "0" }, import_react98.default.createElement(p2, { className: "react-colorful__hue-pointer", left: t4 / 360, color: q({ h: t4, s: 100, v: 100, a: 1 }) })));
+    }, "aria-label": "Hue", "aria-valuenow": b2(t4), "aria-valuemax": "360", "aria-valuemin": "0" }, import_react99.default.createElement(p2, { className: "react-colorful__hue-pointer", left: t4 / 360, color: q({ h: t4, s: 100, v: 100, a: 1 }) })));
   });
-  var T = import_react98.default.memo(function(r4) {
+  var T = import_react99.default.memo(function(r4) {
     var t4 = r4.hsva, n3 = r4.onChange, o4 = { backgroundColor: q({ h: t4.h, s: 100, v: 100, a: 1 }) };
-    return import_react98.default.createElement("div", { className: "react-colorful__saturation", style: o4 }, import_react98.default.createElement(m2, { onMove: function(e3) {
+    return import_react99.default.createElement("div", { className: "react-colorful__saturation", style: o4 }, import_react99.default.createElement(m2, { onMove: function(e3) {
       n3({ s: 100 * e3.left, v: 100 - 100 * e3.top });
     }, onKey: function(e3) {
       n3({ s: s2(t4.s + 100 * e3.left, 0, 100), v: s2(t4.v - 100 * e3.top, 0, 100) });
-    }, "aria-label": "Color", "aria-valuetext": "Saturation " + b2(t4.s) + "%, Brightness " + b2(t4.v) + "%" }, import_react98.default.createElement(p2, { className: "react-colorful__saturation-pointer", top: 1 - t4.v / 100, left: t4.s / 100, color: q(t4) })));
+    }, "aria-label": "Color", "aria-valuetext": "Saturation " + b2(t4.s) + "%, Brightness " + b2(t4.v) + "%" }, import_react99.default.createElement(p2, { className: "react-colorful__saturation-pointer", top: 1 - t4.v / 100, left: t4.s / 100, color: q(t4) })));
   });
   var F = function(e3, r4) {
     if (e3 === r4) return true;
@@ -32437,19 +32837,19 @@ This message will only show in development mode. It won't appear in production. 
     return true;
   };
   function Y(e3, t4, l3) {
-    var u3 = i2(l3), c3 = (0, import_react98.useState)(function() {
+    var u3 = i2(l3), c3 = (0, import_react99.useState)(function() {
       return e3.toHsva(t4);
-    }), s3 = c3[0], f3 = c3[1], v3 = (0, import_react98.useRef)({ color: t4, hsva: s3 });
-    (0, import_react98.useEffect)(function() {
+    }), s3 = c3[0], f3 = c3[1], v3 = (0, import_react99.useRef)({ color: t4, hsva: s3 });
+    (0, import_react99.useEffect)(function() {
       if (!e3.equal(t4, v3.current.color)) {
         var r4 = e3.toHsva(t4);
         v3.current = { hsva: r4, color: t4 }, f3(r4);
       }
-    }, [t4, e3]), (0, import_react98.useEffect)(function() {
+    }, [t4, e3]), (0, import_react99.useEffect)(function() {
       var r4;
       F(s3, v3.current.hsva) || e3.equal(r4 = e3.fromHsva(s3), v3.current.color) || (v3.current = { hsva: s3, color: r4 }, u3(r4));
     }, [s3, e3, u3]);
-    var d3 = (0, import_react98.useCallback)(function(e4) {
+    var d3 = (0, import_react99.useCallback)(function(e4) {
       f3(function(r4) {
         return Object.assign({}, r4, e4);
       });
@@ -32457,7 +32857,7 @@ This message will only show in development mode. It won't appear in production. 
     return [s3, d3];
   }
   var R;
-  var V2 = "undefined" != typeof window ? import_react98.useLayoutEffect : import_react98.useEffect;
+  var V2 = "undefined" != typeof window ? import_react99.useLayoutEffect : import_react99.useEffect;
   var $2 = function() {
     return R || ("undefined" != typeof __webpack_nonce__ ? __webpack_nonce__ : void 0);
   };
@@ -32474,30 +32874,30 @@ This message will only show in development mode. It won't appear in production. 
     }, []);
   };
   var U = function(t4) {
-    var n3 = t4.className, o4 = t4.colorModel, a3 = t4.color, l3 = void 0 === a3 ? o4.defaultColor : a3, i3 = t4.onChange, s3 = c2(t4, ["className", "colorModel", "color", "onChange"]), f3 = (0, import_react98.useRef)(null);
+    var n3 = t4.className, o4 = t4.colorModel, a3 = t4.color, l3 = void 0 === a3 ? o4.defaultColor : a3, i3 = t4.onChange, s3 = c2(t4, ["className", "colorModel", "color", "onChange"]), f3 = (0, import_react99.useRef)(null);
     Q(f3);
     var v3 = Y(o4, l3, i3), d3 = v3[0], h3 = v3[1], m3 = g2(["react-colorful", n3]);
-    return import_react98.default.createElement("div", u2({}, s3, { ref: f3, className: m3 }), import_react98.default.createElement(T, { hsva: d3, onChange: h3 }), import_react98.default.createElement(S2, { hue: d3.h, onChange: h3, className: "react-colorful__last-control" }));
+    return import_react99.default.createElement("div", u2({}, s3, { ref: f3, className: m3 }), import_react99.default.createElement(T, { hsva: d3, onChange: h3 }), import_react99.default.createElement(S2, { hue: d3.h, onChange: h3, className: "react-colorful__last-control" }));
   };
   var ee = function(r4) {
     var t4 = r4.className, n3 = r4.hsva, o4 = r4.onChange, a3 = { backgroundImage: "linear-gradient(90deg, " + k2(Object.assign({}, n3, { a: 0 })) + ", " + k2(Object.assign({}, n3, { a: 1 })) + ")" }, l3 = g2(["react-colorful__alpha", t4]), u3 = b2(100 * n3.a);
-    return import_react98.default.createElement("div", { className: l3 }, import_react98.default.createElement("div", { className: "react-colorful__alpha-gradient", style: a3 }), import_react98.default.createElement(m2, { onMove: function(e3) {
+    return import_react99.default.createElement("div", { className: l3 }, import_react99.default.createElement("div", { className: "react-colorful__alpha-gradient", style: a3 }), import_react99.default.createElement(m2, { onMove: function(e3) {
       o4({ a: e3.left });
     }, onKey: function(e3) {
       o4({ a: s2(n3.a + e3.left) });
-    }, "aria-label": "Alpha", "aria-valuetext": u3 + "%", "aria-valuenow": u3, "aria-valuemin": "0", "aria-valuemax": "100" }, import_react98.default.createElement(p2, { className: "react-colorful__alpha-pointer", left: n3.a, color: k2(n3) })));
+    }, "aria-label": "Alpha", "aria-valuetext": u3 + "%", "aria-valuenow": u3, "aria-valuemin": "0", "aria-valuemax": "100" }, import_react99.default.createElement(p2, { className: "react-colorful__alpha-pointer", left: n3.a, color: k2(n3) })));
   };
   var re = function(t4) {
-    var n3 = t4.className, o4 = t4.colorModel, a3 = t4.color, l3 = void 0 === a3 ? o4.defaultColor : a3, i3 = t4.onChange, s3 = c2(t4, ["className", "colorModel", "color", "onChange"]), f3 = (0, import_react98.useRef)(null);
+    var n3 = t4.className, o4 = t4.colorModel, a3 = t4.color, l3 = void 0 === a3 ? o4.defaultColor : a3, i3 = t4.onChange, s3 = c2(t4, ["className", "colorModel", "color", "onChange"]), f3 = (0, import_react99.useRef)(null);
     Q(f3);
     var v3 = Y(o4, l3, i3), d3 = v3[0], h3 = v3[1], m3 = g2(["react-colorful", n3]);
-    return import_react98.default.createElement("div", u2({}, s3, { ref: f3, className: m3 }), import_react98.default.createElement(T, { hsva: d3, onChange: h3 }), import_react98.default.createElement(S2, { hue: d3.h, onChange: h3 }), import_react98.default.createElement(ee, { hsva: d3, onChange: h3, className: "react-colorful__last-control" }));
+    return import_react99.default.createElement("div", u2({}, s3, { ref: f3, className: m3 }), import_react99.default.createElement(T, { hsva: d3, onChange: h3 }), import_react99.default.createElement(S2, { hue: d3.h, onChange: h3 }), import_react99.default.createElement(ee, { hsva: d3, onChange: h3, className: "react-colorful__last-control" }));
   };
   var ve = { defaultColor: { h: 0, s: 0, v: 0, a: 1 }, toHsva: function(e3) {
     return e3;
   }, fromHsva: A, equal: F };
   var de = function(r4) {
-    return import_react98.default.createElement(re, u2({}, r4, { colorModel: ve }));
+    return import_react99.default.createElement(re, u2({}, r4, { colorModel: ve }));
   };
   var ge = { defaultColor: { h: 0, s: 0, v: 0 }, toHsva: function(e3) {
     return { h: e3.h, s: e3.s, v: e3.v, a: 1 };
@@ -32506,7 +32906,7 @@ This message will only show in development mode. It won't appear in production. 
     return { h: r4.h, s: r4.s, v: r4.v };
   }, equal: F };
   var pe = function(r4) {
-    return import_react98.default.createElement(U, u2({}, r4, { colorModel: ge }));
+    return import_react99.default.createElement(U, u2({}, r4, { colorModel: ge }));
   };
 
   // packages/components/build-module/color-picker/picker.mjs
@@ -42797,7 +43197,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // node_modules/@base-ui/react/internals/useRenderElement.mjs
-  var import_react110 = __toESM(require_react(), 1);
+  var import_react111 = __toESM(require_react(), 1);
   function useRenderElement(element, componentProps, params = {}) {
     const renderProp = componentProps.render;
     const outProps = useRenderElementProps(componentProps, params);
@@ -42898,14 +43298,14 @@ This message will only show in development mode. It won't appear in production. 
   }
   function renderTag(Tag, props) {
     if (Tag === "button") {
-      return /* @__PURE__ */ (0, import_react110.createElement)("button", {
+      return /* @__PURE__ */ (0, import_react111.createElement)("button", {
         type: "button",
         ...props,
         key: props.key
       });
     }
     if (Tag === "img") {
-      return /* @__PURE__ */ (0, import_react110.createElement)("img", {
+      return /* @__PURE__ */ (0, import_react111.createElement)("img", {
         alt: "",
         ...props,
         key: props.key
@@ -47136,7 +47536,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var notice_default = Notice;
 
   // packages/components/build-module/notice/list.mjs
-  var import_react113 = __toESM(require_react(), 1);
+  var import_react114 = __toESM(require_react(), 1);
   var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
   var noop20 = () => {
   };
@@ -47155,7 +47555,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           content,
           ...restNotice
         } = notice;
-        return /* @__PURE__ */ (0, import_react113.createElement)(notice_default, {
+        return /* @__PURE__ */ (0, import_react114.createElement)(notice_default, {
           ...restNotice,
           key: notice.id,
           onRemove: removeNotice(notice.id)
@@ -49179,12 +49579,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (import_element173.Children.count(children) !== 1) {
       return null;
     }
-    const TagName59 = isInline ? "span" : "div";
+    const TagName58 = isInline ? "span" : "div";
     let aspectRatio2;
     if (naturalWidth && naturalHeight) {
       aspectRatio2 = `${naturalWidth} / ${naturalHeight}`;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(TagName59, {
+    return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(TagName58, {
       className: "components-responsive-wrapper",
       children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)("div", {
         children: (0, import_element173.cloneElement)(children, {
