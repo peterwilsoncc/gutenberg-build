@@ -65023,13 +65023,20 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_components108.__experimentalVStack, { spacing: 0, children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_components108.__experimentalView, { children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_components108.__experimentalSpacer, { marginBottom: 0, paddingX: 4, paddingY: 3, children: /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_components108.__experimentalVStack, { spacing: 2, children: [
       /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_components108.__experimentalHStack, { spacing: 2, alignment: "top", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-          import_components108.Navigator.BackButton,
+        onBack ? /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+          import_components108.Button,
           {
             icon: (0, import_i18n156.isRTL)() ? chevron_right_default : chevron_left_default,
             size: "small",
             label: (0, import_i18n156.__)("Back"),
             onClick: onBack
+          }
+        ) : /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+          import_components108.Navigator.BackButton,
+          {
+            icon: (0, import_i18n156.isRTL)() ? chevron_right_default : chevron_left_default,
+            size: "small",
+            label: (0, import_i18n156.__)("Back")
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_components108.__experimentalSpacer, { children: /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_components108.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
@@ -80683,7 +80690,10 @@ If there's a particular need for this, please submit a feature request at https:
                     size: "compact",
                     variant: "primary",
                     className: "global-styles-ui-screen-revisions__apply-button",
-                    onClick: onApplyRevision,
+                    onClick: (event) => {
+                      event.stopPropagation();
+                      onApplyRevision?.();
+                    },
                     "aria-label": (0, import_i18n192.__)(
                       "Apply the selected revision to your site."
                     ),
@@ -80802,7 +80812,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/screen-revisions/index.mjs
   var import_jsx_runtime377 = __toESM(require_jsx_runtime(), 1);
   var PAGE_SIZE = 10;
-  function ScreenRevisions({ onClose } = {}) {
+  function ScreenRevisions() {
     const { user: currentEditorGlobalStyles, onChange: setUserConfig } = (0, import_element221.useContext)(GlobalStylesContext);
     const { params, goTo } = (0, import_components152.useNavigator)();
     const { revisionId: revisionId2 } = params;
@@ -80831,15 +80841,13 @@ If there's a particular need for this, please submit a feature request at https:
       currentlySelectedRevision,
       currentEditorGlobalStyles
     );
-    const onCloseRevisions = () => {
-      if (onClose) {
-        onClose();
-      }
+    const closeRevisions = () => {
+      goTo("/", { isBack: true });
     };
     const restoreRevision2 = (revision) => {
       setUserConfig(revision);
       setIsLoadingRevisionWithUnsavedChanges(false);
-      onCloseRevisions();
+      closeRevisions();
     };
     const handleRevisionSelect = (revision) => {
       goTo(`/revisions/${revision.id}`);
@@ -80862,7 +80870,7 @@ If there's a particular need for this, please submit a feature request at https:
           description: (0, import_i18n194.__)(
             `Click on previously saved styles to preview them. To restore a selected version to the editor, hit "Apply." When you're ready, use the Save button to save your changes.`
           ),
-          onBack: onCloseRevisions
+          onBack: closeRevisions
         }
       ),
       !hasRevisions && /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(import_components152.Spinner, { className: "global-styles-ui-screen-revisions__loading" }),
