@@ -79796,16 +79796,15 @@ If there's a particular need for this, please submit a feature request at https:
         ) })
       ] }) }),
       /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(import_components144.__experimentalSpacer, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(import_components144.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: shadowParts.map((part, index2) => /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(import_components144.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: shadowParts.map((part, index2) => /* @__PURE__ */ (0, import_jsx_runtime366.jsx)("div", { role: "listitem", children: /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
         ShadowItem,
         {
           shadow: part,
           onChange: (value) => onChangeShadowPart(index2, value),
           canRemove: shadowParts.length > 1,
           onRemove: () => onRemoveShadowPart(index2)
-        },
-        index2
-      )) })
+        }
+      ) }, index2)) })
     ] });
   }
   function ShadowItem({

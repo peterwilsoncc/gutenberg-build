@@ -1251,10 +1251,6 @@ button.font-library__upload-area {
   opacity: 0;
 }
 
-.global-styles-ui__shadow-editor__remove-button.global-styles-ui__shadow-editor__remove-button {
-  border: none;
-}
-
 .global-styles-ui__shadow-editor__dropdown-toggle:hover + .global-styles-ui__shadow-editor__remove-button, .global-styles-ui__shadow-editor__remove-button:focus, .global-styles-ui__shadow-editor__remove-button:hover {
   opacity: 1;
 }
