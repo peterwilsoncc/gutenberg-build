@@ -148,9 +148,9 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React201 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef118 = React201.useRef, useEffect77 = React201.useEffect, useMemo101 = React201.useMemo, useDebugValue2 = React201.useDebugValue;
+      var React201 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef117 = React201.useRef, useEffect77 = React201.useEffect, useMemo101 = React201.useMemo, useDebugValue2 = React201.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
-        var instRef = useRef118(null);
+        var instRef = useRef117(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -39240,7 +39240,7 @@ var page_default = Page;
 // routes/dashboard/stage.tsx
 var import_core_data = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
-var import_element242 = __toESM(require_element());
+var import_element241 = __toESM(require_element());
 var import_i18n83 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_viewport2 = __toESM(require_viewport());
@@ -40965,7 +40965,7 @@ var WidgetChrome = (0, import_element141.forwardRef)(
 );
 
 // packages/widget-dashboard/build-module/components/widget-inserter/widget-inserter.mjs
-var import_element222 = __toESM(require_element(), 1);
+var import_element221 = __toESM(require_element(), 1);
 var import_i18n75 = __toESM(require_i18n(), 1);
 
 // node_modules/uuid/dist/stringify.js
@@ -57097,7 +57097,7 @@ DataViewsPickerSubComponents.ViewConfig = DataviewsViewConfigDropdown;
 var dataviews_picker_default = DataViewsPickerSubComponents;
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_element219 = __toESM(require_element(), 1);
+var import_element218 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-context/index.mjs
 var import_element208 = __toESM(require_element(), 1);
@@ -57115,7 +57115,7 @@ function DataFormProvider({
 var dataform_context_default = DataFormContext;
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_element218 = __toESM(require_element(), 1);
+var import_element217 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
 var import_element209 = __toESM(require_element(), 1);
@@ -57355,14 +57355,13 @@ function FormRegularField({
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
 var import_deepmerge2 = __toESM(require_cjs(), 1);
 var import_components60 = __toESM(require_components(), 1);
-var import_element214 = __toESM(require_element(), 1);
+var import_element213 = __toESM(require_element(), 1);
 var import_compose36 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 var import_components59 = __toESM(require_components(), 1);
 var import_i18n69 = __toESM(require_i18n(), 1);
 var import_compose35 = __toESM(require_compose(), 1);
-var import_element210 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
 function getLabelClassName(labelPosition, showError) {
@@ -57374,28 +57373,25 @@ function getLabelClassName(labelPosition, showError) {
 }
 var get_label_classname_default = getLabelClassName;
 
-// packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-content.mjs
+// packages/dataviews/build-module/components/dataform-layouts/panel/field-label-content.mjs
 var import_components58 = __toESM(require_components(), 1);
 var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
-function getLabelContent(showError, errorMessage, fieldLabel) {
-  return showError ? /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(tooltip_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
-      tooltip_exports.Trigger,
-      {
-        render: /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_components58.Icon, { icon: error_default, size: 16 }),
-          /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)(VisuallyHidden, { children: [
-            errorMessage,
-            ": "
-          ] }),
-          fieldLabel
-        ] })
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(tooltip_exports.Popup, { children: errorMessage })
-  ] }) : fieldLabel;
+function FieldLabelContent({
+  showError,
+  errorMessage,
+  fieldLabel,
+  errorId
+}) {
+  if (!showError) {
+    return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_jsx_runtime285.Fragment, { children: fieldLabel });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_components58.Icon, { icon: error_default, size: 16 }),
+    /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(VisuallyHidden, { id: errorId, children: errorMessage }),
+    fieldLabel
+  ] });
 }
-var get_label_content_default = getLabelContent;
+var field_label_content_default = FieldLabelContent;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-first-validation-error.mjs
 function getFirstValidationError(validity) {
@@ -57449,7 +57445,6 @@ function SummaryButton({
   const errorMessage = get_first_validation_error_default(validity);
   const showError = touched && !!errorMessage;
   const labelClassName = get_label_classname_default(labelPosition, showError);
-  const labelContent = get_label_content_default(showError, errorMessage, fieldLabel);
   const className = clsx_default(
     "dataforms-layouts-panel__field-trigger",
     `dataforms-layouts-panel__field-trigger--label-${labelPosition}`,
@@ -57462,6 +57457,7 @@ function SummaryButton({
     SummaryButton,
     "dataforms-layouts-panel__field-control"
   );
+  const errorId = `${controlId}-error`;
   const ariaLabel = showError ? (0, import_i18n69.sprintf)(
     // translators: %s: Field name.
     (0, import_i18n69._x)("Edit %s (has errors)", "field"),
@@ -57471,108 +57467,84 @@ function SummaryButton({
     (0, import_i18n69._x)("Edit %s", "field"),
     fieldLabel || ""
   );
-  const rowRef = (0, import_element210.useRef)(null);
-  const editButtonRef = (0, import_element210.useRef)(null);
-  const handleRowClick = (event) => {
-    if (!isOpen && event.detail < 2 && !editButtonRef.current?.contains(event.target) && rowRef.current?.ownerDocument.defaultView?.getSelection()?.toString()) {
-      return;
-    }
-    onClick();
-  };
-  const handleKeyDown = (event) => {
-    if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) {
-      event.preventDefault();
-      onClick();
-    }
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)(
-    "div",
-    {
-      ref: rowRef,
-      className,
-      onClick: !disabled2 ? handleRowClick : void 0,
-      onKeyDown: !disabled2 ? handleKeyDown : void 0,
-      children: [
-        labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)("span", { className: labelClassName, children: labelContent }),
-        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)(tooltip_exports.Root, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-            tooltip_exports.Trigger,
-            {
-              render: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-                "span",
-                {
-                  className: "dataforms-layouts-panel__field-label-error-content",
-                  role: "img",
-                  "aria-label": errorMessage,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(import_components59.Icon, { icon: error_default, size: 16 })
-                }
-              )
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(tooltip_exports.Popup, { children: errorMessage })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)("div", { className, children: [
+    labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)("span", { className: labelClassName, children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+      field_label_content_default,
+      {
+        showError,
+        errorMessage,
+        fieldLabel,
+        errorId
+      }
+    ) }),
+    labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+      field_label_content_default,
+      {
+        showError: true,
+        errorMessage,
+        errorId
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+      "span",
+      {
+        id: `${controlId}`,
+        className: "dataforms-layouts-panel__field-control",
+        children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
           "span",
           {
-            id: `${controlId}`,
-            className: "dataforms-layouts-panel__field-control",
-            children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+            style: {
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              width: "100%",
+              gap: "2px"
+            },
+            children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
               "span",
               {
-                style: {
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  width: "100%",
-                  gap: "2px"
-                },
-                children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-                  "span",
+                style: { width: "100%" },
+                children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+                  summaryField.render,
                   {
-                    style: { width: "100%" },
-                    children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-                      summaryField.render,
-                      {
-                        item: data,
-                        field: summaryField
-                      }
-                    )
-                  },
-                  summaryField.id
-                ))
-              }
-            ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-              summaryField.render,
-              {
-                item: data,
-                field: summaryField
+                    item: data,
+                    field: summaryField
+                  }
+                )
               },
               summaryField.id
             ))
           }
-        ),
-        !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-          import_components59.Button,
+        ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+          summaryField.render,
           {
-            ref: editButtonRef,
-            className: "dataforms-layouts-panel__field-trigger-icon",
-            label: ariaLabel,
-            icon: pencil_default,
-            size: "small",
-            "aria-expanded": isOpen,
-            "aria-haspopup": "dialog",
-            "aria-describedby": `${controlId}`
-          }
-        )
-      ]
-    }
-  );
+            item: data,
+            field: summaryField
+          },
+          summaryField.id
+        ))
+      }
+    ),
+    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+      import_components59.Button,
+      {
+        className: "dataforms-layouts-panel__field-trigger-icon",
+        label: ariaLabel,
+        icon: pencil_default,
+        size: "small",
+        "aria-expanded": isOpen,
+        "aria-haspopup": "dialog",
+        "aria-describedby": showError ? `${controlId} ${errorId}` : controlId,
+        onClick
+      }
+    )
+  ] });
 }
 
 // packages/dataviews/build-module/hooks/use-form-validity.mjs
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es63 = __toESM(require_es6(), 1);
-var import_element211 = __toESM(require_element(), 1);
+var import_element210 = __toESM(require_element(), 1);
 var import_i18n70 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
@@ -58006,11 +57978,11 @@ function getFormFieldValue(formField, item) {
   };
 }
 function useFormValidity(item, fields2, form) {
-  const [formValidity, setFormValidity] = (0, import_element211.useState)();
-  const customCounterRef = (0, import_element211.useRef)({});
-  const elementsCounterRef = (0, import_element211.useRef)({});
-  const previousValuesRef = (0, import_element211.useRef)({});
-  const validate = (0, import_element211.useCallback)(() => {
+  const [formValidity, setFormValidity] = (0, import_element210.useState)();
+  const customCounterRef = (0, import_element210.useRef)({});
+  const elementsCounterRef = (0, import_element210.useRef)({});
+  const previousValuesRef = (0, import_element210.useRef)({});
+  const validate = (0, import_element210.useCallback)(() => {
     const promiseHandler = {
       customCounterRef,
       elementsCounterRef,
@@ -58068,7 +58040,7 @@ function useFormValidity(item, fields2, form) {
       return validity;
     });
   }, [item, fields2, form]);
-  (0, import_element211.useEffect)(() => {
+  (0, import_element210.useEffect)(() => {
     validate();
   }, [validate]);
   return {
@@ -58079,9 +58051,9 @@ function useFormValidity(item, fields2, form) {
 var use_form_validity_default = useFormValidity;
 
 // packages/dataviews/build-module/hooks/use-reveal-validity.mjs
-var import_element212 = __toESM(require_element(), 1);
+var import_element211 = __toESM(require_element(), 1);
 function useRevealValidity(ref, shouldReveal) {
-  const revealValidity = (0, import_element212.useCallback)(() => {
+  const revealValidity = (0, import_element211.useCallback)(() => {
     const inputs = ref.current?.querySelectorAll("input, textarea, select");
     let revealedCount = 0;
     inputs?.forEach((input) => {
@@ -58094,7 +58066,7 @@ function useRevealValidity(ref, shouldReveal) {
     });
     return revealedCount;
   }, [ref]);
-  (0, import_element212.useEffect)(() => {
+  (0, import_element211.useEffect)(() => {
     if (shouldReveal) {
       revealValidity();
     }
@@ -58103,7 +58075,7 @@ function useRevealValidity(ref, shouldReveal) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
-var import_element213 = __toESM(require_element(), 1);
+var import_element212 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
 function extractSummaryIds(summary) {
@@ -58144,7 +58116,7 @@ var getFieldDefinition = (field, fields2) => {
   return fieldDefinition;
 };
 function useFieldFromFormField(field) {
-  const { fields: fields2 } = (0, import_element213.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element212.useContext)(dataform_context_default);
   const layout = field.layout;
   const summaryFields = getSummaryFields(layout.summary, fields2);
   const fieldDefinition = getFieldDefinition(field, fields2);
@@ -58176,14 +58148,14 @@ function ModalContent({
 }) {
   const { openAs } = field.layout;
   const { applyLabel, cancelLabel } = openAs;
-  const { fields: fields2 } = (0, import_element214.useContext)(dataform_context_default);
-  const [changes, setChanges] = (0, import_element214.useState)({});
-  const modalData = (0, import_element214.useMemo)(() => {
+  const { fields: fields2 } = (0, import_element213.useContext)(dataform_context_default);
+  const [changes, setChanges] = (0, import_element213.useState)({});
+  const modalData = (0, import_element213.useMemo)(() => {
     return (0, import_deepmerge2.default)(data, changes, {
       arrayMerge: (target, source) => source
     });
   }, [data, changes]);
-  const form = (0, import_element214.useMemo)(
+  const form = (0, import_element213.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -58219,7 +58191,7 @@ function ModalContent({
     );
   };
   const focusOnMountRef = (0, import_compose36.useFocusOnMount)("firstInputElement");
-  const contentRef = (0, import_element214.useRef)(null);
+  const contentRef = (0, import_element213.useRef)(null);
   const mergedRef = (0, import_compose36.useMergeRefs)([focusOnMountRef, contentRef]);
   useRevealValidity(contentRef, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(
@@ -58291,8 +58263,8 @@ function PanelModal({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element214.useState)(false);
-  const [isOpen, setIsOpen] = (0, import_element214.useState)(false);
+  const [touched, setTouched] = (0, import_element213.useState)(false);
+  const [isOpen, setIsOpen] = (0, import_element213.useState)(false);
   const { fieldDefinition, fieldLabel, summaryFields } = use_field_from_form_field_default(field);
   if (!fieldDefinition) {
     return null;
@@ -58334,7 +58306,7 @@ var modal_default = PanelModal;
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
 var import_components61 = __toESM(require_components(), 1);
 var import_i18n71 = __toESM(require_i18n(), 1);
-var import_element215 = __toESM(require_element(), 1);
+var import_element214 = __toESM(require_element(), 1);
 var import_compose37 = __toESM(require_compose(), 1);
 var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
@@ -58367,7 +58339,7 @@ function DropdownContentWithValidation({
   touched,
   children
 }) {
-  const ref = (0, import_element215.useRef)(null);
+  const ref = (0, import_element214.useRef)(null);
   useRevealValidity(ref, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("div", { ref, children });
 }
@@ -58377,11 +58349,11 @@ function PanelDropdown({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element215.useState)(false);
-  const [popoverAnchor, setPopoverAnchor] = (0, import_element215.useState)(
+  const [touched, setTouched] = (0, import_element214.useState)(false);
+  const [popoverAnchor, setPopoverAnchor] = (0, import_element214.useState)(
     null
   );
-  const popoverProps = (0, import_element215.useMemo)(
+  const popoverProps = (0, import_element214.useMemo)(
     () => ({
       // Anchor the popover to the middle of the entire row so that it doesn't
       // move around when the label changes.
@@ -58395,7 +58367,7 @@ function PanelDropdown({
   const [dialogRef, dialogProps] = (0, import_compose37.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
-  const form = (0, import_element215.useMemo)(
+  const form = (0, import_element214.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -58405,7 +58377,7 @@ function PanelDropdown({
     }),
     [field]
   );
-  const formValidity = (0, import_element215.useMemo)(() => {
+  const formValidity = (0, import_element214.useMemo)(() => {
     if (validity === void 0) {
       return void 0;
     }
@@ -58517,7 +58489,7 @@ function FormPanelField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_element216 = __toESM(require_element(), 1);
+var import_element215 = __toESM(require_element(), 1);
 var import_compose38 = __toESM(require_compose(), 1);
 import { speak as speak6 } from "@wordpress/a11y";
 
@@ -58685,11 +58657,11 @@ function FormCardField({
   markWhenOptional,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element216.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element215.useContext)(dataform_context_default);
   const layout = field.layout;
-  const contentRef = (0, import_element216.useRef)(null);
-  const hasFocusedContentRef = (0, import_element216.useRef)(false);
-  const form = (0, import_element216.useMemo)(
+  const contentRef = (0, import_element215.useRef)(null);
+  const hasFocusedContentRef = (0, import_element215.useRef)(false);
+  const form = (0, import_element215.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
@@ -58697,12 +58669,12 @@ function FormCardField({
     [field]
   );
   const { isOpened, isCollapsible } = layout;
-  const [isOpen, setIsOpen] = (0, import_element216.useState)(isOpened);
-  const [touched, setTouched] = (0, import_element216.useState)(false);
-  (0, import_element216.useEffect)(() => {
+  const [isOpen, setIsOpen] = (0, import_element215.useState)(isOpened);
+  const [touched, setTouched] = (0, import_element215.useState)(false);
+  (0, import_element215.useEffect)(() => {
     setIsOpen(isOpened);
   }, [isOpened]);
-  const handleOpenChange = (0, import_element216.useCallback)((open) => {
+  const handleOpenChange = (0, import_element215.useCallback)((open) => {
     if (!open) {
       setTouched(true);
     }
@@ -58712,10 +58684,10 @@ function FormCardField({
     contentRef,
     (isCollapsible ? isOpen : true) && touched
   );
-  const handleContentFocus = (0, import_element216.useCallback)(() => {
+  const handleContentFocus = (0, import_element215.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element216.useCallback)(() => {
+  const handleFocusOutside = (0, import_element215.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -58883,7 +58855,7 @@ function FormRowField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
-var import_element217 = __toESM(require_element(), 1);
+var import_element216 = __toESM(require_element(), 1);
 var import_i18n73 = __toESM(require_i18n(), 1);
 var import_compose39 = __toESM(require_compose(), 1);
 import { speak as speak7 } from "@wordpress/a11y";
@@ -58894,20 +58866,20 @@ function FormDetailsField({
   onChange,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element217.useContext)(dataform_context_default);
-  const detailsRef = (0, import_element217.useRef)(null);
-  const contentRef = (0, import_element217.useRef)(null);
-  const hasFocusedContentRef = (0, import_element217.useRef)(false);
-  const [touched, setTouched] = (0, import_element217.useState)(false);
-  const [isOpen, setIsOpen] = (0, import_element217.useState)(false);
-  const form = (0, import_element217.useMemo)(
+  const { fields: fields2 } = (0, import_element216.useContext)(dataform_context_default);
+  const detailsRef = (0, import_element216.useRef)(null);
+  const contentRef = (0, import_element216.useRef)(null);
+  const hasFocusedContentRef = (0, import_element216.useRef)(false);
+  const [touched, setTouched] = (0, import_element216.useState)(false);
+  const [isOpen, setIsOpen] = (0, import_element216.useState)(false);
+  const form = (0, import_element216.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
     }),
     [field]
   );
-  (0, import_element217.useEffect)(() => {
+  (0, import_element216.useEffect)(() => {
     const details = detailsRef.current;
     if (!details) {
       return;
@@ -58925,10 +58897,10 @@ function FormDetailsField({
     };
   }, []);
   const revealValidity = useRevealValidity(contentRef, isOpen && touched);
-  const handleContentFocus = (0, import_element217.useCallback)(() => {
+  const handleContentFocus = (0, import_element216.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element217.useCallback)(() => {
+  const handleFocusOutside = (0, import_element216.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -59082,8 +59054,8 @@ function DataFormLayout({
   children,
   as
 }) {
-  const { fields: fieldDefinitions } = (0, import_element218.useContext)(dataform_context_default);
-  const markWhenOptional = (0, import_element218.useMemo)(() => {
+  const { fields: fieldDefinitions } = (0, import_element217.useContext)(dataform_context_default);
+  const markWhenOptional = (0, import_element217.useMemo)(() => {
     const requiredCount = fieldDefinitions.filter(
       (f2) => !!f2.isValid?.required
     ).length;
@@ -59136,8 +59108,8 @@ function DataForm({
   onChange,
   validity
 }) {
-  const normalizedForm = (0, import_element219.useMemo)(() => normalize_form_default(form), [form]);
-  const normalizedFields = (0, import_element219.useMemo)(
+  const normalizedForm = (0, import_element218.useMemo)(() => normalize_form_default(form), [form]);
+  const normalizedFields = (0, import_element218.useMemo)(
     () => normalizeFields(fields2),
     [fields2]
   );
@@ -59252,11 +59224,11 @@ function filterSortAndPaginate(data, view, fields2) {
 }
 
 // packages/widget-dashboard/build-module/components/widget-picker/widget-picker.mjs
-var import_element221 = __toESM(require_element(), 1);
+var import_element220 = __toESM(require_element(), 1);
 var import_i18n74 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-preview-chrome/widget-preview-chrome.mjs
-var import_element220 = __toESM(require_element(), 1);
+var import_element219 = __toESM(require_element(), 1);
 var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE77 = "data-wp-hash";
 function getRuntime77() {
@@ -59347,8 +59319,8 @@ function WidgetPreviewChrome({
   widgetType,
   index: index2 = 0
 }) {
-  const titleId = (0, import_element220.useId)();
-  const contextValue = (0, import_element220.useMemo)(
+  const titleId = (0, import_element219.useId)();
+  const contextValue = (0, import_element219.useMemo)(
     () => ({
       uuid: widget.uuid,
       name: widget.type,
@@ -59387,7 +59359,7 @@ var DEFAULT_VIEW = {
 };
 var getItemId = (item) => item.name;
 function WidgetPreview({ item }) {
-  const exampleWidget = (0, import_element221.useMemo)(
+  const exampleWidget = (0, import_element220.useMemo)(
     () => createDashboardWidget(item, item.example?.attributes),
     [item]
   );
@@ -59420,14 +59392,14 @@ function WidgetPicker({
   itemListLabel = (0, import_i18n74.__)("Widget list")
 }) {
   const { widgetTypes: registeredTypes } = useDashboardInternalContext();
-  const [selection, setSelection] = (0, import_element221.useState)([]);
-  const [view, setView] = (0, import_element221.useState)(DEFAULT_VIEW);
+  const [selection, setSelection] = (0, import_element220.useState)([]);
+  const [view, setView] = (0, import_element220.useState)(DEFAULT_VIEW);
   const { data: widgetTypes } = filterSortAndPaginate(
     registeredTypes,
     view,
     fields
   );
-  const actions = (0, import_element221.useMemo)(
+  const actions = (0, import_element220.useMemo)(
     () => [
       {
         id: "select",
@@ -59466,7 +59438,7 @@ var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
 function WidgetInserter() {
   const { layout, onLayoutChange } = useDashboardInternalContext();
   const { inserterOpen, setInserterOpen } = useDashboardUIContext();
-  const insertWidgets = (0, import_element222.useCallback)(
+  const insertWidgets = (0, import_element221.useCallback)(
     (widgetTypes) => {
       if (widgetTypes.length > 0) {
         const newWidgets = widgetTypes.map(
@@ -59505,7 +59477,7 @@ function WidgetInserter() {
 }
 
 // packages/widget-dashboard/build-module/components/widget-settings/widget-settings.mjs
-var import_element223 = __toESM(require_element(), 1);
+var import_element222 = __toESM(require_element(), 1);
 var import_i18n77 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-settings/utils/get-widget-settings.mjs
@@ -59615,10 +59587,10 @@ function WidgetSettings() {
   } = useDashboardInternalContext();
   const { settingsWidgetUuid, setSettingsWidgetUuid } = useDashboardUIContext();
   const open = settingsWidgetUuid !== null;
-  const [lastWidgetUuid, setLastWidgetUuid] = (0, import_element223.useState)(
+  const [lastWidgetUuid, setLastWidgetUuid] = (0, import_element222.useState)(
     settingsWidgetUuid
   );
-  (0, import_element223.useEffect)(() => {
+  (0, import_element222.useEffect)(() => {
     if (settingsWidgetUuid) {
       setLastWidgetUuid(settingsWidgetUuid);
     }
@@ -59626,18 +59598,18 @@ function WidgetSettings() {
   const activeUuid = settingsWidgetUuid ?? lastWidgetUuid;
   const widget = activeUuid ? layout.find((instance) => instance.uuid === activeUuid) : void 0;
   const widgetType = widget ? widgetTypes.find((type) => type.name === widget.type) : void 0;
-  const fields2 = (0, import_element223.useMemo)(
+  const fields2 = (0, import_element222.useMemo)(
     () => widgetType?.attributes ?? [],
     [widgetType?.attributes]
   );
-  const form = (0, import_element223.useMemo)(
+  const form = (0, import_element222.useMemo)(
     () => ({
       layout: { type: "regular", labelPosition: "top" },
       fields: fields2.map((field) => field.id)
     }),
     [fields2]
   );
-  const handleChange = (0, import_element223.useCallback)(
+  const handleChange = (0, import_element222.useCallback)(
     (edits) => {
       if (!widget) {
         return;
@@ -59656,15 +59628,15 @@ function WidgetSettings() {
     },
     [layout, onLayoutChange, widget]
   );
-  const close = (0, import_element223.useCallback)(
+  const close = (0, import_element222.useCallback)(
     () => setSettingsWidgetUuid(null),
     [setSettingsWidgetUuid]
   );
-  const handleSave = (0, import_element223.useCallback)(() => {
+  const handleSave = (0, import_element222.useCallback)(() => {
     commit();
     close();
   }, [commit, close]);
-  const handleOpenChange = (0, import_element223.useCallback)(
+  const handleOpenChange = (0, import_element222.useCallback)(
     (nextOpen) => {
       if (!nextOpen) {
         cancelStaging();
@@ -59733,16 +59705,16 @@ function WidgetSettings() {
 var import_i18n78 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-settings/use-widget-settings-toggle.mjs
-var import_element224 = __toESM(require_element(), 1);
+var import_element223 = __toESM(require_element(), 1);
 function useWidgetSettingsToggle(widget) {
   const { settingsWidgetUuid, setSettingsWidgetUuid } = useDashboardUIContext();
   const { cancel, flushAutoSave } = useDashboardInternalContext();
   const isOpen = settingsWidgetUuid === widget.uuid;
-  const open = (0, import_element224.useCallback)(() => {
+  const open = (0, import_element223.useCallback)(() => {
     flushAutoSave();
     setSettingsWidgetUuid(widget.uuid);
   }, [flushAutoSave, setSettingsWidgetUuid, widget.uuid]);
-  const toggle = (0, import_element224.useCallback)(() => {
+  const toggle = (0, import_element223.useCallback)(() => {
     if (isOpen) {
       cancel();
       setSettingsWidgetUuid(null);
@@ -59780,7 +59752,7 @@ function WidgetSettingsTrigger({
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widgets.mjs
-var import_element239 = __toESM(require_element(), 1);
+var import_element238 = __toESM(require_element(), 1);
 
 // node_modules/@dnd-kit/core/dist/core.esm.js
 var import_react80 = __toESM(require_react());
@@ -64027,17 +63999,17 @@ function isAfter2(a2, b2) {
 
 // packages/grid/build-module/dashboard-grid/index.mjs
 var import_compose42 = __toESM(require_compose(), 1);
-var import_element230 = __toESM(require_element(), 1);
+var import_element229 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-grid/grid-item.mjs
-var import_element226 = __toESM(require_element(), 1);
+var import_element225 = __toESM(require_element(), 1);
 var import_compose41 = __toESM(require_compose(), 1);
 
 // packages/grid/build-module/shared/grid-item-key.mjs
 var GRID_ITEM_DATA_KEY = "data-wp-grid-item-key";
 
 // packages/grid/build-module/shared/resize-handle.mjs
-var import_element225 = __toESM(require_element(), 1);
+var import_element224 = __toESM(require_element(), 1);
 var import_compose40 = __toESM(require_compose(), 1);
 var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE79 = "data-wp-hash";
@@ -64141,12 +64113,12 @@ function ResizeHandle({
     id: "draggable",
     data: { itemId }
   });
-  const ownerDocumentRef = (0, import_element225.useRef)(null);
-  const setOwnerDocumentRef = (0, import_element225.useCallback)((node) => {
+  const ownerDocumentRef = (0, import_element224.useRef)(null);
+  const setOwnerDocumentRef = (0, import_element224.useCallback)((node) => {
     ownerDocumentRef.current = node?.ownerDocument ?? null;
   }, []);
   const mergedRef = (0, import_compose40.useMergeRefs)([setOwnerDocumentRef, setNodeRef]);
-  (0, import_element225.useEffect)(() => {
+  (0, import_element224.useEffect)(() => {
     if (!isDragging) {
       return;
     }
@@ -64350,12 +64322,12 @@ function GridItem4({
   minResizeHeightPx,
   renderResizeHandle
 }) {
-  const [resizeDelta, setResizeDelta] = (0, import_element226.useState)(
+  const [resizeDelta, setResizeDelta] = (0, import_element225.useState)(
     null
   );
-  const [initialContentSize, setInitialContentSize] = (0, import_element226.useState)(null);
-  const itemRef = (0, import_element226.useRef)(null);
-  const contentRef = (0, import_element226.useRef)(null);
+  const [initialContentSize, setInitialContentSize] = (0, import_element225.useState)(null);
+  const itemRef = (0, import_element225.useRef)(null);
+  const contentRef = (0, import_element225.useRef)(null);
   const {
     attributes,
     listeners,
@@ -64489,7 +64461,7 @@ function SnapPreviewOverlay({ snap }) {
 }
 
 // packages/grid/build-module/shared/grid-overlay.mjs
-var import_element227 = __toESM(require_element(), 1);
+var import_element226 = __toESM(require_element(), 1);
 var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE81 = "data-wp-hash";
 function getRuntime81() {
@@ -64582,8 +64554,8 @@ function GridOverlay({
   isActive
 }) {
   const showRows = typeof rowHeight === "number" && typeof rows === "number" && rows > 0;
-  const [waveKey, setWaveKey] = (0, import_element227.useState)(0);
-  (0, import_element227.useEffect)(() => {
+  const [waveKey, setWaveKey] = (0, import_element226.useState)(0);
+  (0, import_element226.useEffect)(() => {
     if (isActive) {
       setWaveKey((key2) => key2 + 1);
     }
@@ -64746,7 +64718,7 @@ function ItemExitOverlay({
 }
 
 // packages/grid/build-module/shared/use-layout-shift-animation.mjs
-var import_element228 = __toESM(require_element(), 1);
+var import_element227 = __toESM(require_element(), 1);
 function queryGridItems(container) {
   return Array.from(
     container.querySelectorAll(
@@ -64805,15 +64777,15 @@ function useLayoutShiftAnimation({
   layoutFingerprint,
   excludeItemKey = null
 }) {
-  const snapshotBeforeChangeRef = (0, import_element228.useRef)(null);
-  const lastRenderedPositionsRef = (0, import_element228.useRef)(null);
-  const positionsBeforeLastChangeRef = (0, import_element228.useRef)(null);
-  const captureLayoutSnapshot = (0, import_element228.useCallback)(() => {
+  const snapshotBeforeChangeRef = (0, import_element227.useRef)(null);
+  const lastRenderedPositionsRef = (0, import_element227.useRef)(null);
+  const positionsBeforeLastChangeRef = (0, import_element227.useRef)(null);
+  const captureLayoutSnapshot = (0, import_element227.useCallback)(() => {
     if (container) {
       snapshotBeforeChangeRef.current = snapshotPositions(container);
     }
   }, [container]);
-  (0, import_element228.useLayoutEffect)(() => {
+  (0, import_element227.useLayoutEffect)(() => {
     if (!container || !enabled) {
       snapshotBeforeChangeRef.current = null;
       lastRenderedPositionsRef.current = null;
@@ -64850,10 +64822,10 @@ function useLayoutShiftAnimation({
       }
     }
   }, [container, enabled, layoutFingerprint, excludeItemKey]);
-  const getLastPositions = (0, import_element228.useCallback)(() => {
+  const getLastPositions = (0, import_element227.useCallback)(() => {
     return lastRenderedPositionsRef.current;
   }, []);
-  const getPositionsBeforeLastChange = (0, import_element228.useCallback)(() => {
+  const getPositionsBeforeLastChange = (0, import_element227.useCallback)(() => {
     return positionsBeforeLastChangeRef.current;
   }, []);
   return {
@@ -64880,7 +64852,7 @@ function getPlacementFingerprint(itemStyles) {
 }
 
 // packages/grid/build-module/shared/use-item-exit-animation.mjs
-var import_element229 = __toESM(require_element(), 1);
+var import_element228 = __toESM(require_element(), 1);
 var EXIT_SAFETY_TIMEOUT_MS = 1e3;
 function prefersReducedMotion() {
   return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -64892,12 +64864,12 @@ function useItemExitAnimation({
   getPositionsBeforeLastChange,
   childrenCacheRef
 }) {
-  const [exitingItems, setExitingItems] = (0, import_element229.useState)(
+  const [exitingItems, setExitingItems] = (0, import_element228.useState)(
     []
   );
-  const prevLayoutKeysRef = (0, import_element229.useRef)(/* @__PURE__ */ new Set());
-  const exitTimeoutsRef = (0, import_element229.useRef)(/* @__PURE__ */ new Map());
-  const clearExitingItem = (0, import_element229.useCallback)(
+  const prevLayoutKeysRef = (0, import_element228.useRef)(/* @__PURE__ */ new Set());
+  const exitTimeoutsRef = (0, import_element228.useRef)(/* @__PURE__ */ new Map());
+  const clearExitingItem = (0, import_element228.useCallback)(
     (key2) => {
       const timeout = exitTimeoutsRef.current.get(key2);
       if (timeout) {
@@ -64911,7 +64883,7 @@ function useItemExitAnimation({
     },
     [childrenCacheRef]
   );
-  const scheduleExitComplete = (0, import_element229.useCallback)(
+  const scheduleExitComplete = (0, import_element228.useCallback)(
     (key2) => {
       if (exitTimeoutsRef.current.has(key2)) {
         return;
@@ -64924,7 +64896,7 @@ function useItemExitAnimation({
     },
     [clearExitingItem]
   );
-  (0, import_element229.useLayoutEffect)(() => {
+  (0, import_element228.useLayoutEffect)(() => {
     if (!enabled || !container) {
       prevLayoutKeysRef.current = new Set(layoutKeys);
       for (const timeout of exitTimeoutsRef.current.values()) {
@@ -64983,7 +64955,7 @@ function useItemExitAnimation({
     childrenCacheRef,
     scheduleExitComplete
   ]);
-  (0, import_element229.useLayoutEffect)(() => {
+  (0, import_element228.useLayoutEffect)(() => {
     const exitTimeouts = exitTimeoutsRef.current;
     return () => {
       for (const timeout of exitTimeouts.values()) {
@@ -65296,7 +65268,7 @@ var dashboardDragDropAnimation = createDashboardDragDropAnimation(
 var FALLBACK_GAP_PX = 24;
 var DEFAULT_COLUMNS = 6;
 var NO_SORT_STRATEGY = () => null;
-var DashboardGrid = (0, import_element230.forwardRef)(
+var DashboardGrid = (0, import_element229.forwardRef)(
   function DashboardGrid2(props, ref) {
     const {
       layout,
@@ -65314,25 +65286,25 @@ var DashboardGrid = (0, import_element230.forwardRef)(
       renderGridOverlay,
       ...divProps
     } = props;
-    const [temporaryLayout, setTemporaryLayout] = (0, import_element230.useState)();
-    const [activeId, setActiveId] = (0, import_element230.useState)(null);
-    const [isResizing, setIsResizing] = (0, import_element230.useState)(false);
-    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element230.useState)(null);
-    const latestLayoutRef = (0, import_element230.useRef)();
-    const lastReorderCursorRef = (0, import_element230.useRef)(null);
-    const resizeBaselineRef = (0, import_element230.useRef)(null);
-    const captureLayoutSnapshotRef = (0, import_element230.useRef)(() => {
+    const [temporaryLayout, setTemporaryLayout] = (0, import_element229.useState)();
+    const [activeId, setActiveId] = (0, import_element229.useState)(null);
+    const [isResizing, setIsResizing] = (0, import_element229.useState)(false);
+    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element229.useState)(null);
+    const latestLayoutRef = (0, import_element229.useRef)();
+    const lastReorderCursorRef = (0, import_element229.useRef)(null);
+    const resizeBaselineRef = (0, import_element229.useRef)(null);
+    const captureLayoutSnapshotRef = (0, import_element229.useRef)(() => {
     });
-    const childrenCacheRef = (0, import_element230.useRef)(
+    const childrenCacheRef = (0, import_element229.useRef)(
       /* @__PURE__ */ new Map()
     );
     const activeLayout = temporaryLayout ?? layout;
-    const [gridRoot, setGridRoot] = (0, import_element230.useState)(
+    const [gridRoot, setGridRoot] = (0, import_element229.useState)(
       null
     );
-    const [containerWidth, setContainerWidth] = (0, import_element230.useState)(0);
-    const [containerHeight, setContainerHeight] = (0, import_element230.useState)(0);
-    const [gapPx, setGapPx] = (0, import_element230.useState)(FALLBACK_GAP_PX);
+    const [containerWidth, setContainerWidth] = (0, import_element229.useState)(0);
+    const [containerHeight, setContainerHeight] = (0, import_element229.useState)(0);
+    const [gapPx, setGapPx] = (0, import_element229.useState)(FALLBACK_GAP_PX);
     const resizeObserverRef = (0, import_compose42.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
@@ -65344,7 +65316,7 @@ var DashboardGrid = (0, import_element230.forwardRef)(
       resizeObserverRef,
       ref
     ]);
-    (0, import_element230.useLayoutEffect)(() => {
+    (0, import_element229.useLayoutEffect)(() => {
       if (!gridRoot) {
         return;
       }
@@ -65362,7 +65334,7 @@ var DashboardGrid = (0, import_element230.forwardRef)(
         setGapPx(parsed);
       }
     }, [gridRoot]);
-    const effectiveColumns = (0, import_element230.useMemo)(() => {
+    const effectiveColumns = (0, import_element229.useMemo)(() => {
       if (!minColumnWidth) {
         return columns ?? DEFAULT_COLUMNS;
       }
@@ -65383,23 +65355,23 @@ var DashboardGrid = (0, import_element230.forwardRef)(
     ).widthPx;
     const rowHeightPx = typeof rowHeight === "number" ? rowHeight : null;
     const minResizeHeightPx = rowHeightPx === null ? void 0 : gridSpanToPixelSize(1, 1, columnWidth, gapPx, rowHeightPx).heightPx ?? void 0;
-    const layoutMap = (0, import_element230.useMemo)(() => {
+    const layoutMap = (0, import_element229.useMemo)(() => {
       const map = /* @__PURE__ */ new Map();
       activeLayout.forEach((item) => map.set(item.key, item));
       return map;
     }, [activeLayout]);
-    const layoutKeys = (0, import_element230.useMemo)(
+    const layoutKeys = (0, import_element229.useMemo)(
       () => new Set(layout.map((item) => item.key)),
       [layout]
     );
-    const sortedItems = (0, import_element230.useMemo)(
+    const sortedItems = (0, import_element229.useMemo)(
       () => activeLayout.map((item, index2) => ({ item, index: index2 })).sort(
         (a2, b2) => (a2.item.order ?? a2.index) - (b2.item.order ?? b2.index)
       ).map(({ item }) => item.key),
       [activeLayout]
     );
     const items = sortedItems;
-    const resolvedItemMap = (0, import_element230.useMemo)(() => {
+    const resolvedItemMap = (0, import_element229.useMemo)(() => {
       const fillWidths = resolveFillWidths(
         items,
         layoutMap,
@@ -65418,13 +65390,13 @@ var DashboardGrid = (0, import_element230.forwardRef)(
       }
       return map;
     }, [items, layoutMap, effectiveColumns]);
-    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element230.useMemo)(() => {
+    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element229.useMemo)(() => {
       const childMap = /* @__PURE__ */ new Map();
       const actionableMap = /* @__PURE__ */ new Map();
       const rest = [];
       const byKey = /* @__PURE__ */ new Map();
-      import_element230.Children.forEach(children, (child) => {
-        if (!(0, import_element230.isValidElement)(child)) {
+      import_element229.Children.forEach(children, (child) => {
+        if (!(0, import_element229.isValidElement)(child)) {
           rest.push(child);
           return;
         }
@@ -65434,7 +65406,7 @@ var DashboardGrid = (0, import_element230.forwardRef)(
           return;
         }
         const { actionableArea } = child.props;
-        const stripped = actionableArea !== void 0 ? (0, import_element230.cloneElement)(child, {
+        const stripped = actionableArea !== void 0 ? (0, import_element229.cloneElement)(child, {
           actionableArea: void 0
         }) : child;
         byKey.set(key2, stripped);
@@ -65449,7 +65421,7 @@ var DashboardGrid = (0, import_element230.forwardRef)(
       });
       return [childMap, actionableMap, rest, byKey];
     }, [children, layoutKeys]);
-    (0, import_element230.useLayoutEffect)(() => {
+    (0, import_element229.useLayoutEffect)(() => {
       for (const [key2, child] of renderedByKey) {
         childrenCacheRef.current.set(key2, child);
       }
@@ -65604,7 +65576,7 @@ var DashboardGrid = (0, import_element230.forwardRef)(
     const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime306.jsx)("div", { className: grid_default2["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime306.jsx)("div", { className: grid_default2["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
     const Overlay = renderGridOverlay ?? GridOverlay;
     const overlayRowHeight = typeof rowHeight === "number" ? rowHeight : void 0;
-    const overlayRows = (0, import_element230.useMemo)(() => {
+    const overlayRows = (0, import_element229.useMemo)(() => {
       if (overlayRowHeight === void 0 || containerHeight <= 0) {
         return void 0;
       }
@@ -65614,7 +65586,7 @@ var DashboardGrid = (0, import_element230.forwardRef)(
         Math.floor((containerHeight + gapPx) / rowTile)
       );
     }, [overlayRowHeight, containerHeight, gapPx]);
-    const gridOverlay = (0, import_element230.useMemo)(
+    const gridOverlay = (0, import_element229.useMemo)(
       () => /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
         Overlay,
         {
@@ -65632,7 +65604,7 @@ var DashboardGrid = (0, import_element230.forwardRef)(
         overlayRows
       ]
     );
-    const layoutFingerprint = (0, import_element230.useMemo)(
+    const layoutFingerprint = (0, import_element229.useMemo)(
       () => getLayoutFingerprint([...resolvedItemMap.values()]),
       [resolvedItemMap]
     );
@@ -65651,7 +65623,7 @@ var DashboardGrid = (0, import_element230.forwardRef)(
       childrenCacheRef
     });
     const layoutAnimating = editMode;
-    (0, import_element230.useLayoutEffect)(() => {
+    (0, import_element229.useLayoutEffect)(() => {
       captureLayoutSnapshotRef.current = captureLayoutSnapshot;
     }, [captureLayoutSnapshot]);
     return /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)(
@@ -65731,10 +65703,10 @@ var DashboardGrid = (0, import_element230.forwardRef)(
 
 // packages/grid/build-module/dashboard-lanes/index.mjs
 var import_compose44 = __toESM(require_compose(), 1);
-var import_element233 = __toESM(require_element(), 1);
+var import_element232 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-lanes/lanes-item.mjs
-var import_element231 = __toESM(require_element(), 1);
+var import_element230 = __toESM(require_element(), 1);
 var import_compose43 = __toESM(require_compose(), 1);
 var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE84 = "data-wp-hash";
@@ -65848,12 +65820,12 @@ function LanesItem({
   renderResizeHandle,
   dragging = false
 }) {
-  const [resizeDelta, setResizeDelta] = (0, import_element231.useState)(
+  const [resizeDelta, setResizeDelta] = (0, import_element230.useState)(
     null
   );
-  const [initialContentSize, setInitialContentSize] = (0, import_element231.useState)(null);
-  const itemRef = (0, import_element231.useRef)(null);
-  const contentRef = (0, import_element231.useRef)(null);
+  const [initialContentSize, setInitialContentSize] = (0, import_element230.useState)(null);
+  const itemRef = (0, import_element230.useRef)(null);
+  const contentRef = (0, import_element230.useRef)(null);
   const {
     attributes,
     listeners,
@@ -65976,7 +65948,7 @@ function LanesItem({
 }
 
 // packages/grid/build-module/dashboard-lanes/use-lane-placement.mjs
-var import_element232 = __toESM(require_element(), 1);
+var import_element231 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-lanes/lane-placement.mjs
 function clampSpan(span, lanes) {
@@ -66075,9 +66047,9 @@ function clampSpan2(span) {
   return Math.max(1, Math.floor(span));
 }
 function useLanePlacement(container, input) {
-  const [isPolyfilled] = (0, import_element232.useState)(() => !supportsGridLanes());
-  const [itemStyles, setItemStyles] = (0, import_element232.useState)(() => /* @__PURE__ */ new Map());
-  const nativeStyles = (0, import_element232.useMemo)(() => {
+  const [isPolyfilled] = (0, import_element231.useState)(() => !supportsGridLanes());
+  const [itemStyles, setItemStyles] = (0, import_element231.useState)(() => /* @__PURE__ */ new Map());
+  const nativeStyles = (0, import_element231.useMemo)(() => {
     const map = /* @__PURE__ */ new Map();
     for (const item of input.items) {
       map.set(item.key, {
@@ -66086,14 +66058,14 @@ function useLanePlacement(container, input) {
     }
     return map;
   }, [input.items]);
-  const itemsSignature = (0, import_element232.useMemo)(() => {
+  const itemsSignature = (0, import_element231.useMemo)(() => {
     return input.items.map(
       (item) => `${item.key}/${item.span ?? 1}/${item.lane ?? ""}`
     ).join("\0");
   }, [input.items]);
-  const itemsForPlacement = (0, import_element232.useMemo)(() => input.items, [itemsSignature]);
+  const itemsForPlacement = (0, import_element231.useMemo)(() => input.items, [itemsSignature]);
   const { lanes, gap, flowTolerance, rowUnit } = input;
-  (0, import_element232.useLayoutEffect)(() => {
+  (0, import_element231.useLayoutEffect)(() => {
     if (!isPolyfilled || !container) {
       return;
     }
@@ -66332,7 +66304,7 @@ var dashboardDragDropAnimation2 = createDashboardDragDropAnimation(
 var FALLBACK_GAP_PX2 = 24;
 var DEFAULT_COLUMNS2 = 6;
 var NO_SORT_STRATEGY2 = () => null;
-var DashboardLanes = (0, import_element233.forwardRef)(
+var DashboardLanes = (0, import_element232.forwardRef)(
   function DashboardLanes2(props, ref) {
     const {
       layout,
@@ -66351,24 +66323,24 @@ var DashboardLanes = (0, import_element233.forwardRef)(
       renderGridOverlay,
       ...divProps
     } = props;
-    const [temporaryLayout, setTemporaryLayout] = (0, import_element233.useState)();
-    const [activeId, setActiveId] = (0, import_element233.useState)(null);
-    const [isResizing, setIsResizing] = (0, import_element233.useState)(false);
-    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element233.useState)(null);
-    const latestLayoutRef = (0, import_element233.useRef)();
-    const lastReorderCursorRef = (0, import_element233.useRef)(null);
-    const resizeBaselineRef = (0, import_element233.useRef)(null);
-    const captureLayoutSnapshotRef = (0, import_element233.useRef)(() => {
+    const [temporaryLayout, setTemporaryLayout] = (0, import_element232.useState)();
+    const [activeId, setActiveId] = (0, import_element232.useState)(null);
+    const [isResizing, setIsResizing] = (0, import_element232.useState)(false);
+    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element232.useState)(null);
+    const latestLayoutRef = (0, import_element232.useRef)();
+    const lastReorderCursorRef = (0, import_element232.useRef)(null);
+    const resizeBaselineRef = (0, import_element232.useRef)(null);
+    const captureLayoutSnapshotRef = (0, import_element232.useRef)(() => {
     });
-    const childrenCacheRef = (0, import_element233.useRef)(
+    const childrenCacheRef = (0, import_element232.useRef)(
       /* @__PURE__ */ new Map()
     );
     const activeLayout = temporaryLayout ?? layout;
-    const [container, setContainer] = (0, import_element233.useState)(
+    const [container, setContainer] = (0, import_element232.useState)(
       null
     );
-    const [containerWidth, setContainerWidth] = (0, import_element233.useState)(0);
-    const [gapPx, setGapPx] = (0, import_element233.useState)(FALLBACK_GAP_PX2);
+    const [containerWidth, setContainerWidth] = (0, import_element232.useState)(0);
+    const [gapPx, setGapPx] = (0, import_element232.useState)(FALLBACK_GAP_PX2);
     const resizeObserverRef = (0, import_compose44.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
@@ -66379,7 +66351,7 @@ var DashboardLanes = (0, import_element233.forwardRef)(
       resizeObserverRef,
       ref
     ]);
-    (0, import_element233.useLayoutEffect)(() => {
+    (0, import_element232.useLayoutEffect)(() => {
       if (!container) {
         return;
       }
@@ -66394,7 +66366,7 @@ var DashboardLanes = (0, import_element233.forwardRef)(
         setGapPx(parsed);
       }
     }, [container]);
-    const effectiveColumns = (0, import_element233.useMemo)(() => {
+    const effectiveColumns = (0, import_element232.useMemo)(() => {
       if (!minColumnWidth) {
         return columns ?? DEFAULT_COLUMNS2;
       }
@@ -66413,23 +66385,23 @@ var DashboardLanes = (0, import_element233.forwardRef)(
       gapPx,
       null
     ).widthPx;
-    const layoutMap = (0, import_element233.useMemo)(() => {
+    const layoutMap = (0, import_element232.useMemo)(() => {
       const map = /* @__PURE__ */ new Map();
       activeLayout.forEach((item) => map.set(item.key, item));
       return map;
     }, [activeLayout]);
-    const layoutKeys = (0, import_element233.useMemo)(
+    const layoutKeys = (0, import_element232.useMemo)(
       () => new Set(layout.map((item) => item.key)),
       [layout]
     );
-    const sortedItems = (0, import_element233.useMemo)(
+    const sortedItems = (0, import_element232.useMemo)(
       () => activeLayout.map((item, index2) => ({ item, index: index2 })).sort(
         (a2, b2) => (a2.item.order ?? a2.index) - (b2.item.order ?? b2.index)
       ).map(({ item }) => item.key),
       [activeLayout]
     );
     const items = sortedItems;
-    const placementItems = (0, import_element233.useMemo)(() => {
+    const placementItems = (0, import_element232.useMemo)(() => {
       return items.map((key2) => {
         const item = layoutMap.get(key2);
         const width = item?.width;
@@ -66444,13 +66416,13 @@ var DashboardLanes = (0, import_element233.forwardRef)(
       flowTolerance,
       rowUnit
     });
-    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element233.useMemo)(() => {
+    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element232.useMemo)(() => {
       const childMap = /* @__PURE__ */ new Map();
       const actionableMap = /* @__PURE__ */ new Map();
       const rest = [];
       const byKey = /* @__PURE__ */ new Map();
-      import_element233.Children.forEach(children, (child) => {
-        if (!(0, import_element233.isValidElement)(child)) {
+      import_element232.Children.forEach(children, (child) => {
+        if (!(0, import_element232.isValidElement)(child)) {
           rest.push(child);
           return;
         }
@@ -66460,7 +66432,7 @@ var DashboardLanes = (0, import_element233.forwardRef)(
           return;
         }
         const { actionableArea } = child.props;
-        const stripped = actionableArea !== void 0 ? (0, import_element233.cloneElement)(
+        const stripped = actionableArea !== void 0 ? (0, import_element232.cloneElement)(
           child,
           { actionableArea: void 0 }
         ) : child;
@@ -66476,7 +66448,7 @@ var DashboardLanes = (0, import_element233.forwardRef)(
       });
       return [childMap, actionableMap, rest, byKey];
     }, [children, layoutKeys]);
-    (0, import_element233.useLayoutEffect)(() => {
+    (0, import_element232.useLayoutEffect)(() => {
       for (const [key2, child] of renderedByKey) {
         childrenCacheRef.current.set(key2, child);
       }
@@ -66614,11 +66586,11 @@ var DashboardLanes = (0, import_element233.forwardRef)(
     const DragPreview = renderDragPreview;
     const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime308.jsx)("div", { className: lanes_default["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime308.jsx)("div", { className: lanes_default["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
     const Overlay = renderGridOverlay ?? GridOverlay;
-    const gridOverlay = (0, import_element233.useMemo)(
+    const gridOverlay = (0, import_element232.useMemo)(
       () => /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(Overlay, { columns: effectiveColumns, isActive: editMode }),
       [Overlay, editMode, effectiveColumns]
     );
-    const layoutFingerprint = (0, import_element233.useMemo)(() => {
+    const layoutFingerprint = (0, import_element232.useMemo)(() => {
       const layoutSig = getLayoutFingerprint(activeLayout);
       const placementSig = getPlacementFingerprint(itemStyles);
       return `${layoutSig}\0${placementSig}`;
@@ -66638,7 +66610,7 @@ var DashboardLanes = (0, import_element233.forwardRef)(
       childrenCacheRef
     });
     const layoutAnimating = editMode;
-    (0, import_element233.useLayoutEffect)(() => {
+    (0, import_element232.useLayoutEffect)(() => {
       captureLayoutSnapshotRef.current = captureLayoutSnapshot;
     }, [captureLayoutSnapshot]);
     return /* @__PURE__ */ (0, import_jsx_runtime308.jsxs)(
@@ -66734,7 +66706,7 @@ var DashboardLanes = (0, import_element233.forwardRef)(
 
 // packages/widget-dashboard/build-module/hooks/use-dashboard-container-column-count.mjs
 var import_compose45 = __toESM(require_compose(), 1);
-var import_element234 = __toESM(require_element(), 1);
+var import_element233 = __toESM(require_element(), 1);
 
 // packages/widget-dashboard/build-module/utils/resolve-dashboard-column-count/resolve-dashboard-column-count.mjs
 var WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_ONE_COLUMN = 600;
@@ -66754,10 +66726,10 @@ function resolveDashboardColumnCount(containerWidth) {
 
 // packages/widget-dashboard/build-module/hooks/use-dashboard-container-column-count.mjs
 function useDashboardContainerColumnCount(forwardedRef) {
-  const [container, setContainer] = (0, import_element234.useState)(
+  const [container, setContainer] = (0, import_element233.useState)(
     null
   );
-  const [containerWidth, setContainerWidth] = (0, import_element234.useState)(0);
+  const [containerWidth, setContainerWidth] = (0, import_element233.useState)(0);
   const resizeObserverRef = (0, import_compose45.useResizeObserver)(([{ contentRect }]) => {
     setContainerWidth(contentRect.width);
   });
@@ -66766,7 +66738,7 @@ function useDashboardContainerColumnCount(forwardedRef) {
     resizeObserverRef,
     forwardedRef ?? null
   ]);
-  (0, import_element234.useLayoutEffect)(() => {
+  (0, import_element233.useLayoutEffect)(() => {
     if (!container) {
       return;
     }
@@ -66775,7 +66747,7 @@ function useDashboardContainerColumnCount(forwardedRef) {
       setContainerWidth(width);
     }
   }, [container]);
-  const columnCount = (0, import_element234.useMemo)(
+  const columnCount = (0, import_element233.useMemo)(
     () => resolveDashboardColumnCount(containerWidth),
     [containerWidth]
   );
@@ -66915,10 +66887,10 @@ function WidgetActions({
 }
 
 // packages/widget-dashboard/build-module/components/widget-attributes/widget-attributes.mjs
-var import_element237 = __toESM(require_element(), 1);
+var import_element236 = __toESM(require_element(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-attributes/attributes-dropdown.mjs
-var import_element235 = __toESM(require_element(), 1);
+var import_element234 = __toESM(require_element(), 1);
 var import_i18n80 = __toESM(require_i18n(), 1);
 var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE87 = "data-wp-hash";
@@ -67011,7 +66983,7 @@ function AttributesDropdown({
   onChange,
   onOpenChange
 }) {
-  const form = (0, import_element235.useMemo)(
+  const form = (0, import_element234.useMemo)(
     () => ({
       layout: { type: "regular", labelPosition: "top" },
       fields: fields2.map((field) => field.id)
@@ -67059,16 +67031,16 @@ function AttributesDropdown({
 
 // packages/widget-dashboard/build-module/components/widget-attributes/use-inline-fit.mjs
 var import_compose46 = __toESM(require_compose(), 1);
-var import_element236 = __toESM(require_element(), 1);
+var import_element235 = __toESM(require_element(), 1);
 function useInlineFit(options = {}) {
   const { locked = false } = options;
   const availableSize = useWidgetHeaderAvailableSize();
-  const [naturalSize, setNaturalSize] = (0, import_element236.useState)(0);
+  const [naturalSize, setNaturalSize] = (0, import_element235.useState)(0);
   const measureRef = (0, import_compose46.useResizeObserver)(
     ([entry]) => setNaturalSize(entry.contentRect.width)
   );
   const computed = availableSize !== null && naturalSize > 0 && naturalSize > availableSize;
-  const [held, setHeld] = (0, import_element236.useState)(computed);
+  const [held, setHeld] = (0, import_element235.useState)(computed);
   if (!locked && held !== computed) {
     setHeld(computed);
   }
@@ -67170,26 +67142,26 @@ function WidgetAttributes({
     (attribute) => attribute.relevance !== "high"
   );
   const settingsReserveRef = useReserveHeaderSpace("settings");
-  const [dropdownOpen, setDropdownOpen] = (0, import_element237.useState)(false);
-  const [inlineHasFocus, setInlineHasFocus] = (0, import_element237.useState)(false);
-  const [dropdownTriggerHasFocus, setDropdownTriggerHasFocus] = (0, import_element237.useState)(false);
+  const [dropdownOpen, setDropdownOpen] = (0, import_element236.useState)(false);
+  const [inlineHasFocus, setInlineHasFocus] = (0, import_element236.useState)(false);
+  const [dropdownTriggerHasFocus, setDropdownTriggerHasFocus] = (0, import_element236.useState)(false);
   const { measureRef, collapsed } = useInlineFit({
     locked: dropdownOpen || inlineHasFocus || dropdownTriggerHasFocus
   });
-  (0, import_element237.useEffect)(() => {
+  (0, import_element236.useEffect)(() => {
     if (collapsed) {
       setInlineHasFocus(false);
     } else {
       setDropdownTriggerHasFocus(false);
     }
   }, [collapsed]);
-  const fields2 = (0, import_element237.useMemo)(
+  const fields2 = (0, import_element236.useMemo)(
     () => (widgetType.attributes ?? []).filter(
       (attribute) => attribute.relevance === "high"
     ),
     [widgetType.attributes]
   );
-  const form = (0, import_element237.useMemo)(
+  const form = (0, import_element236.useMemo)(
     () => ({
       layout: { type: "row", alignment: "center" },
       fields: fields2.map((field) => ({
@@ -67199,7 +67171,7 @@ function WidgetAttributes({
     }),
     [fields2]
   );
-  const handleChange = (0, import_element237.useCallback)(
+  const handleChange = (0, import_element236.useCallback)(
     (edits) => {
       onLayoutChange(
         layout.map(
@@ -67475,7 +67447,7 @@ function WidgetToolbar({
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widget-resize-handle.mjs
-var import_element238 = __toESM(require_element(), 1);
+var import_element237 = __toESM(require_element(), 1);
 var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE90 = "data-wp-hash";
 function getRuntime90() {
@@ -67561,7 +67533,7 @@ if (typeof process === "undefined" || true) {
   registerStyle90("415a4244a3", '.a70c7d5347a2f54b__handle{--widget-resize-handle-visual-inset:var(--wpds-dimension-padding-xs,4px);--widget-resize-handle-hover-scale:1.18;background:transparent;bottom:0;box-sizing:border-box;inset-inline-end:0;padding:0;position:absolute;z-index:1}.a70c7d5347a2f54b__handle:focus-visible{border-radius:var(--wpds-border-radius-sm,2px);outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa1d4aafe4d24e03__resizing{opacity:.72}._000e7ddc64fb1ac6__handle-corner{cursor:nwse-resize;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px)}._000e7ddc64fb1ac6__handle-corner:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-block-start:none;border-end-end-radius:var(--wpds-border-radius-md,4px);border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:none;bottom:var(--widget-resize-handle-visual-inset);box-sizing:border-box;content:"";height:var(--wpds-dimension-size-4xs,8px);inset-inline-end:var(--widget-resize-handle-visual-inset);position:absolute;transform:scale(1);transform-origin:100% 100%;width:var(--wpds-dimension-size-4xs,8px)}[dir=rtl] ._000e7ddc64fb1ac6__handle-corner:after{transform-origin:0 100%}._000e7ddc64fb1ac6__handle-corner.aa1d4aafe4d24e03__resizing:after,._000e7ddc64fb1ac6__handle-corner:focus-visible:after,._000e7ddc64fb1ac6__handle-corner:hover:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}.f227b7c826e4b495__handle-horizontal{align-items:center;border:none;cursor:ew-resize;display:flex;height:var(--wpds-dimension-size-lg,40px);justify-content:center;padding-inline-end:var(--widget-resize-handle-visual-inset);width:var(--wpds-dimension-size-sm,24px)}@media not (prefers-reduced-motion){._000e7ddc64fb1ac6__handle-corner:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-block-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-inline-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}.f227b7c826e4b495__handle-horizontal:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),background-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}}.f227b7c826e4b495__handle-horizontal:after{background-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));content:"";height:var(--wpds-dimension-size-3xs,12px);transform:scale(1);transform-origin:50% 100%;width:var(--wpds-border-width-sm,2px)}.f227b7c826e4b495__handle-horizontal.aa1d4aafe4d24e03__resizing:after,.f227b7c826e4b495__handle-horizontal:focus-visible:after,.f227b7c826e4b495__handle-horizontal:hover:after{background-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}@media (forced-colors:active){._000e7ddc64fb1ac6__handle-corner.aa1d4aafe4d24e03__resizing:after,._000e7ddc64fb1ac6__handle-corner:after,._000e7ddc64fb1ac6__handle-corner:focus-visible:after,._000e7ddc64fb1ac6__handle-corner:hover:after{border-block-end-color:Highlight;border-inline-end-color:Highlight}.f227b7c826e4b495__handle-horizontal.aa1d4aafe4d24e03__resizing:after,.f227b7c826e4b495__handle-horizontal:after,.f227b7c826e4b495__handle-horizontal:focus-visible:after,.f227b7c826e4b495__handle-horizontal:hover:after{background-color:Highlight}}');
 }
 var widget_resize_handle_default = { "handle": "a70c7d5347a2f54b__handle", "resizing": "aa1d4aafe4d24e03__resizing", "handle-corner": "_000e7ddc64fb1ac6__handle-corner", "handle-horizontal": "f227b7c826e4b495__handle-horizontal" };
-var WidgetResizeHandle = (0, import_element238.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
+var WidgetResizeHandle = (0, import_element237.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
   if (!verticalResizable) {
     return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
       "div",
@@ -67722,22 +67694,22 @@ function applyMasonryChange(widgets, masonryLayout) {
     };
   });
 }
-var Widgets = (0, import_element239.forwardRef)(
+var Widgets = (0, import_element238.forwardRef)(
   function Widgets2({ className }, ref) {
     const { layout, onLayoutChange, editMode, gridSettings, widgetTypes } = useDashboardInternalContext();
     const { containerRef, columnCount } = useDashboardContainerColumnCount(ref);
     const isMasonry = gridSettings.model === "masonry";
-    const gridLayout = (0, import_element239.useMemo)(
+    const gridLayout = (0, import_element238.useMemo)(
       () => isMasonry ? toMasonryLayout(layout) : toGridLayout(layout),
       [layout, isMasonry]
     );
-    const handleGridChange = (0, import_element239.useCallback)(
+    const handleGridChange = (0, import_element238.useCallback)(
       (newGridLayout) => {
         onLayoutChange(applyGridChange(layout, newGridLayout));
       },
       [layout, onLayoutChange]
     );
-    const handleMasonryChange = (0, import_element239.useCallback)(
+    const handleMasonryChange = (0, import_element238.useCallback)(
       (newMasonryLayout) => {
         onLayoutChange(
           applyMasonryChange(layout, newMasonryLayout)
@@ -67785,7 +67757,7 @@ var Widgets = (0, import_element239.forwardRef)(
         widget.uuid
       );
     });
-    const renderDragPreview = (0, import_element239.useCallback)(
+    const renderDragPreview = (0, import_element238.useCallback)(
       ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("div", { className: widgets_default["drag-preview"], children: clone }),
       []
     );
@@ -67879,10 +67851,10 @@ import {
 import { registerFieldType } from "@wordpress/widget-primitives";
 
 // routes/dashboard/field-types/location-control/location-control.tsx
-var import_element241 = __toESM(require_element());
+var import_element240 = __toESM(require_element());
 
 // routes/dashboard/field-types/location-picker/location-picker.tsx
-var import_element240 = __toESM(require_element());
+var import_element239 = __toESM(require_element());
 var import_i18n82 = __toESM(require_i18n());
 
 // packages/style-runtime/src/index.ts
@@ -67985,11 +67957,11 @@ function LocationPicker({
   selectButton = true,
   onChange
 }) {
-  const locationInputId = (0, import_element240.useId)();
-  const [locationInput, setLocationInput] = (0, import_element240.useState)(seedInput);
-  const [locationOptions, setLocationOptions] = (0, import_element240.useState)([]);
-  const [isLocatingCity, setIsLocatingCity] = (0, import_element240.useState)(false);
-  (0, import_element240.useEffect)(() => {
+  const locationInputId = (0, import_element239.useId)();
+  const [locationInput, setLocationInput] = (0, import_element239.useState)(seedInput);
+  const [locationOptions, setLocationOptions] = (0, import_element239.useState)([]);
+  const [isLocatingCity, setIsLocatingCity] = (0, import_element239.useState)(false);
+  (0, import_element239.useEffect)(() => {
     if (!selectButton || seedInput) {
       setLocationInput(seedInput);
     }
@@ -68025,7 +67997,7 @@ function LocationPicker({
       setIsLocatingCity(false);
     }
   };
-  (0, import_element240.useEffect)(() => {
+  (0, import_element239.useEffect)(() => {
     const query = locationInput.trim();
     if (query.length < 2) {
       setLocationOptions([]);
@@ -68172,7 +68144,7 @@ function LocationControl({
   hideLabelFromVision
 }) {
   const value = field.getValue({ item: data });
-  const onLocationChange = (0, import_element241.useCallback)(
+  const onLocationChange = (0, import_element240.useCallback)(
     (location) => {
       onChange(
         field.setValue({
@@ -68259,7 +68231,7 @@ function Dashboard() {
     []
   );
   const [widgetTypes, isResolving] = useWidgetTypes(widgetsModules);
-  const [editMode, setEditMode] = (0, import_element242.useState)(false);
+  const [editMode, setEditMode] = (0, import_element241.useState)(false);
   const isMobileViewport = (0, import_data9.useSelect)(
     (select) => select(import_viewport2.store).isViewportMatch("< small"),
     []

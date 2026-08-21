@@ -169,9 +169,9 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React87 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef68 = React87.useRef, useEffect46 = React87.useEffect, useMemo60 = React87.useMemo, useDebugValue2 = React87.useDebugValue;
+      var React87 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef67 = React87.useRef, useEffect46 = React87.useEffect, useMemo60 = React87.useMemo, useDebugValue2 = React87.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
-        var instRef = useRef68(null);
+        var instRef = useRef67(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -36773,7 +36773,7 @@ DataViewsSubComponents.Footer = DataViewsFooter;
 var dataviews_default = DataViewsSubComponents;
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_element131 = __toESM(require_element(), 1);
+var import_element130 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-context/index.mjs
 var import_element120 = __toESM(require_element(), 1);
@@ -36791,7 +36791,7 @@ function DataFormProvider({
 var dataform_context_default = DataFormContext;
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_element130 = __toESM(require_element(), 1);
+var import_element129 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
 var import_element121 = __toESM(require_element(), 1);
@@ -37031,14 +37031,13 @@ function FormRegularField({
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
 var import_deepmerge2 = __toESM(require_cjs(), 1);
 var import_components57 = __toESM(require_components(), 1);
-var import_element126 = __toESM(require_element(), 1);
+var import_element125 = __toESM(require_element(), 1);
 var import_compose23 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 var import_components56 = __toESM(require_components(), 1);
 var import_i18n52 = __toESM(require_i18n(), 1);
 var import_compose22 = __toESM(require_compose(), 1);
-var import_element122 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
 function getLabelClassName(labelPosition, showError) {
@@ -37050,28 +37049,25 @@ function getLabelClassName(labelPosition, showError) {
 }
 var get_label_classname_default = getLabelClassName;
 
-// packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-content.mjs
+// packages/dataviews/build-module/components/dataform-layouts/panel/field-label-content.mjs
 var import_components55 = __toESM(require_components(), 1);
 var import_jsx_runtime158 = __toESM(require_jsx_runtime(), 1);
-function getLabelContent(showError, errorMessage, fieldLabel) {
-  return showError ? /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(tooltip_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
-      tooltip_exports.Trigger,
-      {
-        render: /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_components55.Icon, { icon: error_default, size: 16 }),
-          /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(VisuallyHidden, { children: [
-            errorMessage,
-            ": "
-          ] }),
-          fieldLabel
-        ] })
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(tooltip_exports.Popup, { children: errorMessage })
-  ] }) : fieldLabel;
+function FieldLabelContent({
+  showError,
+  errorMessage,
+  fieldLabel,
+  errorId
+}) {
+  if (!showError) {
+    return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_jsx_runtime158.Fragment, { children: fieldLabel });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(import_components55.Icon, { icon: error_default, size: 16 }),
+    /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(VisuallyHidden, { id: errorId, children: errorMessage }),
+    fieldLabel
+  ] });
 }
-var get_label_content_default = getLabelContent;
+var field_label_content_default = FieldLabelContent;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-first-validation-error.mjs
 function getFirstValidationError(validity) {
@@ -37125,7 +37121,6 @@ function SummaryButton({
   const errorMessage = get_first_validation_error_default(validity);
   const showError = touched && !!errorMessage;
   const labelClassName = get_label_classname_default(labelPosition, showError);
-  const labelContent = get_label_content_default(showError, errorMessage, fieldLabel);
   const className = clsx_default(
     "dataforms-layouts-panel__field-trigger",
     `dataforms-layouts-panel__field-trigger--label-${labelPosition}`,
@@ -37138,6 +37133,7 @@ function SummaryButton({
     SummaryButton,
     "dataforms-layouts-panel__field-control"
   );
+  const errorId = `${controlId}-error`;
   const ariaLabel = showError ? (0, import_i18n52.sprintf)(
     // translators: %s: Field name.
     (0, import_i18n52._x)("Edit %s (has errors)", "field"),
@@ -37147,108 +37143,84 @@ function SummaryButton({
     (0, import_i18n52._x)("Edit %s", "field"),
     fieldLabel || ""
   );
-  const rowRef = (0, import_element122.useRef)(null);
-  const editButtonRef = (0, import_element122.useRef)(null);
-  const handleRowClick = (event) => {
-    if (!isOpen && event.detail < 2 && !editButtonRef.current?.contains(event.target) && rowRef.current?.ownerDocument.defaultView?.getSelection()?.toString()) {
-      return;
-    }
-    onClick();
-  };
-  const handleKeyDown = (event) => {
-    if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) {
-      event.preventDefault();
-      onClick();
-    }
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime159.jsxs)(
-    "div",
-    {
-      ref: rowRef,
-      className,
-      onClick: !disabled2 ? handleRowClick : void 0,
-      onKeyDown: !disabled2 ? handleKeyDown : void 0,
-      children: [
-        labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("span", { className: labelClassName, children: labelContent }),
-        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime159.jsxs)(tooltip_exports.Root, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
-            tooltip_exports.Trigger,
-            {
-              render: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
-                "span",
-                {
-                  className: "dataforms-layouts-panel__field-label-error-content",
-                  role: "img",
-                  "aria-label": errorMessage,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(import_components56.Icon, { icon: error_default, size: 16 })
-                }
-              )
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(tooltip_exports.Popup, { children: errorMessage })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime159.jsxs)("div", { className, children: [
+    labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("span", { className: labelClassName, children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+      field_label_content_default,
+      {
+        showError,
+        errorMessage,
+        fieldLabel,
+        errorId
+      }
+    ) }),
+    labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+      field_label_content_default,
+      {
+        showError: true,
+        errorMessage,
+        errorId
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+      "span",
+      {
+        id: `${controlId}`,
+        className: "dataforms-layouts-panel__field-control",
+        children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
           "span",
           {
-            id: `${controlId}`,
-            className: "dataforms-layouts-panel__field-control",
-            children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+            style: {
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              width: "100%",
+              gap: "2px"
+            },
+            children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
               "span",
               {
-                style: {
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  width: "100%",
-                  gap: "2px"
-                },
-                children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
-                  "span",
+                style: { width: "100%" },
+                children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+                  summaryField.render,
                   {
-                    style: { width: "100%" },
-                    children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
-                      summaryField.render,
-                      {
-                        item: data,
-                        field: summaryField
-                      }
-                    )
-                  },
-                  summaryField.id
-                ))
-              }
-            ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
-              summaryField.render,
-              {
-                item: data,
-                field: summaryField
+                    item: data,
+                    field: summaryField
+                  }
+                )
               },
               summaryField.id
             ))
           }
-        ),
-        !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
-          import_components56.Button,
+        ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+          summaryField.render,
           {
-            ref: editButtonRef,
-            className: "dataforms-layouts-panel__field-trigger-icon",
-            label: ariaLabel,
-            icon: pencil_default,
-            size: "small",
-            "aria-expanded": isOpen,
-            "aria-haspopup": "dialog",
-            "aria-describedby": `${controlId}`
-          }
-        )
-      ]
-    }
-  );
+            item: data,
+            field: summaryField
+          },
+          summaryField.id
+        ))
+      }
+    ),
+    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+      import_components56.Button,
+      {
+        className: "dataforms-layouts-panel__field-trigger-icon",
+        label: ariaLabel,
+        icon: pencil_default,
+        size: "small",
+        "aria-expanded": isOpen,
+        "aria-haspopup": "dialog",
+        "aria-describedby": showError ? `${controlId} ${errorId}` : controlId,
+        onClick
+      }
+    )
+  ] });
 }
 
 // packages/dataviews/build-module/hooks/use-form-validity.mjs
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es62 = __toESM(require_es6(), 1);
-var import_element123 = __toESM(require_element(), 1);
+var import_element122 = __toESM(require_element(), 1);
 var import_i18n53 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
@@ -37682,11 +37654,11 @@ function getFormFieldValue(formField, item) {
   };
 }
 function useFormValidity(item, fields, form) {
-  const [formValidity, setFormValidity] = (0, import_element123.useState)();
-  const customCounterRef = (0, import_element123.useRef)({});
-  const elementsCounterRef = (0, import_element123.useRef)({});
-  const previousValuesRef = (0, import_element123.useRef)({});
-  const validate = (0, import_element123.useCallback)(() => {
+  const [formValidity, setFormValidity] = (0, import_element122.useState)();
+  const customCounterRef = (0, import_element122.useRef)({});
+  const elementsCounterRef = (0, import_element122.useRef)({});
+  const previousValuesRef = (0, import_element122.useRef)({});
+  const validate = (0, import_element122.useCallback)(() => {
     const promiseHandler = {
       customCounterRef,
       elementsCounterRef,
@@ -37744,7 +37716,7 @@ function useFormValidity(item, fields, form) {
       return validity;
     });
   }, [item, fields, form]);
-  (0, import_element123.useEffect)(() => {
+  (0, import_element122.useEffect)(() => {
     validate();
   }, [validate]);
   return {
@@ -37755,9 +37727,9 @@ function useFormValidity(item, fields, form) {
 var use_form_validity_default = useFormValidity;
 
 // packages/dataviews/build-module/hooks/use-reveal-validity.mjs
-var import_element124 = __toESM(require_element(), 1);
+var import_element123 = __toESM(require_element(), 1);
 function useRevealValidity(ref, shouldReveal) {
-  const revealValidity = (0, import_element124.useCallback)(() => {
+  const revealValidity = (0, import_element123.useCallback)(() => {
     const inputs = ref.current?.querySelectorAll("input, textarea, select");
     let revealedCount = 0;
     inputs?.forEach((input) => {
@@ -37770,7 +37742,7 @@ function useRevealValidity(ref, shouldReveal) {
     });
     return revealedCount;
   }, [ref]);
-  (0, import_element124.useEffect)(() => {
+  (0, import_element123.useEffect)(() => {
     if (shouldReveal) {
       revealValidity();
     }
@@ -37779,7 +37751,7 @@ function useRevealValidity(ref, shouldReveal) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
-var import_element125 = __toESM(require_element(), 1);
+var import_element124 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
 function extractSummaryIds(summary) {
@@ -37820,7 +37792,7 @@ var getFieldDefinition = (field, fields) => {
   return fieldDefinition;
 };
 function useFieldFromFormField(field) {
-  const { fields } = (0, import_element125.useContext)(dataform_context_default);
+  const { fields } = (0, import_element124.useContext)(dataform_context_default);
   const layout = field.layout;
   const summaryFields = getSummaryFields(layout.summary, fields);
   const fieldDefinition = getFieldDefinition(field, fields);
@@ -37852,14 +37824,14 @@ function ModalContent({
 }) {
   const { openAs } = field.layout;
   const { applyLabel, cancelLabel } = openAs;
-  const { fields } = (0, import_element126.useContext)(dataform_context_default);
-  const [changes, setChanges] = (0, import_element126.useState)({});
-  const modalData = (0, import_element126.useMemo)(() => {
+  const { fields } = (0, import_element125.useContext)(dataform_context_default);
+  const [changes, setChanges] = (0, import_element125.useState)({});
+  const modalData = (0, import_element125.useMemo)(() => {
     return (0, import_deepmerge2.default)(data, changes, {
       arrayMerge: (target, source) => source
     });
   }, [data, changes]);
-  const form = (0, import_element126.useMemo)(
+  const form = (0, import_element125.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -37895,7 +37867,7 @@ function ModalContent({
     );
   };
   const focusOnMountRef = (0, import_compose23.useFocusOnMount)("firstInputElement");
-  const contentRef = (0, import_element126.useRef)(null);
+  const contentRef = (0, import_element125.useRef)(null);
   const mergedRef = (0, import_compose23.useMergeRefs)([focusOnMountRef, contentRef]);
   useRevealValidity(contentRef, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime160.jsxs)(
@@ -37967,8 +37939,8 @@ function PanelModal({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element126.useState)(false);
-  const [isOpen, setIsOpen] = (0, import_element126.useState)(false);
+  const [touched, setTouched] = (0, import_element125.useState)(false);
+  const [isOpen, setIsOpen] = (0, import_element125.useState)(false);
   const { fieldDefinition, fieldLabel, summaryFields } = use_field_from_form_field_default(field);
   if (!fieldDefinition) {
     return null;
@@ -38010,7 +37982,7 @@ var modal_default = PanelModal;
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
 var import_components58 = __toESM(require_components(), 1);
 var import_i18n54 = __toESM(require_i18n(), 1);
-var import_element127 = __toESM(require_element(), 1);
+var import_element126 = __toESM(require_element(), 1);
 var import_compose24 = __toESM(require_compose(), 1);
 var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
@@ -38043,7 +38015,7 @@ function DropdownContentWithValidation({
   touched,
   children
 }) {
-  const ref = (0, import_element127.useRef)(null);
+  const ref = (0, import_element126.useRef)(null);
   useRevealValidity(ref, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime161.jsx)("div", { ref, children });
 }
@@ -38053,11 +38025,11 @@ function PanelDropdown({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element127.useState)(false);
-  const [popoverAnchor, setPopoverAnchor] = (0, import_element127.useState)(
+  const [touched, setTouched] = (0, import_element126.useState)(false);
+  const [popoverAnchor, setPopoverAnchor] = (0, import_element126.useState)(
     null
   );
-  const popoverProps = (0, import_element127.useMemo)(
+  const popoverProps = (0, import_element126.useMemo)(
     () => ({
       // Anchor the popover to the middle of the entire row so that it doesn't
       // move around when the label changes.
@@ -38071,7 +38043,7 @@ function PanelDropdown({
   const [dialogRef, dialogProps] = (0, import_compose24.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
-  const form = (0, import_element127.useMemo)(
+  const form = (0, import_element126.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -38081,7 +38053,7 @@ function PanelDropdown({
     }),
     [field]
   );
-  const formValidity = (0, import_element127.useMemo)(() => {
+  const formValidity = (0, import_element126.useMemo)(() => {
     if (validity === void 0) {
       return void 0;
     }
@@ -38193,7 +38165,7 @@ function FormPanelField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_element128 = __toESM(require_element(), 1);
+var import_element127 = __toESM(require_element(), 1);
 var import_compose25 = __toESM(require_compose(), 1);
 import { speak as speak4 } from "@wordpress/a11y";
 
@@ -38361,11 +38333,11 @@ function FormCardField({
   markWhenOptional,
   validity
 }) {
-  const { fields } = (0, import_element128.useContext)(dataform_context_default);
+  const { fields } = (0, import_element127.useContext)(dataform_context_default);
   const layout = field.layout;
-  const contentRef = (0, import_element128.useRef)(null);
-  const hasFocusedContentRef = (0, import_element128.useRef)(false);
-  const form = (0, import_element128.useMemo)(
+  const contentRef = (0, import_element127.useRef)(null);
+  const hasFocusedContentRef = (0, import_element127.useRef)(false);
+  const form = (0, import_element127.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
@@ -38373,12 +38345,12 @@ function FormCardField({
     [field]
   );
   const { isOpened, isCollapsible } = layout;
-  const [isOpen, setIsOpen] = (0, import_element128.useState)(isOpened);
-  const [touched, setTouched] = (0, import_element128.useState)(false);
-  (0, import_element128.useEffect)(() => {
+  const [isOpen, setIsOpen] = (0, import_element127.useState)(isOpened);
+  const [touched, setTouched] = (0, import_element127.useState)(false);
+  (0, import_element127.useEffect)(() => {
     setIsOpen(isOpened);
   }, [isOpened]);
-  const handleOpenChange = (0, import_element128.useCallback)((open) => {
+  const handleOpenChange = (0, import_element127.useCallback)((open) => {
     if (!open) {
       setTouched(true);
     }
@@ -38388,10 +38360,10 @@ function FormCardField({
     contentRef,
     (isCollapsible ? isOpen : true) && touched
   );
-  const handleContentFocus = (0, import_element128.useCallback)(() => {
+  const handleContentFocus = (0, import_element127.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element128.useCallback)(() => {
+  const handleFocusOutside = (0, import_element127.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -38559,7 +38531,7 @@ function FormRowField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
-var import_element129 = __toESM(require_element(), 1);
+var import_element128 = __toESM(require_element(), 1);
 var import_i18n56 = __toESM(require_i18n(), 1);
 var import_compose26 = __toESM(require_compose(), 1);
 import { speak as speak5 } from "@wordpress/a11y";
@@ -38570,20 +38542,20 @@ function FormDetailsField({
   onChange,
   validity
 }) {
-  const { fields } = (0, import_element129.useContext)(dataform_context_default);
-  const detailsRef = (0, import_element129.useRef)(null);
-  const contentRef = (0, import_element129.useRef)(null);
-  const hasFocusedContentRef = (0, import_element129.useRef)(false);
-  const [touched, setTouched] = (0, import_element129.useState)(false);
-  const [isOpen, setIsOpen] = (0, import_element129.useState)(false);
-  const form = (0, import_element129.useMemo)(
+  const { fields } = (0, import_element128.useContext)(dataform_context_default);
+  const detailsRef = (0, import_element128.useRef)(null);
+  const contentRef = (0, import_element128.useRef)(null);
+  const hasFocusedContentRef = (0, import_element128.useRef)(false);
+  const [touched, setTouched] = (0, import_element128.useState)(false);
+  const [isOpen, setIsOpen] = (0, import_element128.useState)(false);
+  const form = (0, import_element128.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
     }),
     [field]
   );
-  (0, import_element129.useEffect)(() => {
+  (0, import_element128.useEffect)(() => {
     const details = detailsRef.current;
     if (!details) {
       return;
@@ -38601,10 +38573,10 @@ function FormDetailsField({
     };
   }, []);
   const revealValidity = useRevealValidity(contentRef, isOpen && touched);
-  const handleContentFocus = (0, import_element129.useCallback)(() => {
+  const handleContentFocus = (0, import_element128.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element129.useCallback)(() => {
+  const handleFocusOutside = (0, import_element128.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -38758,8 +38730,8 @@ function DataFormLayout({
   children,
   as
 }) {
-  const { fields: fieldDefinitions } = (0, import_element130.useContext)(dataform_context_default);
-  const markWhenOptional = (0, import_element130.useMemo)(() => {
+  const { fields: fieldDefinitions } = (0, import_element129.useContext)(dataform_context_default);
+  const markWhenOptional = (0, import_element129.useMemo)(() => {
     const requiredCount = fieldDefinitions.filter(
       (f2) => !!f2.isValid?.required
     ).length;
@@ -38812,8 +38784,8 @@ function DataForm({
   onChange,
   validity
 }) {
-  const normalizedForm = (0, import_element131.useMemo)(() => normalize_form_default(form), [form]);
-  const normalizedFields = (0, import_element131.useMemo)(
+  const normalizedForm = (0, import_element130.useMemo)(() => normalize_form_default(form), [form]);
+  const normalizedFields = (0, import_element130.useMemo)(
     () => normalizeFields(fields),
     [fields]
   );
@@ -38832,7 +38804,7 @@ function DataForm({
 }
 
 // widgets/quick-draft/render.tsx
-var import_element136 = __toESM(require_element());
+var import_element135 = __toESM(require_element());
 var import_escape_html = __toESM(require_escape_html());
 var import_i18n59 = __toESM(require_i18n());
 
@@ -38840,7 +38812,7 @@ var import_i18n59 = __toESM(require_i18n());
 var import_core_data = __toESM(require_core_data());
 var import_data6 = __toESM(require_data());
 var import_date12 = __toESM(require_date());
-var import_element132 = __toESM(require_element());
+var import_element131 = __toESM(require_element());
 var import_html_entities = __toESM(require_html_entities());
 var import_i18n57 = __toESM(require_i18n());
 var import_url3 = __toESM(require_url());
@@ -39029,7 +39001,7 @@ function DraftDate({ post }) {
   );
 }
 function DraftsList() {
-  const [view, setView] = (0, import_element132.useState)(INITIAL_VIEW);
+  const [view, setView] = (0, import_element131.useState)(INITIAL_VIEW);
   const { drafts, isLoading } = (0, import_data6.useSelect)((select) => {
     const { getEntityRecords, hasFinishedResolution } = select(import_core_data.store);
     const records = getEntityRecords("postType", "post", DRAFTS_QUERY);
@@ -39043,13 +39015,13 @@ function DraftsList() {
     };
   }, []);
   const { deleteEntityRecord } = (0, import_data6.useDispatch)(import_core_data.store);
-  const deleteDraft = (0, import_element132.useCallback)(
+  const deleteDraft = (0, import_element131.useCallback)(
     (id) => {
       void deleteEntityRecord("postType", "post", id, void 0);
     },
     [deleteEntityRecord]
   );
-  const fields = (0, import_element132.useMemo)(
+  const fields = (0, import_element131.useMemo)(
     () => [
       {
         id: "title",
@@ -39099,7 +39071,7 @@ function DraftsList() {
 }
 
 // widgets/quick-draft/components/saved-post/saved-post.tsx
-var import_element133 = __toESM(require_element());
+var import_element132 = __toESM(require_element());
 var import_i18n58 = __toESM(require_i18n());
 var import_url4 = __toESM(require_url());
 
@@ -39130,7 +39102,7 @@ function SavedPost({
       children: /* @__PURE__ */ (0, import_jsx_runtime171.jsxs)(empty_state_exports.Root, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(empty_state_exports.Icon, { icon: check_default, className: saved_post_default.icon }),
         /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(empty_state_exports.Title, { children: (0, import_i18n58.__)("Draft saved") }),
-        /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(empty_state_exports.Description, { children: (0, import_element133.createInterpolateElement)(
+        /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(empty_state_exports.Description, { children: (0, import_element132.createInterpolateElement)(
           (0, import_i18n58.sprintf)(
             /* translators: %s: post title */
             (0, import_i18n58.__)(
@@ -39177,7 +39149,7 @@ function SavedPost({
 
 // widgets/quick-draft/fields/quick-draft-content-field/quick-draft-content-field.tsx
 var import_components60 = __toESM(require_components());
-var import_element134 = __toESM(require_element());
+var import_element133 = __toESM(require_element());
 
 // widgets/quick-draft/fields/quick-draft-content-field/quick-draft-content-field.module.css
 if (typeof process === "undefined" || true) {
@@ -39210,7 +39182,7 @@ function QuickDraftContentField({
 }) {
   const value = field.getValue({ item: data });
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeValue = (0, import_element134.useCallback)(
+  const onChangeValue = (0, import_element133.useCallback)(
     (newValue) => onChange(field.setValue({ item: data, value: newValue })),
     [data, field, onChange]
   );
@@ -39233,12 +39205,12 @@ function QuickDraftContentField({
 
 // widgets/quick-draft/hooks/use-widget-size/use-widget-size.ts
 var import_compose27 = __toESM(require_compose());
-var import_element135 = __toESM(require_element());
+var import_element134 = __toESM(require_element());
 var WIDE_MIN_WIDTH = 560;
 var TALL_MIN_HEIGHT = 420;
 var INITIAL_SIZE = { width: 0, height: 0 };
 function useWidgetSize() {
-  const [size4, setSize] = (0, import_element135.useState)(INITIAL_SIZE);
+  const [size4, setSize] = (0, import_element134.useState)(INITIAL_SIZE);
   const ref = (0, import_compose27.useResizeObserver)(
     (entries) => {
       const entry = entries[0];
@@ -39254,7 +39226,7 @@ function useWidgetSize() {
     },
     { box: "border-box" }
   );
-  return (0, import_element135.useMemo)(
+  return (0, import_element134.useMemo)(
     () => ({
       ref,
       width: size4.width,
@@ -39292,10 +39264,10 @@ var INITIAL_DATA = {
   content: ""
 };
 function QuickDraft() {
-  const [data, setData] = (0, import_element136.useState)(INITIAL_DATA);
-  const [isSaving, setIsSaving] = (0, import_element136.useState)(false);
-  const [createdPost, setCreatedPost] = (0, import_element136.useState)(null);
-  const [isListOpenInCompact, setIsListOpenInCompact] = (0, import_element136.useState)(false);
+  const [data, setData] = (0, import_element135.useState)(INITIAL_DATA);
+  const [isSaving, setIsSaving] = (0, import_element135.useState)(false);
+  const [createdPost, setCreatedPost] = (0, import_element135.useState)(null);
+  const [isListOpenInCompact, setIsListOpenInCompact] = (0, import_element135.useState)(false);
   const { ref, isWide, isTall } = useWidgetSize();
   const showDraftsList = isWide || isTall;
   const listBeside = isWide;
@@ -39314,7 +39286,7 @@ function QuickDraft() {
     },
     [showDraftsList]
   );
-  const fields = (0, import_element136.useMemo)(
+  const fields = (0, import_element135.useMemo)(
     () => [
       {
         id: "title",
