@@ -30973,8 +30973,8 @@ var wp;
   // packages/ui/build-module/form/input-control/input-control.mjs
   var import_element58 = __toESM(require_element(), 1);
   var import_jsx_runtime158 = __toESM(require_jsx_runtime(), 1);
-  var InputControl2 = (0, import_element58.forwardRef)(
-    function InputControl22({
+  var InputControl = (0, import_element58.forwardRef)(
+    function InputControl2({
       className,
       label,
       description,
@@ -97166,7 +97166,7 @@ ${content}
       ),
       showForm && /* @__PURE__ */ (0, import_jsx_runtime492.jsx)("form", { onSubmit: onAddTerm, children: /* @__PURE__ */ (0, import_jsx_runtime492.jsxs)(Stack, { direction: "column", gap: "lg", children: [
         /* @__PURE__ */ (0, import_jsx_runtime492.jsx)(
-          InputControl2,
+          InputControl,
           {
             className: "editor-post-taxonomies__hierarchical-terms-input",
             label: newTermLabel,
