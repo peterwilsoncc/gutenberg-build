@@ -293,6 +293,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/warning
+  var require_warning = __commonJS({
+    "package-external:@wordpress/warning"(exports, module) {
+      module.exports = window.wp.warning;
+    }
+  });
+
   // package-external:@wordpress/keycodes
   var require_keycodes = __commonJS({
     "package-external:@wordpress/keycodes"(exports, module) {
@@ -842,13 +849,6 @@ var wp;
   var require_date = __commonJS({
     "package-external:@wordpress/date"(exports, module) {
       module.exports = window.wp.date;
-    }
-  });
-
-  // package-external:@wordpress/warning
-  var require_warning = __commonJS({
-    "package-external:@wordpress/warning"(exports, module) {
-      module.exports = window.wp.warning;
     }
   });
 

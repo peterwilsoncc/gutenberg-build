@@ -535,6 +535,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/warning
+  var require_warning = __commonJS({
+    "package-external:@wordpress/warning"(exports, module) {
+      module.exports = window.wp.warning;
+    }
+  });
+
   // package-external:@wordpress/blob
   var require_blob = __commonJS({
     "package-external:@wordpress/blob"(exports, module) {
@@ -1042,13 +1049,6 @@ var wp;
   var require_keycodes = __commonJS({
     "package-external:@wordpress/keycodes"(exports, module) {
       module.exports = window.wp.keycodes;
-    }
-  });
-
-  // package-external:@wordpress/warning
-  var require_warning = __commonJS({
-    "package-external:@wordpress/warning"(exports, module) {
-      module.exports = window.wp.warning;
     }
   });
 

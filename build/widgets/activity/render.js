@@ -281,6 +281,13 @@ var require_private_apis = __commonJS({
   }
 });
 
+// package-external:@wordpress/warning
+var require_warning = __commonJS({
+  "package-external:@wordpress/warning"(exports, module) {
+    module.exports = window.wp.warning;
+  }
+});
+
 // package-external:@wordpress/keycodes
 var require_keycodes = __commonJS({
   "package-external:@wordpress/keycodes"(exports, module) {
@@ -823,13 +830,6 @@ var require_es6 = __commonJS({
       }
       return a2 !== a2 && b2 !== b2;
     };
-  }
-});
-
-// package-external:@wordpress/warning
-var require_warning = __commonJS({
-  "package-external:@wordpress/warning"(exports, module) {
-    module.exports = window.wp.warning;
   }
 });
 
