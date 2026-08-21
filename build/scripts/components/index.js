@@ -36904,9 +36904,9 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/palette-edit/index.mjs
-  var import_element112 = __toESM(require_element(), 1);
-  var import_i18n35 = __toESM(require_i18n(), 1);
-  var import_compose44 = __toESM(require_compose(), 1);
+  var import_element114 = __toESM(require_element(), 1);
+  var import_i18n37 = __toESM(require_i18n(), 1);
+  var import_compose45 = __toESM(require_compose(), 1);
 
   // packages/kebab-case/build-module/index.mjs
   function kebabCase(str) {
@@ -38171,14 +38171,283 @@ This message will only show in development mode. It won't appear in production. 
   }
   var gradient_picker_default = GradientPicker;
 
-  // packages/components/build-module/navigable-container/menu.mjs
+  // packages/components/build-module/duotone-picker/duotone-picker.mjs
+  var import_es62 = __toESM(require_es6(), 1);
   var import_element110 = __toESM(require_element(), 1);
+  var import_i18n36 = __toESM(require_i18n(), 1);
+
+  // packages/components/build-module/duotone-picker/color-list-picker/index.mjs
+  var import_element109 = __toESM(require_element(), 1);
+  var import_i18n35 = __toESM(require_i18n(), 1);
+  var import_compose43 = __toESM(require_compose(), 1);
+  var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
+  function ColorOption({
+    label,
+    value,
+    colors,
+    disableCustomColors,
+    enableAlpha,
+    onChange
+  }) {
+    const [isOpen, setIsOpen] = (0, import_element109.useState)(false);
+    const idRoot = (0, import_compose43.useInstanceId)(ColorOption, "color-list-picker-option");
+    const labelId = `${idRoot}__label`;
+    const contentId = `${idRoot}__content`;
+    return /* @__PURE__ */ (0, import_jsx_runtime177.jsxs)(import_jsx_runtime177.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime177.jsx)(button_default, {
+        __next40pxDefaultSize: true,
+        className: "components-color-list-picker__swatch-button",
+        id: labelId,
+        onClick: () => setIsOpen((prev2) => !prev2),
+        "aria-expanded": isOpen,
+        "aria-controls": contentId,
+        icon: value ? /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(color_indicator_default, {
+          colorValue: value,
+          className: "components-color-list-picker__swatch-color"
+        }) : /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(icon_default3, {
+          icon: swatch_default
+        }),
+        text: label
+      }), /* @__PURE__ */ (0, import_jsx_runtime177.jsx)("div", {
+        role: "group",
+        id: contentId,
+        "aria-labelledby": labelId,
+        "aria-hidden": !isOpen,
+        children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(color_palette_default, {
+          "aria-label": (0, import_i18n35.__)("Color options"),
+          className: "components-color-list-picker__color-picker",
+          colors,
+          value,
+          clearable: false,
+          onChange,
+          disableCustomColors,
+          enableAlpha
+        })
+      })]
+    });
+  }
+  function ColorListPicker({
+    colors,
+    labels,
+    value = [],
+    disableCustomColors,
+    enableAlpha,
+    onChange
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)("div", {
+      className: "components-color-list-picker",
+      children: labels.map((label, index2) => /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(ColorOption, {
+        label,
+        value: value[index2],
+        colors,
+        disableCustomColors,
+        enableAlpha,
+        onChange: (newColor) => {
+          const newColors = value.slice();
+          newColors[index2] = newColor;
+          onChange(newColors);
+        }
+      }, index2))
+    });
+  }
+  var color_list_picker_default = ColorListPicker;
+
+  // packages/components/build-module/duotone-picker/utils.mjs
+  k([names_default]);
+  function getDefaultColors(palette) {
+    if (!palette || palette.length < 2) {
+      return ["#000", "#fff"];
+    }
+    return palette.map(({
+      color: color2
+    }) => ({
+      color: color2,
+      brightness: w(color2).brightness()
+    })).reduce(([min2, max2], current) => {
+      return [current.brightness <= min2.brightness ? current : min2, current.brightness >= max2.brightness ? current : max2];
+    }, [{
+      brightness: 1,
+      color: ""
+    }, {
+      brightness: 0,
+      color: ""
+    }]).map(({
+      color: color2
+    }) => color2);
+  }
+  function getGradientFromCSSColors(colors = [], angle = "90deg") {
+    const l3 = 100 / colors.length;
+    const stops = colors.map((c3, i3) => `${c3} ${i3 * l3}%, ${c3} ${(i3 + 1) * l3}%`).join(", ");
+    return `linear-gradient( ${angle}, ${stops} )`;
+  }
+  function getColorStopsFromColors(colors) {
+    return colors.map((color2, i3) => ({
+      position: i3 * 100 / (colors.length - 1),
+      color: color2
+    }));
+  }
+  function getColorsFromColorStops(colorStops = []) {
+    return colorStops.map(({
+      color: color2
+    }) => color2);
+  }
+
+  // packages/components/build-module/duotone-picker/custom-duotone-bar.mjs
+  var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
+  var PLACEHOLDER_VALUES = ["#333", "#CCC"];
+  function CustomDuotoneBar({
+    value,
+    onChange
+  }) {
+    const hasGradient = !!value;
+    const values = hasGradient ? value : PLACEHOLDER_VALUES;
+    const background = getGradientFromCSSColors(values);
+    const controlPoints = getColorStopsFromColors(values);
+    return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(CustomGradientBar, {
+      disableInserter: true,
+      background,
+      hasGradient,
+      value: controlPoints,
+      onChange: (newColorStops) => {
+        const newValue = getColorsFromColorStops(newColorStops);
+        onChange(newValue);
+      }
+    });
+  }
+
+  // packages/components/build-module/duotone-picker/duotone-picker.mjs
+  var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
+  function DuotonePicker({
+    asButtons,
+    loop,
+    clearable = true,
+    unsetable = true,
+    colorPalette,
+    duotonePalette,
+    disableCustomColors,
+    disableCustomDuotone,
+    value,
+    selectedSlug,
+    onChange,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledby,
+    ...otherProps
+  }) {
+    const [defaultDark, defaultLight] = (0, import_element110.useMemo)(() => getDefaultColors(colorPalette), [colorPalette]);
+    const isUnset = value === "unset";
+    const unsetOptionLabel = (0, import_i18n36.__)("Unset");
+    const unsetOption = /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(circular_option_picker_default2.Option, {
+      value: "unset",
+      isSelected: isUnset,
+      tooltipText: unsetOptionLabel,
+      "aria-label": unsetOptionLabel,
+      className: "components-duotone-picker__color-indicator",
+      onClick: () => {
+        onChange(isUnset ? void 0 : "unset");
+      }
+    }, "unset");
+    const duotoneOptions = duotonePalette.map(({
+      colors,
+      slug,
+      name
+    }, index2) => {
+      const style2 = {
+        background: getGradientFromCSSColors(colors, "135deg"),
+        color: "transparent"
+      };
+      const tooltipText = name ?? (0, import_i18n36.sprintf)(
+        // translators: %s: duotone code e.g: "dark-grayscale" or "7f7f7f-ffffff".
+        (0, import_i18n36.__)("Duotone code: %s"),
+        slug
+      );
+      const label = name ? (0, import_i18n36.sprintf)(
+        // translators: %s: The name of the option e.g: "Dark grayscale".
+        (0, import_i18n36.__)("Duotone: %s"),
+        name
+      ) : tooltipText;
+      const isSelected2 = selectedSlug ? slug === selectedSlug : (0, import_es62.default)(colors, value);
+      return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(circular_option_picker_default2.Option, {
+        value: colors,
+        isSelected: isSelected2,
+        "aria-label": label,
+        tooltipText,
+        style: style2,
+        onClick: (
+          // Deselecting reports no preset, matching
+          // `ColorPalette` and `GradientPicker`. Passing the slug
+          // back would leave a controlled consumer marking the
+          // swatch as selected after its value had been cleared.
+          isSelected2 ? () => onChange(void 0) : () => onChange(colors, index2, slug)
+        )
+      }, slug);
+    });
+    const {
+      metaProps,
+      labelProps
+    } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
+    const options2 = unsetable ? [unsetOption, ...duotoneOptions] : duotoneOptions;
+    return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(circular_option_picker_default2, {
+      ...otherProps,
+      ...metaProps,
+      ...labelProps,
+      options: options2,
+      actions: !!clearable && /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(circular_option_picker_default2.ButtonAction, {
+        onClick: () => onChange(void 0),
+        accessibleWhenDisabled: true,
+        disabled: !value,
+        children: (0, import_i18n36.__)("Clear")
+      }),
+      children: !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(component_default6, {
+        paddingTop: options2.length === 0 ? 0 : 4,
+        children: /* @__PURE__ */ (0, import_jsx_runtime179.jsxs)(component_default18, {
+          spacing: 3,
+          children: [!disableCustomColors && /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(CustomDuotoneBar, {
+            value: isUnset ? void 0 : value,
+            onChange
+          }), /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(color_list_picker_default, {
+            labels: [(0, import_i18n36.__)("Shadows"), (0, import_i18n36.__)("Highlights")],
+            colors: colorPalette,
+            value: isUnset ? void 0 : value,
+            disableCustomColors,
+            enableAlpha: true,
+            onChange: (newColors) => {
+              if (!newColors[0]) {
+                newColors[0] = defaultDark;
+              }
+              if (!newColors[1]) {
+                newColors[1] = defaultLight;
+              }
+              const newValue = newColors.length >= 2 ? newColors : void 0;
+              onChange(newValue);
+            }
+          })]
+        })
+      })
+    });
+  }
+  var duotone_picker_default = DuotonePicker;
+
+  // packages/components/build-module/duotone-picker/duotone-swatch.mjs
+  var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
+  function DuotoneSwatch({
+    values
+  }) {
+    return values ? /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(color_indicator_default, {
+      colorValue: getGradientFromCSSColors(values, "135deg")
+    }) : /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(icon_default3, {
+      icon: swatch_default
+    });
+  }
+  var duotone_swatch_default = DuotoneSwatch;
+
+  // packages/components/build-module/navigable-container/menu.mjs
+  var import_element112 = __toESM(require_element(), 1);
 
   // packages/components/build-module/navigable-container/container.mjs
-  var import_element109 = __toESM(require_element(), 1);
-  var import_compose43 = __toESM(require_compose(), 1);
+  var import_element111 = __toESM(require_element(), 1);
+  var import_compose44 = __toESM(require_compose(), 1);
   var import_dom5 = __toESM(require_dom(), 1);
-  var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
   var noop12 = () => {
   };
   var MENU_ITEM_ROLES = ["menuitem", "menuitemradio", "menuitemcheckbox"];
@@ -38214,8 +38483,8 @@ This message will only show in development mode. It won't appear in production. 
     onlyBrowserTabstops,
     ...restProps
   }, ref) {
-    const containerRef = (0, import_element109.useRef)(null);
-    (0, import_element109.useEffect)(() => {
+    const containerRef = (0, import_element111.useRef)(null);
+    (0, import_element111.useEffect)(() => {
       const container = containerRef.current;
       if (!container) {
         return;
@@ -38262,19 +38531,19 @@ This message will only show in development mode. It won't appear in production. 
         container.removeEventListener("keydown", handleKeyDown);
       };
     }, [onKeyDown, eventToOffset, stopNavigationEvents, cycle, onNavigate, onlyBrowserTabstops]);
-    const mergedRef = (0, import_compose43.useMergeRefs)([containerRef, ref]);
-    return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)("div", {
+    const mergedRef = (0, import_compose44.useMergeRefs)([containerRef, ref]);
+    return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)("div", {
       ref: mergedRef,
       ...restProps,
       children
     });
   }
-  var NavigableContainer = (0, import_element109.forwardRef)(UnforwardedNavigableContainer);
+  var NavigableContainer = (0, import_element111.forwardRef)(UnforwardedNavigableContainer);
   NavigableContainer.displayName = "NavigableContainer";
   var container_default = NavigableContainer;
 
   // packages/components/build-module/navigable-container/menu.mjs
-  var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime182 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedNavigableMenu({
     role = "menu",
     orientation = "vertical",
@@ -38303,7 +38572,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       return void 0;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(container_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(container_default, {
       ref,
       stopNavigationEvents: true,
       onlyBrowserTabstops: false,
@@ -38313,13 +38582,13 @@ This message will only show in development mode. It won't appear in production. 
       ...rest
     });
   }
-  var NavigableMenu = (0, import_element110.forwardRef)(UnforwardedNavigableMenu);
+  var NavigableMenu = (0, import_element112.forwardRef)(UnforwardedNavigableMenu);
   NavigableMenu.displayName = "NavigableMenu";
   var menu_default2 = NavigableMenu;
 
   // packages/components/build-module/navigable-container/tabbable.mjs
-  var import_element111 = __toESM(require_element(), 1);
-  var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
+  var import_element113 = __toESM(require_element(), 1);
+  var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTabbableContainer({
     eventToOffset,
     ...props
@@ -38337,7 +38606,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       return void 0;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(container_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(container_default, {
       ref,
       stopNavigationEvents: true,
       onlyBrowserTabstops: true,
@@ -38345,12 +38614,12 @@ This message will only show in development mode. It won't appear in production. 
       ...props
     });
   }
-  var TabbableContainer = (0, import_element111.forwardRef)(UnforwardedTabbableContainer);
+  var TabbableContainer = (0, import_element113.forwardRef)(UnforwardedTabbableContainer);
   TabbableContainer.displayName = "TabbableContainer";
   var tabbable_default = TabbableContainer;
 
   // packages/components/build-module/dropdown-menu/index.mjs
-  var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
   function mergeProps2(defaultProps = {}, props = {}) {
     const mergedProps = {
       ...defaultProps,
@@ -38397,7 +38666,7 @@ This message will only show in development mode. It won't appear in production. 
       className: "components-dropdown-menu__popover",
       variant
     }, popoverProps);
-    return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(dropdown_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(dropdown_default, {
       className,
       popoverProps: mergedPopoverProps,
       renderToggle: ({
@@ -38422,7 +38691,7 @@ This message will only show in development mode. It won't appear in production. 
             "is-opened": isOpen
           })
         }, restToggleProps);
-        return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(Toggle, {
+        return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(Toggle, {
           ...mergedToggleProps,
           icon,
           onClick: (event) => {
@@ -38452,10 +38721,10 @@ This message will only show in development mode. It won't appear in production. 
             "no-icons": noIcons
           })
         }, menuProps);
-        return /* @__PURE__ */ (0, import_jsx_runtime180.jsxs)(menu_default2, {
+        return /* @__PURE__ */ (0, import_jsx_runtime184.jsxs)(menu_default2, {
           ...mergedMenuProps,
           role: "menu",
-          children: [isFunction2(children) ? children(props) : null, controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(button_default, {
+          children: [isFunction2(children) ? children(props) : null, controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(button_default, {
             size: "compact",
             onClick: (event) => {
               event.stopPropagation();
@@ -38554,14 +38823,103 @@ This message will only show in development mode. It won't appear in production. 
   })("&&{margin-top:", space(1), ";}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUE4RTRDIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCBCdXR0b24gZnJvbSAnLi4vYnV0dG9uJztcbmltcG9ydCB7IEhlYWRpbmcgfSBmcm9tICcuLi9oZWFkaW5nJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vdXRpbHMvc3BhY2UnO1xuaW1wb3J0IHsgQ09MT1JTLCBDT05GSUcgfSBmcm9tICcuLi91dGlscyc7XG5pbXBvcnQgeyBWaWV3IH0gZnJvbSAnLi4vdmlldyc7XG5pbXBvcnQgSW5wdXRDb250cm9sIGZyb20gJy4uL2lucHV0LWNvbnRyb2wnO1xuaW1wb3J0IHtcblx0Q29udGFpbmVyIGFzIElucHV0Q29udHJvbENvbnRhaW5lcixcblx0SW5wdXQsXG5cdEJhY2tkcm9wVUkgYXMgSW5wdXRCYWNrZHJvcFVJLFxufSBmcm9tICcuLi9pbnB1dC1jb250cm9sL3N0eWxlcy9pbnB1dC1jb250cm9sLXN0eWxlcyc7XG5pbXBvcnQgQ29sb3JJbmRpY2F0b3IgZnJvbSAnLi4vY29sb3ItaW5kaWNhdG9yJztcblxuZXhwb3J0IGNvbnN0IEluZGljYXRvclN0eWxlZCA9IHN0eWxlZCggQ29sb3JJbmRpY2F0b3IgKWBcblx0JiYge1xuXHRcdGZsZXgtc2hyaW5rOiAwO1xuXHRcdHdpZHRoOiAkeyBzcGFjZSggNiApIH07XG5cdFx0aGVpZ2h0OiAkeyBzcGFjZSggNiApIH07XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBOYW1lSW5wdXRDb250cm9sID0gc3R5bGVkKCBJbnB1dENvbnRyb2wgKWBcblx0JHsgSW5wdXRDb250cm9sQ29udGFpbmVyIH0ge1xuXHRcdGJhY2tncm91bmQ6ICR7IENPTE9SUy5ncmF5WyAxMDAgXSB9O1xuXHRcdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNYU21hbGwgfTtcblx0XHQkeyBJbnB1dCB9JHsgSW5wdXQgfSR7IElucHV0IH0keyBJbnB1dCB9IHtcblx0XHRcdGhlaWdodDogJHsgc3BhY2UoIDggKSB9O1xuXHRcdH1cblx0XHQkeyBJbnB1dEJhY2tkcm9wVUkgfSR7IElucHV0QmFja2Ryb3BVSSB9JHsgSW5wdXRCYWNrZHJvcFVJIH0ge1xuXHRcdFx0Ym9yZGVyLWNvbG9yOiB0cmFuc3BhcmVudDtcblx0XHRcdGJveC1zaGFkb3c6IG5vbmU7XG5cdFx0fVxuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgTmFtZUNvbnRhaW5lciA9IHN0eWxlZC5kaXZgXG5cdGxpbmUtaGVpZ2h0OiAkeyBzcGFjZSggOCApIH07XG5cdG1hcmdpbi1sZWZ0OiAkeyBzcGFjZSggMiApIH07XG5cdG1hcmdpbi1yaWdodDogJHsgc3BhY2UoIDIgKSB9O1xuXHR3aGl0ZS1zcGFjZTogbm93cmFwO1xuXHRvdmVyZmxvdzogaGlkZGVuO1xuYDtcblxuZXhwb3J0IGNvbnN0IFBhbGV0dGVIZWFkaW5nID0gc3R5bGVkKCBIZWFkaW5nIClgXG5cdHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG5cdGxpbmUtaGVpZ2h0OiAkeyBzcGFjZSggNiApIH07XG5cdGZvbnQtd2VpZ2h0OiAkeyBDT05GSUcuZm9udFdlaWdodEVtcGhhc2lzIH07XG5cdCYmJiB7XG5cdFx0Zm9udC1zaXplOiAxMXB4O1xuXHRcdG1hcmdpbi1ib3R0b206IDA7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBQYWxldHRlQWN0aW9uc0NvbnRhaW5lciA9IHN0eWxlZCggVmlldyApYFxuXHRoZWlnaHQ6ICR7IHNwYWNlKCA2ICkgfTtcblx0ZGlzcGxheTogZmxleDtcbmA7XG5cbmV4cG9ydCBjb25zdCBQYWxldHRlRWRpdENvbnRlbnRzID0gc3R5bGVkKCBWaWV3IClgXG5cdG1hcmdpbi10b3A6ICR7IHNwYWNlKCAyICkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBQYWxldHRlRWRpdFN0eWxlcyA9IHN0eWxlZCggVmlldyApYFxuXHQmJiYge1xuXHRcdC5jb21wb25lbnRzLWJ1dHRvbi5oYXMtaWNvbiB7XG5cdFx0XHRtaW4td2lkdGg6IDA7XG5cdFx0XHRwYWRkaW5nOiAwO1xuXHRcdH1cblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IERvbmVCdXR0b24gPSBzdHlsZWQoIEJ1dHRvbiApYFxuXHQmJiB7XG5cdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFJlbW92ZUJ1dHRvbiA9IHN0eWxlZCggQnV0dG9uIClgXG5cdCYmIHtcblx0XHRtYXJnaW4tdG9wOiAkeyBzcGFjZSggMSApIH07XG5cdH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/palette-edit/index.mjs
-  var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
+  k([names_default]);
   var DEFAULT_COLOR = "#000";
+  function getUsableDuotoneColors(colorPalette = []) {
+    return colorPalette.flatMap((paletteColor) => {
+      if (typeof paletteColor.color !== "string") {
+        return [];
+      }
+      const parsed = w(paletteColor.color);
+      return parsed.isValid() ? [{
+        ...paletteColor,
+        color: parsed.toHex()
+      }] : [];
+    });
+  }
+  function getDuotoneColors(element) {
+    const colors = element?.colors;
+    return Array.isArray(colors) ? colors : [];
+  }
+  function getElementValue(element, variant) {
+    if (!element) {
+      return void 0;
+    }
+    switch (variant) {
+      case "duotone":
+        return getGradientFromCSSColors(getDuotoneColors(element), "135deg");
+      case "gradient":
+        return element.gradient;
+      default:
+        return element.color;
+    }
+  }
+  function getNameInputLabel(variant) {
+    switch (variant) {
+      case "duotone":
+        return (0, import_i18n37.__)("Duotone name");
+      case "gradient":
+        return (0, import_i18n37.__)("Gradient name");
+      default:
+        return (0, import_i18n37.__)("Color name");
+    }
+  }
+  function getRemoveLabelFormat(variant) {
+    return variant === "duotone" ? (
+      /* translators: %s is a duotone name, e.g. "Purple and yellow". */
+      (0, import_i18n37.__)("Remove duotone: %s")
+    ) : (
+      /* translators: %s is a color or gradient name, e.g. "Red". */
+      (0, import_i18n37.__)("Remove color: %s")
+    );
+  }
+  function getAddLabel(variant) {
+    switch (variant) {
+      case "duotone":
+        return (0, import_i18n37.__)("Add duotone");
+      case "gradient":
+        return (0, import_i18n37.__)("Add gradient");
+      default:
+        return (0, import_i18n37.__)("Add color");
+    }
+  }
+  function getOptionsLabel(variant) {
+    switch (variant) {
+      case "duotone":
+        return (0, import_i18n37.__)("Duotone options");
+      case "gradient":
+        return (0, import_i18n37.__)("Gradient options");
+      default:
+        return (0, import_i18n37.__)("Color options");
+    }
+  }
+  function getRemoveAllLabel(variant) {
+    switch (variant) {
+      case "duotone":
+        return (0, import_i18n37.__)("Remove all duotones");
+      case "gradient":
+        return (0, import_i18n37.__)("Remove all gradients");
+      default:
+        return (0, import_i18n37.__)("Remove all colors");
+    }
+  }
+  function getResetLabel(variant) {
+    switch (variant) {
+      case "duotone":
+        return (0, import_i18n37.__)("Reset duotones");
+      case "gradient":
+        return (0, import_i18n37.__)("Reset gradient");
+      default:
+        return (0, import_i18n37.__)("Reset colors");
+    }
+  }
   function NameInput({
     value,
     onChange,
     label
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(NameInputControl, {
+    return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(NameInputControl, {
       size: "compact",
       label,
       hideLabelFromVision: true,
@@ -38586,8 +38944,9 @@ This message will only show in development mode. It won't appear in production. 
       };
     });
   }
-  function getNameAndSlugForPosition(elements2, slugPrefix) {
-    const nameRegex = new RegExp(`^${slugPrefix}color-([\\d]+)$`);
+  function getNameAndSlugForPosition(elements2, slugPrefix, variant = "color") {
+    const stem = variant === "duotone" ? "duotone" : "color";
+    const nameRegex = new RegExp(`^${slugPrefix}${stem}-([\\d]+)$`);
     const position2 = elements2.reduce((previousValue, currentValue) => {
       if (typeof currentValue?.slug === "string") {
         const matches = currentValue?.slug.match(nameRegex);
@@ -38601,23 +38960,28 @@ This message will only show in development mode. It won't appear in production. 
       return previousValue;
     }, 1);
     return {
-      name: (0, import_i18n35.sprintf)(
+      name: variant === "duotone" ? (0, import_i18n37.sprintf)(
+        /* translators: %d: is an id for a custom duotone */
+        (0, import_i18n37.__)("Duotone %d"),
+        position2
+      ) : (0, import_i18n37.sprintf)(
         /* translators: %d: is an id for a custom color */
-        (0, import_i18n35.__)("Color %d"),
+        (0, import_i18n37.__)("Color %d"),
         position2
       ),
-      slug: `${slugPrefix}color-${position2}`
+      slug: `${slugPrefix}${stem}-${position2}`
     };
   }
   function ColorPickerPopover({
-    isGradient,
+    variant,
+    colorPalette,
     element,
     onChange,
     popoverProps: receivedPopoverProps,
     onClose = () => {
     }
   }) {
-    const popoverProps = (0, import_element112.useMemo)(() => ({
+    const popoverProps = (0, import_element114.useMemo)(() => ({
       shift: true,
       offset: 20,
       // Disabling resize as it would otherwise cause the popover to show
@@ -38628,10 +38992,10 @@ This message will only show in development mode. It won't appear in production. 
       ...receivedPopoverProps,
       className: clsx_default("components-palette-edit__popover", receivedPopoverProps?.className)
     }), [receivedPopoverProps]);
-    return /* @__PURE__ */ (0, import_jsx_runtime181.jsxs)(popover_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(popover_default, {
       ...popoverProps,
       onClose,
-      children: [!isGradient && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(LegacyAdapter, {
+      children: [variant === "color" && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(LegacyAdapter, {
         color: element.color,
         enableAlpha: true,
         onChange: (newColor) => {
@@ -38640,9 +39004,9 @@ This message will only show in development mode. It won't appear in production. 
             color: newColor
           });
         }
-      }), isGradient && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)("div", {
+      }), variant === "gradient" && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)("div", {
         className: "components-palette-edit__popover-gradient-picker",
-        children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(custom_gradient_picker_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(custom_gradient_picker_default, {
           __experimentalIsRenderedInSidebar: true,
           value: element.gradient,
           onChange: (newGradient) => {
@@ -38651,6 +39015,41 @@ This message will only show in development mode. It won't appear in production. 
               gradient: newGradient
             });
           }
+        })
+      }), variant === "duotone" && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)("div", {
+        className: "components-palette-edit__popover-duotone-picker",
+        children: /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(component_default18, {
+          spacing: 3,
+          children: [/* @__PURE__ */ (0, import_jsx_runtime185.jsx)(CustomDuotoneBar, {
+            value: getDuotoneColors(element),
+            onChange: (newColors) => {
+              if (!newColors?.length) {
+                return;
+              }
+              onChange({
+                ...element,
+                colors: newColors
+              });
+            }
+          }), /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(color_list_picker_default, {
+            labels: [(0, import_i18n37.__)("Shadows"), (0, import_i18n37.__)("Highlights")],
+            colors: colorPalette ?? [],
+            value: getDuotoneColors(element),
+            enableAlpha: true,
+            onChange: (newColors) => {
+              const [defaultDark, defaultLight] = getDefaultColors(colorPalette ?? []);
+              onChange({
+                ...element,
+                colors: [
+                  // Falsy rather than nullish, to match
+                  // how `DuotonePicker` fills a cleared
+                  // shadow or highlight.
+                  newColors[0] || defaultDark,
+                  newColors[1] || defaultLight
+                ]
+              });
+            }
+          })]
         })
       })]
     });
@@ -38662,66 +39061,64 @@ This message will only show in development mode. It won't appear in production. 
     onRemove,
     popoverProps: receivedPopoverProps,
     slugPrefix,
-    isGradient
+    variant,
+    colorPalette
   }) {
-    const value = isGradient ? element.gradient : element.color;
-    const [isEditingColor, setIsEditingColor] = (0, import_element112.useState)(false);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element112.useState)(null);
-    const popoverProps = (0, import_element112.useMemo)(() => ({
+    const value = getElementValue(element, variant);
+    const [isEditingColor, setIsEditingColor] = (0, import_element114.useState)(false);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element114.useState)(null);
+    const popoverProps = (0, import_element114.useMemo)(() => ({
       ...receivedPopoverProps,
       // Use the custom palette color item as the popover anchor.
       anchor: popoverAnchor
     }), [popoverAnchor, receivedPopoverProps]);
-    return /* @__PURE__ */ (0, import_jsx_runtime181.jsxs)(component_default35, {
+    return /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(component_default35, {
       ref: setPopoverAnchor,
       size: "small",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime181.jsxs)(component_default9, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(component_default9, {
         justify: "flex-start",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime181.jsx)(button_default, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime185.jsx)(button_default, {
           size: "small",
           onClick: () => {
             setIsEditingColor(true);
           },
-          "aria-label": (0, import_i18n35.sprintf)(
-            // translators: %s is a color or gradient name, e.g. "Red".
-            (0, import_i18n35.__)("Edit: %s"),
+          "aria-label": (0, import_i18n37.sprintf)(
+            // translators: %s is a color, gradient or duotone name, e.g. "Red".
+            (0, import_i18n37.__)("Edit: %s"),
             element.name.trim().length ? element.name : value || ""
           ),
           style: {
             padding: 0
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(IndicatorStyled, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(IndicatorStyled, {
             colorValue: value
           })
-        }), /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(component_default5, {
-          children: !canOnlyChangeValues ? /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(NameInput, {
-            label: isGradient ? (0, import_i18n35.__)("Gradient name") : (0, import_i18n35.__)("Color name"),
+        }), /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(component_default5, {
+          children: !canOnlyChangeValues ? /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(NameInput, {
+            label: getNameInputLabel(variant),
             value: element.name,
             onChange: (nextName) => onChange({
               ...element,
               name: nextName,
               slug: slugPrefix + kebabCase(nextName ?? "")
             })
-          }) : /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(NameContainer, {
+          }) : /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(NameContainer, {
             children: element.name.trim().length ? element.name : (
               /* Fall back to non-breaking space to maintain height */
               "\xA0"
             )
           })
-        }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(component_default4, {
-          children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(RemoveButton, {
+        }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(component_default4, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(RemoveButton, {
             size: "small",
             icon: line_solid_default,
-            label: (0, import_i18n35.sprintf)(
-              // translators: %s is a color or gradient name, e.g. "Red".
-              (0, import_i18n35.__)("Remove color: %s"),
-              element.name.trim().length ? element.name : value || ""
-            ),
+            label: (0, import_i18n37.sprintf)(getRemoveLabelFormat(variant), element.name.trim().length ? element.name : value || ""),
             onClick: onRemove
           })
         })]
-      }), isEditingColor && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(ColorPickerPopover, {
-        isGradient,
+      }), isEditingColor && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(ColorPickerPopover, {
+        variant,
+        colorPalette,
         onChange,
         element,
         popoverProps,
@@ -38734,23 +39131,25 @@ This message will only show in development mode. It won't appear in production. 
     onChange,
     canOnlyChangeValues,
     slugPrefix,
-    isGradient,
+    variant,
+    colorPalette,
     popoverProps,
     addColorRef
   }) {
-    const elementsReferenceRef = (0, import_element112.useRef)(void 0);
-    (0, import_element112.useEffect)(() => {
+    const elementsReferenceRef = (0, import_element114.useRef)(void 0);
+    (0, import_element114.useEffect)(() => {
       elementsReferenceRef.current = elements2;
     }, [elements2]);
-    const debounceOnChange = (0, import_compose44.useDebounce)((updatedElements) => onChange(deduplicateElementSlugs(updatedElements)), 100);
-    return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(component_default18, {
+    const debounceOnChange = (0, import_compose45.useDebounce)((updatedElements) => onChange(deduplicateElementSlugs(updatedElements)), 100);
+    return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(component_default18, {
       spacing: 3,
-      children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(component_default36, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(component_default36, {
         isRounded: true,
         isBordered: true,
         isSeparated: true,
-        children: elements2.map((element, index2) => /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(Option2, {
-          isGradient,
+        children: elements2.map((element, index2) => /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(Option2, {
+          variant,
+          colorPalette,
           canOnlyChangeValues,
           element,
           onChange: (newElement) => {
@@ -38780,7 +39179,9 @@ This message will only show in development mode. It won't appear in production. 
   var EMPTY_ARRAY = [];
   function PaletteEdit({
     gradients,
+    duotones,
     colors = EMPTY_ARRAY,
+    colorPalette,
     onChange,
     paletteLabel,
     paletteLabelHeadingLevel = 2,
@@ -38790,51 +39191,72 @@ This message will only show in development mode. It won't appear in production. 
     slugPrefix = "",
     popoverProps
   }) {
-    const isGradient = !!gradients;
-    const elements2 = isGradient ? gradients : colors;
-    const [isEditing, setIsEditing] = (0, import_element112.useState)(false);
-    const [editingElement, setEditingElement] = (0, import_element112.useState)(null);
+    let variant = "color";
+    if (gradients) {
+      variant = "gradient";
+    } else if (duotones) {
+      variant = "duotone";
+    }
+    const elements2 = gradients ?? duotones ?? colors;
+    const duotoneColorPalette = (0, import_element114.useMemo)(() => getUsableDuotoneColors(colorPalette), [colorPalette]);
+    const [isEditing, setIsEditing] = (0, import_element114.useState)(false);
+    const [editingElement, setEditingElement] = (0, import_element114.useState)(null);
     const isAdding = isEditing && !!editingElement && elements2[editingElement] && !elements2[editingElement].slug;
     const elementsLength = elements2.length;
     const hasElements = elementsLength > 0;
-    const debounceOnChange = (0, import_compose44.useDebounce)(onChange, 100);
-    const onSelectPaletteItem = (0, import_element112.useCallback)((value, newEditingElementIndex) => {
+    const debounceOnChange = (0, import_compose45.useDebounce)(onChange, 100);
+    const onSelectPaletteItem = (0, import_element114.useCallback)((value, newEditingElementIndex) => {
       const selectedElement = newEditingElementIndex === void 0 ? void 0 : elements2[newEditingElementIndex];
-      const key = isGradient ? "gradient" : "color";
+      const key = variant === "gradient" ? "gradient" : "color";
       if (!!selectedElement && selectedElement[key] === value) {
         setEditingElement(newEditingElementIndex);
       } else {
         setIsEditing(true);
       }
-    }, [isGradient, elements2]);
-    const addColorRef = (0, import_element112.useRef)(null);
-    return /* @__PURE__ */ (0, import_jsx_runtime181.jsxs)(PaletteEditStyles, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime181.jsxs)(component_default9, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime181.jsx)(PaletteHeading, {
+    }, [variant, elements2]);
+    const onSelectDuotoneItem = (0, import_element114.useCallback)((value, newEditingElementIndex) => {
+      if (newEditingElementIndex !== void 0 && (duotones ?? [])[newEditingElementIndex]) {
+        setEditingElement(newEditingElementIndex);
+      } else {
+        setIsEditing(true);
+      }
+    }, [duotones]);
+    const addColorRef = (0, import_element114.useRef)(null);
+    const paletteLabelId = (0, import_compose45.useInstanceId)(PaletteEdit, "components-palette-edit__heading");
+    return /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(PaletteEditStyles, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(component_default9, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime185.jsx)(PaletteHeading, {
+          id: paletteLabelId,
           level: paletteLabelHeadingLevel,
           children: paletteLabel
-        }), /* @__PURE__ */ (0, import_jsx_runtime181.jsxs)(PaletteActionsContainer, {
-          children: [hasElements && isEditing && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(DoneButton, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(PaletteActionsContainer, {
+          children: [hasElements && isEditing && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(DoneButton, {
             size: "small",
             onClick: () => {
               setIsEditing(false);
               setEditingElement(null);
             },
-            children: (0, import_i18n35.__)("Done")
-          }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(button_default, {
+            children: (0, import_i18n37.__)("Done")
+          }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(button_default, {
             ref: addColorRef,
             size: "small",
             isPressed: isAdding,
             icon: plus_default,
-            label: isGradient ? (0, import_i18n35.__)("Add gradient") : (0, import_i18n35.__)("Add color"),
+            label: getAddLabel(variant),
             onClick: () => {
               const {
                 name,
                 slug
-              } = getNameAndSlugForPosition(elements2, slugPrefix);
+              } = getNameAndSlugForPosition(elements2, slugPrefix, variant);
               if (!!gradients) {
                 onChange([...gradients, {
                   gradient: DEFAULT_GRADIENT,
+                  name,
+                  slug
+                }]);
+              } else if (!!duotones) {
+                onChange([...duotones, {
+                  colors: getDefaultColors(duotoneColorPalette),
                   name,
                   slug
                 }]);
@@ -38848,18 +39270,18 @@ This message will only show in development mode. It won't appear in production. 
               setIsEditing(true);
               setEditingElement(elements2.length);
             }
-          }), hasElements && (!isEditing || !canOnlyChangeValues || canReset) && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(dropdown_menu_default, {
+          }), hasElements && (!isEditing || !canOnlyChangeValues || canReset) && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(dropdown_menu_default, {
             icon: more_vertical_default,
-            label: isGradient ? (0, import_i18n35.__)("Gradient options") : (0, import_i18n35.__)("Color options"),
+            label: getOptionsLabel(variant),
             toggleProps: {
               size: "small"
             },
             children: ({
               onClose
-            }) => /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(import_jsx_runtime181.Fragment, {
-              children: /* @__PURE__ */ (0, import_jsx_runtime181.jsxs)(menu_default2, {
+            }) => /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(import_jsx_runtime185.Fragment, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(menu_default2, {
                 role: "menu",
-                children: [!isEditing && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(button_default, {
+                children: [!isEditing && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(button_default, {
                   __next40pxDefaultSize: true,
                   variant: "tertiary",
                   onClick: () => {
@@ -38867,8 +39289,8 @@ This message will only show in development mode. It won't appear in production. 
                     onClose();
                   },
                   className: "components-palette-edit__menu-button",
-                  children: (0, import_i18n35.__)("Show details")
-                }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(button_default, {
+                  children: (0, import_i18n37.__)("Show details")
+                }), !canOnlyChangeValues && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(button_default, {
                   __next40pxDefaultSize: true,
                   variant: "tertiary",
                   onClick: () => {
@@ -38878,8 +39300,8 @@ This message will only show in development mode. It won't appear in production. 
                     onClose();
                   },
                   className: "components-palette-edit__menu-button",
-                  children: isGradient ? (0, import_i18n35.__)("Remove all gradients") : (0, import_i18n35.__)("Remove all colors")
-                }), canReset && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(button_default, {
+                  children: getRemoveAllLabel(variant)
+                }), canReset && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(button_default, {
                   __next40pxDefaultSize: true,
                   className: "components-palette-edit__menu-button",
                   variant: "tertiary",
@@ -38888,23 +39310,25 @@ This message will only show in development mode. It won't appear in production. 
                     onChange();
                     onClose();
                   },
-                  children: isGradient ? (0, import_i18n35.__)("Reset gradient") : (0, import_i18n35.__)("Reset colors")
+                  children: getResetLabel(variant)
                 })]
               })
             })
           })]
         })]
-      }), hasElements && /* @__PURE__ */ (0, import_jsx_runtime181.jsxs)(PaletteEditContents, {
-        children: [isEditing && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(PaletteEditListView, {
+      }), hasElements && /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(PaletteEditContents, {
+        children: [isEditing && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(PaletteEditListView, {
           canOnlyChangeValues,
           elements: elements2,
           onChange,
           slugPrefix,
-          isGradient,
+          variant,
+          colorPalette: duotoneColorPalette,
           popoverProps,
           addColorRef
-        }), !isEditing && editingElement !== null && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(ColorPickerPopover, {
-          isGradient,
+        }), !isEditing && editingElement !== null && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(ColorPickerPopover, {
+          variant,
+          colorPalette: duotoneColorPalette,
           onClose: () => setEditingElement(null),
           onChange: (newElement) => {
             debounceOnChange(
@@ -38919,18 +39343,29 @@ This message will only show in development mode. It won't appear in production. 
           },
           element: elements2[editingElement ?? -1],
           popoverProps
-        }), !isEditing && (isGradient ? /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(gradient_picker_default, {
+        }), !isEditing && variant === "gradient" && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(gradient_picker_default, {
+          "aria-labelledby": paletteLabelId,
           gradients,
           onChange: onSelectPaletteItem,
           clearable: false,
           disableCustomGradients: true
-        }) : /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(color_palette_default, {
+        }), !isEditing && variant === "duotone" && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(duotone_picker_default, {
+          "aria-labelledby": paletteLabelId,
+          duotonePalette: duotones ?? [],
+          colorPalette: duotoneColorPalette,
+          onChange: onSelectDuotoneItem,
+          clearable: false,
+          unsetable: false,
+          disableCustomDuotone: true,
+          disableCustomColors: true
+        }), !isEditing && variant === "color" && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(color_palette_default, {
+          "aria-labelledby": paletteLabelId,
           colors,
           onChange: onSelectPaletteItem,
           clearable: false,
           disableCustomColors: true
-        }))]
-      }), !hasElements && emptyMessage && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(PaletteEditContents, {
+        })]
+      }), !hasElements && emptyMessage && /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(PaletteEditContents, {
         children: emptyMessage
       })]
     });
@@ -38938,9 +39373,9 @@ This message will only show in development mode. It won't appear in production. 
   var palette_edit_default = PaletteEdit;
 
   // packages/components/build-module/combobox-control/index.mjs
-  var import_i18n37 = __toESM(require_i18n(), 1);
-  var import_element116 = __toESM(require_element(), 1);
-  var import_compose47 = __toESM(require_compose(), 1);
+  var import_i18n39 = __toESM(require_i18n(), 1);
+  var import_element118 = __toESM(require_element(), 1);
+  var import_compose48 = __toESM(require_compose(), 1);
   var import_a11y5 = __toESM(require_a11y(), 1);
   var import_keycodes3 = __toESM(require_keycodes(), 1);
 
@@ -38953,8 +39388,8 @@ This message will only show in development mode. It won't appear in production. 
   })("height:38px;padding-left:", space(2), ";padding-right:", space(2), ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFJOEMiLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuaW1wb3J0IHsgRmxleCB9IGZyb20gJy4uL2ZsZXgnO1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi91dGlscy9zcGFjZSc7XG5cbmV4cG9ydCBjb25zdCBJbnB1dFdyYXBwZXJGbGV4ID0gc3R5bGVkKCBGbGV4IClgXG5cdGhlaWdodDogMzhweDsgLy8gNDBweCAtIDJweCB2ZXJ0aWNhbCBib3JkZXJzIG9uIHBhcmVudCBjb250YWluZXJcblx0cGFkZGluZy1sZWZ0OiAkeyBzcGFjZSggMiApIH07XG5cdHBhZGRpbmctcmlnaHQ6ICR7IHNwYWNlKCAyICkgfTtcbmA7XG4iXX0= */"));
 
   // packages/components/build-module/form-token-field/token-input.mjs
-  var import_element113 = __toESM(require_element(), 1);
-  var import_jsx_runtime182 = __toESM(require_jsx_runtime(), 1);
+  var import_element115 = __toESM(require_element(), 1);
+  var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
   function UnForwardedTokenInput(props, ref) {
     const {
       value,
@@ -38968,7 +39403,7 @@ This message will only show in development mode. It won't appear in production. 
       "aria-describedby": ariaDescribedBy,
       ...restProps
     } = props;
-    const [hasFocus2, setHasFocus] = (0, import_element113.useState)(false);
+    const [hasFocus2, setHasFocus] = (0, import_element115.useState)(false);
     const size4 = value ? value.length + 1 : 0;
     const onChangeHandler = (event) => {
       if (onChange) {
@@ -38985,7 +39420,7 @@ This message will only show in development mode. It won't appear in production. 
       setHasFocus(false);
       onBlur?.(e3);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("input", {
+    return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)("input", {
       ref,
       id: `components-form-token-input-${instanceId}`,
       type: "text",
@@ -39011,14 +39446,14 @@ This message will only show in development mode. It won't appear in production. 
       "aria-describedby": ariaDescribedBy
     });
   }
-  var TokenInput = (0, import_element113.forwardRef)(UnForwardedTokenInput);
+  var TokenInput = (0, import_element115.forwardRef)(UnForwardedTokenInput);
   TokenInput.displayName = "TokenInput";
   var token_input_default = TokenInput;
 
   // packages/components/build-module/form-token-field/suggestions-list.mjs
-  var import_compose45 = __toESM(require_compose(), 1);
-  var import_i18n36 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
+  var import_compose46 = __toESM(require_compose(), 1);
+  var import_i18n38 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
   var handleMouseDown = (e3) => {
     e3.preventDefault();
   };
@@ -39033,7 +39468,7 @@ This message will only show in development mode. It won't appear in production. 
     instanceId,
     __experimentalRenderItem
   }) {
-    const listRef = (0, import_compose45.useRefEffect)((listNode) => {
+    const listRef = (0, import_compose46.useRefEffect)((listNode) => {
       if (selectedIndex > -1 && scrollIntoView && listNode.children[selectedIndex]) {
         listNode.children[selectedIndex].scrollIntoView({
           behavior: "instant",
@@ -39065,7 +39500,7 @@ This message will only show in development mode. It won't appear in production. 
         suggestionAfterMatch: transformedSuggestion.substring(indexOfMatch + matchText.length)
       };
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime183.jsxs)("ul", {
+    return /* @__PURE__ */ (0, import_jsx_runtime187.jsxs)("ul", {
       ref: listRef,
       className: "components-form-token-field__suggestions-list",
       id: `components-form-token-suggestions-${instanceId}`,
@@ -39084,9 +39519,9 @@ This message will only show in development mode. It won't appear in production. 
             item: suggestion
           });
         } else if (matchText) {
-          output = /* @__PURE__ */ (0, import_jsx_runtime183.jsxs)("span", {
+          output = /* @__PURE__ */ (0, import_jsx_runtime187.jsxs)("span", {
             "aria-label": displayTransform(suggestion),
-            children: [matchText.suggestionBeforeMatch, /* @__PURE__ */ (0, import_jsx_runtime183.jsx)("strong", {
+            children: [matchText.suggestionBeforeMatch, /* @__PURE__ */ (0, import_jsx_runtime187.jsx)("strong", {
               className: "components-form-token-field__suggestion-match",
               children: matchText.suggestionMatch
             }), matchText.suggestionAfterMatch]
@@ -39094,7 +39529,7 @@ This message will only show in development mode. It won't appear in production. 
         } else {
           output = displayTransform(suggestion);
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)("li", {
+        return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)("li", {
           id: `components-form-token-suggestions-${instanceId}-${index2}`,
           role: "option",
           className,
@@ -39105,24 +39540,24 @@ This message will only show in development mode. It won't appear in production. 
           "aria-disabled": isDisabled,
           children: output
         }, key);
-      }), suggestions.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime183.jsx)("li", {
+      }), suggestions.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)("li", {
         className: "components-form-token-field__suggestion is-empty",
-        children: (0, import_i18n36.__)("No items found")
+        children: (0, import_i18n38.__)("No items found")
       })]
     });
   }
   var suggestions_list_default = SuggestionsList;
 
   // packages/components/build-module/higher-order/with-focus-outside/index.mjs
-  var import_element114 = __toESM(require_element(), 1);
-  var import_compose46 = __toESM(require_compose(), 1);
-  var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
-  var with_focus_outside_default = (0, import_compose46.createHigherOrderComponent)((WrappedComponent) => function WithFocusOutside(props) {
-    const [handleFocusOutside, setHandleFocusOutside] = (0, import_element114.useState)(void 0);
-    const bindFocusOutsideHandler = (0, import_element114.useCallback)((node2) => setHandleFocusOutside(() => node2?.handleFocusOutside ? node2.handleFocusOutside.bind(node2) : void 0), []);
-    return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)("div", {
-      ...(0, import_compose46.__experimentalUseFocusOutside)(handleFocusOutside),
-      children: /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(WrappedComponent, {
+  var import_element116 = __toESM(require_element(), 1);
+  var import_compose47 = __toESM(require_compose(), 1);
+  var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
+  var with_focus_outside_default = (0, import_compose47.createHigherOrderComponent)((WrappedComponent) => function WithFocusOutside(props) {
+    const [handleFocusOutside, setHandleFocusOutside] = (0, import_element116.useState)(void 0);
+    const bindFocusOutsideHandler = (0, import_element116.useCallback)((node2) => setHandleFocusOutside(() => node2?.handleFocusOutside ? node2.handleFocusOutside.bind(node2) : void 0), []);
+    return /* @__PURE__ */ (0, import_jsx_runtime188.jsx)("div", {
+      ...(0, import_compose47.__experimentalUseFocusOutside)(handleFocusOutside),
+      children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(WrappedComponent, {
         ref: bindFocusOutsideHandler,
         ...props
       })
@@ -39130,8 +39565,8 @@ This message will only show in development mode. It won't appear in production. 
   }, "withFocusOutside");
 
   // packages/components/build-module/spinner/index.mjs
-  var import_element115 = __toESM(require_element(), 1);
-  var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
+  var import_element117 = __toESM(require_element(), 1);
+  var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
   function getRuntime16() {
     const globalScope = globalThis;
@@ -39215,7 +39650,7 @@ This message will only show in development mode. It won't appear in production. 
     className,
     ...props
   }, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)("svg", {
       className: clsx_default("components-spinner", style_module_default15.spinner, className),
       viewBox: "0 0 100 100",
       width: "16",
@@ -39225,28 +39660,28 @@ This message will only show in development mode. It won't appear in production. 
       focusable: "false",
       ...props,
       ref: forwardedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime185.jsx)("circle", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime189.jsx)("circle", {
         className: style_module_default15.track,
         cx: "50",
         cy: "50",
         r: "50",
         vectorEffect: "non-scaling-stroke"
-      }), /* @__PURE__ */ (0, import_jsx_runtime185.jsx)("path", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime189.jsx)("path", {
         className: style_module_default15.indicator,
         d: "m 50 0 a 50 50 0 0 1 50 50",
         vectorEffect: "non-scaling-stroke"
       })]
     });
   }
-  var Spinner = (0, import_element115.forwardRef)(UnforwardedSpinner);
+  var Spinner = (0, import_element117.forwardRef)(UnforwardedSpinner);
   Spinner.displayName = "Spinner";
   var spinner_default = Spinner;
 
   // packages/components/build-module/combobox-control/index.mjs
-  var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
   var noop13 = () => {
   };
-  var DetectOutside = with_focus_outside_default(class DetectOutsideComponent extends import_element116.Component {
+  var DetectOutside = with_focus_outside_default(class DetectOutsideComponent extends import_element118.Component {
     handleFocusOutside(event) {
       this.props.onFocusOutside(event);
     }
@@ -39268,7 +39703,7 @@ This message will only show in development mode. It won't appear in production. 
       className,
       isLoading = false,
       messages = {
-        selected: (0, import_i18n37.__)("Item selected.")
+        selected: (0, import_i18n39.__)("Item selected.")
       },
       __experimentalRenderItem,
       expandOnFocus = true,
@@ -39280,13 +39715,13 @@ This message will only show in development mode. It won't appear in production. 
     });
     const currentOption = options2.find((option) => option.value === value);
     const currentLabel = currentOption?.label ?? "";
-    const instanceId = (0, import_compose47.useInstanceId)(ComboboxControl, "combobox-control");
-    const [selectedSuggestion, setSelectedSuggestion] = (0, import_element116.useState)(currentOption || null);
-    const [isExpanded, setIsExpanded] = (0, import_element116.useState)(false);
-    const [inputHasFocus, setInputHasFocus] = (0, import_element116.useState)(false);
-    const [inputValue, setInputValue] = (0, import_element116.useState)("");
-    const inputContainer = (0, import_element116.useRef)(null);
-    const matchingSuggestions = (0, import_element116.useMemo)(() => {
+    const instanceId = (0, import_compose48.useInstanceId)(ComboboxControl, "combobox-control");
+    const [selectedSuggestion, setSelectedSuggestion] = (0, import_element118.useState)(currentOption || null);
+    const [isExpanded, setIsExpanded] = (0, import_element118.useState)(false);
+    const [inputHasFocus, setInputHasFocus] = (0, import_element118.useState)(false);
+    const [inputValue, setInputValue] = (0, import_element118.useState)("");
+    const inputContainer = (0, import_element118.useRef)(null);
+    const matchingSuggestions = (0, import_element118.useMemo)(() => {
       const startsWithMatch = [];
       const containsMatch = [];
       const match3 = normalizeTextString(inputValue);
@@ -39385,39 +39820,39 @@ This message will only show in development mode. It won't appear in production. 
     const handleResetStopPropagation = (event) => {
       event.stopPropagation();
     };
-    (0, import_element116.useEffect)(() => {
+    (0, import_element118.useEffect)(() => {
       const hasMatchingSuggestions = matchingSuggestions.length > 0;
       const hasSelectedMatchingSuggestions = getIndexOfMatchingSuggestion(selectedSuggestion, matchingSuggestions) > 0;
       if (hasMatchingSuggestions && !hasSelectedMatchingSuggestions) {
         setSelectedSuggestion(matchingSuggestions[0]);
       }
     }, [matchingSuggestions, selectedSuggestion]);
-    (0, import_element116.useEffect)(() => {
+    (0, import_element118.useEffect)(() => {
       const hasMatchingSuggestions = matchingSuggestions.length > 0;
       if (isExpanded) {
-        const message = hasMatchingSuggestions ? (0, import_i18n37.sprintf)(
+        const message = hasMatchingSuggestions ? (0, import_i18n39.sprintf)(
           /* translators: %d: number of results. */
-          (0, import_i18n37._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions.length),
+          (0, import_i18n39._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions.length),
           matchingSuggestions.length
-        ) : (0, import_i18n37.__)("No results.");
+        ) : (0, import_i18n39.__)("No results.");
         (0, import_a11y5.speak)(message, "polite");
       }
     }, [matchingSuggestions, isExpanded]);
-    return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(DetectOutside, {
+    return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(DetectOutside, {
       onFocusOutside,
-      children: /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(base_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(base_control_default, {
         className: clsx_default(className, "components-combobox-control"),
         label,
         id: `components-form-token-input-${instanceId}`,
         hideLabelFromVision,
         help,
-        children: /* @__PURE__ */ (0, import_jsx_runtime186.jsxs)("div", {
+        children: /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)("div", {
           className: "components-combobox-control__suggestions-container",
           tabIndex: -1,
           onKeyDown,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime186.jsxs)(InputWrapperFlex, {
-            children: [/* @__PURE__ */ (0, import_jsx_runtime186.jsx)(component_default5, {
-              children: /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(token_input_default, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(InputWrapperFlex, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime190.jsx)(component_default5, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(token_input_default, {
                 className: "components-combobox-control__input",
                 instanceId,
                 ref: inputContainer,
@@ -39434,14 +39869,14 @@ This message will only show in development mode. It won't appear in production. 
                   `components-form-token-input-${instanceId}__help`
                 ) : void 0
               })
-            }), isLoading && /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(spinner_default, {}), allowReset && Boolean(value) && !isExpanded && /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(button_default, {
+            }), isLoading && /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(spinner_default, {}), allowReset && Boolean(value) && !isExpanded && /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(button_default, {
               size: "small",
               icon: close_small_default,
               onClick: handleOnReset,
               onKeyDown: handleResetStopPropagation,
-              label: (0, import_i18n37.__)("Reset")
+              label: (0, import_i18n39.__)("Reset")
             })]
-          }), isExpanded && !isLoading && /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(suggestions_list_default, {
+          }), isExpanded && !isLoading && /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(suggestions_list_default, {
             instanceId,
             match: {
               label: inputValue,
@@ -39462,10 +39897,10 @@ This message will only show in development mode. It won't appear in production. 
   var combobox_control_default = ComboboxControl;
 
   // packages/components/build-module/composite/legacy/index.mjs
-  var import_element117 = __toESM(require_element(), 1);
-  var import_compose48 = __toESM(require_compose(), 1);
+  var import_element119 = __toESM(require_element(), 1);
+  var import_compose49 = __toESM(require_compose(), 1);
   var import_deprecated14 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
   function mapLegacyStatePropsToComponentProps(legacyProps) {
     if (legacyProps.state) {
       const {
@@ -39504,7 +39939,7 @@ This message will only show in development mode. It won't appear in production. 
       let props = rest;
       props = {
         ...props,
-        id: (0, import_compose48.useInstanceId)(store, props.baseId, props.id)
+        id: (0, import_compose49.useInstanceId)(store, props.baseId, props.id)
       };
       Object.entries(propMap).forEach(([from2, to]) => {
         if (props.hasOwnProperty(from2)) {
@@ -39515,7 +39950,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       });
       delete props.baseId;
-      return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(ProxiedComponent, {
+      return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(ProxiedComponent, {
         ...props,
         store
       });
@@ -39523,12 +39958,12 @@ This message will only show in development mode. It won't appear in production. 
     Component7.displayName = displayName;
     return Component7;
   }
-  var UnproxiedCompositeGroup = (0, import_element117.forwardRef)(({
+  var UnproxiedCompositeGroup = (0, import_element119.forwardRef)(({
     role,
     ...props
   }, ref) => {
     const Component7 = role === "row" ? Composite22.Row : Composite22.Group;
-    return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Component7, {
+    return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(Component7, {
       ref,
       role,
       ...props
@@ -39563,7 +39998,7 @@ This message will only show in development mode. It won't appear in production. 
       unstable_virtual: virtualFocus
     } = legacyStateOptions;
     return {
-      baseId: (0, import_compose48.useInstanceId)(Composite4, "composite", baseId),
+      baseId: (0, import_compose49.useInstanceId)(Composite4, "composite", baseId),
       store: useCompositeStore({
         defaultActiveId,
         rtl: rtl2,
@@ -39577,13 +40012,13 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/confirm-dialog/component.mjs
-  var import_i18n39 = __toESM(require_i18n(), 1);
-  var import_element121 = __toESM(require_element(), 1);
+  var import_i18n41 = __toESM(require_i18n(), 1);
+  var import_element123 = __toESM(require_element(), 1);
 
   // packages/components/build-module/modal/index.mjs
-  var import_element120 = __toESM(require_element(), 1);
-  var import_compose50 = __toESM(require_compose(), 1);
-  var import_i18n38 = __toESM(require_i18n(), 1);
+  var import_element122 = __toESM(require_element(), 1);
+  var import_compose51 = __toESM(require_compose(), 1);
+  var import_i18n40 = __toESM(require_i18n(), 1);
   var import_dom6 = __toESM(require_dom(), 1);
   var import_keycodes4 = __toESM(require_keycodes(), 1);
 
@@ -39619,16 +40054,16 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/modal/use-modal-exit-animation.mjs
-  var import_compose49 = __toESM(require_compose(), 1);
-  var import_element118 = __toESM(require_element(), 1);
+  var import_compose50 = __toESM(require_compose(), 1);
+  var import_element120 = __toESM(require_element(), 1);
   var import_warning6 = __toESM(require_warning(), 1);
   var FRAME_ANIMATION_DURATION_MS = Number.parseInt(config_values_default.transitionDuration);
   var EXIT_ANIMATION_NAME = "components-modal__disappear-animation";
   function useModalExitAnimation() {
-    const frameRef = (0, import_element118.useRef)(null);
-    const [isAnimatingOut, setIsAnimatingOut] = (0, import_element118.useState)(false);
-    const isReducedMotion = (0, import_compose49.useReducedMotion)();
-    const closeModal = (0, import_element118.useCallback)(() => new Promise((closeModalResolve) => {
+    const frameRef = (0, import_element120.useRef)(null);
+    const [isAnimatingOut, setIsAnimatingOut] = (0, import_element120.useState)(false);
+    const isReducedMotion = (0, import_compose50.useReducedMotion)();
+    const closeModal = (0, import_element120.useCallback)(() => new Promise((closeModalResolve) => {
       const frameEl = frameRef.current;
       if (isReducedMotion) {
         closeModalResolve();
@@ -39674,12 +40109,12 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/modal/context.mjs
-  var import_element119 = __toESM(require_element(), 1);
-  var ModalContext = (0, import_element119.createContext)(/* @__PURE__ */ new Set());
+  var import_element121 = __toESM(require_element(), 1);
+  var ModalContext = (0, import_element121.createContext)(/* @__PURE__ */ new Set());
   ModalContext.displayName = "ModalContext";
 
   // packages/components/build-module/modal/index.mjs
-  var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
   var bodyOpenClasses = /* @__PURE__ */ new Map();
   function UnforwardedModal(props, forwardedRef) {
     const {
@@ -39709,23 +40144,23 @@ This message will only show in development mode. It won't appear in production. 
       headerActions = null,
       __experimentalHideHeader = false
     } = props;
-    const ref = (0, import_element120.useRef)(null);
-    const instanceId = (0, import_compose50.useInstanceId)(Modal);
+    const ref = (0, import_element122.useRef)(null);
+    const instanceId = (0, import_compose51.useInstanceId)(Modal);
     const headingId = title ? `components-modal-header-${instanceId}` : aria.labelledby;
-    const focusOnMountRef = (0, import_compose50.useFocusOnMount)(focusOnMount === "firstContentElement" ? "firstElement" : focusOnMount);
-    const constrainedTabbingRef = (0, import_compose50.useConstrainedTabbing)();
-    const focusReturnRef = (0, import_compose50.useFocusReturn)();
-    const contentRef = (0, import_element120.useRef)(null);
-    const childrenContainerRef = (0, import_element120.useRef)(null);
-    const [hasScrolledContent, setHasScrolledContent] = (0, import_element120.useState)(false);
-    const [hasScrollableContent, setHasScrollableContent] = (0, import_element120.useState)(false);
+    const focusOnMountRef = (0, import_compose51.useFocusOnMount)(focusOnMount === "firstContentElement" ? "firstElement" : focusOnMount);
+    const constrainedTabbingRef = (0, import_compose51.useConstrainedTabbing)();
+    const focusReturnRef = (0, import_compose51.useFocusReturn)();
+    const contentRef = (0, import_element122.useRef)(null);
+    const childrenContainerRef = (0, import_element122.useRef)(null);
+    const [hasScrolledContent, setHasScrolledContent] = (0, import_element122.useState)(false);
+    const [hasScrollableContent, setHasScrollableContent] = (0, import_element122.useState)(false);
     let sizeClass;
     if (isFullScreen || size4 === "fill") {
       sizeClass = "is-full-screen";
     } else if (size4) {
       sizeClass = `has-size-${size4}`;
     }
-    const isContentScrollable = (0, import_element120.useCallback)(() => {
+    const isContentScrollable = (0, import_element122.useCallback)(() => {
       if (!contentRef.current) {
         return;
       }
@@ -39736,17 +40171,17 @@ This message will only show in development mode. It won't appear in production. 
         setHasScrollableContent(false);
       }
     }, [contentRef]);
-    (0, import_element120.useEffect)(() => {
+    (0, import_element122.useEffect)(() => {
       modalize(ref.current);
       return () => unmodalize();
     }, []);
-    const onRequestCloseRef = (0, import_element120.useRef)(void 0);
-    (0, import_element120.useEffect)(() => {
+    const onRequestCloseRef = (0, import_element122.useRef)(void 0);
+    (0, import_element122.useEffect)(() => {
       onRequestCloseRef.current = onRequestClose;
     }, [onRequestClose]);
-    const dismissers = (0, import_element120.useContext)(ModalContext);
-    const [nestedDismissers] = (0, import_element120.useState)(() => /* @__PURE__ */ new Set());
-    (0, import_element120.useEffect)(() => {
+    const dismissers = (0, import_element122.useContext)(ModalContext);
+    const [nestedDismissers] = (0, import_element122.useState)(() => /* @__PURE__ */ new Set());
+    (0, import_element122.useEffect)(() => {
       dismissers.add(onRequestCloseRef);
       for (const dismisser of dismissers) {
         if (dismisser !== onRequestCloseRef) {
@@ -39760,7 +40195,7 @@ This message will only show in development mode. It won't appear in production. 
         dismissers.delete(onRequestCloseRef);
       };
     }, [dismissers, nestedDismissers]);
-    (0, import_element120.useEffect)(() => {
+    (0, import_element122.useEffect)(() => {
       const theClass = bodyOpenClassName;
       const oneMore = 1 + (bodyOpenClasses.get(theClass) ?? 0);
       bodyOpenClasses.set(theClass, oneMore);
@@ -39780,7 +40215,7 @@ This message will only show in development mode. It won't appear in production. 
       frameRef,
       overlayClassname
     } = useModalExitAnimation();
-    (0, import_element120.useLayoutEffect)(() => {
+    (0, import_element122.useLayoutEffect)(() => {
       if (!window.ResizeObserver || !childrenContainerRef.current) {
         return;
       }
@@ -39798,7 +40233,7 @@ This message will only show in development mode. It won't appear in production. 
         closeModal().then(() => onRequestClose(event));
       }
     }
-    const onContentContainerScroll = (0, import_element120.useCallback)((e3) => {
+    const onContentContainerScroll = (0, import_element122.useCallback)((e3) => {
       const scrollY2 = e3?.currentTarget?.scrollTop ?? -1;
       if (!hasScrolledContent && scrollY2 > 0) {
         setHasScrolledContent(true);
@@ -39833,24 +40268,24 @@ This message will only show in development mode. It won't appear in production. 
     };
     const modal = (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      /* @__PURE__ */ (0, import_jsx_runtime188.jsx)("div", {
-        ref: (0, import_compose50.useMergeRefs)([ref, forwardedRef]),
+      /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("div", {
+        ref: (0, import_compose51.useMergeRefs)([ref, forwardedRef]),
         className: clsx_default("components-modal__screen-overlay", overlayClassname, overlayClassnameProp),
         onKeyDown: (0, import_keycodes4.withIgnoreIMEEvents)(handleEscapeKeyDown),
         ...shouldCloseOnClickOutside ? overlayPressHandlers : {},
-        children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(style_provider_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(style_provider_default, {
           document,
-          children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)("div", {
+          children: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("div", {
             className: clsx_default("components-modal__frame", sizeClass, className),
             style: style2,
-            ref: (0, import_compose50.useMergeRefs)([frameRef, constrainedTabbingRef, focusReturnRef, focusOnMount !== "firstContentElement" ? focusOnMountRef : null]),
+            ref: (0, import_compose51.useMergeRefs)([frameRef, constrainedTabbingRef, focusReturnRef, focusOnMount !== "firstContentElement" ? focusOnMountRef : null]),
             role,
             "aria-label": contentLabel,
             "aria-labelledby": contentLabel ? void 0 : headingId,
             "aria-describedby": aria.describedby,
             tabIndex: -1,
             onKeyDown,
-            children: /* @__PURE__ */ (0, import_jsx_runtime188.jsxs)("div", {
+            children: /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)("div", {
               className: clsx_default("components-modal__content", {
                 "hide-header": __experimentalHideHeader,
                 "is-scrollable": hasScrollableContent,
@@ -39859,34 +40294,34 @@ This message will only show in development mode. It won't appear in production. 
               role: "document",
               onScroll: onContentContainerScroll,
               ref: contentRef,
-              "aria-label": hasScrollableContent ? (0, import_i18n38.__)("Scrollable section") : void 0,
+              "aria-label": hasScrollableContent ? (0, import_i18n40.__)("Scrollable section") : void 0,
               tabIndex: hasScrollableContent ? 0 : void 0,
-              children: [!__experimentalHideHeader && /* @__PURE__ */ (0, import_jsx_runtime188.jsxs)("div", {
+              children: [!__experimentalHideHeader && /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)("div", {
                 className: "components-modal__header",
-                children: [/* @__PURE__ */ (0, import_jsx_runtime188.jsxs)("div", {
+                children: [/* @__PURE__ */ (0, import_jsx_runtime192.jsxs)("div", {
                   className: "components-modal__header-heading-container",
-                  children: [icon && /* @__PURE__ */ (0, import_jsx_runtime188.jsx)("span", {
+                  children: [icon && /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("span", {
                     className: "components-modal__icon-container",
                     "aria-hidden": true,
                     children: icon
-                  }), title && /* @__PURE__ */ (0, import_jsx_runtime188.jsx)("h1", {
+                  }), title && /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("h1", {
                     id: headingId,
                     className: "components-modal__header-heading",
                     children: title
                   })]
-                }), headerActions, isDismissible && /* @__PURE__ */ (0, import_jsx_runtime188.jsxs)(import_jsx_runtime188.Fragment, {
-                  children: [/* @__PURE__ */ (0, import_jsx_runtime188.jsx)(component_default6, {
+                }), headerActions, isDismissible && /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(import_jsx_runtime192.Fragment, {
+                  children: [/* @__PURE__ */ (0, import_jsx_runtime192.jsx)(component_default6, {
                     marginBottom: 0,
                     marginLeft: 2
-                  }), /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(button_default, {
+                  }), /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(button_default, {
                     size: "compact",
                     onClick: (event) => closeModal().then(() => onRequestClose(event)),
                     icon: close_default,
-                    label: closeButtonLabel || (0, import_i18n38.__)("Close")
+                    label: closeButtonLabel || (0, import_i18n40.__)("Close")
                   })]
                 })]
-              }), /* @__PURE__ */ (0, import_jsx_runtime188.jsx)("div", {
-                ref: (0, import_compose50.useMergeRefs)([childrenContainerRef, focusOnMount === "firstContentElement" ? focusOnMountRef : null]),
+              }), /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("div", {
+                ref: (0, import_compose51.useMergeRefs)([childrenContainerRef, focusOnMount === "firstContentElement" ? focusOnMountRef : null]),
                 className: "components-modal__children-container",
                 children
               })]
@@ -39895,17 +40330,17 @@ This message will only show in development mode. It won't appear in production. 
         })
       })
     );
-    return (0, import_element120.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime188.jsx)(ModalContext.Provider, {
+    return (0, import_element122.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime192.jsx)(ModalContext.Provider, {
       value: nestedDismissers,
       children: modal
     }), document.body);
   }
-  var Modal = (0, import_element120.forwardRef)(UnforwardedModal);
+  var Modal = (0, import_element122.forwardRef)(UnforwardedModal);
   Modal.displayName = "Modal";
   var modal_default = Modal;
 
   // packages/components/build-module/confirm-dialog/component.mjs
-  var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
   function getRuntime17() {
     const globalScope = globalThis;
@@ -39997,31 +40432,31 @@ This message will only show in development mode. It won't appear in production. 
       ...otherProps
     } = useContextSystem(props, "ConfirmDialog");
     const wrapperClassName = style_module_default16.wrapper;
-    const cancelButtonRef = (0, import_element121.useRef)(null);
-    const confirmButtonRef = (0, import_element121.useRef)(null);
-    const [isOpen, setIsOpen] = (0, import_element121.useState)();
-    const [shouldSelfClose, setShouldSelfClose] = (0, import_element121.useState)();
-    (0, import_element121.useEffect)(() => {
+    const cancelButtonRef = (0, import_element123.useRef)(null);
+    const confirmButtonRef = (0, import_element123.useRef)(null);
+    const [isOpen, setIsOpen] = (0, import_element123.useState)();
+    const [shouldSelfClose, setShouldSelfClose] = (0, import_element123.useState)();
+    (0, import_element123.useEffect)(() => {
       const isIsOpenSet = typeof isOpenProp !== "undefined";
       setIsOpen(isIsOpenSet ? isOpenProp : true);
       setShouldSelfClose(!isIsOpenSet);
     }, [isOpenProp]);
-    const handleEvent = (0, import_element121.useCallback)((callback) => (event) => {
+    const handleEvent = (0, import_element123.useCallback)((callback) => (event) => {
       callback?.(event);
       if (shouldSelfClose) {
         setIsOpen(false);
       }
     }, [shouldSelfClose, setIsOpen]);
-    const handleEnter = (0, import_element121.useCallback)((event) => {
+    const handleEnter = (0, import_element123.useCallback)((event) => {
       const isConfirmOrCancelButton = event.target === cancelButtonRef.current || event.target === confirmButtonRef.current;
       if (!isConfirmOrCancelButton && event.key === "Enter") {
         handleEvent(onConfirm)(event);
       }
     }, [handleEvent, onConfirm]);
-    const cancelLabel = cancelButtonText ?? (0, import_i18n39.__)("Cancel");
-    const confirmLabel = confirmButtonText ?? (0, import_i18n39.__)("OK");
-    return /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(import_jsx_runtime189.Fragment, {
-      children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(modal_default, {
+    const cancelLabel = cancelButtonText ?? (0, import_i18n41.__)("Cancel");
+    const confirmLabel = confirmButtonText ?? (0, import_i18n41.__)("OK");
+    return /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(import_jsx_runtime193.Fragment, {
+      children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(modal_default, {
         onRequestClose: handleEvent(onCancel),
         onKeyDown: handleEnter,
         closeButtonLabel: cancelLabel,
@@ -40030,14 +40465,14 @@ This message will only show in development mode. It won't appear in production. 
         overlayClassName: wrapperClassName,
         __experimentalHideHeader: true,
         ...otherProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)(component_default18, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(component_default18, {
           spacing: 8,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime189.jsx)(component_default8, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime193.jsx)(component_default8, {
             children
-          }), /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)(component_default3, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(component_default3, {
             direction: "row",
             justify: "flex-end",
-            children: [/* @__PURE__ */ (0, import_jsx_runtime189.jsx)(button_default, {
+            children: [/* @__PURE__ */ (0, import_jsx_runtime193.jsx)(button_default, {
               __next40pxDefaultSize: true,
               ref: cancelButtonRef,
               variant: "tertiary",
@@ -40045,7 +40480,7 @@ This message will only show in development mode. It won't appear in production. 
               accessibleWhenDisabled: true,
               disabled: isBusy,
               children: cancelLabel
-            }), /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(button_default, {
+            }), /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(button_default, {
               __next40pxDefaultSize: true,
               ref: confirmButtonRef,
               variant: "primary",
@@ -40064,12 +40499,12 @@ This message will only show in development mode. It won't appear in production. 
   var component_default37 = ConfirmDialog;
 
   // packages/components/build-module/custom-select-control/index.mjs
-  var import_compose51 = __toESM(require_compose(), 1);
-  var import_i18n41 = __toESM(require_i18n(), 1);
+  var import_compose52 = __toESM(require_compose(), 1);
+  var import_i18n43 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/custom-select-control-v2/custom-select.mjs
-  var import_element122 = __toESM(require_element(), 1);
-  var import_i18n40 = __toESM(require_i18n(), 1);
+  var import_element124 = __toESM(require_element(), 1);
+  var import_i18n42 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/custom-select-control-v2/styles.mjs
   function _EMOTION_STRINGIFIED_CSS_ERROR__19() {
@@ -40203,18 +40638,18 @@ This message will only show in development mode. It won't appear in production. 
   })("display:flex;align-items:center;margin-inline-start:", space(2), ";fill:currentColor;align-self:start;margin-block-start:2px;font-size:0;", WithHintItemWrapper, "~&,&:not(:empty){font-size:24px;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUEyTWtFIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAqIGFzIEFyaWFraXQgZnJvbSAnQGFyaWFraXQvcmVhY3QnO1xuaW1wb3J0IHsgY3NzLCBrZXlmcmFtZXMgfSBmcm9tICdAZW1vdGlvbi9yZWFjdCc7XG5pbXBvcnQgc3R5bGVkIGZyb20gJ0BlbW90aW9uL3N0eWxlZCc7XG5pbXBvcnQgeyBDT0xPUlMsIENPTkZJRyB9IGZyb20gJy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vdXRpbHMvc3BhY2UnO1xuaW1wb3J0IHsgY2hldnJvbkljb25TaXplIH0gZnJvbSAnLi4vc2VsZWN0LWNvbnRyb2wvc3R5bGVzL3NlbGVjdC1jb250cm9sLXN0eWxlcyc7XG5pbXBvcnQgeyBmb250U2l6ZVN0eWxlcyB9IGZyb20gJy4uL2lucHV0LWNvbnRyb2wvc3R5bGVzL2lucHV0LWNvbnRyb2wtc3R5bGVzJztcbmltcG9ydCB7IERST1BET1dOX01PVElPTl9DU1MgfSBmcm9tICcuLi91dGlscy9zdHlsZS1taXhpbnMnO1xuaW1wb3J0IHR5cGUgeyBDdXN0b21TZWxlY3RCdXR0b25TaXplIH0gZnJvbSAnLi90eXBlcyc7XG5cbmNvbnN0IElOTElORV9QQURESU5HID0ge1xuXHRjb21wYWN0OiBDT05GSUcuY29udHJvbFBhZGRpbmdYU21hbGwsXG5cdHNtYWxsOiBDT05GSUcuY29udHJvbFBhZGRpbmdYU21hbGwsXG5cdGRlZmF1bHQ6IENPTkZJRy5jb250cm9sUGFkZGluZ1gsXG59O1xuXG5jb25zdCBnZXRTZWxlY3RTaXplID0gKFxuXHRzaXplOiBOb25OdWxsYWJsZTwgQ3VzdG9tU2VsZWN0QnV0dG9uU2l6ZVsgJ3NpemUnIF0gPixcblx0aGVpZ2h0UHJvcGVydHk6ICdtaW5IZWlnaHQnIHwgJ2hlaWdodCdcbikgPT4ge1xuXHRjb25zdCBzaXplcyA9IHtcblx0XHRjb21wYWN0OiB7XG5cdFx0XHRbIGhlaWdodFByb3BlcnR5IF06IDMyLFxuXHRcdFx0cGFkZGluZ0lubGluZVN0YXJ0OiBJTkxJTkVfUEFERElORy5jb21wYWN0LFxuXHRcdFx0cGFkZGluZ0lubGluZUVuZDogSU5MSU5FX1BBRERJTkcuY29tcGFjdCArIGNoZXZyb25JY29uU2l6ZSxcblx0XHR9LFxuXHRcdGRlZmF1bHQ6IHtcblx0XHRcdFsgaGVpZ2h0UHJvcGVydHkgXTogNDAsXG5cdFx0XHRwYWRkaW5nSW5saW5lU3RhcnQ6IElOTElORV9QQURESU5HLmRlZmF1bHQsXG5cdFx0XHRwYWRkaW5nSW5saW5lRW5kOiBJTkxJTkVfUEFERElORy5kZWZhdWx0ICsgY2hldnJvbkljb25TaXplLFxuXHRcdH0sXG5cdFx0c21hbGw6IHtcblx0XHRcdFsgaGVpZ2h0UHJvcGVydHkgXTogMjQsXG5cdFx0XHRwYWRkaW5nSW5saW5lU3RhcnQ6IElOTElORV9QQURESU5HLnNtYWxsLFxuXHRcdFx0cGFkZGluZ0lubGluZUVuZDogSU5MSU5FX1BBRERJTkcuc21hbGwgKyBjaGV2cm9uSWNvblNpemUsXG5cdFx0fSxcblx0fTtcblxuXHRyZXR1cm4gc2l6ZXNbIHNpemUgXSB8fCBzaXplcy5kZWZhdWx0O1xufTtcblxuY29uc3QgZ2V0U2VsZWN0SXRlbVNpemUgPSAoXG5cdHNpemU6IE5vbk51bGxhYmxlPCBDdXN0b21TZWxlY3RCdXR0b25TaXplWyAnc2l6ZScgXSA+XG4pID0+IHtcblx0Ly8gVXNlZCB0byB2aXN1YWxseSBhbGlnbiB0aGUgY2hlY2ttYXJrIHdpdGggdGhlIGNoZXZyb25cblx0Y29uc3QgY2hlY2ttYXJrQ29ycmVjdGlvbiA9IDY7XG5cdGNvbnN0IHNpemVzID0ge1xuXHRcdGNvbXBhY3Q6IHtcblx0XHRcdHBhZGRpbmdJbmxpbmVTdGFydDogSU5MSU5FX1BBRERJTkcuY29tcGFjdCxcblx0XHRcdHBhZGRpbmdJbmxpbmVFbmQ6IElOTElORV9QQURESU5HLmNvbXBhY3QgLSBjaGVja21hcmtDb3JyZWN0aW9uLFxuXHRcdH0sXG5cdFx0ZGVmYXVsdDoge1xuXHRcdFx0cGFkZGluZ0lubGluZVN0YXJ0OiBJTkxJTkVfUEFERElORy5kZWZhdWx0LFxuXHRcdFx0cGFkZGluZ0lubGluZUVuZDogSU5MSU5FX1BBRERJTkcuZGVmYXVsdCAtIGNoZWNrbWFya0NvcnJlY3Rpb24sXG5cdFx0fSxcblx0XHRzbWFsbDoge1xuXHRcdFx0cGFkZGluZ0lubGluZVN0YXJ0OiBJTkxJTkVfUEFERElORy5zbWFsbCxcblx0XHRcdHBhZGRpbmdJbmxpbmVFbmQ6IElOTElORV9QQURESU5HLnNtYWxsIC0gY2hlY2ttYXJrQ29ycmVjdGlvbixcblx0XHR9LFxuXHR9O1xuXG5cdHJldHVybiBzaXplc1sgc2l6ZSBdIHx8IHNpemVzLmRlZmF1bHQ7XG59O1xuXG5leHBvcnQgY29uc3QgU2VsZWN0ID0gc3R5bGVkKCBBcmlha2l0LlNlbGVjdCwge1xuXHQvLyBEbyBub3QgZm9yd2FyZCBgaGFzQ3VzdG9tUmVuZGVyUHJvcGAgdG8gdGhlIHVuZGVybHlpbmcgQXJpYWtpdC5TZWxlY3QgY29tcG9uZW50XG5cdHNob3VsZEZvcndhcmRQcm9wOiAoIHByb3AgKSA9PiBwcm9wICE9PSAnaGFzQ3VzdG9tUmVuZGVyUHJvcCcsXG59ICkoXG5cdCgge1xuXHRcdHNpemUsXG5cdFx0aGFzQ3VzdG9tUmVuZGVyUHJvcCxcblx0fToge1xuXHRcdHNpemU6IE5vbk51bGxhYmxlPCBDdXN0b21TZWxlY3RCdXR0b25TaXplWyAnc2l6ZScgXSA+O1xuXHRcdGhhc0N1c3RvbVJlbmRlclByb3A6IGJvb2xlYW47XG5cdH0gKSA9PiBjc3NgXG5cdFx0ZGlzcGxheTogYmxvY2s7XG5cdFx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnRoZW1lLmJhY2tncm91bmQgfTtcblx0XHRib3JkZXI6IG5vbmU7XG5cdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdFx0Y3Vyc29yOiBwb2ludGVyO1xuXHRcdGZvbnQtZmFtaWx5OiBpbmhlcml0O1xuXHRcdHRleHQtYWxpZ246IHN0YXJ0O1xuXHRcdHVzZXItc2VsZWN0OiBub25lO1xuXHRcdHdpZHRoOiAxMDAlO1xuXG5cdFx0JltkYXRhLWZvY3VzLXZpc2libGVdIHtcblx0XHRcdG91dGxpbmU6IG5vbmU7IC8vIGhhbmRsZWQgYnkgSW5wdXRCYXNlIGNvbXBvbmVudFxuXHRcdH1cblxuXHRcdCR7IGdldFNlbGVjdFNpemUoIHNpemUsIGhhc0N1c3RvbVJlbmRlclByb3AgPyAnbWluSGVpZ2h0JyA6ICdoZWlnaHQnICkgfVxuXHRcdCR7ICEgaGFzQ3VzdG9tUmVuZGVyUHJvcCAmJiB0cnVuY2F0ZVN0eWxlcyB9XG5cdFx0JHsgZm9udFNpemVTdHlsZXMoIHsgaW5wdXRTaXplOiBzaXplIH0gKSB9XG5cdGBcbik7XG5cbmNvbnN0IHNsaWRlRG93biA9IGtleWZyYW1lcygge1xuXHQnMCUnOiB7IHRyYW5zZm9ybTogYHRyYW5zbGF0ZVkoLSR7IERST1BET1dOX01PVElPTl9DU1MuU0xJREVfRElTVEFOQ0UgfSlgIH0sXG5cdCcxMDAlJzogeyB0cmFuc2Zvcm06ICd0cmFuc2xhdGVZKDApJyB9LFxufSApO1xuXG5jb25zdCBmYWRlSW4gPSBrZXlmcmFtZXMoIHtcblx0JzAlJzogeyBvcGFjaXR5OiAwIH0sXG5cdCcxMDAlJzogeyBvcGFjaXR5OiAxIH0sXG59ICk7XG5cbmV4cG9ydCBjb25zdCBTZWxlY3RQb3BvdmVyID0gc3R5bGVkKCBBcmlha2l0LlNlbGVjdFBvcG92ZXIgKWBcblx0ZGlzcGxheTogZmxleDtcblx0ZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcblxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYmFja2dyb3VuZCB9O1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblx0Ym9yZGVyOiAxcHggc29saWQgJHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfTtcblx0Ym94LXNoYWRvdzogJHsgQ09ORklHLmVsZXZhdGlvbk1lZGl1bSB9O1xuXG5cdC8qIHotaW5kZXgoXCIuY29tcG9uZW50cy1wb3BvdmVyXCIpICovXG5cdHotaW5kZXg6IDEwMDAwMDA7XG5cblx0bWF4LWhlaWdodDogbWluKCB2YXIoIC0tcG9wb3Zlci1hdmFpbGFibGUtaGVpZ2h0LCA0MDBweCApLCA0MDBweCApO1xuXHRvdmVyZmxvdzogYXV0bztcblx0b3ZlcnNjcm9sbC1iZWhhdmlvcjogY29udGFpbjtcblxuXHQvKiBUaGUgc21hbGxlc3Qgc2l6ZSB3aXRob3V0IG92ZXJmbG93aW5nIHRoZSBjb250YWluZXIuICovXG5cdG1pbi13aWR0aDogbWluLWNvbnRlbnQ7XG5cblx0LyogQW5pbWF0aW9uICovXG5cdCZbZGF0YS1vcGVuXSB7XG5cdFx0QG1lZGlhIG5vdCAoIHByZWZlcnMtcmVkdWNlZC1tb3Rpb24gKSB7XG5cdFx0XHRhbmltYXRpb24tbmFtZTogJHsgc2xpZGVEb3duIH0sICR7IGZhZGVJbiB9O1xuXHRcdFx0YW5pbWF0aW9uLWR1cmF0aW9uOiAkeyBEUk9QRE9XTl9NT1RJT05fQ1NTLlNMSURFX0RVUkFUSU9OIH0sXG5cdFx0XHRcdCR7IERST1BET1dOX01PVElPTl9DU1MuRkFERV9EVVJBVElPTiB9O1xuXHRcdFx0YW5pbWF0aW9uLXRpbWluZy1mdW5jdGlvbjogJHsgRFJPUERPV05fTU9USU9OX0NTUy5TTElERV9FQVNJTkcgfSxcblx0XHRcdFx0JHsgRFJPUERPV05fTU9USU9OX0NTUy5GQURFX0VBU0lORyB9O1xuXHRcdFx0d2lsbC1jaGFuZ2U6IHRyYW5zZm9ybSwgb3BhY2l0eTtcblx0XHR9XG5cdH1cblxuXHQmW2RhdGEtZm9jdXMtdmlzaWJsZV0ge1xuXHRcdC8qIFRoZSBvdXRsaW5lIHdpbGwgYmUgb24gdGhlIHRyaWdnZXIsIHJhdGhlciB0aGFuIHRoZSBwb3BvdmVyLiAqL1xuXHRcdG91dGxpbmU6IG5vbmU7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBTZWxlY3RJdGVtID0gc3R5bGVkKCBBcmlha2l0LlNlbGVjdEl0ZW0gKShcblx0KCB7XG5cdFx0c2l6ZSxcblx0fToge1xuXHRcdHNpemU6IE5vbk51bGxhYmxlPCBDdXN0b21TZWxlY3RCdXR0b25TaXplWyAnc2l6ZScgXSA+O1xuXHR9ICkgPT4gY3NzYFxuXHRcdGN1cnNvcjogZGVmYXVsdDtcblx0XHRkaXNwbGF5OiBmbGV4O1xuXHRcdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdFx0anVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xuXHRcdGZvbnQtc2l6ZTogJHsgQ09ORklHLmZvbnRTaXplIH07XG5cdFx0Ly8gVE9ETzogcmVhc3Nlc3MgbGluZS1oZWlnaHQgZm9yIG5vbi1sZWdhY3kgdjJcblx0XHRsaW5lLWhlaWdodDogMjhweDtcblx0XHRwYWRkaW5nLWJsb2NrOiAkeyBzcGFjZSggMiApIH07XG5cdFx0c2Nyb2xsLW1hcmdpbjogJHsgc3BhY2UoIDEgKSB9O1xuXHRcdHVzZXItc2VsZWN0OiBub25lO1xuXG5cdFx0JlthcmlhLWRpc2FibGVkPSd0cnVlJ10ge1xuXHRcdFx0Y3Vyc29yOiBub3QtYWxsb3dlZDtcblx0XHR9XG5cblx0XHQmW2RhdGEtYWN0aXZlLWl0ZW1dIHtcblx0XHRcdGJhY2tncm91bmQtY29sb3I6ICR7IENPTE9SUy50aGVtZS5ncmF5WyAzMDAgXSB9O1xuXHRcdH1cblxuXHRcdCR7IGdldFNlbGVjdEl0ZW1TaXplKCBzaXplICkgfVxuXHRgXG4pO1xuXG5jb25zdCB0cnVuY2F0ZVN0eWxlcyA9IGNzc2Bcblx0b3ZlcmZsb3c6IGhpZGRlbjtcblx0dGV4dC1vdmVyZmxvdzogZWxsaXBzaXM7XG5cdHdoaXRlLXNwYWNlOiBub3dyYXA7XG5gO1xuXG5leHBvcnQgY29uc3QgU2VsZWN0ZWRFeHBlcmltZW50YWxIaW50V3JhcHBlciA9IHN0eWxlZC5kaXZgXG5cdCR7IHRydW5jYXRlU3R5bGVzIH1cbmA7XG5cbmV4cG9ydCBjb25zdCBTZWxlY3RlZEV4cGVyaW1lbnRhbEhpbnRJdGVtID0gc3R5bGVkLnNwYW5gXG5cdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZ3JheVsgNjAwIF0gfTtcblx0bWFyZ2luLWlubGluZS1zdGFydDogJHsgc3BhY2UoIDIgKSB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IFdpdGhIaW50SXRlbVdyYXBwZXIgPSBzdHlsZWQuZGl2YFxuXHRkaXNwbGF5OiBmbGV4O1xuXHRqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGZsZXgtd3JhcDogd3JhcDtcblx0ZmxleDogMTtcblx0Y29sdW1uLWdhcDogJHsgc3BhY2UoIDQgKSB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IFdpdGhIaW50SXRlbUhpbnQgPSBzdHlsZWQuc3BhbmBcblx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5ncmF5WyA2MDAgXSB9O1xuXHR0ZXh0LWFsaWduOiBpbml0aWFsO1xuXHRsaW5lLWhlaWdodDogJHsgQ09ORklHLmZvbnRMaW5lSGVpZ2h0QmFzZSB9O1xuXHRwYWRkaW5nLWlubGluZS1lbmQ6ICR7IHNwYWNlKCAxICkgfTtcblx0bWFyZ2luLWJsb2NrOiAkeyBzcGFjZSggMSApIH07XG5gO1xuXG5leHBvcnQgY29uc3QgU2VsZWN0ZWRJdGVtQ2hlY2sgPSBzdHlsZWQoIEFyaWFraXQuU2VsZWN0SXRlbUNoZWNrIClgXG5cdGRpc3BsYXk6IGZsZXg7XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdG1hcmdpbi1pbmxpbmUtc3RhcnQ6ICR7IHNwYWNlKCAyICkgfTtcblx0ZmlsbDogY3VycmVudENvbG9yO1xuXG5cdC8vIEtlZXAgdGhlIGNoZWNrbWFyayB2ZXJ0aWNhbGx5IGFsaWduZWQgYXQgdGhlIHRvcC4gU2luY2UgdGhlIGl0ZW0gdGV4dCBoYXMgYVxuXHQvLyAyOHB4IGxpbmUgaGVpZ2h0IGFuZCB0aGUgY2hlY2ttYXJrIGlzIDI0cHggdGFsbCwgYSAoMjgtMjQpLzIgPSAycHggbWFyZ2luXG5cdC8vIGlzIGFwcGxpZWQgdG8ga2VlcCB0aGUgY29ycmVjdCBhbGlnbm1lbnQgYmV0d2VlbiB0aGUgdGV4dCBhbmQgdGhlIGNoZWNrbWFyay5cblx0YWxpZ24tc2VsZjogc3RhcnQ7XG5cdG1hcmdpbi1ibG9jay1zdGFydDogMnB4O1xuXG5cdC8vIFNpbmNlIHRoZSBjaGVja21hcmsncyBkaW1lbnNpb25zIGFyZSBhcHBsaWVkIHdpdGggJ2VtJyB1bml0cywgc2V0dGluZyBhXG5cdC8vIGZvbnQgc2l6ZSBvZiAwIGFsbG93cyB0aGUgc3BhY2UgcmVzZXJ2ZWQgZm9yIHRoZSBjaGVja21hcmsgdG8gY29sbGFwc2UgZm9yXG5cdC8vIGl0ZW1zIHRoYXQgYXJlIG5vdCBzZWxlY3RlZCBvciB0aGF0IGRvbid0IGhhdmUgYW4gYXNzb2NpYXRlZCBpdGVtIGhpbnQuXG5cdGZvbnQtc2l6ZTogMDtcblx0JHsgV2l0aEhpbnRJdGVtV3JhcHBlciB9IH4gJixcblx0Jjpub3QoOmVtcHR5KSB7XG5cdFx0Zm9udC1zaXplOiAyNHB4OyAvLyBTaXplIG9mIGNoZWNrbWFyayBpY29uXG5cdH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/custom-select-control-v2/custom-select.mjs
-  var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
-  var CustomSelectContext = (0, import_element122.createContext)(void 0);
+  var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
+  var CustomSelectContext = (0, import_element124.createContext)(void 0);
   CustomSelectContext.displayName = "CustomSelectContext";
   function defaultRenderSelectedValue(value) {
     const isValueEmpty2 = Array.isArray(value) ? value.length === 0 : value === void 0 || value === null;
     if (isValueEmpty2) {
-      return (0, import_i18n40.__)("Select an item");
+      return (0, import_i18n42.__)("Select an item");
     }
     if (Array.isArray(value)) {
-      return value.length === 1 ? value[0] : (0, import_i18n40.sprintf)(
+      return value.length === 1 ? value[0] : (0, import_i18n42.sprintf)(
         // translators: %d: number of items selected (it will always be 2 or more items)
-        (0, import_i18n40._n)("%d item selected", "%d items selected", value.length),
+        (0, import_i18n42._n)("%d item selected", "%d items selected", value.length),
         value.length
       );
     }
@@ -40229,8 +40664,8 @@ This message will only show in development mode. It won't appear in production. 
     const {
       value: currentValue
     } = useStoreState(store);
-    const computedRenderSelectedValue = (0, import_element122.useMemo)(() => renderSelectedValue ?? defaultRenderSelectedValue, [renderSelectedValue]);
-    return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Select22, {
+    const computedRenderSelectedValue = (0, import_element124.useMemo)(() => renderSelectedValue ?? defaultRenderSelectedValue, [renderSelectedValue]);
+    return /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(Select22, {
       ...restProps,
       size: size4,
       hasCustomRenderProp: !!renderSelectedValue,
@@ -40249,47 +40684,47 @@ This message will only show in development mode. It won't appear in production. 
       isLegacy = false,
       ...restProps
     } = props;
-    const onSelectPopoverKeyDown = (0, import_element122.useCallback)((e3) => {
+    const onSelectPopoverKeyDown = (0, import_element124.useCallback)((e3) => {
       if (isLegacy) {
         e3.stopPropagation();
       }
     }, [isLegacy]);
-    const contextValue = (0, import_element122.useMemo)(() => ({
+    const contextValue = (0, import_element124.useMemo)(() => ({
       store,
       size: size4
     }), [store, size4]);
     return (
       // Where should `restProps` be forwarded to?
-      /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)("div", {
+      /* @__PURE__ */ (0, import_jsx_runtime194.jsxs)("div", {
         className,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime190.jsx)(SelectLabel, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime194.jsx)(SelectLabel, {
           store,
           render: hideLabelFromVision ? (
             // @ts-expect-error `children` are passed via the render prop
-            /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(component_default2, {})
+            /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(component_default2, {})
           ) : (
             // @ts-expect-error `children` are passed via the render prop
-            /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(base_control_default.VisualLabel, {
+            /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(base_control_default.VisualLabel, {
               as: "div"
             })
           ),
           children: label
-        }), /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(input_base_default, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime194.jsxs)(input_base_default, {
           size: size4,
-          suffix: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(chevron_down_default2, {}),
-          children: [/* @__PURE__ */ (0, import_jsx_runtime190.jsx)(CustomSelectButton, {
+          suffix: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(chevron_down_default2, {}),
+          children: [/* @__PURE__ */ (0, import_jsx_runtime194.jsx)(CustomSelectButton, {
             ...restProps,
             size: size4,
             store,
             showOnKeyDown: !isLegacy
-          }), /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(SelectPopover22, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(SelectPopover22, {
             gutter: 12,
             store,
             sameWidth: true,
             slide: false,
             onKeyDown: onSelectPopoverKeyDown,
             flip: !isLegacy,
-            children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(CustomSelectContext.Provider, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(CustomSelectContext.Provider, {
               value: contextValue,
               children
             })
@@ -40301,19 +40736,19 @@ This message will only show in development mode. It won't appear in production. 
   var custom_select_default = CustomSelect;
 
   // packages/components/build-module/custom-select-control-v2/item.mjs
-  var import_element123 = __toESM(require_element(), 1);
-  var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
+  var import_element125 = __toESM(require_element(), 1);
+  var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
   function CustomSelectItem({
     children,
     ...props
   }) {
-    const customSelectContext = (0, import_element123.useContext)(CustomSelectContext);
-    return /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(SelectItem22, {
+    const customSelectContext = (0, import_element125.useContext)(CustomSelectContext);
+    return /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(SelectItem22, {
       store: customSelectContext?.store,
       size: customSelectContext?.size ?? "default",
       ...props,
-      children: [children ?? props.value, /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(SelectedItemCheck, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(icon_default2, {
+      children: [children ?? props.value, /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(SelectedItemCheck, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(icon_default2, {
           icon: check_default
         })
       })]
@@ -40323,7 +40758,7 @@ This message will only show in development mode. It won't appear in production. 
   var item_default = CustomSelectItem;
 
   // packages/components/build-module/custom-select-control/index.mjs
-  var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
   function useDeprecatedProps5({
     __experimentalShowSelectedHint,
     ...otherProps
@@ -40346,7 +40781,7 @@ This message will only show in development mode. It won't appear in production. 
     if (describedBy) {
       return describedBy;
     }
-    return (0, import_i18n41.sprintf)((0, import_i18n41.__)("Currently selected: %s"), currentName);
+    return (0, import_i18n43.sprintf)((0, import_i18n43.__)("Currently selected: %s"), currentName);
   }
   function CustomSelectControl(props) {
     const {
@@ -40361,7 +40796,7 @@ This message will only show in development mode. It won't appear in production. 
       showSelectedHint = false,
       ...restProps
     } = useDeprecatedProps5(props);
-    const descriptionId = (0, import_compose51.useInstanceId)(CustomSelectControl, "custom-select-control__description");
+    const descriptionId = (0, import_compose52.useInstanceId)(CustomSelectControl, "custom-select-control__description");
     const store = useSelectStore({
       async setValue(nextValue) {
         const nextOption = options2.find((item) => item.key === nextValue);
@@ -40393,16 +40828,16 @@ This message will only show in development mode. It won't appear in production. 
       style: style2,
       className
     }) => {
-      const withHint = /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(WithHintItemWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime192.jsx)("span", {
+      const withHint = /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(WithHintItemWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime196.jsx)("span", {
           children: name
-        }), /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(WithHintItemHint, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(WithHintItemHint, {
           // Keeping the classname for legacy reasons
           className: "components-custom-select-control__item-hint",
           children: hint
         })]
       });
-      return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(item_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(item_default, {
         value: key,
         children: hint ? withHint : name,
         style: style2,
@@ -40424,16 +40859,16 @@ This message will only show in development mode. It won't appear in production. 
       if (!showSelectedHint || !selectedOption.hint) {
         return selectedOption?.name;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(SelectedExperimentalHintWrapper, {
-        children: [selectedOption?.name, /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(SelectedExperimentalHintItem, {
+      return /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(SelectedExperimentalHintWrapper, {
+        children: [selectedOption?.name, /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(SelectedExperimentalHintItem, {
           // Keeping the classname for legacy reasons
           className: "components-custom-select-control__hint",
           children: selectedOption?.hint
         })]
       });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(import_jsx_runtime192.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime192.jsx)(custom_select_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(import_jsx_runtime196.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime196.jsx)(custom_select_default, {
         "aria-describedby": descriptionId,
         renderSelectedValue,
         size: size4,
@@ -40446,8 +40881,8 @@ This message will only show in development mode. It won't appear in production. 
         isLegacy: true,
         ...restProps,
         children
-      }), /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(component_default2, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("span", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(component_default2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)("span", {
           id: descriptionId,
           children: getDescribedBy(selectedOption?.name, describedBy)
         })
@@ -40777,12 +41212,12 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/date-time/date-picker/index.mjs
-  var import_i18n42 = __toESM(require_i18n(), 1);
+  var import_i18n44 = __toESM(require_i18n(), 1);
   var import_date3 = __toESM(require_date(), 1);
-  var import_element125 = __toESM(require_element(), 1);
+  var import_element127 = __toESM(require_element(), 1);
 
   // packages/components/build-module/date-time/date-picker/use-lilius/index.mjs
-  var import_element124 = __toESM(require_element(), 1);
+  var import_element126 = __toESM(require_element(), 1);
   var Day = /* @__PURE__ */ (function(Day22) {
     Day22[Day22["SUNDAY"] = 0] = "SUNDAY";
     Day22[Day22["MONDAY"] = 1] = "MONDAY";
@@ -40806,27 +41241,27 @@ This message will only show in development mode. It won't appear in production. 
     selected: initialSelected = [],
     numberOfMonths = 1
   } = {}) => {
-    const [viewing, setViewing] = (0, import_element124.useState)(initialViewing);
-    const viewToday = (0, import_element124.useCallback)(() => setViewing(startOfToday()), [setViewing]);
-    const viewMonth = (0, import_element124.useCallback)((month) => setViewing((v3) => setMonth(v3, month)), []);
-    const viewPreviousMonth = (0, import_element124.useCallback)(() => setViewing((v3) => subMonths(v3, 1)), []);
-    const viewNextMonth = (0, import_element124.useCallback)(() => setViewing((v3) => addMonths(v3, 1)), []);
-    const viewYear = (0, import_element124.useCallback)((year) => setViewing((v3) => setYear(v3, year)), []);
-    const viewPreviousYear = (0, import_element124.useCallback)(() => setViewing((v3) => subYears(v3, 1)), []);
-    const viewNextYear = (0, import_element124.useCallback)(() => setViewing((v3) => addYears(v3, 1)), []);
-    const [selected, setSelected] = (0, import_element124.useState)(initialSelected.map(clearTime2));
+    const [viewing, setViewing] = (0, import_element126.useState)(initialViewing);
+    const viewToday = (0, import_element126.useCallback)(() => setViewing(startOfToday()), [setViewing]);
+    const viewMonth = (0, import_element126.useCallback)((month) => setViewing((v3) => setMonth(v3, month)), []);
+    const viewPreviousMonth = (0, import_element126.useCallback)(() => setViewing((v3) => subMonths(v3, 1)), []);
+    const viewNextMonth = (0, import_element126.useCallback)(() => setViewing((v3) => addMonths(v3, 1)), []);
+    const viewYear = (0, import_element126.useCallback)((year) => setViewing((v3) => setYear(v3, year)), []);
+    const viewPreviousYear = (0, import_element126.useCallback)(() => setViewing((v3) => subYears(v3, 1)), []);
+    const viewNextYear = (0, import_element126.useCallback)(() => setViewing((v3) => addYears(v3, 1)), []);
+    const [selected, setSelected] = (0, import_element126.useState)(initialSelected.map(clearTime2));
     const clearSelected = () => setSelected([]);
-    const isSelected2 = (0, import_element124.useCallback)((date) => selected.findIndex((s3) => isEqual(s3, date)) > -1, [selected]);
-    const select = (0, import_element124.useCallback)((date, replaceExisting) => {
+    const isSelected2 = (0, import_element126.useCallback)((date) => selected.findIndex((s3) => isEqual(s3, date)) > -1, [selected]);
+    const select = (0, import_element126.useCallback)((date, replaceExisting) => {
       if (replaceExisting) {
         setSelected(Array.isArray(date) ? date : [date]);
       } else {
         setSelected((selectedItems) => selectedItems.concat(Array.isArray(date) ? date : [date]));
       }
     }, []);
-    const deselect = (0, import_element124.useCallback)((date) => setSelected((selectedItems) => Array.isArray(date) ? selectedItems.filter((s3) => !date.map((d3) => d3.getTime()).includes(s3.getTime())) : selectedItems.filter((s3) => !isEqual(s3, date))), []);
-    const toggle = (0, import_element124.useCallback)((date, replaceExisting) => isSelected2(date) ? deselect(date) : select(date, replaceExisting), [deselect, isSelected2, select]);
-    const selectRange = (0, import_element124.useCallback)((start, end, replaceExisting) => {
+    const deselect = (0, import_element126.useCallback)((date) => setSelected((selectedItems) => Array.isArray(date) ? selectedItems.filter((s3) => !date.map((d3) => d3.getTime()).includes(s3.getTime())) : selectedItems.filter((s3) => !isEqual(s3, date))), []);
+    const toggle = (0, import_element126.useCallback)((date, replaceExisting) => isSelected2(date) ? deselect(date) : select(date, replaceExisting), [deselect, isSelected2, select]);
+    const selectRange = (0, import_element126.useCallback)((start, end, replaceExisting) => {
       if (replaceExisting) {
         setSelected(eachDayOfInterval({
           start,
@@ -40839,13 +41274,13 @@ This message will only show in development mode. It won't appear in production. 
         })));
       }
     }, []);
-    const deselectRange = (0, import_element124.useCallback)((start, end) => {
+    const deselectRange = (0, import_element126.useCallback)((start, end) => {
       setSelected((selectedItems) => selectedItems.filter((s3) => !eachDayOfInterval({
         start,
         end
       }).map((d3) => d3.getTime()).includes(s3.getTime())));
     }, []);
-    const calendar = (0, import_element124.useMemo)(() => eachMonthOfInterval({
+    const calendar = (0, import_element126.useMemo)(() => eachMonthOfInterval({
       start: startOfMonth(viewing),
       end: endOfMonth(addMonths(viewing, numberOfMonths - 1))
     }).map((month) => eachWeekOfInterval({
@@ -41105,7 +41540,7 @@ This message will only show in development mode. It won't appear in production. 
   var TIMEZONELESS_FORMAT = "Y-m-d\\TH:i:s";
 
   // packages/components/build-module/date-time/date-picker/index.mjs
-  var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
   function DatePicker({
     currentDate,
     onChange,
@@ -41128,24 +41563,24 @@ This message will only show in development mode. It won't appear in production. 
       viewing: startOfDayInConfiguredTimezone(date),
       weekStartsOn
     });
-    const [focusable, setFocusable] = (0, import_element125.useState)(startOfDayInConfiguredTimezone(date));
-    const [isFocusWithinCalendar, setIsFocusWithinCalendar] = (0, import_element125.useState)(false);
-    const [prevCurrentDate, setPrevCurrentDate] = (0, import_element125.useState)(currentDate);
+    const [focusable, setFocusable] = (0, import_element127.useState)(startOfDayInConfiguredTimezone(date));
+    const [isFocusWithinCalendar, setIsFocusWithinCalendar] = (0, import_element127.useState)(false);
+    const [prevCurrentDate, setPrevCurrentDate] = (0, import_element127.useState)(currentDate);
     if (currentDate !== prevCurrentDate) {
       setPrevCurrentDate(currentDate);
       setSelected([startOfDayInConfiguredTimezone(date)]);
       setViewing(startOfDayInConfiguredTimezone(date));
       setFocusable(startOfDayInConfiguredTimezone(date));
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(Wrapper3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(Wrapper3, {
       className: "components-datetime__date",
       role: "application",
-      "aria-label": (0, import_i18n42.__)("Calendar"),
-      children: [/* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(Navigator, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime193.jsx)(ViewPreviousMonthButton, {
-          icon: (0, import_i18n42.isRTL)() ? arrow_right_default : arrow_left_default,
+      "aria-label": (0, import_i18n44.__)("Calendar"),
+      children: [/* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(Navigator, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime197.jsx)(ViewPreviousMonthButton, {
+          icon: (0, import_i18n44.isRTL)() ? arrow_right_default : arrow_left_default,
           variant: "tertiary",
-          "aria-label": (0, import_i18n42.__)("View previous month"),
+          "aria-label": (0, import_i18n44.__)("View previous month"),
           onClick: () => {
             viewPreviousMonth();
             setFocusable(subMonths(focusable, 1));
@@ -41153,15 +41588,15 @@ This message will only show in development mode. It won't appear in production. 
             onMonthPreviewed?.((0, import_date3.dateI18n)(TIMEZONELESS_FORMAT, prevMonth, -prevMonth.getTimezoneOffset()));
           },
           size: "compact"
-        }), /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(NavigatorHeading, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(NavigatorHeading, {
           level: 3,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime193.jsx)("strong", {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime197.jsx)("strong", {
             children: (0, import_date3.dateI18n)("F", viewing, -viewing.getTimezoneOffset())
           }), " ", (0, import_date3.dateI18n)("Y", viewing, -viewing.getTimezoneOffset())]
-        }), /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(ViewNextMonthButton, {
-          icon: (0, import_i18n42.isRTL)() ? arrow_left_default : arrow_right_default,
+        }), /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(ViewNextMonthButton, {
+          icon: (0, import_i18n44.isRTL)() ? arrow_left_default : arrow_right_default,
           variant: "tertiary",
-          "aria-label": (0, import_i18n42.__)("View next month"),
+          "aria-label": (0, import_i18n44.__)("View next month"),
           onClick: () => {
             viewNextMonth();
             setFocusable(addMonths(focusable, 1));
@@ -41170,16 +41605,16 @@ This message will only show in development mode. It won't appear in production. 
           },
           size: "compact"
         })]
-      }), /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(Calendar, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(Calendar, {
         onFocus: () => setIsFocusWithinCalendar(true),
         onBlur: () => setIsFocusWithinCalendar(false),
-        children: [calendar[0][0].map((day) => /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(DayOfWeek, {
+        children: [calendar[0][0].map((day) => /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(DayOfWeek, {
           children: (0, import_date3.dateI18n)("D", day, -day.getTimezoneOffset())
         }, day.toString())), calendar[0].map((week) => week.map((day, index2) => {
           if (!isSameMonth(day, viewing)) {
             return null;
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(Day2, {
+          return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Day2, {
             day,
             column: index2 + 1,
             isSelected: isSelected2(day),
@@ -41201,10 +41636,10 @@ This message will only show in development mode. It won't appear in production. 
             onKeyDown: (event) => {
               let nextFocusable;
               if (event.key === "ArrowLeft") {
-                nextFocusable = addDays(day, (0, import_i18n42.isRTL)() ? 1 : -1);
+                nextFocusable = addDays(day, (0, import_i18n44.isRTL)() ? 1 : -1);
               }
               if (event.key === "ArrowRight") {
-                nextFocusable = addDays(day, (0, import_i18n42.isRTL)() ? -1 : 1);
+                nextFocusable = addDays(day, (0, import_i18n44.isRTL)() ? -1 : 1);
               }
               if (event.key === "ArrowUp") {
                 nextFocusable = subWeeks(day, 1);
@@ -41254,13 +41689,13 @@ This message will only show in development mode. It won't appear in production. 
     onClick,
     onKeyDown
   }) {
-    const ref = (0, import_element125.useRef)(null);
-    (0, import_element125.useEffect)(() => {
+    const ref = (0, import_element127.useRef)(null);
+    (0, import_element127.useEffect)(() => {
       if (ref.current && isFocusable2 && isFocusAllowed) {
         ref.current.focus();
       }
     }, [isFocusable2]);
-    return /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(DayButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(DayButton, {
       __next40pxDefaultSize: true,
       ref,
       className: "components-datetime__date__day",
@@ -41283,15 +41718,15 @@ This message will only show in development mode. It won't appear in production. 
     const localizedDate = (0, import_date3.dateI18n)(formats.date, date, -date.getTimezoneOffset());
     const parts = [localizedDate];
     if (isSelected2) {
-      parts.push((0, import_i18n42.__)("Selected"));
+      parts.push((0, import_i18n44.__)("Selected"));
     }
     if (isToday) {
-      parts.push((0, import_i18n42.__)("Today"));
+      parts.push((0, import_i18n44.__)("Today"));
     }
     if (numEvents > 0) {
-      parts.push((0, import_i18n42.sprintf)(
+      parts.push((0, import_i18n44.sprintf)(
         // translators: %d: Number of events on the calendar date.
-        (0, import_i18n42._n)("There is %d event", "There are %d events", numEvents),
+        (0, import_i18n44._n)("There is %d event", "There are %d events", numEvents),
         numEvents
       ));
     }
@@ -41300,12 +41735,12 @@ This message will only show in development mode. It won't appear in production. 
   var date_picker_default = DatePicker;
 
   // packages/components/build-module/date-time/time-picker/index.mjs
-  var import_element127 = __toESM(require_element(), 1);
-  var import_i18n45 = __toESM(require_i18n(), 1);
+  var import_element129 = __toESM(require_element(), 1);
+  var import_i18n47 = __toESM(require_i18n(), 1);
   var import_date5 = __toESM(require_date(), 1);
 
   // packages/components/build-module/date-time/time-picker/timezone.mjs
-  var import_i18n43 = __toESM(require_i18n(), 1);
+  var import_i18n45 = __toESM(require_i18n(), 1);
   var import_date4 = __toESM(require_date(), 1);
 
   // packages/components/build-module/date-time/time-picker/styles.mjs
@@ -41396,7 +41831,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/date-time/time-picker/timezone.mjs
-  var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
   var TimeZone2 = () => {
     const {
       timezone
@@ -41408,15 +41843,15 @@ This message will only show in development mode. It won't appear in production. 
     const offsetSymbol = Number(timezone.offset) >= 0 ? "+" : "";
     const zoneAbbr = "" !== timezone.abbr && isNaN(Number(timezone.abbr)) ? timezone.abbr : `UTC${offsetSymbol}${timezone.offsetFormatted}`;
     const prettyTimezoneString = timezone.string.replace("_", " ");
-    const timezoneDetail = "UTC" === timezone.string ? (0, import_i18n43.__)("Coordinated Universal Time") : `(${zoneAbbr}) ${prettyTimezoneString}`;
+    const timezoneDetail = "UTC" === timezone.string ? (0, import_i18n45.__)("Coordinated Universal Time") : `(${zoneAbbr}) ${prettyTimezoneString}`;
     const hasNoAdditionalTimezoneDetail = prettyTimezoneString.trim().length === 0;
-    return hasNoAdditionalTimezoneDetail ? /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(TimeZone, {
+    return hasNoAdditionalTimezoneDetail ? /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(TimeZone, {
       className: "components-datetime__timezone",
       children: zoneAbbr
-    }) : /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(tooltip_default, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(tooltip_default, {
       placement: "top",
       text: timezoneDetail,
-      children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(TimeZone, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(TimeZone, {
         className: "components-datetime__timezone",
         children: zoneAbbr
       })
@@ -41425,9 +41860,9 @@ This message will only show in development mode. It won't appear in production. 
   var timezone_default = TimeZone2;
 
   // packages/components/build-module/date-time/time-picker/time-input/index.mjs
-  var import_i18n44 = __toESM(require_i18n(), 1);
-  var import_element126 = __toESM(require_element(), 1);
-  var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
+  var import_i18n46 = __toESM(require_i18n(), 1);
+  var import_element128 = __toESM(require_element(), 1);
+  var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
   function TimeInput({
     value: valueProp,
     defaultValue: defaultValue2,
@@ -41474,19 +41909,19 @@ This message will only show in development mode. It won't appear in production. 
     function parseDayPeriod(_hours) {
       return _hours < 12 ? "AM" : "PM";
     }
-    const Wrapper6 = label ? Fieldset : import_element126.Fragment;
-    return /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(Wrapper6, {
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(base_control_default.VisualLabel, {
+    const Wrapper6 = label ? Fieldset : import_element128.Fragment;
+    return /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(Wrapper6, {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(base_control_default.VisualLabel, {
         as: "legend",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(component_default9, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(component_default9, {
         alignment: "left",
         expanded: false,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(TimeWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(TimeWrapper, {
           className: "components-datetime__time-field components-datetime__time-field-time",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime195.jsx)(HoursInput, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime199.jsx)(HoursInput, {
             className: "components-datetime__time-field-hours-input",
-            label: (0, import_i18n44.__)("Hours"),
+            label: (0, import_i18n46.__)("Hours"),
             hideLabelFromVision: true,
             value: String(is12Hour ? hours12Format : value.hours).padStart(2, "0"),
             step: 1,
@@ -41499,17 +41934,17 @@ This message will only show in development mode. It won't appear in production. 
             isShiftStepEnabled: false,
             onChange: buildNumberControlChangeCallback("hours"),
             __unstableStateReducer: buildPadInputStateReducer(2)
-          }), /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(TimeSeparator, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(TimeSeparator, {
             className: "components-datetime__time-separator",
             "aria-hidden": "true",
             children: ":"
-          }), /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(MinutesInput, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(MinutesInput, {
             className: clsx_default(
               "components-datetime__time-field-minutes-input",
               // Unused, for backwards compatibility.
               minutesProps?.className
             ),
-            label: (0, import_i18n44.__)("Minutes"),
+            label: (0, import_i18n46.__)("Minutes"),
             hideLabelFromVision: true,
             value: String(value.minutes).padStart(2, "0"),
             step: 1,
@@ -41527,20 +41962,20 @@ This message will only show in development mode. It won't appear in production. 
             __unstableStateReducer: buildPadInputStateReducer(2),
             ...minutesProps
           })]
-        }), is12Hour && /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(component_default12, {
+        }), is12Hour && /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(component_default12, {
           isBlock: true,
-          label: (0, import_i18n44.__)("Select AM or PM"),
+          label: (0, import_i18n46.__)("Select AM or PM"),
           hideLabelFromVision: true,
           value: dayPeriod,
           onChange: (newValue) => {
             buildAmPmChangeCallback(newValue)();
           },
-          children: [/* @__PURE__ */ (0, import_jsx_runtime195.jsx)(component_default14, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime199.jsx)(component_default14, {
             value: "AM",
-            label: (0, import_i18n44.__)("AM")
-          }), /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(component_default14, {
+            label: (0, import_i18n46.__)("AM")
+          }), /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(component_default14, {
             value: "PM",
-            label: (0, import_i18n44.__)("PM")
+            label: (0, import_i18n46.__)("PM")
           })]
         })]
       })]
@@ -41548,7 +41983,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/date-time/time-picker/index.mjs
-  var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
   var VALID_DATE_ORDERS = ["dmy", "mdy", "ymd"];
   function TimePicker({
     is12Hour,
@@ -41557,49 +41992,49 @@ This message will only show in development mode. It won't appear in production. 
     dateOrder: dateOrderProp,
     hideLabelFromVision = false
   }) {
-    const [date, setDate] = (0, import_element127.useState)(() => (
+    const [date, setDate] = (0, import_element129.useState)(() => (
       // Truncate the date at the minutes, see: #15495.
       startOfMinute(inputToDate(currentTime ?? /* @__PURE__ */ new Date()))
     ));
-    (0, import_element127.useEffect)(() => {
+    (0, import_element129.useEffect)(() => {
       setDate(startOfMinute(inputToDate(currentTime ?? /* @__PURE__ */ new Date())));
     }, [currentTime]);
     const monthOptions = [{
       value: "01",
-      label: (0, import_i18n45.__)("January")
+      label: (0, import_i18n47.__)("January")
     }, {
       value: "02",
-      label: (0, import_i18n45.__)("February")
+      label: (0, import_i18n47.__)("February")
     }, {
       value: "03",
-      label: (0, import_i18n45.__)("March")
+      label: (0, import_i18n47.__)("March")
     }, {
       value: "04",
-      label: (0, import_i18n45.__)("April")
+      label: (0, import_i18n47.__)("April")
     }, {
       value: "05",
-      label: (0, import_i18n45.__)("May")
+      label: (0, import_i18n47.__)("May")
     }, {
       value: "06",
-      label: (0, import_i18n45.__)("June")
+      label: (0, import_i18n47.__)("June")
     }, {
       value: "07",
-      label: (0, import_i18n45.__)("July")
+      label: (0, import_i18n47.__)("July")
     }, {
       value: "08",
-      label: (0, import_i18n45.__)("August")
+      label: (0, import_i18n47.__)("August")
     }, {
       value: "09",
-      label: (0, import_i18n45.__)("September")
+      label: (0, import_i18n47.__)("September")
     }, {
       value: "10",
-      label: (0, import_i18n45.__)("October")
+      label: (0, import_i18n47.__)("October")
     }, {
       value: "11",
-      label: (0, import_i18n45.__)("November")
+      label: (0, import_i18n47.__)("November")
     }, {
       value: "12",
-      label: (0, import_i18n45.__)("December")
+      label: (0, import_i18n47.__)("December")
     }];
     const {
       day,
@@ -41607,7 +42042,7 @@ This message will only show in development mode. It won't appear in production. 
       year,
       minutes,
       hours
-    } = (0, import_element127.useMemo)(() => ({
+    } = (0, import_element129.useMemo)(() => ({
       day: (0, import_date5.date)("d", date),
       month: (0, import_date5.date)("m", date),
       year: (0, import_date5.date)("Y", date),
@@ -41641,9 +42076,9 @@ This message will only show in development mode. It won't appear in production. 
       setDate(newDate);
       onChange?.((0, import_date5.date)(TIMEZONELESS_FORMAT, newDate));
     };
-    const dayField = /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(DayInput, {
+    const dayField = /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(DayInput, {
       className: "components-datetime__time-field components-datetime__time-field-day",
-      label: (0, import_i18n45.__)("Day"),
+      label: (0, import_i18n47.__)("Day"),
       hideLabelFromVision: true,
       value: day,
       step: 1,
@@ -41656,10 +42091,10 @@ This message will only show in development mode. It won't appear in production. 
       isShiftStepEnabled: false,
       onChange: buildNumberControlChangeCallback("date")
     }, "day");
-    const monthField = /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(MonthSelectWrapper, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(select_control_default, {
+    const monthField = /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(MonthSelectWrapper, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(select_control_default, {
         className: "components-datetime__time-field components-datetime__time-field-month",
-        label: (0, import_i18n45.__)("Month"),
+        label: (0, import_i18n47.__)("Month"),
         hideLabelFromVision: true,
         value: month,
         options: monthOptions,
@@ -41672,9 +42107,9 @@ This message will only show in development mode. It won't appear in production. 
         }
       })
     }, "month");
-    const yearField = /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(YearInput, {
+    const yearField = /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(YearInput, {
       className: "components-datetime__time-field components-datetime__time-field-year",
-      label: (0, import_i18n45.__)("Year"),
+      label: (0, import_i18n47.__)("Year"),
       hideLabelFromVision: true,
       value: year,
       step: 1,
@@ -41702,36 +42137,36 @@ This message will only show in development mode. It won't appear in production. 
           return null;
       }
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(Wrapper4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)(Wrapper4, {
       className: "components-datetime__time",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(Fieldset, {
-        children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(component_default2, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime200.jsxs)(Fieldset, {
+        children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(component_default2, {
           as: "legend",
-          children: (0, import_i18n45.__)("Time")
-        }) : /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(base_control_default.VisualLabel, {
+          children: (0, import_i18n47.__)("Time")
+        }) : /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(base_control_default.VisualLabel, {
           as: "legend",
           className: "components-datetime__time-legend",
-          children: (0, import_i18n45.__)("Time")
-        }), /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(component_default9, {
+          children: (0, import_i18n47.__)("Time")
+        }), /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)(component_default9, {
           className: "components-datetime__time-wrapper",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime196.jsx)(TimeInput, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime200.jsx)(TimeInput, {
             value: {
               hours: Number(hours),
               minutes: Number(minutes)
             },
             is12Hour,
             onChange: onTimeInputChangeCallback
-          }), /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(component_default6, {}), /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(timezone_default, {})]
+          }), /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(component_default6, {}), /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(timezone_default, {})]
         })]
-      }), /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(Fieldset, {
-        children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(component_default2, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)(Fieldset, {
+        children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(component_default2, {
           as: "legend",
-          children: (0, import_i18n45.__)("Date")
-        }) : /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(base_control_default.VisualLabel, {
+          children: (0, import_i18n47.__)("Date")
+        }) : /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(base_control_default.VisualLabel, {
           as: "legend",
           className: "components-datetime__time-legend",
-          children: (0, import_i18n45.__)("Date")
-        }), /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(component_default9, {
+          children: (0, import_i18n47.__)("Date")
+        }), /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(component_default9, {
           className: "components-datetime__time-wrapper",
           children: fields
         })]
@@ -41745,7 +42180,7 @@ This message will only show in development mode. It won't appear in production. 
   var time_picker_default = TimePicker;
 
   // packages/components/build-module/date-time/date-time/index.mjs
-  var import_element128 = __toESM(require_element(), 1);
+  var import_element130 = __toESM(require_element(), 1);
 
   // packages/components/build-module/date-time/date-time/styles.mjs
   function _EMOTION_STRINGIFIED_CSS_ERROR__22() {
@@ -41766,7 +42201,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/date-time/date-time/index.mjs
-  var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
   var noop14 = () => {
   };
   function UnforwardedDateTimePicker({
@@ -41779,17 +42214,17 @@ This message will only show in development mode. It won't appear in production. 
     events,
     startOfWeek: startOfWeek2
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Wrapper5, {
+    return /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(Wrapper5, {
       ref,
       className: "components-datetime",
       spacing: 4,
-      children: /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(import_jsx_runtime197.Fragment, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime197.jsx)(time_picker_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(import_jsx_runtime201.Fragment, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime201.jsx)(time_picker_default, {
           currentTime: currentDate,
           onChange,
           is12Hour,
           dateOrder
-        }), /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(date_picker_default, {
+        }), /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(date_picker_default, {
           currentDate,
           onChange,
           isInvalidDate,
@@ -41800,7 +42235,7 @@ This message will only show in development mode. It won't appear in production. 
       })
     });
   }
-  var DateTimePicker = (0, import_element128.forwardRef)(UnforwardedDateTimePicker);
+  var DateTimePicker = (0, import_element130.forwardRef)(UnforwardedDateTimePicker);
   DateTimePicker.displayName = "DateTimePicker";
   var date_time_default = DateTimePicker;
 
@@ -41808,13 +42243,13 @@ This message will only show in development mode. It won't appear in production. 
   var date_time_default2 = date_time_default;
 
   // packages/components/build-module/disabled/context.mjs
-  var import_element129 = __toESM(require_element(), 1);
-  var Context = (0, import_element129.createContext)(false);
+  var import_element131 = __toESM(require_element(), 1);
+  var Context = (0, import_element131.createContext)(false);
   Context.displayName = "DisabledContext";
   var context_default3 = Context;
 
   // packages/components/build-module/disabled/index.mjs
-  var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
   function getRuntime18() {
     const globalScope = globalThis;
@@ -41904,9 +42339,9 @@ This message will only show in development mode. It won't appear in production. 
     isDisabled = true,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(Provider2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(Provider2, {
       value: isDisabled,
-      children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)("div", {
         // @ts-expect-error `inert` is not declared in React 18's HTML attribute types.
         inert: isDisabled ? "true" : void 0,
         className: isDisabled ? clsx_default(style_module_default17.disabled, className, "components-disabled") : void 0,
@@ -41920,8 +42355,8 @@ This message will only show in development mode. It won't appear in production. 
   var disabled_default = Disabled;
 
   // packages/components/build-module/disclosure/index.mjs
-  var import_element130 = __toESM(require_element(), 1);
-  var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
+  var import_element132 = __toESM(require_element(), 1);
+  var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedDisclosureContent = ({
     visible,
     children,
@@ -41930,19 +42365,19 @@ This message will only show in development mode. It won't appear in production. 
     const disclosure = useDisclosureStore({
       open: visible
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(DisclosureContent, {
+    return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(DisclosureContent, {
       store: disclosure,
       ref,
       ...props,
       children
     });
   };
-  var DisclosureContent22 = (0, import_element130.forwardRef)(UnforwardedDisclosureContent);
+  var DisclosureContent22 = (0, import_element132.forwardRef)(UnforwardedDisclosureContent);
   DisclosureContent22.displayName = "DisclosureContent";
 
   // packages/components/build-module/draggable/index.mjs
-  var import_compose52 = __toESM(require_compose(), 1);
-  var import_element134 = __toESM(require_element(), 1);
+  var import_compose53 = __toESM(require_compose(), 1);
+  var import_element136 = __toESM(require_element(), 1);
 
   // node_modules/@base-ui/utils/useRefWithInit.mjs
   var React11 = __toESM(require_react(), 1);
@@ -42413,11 +42848,11 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/ui/build-module/icon/icon.mjs
-  var import_element131 = __toESM(require_element(), 1);
+  var import_element133 = __toESM(require_element(), 1);
   var import_primitives32 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
-  var Icon2 = (0, import_element131.forwardRef)(function Icon22({ icon, size: size4 = 24, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+  var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
+  var Icon2 = (0, import_element133.forwardRef)(function Icon22({ icon, size: size4 = 24, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
       import_primitives32.SVG,
       {
         ref,
@@ -42570,12 +43005,12 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
-  var import_i18n46 = __toESM(require_i18n(), 1);
-  var import_element133 = __toESM(require_element(), 1);
+  var import_i18n48 = __toESM(require_i18n(), 1);
+  var import_element135 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/spinner/spinner.mjs
-  var import_element132 = __toESM(require_element(), 1);
-  var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
+  var import_element134 = __toESM(require_element(), 1);
+  var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
   function getRuntime20() {
     const globalScope = globalThis;
@@ -42660,9 +43095,9 @@ This message will only show in development mode. It won't appear in production. 
     registerStyle19("bbbecfe373", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.ab4d64c07c0ba587__spinner{background-color:transparent;display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}.a7654e10245bb7d2__indicator,.dc51f80c84b35fe2__track{fill:transparent;stroke-width:1.5px}.dc51f80c84b35fe2__track{stroke:var(--wpds-color-background-track-neutral,#dbdbdb)}.a7654e10245bb7d2__indicator{stroke:var(--wpds-color-background-thumb-brand,var(--wp-admin-theme-color,#3858e9));stroke-linecap:round;animation:_02322d973909703c__spinner-spin 1.4s linear infinite both;transform-origin:50% 50%}@keyframes _02322d973909703c__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
   }
   var style_default = { "spinner": "ab4d64c07c0ba587__spinner", "track": "dc51f80c84b35fe2__track", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
-  var Spinner2 = (0, import_element132.forwardRef)(
+  var Spinner2 = (0, import_element134.forwardRef)(
     function Spinner22({ className, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)(
         "svg",
         {
           className: clsx_default(style_default.spinner, className),
@@ -42673,7 +43108,7 @@ This message will only show in development mode. It won't appear in production. 
           ...props,
           ref,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
               "circle",
               {
                 className: style_default.track,
@@ -42683,7 +43118,7 @@ This message will only show in development mode. It won't appear in production. 
                 vectorEffect: "non-scaling-stroke"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
               "path",
               {
                 className: style_default.indicator,
@@ -42698,7 +43133,7 @@ This message will only show in development mode. It won't appear in production. 
   );
 
   // packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
-  var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE21 = "data-wp-hash";
   function getRuntime21() {
     const globalScope = globalThis;
@@ -42796,7 +43231,7 @@ This message will only show in development mode. It won't appear in production. 
     type,
     message
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime202.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
       "p",
       {
         id: id3,
@@ -42806,7 +43241,7 @@ This message will only show in development mode. It won't appear in production. 
           style_default2[`is-${type}`]
         ),
         children: [
-          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(Spinner2, { className: style_default2["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
+          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Spinner2, { className: style_default2["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
             Icon2,
             {
               className: style_default2["indicator-icon"],
@@ -42822,13 +43257,13 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
-  var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
   function appendRequiredIndicator(label, required, markWhenOptional) {
     let suffix;
     if (required && !markWhenOptional) {
-      suffix = `(${(0, import_i18n46.__)("Required")})`;
+      suffix = `(${(0, import_i18n48.__)("Required")})`;
     } else if (!required && markWhenOptional) {
-      suffix = `(${(0, import_i18n46.__)("Optional")})`;
+      suffix = `(${(0, import_i18n48.__)("Optional")})`;
     }
     if (!suffix) {
       return label;
@@ -42836,14 +43271,14 @@ This message will only show in development mode. It won't appear in production. 
     if (typeof label === "string") {
       return `${label} ${suffix}`;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime203.jsxs)(import_jsx_runtime203.Fragment, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(import_jsx_runtime207.Fragment, { children: [
       label,
       " ",
       suffix
     ] });
   }
   var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
-  var ControlWithError = (0, import_element133.forwardRef)(function ControlWithError2({
+  var ControlWithError = (0, import_element135.forwardRef)(function ControlWithError2({
     required,
     markWhenOptional,
     customValidity,
@@ -42852,12 +43287,12 @@ This message will only show in development mode. It won't appear in production. 
     render,
     ...restProps
   }, forwardedRef) {
-    const [errorMessage, setErrorMessage] = (0, import_element133.useState)();
-    const [statusMessage, setStatusMessage] = (0, import_element133.useState)();
-    const [showMessage, setShowMessage] = (0, import_element133.useState)(false);
-    const [isTouched, setIsTouched] = (0, import_element133.useState)(false);
-    const wrapperRef = (0, import_element133.useRef)(null);
-    (0, import_element133.useEffect)(() => {
+    const [errorMessage, setErrorMessage] = (0, import_element135.useState)();
+    const [statusMessage, setStatusMessage] = (0, import_element135.useState)();
+    const [showMessage, setShowMessage] = (0, import_element135.useState)(false);
+    const [isTouched, setIsTouched] = (0, import_element135.useState)(false);
+    const wrapperRef = (0, import_element135.useRef)(null);
+    (0, import_element135.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const handler = () => {
         if (customValidity?.type !== "validating") {
@@ -42869,7 +43304,7 @@ This message will only show in development mode. It won't appear in production. 
       validityTarget?.addEventListener("invalid", handler);
       return () => validityTarget?.removeEventListener("invalid", handler);
     }, [customValidity?.type, getValidityTarget]);
-    (0, import_element133.useEffect)(() => {
+    (0, import_element135.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {
         event.preventDefault();
@@ -42903,7 +43338,7 @@ This message will only show in development mode. It won't appear in production. 
         );
       };
     }, [getValidityTarget]);
-    (0, import_element133.useEffect)(() => {
+    (0, import_element135.useEffect)(() => {
       const validityTarget = getValidityTarget();
       if (!customValidity?.type) {
         validityTarget?.setCustomValidity("");
@@ -42940,7 +43375,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       }
     }, [customValidity, getValidityTarget]);
-    (0, import_element133.useEffect)(() => {
+    (0, import_element135.useEffect)(() => {
       if (!isTouched || showMessage) {
         return;
       }
@@ -42961,10 +43396,10 @@ This message will only show in development mode. It won't appear in production. 
         getValidityTarget()?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       }
     };
-    const messageId = (0, import_element133.useId)();
+    const messageId = (0, import_element135.useId)();
     const message = (() => {
       if (errorMessage) {
-        return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
           ValidityIndicator,
           {
             id: messageId,
@@ -42974,7 +43409,7 @@ This message will only show in development mode. It won't appear in production. 
         );
       }
       if (statusMessage?.type) {
-        return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
           ValidityIndicator,
           {
             id: messageId,
@@ -42986,7 +43421,7 @@ This message will only show in development mode. It won't appear in production. 
       return null;
     })();
     const visibleMessage = showMessage ? message : null;
-    (0, import_element133.useEffect)(() => {
+    (0, import_element135.useEffect)(() => {
       const target = getValidityTarget();
       if (!target) {
         return;
@@ -43011,8 +43446,8 @@ This message will only show in development mode. It won't appear in production. 
       ref: [forwardedRef, wrapperRef],
       props: mergeProps3(restProps, {
         onBlur,
-        children: /* @__PURE__ */ (0, import_jsx_runtime203.jsxs)(import_jsx_runtime203.Fragment, { children: [
-          (0, import_element133.cloneElement)(children, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(import_jsx_runtime207.Fragment, { children: [
+          (0, import_element135.cloneElement)(children, {
             label: appendRequiredIndicator(
               children.props.label,
               required,
@@ -43027,7 +43462,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/draggable/index.mjs
-  var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
   function getRuntime22() {
     const globalScope = globalThis;
@@ -43123,8 +43558,8 @@ This message will only show in development mode. It won't appear in production. 
     __experimentalTransferDataType: transferDataType = "text",
     __experimentalDragComponent: dragComponent
   }) {
-    const dragComponentRef = (0, import_element134.useRef)(null);
-    const cleanupRef = (0, import_element134.useRef)(() => {
+    const dragComponentRef = (0, import_element136.useRef)(null);
+    const cleanupRef = (0, import_element136.useRef)(() => {
     });
     function end(event) {
       event.preventDefault();
@@ -43206,7 +43641,7 @@ This message will only show in development mode. It won't appear in production. 
           onDragOver(e3);
         }
       }
-      const throttledDragOver = (0, import_compose52.throttle)(over, 16);
+      const throttledDragOver = (0, import_compose53.throttle)(over, 16);
       ownerDocument.addEventListener("dragover", throttledDragOver);
       ownerDocument.body.classList.add(bodyClass);
       if (onDragStart) {
@@ -43223,14 +43658,14 @@ This message will only show in development mode. It won't appear in production. 
         ownerDocument.removeEventListener("dragover", throttledDragOver);
       };
     }
-    (0, import_element134.useEffect)(() => () => {
+    (0, import_element136.useEffect)(() => () => {
       cleanupRef.current();
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(import_jsx_runtime204.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(import_jsx_runtime208.Fragment, {
       children: [children({
         onDraggableStart: start,
         onDraggableEnd: end
-      }), dragComponent && /* @__PURE__ */ (0, import_jsx_runtime204.jsx)("div", {
+      }), dragComponent && /* @__PURE__ */ (0, import_jsx_runtime208.jsx)("div", {
         className: "components-draggable-drag-component-root",
         style: {
           display: "none"
@@ -43243,11 +43678,11 @@ This message will only show in development mode. It won't appear in production. 
   var draggable_default = Draggable;
 
   // packages/components/build-module/drop-zone/index.mjs
-  var import_i18n47 = __toESM(require_i18n(), 1);
-  var import_element135 = __toESM(require_element(), 1);
+  var import_i18n49 = __toESM(require_i18n(), 1);
+  var import_element137 = __toESM(require_element(), 1);
   var import_dom7 = __toESM(require_dom(), 1);
-  var import_compose53 = __toESM(require_compose(), 1);
-  var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
+  var import_compose54 = __toESM(require_compose(), 1);
+  var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
   function DropZoneComponent({
     className,
     icon = upload_default,
@@ -43258,10 +43693,10 @@ This message will only show in development mode. It won't appear in production. 
     isEligible = () => true,
     ...restProps
   }) {
-    const [isDraggingOverDocument, setIsDraggingOverDocument] = (0, import_element135.useState)();
-    const [isDraggingOverElement, setIsDraggingOverElement] = (0, import_element135.useState)();
-    const [isActive, setIsActive] = (0, import_element135.useState)();
-    const ref = (0, import_compose53.__experimentalUseDropZone)({
+    const [isDraggingOverDocument, setIsDraggingOverDocument] = (0, import_element137.useState)();
+    const [isDraggingOverElement, setIsDraggingOverElement] = (0, import_element137.useState)();
+    const [isActive, setIsActive] = (0, import_element137.useState)();
+    const ref = (0, import_compose54.__experimentalUseDropZone)({
       onDrop(event) {
         if (!event.dataTransfer) {
           return;
@@ -43310,20 +43745,20 @@ This message will only show in development mode. It won't appear in production. 
       "is-dragging-over-document": isDraggingOverDocument,
       "is-dragging-over-element": isDraggingOverElement
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)("div", {
       ...restProps,
       ref,
       className: classes,
-      children: /* @__PURE__ */ (0, import_jsx_runtime205.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime209.jsx)("div", {
         className: "components-drop-zone__content",
-        children: /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)("div", {
+        children: /* @__PURE__ */ (0, import_jsx_runtime209.jsxs)("div", {
           className: "components-drop-zone__content-inner",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime205.jsx)(icon_default2, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime209.jsx)(icon_default2, {
             icon,
             className: "components-drop-zone__content-icon"
-          }), /* @__PURE__ */ (0, import_jsx_runtime205.jsx)("span", {
+          }), /* @__PURE__ */ (0, import_jsx_runtime209.jsx)("span", {
             className: "components-drop-zone__content-text",
-            children: label ? label : (0, import_i18n47.__)("Drop files to upload")
+            children: label ? label : (0, import_i18n49.__)("Drop files to upload")
           })]
         })
       })
@@ -43342,270 +43777,6 @@ This message will only show in development mode. It won't appear in production. 
     });
     return children;
   }
-
-  // packages/components/build-module/duotone-picker/duotone-picker.mjs
-  var import_es62 = __toESM(require_es6(), 1);
-  var import_element137 = __toESM(require_element(), 1);
-  var import_i18n49 = __toESM(require_i18n(), 1);
-
-  // packages/components/build-module/duotone-picker/color-list-picker/index.mjs
-  var import_element136 = __toESM(require_element(), 1);
-  var import_i18n48 = __toESM(require_i18n(), 1);
-  var import_compose54 = __toESM(require_compose(), 1);
-  var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
-  function ColorOption({
-    label,
-    value,
-    colors,
-    disableCustomColors,
-    enableAlpha,
-    onChange
-  }) {
-    const [isOpen, setIsOpen] = (0, import_element136.useState)(false);
-    const idRoot = (0, import_compose54.useInstanceId)(ColorOption, "color-list-picker-option");
-    const labelId = `${idRoot}__label`;
-    const contentId = `${idRoot}__content`;
-    return /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(import_jsx_runtime206.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime206.jsx)(button_default, {
-        __next40pxDefaultSize: true,
-        className: "components-color-list-picker__swatch-button",
-        id: labelId,
-        onClick: () => setIsOpen((prev2) => !prev2),
-        "aria-expanded": isOpen,
-        "aria-controls": contentId,
-        icon: value ? /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(color_indicator_default, {
-          colorValue: value,
-          className: "components-color-list-picker__swatch-color"
-        }) : /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(icon_default3, {
-          icon: swatch_default
-        }),
-        text: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime206.jsx)("div", {
-        role: "group",
-        id: contentId,
-        "aria-labelledby": labelId,
-        "aria-hidden": !isOpen,
-        children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(color_palette_default, {
-          "aria-label": (0, import_i18n48.__)("Color options"),
-          className: "components-color-list-picker__color-picker",
-          colors,
-          value,
-          clearable: false,
-          onChange,
-          disableCustomColors,
-          enableAlpha
-        })
-      })]
-    });
-  }
-  function ColorListPicker({
-    colors,
-    labels,
-    value = [],
-    disableCustomColors,
-    enableAlpha,
-    onChange
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)("div", {
-      className: "components-color-list-picker",
-      children: labels.map((label, index2) => /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(ColorOption, {
-        label,
-        value: value[index2],
-        colors,
-        disableCustomColors,
-        enableAlpha,
-        onChange: (newColor) => {
-          const newColors = value.slice();
-          newColors[index2] = newColor;
-          onChange(newColors);
-        }
-      }, index2))
-    });
-  }
-  var color_list_picker_default = ColorListPicker;
-
-  // packages/components/build-module/duotone-picker/utils.mjs
-  k([names_default]);
-  function getDefaultColors(palette) {
-    if (!palette || palette.length < 2) {
-      return ["#000", "#fff"];
-    }
-    return palette.map(({
-      color: color2
-    }) => ({
-      color: color2,
-      brightness: w(color2).brightness()
-    })).reduce(([min2, max2], current) => {
-      return [current.brightness <= min2.brightness ? current : min2, current.brightness >= max2.brightness ? current : max2];
-    }, [{
-      brightness: 1,
-      color: ""
-    }, {
-      brightness: 0,
-      color: ""
-    }]).map(({
-      color: color2
-    }) => color2);
-  }
-  function getGradientFromCSSColors(colors = [], angle = "90deg") {
-    const l3 = 100 / colors.length;
-    const stops = colors.map((c3, i3) => `${c3} ${i3 * l3}%, ${c3} ${(i3 + 1) * l3}%`).join(", ");
-    return `linear-gradient( ${angle}, ${stops} )`;
-  }
-  function getColorStopsFromColors(colors) {
-    return colors.map((color2, i3) => ({
-      position: i3 * 100 / (colors.length - 1),
-      color: color2
-    }));
-  }
-  function getColorsFromColorStops(colorStops = []) {
-    return colorStops.map(({
-      color: color2
-    }) => color2);
-  }
-
-  // packages/components/build-module/duotone-picker/custom-duotone-bar.mjs
-  var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
-  var PLACEHOLDER_VALUES = ["#333", "#CCC"];
-  function CustomDuotoneBar({
-    value,
-    onChange
-  }) {
-    const hasGradient = !!value;
-    const values = hasGradient ? value : PLACEHOLDER_VALUES;
-    const background = getGradientFromCSSColors(values);
-    const controlPoints = getColorStopsFromColors(values);
-    return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(CustomGradientBar, {
-      disableInserter: true,
-      background,
-      hasGradient,
-      value: controlPoints,
-      onChange: (newColorStops) => {
-        const newValue = getColorsFromColorStops(newColorStops);
-        onChange(newValue);
-      }
-    });
-  }
-
-  // packages/components/build-module/duotone-picker/duotone-picker.mjs
-  var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
-  function DuotonePicker({
-    asButtons,
-    loop,
-    clearable = true,
-    unsetable = true,
-    colorPalette,
-    duotonePalette,
-    disableCustomColors,
-    disableCustomDuotone,
-    value,
-    onChange,
-    "aria-label": ariaLabel,
-    "aria-labelledby": ariaLabelledby,
-    ...otherProps
-  }) {
-    const [defaultDark, defaultLight] = (0, import_element137.useMemo)(() => getDefaultColors(colorPalette), [colorPalette]);
-    const isUnset = value === "unset";
-    const unsetOptionLabel = (0, import_i18n49.__)("Unset");
-    const unsetOption = /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(circular_option_picker_default2.Option, {
-      value: "unset",
-      isSelected: isUnset,
-      tooltipText: unsetOptionLabel,
-      "aria-label": unsetOptionLabel,
-      className: "components-duotone-picker__color-indicator",
-      onClick: () => {
-        onChange(isUnset ? void 0 : "unset");
-      }
-    }, "unset");
-    const duotoneOptions = duotonePalette.map(({
-      colors,
-      slug,
-      name
-    }) => {
-      const style2 = {
-        background: getGradientFromCSSColors(colors, "135deg"),
-        color: "transparent"
-      };
-      const tooltipText = name ?? (0, import_i18n49.sprintf)(
-        // translators: %s: duotone code e.g: "dark-grayscale" or "7f7f7f-ffffff".
-        (0, import_i18n49.__)("Duotone code: %s"),
-        slug
-      );
-      const label = name ? (0, import_i18n49.sprintf)(
-        // translators: %s: The name of the option e.g: "Dark grayscale".
-        (0, import_i18n49.__)("Duotone: %s"),
-        name
-      ) : tooltipText;
-      const isSelected2 = (0, import_es62.default)(colors, value);
-      return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(circular_option_picker_default2.Option, {
-        value: colors,
-        isSelected: isSelected2,
-        "aria-label": label,
-        tooltipText,
-        style: style2,
-        onClick: () => {
-          onChange(isSelected2 ? void 0 : colors);
-        }
-      }, slug);
-    });
-    const {
-      metaProps,
-      labelProps
-    } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
-    const options2 = unsetable ? [unsetOption, ...duotoneOptions] : duotoneOptions;
-    return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(circular_option_picker_default2, {
-      ...otherProps,
-      ...metaProps,
-      ...labelProps,
-      options: options2,
-      actions: !!clearable && /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(circular_option_picker_default2.ButtonAction, {
-        onClick: () => onChange(void 0),
-        accessibleWhenDisabled: true,
-        disabled: !value,
-        children: (0, import_i18n49.__)("Clear")
-      }),
-      children: /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(component_default6, {
-        paddingTop: options2.length === 0 ? 0 : 4,
-        children: /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(component_default18, {
-          spacing: 3,
-          children: [!disableCustomColors && !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(CustomDuotoneBar, {
-            value: isUnset ? void 0 : value,
-            onChange
-          }), !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(color_list_picker_default, {
-            labels: [(0, import_i18n49.__)("Shadows"), (0, import_i18n49.__)("Highlights")],
-            colors: colorPalette,
-            value: isUnset ? void 0 : value,
-            disableCustomColors,
-            enableAlpha: true,
-            onChange: (newColors) => {
-              if (!newColors[0]) {
-                newColors[0] = defaultDark;
-              }
-              if (!newColors[1]) {
-                newColors[1] = defaultLight;
-              }
-              const newValue = newColors.length >= 2 ? newColors : void 0;
-              onChange(newValue);
-            }
-          })]
-        })
-      })
-    });
-  }
-  var duotone_picker_default = DuotonePicker;
-
-  // packages/components/build-module/duotone-picker/duotone-swatch.mjs
-  var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
-  function DuotoneSwatch({
-    values
-  }) {
-    return values ? /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(color_indicator_default, {
-      colorValue: getGradientFromCSSColors(values, "135deg")
-    }) : /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(icon_default3, {
-      icon: swatch_default
-    });
-  }
-  var duotone_swatch_default = DuotoneSwatch;
 
   // packages/components/build-module/external-link/index.mjs
   var import_i18n50 = __toESM(require_i18n(), 1);

@@ -65960,6 +65960,13 @@ var wp;
     });
     return selectorsScoped.join(", ");
   }
+  function getDuotoneSlugFromPreset(duotone) {
+    if (typeof duotone !== "string") {
+      return void 0;
+    }
+    const [, slug] = duotone.match(/^var:preset\|duotone\|(.+)$/) ?? [];
+    return slug;
+  }
 
   // packages/block-editor/build-module/components/inspector-controls/block-support-tools-panel.mjs
   var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
@@ -76673,6 +76680,7 @@ var wp;
     disableCustomColors,
     disableCustomDuotone,
     value,
+    selectedSlug,
     onChange
   }) {
     let toolbarIcon;
@@ -76727,6 +76735,7 @@ var wp;
               disableCustomColors,
               disableCustomDuotone,
               value,
+              selectedSlug,
               onChange
             }
           )
@@ -90042,22 +90051,25 @@ var wp;
     const localDuotone = decodeValue(value?.filter?.duotone);
     const inheritedDuotone = decodeValue(inheritedValue?.filter?.duotone);
     const duotone = localDuotone ?? inheritedDuotone;
+    const localDuotoneSlug = getDuotoneSlugFromPreset(value?.filter?.duotone);
+    const inheritedDuotoneSlug = getDuotoneSlugFromPreset(
+      inheritedValue?.filter?.duotone
+    );
+    const duotoneSlug = localDuotone !== void 0 ? localDuotoneSlug : inheritedDuotoneSlug;
     const isDuotonePlaceholder = localDuotone === void 0 && inheritedDuotone !== void 0;
-    const setDuotone = (newValue) => {
-      const duotonePreset = duotonePalette.find(({ colors: colors2 }) => {
-        return colors2 === newValue;
-      });
-      const duotoneValue = duotonePreset ? `var:preset|duotone|${duotonePreset.slug}` : newValue;
+    const setDuotone = (newValue, slug) => {
+      const presetSlug = slug ?? duotonePalette.find(({ colors: colors2 }) => colors2 === newValue)?.slug;
+      const duotoneValue = presetSlug ? `var:preset|duotone|${presetSlug}` : newValue;
       onChange(
         setImmutably2(value, ["filter", "duotone"], duotoneValue)
       );
     };
-    const setDuotoneWithInheritedCommit = (newValue) => {
+    const setDuotoneWithInheritedCommit = (newValue, index2, slug) => {
       if (newValue === void 0 && isDuotonePlaceholder && inheritedDuotone !== void 0) {
-        setDuotone(inheritedDuotone);
+        setDuotone(inheritedDuotone, inheritedDuotoneSlug);
         return;
       }
-      setDuotone(newValue);
+      setDuotone(newValue, slug);
     };
     const hasDuotone = () => !!value?.filter?.duotone;
     const resetDuotone = () => setDuotone(void 0);
@@ -90113,6 +90125,7 @@ var wp;
                       disableCustomColors: true,
                       disableCustomDuotone: true,
                       value: duotone,
+                      selectedSlug: duotoneSlug,
                       onChange: setDuotoneWithInheritedCommit
                     }
                   )
@@ -104484,7 +104497,7 @@ var wp;
         FiltersPanel,
         {
           value: {
-            filter: { duotone: duotonePresetOrColors }
+            filter: { duotone: duotoneStyle }
           },
           onChange: (newDuotone) => {
             const newStyle = {
@@ -104509,8 +104522,9 @@ var wp;
           disableCustomDuotone,
           disableCustomColors,
           value: duotonePresetOrColors,
-          onChange: (newDuotone) => {
-            const maybePreset = getDuotonePresetFromColors(
+          selectedSlug: getDuotoneSlugFromPreset(duotoneStyle),
+          onChange: (newDuotone, index2, slug) => {
+            const maybePreset = slug ? `var:preset|duotone|${slug}` : getDuotonePresetFromColors(
               newDuotone,
               duotonePalette
             );

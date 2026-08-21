@@ -1372,7 +1372,7 @@ function getPresetsSvgFilters(blockPresets = {}) {
       metadata.path,
       {}
     );
-    return ["default", "theme"].filter((origin) => presetByOrigin[origin]).flatMap(
+    return ["default", "theme", "custom"].filter((origin) => presetByOrigin[origin]).flatMap(
       (origin) => presetByOrigin[origin].map(
         (preset) => getDuotoneFilter(
           `wp-duotone-${preset.slug}`,

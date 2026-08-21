@@ -860,7 +860,8 @@ svg.components-checkbox-control__indeterminate {
   line-height: 22px;
 }
 
-.components-palette-edit__popover-gradient-picker {
+.components-palette-edit__popover-gradient-picker,
+.components-palette-edit__popover-duotone-picker {
   width: 260px;
   padding: 8px;
 }
