@@ -95018,6 +95018,7 @@ var wp;
   function PublishDateTimePicker({
     onClose,
     onChange,
+    showPopoverHeader = true,
     showPopoverHeaderActions,
     isCompact,
     currentDate,
@@ -95033,13 +95034,13 @@ var wp;
     };
     const DatePickerComponent = isCompact ? import_components220.TimePicker : import_components220.DateTimePicker;
     return /* @__PURE__ */ (0, import_jsx_runtime480.jsxs)("div", { ref, className: "block-editor-publish-date-time-picker", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
+      showPopoverHeader && /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
         InspectorPopoverHeader,
         {
           title: title || (0, import_i18n219.__)("Publish"),
           actions: showPopoverHeaderActions ? [
             {
-              label: (0, import_i18n219.__)("Now"),
+              label: (0, import_i18n219.__)("Reset"),
               onClick: () => onChange?.(null)
             }
           ] : void 0,

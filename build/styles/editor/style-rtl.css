@@ -7632,10 +7632,6 @@ mark.wp-note {
   padding-left: 4px;
 }
 
-.editor-post-publish-panel__header-published {
-  flex-grow: 1;
-}
-
 .editor-post-publish-panel__footer {
   padding: 16px;
 }
@@ -7666,9 +7662,6 @@ mark.wp-note {
   background: #fff;
   margin-right: -16px;
   margin-left: -16px;
-}
-.editor-post-publish-panel__prepublish .editor-post-visibility__dialog-legend {
-  display: none;
 }
 .editor-post-publish-panel__prepublish .components-panel__body-title .components-button {
   align-items: flex-start;
@@ -7728,15 +7721,6 @@ mark.wp-note {
   margin: 0 0 8px;
 }
 
-.post-publish-panel__tip {
-  color: #f0b849;
-}
-
-@media screen and (max-width: 782px) {
-  .post-publish-panel__postpublish-post-address__button-wrap .components-button {
-    height: 40px;
-  }
-}
 .editor-post-publish-panel {
   box-sizing: border-box;
 }
@@ -8030,6 +8014,12 @@ mark.wp-note {
 .editor-post-schedule__dialog .components-popover__content {
   min-width: 320px;
   padding: 16px;
+}
+
+.editor-post-schedule__reset {
+  justify-content: center;
+  margin-top: 16px;
+  width: 100%;
 }
 
 .editor-post-status {
