@@ -2876,7 +2876,8 @@ function Editor({
   postId,
   settings,
   backButton,
-  onActionPerformed
+  onActionPerformed,
+  initialViewport
 }) {
   const homePage = (0, import_data6.useSelect)(
     (select2) => {
@@ -2950,6 +2951,7 @@ function Editor({
       settings: finalSettings,
       styles: finalSettings.styles,
       onActionPerformed,
+      initialViewport,
       children: [
         backButton && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BackButton, { children: backButton }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PreferencesModal, {})

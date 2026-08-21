@@ -85507,6 +85507,7 @@ If there's a particular need for this, please submit a feature request at https:
       settings,
       recovery,
       initialEdits,
+      initialViewport,
       children,
       BlockEditorProviderComponent = ExperimentalBlockEditorProvider,
       __unstableTemplate: template2
@@ -85601,13 +85602,18 @@ If there's a particular need for this, please submit a feature request at https:
         template2,
         mode
       );
+      const initialCanvasWidth = getCanvasWidthByDeviceType(
+        initialViewport,
+        blockEditorSettings.__experimentalFeatures?.viewport
+      );
       const {
         updatePostLock: updatePostLock2,
         setupEditor: setupEditor2,
         updateEditorSettings: updateEditorSettings2,
         setCurrentTemplateId: setCurrentTemplateId2,
         setEditedPost: setEditedPost2,
-        setRenderingMode: setRenderingMode2
+        setRenderingMode: setRenderingMode2,
+        setCanvasWidth: setCanvasWidth2
       } = unlock((0, import_data88.useDispatch)(store));
       const { editEntityRecord } = (0, import_data88.useDispatch)(import_core_data55.store);
       const registry = (0, import_data88.useRegistry)();
@@ -85641,6 +85647,17 @@ If there's a particular need for this, please submit a feature request at https:
         }
         return () => setEditedPost2(null, null);
       }, [post2.type, post2.id, setEditedPost2, removeNotice]);
+      (0, import_element244.useEffect)(() => {
+        if (initialViewport) {
+          setCanvasWidth2(initialCanvasWidth);
+        }
+      }, [
+        post2.type,
+        post2.id,
+        initialViewport,
+        initialCanvasWidth,
+        setCanvasWidth2
+      ]);
       (0, import_element244.useLayoutEffect)(() => {
         updateEditorSettings2(settings);
       }, [settings, updateEditorSettings2]);
@@ -108981,6 +108998,7 @@ ${content}
     settings,
     children,
     initialEdits,
+    initialViewport,
     // This could be part of the settings.
     onActionPerformed,
     // The following abstractions are not ideal but necessary
@@ -109053,6 +109071,7 @@ ${content}
           __unstableTemplate: template2,
           settings,
           initialEdits,
+          initialViewport,
           useSubRegistry: false,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime587.jsx)(EditorInterface, { ...props, children: extraContent }),
