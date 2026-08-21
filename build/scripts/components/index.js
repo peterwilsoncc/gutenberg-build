@@ -269,7 +269,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment9 = REACT_FRAGMENT_TYPE;
+          var Fragment10 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE2;
           var Memo = REACT_MEMO_TYPE;
           var Portal3 = REACT_PORTAL_TYPE;
@@ -328,7 +328,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment9;
+          exports.Fragment = Fragment10;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal3;
@@ -27728,6 +27728,15 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/button/index.mjs
   var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
   var disabledEventsOnDisabledButton = ["onMouseDown", "onClick"];
+  var hasRenderableChildren = (children) => import_element33.Children.toArray(children).some((child) => {
+    if (!(0, import_element33.isValidElement)(child)) {
+      return child !== "";
+    }
+    if (child.type === import_element33.Fragment) {
+      return hasRenderableChildren(child.props.children);
+    }
+    return child.props.className !== "components-tooltip";
+  });
   function useDeprecatedProps2({
     __experimentalIsFocusable,
     isDefault,
@@ -27814,8 +27823,6 @@ This message will only show in development mode. It won't appear in production. 
       ...buttonOrAnchorProps
     };
     const instanceId = (0, import_compose6.useInstanceId)(Button3, "components-button__description");
-    const hasChildren = "string" === typeof children && !!children || Array.isArray(children) && children?.[0] && children[0] !== null && // Tooltip should not considered as a child
-    children?.[0]?.props?.className !== "components-tooltip";
     const truthyAriaPressedValues = [true, "true", "mixed"];
     const classes = clsx_default("components-button", className, {
       "is-next-40px-default-size": __next40pxDefaultSize,
@@ -27829,7 +27836,7 @@ This message will only show in development mode. It won't appear in production. 
       "is-busy": isBusy,
       "is-link": variant === "link",
       "is-destructive": isDestructive,
-      "has-text": !!icon && (hasChildren || text),
+      "has-text": !!icon && (text || hasRenderableChildren(children)),
       "has-icon": !!icon,
       "has-icon-right": iconPosition === "right"
     });
