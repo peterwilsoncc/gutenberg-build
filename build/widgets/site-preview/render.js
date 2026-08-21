@@ -183,12 +183,6 @@ function assertNotCalled() {
   }
 }
 
-// node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
-var React3 = __toESM(require_react(), 1);
-var noop = () => {
-};
-var useIsoLayoutEffect = typeof document !== "undefined" ? React3.useLayoutEffect : noop;
-
 // node_modules/@base-ui/utils/warn.mjs
 var set2;
 if (true) {
@@ -203,6 +197,12 @@ function warn(...messages) {
     }
   }
 }
+
+// node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
+var React3 = __toESM(require_react(), 1);
+var noop = () => {
+};
+var useIsoLayoutEffect = typeof document !== "undefined" ? React3.useLayoutEffect : noop;
 
 // node_modules/@base-ui/react/internals/useRenderElement.mjs
 var React6 = __toESM(require_react(), 1);
@@ -280,7 +280,7 @@ function update(forkRef, refs) {
               if (typeof cleanupCallback === "function") {
                 cleanupCallback();
               } else {
-                ref(null);
+                void ref(null);
               }
               break;
             }
@@ -554,7 +554,7 @@ function useRenderElementProps(componentProps, params = {}) {
   const outProps = enabled ? mergeObjects(stateProps, resolvedProps) ?? {} : EMPTY_OBJECT;
   if (typeof document !== "undefined") {
     if (!enabled) {
-      useMergedRefs(null, null);
+      void useMergedRefs(null, null);
     } else if (Array.isArray(ref)) {
       outProps.ref = useMergedRefsN([outProps.ref, getReactElementRef(renderProp), ...ref]);
     } else {
@@ -711,6 +711,22 @@ function useFocusableWhenDisabled(parameters) {
   };
 }
 
+// node_modules/@base-ui/react/utils/dispatchClickWithModifiers.mjs
+function dispatchClickWithModifiers(target, sourceEvent, {
+  detail = 0
+} = {}) {
+  target.dispatchEvent(new (getWindow(target)).PointerEvent("click", {
+    bubbles: true,
+    cancelable: true,
+    composed: true,
+    detail,
+    shiftKey: sourceEvent.shiftKey,
+    ctrlKey: sourceEvent.ctrlKey,
+    altKey: sourceEvent.altKey,
+    metaKey: sourceEvent.metaKey
+  }));
+}
+
 // node_modules/@base-ui/react/internals/use-button/useButton.mjs
 function useButton(parameters = {}) {
   const {
@@ -806,22 +822,25 @@ function useButton(parameters = {}) {
             return;
           }
           event.preventDefault();
-          if (isLink || isNativeButton && isButton) {
-            currentTarget.click();
+          if (!isNativeButton || isButton) {
             event.preventBaseUIHandler();
-          } else if (shouldClick) {
-            externalOnClick?.(event);
-            event.preventBaseUIHandler();
+            dispatchClickWithModifiers(currentTarget, event);
           }
           return;
         }
-        if (shouldClick) {
-          if (!isNativeButton && (isSpaceKey || isEnterKey)) {
+        if (!shouldClick || isNativeButton || !isSpaceKey && !isEnterKey) {
+          if (isCurrentTarget && isLink && isSpaceKey) {
             event.preventDefault();
           }
-          if (!isNativeButton && isEnterKey) {
-            externalOnClick?.(event);
-          }
+          return;
+        }
+        if (event.defaultPrevented) {
+          return;
+        }
+        event.preventDefault();
+        if (isEnterKey) {
+          event.preventBaseUIHandler();
+          dispatchClickWithModifiers(currentTarget, event);
         }
       },
       onKeyUp(event) {
@@ -837,8 +856,9 @@ function useButton(parameters = {}) {
         if (event.baseUIHandlerPrevented) {
           return;
         }
-        if (event.target === event.currentTarget && !isNativeButton && !isCompositeItem && event.key === " ") {
-          externalOnClick?.(event);
+        if (event.target === event.currentTarget && !isNativeButton && !isCompositeItem && !event.defaultPrevented && event.key === " ") {
+          event.preventBaseUIHandler();
+          dispatchClickWithModifiers(event.currentTarget, event);
         }
       },
       onPointerDown(event) {
@@ -867,7 +887,7 @@ function isButtonElement(elem) {
   return isHTMLElement(elem) && elem.tagName === "BUTTON";
 }
 function isValidLinkElement(elem) {
-  return Boolean(elem?.tagName === "A" && elem?.href);
+  return isHTMLElement(elem) && elem.tagName === "A" && Boolean(elem.href);
 }
 
 // node_modules/@base-ui/react/button/Button.mjs

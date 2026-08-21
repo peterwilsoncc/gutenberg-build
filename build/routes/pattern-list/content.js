@@ -176,9 +176,9 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React81 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef59 = React81.useRef, useEffect37 = React81.useEffect, useMemo50 = React81.useMemo, useDebugValue2 = React81.useDebugValue;
+      var React81 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef58 = React81.useRef, useEffect37 = React81.useEffect, useMemo50 = React81.useMemo, useDebugValue2 = React81.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
-        var instRef = useRef59(null);
+        var instRef = useRef58(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -218,7 +218,7 @@ var require_with_selector_development = __commonJS({
           },
           [getSnapshot, getServerSnapshot, selector2, isEqual]
         );
-        var value = useSyncExternalStore3(subscribe2, instRef[0], instRef[1]);
+        var value = useSyncExternalStore4(subscribe2, instRef[0], instRef[1]);
         useEffect37(
           function() {
             inst.hasValue = true;
@@ -1247,12 +1247,6 @@ function assertNotCalled() {
   }
 }
 
-// node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
-var React4 = __toESM(require_react(), 1);
-var noop = () => {
-};
-var useIsoLayoutEffect = typeof document !== "undefined" ? React4.useLayoutEffect : noop;
-
 // node_modules/@base-ui/utils/warn.mjs
 var set2;
 if (true) {
@@ -1268,17 +1262,14 @@ function warn(...messages) {
   }
 }
 
-// node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
-var React5 = __toESM(require_react(), 1);
-var DirectionContext = /* @__PURE__ */ React5.createContext(void 0);
-if (true) DirectionContext.displayName = "DirectionContext";
-function useDirection() {
-  const context = React5.useContext(DirectionContext);
-  return context?.direction ?? "ltr";
-}
+// node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
+var React4 = __toESM(require_react(), 1);
+var noop = () => {
+};
+var useIsoLayoutEffect = typeof document !== "undefined" ? React4.useLayoutEffect : noop;
 
 // node_modules/@base-ui/react/internals/useRenderElement.mjs
-var React8 = __toESM(require_react(), 1);
+var React7 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/useMergedRefs.mjs
 function useMergedRefs(a2, b2, c2, d2) {
@@ -1353,7 +1344,7 @@ function update(forkRef, refs) {
               if (typeof cleanupCallback === "function") {
                 cleanupCallback();
               } else {
-                ref(null);
+                void ref(null);
               }
               break;
             }
@@ -1370,18 +1361,18 @@ function update(forkRef, refs) {
 }
 
 // node_modules/@base-ui/utils/getReactElementRef.mjs
-var React7 = __toESM(require_react(), 1);
+var React6 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/reactVersion.mjs
-var React6 = __toESM(require_react(), 1);
-var majorVersion = parseInt(React6.version, 10);
+var React5 = __toESM(require_react(), 1);
+var majorVersion = parseInt(React5.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
 // node_modules/@base-ui/utils/getReactElementRef.mjs
 function getReactElementRef(element) {
-  if (!/* @__PURE__ */ React7.isValidElement(element)) {
+  if (!/* @__PURE__ */ React6.isValidElement(element)) {
     return null;
   }
   const reactElement = element;
@@ -1619,17 +1610,17 @@ function useRenderElementProps(componentProps, params = {}) {
     state = EMPTY_OBJECT,
     ref,
     props,
-    stateAttributesMapping: stateAttributesMapping3,
+    stateAttributesMapping,
     enabled = true
   } = params;
   const className = enabled ? resolveClassName(classNameProp, state) : void 0;
   const style = enabled ? resolveStyle(styleProp, state) : void 0;
-  const stateProps = enabled ? getStateAttributesProps(state, stateAttributesMapping3) : EMPTY_OBJECT;
+  const stateProps = enabled ? getStateAttributesProps(state, stateAttributesMapping) : EMPTY_OBJECT;
   const resolvedProps = enabled && props ? resolveRenderFunctionProps(props) : void 0;
   const outProps = enabled ? mergeObjects(stateProps, resolvedProps) ?? {} : EMPTY_OBJECT;
   if (typeof document !== "undefined") {
     if (!enabled) {
-      useMergedRefs(null, null);
+      void useMergedRefs(null, null);
     } else if (Array.isArray(ref)) {
       outProps.ref = useMergedRefsN([outProps.ref, getReactElementRef(renderProp), ...ref]);
     } else {
@@ -1668,15 +1659,15 @@ function evaluateRenderProp(element, render4, props, state) {
     mergedProps.ref = props.ref;
     let newElement = render4;
     if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-      const children = React8.Children.toArray(render4);
+      const children = React7.Children.toArray(render4);
       newElement = children[0];
     }
     if (true) {
-      if (!/* @__PURE__ */ React8.isValidElement(newElement)) {
+      if (!/* @__PURE__ */ React7.isValidElement(newElement)) {
         throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
       }
     }
-    return /* @__PURE__ */ React8.cloneElement(newElement, mergedProps);
+    return /* @__PURE__ */ React7.cloneElement(newElement, mergedProps);
   }
   if (element) {
     if (typeof element === "string") {
@@ -1713,16 +1704,16 @@ function renderTag(Tag, props) {
       key: props.key
     });
   }
-  return /* @__PURE__ */ React8.createElement(Tag, props);
+  return /* @__PURE__ */ React7.createElement(Tag, props);
 }
 
 // node_modules/@base-ui/utils/useId.mjs
-var React9 = __toESM(require_react(), 1);
+var React8 = __toESM(require_react(), 1);
 var globalId = 0;
 function useGlobalId(idOverride, prefix = "mui") {
-  const [defaultId, setDefaultId] = React9.useState(idOverride);
+  const [defaultId, setDefaultId] = React8.useState(idOverride);
   const id = idOverride || defaultId;
-  React9.useEffect(() => {
+  React8.useEffect(() => {
     if (defaultId == null) {
       globalId += 1;
       setDefaultId(`${prefix}-${globalId}`);
@@ -1846,17 +1837,16 @@ function createChangeEventDetails(reason, event, trigger, customProperties) {
 }
 
 // node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-var React11 = __toESM(require_react(), 1);
+var React10 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/useOnMount.mjs
-var React10 = __toESM(require_react(), 1);
-var EMPTY = [];
+var React9 = __toESM(require_react(), 1);
 function useOnMount(fn) {
-  React10.useEffect(fn, EMPTY);
+  React9.useEffect(fn, EMPTY_ARRAY);
 }
 
 // node_modules/@base-ui/utils/useAnimationFrame.mjs
-var EMPTY2 = null;
+var EMPTY = null;
 var LAST_RAF = globalThis.requestAnimationFrame;
 var Scheduler = class {
   /* This implementation uses an array as a backing data-structure for frame callbacks.
@@ -1916,21 +1906,21 @@ var AnimationFrame = class _AnimationFrame {
   static cancel(id) {
     return scheduler.cancel(id);
   }
-  currentId = EMPTY2;
+  currentId = EMPTY;
   /**
    * Executes `fn` after `delay`, clearing any previously scheduled call.
    */
   request(fn) {
     this.cancel();
     this.currentId = scheduler.request(() => {
-      this.currentId = EMPTY2;
+      this.currentId = EMPTY;
       fn();
     });
   }
   cancel = () => {
-    if (this.currentId !== EMPTY2) {
+    if (this.currentId !== EMPTY) {
       scheduler.cancel(this.currentId);
-      this.currentId = EMPTY2;
+      this.currentId = EMPTY;
     }
   };
   disposeEffect = () => {
@@ -1945,8 +1935,8 @@ function useAnimationFrame() {
 
 // node_modules/@base-ui/react/internals/useTransitionStatus.mjs
 function useTransitionStatus(open, enableIdleState = false, deferEndingState = false) {
-  const [transitionStatus, setTransitionStatus] = React11.useState(open && enableIdleState ? "idle" : void 0);
-  const [mounted, setMounted] = React11.useState(open);
+  const [transitionStatus, setTransitionStatus] = React10.useState(open && enableIdleState ? "idle" : void 0);
+  const [mounted, setMounted] = React10.useState(open);
   if (open && !mounted) {
     setMounted(true);
     setTransitionStatus("starting");
@@ -2007,10 +1997,10 @@ var TransitionStatusDataAttributes = /* @__PURE__ */ (function(TransitionStatusD
   return TransitionStatusDataAttributes2;
 })({});
 var STARTING_HOOK = {
-  [TransitionStatusDataAttributes.startingStyle]: ""
+  "data-starting-style": ""
 };
 var ENDING_HOOK = {
-  [TransitionStatusDataAttributes.endingStyle]: ""
+  "data-ending-style": ""
 };
 var transitionStatusMapping = {
   transitionStatus(value) {
@@ -2025,7 +2015,7 @@ var transitionStatusMapping = {
 };
 
 // node_modules/@base-ui/react/internals/use-button/useButton.mjs
-var React14 = __toESM(require_react(), 1);
+var React13 = __toESM(require_react(), 1);
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
 function hasWindow() {
@@ -2184,11 +2174,11 @@ function getFrameElement(win) {
 }
 
 // node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
-var React12 = __toESM(require_react(), 1);
-var CompositeRootContext = /* @__PURE__ */ React12.createContext(void 0);
+var React11 = __toESM(require_react(), 1);
+var CompositeRootContext = /* @__PURE__ */ React11.createContext(void 0);
 if (true) CompositeRootContext.displayName = "CompositeRootContext";
 function useCompositeRootContext(optional = false) {
-  const context = React12.useContext(CompositeRootContext);
+  const context = React11.useContext(CompositeRootContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: CompositeRootContext is missing. Composite parts must be placed within <Composite.Root>." : formatErrorMessage_default(16));
   }
@@ -2196,7 +2186,7 @@ function useCompositeRootContext(optional = false) {
 }
 
 // node_modules/@base-ui/react/utils/useFocusableWhenDisabled.mjs
-var React13 = __toESM(require_react(), 1);
+var React12 = __toESM(require_react(), 1);
 function useFocusableWhenDisabled(parameters) {
   const {
     focusableWhenDisabled,
@@ -2207,7 +2197,7 @@ function useFocusableWhenDisabled(parameters) {
   } = parameters;
   const isFocusableComposite = composite && focusableWhenDisabled !== false;
   const isNonFocusableComposite = composite && focusableWhenDisabled === false;
-  const props = React13.useMemo(() => {
+  const props = React12.useMemo(() => {
     const additionalProps = {
       // allow Tabbing away from focusableWhenDisabled elements
       onKeyDown(event) {
@@ -2235,6 +2225,27 @@ function useFocusableWhenDisabled(parameters) {
   };
 }
 
+// node_modules/@base-ui/utils/owner.mjs
+function ownerDocument(node) {
+  return node?.ownerDocument || document;
+}
+
+// node_modules/@base-ui/react/utils/dispatchClickWithModifiers.mjs
+function dispatchClickWithModifiers(target, sourceEvent, {
+  detail = 0
+} = {}) {
+  target.dispatchEvent(new (getWindow(target)).PointerEvent("click", {
+    bubbles: true,
+    cancelable: true,
+    composed: true,
+    detail,
+    shiftKey: sourceEvent.shiftKey,
+    ctrlKey: sourceEvent.ctrlKey,
+    altKey: sourceEvent.altKey,
+    metaKey: sourceEvent.metaKey
+  }));
+}
+
 // node_modules/@base-ui/react/internals/use-button/useButton.mjs
 function useButton(parameters = {}) {
   const {
@@ -2244,7 +2255,7 @@ function useButton(parameters = {}) {
     native: isNativeButton = true,
     composite: compositeProp
   } = parameters;
-  const elementRef = React14.useRef(null);
+  const elementRef = React13.useRef(null);
   const compositeRootContext = useCompositeRootContext(true);
   const isCompositeItem = compositeProp ?? compositeRootContext !== void 0;
   const {
@@ -2257,7 +2268,7 @@ function useButton(parameters = {}) {
     isNativeButton
   });
   if (true) {
-    React14.useEffect(() => {
+    React13.useEffect(() => {
       if (!elementRef.current) {
         return;
       }
@@ -2275,7 +2286,7 @@ function useButton(parameters = {}) {
       }
     }, [isNativeButton]);
   }
-  const updateDisabled = React14.useCallback(() => {
+  const updateDisabled = React13.useCallback(() => {
     const element = elementRef.current;
     if (!isButtonElement(element)) {
       return;
@@ -2285,7 +2296,7 @@ function useButton(parameters = {}) {
     }
   }, [disabled2, focusableWhenDisabledProps.disabled, isCompositeItem]);
   useIsoLayoutEffect(updateDisabled, [updateDisabled]);
-  const getButtonProps = React14.useCallback((externalProps = {}) => {
+  const getButtonProps = React13.useCallback((externalProps = {}) => {
     const {
       onClick: externalOnClick,
       onMouseDown: externalOnMouseDown,
@@ -2330,22 +2341,25 @@ function useButton(parameters = {}) {
             return;
           }
           event.preventDefault();
-          if (isLink || isNativeButton && isButton2) {
-            currentTarget.click();
+          if (!isNativeButton || isButton2) {
             event.preventBaseUIHandler();
-          } else if (shouldClick) {
-            externalOnClick?.(event);
-            event.preventBaseUIHandler();
+            dispatchClickWithModifiers(currentTarget, event);
           }
           return;
         }
-        if (shouldClick) {
-          if (!isNativeButton && (isSpaceKey || isEnterKey)) {
+        if (!shouldClick || isNativeButton || !isSpaceKey && !isEnterKey) {
+          if (isCurrentTarget && isLink && isSpaceKey) {
             event.preventDefault();
           }
-          if (!isNativeButton && isEnterKey) {
-            externalOnClick?.(event);
-          }
+          return;
+        }
+        if (event.defaultPrevented) {
+          return;
+        }
+        event.preventDefault();
+        if (isEnterKey) {
+          event.preventBaseUIHandler();
+          dispatchClickWithModifiers(currentTarget, event);
         }
       },
       onKeyUp(event) {
@@ -2361,8 +2375,9 @@ function useButton(parameters = {}) {
         if (event.baseUIHandlerPrevented) {
           return;
         }
-        if (event.target === event.currentTarget && !isNativeButton && !isCompositeItem && event.key === " ") {
-          externalOnClick?.(event);
+        if (event.target === event.currentTarget && !isNativeButton && !isCompositeItem && !event.defaultPrevented && event.key === " ") {
+          event.preventBaseUIHandler();
+          dispatchClickWithModifiers(event.currentTarget, event);
         }
       },
       onPointerDown(event) {
@@ -2391,7 +2406,7 @@ function isButtonElement(elem) {
   return isHTMLElement(elem) && elem.tagName === "BUTTON";
 }
 function isValidLinkElement(elem) {
-  return Boolean(elem?.tagName === "A" && elem?.href);
+  return isHTMLElement(elem) && elem.tagName === "A" && Boolean(elem.href);
 }
 
 // node_modules/@base-ui/utils/addEventListener.mjs
@@ -2420,13 +2435,8 @@ function createLatestRef(value) {
   return latest;
 }
 
-// node_modules/@base-ui/utils/owner.mjs
-function ownerDocument(node) {
-  return node?.ownerDocument || document;
-}
-
 // node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-var React15 = __toESM(require_react(), 1);
+var React14 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
 var ReactDOM = __toESM(require_react_dom(), 1);
@@ -2440,7 +2450,7 @@ function resolveRef(maybeRef) {
 }
 
 // node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, treatAbortedAsFinished = true) {
+function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false) {
   const frame = useAnimationFrame();
   return useStableCallback((fnToExecute, signal = null) => {
     frame.cancel();
@@ -2461,21 +2471,20 @@ function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false
         if (!signal?.aborted) {
           done();
         }
-      }).catch(() => {
-        if (treatAbortedAsFinished) {
-          if (!signal?.aborted) {
-            done();
-          }
+      }, () => {
+        if (signal?.aborted) {
           return;
         }
         const currentAnimations = resolvedElement.getAnimations();
-        if (!signal?.aborted && currentAnimations.length > 0 && currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
+        if (currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
           exec();
+          return;
         }
+        done();
       });
     }
     if (waitForStartingStyleRemoved) {
-      const startingStyleAttribute = TransitionStatusDataAttributes.startingStyle;
+      const startingStyleAttribute = "data-starting-style";
       if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
         frame.request(exec);
         return;
@@ -2508,8 +2517,8 @@ function useOpenChangeComplete(parameters) {
     onComplete: onCompleteParam
   } = parameters;
   const onComplete = useStableCallback(onCompleteParam);
-  const runOnceAnimationsFinish = useAnimationsFinished(ref, open, false);
-  React15.useEffect(() => {
+  const runOnceAnimationsFinish = useAnimationsFinished(ref, open);
+  React14.useEffect(() => {
     if (!enabled) {
       return void 0;
     }
@@ -2519,16 +2528,6 @@ function useOpenChangeComplete(parameters) {
       abortController.abort();
     };
   }, [enabled, open, onComplete, runOnceAnimationsFinish]);
-}
-
-// node_modules/@base-ui/utils/useOnFirstRender.mjs
-var React16 = __toESM(require_react(), 1);
-function useOnFirstRender(fn) {
-  const ref = React16.useRef(true);
-  if (ref.current) {
-    ref.current = false;
-    fn();
-  }
 }
 
 // node_modules/@base-ui/utils/platform/parts.mjs
@@ -2622,29 +2621,29 @@ __export(env_exports, {
 var jsdom = /jsdom|happydom/.test(lowerUserAgent);
 
 // node_modules/@base-ui/utils/useTimeout.mjs
-var EMPTY3 = 0;
+var EMPTY2 = 0;
 var Timeout = class _Timeout {
   static create() {
     return new _Timeout();
   }
-  currentId = EMPTY3;
+  currentId = EMPTY2;
   /**
    * Executes `fn` after `delay`, clearing any previously scheduled call.
    */
   start(delay, fn) {
     this.clear();
     this.currentId = setTimeout(() => {
-      this.currentId = EMPTY3;
+      this.currentId = EMPTY2;
       fn();
     }, delay);
   }
   isStarted() {
-    return this.currentId !== EMPTY3;
+    return this.currentId !== EMPTY2;
   }
   clear = () => {
-    if (this.currentId !== EMPTY3) {
+    if (this.currentId !== EMPTY2) {
       clearTimeout(this.currentId);
-      this.currentId = EMPTY3;
+      this.currentId = EMPTY2;
     }
   };
   disposeEffect = () => {
@@ -2658,7 +2657,7 @@ function useTimeout() {
 }
 
 // node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
-var React17 = __toESM(require_react(), 1);
+var React15 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/floating-ui-react/utils/event.mjs
 function isReactEvent(event) {
@@ -2792,7 +2791,7 @@ function isHoverOpenEvent(openEventType) {
 
 // node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-var FloatingDelayGroupContext = /* @__PURE__ */ React17.createContext({
+var FloatingDelayGroupContext = /* @__PURE__ */ React15.createContext({
   hasProvider: false,
   timeoutMs: 0,
   delayRef: {
@@ -2819,10 +2818,10 @@ function FloatingDelayGroup(props) {
     delay,
     timeoutMs = 0
   } = props;
-  const delayRef = React17.useRef(delay);
-  const initialDelayRef = React17.useRef(delay);
-  const currentIdRef = React17.useRef(null);
-  const currentContextRef = React17.useRef(null);
+  const delayRef = React15.useRef(delay);
+  const initialDelayRef = React15.useRef(delay);
+  const currentIdRef = React15.useRef(null);
+  const currentContextRef = React15.useRef(null);
   const timeout = useTimeout();
   useIsoLayoutEffect(() => {
     initialDelayRef.current = delay;
@@ -2836,7 +2835,7 @@ function FloatingDelayGroup(props) {
     };
   }, [delay, currentIdRef, delayRef, initialDelayRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FloatingDelayGroupContext.Provider, {
-    value: React17.useMemo(() => ({
+    value: React15.useMemo(() => ({
       hasProvider: true,
       delayRef,
       initialDelayRef,
@@ -2856,7 +2855,7 @@ function useDelayGroup(context, options = {
   } = options;
   const store = "rootStore" in context ? context.rootStore : context;
   const floatingId = store.useState("floatingId");
-  const groupContext = React17.useContext(FloatingDelayGroupContext);
+  const groupContext = React15.useContext(FloatingDelayGroupContext);
   const {
     currentIdRef,
     delayRef,
@@ -2866,22 +2865,13 @@ function useDelayGroup(context, options = {
     hasProvider,
     timeout
   } = groupContext;
-  const [isInstantPhase, setIsInstantPhase] = React17.useState(false);
-  const openRef = React17.useRef(open);
-  const isUnmountedRef = React17.useRef(false);
+  const [isInstantPhase, setIsInstantPhase] = React15.useState(false);
+  const openRef = React15.useRef(open);
   useIsoLayoutEffect(() => {
     openRef.current = open;
   }, [open]);
   useIsoLayoutEffect(() => {
-    return () => {
-      isUnmountedRef.current = true;
-    };
-  }, []);
-  useIsoLayoutEffect(() => {
     function unset() {
-      if (!isUnmountedRef.current) {
-        setIsInstantPhase(false);
-      }
       currentContextRef.current?.setIsInstantPhase(false);
       currentIdRef.current = null;
       currentContextRef.current = null;
@@ -2949,7 +2939,7 @@ function useDelayGroup(context, options = {
       }
     };
   }, [currentContextRef, currentIdRef, delayRef, floatingId, initialDelayRef, timeout]);
-  return React17.useMemo(() => ({
+  return React15.useMemo(() => ({
     hasProvider,
     delayRef,
     isInstantPhase
@@ -2969,7 +2959,7 @@ function mergeCleanups(...cleanups) {
 }
 
 // node_modules/@base-ui/react/utils/FocusGuard.mjs
-var React18 = __toESM(require_react(), 1);
+var React16 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/visuallyHidden.mjs
 var visuallyHiddenBase = {
@@ -2995,8 +2985,8 @@ var visuallyHiddenInput = {
 
 // node_modules/@base-ui/react/utils/FocusGuard.mjs
 var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-var FocusGuard = /* @__PURE__ */ React18.forwardRef(function FocusGuard2(props, ref) {
-  const [role, setRole] = React18.useState();
+var FocusGuard = /* @__PURE__ */ React16.forwardRef(function FocusGuard2(props, ref) {
+  const [role, setRole] = React16.useState();
   useIsoLayoutEffect(() => {
     if (parts_exports.screenReader.voiceOver && parts_exports.engine.webkit) {
       setRole("button");
@@ -3019,7 +3009,6 @@ var FocusGuard = /* @__PURE__ */ React18.forwardRef(function FocusGuard2(props, 
 if (true) FocusGuard.displayName = "FocusGuard";
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs
-var sides = ["top", "right", "bottom", "left"];
 var min = Math.min;
 var max = Math.max;
 var round = Math.round;
@@ -3341,7 +3330,7 @@ function createAttribute(name) {
 }
 
 // node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
-var React19 = __toESM(require_react(), 1);
+var React17 = __toESM(require_react(), 1);
 var ReactDOM2 = __toESM(require_react_dom(), 1);
 
 // node_modules/@base-ui/react/internals/constants.mjs
@@ -3366,9 +3355,9 @@ var ownerVisuallyHidden = {
 
 // node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
-var PortalContext = /* @__PURE__ */ React19.createContext(null);
+var PortalContext = /* @__PURE__ */ React17.createContext(null);
 if (true) PortalContext.displayName = "PortalContext";
-var usePortalContext = () => React19.useContext(PortalContext);
+var usePortalContext = () => React17.useContext(PortalContext);
 var attr = createAttribute("portal");
 function useFloatingPortalNode(props = {}) {
   const {
@@ -3380,14 +3369,14 @@ function useFloatingPortalNode(props = {}) {
   const uniqueId = useId();
   const portalContext = usePortalContext();
   const parentPortalNode = portalContext?.portalNode;
-  const [containerElement, setContainerElement] = React19.useState(null);
-  const [portalNode, setPortalNode] = React19.useState(null);
+  const [containerElement, setContainerElement] = React17.useState(null);
+  const [portalNode, setPortalNode] = React17.useState(null);
   const setPortalNodeRef = useStableCallback((node) => {
     if (node !== null) {
       setPortalNode(node);
     }
   });
-  const containerRef = React19.useRef(null);
+  const containerRef = React17.useRef(null);
   useIsoLayoutEffect(() => {
     if (containerProp === null) {
       if (containerRef.current) {
@@ -3395,9 +3384,6 @@ function useFloatingPortalNode(props = {}) {
         setPortalNode(null);
         setContainerElement(null);
       }
-      return;
-    }
-    if (uniqueId == null) {
       return;
     }
     const resolvedContainer = (containerProp && (isNode(containerProp) ? containerProp : containerProp.current)) ?? parentPortalNode ?? document.body;
@@ -3414,7 +3400,7 @@ function useFloatingPortalNode(props = {}) {
       setPortalNode(null);
       setContainerElement(resolvedContainer);
     }
-  }, [containerProp, parentPortalNode, uniqueId]);
+  }, [containerProp, parentPortalNode]);
   const portalElement = useRenderElement("div", componentProps, {
     ref: [ref, setPortalNodeRef],
     props: [{
@@ -3424,39 +3410,42 @@ function useFloatingPortalNode(props = {}) {
   });
   const portalSubtree = containerElement && portalElement ? /* @__PURE__ */ ReactDOM2.createPortal(portalElement, containerElement) : null;
   return {
-    portalNode,
-    portalSubtree
+    node: portalNode,
+    // `id` and `render` props can override or remove the generated ID. Use the exact
+    // rendered value so `aria-owns` never points at an ID absent from the DOM.
+    nodeId: /* @__PURE__ */ React17.isValidElement(portalElement) ? portalElement.props.id : void 0,
+    subtree: portalSubtree
   };
 }
-var FloatingPortal = /* @__PURE__ */ React19.forwardRef(function FloatingPortal2(componentProps, forwardedRef) {
+var FloatingPortal = /* @__PURE__ */ React17.forwardRef(function FloatingPortal2(componentProps, forwardedRef) {
   const {
     render: render4,
     className,
     style,
     children,
     container,
-    renderGuards,
     ...elementProps
   } = componentProps;
   const {
-    portalNode,
-    portalSubtree
+    node: portalNode,
+    nodeId: portalNodeId,
+    subtree: portalSubtree
   } = useFloatingPortalNode({
     container,
     ref: forwardedRef,
     componentProps,
     elementProps
   });
-  const beforeOutsideRef = React19.useRef(null);
-  const afterOutsideRef = React19.useRef(null);
-  const beforeInsideRef = React19.useRef(null);
-  const afterInsideRef = React19.useRef(null);
-  const [focusManagerState, setFocusManagerState] = React19.useState(null);
-  const focusInsideDisabledRef = React19.useRef(false);
+  const beforeOutsideRef = React17.useRef(null);
+  const afterOutsideRef = React17.useRef(null);
+  const beforeInsideRef = React17.useRef(null);
+  const afterInsideRef = React17.useRef(null);
+  const [focusManagerState, setFocusManagerState] = React17.useState(null);
+  const focusInsideDisabledRef = React17.useRef(false);
   const modal = focusManagerState?.modal;
   const open = focusManagerState?.open;
-  const shouldRenderGuards = typeof renderGuards === "boolean" ? renderGuards : !!focusManagerState && !focusManagerState.modal && focusManagerState.open && !!portalNode;
-  React19.useEffect(() => {
+  const shouldRenderGuards = !!focusManagerState && !focusManagerState.modal && focusManagerState.open && !!portalNode;
+  React17.useEffect(() => {
     if (!portalNode || modal) {
       return void 0;
     }
@@ -3482,7 +3471,7 @@ var FloatingPortal = /* @__PURE__ */ React19.forwardRef(function FloatingPortal2
     enableFocusInside(portalNode);
     focusInsideDisabledRef.current = false;
   }, [open, portalNode]);
-  const portalContextValue = React19.useMemo(() => ({
+  const portalContextValue = React17.useMemo(() => ({
     beforeOutsideRef,
     afterOutsideRef,
     beforeInsideRef,
@@ -3490,7 +3479,7 @@ var FloatingPortal = /* @__PURE__ */ React19.forwardRef(function FloatingPortal2
     portalNode,
     setFocusManagerState
   }), [portalNode]);
-  return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(React19.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(React17.Fragment, {
     children: [portalSubtree, /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(PortalContext.Provider, {
       value: portalContextValue,
       children: [shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(FocusGuard, {
@@ -3506,7 +3495,7 @@ var FloatingPortal = /* @__PURE__ */ React19.forwardRef(function FloatingPortal2
           }
         }
       }), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", {
-        "aria-owns": portalNode.id,
+        "aria-owns": portalNodeId,
         style: ownerVisuallyHidden
       }), portalNode && /* @__PURE__ */ ReactDOM2.createPortal(children, portalNode), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(FocusGuard, {
         "data-type": "outside",
@@ -3530,7 +3519,7 @@ var FloatingPortal = /* @__PURE__ */ React19.forwardRef(function FloatingPortal2
 if (true) FloatingPortal.displayName = "FloatingPortal";
 
 // node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
-var React20 = __toESM(require_react(), 1);
+var React18 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/floating-ui-react/utils/createEventEmitter.mjs
 function createEventEmitter() {
@@ -3553,18 +3542,18 @@ function createEventEmitter() {
 
 // node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
 var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
-var FloatingNodeContext = /* @__PURE__ */ React20.createContext(null);
+var FloatingNodeContext = /* @__PURE__ */ React18.createContext(null);
 if (true) FloatingNodeContext.displayName = "FloatingNodeContext";
-var FloatingTreeContext = /* @__PURE__ */ React20.createContext(null);
+var FloatingTreeContext = /* @__PURE__ */ React18.createContext(null);
 if (true) FloatingTreeContext.displayName = "FloatingTreeContext";
-var useFloatingParentNodeId = () => React20.useContext(FloatingNodeContext)?.id || null;
+var useFloatingParentNodeId = () => React18.useContext(FloatingNodeContext)?.id || null;
 var useFloatingTree = (externalTree) => {
-  const contextTree = React20.useContext(FloatingTreeContext);
+  const contextTree = React18.useContext(FloatingTreeContext);
   return externalTree ?? contextTree;
 };
 
 // node_modules/@base-ui/react/floating-ui-react/hooks/useClientPoint.mjs
-var React21 = __toESM(require_react(), 1);
+var React19 = __toESM(require_react(), 1);
 function createVirtualElement(domElement, data) {
   let offsetX = null;
   let offsetY = null;
@@ -3631,10 +3620,10 @@ function useClientPoint(context, props = {}) {
   const floating = store.useState("floatingElement");
   const domReference = store.useState("domReferenceElement");
   const dataRef = store.context.dataRef;
-  const initialRef = React21.useRef(false);
-  const cleanupListenerRef = React21.useRef(null);
-  const [pointerType, setPointerType] = React21.useState();
-  const [reactive, setReactive] = React21.useState([]);
+  const initialRef = React19.useRef(false);
+  const cleanupListenerRef = React19.useRef(null);
+  const [pointerType, setPointerType] = React19.useState();
+  const [reactive, setReactive] = React19.useState([]);
   const resetReference = useStableCallback((reference2) => {
     store.set("positionReference", reference2);
   });
@@ -3662,7 +3651,7 @@ function useClientPoint(context, props = {}) {
     }
   });
   const openCheck = isMouseLikePointerType(pointerType) ? floating : open;
-  React21.useEffect(() => {
+  React19.useEffect(() => {
     if (!enabled) {
       resetReference(domReference);
       return void 0;
@@ -3690,20 +3679,20 @@ function useClientPoint(context, props = {}) {
     }
     return cleanupListener;
   }, [openCheck, enabled, floating, dataRef, domReference, store, setReference, resetReference, reactive]);
-  React21.useEffect(() => () => {
+  React19.useEffect(() => () => {
     store.set("positionReference", null);
   }, [store]);
-  React21.useEffect(() => {
+  React19.useEffect(() => {
     if (enabled && !floating) {
       initialRef.current = false;
     }
   }, [enabled, floating]);
-  React21.useEffect(() => {
+  React19.useEffect(() => {
     if (!enabled && open) {
       initialRef.current = true;
     }
   }, [enabled, open]);
-  const reference = React21.useMemo(() => {
+  const reference = React19.useMemo(() => {
     function setPointerTypeRef(event) {
       setPointerType(event.pointerType);
     }
@@ -3714,14 +3703,14 @@ function useClientPoint(context, props = {}) {
       onMouseEnter: handleReferenceEnterOrMove
     };
   }, [handleReferenceEnterOrMove]);
-  return React21.useMemo(() => enabled ? {
+  return React19.useMemo(() => enabled ? {
     reference,
     trigger: reference
   } : {}, [enabled, reference]);
 }
 
 // node_modules/@base-ui/react/floating-ui-react/hooks/useDismiss.mjs
-var React22 = __toESM(require_react(), 1);
+var React20 = __toESM(require_react(), 1);
 function alwaysFalse() {
   return false;
 }
@@ -3756,12 +3745,12 @@ function useDismiss(context, props = {}) {
     escapeKey: escapeKeyBubbles,
     outsidePress: outsidePressBubbles
   } = normalizeProp(bubbles);
-  const pressStartedInsideRef = React22.useRef(false);
-  const pressStartPreventedRef = React22.useRef(false);
-  const suppressNextOutsideClickRef = React22.useRef(false);
-  const isComposingRef = React22.useRef(false);
-  const currentPointerTypeRef = React22.useRef("");
-  const touchStateRef = React22.useRef(null);
+  const pressStartedInsideRef = React20.useRef(false);
+  const pressStartPreventedRef = React20.useRef(false);
+  const suppressNextOutsideClickRef = React20.useRef(false);
+  const isComposingRef = React20.useRef(false);
+  const currentPointerTypeRef = React20.useRef("");
+  const touchStateRef = React20.useRef(null);
   const cancelDismissOnEndTimeout = useTimeout();
   const clearInsideReactTreeTimeout = useTimeout();
   const clearInsideReactTree = useStableCallback(() => {
@@ -3830,9 +3819,9 @@ function useDismiss(context, props = {}) {
       pressStartPreventedRef.current = true;
     }
   });
-  React22.useEffect(() => {
+  React20.useEffect(() => {
     if (!open || !enabled) {
-      return void 0;
+      return clearInsideReactTree;
     }
     dataRef.current.__escapeKeyBubbles = escapeKeyBubbles;
     dataRef.current.__outsidePressBubbles = outsidePressBubbles;
@@ -4078,15 +4067,15 @@ function useDismiss(context, props = {}) {
       preventedPressSuppressionTimeout.clear();
       resetPressStartState();
       suppressNextOutsideClickRef.current = false;
+      clearInsideReactTree();
     };
   }, [dataRef, floatingElement, escapeKey2, outsidePressEnabled, outsidePress2, open, enabled, escapeKeyBubbles, outsidePressBubbles, closeOnEscapeKeyDown, clearInsideReactTree, getOutsidePressEventProp, hasBlockingChild, isEventWithinOwnElements, tree, store, cancelDismissOnEndTimeout]);
-  React22.useEffect(clearInsideReactTree, [outsidePress2, clearInsideReactTree]);
-  const reference = React22.useMemo(() => ({
+  const reference = React20.useMemo(() => ({
     onKeyDown: closeOnEscapeKeyDown,
     onPointerDown: closeOnReferencePress,
     onClick: closeOnReferencePress
   }), [closeOnEscapeKeyDown, closeOnReferencePress]);
-  const floating = React22.useMemo(() => ({
+  const floating = React20.useMemo(() => ({
     onKeyDown: closeOnEscapeKeyDown,
     // `onMouseDown` may be blocked if `event.preventDefault()` is called in
     // `onPointerDown`, such as with <NumberField.ScrubArea>.
@@ -4106,7 +4095,7 @@ function useDismiss(context, props = {}) {
     onTouchEndCapture: markInsideReactTree,
     onTouchMoveCapture: markInsideReactTree
   }), [closeOnEscapeKeyDown, markInsideReactTree, markPressStartedInsideReactTree, markInsidePressStartPrevented]);
-  return React22.useMemo(() => enabled ? {
+  return React20.useMemo(() => enabled ? {
     reference,
     floating,
     trigger: reference
@@ -4114,7 +4103,7 @@ function useDismiss(context, props = {}) {
 }
 
 // node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
-var React29 = __toESM(require_react(), 1);
+var React28 = __toESM(require_react(), 1);
 
 // node_modules/@floating-ui/core/dist/floating-ui.core.mjs
 function computeCoordsFromPlacement(_ref, placement, rtl) {
@@ -4415,67 +4404,6 @@ var flip = function(options) {
         }
       }
       return {};
-    }
-  };
-};
-function getSideOffsets(overflow, rect) {
-  return {
-    top: overflow.top - rect.height,
-    right: overflow.right - rect.width,
-    bottom: overflow.bottom - rect.height,
-    left: overflow.left - rect.width
-  };
-}
-function isAnySideFullyClipped(overflow) {
-  return sides.some((side) => overflow[side] >= 0);
-}
-var hide = function(options) {
-  if (options === void 0) {
-    options = {};
-  }
-  return {
-    name: "hide",
-    options,
-    async fn(state) {
-      const {
-        rects,
-        platform: platform3
-      } = state;
-      const {
-        strategy = "referenceHidden",
-        ...detectOverflowOptions
-      } = evaluate(options, state);
-      switch (strategy) {
-        case "referenceHidden": {
-          const overflow = await platform3.detectOverflow(state, {
-            ...detectOverflowOptions,
-            elementContext: "reference"
-          });
-          const offsets = getSideOffsets(overflow, rects.reference);
-          return {
-            data: {
-              referenceHiddenOffsets: offsets,
-              referenceHidden: isAnySideFullyClipped(offsets)
-            }
-          };
-        }
-        case "escaped": {
-          const overflow = await platform3.detectOverflow(state, {
-            ...detectOverflowOptions,
-            altBoundary: true
-          });
-          const offsets = getSideOffsets(overflow, rects.floating);
-          return {
-            data: {
-              escapedOffsets: offsets,
-              escaped: isAnySideFullyClipped(offsets)
-            }
-          };
-        }
-        default: {
-          return {};
-        }
-      }
     }
   };
 };
@@ -5345,7 +5273,6 @@ var offset2 = offset;
 var shift2 = shift;
 var flip2 = flip;
 var size2 = size;
-var hide2 = hide;
 var limitShift2 = limitShift;
 var computePosition2 = (reference, floating, options) => {
   const cache = /* @__PURE__ */ new Map();
@@ -5362,7 +5289,7 @@ var computePosition2 = (reference, floating, options) => {
 };
 
 // node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
-var React23 = __toESM(require_react(), 1);
+var React21 = __toESM(require_react(), 1);
 var import_react2 = __toESM(require_react(), 1);
 var ReactDOM3 = __toESM(require_react_dom(), 1);
 var isClient = typeof document !== "undefined";
@@ -5428,7 +5355,7 @@ function roundByDPR(element, value) {
   return Math.round(value * dpr) / dpr;
 }
 function useLatestRef(value) {
-  const ref = React23.useRef(value);
+  const ref = React21.useRef(value);
   index(() => {
     ref.current = value;
   });
@@ -5451,7 +5378,7 @@ function useFloating(options) {
     whileElementsMounted,
     open
   } = options;
-  const [data, setData] = React23.useState({
+  const [data, setData] = React21.useState({
     x: 0,
     y: 0,
     strategy,
@@ -5459,19 +5386,19 @@ function useFloating(options) {
     middlewareData: {},
     isPositioned: false
   });
-  const [latestMiddleware, setLatestMiddleware] = React23.useState(middleware);
+  const [latestMiddleware, setLatestMiddleware] = React21.useState(middleware);
   if (!deepEqual(latestMiddleware, middleware)) {
     setLatestMiddleware(middleware);
   }
-  const [_reference, _setReference] = React23.useState(null);
-  const [_floating, _setFloating] = React23.useState(null);
-  const setReference = React23.useCallback((node) => {
+  const [_reference, _setReference] = React21.useState(null);
+  const [_floating, _setFloating] = React21.useState(null);
+  const setReference = React21.useCallback((node) => {
     if (node !== referenceRef.current) {
       referenceRef.current = node;
       _setReference(node);
     }
   }, []);
-  const setFloating = React23.useCallback((node) => {
+  const setFloating = React21.useCallback((node) => {
     if (node !== floatingRef.current) {
       floatingRef.current = node;
       _setFloating(node);
@@ -5479,14 +5406,14 @@ function useFloating(options) {
   }, []);
   const referenceEl = externalReference || _reference;
   const floatingEl = externalFloating || _floating;
-  const referenceRef = React23.useRef(null);
-  const floatingRef = React23.useRef(null);
-  const dataRef = React23.useRef(data);
+  const referenceRef = React21.useRef(null);
+  const floatingRef = React21.useRef(null);
+  const dataRef = React21.useRef(data);
   const hasWhileElementsMounted = whileElementsMounted != null;
   const whileElementsMountedRef = useLatestRef(whileElementsMounted);
   const platformRef = useLatestRef(platform3);
   const openRef = useLatestRef(open);
-  const update2 = React23.useCallback(() => {
+  const update2 = React21.useCallback(() => {
     if (!referenceRef.current || !floatingRef.current) {
       return;
     }
@@ -5524,7 +5451,7 @@ function useFloating(options) {
       }));
     }
   }, [open]);
-  const isMountedRef = React23.useRef(false);
+  const isMountedRef = React21.useRef(false);
   index(() => {
     isMountedRef.current = true;
     return () => {
@@ -5541,17 +5468,17 @@ function useFloating(options) {
       update2();
     }
   }, [referenceEl, floatingEl, update2, whileElementsMountedRef, hasWhileElementsMounted]);
-  const refs = React23.useMemo(() => ({
+  const refs = React21.useMemo(() => ({
     reference: referenceRef,
     floating: floatingRef,
     setReference,
     setFloating
   }), [setReference, setFloating]);
-  const elements = React23.useMemo(() => ({
+  const elements = React21.useMemo(() => ({
     reference: referenceEl,
     floating: floatingEl
   }), [referenceEl, floatingEl]);
-  const floatingStyles = React23.useMemo(() => {
+  const floatingStyles = React21.useMemo(() => {
     const initialStyles = {
       position: strategy,
       left: 0,
@@ -5577,7 +5504,7 @@ function useFloating(options) {
       top: y2
     };
   }, [strategy, transform, elements.floating, data.x, data.y]);
-  return React23.useMemo(() => ({
+  return React21.useMemo(() => ({
     ...data,
     update: update2,
     refs,
@@ -5624,81 +5551,182 @@ var size3 = (options, deps) => {
     options: [options, deps]
   };
 };
-var hide3 = (options, deps) => {
-  const result = hide2(options);
-  return {
-    name: result.name,
-    fn: result.fn,
-    options: [options, deps]
-  };
+
+// node_modules/@base-ui/react/utils/popups/popupHandle.mjs
+var BasePopupHandle = class {
+  /**
+   * Stores of every root currently using this handle, in attach order. A handle is meant to be used
+   * by a single mounted root, but roots can transiently overlap (e.g. during an animated route
+   * transition), so this stack lets `attachStore`'s cleanup restore the previous root instead of
+   * leaving a still-mounted root uncontrollable when a newer overlapping root detaches first.
+   */
+  attachedStores = [];
+  /**
+   * Store of the root that currently controls the handle: the most recently attached one still
+   * mounted, or `null` when no root is attached. Imperative methods are no-ops while this is `null`.
+   */
+  attachedStoreValue = null;
+  /**
+   * Listeners notified when `attachedStore` changes, so detached triggers can follow the store pointer.
+   */
+  storeListeners = /* @__PURE__ */ new Set();
+  /**
+   * Creates a handle backed by the store used while no root is attached.
+   *
+   * @param fallbackStore Inert, closed store handed to detached triggers while no root is attached,
+   * so they can render and register without a mounted root. Triggers register into whichever store
+   * `store` currently resolves to, so while detached they live in this store's trigger map and
+   * migrate themselves to the root's store (and back) as it attaches/detaches.
+   * @param componentName Component name used to prefix dev warnings, e.g. `'Menu'` produces
+   * `MenuHandle.open()` in warning text.
+   * @param throwOnMissingTrigger Whether `open(triggerId)` throws when no trigger with that id is
+   * registered. Anchored popups (Menu, Popover, Tooltip, PreviewCard) need a trigger to anchor to,
+   * so they throw; Dialog is not anchored and instead opens unassociated with a dev warning.
+   */
+  constructor(fallbackStore, componentName, throwOnMissingTrigger = true) {
+    this.fallbackStore = fallbackStore;
+    this.componentName = componentName;
+    this.throwOnMissingTrigger = throwOnMissingTrigger;
+  }
+  get attachedStore() {
+    return this.attachedStoreValue;
+  }
+  /**
+   * Store that detached triggers read from: the attached root's store, or an inert fallback store
+   * used while no root is attached.
+   * @internal
+   */
+  get store() {
+    return this.attachedStoreValue ?? this.fallbackStore;
+  }
+  /**
+   * Stable fallback store used for server rendering and hydration. Root stores cannot be recorded on
+   * the handle during render because a handle can be shared by concurrent server-rendered requests.
+   * @internal
+   */
+  get serverStore() {
+    return this.fallbackStore;
+  }
+  /**
+   * Subscribes to changes of the attached store pointer so detached triggers re-render and re-bind
+   * when a root attaches or detaches. Returns a function that removes the listener.
+   * @internal
+   */
+  subscribeStore(listener) {
+    this.storeListeners.add(listener);
+    return () => {
+      this.storeListeners.delete(listener);
+    };
+  }
+  /**
+   * Points the handle at a root's store and notifies subscribers so detached triggers re-render and
+   * re-register into it (their registration ref re-fires on the store-pointer change). Returns a
+   * cleanup function that detaches the store again.
+   * @internal
+   */
+  attachStore(newStore) {
+    this.attachedStores.push(newStore);
+    this.setActiveStore(newStore);
+    if (true) {
+      if (this.attachedStores.length > 1) {
+        const dev = this;
+        (dev.overlapWarningFrame ??= AnimationFrame.create()).request(() => {
+          if (this.attachedStores.length > 1) {
+            console.warn("Base UI: A handle is attached to more than one mounted root at the same time. The most recently mounted root takes over and the previous one stops being controlled by the handle. A handle should be used by a single root that stays mounted for the lifetime of the handle.");
+          }
+        });
+      }
+    }
+    return () => {
+      const index2 = this.attachedStores.lastIndexOf(newStore);
+      if (index2 !== -1) {
+        this.attachedStores.splice(index2, 1);
+      }
+      this.setActiveStore(this.attachedStores[this.attachedStores.length - 1] ?? null);
+    };
+  }
+  /**
+   * Sets the store that currently controls the handle and notifies subscribers when it changes, so
+   * detached triggers re-render and migrate their registration to the new store.
+   */
+  setActiveStore(store) {
+    if (this.attachedStoreValue !== store) {
+      this.attachedStoreValue = store;
+      this.storeListeners.forEach((listener) => {
+        listener();
+      });
+    }
+  }
+  /**
+   * Opens the attached root's store and associates it with the trigger with the given id, or a
+   * no-op (with a dev warning) while no root is attached. Shared by every concrete handle's public
+   * `open()` method, which only narrows the parameter type.
+   *
+   * When a trigger id is given but no matching trigger is registered, anchored popups throw (see
+   * `throwOnMissingTrigger`); Dialog opens unassociated with a dev warning instead.
+   *
+   * This method should only be called in an event handler or an effect (not during rendering).
+   *
+   * @param triggerId ID of the trigger to associate with the popup, or `null`/`undefined` to open
+   * without associating any trigger.
+   */
+  openByTrigger(triggerId) {
+    const attachedStore = this.attachedStore;
+    if (attachedStore === null) {
+      if (true) {
+        console.warn(`Base UI: ${this.componentName}Handle.open() was called while no root using this handle is mounted. The call was ignored; mount a root with this handle before opening it imperatively.`);
+      }
+      return;
+    }
+    let triggerElement;
+    if (triggerId) {
+      for (let i2 = this.attachedStores.length - 1; i2 >= 0 && !triggerElement; i2 -= 1) {
+        triggerElement = this.attachedStores[i2].context.triggerElements.getById(triggerId);
+      }
+      triggerElement ??= this.fallbackStore.context.triggerElements.getById(triggerId);
+    }
+    if (triggerId && !triggerElement) {
+      if (this.throwOnMissingTrigger) {
+        throw new Error(true ? `Base UI: ${this.componentName}Handle.open() was called with the trigger id "${triggerId}", but no matching trigger is registered with this handle. An anchored popup cannot open without a trigger to anchor to. Pass the id of a mounted ${this.componentName}.Trigger that has this handle set on its "handle" prop.` : formatErrorMessage_default(99, this.componentName, triggerId, this.componentName));
+      }
+      if (true) {
+        console.warn(`Base UI: ${this.componentName}Handle.open: No trigger found with id "${triggerId}". The popup will open, but the trigger will not be associated with it.`);
+      }
+    }
+    attachedStore.setOpen(true, createChangeEventDetails(reason_parts_exports.imperativeAction, void 0, triggerElement));
+  }
+  /**
+   * Closes the popup by setting the attached root's store to closed, or a no-op (with a dev warning)
+   * while no root is attached. Shared by every concrete handle's public `close()` method.
+   *
+   * This method should only be called in an event handler or an effect (not during rendering).
+   */
+  closePopup() {
+    const attachedStore = this.attachedStore;
+    if (attachedStore === null) {
+      if (true) {
+        console.warn(`Base UI: ${this.componentName}Handle.close() was called while no root using this handle is mounted. The call was ignored.`);
+      }
+      return;
+    }
+    attachedStore.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction));
+  }
 };
 
 // node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
-var React28 = __toESM(require_react(), 1);
+var React26 = __toESM(require_react(), 1);
 var ReactDOM4 = __toESM(require_react_dom(), 1);
 
 // node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
-var React27 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/utils/store/createSelector.mjs
-var createSelector = (a2, b2, c2, d2, e2, f2, ...other) => {
-  if (other.length > 0) {
-    throw new Error(true ? "Unsupported number of selectors" : formatErrorMessage_default(1));
-  }
-  let selector2;
-  if (a2 && b2 && c2 && d2 && e2 && f2) {
-    selector2 = (state, a1, a22, a3) => {
-      const va = a2(state, a1, a22, a3);
-      const vb = b2(state, a1, a22, a3);
-      const vc = c2(state, a1, a22, a3);
-      const vd = d2(state, a1, a22, a3);
-      const ve = e2(state, a1, a22, a3);
-      return f2(va, vb, vc, vd, ve, a1, a22, a3);
-    };
-  } else if (a2 && b2 && c2 && d2 && e2) {
-    selector2 = (state, a1, a22, a3) => {
-      const va = a2(state, a1, a22, a3);
-      const vb = b2(state, a1, a22, a3);
-      const vc = c2(state, a1, a22, a3);
-      const vd = d2(state, a1, a22, a3);
-      return e2(va, vb, vc, vd, a1, a22, a3);
-    };
-  } else if (a2 && b2 && c2 && d2) {
-    selector2 = (state, a1, a22, a3) => {
-      const va = a2(state, a1, a22, a3);
-      const vb = b2(state, a1, a22, a3);
-      const vc = c2(state, a1, a22, a3);
-      return d2(va, vb, vc, a1, a22, a3);
-    };
-  } else if (a2 && b2 && c2) {
-    selector2 = (state, a1, a22, a3) => {
-      const va = a2(state, a1, a22, a3);
-      const vb = b2(state, a1, a22, a3);
-      return c2(va, vb, a1, a22, a3);
-    };
-  } else if (a2 && b2) {
-    selector2 = (state, a1, a22, a3) => {
-      const va = a2(state, a1, a22, a3);
-      return b2(va, a1, a22, a3);
-    };
-  } else if (a2) {
-    selector2 = a2;
-  } else {
-    throw (
-      /* minify-error-disabled */
-      new Error("Missing arguments")
-    );
-  }
-  return selector2;
-};
+var React25 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/store/useStore.mjs
-var React25 = __toESM(require_react(), 1);
+var React23 = __toESM(require_react(), 1);
 var import_shim = __toESM(require_shim(), 1);
 var import_with_selector = __toESM(require_with_selector(), 1);
 
 // node_modules/@base-ui/utils/fastHooks.mjs
-var React24 = __toESM(require_react(), 1);
+var React22 = __toESM(require_react(), 1);
 var hooks = [];
 var currentInstance = void 0;
 function getInstance() {
@@ -5730,7 +5758,7 @@ function fastComponent(fn) {
   return FastComponent;
 }
 function fastComponentRef(fn) {
-  return /* @__PURE__ */ React24.forwardRef(fastComponent(fn));
+  return /* @__PURE__ */ React22.forwardRef(fastComponent(fn));
 }
 function createInstance() {
   return {
@@ -5745,7 +5773,7 @@ function useStore(store, selector2, a1, a2, a3) {
   return useStoreImplementation(store, selector2, a1, a2, a3);
 }
 function useStoreR19(store, selector2, a1, a2, a3) {
-  const getSelection = React25.useCallback(() => selector2(store.getSnapshot(), a1, a2, a3), [store, selector2, a1, a2, a3]);
+  const getSelection = React23.useCallback(() => selector2(store.getSnapshot(), a1, a2, a3), [store, selector2, a1, a2, a3]);
   return (0, import_shim.useSyncExternalStore)(store.subscribe, getSelection, getSelection);
 }
 register({
@@ -5932,7 +5960,7 @@ var Store = class {
 };
 
 // node_modules/@base-ui/utils/store/ReactStore.mjs
-var React26 = __toESM(require_react(), 1);
+var React24 = __toESM(require_react(), 1);
 var ReactStore = class extends Store {
   /**
    * Creates a new ReactStore instance.
@@ -5956,7 +5984,7 @@ var ReactStore = class extends Store {
    * by `useState` is updated before the next render (similarly to React's `useState`).
    */
   useSyncedValue(key, value) {
-    React26.useDebugValue(key);
+    React24.useDebugValue(key);
     const store = this;
     useIsoLayoutEffect(() => {
       if (store.state[key] !== value) {
@@ -5991,8 +6019,8 @@ var ReactStore = class extends Store {
   useSyncedValues(statePart) {
     const store = this;
     if (true) {
-      React26.useDebugValue(statePart, (p2) => Object.keys(p2));
-      const keys = React26.useRef(Object.keys(statePart)).current;
+      React24.useDebugValue(statePart, (p2) => Object.keys(p2));
+      const keys = React24.useRef(Object.keys(statePart)).current;
       const nextKeys = Object.keys(statePart);
       if (keys.length !== nextKeys.length || keys.some((key, index2) => key !== nextKeys[index2])) {
         console.error("ReactStore.useSyncedValues expects the same prop keys on every render. Keys should be stable.");
@@ -6008,7 +6036,7 @@ var ReactStore = class extends Store {
    * is non-undefined, the store's state at `key` is updated to match `controlled`.
    */
   useControlledProp(key, controlled) {
-    React26.useDebugValue(key);
+    React24.useDebugValue(key);
     const store = this;
     const isControlled = controlled !== void 0;
     useIsoLayoutEffect(() => {
@@ -6046,7 +6074,7 @@ var ReactStore = class extends Store {
    * @param key Key of the selector to use.
    */
   useState(key, a1, a2, a3) {
-    React26.useDebugValue(key);
+    React24.useDebugValue(key);
     return useStore(this, this.selectors[key], a1, a2, a3);
   }
   /**
@@ -6057,7 +6085,7 @@ var ReactStore = class extends Store {
    * @param fn Function to assign.
    */
   useContextCallback(key, fn) {
-    React26.useDebugValue(key);
+    React24.useDebugValue(key);
     const stableFunction = useStableCallback(fn ?? NOOP);
     this.context[key] = stableFunction;
   }
@@ -6068,7 +6096,7 @@ var ReactStore = class extends Store {
    * @param key Key of the state to set.
    */
   useStateSetter(key) {
-    const ref = React26.useRef(void 0);
+    const ref = React24.useRef(void 0);
     if (ref.current === void 0) {
       ref.current = (value) => {
         this.set(key, value);
@@ -6104,12 +6132,12 @@ var ReactStore = class extends Store {
 
 // node_modules/@base-ui/react/floating-ui-react/components/FloatingRootStore.mjs
 var selectors = {
-  open: createSelector((state) => state.open),
-  transitionStatus: createSelector((state) => state.transitionStatus),
-  domReferenceElement: createSelector((state) => state.domReferenceElement),
-  referenceElement: createSelector((state) => state.positionReference ?? state.referenceElement),
-  floatingElement: createSelector((state) => state.floatingElement),
-  floatingId: createSelector((state) => state.floatingId)
+  open: (state) => state.open,
+  transitionStatus: (state) => state.transitionStatus,
+  domReferenceElement: (state) => state.domReferenceElement,
+  referenceElement: (state) => state.positionReference ?? state.referenceElement,
+  floatingElement: (state) => state.floatingElement,
+  floatingId: (state) => state.floatingId
 };
 var FloatingRootStore = class extends ReactStore {
   constructor(options) {
@@ -6190,7 +6218,7 @@ function useSyncedFloatingRootContext(options) {
   const floatingElement = popupStore.useState(treatPopupAsFloatingElement ? "popupElement" : "positionerElement");
   const triggerElements = popupStore.context.triggerElements;
   const handleOpenChange = onOpenChange;
-  const internalStoreRef = React27.useRef(null);
+  const internalStoreRef = React25.useRef(null);
   if (floatingRootContextProp === void 0 && internalStoreRef.current === null) {
     internalStoreRef.current = new FloatingRootStore({
       open,
@@ -6231,14 +6259,10 @@ var FOCUSABLE_POPUP_PROPS = {
   tabIndex: -1,
   [FOCUSABLE_ATTRIBUTE]: ""
 };
-function usePopupStore(externalStore, createStore2, treatPopupAsFloatingElement = false) {
+function usePopupRootStore(createStore2, treatPopupAsFloatingElement = false) {
   const floatingId = useId();
   const nested = useFloatingParentNodeId() != null;
-  const internalStoreRef = React28.useRef(null);
-  if (externalStore === void 0 && internalStoreRef.current === null) {
-    internalStoreRef.current = createStore2(floatingId, nested);
-  }
-  const store = externalStore ?? internalStoreRef.current;
+  const store = useRefWithInit(() => createStore2(floatingId, nested)).current;
   useSyncedFloatingRootContext({
     popupStore: store,
     treatPopupAsFloatingElement,
@@ -6247,15 +6271,21 @@ function usePopupStore(externalStore, createStore2, treatPopupAsFloatingElement 
     nested,
     onOpenChange: store.setOpen
   });
-  return {
-    store,
-    internalStore: internalStoreRef.current
-  };
+  return store;
+}
+function PopupHandleAttachment({
+  handle,
+  store
+}) {
+  useIsoLayoutEffect(() => {
+    return handle.attachStore(store);
+  }, [handle, store]);
+  return null;
 }
 function useTriggerRegistration(id, store) {
-  const registeredElementIdRef = React28.useRef(null);
-  const registeredElementRef = React28.useRef(null);
-  return React28.useCallback((element) => {
+  const registeredElementIdRef = React26.useRef(null);
+  const registeredElementRef = React26.useRef(null);
+  return React26.useCallback((element) => {
     if (id === void 0) {
       return;
     }
@@ -6337,26 +6367,10 @@ function applyPopupOpenChange(store, nextOpen, eventDetails, options = {}) {
     changeState();
   }
 }
-function useInitialOpenSync(store, openProp, defaultOpen, defaultTriggerId) {
-  useOnFirstRender(() => {
-    if (openProp === void 0 && store.state.open === false && defaultOpen) {
-      store.state = {
-        ...store.state,
-        open: true,
-        activeTriggerId: defaultTriggerId,
-        preventUnmountingOnClose: false
-      };
-    }
-  });
-}
 function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpdates) {
   const isMountedByThisTrigger = store.useState("isMountedByTrigger", triggerId);
   const baseRegisterTrigger = useTriggerRegistration(triggerId, store);
-  const registerTrigger = useStableCallback((element) => {
-    baseRegisterTrigger(element);
-    if (!element) {
-      return;
-    }
+  const applyTriggerData = useStableCallback((element) => {
     const open = store.select("open");
     const activeTriggerId = store.select("activeTriggerId");
     if (activeTriggerId === triggerId) {
@@ -6374,6 +6388,12 @@ function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpda
       });
     }
   });
+  const registerTrigger = React26.useCallback((element) => {
+    baseRegisterTrigger(element);
+    if (element) {
+      applyTriggerData(element);
+    }
+  }, [baseRegisterTrigger, applyTriggerData]);
   useIsoLayoutEffect(() => {
     if (isMountedByThisTrigger) {
       store.update({
@@ -6391,10 +6411,14 @@ function useImplicitActiveTrigger(store, options = {}) {
   const {
     closeOnActiveTriggerUnmount = false
   } = options;
+  const resolvedActiveTriggerIdRef = React26.useRef(null);
   const open = store.useState("open");
   const reactiveTriggerCount = store.useState("triggerCount");
+  const activeTriggerId = store.useState("activeTriggerId");
+  const reactiveActiveTriggerElement = store.useState("activeTriggerElement");
   useIsoLayoutEffect(() => {
     if (!open) {
+      resolvedActiveTriggerIdRef.current = null;
       if (store.state.triggerCount !== 0) {
         store.set("triggerCount", 0);
       }
@@ -6405,22 +6429,42 @@ function useImplicitActiveTrigger(store, options = {}) {
     if (store.state.triggerCount !== triggerCount) {
       stateUpdates.triggerCount = triggerCount;
     }
-    const activeTriggerId = store.select("activeTriggerId");
+    const currentActiveTriggerId = store.select("activeTriggerId");
     let lostActiveTriggerId = null;
-    if (activeTriggerId) {
-      const activeTriggerElement = store.context.triggerElements.getById(activeTriggerId);
+    if (currentActiveTriggerId) {
+      const activeTriggerElement = store.context.triggerElements.getById(currentActiveTriggerId);
       if (!activeTriggerElement) {
-        lostActiveTriggerId = activeTriggerId;
-      } else if (activeTriggerElement !== store.state.activeTriggerElement) {
-        stateUpdates.activeTriggerElement = activeTriggerElement;
+        for (const [triggerId, triggerElement] of store.context.triggerElements.entries()) {
+          if (triggerElement === store.state.activeTriggerElement) {
+            stateUpdates.activeTriggerId = triggerId;
+            stateUpdates.activeTriggerElement = triggerElement;
+            resolvedActiveTriggerIdRef.current = triggerId;
+            break;
+          }
+        }
+        if (stateUpdates.activeTriggerId === void 0) {
+          if (resolvedActiveTriggerIdRef.current === currentActiveTriggerId) {
+            lostActiveTriggerId = currentActiveTriggerId;
+          } else {
+            resolvedActiveTriggerIdRef.current = null;
+          }
+        }
+      } else {
+        resolvedActiveTriggerIdRef.current = currentActiveTriggerId;
+        if (activeTriggerElement !== store.state.activeTriggerElement) {
+          stateUpdates.activeTriggerElement = activeTriggerElement;
+        }
       }
+    } else {
+      resolvedActiveTriggerIdRef.current = null;
     }
-    if (!lostActiveTriggerId && !activeTriggerId && triggerCount === 1) {
+    if (!lostActiveTriggerId && !currentActiveTriggerId && triggerCount === 1) {
       const iteratorResult = store.context.triggerElements.entries().next();
       if (!iteratorResult.done) {
         const [implicitTriggerId, implicitTriggerElement] = iteratorResult.value;
         stateUpdates.activeTriggerId = implicitTriggerId;
         stateUpdates.activeTriggerElement = implicitTriggerElement;
+        resolvedActiveTriggerIdRef.current = implicitTriggerId;
       }
     }
     if (stateUpdates.triggerCount !== void 0 || stateUpdates.activeTriggerId !== void 0 || stateUpdates.activeTriggerElement !== void 0) {
@@ -6442,7 +6486,7 @@ function useImplicitActiveTrigger(store, options = {}) {
         });
       }
     }
-  }, [open, store, reactiveTriggerCount, closeOnActiveTriggerUnmount]);
+  }, [open, store, reactiveTriggerCount, activeTriggerId, reactiveActiveTriggerElement, closeOnActiveTriggerUnmount]);
 }
 function useOpenStateTransitions(open, store, onUnmount) {
   const {
@@ -6495,9 +6539,18 @@ function usePopupInteractionProps(store, statePart) {
 }
 
 // node_modules/@base-ui/react/utils/popups/popupTriggerMap.mjs
+var devElementIdsByMap;
+function getDevElementIds(map) {
+  devElementIdsByMap ??= /* @__PURE__ */ new WeakMap();
+  let elementIds = devElementIdsByMap.get(map);
+  if (!elementIds) {
+    elementIds = /* @__PURE__ */ new WeakMap();
+    devElementIdsByMap.set(map, elementIds);
+  }
+  return elementIds;
+}
 var PopupTriggerMap = class {
   constructor() {
-    this.elementsSet = /* @__PURE__ */ new Set();
     this.idMap = /* @__PURE__ */ new Map();
   }
   /**
@@ -6506,42 +6559,48 @@ var PopupTriggerMap = class {
    * Note: The provided element is assumed to not be registered under multiple IDs.
    */
   add(id, element) {
-    const existingElement = this.idMap.get(id);
-    if (existingElement === element) {
-      return;
-    }
-    if (existingElement !== void 0) {
-      this.elementsSet.delete(existingElement);
-    }
-    this.elementsSet.add(element);
-    this.idMap.set(id, element);
     if (true) {
-      if (this.elementsSet.size !== this.idMap.size) {
+      const elementIds = getDevElementIds(this);
+      const existingId = elementIds.get(element);
+      if (existingId !== void 0 && existingId !== id) {
         throw new Error("Base UI: A trigger element cannot be registered under multiple IDs in PopupTriggerMap.");
       }
+      const previousElement = this.idMap.get(id);
+      if (previousElement !== void 0 && previousElement !== element) {
+        elementIds.delete(previousElement);
+      }
+      elementIds.set(element, id);
     }
+    this.idMap.set(id, element);
   }
   /**
    * Removes the trigger element with the given ID.
    */
   delete(id) {
-    const element = this.idMap.get(id);
-    if (element) {
-      this.elementsSet.delete(element);
-      this.idMap.delete(id);
+    if (true) {
+      const element = this.idMap.get(id);
+      if (element !== void 0) {
+        devElementIdsByMap?.get(this)?.delete(element);
+      }
     }
+    this.idMap.delete(id);
   }
   /**
    * Whether the given element is registered as a trigger.
    */
   hasElement(element) {
-    return this.elementsSet.has(element);
+    for (const registered of this.idMap.values()) {
+      if (registered === element) {
+        return true;
+      }
+    }
+    return false;
   }
   /**
    * Whether there is a registered trigger element matching the given predicate.
    */
   hasMatchingElement(predicate) {
-    for (const element of this.elementsSet) {
+    for (const element of this.idMap.values()) {
       if (predicate(element)) {
         return true;
       }
@@ -6564,7 +6623,7 @@ var PopupTriggerMap = class {
    * Returns an iterable of all registered trigger elements.
    */
   elements() {
-    return this.elementsSet.values();
+    return this.idMap.values();
   }
   /**
    * Returns the number of registered trigger elements.
@@ -6624,12 +6683,12 @@ function createPopupFloatingRootContext(triggerElements, floatingId, nested = fa
     onOpenChange: void 0
   });
 }
-var activeTriggerIdSelector = createSelector((state) => state.triggerIdProp ?? state.activeTriggerId);
-var openSelector = createSelector((state) => state.openProp ?? state.open);
-var popupIdSelector = createSelector((state) => {
+var activeTriggerIdSelector = (state) => state.triggerIdProp ?? state.activeTriggerId;
+var openSelector = (state) => state.openProp ?? state.open;
+var popupIdSelector = (state) => {
   const popupId = state.popupElement?.id ?? state.floatingId;
   return popupId || void 0;
-});
+};
 function triggerOwnsOpenPopup(state, triggerId) {
   return triggerId !== void 0 && openSelector(state) && activeTriggerIdSelector(state) === triggerId;
 }
@@ -6641,101 +6700,73 @@ function triggerOwnsOpenPopupOrIsOnlyTrigger(state, triggerId) {
 }
 var popupStoreSelectors = {
   open: openSelector,
-  mounted: createSelector((state) => state.mounted),
-  transitionStatus: createSelector((state) => state.transitionStatus),
-  floatingRootContext: createSelector((state) => state.floatingRootContext),
-  triggerCount: createSelector((state) => state.triggerCount),
-  preventUnmountingOnClose: createSelector((state) => state.preventUnmountingOnClose),
-  payload: createSelector((state) => state.payload),
+  mounted: (state) => state.mounted,
+  transitionStatus: (state) => state.transitionStatus,
+  floatingRootContext: (state) => state.floatingRootContext,
+  triggerCount: (state) => state.triggerCount,
+  preventUnmountingOnClose: (state) => state.preventUnmountingOnClose,
+  payload: (state) => state.payload,
   activeTriggerId: activeTriggerIdSelector,
-  activeTriggerElement: createSelector((state) => state.mounted ? state.activeTriggerElement : null),
+  activeTriggerElement: (state) => state.mounted ? state.activeTriggerElement : null,
   popupId: popupIdSelector,
   /**
    * Whether the trigger with the given ID was used to open the popup.
    */
-  isTriggerActive: createSelector((state, triggerId) => triggerId !== void 0 && activeTriggerIdSelector(state) === triggerId),
+  isTriggerActive: (state, triggerId) => triggerId !== void 0 && activeTriggerIdSelector(state) === triggerId,
   /**
    * Whether the popup is open and was activated by a trigger with the given ID.
    */
-  isOpenedByTrigger: createSelector((state, triggerId) => triggerOwnsOpenPopup(state, triggerId)),
+  isOpenedByTrigger: (state, triggerId) => triggerOwnsOpenPopup(state, triggerId),
   /**
    * Whether the popup is mounted and was activated by a trigger with the given ID.
    */
-  isMountedByTrigger: createSelector((state, triggerId) => triggerId !== void 0 && activeTriggerIdSelector(state) === triggerId && state.mounted),
-  triggerProps: createSelector((state, isActive) => isActive ? state.activeTriggerProps : state.inactiveTriggerProps),
+  isMountedByTrigger: (state, triggerId) => triggerId !== void 0 && activeTriggerIdSelector(state) === triggerId && state.mounted,
+  triggerProps: (state, isActive) => isActive ? state.activeTriggerProps : state.inactiveTriggerProps,
   /**
    * Popup id for the trigger that currently owns the open popup.
    */
-  triggerPopupId: createSelector((state, triggerId) => triggerOwnsOpenPopupOrIsOnlyTrigger(state, triggerId) ? popupIdSelector(state) : void 0),
-  popupProps: createSelector((state) => state.popupProps),
-  popupElement: createSelector((state) => state.popupElement),
-  positionerElement: createSelector((state) => state.positionerElement)
+  triggerPopupId: (state, triggerId) => triggerOwnsOpenPopupOrIsOnlyTrigger(state, triggerId) ? popupIdSelector(state) : void 0,
+  popupProps: (state) => state.popupProps,
+  popupElement: (state) => state.popupElement,
+  positionerElement: (state) => state.positionerElement
 };
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useFloatingRootContext.mjs
-function useFloatingRootContext(options) {
-  const {
-    open = false,
-    onOpenChange,
-    elements = {}
-  } = options;
-  const floatingId = useId();
-  const nested = useFloatingParentNodeId() != null;
-  if (true) {
-    const optionDomReference = elements.reference;
-    if (optionDomReference && !isElement(optionDomReference)) {
-      console.error("Cannot pass a virtual element to the `elements.reference` option,", "as it must be a real DOM element. Use `context.setPositionReference()`", "instead.");
+// node_modules/@base-ui/react/utils/popups/usePopupHandleStore.mjs
+var React27 = __toESM(require_react(), 1);
+var import_shim2 = __toESM(require_shim(), 1);
+function usePopupHandleStore(handle) {
+  const subscribe2 = React27.useCallback((listener) => {
+    if (handle === void 0) {
+      return NOOP;
     }
-  }
-  const store = useRefWithInit(() => new FloatingRootStore({
-    open,
-    transitionStatus: void 0,
-    onOpenChange,
-    referenceElement: elements.reference ?? null,
-    floatingElement: elements.floating ?? null,
-    triggerElements: new PopupTriggerMap(),
-    floatingId,
-    syncOnly: false,
-    nested
-  })).current;
-  useIsoLayoutEffect(() => {
-    const valuesToSync = {
-      open,
-      floatingId
-    };
-    if (elements.reference !== void 0) {
-      valuesToSync.referenceElement = elements.reference;
-      valuesToSync.domReferenceElement = isElement(elements.reference) ? elements.reference : null;
-    }
-    if (elements.floating !== void 0) {
-      valuesToSync.floatingElement = elements.floating;
-    }
-    store.update(valuesToSync);
-  }, [open, floatingId, elements.reference, elements.floating, store]);
-  store.context.onOpenChange = onOpenChange;
-  store.context.nested = nested;
-  return store;
+    return handle.subscribeStore(listener);
+  }, [handle]);
+  const getSnapshot = React27.useCallback(() => {
+    return handle === void 0 ? void 0 : handle.store;
+  }, [handle]);
+  return (0, import_shim2.useSyncExternalStore)(subscribe2, getSnapshot, () => handle?.serverStore);
 }
 
 // node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
-function useFloating2(options = {}) {
+function useBaseUIFloating(options) {
+  return useFloatingWithStore(options, options.rootContext);
+}
+function useFloatingWithStore(options, store) {
   const {
     nodeId,
     externalTree
   } = options;
-  const internalStore = useFloatingRootContext(options);
-  const store = options.rootContext || internalStore;
   const referenceElement = store.useState("referenceElement");
   const floatingElement = store.useState("floatingElement");
   const domReferenceElement = store.useState("domReferenceElement");
   const open = store.useState("open");
   const floatingId = store.useState("floatingId");
-  const [positionReference, setPositionReferenceRaw] = React29.useState(null);
-  const [localDomReference, setLocalDomReference] = React29.useState(void 0);
-  const [localFloatingElement, setLocalFloatingElement] = React29.useState(void 0);
-  const domReferenceRef = React29.useRef(null);
+  const [positionReference, setPositionReferenceRaw] = React28.useState(null);
+  const [localDomReference, setLocalDomReference] = React28.useState(void 0);
+  const [localFloatingElement, setLocalFloatingElement] = React28.useState(void 0);
+  const domReferenceRef = React28.useRef(null);
   const tree = useFloatingTree(externalTree);
-  const storeElements = React29.useMemo(() => ({
+  const storeElements = React28.useMemo(() => ({
     reference: referenceElement,
     floating: floatingElement,
     domReference: domReferenceElement
@@ -6754,7 +6785,7 @@ function useFloating2(options = {}) {
   store.useSyncedValue("referenceElement", localDomReference ?? null);
   store.useSyncedValue("domReferenceElement", localDomReference === void 0 ? domReferenceElement : localDomReferenceElement);
   store.useSyncedValue("floatingElement", syncedFloatingElement);
-  const setPositionReference = React29.useCallback((node) => {
+  const setPositionReference = React28.useCallback((node) => {
     const computedPositionReference = isElement(node) ? {
       getBoundingClientRect: () => node.getBoundingClientRect(),
       getClientRects: () => node.getClientRects(),
@@ -6763,7 +6794,7 @@ function useFloating2(options = {}) {
     setPositionReferenceRaw(computedPositionReference);
     position.refs.setReference(computedPositionReference);
   }, [position.refs]);
-  const setReference = React29.useCallback((node) => {
+  const setReference = React28.useCallback((node) => {
     if (isElement(node) || node === null) {
       domReferenceRef.current = node;
       setLocalDomReference(node);
@@ -6775,22 +6806,22 @@ function useFloating2(options = {}) {
       position.refs.setReference(node);
     }
   }, [position.refs, setLocalDomReference]);
-  const setFloating = React29.useCallback((node) => {
+  const setFloating = React28.useCallback((node) => {
     setLocalFloatingElement(node);
     position.refs.setFloating(node);
   }, [position.refs]);
-  const refs = React29.useMemo(() => ({
+  const refs = React28.useMemo(() => ({
     ...position.refs,
     setReference,
     setFloating,
     setPositionReference,
     domReference: domReferenceRef
   }), [position.refs, setReference, setFloating, setPositionReference]);
-  const elements = React29.useMemo(() => ({
+  const elements = React28.useMemo(() => ({
     ...position.elements,
     domReference: domReferenceElement
   }), [position.elements, domReferenceElement]);
-  const context = React29.useMemo(() => ({
+  const context = React28.useMemo(() => ({
     ...position,
     dataRef: store.context.dataRef,
     open,
@@ -6814,7 +6845,7 @@ function useFloating2(options = {}) {
       node.context = context;
     }
   });
-  return React29.useMemo(() => ({
+  return React28.useMemo(() => ({
     ...position,
     context,
     refs,
@@ -6824,7 +6855,7 @@ function useFloating2(options = {}) {
 }
 
 // node_modules/@base-ui/react/floating-ui-react/hooks/useFocus.mjs
-var React30 = __toESM(require_react(), 1);
+var React29 = __toESM(require_react(), 1);
 var isMacSafari = parts_exports.os.mac && parts_exports.engine.webkit;
 function useFocus(context, props = {}) {
   const {
@@ -6836,11 +6867,11 @@ function useFocus(context, props = {}) {
     events,
     dataRef
   } = store.context;
-  const blockFocusRef = React30.useRef(false);
-  const blockedReferenceRef = React30.useRef(null);
-  const keyboardModalityRef = React30.useRef(true);
+  const blockFocusRef = React29.useRef(false);
+  const blockedReferenceRef = React29.useRef(null);
+  const keyboardModalityRef = React29.useRef(true);
   const timeout = useTimeout();
-  React30.useEffect(() => {
+  React29.useEffect(() => {
     const domReference = store.select("domReferenceElement");
     if (!enabled) {
       return void 0;
@@ -6860,7 +6891,7 @@ function useFocus(context, props = {}) {
     }
     return mergeCleanups(addEventListener(win, "blur", onBlur), isMacSafari && addEventListener(win, "keydown", onKeyDown, true), isMacSafari && addEventListener(win, "pointerdown", onPointerDown, true));
   }, [store, enabled]);
-  React30.useEffect(() => {
+  React29.useEffect(() => {
     if (!enabled) {
       return void 0;
     }
@@ -6878,7 +6909,7 @@ function useFocus(context, props = {}) {
       events.off("openchange", onOpenChangeLocal);
     };
   }, [events, enabled, store]);
-  const reference = React30.useMemo(() => {
+  const reference = React29.useMemo(() => {
     function resetBlockedFocus() {
       blockFocusRef.current = false;
       blockedReferenceRef.current = null;
@@ -6945,14 +6976,14 @@ function useFocus(context, props = {}) {
       }
     };
   }, [dataRef, delay, store, timeout]);
-  return React30.useMemo(() => enabled ? {
+  return React29.useMemo(() => enabled ? {
     reference,
     trigger: reference
   } : {}, [enabled, reference]);
 }
 
 // node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
-var React31 = __toESM(require_react(), 1);
+var React30 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/floating-ui-react/hooks/useHoverInteractionSharedState.mjs
 var HoverInteraction = class _HoverInteraction {
@@ -7063,7 +7094,7 @@ function useHoverFloatingInteraction(context, parameters = {}) {
       clearPointerEvents();
     }
   }, [open, instance, clearPointerEvents]);
-  React31.useEffect(() => {
+  React30.useEffect(() => {
     return clearPointerEvents;
   }, [clearPointerEvents]);
   useIsoLayoutEffect(() => {
@@ -7092,7 +7123,7 @@ function useHoverFloatingInteraction(context, parameters = {}) {
     }
     return void 0;
   }, [enabled, open, domReferenceElement, floatingElement, instance, isHoverOpen, tree, parentId, clearPointerEvents]);
-  React31.useEffect(() => {
+  React30.useEffect(() => {
     if (!enabled) {
       return void 0;
     }
@@ -7167,7 +7198,7 @@ function useHoverFloatingInteraction(context, parameters = {}) {
 }
 
 // node_modules/@base-ui/react/floating-ui-react/hooks/useHoverReferenceInteraction.mjs
-var React32 = __toESM(require_react(), 1);
+var React31 = __toESM(require_react(), 1);
 var ReactDOM5 = __toESM(require_react_dom(), 1);
 var EMPTY_REF = {
   current: null
@@ -7185,7 +7216,8 @@ function useHoverReferenceInteraction(context, props = {}) {
     isActiveTrigger = true,
     getHandleCloseContext,
     isClosing,
-    shouldOpen: shouldOpenProp
+    shouldOpen: shouldOpenProp,
+    guardStaleOpen = false
   } = props;
   const store = "rootStore" in context ? context.rootStore : context;
   const {
@@ -7194,7 +7226,7 @@ function useHoverReferenceInteraction(context, props = {}) {
   } = store.context;
   const tree = useFloatingTree(externalTree);
   const instance = useHoverInteractionSharedState(store);
-  const isHoverCloseActiveRef = React32.useRef(false);
+  const isHoverCloseActiveRef = React31.useRef(false);
   const handleCloseRef = useValueAsRef(handleClose);
   const delayRef = useValueAsRef(delay);
   const restMsRef = useValueAsRef(restMs);
@@ -7232,8 +7264,8 @@ function useHoverReferenceInteraction(context, props = {}) {
   if (isActiveTrigger) {
     instance.handleCloseOptions = handleCloseRef.current?.__options;
   }
-  React32.useEffect(() => cleanupMouseMoveHandler, [cleanupMouseMoveHandler]);
-  React32.useEffect(() => {
+  React31.useEffect(() => cleanupMouseMoveHandler, [cleanupMouseMoveHandler]);
+  React31.useEffect(() => {
     if (!enabled) {
       return void 0;
     }
@@ -7254,7 +7286,7 @@ function useHoverReferenceInteraction(context, props = {}) {
       events.off("openchange", onOpenChangeLocal);
     };
   }, [enabled, events, instance, cleanupMouseMoveHandler]);
-  React32.useEffect(() => {
+  React31.useEffect(() => {
     if (!enabled) {
       return void 0;
     }
@@ -7368,14 +7400,23 @@ function useHoverReferenceInteraction(context, props = {}) {
         closeWithDelay(event);
       }
     }
+    function onMouseOut(event) {
+      if (contains(trigger, event.relatedTarget)) {
+        return;
+      }
+      instance.openChangeTimeout.clear();
+      instance.restTimeout.clear();
+      instance.restTimeoutPending = false;
+    }
+    const staleOpenGuard = guardStaleOpen ? addEventListener(trigger, "mouseout", onMouseOut) : void 0;
     if (move) {
       return mergeCleanups(addEventListener(trigger, "mousemove", onMouseEnter, {
         once: true
-      }), addEventListener(trigger, "mouseenter", onMouseEnter), addEventListener(trigger, "mouseleave", onMouseLeave));
+      }), addEventListener(trigger, "mouseenter", onMouseEnter), addEventListener(trigger, "mouseleave", onMouseLeave), staleOpenGuard);
     }
-    return mergeCleanups(addEventListener(trigger, "mouseenter", onMouseEnter), addEventListener(trigger, "mouseleave", onMouseLeave));
-  }, [cleanupMouseMoveHandler, clearPointerEvents, dataRef, delayRef, store, enabled, handleCloseRef, instance, isActiveTrigger, isOverInactiveTrigger, isClickLikeOpenEvent2, mouseOnly, move, restMsRef, triggerElementRef, tree, enabledRef, getHandleCloseContext, isClosingRef, checkShouldOpen]);
-  return React32.useMemo(() => {
+    return mergeCleanups(addEventListener(trigger, "mouseenter", onMouseEnter), addEventListener(trigger, "mouseleave", onMouseLeave), staleOpenGuard);
+  }, [cleanupMouseMoveHandler, clearPointerEvents, dataRef, delayRef, store, enabled, handleCloseRef, instance, isActiveTrigger, isOverInactiveTrigger, isClickLikeOpenEvent2, mouseOnly, move, restMsRef, triggerElementRef, tree, enabledRef, getHandleCloseContext, isClosingRef, checkShouldOpen, guardStaleOpen]);
+  return React31.useMemo(() => {
     if (!enabled) {
       return void 0;
     }
@@ -7656,6 +7697,21 @@ function safePolygon(options = {}) {
   return fn;
 }
 
+// node_modules/@base-ui/react/utils/NullStore.mjs
+var NullStore = class extends ReactStore {
+  // `update`/`set`/`notifyAll` funnel through `setState` in the base `Store`, so overriding
+  // `setState` alone would neutralize them today. They are overridden explicitly so the store stays
+  // inert even if a future base-class change stops routing a mutator through `setState`.
+  setState(_newState) {
+  }
+  update(_changes) {
+  }
+  set(_key, _value) {
+  }
+  notifyAll() {
+  }
+};
+
 // node_modules/@base-ui/react/utils/popupStateMapping.mjs
 var CommonPopupDataAttributes = (function(CommonPopupDataAttributes2) {
   CommonPopupDataAttributes2["open"] = "data-open";
@@ -7667,26 +7723,17 @@ var CommonPopupDataAttributes = (function(CommonPopupDataAttributes2) {
   CommonPopupDataAttributes2["align"] = "data-align";
   return CommonPopupDataAttributes2;
 })({});
-var CommonTriggerDataAttributes = /* @__PURE__ */ (function(CommonTriggerDataAttributes2) {
-  CommonTriggerDataAttributes2["popupOpen"] = "data-popup-open";
-  CommonTriggerDataAttributes2["pressed"] = "data-pressed";
-  return CommonTriggerDataAttributes2;
-})({});
 var TRIGGER_HOOK = {
-  [CommonTriggerDataAttributes.popupOpen]: ""
-};
-var PRESSABLE_TRIGGER_HOOK = {
-  [CommonTriggerDataAttributes.popupOpen]: "",
-  [CommonTriggerDataAttributes.pressed]: ""
+  "data-popup-open": ""
 };
 var POPUP_OPEN_HOOK = {
-  [CommonPopupDataAttributes.open]: ""
+  "data-open": ""
 };
 var POPUP_CLOSED_HOOK = {
-  [CommonPopupDataAttributes.closed]: ""
+  "data-closed": ""
 };
 var ANCHOR_HIDDEN_HOOK = {
-  [CommonPopupDataAttributes.anchorHidden]: ""
+  "data-anchor-hidden": ""
 };
 var triggerOpenStateMapping = {
   open(value) {
@@ -7710,6 +7757,10 @@ var popupStateMapping = {
     return null;
   }
 };
+var popupTransitionStateMapping = {
+  ...popupStateMapping,
+  ...transitionStatusMapping
+};
 
 // node_modules/@base-ui/utils/inertValue.mjs
 function inertValue(value) {
@@ -7719,7 +7770,16 @@ function inertValue(value) {
   return value ? "true" : void 0;
 }
 
-// node_modules/@base-ui/react/utils/useAnchorPositioning.mjs
+// node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
+var React32 = __toESM(require_react(), 1);
+var DirectionContext = /* @__PURE__ */ React32.createContext(void 0);
+if (true) DirectionContext.displayName = "DirectionContext";
+function useDirection() {
+  const context = React32.useContext(DirectionContext);
+  return context?.direction ?? "ltr";
+}
+
+// node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
 var React33 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/floating-ui-react/middleware/arrow.mjs
@@ -7792,7 +7852,6 @@ var arrow4 = (options, deps) => ({
 });
 
 // node_modules/@base-ui/react/utils/hideMiddleware.mjs
-var nativeHideFn = hide3().fn;
 var hide4 = {
   name: "hide",
   async fn(state) {
@@ -7803,88 +7862,27 @@ var hide4 = {
       y: y2
     } = state.rects.reference;
     const anchorHidden = width === 0 && height === 0 && x2 === 0 && y2 === 0;
-    const nativeHideResult = await nativeHideFn(state);
+    const overflow = await state.platform.detectOverflow(state, {
+      elementContext: "reference"
+    });
+    const referenceHidden = overflow.top - height >= 0 || overflow.right - width >= 0 || overflow.bottom - height >= 0 || overflow.left - width >= 0;
     return {
       data: {
-        referenceHidden: nativeHideResult.data?.referenceHidden || anchorHidden
+        referenceHidden: referenceHidden || anchorHidden
       }
     };
   }
 };
 
-// node_modules/@base-ui/react/utils/adaptiveOriginMiddleware.mjs
+// node_modules/@base-ui/react/utils/adaptiveOriginConstants.mjs
 var DEFAULT_SIDES = {
   sideX: "left",
   sideY: "top"
 };
-var adaptiveOrigin = {
-  name: "adaptiveOrigin",
-  async fn(state) {
-    const {
-      x: rawX,
-      y: rawY,
-      rects: {
-        floating: floatRect
-      },
-      elements: {
-        floating
-      },
-      platform: platform3,
-      strategy,
-      placement
-    } = state;
-    const win = getWindow(floating);
-    const styles = win.getComputedStyle(floating);
-    const hasTransition = styles.transitionDuration !== "0s" && styles.transitionDuration !== "";
-    if (!hasTransition) {
-      return {
-        x: rawX,
-        y: rawY,
-        data: DEFAULT_SIDES
-      };
-    }
-    const offsetParent = await platform3.getOffsetParent?.(floating);
-    let offsetDimensions = {
-      width: 0,
-      height: 0
-    };
-    if (strategy === "fixed" && win?.visualViewport) {
-      offsetDimensions = {
-        width: win.visualViewport.width,
-        height: win.visualViewport.height
-      };
-    } else if (offsetParent === win) {
-      const doc = ownerDocument(floating);
-      offsetDimensions = {
-        width: doc.documentElement.clientWidth,
-        height: doc.documentElement.clientHeight
-      };
-    } else if (await platform3.isElement?.(offsetParent)) {
-      offsetDimensions = await platform3.getDimensions(offsetParent);
-    }
-    const currentSide = getSide(placement);
-    let x2 = rawX;
-    let y2 = rawY;
-    if (currentSide === "left") {
-      x2 = offsetDimensions.width - (rawX + floatRect.width);
-    }
-    if (currentSide === "top") {
-      y2 = offsetDimensions.height - (rawY + floatRect.height);
-    }
-    const sideX = currentSide === "left" ? "right" : DEFAULT_SIDES.sideX;
-    const sideY = currentSide === "top" ? "bottom" : DEFAULT_SIDES.sideY;
-    return {
-      x: x2,
-      y: y2,
-      data: {
-        sideX,
-        sideY
-      }
-    };
-  }
-};
 
-// node_modules/@base-ui/react/utils/useAnchorPositioning.mjs
+// node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
+var AVAILABLE_WIDTH_VAR = "--available-width";
+var AVAILABLE_HEIGHT_VAR = "--available-height";
 function getLogicalSide(sideParam, renderedSide, isRtl) {
   const isLogicalSideParam = sideParam === "inline-start" || sideParam === "inline-end";
   const logicalRight = isRtl ? "inline-start" : "inline-end";
@@ -7916,6 +7914,9 @@ function getOffsetData(state, sideParam, isRtl) {
   return data;
 }
 function useAnchorPositioning(params) {
+  return useAnchorPositioningWithHook(params, useBaseUIFloating);
+}
+function useAnchorPositioningWithHook(params, useFloatingHook) {
   const {
     // Public parameters
     anchor,
@@ -7935,7 +7936,7 @@ function useAnchorPositioning(params) {
     floatingRootContext,
     mounted,
     collisionAvoidance,
-    shiftCrossAxis = false,
+    shift: shift4,
     nodeId,
     adaptiveOrigin: adaptiveOrigin2,
     lazyFlip = false,
@@ -7948,6 +7949,8 @@ function useAnchorPositioning(params) {
   const collisionAvoidanceSide = collisionAvoidance.side || "flip";
   const collisionAvoidanceAlign = collisionAvoidance.align || "flip";
   const collisionAvoidanceFallbackAxisSide = collisionAvoidance.fallbackAxisSide || "end";
+  const shiftCrossAxis = shift4?.crossAxis ?? false;
+  const shiftRootBoundary = shift4?.rootBoundary;
   const anchorFn = typeof anchor === "function" ? anchor : void 0;
   const anchorFnCallback = useStableCallback(anchorFn);
   const anchorDep = anchorFn ? anchorFnCallback : anchor;
@@ -7965,26 +7968,26 @@ function useAnchorPositioning(params) {
   }[sideParam];
   const placement = align === "center" ? side : `${side}-${align}`;
   let collisionPadding = collisionPaddingParam;
+  if (typeof collisionPadding === "number") {
+    collisionPadding = {
+      top: collisionPadding,
+      right: collisionPadding,
+      bottom: collisionPadding,
+      left: collisionPadding
+    };
+  } else if (collisionPadding) {
+    collisionPadding = {
+      top: collisionPadding.top || 0,
+      right: collisionPadding.right || 0,
+      bottom: collisionPadding.bottom || 0,
+      left: collisionPadding.left || 0
+    };
+  }
   const bias = 1;
   const biasTop = sideParam === "bottom" ? bias : 0;
   const biasBottom = sideParam === "top" ? bias : 0;
   const biasLeft = sideParam === "right" ? bias : 0;
   const biasRight = sideParam === "left" ? bias : 0;
-  if (typeof collisionPadding === "number") {
-    collisionPadding = {
-      top: collisionPadding + biasTop,
-      right: collisionPadding + biasRight,
-      bottom: collisionPadding + biasBottom,
-      left: collisionPadding + biasLeft
-    };
-  } else if (collisionPadding) {
-    collisionPadding = {
-      top: (collisionPadding.top || 0) + biasTop,
-      right: (collisionPadding.right || 0) + biasRight,
-      bottom: (collisionPadding.bottom || 0) + biasBottom,
-      left: (collisionPadding.left || 0) + biasLeft
-    };
-  }
   const commonCollisionProps = {
     boundary: collisionBoundary === "clipping-ancestors" ? "clippingAncestors" : collisionBoundary,
     padding: collisionPadding
@@ -8015,46 +8018,37 @@ function useAnchorPositioning(params) {
     // Ensure the popup flips if it's been limited by its --available-height and it resizes.
     // Since the size() padding is smaller than the flip() padding, flip() will take precedence.
     padding: {
-      top: collisionPadding.top + bias,
-      right: collisionPadding.right + bias,
-      bottom: collisionPadding.bottom + bias,
-      left: collisionPadding.left + bias
+      top: collisionPadding.top + bias + biasTop,
+      right: collisionPadding.right + bias + biasRight,
+      bottom: collisionPadding.bottom + bias + biasBottom,
+      left: collisionPadding.left + bias + biasLeft
     },
     mainAxis: !shiftCrossAxis && collisionAvoidanceSide === "flip",
     crossAxis: collisionAvoidanceAlign === "flip" ? "alignment" : false,
     fallbackAxisSideDirection: collisionAvoidanceFallbackAxisSide
   });
-  const shiftMiddleware = shiftDisabled ? null : shift3((data) => {
-    const html = ownerDocument(data.elements.floating).documentElement;
-    return {
-      ...commonCollisionProps,
-      // Use the Layout Viewport to avoid shifting around when pinch-zooming
-      // for context menus.
-      rootBoundary: shiftCrossAxis ? {
-        x: 0,
-        y: 0,
-        width: html.clientWidth,
-        height: html.clientHeight
-      } : void 0,
-      mainAxis: collisionAvoidanceAlign !== "none",
-      crossAxis: crossAxisShiftEnabled,
-      limiter: sticky || shiftCrossAxis ? void 0 : limitShift3((limitData) => {
-        if (!arrowRef.current) {
-          return {};
-        }
-        const {
-          width,
-          height
-        } = arrowRef.current.getBoundingClientRect();
-        const sideAxis = getSideAxis(getSide(limitData.placement));
-        const arrowSize = sideAxis === "y" ? width : height;
-        const offsetAmount = sideAxis === "y" ? collisionPadding.left + collisionPadding.right : collisionPadding.top + collisionPadding.bottom;
-        return {
-          offset: arrowSize / 2 + offsetAmount / 2
-        };
-      })
-    };
-  }, [commonCollisionProps, sticky, shiftCrossAxis, collisionPadding, collisionAvoidanceAlign]);
+  const shiftMiddleware = shiftDisabled ? null : shift3({
+    ...commonCollisionProps,
+    // Use the Layout Viewport to avoid shifting around when pinch-zooming.
+    rootBoundary: shiftRootBoundary,
+    mainAxis: collisionAvoidanceAlign !== "none",
+    crossAxis: crossAxisShiftEnabled,
+    limiter: sticky || shiftCrossAxis ? void 0 : limitShift3((limitData) => {
+      if (!arrowRef.current) {
+        return {};
+      }
+      const {
+        width,
+        height
+      } = arrowRef.current.getBoundingClientRect();
+      const sideAxis = getSideAxis(getSide(limitData.placement));
+      const arrowSize = sideAxis === "y" ? width : height;
+      const offsetAmount = sideAxis === "y" ? collisionPadding.left + collisionPadding.right : collisionPadding.top + collisionPadding.bottom;
+      return {
+        offset: arrowSize / 2 + offsetAmount / 2
+      };
+    })
+  }, [commonCollisionProps, sticky, shiftCrossAxis, shiftRootBoundary, collisionPadding, collisionAvoidanceAlign]);
   if (collisionAvoidanceSide === "shift" || collisionAvoidanceAlign === "shift" || align === "center") {
     middleware.push(shiftMiddleware, flipMiddleware);
   } else {
@@ -8074,8 +8068,8 @@ function useAnchorPositioning(params) {
         return;
       }
       const floatingStyle = floating.style;
-      floatingStyle.setProperty("--available-width", `${availableWidth}px`);
-      floatingStyle.setProperty("--available-height", `${availableHeight}px`);
+      floatingStyle.setProperty(AVAILABLE_WIDTH_VAR, `${availableWidth}px`);
+      floatingStyle.setProperty(AVAILABLE_HEIGHT_VAR, `${availableHeight}px`);
       const dpr = getWindow(floating).devicePixelRatio || 1;
       const {
         x: x3,
@@ -8153,7 +8147,7 @@ function useAnchorPositioning(params) {
     context,
     isPositioned,
     floatingStyles: originalFloatingStyles
-  } = useFloating2({
+  } = useFloatingHook({
     rootContext: floatingRootContext,
     open: keepMounted ? mounted : void 0,
     placement,
@@ -8169,14 +8163,27 @@ function useAnchorPositioning(params) {
   } = middlewareData.adaptiveOrigin || DEFAULT_SIDES;
   const resolvedPosition = isPositioned ? positionMethod : "fixed";
   const floatingStyles = React33.useMemo(() => {
-    const base = adaptiveOrigin2 ? {
-      position: resolvedPosition,
-      [sideX]: x2,
-      [sideY]: y2
-    } : {
-      position: resolvedPosition,
-      ...originalFloatingStyles
-    };
+    let base;
+    if (!isPositioned) {
+      base = {
+        position: resolvedPosition,
+        top: 0,
+        left: 0
+      };
+    } else if (adaptiveOrigin2) {
+      base = {
+        position: resolvedPosition,
+        [sideX]: x2,
+        [sideY]: y2
+      };
+    } else {
+      base = {
+        ...originalFloatingStyles,
+        position: resolvedPosition
+      };
+    }
+    base[AVAILABLE_WIDTH_VAR] = "100vw";
+    base[AVAILABLE_HEIGHT_VAR] = "100vh";
     if (!isPositioned) {
       base.opacity = 0;
     }
@@ -8220,10 +8227,10 @@ function useAnchorPositioning(params) {
   const renderedAlign = getAlignment(renderedPlacement) || "center";
   const anchorHidden = Boolean(middlewareData.hide?.referenceHidden);
   useIsoLayoutEffect(() => {
-    if (lazyFlip && mounted && isPositioned) {
+    if (lazyFlip && mounted && isPositioned && renderedSide !== side) {
       setMountSide(renderedSide);
     }
-  }, [lazyFlip, mounted, isPositioned, renderedSide]);
+  }, [lazyFlip, mounted, isPositioned, renderedSide, side]);
   const arrowStyles = React33.useMemo(() => ({
     position: "absolute",
     top: middlewareData.arrow?.y,
@@ -8249,7 +8256,7 @@ function isRef(param) {
   return param != null && "current" in param;
 }
 
-// node_modules/@base-ui/react/utils/getDisabledMountTransitionStyles.mjs
+// node_modules/@base-ui/react/internals/getDisabledMountTransitionStyles.mjs
 function getDisabledMountTransitionStyles(transitionStatus) {
   return transitionStatus === "starting" ? DISABLED_TRANSITIONS_STYLE : EMPTY_OBJECT;
 }
@@ -8323,7 +8330,7 @@ function usePreviousValue(value) {
     current: value,
     previous: null
   });
-  if (value !== state.current) {
+  if (!Object.is(value, state.current)) {
     setState({
       current: value,
       previous: state.current
@@ -8366,29 +8373,14 @@ function usePopupAutoResize(parameters) {
     side,
     direction
   } = parameters;
-  const runOnceAnimationsFinish = useAnimationsFinished(popupElement, true, false);
+  const runOnceAnimationsFinish = useAnimationsFinished(popupElement, true);
   const animationFrame = useAnimationFrame();
   const committedDimensionsRef = React36.useRef(null);
   const isInitialRenderRef = React36.useRef(true);
   const restoreAnchoringStylesRef = React36.useRef(NOOP);
   const onMeasureLayout = useStableCallback(onMeasureLayoutParam);
   const onMeasureLayoutComplete = useStableCallback(onMeasureLayoutCompleteParam);
-  const anchoringStyles = React36.useMemo(() => {
-    let isOriginSide = side === "top";
-    let isPhysicalLeft = side === "left";
-    if (direction === "rtl") {
-      isOriginSide = isOriginSide || side === "inline-end";
-      isPhysicalLeft = isPhysicalLeft || side === "inline-end";
-    } else {
-      isOriginSide = isOriginSide || side === "inline-start";
-      isPhysicalLeft = isPhysicalLeft || side === "inline-start";
-    }
-    return isOriginSide ? {
-      position: "absolute",
-      [side === "top" ? "bottom" : "top"]: "0",
-      [isPhysicalLeft ? "right" : "left"]: "0"
-    } : EMPTY_OBJECT;
-  }, [side, direction]);
+  const anchoringStyles = React36.useMemo(() => getPopupAnchoringStyles(side, direction), [side, direction]);
   useIsoLayoutEffect(() => {
     if (!mounted) {
       restoreAnchoringStylesRef.current = NOOP;
@@ -8455,6 +8447,18 @@ function usePopupAutoResize(parameters) {
     };
   }, [content, popupElement, positionerElement, runOnceAnimationsFinish, animationFrame, mounted, onMeasureLayout, onMeasureLayoutComplete, anchoringStyles]);
 }
+function getPopupAnchoringStyles(side, direction) {
+  const isPhysicalTop = side === "top";
+  const isPhysicalLeft = side === "left" || side === (direction === "rtl" ? "inline-end" : "inline-start");
+  if (!isPhysicalTop && !isPhysicalLeft) {
+    return EMPTY_OBJECT;
+  }
+  return {
+    position: "absolute",
+    [isPhysicalTop ? "bottom" : "top"]: "0",
+    [isPhysicalLeft ? "right" : "left"]: "0"
+  };
+}
 function overrideElementStyle(element, property, value) {
   const originalValue = element.style.getPropertyValue(property);
   element.style.setProperty(property, value);
@@ -8501,13 +8505,85 @@ var DirectionProvider = function DirectionProvider2(props) {
 };
 if (true) DirectionProvider.displayName = "DirectionProvider";
 
+// node_modules/@base-ui/react/utils/adaptiveOriginMiddleware.mjs
+var adaptiveOrigin = {
+  name: "adaptiveOrigin",
+  async fn(state) {
+    const {
+      x: rawX,
+      y: rawY,
+      rects: {
+        floating: floatRect
+      },
+      elements: {
+        floating
+      },
+      platform: platform3,
+      strategy,
+      placement
+    } = state;
+    const win = getWindow(floating);
+    const styles = win.getComputedStyle(floating);
+    const hasTransition = styles.transitionDuration !== "0s" && styles.transitionDuration !== "";
+    if (!hasTransition) {
+      return {
+        x: rawX,
+        y: rawY,
+        data: DEFAULT_SIDES
+      };
+    }
+    const offsetParent = await platform3.getOffsetParent?.(floating);
+    let offsetDimensions = {
+      width: 0,
+      height: 0
+    };
+    if (strategy === "fixed" && win?.visualViewport) {
+      offsetDimensions = {
+        width: win.visualViewport.width,
+        height: win.visualViewport.height
+      };
+    } else if (offsetParent === win) {
+      const doc = ownerDocument(floating);
+      offsetDimensions = {
+        width: doc.documentElement.clientWidth,
+        height: doc.documentElement.clientHeight
+      };
+    } else if (await platform3.isElement?.(offsetParent)) {
+      offsetDimensions = await platform3.getDimensions(offsetParent);
+    }
+    const currentSide = getSide(placement);
+    let x2 = rawX;
+    let y2 = rawY;
+    if (currentSide === "left") {
+      x2 = offsetDimensions.width - (rawX + floatRect.width);
+    }
+    if (currentSide === "top") {
+      y2 = offsetDimensions.height - (rawY + floatRect.height);
+    }
+    const sideX = currentSide === "left" ? "right" : DEFAULT_SIDES.sideX;
+    const sideY = currentSide === "top" ? "bottom" : DEFAULT_SIDES.sideY;
+    return {
+      x: x2,
+      y: y2,
+      data: {
+        sideX,
+        sideY
+      }
+    };
+  }
+};
+
 // node_modules/@base-ui/react/utils/usePopupViewport.mjs
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+var popupViewportStateMapping = {
+  activationDirection: (value) => value ? {
+    "data-activation-direction": value
+  } : null
+};
 function usePopupViewport(parameters) {
   const {
     store,
     side,
-    cssVars,
     children
   } = parameters;
   const direction = useDirection();
@@ -8525,14 +8601,15 @@ function usePopupViewport(parameters) {
   const [newTriggerOffset, setNewTriggerOffset] = React38.useState(null);
   const currentContainerRef = React38.useRef(null);
   const previousContainerRef = React38.useRef(null);
-  const onAnimationsFinished = useAnimationsFinished(currentContainerRef, true, false);
+  const onAnimationsFinished = useAnimationsFinished(currentContainerRef, true);
   const cleanupFrame = useAnimationFrame();
+  const cleanupControllerRef = React38.useRef(null);
   const [previousContentDimensions, setPreviousContentDimensions] = React38.useState(null);
   const [showStartingStyleAttribute, setShowStartingStyleAttribute] = React38.useState(false);
   useIsoLayoutEffect(() => {
-    store.set("hasViewport", true);
+    store.set("adaptiveOrigin", adaptiveOrigin);
     return () => {
-      store.set("hasViewport", false);
+      store.set("adaptiveOrigin", void 0);
     };
   }, [store]);
   const handleMeasureLayout = useStableCallback(() => {
@@ -8548,6 +8625,16 @@ function usePopupViewport(parameters) {
       setPreviousContentDimensions(previousDimensions);
     }
   });
+  const armViewportCleanup = useStableCallback(() => {
+    cleanupControllerRef.current?.abort();
+    const controller = new AbortController();
+    cleanupControllerRef.current = controller;
+    onAnimationsFinished(() => {
+      setPreviousContentNode(null);
+      setPreviousContentDimensions(null);
+      capturedNodeRef.current = null;
+    }, controller.signal);
+  });
   const lastHandledTriggerRef = React38.useRef(null);
   useIsoLayoutEffect(() => {
     if (!open || !mounted) {
@@ -8560,19 +8647,22 @@ function usePopupViewport(parameters) {
       setShowStartingStyleAttribute(true);
       const offset4 = calculateRelativePosition(previousActiveTrigger, activeTrigger);
       setNewTriggerOffset(offset4);
-      cleanupFrame.request(() => {
-        ReactDOM6.flushSync(() => {
-          setShowStartingStyleAttribute(false);
-        });
-        onAnimationsFinished(() => {
-          setPreviousContentNode(null);
-          setPreviousContentDimensions(null);
-          capturedNodeRef.current = null;
-        });
-      });
       lastHandledTriggerRef.current = activeTrigger;
     }
-  }, [activeTrigger, previousActiveTrigger, previousContentNode, onAnimationsFinished, cleanupFrame]);
+  }, [activeTrigger, previousActiveTrigger]);
+  useIsoLayoutEffect(() => {
+    if (previousContentNode == null) {
+      return;
+    }
+    cleanupControllerRef.current?.abort();
+    setShowStartingStyleAttribute(true);
+    cleanupFrame.request(() => {
+      ReactDOM6.flushSync(() => {
+        setShowStartingStyleAttribute(false);
+      });
+      armViewportCleanup();
+    });
+  }, [currentContentKey, previousContentNode, armViewportCleanup, cleanupFrame]);
   useIsoLayoutEffect(() => {
     const source = currentContainerRef.current;
     if (!source) {
@@ -8600,8 +8690,8 @@ function usePopupViewport(parameters) {
         ref: previousContainerRef,
         style: {
           ...previousContentDimensions ? {
-            [cssVars.popupWidth]: `${previousContentDimensions.width}px`,
-            [cssVars.popupHeight]: `${previousContentDimensions.height}px`
+            "--popup-width": `${previousContentDimensions.width}px`,
+            "--popup-height": `${previousContentDimensions.height}px`
           } : null,
           position: "absolute"
         },
@@ -8708,8 +8798,8 @@ var FloatingPortalLite = /* @__PURE__ */ React39.forwardRef(function FloatingPor
     ...elementProps
   } = componentProps;
   const {
-    portalNode,
-    portalSubtree
+    node: portalNode,
+    subtree: portalSubtree
   } = useFloatingPortalNode({
     container,
     ref: forwardedRef,
@@ -8759,30 +8849,20 @@ function useTooltipRootContext(optional) {
 var React41 = __toESM(require_react(), 1);
 var selectors2 = {
   ...popupStoreSelectors,
-  disabled: createSelector((state) => state.disabled),
-  instantType: createSelector((state) => state.instantType),
-  isInstantPhase: createSelector((state) => state.isInstantPhase),
-  trackCursorAxis: createSelector((state) => state.trackCursorAxis),
-  disableHoverablePopup: createSelector((state) => state.disableHoverablePopup),
-  lastOpenChangeReason: createSelector((state) => state.openChangeReason),
-  closeOnClick: createSelector((state) => state.closeOnClick),
-  closeDelay: createSelector((state) => state.closeDelay),
-  hasViewport: createSelector((state) => state.hasViewport)
+  disabled: (state) => state.disabled,
+  instantType: (state) => state.instantType,
+  isInstantPhase: (state) => state.isInstantPhase,
+  trackCursorAxis: (state) => state.trackCursorAxis,
+  disableHoverablePopup: (state) => state.disableHoverablePopup,
+  lastOpenChangeReason: (state) => state.openChangeReason,
+  closeOnClick: (state) => state.closeOnClick,
+  closeDelay: (state) => state.closeDelay,
+  adaptiveOrigin: (state) => state.adaptiveOrigin
 };
-var TooltipStore = class _TooltipStore extends ReactStore {
-  constructor(initialState, floatingId, nested = false) {
+var TooltipStore = class extends ReactStore {
+  constructor(initialState, floatingId, nested) {
     const triggerElements = new PopupTriggerMap();
-    const state = {
-      ...createInitialState(),
-      ...initialState
-    };
-    state.floatingRootContext = createPopupFloatingRootContext(triggerElements, floatingId, nested);
-    super(state, {
-      popupRef: /* @__PURE__ */ React41.createRef(),
-      onOpenChange: void 0,
-      onOpenChangeComplete: void 0,
-      triggerElements
-    }, selectors2);
+    super(createInitialState(initialState, triggerElements, floatingId, nested), createInitialContext(triggerElements), selectors2);
   }
   setOpen = (nextOpen, eventDetails) => {
     applyPopupOpenChange(this, nextOpen, eventDetails, {
@@ -8795,13 +8875,17 @@ var TooltipStore = class _TooltipStore extends ReactStore {
   cancelPendingOpen(event) {
     this.state.floatingRootContext.dispatchOpenChange(false, createChangeEventDetails(reason_parts_exports.triggerPress, event));
   }
-  static useStore(externalStore, initialState) {
-    const store = usePopupStore(externalStore, (floatingId, nested) => new _TooltipStore(initialState, floatingId, nested)).store;
-    return store;
-  }
 };
-function createInitialState() {
-  return {
+function createNullTooltipStore() {
+  const triggerElements = new PopupTriggerMap();
+  const store = new NullStore(Object.freeze(createInitialState(void 0, triggerElements)), Object.freeze(createInitialContext(triggerElements)), selectors2);
+  return Object.assign(store, {
+    setOpen: NOOP,
+    cancelPendingOpen: NOOP
+  });
+}
+function createInitialState(initialState, triggerElements, floatingId, nested = false) {
+  const state = {
     ...createInitialPopupStoreState(),
     disabled: false,
     instantType: void 0,
@@ -8811,7 +8895,18 @@ function createInitialState() {
     openChangeReason: null,
     closeOnClick: true,
     closeDelay: 0,
-    hasViewport: false
+    adaptiveOrigin: void 0,
+    ...initialState
+  };
+  state.floatingRootContext = createPopupFloatingRootContext(triggerElements, floatingId, nested);
+  return state;
+}
+function createInitialContext(triggerElements) {
+  return {
+    popupRef: /* @__PURE__ */ React41.createRef(),
+    onOpenChange: void 0,
+    onOpenChangeComplete: void 0,
+    triggerElements
   };
 }
 
@@ -8832,13 +8927,12 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
     defaultTriggerId: defaultTriggerIdProp = null,
     children
   } = props;
-  const store = TooltipStore.useStore(handle?.store, {
+  const store = usePopupRootStore((floatingId, nested) => new TooltipStore({
     open: defaultOpen,
     openProp,
     activeTriggerId: defaultTriggerIdProp,
     triggerIdProp
-  });
-  useInitialOpenSync(store, openProp, defaultOpen, defaultTriggerIdProp);
+  }, floatingId, nested));
   store.useControlledProp("openProp", openProp);
   store.useControlledProp("triggerIdProp", triggerIdProp);
   store.useContextCallback("onOpenChange", onOpenChange);
@@ -8850,9 +8944,9 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const payload = store.useState("payload");
   store.useSyncedValues({
     trackCursorAxis,
-    disableHoverablePopup
+    disableHoverablePopup,
+    disabled: disabled2
   });
-  store.useSyncedValue("disabled", disabled2);
   useImplicitActiveTrigger(store, {
     closeOnActiveTriggerUnmount: true
   });
@@ -8887,17 +8981,17 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
       }
     }
   }, [store, activeTriggerId, open]);
-  const handleImperativeClose = React42.useCallback(() => {
-    store.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction));
-  }, [store]);
   React42.useImperativeHandle(actionsRef, () => ({
     unmount: forceUnmount,
-    close: handleImperativeClose
-  }), [forceUnmount, handleImperativeClose]);
+    close: () => store.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction))
+  }), [forceUnmount, store]);
   const shouldRenderInteractions = open || mounted || !disabled2 && trackCursorAxis !== "none";
   return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(TooltipRootContext.Provider, {
     value: store,
-    children: [shouldRenderInteractions && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(TooltipInteractions, {
+    children: [handle && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(PopupHandleAttachment, {
+      handle,
+      store
+    }), shouldRenderInteractions && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(TooltipInteractions, {
       store,
       disabled: disabled2,
       trackCursorAxis
@@ -8921,13 +9015,11 @@ function TooltipInteractions({
     enabled: !disabled2 && trackCursorAxis !== "none",
     axis: trackCursorAxis === "none" ? void 0 : trackCursorAxis
   });
-  const activeTriggerProps = React42.useMemo(() => mergeProps(clientPoint.reference, dismiss.reference), [clientPoint.reference, dismiss.reference]);
-  const inactiveTriggerProps = React42.useMemo(() => mergeProps(clientPoint.trigger, dismiss.trigger), [clientPoint.trigger, dismiss.trigger]);
-  const popupProps = React42.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, clientPoint.floating, dismiss.floating), [clientPoint.floating, dismiss.floating]);
+  const triggerProps = React42.useMemo(() => mergeProps(clientPoint.reference, dismiss.reference), [clientPoint.reference, dismiss.reference]);
   usePopupInteractionProps(store, {
-    activeTriggerProps,
-    inactiveTriggerProps,
-    popupProps
+    activeTriggerProps: triggerProps,
+    inactiveTriggerProps: triggerProps,
+    popupProps: dismiss.floating ?? EMPTY_OBJECT
   });
   return null;
 }
@@ -8942,13 +9034,6 @@ if (true) TooltipProviderContext.displayName = "TooltipProviderContext";
 function useTooltipProviderContext() {
   return React43.useContext(TooltipProviderContext);
 }
-
-// node_modules/@base-ui/react/tooltip/trigger/TooltipTriggerDataAttributes.mjs
-var TooltipTriggerDataAttributes = (function(TooltipTriggerDataAttributes2) {
-  TooltipTriggerDataAttributes2[TooltipTriggerDataAttributes2["popupOpen"] = CommonTriggerDataAttributes.popupOpen] = "popupOpen";
-  TooltipTriggerDataAttributes2["triggerDisabled"] = "data-trigger-disabled";
-  return TooltipTriggerDataAttributes2;
-})({});
 
 // node_modules/@base-ui/react/tooltip/utils/constants.mjs
 var OPEN_DELAY = 600;
@@ -8974,13 +9059,9 @@ function getTargetElement(event) {
 function closestEnabledTooltipTrigger(element) {
   let current = element;
   while (current) {
-    if (current.hasAttribute(TOOLTIP_TRIGGER_IDENTIFIER)) {
-      return current;
-    }
-    const parentElement = current.parentElement;
-    if (parentElement) {
-      current = parentElement;
-      continue;
+    const trigger = current.closest(`[${TOOLTIP_TRIGGER_IDENTIFIER}]`);
+    if (trigger) {
+      return trigger;
     }
     const root = current.getRootNode();
     current = "host" in root && isElement(root.host) ? root.host : null;
@@ -9002,7 +9083,8 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
     ...elementProps
   } = componentProps;
   const rootContext = useTooltipRootContext(true);
-  const store = handle?.store ?? rootContext;
+  const handleStore = usePopupHandleStore(handle);
+  const store = handleStore ?? rootContext;
   if (!store) {
     throw new Error(true ? "Base UI: <Tooltip.Trigger> must be either used within a <Tooltip.Root> component or provided with a handle." : formatErrorMessage_default(82));
   }
@@ -9021,7 +9103,7 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
     closeOnClick,
     closeDelay: closeDelayWithDefault
   });
-  const providerContext = useTooltipProviderContext();
+  const providerDelay = useTooltipProviderContext();
   const {
     delayRef,
     isInstantPhase,
@@ -9040,17 +9122,10 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
   const nestedTriggerOpenTimeout = useTimeout();
   const pointerTypeRef = React44.useRef(void 0);
   function getOpenDelay() {
-    const providerDelay = providerContext?.delay;
-    const groupOpenValue = typeof delayRef.current === "object" ? delayRef.current.open : void 0;
-    let computedOpenDelay = delayWithDefault;
-    if (hasProvider) {
-      if (groupOpenValue !== 0) {
-        computedOpenDelay = delay ?? providerDelay ?? delayWithDefault;
-      } else {
-        computedOpenDelay = 0;
-      }
+    if (!hasProvider) {
+      return delayWithDefault;
     }
-    return computedOpenDelay;
+    return getDelay(delayRef.current, "open") === 0 ? 0 : delay ?? providerDelay ?? OPEN_DELAY;
   }
   function isEnabledNestedTriggerTarget(target) {
     const triggerEl = triggerElementRef.current;
@@ -9078,13 +9153,13 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
     handleClose: !disableHoverablePopup && trackCursorAxis !== "both" ? safePolygon() : null,
     restMs: getOpenDelay,
     delay() {
-      const closeValue = typeof delayRef.current === "object" ? delayRef.current.close : void 0;
-      let computedCloseDelay = closeDelayWithDefault;
       if (closeDelay == null && hasProvider) {
-        computedCloseDelay = closeValue;
+        return {
+          close: getDelay(delayRef.current, "close")
+        };
       }
       return {
-        close: computedCloseDelay
+        close: closeDelayWithDefault
       };
     },
     triggerElementRef,
@@ -9161,7 +9236,7 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
         }
       },
       id: thisTriggerId,
-      [TooltipTriggerDataAttributes.triggerDisabled]: disabled2 ? "" : void 0,
+      "data-trigger-disabled": disabled2 ? "" : void 0,
       [TOOLTIP_TRIGGER_IDENTIFIER]: disabled2 ? void 0 : ""
     }, elementProps],
     stateAttributesMapping: triggerOpenStateMapping
@@ -9253,7 +9328,7 @@ var TooltipPositioner = /* @__PURE__ */ React48.forwardRef(function TooltipPosit
   const floatingRootContext = store.useState("floatingRootContext");
   const instantType = store.useState("instantType");
   const transitionStatus = store.useState("transitionStatus");
-  const hasViewport = store.useState("hasViewport");
+  const adaptiveOrigin2 = store.useState("adaptiveOrigin");
   const positioning = useAnchorPositioning({
     anchor,
     positionMethod,
@@ -9270,7 +9345,7 @@ var TooltipPositioner = /* @__PURE__ */ React48.forwardRef(function TooltipPosit
     disableAnchorTracking,
     keepMounted,
     collisionAvoidance,
-    adaptiveOrigin: hasViewport ? adaptiveOrigin : void 0
+    adaptiveOrigin: adaptiveOrigin2
   });
   const state = React48.useMemo(() => ({
     open,
@@ -9296,10 +9371,6 @@ if (true) TooltipPositioner.displayName = "TooltipPositioner";
 
 // node_modules/@base-ui/react/tooltip/popup/TooltipPopup.mjs
 var React49 = __toESM(require_react(), 1);
-var stateAttributesMapping = {
-  ...popupStateMapping,
-  ...transitionStatusMapping
-};
 var TooltipPopup = /* @__PURE__ */ React49.forwardRef(function TooltipPopup2(componentProps, forwardedRef) {
   const {
     render: render4,
@@ -9343,8 +9414,8 @@ var TooltipPopup = /* @__PURE__ */ React49.forwardRef(function TooltipPopup2(com
   const element = useRenderElement("div", componentProps, {
     state,
     ref: [forwardedRef, store.context.popupRef, setPopupElement],
-    props: [popupProps, getDisabledMountTransitionStyles(transitionStatus), elementProps],
-    stateAttributesMapping
+    props: [FOCUSABLE_POPUP_PROPS, popupProps, getDisabledMountTransitionStyles(transitionStatus), elementProps],
+    stateAttributesMapping: popupTransitionStateMapping
   });
   return element;
 });
@@ -9398,16 +9469,12 @@ var TooltipProvider = function TooltipProvider2(props) {
     closeDelay,
     timeout = 400
   } = props;
-  const contextValue = React51.useMemo(() => ({
-    delay,
-    closeDelay
-  }), [delay, closeDelay]);
   const delayValue = React51.useMemo(() => ({
     open: delay,
     close: closeDelay
   }), [delay, closeDelay]);
   return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TooltipProviderContext.Provider, {
-    value: contextValue,
+    value: delay,
     children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(FloatingDelayGroup, {
       delay: delayValue,
       timeoutMs: timeout,
@@ -9419,20 +9486,6 @@ if (true) TooltipProvider.displayName = "TooltipProvider";
 
 // node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
 var React52 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/react/tooltip/viewport/TooltipViewportCssVars.mjs
-var TooltipViewportCssVars = /* @__PURE__ */ (function(TooltipViewportCssVars2) {
-  TooltipViewportCssVars2["popupWidth"] = "--popup-width";
-  TooltipViewportCssVars2["popupHeight"] = "--popup-height";
-  return TooltipViewportCssVars2;
-})({});
-
-// node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
-var stateAttributesMapping2 = {
-  activationDirection: (value) => value ? {
-    "data-activation-direction": value
-  } : null
-};
 var TooltipViewport = /* @__PURE__ */ React52.forwardRef(function TooltipViewport2(componentProps, forwardedRef) {
   const {
     render: render4,
@@ -9450,7 +9503,6 @@ var TooltipViewport = /* @__PURE__ */ React52.forwardRef(function TooltipViewpor
   } = usePopupViewport({
     store,
     side: positioner.side,
-    cssVars: TooltipViewportCssVars,
     children
   });
   const state = {
@@ -9464,46 +9516,40 @@ var TooltipViewport = /* @__PURE__ */ React52.forwardRef(function TooltipViewpor
     props: [elementProps, {
       children: childrenToRender
     }],
-    stateAttributesMapping: stateAttributesMapping2
+    stateAttributesMapping: popupViewportStateMapping
   });
 });
 if (true) TooltipViewport.displayName = "TooltipViewport";
 
 // node_modules/@base-ui/react/tooltip/store/TooltipHandle.mjs
-var TooltipHandle = class {
-  /**
-   * Internal store holding the tooltip state.
-   * @internal
-   */
+var TooltipHandle = class extends BasePopupHandle {
   constructor() {
-    this.store = new TooltipStore();
+    super(createNullTooltipStore(), "Tooltip");
   }
   /**
-   * Opens the tooltip and associates it with the trigger with the given ID.
-   * The trigger must be a Tooltip.Trigger component with this handle passed as a prop.
+   * Opens the tooltip and associates it with the trigger with the given id.
    *
    * This method should only be called in an event handler or an effect (not during rendering).
    *
-   * @param triggerId ID of the trigger to associate with the tooltip.
+   * @param triggerId ID of the trigger to associate with the tooltip. The trigger must be a matching
+   * `Tooltip.Trigger` with this handle passed as a prop.
    */
   open(triggerId) {
-    const triggerElement = triggerId ? this.store.context.triggerElements.getById(triggerId) : void 0;
-    if (triggerId && !triggerElement) {
-      throw new Error(true ? `Base UI: TooltipHandle.open: No trigger found with id "${triggerId}".` : formatErrorMessage_default(81, triggerId));
-    }
-    this.store.setOpen(true, createChangeEventDetails(reason_parts_exports.imperativeAction, void 0, triggerElement));
+    this.openByTrigger(triggerId);
   }
   /**
    * Closes the tooltip.
+   *
+   * This method should only be called in an event handler or an effect (not during rendering).
    */
   close() {
-    this.store.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction, void 0, void 0));
+    this.closePopup();
   }
   /**
-   * Indicates whether the tooltip is currently open.
+   * Whether the tooltip is currently open. Returns `false` while no root is attached to the handle.
    */
   get isOpen() {
-    return this.store.select("open");
+    return this.attachedStore?.select("open") ?? false;
   }
 };
 function createTooltipHandle() {
@@ -25636,7 +25682,7 @@ var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
 
 // node_modules/@ariakit/react-store/dist/index.js
 var React80 = __toESM(require_react(), 1);
-var import_shim2 = __toESM(require_shim(), 1);
+var import_shim3 = __toESM(require_shim(), 1);
 var noopSubscribe = () => () => {
 };
 function isStoreKeyArray(value) {
@@ -25682,7 +25728,7 @@ function useStoreState(store, keyOrKeysOrSelector = identity, selector2) {
     if (!hasOwnProperty(state, keyOrKeysOrSelector)) return;
     return state[keyOrKeysOrSelector];
   };
-  return (0, import_shim2.useSyncExternalStore)(storeSubscribe, getSnapshot, getSnapshot);
+  return (0, import_shim3.useSyncExternalStore)(storeSubscribe, getSnapshot, getSnapshot);
 }
 function getStoreStateObjectKeys(object, selectorKeys) {
   const keys = [];
@@ -25739,7 +25785,7 @@ function useStoreStateObject(store, objectOrKeys, object) {
     if (updated) objRef.current = { ...obj };
     return objRef.current;
   };
-  return (0, import_shim2.useSyncExternalStore)(storeSubscribe, getSnapshot, getSnapshot);
+  return (0, import_shim3.useSyncExternalStore)(storeSubscribe, getSnapshot, getSnapshot);
 }
 function useStoreProps(store, props, key, setKey) {
   const value = hasOwnProperty(props, key) ? props[key] : void 0;
@@ -26340,7 +26386,7 @@ var DialogDescriptionContext = (0, import_react51.createContext)(void 0);
 // node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
 var import_react52 = __toESM(require_react(), 1);
 var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
-var import_react_dom4 = __toESM(require_react_dom(), 1);
+var import_react_dom3 = __toESM(require_react_dom(), 1);
 var TagName6 = "div";
 function afterTimeout(timeoutMs, cb) {
   const timeoutId = setTimeout(cb, timeoutMs);
@@ -26432,7 +26478,7 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
     if (!transition) return;
     if (!contentElement) return;
     const stopAnimation = () => store?.setState("animating", false);
-    const stopAnimationSync = () => (0, import_react_dom4.flushSync)(stopAnimation);
+    const stopAnimationSync = () => (0, import_react_dom3.flushSync)(stopAnimation);
     if (transition === "leave" && open) return;
     if (transition === "enter" && !open) return;
     if (typeof animated === "number") return afterTimeout(animated, stopAnimationSync);
