@@ -56365,7 +56365,7 @@ ${text}
       ) });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime377.jsxs)(import_jsx_runtime377.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(import_block_editor185.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
+      isSelected && /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(import_block_editor185.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
         import_block_editor185.MediaReplaceFlow,
         {
           name: (0, import_i18n169.__)("Replace"),
@@ -56379,6 +56379,16 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(import_block_editor185.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime377.jsxs)(import_components103.PanelBody, { title: (0, import_i18n169.__)("Settings"), children: [
+        isSelected && /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
+          import_components103.TextControl,
+          {
+            label: (0, import_i18n169.__)("Title"),
+            value: title ? (0, import_dom19.__unstableStripHTML)(title) : "",
+            onChange: (titleValue) => {
+              setAttributes({ title: titleValue });
+            }
+          }
+        ),
         /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
           import_components103.TextControl,
           {
@@ -56396,16 +56406,6 @@ ${text}
             value: album ? (0, import_dom19.__unstableStripHTML)(album) : "",
             onChange: (albumValue) => {
               setAttributes({ album: albumValue });
-            }
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
-          import_components103.TextControl,
-          {
-            label: (0, import_i18n169.__)("Title"),
-            value: title ? (0, import_dom19.__unstableStripHTML)(title) : "",
-            onChange: (titleValue) => {
-              setAttributes({ title: titleValue });
             }
           }
         ),
