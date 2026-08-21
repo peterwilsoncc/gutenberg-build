@@ -55514,7 +55514,13 @@ ${text}
     } = attributes2;
     const blockProps = (0, import_block_editor183.useBlockProps)();
     const waveformPanelId = `${clientId}-waveform`;
-    const { replaceInnerBlocks, selectBlock } = (0, import_data104.useDispatch)(import_block_editor183.store);
+    const {
+      replaceInnerBlocks,
+      replaceBlocks,
+      insertBlocks,
+      selectBlock,
+      __unstableMarkNextChangeAsNotPersistent
+    } = (0, import_data104.useDispatch)(import_block_editor183.store);
     const { createErrorNotice } = (0, import_data104.useDispatch)(import_notices14.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const colorGradientSettings = (0, import_block_editor183.__experimentalUseMultipleOriginColorsAndGradients)();
@@ -55579,6 +55585,19 @@ ${text}
         setCurrentTrackClientId(validTracks[0].clientId);
       }
     }, [currentTrackClientId, setCurrentTrackClientId, validTracks]);
+    (0, import_element103.useEffect)(() => {
+      if (validTracks.length > 0 || innerBlockTracks.length === 0) {
+        return;
+      }
+      __unstableMarkNextChangeAsNotPersistent();
+      replaceInnerBlocks(clientId, []);
+    }, [
+      clientId,
+      innerBlockTracks,
+      replaceInnerBlocks,
+      validTracks,
+      __unstableMarkNextChangeAsNotPersistent
+    ]);
     const createTrackBlocks = (0, import_element103.useCallback)(
       (media) => {
         if (!media) {
@@ -55641,26 +55660,32 @@ ${text}
         if (newBlocks.length === 0) {
           return;
         }
-        const nextBlocks = [...validTracks, ...newBlocks];
         setCurrentTrackClientId(newBlocks[0].clientId);
-        replaceInnerBlocks(clientId, nextBlocks);
+        insertBlocks(newBlocks, void 0, clientId, false);
         selectBlock(newBlocks[0].clientId);
       },
       [
         clientId,
         createTrackBlocks,
-        replaceInnerBlocks,
+        insertBlocks,
         selectBlock,
         setCurrentTrackClientId,
         validTracks
       ]
     );
+    const removeTrack = (0, import_element103.useCallback)(
+      (trackClientId) => {
+        replaceBlocks(trackClientId, []);
+      },
+      [replaceBlocks]
+    );
     const playlistContext = (0, import_element103.useMemo)(
       () => ({
         currentTrackClientId,
-        setCurrentTrackClientId
+        setCurrentTrackClientId,
+        removeTrack
       }),
-      [currentTrackClientId, setCurrentTrackClientId]
+      [currentTrackClientId, setCurrentTrackClientId, removeTrack]
     );
     const currentTrackData = tracks.find((track) => track.clientId === currentTrackClientId) ?? tracks[0];
     const onTrackEnded = (0, import_element103.useCallback)(() => {
@@ -56288,10 +56313,15 @@ ${text}
     const showImages = context?.showImages ?? true;
     const imageButton = (0, import_element104.useRef)();
     const blockProps = (0, import_block_editor185.useBlockProps)();
-    const { currentTrackClientId, setCurrentTrackClientId } = (0, import_element104.useContext)(PlaylistContext);
+    const { currentTrackClientId, setCurrentTrackClientId, removeTrack } = (0, import_element104.useContext)(PlaylistContext);
     const { createErrorNotice } = (0, import_data105.useDispatch)(import_notices15.store);
-    function onUploadError(message) {
+    function onUploadError(message, { removeTrackOnError = false } = {}) {
       createErrorNotice(message, { type: "snackbar" });
+      if (removeTrackOnError) {
+        removeTrack(clientId);
+        return;
+      }
+      setTemporaryURL();
     }
     const hasTrackSource = !!src || !!temporaryURL;
     (0, import_element104.useEffect)(() => {
@@ -56309,7 +56339,9 @@ ${text}
       url: temporaryURL,
       allowedTypes: ALLOWED_MEDIA_TYPES7,
       onChange: onSelectTrack,
-      onError: onUploadError
+      onError: (message) => {
+        onUploadError(message, { removeTrackOnError: true });
+      }
     });
     function onSelectTrack(media) {
       const mediaUrl = media?.url ?? media?.source_url;
