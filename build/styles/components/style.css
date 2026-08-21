@@ -3609,44 +3609,6 @@ div.components-toolbar > div + div.has-left-divider::before {
   pointer-events: none;
 }
 
-.components-validated-control__indicator {
-  display: flex;
-  align-items: flex-start;
-  gap: 4px;
-  margin: 8px 0 0;
-  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--wp-components-color-gray-700, var(--wpds-color-foreground-content-neutral-weak, #707070));
-  animation: components-validated-control__indicator-jump 0.2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
-.components-validated-control__indicator.is-invalid {
-  color: #cc1818;
-}
-.components-validated-control__indicator.is-valid {
-  color: color-mix(in srgb, #000 30%, #4ab866);
-}
-
-.components-validated-control__indicator-icon {
-  flex-shrink: 0;
-}
-
-.components-validated-control__indicator-spinner {
-  margin: 2px;
-  width: 12px;
-  height: 12px;
-}
-
-@keyframes components-validated-control__indicator-jump {
-  0% {
-    transform: translateY(-4px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
 :root {
   --wp-admin-theme-color: #3858e9;
   --wp-admin-theme-color--rgb: 56, 88, 233;

@@ -3963,46 +3963,6 @@ div.dataviews-view-list {
   pointer-events: none;
 }
 
-.dataviews-validated-control__indicator {
-  display: flex;
-  align-items: flex-start;
-  gap: 4px;
-  margin: 8px 0 0;
-  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 12px;
-  line-height: 16px;
-  color: #757575;
-  animation: dataviews-validated-control__indicator-jump 0.2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
-
-.dataviews-validated-control__indicator.is-invalid {
-  color: #cc1818;
-}
-
-.dataviews-validated-control__indicator.is-valid {
-  color: color-mix(in srgb, #000 30%, #4ab866);
-}
-
-.dataviews-validated-control__indicator-icon {
-  flex-shrink: 0;
-}
-
-.dataviews-validated-control__indicator-spinner {
-  margin: 2px;
-  width: 12px;
-  height: 12px;
-}
-
-@keyframes dataviews-validated-control__indicator-jump {
-  0% {
-    transform: translateY(-4px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
 .dataforms-layouts-panel__field-trigger {
   position: relative;
   color: inherit;

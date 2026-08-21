@@ -87,7 +87,7 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         function useSyncExternalStore$2(subscribe2, getSnapshot) {
-          didWarnOld18Alpha || void 0 === React13.startTransition || (didWarnOld18Alpha = true, console.error(
+          didWarnOld18Alpha || void 0 === React17.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
           var value = getSnapshot();
@@ -135,8 +135,8 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React13 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState75 = React13.useState, useEffect71 = React13.useEffect, useLayoutEffect24 = React13.useLayoutEffect, useDebugValue = React13.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-        exports.useSyncExternalStore = void 0 !== React13.useSyncExternalStore ? React13.useSyncExternalStore : shim;
+        var React17 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState75 = React17.useState, useEffect71 = React17.useEffect, useLayoutEffect24 = React17.useLayoutEffect, useDebugValue = React17.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        exports.useSyncExternalStore = void 0 !== React17.useSyncExternalStore ? React17.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
     }
@@ -221,14 +221,14 @@ var wp;
           var REACT_SUSPENSE_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.suspense") : 60113;
           var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.suspense_list") : 60120;
           var REACT_MEMO_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.memo") : 60115;
-          var REACT_LAZY_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.lazy") : 60116;
+          var REACT_LAZY_TYPE2 = hasSymbol ? /* @__PURE__ */ Symbol.for("react.lazy") : 60116;
           var REACT_BLOCK_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.block") : 60121;
           var REACT_FUNDAMENTAL_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.fundamental") : 60117;
           var REACT_RESPONDER_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.responder") : 60118;
           var REACT_SCOPE_TYPE = hasSymbol ? /* @__PURE__ */ Symbol.for("react.scope") : 60119;
           function isValidElementType(type) {
             return typeof type === "string" || typeof type === "function" || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
-            type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === "object" && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
+            type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === "object" && type !== null && (type.$$typeof === REACT_LAZY_TYPE2 || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
           }
           function typeOf(object) {
             if (typeof object === "object" && object !== null) {
@@ -249,7 +249,7 @@ var wp;
                       switch ($$typeofType) {
                         case REACT_CONTEXT_TYPE:
                         case REACT_FORWARD_REF_TYPE:
-                        case REACT_LAZY_TYPE:
+                        case REACT_LAZY_TYPE2:
                         case REACT_MEMO_TYPE:
                         case REACT_PROVIDER_TYPE:
                           return $$typeofType;
@@ -269,8 +269,8 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment8 = REACT_FRAGMENT_TYPE;
-          var Lazy = REACT_LAZY_TYPE;
+          var Fragment9 = REACT_FRAGMENT_TYPE;
+          var Lazy = REACT_LAZY_TYPE2;
           var Memo = REACT_MEMO_TYPE;
           var Portal3 = REACT_PORTAL_TYPE;
           var Profiler = REACT_PROFILER_TYPE;
@@ -305,7 +305,7 @@ var wp;
             return typeOf(object) === REACT_FRAGMENT_TYPE;
           }
           function isLazy(object) {
-            return typeOf(object) === REACT_LAZY_TYPE;
+            return typeOf(object) === REACT_LAZY_TYPE2;
           }
           function isMemo(object) {
             return typeOf(object) === REACT_MEMO_TYPE;
@@ -328,7 +328,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment8;
+          exports.Fragment = Fragment9;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal3;
@@ -1973,7 +1973,7 @@ var wp;
     Animate: () => animate_default,
     Autocomplete: () => Autocomplete,
     BaseControl: () => base_control_default,
-    BlockQuotation: () => import_primitives35.BlockQuotation,
+    BlockQuotation: () => import_primitives36.BlockQuotation,
     BorderBoxControl: () => component_default24,
     BorderControl: () => component_default21,
     BoxControl: () => box_control_default,
@@ -1986,7 +1986,7 @@ var wp;
     CardHeader: () => component_default33,
     CardMedia: () => component_default34,
     CheckboxControl: () => checkbox_control_default,
-    Circle: () => import_primitives35.Circle,
+    Circle: () => import_primitives36.Circle,
     ClipboardButton: () => ClipboardButton,
     ColorIndicator: () => color_indicator_default,
     ColorPalette: () => color_palette_default,
@@ -2018,16 +2018,16 @@ var wp;
     FormFileUpload: () => form_file_upload_default,
     FormToggle: () => form_toggle_default,
     FormTokenField: () => form_token_field_default,
-    G: () => import_primitives35.G,
+    G: () => import_primitives36.G,
     GradientPicker: () => gradient_picker_default,
     Guide: () => guide_default,
     GuidePage: () => GuidePage,
-    HorizontalRule: () => import_primitives35.HorizontalRule,
+    HorizontalRule: () => import_primitives36.HorizontalRule,
     Icon: () => icon_default3,
     IconButton: () => deprecated_default,
     IsolatedEventContainer: () => isolated_event_container_default,
     KeyboardShortcuts: () => keyboard_shortcuts_default,
-    Line: () => import_primitives35.Line,
+    Line: () => import_primitives36.Line,
     MenuGroup: () => menu_group_default,
     MenuItem: () => menu_item_default,
     MenuItemsChoice: () => menu_items_choice_default,
@@ -2040,18 +2040,18 @@ var wp;
     PanelBody: () => body_default,
     PanelHeader: () => header_default,
     PanelRow: () => row_default,
-    Path: () => import_primitives35.Path,
+    Path: () => import_primitives36.Path,
     Placeholder: () => placeholder_default,
-    Polygon: () => import_primitives35.Polygon,
+    Polygon: () => import_primitives36.Polygon,
     Popover: () => popover_default,
     ProgressBar: () => progress_bar_default,
     QueryControls: () => query_controls_default,
     RadioControl: () => radio_control_default,
     RangeControl: () => range_control_default,
-    Rect: () => import_primitives35.Rect,
+    Rect: () => import_primitives36.Rect,
     ResizableBox: () => resizable_box_default,
     ResponsiveWrapper: () => responsive_wrapper_default,
-    SVG: () => import_primitives35.SVG,
+    SVG: () => import_primitives36.SVG,
     SandBox: () => sandbox_default,
     ScrollLock: () => scroll_lock_default,
     SearchControl: () => search_control_default,
@@ -2154,7 +2154,7 @@ var wp;
     withNotices: () => with_notices_default,
     withSpokenMessages: () => with_spoken_messages_default
   });
-  var import_primitives35 = __toESM(require_primitives(), 1);
+  var import_primitives36 = __toESM(require_primitives(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
   function r(e3) {
@@ -5577,16 +5577,16 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
-  function useDisclosureStoreProps(store, update, props) {
-    useUpdateEffect(update, [props.store, props.disclosure]);
+  function useDisclosureStoreProps(store, update2, props) {
+    useUpdateEffect(update2, [props.store, props.disclosure]);
     useStoreProps(store, props, "open", "setOpen");
     useStoreProps(store, props, "mounted", "setMounted");
     useStoreProps(store, props, "animated");
     return Object.assign(store, { disclosure: props.disclosure });
   }
   function useDisclosureStore(props = {}) {
-    const [store, update] = useStore(createDisclosureStore, props);
-    return useDisclosureStoreProps(store, update, props);
+    const [store, update2] = useStore(createDisclosureStore, props);
+    return useDisclosureStoreProps(store, update2, props);
   }
 
   // node_modules/@ariakit/react-components/dist/tab/tab-panel.js
@@ -5736,8 +5736,8 @@ If there's a particular need for this, please submit a feature request at https:
   var ComboboxItemCheckedContext = (0, import_react13.createContext)(false);
 
   // node_modules/@ariakit/react-components/dist/collection/collection-store.js
-  function useCollectionStoreProps(store, update, props) {
-    useUpdateEffect(update, [props.store]);
+  function useCollectionStoreProps(store, update2, props) {
+    useUpdateEffect(update2, [props.store]);
     useStoreProps(store, props, "items", "setItems");
     return store;
   }
@@ -5749,8 +5749,8 @@ If there's a particular need for this, please submit a feature request at https:
       ...props
     };
   }
-  function useCompositeStoreProps(store, update, props) {
-    store = useCollectionStoreProps(store, update, props);
+  function useCompositeStoreProps(store, update2, props) {
+    store = useCollectionStoreProps(store, update2, props);
     useStoreProps(store, props, "activeId", "setActiveId");
     useStoreProps(store, props, "includesBaseElement");
     useStoreProps(store, props, "virtualFocus");
@@ -5763,8 +5763,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useCompositeStore(props = {}) {
     props = useCompositeStoreOptions(props);
-    const [store, update] = useStore(createCompositeStore, props);
-    return useCompositeStoreProps(store, update, props);
+    const [store, update2] = useStore(createCompositeStore, props);
+    return useCompositeStoreProps(store, update2, props);
   }
 
   // node_modules/@ariakit/react-components/dist/select/select-context.js
@@ -5931,9 +5931,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/tab/tab-store.js
-  function useTabStoreProps(store, update, props) {
-    useUpdateEffect(update, [props.composite, props.combobox]);
-    const compositeStore = useCompositeStoreProps(store, update, props);
+  function useTabStoreProps(store, update2, props) {
+    useUpdateEffect(update2, [props.composite, props.combobox]);
+    const compositeStore = useCompositeStoreProps(store, update2, props);
     useStoreProps(compositeStore, props, "selectedId", "setSelectedId");
     useStoreProps(compositeStore, props, "selectOnMove");
     const [panels, updatePanels] = useStore(() => compositeStore.panels, {});
@@ -5954,8 +5954,8 @@ If there's a particular need for this, please submit a feature request at https:
       composite: props.composite !== void 0 ? props.composite : composite,
       combobox: props.combobox !== void 0 ? props.combobox : combobox
     };
-    const [store, update] = useStore(createTabStore, storeProps);
-    return useTabStoreProps(store, update, storeProps);
+    const [store, update2] = useStore(createTabStore, storeProps);
+    return useTabStoreProps(store, update2, storeProps);
   }
 
   // node_modules/@ariakit/react-components/dist/toolbar/toolbar-context.js
@@ -5977,12 +5977,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/toolbar/toolbar-store.js
-  function useToolbarStoreProps(store, update, props) {
-    return useCompositeStoreProps(store, update, props);
+  function useToolbarStoreProps(store, update2, props) {
+    return useCompositeStoreProps(store, update2, props);
   }
   function useToolbarStore(props = {}) {
-    const [store, update] = useStore(createToolbarStore, props);
-    return useToolbarStoreProps(store, update, props);
+    const [store, update2] = useStore(createToolbarStore, props);
+    return useToolbarStoreProps(store, update2, props);
   }
 
   // node_modules/@ariakit/react-components/dist/toolbar/toolbar.js
@@ -6702,12 +6702,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/dialog/dialog-store.js
-  function useDialogStoreProps(store, update, props) {
-    return useDisclosureStoreProps(store, update, props);
+  function useDialogStoreProps(store, update2, props) {
+    return useDisclosureStoreProps(store, update2, props);
   }
   function useDialogStore(props = {}) {
-    const [store, update] = useStore(createDialogStore, props);
-    return useDialogStoreProps(store, update, props);
+    const [store, update2] = useStore(createDialogStore, props);
+    return useDialogStoreProps(store, update2, props);
   }
 
   // node_modules/@ariakit/react-components/dist/dialog/utils/supports-inert.js
@@ -9080,7 +9080,7 @@ If there's a particular need for this, please submit a feature request at https:
       cleanup();
     };
   }
-  function autoUpdate(reference, floating, update, options2) {
+  function autoUpdate(reference, floating, update2, options2) {
     if (options2 === void 0) {
       options2 = {};
     }
@@ -9094,10 +9094,10 @@ If there's a particular need for this, please submit a feature request at https:
     const referenceEl = unwrapElement(reference);
     const ancestors = ancestorScroll || ancestorResize ? [...referenceEl ? getOverflowAncestors(referenceEl) : [], ...floating ? getOverflowAncestors(floating) : []] : [];
     ancestors.forEach((ancestor) => {
-      ancestorScroll && ancestor.addEventListener("scroll", update);
-      ancestorResize && ancestor.addEventListener("resize", update);
+      ancestorScroll && ancestor.addEventListener("scroll", update2);
+      ancestorResize && ancestor.addEventListener("resize", update2);
     });
-    const cleanupIo = referenceEl && layoutShift ? observeMove(referenceEl, update, ancestorResize) : null;
+    const cleanupIo = referenceEl && layoutShift ? observeMove(referenceEl, update2, ancestorResize) : null;
     let reobserveFrame = -1;
     let resizeObserver = null;
     if (elementResize) {
@@ -9111,7 +9111,7 @@ If there's a particular need for this, please submit a feature request at https:
             (_resizeObserver = resizeObserver) == null || _resizeObserver.observe(floating);
           });
         }
-        update();
+        update2();
       });
       if (referenceEl && !animationFrame) {
         resizeObserver.observe(referenceEl);
@@ -9128,17 +9128,17 @@ If there's a particular need for this, please submit a feature request at https:
     function frameLoop() {
       const nextRefRect = getBoundingClientRect(reference);
       if (prevRefRect && !rectsAreEqual(prevRefRect, nextRefRect)) {
-        update();
+        update2();
       }
       prevRefRect = nextRefRect;
       frameId = requestAnimationFrame(frameLoop);
     }
-    update();
+    update2();
     return () => {
       var _resizeObserver2;
       ancestors.forEach((ancestor) => {
-        ancestorScroll && ancestor.removeEventListener("scroll", update);
-        ancestorResize && ancestor.removeEventListener("resize", update);
+        ancestorScroll && ancestor.removeEventListener("scroll", update2);
+        ancestorResize && ancestor.removeEventListener("resize", update2);
       });
       cleanupIo == null || cleanupIo();
       (_resizeObserver2 = resizeObserver) == null || _resizeObserver2.disconnect();
@@ -9375,7 +9375,7 @@ If there's a particular need for this, please submit a feature request at https:
           });
         }
       };
-      const update = async () => {
+      const update2 = async () => {
         if (shouldCancelUpdate()) return;
         if (hasCustomUpdatePosition) {
           await updatePositionProp({ updatePosition: updatePosition2 });
@@ -9383,7 +9383,7 @@ If there's a particular need for this, please submit a feature request at https:
           setPositioned(true);
         } else await updatePosition2();
       };
-      const cancelAutoUpdate = autoUpdate(anchor, popoverElement, update, { elementResize: typeof ResizeObserver === "function" });
+      const cancelAutoUpdate = autoUpdate(anchor, popoverElement, update2, { elementResize: typeof ResizeObserver === "function" });
       return () => {
         canceled = true;
         setPositioned(false);
@@ -10029,10 +10029,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/popover/popover-store.js
-  function usePopoverStoreProps(store, update, props) {
-    useUpdateEffect(update, [props.popover]);
+  function usePopoverStoreProps(store, update2, props) {
+    useUpdateEffect(update2, [props.popover]);
     useStoreProps(store, props, "placement");
-    return useDialogStoreProps(store, update, props);
+    return useDialogStoreProps(store, update2, props);
   }
 
   // node_modules/@ariakit/components/dist/hovercard/hovercard-store.js
@@ -10058,11 +10058,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/hovercard/hovercard-store.js
-  function useHovercardStoreProps(store, update, props) {
+  function useHovercardStoreProps(store, update2, props) {
     useStoreProps(store, props, "timeout");
     useStoreProps(store, props, "showTimeout");
     useStoreProps(store, props, "hideTimeout");
-    return usePopoverStoreProps(store, update, props);
+    return usePopoverStoreProps(store, update2, props);
   }
 
   // node_modules/@ariakit/components/dist/tooltip/tooltip-store.js
@@ -10088,14 +10088,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/tooltip/tooltip-store.js
-  function useTooltipStoreProps(store, update, props) {
+  function useTooltipStoreProps(store, update2, props) {
     useStoreProps(store, props, "type");
     useStoreProps(store, props, "skipTimeout");
-    return useHovercardStoreProps(store, update, props);
+    return useHovercardStoreProps(store, update2, props);
   }
   function useTooltipStore(props = {}) {
-    const [store, update] = useStore(createTooltipStore, props);
-    return useTooltipStoreProps(store, update, props);
+    const [store, update2] = useStore(createTooltipStore, props);
+    return useTooltipStoreProps(store, update2, props);
   }
 
   // node_modules/@ariakit/react-components/dist/menubar/menubar-context.js
@@ -10497,15 +10497,15 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/radio/radio-store.js
-  function useRadioStoreProps(store, update, props) {
-    store = useCompositeStoreProps(store, update, props);
+  function useRadioStoreProps(store, update2, props) {
+    store = useCompositeStoreProps(store, update2, props);
     useStoreProps(store, props, "value", "setValue");
     return store;
   }
   function useRadioStore(props = {}) {
     props = useCompositeStoreOptions(props);
-    const [store, update] = useStore(createRadioStore, props);
-    return useRadioStoreProps(store, update, props);
+    const [store, update2] = useStore(createRadioStore, props);
+    return useRadioStoreProps(store, update2, props);
   }
 
   // node_modules/@ariakit/react-components/dist/composite/composite-typeahead.js
@@ -11337,16 +11337,16 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return useCompositeStoreOptions(props);
   }
-  function useSelectStoreProps(store, update, props) {
-    useUpdateEffect(update, [props.combobox]);
+  function useSelectStoreProps(store, update2, props) {
+    useUpdateEffect(update2, [props.combobox]);
     useStoreProps(store, props, "value", "setValue");
     useStoreProps(store, props, "setValueOnMove");
-    return Object.assign(usePopoverStoreProps(useCompositeStoreProps(store, update, props), update, props), { combobox: props.combobox });
+    return Object.assign(usePopoverStoreProps(useCompositeStoreProps(store, update2, props), update2, props), { combobox: props.combobox });
   }
   function useSelectStore(props = {}) {
     props = useSelectStoreOptions(props);
-    const [store, update] = useStore(createSelectStore, props);
-    return useSelectStoreProps(store, update, props);
+    const [store, update2] = useStore(createSelectStore, props);
+    return useSelectStoreProps(store, update2, props);
   }
 
   // node_modules/@ariakit/react-components/dist/composite/composite-row.js
@@ -11397,14 +11397,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/checkbox/checkbox-store.js
-  function useCheckboxStoreProps(store, update, props) {
-    useUpdateEffect(update, [props.store]);
+  function useCheckboxStoreProps(store, update2, props) {
+    useUpdateEffect(update2, [props.store]);
     useStoreProps(store, props, "value", "setValue");
     return store;
   }
   function useCheckboxStore(props = {}) {
-    const [store, update] = useStore(createCheckboxStore, props);
-    return useCheckboxStoreProps(store, update, props);
+    const [store, update2] = useStore(createCheckboxStore, props);
+    return useCheckboxStoreProps(store, update2, props);
   }
 
   // node_modules/@ariakit/react-components/dist/checkbox/checkbox-context.js
@@ -12283,14 +12283,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/menu/menu-store.js
-  function useMenuStoreProps(store, update, props) {
-    useUpdateEffect(update, [
+  function useMenuStoreProps(store, update2, props) {
+    useUpdateEffect(update2, [
       props.combobox,
       props.parent,
       props.menubar
     ]);
     useStoreProps(store, props, "values", "setValues");
-    return Object.assign(useHovercardStoreProps(useCompositeStoreProps(store, update, props), update, props), {
+    return Object.assign(useHovercardStoreProps(useCompositeStoreProps(store, update2, props), update2, props), {
       combobox: props.combobox,
       parent: props.parent,
       menubar: props.menubar
@@ -12306,8 +12306,8 @@ If there's a particular need for this, please submit a feature request at https:
       menubar: props.menubar !== void 0 ? props.menubar : menubar2,
       combobox: props.combobox !== void 0 ? props.combobox : combobox
     };
-    const [store, update] = useStore(createMenuStore, props);
-    return useMenuStoreProps(store, update, props);
+    const [store, update2] = useStore(createMenuStore, props);
+    return useMenuStoreProps(store, update2, props);
   }
 
   // node_modules/@ariakit/react-components/dist/menu/menu-separator.js
@@ -12612,7 +12612,7 @@ If there's a particular need for this, please submit a feature request at https:
   function Shortcut(props) {
     const {
       shortcut,
-      className: className2
+      className
     } = props;
     if (!shortcut) {
       return null;
@@ -12627,7 +12627,7 @@ If there's a particular need for this, please submit a feature request at https:
       ariaLabel = shortcut.ariaLabel;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", {
-      className: className2,
+      className,
       "aria-label": ariaLabel,
       children: displayText
     });
@@ -12936,7 +12936,7 @@ If there's a particular need for this, please submit a feature request at https:
       acc[key] = createRenderStep(flagRunNextFrame);
       return acc;
     }, {});
-    const { read, resolveKeyframes, update, preRender, render, postRender } = steps;
+    const { read, resolveKeyframes, update: update2, preRender, render, postRender } = steps;
     const processBatch = () => {
       const timestamp = MotionGlobalConfig.useManualTiming ? state.timestamp : performance.now();
       runNextFrame = false;
@@ -12945,7 +12945,7 @@ If there's a particular need for this, please submit a feature request at https:
       state.isProcessing = true;
       read.process(state);
       resolveKeyframes.process(state);
-      update.process(state);
+      update2.process(state);
       preRender.process(state);
       render.process(state);
       postRender.process(state);
@@ -14532,8 +14532,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/components/node_modules/framer-motion/dist/es/animation/animators/drivers/driver-frameloop.mjs
-  var frameloopDriver = (update) => {
-    const passTimestamp = ({ timestamp }) => update(timestamp);
+  var frameloopDriver = (update2) => {
+    const passTimestamp = ({ timestamp }) => update2(timestamp);
     return {
       start: () => frame.update(passTimestamp, true),
       stop: () => cancelFrame(passTimestamp),
@@ -19141,7 +19141,7 @@ If there's a particular need for this, please submit a feature request at https:
   var motionComponentSymbol = /* @__PURE__ */ Symbol.for("motionComponentSymbol");
 
   // packages/components/node_modules/framer-motion/dist/es/motion/index.mjs
-  function createRendererMotionComponent({ preloadedFeatures, createVisualElement, useRender, useVisualState, Component: Component7 }) {
+  function createRendererMotionComponent({ preloadedFeatures, createVisualElement, useRender: useRender2, useVisualState, Component: Component7 }) {
     preloadedFeatures && loadFeatures(preloadedFeatures);
     function MotionComponent(props, externalRef) {
       let MeasureLayout2;
@@ -19159,7 +19159,7 @@ If there's a particular need for this, please submit a feature request at https:
         MeasureLayout2 = layoutProjection.MeasureLayout;
         context.visualElement = useVisualElement(Component7, visualState, configAndProps, createVisualElement, layoutProjection.ProjectionNode);
       }
-      return (0, import_jsx_runtime40.jsxs)(MotionContext.Provider, { value: context, children: [MeasureLayout2 && context.visualElement ? (0, import_jsx_runtime40.jsx)(MeasureLayout2, { visualElement: context.visualElement, ...configAndProps }) : null, useRender(Component7, props, useMotionRef(visualState, context.visualElement, externalRef), visualState, isStatic, context.visualElement)] });
+      return (0, import_jsx_runtime40.jsxs)(MotionContext.Provider, { value: context, children: [MeasureLayout2 && context.visualElement ? (0, import_jsx_runtime40.jsx)(MeasureLayout2, { visualElement: context.visualElement, ...configAndProps }) : null, useRender2(Component7, props, useMotionRef(visualState, context.visualElement, externalRef), visualState, isStatic, context.visualElement)] });
     }
     const ForwardRefMotionComponent = (0, import_react69.forwardRef)(MotionComponent);
     ForwardRefMotionComponent[motionComponentSymbol] = Component7;
@@ -19717,7 +19717,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/node_modules/framer-motion/dist/es/render/dom/use-render.mjs
   function createUseRender(forwardMotionProps = false) {
-    const useRender = (Component7, props, ref, { latestValues }, isStatic) => {
+    const useRender2 = (Component7, props, ref, { latestValues }, isStatic) => {
       const useVisualProps = isSVGComponent(Component7) ? useSVGProps : useHTMLProps;
       const visualProps = useVisualProps(props, latestValues, isStatic, Component7);
       const filteredProps = filterProps(props, typeof Component7 === "string", forwardMotionProps);
@@ -19729,7 +19729,7 @@ If there's a particular need for this, please submit a feature request at https:
         children: renderedChildren
       });
     };
-    return useRender;
+    return useRender2;
   }
 
   // packages/components/node_modules/framer-motion/dist/es/render/components/create-factory.mjs
@@ -21389,17 +21389,17 @@ If there's a particular need for this, please submit a feature request at https:
   var isBrowser2 = true;
   function getRegisteredStyles(registered, registeredStyles, classNames) {
     var rawClassName = "";
-    classNames.split(" ").forEach(function(className2) {
-      if (registered[className2] !== void 0) {
-        registeredStyles.push(registered[className2] + ";");
-      } else if (className2) {
-        rawClassName += className2 + " ";
+    classNames.split(" ").forEach(function(className) {
+      if (registered[className] !== void 0) {
+        registeredStyles.push(registered[className] + ";");
+      } else if (className) {
+        rawClassName += className + " ";
       }
     });
     return rawClassName;
   }
   var registerStyles = function registerStyles2(cache2, serialized, isStringTag) {
-    var className2 = cache2.key + "-" + serialized.name;
+    var className = cache2.key + "-" + serialized.name;
     if (
       // we only need to add the styles to the registered cache if the
       // class name could be used further down
@@ -21410,18 +21410,18 @@ If there's a particular need for this, please submit a feature request at https:
       // in node since emotion-server relies on whether a style is in
       // the registered cache to know whether a style is global or not
       // also, note that this check will be dead code eliminated in the browser
-      isBrowser2 === false) && cache2.registered[className2] === void 0
+      isBrowser2 === false) && cache2.registered[className] === void 0
     ) {
-      cache2.registered[className2] = serialized.styles;
+      cache2.registered[className] = serialized.styles;
     }
   };
   var insertStyles = function insertStyles2(cache2, serialized, isStringTag) {
     registerStyles(cache2, serialized, isStringTag);
-    var className2 = cache2.key + "-" + serialized.name;
+    var className = cache2.key + "-" + serialized.name;
     if (cache2.inserted[serialized.name] === void 0) {
       var current = serialized;
       do {
-        cache2.insert(serialized === current ? "." + className2 : "", current, cache2.sheet, true);
+        cache2.insert(serialized === current ? "." + className : "", current, cache2.sheet, true);
         current = current.next;
       } while (current !== void 0);
     }
@@ -21743,21 +21743,21 @@ If there's a particular need for this, please submit a feature request at https:
     }
     var WrappedComponent = props[typePropName];
     var registeredStyles = [cssProp];
-    var className2 = "";
+    var className = "";
     if (typeof props.className === "string") {
-      className2 = getRegisteredStyles(cache2.registered, registeredStyles, props.className);
+      className = getRegisteredStyles(cache2.registered, registeredStyles, props.className);
     } else if (props.className != null) {
-      className2 = props.className + " ";
+      className = props.className + " ";
     }
     var serialized = serializeStyles(registeredStyles, void 0, React6.useContext(ThemeContext));
-    className2 += cache2.key + "-" + serialized.name;
+    className += cache2.key + "-" + serialized.name;
     var newProps = {};
     for (var _key2 in props) {
       if (hasOwn.call(props, _key2) && _key2 !== "css" && _key2 !== typePropName && !isDevelopment3) {
         newProps[_key2] = props[_key2];
       }
     }
-    newProps.className = className2;
+    newProps.className = className;
     if (ref) {
       newProps.ref = ref;
     }
@@ -21786,10 +21786,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return React7.createElement.apply(null, createElementArgArray);
   };
-  (function(_jsx249) {
+  (function(_jsx247) {
     var JSX;
     /* @__PURE__ */ (function(_JSX) {
-    })(JSX || (JSX = _jsx249.JSX || (_jsx249.JSX = {})));
+    })(JSX || (JSX = _jsx247.JSX || (_jsx247.JSX = {})));
   })(jsx36 || (jsx36 = {}));
   function css() {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -21816,11 +21816,11 @@ If there's a particular need for this, please submit a feature request at https:
       return cache2.insert("", serialized, cache2.sheet, true);
     }
   }
-  function merge(registered, css3, className2) {
+  function merge(registered, css3, className) {
     var registeredStyles = [];
-    var rawClassName = getRegisteredStyles(registered, registeredStyles, className2);
+    var rawClassName = getRegisteredStyles(registered, registeredStyles, className);
     if (registeredStyles.length < 2) {
-      return className2;
+      return className;
     }
     return rawClassName + css3(registeredStyles);
   }
@@ -22717,7 +22717,7 @@ If there's a particular need for this, please submit a feature request at https:
   function UnforwardedTooltip(props, ref) {
     const {
       children,
-      className: className2,
+      className,
       delay: delay2 = TOOLTIP_DELAY,
       hideOnClick = true,
       placement,
@@ -22774,7 +22774,7 @@ If there's a particular need for this, please submit a feature request at https:
         children: isOnlyChild ? void 0 : children
       }), isOnlyChild && (text || shortcut) && /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(Tooltip, {
         ...restProps,
-        className: clsx_default("components-tooltip", className2),
+        className: clsx_default("components-tooltip", className),
         unmountOnHide: true,
         gutter: 4,
         id: describedById,
@@ -23337,7 +23337,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DOT_SIZE = 2;
   var DOT_SIZE_SELECTED = 4;
   function AlignmentMatrixControlIcon({
-    className: className2,
+    className,
     disablePointerEvents = true,
     size: size4,
     width,
@@ -23352,7 +23352,7 @@ If there's a particular need for this, please submit a feature request at https:
       width: size4 ?? width ?? BASE_SIZE,
       height: size4 ?? height ?? BASE_SIZE,
       role: "presentation",
-      className: clsx_default("component-alignment-matrix-control-icon", className2),
+      className: clsx_default("component-alignment-matrix-control-icon", className),
       style: {
         pointerEvents: disablePointerEvents ? "none" : void 0,
         ...style2
@@ -23454,7 +23454,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var style_module_default2 = { "grid-container": "_02e2af5803bf5bda__grid-container", "grid-row": "c421f8ed08c23077__grid-row", "cell": "_3af769f755097fdb__cell", "point": "_37ef12d4fb6d6131__point" };
   function UnforwardedAlignmentMatrixControl({
-    className: className2,
+    className,
     id: id3,
     label = (0, import_i18n4.__)("Alignment Matrix Control"),
     defaultValue: defaultValue2 = "center center",
@@ -23470,7 +23470,7 @@ If there's a particular need for this, please submit a feature request at https:
         onChange?.(nextValue);
       }
     }, [baseId, onChange]);
-    const classes = clsx_default("component-alignment-matrix-control", style_module_default2["grid-container"], className2);
+    const classes = clsx_default("component-alignment-matrix-control", style_module_default2["grid-container"], className);
     return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Composite22, {
       defaultActiveId: getItemId(baseId, defaultValue2),
       activeId: getItemId(baseId, value),
@@ -23724,7 +23724,7 @@ If there's a particular need for this, please submit a feature request at https:
   function useFlex(props) {
     const {
       align,
-      className: className2,
+      className,
       direction: directionProp = "row",
       expanded = true,
       gap = 2,
@@ -23746,7 +23746,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return {
       ...otherProps,
-      className: clsx_default(style_module_default3.flex, isColumn ? style_module_default3["items-column"] : style_module_default3["items-row"], expanded && (isColumn ? style_module_default3["expanded-column"] : style_module_default3["expanded-row"]), className2),
+      className: clsx_default(style_module_default3.flex, isColumn ? style_module_default3["items-column"] : style_module_default3["items-row"], expanded && (isColumn ? style_module_default3["expanded-column"] : style_module_default3["expanded-row"]), className),
       style: flexStyle,
       isColumn
     };
@@ -23863,7 +23863,7 @@ If there's a particular need for this, please submit a feature request at https:
   var style_module_default4 = { "flex": "e518617e7c3a18e7__flex", "expanded-column": "e4a76957e0b12292__expanded-column", "expanded-row": "cc39999a5fb580d4__expanded-row", "item": "bc09d0edcc10c304__item", "block": "c184ec8e81027f31__block", "items-column": "f9694ed4faabfc82__items-column", "items-row": "_3896336788892095__items-row" };
   function useFlexItem(props) {
     const {
-      className: className2,
+      className,
       display: displayProp,
       isBlock = false,
       style: style2,
@@ -23877,7 +23877,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return {
       ...otherProps,
-      className: clsx_default(style_module_default4.item, isBlock && style_module_default4.block, className2),
+      className: clsx_default(style_module_default4.item, isBlock && style_module_default4.block, className),
       style: itemStyle
     };
   }
@@ -24001,7 +24001,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useSpacer(props) {
     const {
-      className: className2,
+      className,
       margin,
       marginBottom = 2,
       marginLeft,
@@ -24072,7 +24072,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return {
       ...otherProps,
-      className: clsx_default(style_module_default5.spacer, className2),
+      className: clsx_default(style_module_default5.spacer, className),
       style: spacerStyle
     };
   }
@@ -24319,7 +24319,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       var Styled = withEmotionCache(function(props, cache2, ref) {
         var FinalTag = shouldUseAs && props.as || baseTag;
-        var className2 = "";
+        var className = "";
         var classInterpolations = [];
         var mergedProps = props;
         if (props.theme == null) {
@@ -24330,14 +24330,14 @@ If there's a particular need for this, please submit a feature request at https:
           mergedProps.theme = React8.useContext(ThemeContext);
         }
         if (typeof props.className === "string") {
-          className2 = getRegisteredStyles(cache2.registered, classInterpolations, props.className);
+          className = getRegisteredStyles(cache2.registered, classInterpolations, props.className);
         } else if (props.className != null) {
-          className2 = props.className + " ";
+          className = props.className + " ";
         }
         var serialized = serializeStyles(styles3.concat(classInterpolations), cache2.registered, mergedProps);
-        className2 += cache2.key + "-" + serialized.name;
+        className += cache2.key + "-" + serialized.name;
         if (targetClassName !== void 0) {
-          className2 += " " + targetClassName;
+          className += " " + targetClassName;
         }
         var finalShouldForwardProp = shouldUseAs && shouldForwardProp === void 0 ? getDefaultShouldForwardProp(FinalTag) : defaultShouldForwardProp;
         var newProps = {};
@@ -24347,7 +24347,7 @@ If there's a particular need for this, please submit a feature request at https:
             newProps[_key] = props[_key];
           }
         }
-        newProps.className = className2;
+        newProps.className = className;
         if (ref) {
           newProps.ref = ref;
         }
@@ -24539,7 +24539,7 @@ If there's a particular need for this, please submit a feature request at https:
   var style_module_default6 = { "truncate": "_51f2afb77f24a721__truncate", "is-line-clamp": "d232bf8e2132288d__is-line-clamp", "is-single-line": "_95bf20b727db236f__is-single-line" };
   function useTruncate(props) {
     const {
-      className: className2,
+      className,
       children,
       ellipsis = TRUNCATE_ELLIPSIS,
       ellipsizeMode = TRUNCATE_TYPE.auto,
@@ -24563,7 +24563,7 @@ If there's a particular need for this, please submit a feature request at https:
     const shouldTruncate = !!childrenAsText && ellipsizeMode === TRUNCATE_TYPE.auto;
     const shouldClampLines = shouldTruncate && !!numberOfLines;
     const shouldClampSingleLine = shouldClampLines && numberOfLines === 1;
-    const classes = clsx_default(shouldTruncate && !numberOfLines && style_module_default6.truncate, shouldClampLines && style_module_default6["is-line-clamp"], shouldClampSingleLine && style_module_default6["is-single-line"], className2);
+    const classes = clsx_default(shouldTruncate && !numberOfLines && style_module_default6.truncate, shouldClampLines && style_module_default6["is-line-clamp"], shouldClampSingleLine && style_module_default6["is-single-line"], className);
     const truncateStyle = shouldClampLines ? {
       ...style2,
       "--wp-components-truncate-lines": numberOfLines
@@ -24785,7 +24785,7 @@ If there's a particular need for this, please submit a feature request at https:
       adjustLineHeightForInnerControls,
       align,
       children,
-      className: className2,
+      className,
       color: color2,
       ellipsizeMode,
       isDestructive = false,
@@ -24843,8 +24843,8 @@ If there's a particular need for this, please submit a feature request at https:
         }, false ? "" : ";label:optimalTextColor;", false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImhvb2sudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBZ0dNIiwiZmlsZSI6Imhvb2sudHMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgdHlwZSB7IFNlcmlhbGl6ZWRTdHlsZXMgfSBmcm9tICdAZW1vdGlvbi9yZWFjdCc7XG5pbXBvcnQgeyBjc3MgfSBmcm9tICdAZW1vdGlvbi9yZWFjdCc7XG5pbXBvcnQgdHlwZSBSZWFjdCBmcm9tICdyZWFjdCc7XG5pbXBvcnQgeyB1c2VNZW1vLCBDaGlsZHJlbiwgY2xvbmVFbGVtZW50IH0gZnJvbSAnQHdvcmRwcmVzcy9lbGVtZW50JztcbmltcG9ydCB0eXBlIHsgV29yZFByZXNzQ29tcG9uZW50UHJvcHMgfSBmcm9tICcuLi9jb250ZXh0JztcbmltcG9ydCB7IGhhc0Nvbm5lY3ROYW1lc3BhY2UsIHVzZUNvbnRleHRTeXN0ZW0gfSBmcm9tICcuLi9jb250ZXh0JztcbmltcG9ydCB7IHVzZVRydW5jYXRlIH0gZnJvbSAnLi4vdHJ1bmNhdGUnO1xuaW1wb3J0IHsgZ2V0T3B0aW1hbFRleHRTaGFkZSB9IGZyb20gJy4uL3V0aWxzL2NvbG9ycyc7XG5pbXBvcnQgKiBhcyBzdHlsZXMgZnJvbSAnLi9zdHlsZXMnO1xuaW1wb3J0IHsgY3JlYXRlSGlnaGxpZ2h0ZXJUZXh0IH0gZnJvbSAnLi91dGlscyc7XG5pbXBvcnQgeyBnZXRGb250U2l6ZSB9IGZyb20gJy4uL3V0aWxzL2ZvbnQtc2l6ZSc7XG5pbXBvcnQgeyBDT05GSUcsIENPTE9SUyB9IGZyb20gJy4uL3V0aWxzJztcbmltcG9ydCB7IGdldExpbmVIZWlnaHQgfSBmcm9tICcuL2dldC1saW5lLWhlaWdodCc7XG5pbXBvcnQgeyB1c2VDeCB9IGZyb20gJy4uL3V0aWxzL2hvb2tzL3VzZS1jeCc7XG5pbXBvcnQgdHlwZSB7IFByb3BzIH0gZnJvbSAnLi90eXBlcyc7XG5cbi8qKlxuICogQHBhcmFtIHtpbXBvcnQoJy4uL2NvbnRleHQnKS5Xb3JkUHJlc3NDb21wb25lbnRQcm9wczxpbXBvcnQoJy4vdHlwZXMnKS5Qcm9wcywgJ3NwYW4nPn0gcHJvcHNcbiAqL1xuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gdXNlVGV4dChcblx0cHJvcHM6IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzPCBQcm9wcywgJ3NwYW4nID5cbikge1xuXHRjb25zdCB7XG5cdFx0YWRqdXN0TGluZUhlaWdodEZvcklubmVyQ29udHJvbHMsXG5cdFx0YWxpZ24sXG5cdFx0Y2hpbGRyZW4sXG5cdFx0Y2xhc3NOYW1lLFxuXHRcdGNvbG9yLFxuXHRcdGVsbGlwc2l6ZU1vZGUsXG5cdFx0aXNEZXN0cnVjdGl2ZSA9IGZhbHNlLFxuXHRcdGRpc3BsYXksXG5cdFx0aGlnaGxpZ2h0RXNjYXBlID0gZmFsc2UsXG5cdFx0aGlnaGxpZ2h0Q2FzZVNlbnNpdGl2ZSA9IGZhbHNlLFxuXHRcdGhpZ2hsaWdodFdvcmRzLFxuXHRcdGhpZ2hsaWdodFNhbml0aXplLFxuXHRcdGlzQmxvY2sgPSBmYWxzZSxcblx0XHRsZXR0ZXJTcGFjaW5nLFxuXHRcdGxpbmVIZWlnaHQ6IGxpbmVIZWlnaHRQcm9wLFxuXHRcdG9wdGltaXplUmVhZGFiaWxpdHlGb3IsXG5cdFx0c2l6ZSxcblx0XHR0cnVuY2F0ZSA9IGZhbHNlLFxuXHRcdHVwcGVyQ2FzZSA9IGZhbHNlLFxuXHRcdHZhcmlhbnQsXG5cdFx0d2VpZ2h0ID0gQ09ORklHLmZvbnRXZWlnaHQsXG5cdFx0Li4ub3RoZXJQcm9wc1xuXHR9ID0gdXNlQ29udGV4dFN5c3RlbSggcHJvcHMsICdUZXh0JyApO1xuXG5cdGxldCBjb250ZW50OiBSZWFjdC5SZWFjdE5vZGUgPSBjaGlsZHJlbjtcblx0Y29uc3QgaXNIaWdobGlnaHRlciA9IEFycmF5LmlzQXJyYXkoIGhpZ2hsaWdodFdvcmRzICk7XG5cdGNvbnN0IGlzQ2FwdGlvbiA9IHNpemUgPT09ICdjYXB0aW9uJztcblxuXHRpZiAoIGlzSGlnaGxpZ2h0ZXIgKSB7XG5cdFx0aWYgKCB0eXBlb2YgY2hpbGRyZW4gIT09ICdzdHJpbmcnICkge1xuXHRcdFx0dGhyb3cgbmV3IFR5cGVFcnJvcihcblx0XHRcdFx0J2BjaGlsZHJlbmAgb2YgYFRleHRgIG11c3Qgb25seSBiZSBgc3RyaW5nYCB0eXBlcyB3aGVuIGBoaWdobGlnaHRXb3Jkc2AgaXMgZGVmaW5lZCdcblx0XHRcdCk7XG5cdFx0fVxuXG5cdFx0Y29udGVudCA9IGNyZWF0ZUhpZ2hsaWdodGVyVGV4dCgge1xuXHRcdFx0YXV0b0VzY2FwZTogaGlnaGxpZ2h0RXNjYXBlLFxuXHRcdFx0Y2hpbGRyZW4sXG5cdFx0XHRjYXNlU2Vuc2l0aXZlOiBoaWdobGlnaHRDYXNlU2Vuc2l0aXZlLFxuXHRcdFx0c2VhcmNoV29yZHM6IGhpZ2hsaWdodFdvcmRzLFxuXHRcdFx0c2FuaXRpemU6IGhpZ2hsaWdodFNhbml0aXplLFxuXHRcdH0gKTtcblx0fVxuXG5cdGNvbnN0IGN4ID0gdXNlQ3goKTtcblxuXHRjb25zdCBjbGFzc2VzID0gdXNlTWVtbyggKCkgPT4ge1xuXHRcdGNvbnN0IGxpbmVIZWlnaHQgPSBnZXRMaW5lSGVpZ2h0KFxuXHRcdFx0YWRqdXN0TGluZUhlaWdodEZvcklubmVyQ29udHJvbHMsXG5cdFx0XHRsaW5lSGVpZ2h0UHJvcFxuXHRcdCk7XG5cblx0XHRjb25zdCBiYXNlID0gY3NzKCB7XG5cdFx0XHRjb2xvcixcblx0XHRcdGRpc3BsYXksXG5cdFx0XHRmb250U2l6ZTogZ2V0Rm9udFNpemUoIHNpemUgKSxcblx0XHRcdGZvbnRXZWlnaHQ6IHdlaWdodCxcblx0XHRcdGxpbmVIZWlnaHQsXG5cdFx0XHRsZXR0ZXJTcGFjaW5nLFxuXHRcdFx0dGV4dEFsaWduOiBhbGlnbixcblx0XHR9ICk7XG5cblx0XHRjb25zdCB1cHBlckNhc2VTdHlsZXMgPSBjc3MoIHsgdGV4dFRyYW5zZm9ybTogJ3VwcGVyY2FzZScgfSApO1xuXG5cdFx0bGV0IG9wdGltYWxUZXh0Q29sb3I6IFNlcmlhbGl6ZWRTdHlsZXMgfCBudWxsID0gbnVsbDtcblxuXHRcdGlmICggb3B0aW1pemVSZWFkYWJpbGl0eUZvciApIHtcblx0XHRcdGNvbnN0IGlzT3B0aW1hbFRleHRDb2xvckRhcmsgPVxuXHRcdFx0XHRnZXRPcHRpbWFsVGV4dFNoYWRlKCBvcHRpbWl6ZVJlYWRhYmlsaXR5Rm9yICkgPT09ICdkYXJrJztcblxuXHRcdFx0Ly8gU2hvdWxkIG5vdCB1c2UgdGhlbWUgY29sb3JzXG5cdFx0XHRvcHRpbWFsVGV4dENvbG9yID0gaXNPcHRpbWFsVGV4dENvbG9yRGFya1xuXHRcdFx0XHQ/IGNzcyggeyBjb2xvcjogQ09MT1JTLmdyYXlbIDkwMCBdIH0gKVxuXHRcdFx0XHQ6IGNzcyggeyBjb2xvcjogQ09MT1JTLndoaXRlIH0gKTtcblx0XHR9XG5cblx0XHRjb25zdCB0ZXh0U3R5bGVzID0gY3NzKFxuXHRcdFx0c3R5bGVzLlRleHQsXG5cdFx0XHRiYXNlLFxuXHRcdFx0b3B0aW1hbFRleHRDb2xvcixcblx0XHRcdGlzRGVzdHJ1Y3RpdmUgJiYgc3R5bGVzLmRlc3RydWN0aXZlLFxuXHRcdFx0ISEgaXNIaWdobGlnaHRlciAmJiBzdHlsZXMuaGlnaGxpZ2h0ZXJUZXh0LFxuXHRcdFx0aXNCbG9jayAmJiBzdHlsZXMuYmxvY2ssXG5cdFx0XHRpc0NhcHRpb24gJiYgc3R5bGVzLm11dGVkLFxuXHRcdFx0dmFyaWFudCAmJiBzdHlsZXNbIHZhcmlhbnQgXSxcblx0XHRcdHVwcGVyQ2FzZSAmJiB1cHBlckNhc2VTdHlsZXNcblx0XHQpO1xuXG5cdFx0cmV0dXJuIGN4KCB0ZXh0U3R5bGVzLCBjbGFzc05hbWUgKTtcblx0fSwgW1xuXHRcdGFkanVzdExpbmVIZWlnaHRGb3JJbm5lckNvbnRyb2xzLFxuXHRcdGFsaWduLFxuXHRcdGNsYXNzTmFtZSxcblx0XHRjb2xvcixcblx0XHRjeCxcblx0XHRkaXNwbGF5LFxuXHRcdGlzQmxvY2ssXG5cdFx0aXNDYXB0aW9uLFxuXHRcdGlzRGVzdHJ1Y3RpdmUsXG5cdFx0aXNIaWdobGlnaHRlcixcblx0XHRsZXR0ZXJTcGFjaW5nLFxuXHRcdGxpbmVIZWlnaHRQcm9wLFxuXHRcdG9wdGltaXplUmVhZGFiaWxpdHlGb3IsXG5cdFx0c2l6ZSxcblx0XHR1cHBlckNhc2UsXG5cdFx0dmFyaWFudCxcblx0XHR3ZWlnaHQsXG5cdF0gKTtcblxuXHRsZXQgZmluYWxFbGxpcHNpemVNb2RlOiB1bmRlZmluZWQgfCAnYXV0bycgfCAnbm9uZSc7XG5cdGlmICggdHJ1bmNhdGUgPT09IHRydWUgKSB7XG5cdFx0ZmluYWxFbGxpcHNpemVNb2RlID0gJ2F1dG8nO1xuXHR9XG5cdGlmICggdHJ1bmNhdGUgPT09IGZhbHNlICkge1xuXHRcdGZpbmFsRWxsaXBzaXplTW9kZSA9ICdub25lJztcblx0fVxuXG5cdGNvbnN0IGZpbmFsQ29tcG9uZW50UHJvcHMgPSB7XG5cdFx0Li4ub3RoZXJQcm9wcyxcblx0XHRjbGFzc05hbWU6IGNsYXNzZXMsXG5cdFx0Y2hpbGRyZW4sXG5cdFx0ZWxsaXBzaXplTW9kZTogZWxsaXBzaXplTW9kZSB8fCBmaW5hbEVsbGlwc2l6ZU1vZGUsXG5cdH07XG5cblx0Y29uc3QgdHJ1bmNhdGVQcm9wcyA9IHVzZVRydW5jYXRlKCBmaW5hbENvbXBvbmVudFByb3BzICk7XG5cblx0LyoqXG5cdCAqIEVuaGFuY2UgY2hpbGQgYDxMaW5rIC8+YCBjb21wb25lbnRzIHRvIGluaGVyaXQgZm9udCBzaXplLlxuXHQgKi9cblx0aWYgKCAhIHRydW5jYXRlICYmIEFycmF5LmlzQXJyYXkoIGNoaWxkcmVuICkgKSB7XG5cdFx0Y29udGVudCA9IENoaWxkcmVuLm1hcCggY2hpbGRyZW4sICggY2hpbGQgKSA9PiB7XG5cdFx0XHRpZiAoXG5cdFx0XHRcdHR5cGVvZiBjaGlsZCAhPT0gJ29iamVjdCcgfHxcblx0XHRcdFx0Y2hpbGQgPT09IG51bGwgfHxcblx0XHRcdFx0ISAoICdwcm9wcycgaW4gY2hpbGQgKVxuXHRcdFx0KSB7XG5cdFx0XHRcdHJldHVybiBjaGlsZDtcblx0XHRcdH1cblxuXHRcdFx0Y29uc3QgaXNMaW5rID0gaGFzQ29ubmVjdE5hbWVzcGFjZSggY2hpbGQsIFsgJ0xpbmsnIF0gKTtcblx0XHRcdGlmICggaXNMaW5rICkge1xuXHRcdFx0XHRyZXR1cm4gY2xvbmVFbGVtZW50KCBjaGlsZCwge1xuXHRcdFx0XHRcdHNpemU6IGNoaWxkLnByb3BzLnNpemUgfHwgJ2luaGVyaXQnLFxuXHRcdFx0XHR9ICk7XG5cdFx0XHR9XG5cblx0XHRcdHJldHVybiBjaGlsZDtcblx0XHR9ICk7XG5cdH1cblxuXHRyZXR1cm4ge1xuXHRcdC4uLnRydW5jYXRlUHJvcHMsXG5cdFx0Y2hpbGRyZW46IHRydW5jYXRlID8gdHJ1bmNhdGVQcm9wcy5jaGlsZHJlbiA6IGNvbnRlbnQsXG5cdH07XG59XG4iXX0= */");
       }
       const textStyles = /* @__PURE__ */ css(Text, base, optimalTextColor, isDestructive && destructive, !!isHighlighter && highlighterText, isBlock && block, isCaption && muted, variant && styles_exports[variant], upperCase2 && upperCaseStyles, false ? "" : ";label:textStyles;", false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImhvb2sudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBbUdxQiIsImZpbGUiOiJob29rLnRzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHR5cGUgeyBTZXJpYWxpemVkU3R5bGVzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHR5cGUgUmVhY3QgZnJvbSAncmVhY3QnO1xuaW1wb3J0IHsgdXNlTWVtbywgQ2hpbGRyZW4sIGNsb25lRWxlbWVudCB9IGZyb20gJ0B3b3JkcHJlc3MvZWxlbWVudCc7XG5pbXBvcnQgdHlwZSB7IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzIH0gZnJvbSAnLi4vY29udGV4dCc7XG5pbXBvcnQgeyBoYXNDb25uZWN0TmFtZXNwYWNlLCB1c2VDb250ZXh0U3lzdGVtIH0gZnJvbSAnLi4vY29udGV4dCc7XG5pbXBvcnQgeyB1c2VUcnVuY2F0ZSB9IGZyb20gJy4uL3RydW5jYXRlJztcbmltcG9ydCB7IGdldE9wdGltYWxUZXh0U2hhZGUgfSBmcm9tICcuLi91dGlscy9jb2xvcnMnO1xuaW1wb3J0ICogYXMgc3R5bGVzIGZyb20gJy4vc3R5bGVzJztcbmltcG9ydCB7IGNyZWF0ZUhpZ2hsaWdodGVyVGV4dCB9IGZyb20gJy4vdXRpbHMnO1xuaW1wb3J0IHsgZ2V0Rm9udFNpemUgfSBmcm9tICcuLi91dGlscy9mb250LXNpemUnO1xuaW1wb3J0IHsgQ09ORklHLCBDT0xPUlMgfSBmcm9tICcuLi91dGlscyc7XG5pbXBvcnQgeyBnZXRMaW5lSGVpZ2h0IH0gZnJvbSAnLi9nZXQtbGluZS1oZWlnaHQnO1xuaW1wb3J0IHsgdXNlQ3ggfSBmcm9tICcuLi91dGlscy9ob29rcy91c2UtY3gnO1xuaW1wb3J0IHR5cGUgeyBQcm9wcyB9IGZyb20gJy4vdHlwZXMnO1xuXG4vKipcbiAqIEBwYXJhbSB7aW1wb3J0KCcuLi9jb250ZXh0JykuV29yZFByZXNzQ29tcG9uZW50UHJvcHM8aW1wb3J0KCcuL3R5cGVzJykuUHJvcHMsICdzcGFuJz59IHByb3BzXG4gKi9cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIHVzZVRleHQoXG5cdHByb3BzOiBXb3JkUHJlc3NDb21wb25lbnRQcm9wczwgUHJvcHMsICdzcGFuJyA+XG4pIHtcblx0Y29uc3Qge1xuXHRcdGFkanVzdExpbmVIZWlnaHRGb3JJbm5lckNvbnRyb2xzLFxuXHRcdGFsaWduLFxuXHRcdGNoaWxkcmVuLFxuXHRcdGNsYXNzTmFtZSxcblx0XHRjb2xvcixcblx0XHRlbGxpcHNpemVNb2RlLFxuXHRcdGlzRGVzdHJ1Y3RpdmUgPSBmYWxzZSxcblx0XHRkaXNwbGF5LFxuXHRcdGhpZ2hsaWdodEVzY2FwZSA9IGZhbHNlLFxuXHRcdGhpZ2hsaWdodENhc2VTZW5zaXRpdmUgPSBmYWxzZSxcblx0XHRoaWdobGlnaHRXb3Jkcyxcblx0XHRoaWdobGlnaHRTYW5pdGl6ZSxcblx0XHRpc0Jsb2NrID0gZmFsc2UsXG5cdFx0bGV0dGVyU3BhY2luZyxcblx0XHRsaW5lSGVpZ2h0OiBsaW5lSGVpZ2h0UHJvcCxcblx0XHRvcHRpbWl6ZVJlYWRhYmlsaXR5Rm9yLFxuXHRcdHNpemUsXG5cdFx0dHJ1bmNhdGUgPSBmYWxzZSxcblx0XHR1cHBlckNhc2UgPSBmYWxzZSxcblx0XHR2YXJpYW50LFxuXHRcdHdlaWdodCA9IENPTkZJRy5mb250V2VpZ2h0LFxuXHRcdC4uLm90aGVyUHJvcHNcblx0fSA9IHVzZUNvbnRleHRTeXN0ZW0oIHByb3BzLCAnVGV4dCcgKTtcblxuXHRsZXQgY29udGVudDogUmVhY3QuUmVhY3ROb2RlID0gY2hpbGRyZW47XG5cdGNvbnN0IGlzSGlnaGxpZ2h0ZXIgPSBBcnJheS5pc0FycmF5KCBoaWdobGlnaHRXb3JkcyApO1xuXHRjb25zdCBpc0NhcHRpb24gPSBzaXplID09PSAnY2FwdGlvbic7XG5cblx0aWYgKCBpc0hpZ2hsaWdodGVyICkge1xuXHRcdGlmICggdHlwZW9mIGNoaWxkcmVuICE9PSAnc3RyaW5nJyApIHtcblx0XHRcdHRocm93IG5ldyBUeXBlRXJyb3IoXG5cdFx0XHRcdCdgY2hpbGRyZW5gIG9mIGBUZXh0YCBtdXN0IG9ubHkgYmUgYHN0cmluZ2AgdHlwZXMgd2hlbiBgaGlnaGxpZ2h0V29yZHNgIGlzIGRlZmluZWQnXG5cdFx0XHQpO1xuXHRcdH1cblxuXHRcdGNvbnRlbnQgPSBjcmVhdGVIaWdobGlnaHRlclRleHQoIHtcblx0XHRcdGF1dG9Fc2NhcGU6IGhpZ2hsaWdodEVzY2FwZSxcblx0XHRcdGNoaWxkcmVuLFxuXHRcdFx0Y2FzZVNlbnNpdGl2ZTogaGlnaGxpZ2h0Q2FzZVNlbnNpdGl2ZSxcblx0XHRcdHNlYXJjaFdvcmRzOiBoaWdobGlnaHRXb3Jkcyxcblx0XHRcdHNhbml0aXplOiBoaWdobGlnaHRTYW5pdGl6ZSxcblx0XHR9ICk7XG5cdH1cblxuXHRjb25zdCBjeCA9IHVzZUN4KCk7XG5cblx0Y29uc3QgY2xhc3NlcyA9IHVzZU1lbW8oICgpID0+IHtcblx0XHRjb25zdCBsaW5lSGVpZ2h0ID0gZ2V0TGluZUhlaWdodChcblx0XHRcdGFkanVzdExpbmVIZWlnaHRGb3JJbm5lckNvbnRyb2xzLFxuXHRcdFx0bGluZUhlaWdodFByb3Bcblx0XHQpO1xuXG5cdFx0Y29uc3QgYmFzZSA9IGNzcygge1xuXHRcdFx0Y29sb3IsXG5cdFx0XHRkaXNwbGF5LFxuXHRcdFx0Zm9udFNpemU6IGdldEZvbnRTaXplKCBzaXplICksXG5cdFx0XHRmb250V2VpZ2h0OiB3ZWlnaHQsXG5cdFx0XHRsaW5lSGVpZ2h0LFxuXHRcdFx0bGV0dGVyU3BhY2luZyxcblx0XHRcdHRleHRBbGlnbjogYWxpZ24sXG5cdFx0fSApO1xuXG5cdFx0Y29uc3QgdXBwZXJDYXNlU3R5bGVzID0gY3NzKCB7IHRleHRUcmFuc2Zvcm06ICd1cHBlcmNhc2UnIH0gKTtcblxuXHRcdGxldCBvcHRpbWFsVGV4dENvbG9yOiBTZXJpYWxpemVkU3R5bGVzIHwgbnVsbCA9IG51bGw7XG5cblx0XHRpZiAoIG9wdGltaXplUmVhZGFiaWxpdHlGb3IgKSB7XG5cdFx0XHRjb25zdCBpc09wdGltYWxUZXh0Q29sb3JEYXJrID1cblx0XHRcdFx0Z2V0T3B0aW1hbFRleHRTaGFkZSggb3B0aW1pemVSZWFkYWJpbGl0eUZvciApID09PSAnZGFyayc7XG5cblx0XHRcdC8vIFNob3VsZCBub3QgdXNlIHRoZW1lIGNvbG9yc1xuXHRcdFx0b3B0aW1hbFRleHRDb2xvciA9IGlzT3B0aW1hbFRleHRDb2xvckRhcmtcblx0XHRcdFx0PyBjc3MoIHsgY29sb3I6IENPTE9SUy5ncmF5WyA5MDAgXSB9IClcblx0XHRcdFx0OiBjc3MoIHsgY29sb3I6IENPTE9SUy53aGl0ZSB9ICk7XG5cdFx0fVxuXG5cdFx0Y29uc3QgdGV4dFN0eWxlcyA9IGNzcyhcblx0XHRcdHN0eWxlcy5UZXh0LFxuXHRcdFx0YmFzZSxcblx0XHRcdG9wdGltYWxUZXh0Q29sb3IsXG5cdFx0XHRpc0Rlc3RydWN0aXZlICYmIHN0eWxlcy5kZXN0cnVjdGl2ZSxcblx0XHRcdCEhIGlzSGlnaGxpZ2h0ZXIgJiYgc3R5bGVzLmhpZ2hsaWdodGVyVGV4dCxcblx0XHRcdGlzQmxvY2sgJiYgc3R5bGVzLmJsb2NrLFxuXHRcdFx0aXNDYXB0aW9uICYmIHN0eWxlcy5tdXRlZCxcblx0XHRcdHZhcmlhbnQgJiYgc3R5bGVzWyB2YXJpYW50IF0sXG5cdFx0XHR1cHBlckNhc2UgJiYgdXBwZXJDYXNlU3R5bGVzXG5cdFx0KTtcblxuXHRcdHJldHVybiBjeCggdGV4dFN0eWxlcywgY2xhc3NOYW1lICk7XG5cdH0sIFtcblx0XHRhZGp1c3RMaW5lSGVpZ2h0Rm9ySW5uZXJDb250cm9scyxcblx0XHRhbGlnbixcblx0XHRjbGFzc05hbWUsXG5cdFx0Y29sb3IsXG5cdFx0Y3gsXG5cdFx0ZGlzcGxheSxcblx0XHRpc0Jsb2NrLFxuXHRcdGlzQ2FwdGlvbixcblx0XHRpc0Rlc3RydWN0aXZlLFxuXHRcdGlzSGlnaGxpZ2h0ZXIsXG5cdFx0bGV0dGVyU3BhY2luZyxcblx0XHRsaW5lSGVpZ2h0UHJvcCxcblx0XHRvcHRpbWl6ZVJlYWRhYmlsaXR5Rm9yLFxuXHRcdHNpemUsXG5cdFx0dXBwZXJDYXNlLFxuXHRcdHZhcmlhbnQsXG5cdFx0d2VpZ2h0LFxuXHRdICk7XG5cblx0bGV0IGZpbmFsRWxsaXBzaXplTW9kZTogdW5kZWZpbmVkIHwgJ2F1dG8nIHwgJ25vbmUnO1xuXHRpZiAoIHRydW5jYXRlID09PSB0cnVlICkge1xuXHRcdGZpbmFsRWxsaXBzaXplTW9kZSA9ICdhdXRvJztcblx0fVxuXHRpZiAoIHRydW5jYXRlID09PSBmYWxzZSApIHtcblx0XHRmaW5hbEVsbGlwc2l6ZU1vZGUgPSAnbm9uZSc7XG5cdH1cblxuXHRjb25zdCBmaW5hbENvbXBvbmVudFByb3BzID0ge1xuXHRcdC4uLm90aGVyUHJvcHMsXG5cdFx0Y2xhc3NOYW1lOiBjbGFzc2VzLFxuXHRcdGNoaWxkcmVuLFxuXHRcdGVsbGlwc2l6ZU1vZGU6IGVsbGlwc2l6ZU1vZGUgfHwgZmluYWxFbGxpcHNpemVNb2RlLFxuXHR9O1xuXG5cdGNvbnN0IHRydW5jYXRlUHJvcHMgPSB1c2VUcnVuY2F0ZSggZmluYWxDb21wb25lbnRQcm9wcyApO1xuXG5cdC8qKlxuXHQgKiBFbmhhbmNlIGNoaWxkIGA8TGluayAvPmAgY29tcG9uZW50cyB0byBpbmhlcml0IGZvbnQgc2l6ZS5cblx0ICovXG5cdGlmICggISB0cnVuY2F0ZSAmJiBBcnJheS5pc0FycmF5KCBjaGlsZHJlbiApICkge1xuXHRcdGNvbnRlbnQgPSBDaGlsZHJlbi5tYXAoIGNoaWxkcmVuLCAoIGNoaWxkICkgPT4ge1xuXHRcdFx0aWYgKFxuXHRcdFx0XHR0eXBlb2YgY2hpbGQgIT09ICdvYmplY3QnIHx8XG5cdFx0XHRcdGNoaWxkID09PSBudWxsIHx8XG5cdFx0XHRcdCEgKCAncHJvcHMnIGluIGNoaWxkIClcblx0XHRcdCkge1xuXHRcdFx0XHRyZXR1cm4gY2hpbGQ7XG5cdFx0XHR9XG5cblx0XHRcdGNvbnN0IGlzTGluayA9IGhhc0Nvbm5lY3ROYW1lc3BhY2UoIGNoaWxkLCBbICdMaW5rJyBdICk7XG5cdFx0XHRpZiAoIGlzTGluayApIHtcblx0XHRcdFx0cmV0dXJuIGNsb25lRWxlbWVudCggY2hpbGQsIHtcblx0XHRcdFx0XHRzaXplOiBjaGlsZC5wcm9wcy5zaXplIHx8ICdpbmhlcml0Jyxcblx0XHRcdFx0fSApO1xuXHRcdFx0fVxuXG5cdFx0XHRyZXR1cm4gY2hpbGQ7XG5cdFx0fSApO1xuXHR9XG5cblx0cmV0dXJuIHtcblx0XHQuLi50cnVuY2F0ZVByb3BzLFxuXHRcdGNoaWxkcmVuOiB0cnVuY2F0ZSA/IHRydW5jYXRlUHJvcHMuY2hpbGRyZW4gOiBjb250ZW50LFxuXHR9O1xufVxuIl19 */");
-      return cx2(textStyles, className2);
-    }, [adjustLineHeightForInnerControls, align, className2, color2, cx2, display, isBlock, isCaption, isDestructive, isHighlighter, letterSpacing, lineHeightProp, optimizeReadabilityFor, size4, upperCase2, variant, weight]);
+      return cx2(textStyles, className);
+    }, [adjustLineHeightForInnerControls, align, className, color2, cx2, display, isBlock, isCaption, isDestructive, isHighlighter, letterSpacing, lineHeightProp, optimizeReadabilityFor, size4, upperCase2, variant, weight]);
     let finalEllipsizeMode;
     if (truncate === true) {
       finalEllipsizeMode = "auto";
@@ -25199,7 +25199,7 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       __unstableInputWidth,
       children,
-      className: className2,
+      className,
       disabled = false,
       hideLabelFromVision = false,
       labelPosition,
@@ -25228,7 +25228,7 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(Root, {
         ...restProps,
         ...getUIFlexProps(labelPosition),
-        className: className2,
+        className,
         gap: 2,
         ref,
         children: [/* @__PURE__ */ (0, import_jsx_runtime89.jsx)(Label2, {
@@ -27089,11 +27089,11 @@ This message will only show in development mode. It won't appear in production. 
       label,
       hideLabelFromVision = false,
       help,
-      className: className2,
+      className,
       children
     } = useContextSystem(props, "BaseControl");
     return /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(Wrapper, {
-      className: className2,
+      className,
       children: [/* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(StyledField, {
         className: "components-base-control__field",
         children: [label && id3 && (hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(component_default2, {
@@ -27119,14 +27119,14 @@ This message will only show in development mode. It won't appear in production. 
   };
   var UnforwardedVisualLabel = (props, ref) => {
     const {
-      className: className2,
+      className,
       children,
       ...restProps
     } = props;
     return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(StyledVisualLabel, {
       ref,
       ...restProps,
-      className: clsx_default("components-base-control__label", className2),
+      className: clsx_default("components-base-control__label", className),
       children
     });
   };
@@ -27170,7 +27170,7 @@ This message will only show in development mode. It won't appear in production. 
       __next36pxDefaultSize: _next36pxDefaultSize,
       __unstableStateReducer: stateReducer = (state) => state,
       __unstableInputWidth,
-      className: className2,
+      className,
       disabled = false,
       help,
       hideLabelFromVision = false,
@@ -27189,7 +27189,7 @@ This message will only show in development mode. It won't appear in production. 
       ...restProps
     } = props;
     const id3 = useUniqueId2(idProp);
-    const classes = clsx_default("components-input-control", className2);
+    const classes = clsx_default("components-input-control", className);
     const draftHookProps = useDraft({
       value,
       onBlur: restProps.onBlur,
@@ -27250,12 +27250,12 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
   function Dashicon({
     icon,
-    className: className2,
+    className,
     size: size4 = 20,
     style: style2 = {},
     ...extraProps
   }) {
-    const iconClass = ["dashicon", "dashicons", "dashicons-" + icon, className2].filter(Boolean).join(" ");
+    const iconClass = ["dashicon", "dashicons", "dashicons-" + icon, className].filter(Boolean).join(" ");
     const sizeStyles3 = (
       // using `!=` to catch both 20 and "20"
       // eslint-disable-next-line eqeqeq
@@ -27385,7 +27385,7 @@ This message will only show in development mode. It won't appear in production. 
       accessibleWhenDisabled,
       isBusy,
       isDestructive,
-      className: className2,
+      className,
       disabled,
       icon,
       iconPosition = "left",
@@ -27417,7 +27417,7 @@ This message will only show in development mode. It won't appear in production. 
     const hasChildren = "string" === typeof children && !!children || Array.isArray(children) && children?.[0] && children[0] !== null && // Tooltip should not considered as a child
     children?.[0]?.props?.className !== "components-tooltip";
     const truthyAriaPressedValues = [true, "true", "mixed"];
-    const classes = clsx_default("components-button", className2, {
+    const classes = clsx_default("components-button", className, {
       "is-next-40px-default-size": __next40pxDefaultSize,
       "is-secondary": variant === "secondary",
       "is-primary": variant === "primary",
@@ -27765,7 +27765,7 @@ This message will only show in development mode. It won't appear in production. 
   function UnforwardedNumberControl(props, forwardedRef) {
     const {
       __unstableStateReducer: stateReducerProp,
-      className: className2,
+      className,
       dragDirection = "n",
       hideHTMLArrows = false,
       spinControls = hideHTMLArrows ? "none" : "native",
@@ -27805,7 +27805,7 @@ This message will only show in development mode. It won't appear in production. 
     };
     const baseValue = constrainValue(0);
     const autoComplete = typeProp === "number" ? "off" : void 0;
-    const classes = clsx_default("components-number-control", className2);
+    const classes = clsx_default("components-number-control", className);
     const cx2 = useCx();
     const spinButtonClasses = cx2(size4 === "small" && styles.smallSpinButtons);
     const spinValue = (value, direction, event) => {
@@ -28042,7 +28042,7 @@ This message will only show in development mode. It won't appear in production. 
   function AngleCircle({
     value,
     onChange,
-    className: className2,
+    className,
     ...props
   }) {
     const angleCircleRef = (0, import_element36.useRef)(null);
@@ -28099,7 +28099,7 @@ This message will only show in development mode. It won't appear in production. 
       /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("div", {
         ref: angleCircleRef,
         onMouseDown: startDrag,
-        className: clsx_default("components-angle-picker-control__angle-circle", style_module_default7["circle-root"], className2),
+        className: clsx_default("components-angle-picker-control__angle-circle", style_module_default7["circle-root"], className),
         ...props,
         children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("div", {
           style: value ? {
@@ -28130,7 +28130,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedAnglePickerControl(props, ref) {
     const {
-      className: className2,
+      className,
       label = (0, import_i18n6.__)("Angle"),
       onChange,
       value,
@@ -28143,7 +28143,7 @@ This message will only show in development mode. It won't appear in production. 
       const inputValue = unprocessedValue !== void 0 && unprocessedValue !== "" ? parseInt(unprocessedValue, 10) : 0;
       onChange(inputValue);
     };
-    const classes = clsx_default("components-angle-picker-control", className2);
+    const classes = clsx_default("components-angle-picker-control", className);
     const prefixOrSuffixProp = (0, import_i18n6.isRTL)() ? {
       prefix: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(input_prefix_wrapper_default, {
         children: "\xB0"
@@ -28399,7 +28399,7 @@ This message will only show in development mode. It won't appear in production. 
     const whileElementsMountedRef = useLatestRef(whileElementsMounted);
     const platformRef = useLatestRef(platform2);
     const openRef = useLatestRef(open);
-    const update = React10.useCallback(() => {
+    const update2 = React10.useCallback(() => {
       if (!referenceRef.current || !floatingRef.current) {
         return;
       }
@@ -28449,11 +28449,11 @@ This message will only show in development mode. It won't appear in production. 
       if (floatingEl) floatingRef.current = floatingEl;
       if (referenceEl && floatingEl) {
         if (whileElementsMountedRef.current) {
-          return whileElementsMountedRef.current(referenceEl, floatingEl, update);
+          return whileElementsMountedRef.current(referenceEl, floatingEl, update2);
         }
-        update();
+        update2();
       }
-    }, [referenceEl, floatingEl, update, whileElementsMountedRef, hasWhileElementsMounted]);
+    }, [referenceEl, floatingEl, update2, whileElementsMountedRef, hasWhileElementsMounted]);
     const refs = React10.useMemo(() => ({
       reference: referenceRef,
       floating: floatingRef,
@@ -28492,11 +28492,11 @@ This message will only show in development mode. It won't appear in production. 
     }, [strategy, transform, elements2.floating, data.x, data.y]);
     return React10.useMemo(() => ({
       ...data,
-      update,
+      update: update2,
       refs,
       elements: elements2,
       floatingStyles
-    }), [data, update, refs, elements2, floatingStyles]);
+    }), [data, update2, refs, elements2, floatingStyles]);
   }
   var arrow$1 = (options2) => {
     function isRef2(value) {
@@ -29202,7 +29202,7 @@ This message will only show in development mode. It won't appear in production. 
       constrainTabbing,
       onClose,
       children,
-      className: className2,
+      className,
       noArrow = true,
       position: position2,
       placement: placementProp = "bottom-start",
@@ -29345,7 +29345,7 @@ This message will only show in development mode. It won't appear in production. 
       refs,
       // Type of CSS position property to use (absolute or fixed)
       strategy,
-      update,
+      update: update2,
       placement: computedPlacement,
       middlewareData: {
         arrow: arrowData
@@ -29360,8 +29360,8 @@ This message will only show in development mode. It won't appear in production. 
     });
     const arrowCallbackRef = (0, import_element50.useCallback)((node2) => {
       arrowRef.current = node2;
-      update();
-    }, [update]);
+      update2();
+    }, [update2]);
     const anchorRefTop = anchorRef?.top;
     const anchorRefBottom = anchorRef?.bottom;
     const anchorRefStartContainer = anchorRef?.startContainer;
@@ -29413,7 +29413,7 @@ This message will only show in development mode. It won't appear in production. 
     };
     const isPositioned = (!shouldAnimate || animationFinished) && x2 !== null && y3 !== null;
     let content = /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(motion.div, {
-      className: clsx_default(className2, {
+      className: clsx_default(className, {
         "is-expanded": isExpanded,
         "is-positioned": isPositioned,
         // Use the 'alternate' classname for 'toolbar' variant for back compat.
@@ -29507,7 +29507,7 @@ This message will only show in development mode. It won't appear in production. 
     selectedIndex,
     instanceId,
     listBoxId,
-    className: className2,
+    className,
     Component: Component7 = "div"
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(Component7, {
@@ -29521,7 +29521,7 @@ This message will only show in development mode. It won't appear in production. 
         "aria-selected": index2 === selectedIndex,
         accessibleWhenDisabled: true,
         disabled: option.isDisabled,
-        className: clsx_default("components-autocomplete__result", className2, {
+        className: clsx_default("components-autocomplete__result", className, {
           // Unused, for backwards compatibility.
           "is-selected": index2 === selectedIndex
         }),
@@ -29536,7 +29536,7 @@ This message will only show in development mode. It won't appear in production. 
     filterValue,
     instanceId,
     listBoxId,
-    className: className2,
+    className,
     selectedIndex,
     onChangeOptions,
     onSelect,
@@ -29601,7 +29601,7 @@ This message will only show in development mode. It won't appear in production. 
           selectedIndex,
           instanceId,
           listBoxId,
-          className: className2
+          className
         })
       }), contentRef.current && needsA11yCompat && (0, import_react_dom6.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime110.jsx)(ListBox, {
         items,
@@ -29609,7 +29609,7 @@ This message will only show in development mode. It won't appear in production. 
         selectedIndex,
         instanceId,
         listBoxId,
-        className: className2,
+        className,
         Component: component_default2
       }), contentRef.current.ownerDocument.body)]
     });
@@ -29932,7 +29932,7 @@ This message will only show in development mode. It won't appear in production. 
       key: selectedKey = ""
     } = filteredOptions[selectedIndex] || {};
     const {
-      className: className2
+      className
     } = autocompleter || {};
     const isExpanded = !!autocompleter && filteredOptions.length > 0;
     const listBoxId = isExpanded ? `components-autocomplete-listbox-${instanceId}` : void 0;
@@ -29945,7 +29945,7 @@ This message will only show in development mode. It won't appear in production. 
       onKeyDown: (0, import_keycodes2.withIgnoreIMEEvents)(handleKeyDown),
       popover: showPopover && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(AutocompleterUI, {
         autocompleter,
-        className: className2,
+        className,
         filterValue,
         instanceId,
         listBoxId,
@@ -30095,13 +30095,13 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/border-box-control/border-box-control-linked-button/hook.mjs
   function useBorderBoxControlLinkedButton(props) {
     const {
-      className: className2,
+      className,
       ...otherProps
     } = useContextSystem(props, "BorderBoxControlLinkedButton");
     const cx2 = useCx();
     const classes = (0, import_element53.useMemo)(() => {
-      return cx2(borderBoxControlLinkedButton, className2);
-    }, [className2, cx2]);
+      return cx2(borderBoxControlLinkedButton, className);
+    }, [className, cx2]);
     return {
       ...otherProps,
       className: classes
@@ -30112,7 +30112,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
   var BorderBoxControlLinkedButton = (props, forwardedRef) => {
     const {
-      className: className2,
+      className,
       isLinked,
       ...buttonProps
     } = useBorderBoxControlLinkedButton(props);
@@ -30124,7 +30124,7 @@ This message will only show in development mode. It won't appear in production. 
       iconSize: 24,
       label,
       ref: forwardedRef,
-      className: className2
+      className
     });
   };
   var ConnectedBorderBoxControlLinkedButton = contextConnect(BorderBoxControlLinkedButton, "BorderBoxControlLinkedButton");
@@ -30139,14 +30139,14 @@ This message will only show in development mode. It won't appear in production. 
   var import_element54 = __toESM(require_element(), 1);
   function useBorderBoxControlVisualizer(props) {
     const {
-      className: className2,
+      className,
       value,
       ...otherProps
     } = useContextSystem(props, "BorderBoxControlVisualizer");
     const cx2 = useCx();
     const classes = (0, import_element54.useMemo)(() => {
-      return cx2(borderBoxControlVisualizer(value), className2);
-    }, [cx2, className2, value]);
+      return cx2(borderBoxControlVisualizer(value), className);
+    }, [cx2, className, value]);
     return {
       ...otherProps,
       className: classes,
@@ -30546,7 +30546,7 @@ This message will only show in development mode. It won't appear in production. 
       __nextHasNoMarginBottom: _2,
       size: _size,
       __next40pxDefaultSize: _next40pxDefaultSize,
-      className: className2,
+      className,
       isAdaptiveWidth = false,
       isBlock = false,
       isDeselectable = false,
@@ -30582,7 +30582,7 @@ This message will only show in development mode. It won't appear in production. 
       [style_module_default8["is-block"]]: isBlock,
       [style_module_default8["has-border"]]: isBlock && !isDeselectable,
       [style_module_default8["has-enclosing-borders"]]: !isDeselectable
-    }, className2);
+    }, className);
     const MainControl = isDeselectable ? ToggleGroupControlAsButtonGroup : ToggleGroupControlAsRadioGroup;
     return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(base_control_default, {
       ...baseControlProps,
@@ -30717,7 +30717,7 @@ This message will only show in development mode. It won't appear in production. 
       isDeselectable = false
     } = toggleGroupControlContext;
     const {
-      className: className2,
+      className,
       isIcon = false,
       value,
       children,
@@ -30731,7 +30731,7 @@ This message will only show in development mode. It won't appear in production. 
       [style_module_default9["is-deselectable"]]: isDeselectable,
       [style_module_default9["is-icon"]]: isIcon,
       [style_module_default9["is-pressed"]]: isPressed
-    }, className2);
+    }, className);
     const buttonOnClick = () => {
       if (isDeselectable && isPressed) {
         toggleGroupControlContext.setValue(void 0);
@@ -30875,12 +30875,12 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedColorIndicator(props, forwardedRef) {
     const {
-      className: className2,
+      className,
       colorValue,
       ...additionalProps
     } = props;
     return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)("span", {
-      className: clsx_default("component-color-indicator", className2),
+      className: clsx_default("component-color-indicator", className),
       style: {
         background: colorValue
       },
@@ -30928,7 +30928,7 @@ This message will only show in development mode. It won't appear in production. 
     const {
       renderContent,
       renderToggle,
-      className: className2,
+      className,
       contentClassName,
       expandOnMobile,
       headerTitle,
@@ -30983,7 +30983,7 @@ This message will only show in development mode. It won't appear in production. 
     // be removed from `Popover` from WordPress 6.3
     !!popoverProps?.anchorRef || !!popoverProps?.getAnchorRect || !!popoverProps?.anchorRect;
     return /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)("div", {
-      className: className2,
+      className,
       ref: (0, import_compose27.useMergeRefs)([containerRef, forwardedRef, setFallbackPopoverAnchor]),
       tabIndex: -1,
       style: style2,
@@ -31187,7 +31187,7 @@ This message will only show in development mode. It won't appear in production. 
       __nextHasNoMarginBottom: _2,
       __next40pxDefaultSize: _next40pxDefaultSize,
       __next36pxDefaultSize: _next36pxDefaultSize,
-      className: className2,
+      className,
       disabled = false,
       help,
       hideLabelFromVision,
@@ -31227,7 +31227,7 @@ This message will only show in development mode. It won't appear in production. 
         event
       });
     };
-    const classes = clsx_default("components-select-control", className2);
+    const classes = clsx_default("components-select-control", className);
     return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(base_control_default, {
       help,
       id: id3,
@@ -31540,13 +31540,13 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
   function RangeMark(props) {
     const {
-      className: className2,
+      className,
       isFilled = false,
       label,
       style: style2 = {},
       ...otherProps
     } = props;
-    const classes = clsx_default("components-range-control__mark", isFilled && "is-filled", className2);
+    const classes = clsx_default("components-range-control__mark", isFilled && "is-filled", className);
     const labelClasses = clsx_default("components-range-control__mark-label", isFilled && "is-filled");
     return /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(import_jsx_runtime126.Fragment, {
       children: [/* @__PURE__ */ (0, import_jsx_runtime126.jsx)(Mark, {
@@ -31664,7 +31664,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
   function SimpleTooltip(props) {
     const {
-      className: className2,
+      className,
       inputRef,
       tooltipPlacement: tooltipPlacement2,
       show = false,
@@ -31678,7 +31678,7 @@ This message will only show in development mode. It won't appear in production. 
       inputRef,
       tooltipPlacement: tooltipPlacement2
     });
-    const classes = clsx_default("components-simple-tooltip", className2);
+    const classes = clsx_default("components-simple-tooltip", className);
     const styles3 = {
       ...style2,
       zIndex
@@ -31740,7 +31740,7 @@ This message will only show in development mode. It won't appear in production. 
       afterIcon,
       allowReset = false,
       beforeIcon,
-      className: className2,
+      className,
       color: colorProp = COLORS.theme.accent,
       currentInput,
       disabled = false,
@@ -31792,7 +31792,7 @@ This message will only show in development mode. It won't appear in production. 
     const rangeFillValue = isValueReset ? (max2 - min2) / 2 + min2 : value;
     const fillValue = isValueReset ? 50 : (value - min2) / (max2 - min2) * 100;
     const fillValueOffset = `${clamp4(fillValue, 0, 100)}%`;
-    const classes = clsx_default("components-range-control", className2);
+    const classes = clsx_default("components-range-control", className);
     const wrapperClasses = clsx_default("components-range-control__wrapper", !!marks && "is-marked");
     const id3 = (0, import_compose29.useInstanceId)(UnforwardedRangeControl, "inspector-range-control");
     const describedBy = !!help ? `${id3}__help` : void 0;
@@ -32890,7 +32890,7 @@ This message will only show in development mode. It won't appear in production. 
   }
   var OptionAsOption = (0, import_element78.forwardRef)(UnforwardedOptionAsOption);
   function Option({
-    className: className2,
+    className,
     isSelected: isSelected2,
     selectedIconProps = {},
     tooltipText,
@@ -32917,7 +32917,7 @@ This message will only show in development mode. It won't appear in production. 
       isPressed: isSelected2
     });
     return /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)("div", {
-      className: clsx_default(className2, "components-circular-option-picker__option-wrapper"),
+      className: clsx_default(className, "components-circular-option-picker__option-wrapper"),
       children: [optionControl, isSelected2 && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(icon_default2, {
         icon: check_default,
         ...selectedIconProps
@@ -32928,7 +32928,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/circular-option-picker/circular-option-picker-option-group.mjs
   var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
   function OptionGroup({
-    className: className2,
+    className,
     options: options2,
     ...additionalProps
   }) {
@@ -32936,7 +32936,7 @@ This message will only show in development mode. It won't appear in production. 
     return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("div", {
       ...additionalProps,
       role,
-      className: clsx_default("components-circular-option-picker__option-group", "components-circular-option-picker__swatches", className2),
+      className: clsx_default("components-circular-option-picker__option-group", "components-circular-option-picker__swatches", className),
       children: options2
     });
   }
@@ -32945,12 +32945,12 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
   function DropdownLinkAction({
     buttonProps,
-    className: className2,
+    className,
     dropdownProps,
     linkText
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(dropdown_default, {
-      className: clsx_default("components-circular-option-picker__dropdown-link-action", className2),
+      className: clsx_default("components-circular-option-picker__dropdown-link-action", className),
       renderToggle: ({
         isOpen,
         onToggle
@@ -32966,13 +32966,13 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
   function ButtonAction({
-    className: className2,
+    className,
     children,
     ...additionalProps
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(button_default, {
       __next40pxDefaultSize: true,
-      className: clsx_default("components-circular-option-picker__clear", className2),
+      className: clsx_default("components-circular-option-picker__clear", className),
       variant: "tertiary",
       ...additionalProps,
       children
@@ -32986,7 +32986,7 @@ This message will only show in development mode. It won't appear in production. 
       actions,
       options: options2,
       baseId,
-      className: className2,
+      className,
       loop = true,
       children,
       ...additionalProps
@@ -32998,7 +32998,7 @@ This message will only show in development mode. It won't appear in production. 
       setActiveId
     }), [baseId, activeId, setActiveId]);
     return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("div", {
-      className: className2,
+      className,
       children: /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(CircularOptionPickerContext.Provider, {
         value: contextValue,
         children: [/* @__PURE__ */ (0, import_jsx_runtime142.jsx)(Composite22, {
@@ -33041,7 +33041,7 @@ This message will only show in development mode. It won't appear in production. 
       actions: actionsProp,
       options: optionsProp,
       children,
-      className: className2,
+      className,
       ...additionalProps
     } = props;
     const baseId = (0, import_compose33.useInstanceId)(CircularOptionPicker, "components-circular-option-picker", additionalProps.id);
@@ -33057,7 +33057,7 @@ This message will only show in development mode. It won't appear in production. 
     return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(OptionPickerImplementation, {
       ...additionalProps,
       baseId,
-      className: clsx_default("components-circular-option-picker", className2),
+      className: clsx_default("components-circular-option-picker", className),
       actions,
       options: options2,
       children
@@ -33254,7 +33254,7 @@ This message will only show in development mode. It won't appear in production. 
   function UnconnectedDropdownContentWrapper(props, forwardedRef) {
     const {
       paddingSize = "small",
-      className: className2,
+      className,
       ...derivedProps
     } = useContextSystem(props, "DropdownContentWrapper");
     return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("div", {
@@ -33262,7 +33262,7 @@ This message will only show in development mode. It won't appear in production. 
       className: clsx_default(style_module_default10["content-wrapper"], {
         [style_module_default10["padding-small"]]: paddingSize !== "none" && paddingSize !== "medium",
         [style_module_default10["padding-medium"]]: paddingSize === "medium"
-      }, className2),
+      }, className),
       ref: forwardedRef
     });
   }
@@ -33330,7 +33330,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
   k([names_default, a11y_default]);
   function SinglePalette({
-    className: className2,
+    className,
     clearColor,
     colors,
     onChange,
@@ -33362,13 +33362,13 @@ This message will only show in development mode. It won't appear in production. 
       });
     }, [colors, value, selectedSlug, onChange, clearColor]);
     return /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(circular_option_picker_default2.OptionGroup, {
-      className: className2,
+      className,
       options: colorOptions,
       ...additionalProps
     });
   }
   function MultiplePalettes({
-    className: className2,
+    className,
     clearColor,
     colors,
     onChange,
@@ -33382,7 +33382,7 @@ This message will only show in development mode. It won't appear in production. 
     }
     return /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(component_default18, {
       spacing: 3,
-      className: className2,
+      className,
       children: colors.map(({
         name,
         colors: colorPalette
@@ -33932,7 +33932,7 @@ This message will only show in development mode. It won't appear in production. 
   function useBorderControlDropdown(props) {
     const {
       border,
-      className: className2,
+      className,
       colors = [],
       enableAlpha = false,
       enableStyle = true,
@@ -33969,8 +33969,8 @@ This message will only show in development mode. It won't appear in production. 
     };
     const cx2 = useCx();
     const classes = (0, import_element81.useMemo)(() => {
-      return cx2(borderControlDropdown, className2);
-    }, [className2, cx2]);
+      return cx2(borderControlDropdown, className);
+    }, [className, cx2]);
     const indicatorClassName = (0, import_element81.useMemo)(() => {
       return cx2(borderColorIndicator);
     }, [cx2]);
@@ -34179,7 +34179,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_element82 = __toESM(require_element(), 1);
   var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
   function UnitSelectControl({
-    className: className2,
+    className,
     isUnitSelectTabbable: isTabbable2 = true,
     onChange,
     size: size4 = "default",
@@ -34204,7 +34204,7 @@ This message will only show in development mode. It won't appear in production. 
         data
       });
     };
-    const classes = clsx_default("components-unit-control__select", className2);
+    const classes = clsx_default("components-unit-control__select", className);
     return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(UnitSelect, {
       ref,
       className: classes,
@@ -34229,7 +34229,7 @@ This message will only show in development mode. It won't appear in production. 
       autoComplete = "off",
       // @ts-expect-error Ensure that children is omitted from restProps
       children,
-      className: className2,
+      className,
       disabled = false,
       disableUnits = false,
       isPressEnterToChange = false,
@@ -34281,7 +34281,7 @@ This message will only show in development mode. It won't appear in production. 
       // This class is added for legacy purposes to maintain it on the outer
       // wrapper. See: https://github.com/WordPress/gutenberg/pull/45139
       "components-unit-control-wrapper",
-      className2
+      className
     );
     const handleOnQuantityChange = (nextQuantityValue, changeProps) => {
       if (nextQuantityValue === "" || typeof nextQuantityValue === "undefined" || nextQuantityValue === null) {
@@ -34363,7 +34363,7 @@ This message will only show in development mode. It won't appear in production. 
   };
   function useBorderControl(props) {
     const {
-      className: className2,
+      className,
       colors = [],
       isCompact,
       onChange,
@@ -34420,8 +34420,8 @@ This message will only show in development mode. It won't appear in production. 
     }, [onWidthChange, widthUnit]);
     const cx2 = useCx();
     const classes = (0, import_element84.useMemo)(() => {
-      return cx2(borderControl, className2);
-    }, [className2, cx2]);
+      return cx2(borderControl, className);
+    }, [className, cx2]);
     let wrapperWidth2 = width;
     if (isCompact) {
       wrapperWidth2 = "116px";
@@ -34612,7 +34612,7 @@ This message will only show in development mode. It won't appear in production. 
     const {
       align,
       alignment,
-      className: className2,
+      className,
       columnGap,
       columns = 2,
       gap = 3,
@@ -34645,8 +34645,8 @@ This message will only show in development mode. It won't appear in production. 
         verticalAlign: isInline ? "middle" : void 0,
         ...alignmentProps
       }, false ? "" : ";label:gridClasses;", false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImhvb2sudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBNENzQiIsImZpbGUiOiJob29rLnRzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHsgdXNlTWVtbyB9IGZyb20gJ0B3b3JkcHJlc3MvZWxlbWVudCc7XG5pbXBvcnQgdHlwZSB7IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzIH0gZnJvbSAnLi4vY29udGV4dCc7XG5pbXBvcnQgeyB1c2VDb250ZXh0U3lzdGVtIH0gZnJvbSAnLi4vY29udGV4dCc7XG5pbXBvcnQgeyBnZXRBbGlnbm1lbnRQcm9wcyB9IGZyb20gJy4vdXRpbHMnO1xuaW1wb3J0IHsgdXNlUmVzcG9uc2l2ZVZhbHVlIH0gZnJvbSAnLi4vdXRpbHMvdXNlLXJlc3BvbnNpdmUtdmFsdWUnO1xuaW1wb3J0IENPTkZJRyBmcm9tICcuLi91dGlscy9jb25maWctdmFsdWVzJztcbmltcG9ydCB7IHVzZUN4IH0gZnJvbSAnLi4vdXRpbHMvaG9va3MvdXNlLWN4JztcbmltcG9ydCB0eXBlIHsgR3JpZFByb3BzIH0gZnJvbSAnLi90eXBlcyc7XG5cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIHVzZUdyaWQoXG5cdHByb3BzOiBXb3JkUHJlc3NDb21wb25lbnRQcm9wczwgR3JpZFByb3BzLCAnZGl2JyA+XG4pIHtcblx0Y29uc3Qge1xuXHRcdGFsaWduLFxuXHRcdGFsaWdubWVudCxcblx0XHRjbGFzc05hbWUsXG5cdFx0Y29sdW1uR2FwLFxuXHRcdGNvbHVtbnMgPSAyLFxuXHRcdGdhcCA9IDMsXG5cdFx0aXNJbmxpbmUgPSBmYWxzZSxcblx0XHRqdXN0aWZ5LFxuXHRcdHJvd0dhcCxcblx0XHRyb3dzLFxuXHRcdHRlbXBsYXRlQ29sdW1ucyxcblx0XHR0ZW1wbGF0ZVJvd3MsXG5cdFx0Li4ub3RoZXJQcm9wc1xuXHR9ID0gdXNlQ29udGV4dFN5c3RlbSggcHJvcHMsICdHcmlkJyApO1xuXG5cdGNvbnN0IGNvbHVtbnNBc0FycmF5ID0gQXJyYXkuaXNBcnJheSggY29sdW1ucyApID8gY29sdW1ucyA6IFsgY29sdW1ucyBdO1xuXHRjb25zdCBjb2x1bW4gPSB1c2VSZXNwb25zaXZlVmFsdWUoIGNvbHVtbnNBc0FycmF5ICk7XG5cdGNvbnN0IHJvd3NBc0FycmF5ID0gQXJyYXkuaXNBcnJheSggcm93cyApID8gcm93cyA6IFsgcm93cyBdO1xuXHRjb25zdCByb3cgPSB1c2VSZXNwb25zaXZlVmFsdWUoIHJvd3NBc0FycmF5ICk7XG5cblx0Y29uc3QgZ3JpZFRlbXBsYXRlQ29sdW1ucyA9XG5cdFx0dGVtcGxhdGVDb2x1bW5zIHx8ICggISEgY29sdW1ucyAmJiBgcmVwZWF0KCAkeyBjb2x1bW4gfSwgMWZyIClgICk7XG5cdGNvbnN0IGdyaWRUZW1wbGF0ZVJvd3MgPVxuXHRcdHRlbXBsYXRlUm93cyB8fCAoICEhIHJvd3MgJiYgYHJlcGVhdCggJHsgcm93IH0sIDFmciApYCApO1xuXG5cdGNvbnN0IGN4ID0gdXNlQ3goKTtcblxuXHRjb25zdCBjbGFzc2VzID0gdXNlTWVtbyggKCkgPT4ge1xuXHRcdGNvbnN0IGFsaWdubWVudFByb3BzID0gZ2V0QWxpZ25tZW50UHJvcHMoIGFsaWdubWVudCApO1xuXG5cdFx0Y29uc3QgZ3JpZENsYXNzZXMgPSBjc3MoIHtcblx0XHRcdGFsaWduSXRlbXM6IGFsaWduLFxuXHRcdFx0ZGlzcGxheTogaXNJbmxpbmUgPyAnaW5saW5lLWdyaWQnIDogJ2dyaWQnLFxuXHRcdFx0Z2FwOiBgY2FsYyggJHsgQ09ORklHLmdyaWRCYXNlIH0gKiAkeyBnYXAgfSApYCxcblx0XHRcdGdyaWRUZW1wbGF0ZUNvbHVtbnM6IGdyaWRUZW1wbGF0ZUNvbHVtbnMgfHwgdW5kZWZpbmVkLFxuXHRcdFx0Z3JpZFRlbXBsYXRlUm93czogZ3JpZFRlbXBsYXRlUm93cyB8fCB1bmRlZmluZWQsXG5cdFx0XHRncmlkUm93R2FwOiByb3dHYXAsXG5cdFx0XHRncmlkQ29sdW1uR2FwOiBjb2x1bW5HYXAsXG5cdFx0XHRqdXN0aWZ5Q29udGVudDoganVzdGlmeSxcblx0XHRcdHZlcnRpY2FsQWxpZ246IGlzSW5saW5lID8gJ21pZGRsZScgOiB1bmRlZmluZWQsXG5cdFx0XHQuLi5hbGlnbm1lbnRQcm9wcyxcblx0XHR9ICk7XG5cblx0XHRyZXR1cm4gY3goIGdyaWRDbGFzc2VzLCBjbGFzc05hbWUgKTtcblx0fSwgW1xuXHRcdGFsaWduLFxuXHRcdGFsaWdubWVudCxcblx0XHRjbGFzc05hbWUsXG5cdFx0Y29sdW1uR2FwLFxuXHRcdGN4LFxuXHRcdGdhcCxcblx0XHRncmlkVGVtcGxhdGVDb2x1bW5zLFxuXHRcdGdyaWRUZW1wbGF0ZVJvd3MsXG5cdFx0aXNJbmxpbmUsXG5cdFx0anVzdGlmeSxcblx0XHRyb3dHYXAsXG5cdF0gKTtcblxuXHRyZXR1cm4geyAuLi5vdGhlclByb3BzLCBjbGFzc05hbWU6IGNsYXNzZXMgfTtcbn1cbiJdfQ== */");
-      return cx2(gridClasses, className2);
-    }, [align, alignment, className2, columnGap, cx2, gap, gridTemplateColumns, gridTemplateRows, isInline, justify, rowGap]);
+      return cx2(gridClasses, className);
+    }, [align, alignment, className, columnGap, cx2, gap, gridTemplateColumns, gridTemplateRows, isInline, justify, rowGap]);
     return {
       ...otherProps,
       className: classes
@@ -34669,7 +34669,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_element86 = __toESM(require_element(), 1);
   function useBorderBoxControlSplitControls(props) {
     const {
-      className: className2,
+      className,
       colors = [],
       enableAlpha = false,
       enableStyle = true,
@@ -34678,14 +34678,14 @@ This message will only show in development mode. It won't appear in production. 
     } = useContextSystem(props, "BorderBoxControlSplitControls");
     const cx2 = useCx();
     const classes = (0, import_element86.useMemo)(() => {
-      return cx2(borderBoxControlSplitControls, className2);
-    }, [cx2, className2]);
+      return cx2(borderBoxControlSplitControls, className);
+    }, [cx2, className]);
     const centeredClassName = (0, import_element86.useMemo)(() => {
-      return cx2(centeredBorderControl, className2);
-    }, [cx2, className2]);
+      return cx2(centeredBorderControl, className);
+    }, [cx2, className]);
     const rightAlignedClassName = (0, import_element86.useMemo)(() => {
-      return cx2(rightBorderControl(), className2);
-    }, [cx2, className2]);
+      return cx2(rightBorderControl(), className);
+    }, [cx2, className]);
     return {
       ...otherProps,
       centeredClassName,
@@ -34914,7 +34914,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/border-box-control/border-box-control/hook.mjs
   function useBorderBoxControl(props) {
     const {
-      className: className2,
+      className,
       colors = [],
       onChange,
       enableAlpha = false,
@@ -34978,8 +34978,8 @@ This message will only show in development mode. It won't appear in production. 
     };
     const cx2 = useCx();
     const classes = (0, import_element88.useMemo)(() => {
-      return cx2(borderBoxControl, className2);
-    }, [cx2, className2]);
+      return cx2(borderBoxControl, className);
+    }, [cx2, className]);
     const linkedControlClassName = (0, import_element88.useMemo)(() => {
       return cx2(linkedBorderControl());
     }, [cx2]);
@@ -35025,7 +35025,7 @@ This message will only show in development mode. It won't appear in production. 
   };
   var UnconnectedBorderBoxControl = (props, forwardedRef) => {
     const {
-      className: className2,
+      className,
       colors,
       disableCustomColors,
       disableUnits,
@@ -35056,7 +35056,7 @@ This message will only show in development mode. It won't appear in production. 
     } : void 0, [popoverPlacement, popoverOffset, popoverAnchor]);
     const mergedRef = (0, import_compose36.useMergeRefs)([setPopoverAnchor, forwardedRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(component_default, {
-      className: className2,
+      className,
       ...otherProps,
       ref: mergedRef,
       children: [/* @__PURE__ */ (0, import_jsx_runtime153.jsx)(BorderLabel2, {
@@ -35881,11 +35881,11 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime158 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedButtonGroup(props, ref) {
     const {
-      className: className2,
+      className,
       __shouldNotWarnDeprecated,
       ...restProps
     } = props;
-    const classes = clsx_default("components-button-group", className2);
+    const classes = clsx_default("components-button-group", className);
     if (!__shouldNotWarnDeprecated) {
       (0, import_deprecated9.default)("wp.components.ButtonGroup", {
         since: "6.8",
@@ -35933,7 +35933,7 @@ This message will only show in development mode. It won't appear in production. 
     const {
       active,
       borderRadius: borderRadius2 = "inherit",
-      className: className2,
+      className,
       focus: focus4,
       hover: hover2,
       isInteractive = false,
@@ -35970,8 +35970,8 @@ This message will only show in development mode. It won't appear in production. 
         sx.focus = /* @__PURE__ */ css("*:focus>&{box-shadow:", getBoxShadow(focus4), ";}" + (false ? "" : ";label:sx-focus;"), false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImhvb2sudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBNEZpQiIsImZpbGUiOiJob29rLnRzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHR5cGUgeyBTZXJpYWxpemVkU3R5bGVzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHsgdXNlTWVtbyB9IGZyb20gJ0B3b3JkcHJlc3MvZWxlbWVudCc7XG5pbXBvcnQgdHlwZSB7IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzIH0gZnJvbSAnLi4vY29udGV4dCc7XG5pbXBvcnQgeyB1c2VDb250ZXh0U3lzdGVtIH0gZnJvbSAnLi4vY29udGV4dCc7XG5pbXBvcnQgKiBhcyBzdHlsZXMgZnJvbSAnLi9zdHlsZXMnO1xuaW1wb3J0IHsgQ09ORklHIH0gZnJvbSAnLi4vdXRpbHMnO1xuaW1wb3J0IHsgdXNlQ3ggfSBmcm9tICcuLi91dGlscy9ob29rcy91c2UtY3gnO1xuaW1wb3J0IHsgaXNWYWx1ZURlZmluZWQgfSBmcm9tICcuLi91dGlscy92YWx1ZXMnO1xuaW1wb3J0IHR5cGUgeyBFbGV2YXRpb25Qcm9wcyB9IGZyb20gJy4vdHlwZXMnO1xuXG5leHBvcnQgZnVuY3Rpb24gZ2V0Qm94U2hhZG93KCB2YWx1ZTogbnVtYmVyICkge1xuXHRjb25zdCBib3hTaGFkb3dDb2xvciA9IGByZ2JhKDAsIDAsIDAsICR7IHZhbHVlIC8gMjAgfSlgO1xuXHRjb25zdCBib3hTaGFkb3cgPSBgMCAkeyB2YWx1ZSB9cHggJHsgdmFsdWUgKiAyIH1weCAwXG5cdCR7IGJveFNoYWRvd0NvbG9yIH1gO1xuXG5cdHJldHVybiBib3hTaGFkb3c7XG59XG5cbmV4cG9ydCBmdW5jdGlvbiB1c2VFbGV2YXRpb24oXG5cdHByb3BzOiBXb3JkUHJlc3NDb21wb25lbnRQcm9wczwgRWxldmF0aW9uUHJvcHMsICdkaXYnID5cbikge1xuXHRjb25zdCB7XG5cdFx0YWN0aXZlLFxuXHRcdGJvcmRlclJhZGl1cyA9ICdpbmhlcml0Jyxcblx0XHRjbGFzc05hbWUsXG5cdFx0Zm9jdXMsXG5cdFx0aG92ZXIsXG5cdFx0aXNJbnRlcmFjdGl2ZSA9IGZhbHNlLFxuXHRcdG9mZnNldCA9IDAsXG5cdFx0dmFsdWUgPSAwLFxuXHRcdC4uLm90aGVyUHJvcHNcblx0fSA9IHVzZUNvbnRleHRTeXN0ZW0oIHByb3BzLCAnRWxldmF0aW9uJyApO1xuXG5cdGNvbnN0IGN4ID0gdXNlQ3goKTtcblxuXHRjb25zdCBjbGFzc2VzID0gdXNlTWVtbyggKCkgPT4ge1xuXHRcdGxldCBob3ZlclZhbHVlOiBudW1iZXIgfCB1bmRlZmluZWQgPSBpc1ZhbHVlRGVmaW5lZCggaG92ZXIgKVxuXHRcdFx0PyBob3ZlclxuXHRcdFx0OiB2YWx1ZSAqIDI7XG5cdFx0bGV0IGFjdGl2ZVZhbHVlOiBudW1iZXIgfCB1bmRlZmluZWQgPSBpc1ZhbHVlRGVmaW5lZCggYWN0aXZlIClcblx0XHRcdD8gYWN0aXZlXG5cdFx0XHQ6IHZhbHVlIC8gMjtcblxuXHRcdGlmICggISBpc0ludGVyYWN0aXZlICkge1xuXHRcdFx0aG92ZXJWYWx1ZSA9IGlzVmFsdWVEZWZpbmVkKCBob3ZlciApID8gaG92ZXIgOiB1bmRlZmluZWQ7XG5cdFx0XHRhY3RpdmVWYWx1ZSA9IGlzVmFsdWVEZWZpbmVkKCBhY3RpdmUgKSA/IGFjdGl2ZSA6IHVuZGVmaW5lZDtcblx0XHR9XG5cblx0XHRjb25zdCB0cmFuc2l0aW9uID0gYGJveC1zaGFkb3cgJHsgQ09ORklHLnRyYW5zaXRpb25EdXJhdGlvbiB9ICR7IENPTkZJRy50cmFuc2l0aW9uVGltaW5nRnVuY3Rpb24gfWA7XG5cblx0XHRjb25zdCBzeDoge1xuXHRcdFx0QmFzZT86IFNlcmlhbGl6ZWRTdHlsZXM7XG5cdFx0XHRob3Zlcj86IFNlcmlhbGl6ZWRTdHlsZXM7XG5cdFx0XHRhY3RpdmU/OiBTZXJpYWxpemVkU3R5bGVzO1xuXHRcdFx0Zm9jdXM/OiBTZXJpYWxpemVkU3R5bGVzO1xuXHRcdH0gPSB7fTtcblxuXHRcdHN4LkJhc2UgPSBjc3MoXG5cdFx0XHR7XG5cdFx0XHRcdGJvcmRlclJhZGl1cyxcblx0XHRcdFx0Ym90dG9tOiBvZmZzZXQsXG5cdFx0XHRcdGJveFNoYWRvdzogZ2V0Qm94U2hhZG93KCB2YWx1ZSApLFxuXHRcdFx0XHRvcGFjaXR5OiBDT05GSUcuZWxldmF0aW9uSW50ZW5zaXR5LFxuXHRcdFx0XHRsZWZ0OiBvZmZzZXQsXG5cdFx0XHRcdHJpZ2h0OiBvZmZzZXQsXG5cdFx0XHRcdHRvcDogb2Zmc2V0LFxuXHRcdFx0fSxcblx0XHRcdGNzc2Bcblx0XHRcdFx0QG1lZGlhIG5vdCAoIHByZWZlcnMtcmVkdWNlZC1tb3Rpb24gKSB7XG5cdFx0XHRcdFx0dHJhbnNpdGlvbjogJHsgdHJhbnNpdGlvbiB9O1xuXHRcdFx0XHR9XG5cdFx0XHRgXG5cdFx0KTtcblxuXHRcdGlmICggaXNWYWx1ZURlZmluZWQoIGhvdmVyVmFsdWUgKSApIHtcblx0XHRcdHN4LmhvdmVyID0gY3NzYFxuXHRcdFx0XHQqOmhvdmVyID4gJiB7XG5cdFx0XHRcdFx0Ym94LXNoYWRvdzogJHsgZ2V0Qm94U2hhZG93KCBob3ZlclZhbHVlICkgfTtcblx0XHRcdFx0fVxuXHRcdFx0YDtcblx0XHR9XG5cblx0XHRpZiAoIGlzVmFsdWVEZWZpbmVkKCBhY3RpdmVWYWx1ZSApICkge1xuXHRcdFx0c3guYWN0aXZlID0gY3NzYFxuXHRcdFx0XHQqOmFjdGl2ZSA+ICYge1xuXHRcdFx0XHRcdGJveC1zaGFkb3c6ICR7IGdldEJveFNoYWRvdyggYWN0aXZlVmFsdWUgKSB9O1xuXHRcdFx0XHR9XG5cdFx0XHRgO1xuXHRcdH1cblxuXHRcdGlmICggaXNWYWx1ZURlZmluZWQoIGZvY3VzICkgKSB7XG5cdFx0XHRzeC5mb2N1cyA9IGNzc2Bcblx0XHRcdFx0Kjpmb2N1cyA+ICYge1xuXHRcdFx0XHRcdGJveC1zaGFkb3c6ICR7IGdldEJveFNoYWRvdyggZm9jdXMgKSB9O1xuXHRcdFx0XHR9XG5cdFx0XHRgO1xuXHRcdH1cblxuXHRcdGNvbnN0IGVsZXZhdGlvblN0eWxlcyA9IGNzcyhcblx0XHRcdHN0eWxlcy5FbGV2YXRpb24sXG5cdFx0XHRzeC5CYXNlLFxuXHRcdFx0c3guaG92ZXIsXG5cdFx0XHRzeC5mb2N1cyxcblx0XHRcdHN4LmFjdGl2ZVxuXHRcdCk7XG5cblx0XHRyZXR1cm4gY3goIGVsZXZhdGlvblN0eWxlcywgY2xhc3NOYW1lICk7XG5cdH0sIFtcblx0XHRhY3RpdmUsXG5cdFx0Ym9yZGVyUmFkaXVzLFxuXHRcdGNsYXNzTmFtZSxcblx0XHRjeCxcblx0XHRmb2N1cyxcblx0XHRob3Zlcixcblx0XHRpc0ludGVyYWN0aXZlLFxuXHRcdG9mZnNldCxcblx0XHR2YWx1ZSxcblx0XSApO1xuXG5cdHJldHVybiB7IC4uLm90aGVyUHJvcHMsIGNsYXNzTmFtZTogY2xhc3NlcywgJ2FyaWEtaGlkZGVuJzogdHJ1ZSB9O1xufVxuIl19 */");
       }
       const elevationStyles = /* @__PURE__ */ css(Elevation, sx.Base, sx.hover, sx.focus, sx.active, false ? "" : ";label:elevationStyles;", false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImhvb2sudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBbUcwQiIsImZpbGUiOiJob29rLnRzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHR5cGUgeyBTZXJpYWxpemVkU3R5bGVzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHsgdXNlTWVtbyB9IGZyb20gJ0B3b3JkcHJlc3MvZWxlbWVudCc7XG5pbXBvcnQgdHlwZSB7IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzIH0gZnJvbSAnLi4vY29udGV4dCc7XG5pbXBvcnQgeyB1c2VDb250ZXh0U3lzdGVtIH0gZnJvbSAnLi4vY29udGV4dCc7XG5pbXBvcnQgKiBhcyBzdHlsZXMgZnJvbSAnLi9zdHlsZXMnO1xuaW1wb3J0IHsgQ09ORklHIH0gZnJvbSAnLi4vdXRpbHMnO1xuaW1wb3J0IHsgdXNlQ3ggfSBmcm9tICcuLi91dGlscy9ob29rcy91c2UtY3gnO1xuaW1wb3J0IHsgaXNWYWx1ZURlZmluZWQgfSBmcm9tICcuLi91dGlscy92YWx1ZXMnO1xuaW1wb3J0IHR5cGUgeyBFbGV2YXRpb25Qcm9wcyB9IGZyb20gJy4vdHlwZXMnO1xuXG5leHBvcnQgZnVuY3Rpb24gZ2V0Qm94U2hhZG93KCB2YWx1ZTogbnVtYmVyICkge1xuXHRjb25zdCBib3hTaGFkb3dDb2xvciA9IGByZ2JhKDAsIDAsIDAsICR7IHZhbHVlIC8gMjAgfSlgO1xuXHRjb25zdCBib3hTaGFkb3cgPSBgMCAkeyB2YWx1ZSB9cHggJHsgdmFsdWUgKiAyIH1weCAwXG5cdCR7IGJveFNoYWRvd0NvbG9yIH1gO1xuXG5cdHJldHVybiBib3hTaGFkb3c7XG59XG5cbmV4cG9ydCBmdW5jdGlvbiB1c2VFbGV2YXRpb24oXG5cdHByb3BzOiBXb3JkUHJlc3NDb21wb25lbnRQcm9wczwgRWxldmF0aW9uUHJvcHMsICdkaXYnID5cbikge1xuXHRjb25zdCB7XG5cdFx0YWN0aXZlLFxuXHRcdGJvcmRlclJhZGl1cyA9ICdpbmhlcml0Jyxcblx0XHRjbGFzc05hbWUsXG5cdFx0Zm9jdXMsXG5cdFx0aG92ZXIsXG5cdFx0aXNJbnRlcmFjdGl2ZSA9IGZhbHNlLFxuXHRcdG9mZnNldCA9IDAsXG5cdFx0dmFsdWUgPSAwLFxuXHRcdC4uLm90aGVyUHJvcHNcblx0fSA9IHVzZUNvbnRleHRTeXN0ZW0oIHByb3BzLCAnRWxldmF0aW9uJyApO1xuXG5cdGNvbnN0IGN4ID0gdXNlQ3goKTtcblxuXHRjb25zdCBjbGFzc2VzID0gdXNlTWVtbyggKCkgPT4ge1xuXHRcdGxldCBob3ZlclZhbHVlOiBudW1iZXIgfCB1bmRlZmluZWQgPSBpc1ZhbHVlRGVmaW5lZCggaG92ZXIgKVxuXHRcdFx0PyBob3ZlclxuXHRcdFx0OiB2YWx1ZSAqIDI7XG5cdFx0bGV0IGFjdGl2ZVZhbHVlOiBudW1iZXIgfCB1bmRlZmluZWQgPSBpc1ZhbHVlRGVmaW5lZCggYWN0aXZlIClcblx0XHRcdD8gYWN0aXZlXG5cdFx0XHQ6IHZhbHVlIC8gMjtcblxuXHRcdGlmICggISBpc0ludGVyYWN0aXZlICkge1xuXHRcdFx0aG92ZXJWYWx1ZSA9IGlzVmFsdWVEZWZpbmVkKCBob3ZlciApID8gaG92ZXIgOiB1bmRlZmluZWQ7XG5cdFx0XHRhY3RpdmVWYWx1ZSA9IGlzVmFsdWVEZWZpbmVkKCBhY3RpdmUgKSA/IGFjdGl2ZSA6IHVuZGVmaW5lZDtcblx0XHR9XG5cblx0XHRjb25zdCB0cmFuc2l0aW9uID0gYGJveC1zaGFkb3cgJHsgQ09ORklHLnRyYW5zaXRpb25EdXJhdGlvbiB9ICR7IENPTkZJRy50cmFuc2l0aW9uVGltaW5nRnVuY3Rpb24gfWA7XG5cblx0XHRjb25zdCBzeDoge1xuXHRcdFx0QmFzZT86IFNlcmlhbGl6ZWRTdHlsZXM7XG5cdFx0XHRob3Zlcj86IFNlcmlhbGl6ZWRTdHlsZXM7XG5cdFx0XHRhY3RpdmU/OiBTZXJpYWxpemVkU3R5bGVzO1xuXHRcdFx0Zm9jdXM/OiBTZXJpYWxpemVkU3R5bGVzO1xuXHRcdH0gPSB7fTtcblxuXHRcdHN4LkJhc2UgPSBjc3MoXG5cdFx0XHR7XG5cdFx0XHRcdGJvcmRlclJhZGl1cyxcblx0XHRcdFx0Ym90dG9tOiBvZmZzZXQsXG5cdFx0XHRcdGJveFNoYWRvdzogZ2V0Qm94U2hhZG93KCB2YWx1ZSApLFxuXHRcdFx0XHRvcGFjaXR5OiBDT05GSUcuZWxldmF0aW9uSW50ZW5zaXR5LFxuXHRcdFx0XHRsZWZ0OiBvZmZzZXQsXG5cdFx0XHRcdHJpZ2h0OiBvZmZzZXQsXG5cdFx0XHRcdHRvcDogb2Zmc2V0LFxuXHRcdFx0fSxcblx0XHRcdGNzc2Bcblx0XHRcdFx0QG1lZGlhIG5vdCAoIHByZWZlcnMtcmVkdWNlZC1tb3Rpb24gKSB7XG5cdFx0XHRcdFx0dHJhbnNpdGlvbjogJHsgdHJhbnNpdGlvbiB9O1xuXHRcdFx0XHR9XG5cdFx0XHRgXG5cdFx0KTtcblxuXHRcdGlmICggaXNWYWx1ZURlZmluZWQoIGhvdmVyVmFsdWUgKSApIHtcblx0XHRcdHN4LmhvdmVyID0gY3NzYFxuXHRcdFx0XHQqOmhvdmVyID4gJiB7XG5cdFx0XHRcdFx0Ym94LXNoYWRvdzogJHsgZ2V0Qm94U2hhZG93KCBob3ZlclZhbHVlICkgfTtcblx0XHRcdFx0fVxuXHRcdFx0YDtcblx0XHR9XG5cblx0XHRpZiAoIGlzVmFsdWVEZWZpbmVkKCBhY3RpdmVWYWx1ZSApICkge1xuXHRcdFx0c3guYWN0aXZlID0gY3NzYFxuXHRcdFx0XHQqOmFjdGl2ZSA+ICYge1xuXHRcdFx0XHRcdGJveC1zaGFkb3c6ICR7IGdldEJveFNoYWRvdyggYWN0aXZlVmFsdWUgKSB9O1xuXHRcdFx0XHR9XG5cdFx0XHRgO1xuXHRcdH1cblxuXHRcdGlmICggaXNWYWx1ZURlZmluZWQoIGZvY3VzICkgKSB7XG5cdFx0XHRzeC5mb2N1cyA9IGNzc2Bcblx0XHRcdFx0Kjpmb2N1cyA+ICYge1xuXHRcdFx0XHRcdGJveC1zaGFkb3c6ICR7IGdldEJveFNoYWRvdyggZm9jdXMgKSB9O1xuXHRcdFx0XHR9XG5cdFx0XHRgO1xuXHRcdH1cblxuXHRcdGNvbnN0IGVsZXZhdGlvblN0eWxlcyA9IGNzcyhcblx0XHRcdHN0eWxlcy5FbGV2YXRpb24sXG5cdFx0XHRzeC5CYXNlLFxuXHRcdFx0c3guaG92ZXIsXG5cdFx0XHRzeC5mb2N1cyxcblx0XHRcdHN4LmFjdGl2ZVxuXHRcdCk7XG5cblx0XHRyZXR1cm4gY3goIGVsZXZhdGlvblN0eWxlcywgY2xhc3NOYW1lICk7XG5cdH0sIFtcblx0XHRhY3RpdmUsXG5cdFx0Ym9yZGVyUmFkaXVzLFxuXHRcdGNsYXNzTmFtZSxcblx0XHRjeCxcblx0XHRmb2N1cyxcblx0XHRob3Zlcixcblx0XHRpc0ludGVyYWN0aXZlLFxuXHRcdG9mZnNldCxcblx0XHR2YWx1ZSxcblx0XSApO1xuXG5cdHJldHVybiB7IC4uLm90aGVyUHJvcHMsIGNsYXNzTmFtZTogY2xhc3NlcywgJ2FyaWEtaGlkZGVuJzogdHJ1ZSB9O1xufVxuIl19 */");
-      return cx2(elevationStyles, className2);
-    }, [active, borderRadius2, className2, cx2, focus4, hover2, isInteractive, offset4, value]);
+      return cx2(elevationStyles, className);
+    }, [active, borderRadius2, className, cx2, focus4, hover2, isInteractive, offset4, value]);
     return {
       ...otherProps,
       className: classes,
@@ -36237,7 +36237,7 @@ This message will only show in development mode. It won't appear in production. 
       borderLeft = false,
       borderRight = false,
       borderTop = false,
-      className: className2,
+      className,
       style: style2,
       variant = "primary",
       ...otherProps
@@ -36258,7 +36258,7 @@ This message will only show in development mode. It won't appear in production. 
         [style_module_default11.secondary]: variant === "secondary",
         [style_module_default11.dotted]: variant === "dotted",
         [style_module_default11.grid]: variant === "grid"
-      }, className2),
+      }, className),
       style: surfaceStyle
     };
   }
@@ -36303,7 +36303,7 @@ This message will only show in development mode. It won't appear in production. 
   }
   function useCard(props) {
     const {
-      className: className2,
+      className,
       elevation = 0,
       isBorderless = false,
       isRounded = true,
@@ -36315,8 +36315,8 @@ This message will only show in development mode. It won't appear in production. 
       return cx2(getCardStyles({
         isBorderless,
         isRounded
-      }), className2);
-    }, [className2, cx2, isBorderless, isRounded]);
+      }), className);
+    }, [className, cx2, isBorderless, isRounded]);
     const surfaceProps = useSurface({
       ...otherProps,
       className: classes
@@ -36432,13 +36432,13 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/scrollable/hook.mjs
   function useScrollable(props) {
     const {
-      className: className2,
+      className,
       scrollDirection = "y",
       smoothScroll: smoothScroll2 = false,
       ...otherProps
     } = useContextSystem(props, "Scrollable");
     const cx2 = useCx();
-    const classes = (0, import_element96.useMemo)(() => cx2(Scrollable, scrollableScrollbar, smoothScroll2 && smoothScroll, scrollDirection === "x" && scrollX, scrollDirection === "y" && scrollY, scrollDirection === "auto" && scrollAuto, className2), [className2, cx2, scrollDirection, smoothScroll2]);
+    const classes = (0, import_element96.useMemo)(() => cx2(Scrollable, scrollableScrollbar, smoothScroll2 && smoothScroll, scrollDirection === "x" && scrollX, scrollDirection === "y" && scrollY, scrollDirection === "auto" && scrollAuto, className), [className, cx2, scrollDirection, smoothScroll2]);
     return {
       ...otherProps,
       className: classes
@@ -36461,7 +36461,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_element97 = __toESM(require_element(), 1);
   function useCardBody(props) {
     const {
-      className: className2,
+      className,
       isScrollable = false,
       isShady = false,
       size: size4 = "medium",
@@ -36475,8 +36475,8 @@ This message will only show in development mode. It won't appear in production. 
       isShady && shady,
       // This classname is added for legacy compatibility reasons.
       "components-card__body",
-      className2
-    ), [className2, cx2, isShady, size4]);
+      className
+    ), [className, cx2, isShady, size4]);
     return {
       ...otherProps,
       className: classes,
@@ -36588,7 +36588,7 @@ This message will only show in development mode. It won't appear in production. 
   var style_module_default12 = { "divider": "e10c29fc10c181dc__divider" };
   function UnconnectedDivider(props, forwardedRef) {
     const {
-      className: className2,
+      className,
       margin,
       marginEnd,
       marginStart,
@@ -36607,7 +36607,7 @@ This message will only show in development mode. It won't appear in production. 
       dividerStyle["--wp-components-divider-margin-end"] = resolvedMarginEnd;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(Separator, {
-      className: clsx_default(style_module_default12.divider, className2),
+      className: clsx_default(style_module_default12.divider, className),
       style: dividerStyle,
       ...contextProps,
       ref: forwardedRef
@@ -36620,7 +36620,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_element98 = __toESM(require_element(), 1);
   function useCardDivider(props) {
     const {
-      className: className2,
+      className,
       ...otherProps
     } = useContextSystem(props, "CardDivider");
     const cx2 = useCx();
@@ -36629,8 +36629,8 @@ This message will only show in development mode. It won't appear in production. 
       borderColor,
       // This classname is added for legacy compatibility reasons.
       "components-card__divider",
-      className2
-    ), [className2, cx2]);
+      className
+    ), [className, cx2]);
     return {
       ...otherProps,
       className: classes
@@ -36653,7 +36653,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_element99 = __toESM(require_element(), 1);
   function useCardFooter(props) {
     const {
-      className: className2,
+      className,
       justify,
       isBorderless = false,
       isShady = false,
@@ -36670,9 +36670,9 @@ This message will only show in development mode. It won't appear in production. 
         }),
         // This classname is added for legacy compatibility reasons.
         "components-card__footer",
-        className2
+        className
       );
-    }, [className2, cx2, isBorderless, isShady, size4]);
+    }, [className, cx2, isBorderless, isShady, size4]);
     return {
       ...otherProps,
       className: classes,
@@ -36696,7 +36696,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_element100 = __toESM(require_element(), 1);
   function useCardHeader(props) {
     const {
-      className: className2,
+      className,
       isBorderless = false,
       isShady = false,
       size: size4 = "medium",
@@ -36712,9 +36712,9 @@ This message will only show in development mode. It won't appear in production. 
         }),
         // This classname is added for legacy compatibility reasons.
         "components-card__header",
-        className2
+        className
       );
-    }, [className2, cx2, isBorderless, isShady, size4]);
+    }, [className, cx2, isBorderless, isShady, size4]);
     return {
       ...otherProps,
       className: classes
@@ -36737,7 +36737,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_element101 = __toESM(require_element(), 1);
   function useCardMedia(props) {
     const {
-      className: className2,
+      className,
       ...otherProps
     } = useContextSystem(props, "CardMedia");
     const cx2 = useCx();
@@ -36746,8 +36746,8 @@ This message will only show in development mode. It won't appear in production. 
       borderRadius,
       // This classname is added for legacy compatibility reasons.
       "components-card__media",
-      className2
-    ), [className2, cx2]);
+      className
+    ), [className, cx2]);
     return {
       ...otherProps,
       className: classes
@@ -36776,7 +36776,7 @@ This message will only show in development mode. It won't appear in production. 
       // Prevent passing this to `input`.
       __nextHasNoMarginBottom: _2,
       label,
-      className: className2,
+      className,
       heading,
       checked,
       indeterminate,
@@ -36811,7 +36811,7 @@ This message will only show in development mode. It won't appear in production. 
         className: "components-checkbox-control__help",
         children: help
       }),
-      className: clsx_default("components-checkbox-control", className2),
+      className: clsx_default("components-checkbox-control", className),
       children: /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)(component_default9, {
         spacing: 0,
         justify: "start",
@@ -36858,7 +36858,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime170 = __toESM(require_jsx_runtime(), 1);
   var TIMEOUT = 4e3;
   function ClipboardButton({
-    className: className2,
+    className,
     children,
     onCopy,
     onFinishCopy,
@@ -36886,7 +36886,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       };
     }, []);
-    const classes = clsx_default("components-clipboard-button", className2);
+    const classes = clsx_default("components-clipboard-button", className);
     const focusOnCopyEventTarget = (event) => {
       event.target.focus();
     };
@@ -37022,7 +37022,7 @@ This message will only show in development mode. It won't appear in production. 
   function useItem(props) {
     const {
       as: asProp,
-      className: className2,
+      className,
       onClick,
       role = "listitem",
       size: sizeProp,
@@ -37034,7 +37034,7 @@ This message will only show in development mode. It won't appear in production. 
     } = useItemGroupContext();
     const size4 = sizeProp || contextSize;
     const as = asProp || (typeof onClick !== "undefined" ? "button" : "div");
-    const classes = clsx_default(style_module_default13.item, as === "button" && style_module_default13["is-unstyled-button"], as === "a" && style_module_default13["is-unstyled-link"], sizeClassName[size4] || sizeClassName.medium, spacedAround && style_module_default13["is-spaced-around"], className2);
+    const classes = clsx_default(style_module_default13.item, as === "button" && style_module_default13["is-unstyled-button"], as === "a" && style_module_default13["is-unstyled-link"], sizeClassName[size4] || sizeClassName.medium, spacedAround && style_module_default13["is-spaced-around"], className);
     const wrapperClassName = style_module_default13["item-wrapper"];
     return {
       as,
@@ -37148,7 +37148,7 @@ This message will only show in development mode. It won't appear in production. 
   var style_module_default14 = { "item-group": "_68553e70f1f1cb4e__item-group", "is-bordered": "_55756ee749a180e1__is-bordered", "is-separated": "_4e8285db01e0c630__is-separated", "is-rounded": "_58738db58e87759e__is-rounded", "item-wrapper": "_4f562a88cd53281b__item-wrapper", "item": "fc4c000709063bb0__item", "is-unstyled-button": "d204dc5a680d24cf__is-unstyled-button", "is-unstyled-link": "a5802f3508d737a0__is-unstyled-link", "is-spaced-around": "_62800b4fe741b26a__is-spaced-around", "is-size-small": "ff341e6676e9138f__is-size-small", "is-size-medium": "_715af0bb13514a58__is-size-medium", "is-size-large": "b141618c0c420070__is-size-large" };
   function useItemGroup(props) {
     const {
-      className: className2,
+      className,
       isBordered = false,
       isRounded = true,
       isSeparated = false,
@@ -37159,7 +37159,7 @@ This message will only show in development mode. It won't appear in production. 
       [style_module_default14["is-bordered"]]: isBordered,
       [style_module_default14["is-separated"]]: isSeparated,
       [style_module_default14["is-rounded"]]: isRounded
-    }, className2);
+    }, className);
     return {
       isBordered,
       className: classes,
@@ -37325,7 +37325,7 @@ This message will only show in development mode. It won't appear in production. 
   }
   function GradientColorPickerDropdown({
     isRenderedInSidebar,
-    className: className2,
+    className,
     ...props
   }) {
     const popoverProps = (0, import_element105.useMemo)(() => ({
@@ -37336,7 +37336,7 @@ This message will only show in development mode. It won't appear in production. 
       // popover edge.
       resize: false
     }), []);
-    const mergedClassName = clsx_default("components-custom-gradient-picker__control-point-dropdown", className2);
+    const mergedClassName = clsx_default("components-custom-gradient-picker__control-point-dropdown", className);
     return /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(CustomColorPickerDropdown, {
       isRenderedInSidebar,
       popoverProps,
@@ -38028,7 +38028,7 @@ This message will only show in development mode. It won't appear in production. 
     return arr.length > 0 && arr.every((gradientObj) => isMultipleOriginObject(gradientObj));
   };
   function SingleOrigin({
-    className: className2,
+    className,
     clearGradient,
     gradients,
     onChange,
@@ -38064,13 +38064,13 @@ This message will only show in development mode. It won't appear in production. 
       });
     }, [gradients, value, onChange, clearGradient, selectedSlug]);
     return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(circular_option_picker_default2.OptionGroup, {
-      className: className2,
+      className,
       options: gradientOptions,
       ...additionalProps
     });
   }
   function MultipleOrigin({
-    className: className2,
+    className,
     clearGradient,
     gradients,
     onChange,
@@ -38081,7 +38081,7 @@ This message will only show in development mode. It won't appear in production. 
     const instanceId = (0, import_compose42.useInstanceId)(MultipleOrigin);
     return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(component_default18, {
       spacing: 3,
-      className: className2,
+      className,
       children: gradients.map(({
         name,
         gradients: gradientSet
@@ -38133,7 +38133,7 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
   function GradientPicker({
-    className: className2,
+    className,
     gradients = [],
     onChange,
     value,
@@ -38154,7 +38154,7 @@ This message will only show in development mode. It won't appear in production. 
         onChange
       }), (gradients.length > 0 || clearable) && /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(Component3, {
         ...additionalProps,
-        className: className2,
+        className,
         clearGradient,
         gradients,
         onChange,
@@ -38367,7 +38367,7 @@ This message will only show in development mode. It won't appear in production. 
   function UnconnectedDropdownMenu(dropdownMenuProps) {
     const {
       children,
-      className: className2,
+      className,
       controls,
       icon = menu_default,
       label,
@@ -38398,7 +38398,7 @@ This message will only show in development mode. It won't appear in production. 
       variant
     }, popoverProps);
     return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(dropdown_default, {
-      className: className2,
+      className,
       popoverProps: mergedPopoverProps,
       renderToggle: ({
         isOpen,
@@ -38961,7 +38961,7 @@ This message will only show in development mode. It won't appear in production. 
       isExpanded,
       instanceId,
       selectedSuggestionIndex,
-      className: className2,
+      className,
       onChange,
       onFocus,
       onBlur,
@@ -38995,7 +38995,7 @@ This message will only show in development mode. It won't appear in production. 
       onFocus: onFocusHandler,
       onBlur: onBlurHandler,
       size: size4,
-      className: clsx_default(className2, "components-form-token-field__input"),
+      className: clsx_default(className, "components-form-token-field__input"),
       autoComplete: "off",
       role: "combobox",
       "aria-expanded": isExpanded,
@@ -39075,7 +39075,7 @@ This message will only show in development mode. It won't appear in production. 
         const isSelected2 = index2 === selectedIndex;
         const isDisabled = typeof suggestion === "object" && suggestion?.disabled;
         const key = typeof suggestion === "object" && "value" in suggestion ? suggestion?.value : displayTransform(suggestion);
-        const className2 = clsx_default("components-form-token-field__suggestion", {
+        const className = clsx_default("components-form-token-field__suggestion", {
           "is-selected": isSelected2
         });
         let output;
@@ -39097,7 +39097,7 @@ This message will only show in development mode. It won't appear in production. 
         return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)("li", {
           id: `components-form-token-suggestions-${instanceId}-${index2}`,
           role: "option",
-          className: className2,
+          className,
           onMouseDown: handleMouseDown,
           onClick: handleClick(suggestion),
           onMouseEnter: handleHover(suggestion),
@@ -39212,11 +39212,11 @@ This message will only show in development mode. It won't appear in production. 
   }
   var style_module_default15 = { "spinner": "_5223dcef142ddf2a__spinner", "track": "_00e30fe487ccb5cc__track", "indicator": "b33a3d348ed141fd__indicator", "spin": "e5c099d0667bd442__spin" };
   function UnforwardedSpinner({
-    className: className2,
+    className,
     ...props
   }, forwardedRef) {
     return /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)("svg", {
-      className: clsx_default("components-spinner", style_module_default15.spinner, className2),
+      className: clsx_default("components-spinner", style_module_default15.spinner, className),
       viewBox: "0 0 100 100",
       width: "16",
       height: "16",
@@ -39265,7 +39265,7 @@ This message will only show in development mode. It won't appear in production. 
       hideLabelFromVision,
       help,
       allowReset = true,
-      className: className2,
+      className,
       isLoading = false,
       messages = {
         selected: (0, import_i18n37.__)("Item selected.")
@@ -39406,7 +39406,7 @@ This message will only show in development mode. It won't appear in production. 
     return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(DetectOutside, {
       onFocusOutside,
       children: /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(base_control_default, {
-        className: clsx_default(className2, "components-combobox-control"),
+        className: clsx_default(className, "components-combobox-control"),
         label,
         id: `components-form-token-input-${instanceId}`,
         hideLabelFromVision,
@@ -39701,7 +39701,7 @@ This message will only show in development mode. It won't appear in production. 
       children,
       style: style2,
       overlayClassName: overlayClassnameProp,
-      className: className2,
+      className,
       contentLabel,
       onKeyDown,
       isFullScreen = false,
@@ -39841,7 +39841,7 @@ This message will only show in development mode. It won't appear in production. 
         children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(style_provider_default, {
           document,
           children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)("div", {
-            className: clsx_default("components-modal__frame", sizeClass, className2),
+            className: clsx_default("components-modal__frame", sizeClass, className),
             style: style2,
             ref: (0, import_compose50.useMergeRefs)([frameRef, constrainedTabbingRef, focusReturnRef, focusOnMount !== "firstContentElement" ? focusOnMountRef : null]),
             role,
@@ -40245,7 +40245,7 @@ This message will only show in development mode. It won't appear in production. 
       label,
       size: size4,
       store,
-      className: className2,
+      className,
       isLegacy = false,
       ...restProps
     } = props;
@@ -40261,7 +40261,7 @@ This message will only show in development mode. It won't appear in production. 
     return (
       // Where should `restProps` be forwarded to?
       /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)("div", {
-        className: className2,
+        className,
         children: [/* @__PURE__ */ (0, import_jsx_runtime190.jsx)(SelectLabel, {
           store,
           render: hideLabelFromVision ? (
@@ -40391,7 +40391,7 @@ This message will only show in development mode. It won't appear in production. 
       key,
       hint,
       style: style2,
-      className: className2
+      className
     }) => {
       const withHint = /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(WithHintItemWrapper, {
         children: [/* @__PURE__ */ (0, import_jsx_runtime192.jsx)("span", {
@@ -40407,7 +40407,7 @@ This message will only show in development mode. It won't appear in production. 
         children: hint ? withHint : name,
         style: style2,
         className: clsx_default(
-          className2,
+          className,
           // Keeping the classnames for legacy reasons
           "components-custom-select-control__item",
           {
@@ -41899,7 +41899,7 @@ This message will only show in development mode. It won't appear in production. 
     Provider: Provider2
   } = context_default3;
   function Disabled({
-    className: className2,
+    className,
     children,
     isDisabled = true,
     ...props
@@ -41909,7 +41909,7 @@ This message will only show in development mode. It won't appear in production. 
       children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("div", {
         // @ts-expect-error `inert` is not declared in React 18's HTML attribute types.
         inert: isDisabled ? "true" : void 0,
-        className: isDisabled ? clsx_default(style_module_default17.disabled, className2, "components-disabled") : void 0,
+        className: isDisabled ? clsx_default(style_module_default17.disabled, className, "components-disabled") : void 0,
         ...props,
         children
       })
@@ -41942,7 +41942,492 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/draggable/index.mjs
   var import_compose52 = __toESM(require_compose(), 1);
+  var import_element134 = __toESM(require_element(), 1);
+
+  // node_modules/@base-ui/utils/useRefWithInit.mjs
+  var React11 = __toESM(require_react(), 1);
+  var UNINITIALIZED = {};
+  function useRefWithInit(init2, initArg) {
+    const ref = React11.useRef(UNINITIALIZED);
+    if (ref.current === UNINITIALIZED) {
+      ref.current = init2(initArg);
+    }
+    return ref;
+  }
+
+  // node_modules/@base-ui/utils/warn.mjs
+  var set2;
+  if (true) {
+    set2 = /* @__PURE__ */ new Set();
+  }
+  function warn4(...messages) {
+    if (true) {
+      const messageKey = messages.join(" ");
+      if (!set2.has(messageKey)) {
+        set2.add(messageKey);
+        console.warn(`Base UI: ${messageKey}`);
+      }
+    }
+  }
+
+  // node_modules/@base-ui/react/internals/useRenderElement.mjs
+  var React14 = __toESM(require_react(), 1);
+
+  // node_modules/@base-ui/utils/useMergedRefs.mjs
+  function useMergedRefs(a3, b3, c3, d3) {
+    const forkRef = useRefWithInit(createForkRef).current;
+    if (didChange(forkRef, a3, b3, c3, d3)) {
+      update(forkRef, [a3, b3, c3, d3]);
+    }
+    return forkRef.callback;
+  }
+  function useMergedRefsN(refs) {
+    const forkRef = useRefWithInit(createForkRef).current;
+    if (didChangeN(forkRef, refs)) {
+      update(forkRef, refs);
+    }
+    return forkRef.callback;
+  }
+  function createForkRef() {
+    return {
+      callback: null,
+      cleanup: null,
+      refs: []
+    };
+  }
+  function didChange(forkRef, a3, b3, c3, d3) {
+    return forkRef.refs[0] !== a3 || forkRef.refs[1] !== b3 || forkRef.refs[2] !== c3 || forkRef.refs[3] !== d3;
+  }
+  function didChangeN(forkRef, newRefs) {
+    return forkRef.refs.length !== newRefs.length || forkRef.refs.some((ref, index2) => ref !== newRefs[index2]);
+  }
+  function update(forkRef, refs) {
+    forkRef.refs = refs;
+    if (refs.every((ref) => ref == null)) {
+      forkRef.callback = null;
+      return;
+    }
+    forkRef.callback = (instance) => {
+      if (forkRef.cleanup) {
+        forkRef.cleanup();
+        forkRef.cleanup = null;
+      }
+      if (instance != null) {
+        const cleanupCallbacks = Array(refs.length).fill(null);
+        for (let i3 = 0; i3 < refs.length; i3 += 1) {
+          const ref = refs[i3];
+          if (ref == null) {
+            continue;
+          }
+          switch (typeof ref) {
+            case "function": {
+              const refCleanup = ref(instance);
+              if (typeof refCleanup === "function") {
+                cleanupCallbacks[i3] = refCleanup;
+              }
+              break;
+            }
+            case "object": {
+              ref.current = instance;
+              break;
+            }
+            default:
+          }
+        }
+        forkRef.cleanup = () => {
+          for (let i3 = 0; i3 < refs.length; i3 += 1) {
+            const ref = refs[i3];
+            if (ref == null) {
+              continue;
+            }
+            switch (typeof ref) {
+              case "function": {
+                const cleanupCallback = cleanupCallbacks[i3];
+                if (typeof cleanupCallback === "function") {
+                  cleanupCallback();
+                } else {
+                  ref(null);
+                }
+                break;
+              }
+              case "object": {
+                ref.current = null;
+                break;
+              }
+              default:
+            }
+          }
+        };
+      }
+    };
+  }
+
+  // node_modules/@base-ui/utils/getReactElementRef.mjs
+  var React13 = __toESM(require_react(), 1);
+
+  // node_modules/@base-ui/utils/reactVersion.mjs
+  var React12 = __toESM(require_react(), 1);
+  var majorVersion = parseInt(React12.version, 10);
+  function isReactVersionAtLeast(reactVersionToCheck) {
+    return majorVersion >= reactVersionToCheck;
+  }
+
+  // node_modules/@base-ui/utils/getReactElementRef.mjs
+  function getReactElementRef(element) {
+    if (!/* @__PURE__ */ React13.isValidElement(element)) {
+      return null;
+    }
+    const reactElement = element;
+    const propsWithRef = reactElement.props;
+    return (isReactVersionAtLeast(19) ? propsWithRef?.ref : reactElement.ref) ?? null;
+  }
+
+  // node_modules/@base-ui/utils/mergeObjects.mjs
+  function mergeObjects(a3, b3) {
+    if (a3 && !b3) {
+      return a3;
+    }
+    if (!a3 && b3) {
+      return b3;
+    }
+    if (a3 || b3) {
+      return {
+        ...a3,
+        ...b3
+      };
+    }
+    return void 0;
+  }
+
+  // node_modules/@base-ui/utils/empty.mjs
+  var EMPTY_ARRAY2 = Object.freeze([]);
+  var EMPTY_OBJECT = Object.freeze({});
+
+  // node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
+  function getStateAttributesProps(state, customMapping) {
+    const props = {};
+    for (const key in state) {
+      const value = state[key];
+      if (customMapping?.hasOwnProperty(key)) {
+        const customProps = customMapping[key](value);
+        if (customProps != null) {
+          Object.assign(props, customProps);
+        }
+        continue;
+      }
+      if (value === true) {
+        props[`data-${key.toLowerCase()}`] = "";
+      } else if (value) {
+        props[`data-${key.toLowerCase()}`] = value.toString();
+      }
+    }
+    return props;
+  }
+
+  // node_modules/@base-ui/react/utils/resolveClassName.mjs
+  function resolveClassName(className, state) {
+    return typeof className === "function" ? className(state) : className;
+  }
+
+  // node_modules/@base-ui/react/utils/resolveStyle.mjs
+  function resolveStyle(style2, state) {
+    return typeof style2 === "function" ? style2(state) : style2;
+  }
+
+  // node_modules/@base-ui/react/merge-props/mergeProps.mjs
+  var EMPTY_PROPS = {};
+  function mergeProps3(a3, b3, c3, d3, e3) {
+    if (!c3 && !d3 && !e3 && !a3) {
+      return createInitialMergedProps(b3);
+    }
+    let merged = createInitialMergedProps(a3);
+    if (b3) {
+      merged = mergeInto(merged, b3);
+    }
+    if (c3) {
+      merged = mergeInto(merged, c3);
+    }
+    if (d3) {
+      merged = mergeInto(merged, d3);
+    }
+    if (e3) {
+      merged = mergeInto(merged, e3);
+    }
+    return merged;
+  }
+  function mergePropsN(props) {
+    if (props.length === 0) {
+      return EMPTY_PROPS;
+    }
+    if (props.length === 1) {
+      return createInitialMergedProps(props[0]);
+    }
+    let merged = createInitialMergedProps(props[0]);
+    for (let i3 = 1; i3 < props.length; i3 += 1) {
+      merged = mergeInto(merged, props[i3]);
+    }
+    return merged;
+  }
+  function createInitialMergedProps(inputProps) {
+    if (isPropsGetter(inputProps)) {
+      return {
+        ...resolvePropsGetter(inputProps, EMPTY_PROPS)
+      };
+    }
+    return copyInitialProps(inputProps);
+  }
+  function mergeInto(merged, inputProps) {
+    if (isPropsGetter(inputProps)) {
+      return resolvePropsGetter(inputProps, merged);
+    }
+    return mutablyMergeInto(merged, inputProps);
+  }
+  function copyInitialProps(inputProps) {
+    const copiedProps = {
+      ...inputProps
+    };
+    for (const propName in copiedProps) {
+      const propValue = copiedProps[propName];
+      if (isEventHandler(propName, propValue)) {
+        copiedProps[propName] = wrapEventHandler(propValue);
+      }
+    }
+    return copiedProps;
+  }
+  function mutablyMergeInto(mergedProps, externalProps) {
+    if (!externalProps) {
+      return mergedProps;
+    }
+    for (const propName in externalProps) {
+      const externalPropValue = externalProps[propName];
+      switch (propName) {
+        case "style": {
+          mergedProps[propName] = mergeObjects(mergedProps.style, externalPropValue);
+          break;
+        }
+        case "className": {
+          mergedProps[propName] = mergeClassNames(mergedProps.className, externalPropValue);
+          break;
+        }
+        default: {
+          if (isEventHandler(propName, externalPropValue)) {
+            mergedProps[propName] = mergeEventHandlers(mergedProps[propName], externalPropValue);
+          } else {
+            mergedProps[propName] = externalPropValue;
+          }
+        }
+      }
+    }
+    return mergedProps;
+  }
+  function isEventHandler(key, value) {
+    const code0 = key.charCodeAt(0);
+    const code1 = key.charCodeAt(1);
+    const code2 = key.charCodeAt(2);
+    return code0 === 111 && code1 === 110 && code2 >= 65 && code2 <= 90 && (typeof value === "function" || typeof value === "undefined");
+  }
+  function isPropsGetter(inputProps) {
+    return typeof inputProps === "function";
+  }
+  function resolvePropsGetter(inputProps, previousProps) {
+    if (isPropsGetter(inputProps)) {
+      return inputProps(previousProps);
+    }
+    return inputProps ?? EMPTY_PROPS;
+  }
+  function mergeEventHandlers(ourHandler, theirHandler) {
+    if (!theirHandler) {
+      return ourHandler;
+    }
+    if (!ourHandler) {
+      return wrapEventHandler(theirHandler);
+    }
+    return (...args) => {
+      const event = args[0];
+      if (isSyntheticEvent(event)) {
+        const baseUIEvent = event;
+        makeEventPreventable(baseUIEvent);
+        const result2 = theirHandler(...args);
+        if (!baseUIEvent.baseUIHandlerPrevented) {
+          ourHandler?.(...args);
+        }
+        return result2;
+      }
+      const result = theirHandler(...args);
+      ourHandler?.(...args);
+      return result;
+    };
+  }
+  function wrapEventHandler(handler) {
+    if (!handler) {
+      return handler;
+    }
+    return (...args) => {
+      const event = args[0];
+      if (isSyntheticEvent(event)) {
+        makeEventPreventable(event);
+      }
+      return handler(...args);
+    };
+  }
+  function makeEventPreventable(event) {
+    event.preventBaseUIHandler = () => {
+      event.baseUIHandlerPrevented = true;
+    };
+    return event;
+  }
+  function mergeClassNames(ourClassName, theirClassName) {
+    if (theirClassName) {
+      if (ourClassName) {
+        return theirClassName + " " + ourClassName;
+      }
+      return theirClassName;
+    }
+    return ourClassName;
+  }
+  function isSyntheticEvent(event) {
+    return event != null && typeof event === "object" && "nativeEvent" in event;
+  }
+
+  // node_modules/@base-ui/react/internals/useRenderElement.mjs
+  var import_react110 = __toESM(require_react(), 1);
+  function useRenderElement(element, componentProps, params = {}) {
+    const renderProp = componentProps.render;
+    const outProps = useRenderElementProps(componentProps, params);
+    if (params.enabled === false) {
+      return null;
+    }
+    const state = params.state ?? EMPTY_OBJECT;
+    return evaluateRenderProp(element, renderProp, outProps, state);
+  }
+  function useRenderElementProps(componentProps, params = {}) {
+    const {
+      className: classNameProp,
+      style: styleProp,
+      render: renderProp
+    } = componentProps;
+    const {
+      state = EMPTY_OBJECT,
+      ref,
+      props,
+      stateAttributesMapping,
+      enabled = true
+    } = params;
+    const className = enabled ? resolveClassName(classNameProp, state) : void 0;
+    const style2 = enabled ? resolveStyle(styleProp, state) : void 0;
+    const stateProps = enabled ? getStateAttributesProps(state, stateAttributesMapping) : EMPTY_OBJECT;
+    const resolvedProps = enabled && props ? resolveRenderFunctionProps(props) : void 0;
+    const outProps = enabled ? mergeObjects(stateProps, resolvedProps) ?? {} : EMPTY_OBJECT;
+    if (typeof document !== "undefined") {
+      if (!enabled) {
+        useMergedRefs(null, null);
+      } else if (Array.isArray(ref)) {
+        outProps.ref = useMergedRefsN([outProps.ref, getReactElementRef(renderProp), ...ref]);
+      } else {
+        outProps.ref = useMergedRefs(outProps.ref, getReactElementRef(renderProp), ref);
+      }
+    }
+    if (!enabled) {
+      return EMPTY_OBJECT;
+    }
+    if (className !== void 0) {
+      outProps.className = mergeClassNames(outProps.className, className);
+    }
+    if (style2 !== void 0) {
+      outProps.style = mergeObjects(outProps.style, style2);
+    }
+    return outProps;
+  }
+  function resolveRenderFunctionProps(props) {
+    if (Array.isArray(props)) {
+      return mergePropsN(props);
+    }
+    return mergeProps3(void 0, props);
+  }
+  var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+  var COMPONENT_IDENTIFIER_PATTERN = /^[A-Z][A-Za-z0-9$]*$/;
+  var LOWERCASE_CHARACTER_PATTERN = /[a-z]/;
+  function evaluateRenderProp(element, render, props, state) {
+    if (render) {
+      if (typeof render === "function") {
+        if (true) {
+          warnIfRenderPropLooksLikeComponent(render);
+        }
+        return render(props, state);
+      }
+      const mergedProps = mergeProps3(props, render.props);
+      mergedProps.ref = props.ref;
+      let newElement = render;
+      if (newElement?.$$typeof === REACT_LAZY_TYPE) {
+        const children = React14.Children.toArray(render);
+        newElement = children[0];
+      }
+      if (true) {
+        if (!/* @__PURE__ */ React14.isValidElement(newElement)) {
+          throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
+        }
+      }
+      return /* @__PURE__ */ React14.cloneElement(newElement, mergedProps);
+    }
+    if (element) {
+      if (typeof element === "string") {
+        return renderTag(element, props);
+      }
+    }
+    throw new Error(true ? "Base UI: Render element or function are not defined." : formatErrorMessage_default(8));
+  }
+  function warnIfRenderPropLooksLikeComponent(renderFn) {
+    const functionName = renderFn.name;
+    if (functionName.length === 0) {
+      return;
+    }
+    if (!COMPONENT_IDENTIFIER_PATTERN.test(functionName)) {
+      return;
+    }
+    if (!LOWERCASE_CHARACTER_PATTERN.test(functionName)) {
+      return;
+    }
+    warn4(`The \`render\` prop received a function named \`${functionName}\` that starts with an uppercase letter.`, "This usually means a React component was passed directly as `render={Component}`.", "Base UI calls `render` as a plain function, which can break the Rules of Hooks during reconciliation.", "If this is an intentional render callback, rename it to start with a lowercase letter.", "Use `render={<Component />}` or `render={(props) => <Component {...props} />}` instead.", "https://base-ui.com/r/invalid-render-prop");
+  }
+  function renderTag(Tag, props) {
+    if (Tag === "button") {
+      return /* @__PURE__ */ (0, import_react110.createElement)("button", {
+        type: "button",
+        ...props,
+        key: props.key
+      });
+    }
+    if (Tag === "img") {
+      return /* @__PURE__ */ (0, import_react110.createElement)("img", {
+        alt: "",
+        ...props,
+        key: props.key
+      });
+    }
+    return /* @__PURE__ */ React14.createElement(Tag, props);
+  }
+
+  // node_modules/@base-ui/react/use-render/useRender.mjs
+  function useRender(params) {
+    return useRenderElement(params.defaultTagName ?? "div", params, params);
+  }
+
+  // packages/ui/build-module/icon/icon.mjs
   var import_element131 = __toESM(require_element(), 1);
+  var import_primitives32 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
+  var Icon2 = (0, import_element131.forwardRef)(function Icon22({ icon, size: size4 = 24, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+      import_primitives32.SVG,
+      {
+        ref,
+        ...icon.props,
+        ...restProps,
+        width: size4,
+        height: size4
+      }
+    );
+  });
 
   // packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
   var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
@@ -42084,8 +42569,13 @@ This message will only show in development mode. It won't appear in production. 
     return cachedSlot;
   }
 
-  // packages/components/build-module/draggable/index.mjs
-  var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
+  var import_i18n46 = __toESM(require_i18n(), 1);
+  var import_element133 = __toESM(require_element(), 1);
+
+  // packages/ui/build-module/spinner/spinner.mjs
+  var import_element132 = __toESM(require_element(), 1);
+  var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
   function getRuntime20() {
     const globalScope = globalThis;
@@ -42106,7 +42596,9 @@ This message will only show in development mode. It won't appear in production. 
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE20}]`)) {
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE20}]`
+    )) {
       if (style2.getAttribute(STYLE_HASH_ATTRIBUTE20) === hash2) {
         return true;
       }
@@ -42138,7 +42630,10 @@ This message will only show in development mode. It won't appear in production. 
   }
   function registerDocument20(targetDocument) {
     const runtime = getRuntime20();
-    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
     for (const [hash2, css3] of runtime.styles) {
       injectStyle20(targetDocument, hash2, css3);
     }
@@ -42162,7 +42657,454 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle19("e7e88c1781", "._3476c2e530687f96__invisible-drag-image{height:50px;left:-1000px;position:fixed;width:50px}._6f00e51ab7574306__clone{background:transparent;padding:0;pointer-events:none;position:fixed}._6f00e51ab7574306__clone:not(._664ecd37377558df__is-in-compat-slot){z-index:1000000000}body.is-dragging-components-draggable{cursor:move;cursor:grabbing!important}");
+    registerStyle19("bbbecfe373", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.ab4d64c07c0ba587__spinner{background-color:transparent;display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}.a7654e10245bb7d2__indicator,.dc51f80c84b35fe2__track{fill:transparent;stroke-width:1.5px}.dc51f80c84b35fe2__track{stroke:var(--wpds-color-background-track-neutral,#dbdbdb)}.a7654e10245bb7d2__indicator{stroke:var(--wpds-color-background-thumb-brand,var(--wp-admin-theme-color,#3858e9));stroke-linecap:round;animation:_02322d973909703c__spinner-spin 1.4s linear infinite both;transform-origin:50% 50%}@keyframes _02322d973909703c__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
+  }
+  var style_default = { "spinner": "ab4d64c07c0ba587__spinner", "track": "dc51f80c84b35fe2__track", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
+  var Spinner2 = (0, import_element132.forwardRef)(
+    function Spinner22({ className, ...props }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(
+        "svg",
+        {
+          className: clsx_default(style_default.spinner, className),
+          viewBox: "0 0 100 100",
+          xmlns: "http://www.w3.org/2000/svg",
+          role: "presentation",
+          focusable: "false",
+          ...props,
+          ref,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
+              "circle",
+              {
+                className: style_default.track,
+                cx: "50",
+                cy: "50",
+                r: "50",
+                vectorEffect: "non-scaling-stroke"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
+              "path",
+              {
+                className: style_default.indicator,
+                d: "m 50 0 a 50 50 0 0 1 50 50",
+                vectorEffect: "non-scaling-stroke"
+              }
+            )
+          ]
+        }
+      );
+    }
+  );
+
+  // packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
+  var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE21 = "data-wp-hash";
+  function getRuntime21() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument21(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash21(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE21}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE21) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle21(targetDocument, hash2, css3) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime21();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash21(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE21, hash2);
+    style2.appendChild(targetDocument.createTextNode(css3));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument21(targetDocument) {
+    const runtime = getRuntime21();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css3] of runtime.styles) {
+      injectStyle21(targetDocument, hash2, css3);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle20(hash2, css3) {
+    const runtime = getRuntime21();
+    runtime.styles.set(hash2, css3);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle21(targetDocument, hash2, css3);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle20("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+  }
+  var global_css_defense_default = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+  if (typeof process === "undefined" || true) {
+    registerStyle20("d7b0469ef4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7a7ac88e306348e7__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:var(--wpds-dimension-gap-sm,8px) 0 0;align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);margin-block:var(--wpds-dimension-gap-sm,8px) 0;margin-inline:0;@media not (prefers-reduced-motion){animation:_48722cc5dd090ce4__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._57a3bbbfbe38a5c6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._9e944dc198aac10b__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}.e482806667437c6a__indicator-icon{flex-shrink:0}._6e46434cc23019d2__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _48722cc5dd090ce4__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}');
+  }
+  var style_default2 = { "indicator": "_7a7ac88e306348e7__indicator", "indicator-jump": "_48722cc5dd090ce4__indicator-jump", "is-invalid": "_57a3bbbfbe38a5c6__is-invalid", "is-valid": "_9e944dc198aac10b__is-valid", "indicator-icon": "e482806667437c6a__indicator-icon", "indicator-spinner": "_6e46434cc23019d2__indicator-spinner" };
+  var ICON = {
+    valid: published_default,
+    invalid: error_default
+  };
+  function ValidityIndicator({
+    id: id3,
+    type,
+    message
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime202.jsxs)(
+      "p",
+      {
+        id: id3,
+        className: clsx_default(
+          global_css_defense_default.p,
+          style_default2.indicator,
+          style_default2[`is-${type}`]
+        ),
+        children: [
+          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(Spinner2, { className: style_default2["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
+            Icon2,
+            {
+              className: style_default2["indicator-icon"],
+              icon: ICON[type],
+              size: 16,
+              fill: "currentColor"
+            }
+          ),
+          message
+        ]
+      }
+    );
+  }
+
+  // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
+  var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
+  function appendRequiredIndicator(label, required, markWhenOptional) {
+    let suffix;
+    if (required && !markWhenOptional) {
+      suffix = `(${(0, import_i18n46.__)("Required")})`;
+    } else if (!required && markWhenOptional) {
+      suffix = `(${(0, import_i18n46.__)("Optional")})`;
+    }
+    if (!suffix) {
+      return label;
+    }
+    if (typeof label === "string") {
+      return `${label} ${suffix}`;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime203.jsxs)(import_jsx_runtime203.Fragment, { children: [
+      label,
+      " ",
+      suffix
+    ] });
+  }
+  var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
+  var ControlWithError = (0, import_element133.forwardRef)(function ControlWithError2({
+    required,
+    markWhenOptional,
+    customValidity,
+    getValidityTarget,
+    children,
+    render,
+    ...restProps
+  }, forwardedRef) {
+    const [errorMessage, setErrorMessage] = (0, import_element133.useState)();
+    const [statusMessage, setStatusMessage] = (0, import_element133.useState)();
+    const [showMessage, setShowMessage] = (0, import_element133.useState)(false);
+    const [isTouched, setIsTouched] = (0, import_element133.useState)(false);
+    const wrapperRef = (0, import_element133.useRef)(null);
+    (0, import_element133.useEffect)(() => {
+      const validityTarget = getValidityTarget();
+      const handler = () => {
+        if (customValidity?.type !== "validating") {
+          setErrorMessage(validityTarget?.validationMessage);
+        }
+        setShowMessage(true);
+        validityTarget?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
+      };
+      validityTarget?.addEventListener("invalid", handler);
+      return () => validityTarget?.removeEventListener("invalid", handler);
+    }, [customValidity?.type, getValidityTarget]);
+    (0, import_element133.useEffect)(() => {
+      const validityTarget = getValidityTarget();
+      const suppressNativePopover = (event) => {
+        event.preventDefault();
+        if (!event.isTrusted) {
+          return;
+        }
+        const target = event.target;
+        const firstErrorInForm = Array.from(
+          target.form?.elements ?? []
+        ).find((el) => !el.validity.valid);
+        if (!target.form || firstErrorInForm === target) {
+          target.focus();
+        }
+      };
+      const radioSiblings = validityTarget?.type === "radio" && validityTarget?.name ? Array.from(
+        wrapperRef.current?.querySelectorAll(
+          `input[type="radio"][name="${validityTarget?.name}"]`
+        ) ?? []
+      ).filter((sibling) => sibling !== validityTarget) : [];
+      validityTarget?.addEventListener("invalid", suppressNativePopover);
+      radioSiblings.forEach(
+        (sibling) => sibling.addEventListener("invalid", suppressNativePopover)
+      );
+      return () => {
+        validityTarget?.removeEventListener(
+          "invalid",
+          suppressNativePopover
+        );
+        radioSiblings.forEach(
+          (sibling) => sibling.removeEventListener("invalid", suppressNativePopover)
+        );
+      };
+    }, [getValidityTarget]);
+    (0, import_element133.useEffect)(() => {
+      const validityTarget = getValidityTarget();
+      if (!customValidity?.type) {
+        validityTarget?.setCustomValidity("");
+        setErrorMessage(validityTarget?.validationMessage);
+        setStatusMessage(void 0);
+        return;
+      }
+      switch (customValidity.type) {
+        case "validating": {
+          validityTarget?.setCustomValidity("");
+          setErrorMessage(void 0);
+          setStatusMessage({
+            type: "validating",
+            message: customValidity.message
+          });
+          break;
+        }
+        case "valid": {
+          validityTarget?.setCustomValidity("");
+          setErrorMessage(validityTarget?.validationMessage);
+          setStatusMessage({
+            type: "valid",
+            message: customValidity.message
+          });
+          break;
+        }
+        case "invalid": {
+          validityTarget?.setCustomValidity(
+            customValidity.message ?? ""
+          );
+          setErrorMessage(validityTarget?.validationMessage);
+          setStatusMessage(void 0);
+          break;
+        }
+      }
+    }, [customValidity, getValidityTarget]);
+    (0, import_element133.useEffect)(() => {
+      if (!isTouched || showMessage) {
+        return;
+      }
+      if (customValidity?.type === "validating") {
+        const timer = setTimeout(() => {
+          setShowMessage(true);
+        }, 1e3);
+        return () => clearTimeout(timer);
+      }
+      setShowMessage(true);
+    }, [isTouched, customValidity?.type, showMessage]);
+    const onBlur = (event) => {
+      if (isTouched) {
+        return;
+      }
+      if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget)) {
+        setIsTouched(true);
+        getValidityTarget()?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
+      }
+    };
+    const messageId = (0, import_element133.useId)();
+    const message = (() => {
+      if (errorMessage) {
+        return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
+          ValidityIndicator,
+          {
+            id: messageId,
+            type: "invalid",
+            message: errorMessage
+          }
+        );
+      }
+      if (statusMessage?.type) {
+        return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
+          ValidityIndicator,
+          {
+            id: messageId,
+            type: statusMessage.type,
+            message: statusMessage.message
+          }
+        );
+      }
+      return null;
+    })();
+    const visibleMessage = showMessage ? message : null;
+    (0, import_element133.useEffect)(() => {
+      const target = getValidityTarget();
+      if (!target) {
+        return;
+      }
+      function setDescribedBy(el, shouldAdd) {
+        const ids = (el.getAttribute("aria-describedby") ?? "").split(" ").filter((id3) => id3 && id3 !== messageId);
+        if (shouldAdd) {
+          ids.push(messageId);
+        }
+        if (ids.length) {
+          el.setAttribute("aria-describedby", ids.join(" "));
+        } else {
+          el.removeAttribute("aria-describedby");
+        }
+      }
+      setDescribedBy(target, !!visibleMessage);
+      return () => setDescribedBy(target, false);
+    }, [visibleMessage, messageId, getValidityTarget]);
+    return useRender({
+      render,
+      defaultTagName: "div",
+      ref: [forwardedRef, wrapperRef],
+      props: mergeProps3(restProps, {
+        onBlur,
+        children: /* @__PURE__ */ (0, import_jsx_runtime203.jsxs)(import_jsx_runtime203.Fragment, { children: [
+          (0, import_element133.cloneElement)(children, {
+            label: appendRequiredIndicator(
+              children.props.label,
+              required,
+              markWhenOptional
+            ),
+            required
+          }),
+          visibleMessage
+        ] })
+      })
+    });
+  });
+
+  // packages/components/build-module/draggable/index.mjs
+  var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
+  function getRuntime22() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument22(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash22(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE22}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE22) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle22(targetDocument, hash2, css3) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime22();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash22(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE22, hash2);
+    style2.appendChild(targetDocument.createTextNode(css3));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument22(targetDocument) {
+    const runtime = getRuntime22();
+    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+    for (const [hash2, css3] of runtime.styles) {
+      injectStyle22(targetDocument, hash2, css3);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle21(hash2, css3) {
+    const runtime = getRuntime22();
+    runtime.styles.set(hash2, css3);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle22(targetDocument, hash2, css3);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle21("e7e88c1781", "._3476c2e530687f96__invisible-drag-image{height:50px;left:-1000px;position:fixed;width:50px}._6f00e51ab7574306__clone{background:transparent;padding:0;pointer-events:none;position:fixed}._6f00e51ab7574306__clone:not(._664ecd37377558df__is-in-compat-slot){z-index:1000000000}body.is-dragging-components-draggable{cursor:move;cursor:grabbing!important}");
   }
   var style_module_default18 = { "invisible-drag-image": "_3476c2e530687f96__invisible-drag-image", "clone": "_6f00e51ab7574306__clone", "is-in-compat-slot": "_664ecd37377558df__is-in-compat-slot" };
   var dragImageClasses = [style_module_default18["invisible-drag-image"], "components-draggable__invisible-drag-image"].filter(Boolean);
@@ -42181,8 +43123,8 @@ This message will only show in development mode. It won't appear in production. 
     __experimentalTransferDataType: transferDataType = "text",
     __experimentalDragComponent: dragComponent
   }) {
-    const dragComponentRef = (0, import_element131.useRef)(null);
-    const cleanupRef = (0, import_element131.useRef)(() => {
+    const dragComponentRef = (0, import_element134.useRef)(null);
+    const cleanupRef = (0, import_element134.useRef)(() => {
     });
     function end(event) {
       event.preventDefault();
@@ -42281,14 +43223,14 @@ This message will only show in development mode. It won't appear in production. 
         ownerDocument.removeEventListener("dragover", throttledDragOver);
       };
     }
-    (0, import_element131.useEffect)(() => () => {
+    (0, import_element134.useEffect)(() => () => {
       cleanupRef.current();
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)(import_jsx_runtime200.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(import_jsx_runtime204.Fragment, {
       children: [children({
         onDraggableStart: start,
         onDraggableEnd: end
-      }), dragComponent && /* @__PURE__ */ (0, import_jsx_runtime200.jsx)("div", {
+      }), dragComponent && /* @__PURE__ */ (0, import_jsx_runtime204.jsx)("div", {
         className: "components-draggable-drag-component-root",
         style: {
           display: "none"
@@ -42301,13 +43243,13 @@ This message will only show in development mode. It won't appear in production. 
   var draggable_default = Draggable;
 
   // packages/components/build-module/drop-zone/index.mjs
-  var import_i18n46 = __toESM(require_i18n(), 1);
-  var import_element132 = __toESM(require_element(), 1);
+  var import_i18n47 = __toESM(require_i18n(), 1);
+  var import_element135 = __toESM(require_element(), 1);
   var import_dom7 = __toESM(require_dom(), 1);
   var import_compose53 = __toESM(require_compose(), 1);
-  var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
   function DropZoneComponent({
-    className: className2,
+    className,
     icon = upload_default,
     label,
     onFilesDrop,
@@ -42316,9 +43258,9 @@ This message will only show in development mode. It won't appear in production. 
     isEligible = () => true,
     ...restProps
   }) {
-    const [isDraggingOverDocument, setIsDraggingOverDocument] = (0, import_element132.useState)();
-    const [isDraggingOverElement, setIsDraggingOverElement] = (0, import_element132.useState)();
-    const [isActive, setIsActive] = (0, import_element132.useState)();
+    const [isDraggingOverDocument, setIsDraggingOverDocument] = (0, import_element135.useState)();
+    const [isDraggingOverElement, setIsDraggingOverElement] = (0, import_element135.useState)();
+    const [isActive, setIsActive] = (0, import_element135.useState)();
     const ref = (0, import_compose53.__experimentalUseDropZone)({
       onDrop(event) {
         if (!event.dataTransfer) {
@@ -42363,25 +43305,25 @@ This message will only show in development mode. It won't appear in production. 
         setIsDraggingOverElement(false);
       }
     });
-    const classes = clsx_default("components-drop-zone", className2, {
+    const classes = clsx_default("components-drop-zone", className, {
       "is-active": isActive,
       "is-dragging-over-document": isDraggingOverDocument,
       "is-dragging-over-element": isDraggingOverElement
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime201.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)("div", {
       ...restProps,
       ref,
       className: classes,
-      children: /* @__PURE__ */ (0, import_jsx_runtime201.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime205.jsx)("div", {
         className: "components-drop-zone__content",
-        children: /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)("div", {
+        children: /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)("div", {
           className: "components-drop-zone__content-inner",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime201.jsx)(icon_default2, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime205.jsx)(icon_default2, {
             icon,
             className: "components-drop-zone__content-icon"
-          }), /* @__PURE__ */ (0, import_jsx_runtime201.jsx)("span", {
+          }), /* @__PURE__ */ (0, import_jsx_runtime205.jsx)("span", {
             className: "components-drop-zone__content-text",
-            children: label ? label : (0, import_i18n46.__)("Drop files to upload")
+            children: label ? label : (0, import_i18n47.__)("Drop files to upload")
           })]
         })
       })
@@ -42403,14 +43345,14 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/duotone-picker/duotone-picker.mjs
   var import_es62 = __toESM(require_es6(), 1);
-  var import_element134 = __toESM(require_element(), 1);
-  var import_i18n48 = __toESM(require_i18n(), 1);
+  var import_element137 = __toESM(require_element(), 1);
+  var import_i18n49 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/duotone-picker/color-list-picker/index.mjs
-  var import_element133 = __toESM(require_element(), 1);
-  var import_i18n47 = __toESM(require_i18n(), 1);
+  var import_element136 = __toESM(require_element(), 1);
+  var import_i18n48 = __toESM(require_i18n(), 1);
   var import_compose54 = __toESM(require_compose(), 1);
-  var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
   function ColorOption({
     label,
     value,
@@ -42419,32 +43361,32 @@ This message will only show in development mode. It won't appear in production. 
     enableAlpha,
     onChange
   }) {
-    const [isOpen, setIsOpen] = (0, import_element133.useState)(false);
+    const [isOpen, setIsOpen] = (0, import_element136.useState)(false);
     const idRoot = (0, import_compose54.useInstanceId)(ColorOption, "color-list-picker-option");
     const labelId = `${idRoot}__label`;
     const contentId = `${idRoot}__content`;
-    return /* @__PURE__ */ (0, import_jsx_runtime202.jsxs)(import_jsx_runtime202.Fragment, {
-      children: [/* @__PURE__ */ (0, import_jsx_runtime202.jsx)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(import_jsx_runtime206.Fragment, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime206.jsx)(button_default, {
         __next40pxDefaultSize: true,
         className: "components-color-list-picker__swatch-button",
         id: labelId,
         onClick: () => setIsOpen((prev2) => !prev2),
         "aria-expanded": isOpen,
         "aria-controls": contentId,
-        icon: value ? /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(color_indicator_default, {
+        icon: value ? /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(color_indicator_default, {
           colorValue: value,
           className: "components-color-list-picker__swatch-color"
-        }) : /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(icon_default3, {
+        }) : /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(icon_default3, {
           icon: swatch_default
         }),
         text: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime202.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime206.jsx)("div", {
         role: "group",
         id: contentId,
         "aria-labelledby": labelId,
         "aria-hidden": !isOpen,
-        children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(color_palette_default, {
-          "aria-label": (0, import_i18n47.__)("Color options"),
+        children: isOpen && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(color_palette_default, {
+          "aria-label": (0, import_i18n48.__)("Color options"),
           className: "components-color-list-picker__color-picker",
           colors,
           value,
@@ -42464,9 +43406,9 @@ This message will only show in development mode. It won't appear in production. 
     enableAlpha,
     onChange
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime202.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)("div", {
       className: "components-color-list-picker",
-      children: labels.map((label, index2) => /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(ColorOption, {
+      children: labels.map((label, index2) => /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(ColorOption, {
         label,
         value: value[index2],
         colors,
@@ -42523,7 +43465,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/duotone-picker/custom-duotone-bar.mjs
-  var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
   var PLACEHOLDER_VALUES = ["#333", "#CCC"];
   function CustomDuotoneBar({
     value,
@@ -42533,7 +43475,7 @@ This message will only show in development mode. It won't appear in production. 
     const values = hasGradient ? value : PLACEHOLDER_VALUES;
     const background = getGradientFromCSSColors(values);
     const controlPoints = getColorStopsFromColors(values);
-    return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(CustomGradientBar, {
+    return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(CustomGradientBar, {
       disableInserter: true,
       background,
       hasGradient,
@@ -42546,7 +43488,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/duotone-picker/duotone-picker.mjs
-  var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
   function DuotonePicker({
     asButtons,
     loop,
@@ -42562,10 +43504,10 @@ This message will only show in development mode. It won't appear in production. 
     "aria-labelledby": ariaLabelledby,
     ...otherProps
   }) {
-    const [defaultDark, defaultLight] = (0, import_element134.useMemo)(() => getDefaultColors(colorPalette), [colorPalette]);
+    const [defaultDark, defaultLight] = (0, import_element137.useMemo)(() => getDefaultColors(colorPalette), [colorPalette]);
     const isUnset = value === "unset";
-    const unsetOptionLabel = (0, import_i18n48.__)("Unset");
-    const unsetOption = /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(circular_option_picker_default2.Option, {
+    const unsetOptionLabel = (0, import_i18n49.__)("Unset");
+    const unsetOption = /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(circular_option_picker_default2.Option, {
       value: "unset",
       isSelected: isUnset,
       tooltipText: unsetOptionLabel,
@@ -42584,18 +43526,18 @@ This message will only show in development mode. It won't appear in production. 
         background: getGradientFromCSSColors(colors, "135deg"),
         color: "transparent"
       };
-      const tooltipText = name ?? (0, import_i18n48.sprintf)(
+      const tooltipText = name ?? (0, import_i18n49.sprintf)(
         // translators: %s: duotone code e.g: "dark-grayscale" or "7f7f7f-ffffff".
-        (0, import_i18n48.__)("Duotone code: %s"),
+        (0, import_i18n49.__)("Duotone code: %s"),
         slug
       );
-      const label = name ? (0, import_i18n48.sprintf)(
+      const label = name ? (0, import_i18n49.sprintf)(
         // translators: %s: The name of the option e.g: "Dark grayscale".
-        (0, import_i18n48.__)("Duotone: %s"),
+        (0, import_i18n49.__)("Duotone: %s"),
         name
       ) : tooltipText;
       const isSelected2 = (0, import_es62.default)(colors, value);
-      return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(circular_option_picker_default2.Option, {
+      return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(circular_option_picker_default2.Option, {
         value: colors,
         isSelected: isSelected2,
         "aria-label": label,
@@ -42611,26 +43553,26 @@ This message will only show in development mode. It won't appear in production. 
       labelProps
     } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
     const options2 = unsetable ? [unsetOption, ...duotoneOptions] : duotoneOptions;
-    return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(circular_option_picker_default2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(circular_option_picker_default2, {
       ...otherProps,
       ...metaProps,
       ...labelProps,
       options: options2,
-      actions: !!clearable && /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(circular_option_picker_default2.ButtonAction, {
+      actions: !!clearable && /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(circular_option_picker_default2.ButtonAction, {
         onClick: () => onChange(void 0),
         accessibleWhenDisabled: true,
         disabled: !value,
-        children: (0, import_i18n48.__)("Clear")
+        children: (0, import_i18n49.__)("Clear")
       }),
-      children: /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(component_default6, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(component_default6, {
         paddingTop: options2.length === 0 ? 0 : 4,
-        children: /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(component_default18, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(component_default18, {
           spacing: 3,
-          children: [!disableCustomColors && !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(CustomDuotoneBar, {
+          children: [!disableCustomColors && !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(CustomDuotoneBar, {
             value: isUnset ? void 0 : value,
             onChange
-          }), !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(color_list_picker_default, {
-            labels: [(0, import_i18n48.__)("Shadows"), (0, import_i18n48.__)("Highlights")],
+          }), !disableCustomDuotone && /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(color_list_picker_default, {
+            labels: [(0, import_i18n49.__)("Shadows"), (0, import_i18n49.__)("Highlights")],
             colors: colorPalette,
             value: isUnset ? void 0 : value,
             disableCustomColors,
@@ -42653,30 +43595,30 @@ This message will only show in development mode. It won't appear in production. 
   var duotone_picker_default = DuotonePicker;
 
   // packages/components/build-module/duotone-picker/duotone-swatch.mjs
-  var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
   function DuotoneSwatch({
     values
   }) {
-    return values ? /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(color_indicator_default, {
+    return values ? /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(color_indicator_default, {
       colorValue: getGradientFromCSSColors(values, "135deg")
-    }) : /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(icon_default3, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(icon_default3, {
       icon: swatch_default
     });
   }
   var duotone_swatch_default = DuotoneSwatch;
 
   // packages/components/build-module/external-link/index.mjs
-  var import_i18n49 = __toESM(require_i18n(), 1);
-  var import_element135 = __toESM(require_element(), 1);
-  var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
+  var import_i18n50 = __toESM(require_i18n(), 1);
+  var import_element138 = __toESM(require_element(), 1);
+  var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedExternalLink(props, ref) {
     const {
       href,
       children,
-      className: className2,
+      className,
       ...additionalProps
     } = props;
-    const classes = clsx_default("components-external-link", className2);
+    const classes = clsx_default("components-external-link", className);
     const isInternalAnchor = !!href?.startsWith("#");
     const onClickHandler = (event) => {
       if (isInternalAnchor) {
@@ -42688,17 +43630,17 @@ This message will only show in development mode. It won't appear in production. 
     };
     return (
       /* eslint-disable react/jsx-no-target-blank */
-      /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)("a", {
+      /* @__PURE__ */ (0, import_jsx_runtime210.jsxs)("a", {
         ...additionalProps,
         className: classes,
         href,
         onClick: onClickHandler,
         target: "_blank",
         ref,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime206.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime210.jsx)("span", {
           className: "components-external-link__contents",
           children
-        }), /* @__PURE__ */ (0, import_jsx_runtime206.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime210.jsx)("span", {
           className: clsx_default(
             "components-external-link__icon",
             // This class prevents the arrow from being replaced by a Twemoji image.
@@ -42706,24 +43648,24 @@ This message will only show in development mode. It won't appear in production. 
           ),
           "aria-label": (
             /* translators: accessibility text */
-            (0, import_i18n49.__)("(opens in a new tab)")
+            (0, import_i18n50.__)("(opens in a new tab)")
           ),
-          children: (0, import_i18n49.isRTL)() ? "\u2196" : "\u2197"
+          children: (0, import_i18n50.isRTL)() ? "\u2196" : "\u2197"
         })]
       })
     );
   }
-  var ExternalLink = (0, import_element135.forwardRef)(UnforwardedExternalLink);
+  var ExternalLink = (0, import_element138.forwardRef)(UnforwardedExternalLink);
   ExternalLink.displayName = "ExternalLink";
   var external_link_default = ExternalLink;
 
   // packages/components/build-module/focal-point-picker/index.mjs
-  var import_i18n51 = __toESM(require_i18n(), 1);
-  var import_element136 = __toESM(require_element(), 1);
+  var import_i18n52 = __toESM(require_i18n(), 1);
+  var import_element139 = __toESM(require_element(), 1);
   var import_compose55 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/focal-point-picker/controls.mjs
-  var import_i18n50 = __toESM(require_i18n(), 1);
+  var import_i18n51 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/focal-point-picker/utils.mjs
   var INITIAL_BOUNDS = {
@@ -42861,7 +43803,7 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/focal-point-picker/controls.mjs
-  var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
   var TEXTCONTROL_MIN = 0;
   var TEXTCONTROL_MAX = 100;
   var noop15 = () => {
@@ -42888,19 +43830,19 @@ This message will only show in development mode. It won't appear in production. 
         });
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(ControlWrapper, {
+    return /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)(ControlWrapper, {
       className: "focal-point-picker__controls",
       hasHelpText,
       gap: 4,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime207.jsx)(FocalPointUnitControl, {
-        label: (0, import_i18n50.__)("Left"),
-        "aria-label": (0, import_i18n50.__)("Focal point left position"),
+      children: [/* @__PURE__ */ (0, import_jsx_runtime211.jsx)(FocalPointUnitControl, {
+        label: (0, import_i18n51.__)("Left"),
+        "aria-label": (0, import_i18n51.__)("Focal point left position"),
         value: [valueX, "%"].join(""),
         onChange: (next2) => handleChange(next2, "x"),
         dragDirection: "e"
-      }), /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(FocalPointUnitControl, {
-        label: (0, import_i18n50.__)("Top"),
-        "aria-label": (0, import_i18n50.__)("Focal point top position"),
+      }), /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(FocalPointUnitControl, {
+        label: (0, import_i18n51.__)("Top"),
+        "aria-label": (0, import_i18n51.__)("Focal point top position"),
         value: [valueY, "%"].join(""),
         onChange: (next2) => handleChange(next2, "y"),
         dragDirection: "s"
@@ -42908,7 +43850,7 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
   function FocalPointUnitControl(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(StyledUnitControl2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(StyledUnitControl2, {
       className: "focal-point-picker__controls-position-unit-control",
       labelPosition: "top",
       max: TEXTCONTROL_MAX,
@@ -42936,7 +43878,7 @@ This message will only show in development mode. It won't appear in production. 
 			`, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZvY2FsLXBvaW50LXN0eWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUd1QyIsImZpbGUiOiJmb2NhbC1wb2ludC1zdHlsZS50cyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB7IENPTkZJRyB9IGZyb20gJy4uLy4uL3V0aWxzJztcblxuZXhwb3J0IGNvbnN0IFBvaW50ZXJDaXJjbGUgPSBzdHlsZWQuZGl2YFxuXHRiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcblx0Y3Vyc29yOiBncmFiO1xuXHRoZWlnaHQ6IDQwcHg7XG5cdG1hcmdpbjogLTIwcHggMCAwIC0yMHB4O1xuXHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdHVzZXItc2VsZWN0OiBub25lO1xuXHR3aWR0aDogNDBweDtcblx0d2lsbC1jaGFuZ2U6IHRyYW5zZm9ybTtcblx0ei1pbmRleDogMTAwMDA7XG5cdGJhY2tncm91bmQ6IHJnYmEoIDI1NSwgMjU1LCAyNTUsIDAuNCApO1xuXHRib3JkZXI6IDFweCBzb2xpZCByZ2JhKCAyNTUsIDI1NSwgMjU1LCAwLjQgKTtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1JvdW5kIH07XG5cdGJhY2tkcm9wLWZpbHRlcjogYmx1ciggMTZweCApIHNhdHVyYXRlKCAxODAlICk7XG5cdGJveC1zaGFkb3c6IHJnYiggMCAwIDAgLyAxMCUgKSAwcHggMHB4IDhweDtcblxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHR0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMTAwbXMgbGluZWFyO1xuXHR9XG5cblx0JHsgKCB7IGlzRHJhZ2dpbmcgfTogeyBpc0RyYWdnaW5nOiBib29sZWFuIH0gKSA9PlxuXHRcdGlzRHJhZ2dpbmcgJiZcblx0XHRgXG5cdFx0XHRib3gtc2hhZG93OiByZ2IoIDAgMCAwIC8gMTIlICkgMHB4IDBweCAxMHB4O1xuXHRcdFx0dHJhbnNmb3JtOiBzY2FsZSggMS4xICk7XG5cdFx0XHRjdXJzb3I6IGdyYWJiaW5nO1xuXHRcdFx0YCB9XG5gO1xuIl19 */"));
 
   // packages/components/build-module/focal-point-picker/focal-point.mjs
-  var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
   function FocalPoint({
     left = "50%",
     top = "50%",
@@ -42946,7 +43888,7 @@ This message will only show in development mode. It won't appear in production. 
       left,
       top
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(PointerCircle, {
+    return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(PointerCircle, {
       ...props,
       className: "components-focal-point-picker__icon_container",
       style: style2
@@ -42954,31 +43896,31 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/focal-point-picker/grid.mjs
-  var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
   function FocalPointPickerGrid({
     bounds,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime209.jsxs)(GridView, {
+    return /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(GridView, {
       ...props,
       className: "components-focal-point-picker__grid",
       style: {
         width: bounds.width,
         height: bounds.height
       },
-      children: [/* @__PURE__ */ (0, import_jsx_runtime209.jsx)(GridLineX, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime213.jsx)(GridLineX, {
         style: {
           top: "33%"
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(GridLineX, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(GridLineX, {
         style: {
           top: "66%"
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(GridLineY, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(GridLineY, {
         style: {
           left: "33%"
         }
-      }), /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(GridLineY, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(GridLineY, {
         style: {
           left: "66%"
         }
@@ -42987,7 +43929,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/focal-point-picker/media.mjs
-  var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
   function Media2({
     alt,
     autoPlay,
@@ -43000,14 +43942,14 @@ This message will only show in development mode. It won't appear in production. 
     ...props
   }) {
     if (!src) {
-      return /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(MediaPlaceholder, {
+      return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(MediaPlaceholder, {
         className: "components-focal-point-picker__media components-focal-point-picker__media--placeholder",
         ref: mediaRef,
         ...props
       });
     }
     const isVideo = isVideoType(src);
-    return isVideo ? /* @__PURE__ */ (0, import_jsx_runtime210.jsx)("video", {
+    return isVideo ? /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("video", {
       ...props,
       autoPlay,
       className: "components-focal-point-picker__media components-focal-point-picker__media--video",
@@ -43016,7 +43958,7 @@ This message will only show in development mode. It won't appear in production. 
       onLoadedData: onLoad,
       ref: mediaRef,
       src
-    }) : /* @__PURE__ */ (0, import_jsx_runtime210.jsx)("img", {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("img", {
       ...props,
       alt,
       className: "components-focal-point-picker__media components-focal-point-picker__media--image",
@@ -43027,14 +43969,14 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/focal-point-picker/index.mjs
-  var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
   var GRID_OVERLAY_TIMEOUT = 600;
   function FocalPointPicker({
     // Prevent passing to internal component.
     __nextHasNoMarginBottom: _2,
     __next40pxDefaultSize: _next40pxDefaultSize,
     autoPlay = true,
-    className: className2,
+    className,
     help,
     hideLabelFromVision,
     label,
@@ -43050,8 +43992,8 @@ This message will only show in development mode. It won't appear in production. 
     },
     ...restProps
   }) {
-    const [point, setPoint] = (0, import_element136.useState)(valueProp);
-    const [showGridOverlay, setShowGridOverlay] = (0, import_element136.useState)(false);
+    const [point, setPoint] = (0, import_element139.useState)(valueProp);
+    const [showGridOverlay, setShowGridOverlay] = (0, import_element139.useState)(false);
     const {
       startDrag,
       endDrag,
@@ -43084,9 +44026,9 @@ This message will only show in development mode. It won't appear in production. 
       x: x2,
       y: y3
     } = isDragging2 ? point : valueProp;
-    const dragAreaRef = (0, import_element136.useRef)(null);
-    const [bounds, setBounds] = (0, import_element136.useState)(INITIAL_BOUNDS);
-    const refUpdateBounds = (0, import_element136.useRef)(() => {
+    const dragAreaRef = (0, import_element139.useRef)(null);
+    const [bounds, setBounds] = (0, import_element139.useState)(INITIAL_BOUNDS);
+    const refUpdateBounds = (0, import_element139.useRef)(() => {
       if (!dragAreaRef.current) {
         return;
       }
@@ -43101,7 +44043,7 @@ This message will only show in development mode. It won't appear in production. 
         ...INITIAL_BOUNDS
       });
     });
-    (0, import_element136.useEffect)(() => {
+    (0, import_element139.useEffect)(() => {
       const updateBounds = refUpdateBounds.current;
       if (!dragAreaRef.current) {
         return;
@@ -43169,7 +44111,7 @@ This message will only show in development mode. It won't appear in production. 
       left: x2 !== void 0 ? x2 * bounds.width : 0.5 * bounds.width,
       top: y3 !== void 0 ? y3 * bounds.height : 0.5 * bounds.height
     };
-    const classes = clsx_default("components-focal-point-picker-control", className2);
+    const classes = clsx_default("components-focal-point-picker-control", className);
     const Label4 = hideLabelFromVision ? component_default2 : StyledLabel;
     use_update_effect_default(() => {
       setShowGridOverlay(true);
@@ -43178,16 +44120,16 @@ This message will only show in development mode. It won't appear in production. 
       }, GRID_OVERLAY_TIMEOUT);
       return () => window.clearTimeout(timeout);
     }, [x2, y3]);
-    return /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)(Container2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(Container2, {
       ...restProps,
       as: "fieldset",
       className: classes,
-      children: [!!label && /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(Label4, {
+      children: [!!label && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(Label4, {
         as: "legend",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(MediaWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(MediaWrapper, {
         className: "components-focal-point-picker-wrapper",
-        children: /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)(MediaContainer, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(MediaContainer, {
           className: "components-focal-point-picker",
           onKeyDown: arrowKeyStep,
           onMouseDown: startDrag,
@@ -43199,20 +44141,20 @@ This message will only show in development mode. It won't appear in production. 
           ref: dragAreaRef,
           role: "button",
           tabIndex: -1,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime211.jsx)(FocalPointPickerGrid, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime215.jsx)(FocalPointPickerGrid, {
             bounds,
             showOverlay: showGridOverlay
-          }), /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(Media2, {
-            alt: (0, import_i18n51.__)("Media preview"),
+          }), /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(Media2, {
+            alt: (0, import_i18n52.__)("Media preview"),
             autoPlay,
             onLoad: refUpdateBounds.current,
             src: url
-          }), /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(FocalPoint, {
+          }), /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(FocalPoint, {
             ...focalPointPosition,
             isDragging: isDragging2
           })]
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(FocalPointPickerControls, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(FocalPointPickerControls, {
         hasHelpText: !!help,
         point: {
           x: x2,
@@ -43221,7 +44163,7 @@ This message will only show in development mode. It won't appear in production. 
         onChange: (value) => {
           onChange?.(getFinalValue(value));
         }
-      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(StyledHelp, {
+      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(StyledHelp, {
         children: help
       })]
     });
@@ -43231,7 +44173,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/focusable-iframe/index.mjs
   var import_compose56 = __toESM(require_compose(), 1);
   var import_deprecated16 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
   function FocusableIframe({
     iframeRef,
     ...props
@@ -43241,15 +44183,15 @@ This message will only show in development mode. It won't appear in production. 
       since: "5.9",
       alternative: "wp.compose.useFocusableIframe"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("iframe", {
+    return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("iframe", {
       ref,
       ...props
     });
   }
 
   // packages/components/build-module/font-size-picker/index.mjs
-  var import_i18n55 = __toESM(require_i18n(), 1);
-  var import_element138 = __toESM(require_element(), 1);
+  var import_i18n56 = __toESM(require_i18n(), 1);
+  var import_element141 = __toESM(require_element(), 1);
   var import_compose57 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/font-size-picker/styles.mjs
@@ -43302,8 +44244,8 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/font-size-picker/font-size-picker-select.mjs
-  var import_i18n52 = __toESM(require_i18n(), 1);
-  var import_element137 = __toESM(require_element(), 1);
+  var import_i18n53 = __toESM(require_i18n(), 1);
+  var import_element140 = __toESM(require_element(), 1);
 
   // packages/components/build-module/font-size-picker/utils.mjs
   function isSimpleCssValue(value) {
@@ -43321,10 +44263,10 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/font-size-picker/font-size-picker-select.mjs
-  var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime217 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_OPTION = {
     key: "default",
-    name: (0, import_i18n52.__)("Default"),
+    name: (0, import_i18n53.__)("Default"),
     value: void 0
   };
   var FontSizePickerSelect = (props) => {
@@ -43343,7 +44285,7 @@ This message will only show in development mode. It won't appear in production. 
         hint
       };
     })];
-    const selectedOption = (0, import_element137.useMemo)(() => {
+    const selectedOption = (0, import_element140.useMemo)(() => {
       if (value === void 0) {
         return DEFAULT_OPTION;
       }
@@ -43355,13 +44297,13 @@ This message will only show in development mode. It won't appear in production. 
       }
       return options2.find((option) => option.value === value) ?? DEFAULT_OPTION;
     }, [value, valueMode, options2]);
-    return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(StyledCustomSelectControl, {
+    return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(StyledCustomSelectControl, {
       className: "components-font-size-picker__select",
-      label: (0, import_i18n52.__)("Font size"),
+      label: (0, import_i18n53.__)("Font size"),
       hideLabelFromVision: true,
-      describedBy: (0, import_i18n52.sprintf)(
+      describedBy: (0, import_i18n53.sprintf)(
         // translators: %s: Currently selected font size.
-        (0, import_i18n52.__)("Currently selected font size: %s"),
+        (0, import_i18n53.__)("Currently selected font size: %s"),
         selectedOption.name
       ),
       options: options2,
@@ -43378,26 +44320,26 @@ This message will only show in development mode. It won't appear in production. 
   var font_size_picker_select_default = FontSizePickerSelect;
 
   // packages/components/build-module/font-size-picker/font-size-picker-toggle-group.mjs
-  var import_i18n54 = __toESM(require_i18n(), 1);
+  var import_i18n55 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/font-size-picker/constants.mjs
-  var import_i18n53 = __toESM(require_i18n(), 1);
+  var import_i18n54 = __toESM(require_i18n(), 1);
   var T_SHIRT_ABBREVIATIONS = [
     /* translators: S stands for 'small' and is a size label. */
-    (0, import_i18n53.__)("S"),
+    (0, import_i18n54.__)("S"),
     /* translators: M stands for 'medium' and is a size label. */
-    (0, import_i18n53.__)("M"),
+    (0, import_i18n54.__)("M"),
     /* translators: L stands for 'large' and is a size label. */
-    (0, import_i18n53.__)("L"),
+    (0, import_i18n54.__)("L"),
     /* translators: XL stands for 'extra large' and is a size label. */
-    (0, import_i18n53.__)("XL"),
+    (0, import_i18n54.__)("XL"),
     /* translators: XXL stands for 'extra extra large' and is a size label. */
-    (0, import_i18n53.__)("XXL")
+    (0, import_i18n54.__)("XXL")
   ];
-  var T_SHIRT_NAMES = [(0, import_i18n53.__)("Small"), (0, import_i18n53.__)("Medium"), (0, import_i18n53.__)("Large"), (0, import_i18n53.__)("Extra Large"), (0, import_i18n53.__)("Extra Extra Large")];
+  var T_SHIRT_NAMES = [(0, import_i18n54.__)("Small"), (0, import_i18n54.__)("Medium"), (0, import_i18n54.__)("Large"), (0, import_i18n54.__)("Extra Large"), (0, import_i18n54.__)("Extra Extra Large")];
 
   // packages/components/build-module/font-size-picker/font-size-picker-toggle-group.mjs
-  var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
   var FontSizePickerToggleGroup = (props) => {
     const {
       fontSizes,
@@ -43419,8 +44361,8 @@ This message will only show in development mode. It won't appear in production. 
       const fontSizeBySize = fontSizes.find((fontSize) => fontSize.size === value);
       return fontSizeBySize?.slug;
     })();
-    return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(component_default12, {
-      label: (0, import_i18n54.__)("Font size"),
+    return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(component_default12, {
+      label: (0, import_i18n55.__)("Font size"),
       hideLabelFromVision: true,
       value: currentValue,
       onChange: (newSlug) => {
@@ -43434,7 +44376,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       },
       isBlock: true,
-      children: fontSizes.map((fontSize, index2) => /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(component_default14, {
+      children: fontSizes.map((fontSize, index2) => /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(component_default14, {
         value: fontSize.slug,
         label: T_SHIRT_ABBREVIATIONS[index2],
         "aria-label": fontSize.name || T_SHIRT_NAMES[index2],
@@ -43445,7 +44387,7 @@ This message will only show in development mode. It won't appear in production. 
   var font_size_picker_toggle_group_default = FontSizePickerToggleGroup;
 
   // packages/components/build-module/font-size-picker/index.mjs
-  var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_UNITS = ["px", "em", "rem", "vw", "vh"];
   var MAX_TOGGLE_GROUP_SIZES = 5;
   var UnforwardedFontSizePicker = (props, ref) => {
@@ -43474,7 +44416,7 @@ This message will only show in development mode. It won't appear in production. 
       return fontSizes.find((fontSize) => fontSize.size === value);
     })();
     const isCustomValue2 = !!value && !selectedFontSize;
-    const [userRequestedCustom, setUserRequestedCustom] = (0, import_element138.useState)(isCustomValue2);
+    const [userRequestedCustom, setUserRequestedCustom] = (0, import_element141.useState)(isCustomValue2);
     const resolvedValueForControls = valueMode === "slug" ? selectedFontSize?.size : value;
     let currentPickerType;
     if (!disableCustomFontSizes && userRequestedCustom) {
@@ -43489,26 +44431,26 @@ This message will only show in development mode. It won't appear in production. 
     const [valueQuantity, valueUnit] = parseQuantityAndUnitFromRawValue(resolvedValueForControls, units);
     const isValueUnitRelative = !!valueUnit && ["em", "rem", "vw", "vh"].includes(valueUnit);
     const isDisabled = value === void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(Container3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(Container3, {
       ref,
       className: "components-font-size-picker",
       "aria-labelledby": labelId,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime215.jsx)(component_default6, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(Header2, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime219.jsx)(component_default6, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(Header2, {
           className: "components-font-size-picker__header",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime215.jsx)(HeaderLabel, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime219.jsx)(HeaderLabel, {
             id: labelId,
-            children: (0, import_i18n55.__)("Font size")
-          }), !disableCustomFontSizes && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(HeaderToggle, {
-            label: currentPickerType === "custom" ? (0, import_i18n55.__)("Use size preset") : (0, import_i18n55.__)("Set custom size"),
+            children: (0, import_i18n56.__)("Font size")
+          }), !disableCustomFontSizes && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(HeaderToggle, {
+            label: currentPickerType === "custom" ? (0, import_i18n56.__)("Use size preset") : (0, import_i18n56.__)("Set custom size"),
             icon: settings_default,
             onClick: () => setUserRequestedCustom(!userRequestedCustom),
             isPressed: currentPickerType === "custom",
             size: "small"
           })]
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)("div", {
-        children: [currentPickerType === "select" && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(font_size_picker_select_default, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)("div", {
+        children: [currentPickerType === "select" && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(font_size_picker_select_default, {
           fontSizes,
           value,
           valueMode,
@@ -43521,7 +44463,7 @@ This message will only show in development mode. It won't appear in production. 
             }
           },
           onSelectCustom: () => setUserRequestedCustom(true)
-        }), currentPickerType === "togglegroup" && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(font_size_picker_toggle_group_default, {
+        }), currentPickerType === "togglegroup" && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(font_size_picker_toggle_group_default, {
           fontSizes,
           value,
           valueMode,
@@ -43532,12 +44474,12 @@ This message will only show in development mode. It won't appear in production. 
               onChange?.(hasUnits2 ? newValue : Number(newValue), selectedItem);
             }
           }
-        }), currentPickerType === "custom" && /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(component_default3, {
+        }), currentPickerType === "custom" && /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(component_default3, {
           className: "components-font-size-picker__custom-size-control",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime215.jsx)(component_default4, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime219.jsx)(component_default4, {
             isBlock: true,
-            children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(unit_control_default, {
-              label: (0, import_i18n55.__)("Font size"),
+            children: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(unit_control_default, {
+              label: (0, import_i18n56.__)("Font size"),
               labelPosition: "top",
               hideLabelFromVision: true,
               value: hasUnits2 ? `${valueQuantity ?? ""}${valueUnit ?? ""}` : resolvedValueForControls,
@@ -43552,14 +44494,14 @@ This message will only show in development mode. It won't appear in production. 
               units: hasUnits2 ? units : [],
               min: 0
             })
-          }), withSlider && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(component_default4, {
+          }), withSlider && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(component_default4, {
             isBlock: true,
-            children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(component_default6, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(component_default6, {
               marginX: 2,
               marginBottom: 0,
-              children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(range_control_default, {
+              children: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(range_control_default, {
                 className: "components-font-size-picker__custom-input",
-                label: (0, import_i18n55.__)("Font size"),
+                label: (0, import_i18n56.__)("Font size"),
                 hideLabelFromVision: true,
                 value: valueQuantity,
                 initialPosition: fallbackFontSize,
@@ -43579,8 +44521,8 @@ This message will only show in development mode. It won't appear in production. 
                 step: isValueUnitRelative ? 0.1 : 1
               })
             })
-          }), withReset && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(component_default4, {
-            children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(Button3, {
+          }), withReset && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(component_default4, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(Button3, {
               disabled: isDisabled,
               accessibleWhenDisabled: true,
               onClick: () => {
@@ -43589,20 +44531,20 @@ This message will only show in development mode. It won't appear in production. 
               variant: "secondary",
               __next40pxDefaultSize: true,
               size: "default",
-              children: (0, import_i18n55.__)("Reset")
+              children: (0, import_i18n56.__)("Reset")
             })
           })]
         })]
       })]
     });
   };
-  var FontSizePicker = (0, import_element138.forwardRef)(UnforwardedFontSizePicker);
+  var FontSizePicker = (0, import_element141.forwardRef)(UnforwardedFontSizePicker);
   FontSizePicker.displayName = "FontSizePicker";
   var font_size_picker_default = FontSizePicker;
 
   // packages/components/build-module/form-file-upload/index.mjs
-  var import_element139 = __toESM(require_element(), 1);
-  var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
+  var import_element142 = __toESM(require_element(), 1);
+  var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
   function FormFileUpload({
     accept,
     children,
@@ -43613,22 +44555,22 @@ This message will only show in development mode. It won't appear in production. 
     __next40pxDefaultSize: _next40pxDefaultSize,
     ...props
   }) {
-    const ref = (0, import_element139.useRef)(null);
+    const ref = (0, import_element142.useRef)(null);
     const openFileDialog = () => {
       ref.current?.click();
     };
     const ui = render ? render({
       openFileDialog
-    }) : /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(button_default, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(button_default, {
       onClick: openFileDialog,
       __next40pxDefaultSize: true,
       ...props,
       children
     });
     const compatAccept = accept?.includes("audio/*") ? `${accept}, audio/mp3, audio/x-m4a, audio/x-m4b, audio/x-m4p, audio/x-wav, audio/webm` : accept;
-    return /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)("div", {
       className: "components-form-file-upload",
-      children: [ui, /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("input", {
+      children: [ui, /* @__PURE__ */ (0, import_jsx_runtime220.jsx)("input", {
         type: "file",
         ref,
         multiple,
@@ -43645,13 +44587,13 @@ This message will only show in development mode. It won't appear in production. 
   var form_file_upload_default = FormFileUpload;
 
   // packages/components/build-module/form-toggle/index.mjs
-  var import_element140 = __toESM(require_element(), 1);
-  var import_jsx_runtime217 = __toESM(require_jsx_runtime(), 1);
+  var import_element143 = __toESM(require_element(), 1);
+  var import_jsx_runtime221 = __toESM(require_jsx_runtime(), 1);
   var noop16 = () => {
   };
   function UnforwardedFormToggle(props, ref) {
     const {
-      className: className2,
+      className,
       checked,
       id: id3,
       disabled,
@@ -43659,13 +44601,13 @@ This message will only show in development mode. It won't appear in production. 
       onClick,
       ...additionalProps
     } = props;
-    const wrapperClasses = clsx_default("components-form-toggle", className2, {
+    const wrapperClasses = clsx_default("components-form-toggle", className, {
       "is-checked": checked,
       "is-disabled": disabled
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)("span", {
       className: wrapperClasses,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime217.jsx)("input", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime221.jsx)("input", {
         className: "components-form-toggle__input",
         id: id3,
         type: "checkbox",
@@ -43678,20 +44620,20 @@ This message will only show in development mode. It won't appear in production. 
         },
         ...additionalProps,
         ref
-      }), /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("span", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime221.jsx)("span", {
         className: "components-form-toggle__track"
-      }), /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("span", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime221.jsx)("span", {
         className: "components-form-toggle__thumb"
       })]
     });
   }
-  var FormToggle = (0, import_element140.forwardRef)(UnforwardedFormToggle);
+  var FormToggle = (0, import_element143.forwardRef)(UnforwardedFormToggle);
   FormToggle.displayName = "FormToggle";
   var form_toggle_default = FormToggle;
 
   // packages/components/build-module/form-token-field/index.mjs
-  var import_element141 = __toESM(require_element(), 1);
-  var import_i18n57 = __toESM(require_i18n(), 1);
+  var import_element144 = __toESM(require_element(), 1);
+  var import_i18n58 = __toESM(require_i18n(), 1);
   var import_compose59 = __toESM(require_compose(), 1);
   var import_a11y6 = __toESM(require_a11y(), 1);
   var import_is_shallow_equal2 = __toESM(require_is_shallow_equal(), 1);
@@ -43700,8 +44642,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/form-token-field/token.mjs
   var import_compose58 = __toESM(require_compose(), 1);
-  var import_i18n56 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
+  var import_i18n57 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
   var noop17 = () => {
   };
   function Token({
@@ -43730,29 +44672,29 @@ This message will only show in development mode. It won't appear in production. 
       value
     });
     const transformedValue = displayTransform(value);
-    const termPositionAndCount = (0, import_i18n56.sprintf)(
+    const termPositionAndCount = (0, import_i18n57.sprintf)(
       /* translators: 1: term name, 2: term position in a set of terms, 3: total term set count. */
-      (0, import_i18n56.__)("%1$s (%2$d of %3$d)"),
+      (0, import_i18n57.__)("%1$s (%2$d of %3$d)"),
       transformedValue,
       termPosition,
       termsCount
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime218.jsxs)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime222.jsxs)("span", {
       className: tokenClasses,
       onMouseEnter,
       onMouseLeave,
       title,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime218.jsxs)("span", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime222.jsxs)("span", {
         className: "components-form-token-field__token-text",
         id: `components-form-token-field__token-text-${instanceId}`,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime218.jsx)(component_default2, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime222.jsx)(component_default2, {
           as: "span",
           children: termPositionAndCount
-        }), /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime222.jsx)("span", {
           "aria-hidden": "true",
           children: transformedValue
         })]
-      }), /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(button_default, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(button_default, {
         className: "components-form-token-field__remove-token",
         size: "small",
         icon: close_small_default,
@@ -43765,9 +44707,9 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/form-token-field/index.mjs
-  var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE21 = "data-wp-hash";
-  function getRuntime21() {
+  var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
+  function getRuntime23() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -43778,26 +44720,26 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument21(document);
+      registerDocument23(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash21(targetDocument, hash2) {
+  function documentContainsStyleHash23(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE21}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE21) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE23}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE23) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle21(targetDocument, hash2, css3) {
+  function injectStyle23(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime21();
+    const runtime = getRuntime23();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -43806,21 +44748,21 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash21(targetDocument, hash2)) {
+    if (documentContainsStyleHash23(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE21, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE23, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument21(targetDocument) {
-    const runtime = getRuntime21();
+  function registerDocument23(targetDocument) {
+    const runtime = getRuntime23();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle21(targetDocument, hash2, css3);
+      injectStyle23(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -43834,15 +44776,15 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle20(hash2, css3) {
-    const runtime = getRuntime21();
+  function registerStyle22(hash2, css3) {
+    const runtime = getRuntime23();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle21(targetDocument, hash2, css3);
+      injectStyle23(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle20("f9ae5dc19e", ".df878b202c3b3cb7__tokens-and-input{box-sizing:border-box;padding:7px}.df878b202c3b3cb7__tokens-and-input *,.df878b202c3b3cb7__tokens-and-input :after,.df878b202c3b3cb7__tokens-and-input :before{box-sizing:inherit}");
+    registerStyle22("f9ae5dc19e", ".df878b202c3b3cb7__tokens-and-input{box-sizing:border-box;padding:7px}.df878b202c3b3cb7__tokens-and-input *,.df878b202c3b3cb7__tokens-and-input :after,.df878b202c3b3cb7__tokens-and-input :before{box-sizing:inherit}");
   }
   var style_module_default19 = { "tokens-and-input": "df878b202c3b3cb7__tokens-and-input" };
   var identity3 = (value) => value;
@@ -43852,8 +44794,8 @@ This message will only show in development mode. It won't appear in production. 
       autoComplete,
       maxLength,
       placeholder,
-      label = (0, import_i18n57.__)("Add item"),
-      className: className2,
+      label = (0, import_i18n58.__)("Add item"),
+      className,
       suggestions = [],
       maxSuggestions = 100,
       value = [],
@@ -43868,10 +44810,10 @@ This message will only show in development mode. It won't appear in production. 
       disabled = false,
       tokenizeOnSpace = false,
       messages = {
-        added: (0, import_i18n57.__)("Item added."),
-        removed: (0, import_i18n57.__)("Item removed."),
-        remove: (0, import_i18n57.__)("Remove item"),
-        __experimentalInvalid: (0, import_i18n57.__)("Invalid item")
+        added: (0, import_i18n58.__)("Item added."),
+        removed: (0, import_i18n58.__)("Item removed."),
+        remove: (0, import_i18n58.__)("Remove item"),
+        __experimentalInvalid: (0, import_i18n58.__)("Invalid item")
       },
       __experimentalRenderItem,
       __experimentalExpandOnFocus = false,
@@ -43881,7 +44823,7 @@ This message will only show in development mode. It won't appear in production. 
       tokenizeOnBlur = false,
       help
     } = props;
-    const defaultHelp = tokenizeOnSpace ? (0, import_i18n57.__)("Separate with commas, spaces, or the Enter key.") : (0, import_i18n57.__)("Separate with commas or the Enter key.");
+    const defaultHelp = tokenizeOnSpace ? (0, import_i18n58.__)("Separate with commas, spaces, or the Enter key.") : (0, import_i18n58.__)("Separate with commas or the Enter key.");
     let computedHelp = help !== void 0 ? help : defaultHelp;
     if (typeof __experimentalShowHowTo === "boolean") {
       (0, import_deprecated17.default)("`__experimentalShowHowTo` prop in wp.components.FormTokenField", {
@@ -43894,32 +44836,32 @@ This message will only show in development mode. It won't appear in production. 
       }
     }
     const instanceId = (0, import_compose59.useInstanceId)(FormTokenField);
-    const [incompleteTokenValue, setIncompleteTokenValue] = (0, import_element141.useState)("");
-    const [inputOffsetFromEnd, setInputOffsetFromEnd] = (0, import_element141.useState)(0);
-    const [isActive, setIsActive] = (0, import_element141.useState)(false);
-    const [isExpanded, setIsExpanded] = (0, import_element141.useState)(false);
-    const [selectedSuggestionIndex, setSelectedSuggestionIndex] = (0, import_element141.useState)(-1);
-    const [selectedSuggestionScroll, setSelectedSuggestionScroll] = (0, import_element141.useState)(false);
+    const [incompleteTokenValue, setIncompleteTokenValue] = (0, import_element144.useState)("");
+    const [inputOffsetFromEnd, setInputOffsetFromEnd] = (0, import_element144.useState)(0);
+    const [isActive, setIsActive] = (0, import_element144.useState)(false);
+    const [isExpanded, setIsExpanded] = (0, import_element144.useState)(false);
+    const [selectedSuggestionIndex, setSelectedSuggestionIndex] = (0, import_element144.useState)(-1);
+    const [selectedSuggestionScroll, setSelectedSuggestionScroll] = (0, import_element144.useState)(false);
     const prevSuggestions = (0, import_compose59.usePrevious)(suggestions);
     const prevValue = (0, import_compose59.usePrevious)(value);
-    const input = (0, import_element141.useRef)(null);
-    const tokensAndInput = (0, import_element141.useRef)(null);
+    const input = (0, import_element144.useRef)(null);
+    const tokensAndInput = (0, import_element144.useRef)(null);
     const debouncedSpeak = (0, import_compose59.useDebounce)(import_a11y6.speak, 500);
-    (0, import_element141.useEffect)(() => {
+    (0, import_element144.useEffect)(() => {
       if (isActive && !hasFocus2()) {
         focus4();
       }
     }, [isActive]);
-    (0, import_element141.useEffect)(() => {
+    (0, import_element144.useEffect)(() => {
       const suggestionsDidUpdate = !(0, import_is_shallow_equal2.isShallowEqual)(suggestions, prevSuggestions || []);
       if (suggestionsDidUpdate || value !== prevValue) {
         updateSuggestions(suggestionsDidUpdate);
       }
     }, [suggestions, prevSuggestions, value, prevValue]);
-    (0, import_element141.useEffect)(() => {
+    (0, import_element144.useEffect)(() => {
       updateSuggestions();
     }, [incompleteTokenValue]);
-    (0, import_element141.useEffect)(() => {
+    (0, import_element144.useEffect)(() => {
       updateSuggestions();
     }, [__experimentalAutoSelectFirstMatch]);
     if (disabled && isActive) {
@@ -44283,11 +45225,11 @@ This message will only show in development mode. It won't appear in production. 
         }
       }
       if (inputHasMinimumChars) {
-        const message = hasMatchingSuggestions ? (0, import_i18n57.sprintf)(
+        const message = hasMatchingSuggestions ? (0, import_i18n58.sprintf)(
           /* translators: %d: number of results. */
-          (0, import_i18n57._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions2.length),
+          (0, import_i18n58._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions2.length),
           matchingSuggestions2.length
-        ) : (0, import_i18n57.__)("No results.");
+        ) : (0, import_i18n58.__)("No results.");
         debouncedSpeak(message, "assertive");
       }
     }
@@ -44301,8 +45243,8 @@ This message will only show in development mode. It won't appear in production. 
       const status = typeof token2 !== "string" ? token2.status : void 0;
       const termPosition = index2 + 1;
       const termsCount = tokens.length;
-      return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(component_default4, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(Token, {
+      return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(component_default4, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(Token, {
           value: _value,
           status,
           title: typeof token2 !== "string" ? token2.title : void 0,
@@ -44332,13 +45274,13 @@ This message will only show in development mode. It won't appear in production. 
         selectedSuggestionIndex,
         "aria-describedby": describedById
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(token_input_default, {
+      return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(token_input_default, {
         ...inputProps,
         onChange: !(maxLength && value.length >= maxLength) ? onInputChangeHandler : void 0,
         ref: input
       }, "input");
     }
-    const classes = clsx_default(className2, "components-form-token-field__input-container", {
+    const classes = clsx_default(className, "components-form-token-field__input-container", {
       "is-active": isActive,
       "is-disabled": disabled
     });
@@ -44354,26 +45296,26 @@ This message will only show in development mode. It won't appear in production. 
         onFocus: onFocusHandler
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)("div", {
       ...tokenFieldProps,
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(StyledLabel, {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(StyledLabel, {
         htmlFor: `components-form-token-input-${instanceId}`,
         className: "components-form-token-field__label",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)("div", {
         ref: tokensAndInput,
         className: classes,
         tabIndex: -1,
         onMouseDown: onContainerTouched,
         onTouchStart: onContainerTouched,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime219.jsx)(component_default3, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime223.jsx)(component_default3, {
           className: style_module_default19["tokens-and-input"],
           justify: "flex-start",
           align: "center",
           gap: 1,
           wrap: true,
           children: renderTokensAndInput()
-        }), isExpanded && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(suggestions_list_default, {
+        }), isExpanded && /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(suggestions_list_default, {
           instanceId,
           match: saveTransform(incompleteTokenValue),
           displayTransform,
@@ -44384,7 +45326,7 @@ This message will only show in development mode. It won't appear in production. 
           onSelect: onSuggestionSelected,
           __experimentalRenderItem
         })]
-      }), computedHelp && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(StyledHelp, {
+      }), computedHelp && /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(StyledHelp, {
         id: `components-form-token-input-${instanceId}__help`,
         className: "components-form-token-field__help",
         children: computedHelp
@@ -44394,22 +45336,22 @@ This message will only show in development mode. It won't appear in production. 
   var form_token_field_default = FormTokenField;
 
   // packages/components/build-module/guide/index.mjs
-  var import_element142 = __toESM(require_element(), 1);
+  var import_element145 = __toESM(require_element(), 1);
   var import_deprecated18 = __toESM(require_deprecated(), 1);
-  var import_i18n59 = __toESM(require_i18n(), 1);
+  var import_i18n60 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/guide/page-control.mjs
-  var import_i18n58 = __toESM(require_i18n(), 1);
+  var import_i18n59 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/guide/icons.mjs
-  var import_primitives32 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
-  var PageControlIcon = () => /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(import_primitives32.SVG, {
+  var import_primitives33 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
+  var PageControlIcon = () => /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(import_primitives33.SVG, {
     width: "8",
     height: "8",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg",
-    children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(import_primitives32.Circle, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(import_primitives33.Circle, {
       cx: "4",
       cy: "4",
       r: "4"
@@ -44417,26 +45359,26 @@ This message will only show in development mode. It won't appear in production. 
   });
 
   // packages/components/build-module/guide/page-control.mjs
-  var import_jsx_runtime221 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
   function PageControl({
     currentPage,
     numberOfPages,
     setCurrentPage
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)("ul", {
+    return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)("ul", {
       className: "components-guide__page-control",
-      "aria-label": (0, import_i18n58.__)("Guide controls"),
+      "aria-label": (0, import_i18n59.__)("Guide controls"),
       children: Array.from({
         length: numberOfPages
-      }).map((_2, page) => /* @__PURE__ */ (0, import_jsx_runtime221.jsx)("li", {
+      }).map((_2, page) => /* @__PURE__ */ (0, import_jsx_runtime225.jsx)("li", {
         // Set aria-current="step" on the active page, see https://www.w3.org/TR/wai-aria-1.1/#aria-current
         "aria-current": page === currentPage ? "step" : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(button_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(button_default, {
           size: "small",
-          icon: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(PageControlIcon, {}),
-          "aria-label": (0, import_i18n58.sprintf)(
+          icon: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(PageControlIcon, {}),
+          "aria-label": (0, import_i18n59.sprintf)(
             /* translators: 1: current page number 2: total number of pages */
-            (0, import_i18n58.__)("Page %1$d of %2$d"),
+            (0, import_i18n59.__)("Page %1$d of %2$d"),
             page + 1,
             numberOfPages
           ),
@@ -44447,35 +45389,35 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/guide/index.mjs
-  var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
   function Guide({
     children,
-    className: className2,
+    className,
     contentLabel,
-    finishButtonText = (0, import_i18n59.__)("Finish"),
-    nextButtonText = (0, import_i18n59.__)("Next"),
-    previousButtonText = (0, import_i18n59.__)("Previous"),
+    finishButtonText = (0, import_i18n60.__)("Finish"),
+    nextButtonText = (0, import_i18n60.__)("Next"),
+    previousButtonText = (0, import_i18n60.__)("Previous"),
     onFinish,
     pages = []
   }) {
-    const ref = (0, import_element142.useRef)(null);
-    const [currentPage, setCurrentPage] = (0, import_element142.useState)(0);
-    (0, import_element142.useEffect)(() => {
+    const ref = (0, import_element145.useRef)(null);
+    const [currentPage, setCurrentPage] = (0, import_element145.useState)(0);
+    (0, import_element145.useEffect)(() => {
       const frame2 = ref.current?.querySelector(".components-guide");
       if (frame2 instanceof HTMLElement) {
         frame2.focus();
       }
     }, [currentPage]);
-    (0, import_element142.useEffect)(() => {
-      if (import_element142.Children.count(children)) {
+    (0, import_element145.useEffect)(() => {
+      if (import_element145.Children.count(children)) {
         (0, import_deprecated18.default)("Passing children to <Guide>", {
           since: "5.5",
           alternative: "the `pages` prop"
         });
       }
     }, [children]);
-    if (import_element142.Children.count(children)) {
-      pages = import_element142.Children.map(children, (child) => ({
+    if (import_element145.Children.count(children)) {
+      pages = import_element145.Children.map(children, (child) => ({
         content: child
       })) ?? [];
     }
@@ -44494,8 +45436,8 @@ This message will only show in development mode. It won't appear in production. 
     if (pages.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(modal_default, {
-      className: clsx_default("components-guide", className2),
+    return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(modal_default, {
+      className: clsx_default("components-guide", className),
       contentLabel,
       isDismissible: pages.length > 1,
       onRequestClose: onFinish,
@@ -44509,30 +45451,30 @@ This message will only show in development mode. It won't appear in production. 
         }
       },
       ref,
-      children: /* @__PURE__ */ (0, import_jsx_runtime222.jsxs)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)("div", {
         className: "components-guide__container",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime222.jsxs)("div", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime226.jsxs)("div", {
           className: "components-guide__page",
-          children: [pages[currentPage].image, pages.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(PageControl, {
+          children: [pages[currentPage].image, pages.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(PageControl, {
             currentPage,
             numberOfPages: pages.length,
             setCurrentPage
           }), pages[currentPage].content]
-        }), /* @__PURE__ */ (0, import_jsx_runtime222.jsxs)("div", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)("div", {
           className: "components-guide__footer",
-          children: [canGoBack && /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(button_default, {
+          children: [canGoBack && /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(button_default, {
             className: "components-guide__back-button",
             variant: "tertiary",
             onClick: goBack,
             __next40pxDefaultSize: true,
             children: previousButtonText
-          }), canGoForward && /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(button_default, {
+          }), canGoForward && /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(button_default, {
             className: "components-guide__forward-button",
             variant: "primary",
             onClick: goForward,
             __next40pxDefaultSize: true,
             children: nextButtonText
-          }), !canGoForward && /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(button_default, {
+          }), !canGoForward && /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(button_default, {
             className: "components-guide__finish-button",
             variant: "primary",
             onClick: onFinish,
@@ -44546,25 +45488,25 @@ This message will only show in development mode. It won't appear in production. 
   var guide_default = Guide;
 
   // packages/components/build-module/guide/page.mjs
-  var import_element143 = __toESM(require_element(), 1);
+  var import_element146 = __toESM(require_element(), 1);
   var import_deprecated19 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
   function GuidePage(props) {
-    (0, import_element143.useEffect)(() => {
+    (0, import_element146.useEffect)(() => {
       (0, import_deprecated19.default)("<GuidePage>", {
         since: "5.5",
         alternative: "the `pages` prop in <Guide>"
       });
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime227.jsx)("div", {
       ...props
     });
   }
 
   // packages/components/build-module/button/deprecated.mjs
   var import_deprecated20 = __toESM(require_deprecated(), 1);
-  var import_element144 = __toESM(require_element(), 1);
-  var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
+  var import_element147 = __toESM(require_element(), 1);
+  var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedIconButton({
     label,
     labelPosition,
@@ -44580,7 +45522,7 @@ This message will only show in development mode. It won't appear in production. 
     return (
       // Disable reason: the parent component is taking care of the __next40pxDefaultSize prop.
       // eslint-disable-next-line @wordpress/components-no-missing-40px-size-prop
-      /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(button_default, {
+      /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(button_default, {
         ...props,
         ref,
         tooltipPosition: labelPosition,
@@ -44590,12 +45532,12 @@ This message will only show in development mode. It won't appear in production. 
       })
     );
   }
-  var deprecated_default = (0, import_element144.forwardRef)(UnforwardedIconButton);
+  var deprecated_default = (0, import_element147.forwardRef)(UnforwardedIconButton);
 
   // packages/components/build-module/keyboard-shortcuts/index.mjs
-  var import_element145 = __toESM(require_element(), 1);
+  var import_element148 = __toESM(require_element(), 1);
   var import_compose60 = __toESM(require_compose(), 1);
-  var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
   function KeyboardShortcut({
     target,
     callback,
@@ -44616,20 +45558,20 @@ This message will only show in development mode. It won't appear in production. 
     bindGlobal,
     eventName
   }) {
-    const target = (0, import_element145.useRef)(null);
-    const element = Object.entries(shortcuts ?? {}).map(([shortcut, callback]) => /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(KeyboardShortcut, {
+    const target = (0, import_element148.useRef)(null);
+    const element = Object.entries(shortcuts ?? {}).map(([shortcut, callback]) => /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(KeyboardShortcut, {
       shortcut,
       callback,
       bindGlobal,
       eventName,
       target
     }, shortcut));
-    if (!import_element145.Children.count(children)) {
-      return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(import_jsx_runtime225.Fragment, {
+    if (!import_element148.Children.count(children)) {
+      return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(import_jsx_runtime229.Fragment, {
         children: element
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)("div", {
       ref: target,
       children: [element, children]
     });
@@ -44637,32 +45579,32 @@ This message will only show in development mode. It won't appear in production. 
   var keyboard_shortcuts_default = KeyboardShortcuts;
 
   // packages/components/build-module/menu-group/index.mjs
-  var import_element146 = __toESM(require_element(), 1);
+  var import_element149 = __toESM(require_element(), 1);
   var import_compose61 = __toESM(require_compose(), 1);
-  var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
   function MenuGroup3(props) {
     const {
       children,
-      className: className2 = "",
+      className = "",
       label,
       hideSeparator
     } = props;
     const instanceId = (0, import_compose61.useInstanceId)(MenuGroup3);
-    if (!import_element146.Children.count(children)) {
+    if (!import_element149.Children.count(children)) {
       return null;
     }
     const labelId = `components-menu-group-label-${instanceId}`;
-    const classNames = clsx_default(className2, "components-menu-group", {
+    const classNames = clsx_default(className, "components-menu-group", {
       "has-hidden-separator": hideSeparator
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)("div", {
       className: classNames,
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("div", {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime230.jsx)("div", {
         className: "components-menu-group__label",
         id: labelId,
         "aria-hidden": "true",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime230.jsx)("div", {
         role: "group",
         "aria-labelledby": label ? labelId : void 0,
         children
@@ -44672,13 +45614,13 @@ This message will only show in development mode. It won't appear in production. 
   var menu_group_default = MenuGroup3;
 
   // packages/components/build-module/menu-item/index.mjs
-  var import_element147 = __toESM(require_element(), 1);
-  var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
+  var import_element150 = __toESM(require_element(), 1);
+  var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedMenuItem(props, ref) {
     let {
       children,
       info,
-      className: className2,
+      className,
       icon,
       iconPosition = "right",
       shortcut,
@@ -44687,52 +45629,52 @@ This message will only show in development mode. It won't appear in production. 
       suffix,
       ...buttonProps
     } = props;
-    className2 = clsx_default("components-menu-item__button", className2);
+    className = clsx_default("components-menu-item__button", className);
     if (info) {
-      children = /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)("span", {
+      children = /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)("span", {
         className: "components-menu-item__info-wrapper",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime227.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime231.jsx)("span", {
           className: "components-menu-item__item",
           children
-        }), /* @__PURE__ */ (0, import_jsx_runtime227.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("span", {
           className: "components-menu-item__info",
           children: info
         })]
       });
     }
     if (icon && typeof icon !== "string") {
-      icon = (0, import_element147.cloneElement)(icon, {
+      icon = (0, import_element150.cloneElement)(icon, {
         className: clsx_default("components-menu-items__item-icon", {
           "has-icon-right": iconPosition === "right"
         })
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(button_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)(button_default, {
       size: "compact",
       ref,
       "aria-checked": role === "menuitemcheckbox" || role === "menuitemradio" ? isSelected2 : void 0,
       role,
       icon: iconPosition === "left" ? icon : void 0,
-      className: className2,
+      className,
       accessibleWhenDisabled: true,
       ...buttonProps,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime227.jsx)("span", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime231.jsx)("span", {
         className: "components-menu-item__item",
         children
-      }), !suffix && /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(shortcut_default, {
+      }), !suffix && /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(shortcut_default, {
         className: "components-menu-item__shortcut",
         shortcut
-      }), !suffix && icon && iconPosition === "right" && /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(icon_default3, {
+      }), !suffix && icon && iconPosition === "right" && /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(icon_default3, {
         icon
       }), suffix]
     });
   }
-  var MenuItem3 = (0, import_element147.forwardRef)(UnforwardedMenuItem);
+  var MenuItem3 = (0, import_element150.forwardRef)(UnforwardedMenuItem);
   MenuItem3.displayName = "MenuItem";
   var menu_item_default = MenuItem3;
 
   // packages/components/build-module/menu-items-choice/index.mjs
-  var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
   var noop18 = () => {
   };
   function MenuItemsChoice({
@@ -44741,10 +45683,10 @@ This message will only show in development mode. It won't appear in production. 
     onSelect,
     value
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(import_jsx_runtime228.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(import_jsx_runtime232.Fragment, {
       children: choices.map((item) => {
         const isSelected2 = value === item.value;
-        return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(menu_item_default, {
+        return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(menu_item_default, {
           role: "menuitemradio",
           disabled: item.disabled,
           icon: isSelected2 ? check_default : null,
@@ -44769,7 +45711,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/navigator/navigator/component.mjs
   var import_deprecated21 = __toESM(require_deprecated(), 1);
-  var import_element149 = __toESM(require_element(), 1);
+  var import_element152 = __toESM(require_element(), 1);
   var import_is_shallow_equal3 = __toESM(require_is_shallow_equal(), 1);
   var import_warning7 = __toESM(require_warning(), 1);
 
@@ -45126,7 +46068,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/navigator/context.mjs
-  var import_element148 = __toESM(require_element(), 1);
+  var import_element151 = __toESM(require_element(), 1);
   var initialContextValue = {
     location: {},
     goTo: () => {
@@ -45141,7 +46083,7 @@ This message will only show in development mode. It won't appear in production. 
     },
     params: {}
   };
-  var NavigatorContext = (0, import_element148.createContext)(initialContextValue);
+  var NavigatorContext = (0, import_element151.createContext)(initialContextValue);
   NavigatorContext.displayName = "NavigatorContext";
 
   // packages/components/build-module/navigator/styles.mjs
@@ -45233,7 +46175,7 @@ This message will only show in development mode. It won't appear in production. 
   };
 
   // packages/components/build-module/navigator/navigator/component.mjs
-  var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
   function addScreen({
     screens
   }, screen) {
@@ -45375,10 +46317,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       initialPath: initialPathProp,
       children,
-      className: className2,
+      className,
       ...otherProps
     } = useContextSystem(props, "Navigator");
-    const [routerState, dispatch] = (0, import_element149.useReducer)(routerReducer, initialPathProp, (path) => ({
+    const [routerState, dispatch] = (0, import_element152.useReducer)(routerReducer, initialPathProp, (path) => ({
       screens: [],
       currentLocation: {
         path,
@@ -45388,7 +46330,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       focusSelectors: /* @__PURE__ */ new Map(),
       initialPath: initialPathProp
     }));
-    const methods = (0, import_element149.useMemo)(() => ({
+    const methods = (0, import_element152.useMemo)(() => ({
       // Note: calling goBack calls `goToParent` internally, as it was established
       // that `goBack` should behave like `goToParent`, and `goToParent` should
       // be marked as deprecated.
@@ -45424,19 +46366,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       currentLocation,
       matchedPath
     } = routerState;
-    const navigatorContextValue = (0, import_element149.useMemo)(() => ({
+    const navigatorContextValue = (0, import_element152.useMemo)(() => ({
       location: currentLocation,
       params: matchedPath?.params ?? {},
       match: matchedPath?.id,
       ...methods
     }), [currentLocation, matchedPath, methods]);
     const cx2 = useCx();
-    const classes = (0, import_element149.useMemo)(() => cx2(navigatorWrapper, className2), [className2, cx2]);
-    return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(component_default, {
+    const classes = (0, import_element152.useMemo)(() => cx2(navigatorWrapper, className), [className, cx2]);
+    return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(component_default, {
       ref: forwardedRef,
       className: classes,
       ...otherProps,
-      children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(NavigatorContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(NavigatorContext.Provider, {
         value: navigatorContextValue,
         children
       })
@@ -45446,15 +46388,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/navigator/navigator-screen/component.mjs
   var import_dom8 = __toESM(require_dom(), 1);
-  var import_element151 = __toESM(require_element(), 1);
+  var import_element154 = __toESM(require_element(), 1);
   var import_compose63 = __toESM(require_compose(), 1);
   var import_escape_html = __toESM(require_escape_html(), 1);
   var import_warning8 = __toESM(require_warning(), 1);
 
   // packages/components/build-module/navigator/navigator-screen/use-screen-animate-presence.mjs
-  var import_element150 = __toESM(require_element(), 1);
+  var import_element153 = __toESM(require_element(), 1);
   var import_compose62 = __toESM(require_compose(), 1);
-  var import_i18n60 = __toESM(require_i18n(), 1);
+  var import_i18n61 = __toESM(require_i18n(), 1);
   var ANIMATION_TIMEOUT_MARGIN = 1.2;
   var isEnterAnimation = (animationDirection, animationStatus, animationName) => animationStatus === "ANIMATING_IN" && animationName === ANIMATION_END_NAMES[animationDirection].in;
   var isExitAnimation = (animationDirection, animationStatus, animationName) => animationStatus === "ANIMATING_OUT" && animationName === ANIMATION_END_NAMES[animationDirection].out;
@@ -45464,12 +46406,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     isBack,
     onAnimationEnd
   }) {
-    const isRTL19 = (0, import_i18n60.isRTL)();
+    const isRTL19 = (0, import_i18n61.isRTL)();
     const prefersReducedMotion2 = (0, import_compose62.useReducedMotion)();
-    const [animationStatus, setAnimationStatus] = (0, import_element150.useState)("INITIAL");
+    const [animationStatus, setAnimationStatus] = (0, import_element153.useState)("INITIAL");
     const becameSelected = animationStatus !== "ANIMATING_IN" && animationStatus !== "IN" && isMatch;
     const becameUnselected = animationStatus !== "ANIMATING_OUT" && animationStatus !== "OUT" && !isMatch;
-    (0, import_element150.useLayoutEffect)(() => {
+    (0, import_element153.useLayoutEffect)(() => {
       if (becameSelected) {
         setAnimationStatus(skipAnimation || prefersReducedMotion2 ? "IN" : "ANIMATING_IN");
       } else if (becameUnselected) {
@@ -45485,7 +46427,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } else if (isAnimatingOut) {
       animationType = "out";
     }
-    const onScreenAnimationEnd = (0, import_element150.useCallback)((e3) => {
+    const onScreenAnimationEnd = (0, import_element153.useCallback)((e3) => {
       onAnimationEnd?.(e3);
       if (isExitAnimation(animationDirection, animationStatus, e3.animationName)) {
         setAnimationStatus("OUT");
@@ -45493,7 +46435,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         setAnimationStatus("IN");
       }
     }, [onAnimationEnd, animationStatus, animationDirection]);
-    (0, import_element150.useEffect)(() => {
+    (0, import_element153.useEffect)(() => {
       let animationTimeout;
       if (isAnimatingOut) {
         animationTimeout = window.setTimeout(() => {
@@ -45528,15 +46470,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/navigator/navigator-screen/component.mjs
-  var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedNavigatorScreen(props, forwardedRef) {
     if (!/^\//.test(props.path)) {
       true ? (0, import_warning8.default)("wp.components.Navigator.Screen: the `path` should follow a URL-like scheme; it should start with and be separated by the `/` character.") : void 0;
     }
-    const screenId = (0, import_element151.useId)();
+    const screenId = (0, import_element154.useId)();
     const {
       children,
-      className: className2,
+      className,
       path,
       onAnimationEnd: onAnimationEndProp,
       ...otherProps
@@ -45546,7 +46488,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       match: match3,
       addScreen: addScreen2,
       removeScreen: removeScreen2
-    } = (0, import_element151.useContext)(NavigatorContext);
+    } = (0, import_element154.useContext)(NavigatorContext);
     const {
       isInitial,
       isBack,
@@ -45554,9 +46496,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       skipFocus
     } = location;
     const isMatch = match3 === screenId;
-    const wrapperRef = (0, import_element151.useRef)(null);
+    const wrapperRef = (0, import_element154.useRef)(null);
     const skipAnimationAndFocusRestoration = !!isInitial && !isBack;
-    (0, import_element151.useEffect)(() => {
+    (0, import_element154.useEffect)(() => {
       const screen = {
         id: screenId,
         path: (0, import_escape_html.escapeAttribute)(path)
@@ -45575,12 +46517,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       skipAnimation: skipAnimationAndFocusRestoration
     });
     const cx2 = useCx();
-    const classes = (0, import_element151.useMemo)(() => cx2(navigatorScreen, animationStyles, className2), [className2, cx2, animationStyles]);
-    const locationRef = (0, import_element151.useRef)(location);
-    (0, import_element151.useEffect)(() => {
+    const classes = (0, import_element154.useMemo)(() => cx2(navigatorScreen, animationStyles, className), [className, cx2, animationStyles]);
+    const locationRef = (0, import_element154.useRef)(location);
+    (0, import_element154.useEffect)(() => {
       locationRef.current = location;
     }, [location]);
-    (0, import_element151.useEffect)(() => {
+    (0, import_element154.useEffect)(() => {
       const wrapperEl = wrapperRef.current;
       if (skipAnimationAndFocusRestoration || !isMatch || !wrapperEl || locationRef.current.hasRestoredFocus || skipFocus) {
         return;
@@ -45601,7 +46543,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       elementToFocus.focus();
     }, [skipAnimationAndFocusRestoration, isMatch, isBack, focusTargetSelector, skipFocus]);
     const mergedWrapperRef = (0, import_compose63.useMergeRefs)([forwardedRef, wrapperRef]);
-    return shouldRenderScreen ? /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(component_default, {
+    return shouldRenderScreen ? /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(component_default, {
       ref: mergedWrapperRef,
       className: classes,
       ...screenProps,
@@ -45612,11 +46554,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var NavigatorScreen = contextConnect(UnconnectedNavigatorScreen, "Navigator.Screen");
 
   // packages/components/build-module/navigator/navigator-button/hook.mjs
-  var import_element153 = __toESM(require_element(), 1);
+  var import_element156 = __toESM(require_element(), 1);
   var import_escape_html2 = __toESM(require_escape_html(), 1);
 
   // packages/components/build-module/navigator/use-navigator.mjs
-  var import_element152 = __toESM(require_element(), 1);
+  var import_element155 = __toESM(require_element(), 1);
   function useNavigator() {
     const {
       location,
@@ -45624,7 +46566,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       goTo: goTo2,
       goBack,
       goToParent: goToParent2
-    } = (0, import_element152.useContext)(NavigatorContext);
+    } = (0, import_element155.useContext)(NavigatorContext);
     return {
       location,
       goTo: goTo2,
@@ -45648,7 +46590,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       goTo: goTo2
     } = useNavigator();
-    const handleClick = (0, import_element153.useCallback)((e3) => {
+    const handleClick = (0, import_element156.useCallback)((e3) => {
       e3.preventDefault();
       goTo2(escapedPath, {
         focusTargetSelector: cssSelectorForAttribute(attributeName, escapedPath)
@@ -45664,10 +46606,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/navigator/navigator-button/component.mjs
-  var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedNavigatorButton(props, forwardedRef) {
     const navigatorButtonProps = useNavigatorButton(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(component_default, {
       ref: forwardedRef,
       ...navigatorButtonProps
     });
@@ -45675,7 +46617,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var NavigatorButton = contextConnect(UnconnectedNavigatorButton, "Navigator.Button");
 
   // packages/components/build-module/navigator/navigator-back-button/hook.mjs
-  var import_element154 = __toESM(require_element(), 1);
+  var import_element157 = __toESM(require_element(), 1);
   function useNavigatorBackButton(props) {
     const {
       onClick,
@@ -45685,7 +46627,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       goBack
     } = useNavigator();
-    const handleClick = (0, import_element154.useCallback)((e3) => {
+    const handleClick = (0, import_element157.useCallback)((e3) => {
       e3.preventDefault();
       goBack();
       onClick?.(e3);
@@ -45698,10 +46640,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/navigator/navigator-back-button/component.mjs
-  var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime236 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedNavigatorBackButton(props, forwardedRef) {
     const navigatorBackButtonProps = useNavigatorBackButton(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(component_default, {
       ref: forwardedRef,
       ...navigatorBackButtonProps
     });
@@ -45710,13 +46652,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/navigator/navigator-to-parent-button/component.mjs
   var import_deprecated22 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedNavigatorToParentButton(props, forwardedRef) {
     (0, import_deprecated22.default)("wp.components.NavigatorToParentButton", {
       since: "6.7",
       alternative: "wp.components.Navigator.BackButton"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(NavigatorBackButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(NavigatorBackButton, {
       ref: forwardedRef,
       ...props
     });
@@ -45838,15 +46780,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/notice/index.mjs
-  var import_i18n61 = __toESM(require_i18n(), 1);
-  var import_element155 = __toESM(require_element(), 1);
+  var import_i18n62 = __toESM(require_i18n(), 1);
+  var import_element158 = __toESM(require_element(), 1);
   var import_a11y7 = __toESM(require_a11y(), 1);
-  var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
   var noop19 = () => {
   };
   function useSpokenMessage(message, politeness) {
-    const spokenMessage = typeof message === "string" ? message : (0, import_element155.renderToString)(message);
-    (0, import_element155.useEffect)(() => {
+    const spokenMessage = typeof message === "string" ? message : (0, import_element158.renderToString)(message);
+    (0, import_element158.useEffect)(() => {
       if (spokenMessage) {
         (0, import_a11y7.speak)(spokenMessage, politeness);
       }
@@ -45866,18 +46808,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   function getStatusLabel(status) {
     switch (status) {
       case "warning":
-        return (0, import_i18n61.__)("Warning notice");
+        return (0, import_i18n62.__)("Warning notice");
       case "info":
-        return (0, import_i18n61.__)("Information notice");
+        return (0, import_i18n62.__)("Information notice");
       case "error":
-        return (0, import_i18n61.__)("Error notice");
+        return (0, import_i18n62.__)("Error notice");
       // The default will also catch the 'success' status.
       default:
-        return (0, import_i18n61.__)("Notice");
+        return (0, import_i18n62.__)("Notice");
     }
   }
   function Notice({
-    className: className2,
+    className,
     status = "info",
     children,
     spokenMessage = children,
@@ -45892,9 +46834,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     onDismiss = noop19
   }) {
     useSpokenMessage(spokenMessage, politeness);
-    const classes = clsx_default(className2, "components-notice", "is-" + status);
+    const classes = clsx_default(className, "components-notice", "is-" + status);
     if (__unstableHTML && typeof children === "string") {
-      children = /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(import_element155.RawHTML, {
+      children = /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(import_element158.RawHTML, {
         children
       });
     }
@@ -45902,14 +46844,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       onDismiss();
       onRemove();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)("div", {
       className: classes,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime234.jsx)(component_default2, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime238.jsx)(component_default2, {
         children: getStatusLabel(status)
-      }), /* @__PURE__ */ (0, import_jsx_runtime234.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime238.jsx)("div", {
         className: "components-notice__content",
         children
-      }), actions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime234.jsx)("div", {
+      }), actions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime238.jsx)("div", {
         className: "components-notice__actions",
         children: actions.map(({
           className: buttonCustomClasses,
@@ -45928,7 +46870,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           if (typeof computedVariant === "undefined" && isPrimary) {
             computedVariant = "primary";
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(button_default, {
+          return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(button_default, {
             size: "compact",
             href: url,
             variant: computedVariant,
@@ -45939,11 +46881,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             children: label
           }, index2);
         })
-      }), isDismissible && /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(button_default, {
+      }), isDismissible && /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(button_default, {
         size: "small",
         className: "components-notice__dismiss",
         icon: close_small_default,
-        label: (0, import_i18n61.__)("Close"),
+        label: (0, import_i18n62.__)("Close"),
         onClick: onDismissNotice
       })]
     });
@@ -45951,26 +46893,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var notice_default = Notice;
 
   // packages/components/build-module/notice/list.mjs
-  var import_react111 = __toESM(require_react(), 1);
-  var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
+  var import_react113 = __toESM(require_react(), 1);
+  var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
   var noop20 = () => {
   };
   function NoticeList({
     notices,
     onRemove = noop20,
-    className: className2,
+    className,
     children
   }) {
     const removeNotice = (id3) => () => onRemove(id3);
-    className2 = clsx_default("components-notice-list", className2);
-    return /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)("div", {
-      className: className2,
+    className = clsx_default("components-notice-list", className);
+    return /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)("div", {
+      className,
       children: [children, [...notices].reverse().map((notice) => {
         const {
           content,
           ...restNotice
         } = notice;
-        return /* @__PURE__ */ (0, import_react111.createElement)(notice_default, {
+        return /* @__PURE__ */ (0, import_react113.createElement)(notice_default, {
           ...restNotice,
           key: notice.id,
           onRemove: removeNotice(notice.id)
@@ -45981,17 +46923,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var list_default = NoticeList;
 
   // packages/components/build-module/panel/index.mjs
-  var import_element156 = __toESM(require_element(), 1);
+  var import_element159 = __toESM(require_element(), 1);
 
   // packages/components/build-module/panel/header.mjs
-  var import_jsx_runtime236 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime240 = __toESM(require_jsx_runtime(), 1);
   function PanelHeader({
     label,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)("div", {
       className: "components-panel__header",
-      children: [label && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)("h2", {
+      children: [label && /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("h2", {
         children: label
       }), children]
     });
@@ -45999,36 +46941,36 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var header_default = PanelHeader;
 
   // packages/components/build-module/panel/index.mjs
-  var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedPanel({
     header,
-    className: className2,
+    className,
     children
   }, ref) {
-    const classNames = clsx_default(className2, "components-panel");
-    return /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)("div", {
+    const classNames = clsx_default(className, "components-panel");
+    return /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)("div", {
       className: classNames,
       ref,
-      children: [header && /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(header_default, {
+      children: [header && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(header_default, {
         label: header
       }), children]
     });
   }
-  var Panel = (0, import_element156.forwardRef)(UnforwardedPanel);
+  var Panel = (0, import_element159.forwardRef)(UnforwardedPanel);
   Panel.displayName = "Panel";
   var panel_default = Panel;
 
   // packages/components/build-module/panel/body.mjs
   var import_compose64 = __toESM(require_compose(), 1);
-  var import_element157 = __toESM(require_element(), 1);
-  var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
+  var import_element160 = __toESM(require_element(), 1);
+  var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
   var noop21 = () => {
   };
   function UnforwardedPanelBody(props, ref) {
     const {
       buttonProps = {},
       children,
-      className: className2,
+      className,
       icon,
       initialOpen,
       onToggle = noop21,
@@ -46040,7 +46982,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       initial: initialOpen === void 0 ? true : initialOpen,
       fallback: false
     });
-    const nodeRef = (0, import_element157.useRef)(null);
+    const nodeRef = (0, import_element160.useRef)(null);
     const scrollBehavior = (0, import_compose64.useReducedMotion)() ? "auto" : "smooth";
     const handleOnToggle = (event) => {
       event.preventDefault();
@@ -46048,7 +46990,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       setIsOpened(next2);
       onToggle(next2);
     };
-    const scrollAfterOpenRef = (0, import_element157.useRef)(void 0);
+    const scrollAfterOpenRef = (0, import_element160.useRef)(void 0);
     scrollAfterOpenRef.current = scrollAfterOpen;
     use_update_effect_default(() => {
       if (isOpened && scrollAfterOpenRef.current && nodeRef.current?.scrollIntoView) {
@@ -46059,13 +47001,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         });
       }
     }, [isOpened, scrollBehavior]);
-    const classes = clsx_default("components-panel__body", className2, {
+    const classes = clsx_default("components-panel__body", className, {
       "is-opened": isOpened
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)("div", {
       className: classes,
       ref: (0, import_compose64.useMergeRefs)([nodeRef, ref]),
-      children: [/* @__PURE__ */ (0, import_jsx_runtime238.jsx)(PanelBodyTitle, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime242.jsx)(PanelBodyTitle, {
         icon,
         isOpened: Boolean(isOpened),
         onClick: handleOnToggle,
@@ -46076,7 +47018,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }) : isOpened && children]
     });
   }
-  var PanelBodyTitle = (0, import_element157.forwardRef)(({
+  var PanelBodyTitle = (0, import_element160.forwardRef)(({
     isOpened,
     icon,
     title,
@@ -46085,21 +47027,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!title) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)("h2", {
+    return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("h2", {
       className: "components-panel__body-title",
-      children: /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(button_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)(button_default, {
         __next40pxDefaultSize: true,
         className: "components-panel__body-toggle",
         "aria-expanded": isOpened,
         ref,
         ...props,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime238.jsx)("span", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime242.jsx)("span", {
           "aria-hidden": "true",
-          children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(icon_default3, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(icon_default3, {
             className: "components-panel__arrow",
             icon: isOpened ? chevron_up_default : chevron_down_default
           })
-        }), title, icon && /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(icon_default3, {
+        }), title, icon && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(icon_default3, {
           icon,
           className: "components-panel__icon",
           size: 20
@@ -46107,40 +47049,40 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   });
-  var PanelBody = (0, import_element157.forwardRef)(UnforwardedPanelBody);
+  var PanelBody = (0, import_element160.forwardRef)(UnforwardedPanelBody);
   PanelBody.displayName = "PanelBody";
   var body_default = PanelBody;
 
   // packages/components/build-module/panel/row.mjs
-  var import_element158 = __toESM(require_element(), 1);
-  var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
+  var import_element161 = __toESM(require_element(), 1);
+  var import_jsx_runtime243 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedPanelRow({
-    className: className2,
+    className,
     children
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime239.jsx)("div", {
-      className: clsx_default("components-panel__row", className2),
+    return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", {
+      className: clsx_default("components-panel__row", className),
       ref,
       children
     });
   }
-  var PanelRow = (0, import_element158.forwardRef)(UnforwardedPanelRow);
+  var PanelRow = (0, import_element161.forwardRef)(UnforwardedPanelRow);
   PanelRow.displayName = "PanelRow";
   var row_default = PanelRow;
 
   // packages/components/build-module/placeholder/index.mjs
   var import_compose65 = __toESM(require_compose(), 1);
-  var import_primitives33 = __toESM(require_primitives(), 1);
-  var import_element159 = __toESM(require_element(), 1);
+  var import_primitives34 = __toESM(require_primitives(), 1);
+  var import_element162 = __toESM(require_element(), 1);
   var import_a11y8 = __toESM(require_a11y(), 1);
-  var import_jsx_runtime240 = __toESM(require_jsx_runtime(), 1);
-  var PlaceholderIllustration = /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(import_primitives33.SVG, {
+  var import_jsx_runtime244 = __toESM(require_jsx_runtime(), 1);
+  var PlaceholderIllustration = /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(import_primitives34.SVG, {
     className: "components-placeholder__illustration",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 60 60",
     preserveAspectRatio: "none",
-    children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(import_primitives33.Path, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(import_primitives34.Path, {
       vectorEffect: "non-scaling-stroke",
       d: "M60 60 0 0"
     })
@@ -46151,7 +47093,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       children,
       label,
       instructions,
-      className: className2,
+      className,
       notices,
       preview,
       isColumnLayout,
@@ -46169,30 +47111,30 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         "is-small": width < 160
       };
     }
-    const classes = clsx_default("components-placeholder", className2, modifierClassNames, withIllustration ? "has-illustration" : null);
+    const classes = clsx_default("components-placeholder", className, modifierClassNames, withIllustration ? "has-illustration" : null);
     const fieldsetClasses = clsx_default("components-placeholder__fieldset", {
       "is-column-layout": isColumnLayout
     });
-    (0, import_element159.useEffect)(() => {
+    (0, import_element162.useEffect)(() => {
       if (instructions) {
         (0, import_a11y8.speak)(instructions);
       }
     }, [instructions]);
-    return /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime244.jsxs)("div", {
       ...additionalProps,
       className: classes,
-      children: [withIllustration ? PlaceholderIllustration : null, resizeListener, notices, preview && /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("div", {
+      children: [withIllustration ? PlaceholderIllustration : null, resizeListener, notices, preview && /* @__PURE__ */ (0, import_jsx_runtime244.jsx)("div", {
         className: "components-placeholder__preview",
         children: preview
-      }), /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime244.jsxs)("div", {
         className: "components-placeholder__label",
-        children: [/* @__PURE__ */ (0, import_jsx_runtime240.jsx)(icon_default3, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime244.jsx)(icon_default3, {
           icon
         }), label]
-      }), !!instructions && /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("div", {
+      }), !!instructions && /* @__PURE__ */ (0, import_jsx_runtime244.jsx)("div", {
         className: "components-placeholder__instructions",
         children: instructions
-      }), /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime244.jsx)("div", {
         className: fieldsetClasses,
         children
       })]
@@ -46201,11 +47143,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var placeholder_default = Placeholder;
 
   // packages/components/build-module/progress-bar/index.mjs
-  var import_i18n63 = __toESM(require_i18n(), 1);
-  var import_element160 = __toESM(require_element(), 1);
+  var import_i18n64 = __toESM(require_i18n(), 1);
+  var import_element163 = __toESM(require_element(), 1);
 
   // packages/components/build-module/progress-bar/styles.mjs
-  var import_i18n62 = __toESM(require_i18n(), 1);
+  var import_i18n63 = __toESM(require_i18n(), 1);
   function _EMOTION_STRINGIFIED_CSS_ERROR__26() {
     return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop).";
   }
@@ -46246,7 +47188,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     animationDuration: "1.5s",
     animationTimingFunction: "ease-in-out",
     animationIterationCount: "infinite",
-    animationName: animateProgressBar((0, import_i18n62.isRTL)()),
+    animationName: animateProgressBar((0, import_i18n63.isRTL)()),
     width: `${INDETERMINATE_TRACK_WIDTH}%`
   }, false ? "" : ";label:Indicator;", false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUErREsiLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuaW1wb3J0IHsgY3NzLCBrZXlmcmFtZXMgfSBmcm9tICdAZW1vdGlvbi9yZWFjdCc7XG5pbXBvcnQgeyBpc1JUTCB9IGZyb20gJ0B3b3JkcHJlc3MvaTE4bic7XG5pbXBvcnQgeyBDT0xPUlMsIENPTkZJRyB9IGZyb20gJy4uL3V0aWxzJztcblxuZnVuY3Rpb24gYW5pbWF0ZVByb2dyZXNzQmFyKCBpc1J0bCA9IGZhbHNlICkge1xuXHRjb25zdCBhbmltYXRpb25EaXJlY3Rpb24gPSBpc1J0bCA/ICdyaWdodCcgOiAnbGVmdCc7XG5cblx0cmV0dXJuIGtleWZyYW1lcygge1xuXHRcdCcwJSc6IHtcblx0XHRcdFsgYW5pbWF0aW9uRGlyZWN0aW9uIF06ICctNTAlJyxcblx0XHR9LFxuXHRcdCcxMDAlJzoge1xuXHRcdFx0WyBhbmltYXRpb25EaXJlY3Rpb24gXTogJzEwMCUnLFxuXHRcdH0sXG5cdH0gKTtcbn1cblxuLy8gV2lkdGggb2YgdGhlIGluZGljYXRvciBmb3IgdGhlIGluZGV0ZXJtaW5hdGUgcHJvZ3Jlc3MgYmFyXG5leHBvcnQgY29uc3QgSU5ERVRFUk1JTkFURV9UUkFDS19XSURUSCA9IDUwO1xuXG5leHBvcnQgY29uc3QgVHJhY2sgPSBzdHlsZWQuZGl2YFxuXHRwb3NpdGlvbjogcmVsYXRpdmU7XG5cdG92ZXJmbG93OiBoaWRkZW47XG5cdGhlaWdodDogJHsgQ09ORklHLmJvcmRlcldpZHRoRm9jdXMgfTtcblx0LyogVGV4dCBjb2xvciBhdCAxMCUgb3BhY2l0eSAqL1xuXHRiYWNrZ3JvdW5kLWNvbG9yOiBjb2xvci1taXgoXG5cdFx0aW4gc3JnYixcblx0XHQkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZCB9LFxuXHRcdHRyYW5zcGFyZW50IDkwJVxuXHQpO1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzRnVsbCB9O1xuXG5cdC8vIFdpbmRvd3MgaGlnaCBjb250cmFzdCBtb2RlLlxuXHRvdXRsaW5lOiAycHggc29saWQgdHJhbnNwYXJlbnQ7XG5cdG91dGxpbmUtb2Zmc2V0OiAycHg7XG5cblx0OndoZXJlKCAmICkge1xuXHRcdHdpZHRoOiAxNjBweDtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IEluZGljYXRvciA9IHN0eWxlZC5kaXY8IHtcblx0aXNJbmRldGVybWluYXRlOiBib29sZWFuO1xufSA+YFxuXHRkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG5cdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0dG9wOiAwO1xuXHRoZWlnaHQ6IDEwMCU7XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNGdWxsIH07XG5cdC8qIFRleHQgY29sb3IgYXQgOTAlIG9wYWNpdHkgKi9cblx0YmFja2dyb3VuZC1jb2xvcjogY29sb3ItbWl4KFxuXHRcdGluIHNyZ2IsXG5cdFx0JHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfSxcblx0XHR0cmFuc3BhcmVudCAxMCVcblx0KTtcblxuXHQvLyBXaW5kb3dzIGhpZ2ggY29udHJhc3QgbW9kZS5cblx0b3V0bGluZTogMnB4IHNvbGlkIHRyYW5zcGFyZW50O1xuXHRvdXRsaW5lLW9mZnNldDogLTJweDtcblxuXHQkeyAoIHsgaXNJbmRldGVybWluYXRlIH0gKSA9PlxuXHRcdGlzSW5kZXRlcm1pbmF0ZVxuXHRcdFx0PyBjc3MoIHtcblx0XHRcdFx0XHRhbmltYXRpb25EdXJhdGlvbjogJzEuNXMnLFxuXHRcdFx0XHRcdGFuaW1hdGlvblRpbWluZ0Z1bmN0aW9uOiAnZWFzZS1pbi1vdXQnLFxuXHRcdFx0XHRcdGFuaW1hdGlvbkl0ZXJhdGlvbkNvdW50OiAnaW5maW5pdGUnLFxuXHRcdFx0XHRcdGFuaW1hdGlvbk5hbWU6IGFuaW1hdGVQcm9ncmVzc0JhciggaXNSVEwoKSApLFxuXHRcdFx0XHRcdHdpZHRoOiBgJHsgSU5ERVRFUk1JTkFURV9UUkFDS19XSURUSCB9JWAsXG5cdFx0XHQgIH0gKVxuXHRcdFx0OiBjc3MoIHtcblx0XHRcdFx0XHR3aWR0aDogJ3ZhcigtLWluZGljYXRvci13aWR0aCknLFxuXHRcdFx0XHRcdHRyYW5zaXRpb246ICd3aWR0aCAwLjRzIGVhc2UtaW4tb3V0Jyxcblx0XHRcdCAgfSApIH07XG5gO1xuXG5leHBvcnQgY29uc3QgUHJvZ3Jlc3NFbGVtZW50ID0gc3R5bGVkLnByb2dyZXNzYFxuXHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdHRvcDogMDtcblx0bGVmdDogMDtcblx0b3BhY2l0eTogMDtcblx0d2lkdGg6IDEwMCU7XG5cdGhlaWdodDogMTAwJTtcbmA7XG4iXX0= */") : _ref7, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUE0Q0ciLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuaW1wb3J0IHsgY3NzLCBrZXlmcmFtZXMgfSBmcm9tICdAZW1vdGlvbi9yZWFjdCc7XG5pbXBvcnQgeyBpc1JUTCB9IGZyb20gJ0B3b3JkcHJlc3MvaTE4bic7XG5pbXBvcnQgeyBDT0xPUlMsIENPTkZJRyB9IGZyb20gJy4uL3V0aWxzJztcblxuZnVuY3Rpb24gYW5pbWF0ZVByb2dyZXNzQmFyKCBpc1J0bCA9IGZhbHNlICkge1xuXHRjb25zdCBhbmltYXRpb25EaXJlY3Rpb24gPSBpc1J0bCA/ICdyaWdodCcgOiAnbGVmdCc7XG5cblx0cmV0dXJuIGtleWZyYW1lcygge1xuXHRcdCcwJSc6IHtcblx0XHRcdFsgYW5pbWF0aW9uRGlyZWN0aW9uIF06ICctNTAlJyxcblx0XHR9LFxuXHRcdCcxMDAlJzoge1xuXHRcdFx0WyBhbmltYXRpb25EaXJlY3Rpb24gXTogJzEwMCUnLFxuXHRcdH0sXG5cdH0gKTtcbn1cblxuLy8gV2lkdGggb2YgdGhlIGluZGljYXRvciBmb3IgdGhlIGluZGV0ZXJtaW5hdGUgcHJvZ3Jlc3MgYmFyXG5leHBvcnQgY29uc3QgSU5ERVRFUk1JTkFURV9UUkFDS19XSURUSCA9IDUwO1xuXG5leHBvcnQgY29uc3QgVHJhY2sgPSBzdHlsZWQuZGl2YFxuXHRwb3NpdGlvbjogcmVsYXRpdmU7XG5cdG92ZXJmbG93OiBoaWRkZW47XG5cdGhlaWdodDogJHsgQ09ORklHLmJvcmRlcldpZHRoRm9jdXMgfTtcblx0LyogVGV4dCBjb2xvciBhdCAxMCUgb3BhY2l0eSAqL1xuXHRiYWNrZ3JvdW5kLWNvbG9yOiBjb2xvci1taXgoXG5cdFx0aW4gc3JnYixcblx0XHQkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZCB9LFxuXHRcdHRyYW5zcGFyZW50IDkwJVxuXHQpO1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzRnVsbCB9O1xuXG5cdC8vIFdpbmRvd3MgaGlnaCBjb250cmFzdCBtb2RlLlxuXHRvdXRsaW5lOiAycHggc29saWQgdHJhbnNwYXJlbnQ7XG5cdG91dGxpbmUtb2Zmc2V0OiAycHg7XG5cblx0OndoZXJlKCAmICkge1xuXHRcdHdpZHRoOiAxNjBweDtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IEluZGljYXRvciA9IHN0eWxlZC5kaXY8IHtcblx0aXNJbmRldGVybWluYXRlOiBib29sZWFuO1xufSA+YFxuXHRkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG5cdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0dG9wOiAwO1xuXHRoZWlnaHQ6IDEwMCU7XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNGdWxsIH07XG5cdC8qIFRleHQgY29sb3IgYXQgOTAlIG9wYWNpdHkgKi9cblx0YmFja2dyb3VuZC1jb2xvcjogY29sb3ItbWl4KFxuXHRcdGluIHNyZ2IsXG5cdFx0JHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfSxcblx0XHR0cmFuc3BhcmVudCAxMCVcblx0KTtcblxuXHQvLyBXaW5kb3dzIGhpZ2ggY29udHJhc3QgbW9kZS5cblx0b3V0bGluZTogMnB4IHNvbGlkIHRyYW5zcGFyZW50O1xuXHRvdXRsaW5lLW9mZnNldDogLTJweDtcblxuXHQkeyAoIHsgaXNJbmRldGVybWluYXRlIH0gKSA9PlxuXHRcdGlzSW5kZXRlcm1pbmF0ZVxuXHRcdFx0PyBjc3MoIHtcblx0XHRcdFx0XHRhbmltYXRpb25EdXJhdGlvbjogJzEuNXMnLFxuXHRcdFx0XHRcdGFuaW1hdGlvblRpbWluZ0Z1bmN0aW9uOiAnZWFzZS1pbi1vdXQnLFxuXHRcdFx0XHRcdGFuaW1hdGlvbkl0ZXJhdGlvbkNvdW50OiAnaW5maW5pdGUnLFxuXHRcdFx0XHRcdGFuaW1hdGlvbk5hbWU6IGFuaW1hdGVQcm9ncmVzc0JhciggaXNSVEwoKSApLFxuXHRcdFx0XHRcdHdpZHRoOiBgJHsgSU5ERVRFUk1JTkFURV9UUkFDS19XSURUSCB9JWAsXG5cdFx0XHQgIH0gKVxuXHRcdFx0OiBjc3MoIHtcblx0XHRcdFx0XHR3aWR0aDogJ3ZhcigtLWluZGljYXRvci13aWR0aCknLFxuXHRcdFx0XHRcdHRyYW5zaXRpb246ICd3aWR0aCAwLjRzIGVhc2UtaW4tb3V0Jyxcblx0XHRcdCAgfSApIH07XG5gO1xuXG5leHBvcnQgY29uc3QgUHJvZ3Jlc3NFbGVtZW50ID0gc3R5bGVkLnByb2dyZXNzYFxuXHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdHRvcDogMDtcblx0bGVmdDogMDtcblx0b3BhY2l0eTogMDtcblx0d2lkdGg6IDEwMCU7XG5cdGhlaWdodDogMTAwJTtcbmA7XG4iXX0= */"));
   var ProgressElement = /* @__PURE__ */ createStyled("progress", false ? {
@@ -46264,36 +47206,36 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/progress-bar/index.mjs
-  var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedProgressBar(props, ref) {
     const {
-      className: className2,
+      className,
       value,
       ...progressProps
     } = props;
     const isIndeterminate = !Number.isFinite(value);
-    return /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(Track2, {
-      className: className2,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime241.jsx)(Indicator, {
+    return /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(Track2, {
+      className,
+      children: [/* @__PURE__ */ (0, import_jsx_runtime245.jsx)(Indicator, {
         style: {
           "--indicator-width": !isIndeterminate ? `${value}%` : void 0
         },
         isIndeterminate
-      }), /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(ProgressElement, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(ProgressElement, {
         max: 100,
         value,
-        "aria-label": (0, import_i18n63.__)("Loading \u2026"),
+        "aria-label": (0, import_i18n64.__)("Loading \u2026"),
         ref,
         ...progressProps
       })]
     });
   }
-  var ProgressBar = (0, import_element160.forwardRef)(UnforwardedProgressBar);
+  var ProgressBar = (0, import_element163.forwardRef)(UnforwardedProgressBar);
   ProgressBar.displayName = "ProgressBar";
   var progress_bar_default = ProgressBar;
 
   // packages/components/build-module/query-controls/index.mjs
-  var import_i18n64 = __toESM(require_i18n(), 1);
+  var import_i18n65 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/query-controls/terms.mjs
   var ensureParentsAreDefined = (terms) => {
@@ -46332,9 +47274,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tree-select/index.mjs
-  var import_element161 = __toESM(require_element(), 1);
+  var import_element164 = __toESM(require_element(), 1);
   var import_html_entities = __toESM(require_html_entities(), 1);
-  var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
   function getSelectOptions(tree, level = 0) {
     return tree.flatMap((treeNode) => [{
       value: treeNode.id,
@@ -46353,13 +47295,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       tree = [],
       ...restProps
     } = props;
-    const options2 = (0, import_element161.useMemo)(() => {
+    const options2 = (0, import_element164.useMemo)(() => {
       return [noOptionLabel && {
         value: "",
         label: noOptionLabel
       }, ...getSelectOptions(tree)].filter((option) => !!option);
     }, [noOptionLabel, tree]);
-    return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(SelectControl, {
+    return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(SelectControl, {
       label,
       options: options2,
       onChange,
@@ -46370,7 +47312,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var tree_select_default = TreeSelect;
 
   // packages/components/build-module/query-controls/author-select.mjs
-  var import_jsx_runtime243 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime247 = __toESM(require_jsx_runtime(), 1);
   function AuthorSelect({
     label,
     noOptionLabel,
@@ -46382,7 +47324,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return null;
     }
     const termsTree = buildTermsTree(authorList);
-    return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(tree_select_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(tree_select_default, {
       label,
       noOptionLabel,
       onChange: onChangeProp,
@@ -46392,8 +47334,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/query-controls/category-select.mjs
-  var import_element162 = __toESM(require_element(), 1);
-  var import_jsx_runtime244 = __toESM(require_jsx_runtime(), 1);
+  var import_element165 = __toESM(require_element(), 1);
+  var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
   function CategorySelect({
     label,
     noOptionLabel,
@@ -46402,10 +47344,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     onChange: onChangeProp,
     ...props
   }) {
-    const termsTree = (0, import_element162.useMemo)(() => {
+    const termsTree = (0, import_element165.useMemo)(() => {
       return buildTermsTree(categoriesList);
     }, [categoriesList]);
-    return /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(tree_select_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(tree_select_default, {
       label,
       noOptionLabel,
       onChange: onChangeProp,
@@ -46416,7 +47358,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/query-controls/index.mjs
-  var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime249 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_MIN_ITEMS = 1;
   var DEFAULT_MAX_ITEMS = 100;
   var MAX_CATEGORIES_SUGGESTIONS = 20;
@@ -46427,18 +47369,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     return "categorySuggestions" in props;
   }
   var defaultOrderByOptions = [{
-    label: (0, import_i18n64.__)("Newest to oldest"),
+    label: (0, import_i18n65.__)("Newest to oldest"),
     value: "date/desc"
   }, {
-    label: (0, import_i18n64.__)("Oldest to newest"),
+    label: (0, import_i18n65.__)("Oldest to newest"),
     value: "date/asc"
   }, {
     /* translators: Label for ordering posts by title in ascending order. */
-    label: (0, import_i18n64.__)("A \u2192 Z"),
+    label: (0, import_i18n65.__)("A \u2192 Z"),
     value: "title/asc"
   }, {
     /* translators: Label for ordering posts by title in descending order. */
-    label: (0, import_i18n64.__)("Z \u2192 A"),
+    label: (0, import_i18n65.__)("Z \u2192 A"),
     value: "title/desc"
   }];
   function QueryControls({
@@ -46458,11 +47400,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     // but instead are destructured inline where necessary.
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(component_default18, {
+    return /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(component_default18, {
       spacing: "4",
       className: "components-query-controls",
-      children: [onOrderChange && onOrderByChange && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(select_control_default, {
-        label: (0, import_i18n64.__)("Order by"),
+      children: [onOrderChange && onOrderByChange && /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(select_control_default, {
+        label: (0, import_i18n65.__)("Order by"),
         value: orderBy === void 0 || order === void 0 ? void 0 : `${orderBy}/${order}`,
         options: orderByOptions,
         onChange: (value) => {
@@ -46477,14 +47419,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             onOrderByChange(newOrderBy);
           }
         }
-      }, "query-controls-order-select"), isSingleCategorySelection(props) && props.categoriesList && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(CategorySelect, {
+      }, "query-controls-order-select"), isSingleCategorySelection(props) && props.categoriesList && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(CategorySelect, {
         categoriesList: props.categoriesList,
-        label: (0, import_i18n64.__)("Category"),
-        noOptionLabel: (0, import_i18n64._x)("All", "categories"),
+        label: (0, import_i18n65.__)("Category"),
+        noOptionLabel: (0, import_i18n65._x)("All", "categories"),
         selectedCategoryId: props.selectedCategoryId,
         onChange: props.onCategoryChange
-      }, "query-controls-category-select"), isMultipleCategorySelection(props) && props.categorySuggestions && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(form_token_field_default, {
-        label: (0, import_i18n64.__)("Categories"),
+      }, "query-controls-category-select"), isMultipleCategorySelection(props) && props.categorySuggestions && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(form_token_field_default, {
+        label: (0, import_i18n65.__)("Categories"),
         value: props.selectedCategories && props.selectedCategories.map((item) => ({
           id: item.id,
           // Keeping the fallback to `item.value` for legacy reasons,
@@ -46496,14 +47438,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         suggestions: Object.keys(props.categorySuggestions),
         onChange: props.onCategoryChange,
         maxSuggestions: MAX_CATEGORIES_SUGGESTIONS
-      }, "query-controls-categories-select"), onAuthorChange && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(AuthorSelect, {
+      }, "query-controls-categories-select"), onAuthorChange && /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(AuthorSelect, {
         authorList,
-        label: (0, import_i18n64.__)("Author"),
-        noOptionLabel: (0, import_i18n64._x)("All", "authors"),
+        label: (0, import_i18n65.__)("Author"),
+        noOptionLabel: (0, import_i18n65._x)("All", "authors"),
         selectedAuthorId,
         onChange: onAuthorChange
-      }, "query-controls-author-select"), onNumberOfItemsChange && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(range_control_default, {
-        label: (0, import_i18n64.__)("Number of items"),
+      }, "query-controls-author-select"), onNumberOfItemsChange && /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(range_control_default, {
+        label: (0, import_i18n65.__)("Number of items"),
         value: numberOfItems,
         onChange: onNumberOfItemsChange,
         min: minItems,
@@ -46515,18 +47457,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var query_controls_default = QueryControls;
 
   // packages/components/build-module/radio-group/radio.mjs
-  var import_element164 = __toESM(require_element(), 1);
+  var import_element167 = __toESM(require_element(), 1);
 
   // packages/components/build-module/radio-group/context.mjs
-  var import_element163 = __toESM(require_element(), 1);
-  var RadioGroupContext = (0, import_element163.createContext)({
+  var import_element166 = __toESM(require_element(), 1);
+  var RadioGroupContext = (0, import_element166.createContext)({
     store: void 0,
     disabled: void 0
   });
   RadioGroupContext.displayName = "RadioGroupContext";
 
   // packages/components/build-module/radio-group/radio.mjs
-  var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime250 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedRadio({
     value,
     children,
@@ -46536,15 +47478,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       store,
       disabled
-    } = (0, import_element164.useContext)(RadioGroupContext);
+    } = (0, import_element167.useContext)(RadioGroupContext);
     const selectedValue = useStoreState(store, "value");
     const isChecked = selectedValue !== void 0 && selectedValue === value;
-    return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(Radio, {
+    return /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(Radio, {
       disabled,
       store,
       ref,
       value,
-      render: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(button_default, {
+      render: /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(button_default, {
         variant: isChecked ? "primary" : "secondary",
         __next40pxDefaultSize: true,
         ...props
@@ -46552,15 +47494,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       children: children || value
     });
   }
-  var Radio22 = (0, import_element164.forwardRef)(UnforwardedRadio);
+  var Radio22 = (0, import_element167.forwardRef)(UnforwardedRadio);
   Radio22.displayName = "Radio";
   var radio_default = Radio22;
 
   // packages/components/build-module/radio-group/index.mjs
   var import_deprecated23 = __toESM(require_deprecated(), 1);
-  var import_element165 = __toESM(require_element(), 1);
-  var import_i18n65 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime247 = __toESM(require_jsx_runtime(), 1);
+  var import_element168 = __toESM(require_element(), 1);
+  var import_i18n66 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime251 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedRadioGroup({
     label,
     checked,
@@ -46576,9 +47518,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       setValue: (newValue) => {
         onChange?.(newValue ?? void 0);
       },
-      rtl: (0, import_i18n65.isRTL)()
+      rtl: (0, import_i18n66.isRTL)()
     });
-    const contextValue = (0, import_element165.useMemo)(() => ({
+    const contextValue = (0, import_element168.useMemo)(() => ({
       store: radioStore,
       disabled
     }), [radioStore, disabled]);
@@ -46586,11 +47528,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       alternative: "wp.components.RadioControl or wp.components.__experimentalToggleGroupControl",
       since: "6.8"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(RadioGroupContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(RadioGroupContext.Provider, {
       value: contextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(RadioGroup, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(RadioGroup, {
         store: radioStore,
-        render: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(button_group_default, {
+        render: /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(button_group_default, {
           __shouldNotWarnDeprecated: true,
           children
         }),
@@ -46600,13 +47542,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   }
-  var RadioGroup22 = (0, import_element165.forwardRef)(UnforwardedRadioGroup);
+  var RadioGroup22 = (0, import_element168.forwardRef)(UnforwardedRadioGroup);
   RadioGroup22.displayName = "RadioGroup";
   var radio_group_default = RadioGroup22;
 
   // packages/components/build-module/radio-control/index.mjs
   var import_compose66 = __toESM(require_compose(), 1);
-  var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime252 = __toESM(require_jsx_runtime(), 1);
   function generateOptionDescriptionId(radioGroupId, index2) {
     return `${radioGroupId}-${index2}-option-description`;
   }
@@ -46619,7 +47561,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   function RadioControl(props) {
     const {
       label,
-      className: className2,
+      className,
       selected,
       help,
       onChange,
@@ -46635,26 +47577,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!options2?.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)("fieldset", {
+    return /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)("fieldset", {
       id: id3,
       role: "radiogroup",
-      className: clsx_default(className2, "components-radio-control"),
+      className: clsx_default(className, "components-radio-control"),
       disabled,
       "aria-describedby": !!help ? generateHelpId(id3) : void 0,
-      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(component_default2, {
+      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(component_default2, {
         as: "legend",
         children: label
-      }) : /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(base_control_default.VisualLabel, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(base_control_default.VisualLabel, {
         as: "legend",
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(component_default18, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(component_default18, {
         spacing: 3,
         className: clsx_default("components-radio-control__group-wrapper", {
           "has-help": !!help
         }),
-        children: options2.map((option, index2) => /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)("div", {
+        children: options2.map((option, index2) => /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)("div", {
           className: "components-radio-control__option",
-          children: [/* @__PURE__ */ (0, import_jsx_runtime248.jsx)("input", {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime252.jsx)("input", {
             id: generateOptionId(id3, index2),
             className: "components-radio-control__input",
             type: "radio",
@@ -46668,17 +47610,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
               onClick?.(event);
             },
             ...additionalProps
-          }), /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("label", {
+          }), /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("label", {
             className: "components-radio-control__label",
             htmlFor: generateOptionId(id3, index2),
             children: option.label
-          }), !!option.description ? /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(StyledHelp, {
+          }), !!option.description ? /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(StyledHelp, {
             id: generateOptionDescriptionId(id3, index2),
             className: "components-radio-control__option-description",
             children: option.description
           }) : null]
         }, generateOptionId(id3, index2)))
-      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(StyledHelp, {
+      }), !!help && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(StyledHelp, {
         id: generateHelpId(id3),
         className: "components-base-control__help",
         children: help
@@ -46688,13 +47630,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var radio_control_default = RadioControl;
 
   // packages/components/build-module/resizable-box/index.mjs
-  var import_element169 = __toESM(require_element(), 1);
+  var import_element172 = __toESM(require_element(), 1);
 
   // node_modules/re-resizable/lib/index.js
-  var React12 = __toESM(require_react());
+  var React16 = __toESM(require_react());
 
   // node_modules/re-resizable/lib/resizer.js
-  var React11 = __toESM(require_react());
+  var React15 = __toESM(require_react());
   var __extends = /* @__PURE__ */ (function() {
     var extendStatics = function(d3, b3) {
       extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b4) {
@@ -46800,10 +47742,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         return _this;
       }
       Resizer2.prototype.render = function() {
-        return React11.createElement("div", { className: this.props.className || "", style: __assign2(__assign2({ position: "absolute", userSelect: "none" }, styles2[this.props.direction]), this.props.replaceStyles || {}), onMouseDown: this.onMouseDown, onTouchStart: this.onTouchStart }, this.props.children);
+        return React15.createElement("div", { className: this.props.className || "", style: __assign2(__assign2({ position: "absolute", userSelect: "none" }, styles2[this.props.direction]), this.props.replaceStyles || {}), onMouseDown: this.onMouseDown, onTouchStart: this.onTouchStart }, this.props.children);
       };
       return Resizer2;
-    })(React11.PureComponent)
+    })(React15.PureComponent)
   );
 
   // node_modules/re-resizable/lib/index.js
@@ -47469,11 +48411,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
         var resizers = Object.keys(enable).map(function(dir) {
           if (enable[dir] !== false) {
-            return React12.createElement(Resizer, { key: dir, direction: dir, onResizeStart: _this.onResizeStart, replaceStyles: handleStyles && handleStyles[dir], className: handleClasses && handleClasses[dir] }, handleComponent && handleComponent[dir] ? handleComponent[dir] : null);
+            return React16.createElement(Resizer, { key: dir, direction: dir, onResizeStart: _this.onResizeStart, replaceStyles: handleStyles && handleStyles[dir], className: handleClasses && handleClasses[dir] }, handleComponent && handleComponent[dir] ? handleComponent[dir] : null);
           }
           return null;
         });
-        return React12.createElement("div", { className: handleWrapperClass, style: handleWrapperStyle }, resizers);
+        return React16.createElement("div", { className: handleWrapperClass, style: handleWrapperStyle }, resizers);
       };
       Resizable2.prototype.render = function() {
         var _this = this;
@@ -47489,10 +48431,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           style2.flexBasis = this.state.flexBasis;
         }
         var Wrapper6 = this.props.as || "div";
-        return React12.createElement(
+        return React16.createElement(
           Wrapper6,
           __assign3({ ref: this.ref, style: style2, className: this.props.className }, extendsProps),
-          this.state.isResizing && React12.createElement("div", { style: this.state.backgroundStyle }),
+          this.state.isResizing && React16.createElement("div", { style: this.state.backgroundStyle }),
           this.props.children,
           this.renderResizer()
         );
@@ -47525,18 +48467,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         snapGap: 0
       };
       return Resizable2;
-    })(React12.PureComponent)
+    })(React16.PureComponent)
   );
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
-  var import_element168 = __toESM(require_element(), 1);
+  var import_element171 = __toESM(require_element(), 1);
 
   // packages/components/build-module/resizable-box/resize-tooltip/label.mjs
-  var import_element167 = __toESM(require_element(), 1);
-  var import_i18n66 = __toESM(require_i18n(), 1);
+  var import_element170 = __toESM(require_element(), 1);
+  var import_i18n67 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/resizable-box/resize-tooltip/utils.mjs
-  var import_element166 = __toESM(require_element(), 1);
+  var import_element169 = __toESM(require_element(), 1);
   var import_compose67 = __toESM(require_compose(), 1);
   var noop22 = () => {
   };
@@ -47553,16 +48495,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }) {
     const [resizeListener, sizes] = (0, import_compose67.useResizeObserver)();
     const isAxisControlled = !!axis;
-    const [moveX, setMoveX] = (0, import_element166.useState)(false);
-    const [moveY, setMoveY] = (0, import_element166.useState)(false);
+    const [moveX, setMoveX] = (0, import_element169.useState)(false);
+    const [moveY, setMoveY] = (0, import_element169.useState)(false);
     const {
       width,
       height
     } = sizes;
-    const heightRef = (0, import_element166.useRef)(height);
-    const widthRef = (0, import_element166.useRef)(width);
-    const moveTimeoutRef = (0, import_element166.useRef)(void 0);
-    const debounceUnsetMoveXY = (0, import_element166.useCallback)(() => {
+    const heightRef = (0, import_element169.useRef)(height);
+    const widthRef = (0, import_element169.useRef)(width);
+    const moveTimeoutRef = (0, import_element169.useRef)(void 0);
+    const debounceUnsetMoveXY = (0, import_element169.useCallback)(() => {
       const unsetMoveXY = () => {
         if (isAxisControlled) {
           return;
@@ -47575,7 +48517,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       moveTimeoutRef.current = window.setTimeout(unsetMoveXY, fadeTimeout);
     }, [fadeTimeout, isAxisControlled]);
-    (0, import_element166.useEffect)(() => {
+    (0, import_element169.useEffect)(() => {
       const isRendered = width !== null || height !== null;
       if (!isRendered) {
         return;
@@ -47655,9 +48597,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/resizable-box/resize-tooltip/label.mjs
-  var import_jsx_runtime249 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
-  function getRuntime22() {
+  var import_jsx_runtime253 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE24 = "data-wp-hash";
+  function getRuntime24() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -47668,26 +48610,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument22(document);
+      registerDocument24(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash22(targetDocument, hash2) {
+  function documentContainsStyleHash24(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE22}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE22) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE24}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE24) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle22(targetDocument, hash2, css3) {
+  function injectStyle24(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime22();
+    const runtime = getRuntime24();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -47696,21 +48638,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash22(targetDocument, hash2)) {
+    if (documentContainsStyleHash24(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE22, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE24, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument22(targetDocument) {
-    const runtime = getRuntime22();
+  function registerDocument24(targetDocument) {
+    const runtime = getRuntime24();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle22(targetDocument, hash2, css3);
+      injectStyle24(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -47724,15 +48666,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle21(hash2, css3) {
-    const runtime = getRuntime22();
+  function registerStyle23(hash2, css3) {
+    const runtime = getRuntime24();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle22(targetDocument, hash2, css3);
+      injectStyle24(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle21("6a3e579287", ".f1c3c2f08c84bcca__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}.dd094b49bf71dfd9__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.d768357cc581321f__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
+    registerStyle23("6a3e579287", ".f1c3c2f08c84bcca__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}.dd094b49bf71dfd9__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.d768357cc581321f__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
   }
   var style_module_default20 = { "root": "f1c3c2f08c84bcca__root", "tooltip-wrapper": "dd094b49bf71dfd9__tooltip-wrapper", "tooltip": "d768357cc581321f__tooltip", "label-text": "a32e43dd68941abb__label-text" };
   var CORNER_OFFSET = 4;
@@ -47771,20 +48713,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         ...style2,
         position: "absolute",
         top: CORNER_OFFSET,
-        right: (0, import_i18n66.isRTL)() ? void 0 : CORNER_OFFSET,
-        left: (0, import_i18n66.isRTL)() ? CORNER_OFFSET : void 0
+        right: (0, import_i18n67.isRTL)() ? void 0 : CORNER_OFFSET,
+        left: (0, import_i18n67.isRTL)() ? CORNER_OFFSET : void 0
       };
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", {
       "aria-hidden": "true",
       className: clsx_default("components-resizable-tooltip__tooltip-wrapper", style_module_default20["tooltip-wrapper"]),
       ref,
       style: style2,
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", {
         className: clsx_default("components-resizable-tooltip__tooltip", style_module_default20.tooltip),
         style: labelStyle,
-        children: /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(component_default8, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(component_default8, {
           as: "span",
           className: style_module_default20["label-text"],
           children: label
@@ -47792,13 +48734,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   }
-  var ForwardedComponent3 = (0, import_element167.forwardRef)(Label3);
+  var ForwardedComponent3 = (0, import_element170.forwardRef)(Label3);
   var label_default = ForwardedComponent3;
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
-  var import_jsx_runtime250 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
-  function getRuntime23() {
+  var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE25 = "data-wp-hash";
+  function getRuntime25() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -47809,26 +48751,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument23(document);
+      registerDocument25(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash23(targetDocument, hash2) {
+  function documentContainsStyleHash25(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE23}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE23) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE25}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE25) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle23(targetDocument, hash2, css3) {
+  function injectStyle25(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime23();
+    const runtime = getRuntime25();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -47837,21 +48779,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash23(targetDocument, hash2)) {
+    if (documentContainsStyleHash25(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE23, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE25, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument23(targetDocument) {
-    const runtime = getRuntime23();
+  function registerDocument25(targetDocument) {
+    const runtime = getRuntime25();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle23(targetDocument, hash2, css3);
+      injectStyle25(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -47865,15 +48807,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle22(hash2, css3) {
-    const runtime = getRuntime23();
+  function registerStyle24(hash2, css3) {
+    const runtime = getRuntime25();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle23(targetDocument, hash2, css3);
+      injectStyle25(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle22("6a3e579287", ".f1c3c2f08c84bcca__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}.dd094b49bf71dfd9__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.d768357cc581321f__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
+    registerStyle24("6a3e579287", ".f1c3c2f08c84bcca__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}.dd094b49bf71dfd9__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.d768357cc581321f__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
   }
   var style_module_default21 = { "root": "f1c3c2f08c84bcca__root", "tooltip-wrapper": "dd094b49bf71dfd9__tooltip-wrapper", "tooltip": "d768357cc581321f__tooltip", "label-text": "a32e43dd68941abb__label-text" };
   var noop23 = () => {
@@ -47881,7 +48823,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   function ResizeTooltip({
     as = "div",
     axis,
-    className: className2,
+    className,
     fadeTimeout = 180,
     isVisible: isVisible2 = true,
     labelRef,
@@ -47904,14 +48846,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!isVisible2) {
       return null;
     }
-    const classes = clsx_default("components-resize-tooltip", style_module_default21.root, className2);
-    return /* @__PURE__ */ (0, import_jsx_runtime250.jsxs)(PolymorphicElement, {
+    const classes = clsx_default("components-resize-tooltip", style_module_default21.root, className);
+    return /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(PolymorphicElement, {
       "aria-hidden": "true",
       as,
       ...props,
       className: classes,
       ref,
-      children: [resizeListener, /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(label_default, {
+      children: [resizeListener, /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(label_default, {
         "aria-hidden": props["aria-hidden"],
         label,
         position: position2,
@@ -47920,11 +48862,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   }
-  var ForwardedComponent4 = (0, import_element168.forwardRef)(ResizeTooltip);
+  var ForwardedComponent4 = (0, import_element171.forwardRef)(ResizeTooltip);
   var resize_tooltip_default = ForwardedComponent4;
 
   // packages/components/build-module/resizable-box/index.mjs
-  var import_jsx_runtime251 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
   var HANDLE_CLASS_NAME = "components-resizable-box__handle";
   var SIDE_HANDLE_CLASS_NAME = "components-resizable-box__side-handle";
   var CORNER_HANDLE_CLASS_NAME = "components-resizable-box__corner-handle";
@@ -47957,41 +48899,41 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     bottomLeft: HANDLE_STYLES_OVERRIDES
   };
   function UnforwardedResizableBox({
-    className: className2,
+    className,
     children,
     showHandle = true,
     __experimentalShowTooltip: showTooltip = false,
     __experimentalTooltipProps: tooltipProps = {},
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime251.jsxs)(Resizable, {
-      className: clsx_default("components-resizable-box__container", showHandle && "has-show-handle", className2),
-      handleComponent: Object.fromEntries(Object.keys(HANDLE_CLASSES).map((key) => [key, /* @__PURE__ */ (0, import_jsx_runtime251.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(Resizable, {
+      className: clsx_default("components-resizable-box__container", showHandle && "has-show-handle", className),
+      handleComponent: Object.fromEntries(Object.keys(HANDLE_CLASSES).map((key) => [key, /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", {
         tabIndex: -1
       }, key)])),
       handleClasses: HANDLE_CLASSES,
       handleStyles: HANDLE_STYLES,
       ref,
       ...props,
-      children: [children, showTooltip && /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(resize_tooltip_default, {
+      children: [children, showTooltip && /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(resize_tooltip_default, {
         ...tooltipProps
       })]
     });
   }
-  var ResizableBox = (0, import_element169.forwardRef)(UnforwardedResizableBox);
+  var ResizableBox = (0, import_element172.forwardRef)(UnforwardedResizableBox);
   ResizableBox.displayName = "ResizableBox";
   var resizable_box_default = ResizableBox;
 
   // packages/components/build-module/responsive-wrapper/index.mjs
-  var import_element170 = __toESM(require_element(), 1);
-  var import_jsx_runtime252 = __toESM(require_jsx_runtime(), 1);
+  var import_element173 = __toESM(require_element(), 1);
+  var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
   function ResponsiveWrapper({
     naturalWidth,
     naturalHeight,
     children,
     isInline = false
   }) {
-    if (import_element170.Children.count(children) !== 1) {
+    if (import_element173.Children.count(children) !== 1) {
       return null;
     }
     const TagName59 = isInline ? "span" : "div";
@@ -47999,10 +48941,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (naturalWidth && naturalHeight) {
       aspectRatio2 = `${naturalWidth} / ${naturalHeight}`;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(TagName59, {
+    return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(TagName59, {
       className: "components-responsive-wrapper",
-      children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("div", {
-        children: (0, import_element170.cloneElement)(children, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)("div", {
+        children: (0, import_element173.cloneElement)(children, {
           className: clsx_default("components-responsive-wrapper__content", children.props.className),
           style: {
             ...children.props.style,
@@ -48015,9 +48957,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var responsive_wrapper_default = ResponsiveWrapper;
 
   // packages/components/build-module/sandbox/index.mjs
-  var import_element171 = __toESM(require_element(), 1);
+  var import_element174 = __toESM(require_element(), 1);
   var import_compose68 = __toESM(require_compose(), 1);
-  var import_jsx_runtime253 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
   var observeAndResizeJS = function() {
     const {
       MutationObserver: MutationObserver2
@@ -48114,39 +49056,39 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     scripts,
     lang
   }) {
-    const htmlDoc = /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)("html", {
+    const htmlDoc = /* @__PURE__ */ (0, import_jsx_runtime257.jsxs)("html", {
       lang,
       className: type,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime253.jsxs)("head", {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime253.jsx)("title", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime257.jsxs)("head", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime257.jsx)("title", {
           children: title
-        }), /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("style", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime257.jsx)("style", {
           dangerouslySetInnerHTML: {
             __html: style
           }
-        }), styles3.map((rules, i3) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("style", {
+        }), styles3.map((rules, i3) => /* @__PURE__ */ (0, import_jsx_runtime257.jsx)("style", {
           dangerouslySetInnerHTML: {
             __html: rules
           }
-        }, i3)), /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("script", {
+        }, i3)), /* @__PURE__ */ (0, import_jsx_runtime257.jsx)("script", {
           type: "text/javascript",
           dangerouslySetInnerHTML: {
             __html: `(${observeAndResizeJS.toString()})();`
           }
         })]
-      }), /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)("body", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime257.jsxs)("body", {
         "data-resizable-iframe-connected": "data-resizable-iframe-connected",
         className: type,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime257.jsx)("div", {
           dangerouslySetInnerHTML: {
             __html: html
           }
-        }), scripts.map((src) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("script", {
+        }), scripts.map((src) => /* @__PURE__ */ (0, import_jsx_runtime257.jsx)("script", {
           src
         }, src))]
       })]
     });
-    return "<!DOCTYPE html>" + (0, import_element171.renderToString)(htmlDoc);
+    return "<!DOCTYPE html>" + (0, import_element174.renderToString)(htmlDoc);
   }
   function IsolatedSandBox({
     html = "",
@@ -48159,14 +49101,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     allowPopups = false,
     allowForms = false
   }) {
-    const ref = (0, import_element171.useRef)(null);
-    const [width, setWidth] = (0, import_element171.useState)(0);
-    const [height, setHeight] = (0, import_element171.useState)(0);
+    const ref = (0, import_element174.useRef)(null);
+    const [width, setWidth] = (0, import_element174.useState)(0);
+    const [height, setHeight] = (0, import_element174.useState)(0);
     const sandbox = clsx_default("allow-scripts", "allow-presentation", {
       "allow-popups": allowPopups,
       "allow-forms": allowForms
     });
-    const srcDoc = (0, import_element171.useMemo)(() => buildSandBoxDocument({
+    const srcDoc = (0, import_element174.useMemo)(() => buildSandBoxDocument({
       html,
       title,
       type,
@@ -48177,7 +49119,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       // changes after load, so leaving it out of the deps is fine.
       lang: document.documentElement.lang
     }), [html, title, type, styles3, scripts]);
-    (0, import_element171.useEffect)(() => {
+    (0, import_element174.useEffect)(() => {
       const iframe = ref.current;
       if (!iframe) {
         return;
@@ -48216,7 +49158,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         currentView?.removeEventListener("message", checkMessageForResize);
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("iframe", {
+    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)("iframe", {
       ref: (0, import_compose68.useMergeRefs)([ref, (0, import_compose68.useFocusableIframe)()]),
       title,
       tabIndex,
@@ -48239,9 +49181,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     allowPopups = false,
     allowForms = false
   }) {
-    const ref = (0, import_element171.useRef)(null);
-    const [width, setWidth] = (0, import_element171.useState)(0);
-    const [height, setHeight] = (0, import_element171.useState)(0);
+    const ref = (0, import_element174.useRef)(null);
+    const [width, setWidth] = (0, import_element174.useState)(0);
+    const [height, setHeight] = (0, import_element174.useState)(0);
     const sandbox = clsx_default("allow-scripts", "allow-same-origin", "allow-presentation", {
       "allow-popups": allowPopups,
       "allow-forms": allowForms
@@ -48275,7 +49217,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }));
       contentDocument.close();
     }
-    (0, import_element171.useEffect)(() => {
+    (0, import_element174.useEffect)(() => {
       trySandBox();
       function tryNoForceSandBox() {
         trySandBox(false);
@@ -48307,13 +49249,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         defaultView?.removeEventListener("message", checkMessageForResize);
       };
     }, []);
-    (0, import_element171.useEffect)(() => {
+    (0, import_element174.useEffect)(() => {
       trySandBox();
     }, [title, styles3, scripts]);
-    (0, import_element171.useEffect)(() => {
+    (0, import_element174.useEffect)(() => {
       trySandBox(true);
     }, [html, type]);
-    return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("iframe", {
+    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)("iframe", {
       ref: (0, import_compose68.useMergeRefs)([ref, (0, import_compose68.useFocusableIframe)()]),
       title,
       tabIndex,
@@ -48329,11 +49271,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...contentProps
   }) {
     if (allowSameOrigin) {
-      return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(SameOriginSandBox, {
+      return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(SameOriginSandBox, {
         ...contentProps
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(IsolatedSandBox, {
+    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(IsolatedSandBox, {
       ...contentProps
     });
   }
@@ -48341,1139 +49283,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/search-control/index.mjs
   var import_compose69 = __toESM(require_compose(), 1);
-  var import_i18n67 = __toESM(require_i18n(), 1);
-  var import_element172 = __toESM(require_element(), 1);
-  var import_deprecated24 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE24 = "data-wp-hash";
-  function getRuntime24() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument24(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash24(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE24}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE24) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle24(targetDocument, hash2, css3) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime24();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash24(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE24, hash2);
-    style2.appendChild(targetDocument.createTextNode(css3));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument24(targetDocument) {
-    const runtime = getRuntime24();
-    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-    for (const [hash2, css3] of runtime.styles) {
-      injectStyle24(targetDocument, hash2, css3);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle23(hash2, css3) {
-    const runtime = getRuntime24();
-    runtime.styles.set(hash2, css3);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle24(targetDocument, hash2, css3);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle23("77f847972d", "._5e6152f7430df331__input input[type=search]::-webkit-search-cancel-button,._5e6152f7430df331__input input[type=search]::-webkit-search-decoration,._5e6152f7430df331__input input[type=search]::-webkit-search-results-button,._5e6152f7430df331__input input[type=search]::-webkit-search-results-decoration{-webkit-appearance:none}._9a856163f1b1aaae__icon:dir(ltr){transform:scaleX(-1)}");
-  }
-  var style_module_default22 = { "input": "_5e6152f7430df331__input", "icon": "_9a856163f1b1aaae__icon" };
-  function SuffixItem({
-    searchRef,
-    onChange,
-    onClose
-  }) {
-    if (onClose) {
-      (0, import_deprecated24.default)("`onClose` prop in wp.components.SearchControl", {
-        since: "6.8"
-      });
-    }
-    const onReset = () => {
-      onChange("");
-      searchRef.current?.focus();
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(InputControlSuffixWrapper, {
-      variant: "control",
-      children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(button_default, {
-        size: "small",
-        icon: close_small_default,
-        label: onClose ? (0, import_i18n67.__)("Close search") : (0, import_i18n67.__)("Reset search"),
-        onClick: onClose ?? onReset
-      })
-    });
-  }
-  function UnforwardedSearchControl({
-    // Prevent passing legacy props to internal component.
-    __nextHasNoMarginBottom: _2,
-    __next40pxDefaultSize: _next40pxDefaultSize,
-    className: className2,
-    onChange,
-    value,
-    label = (0, import_i18n67.__)("Search"),
-    placeholder = (0, import_i18n67.__)("Search"),
-    hideLabelFromVision = true,
-    onClose,
-    size: size4 = "default",
-    ...restProps
-  }, forwardedRef) {
-    const {
-      disabled,
-      ...filteredRestProps
-    } = restProps;
-    const searchRef = (0, import_element172.useRef)(null);
-    const instanceId = (0, import_compose69.useInstanceId)(SearchControl, "components-search-control");
-    const hasSuffix = !!onClose || !!value;
-    return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(input_control_default, {
-      id: instanceId,
-      hideLabelFromVision,
-      label,
-      ref: (0, import_compose69.useMergeRefs)([searchRef, forwardedRef]),
-      type: "search",
-      size: size4,
-      className: clsx_default(style_module_default22.input, "components-search-control", className2),
-      onChange: (nextValue) => onChange(nextValue ?? ""),
-      autoComplete: "off",
-      placeholder,
-      value: value ?? "",
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(InputControlPrefixWrapper, {
-        variant: "icon",
-        children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(icon_default3, {
-          className: style_module_default22.icon,
-          icon: search_default,
-          fill: "currentColor"
-        })
-      }),
-      suffix: hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(SuffixItem, {
-        searchRef,
-        onChange,
-        onClose
-      }),
-      ...filteredRestProps
-    });
-  }
-  var SearchControl = (0, import_element172.forwardRef)(UnforwardedSearchControl);
-  SearchControl.displayName = "SearchControl";
-  var search_control_default = SearchControl;
-
-  // packages/components/build-module/snackbar/index.mjs
-  var import_a11y9 = __toESM(require_a11y(), 1);
-  var import_element173 = __toESM(require_element(), 1);
   var import_i18n68 = __toESM(require_i18n(), 1);
-  var import_warning9 = __toESM(require_warning(), 1);
-  var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
-  var NOTICE_TIMEOUT = 6e3;
-  function useSpokenMessage2(message, politeness) {
-    const spokenMessage = typeof message === "string" ? message : (0, import_element173.renderToString)(message);
-    (0, import_element173.useEffect)(() => {
-      if (spokenMessage) {
-        (0, import_a11y9.speak)(spokenMessage, politeness);
-      }
-    }, [spokenMessage, politeness]);
-  }
-  function UnforwardedSnackbar({
-    className: className2,
-    children,
-    spokenMessage = children,
-    politeness = "polite",
-    actions = [],
-    onRemove,
-    icon = null,
-    explicitDismiss = false,
-    // onDismiss is a callback executed when the snackbar is dismissed.
-    // It is distinct from onRemove, which _looks_ like a callback but is
-    // actually the function to call to remove the snackbar from the UI.
-    onDismiss,
-    listRef
-  }, ref) {
-    function dismissMe(event) {
-      if (event && event.preventDefault) {
-        event.preventDefault();
-      }
-      listRef?.current?.focus();
-      onDismiss?.();
-      onRemove?.();
-    }
-    function onActionClick(event, onClick) {
-      event.stopPropagation();
-      onRemove?.();
-      if (onClick) {
-        onClick(event);
-      }
-    }
-    useSpokenMessage2(spokenMessage, politeness);
-    const callbacksRef = (0, import_element173.useRef)({
-      onDismiss,
-      onRemove
-    });
-    (0, import_element173.useLayoutEffect)(() => {
-      callbacksRef.current = {
-        onDismiss,
-        onRemove
-      };
-    });
-    (0, import_element173.useEffect)(() => {
-      const timeoutHandle = setTimeout(() => {
-        if (!explicitDismiss) {
-          callbacksRef.current.onDismiss?.();
-          callbacksRef.current.onRemove?.();
-        }
-      }, NOTICE_TIMEOUT);
-      return () => clearTimeout(timeoutHandle);
-    }, [explicitDismiss]);
-    const classes = clsx_default(className2, "components-snackbar", {
-      "components-snackbar-explicit-dismiss": !!explicitDismiss
-    });
-    if (actions && actions.length > 1) {
-      true ? (0, import_warning9.default)("Snackbar can only have one action. Use Notice if your message requires many actions.") : void 0;
-      actions = [actions[0]];
-    }
-    const snackbarContentClassnames = clsx_default("components-snackbar__content", {
-      "components-snackbar__content-with-icon": !!icon
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", {
-      ref,
-      className: classes,
-      onClick: !explicitDismiss ? dismissMe : void 0,
-      tabIndex: 0,
-      role: !explicitDismiss ? "button" : void 0,
-      onKeyPress: !explicitDismiss ? dismissMe : void 0,
-      "aria-label": !explicitDismiss ? (0, import_i18n68.__)("Dismiss this notice") : void 0,
-      "data-testid": "snackbar",
-      children: /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)("div", {
-        className: snackbarContentClassnames,
-        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", {
-          className: "components-snackbar__icon",
-          children: icon
-        }), children, actions.map(({
-          label,
-          onClick,
-          url,
-          openInNewTab = false
-        }, index2) => url !== void 0 && openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(external_link_default, {
-          href: url,
-          onClick: (event) => onActionClick(event, onClick),
-          className: "components-snackbar__action",
-          children: label
-        }, index2) : /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(button_default, {
-          __next40pxDefaultSize: true,
-          href: url,
-          variant: "link",
-          onClick: (event) => onActionClick(event, onClick),
-          className: "components-snackbar__action",
-          children: label
-        }, index2)), explicitDismiss && /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("span", {
-          role: "button",
-          "aria-label": (0, import_i18n68.__)("Dismiss this notice"),
-          tabIndex: 0,
-          className: "components-snackbar__dismiss-button",
-          onClick: dismissMe,
-          onKeyPress: dismissMe,
-          children: "\u2715"
-        })]
-      })
-    });
-  }
-  var Snackbar = (0, import_element173.forwardRef)(UnforwardedSnackbar);
-  Snackbar.displayName = "Snackbar";
-  var snackbar_default = Snackbar;
-
-  // packages/components/build-module/snackbar/list.mjs
-  var import_compose70 = __toESM(require_compose(), 1);
-  var import_element174 = __toESM(require_element(), 1);
-  var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
-  var SNACKBAR_VARIANTS = {
-    init: {
-      height: 0,
-      opacity: 0
-    },
-    open: {
-      height: "auto",
-      opacity: 1,
-      transition: {
-        height: {
-          type: "tween",
-          duration: 0.3,
-          ease: [0, 0, 0.2, 1]
-        },
-        opacity: {
-          type: "tween",
-          duration: 0.25,
-          delay: 0.05,
-          ease: [0, 0, 0.2, 1]
-        }
-      }
-    },
-    exit: {
-      opacity: 0,
-      transition: {
-        type: "tween",
-        duration: 0.1,
-        ease: [0, 0, 0.2, 1]
-      }
-    }
-  };
-  function SnackbarList({
-    notices,
-    className: className2,
-    children,
-    onRemove
-  }) {
-    const listRef = (0, import_element174.useRef)(null);
-    const isReducedMotion = (0, import_compose70.useReducedMotion)();
-    className2 = clsx_default("components-snackbar-list", className2);
-    const removeNotice = (notice) => () => onRemove?.(notice.id);
-    return /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)("div", {
-      className: className2,
-      tabIndex: -1,
-      ref: listRef,
-      "data-testid": "snackbar-list",
-      children: [children, /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(AnimatePresence, {
-        children: notices.map((notice) => {
-          const {
-            content,
-            ...restNotice
-          } = notice;
-          return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(motion.div, {
-            layout: isReducedMotion ? false : "position",
-            style: {
-              width: "100%"
-            },
-            initial: "init",
-            animate: "open",
-            exit: "exit",
-            variants: isReducedMotion ? void 0 : SNACKBAR_VARIANTS,
-            children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)("div", {
-              className: "components-snackbar-list__notice-container",
-              children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(snackbar_default, {
-                ...restNotice,
-                onRemove: removeNotice(notice),
-                listRef,
-                children: notice.content
-              })
-            })
-          }, notice.id);
-        })
-      })]
-    });
-  }
-  var list_default2 = SnackbarList;
-
-  // packages/components/build-module/tab-panel/index.mjs
   var import_element175 = __toESM(require_element(), 1);
-  var import_compose71 = __toESM(require_compose(), 1);
-  var import_i18n69 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
-  var extractTabName = (id3) => {
-    if (typeof id3 === "undefined" || id3 === null) {
-      return;
-    }
-    return id3.match(/^tab-panel-[0-9]*-(.*)/)?.[1];
-  };
-  var UnforwardedTabPanel = ({
-    className: className2,
-    children,
-    tabs,
-    selectOnMove = true,
-    initialTabName,
-    orientation = "horizontal",
-    activeClass = "is-active",
-    onSelect
-  }, ref) => {
-    const instanceId = (0, import_compose71.useInstanceId)(TabPanel22, "tab-panel");
-    const prependInstanceId = (0, import_element175.useCallback)((tabName) => {
-      if (typeof tabName === "undefined") {
-        return;
-      }
-      return `${instanceId}-${tabName}`;
-    }, [instanceId]);
-    const tabStore = useTabStore({
-      setSelectedId: (newTabValue) => {
-        if (typeof newTabValue === "undefined" || newTabValue === null) {
-          return;
-        }
-        const newTab = tabs.find((t4) => prependInstanceId(t4.name) === newTabValue);
-        if (newTab?.disabled || newTab === selectedTab) {
-          return;
-        }
-        const simplifiedTabName = extractTabName(newTabValue);
-        if (typeof simplifiedTabName === "undefined") {
-          return;
-        }
-        onSelect?.(simplifiedTabName);
-      },
-      orientation,
-      selectOnMove,
-      defaultSelectedId: prependInstanceId(initialTabName),
-      rtl: (0, import_i18n69.isRTL)()
-    });
-    const selectedTabName = extractTabName(useStoreState(tabStore, "selectedId"));
-    const setTabStoreSelectedId = (0, import_element175.useCallback)((tabName) => {
-      tabStore.setState("selectedId", prependInstanceId(tabName));
-    }, [prependInstanceId, tabStore]);
-    const selectedTab = tabs.find(({
-      name
-    }) => name === selectedTabName);
-    const previousSelectedTabName = (0, import_compose71.usePrevious)(selectedTabName);
-    (0, import_element175.useEffect)(() => {
-      if (previousSelectedTabName !== selectedTabName && selectedTabName === initialTabName && !!selectedTabName) {
-        onSelect?.(selectedTabName);
-      }
-    }, [selectedTabName, initialTabName, onSelect, previousSelectedTabName]);
-    (0, import_element175.useLayoutEffect)(() => {
-      if (selectedTab) {
-        return;
-      }
-      const initialTab = tabs.find((tab) => tab.name === initialTabName);
-      if (initialTabName && !initialTab) {
-        return;
-      }
-      if (initialTab && !initialTab.disabled) {
-        setTabStoreSelectedId(initialTab.name);
-      } else {
-        const firstEnabledTab = tabs.find((tab) => !tab.disabled);
-        if (firstEnabledTab) {
-          setTabStoreSelectedId(firstEnabledTab.name);
-        }
-      }
-    }, [tabs, selectedTab, initialTabName, instanceId, setTabStoreSelectedId]);
-    (0, import_element175.useEffect)(() => {
-      if (!selectedTab?.disabled) {
-        return;
-      }
-      const firstEnabledTab = tabs.find((tab) => !tab.disabled);
-      if (firstEnabledTab) {
-        setTabStoreSelectedId(firstEnabledTab.name);
-      }
-    }, [tabs, selectedTab?.disabled, setTabStoreSelectedId, instanceId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime257.jsxs)("div", {
-      className: className2,
-      ref,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime257.jsx)(TabList, {
-        store: tabStore,
-        className: "components-tab-panel__tabs",
-        children: tabs.map((tab) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(Tab, {
-            id: prependInstanceId(tab.name),
-            className: clsx_default("components-tab-panel__tabs-item", tab.className, {
-              [activeClass]: tab.name === selectedTabName
-            }),
-            disabled: tab.disabled,
-            "aria-controls": `${prependInstanceId(tab.name)}-view`,
-            render: /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(button_default, {
-              __next40pxDefaultSize: true,
-              icon: tab.icon,
-              label: tab.icon && tab.title,
-              showTooltip: !!tab.icon
-            }),
-            children: !tab.icon && tab.title
-          }, tab.name);
-        })
-      }), selectedTab && /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(TabPanel, {
-        id: `${prependInstanceId(selectedTab.name)}-view`,
-        store: tabStore,
-        tabId: prependInstanceId(selectedTab.name),
-        className: "components-tab-panel__tab-content",
-        children: children(selectedTab)
-      })]
-    });
-  };
-  var TabPanel22 = (0, import_element175.forwardRef)(UnforwardedTabPanel);
-  TabPanel22.displayName = "TabPanel";
-  var tab_panel_default = TabPanel22;
-
-  // packages/components/build-module/text-control/index.mjs
-  var import_compose72 = __toESM(require_compose(), 1);
-  var import_element176 = __toESM(require_element(), 1);
+  var import_deprecated24 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
-  function UnforwardedTextControl(props, ref) {
-    const {
-      // Prevent passing legacy props to `input`.
-      __nextHasNoMarginBottom: _2,
-      __next40pxDefaultSize: __62,
-      label,
-      hideLabelFromVision,
-      value,
-      help,
-      id: idProp,
-      className: className2,
-      onChange,
-      type = "text",
-      ...additionalProps
-    } = props;
-    const id3 = (0, import_compose72.useInstanceId)(TextControl, "inspector-text-control", idProp);
-    const onChangeValue = (event) => onChange(event.target.value);
-    return /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(base_control_default, {
-      label,
-      hideLabelFromVision,
-      id: id3,
-      help,
-      className: className2,
-      children: /* @__PURE__ */ (0, import_jsx_runtime258.jsx)("input", {
-        className: "components-text-control__input",
-        type,
-        id: id3,
-        value,
-        onChange: onChangeValue,
-        "aria-describedby": !!help ? id3 + "__help" : void 0,
-        ref,
-        ...additionalProps
-      })
-    });
-  }
-  var TextControl = (0, import_element176.forwardRef)(UnforwardedTextControl);
-  TextControl.displayName = "TextControl";
-  var text_control_default = TextControl;
-
-  // packages/components/build-module/textarea-control/index.mjs
-  var import_compose73 = __toESM(require_compose(), 1);
-  var import_element177 = __toESM(require_element(), 1);
-
-  // packages/components/build-module/textarea-control/styles/textarea-control-styles.mjs
-  var StyledTextarea = /* @__PURE__ */ createStyled("textarea", false ? {
-    target: "e1w5nnrk0"
-  } : {
-    target: "e1w5nnrk0",
-    label: "StyledTextarea"
-  })("width:100%;display:block;line-height:20px;background:", COLORS.theme.background, ";color:", COLORS.theme.foreground, ";resize:vertical;padding:9px 11px;min-height:38px;&:disabled{background:", COLORS.ui.backgroundDisabled, ";border-color:", COLORS.ui.borderDisabled, ";color:", COLORS.ui.textDisabled, ";}&::-webkit-input-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}&::-moz-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}&:-ms-input-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}.is-dark-theme &{&::-webkit-input-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}&::-moz-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}&:-ms-input-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRleHRhcmVhLWNvbnRyb2wtc3R5bGVzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUc2QyIsImZpbGUiOiJ0ZXh0YXJlYS1jb250cm9sLXN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB7IENPTE9SUyB9IGZyb20gJy4uLy4uL3V0aWxzL2NvbG9ycy12YWx1ZXMnO1xuXG5leHBvcnQgY29uc3QgU3R5bGVkVGV4dGFyZWEgPSBzdHlsZWQudGV4dGFyZWFgXG5cdHdpZHRoOiAxMDAlO1xuXHRkaXNwbGF5OiBibG9jaztcblx0bGluZS1oZWlnaHQ6IDIwcHg7XG5cdGJhY2tncm91bmQ6ICR7IENPTE9SUy50aGVtZS5iYWNrZ3JvdW5kIH07XG5cdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZCB9O1xuXHRyZXNpemU6IHZlcnRpY2FsO1xuXG5cdC8vIFZlcnRpY2FsIHBhZGRpbmcgaXMgdG8gbWF0Y2ggdGhlIHN0YW5kYXJkIDQwcHggY29udHJvbCBoZWlnaHQgd2hlbiByb3dzPTEsXG5cdC8vIGluIGNvbmp1bmN0aW9uIHdpdGggdGhlIDIwcHggbGluZS1oZWlnaHQuXG5cdC8vIFwiU3RhbmRhcmRcIiBtZXRyaWNzIGFyZSAxMHB4IDEycHgsIGJ1dCBzdWJ0cmFjdHMgMXB4IGVhY2ggdG8gYWNjb3VudCBmb3IgdGhlIGJvcmRlciB3aWR0aC5cblx0cGFkZGluZzogOXB4IDExcHg7XG5cblx0Ly8gTWF0Y2hpbmcgdGhlIDIwcHggbGluZS1oZWlnaHQgKyB0aGUgOXB4IHRvcCBhbmQgYm90dG9tIHBhZGRpbmcuXG5cdG1pbi1oZWlnaHQ6IDM4cHg7XG5cblx0JjpkaXNhYmxlZCB7XG5cdFx0YmFja2dyb3VuZDogJHsgQ09MT1JTLnVpLmJhY2tncm91bmREaXNhYmxlZCB9O1xuXHRcdGJvcmRlci1jb2xvcjogJHsgQ09MT1JTLnVpLmJvcmRlckRpc2FibGVkIH07XG5cdFx0Y29sb3I6ICR7IENPTE9SUy51aS50ZXh0RGlzYWJsZWQgfTtcblx0fVxuXG5cdC8vIFVzZSBvcGFjaXR5IHRvIHdvcmsgaW4gdmFyaW91cyBlZGl0b3Igc3R5bGVzLlxuXHQmOjotd2Via2l0LWlucHV0LXBsYWNlaG9sZGVyIHtcblx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmRhcmtHcmF5UGxhY2Vob2xkZXIgfTtcblx0fVxuXG5cdCY6Oi1tb3otcGxhY2Vob2xkZXIge1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudWkuZGFya0dyYXlQbGFjZWhvbGRlciB9O1xuXHR9XG5cblx0JjotbXMtaW5wdXQtcGxhY2Vob2xkZXIge1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudWkuZGFya0dyYXlQbGFjZWhvbGRlciB9O1xuXHR9XG5cblx0LmlzLWRhcmstdGhlbWUgJiB7XG5cdFx0Jjo6LXdlYmtpdC1pbnB1dC1wbGFjZWhvbGRlciB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmxpZ2h0R3JheVBsYWNlaG9sZGVyIH07XG5cdFx0fVxuXG5cdFx0Jjo6LW1vei1wbGFjZWhvbGRlciB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmxpZ2h0R3JheVBsYWNlaG9sZGVyIH07XG5cdFx0fVxuXG5cdFx0JjotbXMtaW5wdXQtcGxhY2Vob2xkZXIge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy51aS5saWdodEdyYXlQbGFjZWhvbGRlciB9O1xuXHRcdH1cblx0fVxuYDtcbiJdfQ== */"));
-
-  // packages/components/build-module/textarea-control/index.mjs
-  var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE25 = "data-wp-hash";
-  function getRuntime25() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument25(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash25(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE25}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE25) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle25(targetDocument, hash2, css3) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime25();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash25(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE25, hash2);
-    style2.appendChild(targetDocument.createTextNode(css3));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument25(targetDocument) {
-    const runtime = getRuntime25();
-    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-    for (const [hash2, css3] of runtime.styles) {
-      injectStyle25(targetDocument, hash2, css3);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle24(hash2, css3) {
-    const runtime = getRuntime25();
-    runtime.styles.set(hash2, css3);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle25(targetDocument, hash2, css3);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle24("c666f77d8c", ".aa08a6e706634925__textarea{border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px}@media (min-width:600px){.aa08a6e706634925__textarea{font-size:13px;line-height:normal}}.aa08a6e706634925__textarea:hover:not(:disabled,[aria-disabled=true],[type=checkbox]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}.aa08a6e706634925__textarea:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa08a6e706634925__textarea::placeholder{color:rgba(30,30,30,.62)}");
-  }
-  var style_module_default23 = { "textarea": "aa08a6e706634925__textarea" };
-  function UnforwardedTextareaControl(props, ref) {
-    const {
-      // Prevent passing this to `textarea`.
-      __nextHasNoMarginBottom: _2,
-      label,
-      hideLabelFromVision,
-      value,
-      help,
-      onChange,
-      rows = 4,
-      className: className2,
-      ...additionalProps
-    } = props;
-    const instanceId = (0, import_compose73.useInstanceId)(TextareaControl);
-    const id3 = `inspector-textarea-control-${instanceId}`;
-    const onChangeValue = (event) => onChange(event.target.value);
-    const classes = clsx_default("components-textarea-control", className2);
-    return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(base_control_default, {
-      label,
-      hideLabelFromVision,
-      id: id3,
-      help,
-      className: classes,
-      children: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(StyledTextarea, {
-        className: clsx_default("components-textarea-control__input", style_module_default23.textarea),
-        id: id3,
-        rows,
-        onChange: onChangeValue,
-        "aria-describedby": !!help ? id3 + "__help" : void 0,
-        value,
-        ref,
-        ...additionalProps
-      })
-    });
-  }
-  var TextareaControl = (0, import_element177.forwardRef)(UnforwardedTextareaControl);
-  TextareaControl.displayName = "TextareaControl";
-  var textarea_control_default = TextareaControl;
-
-  // packages/components/build-module/text-highlight/index.mjs
-  var import_element178 = __toESM(require_element(), 1);
-  var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
-  var TextHighlight = (props) => {
-    const {
-      text = "",
-      highlight = ""
-    } = props;
-    const trimmedHighlightText = highlight.trim();
-    if (!trimmedHighlightText) {
-      return /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(import_jsx_runtime260.Fragment, {
-        children: text
-      });
-    }
-    const regex = new RegExp(`(${escapeRegExp(trimmedHighlightText)})`, "gi");
-    return (0, import_element178.createInterpolateElement)(text.replace(regex, "<mark>$&</mark>"), {
-      mark: /* @__PURE__ */ (0, import_jsx_runtime260.jsx)("mark", {})
-    });
-  };
-  TextHighlight.displayName = "TextHighlight";
-  var text_highlight_default = TextHighlight;
-
-  // packages/components/build-module/tip/index.mjs
-  var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
-  function Tip(props) {
-    const {
-      children
-    } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)("div", {
-      className: "components-tip",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime261.jsx)(icon_default2, {
-        icon: tip_default
-      }), /* @__PURE__ */ (0, import_jsx_runtime261.jsx)("p", {
-        children
-      })]
-    });
-  }
-  var tip_default2 = Tip;
-
-  // packages/components/build-module/toggle-control/index.mjs
-  var import_element179 = __toESM(require_element(), 1);
-  var import_compose74 = __toESM(require_compose(), 1);
-  var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
-  function UnforwardedToggleControl({
-    label,
-    checked,
-    help,
-    className: className2,
-    onChange,
-    disabled,
-    // Prevent passing to internal component.
-    __nextHasNoMarginBottom: _2,
-    ...additionalProps
-  }, ref) {
-    function onChangeToggle(event) {
-      onChange(event.target.checked);
-    }
-    const instanceId = (0, import_compose74.useInstanceId)(ToggleControl);
-    const id3 = `inspector-toggle-control-${instanceId}`;
-    let describedBy, helpLabel;
-    if (help) {
-      if (typeof help === "function") {
-        if (checked !== void 0) {
-          helpLabel = help(checked);
-        }
-      } else {
-        helpLabel = help;
-      }
-      if (helpLabel) {
-        describedBy = id3 + "__help";
-      }
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(base_control_default, {
-      id: id3,
-      help: helpLabel && /* @__PURE__ */ (0, import_jsx_runtime262.jsx)("span", {
-        className: "components-toggle-control__help",
-        children: helpLabel
-      }),
-      className: clsx_default("components-toggle-control", className2),
-      children: /* @__PURE__ */ (0, import_jsx_runtime262.jsxs)(component_default9, {
-        justify: "flex-start",
-        spacing: 2,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime262.jsx)(form_toggle_default, {
-          id: id3,
-          checked,
-          onChange: onChangeToggle,
-          "aria-describedby": describedBy,
-          disabled,
-          ref,
-          ...additionalProps
-        }), /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(component_default5, {
-          as: "label",
-          htmlFor: id3,
-          className: clsx_default("components-toggle-control__label", {
-            "is-disabled": disabled
-          }),
-          children: label
-        })]
-      })
-    });
-  }
-  var ToggleControl = (0, import_element179.forwardRef)(UnforwardedToggleControl);
-  ToggleControl.displayName = "ToggleControl";
-  var toggle_control_default = ToggleControl;
-
-  // packages/components/build-module/toolbar/toolbar/index.mjs
-  var import_element186 = __toESM(require_element(), 1);
-  var import_deprecated25 = __toESM(require_deprecated(), 1);
-
-  // packages/components/build-module/toolbar/toolbar-group/index.mjs
-  var import_element184 = __toESM(require_element(), 1);
-
-  // packages/components/build-module/toolbar/toolbar-button/index.mjs
-  var import_element182 = __toESM(require_element(), 1);
-
-  // packages/components/build-module/toolbar/toolbar-item/index.mjs
-  var import_element181 = __toESM(require_element(), 1);
-  var import_warning10 = __toESM(require_warning(), 1);
-
-  // packages/components/build-module/toolbar/toolbar-context/index.mjs
-  var import_element180 = __toESM(require_element(), 1);
-  var ToolbarContext = (0, import_element180.createContext)(void 0);
-  ToolbarContext.displayName = "ToolbarContext";
-  var toolbar_context_default = ToolbarContext;
-
-  // packages/components/build-module/toolbar/toolbar-item/index.mjs
-  var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
-  function UnforwardedToolbarItem({
-    children,
-    as: Component7,
-    ...props
-  }, ref) {
-    const accessibleToolbarStore = (0, import_element181.useContext)(toolbar_context_default);
-    const isRenderProp = typeof children === "function";
-    if (!isRenderProp && !Component7) {
-      true ? (0, import_warning10.default)("`ToolbarItem` is a generic headless component. You must pass either a `children` prop as a function or an `as` prop as a component. See https://developer.wordpress.org/block-editor/components/toolbar-item/") : void 0;
-      return null;
-    }
-    const allProps = {
-      ...props,
-      ref,
-      "data-toolbar-item": true
-    };
-    if (!accessibleToolbarStore) {
-      if (Component7) {
-        return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(Component7, {
-          ...allProps,
-          children
-        });
-      }
-      if (!isRenderProp) {
-        return null;
-      }
-      return children(allProps);
-    }
-    const render = isRenderProp ? children : Component7 && /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(Component7, {
-      children
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(ToolbarItem, {
-      accessibleWhenDisabled: true,
-      ...allProps,
-      store: accessibleToolbarStore,
-      render
-    });
-  }
-  var ToolbarItem22 = (0, import_element181.forwardRef)(UnforwardedToolbarItem);
-  ToolbarItem22.displayName = "ToolbarItem";
-  var toolbar_item_default = ToolbarItem22;
-
-  // packages/components/build-module/toolbar/toolbar-button/toolbar-button-container.mjs
-  var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
-  var ToolbarButtonContainer = ({
-    children,
-    className: className2
-  }) => /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("div", {
-    className: className2,
-    children
-  });
-  var toolbar_button_container_default = ToolbarButtonContainer;
-
-  // packages/components/build-module/toolbar/toolbar-button/index.mjs
-  var import_jsx_runtime265 = __toESM(require_jsx_runtime(), 1);
-  function useDeprecatedProps6({
-    isDisabled,
-    ...otherProps
-  }) {
-    return {
-      disabled: isDisabled,
-      ...otherProps
-    };
-  }
-  function UnforwardedToolbarButton(props, ref) {
-    const {
-      children,
-      className: className2,
-      containerClassName,
-      extraProps,
-      isActive,
-      title,
-      ...restProps
-    } = useDeprecatedProps6(props);
-    const accessibleToolbarState = (0, import_element182.useContext)(toolbar_context_default);
-    if (!accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(toolbar_button_container_default, {
-        className: containerClassName,
-        children: /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(button_default, {
-          ref,
-          icon: restProps.icon,
-          size: "compact",
-          label: title,
-          shortcut: restProps.shortcut,
-          "data-subscript": restProps.subscript,
-          onClick: (event) => {
-            event.stopPropagation();
-            if (restProps.onClick) {
-              restProps.onClick(event);
-            }
-          },
-          className: clsx_default("components-toolbar__control", className2),
-          isPressed: isActive,
-          accessibleWhenDisabled: true,
-          "data-toolbar-item": true,
-          ...extraProps,
-          ...restProps,
-          children
-        })
-      });
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(toolbar_item_default, {
-      className: clsx_default("components-toolbar-button", className2),
-      ...extraProps,
-      ...restProps,
-      ref,
-      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(button_default, {
-        size: "compact",
-        label: title,
-        isPressed: isActive,
-        ...toolbarItemProps,
-        children
-      })
-    });
-  }
-  var ToolbarButton = (0, import_element182.forwardRef)(UnforwardedToolbarButton);
-  ToolbarButton.displayName = "ToolbarButton";
-  var toolbar_button_default = ToolbarButton;
-
-  // packages/components/build-module/toolbar/toolbar-group/toolbar-group-container.mjs
-  var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
-  var ToolbarGroupContainer = ({
-    className: className2,
-    children,
-    ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("div", {
-    className: className2,
-    ...props,
-    children
-  });
-  var toolbar_group_container_default = ToolbarGroupContainer;
-
-  // packages/components/build-module/toolbar/toolbar-group/toolbar-group-collapsed.mjs
-  var import_element183 = __toESM(require_element(), 1);
-  var import_jsx_runtime267 = __toESM(require_jsx_runtime(), 1);
-  function ToolbarGroupCollapsed({
-    controls = [],
-    toggleProps,
-    ...props
-  }) {
-    const accessibleToolbarState = (0, import_element183.useContext)(toolbar_context_default);
-    const renderDropdownMenu = (internalToggleProps) => /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(dropdown_menu_default, {
-      controls,
-      toggleProps: {
-        ...internalToggleProps,
-        "data-toolbar-item": true
-      },
-      ...props
-    });
-    if (accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(toolbar_item_default, {
-        ...toggleProps,
-        children: renderDropdownMenu
-      });
-    }
-    return renderDropdownMenu(toggleProps);
-  }
-  var toolbar_group_collapsed_default = ToolbarGroupCollapsed;
-
-  // packages/components/build-module/toolbar/toolbar-group/index.mjs
-  var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
-  function isNestedArray(arr) {
-    return Array.isArray(arr) && Array.isArray(arr[0]);
-  }
-  function ToolbarGroup({
-    controls = [],
-    children,
-    className: className2,
-    isCollapsed: isCollapsed2,
-    title,
-    ...props
-  }) {
-    const accessibleToolbarState = (0, import_element184.useContext)(toolbar_context_default);
-    if ((!controls || !controls.length) && !children) {
-      return null;
-    }
-    const finalClassName = clsx_default(
-      // Unfortunately, there's legacy code referencing to `.components-toolbar`
-      // So we can't get rid of it
-      accessibleToolbarState ? "components-toolbar-group" : "components-toolbar",
-      className2
-    );
-    let controlSets;
-    if (isNestedArray(controls)) {
-      controlSets = controls;
-    } else {
-      controlSets = [controls];
-    }
-    if (isCollapsed2) {
-      return /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(toolbar_group_collapsed_default, {
-        label: title,
-        controls: controlSets,
-        className: finalClassName,
-        children,
-        ...props
-      });
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime268.jsxs)(toolbar_group_container_default, {
-      className: finalClassName,
-      ...props,
-      children: [controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(toolbar_button_default, {
-        containerClassName: indexOfSet > 0 && indexOfControl === 0 ? "has-left-divider" : void 0,
-        ...control
-      }, [indexOfSet, indexOfControl].join()))), children]
-    });
-  }
-  var toolbar_group_default = ToolbarGroup;
-
-  // packages/components/build-module/toolbar/toolbar/toolbar-container.mjs
-  var import_element185 = __toESM(require_element(), 1);
-  var import_i18n70 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
-  function UnforwardedToolbarContainer({
-    label,
-    ...props
-  }, ref) {
-    const toolbarStore = useToolbarStore({
-      focusLoop: true,
-      rtl: (0, import_i18n70.isRTL)()
-    });
-    return (
-      // This will provide state for `ToolbarButton`'s
-      /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(toolbar_context_default.Provider, {
-        value: toolbarStore,
-        children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(Toolbar, {
-          ref,
-          "aria-label": label,
-          store: toolbarStore,
-          ...props
-        })
-      })
-    );
-  }
-  var ToolbarContainer2 = (0, import_element185.forwardRef)(UnforwardedToolbarContainer);
-  ToolbarContainer2.displayName = "ToolbarContainer";
-  var toolbar_container_default = ToolbarContainer2;
-
-  // packages/components/build-module/toolbar/toolbar/index.mjs
-  var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
-  function UnforwardedToolbar({
-    className: className2,
-    label,
-    variant,
-    ...props
-  }, ref) {
-    const isVariantDefined = variant !== void 0;
-    const contextSystemValue = (0, import_element186.useMemo)(() => {
-      if (isVariantDefined) {
-        return {};
-      }
-      return {
-        DropdownMenu: {
-          variant: "toolbar"
-        },
-        Dropdown: {
-          variant: "toolbar"
-        },
-        Menu: {
-          variant: "toolbar"
-        }
-      };
-    }, [isVariantDefined]);
-    if (!label) {
-      (0, import_deprecated25.default)("Using Toolbar without label prop", {
-        since: "5.6",
-        alternative: "ToolbarGroup component",
-        link: "https://developer.wordpress.org/block-editor/components/toolbar/"
-      });
-      const {
-        title: _title,
-        ...restProps
-      } = props;
-      return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(toolbar_group_default, {
-        isCollapsed: false,
-        ...restProps,
-        className: className2
-      });
-    }
-    const finalClassName = clsx_default("components-accessible-toolbar", className2, variant && `is-${variant}`);
-    return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(ContextSystemProvider, {
-      value: contextSystemValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(toolbar_container_default, {
-        className: finalClassName,
-        label,
-        ref,
-        ...props
-      })
-    });
-  }
-  var Toolbar3 = (0, import_element186.forwardRef)(UnforwardedToolbar);
-  Toolbar3.displayName = "Toolbar";
-  var toolbar_default = Toolbar3;
-
-  // packages/components/build-module/toolbar/toolbar-dropdown-menu/index.mjs
-  var import_element187 = __toESM(require_element(), 1);
-  var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
-  function UnforwardedToolbarDropdownMenu(props, ref) {
-    const accessibleToolbarState = (0, import_element187.useContext)(toolbar_context_default);
-    if (!accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(dropdown_menu_default, {
-        ...props
-      });
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(toolbar_item_default, {
-      ref,
-      ...props.toggleProps,
-      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(dropdown_menu_default, {
-        ...props,
-        popoverProps: {
-          ...props.popoverProps
-        },
-        toggleProps: toolbarItemProps
-      })
-    });
-  }
-  var ToolbarDropdownMenu = (0, import_element187.forwardRef)(UnforwardedToolbarDropdownMenu);
-  ToolbarDropdownMenu.displayName = "ToolbarDropdownMenu";
-  var toolbar_dropdown_menu_default = ToolbarDropdownMenu;
-
-  // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
-  var import_a11y10 = __toESM(require_a11y(), 1);
-  var import_i18n71 = __toESM(require_i18n(), 1);
-
-  // packages/components/build-module/tools-panel/context.mjs
-  var import_element188 = __toESM(require_element(), 1);
-  var noop24 = () => void 0;
-  var ToolsPanelContext = (0, import_element188.createContext)({
-    menuItems: {
-      default: {},
-      optional: {}
-    },
-    hasMenuItems: false,
-    isResetting: false,
-    shouldRenderPlaceholderItems: false,
-    registerPanelItem: noop24,
-    deregisterPanelItem: noop24,
-    flagItemCustomization: noop24,
-    registerResetAllFilter: noop24,
-    deregisterResetAllFilter: noop24,
-    areAllOptionalControlsHidden: true
-  });
-  ToolsPanelContext.displayName = "ToolsPanelContext";
-  var useToolsPanelContext = () => (0, import_element188.useContext)(ToolsPanelContext);
-
-  // packages/components/build-module/tools-panel/tools-panel-header/hook.mjs
   var STYLE_HASH_ATTRIBUTE26 = "data-wp-hash";
   function getRuntime26() {
     const globalScope = globalThis;
@@ -49550,35 +49363,469 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle25("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+    registerStyle25("77f847972d", "._5e6152f7430df331__input input[type=search]::-webkit-search-cancel-button,._5e6152f7430df331__input input[type=search]::-webkit-search-decoration,._5e6152f7430df331__input input[type=search]::-webkit-search-results-button,._5e6152f7430df331__input input[type=search]::-webkit-search-results-decoration{-webkit-appearance:none}._9a856163f1b1aaae__icon:dir(ltr){transform:scaleX(-1)}");
   }
-  var style_module_default24 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
-  function useToolsPanelHeader(props) {
-    const {
-      className: className2,
-      headingLevel = 2,
-      ...otherProps
-    } = useContextSystem(props, "ToolsPanelHeader");
-    const {
-      menuItems,
-      hasMenuItems,
-      areAllOptionalControlsHidden
-    } = useToolsPanelContext();
-    return {
-      ...otherProps,
-      areAllOptionalControlsHidden,
-      defaultControlsItemClassName: style_module_default24["default-controls-item"],
-      dropdownMenuClassName: style_module_default24["dropdown-menu"],
-      hasMenuItems,
-      headingClassName: style_module_default24["tools-panel-heading"],
-      headingLevel,
-      menuItems,
-      className: clsx_default(style_module_default24["tools-panel-header"], className2)
+  var style_module_default22 = { "input": "_5e6152f7430df331__input", "icon": "_9a856163f1b1aaae__icon" };
+  function SuffixItem({
+    searchRef,
+    onChange,
+    onClose
+  }) {
+    if (onClose) {
+      (0, import_deprecated24.default)("`onClose` prop in wp.components.SearchControl", {
+        since: "6.8"
+      });
+    }
+    const onReset = () => {
+      onChange("");
+      searchRef.current?.focus();
     };
+    return /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(InputControlSuffixWrapper, {
+      variant: "control",
+      children: /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(button_default, {
+        size: "small",
+        icon: close_small_default,
+        label: onClose ? (0, import_i18n68.__)("Close search") : (0, import_i18n68.__)("Reset search"),
+        onClick: onClose ?? onReset
+      })
+    });
   }
+  function UnforwardedSearchControl({
+    // Prevent passing legacy props to internal component.
+    __nextHasNoMarginBottom: _2,
+    __next40pxDefaultSize: _next40pxDefaultSize,
+    className,
+    onChange,
+    value,
+    label = (0, import_i18n68.__)("Search"),
+    placeholder = (0, import_i18n68.__)("Search"),
+    hideLabelFromVision = true,
+    onClose,
+    size: size4 = "default",
+    ...restProps
+  }, forwardedRef) {
+    const {
+      disabled,
+      ...filteredRestProps
+    } = restProps;
+    const searchRef = (0, import_element175.useRef)(null);
+    const instanceId = (0, import_compose69.useInstanceId)(SearchControl, "components-search-control");
+    const hasSuffix = !!onClose || !!value;
+    return /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(input_control_default, {
+      id: instanceId,
+      hideLabelFromVision,
+      label,
+      ref: (0, import_compose69.useMergeRefs)([searchRef, forwardedRef]),
+      type: "search",
+      size: size4,
+      className: clsx_default(style_module_default22.input, "components-search-control", className),
+      onChange: (nextValue) => onChange(nextValue ?? ""),
+      autoComplete: "off",
+      placeholder,
+      value: value ?? "",
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(InputControlPrefixWrapper, {
+        variant: "icon",
+        children: /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(icon_default3, {
+          className: style_module_default22.icon,
+          icon: search_default,
+          fill: "currentColor"
+        })
+      }),
+      suffix: hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(SuffixItem, {
+        searchRef,
+        onChange,
+        onClose
+      }),
+      ...filteredRestProps
+    });
+  }
+  var SearchControl = (0, import_element175.forwardRef)(UnforwardedSearchControl);
+  SearchControl.displayName = "SearchControl";
+  var search_control_default = SearchControl;
 
-  // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
-  var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
+  // packages/components/build-module/snackbar/index.mjs
+  var import_a11y9 = __toESM(require_a11y(), 1);
+  var import_element176 = __toESM(require_element(), 1);
+  var import_i18n69 = __toESM(require_i18n(), 1);
+  var import_warning9 = __toESM(require_warning(), 1);
+  var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
+  var NOTICE_TIMEOUT = 6e3;
+  function useSpokenMessage2(message, politeness) {
+    const spokenMessage = typeof message === "string" ? message : (0, import_element176.renderToString)(message);
+    (0, import_element176.useEffect)(() => {
+      if (spokenMessage) {
+        (0, import_a11y9.speak)(spokenMessage, politeness);
+      }
+    }, [spokenMessage, politeness]);
+  }
+  function UnforwardedSnackbar({
+    className,
+    children,
+    spokenMessage = children,
+    politeness = "polite",
+    actions = [],
+    onRemove,
+    icon = null,
+    explicitDismiss = false,
+    // onDismiss is a callback executed when the snackbar is dismissed.
+    // It is distinct from onRemove, which _looks_ like a callback but is
+    // actually the function to call to remove the snackbar from the UI.
+    onDismiss,
+    listRef
+  }, ref) {
+    function dismissMe(event) {
+      if (event && event.preventDefault) {
+        event.preventDefault();
+      }
+      listRef?.current?.focus();
+      onDismiss?.();
+      onRemove?.();
+    }
+    function onActionClick(event, onClick) {
+      event.stopPropagation();
+      onRemove?.();
+      if (onClick) {
+        onClick(event);
+      }
+    }
+    useSpokenMessage2(spokenMessage, politeness);
+    const callbacksRef = (0, import_element176.useRef)({
+      onDismiss,
+      onRemove
+    });
+    (0, import_element176.useLayoutEffect)(() => {
+      callbacksRef.current = {
+        onDismiss,
+        onRemove
+      };
+    });
+    (0, import_element176.useEffect)(() => {
+      const timeoutHandle = setTimeout(() => {
+        if (!explicitDismiss) {
+          callbacksRef.current.onDismiss?.();
+          callbacksRef.current.onRemove?.();
+        }
+      }, NOTICE_TIMEOUT);
+      return () => clearTimeout(timeoutHandle);
+    }, [explicitDismiss]);
+    const classes = clsx_default(className, "components-snackbar", {
+      "components-snackbar-explicit-dismiss": !!explicitDismiss
+    });
+    if (actions && actions.length > 1) {
+      true ? (0, import_warning9.default)("Snackbar can only have one action. Use Notice if your message requires many actions.") : void 0;
+      actions = [actions[0]];
+    }
+    const snackbarContentClassnames = clsx_default("components-snackbar__content", {
+      "components-snackbar__content-with-icon": !!icon
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("div", {
+      ref,
+      className: classes,
+      onClick: !explicitDismiss ? dismissMe : void 0,
+      tabIndex: 0,
+      role: !explicitDismiss ? "button" : void 0,
+      onKeyPress: !explicitDismiss ? dismissMe : void 0,
+      "aria-label": !explicitDismiss ? (0, import_i18n69.__)("Dismiss this notice") : void 0,
+      "data-testid": "snackbar",
+      children: /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)("div", {
+        className: snackbarContentClassnames,
+        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("div", {
+          className: "components-snackbar__icon",
+          children: icon
+        }), children, actions.map(({
+          label,
+          onClick,
+          url,
+          openInNewTab = false
+        }, index2) => url !== void 0 && openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(external_link_default, {
+          href: url,
+          onClick: (event) => onActionClick(event, onClick),
+          className: "components-snackbar__action",
+          children: label
+        }, index2) : /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(button_default, {
+          __next40pxDefaultSize: true,
+          href: url,
+          variant: "link",
+          onClick: (event) => onActionClick(event, onClick),
+          className: "components-snackbar__action",
+          children: label
+        }, index2)), explicitDismiss && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("span", {
+          role: "button",
+          "aria-label": (0, import_i18n69.__)("Dismiss this notice"),
+          tabIndex: 0,
+          className: "components-snackbar__dismiss-button",
+          onClick: dismissMe,
+          onKeyPress: dismissMe,
+          children: "\u2715"
+        })]
+      })
+    });
+  }
+  var Snackbar = (0, import_element176.forwardRef)(UnforwardedSnackbar);
+  Snackbar.displayName = "Snackbar";
+  var snackbar_default = Snackbar;
+
+  // packages/components/build-module/snackbar/list.mjs
+  var import_compose70 = __toESM(require_compose(), 1);
+  var import_element177 = __toESM(require_element(), 1);
+  var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
+  var SNACKBAR_VARIANTS = {
+    init: {
+      height: 0,
+      opacity: 0
+    },
+    open: {
+      height: "auto",
+      opacity: 1,
+      transition: {
+        height: {
+          type: "tween",
+          duration: 0.3,
+          ease: [0, 0, 0.2, 1]
+        },
+        opacity: {
+          type: "tween",
+          duration: 0.25,
+          delay: 0.05,
+          ease: [0, 0, 0.2, 1]
+        }
+      }
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        type: "tween",
+        duration: 0.1,
+        ease: [0, 0, 0.2, 1]
+      }
+    }
+  };
+  function SnackbarList({
+    notices,
+    className,
+    children,
+    onRemove
+  }) {
+    const listRef = (0, import_element177.useRef)(null);
+    const isReducedMotion = (0, import_compose70.useReducedMotion)();
+    className = clsx_default("components-snackbar-list", className);
+    const removeNotice = (notice) => () => onRemove?.(notice.id);
+    return /* @__PURE__ */ (0, import_jsx_runtime260.jsxs)("div", {
+      className,
+      tabIndex: -1,
+      ref: listRef,
+      "data-testid": "snackbar-list",
+      children: [children, /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(AnimatePresence, {
+        children: notices.map((notice) => {
+          const {
+            content,
+            ...restNotice
+          } = notice;
+          return /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(motion.div, {
+            layout: isReducedMotion ? false : "position",
+            style: {
+              width: "100%"
+            },
+            initial: "init",
+            animate: "open",
+            exit: "exit",
+            variants: isReducedMotion ? void 0 : SNACKBAR_VARIANTS,
+            children: /* @__PURE__ */ (0, import_jsx_runtime260.jsx)("div", {
+              className: "components-snackbar-list__notice-container",
+              children: /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(snackbar_default, {
+                ...restNotice,
+                onRemove: removeNotice(notice),
+                listRef,
+                children: notice.content
+              })
+            })
+          }, notice.id);
+        })
+      })]
+    });
+  }
+  var list_default2 = SnackbarList;
+
+  // packages/components/build-module/tab-panel/index.mjs
+  var import_element178 = __toESM(require_element(), 1);
+  var import_compose71 = __toESM(require_compose(), 1);
+  var import_i18n70 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
+  var extractTabName = (id3) => {
+    if (typeof id3 === "undefined" || id3 === null) {
+      return;
+    }
+    return id3.match(/^tab-panel-[0-9]*-(.*)/)?.[1];
+  };
+  var UnforwardedTabPanel = ({
+    className,
+    children,
+    tabs,
+    selectOnMove = true,
+    initialTabName,
+    orientation = "horizontal",
+    activeClass = "is-active",
+    onSelect
+  }, ref) => {
+    const instanceId = (0, import_compose71.useInstanceId)(TabPanel22, "tab-panel");
+    const prependInstanceId = (0, import_element178.useCallback)((tabName) => {
+      if (typeof tabName === "undefined") {
+        return;
+      }
+      return `${instanceId}-${tabName}`;
+    }, [instanceId]);
+    const tabStore = useTabStore({
+      setSelectedId: (newTabValue) => {
+        if (typeof newTabValue === "undefined" || newTabValue === null) {
+          return;
+        }
+        const newTab = tabs.find((t4) => prependInstanceId(t4.name) === newTabValue);
+        if (newTab?.disabled || newTab === selectedTab) {
+          return;
+        }
+        const simplifiedTabName = extractTabName(newTabValue);
+        if (typeof simplifiedTabName === "undefined") {
+          return;
+        }
+        onSelect?.(simplifiedTabName);
+      },
+      orientation,
+      selectOnMove,
+      defaultSelectedId: prependInstanceId(initialTabName),
+      rtl: (0, import_i18n70.isRTL)()
+    });
+    const selectedTabName = extractTabName(useStoreState(tabStore, "selectedId"));
+    const setTabStoreSelectedId = (0, import_element178.useCallback)((tabName) => {
+      tabStore.setState("selectedId", prependInstanceId(tabName));
+    }, [prependInstanceId, tabStore]);
+    const selectedTab = tabs.find(({
+      name
+    }) => name === selectedTabName);
+    const previousSelectedTabName = (0, import_compose71.usePrevious)(selectedTabName);
+    (0, import_element178.useEffect)(() => {
+      if (previousSelectedTabName !== selectedTabName && selectedTabName === initialTabName && !!selectedTabName) {
+        onSelect?.(selectedTabName);
+      }
+    }, [selectedTabName, initialTabName, onSelect, previousSelectedTabName]);
+    (0, import_element178.useLayoutEffect)(() => {
+      if (selectedTab) {
+        return;
+      }
+      const initialTab = tabs.find((tab) => tab.name === initialTabName);
+      if (initialTabName && !initialTab) {
+        return;
+      }
+      if (initialTab && !initialTab.disabled) {
+        setTabStoreSelectedId(initialTab.name);
+      } else {
+        const firstEnabledTab = tabs.find((tab) => !tab.disabled);
+        if (firstEnabledTab) {
+          setTabStoreSelectedId(firstEnabledTab.name);
+        }
+      }
+    }, [tabs, selectedTab, initialTabName, instanceId, setTabStoreSelectedId]);
+    (0, import_element178.useEffect)(() => {
+      if (!selectedTab?.disabled) {
+        return;
+      }
+      const firstEnabledTab = tabs.find((tab) => !tab.disabled);
+      if (firstEnabledTab) {
+        setTabStoreSelectedId(firstEnabledTab.name);
+      }
+    }, [tabs, selectedTab?.disabled, setTabStoreSelectedId, instanceId]);
+    return /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)("div", {
+      className,
+      ref,
+      children: [/* @__PURE__ */ (0, import_jsx_runtime261.jsx)(TabList, {
+        store: tabStore,
+        className: "components-tab-panel__tabs",
+        children: tabs.map((tab) => {
+          return /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(Tab, {
+            id: prependInstanceId(tab.name),
+            className: clsx_default("components-tab-panel__tabs-item", tab.className, {
+              [activeClass]: tab.name === selectedTabName
+            }),
+            disabled: tab.disabled,
+            "aria-controls": `${prependInstanceId(tab.name)}-view`,
+            render: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(button_default, {
+              __next40pxDefaultSize: true,
+              icon: tab.icon,
+              label: tab.icon && tab.title,
+              showTooltip: !!tab.icon
+            }),
+            children: !tab.icon && tab.title
+          }, tab.name);
+        })
+      }), selectedTab && /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(TabPanel, {
+        id: `${prependInstanceId(selectedTab.name)}-view`,
+        store: tabStore,
+        tabId: prependInstanceId(selectedTab.name),
+        className: "components-tab-panel__tab-content",
+        children: children(selectedTab)
+      })]
+    });
+  };
+  var TabPanel22 = (0, import_element178.forwardRef)(UnforwardedTabPanel);
+  TabPanel22.displayName = "TabPanel";
+  var tab_panel_default = TabPanel22;
+
+  // packages/components/build-module/text-control/index.mjs
+  var import_compose72 = __toESM(require_compose(), 1);
+  var import_element179 = __toESM(require_element(), 1);
+  var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
+  function UnforwardedTextControl(props, ref) {
+    const {
+      // Prevent passing legacy props to `input`.
+      __nextHasNoMarginBottom: _2,
+      __next40pxDefaultSize: __62,
+      label,
+      hideLabelFromVision,
+      value,
+      help,
+      id: idProp,
+      className,
+      onChange,
+      type = "text",
+      ...additionalProps
+    } = props;
+    const id3 = (0, import_compose72.useInstanceId)(TextControl, "inspector-text-control", idProp);
+    const onChangeValue = (event) => onChange(event.target.value);
+    return /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(base_control_default, {
+      label,
+      hideLabelFromVision,
+      id: id3,
+      help,
+      className,
+      children: /* @__PURE__ */ (0, import_jsx_runtime262.jsx)("input", {
+        className: "components-text-control__input",
+        type,
+        id: id3,
+        value,
+        onChange: onChangeValue,
+        "aria-describedby": !!help ? id3 + "__help" : void 0,
+        ref,
+        ...additionalProps
+      })
+    });
+  }
+  var TextControl = (0, import_element179.forwardRef)(UnforwardedTextControl);
+  TextControl.displayName = "TextControl";
+  var text_control_default = TextControl;
+
+  // packages/components/build-module/textarea-control/index.mjs
+  var import_compose73 = __toESM(require_compose(), 1);
+  var import_element180 = __toESM(require_element(), 1);
+
+  // packages/components/build-module/textarea-control/styles/textarea-control-styles.mjs
+  var StyledTextarea = /* @__PURE__ */ createStyled("textarea", false ? {
+    target: "e1w5nnrk0"
+  } : {
+    target: "e1w5nnrk0",
+    label: "StyledTextarea"
+  })("width:100%;display:block;line-height:20px;background:", COLORS.theme.background, ";color:", COLORS.theme.foreground, ";resize:vertical;padding:9px 11px;min-height:38px;&:disabled{background:", COLORS.ui.backgroundDisabled, ";border-color:", COLORS.ui.borderDisabled, ";color:", COLORS.ui.textDisabled, ";}&::-webkit-input-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}&::-moz-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}&:-ms-input-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}.is-dark-theme &{&::-webkit-input-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}&::-moz-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}&:-ms-input-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRleHRhcmVhLWNvbnRyb2wtc3R5bGVzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUc2QyIsImZpbGUiOiJ0ZXh0YXJlYS1jb250cm9sLXN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB7IENPTE9SUyB9IGZyb20gJy4uLy4uL3V0aWxzL2NvbG9ycy12YWx1ZXMnO1xuXG5leHBvcnQgY29uc3QgU3R5bGVkVGV4dGFyZWEgPSBzdHlsZWQudGV4dGFyZWFgXG5cdHdpZHRoOiAxMDAlO1xuXHRkaXNwbGF5OiBibG9jaztcblx0bGluZS1oZWlnaHQ6IDIwcHg7XG5cdGJhY2tncm91bmQ6ICR7IENPTE9SUy50aGVtZS5iYWNrZ3JvdW5kIH07XG5cdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZCB9O1xuXHRyZXNpemU6IHZlcnRpY2FsO1xuXG5cdC8vIFZlcnRpY2FsIHBhZGRpbmcgaXMgdG8gbWF0Y2ggdGhlIHN0YW5kYXJkIDQwcHggY29udHJvbCBoZWlnaHQgd2hlbiByb3dzPTEsXG5cdC8vIGluIGNvbmp1bmN0aW9uIHdpdGggdGhlIDIwcHggbGluZS1oZWlnaHQuXG5cdC8vIFwiU3RhbmRhcmRcIiBtZXRyaWNzIGFyZSAxMHB4IDEycHgsIGJ1dCBzdWJ0cmFjdHMgMXB4IGVhY2ggdG8gYWNjb3VudCBmb3IgdGhlIGJvcmRlciB3aWR0aC5cblx0cGFkZGluZzogOXB4IDExcHg7XG5cblx0Ly8gTWF0Y2hpbmcgdGhlIDIwcHggbGluZS1oZWlnaHQgKyB0aGUgOXB4IHRvcCBhbmQgYm90dG9tIHBhZGRpbmcuXG5cdG1pbi1oZWlnaHQ6IDM4cHg7XG5cblx0JjpkaXNhYmxlZCB7XG5cdFx0YmFja2dyb3VuZDogJHsgQ09MT1JTLnVpLmJhY2tncm91bmREaXNhYmxlZCB9O1xuXHRcdGJvcmRlci1jb2xvcjogJHsgQ09MT1JTLnVpLmJvcmRlckRpc2FibGVkIH07XG5cdFx0Y29sb3I6ICR7IENPTE9SUy51aS50ZXh0RGlzYWJsZWQgfTtcblx0fVxuXG5cdC8vIFVzZSBvcGFjaXR5IHRvIHdvcmsgaW4gdmFyaW91cyBlZGl0b3Igc3R5bGVzLlxuXHQmOjotd2Via2l0LWlucHV0LXBsYWNlaG9sZGVyIHtcblx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmRhcmtHcmF5UGxhY2Vob2xkZXIgfTtcblx0fVxuXG5cdCY6Oi1tb3otcGxhY2Vob2xkZXIge1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudWkuZGFya0dyYXlQbGFjZWhvbGRlciB9O1xuXHR9XG5cblx0JjotbXMtaW5wdXQtcGxhY2Vob2xkZXIge1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudWkuZGFya0dyYXlQbGFjZWhvbGRlciB9O1xuXHR9XG5cblx0LmlzLWRhcmstdGhlbWUgJiB7XG5cdFx0Jjo6LXdlYmtpdC1pbnB1dC1wbGFjZWhvbGRlciB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmxpZ2h0R3JheVBsYWNlaG9sZGVyIH07XG5cdFx0fVxuXG5cdFx0Jjo6LW1vei1wbGFjZWhvbGRlciB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmxpZ2h0R3JheVBsYWNlaG9sZGVyIH07XG5cdFx0fVxuXG5cdFx0JjotbXMtaW5wdXQtcGxhY2Vob2xkZXIge1xuXHRcdFx0Y29sb3I6ICR7IENPTE9SUy51aS5saWdodEdyYXlQbGFjZWhvbGRlciB9O1xuXHRcdH1cblx0fVxuYDtcbiJdfQ== */"));
+
+  // packages/components/build-module/textarea-control/index.mjs
+  var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE27 = "data-wp-hash";
   function getRuntime27() {
     const globalScope = globalThis;
@@ -49655,179 +49902,520 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle26("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+    registerStyle26("c666f77d8c", ".aa08a6e706634925__textarea{border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px}@media (min-width:600px){.aa08a6e706634925__textarea{font-size:13px;line-height:normal}}.aa08a6e706634925__textarea:hover:not(:disabled,[aria-disabled=true],[type=checkbox]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}.aa08a6e706634925__textarea:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa08a6e706634925__textarea::placeholder{color:rgba(30,30,30,.62)}");
   }
-  var style_module_default25 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
-  var DefaultControlsGroup = ({
-    itemClassName,
-    items,
-    toggleItem
-  }) => {
-    if (!items.length) {
-      return null;
-    }
-    const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("span", {
-      "aria-hidden": true,
-      className: style_module_default25["reset-label"],
-      children: (0, import_i18n71.__)("Reset")
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(import_jsx_runtime272.Fragment, {
-      children: items.map(([label, hasValue]) => {
-        if (hasValue) {
-          return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(menu_item_default, {
-            className: itemClassName,
-            role: "menuitem",
-            label: (0, import_i18n71.sprintf)(
-              // translators: %s: The name of the control being reset e.g. "Padding".
-              (0, import_i18n71.__)("Reset %s"),
-              label
-            ),
-            onClick: () => {
-              toggleItem(label);
-              (0, import_a11y10.speak)((0, import_i18n71.sprintf)(
-                // translators: %s: The name of the control being reset e.g. "Padding".
-                (0, import_i18n71.__)("%s reset to default"),
-                label
-              ), "assertive");
-            },
-            suffix: resetSuffix,
-            children: label
-          }, label);
-        }
-        return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(menu_item_default, {
-          icon: check_default,
-          className: itemClassName,
-          role: "menuitemcheckbox",
-          isSelected: true,
-          "aria-disabled": true,
-          children: label
-        }, label);
-      })
-    });
-  };
-  var OptionalControlsGroup = ({
-    items,
-    toggleItem
-  }) => {
-    if (!items.length) {
-      return null;
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(import_jsx_runtime272.Fragment, {
-      children: items.map(([label, isSelected2]) => {
-        const itemLabel = isSelected2 ? (0, import_i18n71.sprintf)(
-          // translators: %s: The name of the control being hidden and reset e.g. "Padding".
-          (0, import_i18n71.__)("Hide and reset %s"),
-          label
-        ) : (0, import_i18n71.sprintf)(
-          // translators: %s: The name of the control to display e.g. "Padding".
-          (0, import_i18n71._x)("Show %s", "input control"),
-          label
-        );
-        return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(menu_item_default, {
-          icon: isSelected2 ? check_default : null,
-          isSelected: isSelected2,
-          label: itemLabel,
-          onClick: () => {
-            if (isSelected2) {
-              (0, import_a11y10.speak)((0, import_i18n71.sprintf)(
-                // translators: %s: The name of the control being reset e.g. "Padding".
-                (0, import_i18n71.__)("%s hidden and reset to default"),
-                label
-              ), "assertive");
-            } else {
-              (0, import_a11y10.speak)((0, import_i18n71.sprintf)(
-                // translators: %s: The name of the control being reset e.g. "Padding".
-                (0, import_i18n71.__)("%s is now visible"),
-                label
-              ), "assertive");
-            }
-            toggleItem(label);
-          },
-          role: "menuitemcheckbox",
-          children: label
-        }, label);
-      })
-    });
-  };
-  var ToolsPanelHeader = (props, forwardedRef) => {
+  var style_module_default23 = { "textarea": "aa08a6e706634925__textarea" };
+  function UnforwardedTextareaControl(props, ref) {
     const {
-      areAllOptionalControlsHidden,
-      defaultControlsItemClassName,
-      dropdownMenuClassName,
-      hasMenuItems,
-      headingClassName,
-      headingLevel = 2,
-      label: labelText,
-      menuItems,
-      resetAll,
-      toggleItem,
-      dropdownMenuProps,
-      ...headerProps
-    } = useToolsPanelHeader(props);
-    if (!labelText) {
-      return null;
+      // Prevent passing this to `textarea`.
+      __nextHasNoMarginBottom: _2,
+      label,
+      hideLabelFromVision,
+      value,
+      help,
+      onChange,
+      rows = 4,
+      className,
+      ...additionalProps
+    } = props;
+    const instanceId = (0, import_compose73.useInstanceId)(TextareaControl);
+    const id3 = `inspector-textarea-control-${instanceId}`;
+    const onChangeValue = (event) => onChange(event.target.value);
+    const classes = clsx_default("components-textarea-control", className);
+    return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(base_control_default, {
+      label,
+      hideLabelFromVision,
+      id: id3,
+      help,
+      className: classes,
+      children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(StyledTextarea, {
+        className: clsx_default("components-textarea-control__input", style_module_default23.textarea),
+        id: id3,
+        rows,
+        onChange: onChangeValue,
+        "aria-describedby": !!help ? id3 + "__help" : void 0,
+        value,
+        ref,
+        ...additionalProps
+      })
+    });
+  }
+  var TextareaControl = (0, import_element180.forwardRef)(UnforwardedTextareaControl);
+  TextareaControl.displayName = "TextareaControl";
+  var textarea_control_default = TextareaControl;
+
+  // packages/components/build-module/text-highlight/index.mjs
+  var import_element181 = __toESM(require_element(), 1);
+  var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
+  var TextHighlight = (props) => {
+    const {
+      text = "",
+      highlight = ""
+    } = props;
+    const trimmedHighlightText = highlight.trim();
+    if (!trimmedHighlightText) {
+      return /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(import_jsx_runtime264.Fragment, {
+        children: text
+      });
     }
-    const defaultItems = Object.entries(menuItems?.default || {});
-    const optionalItems = Object.entries(menuItems?.optional || {});
-    const dropDownMenuIcon = areAllOptionalControlsHidden ? plus_default : more_vertical_default;
-    const dropDownMenuLabelText = (0, import_i18n71.sprintf)(
-      // translators: %s: The name of the tool e.g. "Color" or "Typography".
-      (0, import_i18n71._x)("%s options", "Button label to reveal tool panel options"),
-      labelText
-    );
-    const dropdownMenuDescriptionText = areAllOptionalControlsHidden ? (0, import_i18n71.__)("All options are currently hidden") : void 0;
-    const canResetAll = [...defaultItems, ...optionalItems].some(([, isSelected2]) => isSelected2);
-    return /* @__PURE__ */ (0, import_jsx_runtime272.jsxs)(component_default9, {
-      ...headerProps,
-      ref: forwardedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime272.jsx)(component_default19, {
-        level: headingLevel,
-        className: headingClassName,
-        children: labelText
-      }), hasMenuItems && /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(dropdown_menu_default, {
-        ...dropdownMenuProps,
-        icon: dropDownMenuIcon,
-        label: dropDownMenuLabelText,
-        menuProps: {
-          className: dropdownMenuClassName
-        },
-        toggleProps: {
-          size: "small",
-          description: dropdownMenuDescriptionText
-        },
-        children: () => /* @__PURE__ */ (0, import_jsx_runtime272.jsxs)(import_jsx_runtime272.Fragment, {
-          children: [/* @__PURE__ */ (0, import_jsx_runtime272.jsxs)(menu_group_default, {
-            label: labelText,
-            children: [/* @__PURE__ */ (0, import_jsx_runtime272.jsx)(DefaultControlsGroup, {
-              items: defaultItems,
-              toggleItem,
-              itemClassName: defaultControlsItemClassName
-            }), /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(OptionalControlsGroup, {
-              items: optionalItems,
-              toggleItem
-            })]
-          }), /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(menu_group_default, {
-            children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(menu_item_default, {
-              "aria-disabled": !canResetAll,
-              variant: "tertiary",
-              onClick: () => {
-                if (canResetAll) {
-                  resetAll();
-                  (0, import_a11y10.speak)((0, import_i18n71.__)("All options reset"), "assertive");
-                }
-              },
-              children: (0, import_i18n71.__)("Reset all")
-            })
-          })]
-        })
+    const regex = new RegExp(`(${escapeRegExp(trimmedHighlightText)})`, "gi");
+    return (0, import_element181.createInterpolateElement)(text.replace(regex, "<mark>$&</mark>"), {
+      mark: /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("mark", {})
+    });
+  };
+  TextHighlight.displayName = "TextHighlight";
+  var text_highlight_default = TextHighlight;
+
+  // packages/components/build-module/tip/index.mjs
+  var import_jsx_runtime265 = __toESM(require_jsx_runtime(), 1);
+  function Tip(props) {
+    const {
+      children
+    } = props;
+    return /* @__PURE__ */ (0, import_jsx_runtime265.jsxs)("div", {
+      className: "components-tip",
+      children: [/* @__PURE__ */ (0, import_jsx_runtime265.jsx)(icon_default2, {
+        icon: tip_default
+      }), /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("p", {
+        children
       })]
     });
-  };
-  var ConnectedToolsPanelHeader = contextConnect(ToolsPanelHeader, "ToolsPanelHeader");
-  var component_default38 = ConnectedToolsPanelHeader;
+  }
+  var tip_default2 = Tip;
 
-  // packages/components/build-module/tools-panel/tools-panel/hook.mjs
+  // packages/components/build-module/toggle-control/index.mjs
+  var import_element182 = __toESM(require_element(), 1);
+  var import_compose74 = __toESM(require_compose(), 1);
+  var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
+  function UnforwardedToggleControl({
+    label,
+    checked,
+    help,
+    className,
+    onChange,
+    disabled,
+    // Prevent passing to internal component.
+    __nextHasNoMarginBottom: _2,
+    ...additionalProps
+  }, ref) {
+    function onChangeToggle(event) {
+      onChange(event.target.checked);
+    }
+    const instanceId = (0, import_compose74.useInstanceId)(ToggleControl);
+    const id3 = `inspector-toggle-control-${instanceId}`;
+    let describedBy, helpLabel;
+    if (help) {
+      if (typeof help === "function") {
+        if (checked !== void 0) {
+          helpLabel = help(checked);
+        }
+      } else {
+        helpLabel = help;
+      }
+      if (helpLabel) {
+        describedBy = id3 + "__help";
+      }
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(base_control_default, {
+      id: id3,
+      help: helpLabel && /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("span", {
+        className: "components-toggle-control__help",
+        children: helpLabel
+      }),
+      className: clsx_default("components-toggle-control", className),
+      children: /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)(component_default9, {
+        justify: "flex-start",
+        spacing: 2,
+        children: [/* @__PURE__ */ (0, import_jsx_runtime266.jsx)(form_toggle_default, {
+          id: id3,
+          checked,
+          onChange: onChangeToggle,
+          "aria-describedby": describedBy,
+          disabled,
+          ref,
+          ...additionalProps
+        }), /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(component_default5, {
+          as: "label",
+          htmlFor: id3,
+          className: clsx_default("components-toggle-control__label", {
+            "is-disabled": disabled
+          }),
+          children: label
+        })]
+      })
+    });
+  }
+  var ToggleControl = (0, import_element182.forwardRef)(UnforwardedToggleControl);
+  ToggleControl.displayName = "ToggleControl";
+  var toggle_control_default = ToggleControl;
+
+  // packages/components/build-module/toolbar/toolbar/index.mjs
   var import_element189 = __toESM(require_element(), 1);
+  var import_deprecated25 = __toESM(require_deprecated(), 1);
+
+  // packages/components/build-module/toolbar/toolbar-group/index.mjs
+  var import_element187 = __toESM(require_element(), 1);
+
+  // packages/components/build-module/toolbar/toolbar-button/index.mjs
+  var import_element185 = __toESM(require_element(), 1);
+
+  // packages/components/build-module/toolbar/toolbar-item/index.mjs
+  var import_element184 = __toESM(require_element(), 1);
+  var import_warning10 = __toESM(require_warning(), 1);
+
+  // packages/components/build-module/toolbar/toolbar-context/index.mjs
+  var import_element183 = __toESM(require_element(), 1);
+  var ToolbarContext = (0, import_element183.createContext)(void 0);
+  ToolbarContext.displayName = "ToolbarContext";
+  var toolbar_context_default = ToolbarContext;
+
+  // packages/components/build-module/toolbar/toolbar-item/index.mjs
+  var import_jsx_runtime267 = __toESM(require_jsx_runtime(), 1);
+  function UnforwardedToolbarItem({
+    children,
+    as: Component7,
+    ...props
+  }, ref) {
+    const accessibleToolbarStore = (0, import_element184.useContext)(toolbar_context_default);
+    const isRenderProp = typeof children === "function";
+    if (!isRenderProp && !Component7) {
+      true ? (0, import_warning10.default)("`ToolbarItem` is a generic headless component. You must pass either a `children` prop as a function or an `as` prop as a component. See https://developer.wordpress.org/block-editor/components/toolbar-item/") : void 0;
+      return null;
+    }
+    const allProps = {
+      ...props,
+      ref,
+      "data-toolbar-item": true
+    };
+    if (!accessibleToolbarStore) {
+      if (Component7) {
+        return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(Component7, {
+          ...allProps,
+          children
+        });
+      }
+      if (!isRenderProp) {
+        return null;
+      }
+      return children(allProps);
+    }
+    const render = isRenderProp ? children : Component7 && /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(Component7, {
+      children
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(ToolbarItem, {
+      accessibleWhenDisabled: true,
+      ...allProps,
+      store: accessibleToolbarStore,
+      render
+    });
+  }
+  var ToolbarItem22 = (0, import_element184.forwardRef)(UnforwardedToolbarItem);
+  ToolbarItem22.displayName = "ToolbarItem";
+  var toolbar_item_default = ToolbarItem22;
+
+  // packages/components/build-module/toolbar/toolbar-button/toolbar-button-container.mjs
+  var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
+  var ToolbarButtonContainer = ({
+    children,
+    className
+  }) => /* @__PURE__ */ (0, import_jsx_runtime268.jsx)("div", {
+    className,
+    children
+  });
+  var toolbar_button_container_default = ToolbarButtonContainer;
+
+  // packages/components/build-module/toolbar/toolbar-button/index.mjs
+  var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
+  function useDeprecatedProps6({
+    isDisabled,
+    ...otherProps
+  }) {
+    return {
+      disabled: isDisabled,
+      ...otherProps
+    };
+  }
+  function UnforwardedToolbarButton(props, ref) {
+    const {
+      children,
+      className,
+      containerClassName,
+      extraProps,
+      isActive,
+      title,
+      ...restProps
+    } = useDeprecatedProps6(props);
+    const accessibleToolbarState = (0, import_element185.useContext)(toolbar_context_default);
+    if (!accessibleToolbarState) {
+      return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(toolbar_button_container_default, {
+        className: containerClassName,
+        children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(button_default, {
+          ref,
+          icon: restProps.icon,
+          size: "compact",
+          label: title,
+          shortcut: restProps.shortcut,
+          "data-subscript": restProps.subscript,
+          onClick: (event) => {
+            event.stopPropagation();
+            if (restProps.onClick) {
+              restProps.onClick(event);
+            }
+          },
+          className: clsx_default("components-toolbar__control", className),
+          isPressed: isActive,
+          accessibleWhenDisabled: true,
+          "data-toolbar-item": true,
+          ...extraProps,
+          ...restProps,
+          children
+        })
+      });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(toolbar_item_default, {
+      className: clsx_default("components-toolbar-button", className),
+      ...extraProps,
+      ...restProps,
+      ref,
+      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(button_default, {
+        size: "compact",
+        label: title,
+        isPressed: isActive,
+        ...toolbarItemProps,
+        children
+      })
+    });
+  }
+  var ToolbarButton = (0, import_element185.forwardRef)(UnforwardedToolbarButton);
+  ToolbarButton.displayName = "ToolbarButton";
+  var toolbar_button_default = ToolbarButton;
+
+  // packages/components/build-module/toolbar/toolbar-group/toolbar-group-container.mjs
+  var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
+  var ToolbarGroupContainer = ({
+    className,
+    children,
+    ...props
+  }) => /* @__PURE__ */ (0, import_jsx_runtime270.jsx)("div", {
+    className,
+    ...props,
+    children
+  });
+  var toolbar_group_container_default = ToolbarGroupContainer;
+
+  // packages/components/build-module/toolbar/toolbar-group/toolbar-group-collapsed.mjs
+  var import_element186 = __toESM(require_element(), 1);
+  var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
+  function ToolbarGroupCollapsed({
+    controls = [],
+    toggleProps,
+    ...props
+  }) {
+    const accessibleToolbarState = (0, import_element186.useContext)(toolbar_context_default);
+    const renderDropdownMenu = (internalToggleProps) => /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(dropdown_menu_default, {
+      controls,
+      toggleProps: {
+        ...internalToggleProps,
+        "data-toolbar-item": true
+      },
+      ...props
+    });
+    if (accessibleToolbarState) {
+      return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(toolbar_item_default, {
+        ...toggleProps,
+        children: renderDropdownMenu
+      });
+    }
+    return renderDropdownMenu(toggleProps);
+  }
+  var toolbar_group_collapsed_default = ToolbarGroupCollapsed;
+
+  // packages/components/build-module/toolbar/toolbar-group/index.mjs
+  var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
+  function isNestedArray(arr) {
+    return Array.isArray(arr) && Array.isArray(arr[0]);
+  }
+  function ToolbarGroup({
+    controls = [],
+    children,
+    className,
+    isCollapsed: isCollapsed2,
+    title,
+    ...props
+  }) {
+    const accessibleToolbarState = (0, import_element187.useContext)(toolbar_context_default);
+    if ((!controls || !controls.length) && !children) {
+      return null;
+    }
+    const finalClassName = clsx_default(
+      // Unfortunately, there's legacy code referencing to `.components-toolbar`
+      // So we can't get rid of it
+      accessibleToolbarState ? "components-toolbar-group" : "components-toolbar",
+      className
+    );
+    let controlSets;
+    if (isNestedArray(controls)) {
+      controlSets = controls;
+    } else {
+      controlSets = [controls];
+    }
+    if (isCollapsed2) {
+      return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(toolbar_group_collapsed_default, {
+        label: title,
+        controls: controlSets,
+        className: finalClassName,
+        children,
+        ...props
+      });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime272.jsxs)(toolbar_group_container_default, {
+      className: finalClassName,
+      ...props,
+      children: [controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(toolbar_button_default, {
+        containerClassName: indexOfSet > 0 && indexOfControl === 0 ? "has-left-divider" : void 0,
+        ...control
+      }, [indexOfSet, indexOfControl].join()))), children]
+    });
+  }
+  var toolbar_group_default = ToolbarGroup;
+
+  // packages/components/build-module/toolbar/toolbar/toolbar-container.mjs
+  var import_element188 = __toESM(require_element(), 1);
+  var import_i18n71 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
+  function UnforwardedToolbarContainer({
+    label,
+    ...props
+  }, ref) {
+    const toolbarStore = useToolbarStore({
+      focusLoop: true,
+      rtl: (0, import_i18n71.isRTL)()
+    });
+    return (
+      // This will provide state for `ToolbarButton`'s
+      /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(toolbar_context_default.Provider, {
+        value: toolbarStore,
+        children: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(Toolbar, {
+          ref,
+          "aria-label": label,
+          store: toolbarStore,
+          ...props
+        })
+      })
+    );
+  }
+  var ToolbarContainer2 = (0, import_element188.forwardRef)(UnforwardedToolbarContainer);
+  ToolbarContainer2.displayName = "ToolbarContainer";
+  var toolbar_container_default = ToolbarContainer2;
+
+  // packages/components/build-module/toolbar/toolbar/index.mjs
+  var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
+  function UnforwardedToolbar({
+    className,
+    label,
+    variant,
+    ...props
+  }, ref) {
+    const isVariantDefined = variant !== void 0;
+    const contextSystemValue = (0, import_element189.useMemo)(() => {
+      if (isVariantDefined) {
+        return {};
+      }
+      return {
+        DropdownMenu: {
+          variant: "toolbar"
+        },
+        Dropdown: {
+          variant: "toolbar"
+        },
+        Menu: {
+          variant: "toolbar"
+        }
+      };
+    }, [isVariantDefined]);
+    if (!label) {
+      (0, import_deprecated25.default)("Using Toolbar without label prop", {
+        since: "5.6",
+        alternative: "ToolbarGroup component",
+        link: "https://developer.wordpress.org/block-editor/components/toolbar/"
+      });
+      const {
+        title: _title,
+        ...restProps
+      } = props;
+      return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(toolbar_group_default, {
+        isCollapsed: false,
+        ...restProps,
+        className
+      });
+    }
+    const finalClassName = clsx_default("components-accessible-toolbar", className, variant && `is-${variant}`);
+    return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(ContextSystemProvider, {
+      value: contextSystemValue,
+      children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(toolbar_container_default, {
+        className: finalClassName,
+        label,
+        ref,
+        ...props
+      })
+    });
+  }
+  var Toolbar3 = (0, import_element189.forwardRef)(UnforwardedToolbar);
+  Toolbar3.displayName = "Toolbar";
+  var toolbar_default = Toolbar3;
+
+  // packages/components/build-module/toolbar/toolbar-dropdown-menu/index.mjs
+  var import_element190 = __toESM(require_element(), 1);
+  var import_jsx_runtime275 = __toESM(require_jsx_runtime(), 1);
+  function UnforwardedToolbarDropdownMenu(props, ref) {
+    const accessibleToolbarState = (0, import_element190.useContext)(toolbar_context_default);
+    if (!accessibleToolbarState) {
+      return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(dropdown_menu_default, {
+        ...props
+      });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(toolbar_item_default, {
+      ref,
+      ...props.toggleProps,
+      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(dropdown_menu_default, {
+        ...props,
+        popoverProps: {
+          ...props.popoverProps
+        },
+        toggleProps: toolbarItemProps
+      })
+    });
+  }
+  var ToolbarDropdownMenu = (0, import_element190.forwardRef)(UnforwardedToolbarDropdownMenu);
+  ToolbarDropdownMenu.displayName = "ToolbarDropdownMenu";
+  var toolbar_dropdown_menu_default = ToolbarDropdownMenu;
+
+  // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
+  var import_a11y10 = __toESM(require_a11y(), 1);
+  var import_i18n72 = __toESM(require_i18n(), 1);
+
+  // packages/components/build-module/tools-panel/context.mjs
+  var import_element191 = __toESM(require_element(), 1);
+  var noop24 = () => void 0;
+  var ToolsPanelContext = (0, import_element191.createContext)({
+    menuItems: {
+      default: {},
+      optional: {}
+    },
+    hasMenuItems: false,
+    isResetting: false,
+    shouldRenderPlaceholderItems: false,
+    registerPanelItem: noop24,
+    deregisterPanelItem: noop24,
+    flagItemCustomization: noop24,
+    registerResetAllFilter: noop24,
+    deregisterResetAllFilter: noop24,
+    areAllOptionalControlsHidden: true
+  });
+  ToolsPanelContext.displayName = "ToolsPanelContext";
+  var useToolsPanelContext = () => (0, import_element191.useContext)(ToolsPanelContext);
+
+  // packages/components/build-module/tools-panel/tools-panel-header/hook.mjs
   var STYLE_HASH_ATTRIBUTE28 = "data-wp-hash";
   function getRuntime28() {
     const globalScope = globalThis;
@@ -49905,6 +50493,360 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
   if (typeof process === "undefined" || true) {
     registerStyle27("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+  }
+  var style_module_default24 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
+  function useToolsPanelHeader(props) {
+    const {
+      className,
+      headingLevel = 2,
+      ...otherProps
+    } = useContextSystem(props, "ToolsPanelHeader");
+    const {
+      menuItems,
+      hasMenuItems,
+      areAllOptionalControlsHidden
+    } = useToolsPanelContext();
+    return {
+      ...otherProps,
+      areAllOptionalControlsHidden,
+      defaultControlsItemClassName: style_module_default24["default-controls-item"],
+      dropdownMenuClassName: style_module_default24["dropdown-menu"],
+      hasMenuItems,
+      headingClassName: style_module_default24["tools-panel-heading"],
+      headingLevel,
+      menuItems,
+      className: clsx_default(style_module_default24["tools-panel-header"], className)
+    };
+  }
+
+  // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
+  var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE29 = "data-wp-hash";
+  function getRuntime29() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument29(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash29(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE29}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE29) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle29(targetDocument, hash2, css3) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime29();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash29(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE29, hash2);
+    style2.appendChild(targetDocument.createTextNode(css3));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument29(targetDocument) {
+    const runtime = getRuntime29();
+    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+    for (const [hash2, css3] of runtime.styles) {
+      injectStyle29(targetDocument, hash2, css3);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle28(hash2, css3) {
+    const runtime = getRuntime29();
+    runtime.styles.set(hash2, css3);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle29(targetDocument, hash2, css3);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle28("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+  }
+  var style_module_default25 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
+  var DefaultControlsGroup = ({
+    itemClassName,
+    items,
+    toggleItem
+  }) => {
+    if (!items.length) {
+      return null;
+    }
+    const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime276.jsx)("span", {
+      "aria-hidden": true,
+      className: style_module_default25["reset-label"],
+      children: (0, import_i18n72.__)("Reset")
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(import_jsx_runtime276.Fragment, {
+      children: items.map(([label, hasValue]) => {
+        if (hasValue) {
+          return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(menu_item_default, {
+            className: itemClassName,
+            role: "menuitem",
+            label: (0, import_i18n72.sprintf)(
+              // translators: %s: The name of the control being reset e.g. "Padding".
+              (0, import_i18n72.__)("Reset %s"),
+              label
+            ),
+            onClick: () => {
+              toggleItem(label);
+              (0, import_a11y10.speak)((0, import_i18n72.sprintf)(
+                // translators: %s: The name of the control being reset e.g. "Padding".
+                (0, import_i18n72.__)("%s reset to default"),
+                label
+              ), "assertive");
+            },
+            suffix: resetSuffix,
+            children: label
+          }, label);
+        }
+        return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(menu_item_default, {
+          icon: check_default,
+          className: itemClassName,
+          role: "menuitemcheckbox",
+          isSelected: true,
+          "aria-disabled": true,
+          children: label
+        }, label);
+      })
+    });
+  };
+  var OptionalControlsGroup = ({
+    items,
+    toggleItem
+  }) => {
+    if (!items.length) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(import_jsx_runtime276.Fragment, {
+      children: items.map(([label, isSelected2]) => {
+        const itemLabel = isSelected2 ? (0, import_i18n72.sprintf)(
+          // translators: %s: The name of the control being hidden and reset e.g. "Padding".
+          (0, import_i18n72.__)("Hide and reset %s"),
+          label
+        ) : (0, import_i18n72.sprintf)(
+          // translators: %s: The name of the control to display e.g. "Padding".
+          (0, import_i18n72._x)("Show %s", "input control"),
+          label
+        );
+        return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(menu_item_default, {
+          icon: isSelected2 ? check_default : null,
+          isSelected: isSelected2,
+          label: itemLabel,
+          onClick: () => {
+            if (isSelected2) {
+              (0, import_a11y10.speak)((0, import_i18n72.sprintf)(
+                // translators: %s: The name of the control being reset e.g. "Padding".
+                (0, import_i18n72.__)("%s hidden and reset to default"),
+                label
+              ), "assertive");
+            } else {
+              (0, import_a11y10.speak)((0, import_i18n72.sprintf)(
+                // translators: %s: The name of the control being reset e.g. "Padding".
+                (0, import_i18n72.__)("%s is now visible"),
+                label
+              ), "assertive");
+            }
+            toggleItem(label);
+          },
+          role: "menuitemcheckbox",
+          children: label
+        }, label);
+      })
+    });
+  };
+  var ToolsPanelHeader = (props, forwardedRef) => {
+    const {
+      areAllOptionalControlsHidden,
+      defaultControlsItemClassName,
+      dropdownMenuClassName,
+      hasMenuItems,
+      headingClassName,
+      headingLevel = 2,
+      label: labelText,
+      menuItems,
+      resetAll,
+      toggleItem,
+      dropdownMenuProps,
+      ...headerProps
+    } = useToolsPanelHeader(props);
+    if (!labelText) {
+      return null;
+    }
+    const defaultItems = Object.entries(menuItems?.default || {});
+    const optionalItems = Object.entries(menuItems?.optional || {});
+    const dropDownMenuIcon = areAllOptionalControlsHidden ? plus_default : more_vertical_default;
+    const dropDownMenuLabelText = (0, import_i18n72.sprintf)(
+      // translators: %s: The name of the tool e.g. "Color" or "Typography".
+      (0, import_i18n72._x)("%s options", "Button label to reveal tool panel options"),
+      labelText
+    );
+    const dropdownMenuDescriptionText = areAllOptionalControlsHidden ? (0, import_i18n72.__)("All options are currently hidden") : void 0;
+    const canResetAll = [...defaultItems, ...optionalItems].some(([, isSelected2]) => isSelected2);
+    return /* @__PURE__ */ (0, import_jsx_runtime276.jsxs)(component_default9, {
+      ...headerProps,
+      ref: forwardedRef,
+      children: [/* @__PURE__ */ (0, import_jsx_runtime276.jsx)(component_default19, {
+        level: headingLevel,
+        className: headingClassName,
+        children: labelText
+      }), hasMenuItems && /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(dropdown_menu_default, {
+        ...dropdownMenuProps,
+        icon: dropDownMenuIcon,
+        label: dropDownMenuLabelText,
+        menuProps: {
+          className: dropdownMenuClassName
+        },
+        toggleProps: {
+          size: "small",
+          description: dropdownMenuDescriptionText
+        },
+        children: () => /* @__PURE__ */ (0, import_jsx_runtime276.jsxs)(import_jsx_runtime276.Fragment, {
+          children: [/* @__PURE__ */ (0, import_jsx_runtime276.jsxs)(menu_group_default, {
+            label: labelText,
+            children: [/* @__PURE__ */ (0, import_jsx_runtime276.jsx)(DefaultControlsGroup, {
+              items: defaultItems,
+              toggleItem,
+              itemClassName: defaultControlsItemClassName
+            }), /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(OptionalControlsGroup, {
+              items: optionalItems,
+              toggleItem
+            })]
+          }), /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(menu_group_default, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(menu_item_default, {
+              "aria-disabled": !canResetAll,
+              variant: "tertiary",
+              onClick: () => {
+                if (canResetAll) {
+                  resetAll();
+                  (0, import_a11y10.speak)((0, import_i18n72.__)("All options reset"), "assertive");
+                }
+              },
+              children: (0, import_i18n72.__)("Reset all")
+            })
+          })]
+        })
+      })]
+    });
+  };
+  var ConnectedToolsPanelHeader = contextConnect(ToolsPanelHeader, "ToolsPanelHeader");
+  var component_default38 = ConnectedToolsPanelHeader;
+
+  // packages/components/build-module/tools-panel/tools-panel/hook.mjs
+  var import_element192 = __toESM(require_element(), 1);
+  var STYLE_HASH_ATTRIBUTE30 = "data-wp-hash";
+  function getRuntime30() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument30(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash30(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE30}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE30) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle30(targetDocument, hash2, css3) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime30();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash30(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE30, hash2);
+    style2.appendChild(targetDocument.createTextNode(css3));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument30(targetDocument) {
+    const runtime = getRuntime30();
+    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+    for (const [hash2, css3] of runtime.styles) {
+      injectStyle30(targetDocument, hash2, css3);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle29(hash2, css3) {
+    const runtime = getRuntime30();
+    runtime.styles.set(hash2, css3);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle30(targetDocument, hash2, css3);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle29("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
   var style_module_default26 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   function emptyMenuItems() {
@@ -50069,7 +51011,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var isMenuItemTypeEmpty = (obj) => Object.keys(obj).length === 0;
   function useToolsPanel(props) {
     const {
-      className: className2,
+      className,
       headingLevel = 2,
       resetAll,
       panelId,
@@ -50079,9 +51021,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       __experimentalLastVisibleItemClass,
       ...otherProps
     } = useContextSystem(props, "ToolsPanel");
-    const isResettingRef = (0, import_element189.useRef)(false);
+    const isResettingRef = (0, import_element192.useRef)(false);
     const wasResetting = isResettingRef.current;
-    (0, import_element189.useEffect)(() => {
+    (0, import_element192.useEffect)(() => {
       if (wasResetting) {
         isResettingRef.current = false;
       }
@@ -50089,33 +51031,33 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const [{
       panelItems,
       menuItems
-    }, panelDispatch] = (0, import_element189.useReducer)(panelReducer, void 0, emptyState);
-    const [resetAllFilters, dispatchResetAllFilters] = (0, import_element189.useReducer)(resetAllFiltersReducer, []);
-    const registerPanelItem = (0, import_element189.useCallback)((item) => {
+    }, panelDispatch] = (0, import_element192.useReducer)(panelReducer, void 0, emptyState);
+    const [resetAllFilters, dispatchResetAllFilters] = (0, import_element192.useReducer)(resetAllFiltersReducer, []);
+    const registerPanelItem = (0, import_element192.useCallback)((item) => {
       panelDispatch({
         type: "REGISTER_PANEL",
         item
       });
     }, []);
-    const deregisterPanelItem = (0, import_element189.useCallback)((label) => {
+    const deregisterPanelItem = (0, import_element192.useCallback)((label) => {
       panelDispatch({
         type: "UNREGISTER_PANEL",
         label
       });
     }, []);
-    const registerResetAllFilter = (0, import_element189.useCallback)((filter2) => {
+    const registerResetAllFilter = (0, import_element192.useCallback)((filter2) => {
       dispatchResetAllFilters({
         type: "REGISTER",
         filter: filter2
       });
     }, []);
-    const deregisterResetAllFilter = (0, import_element189.useCallback)((filter2) => {
+    const deregisterResetAllFilter = (0, import_element192.useCallback)((filter2) => {
       dispatchResetAllFilters({
         type: "UNREGISTER",
         filter: filter2
       });
     }, []);
-    const flagItemCustomization = (0, import_element189.useCallback)((value, label, group = "default") => {
+    const flagItemCustomization = (0, import_element192.useCallback)((value, label, group = "default") => {
       panelDispatch({
         type: "UPDATE_VALUE",
         group,
@@ -50123,17 +51065,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         value
       });
     }, []);
-    const areAllOptionalControlsHidden = (0, import_element189.useMemo)(() => {
+    const areAllOptionalControlsHidden = (0, import_element192.useMemo)(() => {
       return isMenuItemTypeEmpty(menuItems.default) && !isMenuItemTypeEmpty(menuItems.optional) && Object.values(menuItems.optional).every((isSelected2) => !isSelected2);
     }, [menuItems]);
-    const classes = clsx_default(style_module_default26["tools-panel"], hasInnerWrapper && style_module_default26["tools-panel-with-inner-wrapper"], areAllOptionalControlsHidden && style_module_default26["tools-panel-hidden-inner-wrapper"], className2);
-    const toggleItem = (0, import_element189.useCallback)((label) => {
+    const classes = clsx_default(style_module_default26["tools-panel"], hasInnerWrapper && style_module_default26["tools-panel-with-inner-wrapper"], areAllOptionalControlsHidden && style_module_default26["tools-panel-hidden-inner-wrapper"], className);
+    const toggleItem = (0, import_element192.useCallback)((label) => {
       panelDispatch({
         type: "TOGGLE_VALUE",
         label
       });
     }, []);
-    const resetAllItems = (0, import_element189.useCallback)(() => {
+    const resetAllItems = (0, import_element192.useCallback)(() => {
       if (typeof resetAll === "function") {
         isResettingRef.current = true;
         resetAll(resetAllFilters);
@@ -50150,7 +51092,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const firstDisplayedItem = getFirstVisibleItemLabel(panelItems);
     const lastDisplayedItem = getFirstVisibleItemLabel([...panelItems].reverse());
     const hasMenuItems = panelItems.length > 0;
-    const panelContext = (0, import_element189.useMemo)(() => ({
+    const panelContext = (0, import_element192.useMemo)(() => ({
       areAllOptionalControlsHidden,
       deregisterPanelItem,
       deregisterResetAllFilter,
@@ -50178,7 +51120,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tools-panel/tools-panel/component.mjs
-  var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
   var TOOLS_PANEL_GAP = space(4);
   var UnconnectedToolsPanel = (props, forwardedRef) => {
     const {
@@ -50191,7 +51133,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       dropdownMenuProps,
       ...toolsPanelProps
     } = useToolsPanel(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(component_default22, {
+    return /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(component_default22, {
       ...toolsPanelProps,
       columns: 2,
       gap: 4,
@@ -50199,9 +51141,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       rowGap: TOOLS_PANEL_GAP,
       templateColumns: "repeat( 2, minmax(0, 1fr) )",
       ref: forwardedRef,
-      children: /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(ToolsPanelContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime277.jsxs)(ToolsPanelContext.Provider, {
         value: panelContext,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime273.jsx)(component_default38, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime277.jsx)(component_default38, {
           label,
           resetAll: resetAllItems,
           toggleItem,
@@ -50216,9 +51158,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tools-panel/tools-panel-item/hook.mjs
   var import_compose75 = __toESM(require_compose(), 1);
-  var import_element190 = __toESM(require_element(), 1);
-  var STYLE_HASH_ATTRIBUTE29 = "data-wp-hash";
-  function getRuntime29() {
+  var import_element193 = __toESM(require_element(), 1);
+  var STYLE_HASH_ATTRIBUTE31 = "data-wp-hash";
+  function getRuntime31() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -50229,26 +51171,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument29(document);
+      registerDocument31(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash29(targetDocument, hash2) {
+  function documentContainsStyleHash31(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE29}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE29) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE31}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE31) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle29(targetDocument, hash2, css3) {
+  function injectStyle31(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime29();
+    const runtime = getRuntime31();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -50257,21 +51199,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash29(targetDocument, hash2)) {
+    if (documentContainsStyleHash31(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE29, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE31, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument29(targetDocument) {
-    const runtime = getRuntime29();
+  function registerDocument31(targetDocument) {
+    const runtime = getRuntime31();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle29(targetDocument, hash2, css3);
+      injectStyle31(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -50285,22 +51227,22 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle28(hash2, css3) {
-    const runtime = getRuntime29();
+  function registerStyle30(hash2, css3) {
+    const runtime = getRuntime31();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle29(targetDocument, hash2, css3);
+      injectStyle31(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle28("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+    registerStyle30("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
   var style_module_default27 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   var noop25 = () => {
   };
   function useToolsPanelItem(props) {
     const {
-      className: className2,
+      className,
       hasValue,
       isShownByDefault = false,
       label,
@@ -50325,11 +51267,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       __experimentalFirstVisibleItemClass,
       __experimentalLastVisibleItemClass
     } = useToolsPanelContext();
-    const hasValueCallback = (0, import_element190.useCallback)(hasValue, [panelId]);
-    const resetAllFilterCallback = (0, import_element190.useCallback)(resetAllFilter, [panelId]);
+    const hasValueCallback = (0, import_element193.useCallback)(hasValue, [panelId]);
+    const resetAllFilterCallback = (0, import_element193.useCallback)(resetAllFilter, [panelId]);
     const previousPanelId = (0, import_compose75.usePrevious)(currentPanelId);
     const hasMatchingPanel = currentPanelId === panelId || currentPanelId === null;
-    (0, import_element190.useLayoutEffect)(() => {
+    (0, import_element193.useLayoutEffect)(() => {
       if (hasMatchingPanel && previousPanelId !== null) {
         registerPanelItem({
           hasValue: hasValueCallback,
@@ -50344,7 +51286,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       };
     }, [currentPanelId, hasMatchingPanel, isShownByDefault, label, hasValueCallback, panelId, previousPanelId, registerPanelItem, deregisterPanelItem]);
-    (0, import_element190.useEffect)(() => {
+    (0, import_element193.useEffect)(() => {
       if (hasMatchingPanel) {
         registerResetAllFilter(resetAllFilterCallback);
       }
@@ -50359,13 +51301,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const wasMenuItemChecked = (0, import_compose75.usePrevious)(isMenuItemChecked);
     const isRegistered = menuItems?.[menuGroup]?.[label] !== void 0;
     const isValueSet = hasValue();
-    (0, import_element190.useEffect)(() => {
+    (0, import_element193.useEffect)(() => {
       if (!isShownByDefault && !isValueSet) {
         return;
       }
       flagItemCustomization(isValueSet, label, menuGroup);
     }, [isValueSet, menuGroup, label, flagItemCustomization, isShownByDefault]);
-    (0, import_element190.useEffect)(() => {
+    (0, import_element193.useEffect)(() => {
       if (!isRegistered || isResetting || !hasMatchingPanel) {
         return;
       }
@@ -50378,7 +51320,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }, [hasMatchingPanel, isMenuItemChecked, isRegistered, isResetting, isValueSet, wasMenuItemChecked, onSelect, onDeselect]);
     const isShown = isShownByDefault ? menuItems?.[menuGroup]?.[label] !== void 0 : isMenuItemChecked;
     const shouldApplyPlaceholderStyles = shouldRenderPlaceholder && !isShown;
-    const classes = clsx_default(style_module_default27["tools-panel-item"], shouldApplyPlaceholderStyles && style_module_default27["tools-panel-item-placeholder"], !shouldApplyPlaceholderStyles && className2, firstDisplayedItem === label && __experimentalFirstVisibleItemClass, lastDisplayedItem === label && __experimentalLastVisibleItemClass);
+    const classes = clsx_default(style_module_default27["tools-panel-item"], shouldApplyPlaceholderStyles && style_module_default27["tools-panel-item-placeholder"], !shouldApplyPlaceholderStyles && className, firstDisplayedItem === label && __experimentalFirstVisibleItemClass, lastDisplayedItem === label && __experimentalLastVisibleItemClass);
     return {
       ...otherProps,
       isShown,
@@ -50388,7 +51330,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tools-panel/tools-panel-item/component.mjs
-  var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
   var UnconnectedToolsPanelItem = (props, forwardedRef) => {
     const {
       children,
@@ -50397,12 +51339,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ...toolsPanelItemProps
     } = useToolsPanelItem(props);
     if (!isShown) {
-      return shouldRenderPlaceholder ? /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(component_default, {
+      return shouldRenderPlaceholder ? /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(component_default, {
         ...toolsPanelItemProps,
         ref: forwardedRef
       }) : null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(component_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(component_default, {
       ...toolsPanelItemProps,
       ref: forwardedRef,
       children
@@ -50413,41 +51355,41 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tree-grid/index.mjs
   var import_dom9 = __toESM(require_dom(), 1);
-  var import_element197 = __toESM(require_element(), 1);
+  var import_element200 = __toESM(require_element(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
 
   // packages/components/build-module/tree-grid/roving-tab-index.mjs
-  var import_element192 = __toESM(require_element(), 1);
+  var import_element195 = __toESM(require_element(), 1);
 
   // packages/components/build-module/tree-grid/roving-tab-index-context.mjs
-  var import_element191 = __toESM(require_element(), 1);
-  var RovingTabIndexContext = (0, import_element191.createContext)(void 0);
+  var import_element194 = __toESM(require_element(), 1);
+  var RovingTabIndexContext = (0, import_element194.createContext)(void 0);
   RovingTabIndexContext.displayName = "RovingTabIndexContext";
-  var useRovingTabIndexContext = () => (0, import_element191.useContext)(RovingTabIndexContext);
+  var useRovingTabIndexContext = () => (0, import_element194.useContext)(RovingTabIndexContext);
   var RovingTabIndexProvider = RovingTabIndexContext.Provider;
 
   // packages/components/build-module/tree-grid/roving-tab-index.mjs
-  var import_jsx_runtime275 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime279 = __toESM(require_jsx_runtime(), 1);
   function RovingTabIndex({
     children
   }) {
-    const [lastFocusedElement, setLastFocusedElement] = (0, import_element192.useState)();
-    const providerValue = (0, import_element192.useMemo)(() => ({
+    const [lastFocusedElement, setLastFocusedElement] = (0, import_element195.useState)();
+    const providerValue = (0, import_element195.useMemo)(() => ({
       lastFocusedElement,
       setLastFocusedElement
     }), [lastFocusedElement]);
-    return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(RovingTabIndexProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(RovingTabIndexProvider, {
       value: providerValue,
       children
     });
   }
 
   // packages/components/build-module/tree-grid/index.mjs
-  var import_jsx_runtime280 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
 
   // packages/components/build-module/tree-grid/row.mjs
-  var import_element193 = __toESM(require_element(), 1);
-  var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
+  var import_element196 = __toESM(require_element(), 1);
+  var import_jsx_runtime280 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTreeGridRow({
     children,
     level,
@@ -50456,7 +51398,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     isExpanded,
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)("tr", {
+    return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)("tr", {
       ...props,
       ref,
       role: "row",
@@ -50467,25 +51409,25 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       children
     });
   }
-  var TreeGridRow = (0, import_element193.forwardRef)(UnforwardedTreeGridRow);
+  var TreeGridRow = (0, import_element196.forwardRef)(UnforwardedTreeGridRow);
   TreeGridRow.displayName = "TreeGridRow";
   var row_default2 = TreeGridRow;
 
   // packages/components/build-module/tree-grid/cell.mjs
-  var import_element196 = __toESM(require_element(), 1);
+  var import_element199 = __toESM(require_element(), 1);
 
   // packages/components/build-module/tree-grid/item.mjs
-  var import_element195 = __toESM(require_element(), 1);
+  var import_element198 = __toESM(require_element(), 1);
 
   // packages/components/build-module/tree-grid/roving-tab-index-item.mjs
-  var import_element194 = __toESM(require_element(), 1);
-  var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
-  var RovingTabIndexItem = (0, import_element194.forwardRef)(function UnforwardedRovingTabIndexItem({
+  var import_element197 = __toESM(require_element(), 1);
+  var import_jsx_runtime281 = __toESM(require_jsx_runtime(), 1);
+  var RovingTabIndexItem = (0, import_element197.forwardRef)(function UnforwardedRovingTabIndexItem({
     children,
     as: Component7,
     ...props
   }, forwardedRef) {
-    const localRef = (0, import_element194.useRef)(null);
+    const localRef = (0, import_element197.useRef)(null);
     const ref = forwardedRef || localRef;
     const {
       lastFocusedElement,
@@ -50512,7 +51454,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!Component7) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(Component7, {
+    return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(Component7, {
       ...allProps,
       children
     });
@@ -50521,43 +51463,43 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var roving_tab_index_item_default = RovingTabIndexItem;
 
   // packages/components/build-module/tree-grid/item.mjs
-  var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTreeGridItem({
     children,
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(roving_tab_index_item_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(roving_tab_index_item_default, {
       ref,
       ...props,
       children
     });
   }
-  var TreeGridItem = (0, import_element195.forwardRef)(UnforwardedTreeGridItem);
+  var TreeGridItem = (0, import_element198.forwardRef)(UnforwardedTreeGridItem);
   TreeGridItem.displayName = "TreeGridItem";
   var item_default2 = TreeGridItem;
 
   // packages/components/build-module/tree-grid/cell.mjs
-  var import_jsx_runtime279 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTreeGridCell({
     children,
     withoutGridItem = false,
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime279.jsx)("td", {
+    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("td", {
       ...props,
       role: "gridcell",
-      children: withoutGridItem ? /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(import_jsx_runtime279.Fragment, {
+      children: withoutGridItem ? /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_jsx_runtime283.Fragment, {
         children: typeof children === "function" ? children({
           ...props,
           ref
         }) : children
-      }) : /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(item_default2, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(item_default2, {
         ref,
         children
       })
     });
   }
-  var TreeGridCell = (0, import_element196.forwardRef)(UnforwardedTreeGridCell);
+  var TreeGridCell = (0, import_element199.forwardRef)(UnforwardedTreeGridCell);
   TreeGridCell.displayName = "TreeGridCell";
   var cell_default = TreeGridCell;
 
@@ -50581,7 +51523,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     applicationAriaLabel,
     ...props
   }, ref) {
-    const onKeyDown = (0, import_element197.useCallback)((event) => {
+    const onKeyDown = (0, import_element200.useCallback)((event) => {
       const {
         keyCode,
         metaKey,
@@ -50702,38 +51644,38 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         event.preventDefault();
       }
     }, [onExpandRow, onCollapseRow, onFocusRow]);
-    return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(RovingTabIndex, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(RovingTabIndex, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)("div", {
         role: "application",
         "aria-label": applicationAriaLabel,
-        children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)("table", {
+        children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)("table", {
           ...props,
           role: "treegrid",
           onKeyDown,
           ref,
-          children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)("tbody", {
+          children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)("tbody", {
             children
           })
         })
       })
     });
   }
-  var TreeGrid = (0, import_element197.forwardRef)(UnforwardedTreeGrid);
+  var TreeGrid = (0, import_element200.forwardRef)(UnforwardedTreeGrid);
   TreeGrid.displayName = "TreeGrid";
   var tree_grid_default = TreeGrid;
 
   // packages/components/build-module/isolated-event-container/index.mjs
-  var import_element198 = __toESM(require_element(), 1);
+  var import_element201 = __toESM(require_element(), 1);
   var import_deprecated26 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime281 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
   function stopPropagation(event) {
     event.stopPropagation();
   }
-  var IsolatedEventContainer = (0, import_element198.forwardRef)((props, ref) => {
+  var IsolatedEventContainer = (0, import_element201.forwardRef)((props, ref) => {
     (0, import_deprecated26.default)("wp.components.IsolatedEventContainer", {
       since: "5.7"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)("div", {
       ...props,
       ref,
       onMouseDown: stopPropagation
@@ -50742,7 +51684,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var isolated_event_container_default = IsolatedEventContainer;
 
   // packages/components/build-module/z-stack/component.mjs
-  var import_element199 = __toESM(require_element(), 1);
+  var import_element202 = __toESM(require_element(), 1);
 
   // packages/components/build-module/z-stack/styles.mjs
   function _EMOTION_STRINGIFIED_CSS_ERROR__27() {
@@ -50783,11 +51725,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   ) : void 0, ";}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFtQkciLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuXG5leHBvcnQgY29uc3QgWlN0YWNrQ2hpbGRWaWV3ID0gc3R5bGVkLmRpdjwge1xuXHRvZmZzZXRBbW91bnQ6IG51bWJlcjtcblx0ekluZGV4OiBudW1iZXI7XG59ID5gXG5cdCY6bm90KCA6Zmlyc3Qtb2YtdHlwZSApIHtcblx0XHQkeyAoIHsgb2Zmc2V0QW1vdW50IH0gKSA9PlxuXHRcdFx0Y3NzKCB7XG5cdFx0XHRcdG1hcmdpbklubGluZVN0YXJ0OiBvZmZzZXRBbW91bnQsXG5cdFx0XHR9ICkgfTtcblx0fVxuXG5cdCR7ICggeyB6SW5kZXggfSApID0+IGNzcyggeyB6SW5kZXggfSApIH07XG5gO1xuXG5leHBvcnQgY29uc3QgWlN0YWNrVmlldyA9IHN0eWxlZC5kaXY8IHtcblx0aXNMYXllcmVkOiBib29sZWFuO1xufSA+YFxuXHRkaXNwbGF5OiBpbmxpbmUtZ3JpZDtcblx0Z3JpZC1hdXRvLWZsb3c6IGNvbHVtbjtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXG5cdCYgPiAkeyBaU3RhY2tDaGlsZFZpZXcgfSB7XG5cdFx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRcdGp1c3RpZnktc2VsZjogc3RhcnQ7XG5cblx0XHQkeyAoIHsgaXNMYXllcmVkIH0gKSA9PlxuXHRcdFx0aXNMYXllcmVkXG5cdFx0XHRcdD8gLy8gV2hlbiBgaXNMYXllcmVkYCBpcyB0cnVlLCBhbGwgaXRlbXMgb3ZlcmxhcCBpbiB0aGUgc2FtZSBncmlkIGNlbGxcblx0XHRcdFx0ICBjc3MoIHsgZ3JpZFJvd1N0YXJ0OiAxLCBncmlkQ29sdW1uU3RhcnQ6IDEgfSApXG5cdFx0XHRcdDogdW5kZWZpbmVkIH07XG5cdH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/z-stack/component.mjs
-  var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedZStack(props, forwardedRef) {
     const {
       children,
-      className: className2,
+      className,
       isLayered = true,
       isReversed = false,
       offset: offset4 = 0,
@@ -50798,16 +51740,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const clonedChildren = validChildren.map((child, index2) => {
       const zIndex = isReversed ? childrenLastIndex - index2 : index2;
       const offsetAmount = isLayered ? offset4 * index2 : offset4;
-      const key = (0, import_element199.isValidElement)(child) ? child.key : index2;
-      return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(ZStackChildView, {
+      const key = (0, import_element202.isValidElement)(child) ? child.key : index2;
+      return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(ZStackChildView, {
         offsetAmount,
         zIndex,
         children: child
       }, key);
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(ZStackView, {
+    return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(ZStackView, {
       ...otherProps,
-      className: className2,
+      className,
       isLayered,
       ref: forwardedRef,
       children: clonedChildren
@@ -50817,10 +51759,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var component_default41 = ZStack;
 
   // packages/components/build-module/higher-order/navigate-regions/index.mjs
-  var import_element200 = __toESM(require_element(), 1);
+  var import_element203 = __toESM(require_element(), 1);
   var import_compose76 = __toESM(require_compose(), 1);
   var import_keycodes7 = __toESM(require_keycodes(), 1);
-  var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
   var defaultShortcuts = {
     previous: [{
       modifier: "ctrlShift",
@@ -50841,8 +51783,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }]
   };
   function useNavigateRegions(shortcuts = defaultShortcuts) {
-    const ref = (0, import_element200.useRef)(null);
-    const [isFocusingRegions, setIsFocusingRegions] = (0, import_element200.useState)(false);
+    const ref = (0, import_element203.useRef)(null);
+    const [isFocusingRegions, setIsFocusingRegions] = (0, import_element203.useState)(false);
     function focusRegion(offset4) {
       const regions = Array.from(ref.current?.querySelectorAll('[role="region"][tabindex="-1"]') ?? []);
       if (!regions.length) {
@@ -50895,9 +51837,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     shortcuts,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)("div", {
       ...useNavigateRegions(shortcuts),
-      children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(Component7, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(Component7, {
         ...props
       })
     });
@@ -50905,13 +51847,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/higher-order/with-constrained-tabbing/index.mjs
   var import_compose77 = __toESM(require_compose(), 1);
-  var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
   var withConstrainedTabbing = (0, import_compose77.createHigherOrderComponent)((WrappedComponent) => function ComponentWithConstrainedTabbing(props) {
     const ref = (0, import_compose77.useConstrainedTabbing)();
-    return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("div", {
       ref,
       tabIndex: -1,
-      children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(WrappedComponent, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(WrappedComponent, {
         ...props
       })
     });
@@ -50920,13 +51862,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/higher-order/with-fallback-styles/index.mjs
   var import_es63 = __toESM(require_es6(), 1);
-  var import_element201 = __toESM(require_element(), 1);
+  var import_element204 = __toESM(require_element(), 1);
   var import_compose78 = __toESM(require_compose(), 1);
-  var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
   var with_fallback_styles_default = (mapNodeToProps) => (0, import_compose78.createHigherOrderComponent)((WrappedComponent) => {
     return function WithFallbackStyles(props) {
-      const [fallbackStyles, setFallbackStyles] = (0, import_element201.useState)(void 0);
-      const nodeRef = (0, import_element201.useRef)(null);
+      const [fallbackStyles, setFallbackStyles] = (0, import_element204.useState)(void 0);
+      const nodeRef = (0, import_element204.useRef)(null);
       (0, import_compose78.useIsomorphicLayoutEffect)(() => {
         const node2 = props.node ?? nodeRef.current;
         const grabStylesCompleted = !!fallbackStyles && Object.values(fallbackStyles).every(Boolean);
@@ -50937,11 +51879,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           }
         }
       });
-      const wrappedComponent = /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(WrappedComponent, {
+      const wrappedComponent = /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(WrappedComponent, {
         ...props,
         ...fallbackStyles
       });
-      return props.node ? wrappedComponent : /* @__PURE__ */ (0, import_jsx_runtime285.jsxs)("div", {
+      return props.node ? wrappedComponent : /* @__PURE__ */ (0, import_jsx_runtime289.jsxs)("div", {
         ref: nodeRef,
         children: [" ", wrappedComponent, " "]
       });
@@ -50949,10 +51891,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, "withFallbackStyles");
 
   // packages/components/build-module/higher-order/with-filters/index.mjs
-  var import_element202 = __toESM(require_element(), 1);
+  var import_element205 = __toESM(require_element(), 1);
   var import_hooks9 = __toESM(require_hooks(), 1);
   var import_compose79 = __toESM(require_compose(), 1);
-  var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
   var ANIMATION_FRAME_PERIOD = 16;
   function withFilters(hookName) {
     return (0, import_compose79.createHigherOrderComponent)((OriginalComponent) => {
@@ -50963,7 +51905,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           FilteredComponent = (0, import_hooks9.applyFilters)(hookName, OriginalComponent);
         }
       }
-      class FilteredComponentRenderer extends import_element202.Component {
+      class FilteredComponentRenderer extends import_element205.Component {
         constructor(props) {
           super(props);
           ensureFilteredComponent();
@@ -50983,7 +51925,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           }
         }
         render() {
-          return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(FilteredComponent, {
+          return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(FilteredComponent, {
             ...this.props
           });
         }
@@ -51005,12 +51947,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/higher-order/with-focus-return/index.mjs
-  var import_element203 = __toESM(require_element(), 1);
+  var import_element206 = __toESM(require_element(), 1);
   var import_compose80 = __toESM(require_compose(), 1);
   var import_deprecated27 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
   function isComponentLike(object) {
-    return object instanceof import_element203.Component || typeof object === "function";
+    return object instanceof import_element206.Component || typeof object === "function";
   }
   var with_focus_return_default = (0, import_compose80.createHigherOrderComponent)(
     // @ts-expect-error TODO: Reconcile with intended `createHigherOrderComponent` types
@@ -51020,9 +51962,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       } = {}) => (WrappedComponent) => {
         const WithFocusReturn = (props) => {
           const ref = (0, import_compose80.useFocusReturn)(onFocusReturn);
-          return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)("div", {
+          return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("div", {
             ref,
-            children: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(WrappedComponent, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(WrappedComponent, {
               ...props
             })
           });
@@ -51048,13 +51990,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   };
 
   // packages/components/build-module/higher-order/with-notices/index.mjs
-  var import_element204 = __toESM(require_element(), 1);
+  var import_element207 = __toESM(require_element(), 1);
   var import_compose81 = __toESM(require_compose(), 1);
-  var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
   var with_notices_default = (0, import_compose81.createHigherOrderComponent)((OriginalComponent) => {
     function Component7(props, ref) {
-      const [noticeList, setNoticeList] = (0, import_element204.useState)([]);
-      const noticeOperations = (0, import_element204.useMemo)(() => {
+      const [noticeList, setNoticeList] = (0, import_element207.useState)([]);
+      const noticeOperations = (0, import_element207.useMemo)(() => {
         const createNotice = (notice) => {
           const noticeToAdd = notice.id ? notice : {
             ...notice,
@@ -51082,16 +52024,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         ...props,
         noticeList,
         noticeOperations,
-        noticeUI: noticeList.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(list_default, {
+        noticeUI: noticeList.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(list_default, {
           className: "components-with-notices-ui",
           notices: noticeList,
           onRemove: noticeOperations.removeNotice
         })
       };
-      return isForwardRef ? /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(OriginalComponent, {
+      return isForwardRef ? /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(OriginalComponent, {
         ...propsOut,
         ref
-      }) : /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(OriginalComponent, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(OriginalComponent, {
         ...propsOut
       });
     }
@@ -51101,7 +52043,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = OriginalComponent;
     if (typeof render === "function") {
       isForwardRef = true;
-      return (0, import_element204.forwardRef)(Component7);
+      return (0, import_element207.forwardRef)(Component7);
     }
     return Component7;
   }, "withNotices");
@@ -51109,9 +52051,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-spoken-messages/index.mjs
   var import_compose82 = __toESM(require_compose(), 1);
   var import_a11y11 = __toESM(require_a11y(), 1);
-  var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
   var with_spoken_messages_default = (0, import_compose82.createHigherOrderComponent)((Component7) => function WithSpokenMessages(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(Component7, {
+    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(Component7, {
       ...props,
       speak: import_a11y11.speak,
       debouncedSpeak: (0, import_compose82.useDebounce)(import_a11y11.speak, 500)
@@ -51119,16 +52061,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, "withSpokenMessages");
 
   // packages/components/build-module/menu/index.mjs
-  var import_element218 = __toESM(require_element(), 1);
-  var import_i18n72 = __toESM(require_i18n(), 1);
+  var import_element221 = __toESM(require_element(), 1);
+  var import_i18n73 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/menu/context.mjs
-  var import_element205 = __toESM(require_element(), 1);
-  var Context2 = (0, import_element205.createContext)(void 0);
+  var import_element208 = __toESM(require_element(), 1);
+  var Context2 = (0, import_element208.createContext)(void 0);
   Context2.displayName = "MenuContext";
 
   // packages/components/build-module/menu/item.mjs
-  var import_element207 = __toESM(require_element(), 1);
+  var import_element210 = __toESM(require_element(), 1);
 
   // packages/components/build-module/menu/styles.mjs
   function _EMOTION_STRINGIFIED_CSS_ERROR__28() {
@@ -51262,7 +52204,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   })("font-size:", font("helpText.fontSize"), ";line-height:16px;color:", LIGHTER_TEXT_COLOR, ";overflow-wrap:anywhere;[data-active-item]:not( [data-focus-visible] ) *:not( ", Menu22, " ) &,[aria-disabled='true'] *:not( ", Menu22, " ) &{color:inherit;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUEyVjhDIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAqIGFzIEFyaWFraXQgZnJvbSAnQGFyaWFraXQvcmVhY3QnO1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuaW1wb3J0IHsgQ09MT1JTLCBmb250LCBydGwsIENPTkZJRywgRFJPUERPV05fTU9USU9OX0NTUyB9IGZyb20gJy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vdXRpbHMvc3BhY2UnO1xuaW1wb3J0IEljb24gZnJvbSAnLi4vaWNvbic7XG5pbXBvcnQgeyBUcnVuY2F0ZSB9IGZyb20gJy4uL3RydW5jYXRlJztcbmltcG9ydCB0eXBlIHsgQ29udGV4dFByb3BzIH0gZnJvbSAnLi90eXBlcyc7XG5cbmNvbnN0IENPTlRFTlRfV1JBUFBFUl9QQURESU5HID0gc3BhY2UoIDEgKTtcbmNvbnN0IElURU1fUEFERElOR19CTE9DSyA9IHNwYWNlKCAxICk7XG5jb25zdCBJVEVNX1BBRERJTkdfSU5MSU5FID0gc3BhY2UoIDMgKTtcblxuLy8gVE9ETzpcbi8vIC0gYm9yZGVyIGNvbG9yIGFuZCBkaXZpZGVyIGNvbG9yIGFyZSBkaWZmZXJlbnQgZnJvbSBDT0xPUlMudGhlbWUgdmFyaWFibGVzXG4vLyAtIGxpZ2h0ZXIgdGV4dCBjb2xvciBpcyBub3QgZGVmaW5lZCBpbiBDT0xPUlMudGhlbWUsIHNob3VsZCBpdCBiZT9cbi8vIC0gbGlnaHRlciBiYWNrZ3JvdW5kIGNvbG9yIGlzIG5vdCBkZWZpbmVkIGluIENPTE9SUy50aGVtZSwgc2hvdWxkIGl0IGJlP1xuLy8gVE9ETzogc2hvdWxkIHVzZSB0aGUgYHN0cm9rZS1zdXJmYWNlLW5ldXRyYWxgIFdQRFMgdG9rZW4gd2hlbiByZWZhY3RvcmVkIHRvIFNDU1MgbW9kdWxlc1xuY29uc3QgREVGQVVMVF9CT1JERVJfQ09MT1IgPSBDT0xPUlMudGhlbWUuZ3JheVsgMzAwIF07XG4vLyBUT0RPOiBzaG91bGQgdXNlIHRoZSBgc3Ryb2tlLXN1cmZhY2UtbmV1dHJhbC13ZWFrYCBXUERTIHRva2VuIHdoZW4gcmVmYWN0b3JlZCB0byBTQ1NTIG1vZHVsZXNcbmNvbnN0IERJVklERVJfQ09MT1IgPSBDT0xPUlMudGhlbWUuZ3JheVsgMjAwIF07XG5jb25zdCBMSUdIVEVSX1RFWFRfQ09MT1IgPSBDT0xPUlMudGhlbWUuZ3JheVsgNzAwIF07XG5jb25zdCBMSUdIVF9CQUNLR1JPVU5EX0NPTE9SID0gQ09MT1JTLnRoZW1lLmdyYXlbIDEwMCBdO1xuY29uc3QgVE9PTEJBUl9WQVJJQU5UX0JPUkRFUl9DT0xPUiA9IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kO1xuY29uc3QgREVGQVVMVF9CT1hfU0hBRE9XID0gYDAgMCAwICR7IENPTkZJRy5ib3JkZXJXaWR0aCB9ICR7IERFRkFVTFRfQk9SREVSX0NPTE9SIH0sICR7IENPTkZJRy5lbGV2YXRpb25NZWRpdW0gfWA7XG5jb25zdCBUT09MQkFSX1ZBUklBTlRfQk9YX1NIQURPVyA9IGAwIDAgMCAkeyBDT05GSUcuYm9yZGVyV2lkdGggfSAkeyBUT09MQkFSX1ZBUklBTlRfQk9SREVSX0NPTE9SIH1gO1xuXG5jb25zdCBHUklEX1RFTVBMQVRFX0NPTFMgPSAnbWlubWF4KCAwLCBtYXgtY29udGVudCApIDFmcic7XG5cbmV4cG9ydCBjb25zdCBNZW51ID0gc3R5bGVkKCBBcmlha2l0Lk1lbnUgKWBcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHQvKiBTYW1lIGFzIHBvcG92ZXIgY29tcG9uZW50ICovXG5cdC8qIFRPRE86IGlzIHRoZXJlIGEgd2F5IHRvIHJlYWQgdGhlIHNhc3MgdmFyaWFibGU/ICovXG5cdHotaW5kZXg6IDEwMDAwMDA7XG5cblx0LyogT25seSB2aXNpYmxlIGluIFdpbmRvd3MgSGlnaCBDb250cmFzdCBtb2RlICovXG5cdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudCAhaW1wb3J0YW50O1xuYDtcblxuZXhwb3J0IGNvbnN0IE1lbnVTdXJmYWNlID0gc3R5bGVkLmRpdjwgUGljazwgQ29udGV4dFByb3BzLCAndmFyaWFudCcgPiA+YFxuXHRkaXNwbGF5OiBncmlkO1xuXHRncmlkLXRlbXBsYXRlLWNvbHVtbnM6ICR7IEdSSURfVEVNUExBVEVfQ09MUyB9O1xuXHRncmlkLXRlbXBsYXRlLXJvd3M6IGF1dG87XG5cblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0bWluLXdpZHRoOiAxNjBweDtcblx0bWF4LXdpZHRoOiAzMjBweDtcblx0bWF4LWhlaWdodDogdmFyKCAtLXBvcG92ZXItYXZhaWxhYmxlLWhlaWdodCApO1xuXG5cdHBhZGRpbmc6ICR7IENPTlRFTlRfV1JBUFBFUl9QQURESU5HIH07XG5cblx0b3ZlcnNjcm9sbC1iZWhhdmlvcjogY29udGFpbjtcblx0b3ZlcmZsb3c6IGF1dG87XG5cblx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnVpLmJhY2tncm91bmQgfTtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c01lZGl1bSB9O1xuXHQkeyAoIHByb3BzICkgPT4gY3NzYFxuXHRcdGJveC1zaGFkb3c6ICR7IHByb3BzLnZhcmlhbnQgPT09ICd0b29sYmFyJ1xuXHRcdFx0PyBUT09MQkFSX1ZBUklBTlRfQk9YX1NIQURPV1xuXHRcdFx0OiBERUZBVUxUX0JPWF9TSEFET1cgfTtcblx0YCB9XG5gO1xuXG4vKipcbiAqIE91dGVyIHdyYXBwZXIgZm9yIG1lbnUgbW90aW9uLiBgTWVudS5Qb3BvdmVyYCB1c2VzIEFyaWFraXTigJlzIGByZW5kZXJgIHByb3Agc29cbiAqIHRoaXMgZWxlbWVudCB3cmFwcyB0aGUgaW5uZXIgc3VyZmFjZSB0aGF0IHJlY2VpdmVzIGFsbCBtZXJnZWQgbWVudSBwcm9wc1xuICogKHJlZiwgcm9sZSwgYGRhdGEtKmAsIGNoaWxkcmVuKS4gVHJhbnNpdGlvbnMgbWlycm9yIHRoZSBwcmUtcmVmYWN0b3IgYE1lbnVgXG4gKiBzdHlsZXMgZnJvbSBgdHJ1bmtgLCBkcml2ZW4gYnkgYGRhdGEtZW50ZXJgIC8gYGRhdGEtc2lkZWAgb24gdGhlIGlubmVyXG4gKiBzdXJmYWNlIHZpYSBgOmhhcyg+IOKApilgLlxuICovXG5leHBvcnQgY29uc3QgTWVudU1vdGlvblJvb3QgPSBzdHlsZWQuZGl2YFxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHR0cmFuc2l0aW9uLXByb3BlcnR5OiB0cmFuc2Zvcm0sIG9wYWNpdHk7XG5cdFx0dHJhbnNpdGlvbi1kdXJhdGlvbjogJHsgRFJPUERPV05fTU9USU9OX0NTUy5TTElERV9EVVJBVElPTiB9LFxuXHRcdFx0JHsgRFJPUERPV05fTU9USU9OX0NTUy5GQURFX0RVUkFUSU9OIH07XG5cdFx0dHJhbnNpdGlvbi10aW1pbmctZnVuY3Rpb246ICR7IERST1BET1dOX01PVElPTl9DU1MuU0xJREVfRUFTSU5HIH0sXG5cdFx0XHQkeyBEUk9QRE9XTl9NT1RJT05fQ1NTLkZBREVfRUFTSU5HIH07XG5cdFx0d2lsbC1jaGFuZ2U6IHRyYW5zZm9ybSwgb3BhY2l0eTtcblxuXHRcdCY6bm90KCA6aGFzKCA+ICR7IE1lbnVTdXJmYWNlIH1bZGF0YS1zdWJtZW51XSApICkge1xuXHRcdFx0LyogUmVnYXJkbGVzcyBvZiB0aGUgc2lkZSwgZmFkZSBpbiBhbmQgb3V0LiAqL1xuXHRcdFx0b3BhY2l0eTogMDtcblx0XHRcdCY6aGFzKCA+ICR7IE1lbnVTdXJmYWNlIH1bZGF0YS1lbnRlcl0gKSB7XG5cdFx0XHRcdG9wYWNpdHk6IDE7XG5cdFx0XHR9XG5cblx0XHRcdC8qIFNsaWRlIGluIHRoZSBkaXJlY3Rpb24gdGhlIG1lbnUgaXMgb3BlbmluZy4gKi9cblx0XHRcdCY6aGFzKCA+ICR7IE1lbnVTdXJmYWNlIH1bZGF0YS1zaWRlPSdib3R0b20nXSApIHtcblx0XHRcdFx0dHJhbnNmb3JtOiB0cmFuc2xhdGVZKFxuXHRcdFx0XHRcdC0keyBEUk9QRE9XTl9NT1RJT05fQ1NTLlNMSURFX0RJU1RBTkNFIH1cblx0XHRcdFx0KTtcblx0XHRcdH1cblx0XHRcdCY6aGFzKCA+ICR7IE1lbnVTdXJmYWNlIH1bZGF0YS1zaWRlPSd0b3AnXSApIHtcblx0XHRcdFx0dHJhbnNmb3JtOiB0cmFuc2xhdGVZKFxuXHRcdFx0XHRcdCR7IERST1BET1dOX01PVElPTl9DU1MuU0xJREVfRElTVEFOQ0UgfVxuXHRcdFx0XHQpO1xuXHRcdFx0fVxuXHRcdFx0JjpoYXMoID4gJHsgTWVudVN1cmZhY2UgfVtkYXRhLXNpZGU9J2xlZnQnXSApIHtcblx0XHRcdFx0dHJhbnNmb3JtOiB0cmFuc2xhdGVYKFxuXHRcdFx0XHRcdCR7IERST1BET1dOX01PVElPTl9DU1MuU0xJREVfRElTVEFOQ0UgfVxuXHRcdFx0XHQpO1xuXHRcdFx0fVxuXHRcdFx0JjpoYXMoID4gJHsgTWVudVN1cmZhY2UgfVtkYXRhLXNpZGU9J3JpZ2h0J10gKSB7XG5cdFx0XHRcdHRyYW5zZm9ybTogdHJhbnNsYXRlWChcblx0XHRcdFx0XHQtJHsgRFJPUERPV05fTU9USU9OX0NTUy5TTElERV9ESVNUQU5DRSB9XG5cdFx0XHRcdCk7XG5cdFx0XHR9XG5cdFx0XHQmOmhhcyggPiAkeyBNZW51U3VyZmFjZSB9W2RhdGEtZW50ZXJdW2RhdGEtc2lkZT0nYm90dG9tJ10gKSxcblx0XHRcdCY6aGFzKCA+ICR7IE1lbnVTdXJmYWNlIH1bZGF0YS1lbnRlcl1bZGF0YS1zaWRlPSd0b3AnXSApIHtcblx0XHRcdFx0dHJhbnNmb3JtOiB0cmFuc2xhdGVZKCAwICk7XG5cdFx0XHR9XG5cdFx0XHQmOmhhcyggPiAkeyBNZW51U3VyZmFjZSB9W2RhdGEtZW50ZXJdW2RhdGEtc2lkZT0nbGVmdCddICksXG5cdFx0XHQmOmhhcyggPiAkeyBNZW51U3VyZmFjZSB9W2RhdGEtZW50ZXJdW2RhdGEtc2lkZT0ncmlnaHQnXSApIHtcblx0XHRcdFx0dHJhbnNmb3JtOiB0cmFuc2xhdGVYKCAwICk7XG5cdFx0XHR9XG5cdFx0fVxuXHR9XG5gO1xuXG5jb25zdCBiYXNlSXRlbSA9IGNzc2Bcblx0YWxsOiB1bnNldDtcblx0Y3Vyc29yOiBwb2ludGVyO1xuXG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblx0bWluLWhlaWdodDogJHsgc3BhY2UoIDggKSB9O1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXG5cdC8qIE9jY3VweSB0aGUgd2lkdGggb2YgYWxsIGdyaWQgY29sdW1ucyAoaWUuIGZ1bGwgd2lkdGgpICovXG5cdGdyaWQtY29sdW1uOiAxIC8gLTE7XG5cblx0ZGlzcGxheTogZ3JpZDtcblx0Z3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiAkeyBHUklEX1RFTVBMQVRFX0NPTFMgfTtcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblxuXHRAc3VwcG9ydHMgKCBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IHN1YmdyaWQgKSB7XG5cdFx0Lypcblx0XHQgKiBEZWZpbmUgYSBncmlkIGxheW91dCB3aGljaCBpbmhlcml0cyB0aGUgc2FtZSBjb2x1bW5zIGNvbmZpZ3VyYXRpb25cblx0XHQgKiBmcm9tIHRoZSBwYXJlbnQgbGF5b3V0IChpZS4gc3ViZ3JpZCkuIFRoaXMgYWxsb3dzIHRoZSBtZW51XG5cdFx0ICogdG8gc3luY2hyb25pemUgdGhlIGluZGVudGF0aW9uIG9mIGFsbCBpdHMgaXRlbXMuXG5cdFx0ICovXG5cdFx0Z3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiBzdWJncmlkO1xuXHR9XG5cblx0Zm9udC1zaXplOiAkeyBmb250KCAnZGVmYXVsdC5mb250U2l6ZScgKSB9O1xuXHRmb250LWZhbWlseTogaW5oZXJpdDtcblx0Zm9udC13ZWlnaHQ6IG5vcm1hbDtcblx0bGluZS1oZWlnaHQ6IDIwcHg7XG5cblx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXG5cdHBhZGRpbmctYmxvY2s6ICR7IElURU1fUEFERElOR19CTE9DSyB9O1xuXHRwYWRkaW5nLWlubGluZTogJHsgSVRFTV9QQURESU5HX0lOTElORSB9O1xuXG5cdC8qXG5cdCAqIE1ha2Ugc3VyZSB0aGF0LCB3aGVuIGFuIGl0ZW0gaXMgc2Nyb2xsZWQgaW50byB2aWV3IChlZy4gd2hpbGUgdXNpbmcgdGhlXG5cdCAqIGtleWJvYXJkIHRvIG1vdmUgZm9jdXMpLCB0aGUgd2hvbGUgaXRlbSBjb21lcyBpbnRvIHZpZXdcblx0ICovXG5cdHNjcm9sbC1tYXJnaW46ICR7IENPTlRFTlRfV1JBUFBFUl9QQURESU5HIH07XG5cblx0dXNlci1zZWxlY3Q6IG5vbmU7XG5cdG91dGxpbmU6IG5vbmU7XG5cblx0JlthcmlhLWRpc2FibGVkPSd0cnVlJ10ge1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudWkudGV4dERpc2FibGVkIH07XG5cdH1cblxuXHQvKiBBY3RpdmUgaXRlbSAoaW5jbHVkaW5nIGhvdmVyKSAqL1xuXHQmW2RhdGEtYWN0aXZlLWl0ZW1dOm5vdCggW2RhdGEtZm9jdXMtdmlzaWJsZV0gKTpub3QoXG5cdFx0XHRbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddXG5cdFx0KSB7XG5cdFx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50SW52ZXJ0ZWQgfTtcblx0fVxuXG5cdC8qIEtleWJvYXJkIGZvY3VzIChmb2N1cy12aXNpYmxlKSAqL1xuXHQmW2RhdGEtZm9jdXMtdmlzaWJsZV0ge1xuXHRcdGJveC1zaGFkb3c6IDAgMCAwIDEuNXB4ICR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblxuXHRcdC8qIE9ubHkgdmlzaWJsZSBpbiBXaW5kb3dzIEhpZ2ggQ29udHJhc3QgbW9kZSAqL1xuXHRcdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcblx0fVxuXG5cdC8qIEFjdGl2ZSAoaWUuIHByZXNzZWQsIG1vdXNlIGRvd24pICovXG5cdCY6YWN0aXZlLFxuXHQmW2RhdGEtYWN0aXZlXSB7XG5cdFx0LyogVE9ETzogc2hvdWxkIHRoZXJlIGJlIGEgdmlzdWFsIGFjdGl2ZSBzdGF0ZT8gKi9cblx0fVxuXG5cdC8qIFdoZW4gdGhlIGl0ZW0gaXMgdGhlIHRyaWdnZXIgb2YgYW4gb3BlbiBzdWJtZW51ICovXG5cdCR7IE1lbnUgfTpub3QoOmZvY3VzKSAmOm5vdCg6Zm9jdXMpW2FyaWEtZXhwYW5kZWQ9XCJ0cnVlXCJdIHtcblx0XHRiYWNrZ3JvdW5kLWNvbG9yOiAkeyBMSUdIVF9CQUNLR1JPVU5EX0NPTE9SIH07XG5cdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdH1cblxuXHRzdmcge1xuXHRcdGZpbGw6IGN1cnJlbnRDb2xvcjtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IEl0ZW0gPSBzdHlsZWQoIEFyaWFraXQuTWVudUl0ZW0gKWBcblx0JHsgYmFzZUl0ZW0gfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBDaGVja2JveEl0ZW0gPSBzdHlsZWQoIEFyaWFraXQuTWVudUl0ZW1DaGVja2JveCApYFxuXHQkeyBiYXNlSXRlbSB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IFJhZGlvSXRlbSA9IHN0eWxlZCggQXJpYWtpdC5NZW51SXRlbVJhZGlvIClgXG5cdCR7IGJhc2VJdGVtIH07XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbVByZWZpeFdyYXBwZXIgPSBzdHlsZWQuc3BhbmBcblx0LyogQWx3YXlzIG9jY3VweSB0aGUgZmlyc3QgY29sdW1uLCBldmVuIHdoZW4gYXV0by1jb2xsYXBzaW5nICovXG5cdGdyaWQtY29sdW1uOiAxO1xuXG5cdC8qXG5cdCAqIEV2ZW4gd2hlbiB0aGUgaXRlbSBpcyBub3QgY2hlY2tlZCwgb2NjdXB5IHRoZSBzYW1lIHNjcmVlbiBzcGFjZSB0byBhdm9pZFxuXHQgKiB0aGUgc3BhY2UgY29sbGFwc2lkZSB3aGVuIG5vIGl0ZW1zIGFyZSBjaGVja2VkLlxuXHQgKi9cblx0JHsgQ2hlY2tib3hJdGVtIH0gPiAmLFxuXHQkeyBSYWRpb0l0ZW0gfSA+ICYge1xuXHRcdC8qIFNhbWUgd2lkdGggYXMgdGhlIGNoZWNrIGljb25zICovXG5cdFx0bWluLXdpZHRoOiAkeyBzcGFjZSggNiApIH07XG5cdH1cblxuXHQkeyBDaGVja2JveEl0ZW0gfSA+ICYsXG5cdCR7IFJhZGlvSXRlbSB9ID4gJixcblx0Jjpub3QoIDplbXB0eSApIHtcblx0XHRtYXJnaW4taW5saW5lLWVuZDogJHsgc3BhY2UoIDIgKSB9O1xuXHR9XG5cblx0ZGlzcGxheTogZmxleDtcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0anVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG5cblx0Y29sb3I6ICR7IExJR0hURVJfVEVYVF9DT0xPUiB9O1xuXG5cdC8qXG5cdCogV2hlbiB0aGUgcGFyZW50IG1lbnUgaXRlbSBpcyBhY3RpdmUsIGV4Y2VwdCB3aGVuIGl0J3MgYSBub24tZm9jdXNlZC9ob3ZlcmVkXG5cdCogc3VibWVudSB0cmlnZ2VyIChpbiB0aGF0IGNhc2UsIGNvbG9yIHNob3VsZCBub3QgYmUgaW5oZXJpdGVkKVxuXHQqL1xuXHRbZGF0YS1hY3RpdmUtaXRlbV06bm90KCBbZGF0YS1mb2N1cy12aXNpYmxlXSApID4gJixcblx0LyogV2hlbiB0aGUgcGFyZW50IG1lbnUgaXRlbSBpcyBkaXNhYmxlZCAqL1xuXHRbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddID4gJiB7XG5cdFx0Y29sb3I6IGluaGVyaXQ7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQ29udGVudFdyYXBwZXIgPSBzdHlsZWQuZGl2YFxuXHQvKlxuXHQgKiBBbHdheXMgb2NjdXB5IHRoZSBzZWNvbmQgY29sdW1uLCBzaW5jZSB0aGUgZmlyc3QgY29sdW1uXG5cdCAqIGlzIHRha2VuIGJ5IHRoZSBwcmVmaXggd3JhcHBlciAod2hlbiBkaXNwbGF5ZWQpLlxuXHQgKi9cblx0Z3JpZC1jb2x1bW46IDI7XG5cblx0ZGlzcGxheTogZmxleDtcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0anVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xuXHRnYXA6ICR7IHNwYWNlKCAzICkgfTtcblxuXHRwb2ludGVyLWV2ZW50czogbm9uZTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQ2hpbGRyZW5XcmFwcGVyID0gc3R5bGVkLmRpdmBcblx0ZmxleDogMTtcblxuXHRkaXNwbGF5OiBpbmxpbmUtZmxleDtcblx0ZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcblx0Z2FwOiAkeyBzcGFjZSggMSApIH07XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbVN1ZmZpeFdyYXBwZXIgPSBzdHlsZWQuc3BhbmBcblx0ZmxleDogMCAxIGZpdC1jb250ZW50O1xuXHRtaW4td2lkdGg6IDA7XG5cdHdpZHRoOiBmaXQtY29udGVudDtcblxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcblx0Z2FwOiAkeyBzcGFjZSggMyApIH07XG5cblx0Y29sb3I6ICR7IExJR0hURVJfVEVYVF9DT0xPUiB9O1xuXG5cdC8qXG5cdCAqIFdoZW4gdGhlIHBhcmVudCBtZW51IGl0ZW0gaXMgYWN0aXZlLCBleGNlcHQgd2hlbiBpdCdzIGEgbm9uLWZvY3VzZWQvaG92ZXJlZFxuXHQgKiBzdWJtZW51IHRyaWdnZXIgKGluIHRoYXQgY2FzZSwgY29sb3Igc2hvdWxkIG5vdCBiZSBpbmhlcml0ZWQpXG5cdCAqL1xuXHRbZGF0YS1hY3RpdmUtaXRlbV06bm90KCBbZGF0YS1mb2N1cy12aXNpYmxlXSApICo6bm90KCR7IE1lbnUgfSkgJixcblx0LyogV2hlbiB0aGUgcGFyZW50IG1lbnUgaXRlbSBpcyBkaXNhYmxlZCAqL1xuXHRbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICo6bm90KCR7IE1lbnUgfSkgJiB7XG5cdFx0Y29sb3I6IGluaGVyaXQ7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBHcm91cCA9IHN0eWxlZCggQXJpYWtpdC5NZW51R3JvdXAgKWBcblx0LyogSWdub3JlIHRoaXMgZWxlbWVudCB3aGVuIGNhbGN1bGF0aW5nIHRoZSBsYXlvdXQuIFVzZWZ1bCBmb3Igc3ViZ3JpZCAqL1xuXHRkaXNwbGF5OiBjb250ZW50cztcbmA7XG5cbmV4cG9ydCBjb25zdCBHcm91cExhYmVsID0gc3R5bGVkKCBBcmlha2l0Lk1lbnVHcm91cExhYmVsIClgXG5cdC8qIE9jY3VweSB0aGUgd2lkdGggb2YgYWxsIGdyaWQgY29sdW1ucyAoaWUuIGZ1bGwgd2lkdGgpICovXG5cdGdyaWQtY29sdW1uOiAxIC8gLTE7XG5cblx0cGFkZGluZy1ibG9jay1zdGFydDogJHsgc3BhY2UoIDMgKSB9O1xuXHRwYWRkaW5nLWJsb2NrLWVuZDogJHsgc3BhY2UoIDIgKSB9O1xuXHRwYWRkaW5nLWlubGluZTogJHsgSVRFTV9QQURESU5HX0lOTElORSB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IFNlcGFyYXRvciA9IHN0eWxlZCggQXJpYWtpdC5NZW51U2VwYXJhdG9yICk8XG5cdFBpY2s8IENvbnRleHRQcm9wcywgJ3ZhcmlhbnQnID5cbj5gXG5cdC8qIE9jY3VweSB0aGUgd2lkdGggb2YgYWxsIGdyaWQgY29sdW1ucyAoaWUuIGZ1bGwgd2lkdGgpICovXG5cdGdyaWQtY29sdW1uOiAxIC8gLTE7XG5cblx0Ym9yZGVyOiBub25lO1xuXHRoZWlnaHQ6ICR7IENPTkZJRy5ib3JkZXJXaWR0aCB9O1xuXHRiYWNrZ3JvdW5kLWNvbG9yOiAkeyAoIHByb3BzICkgPT5cblx0XHRwcm9wcy52YXJpYW50ID09PSAndG9vbGJhcidcblx0XHRcdD8gVE9PTEJBUl9WQVJJQU5UX0JPUkRFUl9DT0xPUlxuXHRcdFx0OiBESVZJREVSX0NPTE9SIH07XG5cdC8qIEFsaWduIHdpdGggbWVudSBpdGVtcycgY29udGVudCAqL1xuXHRtYXJnaW4tYmxvY2s6ICR7IHNwYWNlKCAyICkgfTtcblx0bWFyZ2luLWlubGluZTogJHsgSVRFTV9QQURESU5HX0lOTElORSB9O1xuXG5cdC8qIE9ubHkgdmlzaWJsZSBpbiBXaW5kb3dzIEhpZ2ggQ29udHJhc3QgbW9kZSAqL1xuXHRvdXRsaW5lOiAycHggc29saWQgdHJhbnNwYXJlbnQ7XG5gO1xuXG5leHBvcnQgY29uc3QgU3VibWVudUNoZXZyb25JY29uID0gc3R5bGVkKCBJY29uIClgXG5cdHdpZHRoOiAkeyBzcGFjZSggMS41ICkgfTtcblx0JHsgcnRsKFxuXHRcdHtcblx0XHRcdHRyYW5zZm9ybTogYHNjYWxlWCgxKWAsXG5cdFx0fSxcblx0XHR7XG5cdFx0XHR0cmFuc2Zvcm06IGBzY2FsZVgoLTEpYCxcblx0XHR9XG5cdCkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtTGFiZWwgPSBzdHlsZWQoIFRydW5jYXRlIClgXG5cdGZvbnQtc2l6ZTogJHsgZm9udCggJ2RlZmF1bHQuZm9udFNpemUnICkgfTtcblx0bGluZS1oZWlnaHQ6IDIwcHg7XG5cdGNvbG9yOiBpbmhlcml0O1xuYDtcblxuZXhwb3J0IGNvbnN0IEl0ZW1IZWxwVGV4dCA9IHN0eWxlZCggVHJ1bmNhdGUgKWBcblx0Zm9udC1zaXplOiAkeyBmb250KCAnaGVscFRleHQuZm9udFNpemUnICkgfTtcblx0bGluZS1oZWlnaHQ6IDE2cHg7XG5cdGNvbG9yOiAkeyBMSUdIVEVSX1RFWFRfQ09MT1IgfTtcblx0b3ZlcmZsb3ctd3JhcDogYW55d2hlcmU7XG5cblx0W2RhdGEtYWN0aXZlLWl0ZW1dOm5vdCggW2RhdGEtZm9jdXMtdmlzaWJsZV0gKSAqOm5vdCggJHsgTWVudSB9ICkgJixcblx0W2FyaWEtZGlzYWJsZWQ9J3RydWUnXSAqOm5vdCggJHsgTWVudSB9ICkgJiB7XG5cdFx0Y29sb3I6IGluaGVyaXQ7XG5cdH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/menu/use-menu-item-hide-on-click.mjs
-  var import_element206 = __toESM(require_element(), 1);
+  var import_element209 = __toESM(require_element(), 1);
   function focusDisclosureElement(disclosureElement) {
     disclosureElement.focus();
     if (disclosureElement.ownerDocument.activeElement === disclosureElement) {
@@ -51275,7 +52217,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     disclosureElement.ownerDocument.defaultView?.HTMLElement.prototype.focus.call(disclosureElement);
   }
   function useMenuItemHideOnClick(store, hideOnClick) {
-    return (0, import_element206.useCallback)((event) => {
+    return (0, import_element209.useCallback)((event) => {
       const shouldHide = typeof hideOnClick === "function" ? hideOnClick(event) : hideOnClick;
       if (!shouldHide) {
         return false;
@@ -51300,8 +52242,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/menu/item.mjs
-  var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
-  var Item22 = (0, import_element207.forwardRef)(function Item3({
+  var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
+  var Item22 = (0, import_element210.forwardRef)(function Item3({
     prefix: prefix2,
     suffix,
     children,
@@ -51310,25 +52252,25 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     store,
     ...props
   }, ref) {
-    const menuContext = (0, import_element207.useContext)(Context2);
+    const menuContext = (0, import_element210.useContext)(Context2);
     const computedStore = store ?? menuContext?.store;
     const computedHideOnClick = useMenuItemHideOnClick(computedStore, hideOnClick);
     if (!menuContext?.store || !computedStore) {
       throw new Error("Menu.Item can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)(Item2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(Item2, {
       ref,
       ...props,
       accessibleWhenDisabled: true,
       disabled,
       store: computedStore,
       hideOnClick: computedHideOnClick,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime290.jsx)(ItemPrefixWrapper, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime294.jsx)(ItemPrefixWrapper, {
         children: prefix2
-      }), /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime290.jsx)(ItemChildrenWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime294.jsx)(ItemChildrenWrapper, {
           children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(ItemSuffixWrapper, {
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(ItemSuffixWrapper, {
           children: suffix
         })]
       })]
@@ -51336,43 +52278,43 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/checkbox-item.mjs
-  var import_element208 = __toESM(require_element(), 1);
-  var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
-  var CheckboxItem2 = (0, import_element208.forwardRef)(function CheckboxItem3({
+  var import_element211 = __toESM(require_element(), 1);
+  var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
+  var CheckboxItem2 = (0, import_element211.forwardRef)(function CheckboxItem3({
     suffix,
     children,
     disabled = false,
     hideOnClick = false,
     ...props
   }, ref) {
-    const menuContext = (0, import_element208.useContext)(Context2);
+    const menuContext = (0, import_element211.useContext)(Context2);
     const store = menuContext?.store;
     const computedHideOnClick = useMenuItemHideOnClick(store, hideOnClick);
     if (!store) {
       throw new Error("Menu.CheckboxItem can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)(CheckboxItem, {
+    return /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(CheckboxItem, {
       ref,
       ...props,
       accessibleWhenDisabled: true,
       disabled,
       store,
       hideOnClick: computedHideOnClick,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime291.jsx)(MenuItemCheck, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime295.jsx)(MenuItemCheck, {
         store,
-        render: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(ItemPrefixWrapper, {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(ItemPrefixWrapper, {}),
         style: {
           width: "auto",
           height: "auto"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(icon_default2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(icon_default2, {
           icon: check_default,
           size: 24
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime291.jsx)(ItemChildrenWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime295.jsx)(ItemChildrenWrapper, {
           children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(ItemSuffixWrapper, {
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(ItemSuffixWrapper, {
           children: suffix
         })]
       })]
@@ -51380,53 +52322,53 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/radio-item.mjs
-  var import_element209 = __toESM(require_element(), 1);
-  var import_primitives34 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
-  var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(import_primitives34.SVG, {
+  var import_element212 = __toESM(require_element(), 1);
+  var import_primitives35 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
+  var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(import_primitives35.SVG, {
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
-    children: /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(import_primitives34.Circle, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(import_primitives35.Circle, {
       cx: 12,
       cy: 12,
       r: 3
     })
   });
-  var RadioItem2 = (0, import_element209.forwardRef)(function RadioItem3({
+  var RadioItem2 = (0, import_element212.forwardRef)(function RadioItem3({
     suffix,
     children,
     disabled = false,
     hideOnClick = false,
     ...props
   }, ref) {
-    const menuContext = (0, import_element209.useContext)(Context2);
+    const menuContext = (0, import_element212.useContext)(Context2);
     const store = menuContext?.store;
     const computedHideOnClick = useMenuItemHideOnClick(store, hideOnClick);
     if (!store) {
       throw new Error("Menu.RadioItem can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime292.jsxs)(RadioItem, {
+    return /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)(RadioItem, {
       ref,
       ...props,
       accessibleWhenDisabled: true,
       disabled,
       store,
       hideOnClick: computedHideOnClick,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime292.jsx)(MenuItemCheck, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime296.jsx)(MenuItemCheck, {
         store,
-        render: /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(ItemPrefixWrapper, {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(ItemPrefixWrapper, {}),
         style: {
           width: "auto",
           height: "auto"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(icon_default2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(icon_default2, {
           icon: radioCheck,
           size: 24
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime292.jsxs)(ItemContentWrapper, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime292.jsx)(ItemChildrenWrapper, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)(ItemContentWrapper, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime296.jsx)(ItemChildrenWrapper, {
           children
-        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(ItemSuffixWrapper, {
+        }), suffix && /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(ItemSuffixWrapper, {
           children: suffix
         })]
       })]
@@ -51434,14 +52376,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/group.mjs
-  var import_element210 = __toESM(require_element(), 1);
-  var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
-  var Group22 = (0, import_element210.forwardRef)(function Group32(props, ref) {
-    const menuContext = (0, import_element210.useContext)(Context2);
+  var import_element213 = __toESM(require_element(), 1);
+  var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
+  var Group22 = (0, import_element213.forwardRef)(function Group32(props, ref) {
+    const menuContext = (0, import_element213.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Group can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(Group3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(Group3, {
       ref,
       ...props,
       store: menuContext.store
@@ -51449,18 +52391,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/group-label.mjs
-  var import_element211 = __toESM(require_element(), 1);
-  var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
-  var GroupLabel22 = (0, import_element211.forwardRef)(function Group4(props, ref) {
-    const menuContext = (0, import_element211.useContext)(Context2);
+  var import_element214 = __toESM(require_element(), 1);
+  var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
+  var GroupLabel22 = (0, import_element214.forwardRef)(function Group4(props, ref) {
+    const menuContext = (0, import_element214.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.GroupLabel can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(GroupLabel3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(GroupLabel3, {
       ref,
       render: (
         // @ts-expect-error The `children` prop is passed
-        /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(component_default8, {
+        /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(component_default8, {
           upperCase: true,
           variant: "muted",
           size: "11px",
@@ -51474,14 +52416,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/separator.mjs
-  var import_element212 = __toESM(require_element(), 1);
-  var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
-  var Separator22 = (0, import_element212.forwardRef)(function Separator32(props, ref) {
-    const menuContext = (0, import_element212.useContext)(Context2);
+  var import_element215 = __toESM(require_element(), 1);
+  var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
+  var Separator22 = (0, import_element215.forwardRef)(function Separator32(props, ref) {
+    const menuContext = (0, import_element215.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Separator can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(Separator3, {
+    return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(Separator3, {
       ref,
       ...props,
       store: menuContext.store,
@@ -51490,14 +52432,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/item-label.mjs
-  var import_element213 = __toESM(require_element(), 1);
-  var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
-  var ItemLabel2 = (0, import_element213.forwardRef)(function ItemLabel3(props, ref) {
-    const menuContext = (0, import_element213.useContext)(Context2);
+  var import_element216 = __toESM(require_element(), 1);
+  var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
+  var ItemLabel2 = (0, import_element216.forwardRef)(function ItemLabel3(props, ref) {
+    const menuContext = (0, import_element216.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.ItemLabel can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(ItemLabel, {
+    return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(ItemLabel, {
       numberOfLines: 1,
       ref,
       ...props
@@ -51505,14 +52447,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/item-help-text.mjs
-  var import_element214 = __toESM(require_element(), 1);
-  var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
-  var ItemHelpText2 = (0, import_element214.forwardRef)(function ItemHelpText3(props, ref) {
-    const menuContext = (0, import_element214.useContext)(Context2);
+  var import_element217 = __toESM(require_element(), 1);
+  var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
+  var ItemHelpText2 = (0, import_element217.forwardRef)(function ItemHelpText3(props, ref) {
+    const menuContext = (0, import_element217.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.ItemHelpText can only be rendered inside a Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(ItemHelpText, {
+    return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(ItemHelpText, {
       numberOfLines: 2,
       ref,
       ...props
@@ -51520,21 +52462,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/trigger-button.mjs
-  var import_element215 = __toESM(require_element(), 1);
-  var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
-  var TriggerButton = (0, import_element215.forwardRef)(function TriggerButton2({
+  var import_element218 = __toESM(require_element(), 1);
+  var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
+  var TriggerButton = (0, import_element218.forwardRef)(function TriggerButton2({
     children,
     disabled = false,
     ...props
   }, ref) {
-    const menuContext = (0, import_element215.useContext)(Context2);
+    const menuContext = (0, import_element218.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.TriggerButton can only be rendered inside a Menu component");
     }
     if (menuContext.store.parent) {
       throw new Error("Menu.TriggerButton should not be rendered inside a nested Menu component. Use Menu.SubmenuTriggerItem instead.");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(MenuButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(MenuButton, {
       ref,
       ...props,
       disabled,
@@ -51544,29 +52486,29 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/submenu-trigger-item.mjs
-  var import_element216 = __toESM(require_element(), 1);
-  var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
-  var SubmenuTriggerItem = (0, import_element216.forwardRef)(function SubmenuTriggerItem2({
+  var import_element219 = __toESM(require_element(), 1);
+  var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
+  var SubmenuTriggerItem = (0, import_element219.forwardRef)(function SubmenuTriggerItem2({
     suffix,
     ...otherProps
   }, ref) {
-    const menuContext = (0, import_element216.useContext)(Context2);
+    const menuContext = (0, import_element219.useContext)(Context2);
     if (!menuContext?.store.parent) {
       throw new Error("Menu.SubmenuTriggerItem can only be rendered inside a nested Menu component");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(MenuButton, {
+    return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(MenuButton, {
       ref,
       accessibleWhenDisabled: true,
       store: menuContext.store,
-      render: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(Item22, {
+      render: /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(Item22, {
         ...otherProps,
         // The menu item needs to register and be part of the parent menu.
         // Without specifying the store explicitly, the `Item` component
         // would otherwise read the store via context and pick up the one from
         // the sub-menu `Menu` component.
         store: menuContext.store.parent,
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime299.jsxs)(import_jsx_runtime299.Fragment, {
-          children: [suffix, /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(SubmenuChevronIcon, {
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)(import_jsx_runtime303.Fragment, {
+          children: [suffix, /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(SubmenuChevronIcon, {
             "aria-hidden": "true",
             icon: chevron_right_small_default,
             size: 24,
@@ -51578,22 +52520,22 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/popover.mjs
-  var import_element217 = __toESM(require_element(), 1);
-  var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
-  var Popover4 = (0, import_element217.forwardRef)(function Popover22({
+  var import_element220 = __toESM(require_element(), 1);
+  var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
+  var Popover4 = (0, import_element220.forwardRef)(function Popover22({
     gutter,
     shift: shift4,
     modal = true,
     ...otherProps
   }, ref) {
-    const menuContext = (0, import_element217.useContext)(Context2);
+    const menuContext = (0, import_element220.useContext)(Context2);
     const appliedPlacementSide = useStoreState(menuContext?.store, "currentPlacement")?.split("-")[0];
-    const hideOnEscape = (0, import_element217.useCallback)((event) => {
+    const hideOnEscape = (0, import_element220.useCallback)((event) => {
       event.preventDefault();
       return true;
     }, []);
     const computedDirection = useStoreState(menuContext?.store, "rtl") ? "rtl" : "ltr";
-    const wrapperProps = (0, import_element217.useMemo)(() => ({
+    const wrapperProps = (0, import_element220.useMemo)(() => ({
       dir: computedDirection,
       style: {
         direction: computedDirection
@@ -51602,13 +52544,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!menuContext?.store) {
       throw new Error("Menu.Popover can only be rendered inside a Menu component");
     }
-    const renderMenu = (0, import_element217.useCallback)((htmlProps) => /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(MenuMotionRoot, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(MenuSurface, {
+    const renderMenu = (0, import_element220.useCallback)((htmlProps) => /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(MenuMotionRoot, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(MenuSurface, {
         ...htmlProps,
         variant: menuContext.variant
       })
     }), [menuContext.variant]);
-    return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(Menu22, {
+    return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(Menu22, {
       ...otherProps,
       ref,
       modal,
@@ -51626,7 +52568,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/index.mjs
-  var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
   var UnconnectedMenu = (props) => {
     const {
       children,
@@ -51637,8 +52579,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       // From internal components context
       variant
     } = useContextSystem(props, "Menu");
-    const parentContext = (0, import_element218.useContext)(Context2);
-    const rtl2 = (0, import_i18n72.isRTL)();
+    const parentContext = (0, import_element221.useContext)(Context2);
+    const rtl2 = (0, import_i18n73.isRTL)();
     let computedPlacement = placement ?? (parentContext?.store ? "right-start" : "bottom-start");
     if (rtl2) {
       if (/right/.test(computedPlacement)) {
@@ -51658,11 +52600,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       },
       rtl: rtl2
     });
-    const contextValue = (0, import_element218.useMemo)(() => ({
+    const contextValue = (0, import_element221.useMemo)(() => ({
       store: menuStore,
       variant
     }), [menuStore, variant]);
-    return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(Context2.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(Context2.Provider, {
       value: contextValue,
       children
     });
@@ -51770,17 +52712,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tabs/index.mjs
   var import_compose85 = __toESM(require_compose(), 1);
-  var import_element224 = __toESM(require_element(), 1);
-  var import_i18n73 = __toESM(require_i18n(), 1);
+  var import_element227 = __toESM(require_element(), 1);
+  var import_i18n74 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/tabs/context.mjs
-  var import_element219 = __toESM(require_element(), 1);
-  var TabsContext = (0, import_element219.createContext)(void 0);
+  var import_element222 = __toESM(require_element(), 1);
+  var TabsContext = (0, import_element222.createContext)(void 0);
   TabsContext.displayName = "TabsContext";
-  var useTabsContext = () => (0, import_element219.useContext)(TabsContext);
+  var useTabsContext = () => (0, import_element222.useContext)(TabsContext);
 
   // packages/components/build-module/tabs/tab.mjs
-  var import_element220 = __toESM(require_element(), 1);
+  var import_element223 = __toESM(require_element(), 1);
   var import_warning11 = __toESM(require_warning(), 1);
 
   // packages/components/build-module/tabs/styles.mjs
@@ -51826,8 +52768,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   })("&:focus{box-shadow:none;outline:none;}&[data-focus-visible]{box-shadow:0 0 0 var( --wp-admin-border-width-focus ) ", COLORS.theme.accent, ";outline:2px solid transparent;outline-offset:0;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFxUWtEIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCAqIGFzIEFyaWFraXQgZnJvbSAnQGFyaWFraXQvcmVhY3QnO1xuaW1wb3J0IHsgQ09MT1JTLCBDT05GSUcsIGZvbnQgfSBmcm9tICcuLi91dGlscyc7XG5pbXBvcnQgeyBzcGFjZSB9IGZyb20gJy4uL3V0aWxzL3NwYWNlJztcbmltcG9ydCBJY29uIGZyb20gJy4uL2ljb24nO1xuXG5leHBvcnQgY29uc3QgU3R5bGVkVGFiTGlzdCA9IHN0eWxlZCggQXJpYWtpdC5UYWJMaXN0IClgXG5cdGRpc3BsYXk6IGZsZXg7XG5cdGFsaWduLWl0ZW1zOiBzdHJldGNoO1xuXHRvdmVyZmxvdy14OiBhdXRvO1xuXG5cdCZbYXJpYS1vcmllbnRhdGlvbj0ndmVydGljYWwnXSB7XG5cdFx0ZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcblx0fVxuXG5cdDp3aGVyZSggW2FyaWEtb3JpZW50YXRpb249J2hvcml6b250YWwnXSApIHtcblx0XHR3aWR0aDogZml0LWNvbnRlbnQ7XG5cdH1cblxuXHQtLWRpcmVjdGlvbi1mYWN0b3I6IDE7XG5cdC0tZGlyZWN0aW9uLXN0YXJ0OiBsZWZ0O1xuXHQtLWRpcmVjdGlvbi1lbmQ6IHJpZ2h0O1xuXHQtLXNlbGVjdGVkLXN0YXJ0OiB2YXIoIC0tc2VsZWN0ZWQtbGVmdCwgMCApO1xuXHQmOmRpciggcnRsICkge1xuXHRcdC0tZGlyZWN0aW9uLWZhY3RvcjogLTE7XG5cdFx0LS1kaXJlY3Rpb24tc3RhcnQ6IHJpZ2h0O1xuXHRcdC0tZGlyZWN0aW9uLWVuZDogbGVmdDtcblx0XHQtLXNlbGVjdGVkLXN0YXJ0OiB2YXIoIC0tc2VsZWN0ZWQtcmlnaHQsIDAgKTtcblx0fVxuXG5cdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdCZbZGF0YS1pbmRpY2F0b3ItYW5pbWF0ZWRdOjpiZWZvcmUge1xuXHRcdFx0dHJhbnNpdGlvbi1wcm9wZXJ0eTogdHJhbnNmb3JtLCBib3JkZXItcmFkaXVzLCBib3JkZXItYmxvY2s7XG5cdFx0XHR0cmFuc2l0aW9uLWR1cmF0aW9uOiAwLjJzO1xuXHRcdFx0dHJhbnNpdGlvbi10aW1pbmctZnVuY3Rpb246IGVhc2Utb3V0O1xuXHRcdH1cblx0fVxuXHRwb3NpdGlvbjogcmVsYXRpdmU7XG5cdCY6OmJlZm9yZSB7XG5cdFx0Y29udGVudDogJyc7XG5cdFx0cG9zaXRpb246IGFic29sdXRlO1xuXHRcdHBvaW50ZXItZXZlbnRzOiBub25lO1xuXHRcdHRyYW5zZm9ybS1vcmlnaW46IHZhciggLS1kaXJlY3Rpb24tc3RhcnQgKSB0b3A7XG5cblx0XHQvLyBXaW5kb3dzIGhpZ2ggY29udHJhc3QgbW9kZS5cblx0XHRvdXRsaW5lOiAycHggc29saWQgdHJhbnNwYXJlbnQ7XG5cdFx0b3V0bGluZS1vZmZzZXQ6IC0xcHg7XG5cdH1cblxuXHQvKiBVc2luZyBhIGxhcmdlIHZhbHVlIHRvIGF2b2lkIGFudGlhbGlhc2luZyByb3VuZGluZyBpc3N1ZXNcblx0XHRcdHdoZW4gc2NhbGluZyBpbiB0aGUgdHJhbnNmb3JtLCBzZWU6IGh0dHBzOi8vc3RhY2tvdmVyZmxvdy5jb20vYS81MjE1OTEyMyAqL1xuXHQtLWFudGlhbGlhc2luZy1mYWN0b3I6IDEwMDtcblx0JlthcmlhLW9yaWVudGF0aW9uPSdob3Jpem9udGFsJ10ge1xuXHRcdC0tZmFkZS13aWR0aDogNjRweDtcblx0XHQtLWZhZGUtZ3JhZGllbnQtYmFzZTogdHJhbnNwYXJlbnQgMCUsIGJsYWNrIHZhciggLS1mYWRlLXdpZHRoICk7XG5cdFx0LS1mYWRlLWdyYWRpZW50LWNvbXBvc2VkOiB2YXIoIC0tZmFkZS1ncmFkaWVudC1iYXNlICksIGJsYWNrIDYwJSxcblx0XHRcdHRyYW5zcGFyZW50IDUwJTtcblx0XHQmLmlzLW92ZXJmbG93aW5nLWZpcnN0IHtcblx0XHRcdG1hc2staW1hZ2U6IGxpbmVhci1ncmFkaWVudChcblx0XHRcdFx0dG8gdmFyKCAtLWRpcmVjdGlvbi1lbmQgKSxcblx0XHRcdFx0dmFyKCAtLWZhZGUtZ3JhZGllbnQtYmFzZSApXG5cdFx0XHQpO1xuXHRcdH1cblx0XHQmLmlzLW92ZXJmbG93aW5nLWxhc3Qge1xuXHRcdFx0bWFzay1pbWFnZTogbGluZWFyLWdyYWRpZW50KFxuXHRcdFx0XHR0byB2YXIoIC0tZGlyZWN0aW9uLXN0YXJ0ICksXG5cdFx0XHRcdHZhciggLS1mYWRlLWdyYWRpZW50LWJhc2UgKVxuXHRcdFx0KTtcblx0XHR9XG5cdFx0Ji5pcy1vdmVyZmxvd2luZy1maXJzdC5pcy1vdmVyZmxvd2luZy1sYXN0IHtcblx0XHRcdG1hc2staW1hZ2U6IGxpbmVhci1ncmFkaWVudChcblx0XHRcdFx0XHR0byByaWdodCxcblx0XHRcdFx0XHR2YXIoIC0tZmFkZS1ncmFkaWVudC1jb21wb3NlZCApXG5cdFx0XHRcdCksXG5cdFx0XHRcdGxpbmVhci1ncmFkaWVudCggdG8gbGVmdCwgdmFyKCAtLWZhZGUtZ3JhZGllbnQtY29tcG9zZWQgKSApO1xuXHRcdH1cblxuXHRcdCY6OmJlZm9yZSB7XG5cdFx0XHRib3R0b206IDA7XG5cdFx0XHRoZWlnaHQ6IDA7XG5cdFx0XHR3aWR0aDogY2FsYyggdmFyKCAtLWFudGlhbGlhc2luZy1mYWN0b3IgKSAqIDFweCApO1xuXHRcdFx0dHJhbnNmb3JtOiB0cmFuc2xhdGVYKFxuXHRcdFx0XHRcdGNhbGMoXG5cdFx0XHRcdFx0XHR2YXIoIC0tc2VsZWN0ZWQtc3RhcnQgKSAqIHZhciggLS1kaXJlY3Rpb24tZmFjdG9yICkgKlxuXHRcdFx0XHRcdFx0XHQxcHhcblx0XHRcdFx0XHQpXG5cdFx0XHRcdClcblx0XHRcdFx0c2NhbGVYKFxuXHRcdFx0XHRcdGNhbGMoXG5cdFx0XHRcdFx0XHR2YXIoIC0tc2VsZWN0ZWQtd2lkdGgsIDAgKSAvXG5cdFx0XHRcdFx0XHRcdHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yIClcblx0XHRcdFx0XHQpXG5cdFx0XHRcdCk7XG5cdFx0XHRib3JkZXItYm90dG9tOiB2YXIoIC0td3AtYWRtaW4tYm9yZGVyLXdpZHRoLWZvY3VzICkgc29saWRcblx0XHRcdFx0JHsgQ09MT1JTLnRoZW1lLmdyYXlbIDcwMCBdIH07XG5cdFx0fVxuXHR9XG5cdCZbYXJpYS1vcmllbnRhdGlvbj0ndmVydGljYWwnXSB7XG5cdFx0Jjo6YmVmb3JlIHtcblx0XHRcdC8qIEFkanVzdGluZyB0aGUgYm9yZGVyIHJhZGl1cyB0byBtYXRjaCB0aGUgc2NhbGluZyBpbiB0aGUgeSBheGlzLiAqL1xuXHRcdFx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c1NtYWxsIH0gL1xuXHRcdFx0XHRjYWxjKFxuXHRcdFx0XHRcdCR7IENPTkZJRy5yYWRpdXNTbWFsbCB9IC9cblx0XHRcdFx0XHRcdChcblx0XHRcdFx0XHRcdFx0dmFyKCAtLXNlbGVjdGVkLWhlaWdodCwgMCApIC9cblx0XHRcdFx0XHRcdFx0XHR2YXIoIC0tYW50aWFsaWFzaW5nLWZhY3RvciApXG5cdFx0XHRcdFx0XHQpXG5cdFx0XHRcdCk7XG5cdFx0XHR0b3A6IDA7XG5cdFx0XHRsZWZ0OiAwO1xuXHRcdFx0d2lkdGg6IDEwMCU7XG5cdFx0XHRoZWlnaHQ6IGNhbGMoIHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yICkgKiAxcHggKTtcblx0XHRcdHRyYW5zZm9ybTogdHJhbnNsYXRlWSggY2FsYyggdmFyKCAtLXNlbGVjdGVkLXRvcCwgMCApICogMXB4ICkgKVxuXHRcdFx0XHRzY2FsZVkoXG5cdFx0XHRcdFx0Y2FsYyhcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC1oZWlnaHQsIDAgKSAvXG5cdFx0XHRcdFx0XHRcdHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yIClcblx0XHRcdFx0XHQpXG5cdFx0XHRcdCk7XG5cdFx0XHRiYWNrZ3JvdW5kLWNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZ3JheVsgMTAwIF0gfTtcblx0XHR9XG5cdFx0JltkYXRhLXNlbGVjdC1vbi1tb3ZlPSd0cnVlJ106aGFzKFxuXHRcdFx0XHQ6aXMoIDpmb2N1cy12aXNpYmxlLCBbZGF0YS1mb2N1cy12aXNpYmxlXSApXG5cdFx0XHQpOjpiZWZvcmUge1xuXHRcdFx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0XHRcdGJvcmRlcjogdmFyKCAtLXdwLWFkbWluLWJvcmRlci13aWR0aC1mb2N1cyApIHNvbGlkXG5cdFx0XHRcdCR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHRcdC8qIEFkanVzdGluZyB0aGUgYm9yZGVyIHdpZHRoIHRvIG1hdGNoIHRoZSBzY2FsaW5nIGluIHRoZSB5IGF4aXMuICovXG5cdFx0XHRib3JkZXItYmxvY2std2lkdGg6IGNhbGMoXG5cdFx0XHRcdHZhciggLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMsIDFweCApIC9cblx0XHRcdFx0XHQoXG5cdFx0XHRcdFx0XHR2YXIoIC0tc2VsZWN0ZWQtaGVpZ2h0LCAwICkgL1xuXHRcdFx0XHRcdFx0XHR2YXIoIC0tYW50aWFsaWFzaW5nLWZhY3RvciApXG5cdFx0XHRcdFx0KVxuXHRcdFx0KTtcblx0XHR9XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBUYWIgPSBzdHlsZWQoIEFyaWFraXQuVGFiIClgXG5cdCYge1xuXHRcdC8qIFJlc2V0cyAqL1xuXHRcdGJvcmRlci1yYWRpdXM6IDA7XG5cdFx0YmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XG5cdFx0Ym9yZGVyOiBub25lO1xuXHRcdGJveC1zaGFkb3c6IG5vbmU7XG5cblx0XHRmbGV4OiAxIDAgYXV0bztcblx0XHR3aGl0ZS1zcGFjZTogbm93cmFwO1xuXHRcdGRpc3BsYXk6IGZsZXg7XG5cdFx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0XHRjdXJzb3I6IHBvaW50ZXI7XG5cdFx0bGluZS1oZWlnaHQ6IDEuMjsgLy8gQ2hhcmFjdGVycyBpbiBzb21lIGxhbmd1YWdlcyAoZS5nLiBKYXBhbmVzZSkgbWF5IGhhdmUgYSBuYXRpdmUgaGlnaGVyIGxpbmUtaGVpZ2h0LlxuXHRcdGZvbnQtZmFtaWx5OiAkeyBmb250KCAnZGVmYXVsdC5mb250RmFtaWx5JyApIH07XG5cdFx0Zm9udC13ZWlnaHQ6IDQwMDtcblx0XHRmb250LXNpemU6ICR7IGZvbnQoICdkZWZhdWx0LmZvbnRTaXplJyApIH07XG5cdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cblx0XHQmW2FyaWEtZGlzYWJsZWQ9J3RydWUnXSB7XG5cdFx0XHRjdXJzb3I6IGRlZmF1bHQ7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLnRleHREaXNhYmxlZCB9O1xuXHRcdH1cblxuXHRcdCY6bm90KCBbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICk6aXMoIDpob3ZlciwgW2RhdGEtZm9jdXMtdmlzaWJsZV0gKSB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfTtcblx0XHR9XG5cblx0XHQmOmZvY3VzOm5vdCggOmRpc2FibGVkICkge1xuXHRcdFx0Ym94LXNoYWRvdzogbm9uZTtcblx0XHRcdG91dGxpbmU6IG5vbmU7XG5cdFx0fVxuXG5cdFx0Ly8gRm9jdXMgaW5kaWNhdG9yLlxuXHRcdHBvc2l0aW9uOiByZWxhdGl2ZTtcblx0XHQmOjphZnRlciB7XG5cdFx0XHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdFx0XHRwb2ludGVyLWV2ZW50czogbm9uZTtcblxuXHRcdFx0Ly8gRHJhdyB0aGUgaW5kaWNhdG9yLlxuXHRcdFx0Ly8gT3V0bGluZSB3b3JrcyBmb3IgV2luZG93cyBoaWdoIGNvbnRyYXN0IG1vZGUgYXMgd2VsbC5cblx0XHRcdG91dGxpbmU6IHZhciggLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMgKSBzb2xpZFxuXHRcdFx0XHQkeyBDT0xPUlMudGhlbWUuYWNjZW50IH07XG5cdFx0XHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblxuXHRcdFx0Ly8gQW5pbWF0aW9uXG5cdFx0XHRvcGFjaXR5OiAwO1xuXG5cdFx0XHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHRcdFx0dHJhbnNpdGlvbjogb3BhY2l0eSAwLjFzIGxpbmVhcjtcblx0XHRcdH1cblx0XHR9XG5cblx0XHQmW2RhdGEtZm9jdXMtdmlzaWJsZV06OmFmdGVyIHtcblx0XHRcdG9wYWNpdHk6IDE7XG5cdFx0fVxuXHR9XG5cblx0W2FyaWEtb3JpZW50YXRpb249J2hvcml6b250YWwnXSAmIHtcblx0XHRwYWRkaW5nLWlubGluZTogJHsgc3BhY2UoIDQgKSB9O1xuXHRcdGhlaWdodDogJHsgc3BhY2UoIDEyICkgfTtcblx0XHRzY3JvbGwtbWFyZ2luOiAyNHB4O1xuXG5cdFx0Jjo6YWZ0ZXIge1xuXHRcdFx0Y29udGVudDogJyc7XG5cdFx0XHRpbnNldDogJHsgc3BhY2UoIDMgKSB9O1xuXHRcdH1cblx0fVxuXG5cdFthcmlhLW9yaWVudGF0aW9uPSd2ZXJ0aWNhbCddICYge1xuXHRcdHBhZGRpbmc6ICR7IHNwYWNlKCAyICkgfSAkeyBzcGFjZSggMyApIH07XG5cdFx0bWluLWhlaWdodDogJHsgc3BhY2UoIDEwICkgfTtcblxuXHRcdCZbYXJpYS1zZWxlY3RlZD0ndHJ1ZSddIHtcblx0XHRcdGZpbGw6IGN1cnJlbnRDb2xvcjtcblx0XHR9XG5cdH1cblx0W2FyaWEtb3JpZW50YXRpb249J3ZlcnRpY2FsJ11bZGF0YS1zZWxlY3Qtb24tbW92ZT0nZmFsc2UnXSAmOjphZnRlciB7XG5cdFx0Y29udGVudDogJyc7XG5cdFx0aW5zZXQ6IHZhciggLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMgKTtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFRhYkNoaWxkcmVuID0gc3R5bGVkLnNwYW5gXG5cdGZsZXgtZ3JvdzogMTtcblxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXG5cdFthcmlhLW9yaWVudGF0aW9uPSdob3Jpem9udGFsJ10gJiB7XG5cdFx0anVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG5cdH1cblx0W2FyaWEtb3JpZW50YXRpb249J3ZlcnRpY2FsJ10gJiB7XG5cdFx0anVzdGlmeS1jb250ZW50OiBzdGFydDtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFRhYkNoZXZyb24gPSBzdHlsZWQoIEljb24gKWBcblx0ZmxleC1zaHJpbms6IDA7XG5cdG1hcmdpbi1pbmxpbmUtZW5kOiAkeyBzcGFjZSggLTEgKSB9O1xuXHRbYXJpYS1vcmllbnRhdGlvbj0naG9yaXpvbnRhbCddICYge1xuXHRcdGRpc3BsYXk6IG5vbmU7XG5cdH1cblx0b3BhY2l0eTogMDtcblx0W3JvbGU9J3RhYiddOmlzKCBbYXJpYS1zZWxlY3RlZD0ndHJ1ZSddLCBbZGF0YS1mb2N1cy12aXNpYmxlXSwgOmhvdmVyICkgJiB7XG5cdFx0b3BhY2l0eTogMTtcblx0fVxuXHQvLyBUaGUgY2hldnJvbiBpcyB0cmFuc2l0aW9uZWQgaW50byBleGlzdGVuY2Ugd2hlbiBzZWxlY3RPbk1vdmUgaXMgZW5hYmxlZCxcblx0Ly8gYmVjYXVzZSBvdGhlcndpc2UgaXQgbG9va3MgamFycmluZywgYXMgaXQgc2hvd3MgdXAgb3V0c2lkZSBvZiB0aGUgZm9jdXNcblx0Ly8gaW5kaWNhdG9yIHRoYXQncyBiZWluZyBhbmltYXRlZCBhdCB0aGUgc2FtZSB0aW1lLlxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHRbZGF0YS1zZWxlY3Qtb24tbW92ZT0ndHJ1ZSddXG5cdFx0XHRbcm9sZT0ndGFiJ106aXMoIFthcmlhLXNlbGVjdGVkPSd0cnVlJ10sICApXG5cdFx0XHQmIHtcblx0XHRcdHRyYW5zaXRpb246IG9wYWNpdHkgMC4xNXMgMC4xNXMgbGluZWFyO1xuXHRcdH1cblx0fVxuXHQmOmRpciggcnRsICkge1xuXHRcdHJvdGF0ZTogMTgwZGVnO1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgVGFiUGFuZWwgPSBzdHlsZWQoIEFyaWFraXQuVGFiUGFuZWwgKWBcblx0Jjpmb2N1cyB7XG5cdFx0Ym94LXNoYWRvdzogbm9uZTtcblx0XHRvdXRsaW5lOiBub25lO1xuXHR9XG5cblx0JltkYXRhLWZvY3VzLXZpc2libGVdIHtcblx0XHRib3gtc2hhZG93OiAwIDAgMCB2YXIoIC0td3AtYWRtaW4tYm9yZGVyLXdpZHRoLWZvY3VzIClcblx0XHRcdCR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHQvLyBXaW5kb3dzIGhpZ2ggY29udHJhc3QgbW9kZS5cblx0XHRvdXRsaW5lOiAycHggc29saWQgdHJhbnNwYXJlbnQ7XG5cdFx0b3V0bGluZS1vZmZzZXQ6IDA7XG5cdH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/tabs/tab.mjs
-  var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
-  var Tab3 = (0, import_element220.forwardRef)(function Tab23({
+  var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
+  var Tab3 = (0, import_element223.forwardRef)(function Tab23({
     children,
     tabId,
     disabled,
@@ -51843,16 +52785,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return null;
     }
     const instancedTabId = `${instanceId}-${tabId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime302.jsxs)(Tab22, {
+    return /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)(Tab22, {
       ref,
       store,
       id: instancedTabId,
       disabled,
       render,
       ...otherProps,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime302.jsx)(TabChildren, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime306.jsx)(TabChildren, {
         children
-      }), /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(TabChevron, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(TabChevron, {
         icon: chevron_right_default
       })]
     });
@@ -51860,16 +52802,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tabs/tablist.mjs
   var import_warning12 = __toESM(require_warning(), 1);
-  var import_element222 = __toESM(require_element(), 1);
+  var import_element225 = __toESM(require_element(), 1);
   var import_compose84 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/tabs/use-track-overflow.mjs
-  var import_element221 = __toESM(require_element(), 1);
+  var import_element224 = __toESM(require_element(), 1);
   var import_compose83 = __toESM(require_compose(), 1);
   function useTrackOverflow(parent, children) {
-    const [first, setFirst] = (0, import_element221.useState)(false);
-    const [last, setLast] = (0, import_element221.useState)(false);
-    const [observer, setObserver] = (0, import_element221.useState)();
+    const [first, setFirst] = (0, import_element224.useState)(false);
+    const [last, setLast] = (0, import_element224.useState)(false);
+    const [observer, setObserver] = (0, import_element224.useState)();
     const callback = (0, import_compose83.useEvent)((entries) => {
       for (const entry of entries) {
         if (entry.target === children.first) {
@@ -51880,7 +52822,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       }
     });
-    (0, import_element221.useEffect)(() => {
+    (0, import_element224.useEffect)(() => {
       if (!parent || !window.IntersectionObserver) {
         return;
       }
@@ -51891,7 +52833,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       setObserver(newObserver);
       return () => newObserver.disconnect();
     }, [callback, parent]);
-    (0, import_element221.useEffect)(() => {
+    (0, import_element224.useEffect)(() => {
       if (!observer) {
         return;
       }
@@ -51917,12 +52859,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tabs/tablist.mjs
-  var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_SCROLL_MARGIN = 24;
   function useScrollRectIntoView(parent, rect, {
     margin = DEFAULT_SCROLL_MARGIN
   } = {}) {
-    (0, import_element222.useLayoutEffect)(() => {
+    (0, import_element225.useLayoutEffect)(() => {
       if (!parent || !rect) {
         return;
       }
@@ -51951,7 +52893,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
     }, [margin, parent, rect]);
   }
-  var TabList3 = (0, import_element222.forwardRef)(function TabList22({
+  var TabList3 = (0, import_element225.forwardRef)(function TabList22({
     children,
     ...otherProps
   }, ref) {
@@ -51961,7 +52903,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const selectedId = useStoreState(store, "selectedId");
     const selectOnMove = useStoreState(store, "selectOnMove");
     const items = useStoreState(store, "items");
-    const [parent, setParent] = (0, import_element222.useState)();
+    const [parent, setParent] = (0, import_element225.useState)();
     const refs = (0, import_compose84.useMergeRefs)([ref, setParent]);
     const selectedItem = store?.item(selectedId);
     const renderedItems = useStoreState(store, "renderedItems");
@@ -51982,10 +52924,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       true ? (0, import_warning12.default)("`Tabs.TabList` must be wrapped in a `Tabs` component.") : void 0;
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(StyledTabList, {
+    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(StyledTabList, {
       ref: refs,
       store,
-      render: (props) => /* @__PURE__ */ (0, import_jsx_runtime303.jsx)("div", {
+      render: (props) => /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("div", {
         ...props,
         // Fallback to -1 to prevent browsers from making the tablist
         // tabbable when it is a scrolling container.
@@ -51999,10 +52941,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/tabs/tabpanel.mjs
-  var import_element223 = __toESM(require_element(), 1);
+  var import_element226 = __toESM(require_element(), 1);
   var import_warning13 = __toESM(require_warning(), 1);
-  var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
-  var TabPanel3 = (0, import_element223.forwardRef)(function TabPanel24({
+  var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
+  var TabPanel3 = (0, import_element226.forwardRef)(function TabPanel24({
     children,
     tabId,
     focusable = true,
@@ -52019,7 +52961,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       instanceId
     } = context;
     const instancedTabId = `${instanceId}-${tabId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(TabPanel23, {
+    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(TabPanel23, {
       ref,
       store,
       id: `${instancedTabId}-view`,
@@ -52031,7 +52973,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/tabs/index.mjs
-  var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
   function externalToInternalTabId(externalId, instanceId) {
     return externalId && `${instanceId}-${externalId}`;
   }
@@ -52063,13 +53005,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         onActiveTabIdChange?.(internalToExternalTabId(newActiveId, instanceId));
       },
       activeId: externalToInternalTabId(activeTabId, instanceId),
-      rtl: (0, import_i18n73.isRTL)()
+      rtl: (0, import_i18n74.isRTL)()
     });
-    const contextValue = (0, import_element224.useMemo)(() => ({
+    const contextValue = (0, import_element227.useMemo)(() => ({
       store,
       instanceId
     }), [store, instanceId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(TabsContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(TabsContext.Provider, {
       value: contextValue,
       children
     });
@@ -52103,7 +53045,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/badge/index.mjs
-  var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
   function contextBasedIcon(intent = "default") {
     switch (intent) {
       case "info":
@@ -52119,27 +53061,27 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }
   }
   function Badge({
-    className: className2,
+    className,
     intent = "default",
     children,
     ...props
   }) {
     const icon = contextBasedIcon(intent);
     const hasIcon = !!icon;
-    return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)("span", {
-      className: clsx_default("components-badge", className2, {
+    return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)("span", {
+      className: clsx_default("components-badge", className, {
         [`is-${intent}`]: intent,
         "has-icon": hasIcon
       }),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)("span", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime310.jsxs)("span", {
         className: "components-badge__flex-wrapper",
-        children: [hasIcon && /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(icon_default3, {
+        children: [hasIcon && /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(icon_default3, {
           icon,
           size: 16,
           fill: "currentColor",
           className: "components-badge__icon"
-        }), /* @__PURE__ */ (0, import_jsx_runtime306.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime310.jsx)("span", {
           className: "components-badge__content",
           children
         })]
@@ -52148,242 +53090,42 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
   var badge_default = Badge;
 
-  // packages/components/build-module/validated-form-controls/control-with-error.mjs
-  var import_i18n74 = __toESM(require_i18n(), 1);
-  var import_element225 = __toESM(require_element(), 1);
-
-  // packages/components/build-module/validated-form-controls/validity-indicator.mjs
-  var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
-  function ValidityIndicator({
-    id: id3,
-    type,
-    message
-  }) {
-    const ICON = {
-      valid: published_default,
-      invalid: error_default
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime307.jsxs)("p", {
-      id: id3,
-      className: clsx_default("components-validated-control__indicator", `is-${type}`),
-      children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(spinner_default, {
-        className: "components-validated-control__indicator-spinner"
-      }) : /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(icon_default3, {
-        className: "components-validated-control__indicator-icon",
-        icon: ICON[type],
-        size: 16,
-        fill: "currentColor"
-      }), message]
-    });
-  }
-
-  // packages/components/build-module/validated-form-controls/control-with-error.mjs
-  var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
-  function appendRequiredIndicator(label, required, markWhenOptional) {
-    let suffix;
-    if (required && !markWhenOptional) {
-      suffix = `(${(0, import_i18n74.__)("Required")})`;
-    } else if (!required && markWhenOptional) {
-      suffix = `(${(0, import_i18n74.__)("Optional")})`;
-    }
-    if (!suffix) {
-      return label;
-    }
-    if (typeof label === "string") {
-      return `${label} ${suffix}`;
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime308.jsxs)(import_jsx_runtime308.Fragment, {
-      children: [label, " ", suffix]
-    });
-  }
-  var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
-  var className = "components-validated-control";
-  function UnforwardedControlWithError({
-    required,
-    markWhenOptional,
-    customValidity,
-    getValidityTarget,
-    children
-  }, forwardedRef) {
-    const [errorMessage, setErrorMessage] = (0, import_element225.useState)();
-    const [statusMessage, setStatusMessage] = (0, import_element225.useState)();
-    const [showMessage, setShowMessage] = (0, import_element225.useState)(false);
-    const [isTouched, setIsTouched] = (0, import_element225.useState)(false);
-    (0, import_element225.useEffect)(() => {
-      const validityTarget = getValidityTarget();
-      const handler = () => {
-        if (customValidity?.type !== "validating") {
-          setErrorMessage(validityTarget?.validationMessage);
-        }
-        setShowMessage(true);
-        validityTarget?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
-      };
-      validityTarget?.addEventListener("invalid", handler);
-      return () => validityTarget?.removeEventListener("invalid", handler);
-    }, [customValidity?.type, getValidityTarget]);
-    (0, import_element225.useEffect)(() => {
-      const validityTarget = getValidityTarget();
-      const suppressNativePopover = (event) => {
-        event.preventDefault();
-        if (!event.isTrusted) {
-          return;
-        }
-        const target = event.target;
-        const firstErrorInForm = Array.from(target.form?.elements ?? []).find((el) => !el.validity.valid);
-        if (!target.form || firstErrorInForm === target) {
-          target.focus();
-        }
-      };
-      const radioSibilings = validityTarget?.type === "radio" && validityTarget?.name ? Array.from(validityTarget?.closest(`.${className}`)?.querySelectorAll(`input[type="radio"][name="${validityTarget?.name}"]`) ?? []).filter((sibling) => sibling !== validityTarget) : [];
-      validityTarget?.addEventListener("invalid", suppressNativePopover);
-      radioSibilings.forEach((sibling) => sibling.addEventListener("invalid", suppressNativePopover));
-      return () => {
-        validityTarget?.removeEventListener("invalid", suppressNativePopover);
-        radioSibilings.forEach((sibling) => sibling.removeEventListener("invalid", suppressNativePopover));
-      };
-    }, [getValidityTarget]);
-    (0, import_element225.useEffect)(() => {
-      const validityTarget = getValidityTarget();
-      if (!customValidity?.type) {
-        validityTarget?.setCustomValidity("");
-        setErrorMessage(validityTarget?.validationMessage);
-        setStatusMessage(void 0);
-        return;
-      }
-      switch (customValidity.type) {
-        case "validating": {
-          validityTarget?.setCustomValidity("");
-          setErrorMessage(void 0);
-          setStatusMessage({
-            type: "validating",
-            message: customValidity.message
-          });
-          break;
-        }
-        case "valid": {
-          validityTarget?.setCustomValidity("");
-          setErrorMessage(validityTarget?.validationMessage);
-          setStatusMessage({
-            type: "valid",
-            message: customValidity.message
-          });
-          break;
-        }
-        case "invalid": {
-          validityTarget?.setCustomValidity(customValidity.message ?? "");
-          setErrorMessage(validityTarget?.validationMessage);
-          setStatusMessage(void 0);
-          break;
-        }
-      }
-    }, [customValidity, getValidityTarget]);
-    (0, import_element225.useEffect)(() => {
-      if (!isTouched || showMessage) {
-        return;
-      }
-      if (customValidity?.type === "validating") {
-        const timer = setTimeout(() => {
-          setShowMessage(true);
-        }, 1e3);
-        return () => clearTimeout(timer);
-      }
-      setShowMessage(true);
-    }, [isTouched, customValidity?.type, showMessage]);
-    const onBlur = (event) => {
-      if (isTouched) {
-        return;
-      }
-      if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget)) {
-        setIsTouched(true);
-        getValidityTarget()?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
-      }
-    };
-    const messageId = (0, import_element225.useId)();
-    const message = (() => {
-      if (errorMessage) {
-        return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(ValidityIndicator, {
-          id: messageId,
-          type: "invalid",
-          message: errorMessage
-        });
-      }
-      if (statusMessage?.type) {
-        return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(ValidityIndicator, {
-          id: messageId,
-          type: statusMessage.type,
-          message: statusMessage.message
-        });
-      }
-      return null;
-    })();
-    const visibleMessage = showMessage ? message : null;
-    (0, import_element225.useEffect)(() => {
-      const target = getValidityTarget();
-      if (!target) {
-        return;
-      }
-      function setDescribedBy(el, shouldAdd) {
-        const ids = (el.getAttribute("aria-describedby") ?? "").split(" ").filter((id3) => id3 && id3 !== messageId);
-        if (shouldAdd) {
-          ids.push(messageId);
-        }
-        if (ids.length) {
-          el.setAttribute("aria-describedby", ids.join(" "));
-        } else {
-          el.removeAttribute("aria-describedby");
-        }
-      }
-      setDescribedBy(target, !!visibleMessage);
-      return () => setDescribedBy(target, false);
-    }, [visibleMessage, messageId, getValidityTarget]);
-    return /* @__PURE__ */ (0, import_jsx_runtime308.jsxs)("div", {
-      className,
-      ref: forwardedRef,
-      onBlur,
-      children: [(0, import_element225.cloneElement)(children, {
-        label: appendRequiredIndicator(children.props.label, required, markWhenOptional),
-        required
-      }), visibleMessage]
-    });
-  }
-  var ControlWithError = (0, import_element225.forwardRef)(UnforwardedControlWithError);
-  ControlWithError.displayName = "ControlWithError";
-
   // packages/components/build-module/validated-form-controls/components/input-control.mjs
-  var import_element226 = __toESM(require_element(), 1);
+  var import_element228 = __toESM(require_element(), 1);
   var import_compose86 = __toESM(require_compose(), 1);
-  var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedInputControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element226.useRef)(null);
+    const validityTargetRef = (0, import_element228.useRef)(null);
     const mergedRefs = (0, import_compose86.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(ControlWithError, {
+      className: "components-validated-control",
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(input_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(input_control_default, {
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedInputControl = (0, import_element226.forwardRef)(UnforwardedValidatedInputControl);
+  var ValidatedInputControl = (0, import_element228.forwardRef)(UnforwardedValidatedInputControl);
   ValidatedInputControl.displayName = "ValidatedInputControl";
 
   // packages/components/build-module/validated-form-controls/components/content-editable-control.mjs
-  var import_element228 = __toESM(require_element(), 1);
+  var import_element230 = __toESM(require_element(), 1);
 
   // packages/components/build-module/content-editable-control/index.mjs
   var import_compose87 = __toESM(require_compose(), 1);
-  var import_element227 = __toESM(require_element(), 1);
-  var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE30 = "data-wp-hash";
-  function getRuntime30() {
+  var import_element229 = __toESM(require_element(), 1);
+  var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE32 = "data-wp-hash";
+  function getRuntime32() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -52394,26 +53136,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument30(document);
+      registerDocument32(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash30(targetDocument, hash2) {
+  function documentContainsStyleHash32(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE30}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE30) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE32}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE32) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle30(targetDocument, hash2, css3) {
+  function injectStyle32(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime30();
+    const runtime = getRuntime32();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -52422,21 +53164,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash30(targetDocument, hash2)) {
+    if (documentContainsStyleHash32(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE30, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE32, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument30(targetDocument) {
-    const runtime = getRuntime30();
+  function registerDocument32(targetDocument) {
+    const runtime = getRuntime32();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle30(targetDocument, hash2, css3);
+      injectStyle32(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -52450,21 +53192,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle29(hash2, css3) {
-    const runtime = getRuntime30();
+  function registerStyle31(hash2, css3) {
+    const runtime = getRuntime32();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle30(targetDocument, hash2, css3);
+      injectStyle32(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle29("3558237a49", "._0f130cee1a924516__editable{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;width:100%}@media (min-width:600px){._0f130cee1a924516__editable{font-size:13px;line-height:normal}}._0f130cee1a924516__editable:hover:not(:disabled,[aria-disabled=true],[type=checkbox]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}._0f130cee1a924516__editable:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._0f130cee1a924516__editable::placeholder{color:rgba(30,30,30,.62)}._0f130cee1a924516__editable[aria-placeholder]:empty:before{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%);content:attr(aria-placeholder)}._0f130cee1a924516__editable{min-height:40px;padding:12px}._0f130cee1a924516__editable[aria-disabled=true]{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb));color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));cursor:default}");
+    registerStyle31("3558237a49", "._0f130cee1a924516__editable{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;width:100%}@media (min-width:600px){._0f130cee1a924516__editable{font-size:13px;line-height:normal}}._0f130cee1a924516__editable:hover:not(:disabled,[aria-disabled=true],[type=checkbox]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}._0f130cee1a924516__editable:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._0f130cee1a924516__editable::placeholder{color:rgba(30,30,30,.62)}._0f130cee1a924516__editable[aria-placeholder]:empty:before{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%);content:attr(aria-placeholder)}._0f130cee1a924516__editable{min-height:40px;padding:12px}._0f130cee1a924516__editable[aria-disabled=true]{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb));color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));cursor:default}");
   }
   var style_module_default28 = { "editable": "_0f130cee1a924516__editable" };
   function UnforwardedContentEditableControl({
     label,
     id: id3,
-    className: className2,
+    className,
     help,
     hideLabelFromVision,
     disabled,
@@ -52477,22 +53219,22 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       controlProps
     } = useBaseControlProps({
       id: id3,
-      className: className2,
+      className,
       help
     });
     const labelId = `${controlProps.id}__label`;
-    const editableRef = (0, import_element227.useRef)(null);
+    const editableRef = (0, import_element229.useRef)(null);
     const mergedRefs = (0, import_compose87.useMergeRefs)([editableRef, forwardedRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime310.jsxs)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime312.jsxs)(base_control_default, {
       ...baseControlProps,
-      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(component_default2, {
+      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(component_default2, {
         id: labelId,
         children: label
-      }) : /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(base_control_default.VisualLabel, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(base_control_default.VisualLabel, {
         id: labelId,
         onClick: () => editableRef.current?.focus(),
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime310.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime312.jsx)("div", {
         className: style_module_default28.editable,
         role: "textbox",
         "aria-multiline": true,
@@ -52508,34 +53250,35 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   }
-  var ContentEditableControl = (0, import_element227.forwardRef)(UnforwardedContentEditableControl);
+  var ContentEditableControl = (0, import_element229.forwardRef)(UnforwardedContentEditableControl);
   var content_editable_control_default = ContentEditableControl;
 
   // packages/components/build-module/validated-form-controls/components/content-editable-control.mjs
-  var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedContentEditableControl = ({
     required,
     customValidity,
     markWhenOptional,
     value,
-    className: className2,
+    className,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element228.useRef)(null);
-    return /* @__PURE__ */ (0, import_jsx_runtime311.jsxs)("div", {
+    const validityTargetRef = (0, import_element230.useRef)(null);
+    return /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime311.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime313.jsx)(ControlWithError, {
+        className: "components-validated-control",
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(content_editable_control_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(content_editable_control_default, {
           ref: forwardedRef,
-          className: clsx_default("components-validated-control__content-editable", className2),
+          className: clsx_default("components-validated-control__content-editable", className),
           "aria-invalid": customValidity?.type === "invalid" || void 0,
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime311.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime313.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "text",
         ref: validityTargetRef,
@@ -52550,33 +53293,34 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   };
-  var ValidatedContentEditableControl = (0, import_element228.forwardRef)(UnforwardedValidatedContentEditableControl);
+  var ValidatedContentEditableControl = (0, import_element230.forwardRef)(UnforwardedValidatedContentEditableControl);
   ValidatedContentEditableControl.displayName = "ValidatedContentEditableControl";
 
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
-  var import_element229 = __toESM(require_element(), 1);
+  var import_element231 = __toESM(require_element(), 1);
   var import_compose88 = __toESM(require_compose(), 1);
-  var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element229.useRef)(null);
+    const validityTargetRef = (0, import_element231.useRef)(null);
     const mergedRefs = (0, import_compose88.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(ControlWithError, {
+      className: "components-validated-control",
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(textarea_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(textarea_control_default, {
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedTextareaControl = (0, import_element229.forwardRef)(UnforwardedValidatedTextareaControl);
+  var ValidatedTextareaControl = (0, import_element231.forwardRef)(UnforwardedValidatedTextareaControl);
   ValidatedTextareaControl.displayName = "ValidatedTextareaControl";
 
   // packages/components/build-module/private-apis.mjs
