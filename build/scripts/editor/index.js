@@ -1177,7 +1177,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment127 = REACT_FRAGMENT_TYPE;
+          var Fragment128 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE2;
           var Memo = REACT_MEMO_TYPE;
           var Portal2 = REACT_PORTAL_TYPE;
@@ -1236,7 +1236,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment127;
+          exports.Fragment = Fragment128;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal2;
@@ -69477,6 +69477,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/font-library/font-demo.mjs
   var import_element212 = __toESM(require_element(), 1);
   var import_jsx_runtime350 = __toESM(require_jsx_runtime(), 1);
+  var loadedPreviews = /* @__PURE__ */ new Set();
   function getPreviewUrl(fontFace) {
     if (fontFace.preview) {
       return fontFace.preview;
@@ -69507,11 +69508,19 @@ If there's a particular need for this, please submit a feature request at https:
     const style = getFamilyPreviewStyle(font2);
     text = text || ("name" in font2 ? font2.name : "");
     const customPreviewUrl = font2.preview;
-    const [isIntersecting, setIsIntersecting] = (0, import_element212.useState)(false);
-    const [isAssetLoaded, setIsAssetLoaded] = (0, import_element212.useState)(false);
-    const { loadFontFaceAsset } = (0, import_element212.useContext)(FontLibraryContext);
     const previewUrl = customPreviewUrl ?? getPreviewUrl(fontFace);
-    const isPreviewImage = previewUrl && previewUrl.match(/\.(png|jpg|jpeg|gif|svg)$/i);
+    const isPreviewImage = Boolean(
+      previewUrl && /\.(png|jpg|jpeg|gif|svg)$/i.test(previewUrl)
+    );
+    const [isIntersecting, setIsIntersecting] = (0, import_element212.useState)(false);
+    const [isFontLoaded, setIsFontLoaded] = (0, import_element212.useState)(false);
+    const [resolvedUrl, setResolvedUrl] = (0, import_element212.useState)();
+    const { loadFontFaceAsset } = (0, import_element212.useContext)(FontLibraryContext);
+    const isAssetLoaded = isPreviewImage ? !!previewUrl && (loadedPreviews.has(previewUrl) || resolvedUrl === previewUrl) : isFontLoaded;
+    const estimatedImageWidth = Math.min(
+      Math.max(text.length * 12, 48),
+      300
+    );
     const faceStyles = getFacePreviewStyle(fontFace);
     const textDemoStyle = {
       fontSize: "18px",
@@ -69521,6 +69530,9 @@ If there's a particular need for this, please submit a feature request at https:
       ...faceStyles
     };
     (0, import_element212.useEffect)(() => {
+      if (isPreviewImage) {
+        return;
+      }
       const observer = new window.IntersectionObserver(([entry]) => {
         setIsIntersecting(entry.isIntersecting);
       }, {});
@@ -69528,27 +69540,46 @@ If there's a particular need for this, please submit a feature request at https:
         observer.observe(ref.current);
       }
       return () => observer.disconnect();
-    }, [ref]);
+    }, [isPreviewImage]);
     (0, import_element212.useEffect)(() => {
       const loadAsset = async () => {
-        if (isIntersecting) {
-          if (!isPreviewImage && fontFace.src) {
+        if (isIntersecting && !isPreviewImage) {
+          if (fontFace.src) {
             await loadFontFaceAsset(fontFace);
           }
-          setIsAssetLoaded(true);
+          setIsFontLoaded(true);
         }
       };
       loadAsset();
     }, [fontFace, isIntersecting, loadFontFaceAsset, isPreviewImage]);
-    return /* @__PURE__ */ (0, import_jsx_runtime350.jsx)("div", { ref, children: isPreviewImage ? /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
-      "img",
-      {
-        src: previewUrl,
-        loading: "lazy",
-        alt: text,
-        className: "font-library__font-variant_demo-image"
-      }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime350.jsx)("div", { ref, className: "font-library__font-demo", children: isPreviewImage ? /* @__PURE__ */ (0, import_jsx_runtime350.jsxs)(import_jsx_runtime350.Fragment, { children: [
+      !isAssetLoaded && /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
+        Skeleton,
+        {
+          className: "font-library__font-variant-demo-skeleton",
+          style: { width: estimatedImageWidth }
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
+        "img",
+        {
+          src: previewUrl,
+          loading: "lazy",
+          alt: text,
+          onLoad: () => {
+            if (previewUrl) {
+              loadedPreviews.add(previewUrl);
+            }
+            setResolvedUrl(previewUrl);
+          },
+          onError: () => setResolvedUrl(previewUrl),
+          className: clsx_default(
+            "font-library__font-variant_demo-image",
+            { "is-loading": !isAssetLoaded }
+          )
+        }
+      )
+    ] }) : /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
       "span",
       {
         style: textDemoStyle,

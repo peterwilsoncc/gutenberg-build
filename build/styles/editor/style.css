@@ -738,6 +738,10 @@ body.is-fullscreen-mode .interface-interface-skeleton {
   margin-bottom: 0;
 }
 
+.font-library__font-demo {
+  position: relative;
+}
+
 .font-library__font-card {
   box-sizing: border-box;
   border: 1px solid #ddd;
@@ -767,6 +771,23 @@ body.is-fullscreen-mode .interface-interface-skeleton {
   display: block;
   height: 24px;
   width: auto;
+}
+
+@media not (prefers-reduced-motion) {
+  .font-library__font-card .font-library__font-variant_demo-image {
+    transition: opacity var(--wpds-motion-duration-lg, 300ms) var(--wpds-motion-easing-subtle, cubic-bezier(0.15, 0, 0.15, 1));
+  }
+}
+.font-library__font-card .font-library__font-variant_demo-image.is-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.font-library__font-card .font-library__font-variant-demo-skeleton {
+  height: 24px;
+  border-radius: var(--wpds-border-radius-sm, 2px);
 }
 
 .font-library__font-card .font-library__font-variant_demo-text {
