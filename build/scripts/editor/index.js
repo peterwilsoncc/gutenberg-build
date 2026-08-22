@@ -53087,25 +53087,24 @@ If there's a particular need for this, please submit a feature request at https:
     const disabled2 = field.isDisabled({ item: data, field });
     const fieldValue = getValue3({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
-    const {
-      timezone: { string: timezoneString }
-    } = (0, import_date9.getSettings)();
+    const { timezone } = (0, import_date9.getSettings)();
+    const timeZone = timezone.string || (0, import_date9.dateI18n)("P");
     const [calendarMonth, setCalendarMonth] = (0, import_element150.useState)(() => {
       const parsedDate = parseDateTime(value);
-      return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timezoneString);
+      return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timeZone);
     });
     (0, import_element150.useEffect)(() => {
       const parsedDate = parseDateTime(value);
       if (parsedDate) {
-        const targetMonth = toCalendarDate(parsedDate, timezoneString);
+        const targetMonth = toCalendarDate(parsedDate, timeZone);
         setCalendarMonth(
           (currentMonth) => isSameMonth(
             targetMonth,
-            toCalendarDate(currentMonth, timezoneString)
+            toCalendarDate(currentMonth, timeZone)
           ) ? currentMonth : targetMonth
         );
       }
-    }, [value, timezoneString]);
+    }, [timeZone, value]);
     const inputControlRef = (0, import_element150.useRef)(null);
     const validationTimeoutRef = (0, import_element150.useRef)(void 0);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
@@ -53120,12 +53119,7 @@ If there's a particular need for this, please submit a feature request at https:
       (newDate) => {
         if (newDate) {
           const wpDate = (0, import_date9.dateI18n)("Y-m-d", newDate);
-          let wpTime;
-          if (value) {
-            wpTime = (0, import_date9.dateI18n)("H:i", (0, import_date9.getDate)(value));
-          } else {
-            wpTime = (0, import_date9.dateI18n)("H:i", newDate);
-          }
+          const wpTime = value ? (0, import_date9.dateI18n)("H:i", (0, import_date9.getDate)(value)) : "00:00";
           const finalDateTime = (0, import_date9.getDate)(`${wpDate}T${wpTime}`);
           onChangeCallback(finalDateTime.toISOString());
         } else {
@@ -53154,15 +53148,13 @@ If there's a particular need for this, please submit a feature request at https:
           onChangeCallback(dateTime.toISOString());
           const parsedDate = parseDateTime(dateTime.toISOString());
           if (parsedDate) {
-            setCalendarMonth(
-              toCalendarDate(parsedDate, timezoneString)
-            );
+            setCalendarMonth(toCalendarDate(parsedDate, timeZone));
           }
         } else {
           onChangeCallback(void 0);
         }
       },
-      [onChangeCallback, timezoneString]
+      [onChangeCallback, timeZone]
     );
     const { format: fieldFormat } = field;
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date9.getSettings)().l10n.startOfWeek;
@@ -53204,7 +53196,7 @@ If there's a particular need for this, please submit a feature request at https:
               onValueChange: onSelectDate,
               month: calendarMonth,
               onMonthChange: setCalendarMonth,
-              timeZone: timezoneString || void 0,
+              timeZone,
               weekStartsOn,
               disabled: disabled2 || disabledMatchers
             }
@@ -53334,8 +53326,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (!dateString) {
       return null;
     }
-    const parsed = (0, import_date10.getDate)(dateString);
-    return parsed && isValid(parsed) ? parsed : null;
+    const parsed = parseISO(dateString);
+    return isValid(parsed) ? parsed : null;
   };
   var formatDate = (date) => {
     if (!date) {
@@ -53451,27 +53443,20 @@ If there's a particular need for this, please submit a feature request at https:
       null
     );
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date10.getSettings)().l10n.startOfWeek;
-    const {
-      timezone: { string: timezoneString }
-    } = (0, import_date10.getSettings)();
     const fieldValue = getValue3({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
     const [calendarMonth, setCalendarMonth] = (0, import_element151.useState)(() => {
       const parsedDate = parseDate2(value);
-      return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timezoneString);
+      return parsedDate || /* @__PURE__ */ new Date();
     });
     (0, import_element151.useEffect)(() => {
       const parsedDate = parseDate2(value);
       if (parsedDate) {
-        const targetMonth = toCalendarDate(parsedDate, timezoneString);
         setCalendarMonth(
-          (currentMonth) => isSameMonth(
-            targetMonth,
-            toCalendarDate(currentMonth, timezoneString)
-          ) ? currentMonth : targetMonth
+          (currentMonth) => isSameMonth(parsedDate, currentMonth) ? currentMonth : parsedDate
         );
       }
-    }, [value, timezoneString]);
+    }, [value]);
     const [isTouched, setIsTouched] = (0, import_element151.useState)(false);
     const validityTargetRef = (0, import_element151.useRef)(null);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
@@ -53481,7 +53466,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const onSelectDate = (0, import_element151.useCallback)(
       (newDate) => {
-        const dateValue = newDate ? format(newDate, "yyyy-MM-dd") : void 0;
+        const dateValue = newDate ? formatDate(newDate) : void 0;
         onChangeCallback(dateValue);
         setSelectedPresetId(null);
         setIsTouched(true);
@@ -53492,12 +53477,12 @@ If there's a particular need for this, please submit a feature request at https:
       (preset) => {
         const presetDate = preset.getValue();
         const dateValue = formatDate(presetDate);
-        setCalendarMonth(toCalendarDate(presetDate, timezoneString));
+        setCalendarMonth(presetDate);
         onChangeCallback(dateValue);
         setSelectedPresetId(preset.id);
         setIsTouched(true);
       },
-      [onChangeCallback, timezoneString]
+      [onChangeCallback]
     );
     const handleManualDateChange = (0, import_element151.useCallback)(
       (newValue) => {
@@ -53505,15 +53490,13 @@ If there's a particular need for this, please submit a feature request at https:
         if (newValue) {
           const parsedDate = parseDate2(newValue);
           if (parsedDate) {
-            setCalendarMonth(
-              toCalendarDate(parsedDate, timezoneString)
-            );
+            setCalendarMonth(parsedDate);
           }
         }
         setSelectedPresetId(null);
         setIsTouched(true);
       },
-      [onChangeCallback, timezoneString]
+      [onChangeCallback]
     );
     let displayLabel = label;
     if (isValid2?.required && !markWhenOptional) {
@@ -53601,7 +53584,6 @@ If there's a particular need for this, please submit a feature request at https:
                   onValueChange: onSelectDate,
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
-                  timeZone: timezoneString || void 0,
                   weekStartsOn,
                   disabled: disabled2 || disabledMatchers,
                   disableNavigation: disabled2
@@ -53637,9 +53619,6 @@ If there's a particular need for this, please submit a feature request at https:
       value = fieldValue;
     }
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date10.getSettings)().l10n.startOfWeek;
-    const {
-      timezone: { string: timezoneString }
-    } = (0, import_date10.getSettings)();
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
     const onChangeCallback = (0, import_element151.useCallback)(
       (newValue) => {
@@ -53666,10 +53645,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, [value]);
     const [calendarMonth, setCalendarMonth] = (0, import_element151.useState)(() => {
-      return toCalendarDate(
-        selectedRange?.from || /* @__PURE__ */ new Date(),
-        timezoneString
-      );
+      return selectedRange?.from || /* @__PURE__ */ new Date();
     });
     const [fromValue, toValue] = value ?? [];
     (0, import_element151.useEffect)(() => {
@@ -53677,25 +53653,19 @@ If there's a particular need for this, please submit a feature request at https:
         const from = parseDate2(fromValue);
         const to2 = parseDate2(toValue);
         const targetMonth = from ?? to2;
-        const currentCalendarMonth = toCalendarDate(
-          currentMonth,
-          timezoneString
-        );
-        const calendarFrom = from && toCalendarDate(from, timezoneString);
-        const calendarTo = to2 && toCalendarDate(to2, timezoneString);
-        const isRangeVisible = calendarFrom && calendarTo ? areIntervalsOverlapping(
-          { start: calendarFrom, end: calendarTo },
+        const isRangeVisible = from && to2 ? areIntervalsOverlapping(
+          { start: from, end: to2 },
           {
-            start: startOfMonth(currentCalendarMonth),
-            end: endOfMonth(currentCalendarMonth)
+            start: startOfMonth(currentMonth),
+            end: endOfMonth(currentMonth)
           },
           { inclusive: true }
-        ) : [calendarFrom, calendarTo].some(
-          (date) => date && isSameMonth(date, currentCalendarMonth)
+        ) : [from, to2].some(
+          (date) => date && isSameMonth(date, currentMonth)
         );
-        return targetMonth && !isRangeVisible ? toCalendarDate(targetMonth, timezoneString) : currentMonth;
+        return targetMonth && !isRangeVisible ? targetMonth : currentMonth;
       });
-    }, [fromValue, toValue, timezoneString]);
+    }, [fromValue, toValue]);
     const [isTouched, setIsTouched] = (0, import_element151.useState)(false);
     const fromInputRef = (0, import_element151.useRef)(null);
     const toInputRef = (0, import_element151.useRef)(null);
@@ -53723,12 +53693,12 @@ If there's a particular need for this, please submit a feature request at https:
     const handlePresetClick = (0, import_element151.useCallback)(
       (preset) => {
         const [startDate2, endDate] = preset.getValue();
-        setCalendarMonth(toCalendarDate(startDate2, timezoneString));
+        setCalendarMonth(startDate2);
         updateDateRange(startDate2, endDate);
         setSelectedPresetId(preset.id);
         setIsTouched(true);
       },
-      [updateDateRange, timezoneString]
+      [updateDateRange]
     );
     const handleManualDateChange = (0, import_element151.useCallback)(
       (fromOrTo, newValue) => {
@@ -53742,15 +53712,13 @@ If there's a particular need for this, please submit a feature request at https:
         if (newValue) {
           const parsedDate = parseDate2(newValue);
           if (parsedDate) {
-            setCalendarMonth(
-              toCalendarDate(parsedDate, timezoneString)
-            );
+            setCalendarMonth(parsedDate);
           }
         }
         setSelectedPresetId(null);
         setIsTouched(true);
       },
-      [value, updateDateRange, timezoneString]
+      [value, updateDateRange]
     );
     let displayLabel = label;
     if (field.isValid?.required && !markWhenOptional) {
@@ -53864,7 +53832,6 @@ If there's a particular need for this, please submit a feature request at https:
                   onValueChange: onSelectCalendarRange,
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
-                  timeZone: timezoneString || void 0,
                   weekStartsOn,
                   disabled: disabled2 || disabledMatchers
                 }

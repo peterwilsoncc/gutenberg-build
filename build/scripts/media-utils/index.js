@@ -14539,6 +14539,181 @@ var wp;
     return addDays(date, -amount, options);
   }
 
+  // node_modules/date-fns/parseISO.js
+  function parseISO(argument, options) {
+    const invalidDate = () => constructFrom(options?.in, NaN);
+    const additionalDigits = options?.additionalDigits ?? 2;
+    const dateStrings = splitDateString(argument);
+    let date;
+    if (dateStrings.date) {
+      const parseYearResult = parseYear(dateStrings.date, additionalDigits);
+      date = parseDate(parseYearResult.restDateString, parseYearResult.year);
+    }
+    if (!date || isNaN(+date)) return invalidDate();
+    const timestamp = +date;
+    let time = 0;
+    let offset4;
+    if (dateStrings.time) {
+      time = parseTime(dateStrings.time);
+      if (isNaN(time)) return invalidDate();
+    }
+    if (dateStrings.timezone) {
+      offset4 = parseTimezone(dateStrings.timezone);
+      if (isNaN(offset4)) return invalidDate();
+    } else {
+      const tmpDate = new Date(timestamp + time);
+      const result = toDate(0, options?.in);
+      result.setFullYear(
+        tmpDate.getUTCFullYear(),
+        tmpDate.getUTCMonth(),
+        tmpDate.getUTCDate()
+      );
+      result.setHours(
+        tmpDate.getUTCHours(),
+        tmpDate.getUTCMinutes(),
+        tmpDate.getUTCSeconds(),
+        tmpDate.getUTCMilliseconds()
+      );
+      return result;
+    }
+    return toDate(timestamp + time + offset4, options?.in);
+  }
+  var patterns = {
+    dateTimeDelimiter: /[T ]/,
+    timeZoneDelimiter: /[Z ]/i,
+    timezone: /([Z+-].*)$/
+  };
+  var dateRegex = /^-?(?:(\d{3})|(\d{2})(?:-?(\d{2}))?|W(\d{2})(?:-?(\d{1}))?|)$/;
+  var timeRegex = /^(\d{2}(?:[.,]\d*)?)(?::?(\d{2}(?:[.,]\d*)?))?(?::?(\d{2}(?:[.,]\d*)?))?$/;
+  var timezoneRegex = /^([+-])(\d{2})(?::?(\d{2}))?$/;
+  function splitDateString(dateString) {
+    const dateStrings = {};
+    const array = dateString.split(patterns.dateTimeDelimiter);
+    let timeString;
+    if (array.length > 2) {
+      return dateStrings;
+    }
+    if (/:/.test(array[0])) {
+      timeString = array[0];
+    } else {
+      dateStrings.date = array[0];
+      timeString = array[1];
+      if (patterns.timeZoneDelimiter.test(dateStrings.date)) {
+        dateStrings.date = dateString.split(patterns.timeZoneDelimiter)[0];
+        timeString = dateString.substr(
+          dateStrings.date.length,
+          dateString.length
+        );
+      }
+    }
+    if (timeString) {
+      const token = patterns.timezone.exec(timeString);
+      if (token) {
+        dateStrings.time = timeString.replace(token[1], "");
+        dateStrings.timezone = token[1];
+      } else {
+        dateStrings.time = timeString;
+      }
+    }
+    return dateStrings;
+  }
+  function parseYear(dateString, additionalDigits) {
+    const regex = new RegExp(
+      "^(?:(\\d{4}|[+-]\\d{" + (4 + additionalDigits) + "})|(\\d{2}|[+-]\\d{" + (2 + additionalDigits) + "})$)"
+    );
+    const captures = dateString.match(regex);
+    if (!captures) return { year: NaN, restDateString: "" };
+    const year = captures[1] ? parseInt(captures[1]) : null;
+    const century = captures[2] ? parseInt(captures[2]) : null;
+    return {
+      year: century === null ? year : century * 100,
+      restDateString: dateString.slice((captures[1] || captures[2]).length)
+    };
+  }
+  function parseDate(dateString, year) {
+    if (year === null) return /* @__PURE__ */ new Date(NaN);
+    const captures = dateString.match(dateRegex);
+    if (!captures) return /* @__PURE__ */ new Date(NaN);
+    const isWeekDate = !!captures[4];
+    const dayOfYear = parseDateUnit(captures[1]);
+    const month = parseDateUnit(captures[2]) - 1;
+    const day = parseDateUnit(captures[3]);
+    const week = parseDateUnit(captures[4]);
+    const dayOfWeek = parseDateUnit(captures[5]) - 1;
+    if (isWeekDate) {
+      if (!validateWeekDate(year, week, dayOfWeek)) {
+        return /* @__PURE__ */ new Date(NaN);
+      }
+      return dayOfISOWeekYear(year, week, dayOfWeek);
+    } else {
+      const date = /* @__PURE__ */ new Date(0);
+      if (!validateDate(year, month, day) || !validateDayOfYearDate(year, dayOfYear)) {
+        return /* @__PURE__ */ new Date(NaN);
+      }
+      date.setUTCFullYear(year, month, Math.max(dayOfYear, day));
+      return date;
+    }
+  }
+  function parseDateUnit(value) {
+    return value ? parseInt(value) : 1;
+  }
+  function parseTime(timeString) {
+    const captures = timeString.match(timeRegex);
+    if (!captures) return NaN;
+    const hours = parseTimeUnit(captures[1]);
+    const minutes = parseTimeUnit(captures[2]);
+    const seconds = parseTimeUnit(captures[3]);
+    if (!validateTime(hours, minutes, seconds)) {
+      return NaN;
+    }
+    return hours * millisecondsInHour + minutes * millisecondsInMinute + seconds * 1e3;
+  }
+  function parseTimeUnit(value) {
+    return value && parseFloat(value.replace(",", ".")) || 0;
+  }
+  function parseTimezone(timezoneString) {
+    if (timezoneString === "Z") return 0;
+    const captures = timezoneString.match(timezoneRegex);
+    if (!captures) return 0;
+    const sign = captures[1] === "+" ? -1 : 1;
+    const hours = parseInt(captures[2]);
+    const minutes = captures[3] && parseInt(captures[3]) || 0;
+    if (!validateTimezone(hours, minutes)) {
+      return NaN;
+    }
+    return sign * (hours * millisecondsInHour + minutes * millisecondsInMinute);
+  }
+  function dayOfISOWeekYear(isoWeekYear, week, day) {
+    const date = /* @__PURE__ */ new Date(0);
+    date.setUTCFullYear(isoWeekYear, 0, 4);
+    const fourthOfJanuaryDay = date.getUTCDay() || 7;
+    const diff = (week - 1) * 7 + day + 1 - fourthOfJanuaryDay;
+    date.setUTCDate(date.getUTCDate() + diff);
+    return date;
+  }
+  var daysInMonths = [31, null, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  function isLeapYearIndex2(year) {
+    return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
+  }
+  function validateDate(year, month, date) {
+    return month >= 0 && month <= 11 && date >= 1 && date <= (daysInMonths[month] || (isLeapYearIndex2(year) ? 29 : 28));
+  }
+  function validateDayOfYearDate(year, dayOfYear) {
+    return dayOfYear >= 1 && dayOfYear <= (isLeapYearIndex2(year) ? 366 : 365);
+  }
+  function validateWeekDate(_year, week, day) {
+    return week >= 1 && week <= 53 && day >= 0 && day <= 6;
+  }
+  function validateTime(hours, minutes, seconds) {
+    if (hours === 24) {
+      return minutes === 0 && seconds === 0;
+    }
+    return seconds >= 0 && seconds < 60 && minutes >= 0 && minutes < 60 && hours >= 0 && hours < 25;
+  }
+  function validateTimezone(_hours, minutes) {
+    return minutes >= 0 && minutes <= 59;
+  }
+
   // node_modules/date-fns/setMonth.js
   function setMonth(date, month, options) {
     const _date = toDate(date, options?.in);
@@ -29200,7 +29375,7 @@ If there's a particular need for this, please submit a feature request at https:
   var ZONE_DESIGNATOR = /(?:[Zz]|[+-](?:[01]\d|2[0-3]):?[0-5]\d)$/;
   var TIME_FORMATS = ["HH:mm", "HH:mm:ss"];
   var REFERENCE_DATE = new Date(2e3, 0, 1);
-  function parseTime(value) {
+  function parseTime2(value) {
     if (typeof value !== "string") {
       return null;
     }
@@ -29221,9 +29396,9 @@ If there's a particular need for this, please submit a feature request at https:
     Value: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
   };
   function toComparableTemporals(fieldValue, filterValue) {
-    const filterTime = parseTime(filterValue);
+    const filterTime = parseTime2(filterValue);
     if (filterTime !== null) {
-      return [parseTime(fieldValue) ?? NaN, filterTime];
+      return [parseTime2(fieldValue) ?? NaN, filterTime];
     }
     return [
       (0, import_date2.getDate)(fieldValue).getTime(),
@@ -29357,9 +29532,9 @@ If there's a particular need for this, please submit a feature request at https:
           return true;
         }
         const fieldValue = field.getValue({ item });
-        const [min3, max3] = filterValue.map(parseTime);
+        const [min3, max3] = filterValue.map(parseTime2);
         if (min3 !== null && max3 !== null) {
-          const value = parseTime(fieldValue);
+          const value = parseTime2(fieldValue);
           return value !== null && value >= min3 && value <= max3;
         }
         if (typeof fieldValue === "number" || fieldValue instanceof Date || typeof fieldValue === "string") {
@@ -31397,25 +31572,24 @@ If there's a particular need for this, please submit a feature request at https:
     const disabled2 = field.isDisabled({ item: data, field });
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
-    const {
-      timezone: { string: timezoneString }
-    } = (0, import_date4.getSettings)();
+    const { timezone } = (0, import_date4.getSettings)();
+    const timeZone = timezone.string || (0, import_date4.dateI18n)("P");
     const [calendarMonth, setCalendarMonth] = (0, import_element82.useState)(() => {
       const parsedDate = parseDateTime(value);
-      return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timezoneString);
+      return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timeZone);
     });
     (0, import_element82.useEffect)(() => {
       const parsedDate = parseDateTime(value);
       if (parsedDate) {
-        const targetMonth = toCalendarDate(parsedDate, timezoneString);
+        const targetMonth = toCalendarDate(parsedDate, timeZone);
         setCalendarMonth(
           (currentMonth) => isSameMonth(
             targetMonth,
-            toCalendarDate(currentMonth, timezoneString)
+            toCalendarDate(currentMonth, timeZone)
           ) ? currentMonth : targetMonth
         );
       }
-    }, [value, timezoneString]);
+    }, [timeZone, value]);
     const inputControlRef = (0, import_element82.useRef)(null);
     const validationTimeoutRef = (0, import_element82.useRef)(void 0);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
@@ -31430,12 +31604,7 @@ If there's a particular need for this, please submit a feature request at https:
       (newDate) => {
         if (newDate) {
           const wpDate = (0, import_date4.dateI18n)("Y-m-d", newDate);
-          let wpTime;
-          if (value) {
-            wpTime = (0, import_date4.dateI18n)("H:i", (0, import_date4.getDate)(value));
-          } else {
-            wpTime = (0, import_date4.dateI18n)("H:i", newDate);
-          }
+          const wpTime = value ? (0, import_date4.dateI18n)("H:i", (0, import_date4.getDate)(value)) : "00:00";
           const finalDateTime = (0, import_date4.getDate)(`${wpDate}T${wpTime}`);
           onChangeCallback(finalDateTime.toISOString());
         } else {
@@ -31464,15 +31633,13 @@ If there's a particular need for this, please submit a feature request at https:
           onChangeCallback(dateTime.toISOString());
           const parsedDate = parseDateTime(dateTime.toISOString());
           if (parsedDate) {
-            setCalendarMonth(
-              toCalendarDate(parsedDate, timezoneString)
-            );
+            setCalendarMonth(toCalendarDate(parsedDate, timeZone));
           }
         } else {
           onChangeCallback(void 0);
         }
       },
-      [onChangeCallback, timezoneString]
+      [onChangeCallback, timeZone]
     );
     const { format: fieldFormat } = field;
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
@@ -31514,7 +31681,7 @@ If there's a particular need for this, please submit a feature request at https:
               onValueChange: onSelectDate,
               month: calendarMonth,
               onMonthChange: setCalendarMonth,
-              timeZone: timezoneString || void 0,
+              timeZone,
               weekStartsOn,
               disabled: disabled2 || disabledMatchers
             }
@@ -31640,12 +31807,12 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }
   ];
-  var parseDate = (dateString) => {
+  var parseDate2 = (dateString) => {
     if (!dateString) {
       return null;
     }
-    const parsed = (0, import_date5.getDate)(dateString);
-    return parsed && isValid(parsed) ? parsed : null;
+    const parsed = parseISO(dateString);
+    return isValid(parsed) ? parsed : null;
   };
   var formatDate = (date) => {
     if (!date) {
@@ -31761,37 +31928,30 @@ If there's a particular need for this, please submit a feature request at https:
       null
     );
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
-    const {
-      timezone: { string: timezoneString }
-    } = (0, import_date5.getSettings)();
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
     const [calendarMonth, setCalendarMonth] = (0, import_element83.useState)(() => {
-      const parsedDate = parseDate(value);
-      return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timezoneString);
+      const parsedDate = parseDate2(value);
+      return parsedDate || /* @__PURE__ */ new Date();
     });
     (0, import_element83.useEffect)(() => {
-      const parsedDate = parseDate(value);
+      const parsedDate = parseDate2(value);
       if (parsedDate) {
-        const targetMonth = toCalendarDate(parsedDate, timezoneString);
         setCalendarMonth(
-          (currentMonth) => isSameMonth(
-            targetMonth,
-            toCalendarDate(currentMonth, timezoneString)
-          ) ? currentMonth : targetMonth
+          (currentMonth) => isSameMonth(parsedDate, currentMonth) ? currentMonth : parsedDate
         );
       }
-    }, [value, timezoneString]);
+    }, [value]);
     const [isTouched, setIsTouched] = (0, import_element83.useState)(false);
     const validityTargetRef = (0, import_element83.useRef)(null);
-    const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
+    const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
     const onChangeCallback = (0, import_element83.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
     const onSelectDate = (0, import_element83.useCallback)(
       (newDate) => {
-        const dateValue = newDate ? format(newDate, "yyyy-MM-dd") : void 0;
+        const dateValue = newDate ? formatDate(newDate) : void 0;
         onChangeCallback(dateValue);
         setSelectedPresetId(null);
         setIsTouched(true);
@@ -31802,28 +31962,26 @@ If there's a particular need for this, please submit a feature request at https:
       (preset) => {
         const presetDate = preset.getValue();
         const dateValue = formatDate(presetDate);
-        setCalendarMonth(toCalendarDate(presetDate, timezoneString));
+        setCalendarMonth(presetDate);
         onChangeCallback(dateValue);
         setSelectedPresetId(preset.id);
         setIsTouched(true);
       },
-      [onChangeCallback, timezoneString]
+      [onChangeCallback]
     );
     const handleManualDateChange = (0, import_element83.useCallback)(
       (newValue) => {
         onChangeCallback(newValue);
         if (newValue) {
-          const parsedDate = parseDate(newValue);
+          const parsedDate = parseDate2(newValue);
           if (parsedDate) {
-            setCalendarMonth(
-              toCalendarDate(parsedDate, timezoneString)
-            );
+            setCalendarMonth(parsedDate);
           }
         }
         setSelectedPresetId(null);
         setIsTouched(true);
       },
-      [onChangeCallback, timezoneString]
+      [onChangeCallback]
     );
     let displayLabel = label;
     if (isValid2?.required && !markWhenOptional) {
@@ -31907,11 +32065,10 @@ If there's a particular need for this, please submit a feature request at https:
                 Calendar,
                 {
                   style: { width: "100%" },
-                  value: value ? parseDate(value) : null,
+                  value: value ? parseDate2(value) : null,
                   onValueChange: onSelectDate,
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
-                  timeZone: timezoneString || void 0,
                   weekStartsOn,
                   disabled: disabled2 || disabledMatchers,
                   disableNavigation: disabled2
@@ -31947,10 +32104,7 @@ If there's a particular need for this, please submit a feature request at https:
       value = fieldValue;
     }
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
-    const {
-      timezone: { string: timezoneString }
-    } = (0, import_date5.getSettings)();
-    const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
+    const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
     const onChangeCallback = (0, import_element83.useCallback)(
       (newValue) => {
         onChange(
@@ -31971,41 +32125,32 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const [from, to] = value;
       return {
-        from: parseDate(from) || void 0,
-        to: parseDate(to) || void 0
+        from: parseDate2(from) || void 0,
+        to: parseDate2(to) || void 0
       };
     }, [value]);
     const [calendarMonth, setCalendarMonth] = (0, import_element83.useState)(() => {
-      return toCalendarDate(
-        selectedRange?.from || /* @__PURE__ */ new Date(),
-        timezoneString
-      );
+      return selectedRange?.from || /* @__PURE__ */ new Date();
     });
     const [fromValue, toValue] = value ?? [];
     (0, import_element83.useEffect)(() => {
       setCalendarMonth((currentMonth) => {
-        const from = parseDate(fromValue);
-        const to = parseDate(toValue);
+        const from = parseDate2(fromValue);
+        const to = parseDate2(toValue);
         const targetMonth = from ?? to;
-        const currentCalendarMonth = toCalendarDate(
-          currentMonth,
-          timezoneString
-        );
-        const calendarFrom = from && toCalendarDate(from, timezoneString);
-        const calendarTo = to && toCalendarDate(to, timezoneString);
-        const isRangeVisible = calendarFrom && calendarTo ? areIntervalsOverlapping(
-          { start: calendarFrom, end: calendarTo },
+        const isRangeVisible = from && to ? areIntervalsOverlapping(
+          { start: from, end: to },
           {
-            start: startOfMonth(currentCalendarMonth),
-            end: endOfMonth(currentCalendarMonth)
+            start: startOfMonth(currentMonth),
+            end: endOfMonth(currentMonth)
           },
           { inclusive: true }
-        ) : [calendarFrom, calendarTo].some(
-          (date) => date && isSameMonth(date, currentCalendarMonth)
+        ) : [from, to].some(
+          (date) => date && isSameMonth(date, currentMonth)
         );
-        return targetMonth && !isRangeVisible ? toCalendarDate(targetMonth, timezoneString) : currentMonth;
+        return targetMonth && !isRangeVisible ? targetMonth : currentMonth;
       });
-    }, [fromValue, toValue, timezoneString]);
+    }, [fromValue, toValue]);
     const [isTouched, setIsTouched] = (0, import_element83.useState)(false);
     const fromInputRef = (0, import_element83.useRef)(null);
     const toInputRef = (0, import_element83.useRef)(null);
@@ -32033,12 +32178,12 @@ If there's a particular need for this, please submit a feature request at https:
     const handlePresetClick = (0, import_element83.useCallback)(
       (preset) => {
         const [startDate, endDate] = preset.getValue();
-        setCalendarMonth(toCalendarDate(startDate, timezoneString));
+        setCalendarMonth(startDate);
         updateDateRange(startDate, endDate);
         setSelectedPresetId(preset.id);
         setIsTouched(true);
       },
-      [updateDateRange, timezoneString]
+      [updateDateRange]
     );
     const handleManualDateChange = (0, import_element83.useCallback)(
       (fromOrTo, newValue) => {
@@ -32050,17 +32195,15 @@ If there's a particular need for this, please submit a feature request at https:
         const updatedTo = fromOrTo === "to" ? newValue : currentTo;
         updateDateRange(updatedFrom, updatedTo);
         if (newValue) {
-          const parsedDate = parseDate(newValue);
+          const parsedDate = parseDate2(newValue);
           if (parsedDate) {
-            setCalendarMonth(
-              toCalendarDate(parsedDate, timezoneString)
-            );
+            setCalendarMonth(parsedDate);
           }
         }
         setSelectedPresetId(null);
         setIsTouched(true);
       },
-      [value, updateDateRange, timezoneString]
+      [value, updateDateRange]
     );
     let displayLabel = label;
     if (field.isValid?.required && !markWhenOptional) {
@@ -32174,7 +32317,6 @@ If there's a particular need for this, please submit a feature request at https:
                   onValueChange: onSelectCalendarRange,
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
-                  timeZone: timezoneString || void 0,
                   weekStartsOn,
                   disabled: disabled2 || disabledMatchers
                 }
@@ -32656,11 +32798,11 @@ If there's a particular need for this, please submit a feature request at https:
   var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components48.privateApis);
   function getStep(timeFormat, values) {
     const tokens = (timeFormat ?? "").replace(/\\./g, "");
-    const hasSeconds = tokens.includes("s") || values.some((value) => (parseTime(value) ?? 0) % 60 !== 0);
+    const hasSeconds = tokens.includes("s") || values.some((value) => (parseTime2(value) ?? 0) % 60 !== 0);
     return hasSeconds ? 1 : void 0;
   }
   function toInputValue(value) {
-    const seconds = parseTime(value);
+    const seconds = parseTime2(value);
     if (seconds === null) {
       return "";
     }
@@ -33843,10 +33985,10 @@ If there's a particular need for this, please submit a feature request at https:
     return validateBoundary(item, field, "max", parseDateLike);
   }
   function isValidMinTime(item, field) {
-    return validateBoundary(item, field, "min", parseTime);
+    return validateBoundary(item, field, "min", parseTime2);
   }
   function isValidMaxTime(item, field) {
-    return validateBoundary(item, field, "max", parseTime);
+    return validateBoundary(item, field, "max", parseTime2);
   }
 
   // packages/dataviews/build-module/field-types/datetime.mjs
@@ -33995,7 +34137,7 @@ If there's a particular need for this, please submit a feature request at https:
     item,
     field
   }) {
-    const secondsSinceMidnight = parseTime(field.getValue({ item }));
+    const secondsSinceMidnight = parseTime2(field.getValue({ item }));
     if (secondsSinceMidnight === null) {
       return "";
     }
@@ -34008,8 +34150,8 @@ If there's a particular need for this, please submit a feature request at https:
     return (0, import_date10.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
   }
   var sort3 = (a2, b2, direction) => {
-    const timeA = parseTime(a2);
-    const timeB = parseTime(b2);
+    const timeA = parseTime2(a2);
+    const timeB = parseTime2(b2);
     if (timeA === null || timeB === null) {
       if (timeA === timeB) {
         return 0;

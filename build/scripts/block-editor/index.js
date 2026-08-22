@@ -14017,9 +14017,9 @@ var wp;
     (select3) => (0, import_data4.createSelector)(
       (state, rootClientId = null) => {
         const { getAllPatterns: getAllPatterns2 } = unlock(select3(STORE_NAME));
-        const patterns = getAllPatterns2();
+        const patterns2 = getAllPatterns2();
         const { allowedBlockTypes } = getSettings(state);
-        return patterns.some((pattern) => {
+        return patterns2.some((pattern) => {
           const { inserter = true } = pattern;
           if (!inserter) {
             return false;
@@ -15917,9 +15917,9 @@ var wp;
       return (0, import_data5.createSelector)(
         (state, rootClientId = null, options = DEFAULT_INSERTER_OPTIONS) => {
           const { getAllPatterns: getAllPatterns2 } = unlock(select3(STORE_NAME));
-          const patterns = getAllPatterns2();
+          const patterns2 = getAllPatterns2();
           const { allowedBlockTypes } = getSettings(state);
-          const parsedPatterns = patterns.filter(({ inserter = true }) => !!inserter).map(enhancePatternWithParsedBlocks);
+          const parsedPatterns = patterns2.filter(({ inserter = true }) => !!inserter).map(enhancePatternWithParsedBlocks);
           const availableParsedPatterns = parsedPatterns.filter(
             (pattern) => checkAllowListRecursive(
               getGrammar(pattern),
@@ -15951,11 +15951,11 @@ var wp;
         if (!blockNames) {
           return EMPTY_ARRAY2;
         }
-        const patterns = select3(STORE_NAME).__experimentalGetAllowedPatterns(
+        const patterns2 = select3(STORE_NAME).__experimentalGetAllowedPatterns(
           rootClientId
         );
         const normalizedBlockNames = Array.isArray(blockNames) ? blockNames : [blockNames];
-        const filteredPatterns = patterns.filter(
+        const filteredPatterns = patterns2.filter(
           (pattern) => pattern?.blockTypes?.some?.(
             (blockName) => normalizedBlockNames.includes(blockName)
           )
@@ -47765,6 +47765,181 @@ var wp;
     return addDays(date, -amount, options);
   }
 
+  // node_modules/date-fns/parseISO.js
+  function parseISO(argument, options) {
+    const invalidDate = () => constructFrom(options?.in, NaN);
+    const additionalDigits = options?.additionalDigits ?? 2;
+    const dateStrings = splitDateString(argument);
+    let date;
+    if (dateStrings.date) {
+      const parseYearResult = parseYear(dateStrings.date, additionalDigits);
+      date = parseDate(parseYearResult.restDateString, parseYearResult.year);
+    }
+    if (!date || isNaN(+date)) return invalidDate();
+    const timestamp = +date;
+    let time = 0;
+    let offset4;
+    if (dateStrings.time) {
+      time = parseTime(dateStrings.time);
+      if (isNaN(time)) return invalidDate();
+    }
+    if (dateStrings.timezone) {
+      offset4 = parseTimezone(dateStrings.timezone);
+      if (isNaN(offset4)) return invalidDate();
+    } else {
+      const tmpDate = new Date(timestamp + time);
+      const result = toDate(0, options?.in);
+      result.setFullYear(
+        tmpDate.getUTCFullYear(),
+        tmpDate.getUTCMonth(),
+        tmpDate.getUTCDate()
+      );
+      result.setHours(
+        tmpDate.getUTCHours(),
+        tmpDate.getUTCMinutes(),
+        tmpDate.getUTCSeconds(),
+        tmpDate.getUTCMilliseconds()
+      );
+      return result;
+    }
+    return toDate(timestamp + time + offset4, options?.in);
+  }
+  var patterns = {
+    dateTimeDelimiter: /[T ]/,
+    timeZoneDelimiter: /[Z ]/i,
+    timezone: /([Z+-].*)$/
+  };
+  var dateRegex = /^-?(?:(\d{3})|(\d{2})(?:-?(\d{2}))?|W(\d{2})(?:-?(\d{1}))?|)$/;
+  var timeRegex = /^(\d{2}(?:[.,]\d*)?)(?::?(\d{2}(?:[.,]\d*)?))?(?::?(\d{2}(?:[.,]\d*)?))?$/;
+  var timezoneRegex = /^([+-])(\d{2})(?::?(\d{2}))?$/;
+  function splitDateString(dateString) {
+    const dateStrings = {};
+    const array = dateString.split(patterns.dateTimeDelimiter);
+    let timeString;
+    if (array.length > 2) {
+      return dateStrings;
+    }
+    if (/:/.test(array[0])) {
+      timeString = array[0];
+    } else {
+      dateStrings.date = array[0];
+      timeString = array[1];
+      if (patterns.timeZoneDelimiter.test(dateStrings.date)) {
+        dateStrings.date = dateString.split(patterns.timeZoneDelimiter)[0];
+        timeString = dateString.substr(
+          dateStrings.date.length,
+          dateString.length
+        );
+      }
+    }
+    if (timeString) {
+      const token = patterns.timezone.exec(timeString);
+      if (token) {
+        dateStrings.time = timeString.replace(token[1], "");
+        dateStrings.timezone = token[1];
+      } else {
+        dateStrings.time = timeString;
+      }
+    }
+    return dateStrings;
+  }
+  function parseYear(dateString, additionalDigits) {
+    const regex = new RegExp(
+      "^(?:(\\d{4}|[+-]\\d{" + (4 + additionalDigits) + "})|(\\d{2}|[+-]\\d{" + (2 + additionalDigits) + "})$)"
+    );
+    const captures = dateString.match(regex);
+    if (!captures) return { year: NaN, restDateString: "" };
+    const year = captures[1] ? parseInt(captures[1]) : null;
+    const century = captures[2] ? parseInt(captures[2]) : null;
+    return {
+      year: century === null ? year : century * 100,
+      restDateString: dateString.slice((captures[1] || captures[2]).length)
+    };
+  }
+  function parseDate(dateString, year) {
+    if (year === null) return /* @__PURE__ */ new Date(NaN);
+    const captures = dateString.match(dateRegex);
+    if (!captures) return /* @__PURE__ */ new Date(NaN);
+    const isWeekDate = !!captures[4];
+    const dayOfYear = parseDateUnit(captures[1]);
+    const month = parseDateUnit(captures[2]) - 1;
+    const day = parseDateUnit(captures[3]);
+    const week = parseDateUnit(captures[4]);
+    const dayOfWeek = parseDateUnit(captures[5]) - 1;
+    if (isWeekDate) {
+      if (!validateWeekDate(year, week, dayOfWeek)) {
+        return /* @__PURE__ */ new Date(NaN);
+      }
+      return dayOfISOWeekYear(year, week, dayOfWeek);
+    } else {
+      const date = /* @__PURE__ */ new Date(0);
+      if (!validateDate(year, month, day) || !validateDayOfYearDate(year, dayOfYear)) {
+        return /* @__PURE__ */ new Date(NaN);
+      }
+      date.setUTCFullYear(year, month, Math.max(dayOfYear, day));
+      return date;
+    }
+  }
+  function parseDateUnit(value) {
+    return value ? parseInt(value) : 1;
+  }
+  function parseTime(timeString) {
+    const captures = timeString.match(timeRegex);
+    if (!captures) return NaN;
+    const hours = parseTimeUnit(captures[1]);
+    const minutes = parseTimeUnit(captures[2]);
+    const seconds = parseTimeUnit(captures[3]);
+    if (!validateTime(hours, minutes, seconds)) {
+      return NaN;
+    }
+    return hours * millisecondsInHour + minutes * millisecondsInMinute + seconds * 1e3;
+  }
+  function parseTimeUnit(value) {
+    return value && parseFloat(value.replace(",", ".")) || 0;
+  }
+  function parseTimezone(timezoneString) {
+    if (timezoneString === "Z") return 0;
+    const captures = timezoneString.match(timezoneRegex);
+    if (!captures) return 0;
+    const sign = captures[1] === "+" ? -1 : 1;
+    const hours = parseInt(captures[2]);
+    const minutes = captures[3] && parseInt(captures[3]) || 0;
+    if (!validateTimezone(hours, minutes)) {
+      return NaN;
+    }
+    return sign * (hours * millisecondsInHour + minutes * millisecondsInMinute);
+  }
+  function dayOfISOWeekYear(isoWeekYear, week, day) {
+    const date = /* @__PURE__ */ new Date(0);
+    date.setUTCFullYear(isoWeekYear, 0, 4);
+    const fourthOfJanuaryDay = date.getUTCDay() || 7;
+    const diff = (week - 1) * 7 + day + 1 - fourthOfJanuaryDay;
+    date.setUTCDate(date.getUTCDate() + diff);
+    return date;
+  }
+  var daysInMonths = [31, null, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  function isLeapYearIndex2(year) {
+    return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
+  }
+  function validateDate(year, month, date) {
+    return month >= 0 && month <= 11 && date >= 1 && date <= (daysInMonths[month] || (isLeapYearIndex2(year) ? 29 : 28));
+  }
+  function validateDayOfYearDate(year, dayOfYear) {
+    return dayOfYear >= 1 && dayOfYear <= (isLeapYearIndex2(year) ? 366 : 365);
+  }
+  function validateWeekDate(_year, week, day) {
+    return week >= 1 && week <= 53 && day >= 0 && day <= 6;
+  }
+  function validateTime(hours, minutes, seconds) {
+    if (hours === 24) {
+      return minutes === 0 && seconds === 0;
+    }
+    return seconds >= 0 && seconds < 60 && minutes >= 0 && minutes < 60 && hours >= 0 && hours < 25;
+  }
+  function validateTimezone(_hours, minutes) {
+    return minutes >= 0 && minutes <= 59;
+  }
+
   // node_modules/date-fns/setMonth.js
   function setMonth(date, month, options) {
     const _date = toDate(date, options?.in);
@@ -60320,7 +60495,7 @@ var wp;
       const settings2 = getSettings8();
       return settings2[isNavigationOverlayContextKey] ?? false;
     }, []);
-    const { patternCategories, patterns, userPatternCategories } = (0, import_data59.useSelect)(
+    const { patternCategories, patterns: patterns2, userPatternCategories } = (0, import_data59.useSelect)(
       (select3) => {
         const { getSettings: getSettings8, __experimentalGetAllowedPatterns: __experimentalGetAllowedPatterns2 } = unlock(
           select3(store)
@@ -60339,14 +60514,14 @@ var wp;
       [rootClientId, options]
     );
     const filteredPatterns = (0, import_element131.useMemo)(() => {
-      return patterns.filter((pattern) => {
+      return patterns2.filter((pattern) => {
         const hasNavigationCategory = pattern.categories?.includes("navigation");
         if (hasNavigationCategory && !isWithinNavigationOverlayContext) {
           return false;
         }
         return true;
       });
-    }, [patterns, isWithinNavigationOverlayContext]);
+    }, [patterns2, isWithinNavigationOverlayContext]);
     const { getClosestAllowedInsertionPointForPattern: getClosestAllowedInsertionPointForPattern2 } = unlock(
       (0, import_data59.useSelect)(store)
     );
@@ -60474,7 +60649,7 @@ var wp;
       rootClientId,
       shouldFocusBlock: true
     });
-    const [patterns, , onClickPattern] = use_patterns_state_default(
+    const [patterns2, , onClickPattern] = use_patterns_state_default(
       onInsertBlocks,
       destinationRootClientId,
       selectedCategory
@@ -60486,7 +60661,7 @@ var wp;
       [patternCategories]
     );
     const filteredBlockPatterns = (0, import_element133.useMemo)(() => {
-      const filteredPatterns = patterns.filter((pattern) => {
+      const filteredPatterns = patterns2.filter((pattern) => {
         if (selectedCategory === allPatternsCategory.name) {
           return true;
         }
@@ -60510,7 +60685,7 @@ var wp;
       return searchItems(filteredPatterns, searchValue);
     }, [
       searchValue,
-      patterns,
+      patterns2,
       selectedCategory,
       registeredPatternCategories
     ]);
@@ -60581,15 +60756,15 @@ var wp;
     );
   }
   function usePatternCategories(rootClientId, sourceFilter = "all") {
-    const [patterns, allCategories] = use_patterns_state_default(
+    const [patterns2, allCategories] = use_patterns_state_default(
       void 0,
       rootClientId
     );
     const filteredPatterns = (0, import_element134.useMemo)(
-      () => sourceFilter === "all" ? patterns : patterns.filter(
+      () => sourceFilter === "all" ? patterns2 : patterns2.filter(
         (pattern) => !isPatternFiltered(pattern, sourceFilter)
       ),
-      [sourceFilter, patterns]
+      [sourceFilter, patterns2]
     );
     const populatedCategories = (0, import_element134.useMemo)(() => {
       const categories = allCategories.filter(
@@ -62181,7 +62356,7 @@ var wp;
       blockTypeCollections,
       onSelectBlockType
     ] = use_block_types_state_default(destinationRootClientId, onInsertBlocks, isQuick);
-    const [patterns, , onClickPattern] = use_patterns_state_default(
+    const [patterns2, , onClickPattern] = use_patterns_state_default(
       onInsertBlocks,
       destinationRootClientId,
       void 0,
@@ -62191,9 +62366,9 @@ var wp;
       if (maxBlockPatterns === 0) {
         return [];
       }
-      const results = searchItems(patterns, filterValue);
+      const results = searchItems(patterns2, filterValue);
       return maxBlockPatterns !== void 0 ? results.slice(0, maxBlockPatterns) : results;
-    }, [filterValue, patterns, maxBlockPatterns]);
+    }, [filterValue, patterns2, maxBlockPatterns]);
     let maxBlockTypesToShow = maxBlockTypes;
     if (prioritizePatterns && filteredBlockPatterns.length > 2) {
       maxBlockTypesToShow = 0;
@@ -69520,7 +69695,7 @@ var wp;
     placement: "bottom-start"
   };
   function ChangeDesign({ clientId }) {
-    const { categories, currentPatternName, patterns } = (0, import_data112.useSelect)(
+    const { categories, currentPatternName, patterns: patterns2 } = (0, import_data112.useSelect)(
       (select3) => {
         const {
           getBlockAttributes: getBlockAttributes3,
@@ -69541,10 +69716,10 @@ var wp;
     );
     const { replaceBlocks: replaceBlocks2 } = (0, import_data112.useDispatch)(store);
     const sameCategoryPatternsWithSingleWrapper = (0, import_element186.useMemo)(() => {
-      if (categories.length === 0 || !patterns || patterns.length === 0) {
+      if (categories.length === 0 || !patterns2 || patterns2.length === 0) {
         return EMPTY_ARRAY10;
       }
-      return patterns.filter((pattern) => {
+      return patterns2.filter((pattern) => {
         const isCorePattern = pattern.source === "core" || pattern.source?.startsWith("pattern-directory") && pattern.source !== "pattern-directory/theme";
         return (
           // Check if the pattern has only one top level block,
@@ -69557,7 +69732,7 @@ var wp;
           (pattern.syncStatus === "unsynced" || !pattern.id)
         );
       }).slice(0, MAX_PATTERNS_TO_SHOW);
-    }, [categories, currentPatternName, patterns]);
+    }, [categories, currentPatternName, patterns2]);
     if (sameCategoryPatternsWithSingleWrapper.length < 2) {
       return null;
     }
@@ -70349,9 +70524,9 @@ var wp;
     }
     return _patternBlocks;
   };
-  var useTransformedPatterns = (patterns, selectedBlocks) => {
+  var useTransformedPatterns = (patterns2, selectedBlocks) => {
     return (0, import_element191.useMemo)(
-      () => patterns.reduce((accumulator, _pattern) => {
+      () => patterns2.reduce((accumulator, _pattern) => {
         const transformedBlocks = getPatternTransformedBlocks(
           selectedBlocks,
           _pattern.blocks
@@ -70364,7 +70539,7 @@ var wp;
         }
         return accumulator;
       }, []),
-      [patterns, selectedBlocks]
+      [patterns2, selectedBlocks]
     );
   };
   var use_transformed_patterns_default = useTransformedPatterns;
@@ -70377,15 +70552,15 @@ var wp;
     onSelect
   }) {
     const [showTransforms, setShowTransforms] = (0, import_element192.useState)(false);
-    const patterns = use_transformed_patterns_default(statePatterns, blocks2);
-    if (!patterns.length) {
+    const patterns2 = use_transformed_patterns_default(statePatterns, blocks2);
+    if (!patterns2.length) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime332.jsxs)(import_components105.MenuGroup, { className: "block-editor-block-switcher__pattern__transforms__menugroup", children: [
       showTransforms && /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
         PreviewPatternsPopover,
         {
-          patterns,
+          patterns: patterns2,
           onSelect
         }
       ),
@@ -70402,7 +70577,7 @@ var wp;
       )
     ] });
   }
-  function PreviewPatternsPopover({ patterns, onSelect }) {
+  function PreviewPatternsPopover({ patterns: patterns2, onSelect }) {
     const isMobile = (0, import_compose71.useViewportMatch)("medium", "<");
     return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)("div", { className: "block-editor-block-switcher__popover-preview-container", children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
       import_components105.Popover,
@@ -70413,21 +70588,21 @@ var wp;
         children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)("div", { className: "block-editor-block-switcher__preview is-pattern-list-preview", children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
           BlockPatternsList2,
           {
-            patterns,
+            patterns: patterns2,
             onSelect
           }
         ) })
       }
     ) });
   }
-  function BlockPatternsList2({ patterns, onSelect }) {
+  function BlockPatternsList2({ patterns: patterns2, onSelect }) {
     return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
       import_components105.Composite,
       {
         role: "listbox",
         className: "block-editor-block-switcher__preview-patterns-container",
         "aria-label": (0, import_i18n100.__)("Patterns list"),
-        children: patterns.map((pattern) => /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
+        children: patterns2.map((pattern) => /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
           BlockPattern2,
           {
             pattern,
@@ -70481,7 +70656,7 @@ var wp;
     const { replaceBlocks: replaceBlocks2, multiSelect: multiSelect2, updateBlockAttributes: updateBlockAttributes2 } = (0, import_data118.useDispatch)(store);
     const {
       possibleBlockTransformations,
-      patterns,
+      patterns: patterns2,
       blocks: blocks2,
       isUsingBindings,
       canRemove,
@@ -70554,7 +70729,7 @@ var wp;
     const isSynced = isSingleBlock && ((0, import_blocks76.isTemplatePart)(blocks2[0]) || (0, import_blocks76.isReusableBlock)(blocks2[0]));
     const hasPossibleBlockTransformations = !!possibleBlockTransformations?.length && canRemove && !isSynced;
     const hasPossibleBlockVariationTransformations = !!blockVariationTransformations?.length;
-    const hasPatternTransformation = !!patterns?.length && canRemove;
+    const hasPatternTransformation = !!patterns2?.length && canRemove;
     const hasBlockOrBlockVariationTransforms = hasPossibleBlockTransformations || hasPossibleBlockVariationTransformations;
     const hasContents = hasBlockStyles || hasBlockOrBlockVariationTransforms || hasPatternTransformation;
     if (!hasContents) {
@@ -70572,7 +70747,7 @@ var wp;
         pattern_transformations_menu_default,
         {
           blocks: blocks2,
-          patterns,
+          patterns: patterns2,
           onSelect: (transformedBlocks) => {
             onPatternTransform(transformedBlocks);
             onClose();
@@ -75154,7 +75329,7 @@ var wp;
   var SetupContent = ({
     viewMode,
     activeSlide,
-    patterns,
+    patterns: patterns2,
     onBlockPatternSelect,
     showTitles
   }) => {
@@ -75165,7 +75340,7 @@ var wp;
         [activeSlide - 1, "previous-slide"],
         [activeSlide + 1, "next-slide"]
       ]);
-      return /* @__PURE__ */ (0, import_jsx_runtime360.jsx)("div", { className: "block-editor-block-pattern-setup__carousel", children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)("div", { className: containerClass, children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)("div", { className: "carousel-container", children: patterns.map((pattern, index2) => /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime360.jsx)("div", { className: "block-editor-block-pattern-setup__carousel", children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)("div", { className: containerClass, children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)("div", { className: "carousel-container", children: patterns2.map((pattern, index2) => /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
         BlockPatternSlide,
         {
           active: index2 === activeSlide,
@@ -75181,7 +75356,7 @@ var wp;
         role: "listbox",
         className: containerClass,
         "aria-label": (0, import_i18n123.__)("Patterns list"),
-        children: patterns.map((pattern) => /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+        children: patterns2.map((pattern) => /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
           BlockPattern3,
           {
             pattern,
@@ -75260,8 +75435,8 @@ var wp;
     const [viewMode, setViewMode] = (0, import_element217.useState)(initialViewMode);
     const [activeSlide, setActiveSlide] = (0, import_element217.useState)(0);
     const { replaceBlock: replaceBlock2 } = (0, import_data144.useDispatch)(store);
-    const patterns = use_patterns_setup_default(clientId, blockName, filterPatternsFn);
-    if (!patterns?.length) {
+    const patterns2 = use_patterns_setup_default(clientId, blockName, filterPatternsFn);
+    if (!patterns2?.length) {
       return null;
     }
     const onBlockPatternSelectDefault = (blocks2) => {
@@ -75279,7 +75454,7 @@ var wp;
             {
               viewMode,
               activeSlide,
-              patterns,
+              patterns: patterns2,
               onBlockPatternSelect: onPatternSelectCallback,
               showTitles
             }
@@ -75290,10 +75465,10 @@ var wp;
               viewMode,
               setViewMode,
               activeSlide,
-              totalSlides: patterns.length,
+              totalSlides: patterns2.length,
               handleNext: () => {
                 setActiveSlide(
-                  (active) => Math.min(active + 1, patterns.length - 1)
+                  (active) => Math.min(active + 1, patterns2.length - 1)
                 );
               },
               handlePrevious: () => {
@@ -75303,7 +75478,7 @@ var wp;
               },
               onBlockPatternSelect: () => {
                 onPatternSelectCallback(
-                  patterns[activeSlide].blocks
+                  patterns2[activeSlide].blocks
                 );
               }
             }
@@ -96503,7 +96678,7 @@ var wp;
   var ZONE_DESIGNATOR = /(?:[Zz]|[+-](?:[01]\d|2[0-3]):?[0-5]\d)$/;
   var TIME_FORMATS = ["HH:mm", "HH:mm:ss"];
   var REFERENCE_DATE = new Date(2e3, 0, 1);
-  function parseTime(value) {
+  function parseTime2(value) {
     if (typeof value !== "string") {
       return null;
     }
@@ -96524,9 +96699,9 @@ var wp;
     Value: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
   };
   function toComparableTemporals(fieldValue, filterValue) {
-    const filterTime = parseTime(filterValue);
+    const filterTime = parseTime2(filterValue);
     if (filterTime !== null) {
-      return [parseTime(fieldValue) ?? NaN, filterTime];
+      return [parseTime2(fieldValue) ?? NaN, filterTime];
     }
     return [
       (0, import_date4.getDate)(fieldValue).getTime(),
@@ -96660,9 +96835,9 @@ var wp;
           return true;
         }
         const fieldValue = field.getValue({ item });
-        const [min3, max3] = filterValue.map(parseTime);
+        const [min3, max3] = filterValue.map(parseTime2);
         if (min3 !== null && max3 !== null) {
-          const value = parseTime(fieldValue);
+          const value = parseTime2(fieldValue);
           return value !== null && value >= min3 && value <= max3;
         }
         if (typeof fieldValue === "number" || fieldValue instanceof Date || typeof fieldValue === "string") {
@@ -97652,25 +97827,24 @@ var wp;
     const disabled2 = field.isDisabled({ item: data, field });
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
-    const {
-      timezone: { string: timezoneString }
-    } = (0, import_date6.getSettings)();
+    const { timezone } = (0, import_date6.getSettings)();
+    const timeZone = timezone.string || (0, import_date6.dateI18n)("P");
     const [calendarMonth, setCalendarMonth] = (0, import_element313.useState)(() => {
       const parsedDate = parseDateTime(value);
-      return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timezoneString);
+      return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timeZone);
     });
     (0, import_element313.useEffect)(() => {
       const parsedDate = parseDateTime(value);
       if (parsedDate) {
-        const targetMonth = toCalendarDate(parsedDate, timezoneString);
+        const targetMonth = toCalendarDate(parsedDate, timeZone);
         setCalendarMonth(
           (currentMonth) => isSameMonth(
             targetMonth,
-            toCalendarDate(currentMonth, timezoneString)
+            toCalendarDate(currentMonth, timeZone)
           ) ? currentMonth : targetMonth
         );
       }
-    }, [value, timezoneString]);
+    }, [timeZone, value]);
     const inputControlRef = (0, import_element313.useRef)(null);
     const validationTimeoutRef = (0, import_element313.useRef)(void 0);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
@@ -97685,12 +97859,7 @@ var wp;
       (newDate) => {
         if (newDate) {
           const wpDate = (0, import_date6.dateI18n)("Y-m-d", newDate);
-          let wpTime;
-          if (value) {
-            wpTime = (0, import_date6.dateI18n)("H:i", (0, import_date6.getDate)(value));
-          } else {
-            wpTime = (0, import_date6.dateI18n)("H:i", newDate);
-          }
+          const wpTime = value ? (0, import_date6.dateI18n)("H:i", (0, import_date6.getDate)(value)) : "00:00";
           const finalDateTime = (0, import_date6.getDate)(`${wpDate}T${wpTime}`);
           onChangeCallback(finalDateTime.toISOString());
         } else {
@@ -97719,15 +97888,13 @@ var wp;
           onChangeCallback(dateTime.toISOString());
           const parsedDate = parseDateTime(dateTime.toISOString());
           if (parsedDate) {
-            setCalendarMonth(
-              toCalendarDate(parsedDate, timezoneString)
-            );
+            setCalendarMonth(toCalendarDate(parsedDate, timeZone));
           }
         } else {
           onChangeCallback(void 0);
         }
       },
-      [onChangeCallback, timezoneString]
+      [onChangeCallback, timeZone]
     );
     const { format: fieldFormat } = field;
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
@@ -97769,7 +97936,7 @@ var wp;
               onValueChange: onSelectDate,
               month: calendarMonth,
               onMonthChange: setCalendarMonth,
-              timeZone: timezoneString || void 0,
+              timeZone,
               weekStartsOn,
               disabled: disabled2 || disabledMatchers
             }
@@ -97895,12 +98062,12 @@ var wp;
       }
     }
   ];
-  var parseDate = (dateString) => {
+  var parseDate2 = (dateString) => {
     if (!dateString) {
       return null;
     }
-    const parsed = (0, import_date7.getDate)(dateString);
-    return parsed && isValid(parsed) ? parsed : null;
+    const parsed = parseISO(dateString);
+    return isValid(parsed) ? parsed : null;
   };
   var formatDate = (date) => {
     if (!date) {
@@ -98016,37 +98183,30 @@ var wp;
       null
     );
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date7.getSettings)().l10n.startOfWeek;
-    const {
-      timezone: { string: timezoneString }
-    } = (0, import_date7.getSettings)();
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
     const [calendarMonth, setCalendarMonth] = (0, import_element314.useState)(() => {
-      const parsedDate = parseDate(value);
-      return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timezoneString);
+      const parsedDate = parseDate2(value);
+      return parsedDate || /* @__PURE__ */ new Date();
     });
     (0, import_element314.useEffect)(() => {
-      const parsedDate = parseDate(value);
+      const parsedDate = parseDate2(value);
       if (parsedDate) {
-        const targetMonth = toCalendarDate(parsedDate, timezoneString);
         setCalendarMonth(
-          (currentMonth) => isSameMonth(
-            targetMonth,
-            toCalendarDate(currentMonth, timezoneString)
-          ) ? currentMonth : targetMonth
+          (currentMonth) => isSameMonth(parsedDate, currentMonth) ? currentMonth : parsedDate
         );
       }
-    }, [value, timezoneString]);
+    }, [value]);
     const [isTouched, setIsTouched] = (0, import_element314.useState)(false);
     const validityTargetRef = (0, import_element314.useRef)(null);
-    const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
+    const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
     const onChangeCallback = (0, import_element314.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
     const onSelectDate = (0, import_element314.useCallback)(
       (newDate) => {
-        const dateValue = newDate ? format(newDate, "yyyy-MM-dd") : void 0;
+        const dateValue = newDate ? formatDate(newDate) : void 0;
         onChangeCallback(dateValue);
         setSelectedPresetId(null);
         setIsTouched(true);
@@ -98057,28 +98217,26 @@ var wp;
       (preset) => {
         const presetDate = preset.getValue();
         const dateValue = formatDate(presetDate);
-        setCalendarMonth(toCalendarDate(presetDate, timezoneString));
+        setCalendarMonth(presetDate);
         onChangeCallback(dateValue);
         setSelectedPresetId(preset.id);
         setIsTouched(true);
       },
-      [onChangeCallback, timezoneString]
+      [onChangeCallback]
     );
     const handleManualDateChange = (0, import_element314.useCallback)(
       (newValue) => {
         onChangeCallback(newValue);
         if (newValue) {
-          const parsedDate = parseDate(newValue);
+          const parsedDate = parseDate2(newValue);
           if (parsedDate) {
-            setCalendarMonth(
-              toCalendarDate(parsedDate, timezoneString)
-            );
+            setCalendarMonth(parsedDate);
           }
         }
         setSelectedPresetId(null);
         setIsTouched(true);
       },
-      [onChangeCallback, timezoneString]
+      [onChangeCallback]
     );
     let displayLabel = label;
     if (isValid2?.required && !markWhenOptional) {
@@ -98162,11 +98320,10 @@ var wp;
                 Calendar,
                 {
                   style: { width: "100%" },
-                  value: value ? parseDate(value) : null,
+                  value: value ? parseDate2(value) : null,
                   onValueChange: onSelectDate,
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
-                  timeZone: timezoneString || void 0,
                   weekStartsOn,
                   disabled: disabled2 || disabledMatchers,
                   disableNavigation: disabled2
@@ -98202,10 +98359,7 @@ var wp;
       value = fieldValue;
     }
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date7.getSettings)().l10n.startOfWeek;
-    const {
-      timezone: { string: timezoneString }
-    } = (0, import_date7.getSettings)();
-    const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
+    const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
     const onChangeCallback = (0, import_element314.useCallback)(
       (newValue) => {
         onChange(
@@ -98226,41 +98380,32 @@ var wp;
       }
       const [from, to2] = value;
       return {
-        from: parseDate(from) || void 0,
-        to: parseDate(to2) || void 0
+        from: parseDate2(from) || void 0,
+        to: parseDate2(to2) || void 0
       };
     }, [value]);
     const [calendarMonth, setCalendarMonth] = (0, import_element314.useState)(() => {
-      return toCalendarDate(
-        selectedRange?.from || /* @__PURE__ */ new Date(),
-        timezoneString
-      );
+      return selectedRange?.from || /* @__PURE__ */ new Date();
     });
     const [fromValue, toValue] = value ?? [];
     (0, import_element314.useEffect)(() => {
       setCalendarMonth((currentMonth) => {
-        const from = parseDate(fromValue);
-        const to2 = parseDate(toValue);
+        const from = parseDate2(fromValue);
+        const to2 = parseDate2(toValue);
         const targetMonth = from ?? to2;
-        const currentCalendarMonth = toCalendarDate(
-          currentMonth,
-          timezoneString
-        );
-        const calendarFrom = from && toCalendarDate(from, timezoneString);
-        const calendarTo = to2 && toCalendarDate(to2, timezoneString);
-        const isRangeVisible = calendarFrom && calendarTo ? areIntervalsOverlapping(
-          { start: calendarFrom, end: calendarTo },
+        const isRangeVisible = from && to2 ? areIntervalsOverlapping(
+          { start: from, end: to2 },
           {
-            start: startOfMonth(currentCalendarMonth),
-            end: endOfMonth(currentCalendarMonth)
+            start: startOfMonth(currentMonth),
+            end: endOfMonth(currentMonth)
           },
           { inclusive: true }
-        ) : [calendarFrom, calendarTo].some(
-          (date) => date && isSameMonth(date, currentCalendarMonth)
+        ) : [from, to2].some(
+          (date) => date && isSameMonth(date, currentMonth)
         );
-        return targetMonth && !isRangeVisible ? toCalendarDate(targetMonth, timezoneString) : currentMonth;
+        return targetMonth && !isRangeVisible ? targetMonth : currentMonth;
       });
-    }, [fromValue, toValue, timezoneString]);
+    }, [fromValue, toValue]);
     const [isTouched, setIsTouched] = (0, import_element314.useState)(false);
     const fromInputRef = (0, import_element314.useRef)(null);
     const toInputRef = (0, import_element314.useRef)(null);
@@ -98288,12 +98433,12 @@ var wp;
     const handlePresetClick = (0, import_element314.useCallback)(
       (preset) => {
         const [startDate, endDate] = preset.getValue();
-        setCalendarMonth(toCalendarDate(startDate, timezoneString));
+        setCalendarMonth(startDate);
         updateDateRange(startDate, endDate);
         setSelectedPresetId(preset.id);
         setIsTouched(true);
       },
-      [updateDateRange, timezoneString]
+      [updateDateRange]
     );
     const handleManualDateChange = (0, import_element314.useCallback)(
       (fromOrTo, newValue) => {
@@ -98305,17 +98450,15 @@ var wp;
         const updatedTo = fromOrTo === "to" ? newValue : currentTo;
         updateDateRange(updatedFrom, updatedTo);
         if (newValue) {
-          const parsedDate = parseDate(newValue);
+          const parsedDate = parseDate2(newValue);
           if (parsedDate) {
-            setCalendarMonth(
-              toCalendarDate(parsedDate, timezoneString)
-            );
+            setCalendarMonth(parsedDate);
           }
         }
         setSelectedPresetId(null);
         setIsTouched(true);
       },
-      [value, updateDateRange, timezoneString]
+      [value, updateDateRange]
     );
     let displayLabel = label;
     if (field.isValid?.required && !markWhenOptional) {
@@ -98429,7 +98572,6 @@ var wp;
                   onValueChange: onSelectCalendarRange,
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
-                  timeZone: timezoneString || void 0,
                   weekStartsOn,
                   disabled: disabled2 || disabledMatchers
                 }
@@ -98911,11 +99053,11 @@ var wp;
   var { ValidatedInputControl: ValidatedInputControl4 } = unlock4(import_components249.privateApis);
   function getStep(timeFormat, values) {
     const tokens = (timeFormat ?? "").replace(/\\./g, "");
-    const hasSeconds = tokens.includes("s") || values.some((value) => (parseTime(value) ?? 0) % 60 !== 0);
+    const hasSeconds = tokens.includes("s") || values.some((value) => (parseTime2(value) ?? 0) % 60 !== 0);
     return hasSeconds ? 1 : void 0;
   }
   function toInputValue(value) {
-    const seconds = parseTime(value);
+    const seconds = parseTime2(value);
     if (seconds === null) {
       return "";
     }
@@ -99940,10 +100082,10 @@ var wp;
     return validateBoundary(item, field, "max", parseDateLike);
   }
   function isValidMinTime(item, field) {
-    return validateBoundary(item, field, "min", parseTime);
+    return validateBoundary(item, field, "min", parseTime2);
   }
   function isValidMaxTime(item, field) {
-    return validateBoundary(item, field, "max", parseTime);
+    return validateBoundary(item, field, "max", parseTime2);
   }
 
   // packages/dataviews/build-module/field-types/datetime.mjs
@@ -100092,7 +100234,7 @@ var wp;
     item,
     field
   }) {
-    const secondsSinceMidnight = parseTime(field.getValue({ item }));
+    const secondsSinceMidnight = parseTime2(field.getValue({ item }));
     if (secondsSinceMidnight === null) {
       return "";
     }
@@ -100105,8 +100247,8 @@ var wp;
     return (0, import_date12.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
   }
   var sort3 = (a2, b2, direction) => {
-    const timeA = parseTime(a2);
-    const timeB = parseTime(b2);
+    const timeA = parseTime2(a2);
+    const timeB = parseTime2(b2);
     if (timeA === null || timeB === null) {
       if (timeA === timeB) {
         return 0;
