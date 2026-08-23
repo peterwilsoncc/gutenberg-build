@@ -16982,9 +16982,8 @@ function useControlledValue2({
 // packages/ui/build-module/calendar/utils/use-localization-props.mjs
 var import_i18n2 = __toESM(require_i18n(), 1);
 var import_element19 = __toESM(require_element(), 1);
-function isLocaleRTL(localeCode) {
-  const localeObj = new Intl.Locale(localeCode);
-  const direction = localeObj.getTextInfo?.().direction;
+function isLocaleRTL(locale) {
+  const direction = locale.getTextInfo?.().direction;
   if (direction) {
     return direction === "rtl";
   }
@@ -17011,7 +17010,27 @@ function isLocaleRTL(localeCode) {
     // Uyghur
     "yi"
     // Yiddish
-  ].includes(localeObj.language);
+  ].includes(locale.language);
+}
+function getSupportedLocaleCode(localeCode) {
+  if (!localeCode) {
+    return;
+  }
+  let supportedLocaleCode;
+  try {
+    supportedLocaleCode = Intl.DateTimeFormat.supportedLocalesOf([
+      localeCode
+    ])[0];
+  } catch {
+  }
+  return supportedLocaleCode;
+}
+function getWeekStartsOn(locale) {
+  const firstDay = (locale.getWeekInfo?.() ?? locale.weekInfo)?.firstDay;
+  if (firstDay === void 0 || firstDay < 1 || firstDay > 7) {
+    return;
+  }
+  return firstDay % 7;
 }
 var useLocalizationProps = ({
   locale,
@@ -17019,34 +17038,55 @@ var useLocalizationProps = ({
   mode
 }) => {
   return (0, import_element19.useMemo)(() => {
-    const monthNameFormatter = new Intl.DateTimeFormat(locale.code, {
+    const isLocaleString = typeof locale === "string";
+    const dateFnsLocale = isLocaleString ? enUS : locale;
+    const supportedLocaleCode = getSupportedLocaleCode(
+      isLocaleString ? locale : locale.code
+    );
+    const localeCode = supportedLocaleCode ?? "en-US";
+    const intlLocale = new Intl.Locale(
+      localeCode
+    );
+    const weekStartsOn = isLocaleString || supportedLocaleCode !== void 0 ? getWeekStartsOn(intlLocale) : void 0;
+    const monthNameFormatter = new Intl.DateTimeFormat(localeCode, {
+      calendar: "gregory",
       year: "numeric",
       month: "long",
       timeZone
     });
-    const weekdayNarrowFormatter = new Intl.DateTimeFormat(locale.code, {
+    const weekdayNarrowFormatter = new Intl.DateTimeFormat(localeCode, {
+      calendar: "gregory",
       weekday: "narrow",
       timeZone
     });
-    const weekdayLongFormatter = new Intl.DateTimeFormat(locale.code, {
+    const weekdayLongFormatter = new Intl.DateTimeFormat(localeCode, {
+      calendar: "gregory",
       weekday: "long",
       timeZone
     });
-    const fullDateFormatter = new Intl.DateTimeFormat(locale.code, {
+    const fullDateFormatter = new Intl.DateTimeFormat(localeCode, {
+      calendar: "gregory",
       weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
       timeZone
     });
+    const dayNumberFormatter = new Intl.DateTimeFormat(localeCode, {
+      calendar: "gregory",
+      day: "numeric",
+      timeZone
+    });
     return {
       "aria-label": mode === "single" ? (0, import_i18n2.__)("Date calendar") : (0, import_i18n2.__)("Date range calendar"),
       labels: {
+        /** The label for the navigation toolbar. */
+        labelNav: () => (0, import_i18n2.__)("Navigation bar"),
         /**
          * The label for the month grid.
          * @param date
          */
-        labelGrid: (date) => monthNameFormatter.format(date),
+        labelGrid: monthNameFormatter.format,
         /**
          * The label for the gridcell, when the calendar is not interactive.
          * @param date
@@ -17103,17 +17143,16 @@ var useLocalizationProps = ({
          * The label for the weekday.
          * @param date
          */
-        labelWeekday: (date) => weekdayLongFormatter.format(date)
+        labelWeekday: weekdayLongFormatter.format
       },
-      locale,
-      dir: isLocaleRTL(locale.code) ? "rtl" : "ltr",
+      locale: dateFnsLocale,
+      lang: localeCode,
+      dir: isLocaleRTL(intlLocale) ? "rtl" : "ltr",
+      ...weekStartsOn === void 0 ? {} : { weekStartsOn },
       formatters: {
-        formatWeekdayName: (date) => {
-          return weekdayNarrowFormatter.format(date);
-        },
-        formatCaption: (date) => {
-          return monthNameFormatter.format(date);
-        }
+        formatDay: dayNumberFormatter.format,
+        formatWeekdayName: weekdayNarrowFormatter.format,
+        formatCaption: monthNameFormatter.format
       },
       timeZone
     };
