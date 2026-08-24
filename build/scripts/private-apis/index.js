@@ -60,7 +60,6 @@ var wp;
     "@wordpress/storybook",
     "@wordpress/sync",
     "@wordpress/theme",
-    "@wordpress/dataviews",
     "@wordpress/fields",
     "@wordpress/lazy-editor",
     "@wordpress/media-editor",
