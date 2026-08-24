@@ -316,12 +316,19 @@ var require_html_entities = __commonJS({
   }
 });
 
+// package-external:@wordpress/plugins
+var require_plugins = __commonJS({
+  "package-external:@wordpress/plugins"(exports, module) {
+    module.exports = window.wp.plugins;
+  }
+});
+
 // packages/boot/build-module/components/app/index.mjs
 var import_element44 = __toESM(require_element(), 1);
-var import_data13 = __toESM(require_data(), 1);
+var import_data14 = __toESM(require_data(), 1);
 
 // packages/boot/build-module/components/app/router.mjs
-var import_i18n18 = __toESM(require_i18n(), 1);
+var import_i18n19 = __toESM(require_i18n(), 1);
 var import_element42 = __toESM(require_element(), 1);
 
 // node_modules/clsx/dist/clsx.mjs
@@ -10575,19 +10582,19 @@ function getAdminThemeColors() {
 }
 
 // packages/boot/build-module/components/app/router.mjs
-var import_data12 = __toESM(require_data(), 1);
+var import_data13 = __toESM(require_data(), 1);
 var import_core_data7 = __toESM(require_core_data(), 1);
 import {
   privateApis as routePrivateApis6
 } from "@wordpress/route";
 
 // packages/boot/build-module/components/root/index.mjs
-var import_notices2 = __toESM(require_notices(), 1);
+var import_notices3 = __toESM(require_notices(), 1);
 var import_compose5 = __toESM(require_compose(), 1);
 var import_components14 = __toESM(require_components(), 1);
 import { privateApis as routePrivateApis5 } from "@wordpress/route";
 var import_element41 = __toESM(require_element(), 1);
-var import_i18n17 = __toESM(require_i18n(), 1);
+var import_i18n18 = __toESM(require_i18n(), 1);
 var import_editor5 = __toESM(require_editor(), 1);
 var import_theme = __toESM(require_theme(), 1);
 
@@ -12596,11 +12603,37 @@ var ErrorBoundary = class extends import_element38.Component {
   }
 };
 
+// packages/boot/build-module/components/plugin-area/index.mjs
+var import_data11 = __toESM(require_data(), 1);
+var import_i18n16 = __toESM(require_i18n(), 1);
+var import_notices2 = __toESM(require_notices(), 1);
+var import_plugins = __toESM(require_plugins(), 1);
+var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
+function PluginArea() {
+  const { createErrorNotice } = (0, import_data11.useDispatch)(import_notices2.store);
+  return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+    import_plugins.PluginArea,
+    {
+      onError: (name) => {
+        createErrorNotice(
+          (0, import_i18n16.sprintf)(
+            /* translators: %s: plugin name */
+            (0, import_i18n16.__)(
+              'The "%s" plugin has encountered an error and cannot be rendered.'
+            ),
+            name
+          )
+        );
+      }
+    }
+  );
+}
+
 // packages/boot/build-module/components/app/use-route-title.mjs
 var import_element39 = __toESM(require_element(), 1);
-var import_data11 = __toESM(require_data(), 1);
+var import_data12 = __toESM(require_data(), 1);
 var import_core_data6 = __toESM(require_core_data(), 1);
-var import_i18n16 = __toESM(require_i18n(), 1);
+var import_i18n17 = __toESM(require_i18n(), 1);
 var import_html_entities2 = __toESM(require_html_entities(), 1);
 import { speak } from "@wordpress/a11y";
 import { privateApis as routePrivateApis4 } from "@wordpress/route";
@@ -12610,7 +12643,7 @@ function useRouteTitle() {
   const matches = useMatches2();
   const currentMatch = matches[matches.length - 1];
   const routeTitle = currentMatch?.loaderData?.title;
-  const siteTitle = (0, import_data11.useSelect)(
+  const siteTitle = (0, import_data12.useSelect)(
     (select) => select(import_core_data6.store).getEntityRecord(
       "root",
       "__unstableBase"
@@ -12628,9 +12661,9 @@ function useRouteTitle() {
     if (routeTitle && typeof routeTitle === "string" && siteTitle && typeof siteTitle === "string") {
       const decodedRouteTitle = (0, import_html_entities2.decodeEntities)(routeTitle);
       const decodedSiteTitle = (0, import_html_entities2.decodeEntities)(siteTitle);
-      const formattedTitle = (0, import_i18n16.sprintf)(
+      const formattedTitle = (0, import_i18n17.sprintf)(
         /* translators: Admin document title. 1: Admin screen name, 2: Site name. */
-        (0, import_i18n16.__)("%1$s ‹ %2$s — WordPress"),
+        (0, import_i18n17.__)("%1$s ‹ %2$s — WordPress"),
         decodedRouteTitle,
         decodedSiteTitle
       );
@@ -12666,7 +12699,7 @@ function useSyncBodyBackground() {
 }
 
 // packages/boot/build-module/components/root/index.mjs
-var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE25 = "data-wp-hash";
 function getRuntime25() {
   const globalScope = globalThis;
@@ -12768,140 +12801,143 @@ function Root3() {
   }, [location.pathname, isMobileViewport]);
   const themeColors = (0, import_element41.useMemo)(getAdminThemeColors, []);
   const layoutRef = useSyncBodyBackground();
-  return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_components14.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(tooltip_exports.Provider, { children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
-    import_theme.ThemeProvider,
-    {
-      isRoot: true,
-      color: { ...themeColors, background: "#f8f8f8" },
-      children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_theme.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(
-        "div",
-        {
-          ref: layoutRef,
-          className: clsx_default(style_module_default9.layout, {
-            [style_module_default9["has-canvas"]]: !!canvas || canvas === null,
-            [style_module_default9["has-full-canvas"]]: isFullScreen
-          }),
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_editor5.UnsavedChangesWarning, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(SavePanel, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
-              import_notices2.SnackbarNotices,
-              {
-                className: style_module_default9["notices-snackbar"]
-              }
-            ),
-            isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(page_default.SidebarToggleFill, { children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
-              import_components14.Button,
-              {
-                icon: menu_default,
-                onClick: () => setIsMobileSidebarOpen(true),
-                label: (0, import_i18n17.__)("Open navigation panel"),
-                size: "compact"
-              }
-            ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_components14.__unstableAnimatePresence, { children: isMobileViewport && isMobileSidebarOpen && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
-              import_components14.__unstableMotion.div,
-              {
-                initial: { opacity: 0 },
-                animate: { opacity: 1 },
-                exit: { opacity: 0 },
-                transition: {
-                  type: "tween",
-                  duration: disableMotion ? 0 : 0.2,
-                  ease: "easeOut"
-                },
-                className: style_module_default9["sidebar-backdrop"],
-                onClick: () => setIsMobileSidebarOpen(false),
-                onKeyDown: (event) => {
-                  if (event.key === "Escape") {
-                    setIsMobileSidebarOpen(
-                      false
-                    );
-                  }
-                },
-                role: "button",
-                tabIndex: -1,
-                "aria-label": (0, import_i18n17.__)(
-                  "Close navigation panel"
-                )
-              }
-            ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_components14.__unstableAnimatePresence, { children: isMobileViewport && isMobileSidebarOpen && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
-              import_components14.__unstableMotion.div,
-              {
-                initial: { x: "-100%" },
-                animate: { x: 0 },
-                exit: { x: "-100%" },
-                transition: {
-                  type: "tween",
-                  duration: disableMotion ? 0 : 0.2,
-                  ease: "easeOut"
-                },
-                className: clsx_default(
-                  style_module_default9.sidebar,
-                  style_module_default9["is-mobile"]
-                ),
-                children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Sidebar, {})
-              }
-            ) }),
-            !isMobileViewport && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { className: style_module_default9.sidebar, children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Sidebar, {}) }),
-            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { className: style_module_default9.surfaces, children: /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(
-              import_theme.ThemeProvider,
-              {
-                color: {
-                  ...themeColors,
-                  background: "#ffffff"
-                },
-                children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Outlet, {}),
-                  (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(
-                    "div",
-                    {
-                      className: clsx_default(style_module_default9.canvas, {
-                        [style_module_default9["has-mobile-drawer"]]: canvas?.isPreview && isMobileViewport
-                      }),
-                      children: [
-                        canvas?.isPreview && isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
-                          "div",
-                          {
-                            className: style_module_default9["mobile-sidebar-drawer"],
-                            children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
-                              import_components14.Button,
-                              {
-                                icon: menu_default,
-                                onClick: () => setIsMobileSidebarOpen(
-                                  true
-                                ),
-                                label: (0, import_i18n17.__)(
-                                  "Open navigation panel"
-                                ),
-                                size: "compact"
-                              }
-                            )
-                          }
-                        ),
-                        /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
-                          CanvasRenderer,
-                          {
-                            canvas,
-                            routeContentModule
-                          }
-                        ) })
-                      ]
+  return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_components14.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(tooltip_exports.Provider, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(PluginArea, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+      import_theme.ThemeProvider,
+      {
+        isRoot: true,
+        color: { ...themeColors, background: "#f8f8f8" },
+        children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_theme.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(
+          "div",
+          {
+            ref: layoutRef,
+            className: clsx_default(style_module_default9.layout, {
+              [style_module_default9["has-canvas"]]: !!canvas || canvas === null,
+              [style_module_default9["has-full-canvas"]]: isFullScreen
+            }),
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_editor5.UnsavedChangesWarning, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(SavePanel, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+                import_notices3.SnackbarNotices,
+                {
+                  className: style_module_default9["notices-snackbar"]
+                }
+              ),
+              isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(page_default.SidebarToggleFill, { children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+                import_components14.Button,
+                {
+                  icon: menu_default,
+                  onClick: () => setIsMobileSidebarOpen(true),
+                  label: (0, import_i18n18.__)("Open navigation panel"),
+                  size: "compact"
+                }
+              ) }),
+              /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_components14.__unstableAnimatePresence, { children: isMobileViewport && isMobileSidebarOpen && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+                import_components14.__unstableMotion.div,
+                {
+                  initial: { opacity: 0 },
+                  animate: { opacity: 1 },
+                  exit: { opacity: 0 },
+                  transition: {
+                    type: "tween",
+                    duration: disableMotion ? 0 : 0.2,
+                    ease: "easeOut"
+                  },
+                  className: style_module_default9["sidebar-backdrop"],
+                  onClick: () => setIsMobileSidebarOpen(false),
+                  onKeyDown: (event) => {
+                    if (event.key === "Escape") {
+                      setIsMobileSidebarOpen(
+                        false
+                      );
                     }
+                  },
+                  role: "button",
+                  tabIndex: -1,
+                  "aria-label": (0, import_i18n18.__)(
+                    "Close navigation panel"
                   )
-                ]
-              }
-            ) })
-          ]
-        }
-      ) })
-    }
-  ) }) });
+                }
+              ) }),
+              /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_components14.__unstableAnimatePresence, { children: isMobileViewport && isMobileSidebarOpen && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+                import_components14.__unstableMotion.div,
+                {
+                  initial: { x: "-100%" },
+                  animate: { x: 0 },
+                  exit: { x: "-100%" },
+                  transition: {
+                    type: "tween",
+                    duration: disableMotion ? 0 : 0.2,
+                    ease: "easeOut"
+                  },
+                  className: clsx_default(
+                    style_module_default9.sidebar,
+                    style_module_default9["is-mobile"]
+                  ),
+                  children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Sidebar, {})
+                }
+              ) }),
+              !isMobileViewport && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)("div", { className: style_module_default9.sidebar, children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Sidebar, {}) }),
+              /* @__PURE__ */ (0, import_jsx_runtime53.jsx)("div", { className: style_module_default9.surfaces, children: /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(
+                import_theme.ThemeProvider,
+                {
+                  color: {
+                    ...themeColors,
+                    background: "#ffffff"
+                  },
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Outlet, {}),
+                    (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(
+                      "div",
+                      {
+                        className: clsx_default(style_module_default9.canvas, {
+                          [style_module_default9["has-mobile-drawer"]]: canvas?.isPreview && isMobileViewport
+                        }),
+                        children: [
+                          canvas?.isPreview && isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+                            "div",
+                            {
+                              className: style_module_default9["mobile-sidebar-drawer"],
+                              children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+                                import_components14.Button,
+                                {
+                                  icon: menu_default,
+                                  onClick: () => setIsMobileSidebarOpen(
+                                    true
+                                  ),
+                                  label: (0, import_i18n18.__)(
+                                    "Open navigation panel"
+                                  ),
+                                  size: "compact"
+                                }
+                              )
+                            }
+                          ),
+                          /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+                            CanvasRenderer,
+                            {
+                              canvas,
+                              routeContentModule
+                            }
+                          ) })
+                        ]
+                      }
+                    )
+                  ]
+                }
+              ) })
+            ]
+          }
+        ) })
+      }
+    )
+  ] }) });
 }
 
 // packages/boot/build-module/components/app/router.mjs
-var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE26 = "data-wp-hash";
 function getRuntime26() {
   const globalScope = globalThis;
@@ -12997,7 +13033,7 @@ var {
   useLoaderData
 } = unlock2(routePrivateApis6);
 function NotFoundComponent() {
-  return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)("div", { className: style_module_default10.stage, children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(page_default, { title: (0, import_i18n18.__)("Route not found"), hasPadding: true, children: (0, import_i18n18.__)("The page you're looking for does not exist") }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("div", { className: style_module_default10.stage, children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(page_default, { title: (0, import_i18n19.__)("Route not found"), hasPadding: true, children: (0, import_i18n19.__)("The page you're looking for does not exist") }) });
 }
 function createRouteFromDefinition(route, parentRoute) {
   let tanstackRoute = createRoute({
@@ -13026,7 +13062,7 @@ function createRouteFromDefinition(route, parentRoute) {
         search: opts.deps || {}
       };
       const [, loaderData, canvasData, titleData] = await Promise.all([
-        (0, import_data12.resolveSelect)(import_core_data7.store).getEntityRecord(
+        (0, import_data13.resolveSelect)(import_core_data7.store).getEntityRecord(
           "root",
           "__unstableBase"
         ),
@@ -13060,9 +13096,9 @@ function createRouteFromDefinition(route, parentRoute) {
     return createLazyRoute(route.path)({
       component: function RouteComponent() {
         const { inspector: showInspector, stage: showStage } = useLoaderData({ from: route.path }) ?? {};
-        return /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(import_jsx_runtime53.Fragment, { children: [
-          Stage && showStage && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)("div", { className: style_module_default10.stage, children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Stage, {}) }) }),
-          Inspector && showInspector && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)("div", { className: style_module_default10.inspector, children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Inspector, {}) }) })
+        return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(import_jsx_runtime54.Fragment, { children: [
+          Stage && showStage && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("div", { className: style_module_default10.stage, children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(Stage, {}) }) }),
+          Inspector && showInspector && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("div", { className: style_module_default10.inspector, children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(Inspector, {}) }) })
         ] });
       }
     });
@@ -13118,17 +13154,17 @@ function Router({
       }
     });
   }, [routes, rootComponent]);
-  return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(RouterProvider, { router });
+  return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(RouterProvider, { router });
 }
 
 // packages/boot/build-module/components/root/single-page.mjs
-var import_notices3 = __toESM(require_notices(), 1);
+var import_notices4 = __toESM(require_notices(), 1);
 var import_components15 = __toESM(require_components(), 1);
 var import_element43 = __toESM(require_element(), 1);
 import { privateApis as routePrivateApis7 } from "@wordpress/route";
 var import_theme2 = __toESM(require_theme(), 1);
 var import_editor6 = __toESM(require_editor(), 1);
-var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE27 = "data-wp-hash";
 function getRuntime27() {
   const globalScope = globalThis;
@@ -13223,63 +13259,66 @@ function RootSinglePage() {
   useRouteTitle();
   const themeColors = (0, import_element43.useMemo)(getAdminThemeColors, []);
   const layoutRef = useSyncBodyBackground();
-  return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_components15.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
-    import_theme2.ThemeProvider,
-    {
-      isRoot: true,
-      color: { ...themeColors, background: "#f8f8f8" },
-      children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_theme2.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(
-        "div",
-        {
-          ref: layoutRef,
-          className: clsx_default(
-            style_module_default11.layout,
-            style_module_default11["layout-single-page"],
-            {
-              [style_module_default11["has-canvas"]]: !!canvas || canvas === null,
-              [style_module_default11["has-full-canvas"]]: isFullScreen
-            }
-          ),
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_editor6.UnsavedChangesWarning, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(SavePanel, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
-              import_notices3.SnackbarNotices,
+  return /* @__PURE__ */ (0, import_jsx_runtime55.jsxs)(import_components15.SlotFillProvider, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(PluginArea, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+      import_theme2.ThemeProvider,
+      {
+        isRoot: true,
+        color: { ...themeColors, background: "#f8f8f8" },
+        children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_theme2.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime55.jsxs)(
+          "div",
+          {
+            ref: layoutRef,
+            className: clsx_default(
+              style_module_default11.layout,
+              style_module_default11["layout-single-page"],
               {
-                className: style_module_default11["notices-snackbar"]
+                [style_module_default11["has-canvas"]]: !!canvas || canvas === null,
+                [style_module_default11["has-full-canvas"]]: isFullScreen
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("div", { className: style_module_default11.surfaces, children: /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(
-              import_theme2.ThemeProvider,
-              {
-                color: {
-                  ...themeColors,
-                  background: "#ffffff"
-                },
-                children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(Outlet2, {}),
-                  (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("div", { className: style_module_default11.canvas, children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
-                    CanvasRenderer,
-                    {
-                      canvas,
-                      routeContentModule
-                    }
-                  ) })
-                ]
-              }
-            ) })
-          ]
-        }
-      ) })
-    }
-  ) });
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_editor6.UnsavedChangesWarning, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(SavePanel, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+                import_notices4.SnackbarNotices,
+                {
+                  className: style_module_default11["notices-snackbar"]
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("div", { className: style_module_default11.surfaces, children: /* @__PURE__ */ (0, import_jsx_runtime55.jsxs)(
+                import_theme2.ThemeProvider,
+                {
+                  color: {
+                    ...themeColors,
+                    background: "#ffffff"
+                  },
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(Outlet2, {}),
+                    (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("div", { className: style_module_default11.canvas, children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+                      CanvasRenderer,
+                      {
+                        canvas,
+                        routeContentModule
+                      }
+                    ) })
+                  ]
+                }
+              ) })
+            ]
+          }
+        ) })
+      }
+    )
+  ] });
 }
 
 // packages/boot/build-module/components/app/index.mjs
-var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
 function App({ rootComponent }) {
-  const routes = (0, import_data13.useSelect)((select) => select(store).getRoutes(), []);
-  return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(Router, { routes, rootComponent });
+  const routes = (0, import_data14.useSelect)((select) => select(store).getRoutes(), []);
+  return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(Router, { routes, rootComponent });
 }
 async function runInitModules(initModules) {
   for (const moduleId of initModules ?? []) {
@@ -13295,20 +13334,20 @@ async function init({
   dashboardLink
 }) {
   (menuItems ?? []).forEach((menuItem) => {
-    (0, import_data13.dispatch)(store).registerMenuItem(menuItem.id, menuItem);
+    (0, import_data14.dispatch)(store).registerMenuItem(menuItem.id, menuItem);
   });
   (routes ?? []).forEach((route) => {
-    (0, import_data13.dispatch)(store).registerRoute(route);
+    (0, import_data14.dispatch)(store).registerRoute(route);
   });
   if (dashboardLink) {
-    (0, import_data13.dispatch)(store).setDashboardLink(dashboardLink);
+    (0, import_data14.dispatch)(store).setDashboardLink(dashboardLink);
   }
   await runInitModules(initModules);
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
     const root = (0, import_element44.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_element44.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_element44.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(App, {}) })
     );
   }
 }
@@ -13318,14 +13357,14 @@ async function initSinglePage({
   initModules
 }) {
   (routes ?? []).forEach((route) => {
-    (0, import_data13.dispatch)(store).registerRoute(route);
+    (0, import_data14.dispatch)(store).registerRoute(route);
   });
   await runInitModules(initModules);
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
     const root = (0, import_element44.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_element44.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(App, { rootComponent: RootSinglePage }) })
+      /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_element44.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(App, { rootComponent: RootSinglePage }) })
     );
   }
 }
