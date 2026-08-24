@@ -54214,6 +54214,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
   var import_element232 = __toESM(require_element(), 1);
   var import_compose88 = __toESM(require_compose(), 1);
+  var import_deprecated29 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
     required,
@@ -54221,6 +54222,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
+    (0, import_deprecated29.default)("wp.components.privateApis.ValidatedTextareaControl", {
+      since: "7.2",
+      alternative: "ValidatedTextareaControl from @wordpress/ui",
+      hint: "This private API will be completely removed within a few Gutenberg plugin releases."
+    });
     const validityTargetRef = (0, import_element232.useRef)(null);
     const mergedRefs = (0, import_compose88.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(ControlWithError, {
