@@ -68,13 +68,12 @@ var route = {
   canvas: async ({
     search
   }) => {
-    const [firstNavigation] = await (0, import_data.resolveSelect)(
-      import_core_data.store
-    ).getEntityRecords(
+    const navigations = await (0, import_data.resolveSelect)(import_core_data.store).getEntityRecords(
       "postType",
       NAVIGATION_POST_TYPE,
       PRELOADED_NAVIGATION_MENUS_QUERY
     );
+    const firstNavigation = navigations?.[0];
     if (!firstNavigation) {
       return { postType: NAVIGATION_POST_TYPE, isPreview: true };
     }

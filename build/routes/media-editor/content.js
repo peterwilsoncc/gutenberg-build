@@ -72,7 +72,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       function useSyncExternalStore$2(subscribe2, getSnapshot2) {
-        didWarnOld18Alpha || void 0 === React67.startTransition || (didWarnOld18Alpha = true, console.error(
+        didWarnOld18Alpha || void 0 === React66.startTransition || (didWarnOld18Alpha = true, console.error(
           "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
         ));
         var value = getSnapshot2();
@@ -120,8 +120,8 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot2();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React67 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState37 = React67.useState, useEffect35 = React67.useEffect, useLayoutEffect6 = React67.useLayoutEffect, useDebugValue = React67.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-      exports.useSyncExternalStore = void 0 !== React67.useSyncExternalStore ? React67.useSyncExternalStore : shim;
+      var React66 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState37 = React66.useState, useEffect35 = React66.useEffect, useLayoutEffect6 = React66.useLayoutEffect, useDebugValue = React66.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      exports.useSyncExternalStore = void 0 !== React66.useSyncExternalStore ? React66.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
   }
@@ -441,7 +441,7 @@ var clsx_default = clsx;
 var import_element2 = __toESM(require_element(), 1);
 
 // node_modules/@base-ui/utils/useControlled.mjs
-var React2 = __toESM(require_react(), 1);
+var React = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/error.mjs
 var set;
@@ -467,25 +467,25 @@ function useControlled({
 }) {
   const {
     current: isControlled
-  } = React2.useRef(controlled !== void 0);
-  const [valueState, setValue] = React2.useState(defaultProp);
+  } = React.useRef(controlled !== void 0);
+  const [valueState, setValue] = React.useState(defaultProp);
   const value = isControlled ? controlled : valueState;
   if (true) {
-    React2.useEffect(() => {
+    React.useEffect(() => {
       if (isControlled !== (controlled !== void 0)) {
         error([`A component is changing the ${isControlled ? "" : "un"}controlled ${state} state of ${name} to be ${isControlled ? "un" : ""}controlled.`, "Elements should not switch from uncontrolled to controlled (or vice versa).", `Decide between using a controlled or uncontrolled ${name} element for the lifetime of the component.`, "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.", "More info: https://fb.me/react-controlled-components"].join("\n"));
       }
     }, [state, name, controlled]);
     const {
       current: defaultValue
-    } = React2.useRef(defaultProp);
-    React2.useEffect(() => {
+    } = React.useRef(defaultProp);
+    React.useEffect(() => {
       if (!isControlled && serializeToDevModeString(defaultValue) !== serializeToDevModeString(defaultProp)) {
         error([`A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. To suppress this warning opt to use a controlled ${name}.`].join("\n"));
       }
     }, [defaultProp]);
   }
-  const setValueIfUncontrolled = React2.useCallback((newValue) => {
+  const setValueIfUncontrolled = React.useCallback((newValue) => {
     if (!isControlled) {
       setValue(newValue);
     }
@@ -520,16 +520,16 @@ function serializeToDevModeString(input) {
 }
 
 // node_modules/@base-ui/utils/safeReact.mjs
-var React3 = __toESM(require_react(), 1);
+var React2 = __toESM(require_react(), 1);
 var SafeReact = {
-  ...React3
+  ...React2
 };
 
 // node_modules/@base-ui/utils/useRefWithInit.mjs
-var React4 = __toESM(require_react(), 1);
+var React3 = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init, initArg) {
-  const ref = React4.useRef(UNINITIALIZED);
+  const ref = React3.useRef(UNINITIALIZED);
   if (ref.current === UNINITIALIZED) {
     ref.current = init(initArg);
   }
@@ -585,17 +585,17 @@ function warn(...messages) {
 }
 
 // node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
-var React7 = __toESM(require_react(), 1);
+var React6 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
-var React5 = __toESM(require_react(), 1);
+var React4 = __toESM(require_react(), 1);
 var noop = () => {
 };
-var useIsoLayoutEffect = typeof document !== "undefined" ? React5.useLayoutEffect : noop;
+var useIsoLayoutEffect = typeof document !== "undefined" ? React4.useLayoutEffect : noop;
 
 // node_modules/@base-ui/react/internals/composite/list/CompositeListContext.mjs
-var React6 = __toESM(require_react(), 1);
-var CompositeListContext = /* @__PURE__ */ React6.createContext({
+var React5 = __toESM(require_react(), 1);
+var CompositeListContext = /* @__PURE__ */ React5.createContext({
   register: () => {
   },
   unregister: () => {
@@ -608,7 +608,7 @@ var CompositeListContext = /* @__PURE__ */ React6.createContext({
 });
 if (true) CompositeListContext.displayName = "CompositeListContext";
 function useCompositeListContext() {
-  return React6.useContext(CompositeListContext);
+  return React5.useContext(CompositeListContext);
 }
 
 // node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
@@ -621,13 +621,13 @@ function CompositeList(props) {
     onMapChange: onMapChangeProp
   } = props;
   const onMapChange = useStableCallback(onMapChangeProp);
-  const [, setMapTick] = React7.useState(false);
+  const [, setMapTick] = React6.useState(false);
   const listeners = useRefWithInit(createListeners).current;
   const map = useRefWithInit(createMap).current;
-  const nextIndexRef = React7.useRef(0);
-  const isDirtyRef = React7.useRef(true);
-  const itemsRef = React7.useRef([]);
-  const mutationObserverRef = React7.useRef(null);
+  const nextIndexRef = React6.useRef(0);
+  const isDirtyRef = React6.useRef(true);
+  const itemsRef = React6.useRef([]);
+  const mutationObserverRef = React6.useRef(null);
   const scheduleMapUpdate = useStableCallback(() => {
     if (isDirtyRef.current) {
       return;
@@ -734,7 +734,7 @@ function CompositeList(props) {
       listeners.delete(fn);
     };
   });
-  const contextValue = React7.useMemo(() => ({
+  const contextValue = React6.useMemo(() => ({
     register: register3,
     unregister,
     subscribeMapChange,
@@ -809,7 +809,7 @@ function sortByDocumentPosition(a2, b2) {
 }
 
 // node_modules/@base-ui/react/internals/useRenderElement.mjs
-var React10 = __toESM(require_react(), 1);
+var React9 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/useMergedRefs.mjs
 function useMergedRefs(a2, b2, c2, d2) {
@@ -901,18 +901,18 @@ function update(forkRef, refs) {
 }
 
 // node_modules/@base-ui/utils/getReactElementRef.mjs
-var React9 = __toESM(require_react(), 1);
+var React8 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/reactVersion.mjs
-var React8 = __toESM(require_react(), 1);
-var majorVersion = parseInt(React8.version, 10);
+var React7 = __toESM(require_react(), 1);
+var majorVersion = parseInt(React7.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
 // node_modules/@base-ui/utils/getReactElementRef.mjs
 function getReactElementRef(element) {
-  if (!/* @__PURE__ */ React9.isValidElement(element)) {
+  if (!/* @__PURE__ */ React8.isValidElement(element)) {
     return null;
   }
   const reactElement = element;
@@ -1199,15 +1199,15 @@ function evaluateRenderProp(element, render4, props, state) {
     mergedProps.ref = props.ref;
     let newElement = render4;
     if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-      const children = React10.Children.toArray(render4);
+      const children = React9.Children.toArray(render4);
       newElement = children[0];
     }
     if (true) {
-      if (!/* @__PURE__ */ React10.isValidElement(newElement)) {
+      if (!/* @__PURE__ */ React9.isValidElement(newElement)) {
         throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
       }
     }
-    return /* @__PURE__ */ React10.cloneElement(newElement, mergedProps);
+    return /* @__PURE__ */ React9.cloneElement(newElement, mergedProps);
   }
   if (element) {
     if (typeof element === "string") {
@@ -1244,16 +1244,16 @@ function renderTag(Tag, props) {
       key: props.key
     });
   }
-  return /* @__PURE__ */ React10.createElement(Tag, props);
+  return /* @__PURE__ */ React9.createElement(Tag, props);
 }
 
 // node_modules/@base-ui/utils/useId.mjs
-var React11 = __toESM(require_react(), 1);
+var React10 = __toESM(require_react(), 1);
 var globalId = 0;
 function useGlobalId(idOverride, prefix = "mui") {
-  const [defaultId, setDefaultId] = React11.useState(idOverride);
+  const [defaultId, setDefaultId] = React10.useState(idOverride);
   const id = idOverride || defaultId;
-  React11.useEffect(() => {
+  React10.useEffect(() => {
     if (defaultId == null) {
       globalId += 1;
       setDefaultId(`${prefix}-${globalId}`);
@@ -1276,7 +1276,7 @@ function useBaseUiId(idOverride) {
 }
 
 // node_modules/@base-ui/react/collapsible/root/useCollapsibleRoot.mjs
-var React14 = __toESM(require_react(), 1);
+var React13 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/internals/reason-parts.mjs
 var reason_parts_exports = {};
@@ -1380,12 +1380,12 @@ function createChangeEventDetails(reason, event, trigger, customProperties) {
 }
 
 // node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-var React13 = __toESM(require_react(), 1);
+var React12 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/useOnMount.mjs
-var React12 = __toESM(require_react(), 1);
+var React11 = __toESM(require_react(), 1);
 function useOnMount(fn) {
-  React12.useEffect(fn, EMPTY_ARRAY);
+  React11.useEffect(fn, EMPTY_ARRAY);
 }
 
 // node_modules/@base-ui/utils/useAnimationFrame.mjs
@@ -1478,8 +1478,8 @@ function useAnimationFrame() {
 
 // node_modules/@base-ui/react/internals/useTransitionStatus.mjs
 function useTransitionStatus(open, enableIdleState = false, deferEndingState = false) {
-  const [transitionStatus, setTransitionStatus] = React13.useState(open && enableIdleState ? "idle" : void 0);
-  const [mounted, setMounted] = React13.useState(open);
+  const [transitionStatus, setTransitionStatus] = React12.useState(open && enableIdleState ? "idle" : void 0);
+  const [mounted, setMounted] = React12.useState(open);
   if (open && !mounted) {
     setMounted(true);
     setTransitionStatus("starting");
@@ -1553,7 +1553,7 @@ function useCollapsibleRoot(parameters) {
     transitionStatus
   } = useTransitionStatus(open, true, true);
   const defaultPanelId = useBaseUiId();
-  const [registeredPanelId, setPanelIdState] = React14.useState();
+  const [registeredPanelId, setPanelIdState] = React13.useState();
   const panelId = registeredPanelId === null ? void 0 : registeredPanelId ?? defaultPanelId;
   const handleTrigger = useStableCallback((event) => {
     const nextOpen = !open;
@@ -1564,7 +1564,7 @@ function useCollapsibleRoot(parameters) {
     }
     setOpen(nextOpen);
   });
-  return React14.useMemo(() => ({
+  return React13.useMemo(() => ({
     defaultPanelId,
     disabled: disabled2,
     handleTrigger,
@@ -1579,11 +1579,11 @@ function useCollapsibleRoot(parameters) {
 }
 
 // node_modules/@base-ui/react/collapsible/root/CollapsibleRootContext.mjs
-var React15 = __toESM(require_react(), 1);
-var CollapsibleRootContext = /* @__PURE__ */ React15.createContext(void 0);
+var React14 = __toESM(require_react(), 1);
+var CollapsibleRootContext = /* @__PURE__ */ React14.createContext(void 0);
 if (true) CollapsibleRootContext.displayName = "CollapsibleRootContext";
 function useCollapsibleRootContext() {
-  const context = React15.useContext(CollapsibleRootContext);
+  const context = React14.useContext(CollapsibleRootContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: CollapsibleRootContext is missing. Collapsible parts must be placed within <Collapsible.Root>." : formatErrorMessage_default(15));
   }
@@ -1591,7 +1591,7 @@ function useCollapsibleRootContext() {
 }
 
 // node_modules/@base-ui/react/internals/composite/list/useCompositeListItem.mjs
-var React16 = __toESM(require_react(), 1);
+var React15 = __toESM(require_react(), 1);
 function useCompositeListItem(params = {}) {
   const {
     guess,
@@ -1606,8 +1606,8 @@ function useCompositeListItem(params = {}) {
     subscribeMapChange,
     nextIndexRef
   } = useCompositeListContext();
-  const indexRef = React16.useRef(-1);
-  const [internalIndex, setInternalIndex] = React16.useState(externalIndex == null && guess ? () => {
+  const indexRef = React15.useRef(-1);
+  const [internalIndex, setInternalIndex] = React15.useState(externalIndex == null && guess ? () => {
     if (indexRef.current === -1) {
       const newIndex = nextIndexRef.current;
       nextIndexRef.current += 1;
@@ -1616,8 +1616,8 @@ function useCompositeListItem(params = {}) {
     return indexRef.current;
   } : -1);
   const index = externalIndex ?? internalIndex;
-  const componentRef = React16.useRef(null);
-  const ref = React16.useCallback((node) => {
+  const componentRef = React15.useRef(null);
+  const ref = React15.useCallback((node) => {
     const previousNode = componentRef.current;
     if (previousNode) {
       unregister(previousNode);
@@ -1715,7 +1715,7 @@ var collapsibleOpenStateMapping = {
 };
 
 // node_modules/@base-ui/react/internals/use-button/useButton.mjs
-var React19 = __toESM(require_react(), 1);
+var React18 = __toESM(require_react(), 1);
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
 function hasWindow() {
@@ -1742,11 +1742,11 @@ function getComputedStyle2(element) {
 }
 
 // node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
-var React17 = __toESM(require_react(), 1);
-var CompositeRootContext = /* @__PURE__ */ React17.createContext(void 0);
+var React16 = __toESM(require_react(), 1);
+var CompositeRootContext = /* @__PURE__ */ React16.createContext(void 0);
 if (true) CompositeRootContext.displayName = "CompositeRootContext";
 function useCompositeRootContext(optional = false) {
-  const context = React17.useContext(CompositeRootContext);
+  const context = React16.useContext(CompositeRootContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: CompositeRootContext is missing. Composite parts must be placed within <Composite.Root>." : formatErrorMessage_default(16));
   }
@@ -1754,7 +1754,7 @@ function useCompositeRootContext(optional = false) {
 }
 
 // node_modules/@base-ui/react/utils/useFocusableWhenDisabled.mjs
-var React18 = __toESM(require_react(), 1);
+var React17 = __toESM(require_react(), 1);
 function useFocusableWhenDisabled(parameters) {
   const {
     focusableWhenDisabled,
@@ -1765,7 +1765,7 @@ function useFocusableWhenDisabled(parameters) {
   } = parameters;
   const isFocusableComposite = composite && focusableWhenDisabled !== false;
   const isNonFocusableComposite = composite && focusableWhenDisabled === false;
-  const props = React18.useMemo(() => {
+  const props = React17.useMemo(() => {
     const additionalProps = {
       // allow Tabbing away from focusableWhenDisabled elements
       onKeyDown(event) {
@@ -1823,7 +1823,7 @@ function useButton(parameters = {}) {
     native: isNativeButton = true,
     composite: compositeProp
   } = parameters;
-  const elementRef = React19.useRef(null);
+  const elementRef = React18.useRef(null);
   const compositeRootContext = useCompositeRootContext(true);
   const isCompositeItem = compositeProp ?? compositeRootContext !== void 0;
   const {
@@ -1836,7 +1836,7 @@ function useButton(parameters = {}) {
     isNativeButton
   });
   if (true) {
-    React19.useEffect(() => {
+    React18.useEffect(() => {
       if (!elementRef.current) {
         return;
       }
@@ -1854,7 +1854,7 @@ function useButton(parameters = {}) {
       }
     }, [isNativeButton]);
   }
-  const updateDisabled = React19.useCallback(() => {
+  const updateDisabled = React18.useCallback(() => {
     const element = elementRef.current;
     if (!isButtonElement(element)) {
       return;
@@ -1864,7 +1864,7 @@ function useButton(parameters = {}) {
     }
   }, [disabled2, focusableWhenDisabledProps.disabled, isCompositeItem]);
   useIsoLayoutEffect(updateDisabled, [updateDisabled]);
-  const getButtonProps = React19.useCallback((externalProps = {}) => {
+  const getButtonProps = React18.useCallback((externalProps = {}) => {
     const {
       onClick: externalOnClick,
       onMouseDown: externalOnMouseDown,
@@ -1978,7 +1978,7 @@ function isValidLinkElement(elem) {
 }
 
 // node_modules/@base-ui/react/collapsible/panel/useCollapsiblePanel.mjs
-var React21 = __toESM(require_react(), 1);
+var React20 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/addEventListener.mjs
 function addEventListener(target, type, listener, options) {
@@ -2007,7 +2007,7 @@ function createLatestRef(value) {
 }
 
 // node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-var React20 = __toESM(require_react(), 1);
+var React19 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
 var ReactDOM = __toESM(require_react_dom(), 1);
@@ -2089,7 +2089,7 @@ function useOpenChangeComplete(parameters) {
   } = parameters;
   const onComplete = useStableCallback(onCompleteParam);
   const runOnceAnimationsFinish = useAnimationsFinished(ref, open);
-  React20.useEffect(() => {
+  React19.useEffect(() => {
     if (!enabled) {
       return void 0;
     }
@@ -2119,15 +2119,15 @@ function useCollapsiblePanel(parameters) {
     setOpen,
     transitionStatus
   } = parameters;
-  const panelRef = React21.useRef(null);
-  const animationTypeRef = React21.useRef(null);
-  const [dimensions, setDimensionsUnwrapped] = React21.useState(EMPTY_DIMENSIONS);
-  const lastMeasuredDimensionsRef = React21.useRef(EMPTY_DIMENSIONS);
-  const shouldSkipNextOpenRef = React21.useRef(false);
-  const shouldPreventMountAnimationRef = React21.useRef(open);
-  const shouldPreventActivityResumeAnimationRef = React21.useRef(false);
-  const [forcePanelIdle, setForcePanelIdle] = React21.useState(false);
-  const pendingTemporaryStyleRestoreRef = React21.useRef(null);
+  const panelRef = React20.useRef(null);
+  const animationTypeRef = React20.useRef(null);
+  const [dimensions, setDimensionsUnwrapped] = React20.useState(EMPTY_DIMENSIONS);
+  const lastMeasuredDimensionsRef = React20.useRef(EMPTY_DIMENSIONS);
+  const shouldSkipNextOpenRef = React20.useRef(false);
+  const shouldPreventMountAnimationRef = React20.useRef(open);
+  const shouldPreventActivityResumeAnimationRef = React20.useRef(false);
+  const [forcePanelIdle, setForcePanelIdle] = React20.useState(false);
+  const pendingTemporaryStyleRestoreRef = React20.useRef(null);
   const mergedPanelRef = useMergedRefs(externalRef, panelRef);
   const latestOpenRef = useValueAsRef(open);
   const runOnceCloseAnimationsFinish = useAnimationsFinished(panelRef);
@@ -2170,7 +2170,7 @@ function useCollapsiblePanel(parameters) {
     }
     setForcePanelIdle(false);
   }, [forcePanelIdle, transitionStatus]);
-  React21.useEffect(() => {
+  React20.useEffect(() => {
     return () => {
       markActivityResumeAnimationSuppressed();
       restorePendingTemporaryStyle();
@@ -2263,7 +2263,7 @@ function useCollapsiblePanel(parameters) {
       setDimensions(EMPTY_DIMENSIONS, false);
     }
   });
-  React21.useEffect(() => {
+  React20.useEffect(() => {
     if (open || !mounted || panelTransitionStatus !== "ending") {
       return void 0;
     }
@@ -2295,7 +2295,7 @@ function useCollapsiblePanel(parameters) {
     }
     panel.setAttribute("hidden", "until-found");
   }, [hidden, hiddenUntilFound]);
-  React21.useEffect(function registerBeforeMatchListener() {
+  React20.useEffect(function registerBeforeMatchListener() {
     const panel = panelRef.current;
     if (!panel) {
       return void 0;
@@ -2489,10 +2489,10 @@ function isElementVisible(element, styles = element ? getComputedStyle2(element)
 }
 
 // node_modules/@base-ui/utils/useForcedRerendering.mjs
-var React22 = __toESM(require_react(), 1);
+var React21 = __toESM(require_react(), 1);
 function useForcedRerendering() {
-  const [, setState] = React22.useState({});
-  return React22.useCallback(() => {
+  const [, setState] = React21.useState({});
+  return React21.useCallback(() => {
     setState({});
   }, []);
 }
@@ -2597,17 +2597,17 @@ function inertValue(value) {
 }
 
 // node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
-var React23 = __toESM(require_react(), 1);
-var DirectionContext = /* @__PURE__ */ React23.createContext(void 0);
+var React22 = __toESM(require_react(), 1);
+var DirectionContext = /* @__PURE__ */ React22.createContext(void 0);
 if (true) DirectionContext.displayName = "DirectionContext";
 function useDirection() {
-  const context = React23.useContext(DirectionContext);
+  const context = React22.useContext(DirectionContext);
   return context?.direction ?? "ltr";
 }
 
 // node_modules/@base-ui/react/button/Button.mjs
-var React24 = __toESM(require_react(), 1);
-var Button = /* @__PURE__ */ React24.forwardRef(function Button2(componentProps, forwardedRef) {
+var React23 = __toESM(require_react(), 1);
+var Button = /* @__PURE__ */ React23.forwardRef(function Button2(componentProps, forwardedRef) {
   const {
     render: render4,
     className,
@@ -2645,7 +2645,7 @@ __export(index_parts_exports, {
 });
 
 // node_modules/@base-ui/react/collapsible/root/CollapsibleRoot.mjs
-var React25 = __toESM(require_react(), 1);
+var React24 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/collapsible/root/stateAttributesMapping.mjs
 var collapsibleStateAttributesMapping = {
@@ -2655,7 +2655,7 @@ var collapsibleStateAttributesMapping = {
 
 // node_modules/@base-ui/react/collapsible/root/CollapsibleRoot.mjs
 var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-var CollapsibleRoot = /* @__PURE__ */ React25.forwardRef(function CollapsibleRoot2(componentProps, forwardedRef) {
+var CollapsibleRoot = /* @__PURE__ */ React24.forwardRef(function CollapsibleRoot2(componentProps, forwardedRef) {
   const {
     render: render4,
     className,
@@ -2673,12 +2673,12 @@ var CollapsibleRoot = /* @__PURE__ */ React25.forwardRef(function CollapsibleRoo
     onOpenChange,
     disabled: disabled2
   });
-  const state = React25.useMemo(() => ({
+  const state = React24.useMemo(() => ({
     open: collapsible.open,
     disabled: collapsible.disabled,
     transitionStatus: collapsible.transitionStatus
   }), [collapsible.open, collapsible.disabled, collapsible.transitionStatus]);
-  const contextValue = React25.useMemo(() => ({
+  const contextValue = React24.useMemo(() => ({
     ...collapsible,
     onOpenChange,
     state
@@ -2697,12 +2697,12 @@ var CollapsibleRoot = /* @__PURE__ */ React25.forwardRef(function CollapsibleRoo
 if (true) CollapsibleRoot.displayName = "CollapsibleRoot";
 
 // node_modules/@base-ui/react/collapsible/trigger/CollapsibleTrigger.mjs
-var React26 = __toESM(require_react(), 1);
+var React25 = __toESM(require_react(), 1);
 var stateAttributesMapping = {
   ...triggerOpenStateMapping,
   ...transitionStatusMapping
 };
-var CollapsibleTrigger = /* @__PURE__ */ React26.forwardRef(function CollapsibleTrigger2(componentProps, forwardedRef) {
+var CollapsibleTrigger = /* @__PURE__ */ React25.forwardRef(function CollapsibleTrigger2(componentProps, forwardedRef) {
   const {
     panelId,
     open,
@@ -2741,7 +2741,7 @@ var CollapsibleTrigger = /* @__PURE__ */ React26.forwardRef(function Collapsible
 if (true) CollapsibleTrigger.displayName = "CollapsibleTrigger";
 
 // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanel.mjs
-var React27 = __toESM(require_react(), 1);
+var React26 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanelCssVars.mjs
 var CollapsiblePanelCssVars = /* @__PURE__ */ (function(CollapsiblePanelCssVars2) {
@@ -2751,7 +2751,7 @@ var CollapsiblePanelCssVars = /* @__PURE__ */ (function(CollapsiblePanelCssVars2
 })({});
 
 // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanel.mjs
-var CollapsiblePanel = /* @__PURE__ */ React27.forwardRef(function CollapsiblePanel2(componentProps, forwardedRef) {
+var CollapsiblePanel = /* @__PURE__ */ React26.forwardRef(function CollapsiblePanel2(componentProps, forwardedRef) {
   const {
     className,
     hiddenUntilFound: hiddenUntilFoundProp,
@@ -2762,7 +2762,7 @@ var CollapsiblePanel = /* @__PURE__ */ React27.forwardRef(function CollapsiblePa
     ...elementProps
   } = componentProps;
   if (true) {
-    React27.useEffect(() => {
+    React26.useEffect(() => {
       if (hiddenUntilFoundProp && keepMountedProp === false) {
         warn("The `keepMounted={false}` prop on `Collapsible.Panel` is ignored when `hiddenUntilFound` is enabled, since the panel must remain mounted while closed.");
       }
@@ -2850,7 +2850,7 @@ var CollapsiblePanel = /* @__PURE__ */ React27.forwardRef(function CollapsiblePa
 if (true) CollapsiblePanel.displayName = "CollapsiblePanel";
 
 // node_modules/@base-ui/react/internals/composite/item/useCompositeItem.mjs
-var React28 = __toESM(require_react(), 1);
+var React27 = __toESM(require_react(), 1);
 function useCompositeItem(params = {}) {
   const {
     highlightItemOnHover,
@@ -2862,7 +2862,7 @@ function useCompositeItem(params = {}) {
     index
   } = useCompositeListItem(params);
   const isHighlighted = highlightedIndex === index;
-  const itemRef = React28.useRef(null);
+  const itemRef = React27.useRef(null);
   const mergedRef = useMergedRefs(ref, itemRef);
   const compositeProps = {
     tabIndex: isHighlighted ? 0 : -1,
@@ -2907,13 +2907,13 @@ function getCssDimensions(element) {
 }
 
 // node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
-var React29 = __toESM(require_react(), 1);
+var React28 = __toESM(require_react(), 1);
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
 var DirectionProvider = function DirectionProvider2(props) {
   const {
     direction = "ltr"
   } = props;
-  const contextValue = React29.useMemo(() => ({
+  const contextValue = React28.useMemo(() => ({
     direction
   }), [direction]);
   return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(DirectionContext.Provider, {
@@ -2929,21 +2929,21 @@ function isElementDisabled(element) {
 }
 
 // node_modules/@base-ui/react/internals/csp-context/CSPContext.mjs
-var React30 = __toESM(require_react(), 1);
-var CSPContext = /* @__PURE__ */ React30.createContext(void 0);
+var React29 = __toESM(require_react(), 1);
+var CSPContext = /* @__PURE__ */ React29.createContext(void 0);
 if (true) CSPContext.displayName = "CSPContext";
 var DEFAULT_CSP_CONTEXT_VALUE = {
   disableStyleElements: false
 };
 function useCSPContext() {
-  return React30.useContext(CSPContext) ?? DEFAULT_CSP_CONTEXT_VALUE;
+  return React29.useContext(CSPContext) ?? DEFAULT_CSP_CONTEXT_VALUE;
 }
 
 // node_modules/@base-ui/react/internals/composite/root/CompositeRoot.mjs
-var React32 = __toESM(require_react(), 1);
+var React31 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/internals/composite/root/useCompositeRoot.mjs
-var React31 = __toESM(require_react(), 1);
+var React30 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/internals/composite/constants.mjs
 var ACTIVE_COMPOSITE_ITEM = "data-composite-item-active";
@@ -2965,12 +2965,12 @@ function useCompositeRoot(params) {
     disabledIndices,
     modifierKeys = EMPTY_ARRAY2
   } = params;
-  const [internalHighlightedIndex, internalSetHighlightedIndex] = React31.useState(0);
+  const [internalHighlightedIndex, internalSetHighlightedIndex] = React30.useState(0);
   const isGrid = grid != null;
-  const rootRef = React31.useRef(null);
+  const rootRef = React30.useRef(null);
   const mergedRef = useMergedRefs(rootRef, externalRef);
-  const elementsRef = React31.useRef([]);
-  const hasSetDefaultIndexRef = React31.useRef(false);
+  const elementsRef = React30.useRef([]);
+  const hasSetDefaultIndexRef = React30.useRef(false);
   const highlightedIndex = externalHighlightedIndex ?? internalHighlightedIndex;
   const onHighlightedIndexChange = useStableCallback((index, shouldScrollIntoView = false) => {
     (externalSetHighlightedIndex ?? internalSetHighlightedIndex)(index);
@@ -3197,7 +3197,7 @@ function CompositeRoot(componentProps) {
     props: [defaultProps, ...props, elementProps],
     stateAttributesMapping: stateAttributesMapping4
   });
-  const contextValue = React32.useMemo(() => ({
+  const contextValue = React31.useMemo(() => ({
     highlightedIndex,
     onHighlightedIndexChange,
     highlightItemOnHover,
@@ -3235,7 +3235,7 @@ function useIsHydrating() {
 }
 
 // node_modules/@base-ui/react/internals/PrehydrationScript.mjs
-var React33 = __toESM(require_react(), 1);
+var React32 = __toESM(require_react(), 1);
 var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
 function PrehydrationScript(props) {
   const {
@@ -3268,14 +3268,14 @@ __export(index_parts_exports2, {
 });
 
 // node_modules/@base-ui/react/tabs/root/TabsRoot.mjs
-var React35 = __toESM(require_react(), 1);
+var React34 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/tabs/root/TabsRootContext.mjs
-var React34 = __toESM(require_react(), 1);
-var TabsRootContext = /* @__PURE__ */ React34.createContext(void 0);
+var React33 = __toESM(require_react(), 1);
+var TabsRootContext = /* @__PURE__ */ React33.createContext(void 0);
 if (true) TabsRootContext.displayName = "TabsRootContext";
 function useTabsRootContext() {
-  const context = React34.useContext(TabsRootContext);
+  const context = React33.useContext(TabsRootContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: TabsRootContext is missing. Tabs parts must be placed within <Tabs.Root>." : formatErrorMessage_default(64));
   }
@@ -3291,7 +3291,7 @@ var tabsStateAttributesMapping = {
 
 // node_modules/@base-ui/react/tabs/root/TabsRoot.mjs
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
-var TabsRoot = /* @__PURE__ */ React35.forwardRef(function TabsRoot2(componentProps, forwardedRef) {
+var TabsRoot = /* @__PURE__ */ React34.forwardRef(function TabsRoot2(componentProps, forwardedRef) {
   const {
     className,
     defaultValue: defaultValueProp = 0,
@@ -3303,8 +3303,8 @@ var TabsRoot = /* @__PURE__ */ React35.forwardRef(function TabsRoot2(componentPr
     ...elementProps
   } = componentProps;
   const hasExplicitDefaultValueProp = componentProps.defaultValue !== void 0;
-  const tabPanelRefs = React35.useRef([]);
-  const [mountedTabPanels, setMountedTabPanels] = React35.useState(() => /* @__PURE__ */ new Map());
+  const tabPanelRefs = React34.useRef([]);
+  const [mountedTabPanels, setMountedTabPanels] = React34.useState(() => /* @__PURE__ */ new Map());
   const [value, setValue] = useControlled({
     controlled: valueProp,
     default: defaultValueProp,
@@ -3312,10 +3312,10 @@ var TabsRoot = /* @__PURE__ */ React35.forwardRef(function TabsRoot2(componentPr
     state: "value"
   });
   const isControlled = valueProp !== void 0;
-  const [tabMap, setTabMap] = React35.useState(() => /* @__PURE__ */ new Map());
-  const lastKnownTabElementRef = React35.useRef(void 0);
-  const getTabElementBySelectedValue = React35.useCallback((selectedValue) => findTabElement(tabMap, selectedValue), [tabMap]);
-  const [activationDirectionState, setActivationDirectionState] = React35.useState(() => ({
+  const [tabMap, setTabMap] = React34.useState(() => /* @__PURE__ */ new Map());
+  const lastKnownTabElementRef = React34.useRef(void 0);
+  const getTabElementBySelectedValue = React34.useCallback((selectedValue) => findTabElement(tabMap, selectedValue), [tabMap]);
+  const [activationDirectionState, setActivationDirectionState] = React34.useState(() => ({
     previousValue: value,
     tabActivationDirection: "none"
   }));
@@ -3371,10 +3371,10 @@ var TabsRoot = /* @__PURE__ */ React35.forwardRef(function TabsRoot2(componentPr
       });
     };
   });
-  const getTabPanelIdByValue = React35.useCallback((tabValue) => {
+  const getTabPanelIdByValue = React34.useCallback((tabValue) => {
     return mountedTabPanels.get(tabValue);
   }, [mountedTabPanels]);
-  const getTabIdByPanelValue = React35.useCallback((tabPanelValue) => {
+  const getTabIdByPanelValue = React34.useCallback((tabPanelValue) => {
     for (const tabMetadata of tabMap.values()) {
       if (tabPanelValue === tabMetadata.value) {
         return tabMetadata.id;
@@ -3382,7 +3382,7 @@ var TabsRoot = /* @__PURE__ */ React35.forwardRef(function TabsRoot2(componentPr
     }
     return void 0;
   }, [tabMap]);
-  const tabsContextValue = React35.useMemo(() => ({
+  const tabsContextValue = React34.useMemo(() => ({
     getTabElementBySelectedValue,
     getTabIdByPanelValue,
     getTabPanelIdByValue,
@@ -3393,7 +3393,7 @@ var TabsRoot = /* @__PURE__ */ React35.forwardRef(function TabsRoot2(componentPr
     tabActivationDirection,
     value
   }), [getTabElementBySelectedValue, getTabIdByPanelValue, getTabPanelIdByValue, onValueChange, orientation, registerMountedTabPanel, setTabMap, tabActivationDirection, value]);
-  const selectedTabMetadata = React35.useMemo(() => {
+  const selectedTabMetadata = React34.useMemo(() => {
     for (const tabMetadata of tabMap.values()) {
       if (tabMetadata.value === value) {
         return tabMetadata;
@@ -3401,7 +3401,7 @@ var TabsRoot = /* @__PURE__ */ React35.forwardRef(function TabsRoot2(componentPr
     }
     return void 0;
   }, [tabMap, value]);
-  const firstEnabledTabValue = React35.useMemo(() => {
+  const firstEnabledTabValue = React34.useMemo(() => {
     for (const tabMetadata of tabMap.values()) {
       if (!tabMetadata.disabled) {
         return tabMetadata.value;
@@ -3409,10 +3409,10 @@ var TabsRoot = /* @__PURE__ */ React35.forwardRef(function TabsRoot2(componentPr
     }
     return void 0;
   }, [tabMap]);
-  const shouldNotifyInitialValueChangeRef = React35.useRef(!hasExplicitDefaultValueProp);
-  const initialDefaultValueRef = React35.useRef(defaultValueProp);
-  const shouldHonorDisabledDefaultValueRef = React35.useRef(hasExplicitDefaultValueProp);
-  const didRegisterTabsRef = React35.useRef(false);
+  const shouldNotifyInitialValueChangeRef = React34.useRef(!hasExplicitDefaultValueProp);
+  const initialDefaultValueRef = React34.useRef(defaultValueProp);
+  const shouldHonorDisabledDefaultValueRef = React34.useRef(hasExplicitDefaultValueProp);
+  const didRegisterTabsRef = React34.useRef(false);
   useIsoLayoutEffect(() => {
     if (isControlled) {
       return;
@@ -3515,14 +3515,14 @@ function computeActivationDirection(oldValue, newValue, orientation, tabMap) {
 }
 
 // node_modules/@base-ui/react/tabs/tab/TabsTab.mjs
-var React37 = __toESM(require_react(), 1);
+var React36 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/tabs/list/TabsListContext.mjs
-var React36 = __toESM(require_react(), 1);
-var TabsListContext = /* @__PURE__ */ React36.createContext(void 0);
+var React35 = __toESM(require_react(), 1);
+var TabsListContext = /* @__PURE__ */ React35.createContext(void 0);
 if (true) TabsListContext.displayName = "TabsListContext";
 function useTabsListContext() {
-  const context = React36.useContext(TabsListContext);
+  const context = React35.useContext(TabsListContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: TabsListContext is missing. TabsList parts must be placed within <Tabs.List>." : formatErrorMessage_default(65));
   }
@@ -3530,7 +3530,7 @@ function useTabsListContext() {
 }
 
 // node_modules/@base-ui/react/tabs/tab/TabsTab.mjs
-var TabsTab = /* @__PURE__ */ React37.forwardRef(function TabsTab2(componentProps, forwardedRef) {
+var TabsTab = /* @__PURE__ */ React36.forwardRef(function TabsTab2(componentProps, forwardedRef) {
   const {
     className,
     disabled: disabled2 = false,
@@ -3558,7 +3558,7 @@ var TabsTab = /* @__PURE__ */ React37.forwardRef(function TabsTab2(componentProp
     onHighlightedIndexChange
   } = useCompositeRootContext();
   const id = useBaseUiId(idProp);
-  const tabMetadata = React37.useMemo(() => ({
+  const tabMetadata = React36.useMemo(() => ({
     disabled: disabled2,
     id,
     value
@@ -3573,8 +3573,8 @@ var TabsTab = /* @__PURE__ */ React37.forwardRef(function TabsTab2(componentProp
     metadata: tabMetadata
   });
   const active = value === activeTabValue;
-  const isNavigatingRef = React37.useRef(false);
-  const unobserveTabElementRef = React37.useRef(null);
+  const isNavigatingRef = React36.useRef(false);
+  const unobserveTabElementRef = React36.useRef(null);
   const observeTabElement = useStableCallback((element2) => {
     unobserveTabElementRef.current?.();
     unobserveTabElementRef.current = element2 ? registerTabResizeObserverElement(element2) : null;
@@ -3607,8 +3607,8 @@ var TabsTab = /* @__PURE__ */ React37.forwardRef(function TabsTab2(componentProp
     focusableWhenDisabled: true
   });
   const tabPanelId = getTabPanelIdByValue(value);
-  const isPressingRef = React37.useRef(false);
-  const isMainButtonRef = React37.useRef(false);
+  const isPressingRef = React36.useRef(false);
+  const isMainButtonRef = React36.useRef(false);
   function activate(event) {
     onValueChange(value, createChangeEventDetails(reason_parts_exports.none, event.nativeEvent, void 0, {
       activationDirection: "none"
@@ -3674,7 +3674,7 @@ var TabsTab = /* @__PURE__ */ React37.forwardRef(function TabsTab2(componentProp
 if (true) TabsTab.displayName = "TabsTab";
 
 // node_modules/@base-ui/react/tabs/indicator/TabsIndicator.mjs
-var React38 = __toESM(require_react(), 1);
+var React37 = __toESM(require_react(), 1);
 var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 var _PrehydrationScript;
 var stateAttributesMapping2 = {
@@ -3682,7 +3682,7 @@ var stateAttributesMapping2 = {
   activeTabPosition: () => null,
   activeTabSize: () => null
 };
-var TabsIndicator = /* @__PURE__ */ React38.forwardRef(function TabsIndicator2(componentProps, forwardedRef) {
+var TabsIndicator = /* @__PURE__ */ React37.forwardRef(function TabsIndicator2(componentProps, forwardedRef) {
   const {
     className,
     render: render4,
@@ -3701,7 +3701,7 @@ var TabsIndicator = /* @__PURE__ */ React38.forwardRef(function TabsIndicator2(c
     registerIndicatorUpdateListener
   } = useTabsListContext();
   const rerender = useForcedRerendering();
-  React38.useEffect(() => {
+  React37.useEffect(() => {
     return registerIndicatorUpdateListener(rerender);
   }, [registerIndicatorUpdateListener, rerender]);
   let left = 0;
@@ -3784,7 +3784,7 @@ var TabsIndicator = /* @__PURE__ */ React38.forwardRef(function TabsIndicator2(c
   if (value == null) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(React38.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(React37.Fragment, {
     children: [element, renderBeforeHydration && (_PrehydrationScript || (_PrehydrationScript = /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(PrehydrationScript, {
       script
     })))]
@@ -3793,12 +3793,12 @@ var TabsIndicator = /* @__PURE__ */ React38.forwardRef(function TabsIndicator2(c
 if (true) TabsIndicator.displayName = "TabsIndicator";
 
 // node_modules/@base-ui/react/tabs/panel/TabsPanel.mjs
-var React39 = __toESM(require_react(), 1);
+var React38 = __toESM(require_react(), 1);
 var stateAttributesMapping3 = {
   ...tabsStateAttributesMapping,
   ...transitionStatusMapping
 };
-var TabsPanel = /* @__PURE__ */ React39.forwardRef(function TabsPanel2(componentProps, forwardedRef) {
+var TabsPanel = /* @__PURE__ */ React38.forwardRef(function TabsPanel2(componentProps, forwardedRef) {
   const {
     className,
     value,
@@ -3833,7 +3833,7 @@ var TabsPanel = /* @__PURE__ */ React39.forwardRef(function TabsPanel2(component
     tabActivationDirection,
     transitionStatus
   };
-  const panelRef = React39.useRef(null);
+  const panelRef = React38.useRef(null);
   const element = useRenderElement("div", componentProps, {
     state,
     ref: [forwardedRef, listItemRef, panelRef],
@@ -3873,9 +3873,9 @@ var TabsPanel = /* @__PURE__ */ React39.forwardRef(function TabsPanel2(component
 if (true) TabsPanel.displayName = "TabsPanel";
 
 // node_modules/@base-ui/react/tabs/list/TabsList.mjs
-var React40 = __toESM(require_react(), 1);
+var React39 = __toESM(require_react(), 1);
 var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
-var TabsList = /* @__PURE__ */ React40.forwardRef(function TabsList2(componentProps, forwardedRef) {
+var TabsList = /* @__PURE__ */ React39.forwardRef(function TabsList2(componentProps, forwardedRef) {
   const {
     activateOnFocus = false,
     className,
@@ -3889,11 +3889,11 @@ var TabsList = /* @__PURE__ */ React40.forwardRef(function TabsList2(componentPr
     setTabMap,
     tabActivationDirection
   } = useTabsRootContext();
-  const [highlightedTabIndex, setHighlightedTabIndex] = React40.useState(0);
-  const [tabsListElement, setTabsListElement] = React40.useState(null);
-  const indicatorUpdateListenersRef = React40.useRef(/* @__PURE__ */ new Set());
-  const tabResizeObserverElementsRef = React40.useRef(/* @__PURE__ */ new Set());
-  const resizeObserverRef = React40.useRef(null);
+  const [highlightedTabIndex, setHighlightedTabIndex] = React39.useState(0);
+  const [tabsListElement, setTabsListElement] = React39.useState(null);
+  const indicatorUpdateListenersRef = React39.useRef(/* @__PURE__ */ new Set());
+  const tabResizeObserverElementsRef = React39.useRef(/* @__PURE__ */ new Set());
+  const resizeObserverRef = React39.useRef(null);
   useIsoLayoutEffect(() => {
     if (typeof ResizeObserver === "undefined") {
       return void 0;
@@ -3937,7 +3937,7 @@ var TabsList = /* @__PURE__ */ React40.forwardRef(function TabsList2(componentPr
     "aria-orientation": orientation === "vertical" ? "vertical" : void 0,
     role: "tablist"
   };
-  const tabsListContextValue = React40.useMemo(() => ({
+  const tabsListContextValue = React39.useMemo(() => ({
     activateOnFocus,
     registerIndicatorUpdateListener,
     registerTabResizeObserverElement,
@@ -28472,6 +28472,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 }
 
 // routes/media-editor/stage.tsx
+var import_jsx_runtime140 = __toESM(require_jsx_runtime());
 var { usePostFields } = unlock3(import_editor.privateApis);
 var { MediaEditor: MediaEditor2 } = unlock3(privateApis4);
 var MEDIA_LIST_PATH = "/types/attachment/list/all";
@@ -28492,14 +28493,17 @@ function MediaEditorRoute() {
   const fields = usePostFields({ postType: "attachment" });
   const isStandaloneAdminPage = isMediaEditorAdminPage();
   const media = (0, import_data10.useSelect)(
-    (select) => select(import_core_data3.store).getEditedEntityRecord(
-      "postType",
-      "attachment",
-      attachmentId
+    (select) => (
+      /* The record of an attachment is always assignable to `Media`. */
+      select(import_core_data3.store).getEditedEntityRecord(
+        "postType",
+        "attachment",
+        attachmentId
+      )
     ),
     [attachmentId]
   );
-  const title = getMediaTitle(media ?? null);
+  const title = getMediaTitle(media || null);
   const navigateBack = () => {
     if (typeof window !== "undefined" && window.history.length > 1) {
       window.history.back();
@@ -28511,7 +28515,7 @@ function MediaEditorRoute() {
     }
     navigate({ to: MEDIA_LIST_PATH });
   };
-  return /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
     MediaEditor2,
     {
       id: attachmentId,
@@ -28523,7 +28527,12 @@ function MediaEditorRoute() {
           navigate({ to: `/media-editor/${savedId}` });
         }
       },
-      renderFrame: ({ children, isImage, layout, onKeyDown }) => {
+      renderFrame: ({
+        children,
+        isImage,
+        layout,
+        onKeyDown
+      }) => {
         const isNarrow = layout === "narrow";
         return (
           // The keydown handler covers the whole frame, not just the
@@ -28533,34 +28542,43 @@ function MediaEditorRoute() {
           // `Page` takes no `onKeyDown`, hence the wrapper; it is
           // `display: contents`, so it adds no box to the layout.
           // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-          /* @__PURE__ */ React.createElement(
+          /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
             "div",
             {
               className: "media-editor-route__shortcut-scope",
-              onKeyDown
-            },
-            /* @__PURE__ */ React.createElement(
-              page_default,
-              {
-                className: "media-editor-route",
-                ariaLabel: title,
-                breadcrumbs: /* @__PURE__ */ React.createElement(
-                  breadcrumbs_default,
-                  {
-                    items: isStandaloneAdminPage ? [{ label: title }] : [
-                      {
-                        label: (0, import_i18n45.__)("Media"),
-                        to: MEDIA_LIST_PATH
-                      },
-                      { label: title }
-                    ]
-                  }
-                ),
-                actions: /* @__PURE__ */ React.createElement(React.Fragment, null, !isNarrow && /* @__PURE__ */ React.createElement(MediaEditor2.HistoryActions, null), /* @__PURE__ */ React.createElement(MediaEditor2.HeaderActions, null), /* @__PURE__ */ React.createElement(MediaEditor2.SaveActions, { size: "compact" }))
-              },
-              /* @__PURE__ */ React.createElement("div", { className: "media-editor-route__content" }, children),
-              isNarrow && isImage && /* @__PURE__ */ React.createElement("div", { className: "media-editor-route__toolbar" }, /* @__PURE__ */ React.createElement(MediaEditor2.ImageControls, null), /* @__PURE__ */ React.createElement(MediaEditor2.HistoryActions, null))
-            )
+              onKeyDown,
+              children: /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
+                page_default,
+                {
+                  className: "media-editor-route",
+                  ariaLabel: title,
+                  breadcrumbs: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+                    breadcrumbs_default,
+                    {
+                      items: isStandaloneAdminPage ? [{ label: title }] : [
+                        {
+                          label: (0, import_i18n45.__)("Media"),
+                          to: MEDIA_LIST_PATH
+                        },
+                        { label: title }
+                      ]
+                    }
+                  ),
+                  actions: /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(import_jsx_runtime140.Fragment, { children: [
+                    !isNarrow && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(MediaEditor2.HistoryActions, {}),
+                    /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(MediaEditor2.HeaderActions, {}),
+                    /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(MediaEditor2.SaveActions, { size: "compact" })
+                  ] }),
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("div", { className: "media-editor-route__content", children }),
+                    isNarrow && isImage && /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)("div", { className: "media-editor-route__toolbar", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(MediaEditor2.ImageControls, {}),
+                      /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(MediaEditor2.HistoryActions, {})
+                    ] })
+                  ]
+                }
+              )
+            }
           )
         );
       }

@@ -305,7 +305,7 @@ var clsx_default = clsx;
 var import_element2 = __toESM(require_element(), 1);
 
 // node_modules/@base-ui/utils/useControlled.mjs
-var React2 = __toESM(require_react(), 1);
+var React = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/error.mjs
 var set;
@@ -331,25 +331,25 @@ function useControlled({
 }) {
   const {
     current: isControlled
-  } = React2.useRef(controlled !== void 0);
-  const [valueState, setValue] = React2.useState(defaultProp);
+  } = React.useRef(controlled !== void 0);
+  const [valueState, setValue] = React.useState(defaultProp);
   const value = isControlled ? controlled : valueState;
   if (true) {
-    React2.useEffect(() => {
+    React.useEffect(() => {
       if (isControlled !== (controlled !== void 0)) {
         error([`A component is changing the ${isControlled ? "" : "un"}controlled ${state} state of ${name} to be ${isControlled ? "un" : ""}controlled.`, "Elements should not switch from uncontrolled to controlled (or vice versa).", `Decide between using a controlled or uncontrolled ${name} element for the lifetime of the component.`, "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.", "More info: https://fb.me/react-controlled-components"].join("\n"));
       }
     }, [state, name, controlled]);
     const {
       current: defaultValue
-    } = React2.useRef(defaultProp);
-    React2.useEffect(() => {
+    } = React.useRef(defaultProp);
+    React.useEffect(() => {
       if (!isControlled && serializeToDevModeString(defaultValue) !== serializeToDevModeString(defaultProp)) {
         error([`A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. To suppress this warning opt to use a controlled ${name}.`].join("\n"));
       }
     }, [defaultProp]);
   }
-  const setValueIfUncontrolled = React2.useCallback((newValue) => {
+  const setValueIfUncontrolled = React.useCallback((newValue) => {
     if (!isControlled) {
       setValue(newValue);
     }
@@ -384,16 +384,16 @@ function serializeToDevModeString(input) {
 }
 
 // node_modules/@base-ui/utils/safeReact.mjs
-var React3 = __toESM(require_react(), 1);
+var React2 = __toESM(require_react(), 1);
 var SafeReact = {
-  ...React3
+  ...React2
 };
 
 // node_modules/@base-ui/utils/useRefWithInit.mjs
-var React4 = __toESM(require_react(), 1);
+var React3 = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init, initArg) {
-  const ref = React4.useRef(UNINITIALIZED);
+  const ref = React3.useRef(UNINITIALIZED);
   if (ref.current === UNINITIALIZED) {
     ref.current = init(initArg);
   }
@@ -449,13 +449,13 @@ function warn(...messages) {
 }
 
 // node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
-var React5 = __toESM(require_react(), 1);
+var React4 = __toESM(require_react(), 1);
 var noop = () => {
 };
-var useIsoLayoutEffect = typeof document !== "undefined" ? React5.useLayoutEffect : noop;
+var useIsoLayoutEffect = typeof document !== "undefined" ? React4.useLayoutEffect : noop;
 
 // node_modules/@base-ui/react/internals/useRenderElement.mjs
-var React8 = __toESM(require_react(), 1);
+var React7 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/useMergedRefs.mjs
 function useMergedRefs(a2, b2, c2, d2) {
@@ -547,18 +547,18 @@ function update(forkRef, refs) {
 }
 
 // node_modules/@base-ui/utils/getReactElementRef.mjs
-var React7 = __toESM(require_react(), 1);
+var React6 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/reactVersion.mjs
-var React6 = __toESM(require_react(), 1);
-var majorVersion = parseInt(React6.version, 10);
+var React5 = __toESM(require_react(), 1);
+var majorVersion = parseInt(React5.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
 // node_modules/@base-ui/utils/getReactElementRef.mjs
 function getReactElementRef(element) {
-  if (!/* @__PURE__ */ React7.isValidElement(element)) {
+  if (!/* @__PURE__ */ React6.isValidElement(element)) {
     return null;
   }
   const reactElement = element;
@@ -843,15 +843,15 @@ function evaluateRenderProp(element, render4, props, state) {
     mergedProps.ref = props.ref;
     let newElement = render4;
     if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-      const children = React8.Children.toArray(render4);
+      const children = React7.Children.toArray(render4);
       newElement = children[0];
     }
     if (true) {
-      if (!/* @__PURE__ */ React8.isValidElement(newElement)) {
+      if (!/* @__PURE__ */ React7.isValidElement(newElement)) {
         throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
       }
     }
-    return /* @__PURE__ */ React8.cloneElement(newElement, mergedProps);
+    return /* @__PURE__ */ React7.cloneElement(newElement, mergedProps);
   }
   if (element) {
     if (typeof element === "string") {
@@ -888,16 +888,16 @@ function renderTag(Tag, props) {
       key: props.key
     });
   }
-  return /* @__PURE__ */ React8.createElement(Tag, props);
+  return /* @__PURE__ */ React7.createElement(Tag, props);
 }
 
 // node_modules/@base-ui/utils/useId.mjs
-var React9 = __toESM(require_react(), 1);
+var React8 = __toESM(require_react(), 1);
 var globalId = 0;
 function useGlobalId(idOverride, prefix = "mui") {
-  const [defaultId, setDefaultId] = React9.useState(idOverride);
+  const [defaultId, setDefaultId] = React8.useState(idOverride);
   const id = idOverride || defaultId;
-  React9.useEffect(() => {
+  React8.useEffect(() => {
     if (defaultId == null) {
       globalId += 1;
       setDefaultId(`${prefix}-${globalId}`);
@@ -920,7 +920,7 @@ function useBaseUiId(idOverride) {
 }
 
 // node_modules/@base-ui/react/collapsible/root/useCollapsibleRoot.mjs
-var React12 = __toESM(require_react(), 1);
+var React11 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/internals/reason-parts.mjs
 var reason_parts_exports = {};
@@ -1024,12 +1024,12 @@ function createChangeEventDetails(reason, event, trigger, customProperties) {
 }
 
 // node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-var React11 = __toESM(require_react(), 1);
+var React10 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/useOnMount.mjs
-var React10 = __toESM(require_react(), 1);
+var React9 = __toESM(require_react(), 1);
 function useOnMount(fn) {
-  React10.useEffect(fn, EMPTY_ARRAY);
+  React9.useEffect(fn, EMPTY_ARRAY);
 }
 
 // node_modules/@base-ui/utils/useAnimationFrame.mjs
@@ -1122,8 +1122,8 @@ function useAnimationFrame() {
 
 // node_modules/@base-ui/react/internals/useTransitionStatus.mjs
 function useTransitionStatus(open, enableIdleState = false, deferEndingState = false) {
-  const [transitionStatus, setTransitionStatus] = React11.useState(open && enableIdleState ? "idle" : void 0);
-  const [mounted, setMounted] = React11.useState(open);
+  const [transitionStatus, setTransitionStatus] = React10.useState(open && enableIdleState ? "idle" : void 0);
+  const [mounted, setMounted] = React10.useState(open);
   if (open && !mounted) {
     setMounted(true);
     setTransitionStatus("starting");
@@ -1197,7 +1197,7 @@ function useCollapsibleRoot(parameters) {
     transitionStatus
   } = useTransitionStatus(open, true, true);
   const defaultPanelId = useBaseUiId();
-  const [registeredPanelId, setPanelIdState] = React12.useState();
+  const [registeredPanelId, setPanelIdState] = React11.useState();
   const panelId = registeredPanelId === null ? void 0 : registeredPanelId ?? defaultPanelId;
   const handleTrigger = useStableCallback((event) => {
     const nextOpen = !open;
@@ -1208,7 +1208,7 @@ function useCollapsibleRoot(parameters) {
     }
     setOpen(nextOpen);
   });
-  return React12.useMemo(() => ({
+  return React11.useMemo(() => ({
     defaultPanelId,
     disabled: disabled2,
     handleTrigger,
@@ -1223,11 +1223,11 @@ function useCollapsibleRoot(parameters) {
 }
 
 // node_modules/@base-ui/react/collapsible/root/CollapsibleRootContext.mjs
-var React13 = __toESM(require_react(), 1);
-var CollapsibleRootContext = /* @__PURE__ */ React13.createContext(void 0);
+var React12 = __toESM(require_react(), 1);
+var CollapsibleRootContext = /* @__PURE__ */ React12.createContext(void 0);
 if (true) CollapsibleRootContext.displayName = "CollapsibleRootContext";
 function useCollapsibleRootContext() {
-  const context = React13.useContext(CollapsibleRootContext);
+  const context = React12.useContext(CollapsibleRootContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: CollapsibleRootContext is missing. Collapsible parts must be placed within <Collapsible.Root>." : formatErrorMessage_default(15));
   }
@@ -1300,7 +1300,7 @@ var collapsibleOpenStateMapping = {
 };
 
 // node_modules/@base-ui/react/internals/use-button/useButton.mjs
-var React16 = __toESM(require_react(), 1);
+var React15 = __toESM(require_react(), 1);
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
 function hasWindow() {
@@ -1318,11 +1318,11 @@ function isHTMLElement(value) {
 }
 
 // node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
-var React14 = __toESM(require_react(), 1);
-var CompositeRootContext = /* @__PURE__ */ React14.createContext(void 0);
+var React13 = __toESM(require_react(), 1);
+var CompositeRootContext = /* @__PURE__ */ React13.createContext(void 0);
 if (true) CompositeRootContext.displayName = "CompositeRootContext";
 function useCompositeRootContext(optional = false) {
-  const context = React14.useContext(CompositeRootContext);
+  const context = React13.useContext(CompositeRootContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: CompositeRootContext is missing. Composite parts must be placed within <Composite.Root>." : formatErrorMessage_default(16));
   }
@@ -1330,7 +1330,7 @@ function useCompositeRootContext(optional = false) {
 }
 
 // node_modules/@base-ui/react/utils/useFocusableWhenDisabled.mjs
-var React15 = __toESM(require_react(), 1);
+var React14 = __toESM(require_react(), 1);
 function useFocusableWhenDisabled(parameters) {
   const {
     focusableWhenDisabled,
@@ -1341,7 +1341,7 @@ function useFocusableWhenDisabled(parameters) {
   } = parameters;
   const isFocusableComposite = composite && focusableWhenDisabled !== false;
   const isNonFocusableComposite = composite && focusableWhenDisabled === false;
-  const props = React15.useMemo(() => {
+  const props = React14.useMemo(() => {
     const additionalProps = {
       // allow Tabbing away from focusableWhenDisabled elements
       onKeyDown(event) {
@@ -1394,7 +1394,7 @@ function useButton(parameters = {}) {
     native: isNativeButton = true,
     composite: compositeProp
   } = parameters;
-  const elementRef = React16.useRef(null);
+  const elementRef = React15.useRef(null);
   const compositeRootContext = useCompositeRootContext(true);
   const isCompositeItem = compositeProp ?? compositeRootContext !== void 0;
   const {
@@ -1407,7 +1407,7 @@ function useButton(parameters = {}) {
     isNativeButton
   });
   if (true) {
-    React16.useEffect(() => {
+    React15.useEffect(() => {
       if (!elementRef.current) {
         return;
       }
@@ -1425,7 +1425,7 @@ function useButton(parameters = {}) {
       }
     }, [isNativeButton]);
   }
-  const updateDisabled = React16.useCallback(() => {
+  const updateDisabled = React15.useCallback(() => {
     const element = elementRef.current;
     if (!isButtonElement(element)) {
       return;
@@ -1435,7 +1435,7 @@ function useButton(parameters = {}) {
     }
   }, [disabled2, focusableWhenDisabledProps.disabled, isCompositeItem]);
   useIsoLayoutEffect(updateDisabled, [updateDisabled]);
-  const getButtonProps = React16.useCallback((externalProps = {}) => {
+  const getButtonProps = React15.useCallback((externalProps = {}) => {
     const {
       onClick: externalOnClick,
       onMouseDown: externalOnMouseDown,
@@ -1549,7 +1549,7 @@ function isValidLinkElement(elem) {
 }
 
 // node_modules/@base-ui/react/collapsible/panel/useCollapsiblePanel.mjs
-var React18 = __toESM(require_react(), 1);
+var React17 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/addEventListener.mjs
 function addEventListener(target, type, listener, options) {
@@ -1578,7 +1578,7 @@ function createLatestRef(value) {
 }
 
 // node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-var React17 = __toESM(require_react(), 1);
+var React16 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
 var ReactDOM = __toESM(require_react_dom(), 1);
@@ -1660,7 +1660,7 @@ function useOpenChangeComplete(parameters) {
   } = parameters;
   const onComplete = useStableCallback(onCompleteParam);
   const runOnceAnimationsFinish = useAnimationsFinished(ref, open);
-  React17.useEffect(() => {
+  React16.useEffect(() => {
     if (!enabled) {
       return void 0;
     }
@@ -1690,15 +1690,15 @@ function useCollapsiblePanel(parameters) {
     setOpen,
     transitionStatus
   } = parameters;
-  const panelRef = React18.useRef(null);
-  const animationTypeRef = React18.useRef(null);
-  const [dimensions, setDimensionsUnwrapped] = React18.useState(EMPTY_DIMENSIONS);
-  const lastMeasuredDimensionsRef = React18.useRef(EMPTY_DIMENSIONS);
-  const shouldSkipNextOpenRef = React18.useRef(false);
-  const shouldPreventMountAnimationRef = React18.useRef(open);
-  const shouldPreventActivityResumeAnimationRef = React18.useRef(false);
-  const [forcePanelIdle, setForcePanelIdle] = React18.useState(false);
-  const pendingTemporaryStyleRestoreRef = React18.useRef(null);
+  const panelRef = React17.useRef(null);
+  const animationTypeRef = React17.useRef(null);
+  const [dimensions, setDimensionsUnwrapped] = React17.useState(EMPTY_DIMENSIONS);
+  const lastMeasuredDimensionsRef = React17.useRef(EMPTY_DIMENSIONS);
+  const shouldSkipNextOpenRef = React17.useRef(false);
+  const shouldPreventMountAnimationRef = React17.useRef(open);
+  const shouldPreventActivityResumeAnimationRef = React17.useRef(false);
+  const [forcePanelIdle, setForcePanelIdle] = React17.useState(false);
+  const pendingTemporaryStyleRestoreRef = React17.useRef(null);
   const mergedPanelRef = useMergedRefs(externalRef, panelRef);
   const latestOpenRef = useValueAsRef(open);
   const runOnceCloseAnimationsFinish = useAnimationsFinished(panelRef);
@@ -1741,7 +1741,7 @@ function useCollapsiblePanel(parameters) {
     }
     setForcePanelIdle(false);
   }, [forcePanelIdle, transitionStatus]);
-  React18.useEffect(() => {
+  React17.useEffect(() => {
     return () => {
       markActivityResumeAnimationSuppressed();
       restorePendingTemporaryStyle();
@@ -1834,7 +1834,7 @@ function useCollapsiblePanel(parameters) {
       setDimensions(EMPTY_DIMENSIONS, false);
     }
   });
-  React18.useEffect(() => {
+  React17.useEffect(() => {
     if (open || !mounted || panelTransitionStatus !== "ending") {
       return void 0;
     }
@@ -1866,7 +1866,7 @@ function useCollapsiblePanel(parameters) {
     }
     panel.setAttribute("hidden", "until-found");
   }, [hidden, hiddenUntilFound]);
-  React18.useEffect(function registerBeforeMatchListener() {
+  React17.useEffect(function registerBeforeMatchListener() {
     const panel = panelRef.current;
     if (!panel) {
       return void 0;
@@ -1965,8 +1965,8 @@ function resetLayoutStyles(element) {
 }
 
 // node_modules/@base-ui/react/button/Button.mjs
-var React19 = __toESM(require_react(), 1);
-var Button = /* @__PURE__ */ React19.forwardRef(function Button2(componentProps, forwardedRef) {
+var React18 = __toESM(require_react(), 1);
+var Button = /* @__PURE__ */ React18.forwardRef(function Button2(componentProps, forwardedRef) {
   const {
     render: render4,
     className,
@@ -2004,7 +2004,7 @@ __export(index_parts_exports, {
 });
 
 // node_modules/@base-ui/react/collapsible/root/CollapsibleRoot.mjs
-var React20 = __toESM(require_react(), 1);
+var React19 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/collapsible/root/stateAttributesMapping.mjs
 var collapsibleStateAttributesMapping = {
@@ -2014,7 +2014,7 @@ var collapsibleStateAttributesMapping = {
 
 // node_modules/@base-ui/react/collapsible/root/CollapsibleRoot.mjs
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-var CollapsibleRoot = /* @__PURE__ */ React20.forwardRef(function CollapsibleRoot2(componentProps, forwardedRef) {
+var CollapsibleRoot = /* @__PURE__ */ React19.forwardRef(function CollapsibleRoot2(componentProps, forwardedRef) {
   const {
     render: render4,
     className,
@@ -2032,12 +2032,12 @@ var CollapsibleRoot = /* @__PURE__ */ React20.forwardRef(function CollapsibleRoo
     onOpenChange,
     disabled: disabled2
   });
-  const state = React20.useMemo(() => ({
+  const state = React19.useMemo(() => ({
     open: collapsible.open,
     disabled: collapsible.disabled,
     transitionStatus: collapsible.transitionStatus
   }), [collapsible.open, collapsible.disabled, collapsible.transitionStatus]);
-  const contextValue = React20.useMemo(() => ({
+  const contextValue = React19.useMemo(() => ({
     ...collapsible,
     onOpenChange,
     state
@@ -2056,12 +2056,12 @@ var CollapsibleRoot = /* @__PURE__ */ React20.forwardRef(function CollapsibleRoo
 if (true) CollapsibleRoot.displayName = "CollapsibleRoot";
 
 // node_modules/@base-ui/react/collapsible/trigger/CollapsibleTrigger.mjs
-var React21 = __toESM(require_react(), 1);
+var React20 = __toESM(require_react(), 1);
 var stateAttributesMapping = {
   ...triggerOpenStateMapping,
   ...transitionStatusMapping
 };
-var CollapsibleTrigger = /* @__PURE__ */ React21.forwardRef(function CollapsibleTrigger2(componentProps, forwardedRef) {
+var CollapsibleTrigger = /* @__PURE__ */ React20.forwardRef(function CollapsibleTrigger2(componentProps, forwardedRef) {
   const {
     panelId,
     open,
@@ -2100,7 +2100,7 @@ var CollapsibleTrigger = /* @__PURE__ */ React21.forwardRef(function Collapsible
 if (true) CollapsibleTrigger.displayName = "CollapsibleTrigger";
 
 // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanel.mjs
-var React22 = __toESM(require_react(), 1);
+var React21 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanelCssVars.mjs
 var CollapsiblePanelCssVars = /* @__PURE__ */ (function(CollapsiblePanelCssVars2) {
@@ -2110,7 +2110,7 @@ var CollapsiblePanelCssVars = /* @__PURE__ */ (function(CollapsiblePanelCssVars2
 })({});
 
 // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanel.mjs
-var CollapsiblePanel = /* @__PURE__ */ React22.forwardRef(function CollapsiblePanel2(componentProps, forwardedRef) {
+var CollapsiblePanel = /* @__PURE__ */ React21.forwardRef(function CollapsiblePanel2(componentProps, forwardedRef) {
   const {
     className,
     hiddenUntilFound: hiddenUntilFoundProp,
@@ -2121,7 +2121,7 @@ var CollapsiblePanel = /* @__PURE__ */ React22.forwardRef(function CollapsiblePa
     ...elementProps
   } = componentProps;
   if (true) {
-    React22.useEffect(() => {
+    React21.useEffect(() => {
       if (hiddenUntilFoundProp && keepMountedProp === false) {
         warn("The `keepMounted={false}` prop on `Collapsible.Panel` is ignored when `hiddenUntilFound` is enabled, since the panel must remain mounted while closed.");
       }
@@ -18502,6 +18502,7 @@ async function fetchExperiments() {
 }
 
 // routes/experiments-home/stage.tsx
+var import_jsx_runtime86 = __toESM(require_jsx_runtime());
 function ExperimentsPage() {
   const [experiments, setExperiments] = (0, import_element71.useState)(
     null
@@ -18611,58 +18612,63 @@ function ExperimentsPage() {
     }));
   }, [experiments]);
   if (experiments === null || !siteSettings) {
-    return /* @__PURE__ */ React.createElement(import_components34.Spinner, null);
+    return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components34.Spinner, {});
   }
-  return /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
     page_default,
     {
       title: (0, import_i18n27.__)("Gutenberg Experiments"),
       subTitle: (0, import_i18n27.__)(
         "The latest block and full site editing features before they ship in a WordPress release."
-      )
-    },
-    /* @__PURE__ */ React.createElement(
-      Stack,
-      {
-        className: "experiments-page__container",
-        direction: "column",
-        gap: "md"
-      },
-      /* @__PURE__ */ React.createElement(card_exports.Root, null, /* @__PURE__ */ React.createElement(card_exports.Content, null, /* @__PURE__ */ React.createElement(Stack, { direction: "column", gap: "md" }, /* @__PURE__ */ React.createElement(Text, { variant: "body-lg", render: /* @__PURE__ */ React.createElement("p", null) }, (0, import_i18n27.__)(
-        "The Gutenberg plugin adds editing, customization, and site building to WordPress, and gives early adopters access to the latest block and full site editing features before they ship in a WordPress release."
-      )), /* @__PURE__ */ React.createElement(Text, { variant: "body-lg", render: /* @__PURE__ */ React.createElement("p", null) }, (0, import_element71.createInterpolateElement)(
-        (0, import_i18n27.__)(
-          "The experiments below are in active development, so expect rough edges and changes over time. To learn more about the project and how to build with blocks, see the <a>Block Editor Handbook</a>."
-        ),
+      ),
+      children: /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(
+        Stack,
         {
-          a: /* @__PURE__ */ React.createElement(
-            Link,
-            {
-              href: "https://developer.wordpress.org/block-editor/",
-              openInNewTab: true
-            }
-          )
-        }
-      ))))),
-      /* @__PURE__ */ React.createElement(
-        DataForm,
-        {
-          data: settings,
-          fields,
-          form: {
-            layout: { type: "card" },
-            fields: formFields
-          },
-          onChange: (values) => {
-            setSettings(values);
-          }
+          className: "experiments-page__container",
+          direction: "column",
+          gap: "md",
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(card_exports.Root, { children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(card_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(Stack, { direction: "column", gap: "md", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(Text, { variant: "body-lg", render: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)("p", {}), children: (0, import_i18n27.__)(
+                "The Gutenberg plugin adds editing, customization, and site building to WordPress, and gives early adopters access to the latest block and full site editing features before they ship in a WordPress release."
+              ) }),
+              /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(Text, { variant: "body-lg", render: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)("p", {}), children: (0, import_element71.createInterpolateElement)(
+                (0, import_i18n27.__)(
+                  "The experiments below are in active development, so expect rough edges and changes over time. To learn more about the project and how to build with blocks, see the <a>Block Editor Handbook</a>."
+                ),
+                {
+                  a: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+                    Link,
+                    {
+                      href: "https://developer.wordpress.org/block-editor/",
+                      openInNewTab: true
+                    }
+                  )
+                }
+              ) })
+            ] }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+              DataForm,
+              {
+                data: settings,
+                fields,
+                form: {
+                  layout: { type: "card" },
+                  fields: formFields
+                },
+                onChange: (values) => {
+                  setSettings(values);
+                }
+              }
+            )
+          ]
         }
       )
-    )
+    }
   );
 }
 function Stage() {
-  return /* @__PURE__ */ React.createElement(ExperimentsPage, null);
+  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(ExperimentsPage, {});
 }
 var stage = Stage;
 export {

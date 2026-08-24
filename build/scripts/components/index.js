@@ -40908,6 +40908,8 @@ This message will only show in development mode. It won't appear in production. 
       confirmButtonText,
       cancelButtonText,
       isBusy,
+      title,
+      __experimentalHideHeader = true,
       ...otherProps
     } = useContextSystem(props, "ConfirmDialog");
     const wrapperClassName = style_module_default17.wrapper;
@@ -40942,7 +40944,9 @@ This message will only show in development mode. It won't appear in production. 
         isDismissible: true,
         ref: forwardedRef,
         overlayClassName: wrapperClassName,
-        __experimentalHideHeader: true,
+        title,
+        contentLabel: __experimentalHideHeader ? title : void 0,
+        __experimentalHideHeader,
         ...otherProps,
         children: /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(component_default18, {
           spacing: 8,

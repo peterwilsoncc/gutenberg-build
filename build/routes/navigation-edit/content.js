@@ -132,10 +132,10 @@ function clsx() {
 var clsx_default = clsx;
 
 // node_modules/@base-ui/utils/useRefWithInit.mjs
-var React2 = __toESM(require_react(), 1);
+var React = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init, initArg) {
-  const ref = React2.useRef(UNINITIALIZED);
+  const ref = React.useRef(UNINITIALIZED);
   if (ref.current === UNINITIALIZED) {
     ref.current = init(initArg);
   }
@@ -158,7 +158,7 @@ function warn(...messages) {
 }
 
 // node_modules/@base-ui/react/internals/useRenderElement.mjs
-var React5 = __toESM(require_react(), 1);
+var React4 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/useMergedRefs.mjs
 function useMergedRefs(a, b, c, d) {
@@ -250,18 +250,18 @@ function update(forkRef, refs) {
 }
 
 // node_modules/@base-ui/utils/getReactElementRef.mjs
-var React4 = __toESM(require_react(), 1);
+var React3 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/reactVersion.mjs
-var React3 = __toESM(require_react(), 1);
-var majorVersion = parseInt(React3.version, 10);
+var React2 = __toESM(require_react(), 1);
+var majorVersion = parseInt(React2.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
 // node_modules/@base-ui/utils/getReactElementRef.mjs
 function getReactElementRef(element) {
-  if (!/* @__PURE__ */ React4.isValidElement(element)) {
+  if (!/* @__PURE__ */ React3.isValidElement(element)) {
     return null;
   }
   const reactElement = element;
@@ -546,15 +546,15 @@ function evaluateRenderProp(element, render, props, state) {
     mergedProps.ref = props.ref;
     let newElement = render;
     if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-      const children = React5.Children.toArray(render);
+      const children = React4.Children.toArray(render);
       newElement = children[0];
     }
     if (true) {
-      if (!/* @__PURE__ */ React5.isValidElement(newElement)) {
+      if (!/* @__PURE__ */ React4.isValidElement(newElement)) {
         throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
       }
     }
-    return /* @__PURE__ */ React5.cloneElement(newElement, mergedProps);
+    return /* @__PURE__ */ React4.cloneElement(newElement, mergedProps);
   }
   if (element) {
     if (typeof element === "string") {
@@ -591,7 +591,7 @@ function renderTag(Tag, props) {
       key: props.key
     });
   }
-  return /* @__PURE__ */ React5.createElement(Tag, props);
+  return /* @__PURE__ */ React4.createElement(Tag, props);
 }
 
 // node_modules/@base-ui/react/use-render/useRender.mjs
@@ -1664,6 +1664,7 @@ var import_data = __toESM(require_data());
 var import_i18n4 = __toESM(require_i18n());
 var import_block_editor = __toESM(require_block_editor());
 var import_blocks = __toESM(require_blocks());
+var import_jsx_runtime10 = __toESM(require_jsx_runtime());
 var POPOVER_PROPS = {
   className: "block-editor-block-settings-menu__popover",
   placement: "bottom-start"
@@ -1712,7 +1713,7 @@ function LeafMoreMenu({
     },
     [clientId, block]
   );
-  return /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
     import_components2.DropdownMenu,
     {
       icon: more_vertical_default,
@@ -1720,73 +1721,83 @@ function LeafMoreMenu({
       className: "block-editor-block-settings-menu",
       popoverProps: POPOVER_PROPS,
       noIcons: true,
-      ...props
-    },
-    ({ onClose }) => /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components2.MenuGroup, null, /* @__PURE__ */ React.createElement(
-      import_components2.MenuItem,
-      {
-        icon: chevron_up_default,
-        disabled: isFirst,
-        accessibleWhenDisabled: true,
-        onClick: () => {
-          moveBlocksUp([clientId], rootClientId);
-          onClose();
-        }
-      },
-      (0, import_i18n4.__)("Move up")
-    ), /* @__PURE__ */ React.createElement(
-      import_components2.MenuItem,
-      {
-        icon: chevron_down_default,
-        disabled: isLast,
-        accessibleWhenDisabled: true,
-        onClick: () => {
-          moveBlocksDown([clientId], rootClientId);
-          onClose();
-        }
-      },
-      (0, import_i18n4.__)("Move down")
-    ), canDuplicate && /* @__PURE__ */ React.createElement(
-      import_components2.MenuItem,
-      {
-        onClick: () => {
-          duplicateBlocks([clientId]);
-          onClose();
-        }
-      },
-      (0, import_i18n4.__)("Duplicate")
-    ), canInsertBlock && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(
-      import_components2.MenuItem,
-      {
-        onClick: () => {
-          insertBeforeBlock(clientId);
-          onClose();
-        }
-      },
-      (0, import_i18n4.__)("Add before")
-    ), /* @__PURE__ */ React.createElement(
-      import_components2.MenuItem,
-      {
-        onClick: () => {
-          insertAfterBlock(clientId);
-          onClose();
-        }
-      },
-      (0, import_i18n4.__)("Add after")
-    ))), /* @__PURE__ */ React.createElement(import_components2.MenuGroup, null, /* @__PURE__ */ React.createElement(
-      import_components2.MenuItem,
-      {
-        onClick: () => {
-          removeBlocks([clientId], false);
-          onClose();
-        }
-      },
-      removeLabel
-    )))
+      ...props,
+      children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_jsx_runtime10.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_components2.MenuGroup, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+            import_components2.MenuItem,
+            {
+              icon: chevron_up_default,
+              disabled: isFirst,
+              onClick: () => {
+                moveBlocksUp([clientId], rootClientId);
+                onClose();
+              },
+              children: (0, import_i18n4.__)("Move up")
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+            import_components2.MenuItem,
+            {
+              icon: chevron_down_default,
+              disabled: isLast,
+              onClick: () => {
+                moveBlocksDown([clientId], rootClientId);
+                onClose();
+              },
+              children: (0, import_i18n4.__)("Move down")
+            }
+          ),
+          canDuplicate && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+            import_components2.MenuItem,
+            {
+              onClick: () => {
+                duplicateBlocks([clientId]);
+                onClose();
+              },
+              children: (0, import_i18n4.__)("Duplicate")
+            }
+          ),
+          canInsertBlock && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_jsx_runtime10.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              import_components2.MenuItem,
+              {
+                onClick: () => {
+                  insertBeforeBlock(clientId);
+                  onClose();
+                },
+                children: (0, import_i18n4.__)("Add before")
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              import_components2.MenuItem,
+              {
+                onClick: () => {
+                  insertAfterBlock(clientId);
+                  onClose();
+                },
+                children: (0, import_i18n4.__)("Add after")
+              }
+            )
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_components2.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+          import_components2.MenuItem,
+          {
+            onClick: () => {
+              removeBlocks([clientId], false);
+              onClose();
+            },
+            children: removeLabel
+          }
+        ) })
+      ] })
+    }
   );
 }
 
 // routes/navigation-edit/editor/content.tsx
+var import_jsx_runtime11 = __toESM(require_jsx_runtime());
 var { PrivateListView } = unlock(import_block_editor2.privateApis);
 var MAX_PAGE_COUNT = 100;
 var PAGES_QUERY = [
@@ -1843,19 +1854,23 @@ function NavigationMenuContent({
     },
     [__unstableMarkNextChangeAsNotPersistent, replaceBlock]
   );
-  return /* @__PURE__ */ React.createElement(React.Fragment, null, !isLoading && /* @__PURE__ */ React.createElement(
-    PrivateListView,
-    {
-      rootClientId: listViewRootClientId,
-      onSelect: offCanvasOnselect,
-      blockSettingsMenu: LeafMoreMenu,
-      showAppender: false,
-      isExpanded: true
-    }
-  ), /* @__PURE__ */ React.createElement("div", { className: "navigation-edit-editor__hidden-blocks" }, /* @__PURE__ */ React.createElement(import_block_editor2.BlockList, null)));
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
+    !isLoading && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+      PrivateListView,
+      {
+        rootClientId: listViewRootClientId,
+        onSelect: offCanvasOnselect,
+        blockSettingsMenu: LeafMoreMenu,
+        showAppender: false,
+        isExpanded: true
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "navigation-edit-editor__hidden-blocks", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_block_editor2.BlockList, {}) })
+  ] });
 }
 
 // routes/navigation-edit/editor/index.tsx
+var import_jsx_runtime12 = __toESM(require_jsx_runtime());
 var noop = () => {
 };
 function NavigationMenuEditor({ id }) {
@@ -1867,7 +1882,7 @@ function NavigationMenuEditor({ id }) {
     return [(0, import_blocks3.createBlock)("core/navigation", { ref: id })];
   }, [assetsReady, id]);
   if (!assetsReady || !blocks.length) {
-    return /* @__PURE__ */ React.createElement(
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
       "div",
       {
         style: {
@@ -1875,24 +1890,25 @@ function NavigationMenuEditor({ id }) {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh"
-        }
-      },
-      /* @__PURE__ */ React.createElement(import_components3.Spinner, null)
+        },
+        children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_components3.Spinner, {})
+      }
     );
   }
-  return /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
     import_block_editor3.BlockEditorProvider,
     {
       settings: {},
       value: blocks,
       onChange: noop,
-      onInput: noop
-    },
-    /* @__PURE__ */ React.createElement(NavigationMenuContent, { rootClientId: blocks[0].clientId })
+      onInput: noop,
+      children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(NavigationMenuContent, { rootClientId: blocks[0].clientId })
+    }
   );
 }
 
 // routes/navigation-edit/stage.tsx
+var import_jsx_runtime13 = __toESM(require_jsx_runtime());
 var NAVIGATION_POST_TYPE = "wp_navigation";
 function NavigationEditStage() {
   const { id } = useParams({ from: "/navigation/edit/$id" });
@@ -1914,12 +1930,12 @@ function NavigationEditStage() {
     return;
   }
   const menuTitle = navigationMenu.title?.rendered || navigationMenu.title?.raw || "";
-  return /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
     page_default,
     {
       ariaLabel: (0, import_html_entities.decodeEntities)(menuTitle),
       headingLevel: 2,
-      breadcrumbs: /* @__PURE__ */ React.createElement(
+      breadcrumbs: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
         breadcrumbs_default,
         {
           items: [
@@ -1933,9 +1949,9 @@ function NavigationEditStage() {
           ]
         }
       ),
-      hasPadding: true
-    },
-    /* @__PURE__ */ React.createElement(NavigationMenuEditor, { id: navigationId })
+      hasPadding: true,
+      children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(NavigationMenuEditor, { id: navigationId })
+    }
   );
 }
 var stage = NavigationEditStage;
