@@ -60719,7 +60719,7 @@ var wp;
     const {
       getSelectedBlock: getSelectedBlock2,
       getClosestAllowedInsertionPoint: getClosestAllowedInsertionPoint2,
-      isBlockInsertionPointVisible: isBlockInsertionPointVisible2
+      getBlockInsertionPoint: getBlockInsertionPoint2
     } = unlock((0, import_data58.useSelect)(store));
     const { destinationRootClientId, destinationIndex } = (0, import_data58.useSelect)(
       (select3) => {
@@ -60821,7 +60821,7 @@ var wp;
     );
     const onToggleInsertionPoint = (0, import_element133.useCallback)(
       (item) => {
-        if (item && !isBlockInsertionPointVisible2()) {
+        if (item) {
           const allowedDestinationRootClientId = getClosestAllowedInsertionPoint2(
             item.name,
             destinationRootClientId
@@ -60837,13 +60837,13 @@ var wp;
               })
             );
           }
-        } else {
+        } else if (!getBlockInsertionPoint2()?.__unstableWithInserter) {
           hideInsertionPoint2();
         }
       },
       [
         getClosestAllowedInsertionPoint2,
-        isBlockInsertionPointVisible2,
+        getBlockInsertionPoint2,
         showInsertionPoint2,
         hideInsertionPoint2,
         destinationRootClientId,
@@ -63015,9 +63015,11 @@ var wp;
       insertionIndex: __experimentalInsertionIndex,
       shouldFocusBlock
     });
+    const { hideInsertionPoint: hideInsertionPoint2 } = (0, import_data66.useDispatch)(store);
     const blockTypesTabRef = (0, import_element150.useRef)();
     const onInsert = (0, import_element150.useCallback)(
       (blocks2, meta, shouldForceFocusBlock, _rootClientId) => {
+        hideInsertionPoint2();
         onInsertBlocks(
           blocks2,
           meta,
@@ -63034,16 +63036,23 @@ var wp;
           }
         });
       },
-      [onInsertBlocks, maybeCloseInserter, onSelect, ref, shouldFocusBlock]
+      [
+        hideInsertionPoint2,
+        onInsertBlocks,
+        maybeCloseInserter,
+        onSelect,
+        ref,
+        shouldFocusBlock
+      ]
     );
     const onInsertPattern = (0, import_element150.useCallback)(
       (blocks2, patternName, ...args) => {
-        onToggleInsertionPoint(false);
+        hideInsertionPoint2();
         onInsertBlocks(blocks2, { patternName }, ...args);
         onSelect();
         maybeCloseInserter();
       },
-      [onInsertBlocks, maybeCloseInserter, onSelect, onToggleInsertionPoint]
+      [hideInsertionPoint2, onInsertBlocks, maybeCloseInserter, onSelect]
     );
     const onHover = (0, import_element150.useCallback)(
       (item) => {
