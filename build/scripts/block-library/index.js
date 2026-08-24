@@ -40685,6 +40685,7 @@ ${text}
     },
     supports: {
       anchor: true,
+      align: ["wide", "full"],
       html: false,
       __experimentalBorder: {
         color: true,

@@ -3923,6 +3923,10 @@ return array(
 		),
 		'supports' => array(
 			'anchor' => true,
+			'align' => array(
+				'wide',
+				'full'
+			),
 			'html' => false,
 			'__experimentalBorder' => array(
 				'color' => true,
