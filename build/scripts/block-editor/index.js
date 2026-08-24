@@ -63223,11 +63223,13 @@ var wp;
     };
     const tabsRef = (0, import_element150.useRef)();
     (0, import_element150.useLayoutEffect)(() => {
-      if (tabsRef.current) {
-        window.requestAnimationFrame(() => {
-          tabsRef.current.querySelector('[role="tab"][aria-selected="true"]')?.focus();
-        });
+      if (!tabsRef.current) {
+        return;
       }
+      const frame = window.requestAnimationFrame(() => {
+        tabsRef.current?.querySelector('[role="tab"][aria-selected="true"]')?.focus();
+      });
+      return () => window.cancelAnimationFrame(frame);
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(
       "div",
