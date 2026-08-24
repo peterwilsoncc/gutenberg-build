@@ -996,7 +996,11 @@ var wp;
               allowEmpty
             } = schema[tag];
             if (children && !allowEmpty && isEmpty(node)) {
-              remove(node);
+              if (isPhrasingContent(node) && node.hasChildNodes()) {
+                unwrap(node);
+              } else {
+                remove(node);
+              }
               return;
             }
             if (node.hasAttributes()) {
