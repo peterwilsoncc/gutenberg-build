@@ -13218,8 +13218,8 @@ var wp;
           const isScrollableY = lastTraversableNode || scrollRe.test(style.overflowY);
           const canScrollX = isScrollableX && target.clientWidth > 0 && target.scrollWidth > target.clientWidth;
           const canScrollY = isScrollableY && target.clientHeight > 0 && target.scrollHeight > target.clientHeight;
-          const isRTL26 = style.direction === "rtl";
-          const pressedVerticalScrollbar = canScrollY && (isRTL26 ? event.offsetX <= target.offsetWidth - target.clientWidth : event.offsetX > target.clientWidth);
+          const isRTL27 = style.direction === "rtl";
+          const pressedVerticalScrollbar = canScrollY && (isRTL27 ? event.offsetX <= target.offsetWidth - target.clientWidth : event.offsetX > target.clientWidth);
           const pressedHorizontalScrollbar = canScrollX && event.offsetY > target.clientHeight;
           if (pressedVerticalScrollbar || pressedHorizontalScrollbar) {
             return;
@@ -32698,7 +32698,7 @@ var wp;
   var import_i18n14 = __toESM(require_i18n(), 1);
   var import_element33 = __toESM(require_element(), 1);
   function isLocaleRTL(locale) {
-    const direction = locale.getTextInfo?.().direction;
+    const direction = (locale.getTextInfo?.() ?? locale.textInfo)?.direction;
     if (direction) {
       return direction === "rtl";
     }
@@ -32754,14 +32754,13 @@ var wp;
   }) => {
     return (0, import_element33.useMemo)(() => {
       const isLocaleString = typeof locale === "string";
-      const dateFnsLocale = isLocaleString ? enUS : locale;
+      const dateFnsLocale = isLocaleString || locale === void 0 ? enUS : locale;
       const supportedLocaleCode = getSupportedLocaleCode(
-        isLocaleString ? locale : locale.code
+        isLocaleString ? locale : locale?.code
       );
       const localeCode = supportedLocaleCode ?? "en-US";
-      const intlLocale = new Intl.Locale(
-        localeCode
-      );
+      const intlLocale = new Intl.Locale(localeCode);
+      const isRightToLeft = supportedLocaleCode !== void 0 ? isLocaleRTL(intlLocale) : (0, import_i18n14.isRTL)();
       const weekStartsOn = isLocaleString || supportedLocaleCode !== void 0 ? getWeekStartsOn(intlLocale) : void 0;
       const monthNameFormatter = new Intl.DateTimeFormat(localeCode, {
         calendar: "gregory",
@@ -32862,7 +32861,7 @@ var wp;
         },
         locale: dateFnsLocale,
         lang: localeCode,
-        dir: isLocaleRTL(intlLocale) ? "rtl" : "ltr",
+        dir: isRightToLeft ? "rtl" : "ltr",
         ...weekStartsOn === void 0 ? {} : { weekStartsOn },
         formatters: {
           formatDay: dayNumberFormatter.format,
@@ -32925,7 +32924,7 @@ var wp;
       value: valueProp,
       onValueChange,
       numberOfMonths = 1,
-      locale = enUS2,
+      locale,
       timeZone,
       month,
       render: render5,
@@ -33064,7 +33063,7 @@ var wp;
       min: min4,
       max: max4,
       disabled: disabled2,
-      locale = enUS2,
+      locale,
       timeZone,
       month,
       render: render5,
