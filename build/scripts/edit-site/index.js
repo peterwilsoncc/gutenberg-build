@@ -6400,8 +6400,8 @@ var wp;
           const isScrollableY = lastTraversableNode || scrollRe.test(style.overflowY);
           const canScrollX = isScrollableX && target.clientWidth > 0 && target.scrollWidth > target.clientWidth;
           const canScrollY = isScrollableY && target.clientHeight > 0 && target.scrollHeight > target.clientHeight;
-          const isRTL23 = style.direction === "rtl";
-          const pressedVerticalScrollbar = canScrollY && (isRTL23 ? event.offsetX <= target.offsetWidth - target.clientWidth : event.offsetX > target.clientWidth);
+          const isRTL25 = style.direction === "rtl";
+          const pressedVerticalScrollbar = canScrollY && (isRTL25 ? event.offsetX <= target.offsetWidth - target.clientWidth : event.offsetX > target.clientWidth);
           const pressedHorizontalScrollbar = canScrollX && event.offsetY > target.clientHeight;
           if (pressedVerticalScrollbar || pressedHorizontalScrollbar) {
             return;
@@ -51526,6 +51526,28 @@ If there's a particular need for this, please submit a feature request at https:
     return { minConstraint, maxConstraint, disabledMatchers };
   }
 
+  // packages/dataviews/build-module/components/dataform-controls/utils/get-calendar-locale.mjs
+  var LANGUAGE_ALIASES = {
+    ary: "ar-MA",
+    // Moroccan Arabic.
+    haz: "fa"
+    // Hazaragi, a variety of Persian.
+  };
+  function getCalendarLocale(wpLocale) {
+    const subtags = wpLocale?.trim().split(/[_-]/) ?? [];
+    const language = subtags.shift()?.toLowerCase();
+    if (!language) {
+      return void 0;
+    }
+    const normalized = [LANGUAGE_ALIASES[language] ?? language];
+    for (const subtag of subtags) {
+      if (/^[a-z]{4}$/i.test(subtag) || /^([a-z]{2}|\d{3})$/i.test(subtag)) {
+        normalized.push(subtag);
+      }
+    }
+    return normalized.join("-");
+  }
+
   // packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
   var import_date3 = __toESM(require_date(), 1);
   function parseDateTime(dateTimeString) {
@@ -51629,6 +51651,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { format: fieldFormat } = field;
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
+    const locale = getCalendarLocale((0, import_date4.getSettings)().l10n.locale);
     let displayLabel = label;
     if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
       displayLabel = `${label} (${(0, import_i18n65.__)("Required")})`;
@@ -51668,6 +51691,8 @@ If there's a particular need for this, please submit a feature request at https:
               month: calendarMonth,
               onMonthChange: setCalendarMonth,
               timeZone,
+              locale,
+              dir: (0, import_i18n65.isRTL)() ? "rtl" : "ltr",
               weekStartsOn,
               disabled: disabled2 || disabledMatchers
             }
@@ -51914,6 +51939,7 @@ If there's a particular need for this, please submit a feature request at https:
       null
     );
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
+    const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
     const [calendarMonth, setCalendarMonth] = (0, import_element152.useState)(() => {
@@ -52055,6 +52081,8 @@ If there's a particular need for this, please submit a feature request at https:
                   onValueChange: onSelectDate,
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
+                  locale,
+                  dir: (0, import_i18n66.isRTL)() ? "rtl" : "ltr",
                   weekStartsOn,
                   disabled: disabled2 || disabledMatchers,
                   disableNavigation: disabled2
@@ -52090,6 +52118,7 @@ If there's a particular need for this, please submit a feature request at https:
       value = fieldValue;
     }
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
+    const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
     const onChangeCallback = (0, import_element152.useCallback)(
       (newValue) => {
@@ -52303,6 +52332,8 @@ If there's a particular need for this, please submit a feature request at https:
                   onValueChange: onSelectCalendarRange,
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
+                  locale,
+                  dir: (0, import_i18n66.isRTL)() ? "rtl" : "ltr",
                   weekStartsOn,
                   disabled: disabled2 || disabledMatchers
                 }
