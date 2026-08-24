@@ -2869,7 +2869,9 @@ var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
 var {
   Editor: PrivateEditor,
   BackButton,
-  PreferencesModal
+  PreferencesModal,
+  ToolsMoreMenuGroup,
+  SiteExport
 } = unlock(import_editor.privateApis);
 function Editor({
   postType,
@@ -2954,7 +2956,8 @@ function Editor({
       initialViewport,
       children: [
         backButton && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BackButton, { children: backButton }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PreferencesModal, {})
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PreferencesModal, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolsMoreMenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SiteExport, {}) })
       ]
     }
   );

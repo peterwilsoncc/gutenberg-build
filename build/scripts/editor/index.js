@@ -2211,10 +2211,10 @@ var wp;
         };
         return function(d3, b3) {
           extendStatics(d3, b3);
-          function __344() {
+          function __345() {
             this.constructor = d3;
           }
-          d3.prototype = b3 === null ? Object.create(b3) : (__344.prototype = b3.prototype, new __344());
+          d3.prototype = b3 === null ? Object.create(b3) : (__345.prototype = b3.prototype, new __345());
         };
       })();
       var __assign2 = exports && exports.__assign || Object.assign || function(t4) {
@@ -80166,8 +80166,8 @@ If there's a particular need for this, please submit a feature request at https:
                             ringbuffer,
                             ringbuffer_size
                           );
-                          for (var _x51 = 0; _x51 < copy_dst - ringbuffer_end; _x51++)
-                            ringbuffer[_x51] = ringbuffer[ringbuffer_end + _x51];
+                          for (var _x52 = 0; _x52 < copy_dst - ringbuffer_end; _x52++)
+                            ringbuffer[_x52] = ringbuffer[ringbuffer_end + _x52];
                         }
                       } else {
                         throw new Error(
@@ -81046,12 +81046,12 @@ If there's a particular need for this, please submit a feature request at https:
             var STR_APPLY_UIA_OK = true;
             try {
               String.fromCharCode.apply(null, [0]);
-            } catch (__344) {
+            } catch (__345) {
               STR_APPLY_OK = false;
             }
             try {
               String.fromCharCode.apply(null, new Uint8Array(1));
-            } catch (__344) {
+            } catch (__345) {
               STR_APPLY_UIA_OK = false;
             }
             var _utf8len = new utils.Buf8(256);
@@ -118856,6 +118856,68 @@ ${content}
     return /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(PreferencesModalTabs, { sections });
   }
 
+  // packages/editor/build-module/components/site-export/index.mjs
+  var import_i18n359 = __toESM(require_i18n(), 1);
+  var import_components285 = __toESM(require_components(), 1);
+  var import_api_fetch10 = __toESM(require_api_fetch(), 1);
+  var import_data273 = __toESM(require_data(), 1);
+  var import_blob4 = __toESM(require_blob(), 1);
+  var import_core_data146 = __toESM(require_core_data(), 1);
+  var import_notices39 = __toESM(require_notices(), 1);
+  var import_jsx_runtime640 = __toESM(require_jsx_runtime(), 1);
+  function SiteExport() {
+    const canExport = (0, import_data273.useSelect)((select9) => {
+      const postType2 = select9(store).getCurrentPostType();
+      if (postType2 !== TEMPLATE_POST_TYPE && postType2 !== TEMPLATE_PART_POST_TYPE) {
+        return false;
+      }
+      const targetHints = select9(import_core_data146.store).getCurrentTheme()?._links?.["wp:export-theme"]?.[0]?.targetHints ?? {};
+      return !!targetHints.allow?.includes("GET");
+    }, []);
+    const { createErrorNotice } = (0, import_data273.useDispatch)(import_notices39.store);
+    if (!canExport) {
+      return null;
+    }
+    async function handleExport() {
+      try {
+        const response = await (0, import_api_fetch10.default)({
+          path: "/wp-block-editor/v1/export",
+          parse: false,
+          headers: {
+            Accept: "application/zip"
+          }
+        });
+        const blob = await response.blob();
+        const contentDisposition = response.headers.get(
+          "content-disposition"
+        );
+        const contentDispositionMatches = contentDisposition.match(/=(.+)\.zip/);
+        const fileName = contentDispositionMatches[1] ? contentDispositionMatches[1] : "edit-site-export";
+        (0, import_blob4.downloadBlob)(fileName + ".zip", blob, "application/zip");
+      } catch (errorResponse) {
+        let error2 = {};
+        try {
+          error2 = await errorResponse.json();
+        } catch {
+        }
+        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n359.__)("An error occurred while creating the site export.");
+        createErrorNotice(errorMessage, { type: "snackbar" });
+      }
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime640.jsx)(
+      import_components285.MenuItem,
+      {
+        role: "menuitem",
+        icon: download_default,
+        onClick: handleExport,
+        info: (0, import_i18n359.__)(
+          "Download your theme with updated templates and styles."
+        ),
+        children: (0, import_i18n359._x)("Export", "site exporter menu item")
+      }
+    );
+  }
+
   // packages/editor/build-module/bindings/api.mjs
   var import_blocks40 = __toESM(require_blocks(), 1);
 
@@ -118935,8 +118997,8 @@ ${content}
   };
 
   // packages/editor/build-module/bindings/post-data.mjs
-  var import_i18n359 = __toESM(require_i18n(), 1);
-  var import_core_data146 = __toESM(require_core_data(), 1);
+  var import_i18n360 = __toESM(require_i18n(), 1);
+  var import_core_data147 = __toESM(require_core_data(), 1);
   var import_block_editor112 = __toESM(require_block_editor(), 1);
   var NAVIGATION_BLOCK_TYPES = [
     "core/navigation-link",
@@ -118944,17 +119006,17 @@ ${content}
   ];
   var postDataFields = [
     {
-      label: (0, import_i18n359.__)("Post Date"),
+      label: (0, import_i18n360.__)("Post Date"),
       args: { field: "date" },
       type: "string"
     },
     {
-      label: (0, import_i18n359.__)("Post Modified Date"),
+      label: (0, import_i18n360.__)("Post Modified Date"),
       args: { field: "modified" },
       type: "string"
     },
     {
-      label: (0, import_i18n359.__)("Post Link"),
+      label: (0, import_i18n360.__)("Post Link"),
       args: { field: "link" },
       type: "string"
     }
@@ -118974,7 +119036,7 @@ ${content}
         postId2 = context?.postId;
         postType2 = context?.postType;
       }
-      const { getEditedEntityRecord } = select9(import_core_data146.store);
+      const { getEditedEntityRecord } = select9(import_core_data147.store);
       const entityDataValues = getEditedEntityRecord(
         "postType",
         postType2,
@@ -119005,7 +119067,7 @@ ${content}
       Object.values(bindings).forEach(({ args, newValue }) => {
         newData[args.field] = newValue;
       });
-      dispatch8(import_core_data146.store).editEntityRecord(
+      dispatch8(import_core_data147.store).editEntityRecord(
         "postType",
         context?.postType,
         context?.postId,
@@ -119025,7 +119087,7 @@ ${content}
       if (!context?.postType) {
         return false;
       }
-      const canUserEdit = select9(import_core_data146.store).canUser("update", {
+      const canUserEdit = select9(import_core_data147.store).canUser("update", {
         kind: "postType",
         name: context?.postType,
         id: context?.postId
@@ -119048,9 +119110,9 @@ ${content}
   };
 
   // packages/editor/build-module/bindings/post-meta.mjs
-  var import_core_data147 = __toESM(require_core_data(), 1);
+  var import_core_data148 = __toESM(require_core_data(), 1);
   function getPostMetaFields(select9, context) {
-    const { getRegisteredPostMeta } = unlock(select9(import_core_data147.store));
+    const { getRegisteredPostMeta } = unlock(select9(import_core_data148.store));
     const registeredFields = getRegisteredPostMeta(context?.postType);
     const metaFields = [];
     Object.entries(registeredFields).forEach(([key, props]) => {
@@ -119077,7 +119139,7 @@ ${content}
     if (!context?.postId) {
       return metaField.default || metaField.label || args.key;
     }
-    const { getEditedEntityRecord } = select9(import_core_data147.store);
+    const { getEditedEntityRecord } = select9(import_core_data148.store);
     const entityMetaValues = getEditedEntityRecord(
       "postType",
       context?.postType,
@@ -119103,7 +119165,7 @@ ${content}
       Object.values(bindings).forEach(({ args, newValue }) => {
         newMeta[args.key] = newValue;
       });
-      dispatch8(import_core_data147.store).editEntityRecord(
+      dispatch8(import_core_data148.store).editEntityRecord(
         "postType",
         context?.postType,
         context?.postId,
@@ -119130,7 +119192,7 @@ ${content}
       if (areCustomFieldsEnabled) {
         return false;
       }
-      const canUserEdit = select9(import_core_data147.store).canUser("update", {
+      const canUserEdit = select9(import_core_data148.store).canUser("update", {
         kind: "postType",
         name: context?.postType,
         id: context?.postId
@@ -119151,8 +119213,8 @@ ${content}
   };
 
   // packages/editor/build-module/bindings/term-data.mjs
-  var import_i18n360 = __toESM(require_i18n(), 1);
-  var import_core_data148 = __toESM(require_core_data(), 1);
+  var import_i18n361 = __toESM(require_i18n(), 1);
+  var import_core_data149 = __toESM(require_core_data(), 1);
   var import_block_editor113 = __toESM(require_block_editor(), 1);
   var NAVIGATION_BLOCK_TYPES2 = [
     "core/navigation-link",
@@ -119160,37 +119222,37 @@ ${content}
   ];
   var termDataFields = [
     {
-      label: (0, import_i18n360.__)("Term ID"),
+      label: (0, import_i18n361.__)("Term ID"),
       args: { field: "id" },
       type: "string"
     },
     {
-      label: (0, import_i18n360.__)("Name"),
+      label: (0, import_i18n361.__)("Name"),
       args: { field: "name" },
       type: "string"
     },
     {
-      label: (0, import_i18n360.__)("Slug"),
+      label: (0, import_i18n361.__)("Slug"),
       args: { field: "slug" },
       type: "string"
     },
     {
-      label: (0, import_i18n360.__)("Link"),
+      label: (0, import_i18n361.__)("Link"),
       args: { field: "link" },
       type: "string"
     },
     {
-      label: (0, import_i18n360.__)("Description"),
+      label: (0, import_i18n361.__)("Description"),
       args: { field: "description" },
       type: "string"
     },
     {
-      label: (0, import_i18n360.__)("Parent ID"),
+      label: (0, import_i18n361.__)("Parent ID"),
       args: { field: "parent" },
       type: "string"
     },
     {
-      label: (0, import_i18n360.__)("Count"),
+      label: (0, import_i18n361.__)("Count"),
       args: { field: "count" },
       type: "string"
     }
@@ -119199,7 +119261,7 @@ ${content}
     name: "core/term-data",
     usesContext: ["taxonomy", "termId", "termData"],
     getValues({ select: select9, context, bindings, clientId }) {
-      const { getEntityRecord } = select9(import_core_data148.store);
+      const { getEntityRecord } = select9(import_core_data149.store);
       const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select9(import_block_editor113.store);
       const blockName = getBlockName2(clientId);
       const isNavigationBlock = NAVIGATION_BLOCK_TYPES2.includes(blockName);
@@ -119289,14 +119351,14 @@ ${content}
   }
 
   // packages/editor/build-module/components/upload-progress-snackbar/index.mjs
-  var import_data273 = __toESM(require_data(), 1);
+  var import_data274 = __toESM(require_data(), 1);
   var import_element404 = __toESM(require_element(), 1);
-  var import_i18n361 = __toESM(require_i18n(), 1);
+  var import_i18n362 = __toESM(require_i18n(), 1);
   var import_a11y18 = __toESM(require_a11y(), 1);
   var import_upload_media3 = __toESM(require_upload_media(), 1);
-  var import_notices39 = __toESM(require_notices(), 1);
-  var import_components285 = __toESM(require_components(), 1);
-  var import_jsx_runtime640 = __toESM(require_jsx_runtime(), 1);
+  var import_notices40 = __toESM(require_notices(), 1);
+  var import_components286 = __toESM(require_components(), 1);
+  var import_jsx_runtime641 = __toESM(require_jsx_runtime(), 1);
   var NOTICE_ID = "upload-progress";
   var COMPLETION_DISPLAY_MS = 3e3;
   var MAX_FILENAME_LENGTH = 40;
@@ -119310,17 +119372,17 @@ ${content}
     const back = Math.floor(visible / 2);
     return filename.slice(0, front) + ellipsis + filename.slice(filename.length - back);
   }
-  var UPLOAD_SPINNER = /* @__PURE__ */ (0, import_jsx_runtime640.jsx)(
+  var UPLOAD_SPINNER = /* @__PURE__ */ (0, import_jsx_runtime641.jsx)(
     "span",
     {
       className: "editor-upload-progress-snackbar__spinner",
       "aria-hidden": "true",
-      children: /* @__PURE__ */ (0, import_jsx_runtime640.jsx)(import_components285.Spinner, {})
+      children: /* @__PURE__ */ (0, import_jsx_runtime641.jsx)(import_components286.Spinner, {})
     }
   );
-  var UPLOAD_DONE = /* @__PURE__ */ (0, import_jsx_runtime640.jsx)("span", { className: "editor-upload-progress-snackbar__check", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime640.jsx)(import_components285.Icon, { icon: check_default }) });
+  var UPLOAD_DONE = /* @__PURE__ */ (0, import_jsx_runtime641.jsx)("span", { className: "editor-upload-progress-snackbar__check", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime641.jsx)(import_components286.Icon, { icon: check_default }) });
   function UploadProgressSnackbar() {
-    const items = (0, import_data273.useSelect)(
+    const items = (0, import_data274.useSelect)(
       (select9) => select9(import_upload_media3.store).getItems(),
       []
     );
@@ -119334,7 +119396,7 @@ ${content}
     const remaining = csmRemaining + trackedRemaining;
     const sessionTotal = csmRemaining + (tracker ? tracker.total : 0);
     const peakRef = (0, import_element404.useRef)(0);
-    const { createNotice, removeNotice } = (0, import_data273.useDispatch)(import_notices39.store);
+    const { createNotice, removeNotice } = (0, import_data274.useDispatch)(import_notices40.store);
     const dismissedRef = (0, import_element404.useRef)(false);
     const wasUploadingRef = (0, import_element404.useRef)(false);
     const completionTimeoutRef = (0, import_element404.useRef)(null);
@@ -119349,16 +119411,16 @@ ${content}
       const isUploading = remaining > 0;
       if (isUploading && !wasUploadingRef.current) {
         dismissedRef.current = false;
-        (0, import_a11y18.speak)((0, import_i18n361.__)("Media upload started"), "polite");
+        (0, import_a11y18.speak)((0, import_i18n362.__)("Media upload started"), "polite");
         if (completionTimeoutRef.current) {
           clearTimeout(completionTimeoutRef.current);
           completionTimeoutRef.current = null;
           peakRef.current = 0;
         }
       } else if (!isUploading && wasUploadingRef.current) {
-        (0, import_a11y18.speak)((0, import_i18n361.__)("Media upload complete"), "polite");
+        (0, import_a11y18.speak)((0, import_i18n362.__)("Media upload complete"), "polite");
         if (!dismissedRef.current) {
-          createNotice("info", (0, import_i18n361.__)("Upload complete"), {
+          createNotice("info", (0, import_i18n362.__)("Upload complete"), {
             id: NOTICE_ID,
             type: "snackbar",
             isDismissible: false,
@@ -119388,15 +119450,15 @@ ${content}
       const total = peakRef.current;
       const current = total - remaining + 1;
       const filename = truncateFilename(
-        csmOriginals[0]?.sourceFile?.name || tracker?.pending[0] || (0, import_i18n361.__)("Uploading")
+        csmOriginals[0]?.sourceFile?.name || tracker?.pending[0] || (0, import_i18n362.__)("Uploading")
       );
-      const content = total === 1 ? (0, import_i18n361.sprintf)(
+      const content = total === 1 ? (0, import_i18n362.sprintf)(
         /* translators: %s: filename. */
-        (0, import_i18n361.__)("Uploading \u2014 %s"),
+        (0, import_i18n362.__)("Uploading \u2014 %s"),
         filename
-      ) : (0, import_i18n361.sprintf)(
+      ) : (0, import_i18n362.sprintf)(
         /* translators: 1: current upload number, 2: total uploads, 3: filename. */
-        (0, import_i18n361.__)("Uploading %1$d of %2$d \u2014 %3$s"),
+        (0, import_i18n362.__)("Uploading %1$d of %2$d \u2014 %3$s"),
         current,
         total,
         filename
@@ -119438,6 +119500,7 @@ ${content}
     usePostActions,
     usePostFields: post_fields_default,
     ToolsMoreMenuGroup: tools_more_menu_group_default,
+    SiteExport,
     ViewMoreMenuGroup: view_more_menu_group_default,
     ResizableEditor: resizable_editor_default,
     UploadProgressSnackbar,
@@ -119454,10 +119517,10 @@ ${content}
   });
 
   // packages/editor/build-module/dataviews/api.mjs
-  var import_data274 = __toESM(require_data(), 1);
+  var import_data275 = __toESM(require_data(), 1);
   function registerEntityAction2(kind, name2, config2) {
     const { registerEntityAction: _registerEntityAction } = unlock(
-      (0, import_data274.dispatch)(store)
+      (0, import_data275.dispatch)(store)
     );
     if (true) {
       _registerEntityAction(kind, name2, config2);
@@ -119465,7 +119528,7 @@ ${content}
   }
   function unregisterEntityAction2(kind, name2, actionId) {
     const { unregisterEntityAction: _unregisterEntityAction } = unlock(
-      (0, import_data274.dispatch)(store)
+      (0, import_data275.dispatch)(store)
     );
     if (true) {
       _unregisterEntityAction(kind, name2, actionId);
@@ -119473,7 +119536,7 @@ ${content}
   }
   function registerEntityField2(kind, name2, config2) {
     const { registerEntityField: _registerEntityField } = unlock(
-      (0, import_data274.dispatch)(store)
+      (0, import_data275.dispatch)(store)
     );
     if (true) {
       _registerEntityField(kind, name2, config2);
@@ -119481,7 +119544,7 @@ ${content}
   }
   function unregisterEntityField2(kind, name2, fieldId) {
     const { unregisterEntityField: _unregisterEntityField } = unlock(
-      (0, import_data274.dispatch)(store)
+      (0, import_data275.dispatch)(store)
     );
     if (true) {
       _unregisterEntityField(kind, name2, fieldId);
