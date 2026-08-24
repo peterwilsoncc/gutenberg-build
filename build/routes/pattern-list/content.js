@@ -176,9 +176,9 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React147 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef88 = React147.useRef, useEffect47 = React147.useEffect, useMemo71 = React147.useMemo, useDebugValue2 = React147.useDebugValue;
+      var React147 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef89 = React147.useRef, useEffect47 = React147.useEffect, useMemo71 = React147.useMemo, useDebugValue2 = React147.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
-        var instRef = useRef88(null);
+        var instRef = useRef89(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -858,6 +858,13 @@ var require_patterns = __commonJS({
 var require_block_editor = __commonJS({
   "package-external:@wordpress/block-editor"(exports, module) {
     module.exports = window.wp.blockEditor;
+  }
+});
+
+// package-external:@wordpress/notices
+var require_notices = __commonJS({
+  "package-external:@wordpress/notices"(exports, module) {
+    module.exports = window.wp.notices;
   }
 });
 
@@ -44155,12 +44162,12 @@ var page_default = Page;
 
 // routes/pattern-list/stage.tsx
 var import_core_data4 = __toESM(require_core_data());
-var import_components51 = __toESM(require_components());
-var import_data11 = __toESM(require_data());
-var import_element135 = __toESM(require_element());
+var import_components52 = __toESM(require_components());
+var import_data12 = __toESM(require_data());
+var import_element136 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
-var import_patterns3 = __toESM(require_patterns());
-var import_i18n58 = __toESM(require_i18n());
+var import_patterns4 = __toESM(require_patterns());
+var import_i18n59 = __toESM(require_i18n());
 
 // routes/lock-unlock/index.ts
 var import_private_apis4 = __toESM(require_private_apis());
@@ -44652,6 +44659,67 @@ var usePatterns = (postType, categoryId, { search = "", syncStatus } = {}) => {
 };
 var use_patterns_default = usePatterns;
 
+// routes/pattern-list/import-pattern-button.tsx
+var import_components51 = __toESM(require_components());
+var import_element135 = __toESM(require_element());
+var import_i18n58 = __toESM(require_i18n());
+var import_data11 = __toESM(require_data());
+var import_notices = __toESM(require_notices());
+var import_patterns3 = __toESM(require_patterns());
+var import_jsx_runtime192 = __toESM(require_jsx_runtime());
+function ImportPatternButton() {
+  const inputRef = (0, import_element135.useRef)(null);
+  const { createPatternFromFile } = unlock4((0, import_data11.useDispatch)(import_patterns3.store));
+  const { createSuccessNotice, createErrorNotice } = (0, import_data11.useDispatch)(import_notices.store);
+  return /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(import_jsx_runtime192.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+      import_components51.Button,
+      {
+        variant: "secondary",
+        size: "compact",
+        onClick: () => inputRef.current?.click(),
+        children: (0, import_i18n58.__)("Import pattern from JSON")
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+      "input",
+      {
+        type: "file",
+        accept: ".json",
+        hidden: true,
+        ref: inputRef,
+        onChange: async (event) => {
+          const file = event.target.files?.[0];
+          if (!file) {
+            return;
+          }
+          try {
+            const pattern = await createPatternFromFile(file);
+            createSuccessNotice(
+              (0, import_i18n58.sprintf)(
+                // translators: %s: The imported pattern's title.
+                (0, import_i18n58.__)('Imported "%s" from JSON.'),
+                pattern.title.raw
+              ),
+              {
+                type: "snackbar",
+                id: "import-pattern-success"
+              }
+            );
+          } catch (err) {
+            createErrorNotice(err.message, {
+              type: "snackbar",
+              id: "import-pattern-error"
+            });
+          } finally {
+            event.target.value = "";
+          }
+        }
+      }
+    )
+  ] });
+}
+
 // routes/pattern-list/style.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='a3942f3f8d']")) {
   const style = document.createElement("style");
@@ -44661,10 +44729,10 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 }
 
 // routes/pattern-list/stage.tsx
-var import_jsx_runtime192 = __toESM(require_jsx_runtime());
+var import_jsx_runtime193 = __toESM(require_jsx_runtime());
 var { usePostActions, patternTitleField } = unlock4(import_editor.privateApis);
-var { Tabs } = unlock4(import_components51.privateApis);
-var { PATTERN_TYPES: PATTERN_TYPES2, CreatePatternModal } = unlock4(import_patterns3.privateApis);
+var { Tabs } = unlock4(import_components52.privateApis);
+var { PATTERN_TYPES: PATTERN_TYPES2, CreatePatternModal } = unlock4(import_patterns4.privateApis);
 function PatternList() {
   const invalidate = useInvalidate();
   const { type = "all" } = useParams({
@@ -44672,20 +44740,20 @@ function PatternList() {
   });
   const navigate = useNavigate();
   const searchParams = useSearch({ from: "/patterns/list/$type" });
-  const postTypeObject = (0, import_data11.useSelect)(
+  const postTypeObject = (0, import_data12.useSelect)(
     (select2) => select2(import_core_data4.store).getPostType("wp_block"),
     []
   );
   const labels = postTypeObject?.labels;
-  const canCreateRecord = (0, import_data11.useSelect)(
+  const canCreateRecord = (0, import_data12.useSelect)(
     (select2) => select2(import_core_data4.store).canUser("create", {
       kind: "postType",
       name: "wp_block"
     }),
     []
   );
-  const [showPatternModal, setShowPatternModal] = (0, import_element135.useState)(false);
-  const handleQueryParamsChange = (0, import_element135.useCallback)(
+  const [showPatternModal, setShowPatternModal] = (0, import_element136.useState)(false);
+  const handleQueryParamsChange = (0, import_element136.useCallback)(
     (params) => {
       navigate({
         search: {
@@ -44714,15 +44782,15 @@ function PatternList() {
       invalidate();
     }
   };
-  const categoryFilter = (0, import_element135.useMemo)(() => {
+  const categoryFilter = (0, import_element136.useMemo)(() => {
     const filter = view.filters?.find((f2) => f2.field === "category");
     return filter?.value || "all-patterns";
   }, [view.filters]);
-  const syncStatusFilter = (0, import_element135.useMemo)(() => {
+  const syncStatusFilter = (0, import_element136.useMemo)(() => {
     const filter = view.filters?.find((f2) => f2.field === "sync-status");
     return filter?.value;
   }, [view.filters]);
-  const patternType = (0, import_element135.useMemo)(() => {
+  const patternType = (0, import_element136.useMemo)(() => {
     if (type === "my-patterns") {
       return PATTERN_TYPES2.user;
     } else if (type === "registered") {
@@ -44740,7 +44808,7 @@ function PatternList() {
   );
   const patternsWithPermissions = useAugmentPatternsWithPermissions(patterns2);
   const patternCategoryField = usePatternCategoryField();
-  const fields = (0, import_element135.useMemo)(() => {
+  const fields = (0, import_element136.useMemo)(() => {
     const patternFields = [
       previewField,
       patternTitleField,
@@ -44751,7 +44819,7 @@ function PatternList() {
     }
     return patternFields;
   }, [type, patternCategoryField]);
-  const { data: posts, paginationInfo } = (0, import_element135.useMemo)(() => {
+  const { data: posts, paginationInfo } = (0, import_element136.useMemo)(() => {
     const viewWithoutFilters = { ...view };
     delete viewWithoutFilters.search;
     viewWithoutFilters.filters = [];
@@ -44762,7 +44830,7 @@ function PatternList() {
     );
   }, [patternsWithPermissions, view, fields]);
   const { totalItems, totalPages } = paginationInfo;
-  const cleanupDeletedPostIdsFromUrl = (0, import_element135.useCallback)(
+  const cleanupDeletedPostIdsFromUrl = (0, import_element136.useCallback)(
     (deletedItems) => {
       const deletedIds = deletedItems.map((item) => item.id);
       const currentPostIds = searchParams.postIds || [];
@@ -44791,7 +44859,7 @@ function PatternList() {
       }
     }
   });
-  const actions = (0, import_element135.useMemo)(() => {
+  const actions = (0, import_element136.useMemo)(() => {
     return [
       ...postTypeActions?.flatMap((action) => {
         if (action.id === "view-post-revisions") {
@@ -44801,7 +44869,7 @@ function PatternList() {
       })
     ];
   }, [postTypeActions]);
-  const handleTabChange = (0, import_element135.useCallback)(
+  const handleTabChange = (0, import_element136.useCallback)(
     (typeSlug) => {
       navigate({
         to: `/patterns/list/${typeSlug}`
@@ -44819,33 +44887,36 @@ function PatternList() {
   if (view.type === "list") {
     selection.splice(1);
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(
     page_default,
     {
-      title: (0, import_i18n58.__)("Patterns"),
+      title: (0, import_i18n59.__)("Patterns"),
       headingLevel: 2,
-      subTitle: (0, import_i18n58.__)(
+      subTitle: (0, import_i18n59.__)(
         "Reusable design elements for your site. Create once, use everywhere."
       ),
       className: "pattern-page",
-      actions: labels?.add_new_item && canCreateRecord && /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
-        import_components51.Button,
-        {
-          variant: "primary",
-          onClick: () => setShowPatternModal(true),
-          size: "compact",
-          children: labels.add_new_item
-        }
-      ),
+      actions: labels?.add_new_item && canCreateRecord && /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(import_jsx_runtime193.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(ImportPatternButton, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
+          import_components52.Button,
+          {
+            variant: "primary",
+            onClick: () => setShowPatternModal(true),
+            size: "compact",
+            children: labels.add_new_item
+          }
+        )
+      ] }),
       hasPadding: false,
       children: [
-        DEFAULT_VIEWS.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("div", { className: "routes-pattern-list__tabs-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+        DEFAULT_VIEWS.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)("div", { className: "routes-pattern-list__tabs-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
           Tabs,
           {
             onSelect: handleTabChange,
             selectedTabId: type ?? "all",
-            children: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(Tabs.TabList, { children: DEFAULT_VIEWS.map(
-              (filter) => /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(Tabs.TabList, { children: DEFAULT_VIEWS.map(
+              (filter) => /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
                 Tabs.Tab,
                 {
                   tabId: filter.slug,
@@ -44856,7 +44927,7 @@ function PatternList() {
             ) })
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
           dataviews_default,
           {
             data: posts,
@@ -44885,7 +44956,7 @@ function PatternList() {
             renderItemLink: ({
               item,
               ...props
-            }) => /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+            }) => /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
               Link3,
               {
                 to: `/types/wp_block/edit/${encodeURIComponent(
@@ -44899,7 +44970,7 @@ function PatternList() {
             )
           }
         ),
-        showPatternModal && /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+        showPatternModal && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
           CreatePatternModal,
           {
             onClose: () => setShowPatternModal(false),
