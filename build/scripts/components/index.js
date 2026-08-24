@@ -53899,6 +53899,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/input-control.mjs
   var import_element228 = __toESM(require_element(), 1);
   var import_compose86 = __toESM(require_compose(), 1);
+  var import_deprecated28 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedInputControl = ({
     required,
@@ -53906,6 +53907,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
+    (0, import_deprecated28.default)("wp.components.privateApis.ValidatedInputControl", {
+      since: "7.2",
+      alternative: "ValidatedInputControl from @wordpress/ui",
+      hint: "This private API will be completely removed within a few Gutenberg plugin releases."
+    });
     const validityTargetRef = (0, import_element228.useRef)(null);
     const mergedRefs = (0, import_compose86.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(ControlWithError, {
