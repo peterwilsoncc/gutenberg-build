@@ -96997,13 +96997,6 @@ var wp;
     desc: (0, import_i18n224.__)("Sort descending")
   };
 
-  // packages/dataviews/build-module/lock-unlock.mjs
-  var import_private_apis5 = __toESM(require_private_apis(), 1);
-  var { lock: lock4, unlock: unlock4 } = (0, import_private_apis5.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-    "@wordpress/dataviews"
-  );
-
   // packages/dataviews/build-module/hooks/use-elements.mjs
   var import_element302 = __toESM(require_element(), 1);
   var EMPTY_ARRAY17 = [];
@@ -99608,6 +99601,15 @@ var wp;
   // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
   var import_components246 = __toESM(require_components(), 1);
   var import_element325 = __toESM(require_element(), 1);
+
+  // packages/dataviews/build-module/lock-unlock.mjs
+  var import_private_apis5 = __toESM(require_private_apis(), 1);
+  var { lock: lock4, unlock: unlock4 } = (0, import_private_apis5.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/dataviews"
+  );
+
+  // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
   var import_jsx_runtime522 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedTextareaControl } = unlock4(import_components246.privateApis);
   function Textarea({

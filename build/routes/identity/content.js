@@ -22185,13 +22185,6 @@ var sortLabels = {
   desc: (0, import_i18n8.__)("Sort descending")
 };
 
-// packages/dataviews/build-module/lock-unlock.mjs
-var import_private_apis2 = __toESM(require_private_apis(), 1);
-var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-  "@wordpress/dataviews"
-);
-
 // packages/dataviews/build-module/hooks/use-elements.mjs
 var import_element57 = __toESM(require_element(), 1);
 var EMPTY_ARRAY2 = [];
@@ -24796,6 +24789,15 @@ function Toggle({
 // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
 var import_components19 = __toESM(require_components(), 1);
 var import_element80 = __toESM(require_element(), 1);
+
+// packages/dataviews/build-module/lock-unlock.mjs
+var import_private_apis2 = __toESM(require_private_apis(), 1);
+var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/dataviews"
+);
+
+// packages/dataviews/build-module/components/dataform-controls/textarea.mjs
 var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedTextareaControl } = unlock2(import_components19.privateApis);
 function Textarea({
