@@ -19581,6 +19581,15 @@ var wp;
   var flex_default = {
     name: "flex",
     label: (0, import_i18n12.__)("Flex"),
+    hasInspectorControls(layoutBlockSupport = {}) {
+      const {
+        allowOrientation = true,
+        allowJustification = true,
+        allowVerticalAlignment = true,
+        allowWrap = true
+      } = layoutBlockSupport;
+      return allowOrientation || allowJustification || allowVerticalAlignment || allowWrap;
+    },
     inspectorControls: function FlexLayoutInspectorControls({
       layout = {},
       onChange,
@@ -20048,6 +20057,9 @@ var wp;
   var flow_default = {
     name: "default",
     label: (0, import_i18n13.__)("Flow"),
+    hasInspectorControls() {
+      return false;
+    },
     inspectorControls: function DefaultLayoutInspectorControls() {
       return null;
     },
@@ -20127,6 +20139,13 @@ var wp;
   var constrained_default = {
     name: "constrained",
     label: (0, import_i18n14.__)("Constrained"),
+    hasInspectorControls(layoutBlockSupport = {}) {
+      const {
+        allowJustification = true,
+        allowCustomContentAndWideSize = true
+      } = layoutBlockSupport;
+      return allowJustification || allowCustomContentAndWideSize;
+    },
     inspectorControls: function DefaultLayoutInspectorControls2({
       layout,
       onChange,
@@ -20508,6 +20527,9 @@ var wp;
   var grid_default2 = {
     name: "grid",
     label: (0, import_i18n15.__)("Grid"),
+    hasInspectorControls() {
+      return true;
+    },
     inspectorControls: function GridLayoutInspectorControls({
       layout = {},
       onChange,
@@ -105025,6 +105047,18 @@ var wp;
       ...overrides
     });
   }
+  function hasLayoutPanelControls({
+    layoutType,
+    constrainedType,
+    layoutBlockSupport,
+    showInheritToggle,
+    showLayoutTypeSwitcher,
+    displayControlsForLegacyLayouts
+  }) {
+    const hasActiveLayoutControls = layoutType?.name !== "default" && layoutType?.hasInspectorControls(layoutBlockSupport);
+    const hasLegacyLayoutControls = displayControlsForLegacyLayouts && constrainedType?.hasInspectorControls(layoutBlockSupport);
+    return !!(showInheritToggle || showLayoutTypeSwitcher || hasActiveLayoutControls || hasLegacyLayoutControls);
+  }
   function getLayoutContainerValues(layout = {}) {
     return Object.fromEntries(
       Object.entries(layout || {}).filter(
@@ -105250,6 +105284,14 @@ var wp;
     const displayControlsForLegacyLayouts = !usedLayout.type && (contentSize || inherit);
     const hasContentSizeOrLegacySettings = !!inherit || !!contentSize;
     const showLayoutTypeSwitcher = isDefaultBlockStyleState2(selectedState) && !inherit && allowSwitching;
+    const showLayoutPanel = hasLayoutPanelControls({
+      layoutType,
+      constrainedType,
+      layoutBlockSupport: blockSupportAndThemeSettings,
+      showInheritToggle,
+      showLayoutTypeSwitcher,
+      displayControlsForLegacyLayouts
+    });
     const onChangeLayout = (newLayout) => {
       if (isViewportLayoutState) {
         const nextStateStyle = cleanEmptyObject({
@@ -105274,7 +105316,7 @@ var wp;
     const hasInheritToggleValue = () => isViewportLayoutState ? (usedLayout?.type ?? "default") !== (resetLayoutDefaults?.type ?? "default") : layout?.type === "constrained";
     const hasLayoutTypeValue = () => (usedLayout?.type ?? "default") !== (resetLayoutDefaults?.type ?? "default");
     return /* @__PURE__ */ (0, import_jsx_runtime551.jsxs)(import_jsx_runtime551.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime551.jsxs)(
+      showLayoutPanel && /* @__PURE__ */ (0, import_jsx_runtime551.jsxs)(
         inspector_controls_default,
         {
           group: "layout",
