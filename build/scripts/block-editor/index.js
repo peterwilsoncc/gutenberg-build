@@ -75323,6 +75323,7 @@ var wp;
   var import_jsx_runtime359 = __toESM(require_jsx_runtime(), 1);
   var noop14 = () => {
   };
+  var getCompositeItemId = (instanceId, style) => `${instanceId}-${style.name}`;
   function BlockStyles({ clientId, onSwitch = noop14, onHoverClassName = noop14 }) {
     const canEdit = (0, import_data142.useSelect)(
       (select3) => select3(store).canEditBlock(clientId),
@@ -75341,6 +75342,17 @@ var wp;
     const [hoveredStyle, setHoveredStyle] = (0, import_element219.useState)(null);
     const [blockStylesAnchor, setBlockStylesAnchor] = (0, import_element219.useState)(null);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+    const instanceId = (0, import_compose83.useInstanceId)(
+      BlockStyles,
+      "block-editor-block-styles"
+    );
+    const styleRows = (0, import_element219.useMemo)(() => {
+      const rows = [];
+      for (let i2 = 0; i2 < (stylesToRender?.length ?? 0); i2 += 2) {
+        rows.push(stylesToRender.slice(i2, i2 + 2));
+      }
+      return rows;
+    }, [stylesToRender]);
     const previewBlocks = (0, import_element219.useMemo)(() => {
       if (!hoveredStyle || !genericPreviewBlock) {
         return null;
@@ -75378,6 +75390,14 @@ var wp;
       debouncedSetHoveredStyle(item);
       onHoverClassName(item?.name ?? null);
     };
+    const onSetActiveId = (nextActiveId) => {
+      const nextStyle = stylesToRender.find(
+        (style) => getCompositeItemId(instanceId, style) === nextActiveId
+      );
+      if (nextStyle && nextStyle.name !== activeStyle.name) {
+        onSelectStylePreview(nextStyle);
+      }
+    };
     const defaultStyle = getDefaultStyle(stylesToRender);
     const hasValue3 = () => {
       return activeStyle?.name !== defaultStyle?.name;
@@ -75407,38 +75427,62 @@ var wp;
                 ref: setBlockStylesAnchor,
                 className: "block-editor-block-styles",
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime359.jsx)("div", { className: "block-editor-block-styles__variants", children: stylesToRender.map((style) => {
-                    const buttonText = style.label || style.name;
-                    return /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
-                      import_components122.Button,
-                      {
-                        __next40pxDefaultSize: true,
-                        className: clsx_default(
-                          "block-editor-block-styles__item",
-                          {
-                            "is-active": activeStyle.name === style.name
-                          }
-                        ),
-                        variant: "secondary",
-                        label: buttonText,
-                        onMouseEnter: () => styleItemHandler(style),
-                        onFocus: () => styleItemHandler(style),
-                        onMouseLeave: () => styleItemHandler(null),
-                        onBlur: () => styleItemHandler(null),
-                        onClick: () => onSelectStylePreview(style),
-                        "aria-current": activeStyle.name === style.name,
-                        children: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
-                          import_components122.__experimentalTruncate,
-                          {
-                            numberOfLines: 1,
-                            className: "block-editor-block-styles__item-text",
-                            children: buttonText
-                          }
-                        )
-                      },
-                      style.name
-                    );
-                  }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+                    import_components122.Composite,
+                    {
+                      role: "radiogroup",
+                      "aria-label": (0, import_i18n119.__)("Styles"),
+                      className: "block-editor-block-styles__variants",
+                      activeId: getCompositeItemId(
+                        instanceId,
+                        activeStyle
+                      ),
+                      setActiveId: onSetActiveId,
+                      focusLoop: true,
+                      focusWrap: true,
+                      focusShift: true,
+                      children: styleRows.map((row, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+                        import_components122.Composite.Row,
+                        {
+                          className: "block-editor-block-styles__row",
+                          children: row.map((style) => /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+                            import_components122.Composite.Item,
+                            {
+                              id: getCompositeItemId(
+                                instanceId,
+                                style
+                              ),
+                              render: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+                                Button9,
+                                {
+                                  className: "block-editor-block-styles__item",
+                                  tone: "neutral",
+                                  variant: activeStyle.name === style.name ? "solid" : "outline"
+                                }
+                              ),
+                              role: "radio",
+                              "aria-checked": activeStyle.name === style.name,
+                              onMouseEnter: () => styleItemHandler(style),
+                              onFocus: () => styleItemHandler(style),
+                              onMouseLeave: () => styleItemHandler(null),
+                              onBlur: () => styleItemHandler(null),
+                              onClick: () => onSelectStylePreview(style),
+                              children: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
+                                import_components122.__experimentalTruncate,
+                                {
+                                  numberOfLines: 3,
+                                  className: "block-editor-block-styles__item-text",
+                                  children: style.label || style.name
+                                }
+                              )
+                            },
+                            style.name
+                          ))
+                        },
+                        rowIndex
+                      ))
+                    }
+                  ),
                   previewBlocks && /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
                     PreviewBlockPopover,
                     {
