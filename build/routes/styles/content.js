@@ -101,6 +101,27 @@ var require_core_data = __commonJS({
   }
 });
 
+// package-external:@wordpress/html-entities
+var require_html_entities = __commonJS({
+  "package-external:@wordpress/html-entities"(exports, module) {
+    module.exports = window.wp.htmlEntities;
+  }
+});
+
+// package-external:@wordpress/api-fetch
+var require_api_fetch = __commonJS({
+  "package-external:@wordpress/api-fetch"(exports, module) {
+    module.exports = window.wp.apiFetch;
+  }
+});
+
+// package-external:@wordpress/url
+var require_url = __commonJS({
+  "package-external:@wordpress/url"(exports, module) {
+    module.exports = window.wp.url;
+  }
+});
+
 // routes/styles/stage.tsx
 import { useNavigate, useSearch } from "@wordpress/route";
 
@@ -1209,9 +1230,9 @@ function registerStyle5(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle5("89e4060c20", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
+  registerStyle5("1f3750277d", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8bcd33103b451f30__header-lockup{min-width:0}._8113be94e7caf73c__header-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
 }
-var style_default5 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "has-navigation": "_4b0f17e503d11619__has-navigation", "header-navigation": "_673c99dcbfb58211__header-navigation", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
+var style_default5 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-lockup": "_8bcd33103b451f30__header-lockup", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "has-navigation": "_4b0f17e503d11619__has-navigation", "header-navigation": "_673c99dcbfb58211__header-navigation", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
 function Header({
   headingLevel = 1,
   breadcrumbs,
@@ -1243,34 +1264,44 @@ function Header({
             gap: "sm",
             justify: "space-between",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
-                showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
-                  SidebarToggleSlot,
-                  {
-                    bubblesVirtually: true,
-                    className: style_default5["sidebar-toggle-slot"]
-                  }
-                ),
-                visual && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
-                  "div",
-                  {
-                    className: style_default5["header-visual"],
-                    "aria-hidden": "true",
-                    children: visual
-                  }
-                ),
-                title && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
-                  Text,
-                  {
-                    className: style_default5["header-title"],
-                    render: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(HeadingTag, {}),
-                    variant: "heading-lg",
-                    children: title
-                  }
-                ),
-                breadcrumbs,
-                badges
-              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+                Stack,
+                {
+                  direction: "row",
+                  gap: "sm",
+                  align: "center",
+                  justify: "start",
+                  className: style_default5["header-lockup"],
+                  children: [
+                    showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                      SidebarToggleSlot,
+                      {
+                        bubblesVirtually: true,
+                        className: style_default5["sidebar-toggle-slot"]
+                      }
+                    ),
+                    visual && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                      "div",
+                      {
+                        className: style_default5["header-visual"],
+                        "aria-hidden": "true",
+                        children: visual
+                      }
+                    ),
+                    title && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                      Text,
+                      {
+                        className: style_default5["header-title"],
+                        render: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(HeadingTag, {}),
+                        variant: "heading-lg",
+                        children: title
+                      }
+                    ),
+                    breadcrumbs,
+                    badges
+                  ]
+                }
+              ),
               actions && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
                 Stack,
                 {
@@ -1389,9 +1420,9 @@ function registerStyle6(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle6("89e4060c20", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
+  registerStyle6("1f3750277d", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8bcd33103b451f30__header-lockup{min-width:0}._8113be94e7caf73c__header-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
 }
-var style_default6 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "has-navigation": "_4b0f17e503d11619__has-navigation", "header-navigation": "_673c99dcbfb58211__header-navigation", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
+var style_default6 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-lockup": "_8bcd33103b451f30__header-lockup", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "has-navigation": "_4b0f17e503d11619__has-navigation", "header-navigation": "_673c99dcbfb58211__header-navigation", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
 function Page({
   headingLevel,
   breadcrumbs,
@@ -1442,13 +1473,14 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/styles/stage.tsx
-var import_i18n3 = __toESM(require_i18n());
+var import_i18n5 = __toESM(require_i18n());
 var import_editor = __toESM(require_editor());
 var import_compose = __toESM(require_compose());
 var import_data = __toESM(require_data());
-var import_core_data = __toESM(require_core_data());
+var import_core_data2 = __toESM(require_core_data());
 var import_components2 = __toESM(require_components());
-var import_element5 = __toESM(require_element());
+var import_html_entities = __toESM(require_html_entities());
+var import_element6 = __toESM(require_element());
 import { useEditorSettings } from "@wordpress/lazy-editor";
 
 // routes/lock-unlock/index.ts
@@ -1457,6 +1489,91 @@ var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnl
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/routes"
 );
+
+// routes/styles/activate-panel.tsx
+var import_api_fetch = __toESM(require_api_fetch());
+var import_core_data = __toESM(require_core_data());
+var import_element5 = __toESM(require_element());
+var import_i18n4 = __toESM(require_i18n());
+var import_url2 = __toESM(require_url());
+
+// routes/styles/previewed-theme.ts
+var import_i18n3 = __toESM(require_i18n());
+var import_url = __toESM(require_url());
+var previewedStylesheet = (() => {
+  const value = (0, import_url.getQueryArg)(window.location.href, "wp_theme_preview");
+  return typeof value === "string" ? value : "";
+})();
+function getPreviewedStylesheet() {
+  return previewedStylesheet;
+}
+function getPreviewTitle(themeName) {
+  return themeName ? (0, import_i18n3.sprintf)(
+    /* translators: %s: Theme name. */
+    (0, import_i18n3.__)("Previewing %s"),
+    themeName
+  ) : (0, import_i18n3.__)("Theme Preview");
+}
+
+// routes/styles/activate-panel.tsx
+var import_jsx_runtime7 = __toESM(require_jsx_runtime());
+var { EntitiesSavedStatesExtensible, useEntitiesSavedStatesIsDirty } = unlock(import_core_data.privateApis);
+var ACTIVE_THEMES_URL = "/wp/v2/themes?status=active";
+function useActualCurrentTheme() {
+  const [currentTheme, setCurrentTheme] = (0, import_element5.useState)();
+  (0, import_element5.useEffect)(() => {
+    const path = (0, import_url2.addQueryArgs)(ACTIVE_THEMES_URL, {
+      context: "edit",
+      wp_theme_preview: ""
+    });
+    (0, import_api_fetch.default)({ path }).then((activeThemes) => setCurrentTheme(activeThemes[0])).catch(() => {
+    });
+  }, []);
+  return currentTheme;
+}
+function activateTheme(stylesheet) {
+  window.location.href = (0, import_url2.addQueryArgs)("themes.php", {
+    action: "activate",
+    stylesheet,
+    _wpnonce: window.WP_BLOCK_THEME_ACTIVATE_NONCE
+  });
+}
+function ActivatePanel({
+  themeName,
+  onClose
+}) {
+  const isDirtyProps = useEntitiesSavedStatesIsDirty();
+  let activateSaveLabel, successNoticeContent;
+  if (isDirtyProps.isDirty) {
+    activateSaveLabel = (0, import_i18n4.__)("Activate & Save");
+    successNoticeContent = (0, import_i18n4.__)("Theme activated and site updated.");
+  } else {
+    activateSaveLabel = (0, import_i18n4.__)("Activate");
+    successNoticeContent = (0, import_i18n4.__)("Theme activated.");
+  }
+  const currentTheme = useActualCurrentTheme();
+  const additionalPrompt = /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { children: (0, import_i18n4.sprintf)(
+    /* translators: 1: The name of active theme, 2: The name of theme to be activated. */
+    (0, import_i18n4.__)(
+      "Saving your changes will change your active theme from %1$s to %2$s."
+    ),
+    currentTheme?.name?.rendered ?? "...",
+    themeName ?? "..."
+  ) });
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+    EntitiesSavedStatesExtensible,
+    {
+      ...isDirtyProps,
+      additionalPrompt,
+      close: onClose,
+      onSave: () => activateTheme(getPreviewedStylesheet()),
+      saveEnabled: true,
+      saveLabel: activateSaveLabel,
+      variant: "inline",
+      successNoticeContent
+    }
+  );
+}
 
 // routes/styles/style.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='1153641d9c']")) {
@@ -1467,21 +1584,30 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 }
 
 // routes/styles/stage.tsx
-var import_jsx_runtime7 = __toESM(require_jsx_runtime());
+var import_jsx_runtime8 = __toESM(require_jsx_runtime());
 var { GlobalStylesUIWrapper, GlobalStylesActionMenu } = unlock(import_editor.privateApis);
 function Stage() {
   const navigate = useNavigate();
   const search = useSearch({ strict: false });
   const isMobileViewport = (0, import_compose.useViewportMatch)("medium", "<");
-  const globalStylesId = (0, import_data.useSelect)(
-    (select) => select(import_core_data.store).__experimentalGetCurrentGlobalStylesId(),
-    []
+  const isPreviewingTheme = !!getPreviewedStylesheet();
+  const [isActivatePanelOpen, setIsActivatePanelOpen] = (0, import_element6.useState)(false);
+  const { globalStylesId, themeName } = (0, import_data.useSelect)(
+    (select) => {
+      const { getCurrentTheme, __experimentalGetCurrentGlobalStylesId } = select(import_core_data2.store);
+      const themeNameRendered = isPreviewingTheme ? getCurrentTheme()?.name?.rendered : void 0;
+      return {
+        globalStylesId: __experimentalGetCurrentGlobalStylesId(),
+        themeName: themeNameRendered ? (0, import_html_entities.decodeEntities)(themeNameRendered) : void 0
+      };
+    },
+    [isPreviewingTheme]
   );
   const { editorSettings } = useEditorSettings({
     stylesId: globalStylesId
   });
   const section = search.section ?? "/";
-  const [isStyleBookOpened, setIsStyleBookOpened] = (0, import_element5.useState)(
+  const [isStyleBookOpened, setIsStyleBookOpened] = (0, import_element6.useState)(
     search.preview === "stylebook"
   );
   const onChangeSection = (updatedSection) => {
@@ -1492,51 +1618,84 @@ function Stage() {
       }
     });
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
     page_default,
     {
       headingLevel: 2,
-      actions: !isMobileViewport ? /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_components2.__experimentalHStack, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+      actions: !isMobileViewport || isPreviewingTheme ? /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_components2.__experimentalHStack, { children: [
+        !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_jsx_runtime8.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+            import_components2.Button,
+            {
+              size: "compact",
+              isPressed: isStyleBookOpened,
+              icon: seen_default,
+              label: (0, import_i18n5.__)("Style Book"),
+              onClick: () => {
+                const newIsStyleBookOpened = !isStyleBookOpened;
+                setIsStyleBookOpened(
+                  newIsStyleBookOpened
+                );
+                navigate({
+                  search: newIsStyleBookOpened ? {
+                    ...search,
+                    preview: "stylebook"
+                  } : (() => {
+                    const {
+                      preview,
+                      ...restSearch
+                    } = search;
+                    return restSearch;
+                  })()
+                });
+              }
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+            GlobalStylesActionMenu,
+            {
+              hideWelcomeGuide: true,
+              onChangePath: onChangeSection
+            }
+          )
+        ] }),
+        isPreviewingTheme && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
           import_components2.Button,
           {
             size: "compact",
-            isPressed: isStyleBookOpened,
-            icon: seen_default,
-            label: (0, import_i18n3.__)("Style Book"),
-            onClick: () => {
-              const newIsStyleBookOpened = !isStyleBookOpened;
-              setIsStyleBookOpened(newIsStyleBookOpened);
-              navigate({
-                search: newIsStyleBookOpened ? { ...search, preview: "stylebook" } : (() => {
-                  const {
-                    preview,
-                    ...restSearch
-                  } = search;
-                  return restSearch;
-                })()
-              });
-            }
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
-          GlobalStylesActionMenu,
-          {
-            hideWelcomeGuide: true,
-            onChangePath: onChangeSection
+            variant: "primary",
+            onClick: () => setIsActivatePanelOpen(true),
+            children: (0, import_i18n5.__)("Activate")
           }
         )
       ] }) : null,
       className: "routes-styles__page",
-      title: (0, import_i18n3.__)("Styles"),
-      children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
-        GlobalStylesUIWrapper,
-        {
-          path: section,
-          onPathChange: onChangeSection,
-          settings: editorSettings
-        }
-      )
+      title: isPreviewingTheme ? getPreviewTitle(themeName) : (0, import_i18n5.__)("Styles"),
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+          GlobalStylesUIWrapper,
+          {
+            path: section,
+            onPathChange: onChangeSection,
+            settings: editorSettings
+          }
+        ),
+        isActivatePanelOpen && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+          import_components2.Modal,
+          {
+            title: (0, import_i18n5.__)("Activate"),
+            onRequestClose: () => setIsActivatePanelOpen(false),
+            size: "small",
+            children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+              ActivatePanel,
+              {
+                themeName,
+                onClose: () => setIsActivatePanelOpen(false)
+              }
+            )
+          }
+        )
+      ]
     }
   );
 }
@@ -1546,17 +1705,17 @@ var stage = Stage;
 var import_editor2 = __toESM(require_editor());
 var import_components3 = __toESM(require_components());
 var import_data2 = __toESM(require_data());
-var import_core_data2 = __toESM(require_core_data());
+var import_core_data3 = __toESM(require_core_data());
 import { useNavigate as useNavigate2, useSearch as useSearch2 } from "@wordpress/route";
 import { useEditorAssets, useEditorSettings as useEditorSettings2 } from "@wordpress/lazy-editor";
-var import_jsx_runtime8 = __toESM(require_jsx_runtime());
+var import_jsx_runtime9 = __toESM(require_jsx_runtime());
 var { StyleBookPreview } = unlock(import_editor2.privateApis);
 function Canvas() {
   const { isReady: assetsReady } = useEditorAssets();
   const navigate = useNavigate2();
   const search = useSearch2({ strict: false });
   const { globalStylesId, isBlockTheme } = (0, import_data2.useSelect)((select) => {
-    const { getCurrentTheme, __experimentalGetCurrentGlobalStylesId } = select(import_core_data2.store);
+    const { getCurrentTheme, __experimentalGetCurrentGlobalStylesId } = select(import_core_data3.store);
     return {
       globalStylesId: __experimentalGetCurrentGlobalStylesId(),
       isBlockTheme: !!getCurrentTheme()?.is_block_theme
@@ -1575,7 +1734,7 @@ function Canvas() {
     });
   };
   if (!assetsReady || !settingsReady) {
-    return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
       "div",
       {
         style: {
@@ -1584,14 +1743,14 @@ function Canvas() {
           alignItems: "center",
           height: "100%"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_components3.Spinner, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components3.Spinner, {})
       }
     );
   }
   if (!isBlockTheme) {
-    return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(StyleBookPreview, { isStatic: true, settings: editorSettings });
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(StyleBookPreview, { isStatic: true, settings: editorSettings });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
     StyleBookPreview,
     {
       path: section,

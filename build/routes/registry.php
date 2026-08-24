@@ -155,6 +155,13 @@ return array(
 		'has_content' => true,
 	),
 	array(
+		'name'        => 'styles',
+		'path'        => '/styles',
+		'page'        => 'theme-preview',
+		'has_route'   => true,
+		'has_content' => true,
+	),
+	array(
 		'name'        => 'template',
 		'path'        => '/templates',
 		'page'        => 'site-editor-v2',
