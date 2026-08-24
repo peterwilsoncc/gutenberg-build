@@ -4967,9 +4967,9 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle("f4e6e06c6a", ".dba930ea7a9438fd__root{display:contents}");
+    registerStyle("8d074a190c", "._0ebd6d9bf8b95794__wrapper{display:contents}");
   }
-  var style_default = { "root": "dba930ea7a9438fd__root" };
+  var style_default = { "wrapper": "_0ebd6d9bf8b95794__wrapper" };
   var rootProviderCountByDocument = /* @__PURE__ */ new WeakMap();
   var ThemeProvider = ({
     children,
@@ -5077,7 +5077,7 @@ var wp;
         ref: wrapperRef,
         "data-wpds-root-provider": isRoot || void 0,
         "data-wpds-corner-radius": cornerRadiusPreset,
-        className: style_default.root,
+        className: style_default.wrapper,
         style: themeProviderStyles,
         children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeContext.Provider, { value: contextValue, children })
       }
