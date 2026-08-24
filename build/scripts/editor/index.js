@@ -458,9 +458,9 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React122 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef137 = React122.useRef, useEffect128 = React122.useEffect, useMemo167 = React122.useMemo, useDebugValue2 = React122.useDebugValue;
+        var React122 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef138 = React122.useRef, useEffect128 = React122.useEffect, useMemo167 = React122.useMemo, useDebugValue2 = React122.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe5, getSnapshot2, getServerSnapshot2, selector2, isEqual2) {
-          var instRef = useRef137(null);
+          var instRef = useRef138(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -2512,7 +2512,7 @@ var wp;
   var import_data91 = __toESM(require_data(), 1);
   var import_core_data60 = __toESM(require_core_data(), 1);
   var import_element256 = __toESM(require_element(), 1);
-  var import_compose46 = __toESM(require_compose(), 1);
+  var import_compose47 = __toESM(require_compose(), 1);
   var import_hooks41 = __toESM(require_hooks(), 1);
 
   // packages/editor/build-module/store/index.mjs
@@ -28612,14 +28612,12 @@ var wp;
   );
 
   // packages/ui/build-module/collapsible-card/header.mjs
+  var import_compose4 = __toESM(require_compose(), 1);
   var import_element35 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/collapsible-card/context.mjs
   var import_element34 = __toESM(require_element(), 1);
-  var HeaderDescriptionIdContext = (0, import_element34.createContext)({
-    setDescriptionId: () => {
-    }
-  });
+  var HeaderDescriptionIdContext = (0, import_element34.createContext)(null);
 
   // packages/ui/build-module/collapsible-card/header.mjs
   var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
@@ -28704,9 +28702,9 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle10("78199613cf", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
+    registerStyle10("64bdb4d46e", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}._92ebbaa30c8a1d05__header-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dd89d27c4f15912d__header-trigger-positioner{align-self:flex-start;flex-shrink:0;margin-block-start:calc(var(--wpds-typography-line-height-sm, 20px)/2);max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
   }
-  var style_default10 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
+  var style_default10 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-description": "_92ebbaa30c8a1d05__header-description", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
   if (typeof process === "undefined" || true) {
     registerStyle10("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
   }
@@ -28716,12 +28714,57 @@ var wp;
   }
   var focus_module_default3 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
   var Header2 = (0, import_element35.forwardRef)(
-    function CollapsibleCardHeader({ children, className, render: render5, ...restProps }, ref) {
-      const [descriptionId, setDescriptionId] = (0, import_element35.useState)();
-      const contextValue = (0, import_element35.useMemo)(
-        () => ({ setDescriptionId }),
-        [setDescriptionId]
+    function CollapsibleCardHeader({
+      children,
+      className,
+      render: render5,
+      "aria-describedby": ariaDescribedByProp,
+      ...restProps
+    }, ref) {
+      const [descriptionIds, setDescriptionIds] = (0, import_element35.useState)(
+        []
       );
+      const [orderedDescriptionIds, setOrderedDescriptionIds] = (0, import_element35.useState)([]);
+      const headerContentRef = (0, import_element35.useRef)(null);
+      const registerDescriptionId = (0, import_element35.useCallback)((id) => {
+        setDescriptionIds((currentDescriptionIds) => {
+          if (currentDescriptionIds.includes(id)) {
+            return currentDescriptionIds;
+          }
+          return [...currentDescriptionIds, id];
+        });
+        return () => {
+          setDescriptionIds(
+            (currentDescriptionIds) => currentDescriptionIds.filter(
+              (descriptionId) => descriptionId !== id
+            )
+          );
+        };
+      }, []);
+      const contextValue = (0, import_element35.useMemo)(
+        () => ({ registerDescriptionId }),
+        [registerDescriptionId]
+      );
+      (0, import_compose4.useIsomorphicLayoutEffect)(() => {
+        const registeredDescriptionIds = new Set(descriptionIds);
+        const nextDescriptionIds = Array.from(
+          headerContentRef.current?.querySelectorAll("[id]") ?? []
+        ).map((element) => element.id).filter((id) => registeredDescriptionIds.has(id));
+        setOrderedDescriptionIds((currentDescriptionIds) => {
+          if (currentDescriptionIds.length === nextDescriptionIds.length && currentDescriptionIds.every(
+            (id, index2) => id === nextDescriptionIds[index2]
+          )) {
+            return currentDescriptionIds;
+          }
+          return nextDescriptionIds;
+        });
+      });
+      const ariaDescribedBy = Array.from(
+        /* @__PURE__ */ new Set([
+          ...ariaDescribedByProp?.split(/\s+/).filter(Boolean) ?? [],
+          ...orderedDescriptionIds
+        ])
+      ).join(" ") || void 0;
       return useRender({
         defaultTagName: "div",
         render: render5,
@@ -28738,9 +28781,16 @@ var wp;
               className: style_default10.header,
               render: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(Header, {}),
               nativeButton: false,
-              "aria-describedby": descriptionId,
+              "aria-describedby": ariaDescribedBy,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { className: style_default10["header-content"], children }),
+                /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
+                  "div",
+                  {
+                    ref: headerContentRef,
+                    className: style_default10["header-content"],
+                    children
+                  }
+                ),
                 /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
                   "div",
                   {
@@ -28780,29 +28830,6 @@ var wp;
   // packages/ui/build-module/collapsible-card/header-description.mjs
   var import_element36 = __toESM(require_element(), 1);
   var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
-  var HeaderDescription = (0, import_element36.forwardRef)(function CollapsibleCardHeaderDescription({ children, className, ...restProps }, ref) {
-    const descriptionId = (0, import_element36.useId)();
-    const { setDescriptionId } = (0, import_element36.useContext)(HeaderDescriptionIdContext);
-    (0, import_element36.useEffect)(() => {
-      setDescriptionId(descriptionId);
-      return () => setDescriptionId(void 0);
-    }, [descriptionId, setDescriptionId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
-      "div",
-      {
-        ref,
-        id: descriptionId,
-        "aria-hidden": "true",
-        className,
-        ...restProps,
-        children
-      }
-    );
-  });
-
-  // packages/ui/build-module/collapsible-card/content.mjs
-  var import_element37 = __toESM(require_element(), 1);
-  var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
   function getRuntime11() {
     const globalScope = globalThis;
@@ -28884,70 +28911,40 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle11("78199613cf", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
+    registerStyle11("64bdb4d46e", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}._92ebbaa30c8a1d05__header-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dd89d27c4f15912d__header-trigger-positioner{align-self:flex-start;flex-shrink:0;margin-block-start:calc(var(--wpds-typography-line-height-sm, 20px)/2);max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
   }
-  var style_default11 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
-  var Content2 = (0, import_element37.forwardRef)(
-    function CollapsibleCardContent({ className, render: render5, children, hiddenUntilFound = true, ...restProps }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
-        Panel,
-        {
-          ref,
-          className: (state2) => clsx_default(
-            style_default11.content,
-            state2.open && state2.transitionStatus === "idle" && style_default11["overflow-visible"],
-            className
-          ),
-          hiddenUntilFound,
-          ...restProps,
-          children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
-            Content,
-            {
-              className: style_default11["content-inner"],
-              render: render5,
-              children
-            }
-          )
-        }
-      );
-    }
-  );
-
-  // packages/ui/build-module/utils/render-slot-with-children.mjs
-  var import_element38 = __toESM(require_element(), 1);
-  function renderSlotWithChildren(slot, defaultSlot, children) {
-    return (0, import_element38.cloneElement)(slot ?? defaultSlot, { children });
-  }
-
-  // packages/ui/build-module/utils/theme-provider.mjs
-  var theme = __toESM(require_theme(), 1);
-
-  // packages/ui/build-module/lock-unlock.mjs
-  var import_private_apis5 = __toESM(require_private_apis(), 1);
-  var { lock: lock4, unlock: unlock4 } = (0, import_private_apis5.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-    "@wordpress/ui"
-  );
-
-  // packages/ui/build-module/utils/theme-provider.mjs
-  function getThemeProvider() {
-    const themePackage = theme;
-    if (themePackage.ThemeProvider) {
-      return themePackage.ThemeProvider;
-    }
-    if (!themePackage.privateApis) {
+  var style_default11 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-description": "_92ebbaa30c8a1d05__header-description", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
+  var DEFAULT_TAG2 = /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("div", {});
+  var HeaderDescription = (0, import_element36.forwardRef)(function CollapsibleCardHeaderDescription({ children, className, id: idProp, render: render5 = DEFAULT_TAG2, ...restProps }, ref) {
+    const generatedId = (0, import_element36.useId)();
+    const descriptionId = idProp ?? generatedId;
+    const context = (0, import_element36.useContext)(HeaderDescriptionIdContext);
+    if (!context) {
       throw new Error(
-        "@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`."
+        "CollapsibleCard.HeaderDescription: Missing parent <CollapsibleCard.Header>. Render <CollapsibleCard.HeaderDescription> inside <CollapsibleCard.Header>."
       );
     }
-    return unlock4(
-      themePackage.privateApis
-    ).ThemeProvider;
-  }
-  var ThemeProvider = getThemeProvider();
+    (0, import_element36.useEffect)(() => {
+      return context?.registerDescriptionId(descriptionId);
+    }, [context, descriptionId]);
+    return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+      Text,
+      {
+        ref,
+        variant: "body-md",
+        render: render5,
+        id: descriptionId,
+        "aria-hidden": "true",
+        className: clsx_default(style_default11["header-description"], className),
+        ...restProps,
+        children
+      }
+    );
+  });
 
-  // packages/ui/build-module/stack/stack.mjs
-  var import_element39 = __toESM(require_element(), 1);
+  // packages/ui/build-module/collapsible-card/content.mjs
+  var import_element37 = __toESM(require_element(), 1);
+  var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
   function getRuntime12() {
     const globalScope = globalThis;
@@ -29029,55 +29026,70 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle12("32aba35fe1", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._19ce0419607e1896__stack{display:flex}}}");
+    registerStyle12("64bdb4d46e", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}._92ebbaa30c8a1d05__header-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dd89d27c4f15912d__header-trigger-positioner{align-self:flex-start;flex-shrink:0;margin-block-start:calc(var(--wpds-typography-line-height-sm, 20px)/2);max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
   }
-  var style_default12 = { "stack": "_19ce0419607e1896__stack" };
-  var gapTokens = {
-    xs: "var(--wpds-dimension-gap-xs, 4px)",
-    sm: "var(--wpds-dimension-gap-sm, 8px)",
-    md: "var(--wpds-dimension-gap-md, 12px)",
-    lg: "var(--wpds-dimension-gap-lg, 16px)",
-    xl: "var(--wpds-dimension-gap-xl, 24px)",
-    "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
-    "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
-  };
-  var Stack = (0, import_element39.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render5, ...props }, ref) {
-    const style = {
-      gap: gap && gapTokens[gap],
-      alignItems: align,
-      justifyContent: justify,
-      flexDirection: direction,
-      flexWrap: wrap
-    };
-    const element = useRender({
-      render: render5,
-      ref,
-      props: mergeProps(props, { style, className: style_default12.stack })
-    });
-    return element;
-  });
+  var style_default12 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-description": "_92ebbaa30c8a1d05__header-description", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
+  var Content2 = (0, import_element37.forwardRef)(
+    function CollapsibleCardContent({ className, render: render5, children, hiddenUntilFound = true, ...restProps }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+        Panel,
+        {
+          ref,
+          className: (state2) => clsx_default(
+            style_default12.content,
+            state2.open && state2.transitionStatus === "idle" && style_default12["overflow-visible"],
+            className
+          ),
+          hiddenUntilFound,
+          ...restProps,
+          children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+            Content,
+            {
+              className: style_default12["content-inner"],
+              render: render5,
+              children
+            }
+          )
+        }
+      );
+    }
+  );
 
-  // packages/ui/build-module/icon-button/icon-button.mjs
-  var import_element46 = __toESM(require_element(), 1);
+  // packages/ui/build-module/utils/render-slot-with-children.mjs
+  var import_element38 = __toESM(require_element(), 1);
+  function renderSlotWithChildren(slot, defaultSlot, children) {
+    return (0, import_element38.cloneElement)(slot ?? defaultSlot, { children });
+  }
 
-  // packages/ui/build-module/tooltip/index.mjs
-  var tooltip_exports = {};
-  __export(tooltip_exports, {
-    Popup: () => Popup,
-    Portal: () => Portal,
-    Positioner: () => Positioner,
-    Provider: () => Provider,
-    Root: () => Root5,
-    Trigger: () => Trigger2
-  });
+  // packages/ui/build-module/utils/theme-provider.mjs
+  var theme = __toESM(require_theme(), 1);
 
-  // packages/ui/build-module/tooltip/popup.mjs
-  var import_element42 = __toESM(require_element(), 1);
+  // packages/ui/build-module/lock-unlock.mjs
+  var import_private_apis5 = __toESM(require_private_apis(), 1);
+  var { lock: lock4, unlock: unlock4 } = (0, import_private_apis5.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/ui"
+  );
 
-  // packages/ui/build-module/tooltip/portal.mjs
-  var import_element40 = __toESM(require_element(), 1);
+  // packages/ui/build-module/utils/theme-provider.mjs
+  function getThemeProvider() {
+    const themePackage = theme;
+    if (themePackage.ThemeProvider) {
+      return themePackage.ThemeProvider;
+    }
+    if (!themePackage.privateApis) {
+      throw new Error(
+        "@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`."
+      );
+    }
+    return unlock4(
+      themePackage.privateApis
+    ).ThemeProvider;
+  }
+  var ThemeProvider = getThemeProvider();
 
-  // packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
+  // packages/ui/build-module/stack/stack.mjs
+  var import_element39 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
   function getRuntime13() {
     const globalScope = globalThis;
@@ -29159,82 +29171,55 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle13("be37f31c1e", "._11fc52b637ff8a7e__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._11fc52b637ff8a7e__slot>*{pointer-events:auto}}}");
+    registerStyle13("32aba35fe1", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._19ce0419607e1896__stack{display:flex}}}");
   }
-  var wp_compat_overlay_slot_default = { "slot": "_11fc52b637ff8a7e__slot" };
-  var WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
-  function resolveOwnerDocument() {
-    return typeof document === "undefined" ? null : document;
-  }
-  function isInWordPressEnvironment() {
-    let topWp;
-    try {
-      topWp = window.top?.wp;
-    } catch {
-    }
-    const wp = topWp ?? window.wp;
-    return typeof wp?.components === "object" && wp.components !== null;
-  }
-  var cachedSlot = null;
-  function ensureSlotIsAccessible(element) {
-    element.setAttribute("aria-hidden", "false");
+  var style_default13 = { "stack": "_19ce0419607e1896__stack" };
+  var gapTokens = {
+    xs: "var(--wpds-dimension-gap-xs, 4px)",
+    sm: "var(--wpds-dimension-gap-sm, 8px)",
+    md: "var(--wpds-dimension-gap-md, 12px)",
+    lg: "var(--wpds-dimension-gap-lg, 16px)",
+    xl: "var(--wpds-dimension-gap-xl, 24px)",
+    "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
+    "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
+  };
+  var Stack = (0, import_element39.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render5, ...props }, ref) {
+    const style = {
+      gap: gap && gapTokens[gap],
+      alignItems: align,
+      justifyContent: justify,
+      flexDirection: direction,
+      flexWrap: wrap
+    };
+    const element = useRender({
+      render: render5,
+      ref,
+      props: mergeProps(props, { style, className: style_default13.stack })
+    });
     return element;
-  }
-  function createSlot(ownerDocument2) {
-    const element = ownerDocument2.createElement("div");
-    element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
-    if (wp_compat_overlay_slot_default.slot) {
-      element.classList.add(wp_compat_overlay_slot_default.slot);
-    }
-    ownerDocument2.body.appendChild(element);
-    return element;
-  }
-  function getWpCompatOverlaySlot() {
-    if (typeof window === "undefined") {
-      return void 0;
-    }
-    if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) {
-      return void 0;
-    }
-    const ownerDocument2 = resolveOwnerDocument();
-    if (!ownerDocument2 || !ownerDocument2.body) {
-      return void 0;
-    }
-    if (cachedSlot && cachedSlot.ownerDocument === ownerDocument2 && cachedSlot.isConnected) {
-      return ensureSlotIsAccessible(cachedSlot);
-    }
-    const existing = ownerDocument2.querySelector(
-      `[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`
-    );
-    if (existing instanceof HTMLDivElement) {
-      cachedSlot = ensureSlotIsAccessible(existing);
-      return cachedSlot;
-    }
-    if (cachedSlot?.isConnected) {
-      cachedSlot.remove();
-    }
-    cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument2));
-    return cachedSlot;
-  }
+  });
+
+  // packages/ui/build-module/icon-button/icon-button.mjs
+  var import_element46 = __toESM(require_element(), 1);
+
+  // packages/ui/build-module/tooltip/index.mjs
+  var tooltip_exports = {};
+  __export(tooltip_exports, {
+    Popup: () => Popup,
+    Portal: () => Portal,
+    Positioner: () => Positioner,
+    Provider: () => Provider,
+    Root: () => Root5,
+    Trigger: () => Trigger2
+  });
+
+  // packages/ui/build-module/tooltip/popup.mjs
+  var import_element42 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/tooltip/portal.mjs
-  var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
-  var Portal = (0, import_element40.forwardRef)(
-    function TooltipPortal3({ container, ...restProps }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
-        index_parts_exports4.Portal,
-        {
-          container: container ?? getWpCompatOverlaySlot(),
-          ...restProps,
-          ref
-        }
-      );
-    }
-  );
+  var import_element40 = __toESM(require_element(), 1);
 
-  // packages/ui/build-module/tooltip/positioner.mjs
-  var import_element41 = __toESM(require_element(), 1);
-  var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
   var STYLE_HASH_ATTRIBUTE14 = "data-wp-hash";
   function getRuntime14() {
     const globalScope = globalThis;
@@ -29316,35 +29301,82 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle14("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+    registerStyle14("be37f31c1e", "._11fc52b637ff8a7e__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._11fc52b637ff8a7e__slot>*{pointer-events:auto}}}");
   }
-  var resets_default4 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-  if (typeof process === "undefined" || true) {
-    registerStyle14("19fcc06039", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
+  var wp_compat_overlay_slot_default = { "slot": "_11fc52b637ff8a7e__slot" };
+  var WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
+  function resolveOwnerDocument() {
+    return typeof document === "undefined" ? null : document;
   }
-  var style_default13 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
-  var Positioner = (0, import_element41.forwardRef)(
-    function TooltipPositioner3({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
-        index_parts_exports4.Positioner,
+  function isInWordPressEnvironment() {
+    let topWp;
+    try {
+      topWp = window.top?.wp;
+    } catch {
+    }
+    const wp = topWp ?? window.wp;
+    return typeof wp?.components === "object" && wp.components !== null;
+  }
+  var cachedSlot = null;
+  function ensureSlotIsAccessible(element) {
+    element.setAttribute("aria-hidden", "false");
+    return element;
+  }
+  function createSlot(ownerDocument2) {
+    const element = ownerDocument2.createElement("div");
+    element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
+    if (wp_compat_overlay_slot_default.slot) {
+      element.classList.add(wp_compat_overlay_slot_default.slot);
+    }
+    ownerDocument2.body.appendChild(element);
+    return element;
+  }
+  function getWpCompatOverlaySlot() {
+    if (typeof window === "undefined") {
+      return void 0;
+    }
+    if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) {
+      return void 0;
+    }
+    const ownerDocument2 = resolveOwnerDocument();
+    if (!ownerDocument2 || !ownerDocument2.body) {
+      return void 0;
+    }
+    if (cachedSlot && cachedSlot.ownerDocument === ownerDocument2 && cachedSlot.isConnected) {
+      return ensureSlotIsAccessible(cachedSlot);
+    }
+    const existing = ownerDocument2.querySelector(
+      `[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`
+    );
+    if (existing instanceof HTMLDivElement) {
+      cachedSlot = ensureSlotIsAccessible(existing);
+      return cachedSlot;
+    }
+    if (cachedSlot?.isConnected) {
+      cachedSlot.remove();
+    }
+    cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument2));
+    return cachedSlot;
+  }
+
+  // packages/ui/build-module/tooltip/portal.mjs
+  var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
+  var Portal = (0, import_element40.forwardRef)(
+    function TooltipPortal3({ container, ...restProps }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+        index_parts_exports4.Portal,
         {
-          ref,
-          align,
-          side,
-          sideOffset,
-          ...props,
-          className: clsx_default(
-            resets_default4["box-sizing"],
-            style_default13.positioner,
-            className
-          )
+          container: container ?? getWpCompatOverlaySlot(),
+          ...restProps,
+          ref
         }
       );
     }
   );
 
-  // packages/ui/build-module/tooltip/popup.mjs
-  var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/tooltip/positioner.mjs
+  var import_element41 = __toESM(require_element(), 1);
+  var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
   function getRuntime15() {
     const globalScope = globalThis;
@@ -29426,62 +29458,35 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
+    registerStyle15("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+  }
+  var resets_default4 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+  if (typeof process === "undefined" || true) {
     registerStyle15("19fcc06039", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
   }
   var style_default14 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
-  var POPUP_COLOR = { background: "#1e1e1e" };
-  var Popup = (0, import_element42.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
-      index_parts_exports4.Popup,
-      {
-        ref,
-        className: clsx_default(style_default14.popup, className),
-        ...props,
-        children
-      }
-    ) });
-    const positionedPopup = renderSlotWithChildren(
-      positioner,
-      /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(Positioner, {}),
-      popupContent
-    );
-    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(Portal, {}), positionedPopup);
-  });
-
-  // packages/ui/build-module/tooltip/trigger.mjs
-  var import_element43 = __toESM(require_element(), 1);
-  var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
-  var Trigger2 = (0, import_element43.forwardRef)(
-    function TooltipTrigger3(props, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(index_parts_exports4.Trigger, { ref, ...props });
+  var Positioner = (0, import_element41.forwardRef)(
+    function TooltipPositioner3({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+        index_parts_exports4.Positioner,
+        {
+          ref,
+          align,
+          side,
+          sideOffset,
+          ...props,
+          className: clsx_default(
+            resets_default4["box-sizing"],
+            style_default14.positioner,
+            className
+          )
+        }
+      );
     }
   );
 
-  // packages/ui/build-module/utils/direction-provider.mjs
-  var import_i18n13 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
-  function DirectionProvider3({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(DirectionProvider, { direction: (0, import_i18n13.isRTL)() ? "rtl" : "ltr", children });
-  }
-
-  // packages/ui/build-module/tooltip/root.mjs
-  var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
-  function Root5(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(index_parts_exports4.Root, { ...props }) });
-  }
-
-  // packages/ui/build-module/tooltip/provider.mjs
-  var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
-  function Provider({ ...props }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(index_parts_exports4.Provider, { ...props });
-  }
-
-  // packages/ui/build-module/utils/keyboard-shortcut.mjs
-  var import_element45 = __toESM(require_element(), 1);
-  var import_i18n14 = __toESM(require_i18n(), 1);
-
-  // packages/ui/build-module/visually-hidden/visually-hidden.mjs
-  var import_element44 = __toESM(require_element(), 1);
+  // packages/ui/build-module/tooltip/popup.mjs
+  var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
   function getRuntime16() {
     const globalScope = globalThis;
@@ -29563,66 +29568,62 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle16("fa606a57ae", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f37b9e2e191ebd66__visually-hidden{word-wrap:normal;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal}}}");
+    registerStyle16("19fcc06039", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
   }
-  var style_default15 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
-  var VisuallyHidden = (0, import_element44.forwardRef)(
-    function VisuallyHidden2({ render: render5, ...restProps }, ref) {
-      const element = useRender({
-        render: render5,
+  var style_default15 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
+  var POPUP_COLOR = { background: "#1e1e1e" };
+  var Popup = (0, import_element42.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
+    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+      index_parts_exports4.Popup,
+      {
         ref,
-        props: mergeProps(
-          { className: style_default15["visually-hidden"] },
-          restProps,
-          {
-            // @ts-expect-error Arbitrary data-* attributes aren't indexable on the typed div props. Kept hardcoded so consumers can't change or remove it.
-            "data-visually-hidden": ""
-          }
-        )
-      });
-      return element;
+        className: clsx_default(style_default15.popup, className),
+        ...props,
+        children
+      }
+    ) });
+    const positionedPopup = renderSlotWithChildren(
+      positioner,
+      /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(Positioner, {}),
+      popupContent
+    );
+    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(Portal, {}), positionedPopup);
+  });
+
+  // packages/ui/build-module/tooltip/trigger.mjs
+  var import_element43 = __toESM(require_element(), 1);
+  var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
+  var Trigger2 = (0, import_element43.forwardRef)(
+    function TooltipTrigger3(props, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(index_parts_exports4.Trigger, { ref, ...props });
     }
   );
 
-  // packages/ui/build-module/utils/keyboard-shortcut.mjs
-  var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
-  function useKeyboardShortcutProps({
-    "aria-describedby": ariaDescribedBy,
-    "aria-keyshortcuts": ariaKeyShortcuts,
-    shortcut
-  }) {
-    const generatedDescriptionId = (0, import_element45.useId)();
-    const descriptionId = shortcut ? generatedDescriptionId : void 0;
-    const describedBy = [ariaDescribedBy, descriptionId].filter(Boolean).join(" ");
-    return {
-      descriptionId,
-      targetProps: {
-        "aria-describedby": describedBy || void 0,
-        "aria-keyshortcuts": shortcut?.ariaKeyShortcut ?? ariaKeyShortcuts
-      }
-    };
+  // packages/ui/build-module/utils/direction-provider.mjs
+  var import_i18n13 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
+  function DirectionProvider3({ children }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(DirectionProvider, { direction: (0, import_i18n13.isRTL)() ? "rtl" : "ltr", children });
   }
-  var KeyboardShortcutDescription = (0, import_element45.forwardRef)(function KeyboardShortcutDescription2({ descriptionId, shortcut }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
-      VisuallyHidden,
-      {
-        id: descriptionId,
-        "aria-hidden": "true",
-        render: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("span", { ref }),
-        children: (0, import_i18n14.sprintf)(
-          /* translators: %s: keyboard shortcut. */
-          (0, import_i18n14.__)("Keyboard shortcut: %s"),
-          shortcut.label ?? shortcut.ariaKeyShortcut
-        )
-      }
-    );
-  });
-  var KeyboardShortcutDisplay = (0, import_element45.forwardRef)(function KeyboardShortcutDisplay2({ className, shortcut }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
-  });
 
-  // packages/ui/build-module/icon-button/icon-button.mjs
-  var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/tooltip/root.mjs
+  var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
+  function Root5(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(index_parts_exports4.Root, { ...props }) });
+  }
+
+  // packages/ui/build-module/tooltip/provider.mjs
+  var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
+  function Provider({ ...props }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(index_parts_exports4.Provider, { ...props });
+  }
+
+  // packages/ui/build-module/utils/keyboard-shortcut.mjs
+  var import_element45 = __toESM(require_element(), 1);
+  var import_i18n14 = __toESM(require_i18n(), 1);
+
+  // packages/ui/build-module/visually-hidden/visually-hidden.mjs
+  var import_element44 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
   function getRuntime17() {
     const globalScope = globalThis;
@@ -29704,109 +29705,66 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle17("c5cdafb1bc", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._28cfdc260e755391__icon-button{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}.f1c70d719989a85a__icon{margin:-1px}}}");
+    registerStyle17("fa606a57ae", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f37b9e2e191ebd66__visually-hidden{word-wrap:normal;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal}}}");
   }
-  var style_default16 = { "icon-button": "_28cfdc260e755391__icon-button", "icon": "f1c70d719989a85a__icon" };
-  var IconButton = (0, import_element46.forwardRef)(
-    function IconButton2({
-      label,
-      className,
-      // Prevent accidental forwarding of `children`
-      children: _children,
-      disabled: disabled2,
-      focusableWhenDisabled = true,
-      icon,
-      size: size4,
-      shortcut,
-      positioner,
-      "aria-describedby": ariaDescribedBy,
-      "aria-keyshortcuts": ariaKeyShortcuts,
-      ...restProps
-    }, ref) {
-      const classes = clsx_default(style_default16["icon-button"], className);
-      const { descriptionId, targetProps } = useKeyboardShortcutProps({
-        "aria-describedby": ariaDescribedBy,
-        "aria-keyshortcuts": ariaKeyShortcuts,
-        shortcut
-      });
-      return /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(Root5, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(
-          Trigger2,
+  var style_default16 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
+  var VisuallyHidden = (0, import_element44.forwardRef)(
+    function VisuallyHidden2({ render: render5, ...restProps }, ref) {
+      const element = useRender({
+        render: render5,
+        ref,
+        props: mergeProps(
+          { className: style_default16["visually-hidden"] },
+          restProps,
           {
-            ref,
-            ...targetProps,
-            disabled: disabled2 && !focusableWhenDisabled,
-            render: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
-              Button5,
-              {
-                ...restProps,
-                size: size4,
-                "aria-label": label,
-                disabled: disabled2,
-                focusableWhenDisabled
-              }
-            ),
-            className: classes,
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(Icon, { icon, size: 24, className: style_default16.icon }),
-              shortcut && descriptionId && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
-                KeyboardShortcutDescription,
-                {
-                  descriptionId,
-                  shortcut
-                }
-              )
-            ]
+            // @ts-expect-error Arbitrary data-* attributes aren't indexable on the typed div props. Kept hardcoded so consumers can't change or remove it.
+            "data-visually-hidden": ""
           }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(Popup, { positioner, children: [
-          label,
-          shortcut && /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(import_jsx_runtime145.Fragment, { children: [
-            " ",
-            /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(KeyboardShortcutDisplay, { shortcut })
-          ] })
-        ] })
-      ] });
+        )
+      });
+      return element;
     }
   );
 
-  // packages/ui/build-module/utils/use-schedule-validation.mjs
-  var import_element47 = __toESM(require_element(), 1);
-  function useScheduleValidation(validate) {
-    const validateRef = (0, import_element47.useRef)(validate);
-    validateRef.current = validate;
-    const timerRef = (0, import_element47.useRef)(null);
-    const unmountedRef = (0, import_element47.useRef)(false);
-    const scheduleValidation = (0, import_element47.useCallback)(() => {
-      if (unmountedRef.current) {
-        return;
+  // packages/ui/build-module/utils/keyboard-shortcut.mjs
+  var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
+  function useKeyboardShortcutProps({
+    "aria-describedby": ariaDescribedBy,
+    "aria-keyshortcuts": ariaKeyShortcuts,
+    shortcut
+  }) {
+    const generatedDescriptionId = (0, import_element45.useId)();
+    const descriptionId = shortcut ? generatedDescriptionId : void 0;
+    const describedBy = [ariaDescribedBy, descriptionId].filter(Boolean).join(" ");
+    return {
+      descriptionId,
+      targetProps: {
+        "aria-describedby": describedBy || void 0,
+        "aria-keyshortcuts": shortcut?.ariaKeyShortcut ?? ariaKeyShortcuts
       }
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-      timerRef.current = setTimeout(() => {
-        validateRef.current();
-        timerRef.current = null;
-      }, 0);
-    }, []);
-    (0, import_element47.useEffect)(() => {
-      unmountedRef.current = false;
-      return () => {
-        unmountedRef.current = true;
-        if (timerRef.current) {
-          clearTimeout(timerRef.current);
-        }
-      };
-    }, []);
-    return scheduleValidation;
+    };
   }
+  var KeyboardShortcutDescription = (0, import_element45.forwardRef)(function KeyboardShortcutDescription2({ descriptionId, shortcut }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      VisuallyHidden,
+      {
+        id: descriptionId,
+        "aria-hidden": "true",
+        render: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("span", { ref }),
+        children: (0, import_i18n14.sprintf)(
+          /* translators: %s: keyboard shortcut. */
+          (0, import_i18n14.__)("Keyboard shortcut: %s"),
+          shortcut.label ?? shortcut.ariaKeyShortcut
+        )
+      }
+    );
+  });
+  var KeyboardShortcutDisplay = (0, import_element45.forwardRef)(function KeyboardShortcutDisplay2({ className, shortcut }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
+  });
 
-  // packages/ui/build-module/form/primitives/input/input.mjs
-  var import_element50 = __toESM(require_element(), 1);
-
-  // packages/ui/build-module/form/primitives/input-layout/input-layout.mjs
-  var import_element48 = __toESM(require_element(), 1);
-  var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/icon-button/icon-button.mjs
+  var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
   function getRuntime18() {
     const globalScope = globalThis;
@@ -29888,69 +29846,109 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle18("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+    registerStyle18("c5cdafb1bc", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._28cfdc260e755391__icon-button{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}.f1c70d719989a85a__icon{margin:-1px}}}");
   }
-  var global_css_defense_default5 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
-  if (typeof process === "undefined" || true) {
-    registerStyle18("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-  }
-  var resets_default5 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-  if (typeof process === "undefined" || true) {
-    registerStyle18("4767ce195b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cb2baafdc08746bb__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:max(var(--wpds-typography-font-size-md,13px),16px);height:var(--wpds-dimension-size-lg,40px);line-height:1;@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}&._0c807a84cbb94e0c__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&._0c807a84cbb94e0c__is-size-compact,&.ed67cda122dc1e7b__is-size-small{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.ed67cda122dc1e7b__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._6fb7104732387680__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&._8097270636ca6100__is-borderless{border-color:transparent}&:has(._0d7afad74a057888__input-layout-slot:focus-within){outline:none}&:hover:not(._6fb7104732387680__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._8097270636ca6100__is-borderless){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}.c192b41a12b4387b__slot-wrapper{display:contents}._0d7afad74a057888__input-layout-slot{align-items:center;display:flex;&._0c952682762ca288__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}');
-  }
-  var style_default17 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
-  var InputLayout = (0, import_element48.forwardRef)(
-    function InputLayout2({
+  var style_default17 = { "icon-button": "_28cfdc260e755391__icon-button", "icon": "f1c70d719989a85a__icon" };
+  var IconButton = (0, import_element46.forwardRef)(
+    function IconButton2({
+      label,
       className,
-      children,
-      visuallyDisabled,
-      size: size4 = "default",
-      isBorderless,
-      prefix: prefix2,
-      suffix,
+      // Prevent accidental forwarding of `children`
+      children: _children,
+      disabled: disabled2,
+      focusableWhenDisabled = true,
+      icon,
+      size: size4,
+      shortcut,
+      positioner,
+      "aria-describedby": ariaDescribedBy,
+      "aria-keyshortcuts": ariaKeyShortcuts,
       ...restProps
     }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(
-        "div",
-        {
-          ref,
-          className: clsx_default(
-            global_css_defense_default5.div,
-            resets_default5["box-sizing"],
-            style_default17["input-layout"],
-            style_default17[`is-size-${size4}`],
-            visuallyDisabled && style_default17["is-disabled"],
-            isBorderless && style_default17["is-borderless"],
-            className
-          ),
-          ...restProps,
-          children: [
-            import_element48.Children.count(prefix2) > 0 && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
-              "div",
+      const classes = clsx_default(style_default17["icon-button"], className);
+      const { descriptionId, targetProps } = useKeyboardShortcutProps({
+        "aria-describedby": ariaDescribedBy,
+        "aria-keyshortcuts": ariaKeyShortcuts,
+        shortcut
+      });
+      return /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(Root5, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(
+          Trigger2,
+          {
+            ref,
+            ...targetProps,
+            disabled: disabled2 && !focusableWhenDisabled,
+            render: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
+              Button5,
               {
-                className: style_default17["slot-wrapper"],
-                "data-slot-type": "prefix",
-                children: prefix2
+                ...restProps,
+                size: size4,
+                "aria-label": label,
+                disabled: disabled2,
+                focusableWhenDisabled
               }
             ),
-            children,
-            import_element48.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
-              "div",
-              {
-                className: style_default17["slot-wrapper"],
-                "data-slot-type": "suffix",
-                children: suffix
-              }
-            )
-          ]
-        }
-      );
+            className: classes,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(Icon, { icon, size: 24, className: style_default17.icon }),
+              shortcut && descriptionId && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
+                KeyboardShortcutDescription,
+                {
+                  descriptionId,
+                  shortcut
+                }
+              )
+            ]
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(Popup, { positioner, children: [
+          label,
+          shortcut && /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(import_jsx_runtime145.Fragment, { children: [
+            " ",
+            /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(KeyboardShortcutDisplay, { shortcut })
+          ] })
+        ] })
+      ] });
     }
   );
 
-  // packages/ui/build-module/form/primitives/input-layout/slot.mjs
-  var import_element49 = __toESM(require_element(), 1);
-  var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/utils/use-schedule-validation.mjs
+  var import_element47 = __toESM(require_element(), 1);
+  function useScheduleValidation(validate) {
+    const validateRef = (0, import_element47.useRef)(validate);
+    validateRef.current = validate;
+    const timerRef = (0, import_element47.useRef)(null);
+    const unmountedRef = (0, import_element47.useRef)(false);
+    const scheduleValidation = (0, import_element47.useCallback)(() => {
+      if (unmountedRef.current) {
+        return;
+      }
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+      timerRef.current = setTimeout(() => {
+        validateRef.current();
+        timerRef.current = null;
+      }, 0);
+    }, []);
+    (0, import_element47.useEffect)(() => {
+      unmountedRef.current = false;
+      return () => {
+        unmountedRef.current = true;
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+        }
+      };
+    }, []);
+    return scheduleValidation;
+  }
+
+  // packages/ui/build-module/form/primitives/input/input.mjs
+  var import_element50 = __toESM(require_element(), 1);
+
+  // packages/ui/build-module/form/primitives/input-layout/input-layout.mjs
+  var import_element48 = __toESM(require_element(), 1);
+  var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
   function getRuntime19() {
     const globalScope = globalThis;
@@ -30032,32 +30030,69 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
+    registerStyle19("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+  }
+  var global_css_defense_default5 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+  if (typeof process === "undefined" || true) {
+    registerStyle19("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+  }
+  var resets_default5 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+  if (typeof process === "undefined" || true) {
     registerStyle19("4767ce195b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cb2baafdc08746bb__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:max(var(--wpds-typography-font-size-md,13px),16px);height:var(--wpds-dimension-size-lg,40px);line-height:1;@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}&._0c807a84cbb94e0c__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&._0c807a84cbb94e0c__is-size-compact,&.ed67cda122dc1e7b__is-size-small{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.ed67cda122dc1e7b__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._6fb7104732387680__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&._8097270636ca6100__is-borderless{border-color:transparent}&:has(._0d7afad74a057888__input-layout-slot:focus-within){outline:none}&:hover:not(._6fb7104732387680__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._8097270636ca6100__is-borderless){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}.c192b41a12b4387b__slot-wrapper{display:contents}._0d7afad74a057888__input-layout-slot{align-items:center;display:flex;&._0c952682762ca288__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}');
   }
   var style_default18 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
-  var InputLayoutSlot = (0, import_element49.forwardRef)(function InputLayoutSlot2({ padding = "default", className, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
-      "div",
-      {
-        ref,
-        className: clsx_default(
-          style_default18["input-layout-slot"],
-          style_default18[`is-padding-${padding}`],
-          className
-        ),
-        ...restProps
-      }
-    );
-  });
-  InputLayoutSlot.displayName = "InputLayout.Slot";
+  var InputLayout = (0, import_element48.forwardRef)(
+    function InputLayout2({
+      className,
+      children,
+      visuallyDisabled,
+      size: size4 = "default",
+      isBorderless,
+      prefix: prefix2,
+      suffix,
+      ...restProps
+    }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(
+        "div",
+        {
+          ref,
+          className: clsx_default(
+            global_css_defense_default5.div,
+            resets_default5["box-sizing"],
+            style_default18["input-layout"],
+            style_default18[`is-size-${size4}`],
+            visuallyDisabled && style_default18["is-disabled"],
+            isBorderless && style_default18["is-borderless"],
+            className
+          ),
+          ...restProps,
+          children: [
+            import_element48.Children.count(prefix2) > 0 && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
+              "div",
+              {
+                className: style_default18["slot-wrapper"],
+                "data-slot-type": "prefix",
+                children: prefix2
+              }
+            ),
+            children,
+            import_element48.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
+              "div",
+              {
+                className: style_default18["slot-wrapper"],
+                "data-slot-type": "suffix",
+                children: suffix
+              }
+            )
+          ]
+        }
+      );
+    }
+  );
 
-  // packages/ui/build-module/form/primitives/input-layout/index.mjs
-  var InputLayout3 = Object.assign(InputLayout, {
-    Slot: InputLayoutSlot
-  });
-
-  // packages/ui/build-module/form/primitives/input/input.mjs
-  var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/form/primitives/input-layout/slot.mjs
+  var import_element49 = __toESM(require_element(), 1);
+  var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
   function getRuntime20() {
     const globalScope = globalThis;
@@ -30139,49 +30174,32 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle20("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+    registerStyle20("4767ce195b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cb2baafdc08746bb__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:max(var(--wpds-typography-font-size-md,13px),16px);height:var(--wpds-dimension-size-lg,40px);line-height:1;@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}&._0c807a84cbb94e0c__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&._0c807a84cbb94e0c__is-size-compact,&.ed67cda122dc1e7b__is-size-small{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.ed67cda122dc1e7b__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._6fb7104732387680__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&._8097270636ca6100__is-borderless{border-color:transparent}&:has(._0d7afad74a057888__input-layout-slot:focus-within){outline:none}&:hover:not(._6fb7104732387680__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._8097270636ca6100__is-borderless){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}.c192b41a12b4387b__slot-wrapper{display:contents}._0d7afad74a057888__input-layout-slot{align-items:center;display:flex;&._0c952682762ca288__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}');
   }
-  var global_css_defense_default6 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
-  if (typeof process === "undefined" || true) {
-    registerStyle20("96553466c8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-  }
-  var focus_module_default4 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
-  if (typeof process === "undefined" || true) {
-    registerStyle20("41fce05ee0", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._2ae7be2fc1bb17a3__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&:disabled,&[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}}");
-  }
-  var style_default19 = { "input": "_2ae7be2fc1bb17a3__input" };
-  var Input3 = (0, import_element50.forwardRef)(function Input22({ className, size: size4 = "default", prefix: prefix2, suffix, style, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
-      InputLayout3,
+  var style_default19 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
+  var InputLayoutSlot = (0, import_element49.forwardRef)(function InputLayoutSlot2({ padding = "default", className, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+      "div",
       {
+        ref,
         className: clsx_default(
-          focus_module_default4["outset-ring--focus-within"],
+          style_default19["input-layout-slot"],
+          style_default19[`is-padding-${padding}`],
           className
         ),
-        style,
-        size: size4,
-        visuallyDisabled: restProps.disabled,
-        prefix: prefix2,
-        suffix,
-        children: /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
-          Input,
-          {
-            ref,
-            className: clsx_default(global_css_defense_default6.input, style_default19.input),
-            ...restProps
-          }
-        )
+        ...restProps
       }
     );
   });
+  InputLayoutSlot.displayName = "InputLayout.Slot";
 
-  // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
-  var import_i18n15 = __toESM(require_i18n(), 1);
-  var import_element52 = __toESM(require_element(), 1);
+  // packages/ui/build-module/form/primitives/input-layout/index.mjs
+  var InputLayout3 = Object.assign(InputLayout, {
+    Slot: InputLayoutSlot
+  });
 
-  // packages/ui/build-module/spinner/spinner.mjs
-  var import_element51 = __toESM(require_element(), 1);
-  var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/form/primitives/input/input.mjs
+  var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE21 = "data-wp-hash";
   function getRuntime21() {
     const globalScope = globalThis;
@@ -30263,48 +30281,49 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle21("bbbecfe373", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.ab4d64c07c0ba587__spinner{background-color:transparent;display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}.a7654e10245bb7d2__indicator,.dc51f80c84b35fe2__track{fill:transparent;stroke-width:1.5px}.dc51f80c84b35fe2__track{stroke:var(--wpds-color-background-track-neutral,#dbdbdb)}.a7654e10245bb7d2__indicator{stroke:var(--wpds-color-background-thumb-brand,var(--wp-admin-theme-color,#3858e9));stroke-linecap:round;animation:_02322d973909703c__spinner-spin 1.4s linear infinite both;transform-origin:50% 50%}@keyframes _02322d973909703c__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
+    registerStyle21("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
   }
-  var style_default20 = { "spinner": "ab4d64c07c0ba587__spinner", "track": "dc51f80c84b35fe2__track", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
-  var Spinner = (0, import_element51.forwardRef)(
-    function Spinner2({ className, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)(
-        "svg",
-        {
-          className: clsx_default(style_default20.spinner, className),
-          viewBox: "0 0 100 100",
-          xmlns: "http://www.w3.org/2000/svg",
-          role: "presentation",
-          focusable: "false",
-          ...props,
-          ref,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
-              "circle",
-              {
-                className: style_default20.track,
-                cx: "50",
-                cy: "50",
-                r: "50",
-                vectorEffect: "non-scaling-stroke"
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
-              "path",
-              {
-                className: style_default20.indicator,
-                d: "m 50 0 a 50 50 0 0 1 50 50",
-                vectorEffect: "non-scaling-stroke"
-              }
-            )
-          ]
-        }
-      );
-    }
-  );
+  var global_css_defense_default6 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+  if (typeof process === "undefined" || true) {
+    registerStyle21("96553466c8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+  }
+  var focus_module_default4 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
+  if (typeof process === "undefined" || true) {
+    registerStyle21("41fce05ee0", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._2ae7be2fc1bb17a3__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&:disabled,&[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}}");
+  }
+  var style_default20 = { "input": "_2ae7be2fc1bb17a3__input" };
+  var Input3 = (0, import_element50.forwardRef)(function Input22({ className, size: size4 = "default", prefix: prefix2, suffix, style, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
+      InputLayout3,
+      {
+        className: clsx_default(
+          focus_module_default4["outset-ring--focus-within"],
+          className
+        ),
+        style,
+        size: size4,
+        visuallyDisabled: restProps.disabled,
+        prefix: prefix2,
+        suffix,
+        children: /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
+          Input,
+          {
+            ref,
+            className: clsx_default(global_css_defense_default6.input, style_default20.input),
+            ...restProps
+          }
+        )
+      }
+    );
+  });
 
-  // packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
-  var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
+  var import_i18n15 = __toESM(require_i18n(), 1);
+  var import_element52 = __toESM(require_element(), 1);
+
+  // packages/ui/build-module/spinner/spinner.mjs
+  var import_element51 = __toESM(require_element(), 1);
+  var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
   function getRuntime22() {
     const globalScope = globalThis;
@@ -30386,13 +30405,136 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle22("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+    registerStyle22("bbbecfe373", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.ab4d64c07c0ba587__spinner{background-color:transparent;display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}.a7654e10245bb7d2__indicator,.dc51f80c84b35fe2__track{fill:transparent;stroke-width:1.5px}.dc51f80c84b35fe2__track{stroke:var(--wpds-color-background-track-neutral,#dbdbdb)}.a7654e10245bb7d2__indicator{stroke:var(--wpds-color-background-thumb-brand,var(--wp-admin-theme-color,#3858e9));stroke-linecap:round;animation:_02322d973909703c__spinner-spin 1.4s linear infinite both;transform-origin:50% 50%}@keyframes _02322d973909703c__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
+  }
+  var style_default21 = { "spinner": "ab4d64c07c0ba587__spinner", "track": "dc51f80c84b35fe2__track", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
+  var Spinner = (0, import_element51.forwardRef)(
+    function Spinner2({ className, ...props }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)(
+        "svg",
+        {
+          className: clsx_default(style_default21.spinner, className),
+          viewBox: "0 0 100 100",
+          xmlns: "http://www.w3.org/2000/svg",
+          role: "presentation",
+          focusable: "false",
+          ...props,
+          ref,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
+              "circle",
+              {
+                className: style_default21.track,
+                cx: "50",
+                cy: "50",
+                r: "50",
+                vectorEffect: "non-scaling-stroke"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
+              "path",
+              {
+                className: style_default21.indicator,
+                d: "m 50 0 a 50 50 0 0 1 50 50",
+                vectorEffect: "non-scaling-stroke"
+              }
+            )
+          ]
+        }
+      );
+    }
+  );
+
+  // packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
+  var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
+  function getRuntime23() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument23(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash23(targetDocument, hash) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE23}]`
+    )) {
+      if (style.getAttribute(STYLE_HASH_ATTRIBUTE23) === hash) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle23(targetDocument, hash, css) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime23();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash)) {
+      return;
+    }
+    if (documentContainsStyleHash23(targetDocument, hash)) {
+      injectedStyles.add(hash);
+      return;
+    }
+    const style = targetDocument.createElement("style");
+    style.setAttribute(STYLE_HASH_ATTRIBUTE23, hash);
+    style.appendChild(targetDocument.createTextNode(css));
+    targetDocument.head.appendChild(style);
+    injectedStyles.add(hash);
+  }
+  function registerDocument23(targetDocument) {
+    const runtime = getRuntime23();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash, css] of runtime.styles) {
+      injectStyle23(targetDocument, hash, css);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle23(hash, css) {
+    const runtime = getRuntime23();
+    runtime.styles.set(hash, css);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle23(targetDocument, hash, css);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle23("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
   }
   var global_css_defense_default7 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
   if (typeof process === "undefined" || true) {
-    registerStyle22("d7b0469ef4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7a7ac88e306348e7__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:var(--wpds-dimension-gap-sm,8px) 0 0;align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);margin-block:var(--wpds-dimension-gap-sm,8px) 0;margin-inline:0;@media not (prefers-reduced-motion){animation:_48722cc5dd090ce4__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._57a3bbbfbe38a5c6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._9e944dc198aac10b__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}.e482806667437c6a__indicator-icon{flex-shrink:0}._6e46434cc23019d2__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _48722cc5dd090ce4__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}');
+    registerStyle23("d7b0469ef4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7a7ac88e306348e7__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:var(--wpds-dimension-gap-sm,8px) 0 0;align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);margin-block:var(--wpds-dimension-gap-sm,8px) 0;margin-inline:0;@media not (prefers-reduced-motion){animation:_48722cc5dd090ce4__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._57a3bbbfbe38a5c6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._9e944dc198aac10b__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}.e482806667437c6a__indicator-icon{flex-shrink:0}._6e46434cc23019d2__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _48722cc5dd090ce4__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}');
   }
-  var style_default21 = { "indicator": "_7a7ac88e306348e7__indicator", "indicator-jump": "_48722cc5dd090ce4__indicator-jump", "is-invalid": "_57a3bbbfbe38a5c6__is-invalid", "is-valid": "_9e944dc198aac10b__is-valid", "indicator-icon": "e482806667437c6a__indicator-icon", "indicator-spinner": "_6e46434cc23019d2__indicator-spinner" };
+  var style_default22 = { "indicator": "_7a7ac88e306348e7__indicator", "indicator-jump": "_48722cc5dd090ce4__indicator-jump", "is-invalid": "_57a3bbbfbe38a5c6__is-invalid", "is-valid": "_9e944dc198aac10b__is-valid", "indicator-icon": "e482806667437c6a__indicator-icon", "indicator-spinner": "_6e46434cc23019d2__indicator-spinner" };
   var ICON = {
     valid: published_default,
     invalid: error_default
@@ -30408,14 +30550,14 @@ var wp;
         id,
         className: clsx_default(
           global_css_defense_default7.p,
-          style_default21.indicator,
-          style_default21[`is-${type}`]
+          style_default22.indicator,
+          style_default22[`is-${type}`]
         ),
         children: [
-          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(Spinner, { className: style_default21["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(
+          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(Spinner, { className: style_default22["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(
             Icon,
             {
-              className: style_default21["indicator-icon"],
+              className: style_default22["indicator-icon"],
               icon: ICON[type],
               size: 16,
               fill: "currentColor"
@@ -30646,113 +30788,6 @@ var wp;
   // packages/ui/build-module/form/primitives/field/root.mjs
   var import_element53 = __toESM(require_element(), 1);
   var import_jsx_runtime152 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
-  function getRuntime23() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument23(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash23(targetDocument, hash) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE23}]`
-    )) {
-      if (style.getAttribute(STYLE_HASH_ATTRIBUTE23) === hash) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle23(targetDocument, hash, css) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime23();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash)) {
-      return;
-    }
-    if (documentContainsStyleHash23(targetDocument, hash)) {
-      injectedStyles.add(hash);
-      return;
-    }
-    const style = targetDocument.createElement("style");
-    style.setAttribute(STYLE_HASH_ATTRIBUTE23, hash);
-    style.appendChild(targetDocument.createTextNode(css));
-    targetDocument.head.appendChild(style);
-    injectedStyles.add(hash);
-  }
-  function registerDocument23(targetDocument) {
-    const runtime = getRuntime23();
-    runtime.documents.set(
-      targetDocument,
-      (runtime.documents.get(targetDocument) ?? 0) + 1
-    );
-    for (const [hash, css] of runtime.styles) {
-      injectStyle23(targetDocument, hash, css);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle23(hash, css) {
-    const runtime = getRuntime23();
-    runtime.styles.set(hash, css);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle23(targetDocument, hash, css);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle23("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-  }
-  var resets_default6 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-  var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
-  var Root6 = (0, import_element53.forwardRef)(function Root22({ className, render: render5 = DEFAULT_RENDER, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
-      index_parts_exports2.Root,
-      {
-        ref,
-        className: clsx_default(resets_default6["box-sizing"], className),
-        render: render5,
-        ...restProps
-      }
-    );
-  });
-
-  // packages/ui/build-module/form/primitives/field/item.mjs
-  var import_element54 = __toESM(require_element(), 1);
-  var import_jsx_runtime153 = __toESM(require_jsx_runtime(), 1);
-  var Item = (0, import_element54.forwardRef)(function Item2(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(index_parts_exports2.Item, { ref, ...props });
-  });
-
-  // packages/ui/build-module/form/primitives/field/label.mjs
-  var import_element55 = __toESM(require_element(), 1);
-  var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE24 = "data-wp-hash";
   function getRuntime24() {
     const globalScope = globalThis;
@@ -30834,33 +30869,32 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle24("e08ffbfdae", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
+    registerStyle24("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
   }
-  var field_default = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
-  var Label = (0, import_element55.forwardRef)(
-    function Label2({ className, hideFromVision, variant, ...restProps }, ref) {
-      const label = /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
-        index_parts_exports2.Label,
-        {
-          ref,
-          className: clsx_default(
-            field_default.label,
-            variant && field_default[`is-${variant}`],
-            className
-          ),
-          ...restProps
-        }
-      );
-      if (hideFromVision) {
-        return /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(VisuallyHidden, { render: label });
+  var resets_default6 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+  var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
+  var Root6 = (0, import_element53.forwardRef)(function Root22({ className, render: render5 = DEFAULT_RENDER, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+      index_parts_exports2.Root,
+      {
+        ref,
+        className: clsx_default(resets_default6["box-sizing"], className),
+        render: render5,
+        ...restProps
       }
-      return label;
-    }
-  );
+    );
+  });
 
-  // packages/ui/build-module/form/primitives/field/description.mjs
-  var import_element56 = __toESM(require_element(), 1);
-  var import_jsx_runtime155 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/form/primitives/field/item.mjs
+  var import_element54 = __toESM(require_element(), 1);
+  var import_jsx_runtime153 = __toESM(require_jsx_runtime(), 1);
+  var Item = (0, import_element54.forwardRef)(function Item2(props, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(index_parts_exports2.Item, { ref, ...props });
+  });
+
+  // packages/ui/build-module/form/primitives/field/label.mjs
+  var import_element55 = __toESM(require_element(), 1);
+  var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE25 = "data-wp-hash";
   function getRuntime25() {
     const globalScope = globalThis;
@@ -30942,32 +30976,33 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle25("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
-  }
-  var global_css_defense_default8 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
-  if (typeof process === "undefined" || true) {
     registerStyle25("e08ffbfdae", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
   }
-  var field_default2 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
-  var Description = (0, import_element56.forwardRef)(function Description2({ className, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
-      index_parts_exports2.Description,
-      {
-        ref,
-        className: clsx_default(
-          global_css_defense_default8.p,
-          field_default2.description,
-          className
-        ),
-        ...restProps
+  var field_default = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
+  var Label = (0, import_element55.forwardRef)(
+    function Label2({ className, hideFromVision, variant, ...restProps }, ref) {
+      const label = /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
+        index_parts_exports2.Label,
+        {
+          ref,
+          className: clsx_default(
+            field_default.label,
+            variant && field_default[`is-${variant}`],
+            className
+          ),
+          ...restProps
+        }
+      );
+      if (hideFromVision) {
+        return /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(VisuallyHidden, { render: label });
       }
-    );
-  });
+      return label;
+    }
+  );
 
-  // packages/ui/build-module/form/primitives/field/details.mjs
-  var import_element57 = __toESM(require_element(), 1);
-  var import_i18n16 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/form/primitives/field/description.mjs
+  var import_element56 = __toESM(require_element(), 1);
+  var import_jsx_runtime155 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE26 = "data-wp-hash";
   function getRuntime26() {
     const globalScope = globalThis;
@@ -31049,78 +31084,32 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
+    registerStyle26("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+  }
+  var global_css_defense_default8 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+  if (typeof process === "undefined" || true) {
     registerStyle26("e08ffbfdae", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
   }
-  var field_default3 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
-  var Details = (0, import_element57.forwardRef)(
-    function Details2({ className, ...restProps }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime156.jsxs)(import_jsx_runtime156.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(index_parts_exports2.Description, {}), children: (0, import_i18n16.__)("More details follow the field.") }),
-        /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
-          "div",
-          {
-            ref,
-            className: clsx_default(field_default3.description, className),
-            ...restProps
-          }
-        )
-      ] });
-    }
-  );
-
-  // packages/ui/build-module/form/primitives/field/control.mjs
-  var import_element58 = __toESM(require_element(), 1);
-  var import_jsx_runtime157 = __toESM(require_jsx_runtime(), 1);
-  var Control = (0, import_element58.forwardRef)(
-    function Control2(props, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(index_parts_exports2.Control, { ref, ...props });
-    }
-  );
-
-  // packages/ui/build-module/form/input-control/input-control.mjs
-  var import_element59 = __toESM(require_element(), 1);
-  var import_jsx_runtime158 = __toESM(require_jsx_runtime(), 1);
-  var InputControl = (0, import_element59.forwardRef)(
-    function InputControl2({
-      className,
-      label,
-      description,
-      details,
-      hideLabelFromVision,
-      ...restProps
-    }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(field_exports.Root, { className, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
-        /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(Input3, { ref, ...restProps }),
-        description && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(field_exports.Description, { children: description }),
-        details && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(field_exports.Details, { children: details })
-      ] });
-    }
-  );
-
-  // packages/ui/build-module/form/with-validation/validated-input-control/validated-input-control.mjs
-  var import_element60 = __toESM(require_element(), 1);
-  var import_compose4 = __toESM(require_compose(), 1);
-  var import_jsx_runtime159 = __toESM(require_jsx_runtime(), 1);
-  var ValidatedInputControl = (0, import_element60.forwardRef)(function ValidatedInputControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
-    const validityTargetRef = (0, import_element60.useRef)(null);
-    const mergedRefs = (0, import_compose4.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
-      ControlWithError,
+  var field_default2 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
+  var Description = (0, import_element56.forwardRef)(function Description2({ className, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
+      index_parts_exports2.Description,
       {
-        required,
-        markWhenOptional,
-        customValidity,
-        getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(InputControl, { ref: mergedRefs, ...restProps })
+        ref,
+        className: clsx_default(
+          global_css_defense_default8.p,
+          field_default2.description,
+          className
+        ),
+        ...restProps
       }
     );
   });
 
-  // packages/ui/build-module/link/link.mjs
-  var import_element61 = __toESM(require_element(), 1);
-  var import_i18n17 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/form/primitives/field/details.mjs
+  var import_element57 = __toESM(require_element(), 1);
+  var import_i18n16 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE27 = "data-wp-hash";
   function getRuntime27() {
     const globalScope = globalThis;
@@ -31202,80 +31191,78 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle27("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+    registerStyle27("e08ffbfdae", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
   }
-  var resets_default7 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-  if (typeof process === "undefined" || true) {
-    registerStyle27("96553466c8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-  }
-  var focus_module_default5 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
-  if (typeof process === "undefined" || true) {
-    registerStyle27("e8e6a9be37", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d4250949359b05ce__link{text-decoration-thickness:from-font;text-underline-offset:.2em}.c6055659b8e2cd2c__is-brand,.c6055659b8e2cd2c__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}.c6055659b8e2cd2c__is-brand:active,.c6055659b8e2cd2c__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._92e0dfcaeee15b88__is-neutral,._92e0dfcaeee15b88__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._92e0dfcaeee15b88__is-neutral:active,._92e0dfcaeee15b88__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}.cf122a9bf1035d42__is-unstyled{--_gcd-a-color:inherit;color:inherit;text-decoration:none}._0cb411afac4c86c7__link-icon{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._0cb411afac4c86c7__link-icon:after{content:"\\2197"}._0cb411afac4c86c7__link-icon:dir(rtl):after{content:"\\2196"}}}');
-  }
-  var style_default22 = { "link": "d4250949359b05ce__link", "is-brand": "c6055659b8e2cd2c__is-brand", "is-neutral": "_92e0dfcaeee15b88__is-neutral", "is-unstyled": "cf122a9bf1035d42__is-unstyled", "link-icon": "_0cb411afac4c86c7__link-icon" };
-  if (typeof process === "undefined" || true) {
-    registerStyle27("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
-  }
-  var global_css_defense_default9 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
-  var Link = (0, import_element61.forwardRef)(function Link2({
-    children,
-    variant = "default",
-    tone = "brand",
-    openInNewTab = false,
-    render: render5,
-    className,
-    ...props
-  }, ref) {
-    const element = useRender({
-      render: render5,
-      defaultTagName: "a",
-      ref,
-      props: mergeProps(props, {
-        className: clsx_default(
-          global_css_defense_default9.a,
-          resets_default7["box-sizing"],
-          focus_module_default5["outset-ring--focus-except-active"],
-          variant !== "unstyled" && style_default22.link,
-          variant !== "unstyled" && style_default22[`is-${tone}`],
-          variant === "unstyled" && style_default22["is-unstyled"],
-          className
-        ),
-        target: openInNewTab ? "_blank" : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime160.jsxs)(import_jsx_runtime160.Fragment, { children: [
-          children,
-          openInNewTab && /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(
-            "span",
-            {
-              className: style_default22["link-icon"],
-              role: "img",
-              "aria-label": (
-                /* translators: accessibility text appended to link text */
-                (0, import_i18n17.__)("(opens in a new tab)")
-              )
-            }
-          )
-        ] })
-      })
-    });
-    return element;
+  var field_default3 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
+  var Details = (0, import_element57.forwardRef)(
+    function Details2({ className, ...restProps }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime156.jsxs)(import_jsx_runtime156.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(index_parts_exports2.Description, {}), children: (0, import_i18n16.__)("More details follow the field.") }),
+        /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
+          "div",
+          {
+            ref,
+            className: clsx_default(field_default3.description, className),
+            ...restProps
+          }
+        )
+      ] });
+    }
+  );
+
+  // packages/ui/build-module/form/primitives/field/control.mjs
+  var import_element58 = __toESM(require_element(), 1);
+  var import_jsx_runtime157 = __toESM(require_jsx_runtime(), 1);
+  var Control = (0, import_element58.forwardRef)(
+    function Control2(props, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(index_parts_exports2.Control, { ref, ...props });
+    }
+  );
+
+  // packages/ui/build-module/form/input-control/input-control.mjs
+  var import_element59 = __toESM(require_element(), 1);
+  var import_jsx_runtime158 = __toESM(require_jsx_runtime(), 1);
+  var InputControl = (0, import_element59.forwardRef)(
+    function InputControl2({
+      className,
+      label,
+      description,
+      details,
+      hideLabelFromVision,
+      ...restProps
+    }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime158.jsxs)(field_exports.Root, { className, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
+        /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(Input3, { ref, ...restProps }),
+        description && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(field_exports.Description, { children: description }),
+        details && /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(field_exports.Details, { children: details })
+      ] });
+    }
+  );
+
+  // packages/ui/build-module/form/with-validation/validated-input-control/validated-input-control.mjs
+  var import_element60 = __toESM(require_element(), 1);
+  var import_compose5 = __toESM(require_compose(), 1);
+  var import_jsx_runtime159 = __toESM(require_jsx_runtime(), 1);
+  var ValidatedInputControl = (0, import_element60.forwardRef)(function ValidatedInputControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
+    const validityTargetRef = (0, import_element60.useRef)(null);
+    const mergedRefs = (0, import_compose5.useMergeRefs)([forwardedRef, validityTargetRef]);
+    return /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+      ControlWithError,
+      {
+        required,
+        markWhenOptional,
+        customValidity,
+        getValidityTarget: () => validityTargetRef.current,
+        children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(InputControl, { ref: mergedRefs, ...restProps })
+      }
+    );
   });
 
-  // packages/ui/build-module/notice/index.mjs
-  var notice_exports = {};
-  __export(notice_exports, {
-    ActionButton: () => ActionButton,
-    ActionLink: () => ActionLink,
-    Actions: () => Actions,
-    CloseIcon: () => CloseIcon,
-    Description: () => Description3,
-    Root: () => Root7,
-    Title: () => Title2
-  });
-
-  // packages/ui/build-module/notice/root.mjs
-  var import_a11y2 = __toESM(require_a11y(), 1);
-  var import_element62 = __toESM(require_element(), 1);
-  var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/link/link.mjs
+  var import_element61 = __toESM(require_element(), 1);
+  var import_i18n17 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE28 = "data-wp-hash";
   function getRuntime28() {
     const globalScope = globalThis;
@@ -31359,85 +31346,78 @@ var wp;
   if (typeof process === "undefined" || true) {
     registerStyle28("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
   }
-  var resets_default8 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+  var resets_default7 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
   if (typeof process === "undefined" || true) {
-    registerStyle28("726c480820", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._1904b570a89bb815__description{text-wrap:pretty}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#a9c6e7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bc7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#926300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#94d29e);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#dab1aa);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
+    registerStyle28("96553466c8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
   }
-  var style_default23 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var icons = {
-    neutral: null,
-    info: info_default,
-    warning: caution_default,
-    success: published_default,
-    error: error_default
-  };
-  function getDefaultPoliteness(intent) {
-    return intent === "error" ? "assertive" : "polite";
+  var focus_module_default5 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
+  if (typeof process === "undefined" || true) {
+    registerStyle28("e8e6a9be37", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d4250949359b05ce__link{text-decoration-thickness:from-font;text-underline-offset:.2em}.c6055659b8e2cd2c__is-brand,.c6055659b8e2cd2c__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}.c6055659b8e2cd2c__is-brand:active,.c6055659b8e2cd2c__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._92e0dfcaeee15b88__is-neutral,._92e0dfcaeee15b88__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._92e0dfcaeee15b88__is-neutral:active,._92e0dfcaeee15b88__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}.cf122a9bf1035d42__is-unstyled{--_gcd-a-color:inherit;color:inherit;text-decoration:none}._0cb411afac4c86c7__link-icon{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._0cb411afac4c86c7__link-icon:after{content:"\\2197"}._0cb411afac4c86c7__link-icon:dir(rtl):after{content:"\\2196"}}}');
   }
-  function safeRenderToString(message2) {
-    if (!message2) {
-      return void 0;
-    }
-    if (typeof message2 === "string") {
-      return message2;
-    }
-    try {
-      return (0, import_element62.renderToString)(message2);
-    } catch {
-      return void 0;
-    }
+  var style_default23 = { "link": "d4250949359b05ce__link", "is-brand": "c6055659b8e2cd2c__is-brand", "is-neutral": "_92e0dfcaeee15b88__is-neutral", "is-unstyled": "cf122a9bf1035d42__is-unstyled", "link-icon": "_0cb411afac4c86c7__link-icon" };
+  if (typeof process === "undefined" || true) {
+    registerStyle28("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
   }
-  function useSpokenMessage(message2, politeness) {
-    const spokenMessage = safeRenderToString(message2);
-    (0, import_element62.useEffect)(() => {
-      if (spokenMessage) {
-        (0, import_a11y2.speak)(spokenMessage, politeness);
-      }
-    }, [spokenMessage, politeness]);
-  }
-  var Root7 = (0, import_element62.forwardRef)(function Notice({
-    intent = "neutral",
+  var global_css_defense_default9 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+  var Link = (0, import_element61.forwardRef)(function Link2({
     children,
-    icon,
-    spokenMessage = children,
-    politeness = getDefaultPoliteness(intent),
+    variant = "default",
+    tone = "brand",
+    openInNewTab = false,
     render: render5,
-    ...restProps
+    className,
+    ...props
   }, ref) {
-    useSpokenMessage(spokenMessage, politeness);
-    const iconElement = icon === null ? null : icon ?? icons[intent];
-    const mergedClassName = clsx_default(
-      style_default23.notice,
-      style_default23[`is-${intent}`],
-      resets_default8["box-sizing"]
-    );
     const element = useRender({
-      defaultTagName: "div",
       render: render5,
+      defaultTagName: "a",
       ref,
-      props: mergeProps(
-        {
-          className: mergedClassName,
-          children: /* @__PURE__ */ (0, import_jsx_runtime161.jsxs)(import_jsx_runtime161.Fragment, { children: [
-            children,
-            iconElement && /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
-              Icon,
-              {
-                className: style_default23.icon,
-                icon: iconElement
-              }
-            )
-          ] })
-        },
-        restProps
-      )
+      props: mergeProps(props, {
+        className: clsx_default(
+          global_css_defense_default9.a,
+          resets_default7["box-sizing"],
+          focus_module_default5["outset-ring--focus-except-active"],
+          variant !== "unstyled" && style_default23.link,
+          variant !== "unstyled" && style_default23[`is-${tone}`],
+          variant === "unstyled" && style_default23["is-unstyled"],
+          className
+        ),
+        target: openInNewTab ? "_blank" : void 0,
+        children: /* @__PURE__ */ (0, import_jsx_runtime160.jsxs)(import_jsx_runtime160.Fragment, { children: [
+          children,
+          openInNewTab && /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(
+            "span",
+            {
+              className: style_default23["link-icon"],
+              role: "img",
+              "aria-label": (
+                /* translators: accessibility text appended to link text */
+                (0, import_i18n17.__)("(opens in a new tab)")
+              )
+            }
+          )
+        ] })
+      })
     });
     return element;
   });
 
-  // packages/ui/build-module/notice/title.mjs
-  var import_element63 = __toESM(require_element(), 1);
-  var import_jsx_runtime162 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/notice/index.mjs
+  var notice_exports = {};
+  __export(notice_exports, {
+    ActionButton: () => ActionButton,
+    ActionLink: () => ActionLink,
+    Actions: () => Actions,
+    CloseIcon: () => CloseIcon,
+    Description: () => Description3,
+    Root: () => Root7,
+    Title: () => Title2
+  });
+
+  // packages/ui/build-module/notice/root.mjs
+  var import_a11y2 = __toESM(require_a11y(), 1);
+  var import_element62 = __toESM(require_element(), 1);
+  var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE29 = "data-wp-hash";
   function getRuntime29() {
     const globalScope = globalThis;
@@ -31519,26 +31499,87 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
+    registerStyle29("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+  }
+  var resets_default8 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+  if (typeof process === "undefined" || true) {
     registerStyle29("726c480820", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._1904b570a89bb815__description{text-wrap:pretty}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#a9c6e7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bc7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#926300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#94d29e);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#dab1aa);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
   }
   var style_default24 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var Title2 = (0, import_element63.forwardRef)(
-    function NoticeTitle({ className, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
-        Text,
-        {
-          ref,
-          variant: "heading-md",
-          className: clsx_default(style_default24.title, className),
-          ...props
-        }
-      );
+  var icons = {
+    neutral: null,
+    info: info_default,
+    warning: caution_default,
+    success: published_default,
+    error: error_default
+  };
+  function getDefaultPoliteness(intent) {
+    return intent === "error" ? "assertive" : "polite";
+  }
+  function safeRenderToString(message2) {
+    if (!message2) {
+      return void 0;
     }
-  );
+    if (typeof message2 === "string") {
+      return message2;
+    }
+    try {
+      return (0, import_element62.renderToString)(message2);
+    } catch {
+      return void 0;
+    }
+  }
+  function useSpokenMessage(message2, politeness) {
+    const spokenMessage = safeRenderToString(message2);
+    (0, import_element62.useEffect)(() => {
+      if (spokenMessage) {
+        (0, import_a11y2.speak)(spokenMessage, politeness);
+      }
+    }, [spokenMessage, politeness]);
+  }
+  var Root7 = (0, import_element62.forwardRef)(function Notice({
+    intent = "neutral",
+    children,
+    icon,
+    spokenMessage = children,
+    politeness = getDefaultPoliteness(intent),
+    render: render5,
+    ...restProps
+  }, ref) {
+    useSpokenMessage(spokenMessage, politeness);
+    const iconElement = icon === null ? null : icon ?? icons[intent];
+    const mergedClassName = clsx_default(
+      style_default24.notice,
+      style_default24[`is-${intent}`],
+      resets_default8["box-sizing"]
+    );
+    const element = useRender({
+      defaultTagName: "div",
+      render: render5,
+      ref,
+      props: mergeProps(
+        {
+          className: mergedClassName,
+          children: /* @__PURE__ */ (0, import_jsx_runtime161.jsxs)(import_jsx_runtime161.Fragment, { children: [
+            children,
+            iconElement && /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
+              Icon,
+              {
+                className: style_default24.icon,
+                icon: iconElement
+              }
+            )
+          ] })
+        },
+        restProps
+      )
+    });
+    return element;
+  });
 
-  // packages/ui/build-module/notice/description.mjs
-  var import_element64 = __toESM(require_element(), 1);
-  var import_jsx_runtime163 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/notice/title.mjs
+  var import_element63 = __toESM(require_element(), 1);
+  var import_jsx_runtime162 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE30 = "data-wp-hash";
   function getRuntime30() {
     const globalScope = globalThis;
@@ -31623,22 +31664,23 @@ var wp;
     registerStyle30("726c480820", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._1904b570a89bb815__description{text-wrap:pretty}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#a9c6e7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bc7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#926300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#94d29e);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#dab1aa);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
   }
   var style_default25 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var Description3 = (0, import_element64.forwardRef)(
-    function NoticeDescription({ className, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
+  var Title2 = (0, import_element63.forwardRef)(
+    function NoticeTitle({ className, ...props }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
         Text,
         {
           ref,
-          variant: "body-md",
-          className: clsx_default(style_default25.description, className),
+          variant: "heading-md",
+          className: clsx_default(style_default25.title, className),
           ...props
         }
       );
     }
   );
 
-  // packages/ui/build-module/notice/actions.mjs
-  var import_element65 = __toESM(require_element(), 1);
+  // packages/ui/build-module/notice/description.mjs
+  var import_element64 = __toESM(require_element(), 1);
+  var import_jsx_runtime163 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE31 = "data-wp-hash";
   function getRuntime31() {
     const globalScope = globalThis;
@@ -31723,27 +31765,22 @@ var wp;
     registerStyle31("726c480820", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._1904b570a89bb815__description{text-wrap:pretty}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#a9c6e7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bc7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#926300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#94d29e);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#dab1aa);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
   }
   var style_default26 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var Actions = (0, import_element65.forwardRef)(
-    function NoticeActions({ render: render5, ...props }, ref) {
-      const element = useRender({
-        defaultTagName: "div",
-        render: render5,
-        ref,
-        props: mergeProps(
-          {
-            className: style_default26.actions
-          },
-          props
-        )
-      });
-      return element;
+  var Description3 = (0, import_element64.forwardRef)(
+    function NoticeDescription({ className, ...props }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
+        Text,
+        {
+          ref,
+          variant: "body-md",
+          className: clsx_default(style_default26.description, className),
+          ...props
+        }
+      );
     }
   );
 
-  // packages/ui/build-module/notice/close-icon.mjs
-  var import_element66 = __toESM(require_element(), 1);
-  var import_i18n18 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/notice/actions.mjs
+  var import_element65 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE32 = "data-wp-hash";
   function getRuntime32() {
     const globalScope = globalThis;
@@ -31828,27 +31865,27 @@ var wp;
     registerStyle32("726c480820", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._1904b570a89bb815__description{text-wrap:pretty}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#a9c6e7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bc7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#926300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#94d29e);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#dab1aa);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
   }
   var style_default27 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var CloseIcon = (0, import_element66.forwardRef)(
-    function NoticeCloseIcon({ className, icon = close_small_default, label = (0, import_i18n18.__)("Dismiss"), ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
-        IconButton,
-        {
-          ...props,
-          ref,
-          className: clsx_default(style_default27["close-icon"], className),
-          variant: "minimal",
-          size: "small",
-          tone: "neutral",
-          icon,
-          label
-        }
-      );
+  var Actions = (0, import_element65.forwardRef)(
+    function NoticeActions({ render: render5, ...props }, ref) {
+      const element = useRender({
+        defaultTagName: "div",
+        render: render5,
+        ref,
+        props: mergeProps(
+          {
+            className: style_default27.actions
+          },
+          props
+        )
+      });
+      return element;
     }
   );
 
-  // packages/ui/build-module/notice/action-button.mjs
-  var import_element67 = __toESM(require_element(), 1);
-  var import_jsx_runtime165 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/notice/close-icon.mjs
+  var import_element66 = __toESM(require_element(), 1);
+  var import_i18n18 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE33 = "data-wp-hash";
   function getRuntime33() {
     const globalScope = globalThis;
@@ -31933,31 +31970,27 @@ var wp;
     registerStyle33("726c480820", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._1904b570a89bb815__description{text-wrap:pretty}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#a9c6e7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bc7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#926300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#94d29e);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#dab1aa);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
   }
   var style_default28 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var ActionButton = (0, import_element67.forwardRef)(
-    function NoticeActionButton({ className, loading, loadingAnnouncement, variant, ...props }, ref) {
-      const loadingProps = loading !== void 0 ? { loading, loadingAnnouncement: loadingAnnouncement ?? "" } : {};
-      return /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
-        Button5,
+  var CloseIcon = (0, import_element66.forwardRef)(
+    function NoticeCloseIcon({ className, icon = close_small_default, label = (0, import_i18n18.__)("Dismiss"), ...props }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+        IconButton,
         {
           ...props,
-          ...loadingProps,
           ref,
-          size: "compact",
+          className: clsx_default(style_default28["close-icon"], className),
+          variant: "minimal",
+          size: "small",
           tone: "neutral",
-          variant,
-          className: clsx_default(
-            style_default28["action-button"],
-            style_default28[`is-action-button-${variant}`],
-            className
-          )
+          icon,
+          label
         }
       );
     }
   );
 
-  // packages/ui/build-module/notice/action-link.mjs
-  var import_element68 = __toESM(require_element(), 1);
-  var import_jsx_runtime166 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/notice/action-button.mjs
+  var import_element67 = __toESM(require_element(), 1);
+  var import_jsx_runtime165 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE34 = "data-wp-hash";
   function getRuntime34() {
     const globalScope = globalThis;
@@ -32042,23 +32075,31 @@ var wp;
     registerStyle34("726c480820", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._1904b570a89bb815__description{text-wrap:pretty}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#a9c6e7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bc7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#926300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#94d29e);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#dab1aa);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
   }
   var style_default29 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-  var ActionLink = (0, import_element68.forwardRef)(
-    function NoticeActionLink({ className, render: render5, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
-        Text,
+  var ActionButton = (0, import_element67.forwardRef)(
+    function NoticeActionButton({ className, loading, loadingAnnouncement, variant, ...props }, ref) {
+      const loadingProps = loading !== void 0 ? { loading, loadingAnnouncement: loadingAnnouncement ?? "" } : {};
+      return /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
+        Button5,
         {
-          ref,
-          className: clsx_default(style_default29["action-link"], className),
           ...props,
-          variant: "body-md",
-          render: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(Link, { tone: "neutral", variant: "default", render: render5 })
+          ...loadingProps,
+          ref,
+          size: "compact",
+          tone: "neutral",
+          variant,
+          className: clsx_default(
+            style_default29["action-button"],
+            style_default29[`is-action-button-${variant}`],
+            className
+          )
         }
       );
     }
   );
 
-  // packages/ui/build-module/skeleton/skeleton.mjs
-  var import_element69 = __toESM(require_element(), 1);
+  // packages/ui/build-module/notice/action-link.mjs
+  var import_element68 = __toESM(require_element(), 1);
+  var import_jsx_runtime166 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE35 = "data-wp-hash";
   function getRuntime35() {
     const globalScope = globalThis;
@@ -32140,48 +32181,26 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle35("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+    registerStyle35("726c480820", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._1904b570a89bb815__description{text-wrap:pretty}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#a9c6e7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bc7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#926300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#94d29e);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#dab1aa);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
   }
-  var resets_default9 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-  if (typeof process === "undefined" || true) {
-    registerStyle35("ed2c39ec90", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b20cc1690085c2f0__skeleton{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);display:block;@media (forced-colors:active){border:var(--wpds-border-width-xs,1px) solid CanvasText}}._9b143194fdb45f93__pulse{@media not (prefers-reduced-motion){animation:e2b9fe0690281bc8__skeleton-pulse 1.5s ease-in-out infinite}}@keyframes e2b9fe0690281bc8__skeleton-pulse{0%,to{opacity:1}50%{opacity:.4}}}}");
-  }
-  var style_default30 = { "skeleton": "b20cc1690085c2f0__skeleton", "pulse": "_9b143194fdb45f93__pulse", "skeleton-pulse": "e2b9fe0690281bc8__skeleton-pulse" };
-  var Skeleton = (0, import_element69.forwardRef)(
-    function Skeleton2({ render: render5, ...props }, ref) {
-      return useRender({
-        render: render5,
-        ref,
-        props: mergeProps(
-          {
-            className: clsx_default(
-              style_default30.skeleton,
-              style_default30.pulse,
-              resets_default9["box-sizing"]
-            ),
-            // Decorative by default; consumers mark the loading
-            // region with aria-busy / role="status".
-            "aria-hidden": true
-          },
-          props
-        )
-      });
+  var style_default30 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
+  var ActionLink = (0, import_element68.forwardRef)(
+    function NoticeActionLink({ className, render: render5, ...props }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
+        Text,
+        {
+          ref,
+          className: clsx_default(style_default30["action-link"], className),
+          ...props,
+          variant: "body-md",
+          render: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(Link, { tone: "neutral", variant: "default", render: render5 })
+        }
+      );
     }
   );
 
-  // packages/ui/build-module/tabs/index.mjs
-  var tabs_exports = {};
-  __export(tabs_exports, {
-    List: () => List,
-    Panel: () => Panel2,
-    Root: () => Root8,
-    Tab: () => Tab
-  });
-
-  // packages/ui/build-module/tabs/list.mjs
-  var import_element70 = __toESM(require_element(), 1);
-  var import_compose5 = __toESM(require_compose(), 1);
-  var import_jsx_runtime167 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/skeleton/skeleton.mjs
+  var import_element69 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE36 = "data-wp-hash";
   function getRuntime36() {
     const globalScope = globalThis;
@@ -32263,9 +32282,132 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle36("54ae3f4680", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7313adbc8a112e90__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&._9f2ac729c68a735a__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._9f2ac729c68a735a__is-overflowing-first._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._59228b5227f38a99__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._1c37dcfaa1ad8cda__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height,border-radius,border-block;transition-timing-function:ease-out}outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;&[data-orientation=horizontal]{background-color:var(--wpds-color-stroke-interactive-neutral-strong,#6e6e6e);bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width);z-index:1}&[data-orientation=vertical]{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-radius:var(--wpds-border-radius-sm,2px);height:var(--active-tab-height);left:50%;top:0;translate:-50% var(--active-tab-top);width:100%;z-index:0}._7313adbc8a112e90__tablist[data-select-on-move=true]:has(:focus-visible)\n			&[data-orientation=vertical]{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));box-sizing:border-box}}.a5fd8814f195aa5e__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);cursor:default;@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:hover,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&:after{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}}._59228b5227f38a99__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px)}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-sm,8px) var(--wpds-dimension-padding-md,12px)}[data-orientation=vertical][data-select-on-move=false] &:after{content:"";inset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}._5dfc77e6edd345d4__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}._4a20e969d15e5ac1__tab-chevron{flex-shrink:0;margin-inline-end:calc(var(--wpds-dimension-gap-xs, 4px)*-1);opacity:0;[data-orientation=horizontal] &{display:none}[role=tab]:is([aria-selected=true],:focus-visible,:hover) &{opacity:1}@media not (prefers-reduced-motion){[data-select-on-move=true]\n				[role=tab]:is([aria-selected=true])\n				&{transition:opacity .15s linear .15s}}&:dir(rtl){rotate:180deg}}}}');
+    registerStyle36("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
   }
-  var style_default31 = { "tablist": "_7313adbc8a112e90__tablist", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children", "tab-chevron": "_4a20e969d15e5ac1__tab-chevron" };
+  var resets_default9 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+  if (typeof process === "undefined" || true) {
+    registerStyle36("ed2c39ec90", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b20cc1690085c2f0__skeleton{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);display:block;@media (forced-colors:active){border:var(--wpds-border-width-xs,1px) solid CanvasText}}._9b143194fdb45f93__pulse{@media not (prefers-reduced-motion){animation:e2b9fe0690281bc8__skeleton-pulse 1.5s ease-in-out infinite}}@keyframes e2b9fe0690281bc8__skeleton-pulse{0%,to{opacity:1}50%{opacity:.4}}}}");
+  }
+  var style_default31 = { "skeleton": "b20cc1690085c2f0__skeleton", "pulse": "_9b143194fdb45f93__pulse", "skeleton-pulse": "e2b9fe0690281bc8__skeleton-pulse" };
+  var Skeleton = (0, import_element69.forwardRef)(
+    function Skeleton2({ render: render5, ...props }, ref) {
+      return useRender({
+        render: render5,
+        ref,
+        props: mergeProps(
+          {
+            className: clsx_default(
+              style_default31.skeleton,
+              style_default31.pulse,
+              resets_default9["box-sizing"]
+            ),
+            // Decorative by default; consumers mark the loading
+            // region with aria-busy / role="status".
+            "aria-hidden": true
+          },
+          props
+        )
+      });
+    }
+  );
+
+  // packages/ui/build-module/tabs/index.mjs
+  var tabs_exports = {};
+  __export(tabs_exports, {
+    List: () => List,
+    Panel: () => Panel2,
+    Root: () => Root8,
+    Tab: () => Tab
+  });
+
+  // packages/ui/build-module/tabs/list.mjs
+  var import_element70 = __toESM(require_element(), 1);
+  var import_compose6 = __toESM(require_compose(), 1);
+  var import_jsx_runtime167 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE37 = "data-wp-hash";
+  function getRuntime37() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument37(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash37(targetDocument, hash) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE37}]`
+    )) {
+      if (style.getAttribute(STYLE_HASH_ATTRIBUTE37) === hash) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle37(targetDocument, hash, css) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime37();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash)) {
+      return;
+    }
+    if (documentContainsStyleHash37(targetDocument, hash)) {
+      injectedStyles.add(hash);
+      return;
+    }
+    const style = targetDocument.createElement("style");
+    style.setAttribute(STYLE_HASH_ATTRIBUTE37, hash);
+    style.appendChild(targetDocument.createTextNode(css));
+    targetDocument.head.appendChild(style);
+    injectedStyles.add(hash);
+  }
+  function registerDocument37(targetDocument) {
+    const runtime = getRuntime37();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash, css] of runtime.styles) {
+      injectStyle37(targetDocument, hash, css);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle37(hash, css) {
+    const runtime = getRuntime37();
+    runtime.styles.set(hash, css);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle37(targetDocument, hash, css);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle37("54ae3f4680", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7313adbc8a112e90__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&._9f2ac729c68a735a__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._9f2ac729c68a735a__is-overflowing-first._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._59228b5227f38a99__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._1c37dcfaa1ad8cda__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height,border-radius,border-block;transition-timing-function:ease-out}outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;&[data-orientation=horizontal]{background-color:var(--wpds-color-stroke-interactive-neutral-strong,#6e6e6e);bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width);z-index:1}&[data-orientation=vertical]{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-radius:var(--wpds-border-radius-sm,2px);height:var(--active-tab-height);left:50%;top:0;translate:-50% var(--active-tab-top);width:100%;z-index:0}._7313adbc8a112e90__tablist[data-select-on-move=true]:has(:focus-visible)\n			&[data-orientation=vertical]{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));box-sizing:border-box}}.a5fd8814f195aa5e__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);cursor:default;@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:hover,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&:after{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}}._59228b5227f38a99__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px)}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-sm,8px) var(--wpds-dimension-padding-md,12px)}[data-orientation=vertical][data-select-on-move=false] &:after{content:"";inset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}._5dfc77e6edd345d4__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}._4a20e969d15e5ac1__tab-chevron{flex-shrink:0;margin-inline-end:calc(var(--wpds-dimension-gap-xs, 4px)*-1);opacity:0;[data-orientation=horizontal] &{display:none}[role=tab]:is([aria-selected=true],:focus-visible,:hover) &{opacity:1}@media not (prefers-reduced-motion){[data-select-on-move=true]\n				[role=tab]:is([aria-selected=true])\n				&{transition:opacity .15s linear .15s}}&:dir(rtl){rotate:180deg}}}}');
+  }
+  var style_default32 = { "tablist": "_7313adbc8a112e90__tablist", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children", "tab-chevron": "_4a20e969d15e5ac1__tab-chevron" };
   var SCROLL_EPSILON = 1;
   var List = (0, import_element70.forwardRef)(
     function TabList({
@@ -32341,7 +32483,7 @@ var wp;
           mutationObserver.disconnect();
         };
       }, [listEl]);
-      const mergedListRef = (0, import_compose5.useMergeRefs)([
+      const mergedListRef = (0, import_compose6.useMergeRefs)([
         forwardedRef,
         (el) => setListEl(el)
       ]);
@@ -32352,17 +32494,17 @@ var wp;
           activateOnFocus,
           "data-select-on-move": activateOnFocus ? "true" : "false",
           className: clsx_default(
-            style_default31.tablist,
-            overflow.first && style_default31["is-overflowing-first"],
-            overflow.last && style_default31["is-overflowing-last"],
-            style_default31[`is-${variant}-variant`],
+            style_default32.tablist,
+            overflow.first && style_default32["is-overflowing-first"],
+            overflow.last && style_default32["is-overflowing-last"],
+            style_default32[`is-${variant}-variant`],
             className
           ),
           ...otherProps,
           tabIndex: otherProps.tabIndex ?? (overflow.isScrolling ? -1 : void 0),
           children: [
             children,
-            /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(index_parts_exports3.Indicator, { className: style_default31.indicator })
+            /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(index_parts_exports3.Indicator, { className: style_default32.indicator })
           ]
         }
       );
@@ -32449,124 +32591,6 @@ var wp;
 
   // packages/ui/build-module/tabs/panel.mjs
   var import_jsx_runtime169 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE37 = "data-wp-hash";
-  function getRuntime37() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument37(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash37(targetDocument, hash) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE37}]`
-    )) {
-      if (style.getAttribute(STYLE_HASH_ATTRIBUTE37) === hash) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle37(targetDocument, hash, css) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime37();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash)) {
-      return;
-    }
-    if (documentContainsStyleHash37(targetDocument, hash)) {
-      injectedStyles.add(hash);
-      return;
-    }
-    const style = targetDocument.createElement("style");
-    style.setAttribute(STYLE_HASH_ATTRIBUTE37, hash);
-    style.appendChild(targetDocument.createTextNode(css));
-    targetDocument.head.appendChild(style);
-    injectedStyles.add(hash);
-  }
-  function registerDocument37(targetDocument) {
-    const runtime = getRuntime37();
-    runtime.documents.set(
-      targetDocument,
-      (runtime.documents.get(targetDocument) ?? 0) + 1
-    );
-    for (const [hash, css] of runtime.styles) {
-      injectStyle37(targetDocument, hash, css);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle37(hash, css) {
-    const runtime = getRuntime37();
-    runtime.styles.set(hash, css);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle37(targetDocument, hash, css);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle37("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
-  }
-  var global_css_defense_default10 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
-  if (typeof process === "undefined" || true) {
-    registerStyle37("96553466c8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-  }
-  var focus_module_default6 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
-  var Panel2 = (0, import_element72.forwardRef)(
-    function TabPanel({ className, ...otherProps }, forwardedRef) {
-      useRegisterPanel();
-      return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
-        index_parts_exports3.Panel,
-        {
-          ref: forwardedRef,
-          className: clsx_default(
-            global_css_defense_default10.div,
-            focus_module_default6["outset-ring--focus-visible"],
-            className
-          ),
-          ...otherProps
-        }
-      );
-    }
-  );
-
-  // packages/ui/build-module/tabs/root.mjs
-  var import_element73 = __toESM(require_element(), 1);
-  var import_jsx_runtime170 = __toESM(require_jsx_runtime(), 1);
-  var Root8 = (0, import_element73.forwardRef)(
-    function TabsRoot3({ ...otherProps }, forwardedRef) {
-      return /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(TabsValidationProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(index_parts_exports3.Root, { ref: forwardedRef, ...otherProps }) }) });
-    }
-  );
-
-  // packages/ui/build-module/tabs/tab.mjs
-  var import_element74 = __toESM(require_element(), 1);
-  var import_jsx_runtime171 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE38 = "data-wp-hash";
   function getRuntime38() {
     const globalScope = globalThis;
@@ -32648,20 +32672,138 @@ var wp;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle38("54ae3f4680", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7313adbc8a112e90__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&._9f2ac729c68a735a__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._9f2ac729c68a735a__is-overflowing-first._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._59228b5227f38a99__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._1c37dcfaa1ad8cda__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height,border-radius,border-block;transition-timing-function:ease-out}outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;&[data-orientation=horizontal]{background-color:var(--wpds-color-stroke-interactive-neutral-strong,#6e6e6e);bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width);z-index:1}&[data-orientation=vertical]{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-radius:var(--wpds-border-radius-sm,2px);height:var(--active-tab-height);left:50%;top:0;translate:-50% var(--active-tab-top);width:100%;z-index:0}._7313adbc8a112e90__tablist[data-select-on-move=true]:has(:focus-visible)\n			&[data-orientation=vertical]{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));box-sizing:border-box}}.a5fd8814f195aa5e__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);cursor:default;@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:hover,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&:after{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}}._59228b5227f38a99__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px)}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-sm,8px) var(--wpds-dimension-padding-md,12px)}[data-orientation=vertical][data-select-on-move=false] &:after{content:"";inset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}._5dfc77e6edd345d4__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}._4a20e969d15e5ac1__tab-chevron{flex-shrink:0;margin-inline-end:calc(var(--wpds-dimension-gap-xs, 4px)*-1);opacity:0;[data-orientation=horizontal] &{display:none}[role=tab]:is([aria-selected=true],:focus-visible,:hover) &{opacity:1}@media not (prefers-reduced-motion){[data-select-on-move=true]\n				[role=tab]:is([aria-selected=true])\n				&{transition:opacity .15s linear .15s}}&:dir(rtl){rotate:180deg}}}}');
+    registerStyle38("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
   }
-  var style_default32 = { "tablist": "_7313adbc8a112e90__tablist", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children", "tab-chevron": "_4a20e969d15e5ac1__tab-chevron" };
+  var global_css_defense_default10 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+  if (typeof process === "undefined" || true) {
+    registerStyle38("96553466c8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+  }
+  var focus_module_default6 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
+  var Panel2 = (0, import_element72.forwardRef)(
+    function TabPanel({ className, ...otherProps }, forwardedRef) {
+      useRegisterPanel();
+      return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+        index_parts_exports3.Panel,
+        {
+          ref: forwardedRef,
+          className: clsx_default(
+            global_css_defense_default10.div,
+            focus_module_default6["outset-ring--focus-visible"],
+            className
+          ),
+          ...otherProps
+        }
+      );
+    }
+  );
+
+  // packages/ui/build-module/tabs/root.mjs
+  var import_element73 = __toESM(require_element(), 1);
+  var import_jsx_runtime170 = __toESM(require_jsx_runtime(), 1);
+  var Root8 = (0, import_element73.forwardRef)(
+    function TabsRoot3({ ...otherProps }, forwardedRef) {
+      return /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(TabsValidationProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(index_parts_exports3.Root, { ref: forwardedRef, ...otherProps }) }) });
+    }
+  );
+
+  // packages/ui/build-module/tabs/tab.mjs
+  var import_element74 = __toESM(require_element(), 1);
+  var import_jsx_runtime171 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE39 = "data-wp-hash";
+  function getRuntime39() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument39(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash39(targetDocument, hash) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE39}]`
+    )) {
+      if (style.getAttribute(STYLE_HASH_ATTRIBUTE39) === hash) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle39(targetDocument, hash, css) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime39();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash)) {
+      return;
+    }
+    if (documentContainsStyleHash39(targetDocument, hash)) {
+      injectedStyles.add(hash);
+      return;
+    }
+    const style = targetDocument.createElement("style");
+    style.setAttribute(STYLE_HASH_ATTRIBUTE39, hash);
+    style.appendChild(targetDocument.createTextNode(css));
+    targetDocument.head.appendChild(style);
+    injectedStyles.add(hash);
+  }
+  function registerDocument39(targetDocument) {
+    const runtime = getRuntime39();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash, css] of runtime.styles) {
+      injectStyle39(targetDocument, hash, css);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle39(hash, css) {
+    const runtime = getRuntime39();
+    runtime.styles.set(hash, css);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle39(targetDocument, hash, css);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle39("54ae3f4680", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7313adbc8a112e90__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&._9f2ac729c68a735a__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._9f2ac729c68a735a__is-overflowing-first._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._59228b5227f38a99__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._1c37dcfaa1ad8cda__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height,border-radius,border-block;transition-timing-function:ease-out}outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;&[data-orientation=horizontal]{background-color:var(--wpds-color-stroke-interactive-neutral-strong,#6e6e6e);bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width);z-index:1}&[data-orientation=vertical]{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-radius:var(--wpds-border-radius-sm,2px);height:var(--active-tab-height);left:50%;top:0;translate:-50% var(--active-tab-top);width:100%;z-index:0}._7313adbc8a112e90__tablist[data-select-on-move=true]:has(:focus-visible)\n			&[data-orientation=vertical]{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));box-sizing:border-box}}.a5fd8814f195aa5e__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);cursor:default;@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:hover,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&:after{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}}._59228b5227f38a99__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px)}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-sm,8px) var(--wpds-dimension-padding-md,12px)}[data-orientation=vertical][data-select-on-move=false] &:after{content:"";inset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}._5dfc77e6edd345d4__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}._4a20e969d15e5ac1__tab-chevron{flex-shrink:0;margin-inline-end:calc(var(--wpds-dimension-gap-xs, 4px)*-1);opacity:0;[data-orientation=horizontal] &{display:none}[role=tab]:is([aria-selected=true],:focus-visible,:hover) &{opacity:1}@media not (prefers-reduced-motion){[data-select-on-move=true]\n				[role=tab]:is([aria-selected=true])\n				&{transition:opacity .15s linear .15s}}&:dir(rtl){rotate:180deg}}}}');
+  }
+  var style_default33 = { "tablist": "_7313adbc8a112e90__tablist", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children", "tab-chevron": "_4a20e969d15e5ac1__tab-chevron" };
   var Tab = (0, import_element74.forwardRef)(function Tab2({ className, children, ...otherProps }, forwardedRef) {
     useRegisterTab();
     return /* @__PURE__ */ (0, import_jsx_runtime171.jsxs)(
       index_parts_exports3.Tab,
       {
         ref: forwardedRef,
-        className: clsx_default(style_default32.tab, className),
+        className: clsx_default(style_default33.tab, className),
         ...otherProps,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime171.jsx)("span", { className: style_default32["tab-children"], children }),
-          /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(Icon, { icon: chevron_right_default, className: style_default32["tab-chevron"] })
+          /* @__PURE__ */ (0, import_jsx_runtime171.jsx)("span", { className: style_default33["tab-children"], children }),
+          /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(Icon, { icon: chevron_right_default, className: style_default33["tab-chevron"] })
         ]
       }
     );
@@ -33562,10 +33704,10 @@ var wp;
   function isAnimatedString(value) {
     return is.str(value) && (value[0] == "#" || /\d/.test(value) || !isSSR() && cssVariableRegex.test(value) || value in (colors$1 || {}));
   }
-  var useIsomorphicLayoutEffect = isSSR() ? import_react50.useEffect : import_react50.useLayoutEffect;
+  var useIsomorphicLayoutEffect2 = isSSR() ? import_react50.useEffect : import_react50.useLayoutEffect;
   var useIsMounted = () => {
     const isMounted = (0, import_react50.useRef)(false);
-    useIsomorphicLayoutEffect(() => {
+    useIsomorphicLayoutEffect2(() => {
       isMounted.current = true;
       return () => {
         isMounted.current = false;
@@ -33847,7 +33989,7 @@ var wp;
       };
       const observer = new PropsObserver(callback, deps);
       const observerRef = (0, import_react51.useRef)();
-      useIsomorphicLayoutEffect(() => {
+      useIsomorphicLayoutEffect2(() => {
         observerRef.current = observer;
         each(deps, (dep) => addFluidObserver(dep, observer));
         return () => {
@@ -36852,7 +36994,7 @@ var wp;
   var import_data12 = __toESM(require_data(), 1);
   var import_element78 = __toESM(require_element(), 1);
   var import_core_data9 = __toESM(require_core_data(), 1);
-  var import_compose6 = __toESM(require_compose(), 1);
+  var import_compose7 = __toESM(require_compose(), 1);
   var import_html_entities5 = __toESM(require_html_entities(), 1);
   var import_i18n29 = __toESM(require_i18n(), 1);
   var import_url4 = __toESM(require_url(), 1);
@@ -37016,7 +37158,7 @@ var wp;
         help: (0, import_i18n29.__)("Choose a parent page."),
         value: pageId?.toString(),
         options: parentOptions,
-        onFilterValueChange: (0, import_compose6.debounce)(
+        onFilterValueChange: (0, import_compose7.debounce)(
           (value) => handleKeydown(value),
           300
         ),
@@ -39619,7 +39761,7 @@ var wp;
 
   // packages/fields/build-module/components/create-template-part-modal/index.mjs
   var import_components21 = __toESM(require_components(), 1);
-  var import_compose7 = __toESM(require_compose(), 1);
+  var import_compose8 = __toESM(require_compose(), 1);
   var import_core_data25 = __toESM(require_core_data(), 1);
   var import_data27 = __toESM(require_data(), 1);
   var import_element91 = __toESM(require_element(), 1);
@@ -39714,7 +39856,7 @@ var wp;
     const [title, setTitle] = (0, import_element91.useState)(defaultTitle);
     const [area, setArea] = (0, import_element91.useState)(defaultArea);
     const [isSubmitting, setIsSubmitting] = (0, import_element91.useState)(false);
-    const instanceId = (0, import_compose7.useInstanceId)(CreateTemplatePartModal);
+    const instanceId = (0, import_compose8.useInstanceId)(CreateTemplatePartModal);
     const defaultTemplatePartAreas = (0, import_data27.useSelect)(
       (select9) => select9(import_core_data25.store).getCurrentTheme()?.default_template_part_areas,
       []
@@ -40013,7 +40155,7 @@ var wp;
   var import_components23 = __toESM(require_components(), 1);
   var import_i18n73 = __toESM(require_i18n(), 1);
   var import_element94 = __toESM(require_element(), 1);
-  var import_compose8 = __toESM(require_compose(), 1);
+  var import_compose9 = __toESM(require_compose(), 1);
   var import_data29 = __toESM(require_data(), 1);
   var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
   function MediaAttachedToEdit({
@@ -40069,7 +40211,7 @@ var wp;
       setOptions(suggestions.concat(includeCurrent ? defaultPost : []));
       setIsLoading(false);
     };
-    const debouncedValueChange = (0, import_compose8.useDebounce)((0, import_compose8.useEvent)(onValueChange), 300);
+    const debouncedValueChange = (0, import_compose9.useDebounce)((0, import_compose9.useEvent)(onValueChange), 300);
     const handleSelectOption = (selectedPostId) => {
       if (!selectedPostId) {
         handleDetach();
@@ -40470,7 +40612,7 @@ var wp;
   // packages/editor/build-module/components/provider/with-registry-provider.mjs
   var import_element97 = __toESM(require_element(), 1);
   var import_data31 = __toESM(require_data(), 1);
-  var import_compose9 = __toESM(require_compose(), 1);
+  var import_compose10 = __toESM(require_compose(), 1);
   var import_block_editor4 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
   function getSubRegistry(subRegistries, registry, useSubRegistry) {
@@ -40490,7 +40632,7 @@ var wp;
     }
     return subRegistry;
   }
-  var withRegistryProvider = (0, import_compose9.createHigherOrderComponent)(
+  var withRegistryProvider = (0, import_compose10.createHigherOrderComponent)(
     (WrappedComponent) => ({ useSubRegistry = true, ...props }) => {
       const registry = (0, import_data31.useRegistry)();
       const [subRegistries] = (0, import_element97.useState)(() => /* @__PURE__ */ new WeakMap());
@@ -40670,7 +40812,7 @@ var wp;
   var import_core_data47 = __toESM(require_core_data(), 1);
   var import_i18n199 = __toESM(require_i18n(), 1);
   var import_preferences6 = __toESM(require_preferences(), 1);
-  var import_compose45 = __toESM(require_compose(), 1);
+  var import_compose46 = __toESM(require_compose(), 1);
   var import_blocks12 = __toESM(require_blocks(), 1);
   var import_block_editor21 = __toESM(require_block_editor(), 1);
 
@@ -40960,7 +41102,7 @@ var wp;
   var import_i18n88 = __toESM(require_i18n(), 1);
   var import_element103 = __toESM(require_element(), 1);
   var import_data34 = __toESM(require_data(), 1);
-  var import_compose10 = __toESM(require_compose(), 1);
+  var import_compose11 = __toESM(require_compose(), 1);
 
   // packages/kebab-case/build-module/index.mjs
   function kebabCase2(str3) {
@@ -41095,7 +41237,7 @@ var wp;
         eligibleActions: _eligibleActions
       };
     }, [actions2, item]);
-    const isMobileViewport = (0, import_compose10.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose11.useViewportMatch)("medium", "<");
     if (isCompact) {
       return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
         CompactItemActions,
@@ -41194,7 +41336,7 @@ var wp;
     buttonVariant
   }) {
     const [activeModalAction, setActiveModalAction] = (0, import_element103.useState)(null);
-    const isMobileViewport = (0, import_compose10.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose11.useViewportMatch)("medium", "<");
     if (isMobileViewport) {
       return null;
     }
@@ -41234,7 +41376,7 @@ var wp;
   var import_i18n90 = __toESM(require_i18n(), 1);
   var import_element104 = __toESM(require_element(), 1);
   var import_data35 = __toESM(require_data(), 1);
-  var import_compose11 = __toESM(require_compose(), 1);
+  var import_compose12 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/utils/get-footer-message.mjs
   var import_i18n89 = __toESM(require_i18n(), 1);
@@ -42592,7 +42734,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
   var import_components35 = __toESM(require_components(), 1);
   var import_i18n96 = __toESM(require_i18n(), 1);
-  var import_compose12 = __toESM(require_compose(), 1);
+  var import_compose13 = __toESM(require_compose(), 1);
   var import_element115 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataviews-layouts/grid/preview-size-picker.mjs
@@ -42734,7 +42876,7 @@ var wp;
         [forwardedRef]
       );
       useIntersectionObserver(elementRef, posinset);
-      const instanceId = (0, import_compose12.useInstanceId)(GridItem2);
+      const instanceId = (0, import_compose13.useInstanceId)(GridItem2);
       const isSelected2 = selection.includes(id);
       const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime222.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
       const rendersMediaField = showMedia && mediaField?.render;
@@ -43275,7 +43417,7 @@ var wp;
   var grid_default = ViewGrid;
 
   // packages/dataviews/build-module/components/dataviews-layouts/list/index.mjs
-  var import_compose13 = __toESM(require_compose(), 1);
+  var import_compose14 = __toESM(require_compose(), 1);
   var import_components37 = __toESM(require_components(), 1);
   var import_element116 = __toESM(require_element(), 1);
   var import_i18n98 = __toESM(require_i18n(), 1);
@@ -43606,7 +43748,7 @@ var wp;
       className,
       empty
     } = props;
-    const baseId = (0, import_compose13.useInstanceId)(ViewList, "view-list");
+    const baseId = (0, import_compose14.useInstanceId)(ViewList, "view-list");
     const isDelayedLoading = useDelayedLoading(!!isLoading);
     const { paginationInfo } = (0, import_element116.useContext)(dataviews_context_default);
     const selectedItem = data?.findLast(
@@ -43653,7 +43795,7 @@ var wp;
     const activeItemIndex = data.findIndex(
       (item) => isActiveCompositeItem(item, activeCompositeId ?? "")
     );
-    const previousActiveItemIndex = (0, import_compose13.usePrevious)(activeItemIndex);
+    const previousActiveItemIndex = (0, import_compose14.usePrevious)(activeItemIndex);
     const isActiveIdInList = activeItemIndex !== -1;
     const selectCompositeItem = (0, import_element116.useCallback)(
       (targetIndex, generateCompositeId) => {
@@ -43865,7 +44007,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-item.mjs
   var import_element118 = __toESM(require_element(), 1);
   var import_data37 = __toESM(require_data(), 1);
-  var import_compose14 = __toESM(require_compose(), 1);
+  var import_compose15 = __toESM(require_compose(), 1);
   var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
   function ActivityItem(props) {
     const {
@@ -43902,7 +44044,7 @@ var wp;
         eligibleActions: _eligibleActions
       };
     }, [actions2, item]);
-    const isMobileViewport = (0, import_compose14.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose15.useViewportMatch)("medium", "<");
     const density = view.layout?.density ?? "balanced";
     const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
       mediaField.render,
@@ -44135,7 +44277,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
   var import_components41 = __toESM(require_components(), 1);
   var import_i18n102 = __toESM(require_i18n(), 1);
-  var import_compose15 = __toESM(require_compose(), 1);
+  var import_compose16 = __toESM(require_compose(), 1);
   var import_element121 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
@@ -44619,7 +44761,7 @@ var wp;
     showLabel = true,
     children
   }) {
-    const headerId = (0, import_compose15.useInstanceId)(
+    const headerId = (0, import_compose16.useInstanceId)(
       GridGroup,
       "dataviews-view-picker-grid-group__header"
     );
@@ -45301,7 +45443,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/picker-activity/index.mjs
   var import_components43 = __toESM(require_components(), 1);
   var import_element123 = __toESM(require_element(), 1);
-  var import_compose16 = __toESM(require_compose(), 1);
+  var import_compose17 = __toESM(require_compose(), 1);
   var import_i18n104 = __toESM(require_i18n(), 1);
   var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
   function isDefined4(item) {
@@ -45429,7 +45571,7 @@ var wp;
     showLabel = true,
     children
   }) {
-    const headerId = (0, import_compose16.useInstanceId)(
+    const headerId = (0, import_compose17.useInstanceId)(
       PickerActivityGroup,
       "dataviews-view-picker-activity-group__header"
     );
@@ -50488,7 +50630,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataviews-filters/search-widget.mjs
   var import_remove_accents2 = __toESM(require_remove_accents(), 1);
-  var import_compose17 = __toESM(require_compose(), 1);
+  var import_compose18 = __toESM(require_compose(), 1);
   var import_i18n108 = __toESM(require_i18n(), 1);
   var import_element127 = __toESM(require_element(), 1);
   var import_components46 = __toESM(require_components(), 1);
@@ -50590,7 +50732,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   };
   function ListBox({ view, filter, onChangeView }) {
-    const baseId = (0, import_compose17.useInstanceId)(ListBox, "dataviews-filter-list-box");
+    const baseId = (0, import_compose18.useInstanceId)(ListBox, "dataviews-filter-list-box");
     const [activeCompositeId, setActiveCompositeId] = (0, import_element127.useState)(
       // When there are one or less operators, the first item is set as active
       // (by setting the initial `activeId` to `undefined`).
@@ -50848,7 +50990,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
   var import_es62 = __toESM(require_es6(), 1);
-  var import_compose18 = __toESM(require_compose(), 1);
+  var import_compose19 = __toESM(require_compose(), 1);
   var import_element128 = __toESM(require_element(), 1);
   var import_components47 = __toESM(require_components(), 1);
   var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
@@ -50891,7 +51033,7 @@ If there's a particular need for this, please submit a feature request at https:
         {}
       );
     }, [view.filters]);
-    const handleChange = (0, import_compose18.useEvent)((updatedData) => {
+    const handleChange = (0, import_compose19.useEvent)((updatedData) => {
       if (!field || !currentFilter) {
         return;
       }
@@ -52214,11 +52356,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n115 = __toESM(require_i18n(), 1);
   var import_element137 = __toESM(require_element(), 1);
   var import_components53 = __toESM(require_components(), 1);
-  var import_compose19 = __toESM(require_compose(), 1);
+  var import_compose20 = __toESM(require_compose(), 1);
   var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
   var DataViewsSearch = (0, import_element137.memo)(function Search({ label }) {
     const { view, onChangeView } = (0, import_element137.useContext)(dataviews_context_default);
-    const [search, setSearch, debouncedSearch] = (0, import_compose19.useDebouncedInput)(
+    const [search, setSearch, debouncedSearch] = (0, import_compose20.useDebouncedInput)(
       view.search
     );
     (0, import_element137.useEffect)(() => {
@@ -52262,7 +52404,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n116 = __toESM(require_i18n(), 1);
   var import_element138 = __toESM(require_element(), 1);
   var import_warning = __toESM(require_warning(), 1);
-  var import_compose20 = __toESM(require_compose(), 1);
+  var import_compose21 = __toESM(require_compose(), 1);
   var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu5 } = unlock5(import_components54.privateApis);
   var DATAVIEWS_CONFIG_POPOVER_PROPS = {
@@ -52474,7 +52616,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function DataviewsViewConfigDropdown() {
     const { view, onReset } = (0, import_element138.useContext)(dataviews_context_default);
-    const popoverId = (0, import_compose20.useInstanceId)(
+    const popoverId = (0, import_compose21.useInstanceId)(
       _DataViewsViewConfig,
       "dataviews-view-config-dropdown"
     );
@@ -52580,7 +52722,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/validated-form-controls/checkbox-control.mjs
   var import_element139 = __toESM(require_element(), 1);
-  var import_compose21 = __toESM(require_compose(), 1);
+  var import_compose22 = __toESM(require_compose(), 1);
   var import_components55 = __toESM(require_components(), 1);
   var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedCheckboxControl = ({
@@ -52590,7 +52732,7 @@ If there's a particular need for this, please submit a feature request at https:
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element139.useRef)(null);
-    const mergedRefs = (0, import_compose21.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose22.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(
       ControlWithError,
       {
@@ -52616,7 +52758,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/validated-form-controls/combobox-control.mjs
   var import_element140 = __toESM(require_element(), 1);
-  var import_compose22 = __toESM(require_compose(), 1);
+  var import_compose23 = __toESM(require_compose(), 1);
   var import_components56 = __toESM(require_components(), 1);
   var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedComboboxControl = ({
@@ -52626,7 +52768,7 @@ If there's a particular need for this, please submit a feature request at https:
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element140.useRef)(null);
-    const mergedRefs = (0, import_compose22.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose23.useMergeRefs)([forwardedRef, validityTargetRef]);
     (0, import_element140.useEffect)(() => {
       const input = validityTargetRef.current?.querySelector(
         'input[role="combobox"]'
@@ -52711,7 +52853,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/validated-form-controls/number-control.mjs
   var import_element142 = __toESM(require_element(), 1);
-  var import_compose23 = __toESM(require_compose(), 1);
+  var import_compose24 = __toESM(require_compose(), 1);
   var import_components58 = __toESM(require_components(), 1);
   var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedNumberControl = ({
@@ -52721,7 +52863,7 @@ If there's a particular need for this, please submit a feature request at https:
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element142.useRef)(null);
-    const mergedRefs = (0, import_compose23.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose24.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(
       ControlWithError,
       {
@@ -52739,7 +52881,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/validated-form-controls/radio-control.mjs
   var import_element143 = __toESM(require_element(), 1);
-  var import_compose24 = __toESM(require_compose(), 1);
+  var import_compose25 = __toESM(require_compose(), 1);
   var import_components59 = __toESM(require_components(), 1);
   var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedRadioControl = ({
@@ -52749,7 +52891,7 @@ If there's a particular need for this, please submit a feature request at https:
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element143.useRef)(null);
-    const mergedRefs = (0, import_compose24.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose25.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(
       ControlWithError,
       {
@@ -52770,7 +52912,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/validated-form-controls/select-control.mjs
   var import_element144 = __toESM(require_element(), 1);
-  var import_compose25 = __toESM(require_compose(), 1);
+  var import_compose26 = __toESM(require_compose(), 1);
   var import_components60 = __toESM(require_components(), 1);
   var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedSelectControl = ({
@@ -52780,7 +52922,7 @@ If there's a particular need for this, please submit a feature request at https:
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element144.useRef)(null);
-    const mergedRefs = (0, import_compose25.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose26.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(
       ControlWithError,
       {
@@ -52806,7 +52948,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/validated-form-controls/toggle-control.mjs
   var import_element145 = __toESM(require_element(), 1);
-  var import_compose26 = __toESM(require_compose(), 1);
+  var import_compose27 = __toESM(require_compose(), 1);
   var import_components61 = __toESM(require_components(), 1);
   var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedToggleControl = ({
@@ -52816,7 +52958,7 @@ If there's a particular need for this, please submit a feature request at https:
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element145.useRef)(null);
-    const mergedRefs = (0, import_compose26.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose27.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(
       ControlWithError,
       {
@@ -56263,7 +56405,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
   var import_element166 = __toESM(require_element(), 1);
-  var import_compose27 = __toESM(require_compose(), 1);
+  var import_compose28 = __toESM(require_compose(), 1);
   function captureAnchorElement(container, anchorElementRef, direction) {
     const containerRect = container.getBoundingClientRect();
     const centerY = containerRect.top + containerRect.height / 2;
@@ -56390,7 +56532,7 @@ If there's a particular need for this, please submit a feature request at https:
       let lastScrollTop = 0;
       const BOTTOM_THRESHOLD = 600;
       const TOP_THRESHOLD = 800;
-      const handleScroll = (0, import_compose27.throttle)((event) => {
+      const handleScroll = (0, import_compose28.throttle)((event) => {
         const currentView = viewRef.current;
         const totalItems = totalItemsRef.current;
         const target = event.target;
@@ -56444,7 +56586,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/dataviews-picker/index.mjs
   var import_element167 = __toESM(require_element(), 1);
-  var import_compose28 = __toESM(require_compose(), 1);
+  var import_compose29 = __toESM(require_compose(), 1);
   var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
   var isItemClickable = () => false;
   var dataViewsPickerLayouts = VIEW_LAYOUTS.filter(
@@ -56525,7 +56667,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const containerRef = (0, import_element167.useRef)(null);
     const [containerWidth, setContainerWidth] = (0, import_element167.useState)(0);
-    const resizeObserverRef = (0, import_compose28.useResizeObserver)(
+    const resizeObserverRef = (0, import_compose29.useResizeObserver)(
       (resizeObserverEntries) => {
         setContainerWidth(
           resizeObserverEntries[0].borderBoxSize[0].inlineSize
@@ -56888,12 +57030,12 @@ If there's a particular need for this, please submit a feature request at https:
   var import_deepmerge3 = __toESM(require_cjs(), 1);
   var import_components79 = __toESM(require_components(), 1);
   var import_element173 = __toESM(require_element(), 1);
-  var import_compose30 = __toESM(require_compose(), 1);
+  var import_compose31 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
   var import_components78 = __toESM(require_components(), 1);
   var import_i18n131 = __toESM(require_i18n(), 1);
-  var import_compose29 = __toESM(require_compose(), 1);
+  var import_compose30 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
   function getLabelClassName(labelPosition, showError) {
@@ -56985,7 +57127,7 @@ If there's a particular need for this, please submit a feature request at https:
         "dataforms-layouts-panel__field-trigger--edit-always": editVisibility === "always"
       }
     );
-    const controlId = (0, import_compose29.useInstanceId)(
+    const controlId = (0, import_compose30.useInstanceId)(
       SummaryButton,
       "dataforms-layouts-panel__field-control"
     );
@@ -57722,9 +57864,9 @@ If there's a particular need for this, please submit a feature request at https:
         })
       );
     };
-    const focusOnMountRef = (0, import_compose30.useFocusOnMount)("firstInputElement");
+    const focusOnMountRef = (0, import_compose31.useFocusOnMount)("firstInputElement");
     const contentRef = (0, import_element173.useRef)(null);
-    const mergedRef = (0, import_compose30.useMergeRefs)([focusOnMountRef, contentRef]);
+    const mergedRef = (0, import_compose31.useMergeRefs)([focusOnMountRef, contentRef]);
     useRevealValidity(contentRef, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)(
       import_components79.Modal,
@@ -57839,7 +57981,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components80 = __toESM(require_components(), 1);
   var import_i18n133 = __toESM(require_i18n(), 1);
   var import_element174 = __toESM(require_element(), 1);
-  var import_compose31 = __toESM(require_compose(), 1);
+  var import_compose32 = __toESM(require_compose(), 1);
   var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
   function DropdownHeader({
     title,
@@ -57896,7 +58038,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [popoverAnchor]
     );
-    const [dialogRef, dialogProps] = (0, import_compose31.__experimentalUseDialog)({
+    const [dialogRef, dialogProps] = (0, import_compose32.__experimentalUseDialog)({
       focusOnMount: "firstInputElement"
     });
     const form = (0, import_element174.useMemo)(
@@ -58023,7 +58165,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
   var import_element175 = __toESM(require_element(), 1);
   var import_a11y6 = __toESM(require_a11y(), 1);
-  var import_compose32 = __toESM(require_compose(), 1);
+  var import_compose33 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
   var import_i18n134 = __toESM(require_i18n(), 1);
@@ -58233,7 +58375,7 @@ If there's a particular need for this, please submit a feature request at https:
         (0, import_a11y6.speak)(message2, "polite");
       }
     }, [isCollapsible, isOpen2, revealValidity, validity]);
-    const focusOutsideProps = (0, import_compose32.__experimentalUseFocusOutside)(handleFocusOutside);
+    const focusOutsideProps = (0, import_compose33.__experimentalUseFocusOutside)(handleFocusOutside);
     let label = field.label;
     let withHeader;
     if (field.children) {
@@ -58390,7 +58532,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element176 = __toESM(require_element(), 1);
   var import_i18n135 = __toESM(require_i18n(), 1);
   var import_a11y7 = __toESM(require_a11y(), 1);
-  var import_compose33 = __toESM(require_compose(), 1);
+  var import_compose34 = __toESM(require_compose(), 1);
   var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
   function FormDetailsField({
     data,
@@ -58446,7 +58588,7 @@ If there's a particular need for this, please submit a feature request at https:
         (0, import_a11y7.speak)(message2, "polite");
       }
     }, [revealValidity, validity]);
-    const focusOutsideProps = (0, import_compose33.__experimentalUseFocusOutside)(handleFocusOutside);
+    const focusOutsideProps = (0, import_compose34.__experimentalUseFocusOutside)(handleFocusOutside);
     if (!field.children) {
       return null;
     }
@@ -58906,7 +59048,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-editor/build-module/components/media-editor/index.mjs
   var import_components94 = __toESM(require_components(), 1);
-  var import_compose36 = __toESM(require_compose(), 1);
+  var import_compose37 = __toESM(require_compose(), 1);
   var import_data46 = __toESM(require_data(), 1);
   var import_core_data30 = __toESM(require_core_data(), 1);
   var import_element201 = __toESM(require_element(), 1);
@@ -58933,7 +59075,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element180 = __toESM(require_element(), 1);
   var import_viewport3 = __toESM(require_viewport(), 1);
   var import_preferences5 = __toESM(require_preferences(), 1);
-  var import_compose34 = __toESM(require_compose(), 1);
+  var import_compose35 = __toESM(require_compose(), 1);
   var import_plugins3 = __toESM(require_plugins(), 1);
 
   // packages/interface/build-module/components/complementary-area-toggle/index.mjs
@@ -59445,9 +59587,9 @@ If there's a particular need for this, please submit a feature request at https:
     id,
     render: render5
   }) {
-    const disableMotion = (0, import_compose34.useReducedMotion)();
-    const isMobileViewport = (0, import_compose34.useViewportMatch)("medium", "<");
-    const previousActiveArea = (0, import_compose34.usePrevious)(activeArea);
+    const disableMotion = (0, import_compose35.useReducedMotion)();
+    const isMobileViewport = (0, import_compose35.useViewportMatch)("medium", "<");
+    const previousActiveArea = (0, import_compose35.usePrevious)(activeArea);
     const isSwitchingAreas = !!previousActiveArea && !!activeArea && activeArea !== previousActiveArea;
     const transition = {
       type: "tween",
@@ -59558,7 +59700,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [identifier, scope]
     );
-    const isMobileViewport = (0, import_compose34.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose35.useViewportMatch)("medium", "<");
     useAdjustComplementaryListener(
       scope,
       identifier,
@@ -59726,7 +59868,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element183 = __toESM(require_element(), 1);
   var import_components88 = __toESM(require_components(), 1);
   var import_i18n138 = __toESM(require_i18n(), 1);
-  var import_compose35 = __toESM(require_compose(), 1);
+  var import_compose36 = __toESM(require_compose(), 1);
   var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   var ANIMATION_DURATION2 = 0.25;
   var commonTransition = {
@@ -59784,8 +59926,8 @@ If there's a particular need for this, please submit a feature request at https:
     labels,
     className
   }, ref) {
-    const isMobileViewport = (0, import_compose35.useViewportMatch)("medium", "<");
-    const disableMotion = (0, import_compose35.useReducedMotion)();
+    const isMobileViewport = (0, import_compose36.useViewportMatch)("medium", "<");
+    const disableMotion = (0, import_compose36.useReducedMotion)();
     const defaultTransition = {
       type: "tween",
       duration: disableMotion ? 0 : ANIMATION_DURATION2,
@@ -65703,7 +65845,7 @@ If there's a particular need for this, please submit a feature request at https:
     scope = "media-editor"
   }) {
     const cropper = useMediaEditor();
-    const isPanelLayout = (0, import_compose36.useViewportMatch)("small");
+    const isPanelLayout = (0, import_compose37.useViewportMatch)("small");
     const layout = isPanelLayout ? "wide" : "narrow";
     const { media, hasEdits } = (0, import_data46.useSelect)(
       (select9) => {
@@ -66708,7 +66850,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data63 = __toESM(require_data(), 1);
   var import_block_editor18 = __toESM(require_block_editor(), 1);
   var import_element234 = __toESM(require_element(), 1);
-  var import_compose43 = __toESM(require_compose(), 1);
+  var import_compose44 = __toESM(require_compose(), 1);
 
   // packages/global-styles-ui/build-module/provider.mjs
   var import_element204 = __toESM(require_element(), 1);
@@ -67401,7 +67543,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/preview-wrapper.mjs
   var import_components100 = __toESM(require_components(), 1);
-  var import_compose37 = __toESM(require_compose(), 1);
+  var import_compose38 = __toESM(require_compose(), 1);
   var import_element207 = __toESM(require_element(), 1);
   var import_jsx_runtime336 = __toESM(require_jsx_runtime(), 1);
   var normalizedWidth = 248;
@@ -67418,12 +67560,12 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const [backgroundColor = "white"] = useStyle("color.background");
     const [gradientValue] = useStyle("color.gradient");
-    const disableMotion = (0, import_compose37.useReducedMotion)();
+    const disableMotion = (0, import_compose38.useReducedMotion)();
     const [isHovered, setIsHovered] = (0, import_element207.useState)(false);
-    const [containerResizeListener, { width }] = (0, import_compose37.useResizeObserver)();
+    const [containerResizeListener, { width }] = (0, import_compose38.useResizeObserver)();
     const [throttledWidth, setThrottledWidthState] = (0, import_element207.useState)(width);
     const [ratioState, setRatioState] = (0, import_element207.useState)();
-    const setThrottledWidth = (0, import_compose37.useThrottle)(
+    const setThrottledWidth = (0, import_compose38.useThrottle)(
       setThrottledWidthState,
       250,
       THROTTLE_OPTIONS
@@ -67735,7 +67877,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data55 = __toESM(require_data(), 1);
   var import_element208 = __toESM(require_element(), 1);
   var import_block_editor7 = __toESM(require_block_editor(), 1);
-  var import_compose38 = __toESM(require_compose(), 1);
+  var import_compose39 = __toESM(require_compose(), 1);
   var import_a11y10 = __toESM(require_a11y(), 1);
 
   // packages/global-styles-ui/build-module/variations/variations-panel.mjs
@@ -67956,7 +68098,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function BlockList({ filterValue, styleFilter }) {
     const sortedBlockTypes = useSortedBlockTypes();
-    const debouncedSpeak = (0, import_compose38.useDebounce)(import_a11y10.speak, 500);
+    const debouncedSpeak = (0, import_compose39.useDebounce)(import_a11y10.speak, 500);
     const { isMatchingSearchTerm } = (0, import_data55.useSelect)(import_blocks8.store);
     const { user } = (0, import_element208.useContext)(GlobalStylesContext);
     const customizedBlockNames = (0, import_element208.useMemo)(() => {
@@ -70274,7 +70416,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/font-library/font-collection.mjs
   var import_element218 = __toESM(require_element(), 1);
   var import_components118 = __toESM(require_components(), 1);
-  var import_compose39 = __toESM(require_compose(), 1);
+  var import_compose40 = __toESM(require_compose(), 1);
   var import_i18n167 = __toESM(require_i18n(), 1);
   var import_core_data40 = __toESM(require_core_data(), 1);
 
@@ -70466,7 +70608,7 @@ If there's a particular need for this, please submit a feature request at https:
       setFilters({ ...filters, search: value });
       setPage(1);
     };
-    const debouncedUpdateSearchInput = (0, import_compose39.debounce)(
+    const debouncedUpdateSearchInput = (0, import_compose40.debounce)(
       // @ts-expect-error `debounce` expects a `(...args: unknown[]) => unknown` callback.
       handleUpdateSearchInput,
       300
@@ -81649,7 +81791,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n180 = __toESM(require_i18n(), 1);
 
   // packages/global-styles-ui/build-module/color-palette-panel.mjs
-  var import_compose40 = __toESM(require_compose(), 1);
+  var import_compose41 = __toESM(require_compose(), 1);
   var import_components131 = __toESM(require_components(), 1);
   var import_i18n177 = __toESM(require_i18n(), 1);
 
@@ -81784,7 +81926,7 @@ If there's a particular need for this, please submit a feature request at https:
       "color.defaultPalette",
       name2
     );
-    const isMobileViewport = (0, import_compose40.useViewportMatch)("small", "<");
+    const isMobileViewport = (0, import_compose41.useViewportMatch)("small", "<");
     const popoverProps = isMobileViewport ? mobilePopoverProps : void 0;
     const [randomizeThemeColors] = useColorRandomizer(name2);
     return /* @__PURE__ */ (0, import_jsx_runtime373.jsxs)(import_components131.__experimentalVStack, { className: "global-styles-ui-color-palette-panel", spacing: 8, children: [
@@ -81840,7 +81982,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/global-styles-ui/build-module/gradients-palette-panel.mjs
-  var import_compose41 = __toESM(require_compose(), 1);
+  var import_compose42 = __toESM(require_compose(), 1);
   var import_components132 = __toESM(require_components(), 1);
   var import_i18n178 = __toESM(require_i18n(), 1);
   var import_jsx_runtime374 = __toESM(require_jsx_runtime(), 1);
@@ -81874,7 +82016,7 @@ If there's a particular need for this, please submit a feature request at https:
       "color.defaultGradients",
       name2
     );
-    const isMobileViewport = (0, import_compose41.useViewportMatch)("small", "<");
+    const isMobileViewport = (0, import_compose42.useViewportMatch)("small", "<");
     const popoverProps = isMobileViewport ? mobilePopoverProps2 : void 0;
     return /* @__PURE__ */ (0, import_jsx_runtime374.jsxs)(
       import_components132.__experimentalVStack,
@@ -81923,7 +82065,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/global-styles-ui/build-module/duotone-palette-panel.mjs
-  var import_compose42 = __toESM(require_compose(), 1);
+  var import_compose43 = __toESM(require_compose(), 1);
   var import_element225 = __toESM(require_element(), 1);
   var import_components133 = __toESM(require_components(), 1);
   var import_i18n179 = __toESM(require_i18n(), 1);
@@ -81983,7 +82125,7 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       [customColors, themeColors, defaultColors, defaultPaletteEnabled]
     );
-    const isMobileViewport = (0, import_compose42.useViewportMatch)("small", "<");
+    const isMobileViewport = (0, import_compose43.useViewportMatch)("small", "<");
     const popoverProps = isMobileViewport ? mobilePopoverProps3 : void 0;
     return /* @__PURE__ */ (0, import_jsx_runtime375.jsxs)(
       Stack,
@@ -84261,8 +84403,8 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const navigator2 = (0, import_components151.useNavigator)();
     const { path: childPath } = navigator2.location;
-    const previousParentPath = (0, import_compose43.usePrevious)(path);
-    const previousChildPath = (0, import_compose43.usePrevious)(childPath);
+    const previousParentPath = (0, import_compose44.usePrevious)(path);
+    const previousChildPath = (0, import_compose44.usePrevious)(childPath);
     (0, import_element234.useEffect)(() => {
       if (path && path !== childPath) {
         if (path !== previousParentPath) {
@@ -84322,7 +84464,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data64 = __toESM(require_data(), 1);
   var import_element235 = __toESM(require_element(), 1);
   var import_block_editor19 = __toESM(require_block_editor(), 1);
-  var import_compose44 = __toESM(require_compose(), 1);
+  var import_compose45 = __toESM(require_compose(), 1);
   function GlobalStylesBlockLink({ path, onPathChange }) {
     const { selectedBlockName, selectedBlockClientId } = (0, import_data64.useSelect)(
       (select9) => {
@@ -84336,7 +84478,7 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const blockHasGlobalStyles = true;
-    const previousBlockClientId = (0, import_compose44.usePrevious)(selectedBlockClientId);
+    const previousBlockClientId = (0, import_compose45.usePrevious)(selectedBlockClientId);
     (0, import_element235.useEffect)(() => {
       if (selectedBlockClientId === previousBlockClientId) {
         return;
@@ -84712,7 +84854,7 @@ If there's a particular need for this, please submit a feature request at https:
     openMediaEditorModalKey
   } = unlock(import_block_editor21.privateApis);
   function useBlockEditorSettings(settings, postType2, postId2, renderingMode2) {
-    const isLargeViewport = (0, import_compose45.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose46.useViewportMatch)("medium");
     const {
       allImageSizes,
       bigImageSizeThreshold,
@@ -89871,7 +90013,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/hooks/custom-sources-backwards-compatibility.mjs
   var import_jsx_runtime419 = __toESM(require_jsx_runtime(), 1);
-  var createWithMetaAttributeSource = (metaAttributes) => (0, import_compose46.createHigherOrderComponent)(
+  var createWithMetaAttributeSource = (metaAttributes) => (0, import_compose47.createHigherOrderComponent)(
     (BlockEdit2) => ({ attributes, setAttributes, ...props }) => {
       const postType2 = (0, import_data91.useSelect)(
         (select9) => select9(store).getCurrentPostType(),
@@ -90089,7 +90231,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data66 = __toESM(require_core_data(), 1);
   var import_commands3 = __toESM(require_commands(), 1);
   var import_element265 = __toESM(require_element(), 1);
-  var import_compose49 = __toESM(require_compose(), 1);
+  var import_compose50 = __toESM(require_compose(), 1);
   var import_html_entities16 = __toESM(require_html_entities(), 1);
   var import_dom24 = __toESM(require_dom(), 1);
 
@@ -90123,7 +90265,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_keycodes11 = __toESM(require_keycodes(), 1);
   var import_i18n220 = __toESM(require_i18n(), 1);
   var import_data100 = __toESM(require_data(), 1);
-  var import_compose48 = __toESM(require_compose(), 1);
+  var import_compose49 = __toESM(require_compose(), 1);
   var import_preferences11 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/styles-canvas/style-book.mjs
@@ -91582,7 +91724,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data99 = __toESM(require_data(), 1);
   var import_element264 = __toESM(require_element(), 1);
   var import_components162 = __toESM(require_components(), 1);
-  var import_compose47 = __toESM(require_compose(), 1);
+  var import_compose48 = __toESM(require_compose(), 1);
 
   // packages/editor/build-module/components/resizable-editor/resize-handle.mjs
   var import_i18n219 = __toESM(require_i18n(), 1);
@@ -91663,7 +91805,7 @@ If there's a particular need for this, please submit a feature request at https:
     children
   }) {
     const [isResizing, setIsResizing] = (0, import_element264.useState)(false);
-    const disableMotion = (0, import_compose47.useReducedMotion)();
+    const disableMotion = (0, import_compose48.useReducedMotion)();
     const { setCanvasWidth: setCanvasWidth2 } = unlock((0, import_data99.useDispatch)(store));
     const resizableRef = (0, import_element264.useRef)();
     const resizeWidthBy = (0, import_element264.useCallback)(
@@ -91792,8 +91934,8 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_data100.useDispatch)(store)
     );
     const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data100.useDispatch)(store);
-    const focusOnMountRef = (0, import_compose48.useFocusOnMount)("firstElement");
-    const sectionFocusReturnRef = (0, import_compose48.useFocusReturn)();
+    const focusOnMountRef = (0, import_compose49.useFocusOnMount)("firstElement");
+    const sectionFocusReturnRef = (0, import_compose49.useFocusReturn)();
     let content = null;
     if (showStylebook2) {
       content = /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
@@ -91987,7 +92129,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const { open: openCommandCenter } = (0, import_data102.useDispatch)(import_commands3.store);
-    const isReducedMotion = (0, import_compose49.useReducedMotion)();
+    const isReducedMotion = (0, import_compose50.useReducedMotion)();
     const isTemplate2 = TEMPLATE_POST_TYPES.includes(postType2);
     const hasBackButton = !!onNavigateToPreviousEntityRecord || !!unlockedPatternInfo;
     const entityTitle = isTemplate2 ? templateTitle : documentTitle;
@@ -92487,7 +92629,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element270 = __toESM(require_element(), 1);
   var import_i18n226 = __toESM(require_i18n(), 1);
   var import_data109 = __toESM(require_data(), 1);
-  var import_compose50 = __toESM(require_compose(), 1);
+  var import_compose51 = __toESM(require_compose(), 1);
   var import_hooks44 = __toESM(require_hooks(), 1);
   var import_jsx_runtime439 = __toESM(require_jsx_runtime(), 1);
   function getContent() {
@@ -92544,7 +92686,7 @@ ${content}
     return ["### Error report", ...sections].join("\n\n");
   }
   function CopyButton({ text, children, variant = "outline" }) {
-    const ref = (0, import_compose50.useCopyToClipboard)(text);
+    const ref = (0, import_compose51.useCopyToClipboard)(text);
     return /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(notice_exports.ActionButton, { variant, ref, children });
   }
   function ErrorReport({ error: error2, componentStack }) {
@@ -92636,7 +92778,7 @@ ${content}
 
   // packages/editor/build-module/components/local-autosave-monitor/index.mjs
   var import_element271 = __toESM(require_element(), 1);
-  var import_compose51 = __toESM(require_compose(), 1);
+  var import_compose52 = __toESM(require_compose(), 1);
   var import_data110 = __toESM(require_data(), 1);
   var import_i18n227 = __toESM(require_i18n(), 1);
   var import_blocks24 = __toESM(require_blocks(), 1);
@@ -92755,8 +92897,8 @@ ${content}
       lastIsDirtyRef.current = isDirty;
       lastIsAutosavingRef.current = isAutosaving;
     }, [isDirty, isAutosaving, didError]);
-    const wasEditedPostNew = (0, import_compose51.usePrevious)(isEditedPostNew2);
-    const prevPostId = (0, import_compose51.usePrevious)(postId2);
+    const wasEditedPostNew = (0, import_compose52.usePrevious)(isEditedPostNew2);
+    const prevPostId = (0, import_compose52.usePrevious)(postId2);
     (0, import_element271.useEffect)(() => {
       if (prevPostId === postId2 && wasEditedPostNew && !isEditedPostNew2) {
         localAutosaveClear(postId2, true);
@@ -92782,7 +92924,7 @@ ${content}
       }
     );
   }
-  var local_autosave_monitor_default = (0, import_compose51.ifCondition)(hasSessionStorageSupport)(LocalAutosaveMonitor);
+  var local_autosave_monitor_default = (0, import_compose52.ifCondition)(hasSessionStorageSupport)(LocalAutosaveMonitor);
 
   // packages/editor/build-module/components/page-attributes/check.mjs
   var import_data111 = __toESM(require_data(), 1);
@@ -92878,7 +93020,7 @@ ${content}
   var import_remove_accents4 = __toESM(require_remove_accents(), 1);
   var import_i18n229 = __toESM(require_i18n(), 1);
   var import_components171 = __toESM(require_components(), 1);
-  var import_compose52 = __toESM(require_compose(), 1);
+  var import_compose53 = __toESM(require_compose(), 1);
   var import_element274 = __toESM(require_element(), 1);
   var import_data114 = __toESM(require_data(), 1);
   var import_html_entities18 = __toESM(require_html_entities(), 1);
@@ -93073,7 +93215,7 @@ ${content}
         help: (0, import_i18n229.__)("Choose a parent page."),
         value: parentPostId,
         options: parentOptions,
-        onFilterValueChange: (0, import_compose52.debounce)(handleKeydown, 300),
+        onFilterValueChange: (0, import_compose53.debounce)(handleKeydown, 300),
         onChange: handleChange,
         hideLabelFromVision: true,
         isLoading
@@ -93773,7 +93915,7 @@ ${content}
   // packages/editor/build-module/components/block-settings-menu/plugin-block-settings-menu-item.mjs
   var import_block_editor49 = __toESM(require_block_editor(), 1);
   var import_components176 = __toESM(require_components(), 1);
-  var import_compose53 = __toESM(require_compose(), 1);
+  var import_compose54 = __toESM(require_compose(), 1);
   var import_jsx_runtime450 = __toESM(require_jsx_runtime(), 1);
   var isEverySelectedBlockAllowed = (selected, allowed) => selected.filter((id) => !allowed.includes(id)).length === 0;
   var shouldRenderItem = (selectedBlocks, allowedBlocks) => !Array.isArray(allowedBlocks) || isEverySelectedBlockAllowed(selectedBlocks, allowedBlocks);
@@ -93791,7 +93933,7 @@ ${content}
     return /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
       import_components176.MenuItem,
       {
-        onClick: (0, import_compose53.compose)(onClick, onClose),
+        onClick: (0, import_compose54.compose)(onClick, onClose),
         icon,
         label: small ? label : void 0,
         role,
@@ -94315,7 +94457,7 @@ ${content}
   var import_core_data79 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-author/combobox.mjs
-  var import_compose54 = __toESM(require_compose(), 1);
+  var import_compose55 = __toESM(require_compose(), 1);
   var import_element282 = __toESM(require_element(), 1);
   var import_data126 = __toESM(require_data(), 1);
   var import_i18n238 = __toESM(require_i18n(), 1);
@@ -94410,7 +94552,7 @@ ${content}
         label: (0, import_i18n238.__)("Author"),
         options: authorOptions,
         value: authorId,
-        onFilterValueChange: (0, import_compose54.debounce)(setFieldValue, 300),
+        onFilterValueChange: (0, import_compose55.debounce)(setFieldValue, 300),
         onChange: handleSelect,
         allowReset: false,
         hideLabelFromVision: true,
@@ -94978,7 +95120,7 @@ ${content}
   var import_components195 = __toESM(require_components(), 1);
   var import_blob3 = __toESM(require_blob(), 1);
   var import_element287 = __toESM(require_element(), 1);
-  var import_compose55 = __toESM(require_compose(), 1);
+  var import_compose56 = __toESM(require_compose(), 1);
   var import_data137 = __toESM(require_data(), 1);
   var import_block_editor54 = __toESM(require_block_editor(), 1);
   var import_core_data84 = __toESM(require_core_data(), 1);
@@ -95268,7 +95410,7 @@ ${content}
       };
     }
   );
-  var post_featured_image_default = (0, import_compose55.compose)(
+  var post_featured_image_default = (0, import_compose56.compose)(
     import_components195.withNotices,
     applyWithSelect,
     applyWithDispatch,
@@ -95318,7 +95460,7 @@ ${content}
   var import_i18n248 = __toESM(require_i18n(), 1);
   var import_components197 = __toESM(require_components(), 1);
   var import_data140 = __toESM(require_data(), 1);
-  var import_compose56 = __toESM(require_compose(), 1);
+  var import_compose57 = __toESM(require_compose(), 1);
   var import_core_data86 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-format/check.mjs
@@ -95360,7 +95502,7 @@ ${content}
     return 0;
   });
   function PostFormat() {
-    const instanceId = (0, import_compose56.useInstanceId)(PostFormat);
+    const instanceId = (0, import_compose57.useInstanceId)(PostFormat);
     const postFormatSelectorId = `post-format-selector-${instanceId}`;
     const { postFormat, suggestedFormat, supportedFormats } = (0, import_data140.useSelect)(
       (select9) => {
@@ -95524,7 +95666,7 @@ ${content}
   var import_url18 = __toESM(require_url(), 1);
   var import_element288 = __toESM(require_element(), 1);
   var import_hooks51 = __toESM(require_hooks(), 1);
-  var import_compose57 = __toESM(require_compose(), 1);
+  var import_compose58 = __toESM(require_compose(), 1);
   var import_core_data87 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/utils/sync-error-messages.mjs
@@ -95605,7 +95747,7 @@ ${content}
     ) });
   }
   function PostLockedModal() {
-    const instanceId = (0, import_compose57.useInstanceId)(PostLockedModal);
+    const instanceId = (0, import_compose58.useInstanceId)(PostLockedModal);
     const hookName = "core/editor/post-locked-modal-" + instanceId;
     const { autosave: autosave2, updatePostLock: updatePostLock2 } = (0, import_data143.useDispatch)(store);
     const {
@@ -96079,9 +96221,9 @@ ${content}
   // packages/editor/build-module/components/post-publish-button/label.mjs
   var import_i18n254 = __toESM(require_i18n(), 1);
   var import_data147 = __toESM(require_data(), 1);
-  var import_compose58 = __toESM(require_compose(), 1);
+  var import_compose59 = __toESM(require_compose(), 1);
   function PublishButtonLabel() {
-    const isSmallerThanMediumViewport = (0, import_compose58.useViewportMatch)("medium", "<");
+    const isSmallerThanMediumViewport = (0, import_compose59.useViewportMatch)("medium", "<");
     const {
       isPublished,
       isBeingScheduled,
@@ -96263,7 +96405,7 @@ ${content}
   var import_element298 = __toESM(require_element(), 1);
   var import_components215 = __toESM(require_components(), 1);
   var import_data162 = __toESM(require_data(), 1);
-  var import_compose63 = __toESM(require_compose(), 1);
+  var import_compose64 = __toESM(require_compose(), 1);
   var import_core_data98 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-publish-panel/prepublish.mjs
@@ -96278,7 +96420,7 @@ ${content}
   var import_i18n256 = __toESM(require_i18n(), 1);
   var import_element290 = __toESM(require_element(), 1);
   var import_components204 = __toESM(require_components(), 1);
-  var import_compose59 = __toESM(require_compose(), 1);
+  var import_compose60 = __toESM(require_compose(), 1);
   var import_data149 = __toESM(require_data(), 1);
   var import_block_editor55 = __toESM(require_block_editor(), 1);
 
@@ -96308,7 +96450,7 @@ ${content}
     return /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(PrivatePostVisibility, { ...props, showPopoverHeader: true });
   }
   function PrivatePostVisibility({ onClose, showPopoverHeader }) {
-    const instanceId = (0, import_compose59.useInstanceId)(PrivatePostVisibility);
+    const instanceId = (0, import_compose60.useInstanceId)(PrivatePostVisibility);
     const { status, visibility, password } = (0, import_data149.useSelect)((select9) => ({
       status: select9(store).getEditedPostAttribute("status"),
       visibility: select9(store).getEditedPostVisibility(),
@@ -96594,7 +96736,7 @@ ${content}
   var import_components207 = __toESM(require_components(), 1);
   var import_data154 = __toESM(require_data(), 1);
   var import_core_data91 = __toESM(require_core_data(), 1);
-  var import_compose60 = __toESM(require_compose(), 1);
+  var import_compose61 = __toESM(require_compose(), 1);
   var import_a11y13 = __toESM(require_a11y(), 1);
   var import_notices27 = __toESM(require_notices(), 1);
 
@@ -96677,7 +96819,7 @@ ${content}
   function FlatTermSelector({ slug }) {
     const [values, setValues] = (0, import_element292.useState)([]);
     const [search, setSearch] = (0, import_element292.useState)("");
-    const debouncedSearch = (0, import_compose60.useDebounce)(setSearch, 500);
+    const debouncedSearch = (0, import_compose61.useDebounce)(setSearch, 500);
     const {
       terms,
       termIds,
@@ -96997,7 +97139,7 @@ ${content}
   var import_notices28 = __toESM(require_notices(), 1);
   var import_components210 = __toESM(require_components(), 1);
   var import_data157 = __toESM(require_data(), 1);
-  var import_compose61 = __toESM(require_compose(), 1);
+  var import_compose62 = __toESM(require_compose(), 1);
   var import_core_data94 = __toESM(require_core_data(), 1);
   var import_a11y14 = __toESM(require_a11y(), 1);
   var import_html_entities25 = __toESM(require_html_entities(), 1);
@@ -97122,7 +97264,7 @@ ${content}
     const [showForm, setShowForm] = (0, import_element294.useState)(false);
     const [filterValue, setFilterValue] = (0, import_element294.useState)("");
     const deferredFilterValue = (0, import_element294.useDeferredValue)(filterValue);
-    const debouncedSpeak = (0, import_compose61.useDebounce)(import_a11y14.speak, SPEAK_DEBOUNCE_MS);
+    const debouncedSpeak = (0, import_compose62.useDebounce)(import_a11y14.speak, SPEAK_DEBOUNCE_MS);
     const {
       hasCreateAction,
       hasAssignAction,
@@ -97185,7 +97327,7 @@ ${content}
     const onUpdateTerms = (termIds) => {
       editPost2({ [taxonomy.rest_base]: termIds });
     };
-    const onToggleTerm = (0, import_compose61.useEvent)((termId) => {
+    const onToggleTerm = (0, import_compose62.useEvent)((termId) => {
       const id = parseInt(termId, 10);
       onUpdateTerms(
         selectedTerms.has(id) ? terms.filter((term) => term !== id) : [...terms, id]
@@ -97727,7 +97869,7 @@ ${content}
   var import_data161 = __toESM(require_data(), 1);
   var import_url20 = __toESM(require_url(), 1);
   var import_html_entities27 = __toESM(require_html_entities(), 1);
-  var import_compose62 = __toESM(require_compose(), 1);
+  var import_compose63 = __toESM(require_compose(), 1);
   var import_core_data97 = __toESM(require_core_data(), 1);
   var import_jsx_runtime497 = __toESM(require_jsx_runtime(), 1);
   var POSTNAME = "%postname%";
@@ -97745,7 +97887,7 @@ ${content}
   function CopyButton2({ text }) {
     const [showCopyConfirmation, setShowCopyConfirmation] = (0, import_element297.useState)(false);
     const timeoutIdRef = (0, import_element297.useRef)();
-    const ref = (0, import_compose62.useCopyToClipboard)(text, () => {
+    const ref = (0, import_compose63.useCopyToClipboard)(text, () => {
       setShowCopyConfirmation(true);
       if (timeoutIdRef.current) {
         clearTimeout(timeoutIdRef.current);
@@ -97912,15 +98054,15 @@ ${content}
     }, []);
     const { disablePublishSidebar: disablePublishSidebar2, enablePublishSidebar: enablePublishSidebar2 } = (0, import_data162.useDispatch)(store);
     const cancelButtonRef = (0, import_element298.useRef)(null);
-    const wrapperRef = (0, import_compose63.useMergeRefs)([
-      (0, import_compose63.useFocusReturn)(),
-      (0, import_compose63.useConstrainedTabbing)()
+    const wrapperRef = (0, import_compose64.useMergeRefs)([
+      (0, import_compose64.useFocusReturn)(),
+      (0, import_compose64.useConstrainedTabbing)()
     ]);
     (0, import_element298.useEffect)(() => {
       cancelButtonRef.current?.focus();
     }, []);
     const prevPostIdRef = (0, import_element298.useRef)(currentPostId);
-    const stableOnClose = (0, import_compose63.useEvent)(onClose);
+    const stableOnClose = (0, import_compose64.useEvent)(onClose);
     (0, import_element298.useEffect)(() => {
       const postChanged = currentPostId !== prevPostIdRef.current;
       prevPostIdRef.current = currentPostId;
@@ -98000,7 +98142,7 @@ ${content}
 
   // packages/editor/build-module/components/post-saved-state/index.mjs
   var import_components218 = __toESM(require_components(), 1);
-  var import_compose65 = __toESM(require_compose(), 1);
+  var import_compose66 = __toESM(require_compose(), 1);
   var import_data166 = __toESM(require_data(), 1);
   var import_element300 = __toESM(require_element(), 1);
   var import_i18n270 = __toESM(require_i18n(), 1);
@@ -98014,7 +98156,7 @@ ${content}
   var import_element299 = __toESM(require_element(), 1);
   var import_core_data99 = __toESM(require_core_data(), 1);
   var import_block_editor58 = __toESM(require_block_editor(), 1);
-  var import_compose64 = __toESM(require_compose(), 1);
+  var import_compose65 = __toESM(require_compose(), 1);
 
   // packages/editor/build-module/components/post-sticky/index.mjs
   var import_i18n268 = __toESM(require_i18n(), 1);
@@ -98114,7 +98256,7 @@ ${content}
       []
     );
     const [showPassword, setShowPassword] = (0, import_element299.useState)(!!password);
-    const passwordInputId = (0, import_compose64.useInstanceId)(
+    const passwordInputId = (0, import_compose65.useInstanceId)(
       PostStatus,
       "editor-change-status__password-input"
     );
@@ -98280,7 +98422,7 @@ ${content}
   var import_jsx_runtime501 = __toESM(require_jsx_runtime(), 1);
   function PostSavedState({ forceIsDirty }) {
     const [forceSavedMessage, setForceSavedMessage] = (0, import_element300.useState)(false);
-    const isLargeViewport = (0, import_compose65.useViewportMatch)("small");
+    const isLargeViewport = (0, import_compose66.useViewportMatch)("small");
     const {
       isAutosaving,
       isDirty,
@@ -98321,7 +98463,7 @@ ${content}
     );
     const isPending = postStatus === "pending";
     const { savePost: savePost2 } = (0, import_data166.useDispatch)(store);
-    const wasSaving = (0, import_compose65.usePrevious)(isSaving);
+    const wasSaving = (0, import_compose66.usePrevious)(isSaving);
     (0, import_element300.useEffect)(() => {
       let timeoutId;
       if (wasSaving && !isSaving) {
@@ -98650,7 +98792,7 @@ ${content}
   var import_i18n274 = __toESM(require_i18n(), 1);
   var import_core_data102 = __toESM(require_core_data(), 1);
   var import_data174 = __toESM(require_data(), 1);
-  var import_compose66 = __toESM(require_compose(), 1);
+  var import_compose67 = __toESM(require_compose(), 1);
 
   // packages/editor/build-module/components/post-text-editor/utils.mjs
   var STRING_TOO_LARGE_THRESHOLD = 1e3;
@@ -98763,7 +98905,7 @@ ${content}
   // packages/editor/build-module/components/post-text-editor/index.mjs
   var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
   function PostTextEditor() {
-    const instanceId = (0, import_compose66.useInstanceId)(PostTextEditor);
+    const instanceId = (0, import_compose67.useInstanceId)(PostTextEditor);
     const textareaRef = (0, import_element304.useRef)();
     const previousValueRef = (0, import_element304.useRef)();
     const selectionRef = (0, import_element304.useRef)();
@@ -98860,7 +99002,7 @@ ${content}
   var import_keycodes15 = __toESM(require_keycodes(), 1);
   var import_blocks27 = __toESM(require_blocks(), 1);
   var import_rich_text4 = __toESM(require_rich_text(), 1);
-  var import_compose67 = __toESM(require_compose(), 1);
+  var import_compose68 = __toESM(require_compose(), 1);
   var import_dom25 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/post-title/constants.mjs
@@ -99027,7 +99169,7 @@ ${content}
       /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(
         "h1",
         {
-          ref: (0, import_compose67.useMergeRefs)([richTextRef, focusRef]),
+          ref: (0, import_compose68.useMergeRefs)([richTextRef, focusRef]),
           contentEditable: !isEditingContentOnlySection && !isPreview,
           className,
           "aria-label": decodedPlaceholder,
@@ -99193,7 +99335,7 @@ ${content}
   var import_components224 = __toESM(require_components(), 1);
   var import_notices29 = __toESM(require_notices(), 1);
   var import_core_data104 = __toESM(require_core_data(), 1);
-  var import_compose68 = __toESM(require_compose(), 1);
+  var import_compose69 = __toESM(require_compose(), 1);
   var import_jsx_runtime511 = __toESM(require_jsx_runtime(), 1);
   function PostURL({ onClose }) {
     const {
@@ -99226,13 +99368,13 @@ ${content}
     const { editPost: editPost2 } = (0, import_data181.useDispatch)(store);
     const { createNotice } = (0, import_data181.useDispatch)(import_notices29.store);
     const [forceEmptyField, setForceEmptyField] = (0, import_element309.useState)(false);
-    const copyButtonRef = (0, import_compose68.useCopyToClipboard)(permalink, () => {
+    const copyButtonRef = (0, import_compose69.useCopyToClipboard)(permalink, () => {
       createNotice("info", (0, import_i18n278.__)("Copied Permalink to clipboard."), {
         isDismissible: true,
         type: "snackbar"
       });
     });
-    const postUrlSlugDescriptionId = "editor-post-url__slug-description-" + (0, import_compose68.useInstanceId)(PostURL);
+    const postUrlSlugDescriptionId = "editor-post-url__slug-description-" + (0, import_compose69.useInstanceId)(PostURL);
     return /* @__PURE__ */ (0, import_jsx_runtime511.jsxs)("div", { className: "editor-post-url", children: [
       /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(
         import_block_editor61.__experimentalInspectorPopoverHeader,
@@ -99994,7 +100136,7 @@ ${content}
   // packages/editor/build-module/hooks/pattern-overrides.mjs
   var import_hooks55 = __toESM(require_hooks(), 1);
   var import_patterns9 = __toESM(require_patterns(), 1);
-  var import_compose69 = __toESM(require_compose(), 1);
+  var import_compose70 = __toESM(require_compose(), 1);
   var import_block_editor65 = __toESM(require_block_editor(), 1);
   var import_data192 = __toESM(require_data(), 1);
   var import_blocks28 = __toESM(require_blocks(), 1);
@@ -100005,7 +100147,7 @@ ${content}
     PATTERN_TYPES: PATTERN_TYPES5,
     PATTERN_SYNC_TYPES: PATTERN_SYNC_TYPES2
   } = unlock(import_patterns9.privateApis);
-  var withPatternOverrideControls = (0, import_compose69.createHigherOrderComponent)(
+  var withPatternOverrideControls = (0, import_compose70.createHigherOrderComponent)(
     (BlockEdit2) => (props) => {
       const isSupportedBlock = (0, import_data192.useSelect)(
         (select9) => {
@@ -100058,7 +100200,7 @@ ${content}
 
   // packages/editor/build-module/hooks/navigation-link-view-button.mjs
   var import_hooks56 = __toESM(require_hooks(), 1);
-  var import_compose70 = __toESM(require_compose(), 1);
+  var import_compose71 = __toESM(require_compose(), 1);
   var import_element316 = __toESM(require_element(), 1);
   var import_i18n285 = __toESM(require_i18n(), 1);
   var import_block_editor66 = __toESM(require_block_editor(), 1);
@@ -100094,7 +100236,7 @@ ${content}
       }
     ) }) });
   }
-  var withNavigationViewButton = (0, import_compose70.createHigherOrderComponent)(
+  var withNavigationViewButton = (0, import_compose71.createHigherOrderComponent)(
     (BlockEdit2) => (props) => {
       const isSupportedBlock = SUPPORTED_BLOCKS.includes(props.name);
       return /* @__PURE__ */ (0, import_jsx_runtime520.jsxs)(import_jsx_runtime520.Fragment, { children: [
@@ -100112,7 +100254,7 @@ ${content}
 
   // packages/editor/build-module/hooks/template-part-navigation-edit-button.mjs
   var import_hooks57 = __toESM(require_hooks(), 1);
-  var import_compose71 = __toESM(require_compose(), 1);
+  var import_compose72 = __toESM(require_compose(), 1);
   var import_element317 = __toESM(require_element(), 1);
   var import_i18n286 = __toESM(require_i18n(), 1);
   var import_block_editor67 = __toESM(require_block_editor(), 1);
@@ -100185,7 +100327,7 @@ ${content}
       }
     ) }) });
   }
-  var withTemplatePartNavigationEditButton = (0, import_compose71.createHigherOrderComponent)(
+  var withTemplatePartNavigationEditButton = (0, import_compose72.createHigherOrderComponent)(
     (BlockEdit2) => (props) => {
       const isTemplatePart2 = props.name === TEMPLATE_PART_BLOCK_NAME;
       return /* @__PURE__ */ (0, import_jsx_runtime521.jsxs)(import_jsx_runtime521.Fragment, { children: [
@@ -100208,7 +100350,7 @@ ${content}
 
   // packages/editor/build-module/hooks/push-changes-to-global-styles/index.mjs
   var import_hooks59 = __toESM(require_hooks(), 1);
-  var import_compose72 = __toESM(require_compose(), 1);
+  var import_compose73 = __toESM(require_compose(), 1);
   var import_block_editor68 = __toESM(require_block_editor(), 1);
   var import_components231 = __toESM(require_components(), 1);
   var import_i18n289 = __toESM(require_i18n(), 1);
@@ -100967,7 +101109,7 @@ ${content}
     }
     return /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_block_editor68.InspectorAdvancedControls, { children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(PushChangesToGlobalStylesControl, { ...props }) });
   }
-  var withPushChangesToGlobalStyles = (0, import_compose72.createHigherOrderComponent)(
+  var withPushChangesToGlobalStyles = (0, import_compose73.createHigherOrderComponent)(
     (BlockEdit2) => (props) => /* @__PURE__ */ (0, import_jsx_runtime523.jsxs)(import_jsx_runtime523.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(BlockEdit2, { ...props }, "edit"),
       props.isSelected && /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(PushChangesToGlobalStyles, { ...props })
@@ -101066,7 +101208,7 @@ ${content}
   var import_i18n317 = __toESM(require_i18n(), 1);
   var import_preferences24 = __toESM(require_preferences(), 1);
   var import_block_editor87 = __toESM(require_block_editor(), 1);
-  var import_compose89 = __toESM(require_compose(), 1);
+  var import_compose90 = __toESM(require_compose(), 1);
   var import_element347 = __toESM(require_element(), 1);
   var import_html_entities30 = __toESM(require_html_entities(), 1);
   var import_notices33 = __toESM(require_notices(), 1);
@@ -101075,7 +101217,7 @@ ${content}
   // packages/editor/build-module/components/header/index.mjs
   var import_block_editor76 = __toESM(require_block_editor(), 1);
   var import_data207 = __toESM(require_data(), 1);
-  var import_compose78 = __toESM(require_compose(), 1);
+  var import_compose79 = __toESM(require_compose(), 1);
   var import_preferences21 = __toESM(require_preferences(), 1);
   var import_element333 = __toESM(require_element(), 1);
 
@@ -101130,7 +101272,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/document-tools/index.mjs
-  var import_compose73 = __toESM(require_compose(), 1);
+  var import_compose74 = __toESM(require_compose(), 1);
   var import_data198 = __toESM(require_data(), 1);
   var import_i18n292 = __toESM(require_i18n(), 1);
   var import_block_editor70 = __toESM(require_block_editor(), 1);
@@ -101176,7 +101318,7 @@ ${content}
         event.preventDefault();
       }
     };
-    const isWideViewport = (0, import_compose73.useViewportMatch)("wide");
+    const isWideViewport = (0, import_compose74.useViewportMatch)("wide");
     const toolbarAriaLabel = (0, import_i18n292.__)("Document tools");
     const toggleListView = (0, import_element323.useCallback)(
       () => setIsListViewOpened2(!isListViewOpen),
@@ -101341,7 +101483,7 @@ ${content}
   var import_components236 = __toESM(require_components(), 1);
   var import_data199 = __toESM(require_data(), 1);
   var import_i18n293 = __toESM(require_i18n(), 1);
-  var import_compose74 = __toESM(require_compose(), 1);
+  var import_compose75 = __toESM(require_compose(), 1);
   var import_notices31 = __toESM(require_notices(), 1);
   var import_jsx_runtime528 = __toESM(require_jsx_runtime(), 1);
   function CopyContentMenuItem() {
@@ -101356,7 +101498,7 @@ ${content}
         type: "snackbar"
       });
     }
-    const ref = (0, import_compose74.useCopyToClipboard)(getText, onSuccess);
+    const ref = (0, import_compose75.useCopyToClipboard)(getText, onSuccess);
     return /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(import_components236.MenuItem, { ref, children: (0, import_i18n293.__)("Copy all blocks") });
   }
 
@@ -101591,7 +101733,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-publish-button/post-publish-button-or-toggle.mjs
-  var import_compose75 = __toESM(require_compose(), 1);
+  var import_compose76 = __toESM(require_compose(), 1);
   var import_data202 = __toESM(require_data(), 1);
   var import_jsx_runtime533 = __toESM(require_jsx_runtime(), 1);
   var IS_TOGGLE = "toggle";
@@ -101601,7 +101743,7 @@ ${content}
     setEntitiesSavedStatesCallback
   }) {
     let component;
-    const isSmallerThanMediumViewport = (0, import_compose75.useViewportMatch)("medium", "<");
+    const isSmallerThanMediumViewport = (0, import_compose76.useViewportMatch)("medium", "<");
     const { togglePublishSidebar: togglePublishSidebar2 } = (0, import_data202.useDispatch)(store);
     const {
       hasPublishAction,
@@ -101686,7 +101828,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/preview-dropdown/index.mjs
-  var import_compose76 = __toESM(require_compose(), 1);
+  var import_compose77 = __toESM(require_compose(), 1);
   var import_components242 = __toESM(require_components(), 1);
   var import_i18n297 = __toESM(require_i18n(), 1);
   var import_data204 = __toESM(require_data(), 1);
@@ -101772,7 +101914,7 @@ ${content}
         enableComplementaryArea2("core", sidebars.block);
       }
     };
-    const isMobile = (0, import_compose76.useViewportMatch)("medium", "<");
+    const isMobile = (0, import_compose77.useViewportMatch)("medium", "<");
     if (isMobile) {
       return null;
     }
@@ -102643,7 +102785,7 @@ ${content}
   var import_block_editor75 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/overlay.mjs
-  var import_compose77 = __toESM(require_compose(), 1);
+  var import_compose78 = __toESM(require_compose(), 1);
   var import_element331 = __toESM(require_element(), 1);
   var import_i18n303 = __toESM(require_i18n(), 1);
 
@@ -103863,7 +104005,7 @@ ${content}
       rerenderCursorsOnResize();
       rerenderHighlightsOnResize();
     }, [rerenderCursorsOnResize, rerenderHighlightsOnResize]);
-    const resizeObserverRef = (0, import_compose77.useResizeObserver)(onResize);
+    const resizeObserverRef = (0, import_compose78.useResizeObserver)(onResize);
     (0, import_element331.useEffect)(() => {
       const cleanupCursors = rerenderCursorsAfterDelay();
       const cleanupHighlights = rerenderHighlightsAfterDelay();
@@ -103881,7 +104023,7 @@ ${content}
         CURSOR_REDRAW_INTERVAL_MS
       );
     }, [cursors.length, rerenderCursorsAfterDelay]);
-    const mergedRef = (0, import_compose77.useMergeRefs)([
+    const mergedRef = (0, import_compose78.useMergeRefs)([
       setOverlayElement,
       resizeObserverRef
     ]);
@@ -104129,9 +104271,9 @@ ${content}
     forceIsDirty,
     setEntitiesSavedStatesCallback
   }) {
-    const isWideViewport = (0, import_compose78.useViewportMatch)("large");
-    const isLargeViewport = (0, import_compose78.useViewportMatch)("medium");
-    const isTooNarrowForDocumentBar = (0, import_compose78.useMediaQuery)("(max-width: 403px)");
+    const isWideViewport = (0, import_compose79.useViewportMatch)("large");
+    const isLargeViewport = (0, import_compose79.useViewportMatch)("medium");
+    const isTooNarrowForDocumentBar = (0, import_compose79.useMediaQuery)("(max-width: 403px)");
     const {
       postId: postId2,
       postType: postType2,
@@ -104250,7 +104392,7 @@ ${content}
   // packages/editor/build-module/components/inserter-sidebar/index.mjs
   var import_data208 = __toESM(require_data(), 1);
   var import_block_editor77 = __toESM(require_block_editor(), 1);
-  var import_compose79 = __toESM(require_compose(), 1);
+  var import_compose80 = __toESM(require_compose(), 1);
   var import_element334 = __toESM(require_element(), 1);
   var import_preferences22 = __toESM(require_preferences(), 1);
   var import_keycodes18 = __toESM(require_keycodes(), 1);
@@ -104291,7 +104433,7 @@ ${content}
     }, []);
     const { setIsInserterOpened: setIsInserterOpened2 } = (0, import_data208.useDispatch)(store);
     const { disableComplementaryArea: disableComplementaryArea2 } = (0, import_data208.useDispatch)(store3);
-    const isMobileViewport = (0, import_compose79.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose80.useViewportMatch)("medium", "<");
     const libraryRef = (0, import_element334.useRef)();
     const closeInserterSidebar = (0, import_element334.useCallback)(() => {
       setIsInserterOpened2(false);
@@ -104331,7 +104473,7 @@ ${content}
 
   // packages/editor/build-module/components/list-view-sidebar/index.mjs
   var import_block_editor78 = __toESM(require_block_editor(), 1);
-  var import_compose80 = __toESM(require_compose(), 1);
+  var import_compose81 = __toESM(require_compose(), 1);
   var import_data209 = __toESM(require_data(), 1);
   var import_dom27 = __toESM(require_dom(), 1);
   var import_element335 = __toESM(require_element(), 1);
@@ -104387,7 +104529,7 @@ ${content}
     const sidebarRef = (0, import_element335.useRef)();
     const tabsRef = (0, import_element335.useRef)();
     const listViewRef = (0, import_element335.useRef)();
-    const listViewContainerRef = (0, import_compose80.useMergeRefs)([
+    const listViewContainerRef = (0, import_compose81.useMergeRefs)([
       listViewRef,
       setDropZoneElement
     ]);
@@ -104454,7 +104596,7 @@ ${content}
   var import_i18n307 = __toESM(require_i18n(), 1);
   var import_date21 = __toESM(require_date(), 1);
   var import_element336 = __toESM(require_element(), 1);
-  var import_compose81 = __toESM(require_compose(), 1);
+  var import_compose82 = __toESM(require_compose(), 1);
   var import_jsx_runtime547 = __toESM(require_jsx_runtime(), 1);
   function ConnectedRevisionsSlider() {
     const revisionData = (0, import_data210.useSelect)((select9) => {
@@ -104503,7 +104645,7 @@ ${content}
     setCurrentRevisionId: setCurrentRevisionId2,
     setRevisionPage: setRevisionPage2
   }) {
-    const setFocusOnMountRef = (0, import_compose81.useFocusOnMount)(true);
+    const setFocusOnMountRef = (0, import_compose82.useFocusOnMount)(true);
     const initialActiveElementRef = (0, import_element336.useRef)();
     const loadingRef = (0, import_element336.useCallback)((node) => {
       if (node && initialActiveElementRef.current === void 0) {
@@ -104733,7 +104875,7 @@ ${content}
   var import_data218 = __toESM(require_data(), 1);
   var import_blocks33 = __toESM(require_blocks(), 1);
   var import_core_data120 = __toESM(require_core_data(), 1);
-  var import_compose87 = __toESM(require_compose(), 1);
+  var import_compose88 = __toESM(require_compose(), 1);
 
   // packages/editor/build-module/components/visual-editor/edit-template-blocks-notification.mjs
   var import_data212 = __toESM(require_data(), 1);
@@ -104802,7 +104944,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/visual-editor/use-select-nearest-editable-block.mjs
-  var import_compose82 = __toESM(require_compose(), 1);
+  var import_compose83 = __toESM(require_compose(), 1);
   var import_data213 = __toESM(require_data(), 1);
   var import_block_editor79 = __toESM(require_block_editor(), 1);
   var DISTANCE_THRESHOLD = 500;
@@ -104821,7 +104963,7 @@ ${content}
       (0, import_data213.useSelect)(import_block_editor79.store)
     );
     const { selectBlock: selectBlock2 } = (0, import_data213.useDispatch)(import_block_editor79.store);
-    return (0, import_compose82.useRefEffect)(
+    return (0, import_compose83.useRefEffect)(
       (element) => {
         if (!isEnabled) {
           return;
@@ -104874,12 +105016,12 @@ ${content}
 
   // packages/editor/build-module/components/visual-editor/use-zoom-out-mode-exit.mjs
   var import_data214 = __toESM(require_data(), 1);
-  var import_compose83 = __toESM(require_compose(), 1);
+  var import_compose84 = __toESM(require_compose(), 1);
   var import_block_editor80 = __toESM(require_block_editor(), 1);
   function useZoomOutModeExit() {
     const { getSettings: getSettings11, isZoomOut } = unlock((0, import_data214.useSelect)(import_block_editor80.store));
     const { resetZoomLevel } = unlock((0, import_data214.useDispatch)(import_block_editor80.store));
-    return (0, import_compose83.useRefEffect)(
+    return (0, import_compose84.useRefEffect)(
       (node) => {
         function onDoubleClick(event) {
           if (!isZoomOut()) {
@@ -104905,13 +105047,13 @@ ${content}
 
   // packages/editor/build-module/components/visual-editor/use-padding-appender.mjs
   var import_data215 = __toESM(require_data(), 1);
-  var import_compose84 = __toESM(require_compose(), 1);
+  var import_compose85 = __toESM(require_compose(), 1);
   var import_block_editor81 = __toESM(require_block_editor(), 1);
   var import_blocks31 = __toESM(require_blocks(), 1);
   var CSS2 = ':root :where(.editor-styles-wrapper)::after {content: ""; display: block; height: 40vh;}';
   function usePaddingAppender(enabled) {
     const registry = (0, import_data215.useRegistry)();
-    const effect = (0, import_compose84.useRefEffect)(
+    const effect = (0, import_compose85.useRefEffect)(
       (node) => {
         function onMouseDown(event) {
           if (event.target !== node && // Tests for the parent element because in the iframed editor if the click is
@@ -104952,7 +105094,7 @@ ${content}
 
   // packages/editor/build-module/components/visual-editor/use-edit-content-only-section-exit.mjs
   var import_data216 = __toESM(require_data(), 1);
-  var import_compose85 = __toESM(require_compose(), 1);
+  var import_compose86 = __toESM(require_compose(), 1);
   var import_block_editor82 = __toESM(require_block_editor(), 1);
   function useEditContentOnlySectionExit() {
     const { getEditedContentOnlySection } = unlock(
@@ -104961,7 +105103,7 @@ ${content}
     const { stopEditingContentOnlySection } = unlock(
       (0, import_data216.useDispatch)(import_block_editor82.store)
     );
-    return (0, import_compose85.useRefEffect)(
+    return (0, import_compose86.useRefEffect)(
       (node) => {
         function onClick(event) {
           const editedContentOnlySection = getEditedContentOnlySection();
@@ -104987,7 +105129,7 @@ ${content}
 
   // packages/editor/build-module/components/sync-connection-error-modal/index.mjs
   var import_data217 = __toESM(require_data(), 1);
-  var import_compose86 = __toESM(require_compose(), 1);
+  var import_compose87 = __toESM(require_compose(), 1);
   var import_blocks32 = __toESM(require_blocks(), 1);
   var import_core_data119 = __toESM(require_core_data(), 1);
   var import_block_editor83 = __toESM(require_block_editor(), 1);
@@ -105077,7 +105219,7 @@ ${content}
       []
     );
     const { onManualRetry, secondsRemaining } = useRetryCountdown(connectionStatus);
-    const copyButtonRef = (0, import_compose86.useCopyToClipboard)(() => {
+    const copyButtonRef = (0, import_compose87.useCopyToClipboard)(() => {
       const blocks = (0, import_data217.select)(import_block_editor83.store).getBlocks();
       return (0, import_blocks32.serialize)(blocks);
     });
@@ -105256,7 +105398,7 @@ ${content}
     contentRef,
     className
   }) {
-    const isMobileViewport = (0, import_compose87.useViewportMatch)("small", "<");
+    const isMobileViewport = (0, import_compose88.useViewportMatch)("small", "<");
     const {
       renderingMode: renderingMode2,
       postContentAttributes,
@@ -105339,7 +105481,7 @@ ${content}
     const localRef = (0, import_element340.useRef)();
     const [globalLayoutSettings] = (0, import_block_editor84.useSettings)("layout");
     const [containerSize, setContainerSize] = (0, import_element340.useState)();
-    const containerRef = (0, import_compose87.useResizeObserver)((entries) => {
+    const containerRef = (0, import_compose88.useResizeObserver)((entries) => {
       const { width, height } = entries[0].contentRect;
       setContainerSize(
         (size4) => size4?.width === width && size4?.height === height ? size4 : { width, height }
@@ -105466,7 +105608,7 @@ ${content}
       paddingStyle
     ]);
     const typewriterRef = (0, import_block_editor84.__unstableUseTypewriter)();
-    contentRef = (0, import_compose87.useMergeRefs)([
+    contentRef = (0, import_compose88.useMergeRefs)([
       localRef,
       contentRef,
       renderingMode2 === "post-only" ? typewriterRef : null,
@@ -105615,7 +105757,7 @@ ${content}
 
   // packages/editor/build-module/components/post-revisions-preview/diff-markers.mjs
   var import_element341 = __toESM(require_element(), 1);
-  var import_compose88 = __toESM(require_compose(), 1);
+  var import_compose89 = __toESM(require_compose(), 1);
   var import_data219 = __toESM(require_data(), 1);
   var import_block_editor85 = __toESM(require_block_editor(), 1);
   var import_i18n311 = __toESM(require_i18n(), 1);
@@ -105705,7 +105847,7 @@ ${content}
       subscribersRef.current.add(callback);
       return () => subscribersRef.current.delete(callback);
     }, []);
-    const contentRef = (0, import_compose88.useRefEffect)((element) => {
+    const contentRef = (0, import_compose89.useRefEffect)((element) => {
       const { ownerDocument: ownerDocument2 } = element;
       const { defaultView } = ownerDocument2;
       const resizeObserver = new defaultView.ResizeObserver(() => {
@@ -105717,7 +105859,7 @@ ${content}
       };
     }, []);
     return [
-      (0, import_compose88.useMergeRefs)([contentRef, setIsMounted]),
+      (0, import_compose89.useMergeRefs)([contentRef, setIsMounted]),
       /* @__PURE__ */ (0, import_jsx_runtime552.jsx)(
         "div",
         {
@@ -106477,7 +106619,7 @@ ${content}
     }, []);
     const { setShowRevisionDiff: setShowRevisionDiff2 } = unlock((0, import_data225.useDispatch)(store));
     useCollaboratorNotifications(postId2, postType2);
-    const isLargeViewport = (0, import_compose89.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose90.useViewportMatch)("medium");
     const secondarySidebarLabel = isListViewOpened2 ? (0, import_i18n317.__)("Document Overview") : (0, import_i18n317.__)("Block Library");
     const shouldShowStylesCanvas = showStylebook2 || stylesPath2?.startsWith("/revisions");
     const shouldShowBlockEditor = !shouldShowStylesCanvas;
@@ -107418,7 +107560,7 @@ ${content}
 
   // packages/editor/build-module/components/blog-title/index.mjs
   var import_i18n325 = __toESM(require_i18n(), 1);
-  var import_compose90 = __toESM(require_compose(), 1);
+  var import_compose91 = __toESM(require_compose(), 1);
   var import_data235 = __toESM(require_data(), 1);
   var import_core_data130 = __toESM(require_core_data(), 1);
   var import_html_entities32 = __toESM(require_html_entities(), 1);
@@ -107506,7 +107648,7 @@ ${content}
             {
               placeholder: (0, import_i18n325.__)("No title"),
               value: postsPageTitle,
-              onChange: (0, import_compose90.debounce)(setPostsPageTitle, 300),
+              onChange: (0, import_compose91.debounce)(setPostsPageTitle, 300),
               label: (0, import_i18n325.__)("Blog title"),
               help: (0, import_i18n325.__)(
                 "Set the Posts Page title. Appears in search results, and when the page is shared on social media."
@@ -109194,7 +109336,7 @@ ${content}
   var import_i18n351 = __toESM(require_i18n(), 1);
   var import_data265 = __toESM(require_data(), 1);
   var import_element377 = __toESM(require_element(), 1);
-  var import_compose95 = __toESM(require_compose(), 1);
+  var import_compose96 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts13 = __toESM(require_keyboard_shortcuts(), 1);
   var import_block_editor108 = __toESM(require_block_editor(), 1);
   var import_preferences30 = __toESM(require_preferences(), 1);
@@ -109208,7 +109350,7 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
   var import_element372 = __toESM(require_element(), 1);
   var import_components278 = __toESM(require_components(), 1);
-  var import_compose94 = __toESM(require_compose(), 1);
+  var import_compose95 = __toESM(require_compose(), 1);
   var import_i18n346 = __toESM(require_i18n(), 1);
   var import_data260 = __toESM(require_data(), 1);
   var import_dom30 = __toESM(require_dom(), 1);
@@ -109217,7 +109359,7 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_i18n344 = __toESM(require_i18n(), 1);
   var import_element370 = __toESM(require_element(), 1);
-  var import_compose93 = __toESM(require_compose(), 1);
+  var import_compose94 = __toESM(require_compose(), 1);
   var import_data259 = __toESM(require_data(), 1);
   var import_block_editor101 = __toESM(require_block_editor(), 1);
 
@@ -109348,7 +109490,7 @@ ${content}
   var import_element369 = __toESM(require_element(), 1);
   var import_components276 = __toESM(require_components(), 1);
   var import_i18n343 = __toESM(require_i18n(), 1);
-  var import_compose92 = __toESM(require_compose(), 1);
+  var import_compose93 = __toESM(require_compose(), 1);
   var import_keycodes22 = __toESM(require_keycodes(), 1);
   var import_dom29 = __toESM(require_dom(), 1);
 
@@ -109393,7 +109535,7 @@ ${content}
 
   // packages/editor/build-module/components/collab-sidebar/rich-text-control/index.mjs
   var import_components275 = __toESM(require_components(), 1);
-  var import_compose91 = __toESM(require_compose(), 1);
+  var import_compose92 = __toESM(require_compose(), 1);
   var import_element368 = __toESM(require_element(), 1);
   var import_keycodes21 = __toESM(require_keycodes(), 1);
   var import_rich_text8 = __toESM(require_rich_text(), 1);
@@ -109500,7 +109642,7 @@ ${content}
     const keyboardShortcuts = (0, import_element368.useRef)(
       /* @__PURE__ */ new Set()
     );
-    const focusOutside = (0, import_compose91.__experimentalUseFocusOutside)(() => setIsSelected(false));
+    const focusOutside = (0, import_compose92.__experimentalUseFocusOutside)(() => setIsSelected(false));
     const adjustedAllowedFormats = getAllowedFormats({
       allowedFormats,
       disableFormats
@@ -109550,7 +109692,7 @@ ${content}
         onChange: onRichTextChange
       };
     });
-    const enterRef = (0, import_compose91.useRefEffect)(
+    const enterRef = (0, import_compose92.useRefEffect)(
       (element) => {
         if (disabled2) {
           return;
@@ -109579,7 +109721,7 @@ ${content}
       },
       [disableLineBreaks, disabled2]
     );
-    const eventListenersRef = (0, import_compose91.useRefEffect)(
+    const eventListenersRef = (0, import_compose92.useRefEffect)(
       (element) => {
         if (!isSelected2) {
           return;
@@ -109636,7 +109778,7 @@ ${content}
         }
       }
     );
-    const focusOnMountRef = (0, import_compose91.useRefEffect)(
+    const focusOnMountRef = (0, import_compose92.useRefEffect)(
       (element) => {
         if (focusOnMount && !disabled2) {
           element.focus();
@@ -109644,7 +109786,7 @@ ${content}
       },
       [focusOnMount, disabled2]
     );
-    const editableRef = (0, import_compose91.useMergeRefs)([
+    const editableRef = (0, import_compose92.useMergeRefs)([
       richTextRef,
       anchorRef,
       eventListenersRef,
@@ -109720,7 +109862,7 @@ ${content}
       note?.content?.raw ?? ""
     );
     const [isSubmitting, setIsSubmitting] = (0, import_element369.useState)(false);
-    const inputId = (0, import_compose92.useInstanceId)(NoteForm, "comment-input");
+    const inputId = (0, import_compose93.useInstanceId)(NoteForm, "comment-input");
     const trimmedPlainText = sanitizeNoteContent((0, import_dom29.__unstableStripHTML)(inputComment));
     const isDisabled = isSubmitting || inputComment === note?.content?.raw || !trimmedPlainText.length;
     async function submit() {
@@ -109854,7 +109996,7 @@ ${content}
     const { selectNote: selectNote2 } = unlock((0, import_data259.useDispatch)(store));
     const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data259.useSelect)(store));
     const isSubmittingRef = (0, import_element370.useRef)(false);
-    const focusOutside = (0, import_compose93.__experimentalUseFocusOutside)((event) => {
+    const focusOutside = (0, import_compose94.__experimentalUseFocusOutside)((event) => {
       if (event.relatedTarget?.closest(
         ".editor-collab-sidebar-panel__add-note"
       )) {
@@ -110139,7 +110281,7 @@ ${content}
     const { selectNote: selectNote2 } = unlock((0, import_data260.useDispatch)(store));
     const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data260.useSelect)(store));
     const relatedBlockElement = useBlockElement2(note.blockClientId);
-    const debouncedToggleBlockHighlight = (0, import_compose94.useDebounce)(
+    const debouncedToggleBlockHighlight = (0, import_compose95.useDebounce)(
       toggleBlockHighlight,
       50
     );
@@ -110160,7 +110302,7 @@ ${content}
       }
       scrollNoteThreadIntoView(note.id, sidebarRef.current);
     }, [isSelected2, floating?.y, note.id, sidebarRef]);
-    const focusOutside = (0, import_compose94.__experimentalUseFocusOutside)((event) => {
+    const focusOutside = (0, import_compose95.__experimentalUseFocusOutside)((event) => {
       const isNoteFocused2 = event.relatedTarget?.closest(
         ".editor-collab-sidebar-panel__thread"
       );
@@ -111306,7 +111448,7 @@ ${content}
       (0, import_data265.useDispatch)(import_block_editor108.store)
     );
     const { selectNote: selectNote2 } = unlock((0, import_data265.useDispatch)(store));
-    const isLargeViewport = (0, import_compose95.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose96.useViewportMatch)("medium");
     const sidebarRef = (0, import_element377.useRef)(null);
     const { clientId, noteId, isClassicBlock } = (0, import_data265.useSelect)((select9) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select9(import_block_editor108.store);
@@ -111475,7 +111617,7 @@ ${content}
   var import_data268 = __toESM(require_data(), 1);
   var import_element378 = __toESM(require_element(), 1);
   var import_preferences33 = __toESM(require_preferences(), 1);
-  var import_compose96 = __toESM(require_compose(), 1);
+  var import_compose97 = __toESM(require_compose(), 1);
   var import_core_data144 = __toESM(require_core_data(), 1);
   var import_block_editor109 = __toESM(require_block_editor(), 1);
 
@@ -111717,10 +111859,10 @@ ${content}
     const { setStylesPath: setStylesPath2, setShowStylebook: setShowStylebook2, resetStylesNavigation: resetStylesNavigation2 } = unlock(
       (0, import_data268.useDispatch)(store)
     );
-    const isMobileViewport = (0, import_compose96.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose97.useViewportMatch)("medium", "<");
     const isRevisionsOpened = stylesPath2.startsWith("/revisions") && !showStylebook2;
     const isRevisionsStyleBookOpened = stylesPath2.startsWith("/revisions") && showStylebook2;
-    const previousActiveArea = (0, import_compose96.usePrevious)(activeComplementaryArea);
+    const previousActiveArea = (0, import_compose97.usePrevious)(activeComplementaryArea);
     (0, import_element378.useEffect)(() => {
       if (activeComplementaryArea === "edit-site/global-styles" && previousActiveArea !== "edit-site/global-styles") {
         resetStylesNavigation2();
@@ -111932,7 +112074,7 @@ ${content}
 
   // packages/editor/build-module/components/preferences-modal/index.mjs
   var import_i18n357 = __toESM(require_i18n(), 1);
-  var import_compose97 = __toESM(require_compose(), 1);
+  var import_compose98 = __toESM(require_compose(), 1);
   var import_data272 = __toESM(require_data(), 1);
   var import_element380 = __toESM(require_element(), 1);
   var import_preferences36 = __toESM(require_preferences(), 1);
@@ -112075,7 +112217,7 @@ ${content}
     return /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(PreferencesModal, { closeModal: closeModal2, children: /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(PreferencesModalContents, { extraSections }) });
   }
   function PreferencesModalContents({ extraSections = {} }) {
-    const isLargeViewport = (0, import_compose97.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose98.useViewportMatch)("medium");
     const { showBlockBreadcrumbsOption, showCollaborationOptions } = (0, import_data272.useSelect)(
       (select9) => {
         const { getEditorSettings: getEditorSettings2, isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2 } = unlock(select9(store));

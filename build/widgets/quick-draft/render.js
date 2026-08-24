@@ -169,9 +169,9 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React104 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef75 = React104.useRef, useEffect48 = React104.useEffect, useMemo65 = React104.useMemo, useDebugValue2 = React104.useDebugValue;
+      var React104 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef76 = React104.useRef, useEffect48 = React104.useEffect, useMemo65 = React104.useMemo, useDebugValue2 = React104.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
-        var instRef = useRef75(null);
+        var instRef = useRef76(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -980,7 +980,7 @@ var import_data7 = __toESM(require_data());
 
 // packages/dataviews/build-module/dataviews/index.mjs
 var import_element130 = __toESM(require_element(), 1);
-var import_compose22 = __toESM(require_compose(), 1);
+var import_compose23 = __toESM(require_compose(), 1);
 
 // packages/ui/build-module/badge/badge.mjs
 var import_element11 = __toESM(require_element(), 1);
@@ -19674,14 +19674,12 @@ var Root32 = (0, import_element30.forwardRef)(
 );
 
 // packages/ui/build-module/collapsible-card/header.mjs
+var import_compose3 = __toESM(require_compose(), 1);
 var import_element32 = __toESM(require_element(), 1);
 
 // packages/ui/build-module/collapsible-card/context.mjs
 var import_element31 = __toESM(require_element(), 1);
-var HeaderDescriptionIdContext = (0, import_element31.createContext)({
-  setDescriptionId: () => {
-  }
-});
+var HeaderDescriptionIdContext = (0, import_element31.createContext)(null);
 
 // packages/ui/build-module/collapsible-card/header.mjs
 var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
@@ -19766,9 +19764,9 @@ function registerStyle10(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle10("78199613cf", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
+  registerStyle10("64bdb4d46e", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}._92ebbaa30c8a1d05__header-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dd89d27c4f15912d__header-trigger-positioner{align-self:flex-start;flex-shrink:0;margin-block-start:calc(var(--wpds-typography-line-height-sm, 20px)/2);max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
 }
-var style_default10 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
+var style_default10 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-description": "_92ebbaa30c8a1d05__header-description", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
 if (typeof process === "undefined" || true) {
   registerStyle10("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
 }
@@ -19778,12 +19776,57 @@ if (typeof process === "undefined" || true) {
 }
 var focus_module_default3 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
 var Header2 = (0, import_element32.forwardRef)(
-  function CollapsibleCardHeader({ children, className, render: render4, ...restProps }, ref) {
-    const [descriptionId, setDescriptionId] = (0, import_element32.useState)();
-    const contextValue = (0, import_element32.useMemo)(
-      () => ({ setDescriptionId }),
-      [setDescriptionId]
+  function CollapsibleCardHeader({
+    children,
+    className,
+    render: render4,
+    "aria-describedby": ariaDescribedByProp,
+    ...restProps
+  }, ref) {
+    const [descriptionIds, setDescriptionIds] = (0, import_element32.useState)(
+      []
     );
+    const [orderedDescriptionIds, setOrderedDescriptionIds] = (0, import_element32.useState)([]);
+    const headerContentRef = (0, import_element32.useRef)(null);
+    const registerDescriptionId = (0, import_element32.useCallback)((id) => {
+      setDescriptionIds((currentDescriptionIds) => {
+        if (currentDescriptionIds.includes(id)) {
+          return currentDescriptionIds;
+        }
+        return [...currentDescriptionIds, id];
+      });
+      return () => {
+        setDescriptionIds(
+          (currentDescriptionIds) => currentDescriptionIds.filter(
+            (descriptionId) => descriptionId !== id
+          )
+        );
+      };
+    }, []);
+    const contextValue = (0, import_element32.useMemo)(
+      () => ({ registerDescriptionId }),
+      [registerDescriptionId]
+    );
+    (0, import_compose3.useIsomorphicLayoutEffect)(() => {
+      const registeredDescriptionIds = new Set(descriptionIds);
+      const nextDescriptionIds = Array.from(
+        headerContentRef.current?.querySelectorAll("[id]") ?? []
+      ).map((element) => element.id).filter((id) => registeredDescriptionIds.has(id));
+      setOrderedDescriptionIds((currentDescriptionIds) => {
+        if (currentDescriptionIds.length === nextDescriptionIds.length && currentDescriptionIds.every(
+          (id, index2) => id === nextDescriptionIds[index2]
+        )) {
+          return currentDescriptionIds;
+        }
+        return nextDescriptionIds;
+      });
+    });
+    const ariaDescribedBy = Array.from(
+      /* @__PURE__ */ new Set([
+        ...ariaDescribedByProp?.split(/\s+/).filter(Boolean) ?? [],
+        ...orderedDescriptionIds
+      ])
+    ).join(" ") || void 0;
     return useRender({
       defaultTagName: "div",
       render: render4,
@@ -19800,9 +19843,16 @@ var Header2 = (0, import_element32.forwardRef)(
             className: style_default10.header,
             render: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(Header, {}),
             nativeButton: false,
-            "aria-describedby": descriptionId,
+            "aria-describedby": ariaDescribedBy,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime62.jsx)("div", { className: style_default10["header-content"], children }),
+              /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
+                "div",
+                {
+                  ref: headerContentRef,
+                  className: style_default10["header-content"],
+                  children
+                }
+              ),
               /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
                 "div",
                 {
@@ -19842,29 +19892,6 @@ var Header2 = (0, import_element32.forwardRef)(
 // packages/ui/build-module/collapsible-card/header-description.mjs
 var import_element33 = __toESM(require_element(), 1);
 var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
-var HeaderDescription = (0, import_element33.forwardRef)(function CollapsibleCardHeaderDescription({ children, className, ...restProps }, ref) {
-  const descriptionId = (0, import_element33.useId)();
-  const { setDescriptionId } = (0, import_element33.useContext)(HeaderDescriptionIdContext);
-  (0, import_element33.useEffect)(() => {
-    setDescriptionId(descriptionId);
-    return () => setDescriptionId(void 0);
-  }, [descriptionId, setDescriptionId]);
-  return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
-    "div",
-    {
-      ref,
-      id: descriptionId,
-      "aria-hidden": "true",
-      className,
-      ...restProps,
-      children
-    }
-  );
-});
-
-// packages/ui/build-module/collapsible-card/content.mjs
-var import_element34 = __toESM(require_element(), 1);
-var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
 function getRuntime11() {
   const globalScope = globalThis;
@@ -19946,70 +19973,40 @@ function registerStyle11(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle11("78199613cf", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
+  registerStyle11("64bdb4d46e", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}._92ebbaa30c8a1d05__header-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dd89d27c4f15912d__header-trigger-positioner{align-self:flex-start;flex-shrink:0;margin-block-start:calc(var(--wpds-typography-line-height-sm, 20px)/2);max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
 }
-var style_default11 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
-var Content2 = (0, import_element34.forwardRef)(
-  function CollapsibleCardContent({ className, render: render4, children, hiddenUntilFound = true, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
-      Panel,
-      {
-        ref,
-        className: (state) => clsx_default(
-          style_default11.content,
-          state.open && state.transitionStatus === "idle" && style_default11["overflow-visible"],
-          className
-        ),
-        hiddenUntilFound,
-        ...restProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
-          Content,
-          {
-            className: style_default11["content-inner"],
-            render: render4,
-            children
-          }
-        )
-      }
-    );
-  }
-);
-
-// packages/ui/build-module/utils/render-slot-with-children.mjs
-var import_element35 = __toESM(require_element(), 1);
-function renderSlotWithChildren(slot, defaultSlot, children) {
-  return (0, import_element35.cloneElement)(slot ?? defaultSlot, { children });
-}
-
-// packages/ui/build-module/utils/theme-provider.mjs
-var theme = __toESM(require_theme(), 1);
-
-// packages/ui/build-module/lock-unlock.mjs
-var import_private_apis = __toESM(require_private_apis(), 1);
-var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-  "@wordpress/ui"
-);
-
-// packages/ui/build-module/utils/theme-provider.mjs
-function getThemeProvider() {
-  const themePackage = theme;
-  if (themePackage.ThemeProvider) {
-    return themePackage.ThemeProvider;
-  }
-  if (!themePackage.privateApis) {
+var style_default11 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-description": "_92ebbaa30c8a1d05__header-description", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
+var DEFAULT_TAG2 = /* @__PURE__ */ (0, import_jsx_runtime63.jsx)("div", {});
+var HeaderDescription = (0, import_element33.forwardRef)(function CollapsibleCardHeaderDescription({ children, className, id: idProp, render: render4 = DEFAULT_TAG2, ...restProps }, ref) {
+  const generatedId = (0, import_element33.useId)();
+  const descriptionId = idProp ?? generatedId;
+  const context = (0, import_element33.useContext)(HeaderDescriptionIdContext);
+  if (!context) {
     throw new Error(
-      "@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`."
+      "CollapsibleCard.HeaderDescription: Missing parent <CollapsibleCard.Header>. Render <CollapsibleCard.HeaderDescription> inside <CollapsibleCard.Header>."
     );
   }
-  return unlock(
-    themePackage.privateApis
-  ).ThemeProvider;
-}
-var ThemeProvider = getThemeProvider();
+  (0, import_element33.useEffect)(() => {
+    return context?.registerDescriptionId(descriptionId);
+  }, [context, descriptionId]);
+  return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
+    Text,
+    {
+      ref,
+      variant: "body-md",
+      render: render4,
+      id: descriptionId,
+      "aria-hidden": "true",
+      className: clsx_default(style_default11["header-description"], className),
+      ...restProps,
+      children
+    }
+  );
+});
 
-// packages/ui/build-module/stack/stack.mjs
-var import_element36 = __toESM(require_element(), 1);
+// packages/ui/build-module/collapsible-card/content.mjs
+var import_element34 = __toESM(require_element(), 1);
+var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
 function getRuntime12() {
   const globalScope = globalThis;
@@ -20091,55 +20088,70 @@ function registerStyle12(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle12("32aba35fe1", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._19ce0419607e1896__stack{display:flex}}}");
+  registerStyle12("64bdb4d46e", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}._92ebbaa30c8a1d05__header-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dd89d27c4f15912d__header-trigger-positioner{align-self:flex-start;flex-shrink:0;margin-block-start:calc(var(--wpds-typography-line-height-sm, 20px)/2);max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
 }
-var style_default12 = { "stack": "_19ce0419607e1896__stack" };
-var gapTokens = {
-  xs: "var(--wpds-dimension-gap-xs, 4px)",
-  sm: "var(--wpds-dimension-gap-sm, 8px)",
-  md: "var(--wpds-dimension-gap-md, 12px)",
-  lg: "var(--wpds-dimension-gap-lg, 16px)",
-  xl: "var(--wpds-dimension-gap-xl, 24px)",
-  "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
-  "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
-};
-var Stack = (0, import_element36.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
-  const style = {
-    gap: gap && gapTokens[gap],
-    alignItems: align,
-    justifyContent: justify,
-    flexDirection: direction,
-    flexWrap: wrap
-  };
-  const element = useRender({
-    render: render4,
-    ref,
-    props: mergeProps(props, { style, className: style_default12.stack })
-  });
-  return element;
-});
+var style_default12 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-description": "_92ebbaa30c8a1d05__header-description", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
+var Content2 = (0, import_element34.forwardRef)(
+  function CollapsibleCardContent({ className, render: render4, children, hiddenUntilFound = true, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
+      Panel,
+      {
+        ref,
+        className: (state) => clsx_default(
+          style_default12.content,
+          state.open && state.transitionStatus === "idle" && style_default12["overflow-visible"],
+          className
+        ),
+        hiddenUntilFound,
+        ...restProps,
+        children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
+          Content,
+          {
+            className: style_default12["content-inner"],
+            render: render4,
+            children
+          }
+        )
+      }
+    );
+  }
+);
 
-// packages/ui/build-module/icon-button/icon-button.mjs
-var import_element43 = __toESM(require_element(), 1);
+// packages/ui/build-module/utils/render-slot-with-children.mjs
+var import_element35 = __toESM(require_element(), 1);
+function renderSlotWithChildren(slot, defaultSlot, children) {
+  return (0, import_element35.cloneElement)(slot ?? defaultSlot, { children });
+}
 
-// packages/ui/build-module/tooltip/index.mjs
-var tooltip_exports = {};
-__export(tooltip_exports, {
-  Popup: () => Popup,
-  Portal: () => Portal,
-  Positioner: () => Positioner,
-  Provider: () => Provider,
-  Root: () => Root5,
-  Trigger: () => Trigger2
-});
+// packages/ui/build-module/utils/theme-provider.mjs
+var theme = __toESM(require_theme(), 1);
 
-// packages/ui/build-module/tooltip/popup.mjs
-var import_element39 = __toESM(require_element(), 1);
+// packages/ui/build-module/lock-unlock.mjs
+var import_private_apis = __toESM(require_private_apis(), 1);
+var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/ui"
+);
 
-// packages/ui/build-module/tooltip/portal.mjs
-var import_element37 = __toESM(require_element(), 1);
+// packages/ui/build-module/utils/theme-provider.mjs
+function getThemeProvider() {
+  const themePackage = theme;
+  if (themePackage.ThemeProvider) {
+    return themePackage.ThemeProvider;
+  }
+  if (!themePackage.privateApis) {
+    throw new Error(
+      "@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`."
+    );
+  }
+  return unlock(
+    themePackage.privateApis
+  ).ThemeProvider;
+}
+var ThemeProvider = getThemeProvider();
 
-// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
+// packages/ui/build-module/stack/stack.mjs
+var import_element36 = __toESM(require_element(), 1);
 var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
 function getRuntime13() {
   const globalScope = globalThis;
@@ -20221,82 +20233,55 @@ function registerStyle13(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle13("be37f31c1e", "._11fc52b637ff8a7e__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._11fc52b637ff8a7e__slot>*{pointer-events:auto}}}");
+  registerStyle13("32aba35fe1", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._19ce0419607e1896__stack{display:flex}}}");
 }
-var wp_compat_overlay_slot_default = { "slot": "_11fc52b637ff8a7e__slot" };
-var WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
-function resolveOwnerDocument() {
-  return typeof document === "undefined" ? null : document;
-}
-function isInWordPressEnvironment() {
-  let topWp;
-  try {
-    topWp = window.top?.wp;
-  } catch {
-  }
-  const wp = topWp ?? window.wp;
-  return typeof wp?.components === "object" && wp.components !== null;
-}
-var cachedSlot = null;
-function ensureSlotIsAccessible(element) {
-  element.setAttribute("aria-hidden", "false");
+var style_default13 = { "stack": "_19ce0419607e1896__stack" };
+var gapTokens = {
+  xs: "var(--wpds-dimension-gap-xs, 4px)",
+  sm: "var(--wpds-dimension-gap-sm, 8px)",
+  md: "var(--wpds-dimension-gap-md, 12px)",
+  lg: "var(--wpds-dimension-gap-lg, 16px)",
+  xl: "var(--wpds-dimension-gap-xl, 24px)",
+  "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
+  "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
+};
+var Stack = (0, import_element36.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
+  const style = {
+    gap: gap && gapTokens[gap],
+    alignItems: align,
+    justifyContent: justify,
+    flexDirection: direction,
+    flexWrap: wrap
+  };
+  const element = useRender({
+    render: render4,
+    ref,
+    props: mergeProps(props, { style, className: style_default13.stack })
+  });
   return element;
-}
-function createSlot(ownerDocument2) {
-  const element = ownerDocument2.createElement("div");
-  element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
-  if (wp_compat_overlay_slot_default.slot) {
-    element.classList.add(wp_compat_overlay_slot_default.slot);
-  }
-  ownerDocument2.body.appendChild(element);
-  return element;
-}
-function getWpCompatOverlaySlot() {
-  if (typeof window === "undefined") {
-    return void 0;
-  }
-  if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) {
-    return void 0;
-  }
-  const ownerDocument2 = resolveOwnerDocument();
-  if (!ownerDocument2 || !ownerDocument2.body) {
-    return void 0;
-  }
-  if (cachedSlot && cachedSlot.ownerDocument === ownerDocument2 && cachedSlot.isConnected) {
-    return ensureSlotIsAccessible(cachedSlot);
-  }
-  const existing = ownerDocument2.querySelector(
-    `[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`
-  );
-  if (existing instanceof HTMLDivElement) {
-    cachedSlot = ensureSlotIsAccessible(existing);
-    return cachedSlot;
-  }
-  if (cachedSlot?.isConnected) {
-    cachedSlot.remove();
-  }
-  cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument2));
-  return cachedSlot;
-}
+});
+
+// packages/ui/build-module/icon-button/icon-button.mjs
+var import_element43 = __toESM(require_element(), 1);
+
+// packages/ui/build-module/tooltip/index.mjs
+var tooltip_exports = {};
+__export(tooltip_exports, {
+  Popup: () => Popup,
+  Portal: () => Portal,
+  Positioner: () => Positioner,
+  Provider: () => Provider,
+  Root: () => Root5,
+  Trigger: () => Trigger2
+});
+
+// packages/ui/build-module/tooltip/popup.mjs
+var import_element39 = __toESM(require_element(), 1);
 
 // packages/ui/build-module/tooltip/portal.mjs
-var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
-var Portal = (0, import_element37.forwardRef)(
-  function TooltipPortal3({ container, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
-      index_parts_exports3.Portal,
-      {
-        container: container ?? getWpCompatOverlaySlot(),
-        ...restProps,
-        ref
-      }
-    );
-  }
-);
+var import_element37 = __toESM(require_element(), 1);
 
-// packages/ui/build-module/tooltip/positioner.mjs
-var import_element38 = __toESM(require_element(), 1);
-var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
 var STYLE_HASH_ATTRIBUTE14 = "data-wp-hash";
 function getRuntime14() {
   const globalScope = globalThis;
@@ -20378,35 +20363,82 @@ function registerStyle14(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle14("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+  registerStyle14("be37f31c1e", "._11fc52b637ff8a7e__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._11fc52b637ff8a7e__slot>*{pointer-events:auto}}}");
 }
-var resets_default4 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-if (typeof process === "undefined" || true) {
-  registerStyle14("19fcc06039", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
+var wp_compat_overlay_slot_default = { "slot": "_11fc52b637ff8a7e__slot" };
+var WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
+function resolveOwnerDocument() {
+  return typeof document === "undefined" ? null : document;
 }
-var style_default13 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
-var Positioner = (0, import_element38.forwardRef)(
-  function TooltipPositioner3({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
-      index_parts_exports3.Positioner,
+function isInWordPressEnvironment() {
+  let topWp;
+  try {
+    topWp = window.top?.wp;
+  } catch {
+  }
+  const wp = topWp ?? window.wp;
+  return typeof wp?.components === "object" && wp.components !== null;
+}
+var cachedSlot = null;
+function ensureSlotIsAccessible(element) {
+  element.setAttribute("aria-hidden", "false");
+  return element;
+}
+function createSlot(ownerDocument2) {
+  const element = ownerDocument2.createElement("div");
+  element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
+  if (wp_compat_overlay_slot_default.slot) {
+    element.classList.add(wp_compat_overlay_slot_default.slot);
+  }
+  ownerDocument2.body.appendChild(element);
+  return element;
+}
+function getWpCompatOverlaySlot() {
+  if (typeof window === "undefined") {
+    return void 0;
+  }
+  if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) {
+    return void 0;
+  }
+  const ownerDocument2 = resolveOwnerDocument();
+  if (!ownerDocument2 || !ownerDocument2.body) {
+    return void 0;
+  }
+  if (cachedSlot && cachedSlot.ownerDocument === ownerDocument2 && cachedSlot.isConnected) {
+    return ensureSlotIsAccessible(cachedSlot);
+  }
+  const existing = ownerDocument2.querySelector(
+    `[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`
+  );
+  if (existing instanceof HTMLDivElement) {
+    cachedSlot = ensureSlotIsAccessible(existing);
+    return cachedSlot;
+  }
+  if (cachedSlot?.isConnected) {
+    cachedSlot.remove();
+  }
+  cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument2));
+  return cachedSlot;
+}
+
+// packages/ui/build-module/tooltip/portal.mjs
+var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
+var Portal = (0, import_element37.forwardRef)(
+  function TooltipPortal3({ container, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
+      index_parts_exports3.Portal,
       {
-        ref,
-        align,
-        side,
-        sideOffset,
-        ...props,
-        className: clsx_default(
-          resets_default4["box-sizing"],
-          style_default13.positioner,
-          className
-        )
+        container: container ?? getWpCompatOverlaySlot(),
+        ...restProps,
+        ref
       }
     );
   }
 );
 
-// packages/ui/build-module/tooltip/popup.mjs
-var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/tooltip/positioner.mjs
+var import_element38 = __toESM(require_element(), 1);
+var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
 function getRuntime15() {
   const globalScope = globalThis;
@@ -20488,62 +20520,35 @@ function registerStyle15(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
+  registerStyle15("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+}
+var resets_default4 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+if (typeof process === "undefined" || true) {
   registerStyle15("19fcc06039", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
 }
 var style_default14 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
-var POPUP_COLOR = { background: "#1e1e1e" };
-var Popup = (0, import_element39.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
-    index_parts_exports3.Popup,
-    {
-      ref,
-      className: clsx_default(style_default14.popup, className),
-      ...props,
-      children
-    }
-  ) });
-  const positionedPopup = renderSlotWithChildren(
-    positioner,
-    /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(Positioner, {}),
-    popupContent
-  );
-  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(Portal, {}), positionedPopup);
-});
-
-// packages/ui/build-module/tooltip/trigger.mjs
-var import_element40 = __toESM(require_element(), 1);
-var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
-var Trigger2 = (0, import_element40.forwardRef)(
-  function TooltipTrigger3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(index_parts_exports3.Trigger, { ref, ...props });
+var Positioner = (0, import_element38.forwardRef)(
+  function TooltipPositioner3({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+      index_parts_exports3.Positioner,
+      {
+        ref,
+        align,
+        side,
+        sideOffset,
+        ...props,
+        className: clsx_default(
+          resets_default4["box-sizing"],
+          style_default14.positioner,
+          className
+        )
+      }
+    );
   }
 );
 
-// packages/ui/build-module/utils/direction-provider.mjs
-var import_i18n3 = __toESM(require_i18n(), 1);
-var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
-function DirectionProvider3({ children }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(DirectionProvider, { direction: (0, import_i18n3.isRTL)() ? "rtl" : "ltr", children });
-}
-
-// packages/ui/build-module/tooltip/root.mjs
-var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
-function Root5(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(index_parts_exports3.Root, { ...props }) });
-}
-
-// packages/ui/build-module/tooltip/provider.mjs
-var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
-function Provider({ ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(index_parts_exports3.Provider, { ...props });
-}
-
-// packages/ui/build-module/utils/keyboard-shortcut.mjs
-var import_element42 = __toESM(require_element(), 1);
-var import_i18n4 = __toESM(require_i18n(), 1);
-
-// packages/ui/build-module/visually-hidden/visually-hidden.mjs
-var import_element41 = __toESM(require_element(), 1);
+// packages/ui/build-module/tooltip/popup.mjs
+var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
 function getRuntime16() {
   const globalScope = globalThis;
@@ -20625,66 +20630,62 @@ function registerStyle16(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle16("fa606a57ae", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f37b9e2e191ebd66__visually-hidden{word-wrap:normal;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal}}}");
+  registerStyle16("19fcc06039", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
 }
-var style_default15 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
-var VisuallyHidden = (0, import_element41.forwardRef)(
-  function VisuallyHidden2({ render: render4, ...restProps }, ref) {
-    const element = useRender({
-      render: render4,
+var style_default15 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
+var POPUP_COLOR = { background: "#1e1e1e" };
+var Popup = (0, import_element39.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
+    index_parts_exports3.Popup,
+    {
       ref,
-      props: mergeProps(
-        { className: style_default15["visually-hidden"] },
-        restProps,
-        {
-          // @ts-expect-error Arbitrary data-* attributes aren't indexable on the typed div props. Kept hardcoded so consumers can't change or remove it.
-          "data-visually-hidden": ""
-        }
-      )
-    });
-    return element;
+      className: clsx_default(style_default15.popup, className),
+      ...props,
+      children
+    }
+  ) });
+  const positionedPopup = renderSlotWithChildren(
+    positioner,
+    /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(Positioner, {}),
+    popupContent
+  );
+  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(Portal, {}), positionedPopup);
+});
+
+// packages/ui/build-module/tooltip/trigger.mjs
+var import_element40 = __toESM(require_element(), 1);
+var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
+var Trigger2 = (0, import_element40.forwardRef)(
+  function TooltipTrigger3(props, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(index_parts_exports3.Trigger, { ref, ...props });
   }
 );
 
-// packages/ui/build-module/utils/keyboard-shortcut.mjs
-var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
-function useKeyboardShortcutProps({
-  "aria-describedby": ariaDescribedBy,
-  "aria-keyshortcuts": ariaKeyShortcuts,
-  shortcut
-}) {
-  const generatedDescriptionId = (0, import_element42.useId)();
-  const descriptionId = shortcut ? generatedDescriptionId : void 0;
-  const describedBy = [ariaDescribedBy, descriptionId].filter(Boolean).join(" ");
-  return {
-    descriptionId,
-    targetProps: {
-      "aria-describedby": describedBy || void 0,
-      "aria-keyshortcuts": shortcut?.ariaKeyShortcut ?? ariaKeyShortcuts
-    }
-  };
+// packages/ui/build-module/utils/direction-provider.mjs
+var import_i18n3 = __toESM(require_i18n(), 1);
+var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
+function DirectionProvider3({ children }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(DirectionProvider, { direction: (0, import_i18n3.isRTL)() ? "rtl" : "ltr", children });
 }
-var KeyboardShortcutDescription = (0, import_element42.forwardRef)(function KeyboardShortcutDescription2({ descriptionId, shortcut }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-    VisuallyHidden,
-    {
-      id: descriptionId,
-      "aria-hidden": "true",
-      render: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("span", { ref }),
-      children: (0, import_i18n4.sprintf)(
-        /* translators: %s: keyboard shortcut. */
-        (0, import_i18n4.__)("Keyboard shortcut: %s"),
-        shortcut.label ?? shortcut.ariaKeyShortcut
-      )
-    }
-  );
-});
-var KeyboardShortcutDisplay = (0, import_element42.forwardRef)(function KeyboardShortcutDisplay2({ className, shortcut }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
-});
 
-// packages/ui/build-module/icon-button/icon-button.mjs
-var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/tooltip/root.mjs
+var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
+function Root5(props) {
+  return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(index_parts_exports3.Root, { ...props }) });
+}
+
+// packages/ui/build-module/tooltip/provider.mjs
+var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
+function Provider({ ...props }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(index_parts_exports3.Provider, { ...props });
+}
+
+// packages/ui/build-module/utils/keyboard-shortcut.mjs
+var import_element42 = __toESM(require_element(), 1);
+var import_i18n4 = __toESM(require_i18n(), 1);
+
+// packages/ui/build-module/visually-hidden/visually-hidden.mjs
+var import_element41 = __toESM(require_element(), 1);
 var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
 function getRuntime17() {
   const globalScope = globalThis;
@@ -20766,85 +20767,66 @@ function registerStyle17(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle17("c5cdafb1bc", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._28cfdc260e755391__icon-button{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}.f1c70d719989a85a__icon{margin:-1px}}}");
+  registerStyle17("fa606a57ae", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f37b9e2e191ebd66__visually-hidden{word-wrap:normal;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal}}}");
 }
-var style_default16 = { "icon-button": "_28cfdc260e755391__icon-button", "icon": "f1c70d719989a85a__icon" };
-var IconButton = (0, import_element43.forwardRef)(
-  function IconButton2({
-    label,
-    className,
-    // Prevent accidental forwarding of `children`
-    children: _children,
-    disabled: disabled2,
-    focusableWhenDisabled = true,
-    icon,
-    size: size4,
-    shortcut,
-    positioner,
-    "aria-describedby": ariaDescribedBy,
-    "aria-keyshortcuts": ariaKeyShortcuts,
-    ...restProps
-  }, ref) {
-    const classes = clsx_default(style_default16["icon-button"], className);
-    const { descriptionId, targetProps } = useKeyboardShortcutProps({
-      "aria-describedby": ariaDescribedBy,
-      "aria-keyshortcuts": ariaKeyShortcuts,
-      shortcut
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(Root5, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(
-        Trigger2,
+var style_default16 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
+var VisuallyHidden = (0, import_element41.forwardRef)(
+  function VisuallyHidden2({ render: render4, ...restProps }, ref) {
+    const element = useRender({
+      render: render4,
+      ref,
+      props: mergeProps(
+        { className: style_default16["visually-hidden"] },
+        restProps,
         {
-          ref,
-          ...targetProps,
-          disabled: disabled2 && !focusableWhenDisabled,
-          render: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
-            Button4,
-            {
-              ...restProps,
-              size: size4,
-              "aria-label": label,
-              disabled: disabled2,
-              focusableWhenDisabled
-            }
-          ),
-          className: classes,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Icon, { icon, size: 24, className: style_default16.icon }),
-            shortcut && descriptionId && /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
-              KeyboardShortcutDescription,
-              {
-                descriptionId,
-                shortcut
-              }
-            )
-          ]
+          // @ts-expect-error Arbitrary data-* attributes aren't indexable on the typed div props. Kept hardcoded so consumers can't change or remove it.
+          "data-visually-hidden": ""
         }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(Popup, { positioner, children: [
-        label,
-        shortcut && /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(import_jsx_runtime73.Fragment, { children: [
-          " ",
-          /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(KeyboardShortcutDisplay, { shortcut })
-        ] })
-      ] })
-    ] });
+      )
+    });
+    return element;
   }
 );
 
-// packages/ui/build-module/empty-state/index.mjs
-var empty_state_exports = {};
-__export(empty_state_exports, {
-  Actions: () => Actions,
-  Description: () => Description,
-  Icon: () => Icon3,
-  Root: () => Root6,
-  Title: () => Title2,
-  Visual: () => Visual
+// packages/ui/build-module/utils/keyboard-shortcut.mjs
+var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
+function useKeyboardShortcutProps({
+  "aria-describedby": ariaDescribedBy,
+  "aria-keyshortcuts": ariaKeyShortcuts,
+  shortcut
+}) {
+  const generatedDescriptionId = (0, import_element42.useId)();
+  const descriptionId = shortcut ? generatedDescriptionId : void 0;
+  const describedBy = [ariaDescribedBy, descriptionId].filter(Boolean).join(" ");
+  return {
+    descriptionId,
+    targetProps: {
+      "aria-describedby": describedBy || void 0,
+      "aria-keyshortcuts": shortcut?.ariaKeyShortcut ?? ariaKeyShortcuts
+    }
+  };
+}
+var KeyboardShortcutDescription = (0, import_element42.forwardRef)(function KeyboardShortcutDescription2({ descriptionId, shortcut }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
+    VisuallyHidden,
+    {
+      id: descriptionId,
+      "aria-hidden": "true",
+      render: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("span", { ref }),
+      children: (0, import_i18n4.sprintf)(
+        /* translators: %s: keyboard shortcut. */
+        (0, import_i18n4.__)("Keyboard shortcut: %s"),
+        shortcut.label ?? shortcut.ariaKeyShortcut
+      )
+    }
+  );
+});
+var KeyboardShortcutDisplay = (0, import_element42.forwardRef)(function KeyboardShortcutDisplay2({ className, shortcut }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
 });
 
-// packages/ui/build-module/empty-state/root.mjs
-var import_element44 = __toESM(require_element(), 1);
+// packages/ui/build-module/icon-button/icon-button.mjs
+var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
 function getRuntime18() {
   const globalScope = globalThis;
@@ -20926,24 +20908,85 @@ function registerStyle18(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle18("7b60a246cc", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}}');
+  registerStyle18("c5cdafb1bc", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._28cfdc260e755391__icon-button{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}.f1c70d719989a85a__icon{margin:-1px}}}");
 }
-var style_default17 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var Root6 = (0, import_element44.forwardRef)(
-  function EmptyStateRoot({ render: render4, ...props }, ref) {
-    const className = clsx_default(style_default17.root);
-    const element = useRender({
-      defaultTagName: "div",
-      render: render4,
-      ref,
-      props: mergeProps({ className }, props)
+var style_default17 = { "icon-button": "_28cfdc260e755391__icon-button", "icon": "f1c70d719989a85a__icon" };
+var IconButton = (0, import_element43.forwardRef)(
+  function IconButton2({
+    label,
+    className,
+    // Prevent accidental forwarding of `children`
+    children: _children,
+    disabled: disabled2,
+    focusableWhenDisabled = true,
+    icon,
+    size: size4,
+    shortcut,
+    positioner,
+    "aria-describedby": ariaDescribedBy,
+    "aria-keyshortcuts": ariaKeyShortcuts,
+    ...restProps
+  }, ref) {
+    const classes = clsx_default(style_default17["icon-button"], className);
+    const { descriptionId, targetProps } = useKeyboardShortcutProps({
+      "aria-describedby": ariaDescribedBy,
+      "aria-keyshortcuts": ariaKeyShortcuts,
+      shortcut
     });
-    return element;
+    return /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(Root5, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(
+        Trigger2,
+        {
+          ref,
+          ...targetProps,
+          disabled: disabled2 && !focusableWhenDisabled,
+          render: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+            Button4,
+            {
+              ...restProps,
+              size: size4,
+              "aria-label": label,
+              disabled: disabled2,
+              focusableWhenDisabled
+            }
+          ),
+          className: classes,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Icon, { icon, size: 24, className: style_default17.icon }),
+            shortcut && descriptionId && /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+              KeyboardShortcutDescription,
+              {
+                descriptionId,
+                shortcut
+              }
+            )
+          ]
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(Popup, { positioner, children: [
+        label,
+        shortcut && /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(import_jsx_runtime73.Fragment, { children: [
+          " ",
+          /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(KeyboardShortcutDisplay, { shortcut })
+        ] })
+      ] })
+    ] });
   }
 );
 
-// packages/ui/build-module/empty-state/visual.mjs
-var import_element45 = __toESM(require_element(), 1);
+// packages/ui/build-module/empty-state/index.mjs
+var empty_state_exports = {};
+__export(empty_state_exports, {
+  Actions: () => Actions,
+  Description: () => Description,
+  Icon: () => Icon3,
+  Root: () => Root6,
+  Title: () => Title2,
+  Visual: () => Visual
+});
+
+// packages/ui/build-module/empty-state/root.mjs
+var import_element44 = __toESM(require_element(), 1);
 var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
 function getRuntime19() {
   const globalScope = globalThis;
@@ -21028,9 +21071,9 @@ if (typeof process === "undefined" || true) {
   registerStyle19("7b60a246cc", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}}');
 }
 var style_default18 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var Visual = (0, import_element45.forwardRef)(
-  function EmptyStateVisual({ render: render4, ...props }, ref) {
-    const className = clsx_default(style_default18.visual);
+var Root6 = (0, import_element44.forwardRef)(
+  function EmptyStateRoot({ render: render4, ...props }, ref) {
+    const className = clsx_default(style_default18.root);
     const element = useRender({
       defaultTagName: "div",
       render: render4,
@@ -21041,9 +21084,8 @@ var Visual = (0, import_element45.forwardRef)(
   }
 );
 
-// packages/ui/build-module/empty-state/icon.mjs
-var import_element46 = __toESM(require_element(), 1);
-var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/empty-state/visual.mjs
+var import_element45 = __toESM(require_element(), 1);
 var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
 function getRuntime20() {
   const globalScope = globalThis;
@@ -21128,23 +21170,22 @@ if (typeof process === "undefined" || true) {
   registerStyle20("7b60a246cc", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}}');
 }
 var style_default19 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var Icon3 = (0, import_element46.forwardRef)(
-  function EmptyStateIcon({ icon, className, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
-      Visual,
-      {
-        ref,
-        className: clsx_default(style_default19.icon, className),
-        ...restProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(Icon, { icon })
-      }
-    );
+var Visual = (0, import_element45.forwardRef)(
+  function EmptyStateVisual({ render: render4, ...props }, ref) {
+    const className = clsx_default(style_default19.visual);
+    const element = useRender({
+      defaultTagName: "div",
+      render: render4,
+      ref,
+      props: mergeProps({ className }, props)
+    });
+    return element;
   }
 );
 
-// packages/ui/build-module/empty-state/title.mjs
-var import_element47 = __toESM(require_element(), 1);
-var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/empty-state/icon.mjs
+var import_element46 = __toESM(require_element(), 1);
+var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE21 = "data-wp-hash";
 function getRuntime21() {
   const globalScope = globalThis;
@@ -21229,26 +21270,23 @@ if (typeof process === "undefined" || true) {
   registerStyle21("7b60a246cc", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}}');
 }
 var style_default20 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var DEFAULT_TAG2 = /* @__PURE__ */ (0, import_jsx_runtime75.jsx)("h2", {});
-var Title2 = (0, import_element47.forwardRef)(
-  function EmptyStateTitle({ render: render4 = DEFAULT_TAG2, className, children, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
-      Text,
+var Icon3 = (0, import_element46.forwardRef)(
+  function EmptyStateIcon({ icon, className, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+      Visual,
       {
         ref,
-        variant: "heading-lg",
-        render: render4,
-        className: clsx_default(style_default20.title, className),
-        ...props,
-        children
+        className: clsx_default(style_default20.icon, className),
+        ...restProps,
+        children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(Icon, { icon })
       }
     );
   }
 );
 
-// packages/ui/build-module/empty-state/description.mjs
-var import_element48 = __toESM(require_element(), 1);
-var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/empty-state/title.mjs
+var import_element47 = __toESM(require_element(), 1);
+var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
 function getRuntime22() {
   const globalScope = globalThis;
@@ -21333,23 +21371,26 @@ if (typeof process === "undefined" || true) {
   registerStyle22("7b60a246cc", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}}');
 }
 var style_default21 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var DEFAULT_TAG3 = /* @__PURE__ */ (0, import_jsx_runtime76.jsx)("p", {});
-var Description = (0, import_element48.forwardRef)(function EmptyStateDescription({ render: render4 = DEFAULT_TAG3, className, children, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-    Text,
-    {
-      ref,
-      variant: "body-md",
-      render: render4,
-      className: clsx_default(style_default21.description, className),
-      ...props,
-      children
-    }
-  );
-});
+var DEFAULT_TAG3 = /* @__PURE__ */ (0, import_jsx_runtime75.jsx)("h2", {});
+var Title2 = (0, import_element47.forwardRef)(
+  function EmptyStateTitle({ render: render4 = DEFAULT_TAG3, className, children, ...props }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+      Text,
+      {
+        ref,
+        variant: "heading-lg",
+        render: render4,
+        className: clsx_default(style_default21.title, className),
+        ...props,
+        children
+      }
+    );
+  }
+);
 
-// packages/ui/build-module/empty-state/actions.mjs
-var import_element49 = __toESM(require_element(), 1);
+// packages/ui/build-module/empty-state/description.mjs
+var import_element48 = __toESM(require_element(), 1);
+var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
 function getRuntime23() {
   const globalScope = globalThis;
@@ -21434,25 +21475,23 @@ if (typeof process === "undefined" || true) {
   registerStyle23("7b60a246cc", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}}');
 }
 var style_default22 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var Actions = (0, import_element49.forwardRef)(
-  function EmptyStateActions({ render: render4, ...props }, ref) {
-    const className = clsx_default(style_default22.actions);
-    const element = useRender({
-      defaultTagName: "div",
-      render: render4,
+var DEFAULT_TAG4 = /* @__PURE__ */ (0, import_jsx_runtime76.jsx)("p", {});
+var Description = (0, import_element48.forwardRef)(function EmptyStateDescription({ render: render4 = DEFAULT_TAG4, className, children, ...props }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+    Text,
+    {
       ref,
-      props: mergeProps({ className }, props)
-    });
-    return element;
-  }
-);
+      variant: "body-md",
+      render: render4,
+      className: clsx_default(style_default22.description, className),
+      ...props,
+      children
+    }
+  );
+});
 
-// packages/ui/build-module/form/primitives/input/input.mjs
-var import_element52 = __toESM(require_element(), 1);
-
-// packages/ui/build-module/form/primitives/input-layout/input-layout.mjs
-var import_element50 = __toESM(require_element(), 1);
-var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/empty-state/actions.mjs
+var import_element49 = __toESM(require_element(), 1);
 var STYLE_HASH_ATTRIBUTE24 = "data-wp-hash";
 function getRuntime24() {
   const globalScope = globalThis;
@@ -21534,69 +21573,28 @@ function registerStyle24(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle24("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+  registerStyle24("7b60a246cc", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}}');
 }
-var global_css_defense_default5 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
-if (typeof process === "undefined" || true) {
-  registerStyle24("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-}
-var resets_default5 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-if (typeof process === "undefined" || true) {
-  registerStyle24("4767ce195b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cb2baafdc08746bb__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:max(var(--wpds-typography-font-size-md,13px),16px);height:var(--wpds-dimension-size-lg,40px);line-height:1;@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}&._0c807a84cbb94e0c__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&._0c807a84cbb94e0c__is-size-compact,&.ed67cda122dc1e7b__is-size-small{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.ed67cda122dc1e7b__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._6fb7104732387680__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&._8097270636ca6100__is-borderless{border-color:transparent}&:has(._0d7afad74a057888__input-layout-slot:focus-within){outline:none}&:hover:not(._6fb7104732387680__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._8097270636ca6100__is-borderless){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}.c192b41a12b4387b__slot-wrapper{display:contents}._0d7afad74a057888__input-layout-slot{align-items:center;display:flex;&._0c952682762ca288__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}');
-}
-var style_default23 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
-var InputLayout = (0, import_element50.forwardRef)(
-  function InputLayout2({
-    className,
-    children,
-    visuallyDisabled,
-    size: size4 = "default",
-    isBorderless,
-    prefix,
-    suffix,
-    ...restProps
-  }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
-      "div",
-      {
-        ref,
-        className: clsx_default(
-          global_css_defense_default5.div,
-          resets_default5["box-sizing"],
-          style_default23["input-layout"],
-          style_default23[`is-size-${size4}`],
-          visuallyDisabled && style_default23["is-disabled"],
-          isBorderless && style_default23["is-borderless"],
-          className
-        ),
-        ...restProps,
-        children: [
-          import_element50.Children.count(prefix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-            "div",
-            {
-              className: style_default23["slot-wrapper"],
-              "data-slot-type": "prefix",
-              children: prefix
-            }
-          ),
-          children,
-          import_element50.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-            "div",
-            {
-              className: style_default23["slot-wrapper"],
-              "data-slot-type": "suffix",
-              children: suffix
-            }
-          )
-        ]
-      }
-    );
+var style_default23 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
+var Actions = (0, import_element49.forwardRef)(
+  function EmptyStateActions({ render: render4, ...props }, ref) {
+    const className = clsx_default(style_default23.actions);
+    const element = useRender({
+      defaultTagName: "div",
+      render: render4,
+      ref,
+      props: mergeProps({ className }, props)
+    });
+    return element;
   }
 );
 
-// packages/ui/build-module/form/primitives/input-layout/slot.mjs
-var import_element51 = __toESM(require_element(), 1);
-var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/primitives/input/input.mjs
+var import_element52 = __toESM(require_element(), 1);
+
+// packages/ui/build-module/form/primitives/input-layout/input-layout.mjs
+var import_element50 = __toESM(require_element(), 1);
+var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE25 = "data-wp-hash";
 function getRuntime25() {
   const globalScope = globalThis;
@@ -21678,32 +21676,69 @@ function registerStyle25(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
+  registerStyle25("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+}
+var global_css_defense_default5 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+if (typeof process === "undefined" || true) {
+  registerStyle25("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+}
+var resets_default5 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+if (typeof process === "undefined" || true) {
   registerStyle25("4767ce195b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cb2baafdc08746bb__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:max(var(--wpds-typography-font-size-md,13px),16px);height:var(--wpds-dimension-size-lg,40px);line-height:1;@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}&._0c807a84cbb94e0c__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&._0c807a84cbb94e0c__is-size-compact,&.ed67cda122dc1e7b__is-size-small{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.ed67cda122dc1e7b__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._6fb7104732387680__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&._8097270636ca6100__is-borderless{border-color:transparent}&:has(._0d7afad74a057888__input-layout-slot:focus-within){outline:none}&:hover:not(._6fb7104732387680__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._8097270636ca6100__is-borderless){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}.c192b41a12b4387b__slot-wrapper{display:contents}._0d7afad74a057888__input-layout-slot{align-items:center;display:flex;&._0c952682762ca288__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}');
 }
 var style_default24 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
-var InputLayoutSlot = (0, import_element51.forwardRef)(function InputLayoutSlot2({ padding = "default", className, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
-    "div",
-    {
-      ref,
-      className: clsx_default(
-        style_default24["input-layout-slot"],
-        style_default24[`is-padding-${padding}`],
-        className
-      ),
-      ...restProps
-    }
-  );
-});
-InputLayoutSlot.displayName = "InputLayout.Slot";
+var InputLayout = (0, import_element50.forwardRef)(
+  function InputLayout2({
+    className,
+    children,
+    visuallyDisabled,
+    size: size4 = "default",
+    isBorderless,
+    prefix,
+    suffix,
+    ...restProps
+  }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(
+      "div",
+      {
+        ref,
+        className: clsx_default(
+          global_css_defense_default5.div,
+          resets_default5["box-sizing"],
+          style_default24["input-layout"],
+          style_default24[`is-size-${size4}`],
+          visuallyDisabled && style_default24["is-disabled"],
+          isBorderless && style_default24["is-borderless"],
+          className
+        ),
+        ...restProps,
+        children: [
+          import_element50.Children.count(prefix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+            "div",
+            {
+              className: style_default24["slot-wrapper"],
+              "data-slot-type": "prefix",
+              children: prefix
+            }
+          ),
+          children,
+          import_element50.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+            "div",
+            {
+              className: style_default24["slot-wrapper"],
+              "data-slot-type": "suffix",
+              children: suffix
+            }
+          )
+        ]
+      }
+    );
+  }
+);
 
-// packages/ui/build-module/form/primitives/input-layout/index.mjs
-var InputLayout3 = Object.assign(InputLayout, {
-  Slot: InputLayoutSlot
-});
-
-// packages/ui/build-module/form/primitives/input/input.mjs
-var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/primitives/input-layout/slot.mjs
+var import_element51 = __toESM(require_element(), 1);
+var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE26 = "data-wp-hash";
 function getRuntime26() {
   const globalScope = globalThis;
@@ -21785,49 +21820,32 @@ function registerStyle26(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle26("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+  registerStyle26("4767ce195b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cb2baafdc08746bb__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:max(var(--wpds-typography-font-size-md,13px),16px);height:var(--wpds-dimension-size-lg,40px);line-height:1;@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}&._0c807a84cbb94e0c__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&._0c807a84cbb94e0c__is-size-compact,&.ed67cda122dc1e7b__is-size-small{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.ed67cda122dc1e7b__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._6fb7104732387680__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&._8097270636ca6100__is-borderless{border-color:transparent}&:has(._0d7afad74a057888__input-layout-slot:focus-within){outline:none}&:hover:not(._6fb7104732387680__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._8097270636ca6100__is-borderless){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}.c192b41a12b4387b__slot-wrapper{display:contents}._0d7afad74a057888__input-layout-slot{align-items:center;display:flex;&._0c952682762ca288__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}');
 }
-var global_css_defense_default6 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
-if (typeof process === "undefined" || true) {
-  registerStyle26("96553466c8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-}
-var focus_module_default4 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
-if (typeof process === "undefined" || true) {
-  registerStyle26("41fce05ee0", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._2ae7be2fc1bb17a3__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&:disabled,&[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}}");
-}
-var style_default25 = { "input": "_2ae7be2fc1bb17a3__input" };
-var Input3 = (0, import_element52.forwardRef)(function Input22({ className, size: size4 = "default", prefix, suffix, style, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
-    InputLayout3,
+var style_default25 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
+var InputLayoutSlot = (0, import_element51.forwardRef)(function InputLayoutSlot2({ padding = "default", className, ...restProps }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
+    "div",
     {
+      ref,
       className: clsx_default(
-        focus_module_default4["outset-ring--focus-within"],
+        style_default25["input-layout-slot"],
+        style_default25[`is-padding-${padding}`],
         className
       ),
-      style,
-      size: size4,
-      visuallyDisabled: restProps.disabled,
-      prefix,
-      suffix,
-      children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
-        Input,
-        {
-          ref,
-          className: clsx_default(global_css_defense_default6.input, style_default25.input),
-          ...restProps
-        }
-      )
+      ...restProps
     }
   );
 });
+InputLayoutSlot.displayName = "InputLayout.Slot";
 
-// packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
-var import_i18n5 = __toESM(require_i18n(), 1);
-var import_element54 = __toESM(require_element(), 1);
+// packages/ui/build-module/form/primitives/input-layout/index.mjs
+var InputLayout3 = Object.assign(InputLayout, {
+  Slot: InputLayoutSlot
+});
 
-// packages/ui/build-module/spinner/spinner.mjs
-var import_element53 = __toESM(require_element(), 1);
-var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/primitives/input/input.mjs
+var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE27 = "data-wp-hash";
 function getRuntime27() {
   const globalScope = globalThis;
@@ -21909,48 +21927,49 @@ function registerStyle27(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle27("bbbecfe373", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.ab4d64c07c0ba587__spinner{background-color:transparent;display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}.a7654e10245bb7d2__indicator,.dc51f80c84b35fe2__track{fill:transparent;stroke-width:1.5px}.dc51f80c84b35fe2__track{stroke:var(--wpds-color-background-track-neutral,#dbdbdb)}.a7654e10245bb7d2__indicator{stroke:var(--wpds-color-background-thumb-brand,var(--wp-admin-theme-color,#3858e9));stroke-linecap:round;animation:_02322d973909703c__spinner-spin 1.4s linear infinite both;transform-origin:50% 50%}@keyframes _02322d973909703c__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
+  registerStyle27("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
 }
-var style_default26 = { "spinner": "ab4d64c07c0ba587__spinner", "track": "dc51f80c84b35fe2__track", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
-var Spinner = (0, import_element53.forwardRef)(
-  function Spinner2({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(
-      "svg",
-      {
-        className: clsx_default(style_default26.spinner, className),
-        viewBox: "0 0 100 100",
-        xmlns: "http://www.w3.org/2000/svg",
-        role: "presentation",
-        focusable: "false",
-        ...props,
-        ref,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
-            "circle",
-            {
-              className: style_default26.track,
-              cx: "50",
-              cy: "50",
-              r: "50",
-              vectorEffect: "non-scaling-stroke"
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
-            "path",
-            {
-              className: style_default26.indicator,
-              d: "m 50 0 a 50 50 0 0 1 50 50",
-              vectorEffect: "non-scaling-stroke"
-            }
-          )
-        ]
-      }
-    );
-  }
-);
+var global_css_defense_default6 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+if (typeof process === "undefined" || true) {
+  registerStyle27("96553466c8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+}
+var focus_module_default4 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
+if (typeof process === "undefined" || true) {
+  registerStyle27("41fce05ee0", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._2ae7be2fc1bb17a3__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&:disabled,&[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}}");
+}
+var style_default26 = { "input": "_2ae7be2fc1bb17a3__input" };
+var Input3 = (0, import_element52.forwardRef)(function Input22({ className, size: size4 = "default", prefix, suffix, style, ...restProps }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
+    InputLayout3,
+    {
+      className: clsx_default(
+        focus_module_default4["outset-ring--focus-within"],
+        className
+      ),
+      style,
+      size: size4,
+      visuallyDisabled: restProps.disabled,
+      prefix,
+      suffix,
+      children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
+        Input,
+        {
+          ref,
+          className: clsx_default(global_css_defense_default6.input, style_default26.input),
+          ...restProps
+        }
+      )
+    }
+  );
+});
 
-// packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
-var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
+var import_i18n5 = __toESM(require_i18n(), 1);
+var import_element54 = __toESM(require_element(), 1);
+
+// packages/ui/build-module/spinner/spinner.mjs
+var import_element53 = __toESM(require_element(), 1);
+var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE28 = "data-wp-hash";
 function getRuntime28() {
   const globalScope = globalThis;
@@ -22032,13 +22051,136 @@ function registerStyle28(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle28("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+  registerStyle28("bbbecfe373", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.ab4d64c07c0ba587__spinner{background-color:transparent;display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}.a7654e10245bb7d2__indicator,.dc51f80c84b35fe2__track{fill:transparent;stroke-width:1.5px}.dc51f80c84b35fe2__track{stroke:var(--wpds-color-background-track-neutral,#dbdbdb)}.a7654e10245bb7d2__indicator{stroke:var(--wpds-color-background-thumb-brand,var(--wp-admin-theme-color,#3858e9));stroke-linecap:round;animation:_02322d973909703c__spinner-spin 1.4s linear infinite both;transform-origin:50% 50%}@keyframes _02322d973909703c__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
+}
+var style_default27 = { "spinner": "ab4d64c07c0ba587__spinner", "track": "dc51f80c84b35fe2__track", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
+var Spinner = (0, import_element53.forwardRef)(
+  function Spinner2({ className, ...props }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(
+      "svg",
+      {
+        className: clsx_default(style_default27.spinner, className),
+        viewBox: "0 0 100 100",
+        xmlns: "http://www.w3.org/2000/svg",
+        role: "presentation",
+        focusable: "false",
+        ...props,
+        ref,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+            "circle",
+            {
+              className: style_default27.track,
+              cx: "50",
+              cy: "50",
+              r: "50",
+              vectorEffect: "non-scaling-stroke"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+            "path",
+            {
+              className: style_default27.indicator,
+              d: "m 50 0 a 50 50 0 0 1 50 50",
+              vectorEffect: "non-scaling-stroke"
+            }
+          )
+        ]
+      }
+    );
+  }
+);
+
+// packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
+var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE29 = "data-wp-hash";
+function getRuntime29() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument29(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash29(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE29}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE29) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle29(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime29();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash29(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE29, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument29(targetDocument) {
+  const runtime = getRuntime29();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle29(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle29(hash, css) {
+  const runtime = getRuntime29();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle29(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle29("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
 }
 var global_css_defense_default7 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
 if (typeof process === "undefined" || true) {
-  registerStyle28("d7b0469ef4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7a7ac88e306348e7__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:var(--wpds-dimension-gap-sm,8px) 0 0;align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);margin-block:var(--wpds-dimension-gap-sm,8px) 0;margin-inline:0;@media not (prefers-reduced-motion){animation:_48722cc5dd090ce4__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._57a3bbbfbe38a5c6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._9e944dc198aac10b__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}.e482806667437c6a__indicator-icon{flex-shrink:0}._6e46434cc23019d2__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _48722cc5dd090ce4__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}');
+  registerStyle29("d7b0469ef4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7a7ac88e306348e7__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:var(--wpds-dimension-gap-sm,8px) 0 0;align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);margin-block:var(--wpds-dimension-gap-sm,8px) 0;margin-inline:0;@media not (prefers-reduced-motion){animation:_48722cc5dd090ce4__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._57a3bbbfbe38a5c6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._9e944dc198aac10b__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}.e482806667437c6a__indicator-icon{flex-shrink:0}._6e46434cc23019d2__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _48722cc5dd090ce4__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}');
 }
-var style_default27 = { "indicator": "_7a7ac88e306348e7__indicator", "indicator-jump": "_48722cc5dd090ce4__indicator-jump", "is-invalid": "_57a3bbbfbe38a5c6__is-invalid", "is-valid": "_9e944dc198aac10b__is-valid", "indicator-icon": "e482806667437c6a__indicator-icon", "indicator-spinner": "_6e46434cc23019d2__indicator-spinner" };
+var style_default28 = { "indicator": "_7a7ac88e306348e7__indicator", "indicator-jump": "_48722cc5dd090ce4__indicator-jump", "is-invalid": "_57a3bbbfbe38a5c6__is-invalid", "is-valid": "_9e944dc198aac10b__is-valid", "indicator-icon": "e482806667437c6a__indicator-icon", "indicator-spinner": "_6e46434cc23019d2__indicator-spinner" };
 var ICON = {
   valid: published_default,
   invalid: error_default
@@ -22054,14 +22196,14 @@ function ValidityIndicator({
       id,
       className: clsx_default(
         global_css_defense_default7.p,
-        style_default27.indicator,
-        style_default27[`is-${type}`]
+        style_default28.indicator,
+        style_default28[`is-${type}`]
       ),
       children: [
-        type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(Spinner, { className: style_default27["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+        type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(Spinner, { className: style_default28["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
           Icon,
           {
-            className: style_default27["indicator-icon"],
+            className: style_default28["indicator-icon"],
             icon: ICON[type],
             size: 16,
             fill: "currentColor"
@@ -22292,113 +22434,6 @@ __export(field_exports, {
 // packages/ui/build-module/form/primitives/field/root.mjs
 var import_element55 = __toESM(require_element(), 1);
 var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE29 = "data-wp-hash";
-function getRuntime29() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument29(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash29(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE29}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE29) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle29(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime29();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash29(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE29, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument29(targetDocument) {
-  const runtime = getRuntime29();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle29(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle29(hash, css) {
-  const runtime = getRuntime29();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle29(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle29("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-}
-var resets_default6 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
-var Root7 = (0, import_element55.forwardRef)(function Root22({ className, render: render4 = DEFAULT_RENDER, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
-    index_parts_exports2.Root,
-    {
-      ref,
-      className: clsx_default(resets_default6["box-sizing"], className),
-      render: render4,
-      ...restProps
-    }
-  );
-});
-
-// packages/ui/build-module/form/primitives/field/item.mjs
-var import_element56 = __toESM(require_element(), 1);
-var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
-var Item = (0, import_element56.forwardRef)(function Item2(props, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(index_parts_exports2.Item, { ref, ...props });
-});
-
-// packages/ui/build-module/form/primitives/field/label.mjs
-var import_element57 = __toESM(require_element(), 1);
-var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE30 = "data-wp-hash";
 function getRuntime30() {
   const globalScope = globalThis;
@@ -22480,33 +22515,32 @@ function registerStyle30(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle30("e08ffbfdae", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
+  registerStyle30("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 }
-var field_default = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
-var Label = (0, import_element57.forwardRef)(
-  function Label2({ className, hideFromVision, variant, ...restProps }, ref) {
-    const label = /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
-      index_parts_exports2.Label,
-      {
-        ref,
-        className: clsx_default(
-          field_default.label,
-          variant && field_default[`is-${variant}`],
-          className
-        ),
-        ...restProps
-      }
-    );
-    if (hideFromVision) {
-      return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(VisuallyHidden, { render: label });
+var resets_default6 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
+var Root7 = (0, import_element55.forwardRef)(function Root22({ className, render: render4 = DEFAULT_RENDER, ...restProps }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+    index_parts_exports2.Root,
+    {
+      ref,
+      className: clsx_default(resets_default6["box-sizing"], className),
+      render: render4,
+      ...restProps
     }
-    return label;
-  }
-);
+  );
+});
 
-// packages/ui/build-module/form/primitives/field/description.mjs
-var import_element58 = __toESM(require_element(), 1);
-var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/primitives/field/item.mjs
+var import_element56 = __toESM(require_element(), 1);
+var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
+var Item = (0, import_element56.forwardRef)(function Item2(props, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(index_parts_exports2.Item, { ref, ...props });
+});
+
+// packages/ui/build-module/form/primitives/field/label.mjs
+var import_element57 = __toESM(require_element(), 1);
+var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE31 = "data-wp-hash";
 function getRuntime31() {
   const globalScope = globalThis;
@@ -22588,32 +22622,33 @@ function registerStyle31(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle31("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
-}
-var global_css_defense_default8 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
-if (typeof process === "undefined" || true) {
   registerStyle31("e08ffbfdae", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
 }
-var field_default2 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
-var Description2 = (0, import_element58.forwardRef)(function Description22({ className, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
-    index_parts_exports2.Description,
-    {
-      ref,
-      className: clsx_default(
-        global_css_defense_default8.p,
-        field_default2.description,
-        className
-      ),
-      ...restProps
+var field_default = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
+var Label = (0, import_element57.forwardRef)(
+  function Label2({ className, hideFromVision, variant, ...restProps }, ref) {
+    const label = /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+      index_parts_exports2.Label,
+      {
+        ref,
+        className: clsx_default(
+          field_default.label,
+          variant && field_default[`is-${variant}`],
+          className
+        ),
+        ...restProps
+      }
+    );
+    if (hideFromVision) {
+      return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(VisuallyHidden, { render: label });
     }
-  );
-});
+    return label;
+  }
+);
 
-// packages/ui/build-module/form/primitives/field/details.mjs
-var import_element59 = __toESM(require_element(), 1);
-var import_i18n6 = __toESM(require_i18n(), 1);
-var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/primitives/field/description.mjs
+var import_element58 = __toESM(require_element(), 1);
+var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE32 = "data-wp-hash";
 function getRuntime32() {
   const globalScope = globalThis;
@@ -22695,78 +22730,32 @@ function registerStyle32(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
+  registerStyle32("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+}
+var global_css_defense_default8 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+if (typeof process === "undefined" || true) {
   registerStyle32("e08ffbfdae", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
 }
-var field_default3 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
-var Details = (0, import_element59.forwardRef)(
-  function Details2({ className, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(import_jsx_runtime87.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(index_parts_exports2.Description, {}), children: (0, import_i18n6.__)("More details follow the field.") }),
-      /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
-        "div",
-        {
-          ref,
-          className: clsx_default(field_default3.description, className),
-          ...restProps
-        }
-      )
-    ] });
-  }
-);
-
-// packages/ui/build-module/form/primitives/field/control.mjs
-var import_element60 = __toESM(require_element(), 1);
-var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
-var Control = (0, import_element60.forwardRef)(
-  function Control2(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(index_parts_exports2.Control, { ref, ...props });
-  }
-);
-
-// packages/ui/build-module/form/input-control/input-control.mjs
-var import_element61 = __toESM(require_element(), 1);
-var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
-var InputControl = (0, import_element61.forwardRef)(
-  function InputControl2({
-    className,
-    label,
-    description,
-    details,
-    hideLabelFromVision,
-    ...restProps
-  }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(field_exports.Root, { className, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(Input3, { ref, ...restProps }),
-      description && /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(field_exports.Description, { children: description }),
-      details && /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(field_exports.Details, { children: details })
-    ] });
-  }
-);
-
-// packages/ui/build-module/form/with-validation/validated-input-control/validated-input-control.mjs
-var import_element62 = __toESM(require_element(), 1);
-var import_compose3 = __toESM(require_compose(), 1);
-var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
-var ValidatedInputControl = (0, import_element62.forwardRef)(function ValidatedInputControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
-  const validityTargetRef = (0, import_element62.useRef)(null);
-  const mergedRefs = (0, import_compose3.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
-    ControlWithError,
+var field_default2 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
+var Description2 = (0, import_element58.forwardRef)(function Description22({ className, ...restProps }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+    index_parts_exports2.Description,
     {
-      required,
-      markWhenOptional,
-      customValidity,
-      getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(InputControl, { ref: mergedRefs, ...restProps })
+      ref,
+      className: clsx_default(
+        global_css_defense_default8.p,
+        field_default2.description,
+        className
+      ),
+      ...restProps
     }
   );
 });
 
-// packages/ui/build-module/link/link.mjs
-var import_element63 = __toESM(require_element(), 1);
-var import_i18n7 = __toESM(require_i18n(), 1);
-var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/primitives/field/details.mjs
+var import_element59 = __toESM(require_element(), 1);
+var import_i18n6 = __toESM(require_i18n(), 1);
+var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE33 = "data-wp-hash";
 function getRuntime33() {
   const globalScope = globalThis;
@@ -22848,19 +22837,172 @@ function registerStyle33(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle33("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+  registerStyle33("e08ffbfdae", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
+}
+var field_default3 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
+var Details = (0, import_element59.forwardRef)(
+  function Details2({ className, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(import_jsx_runtime87.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(index_parts_exports2.Description, {}), children: (0, import_i18n6.__)("More details follow the field.") }),
+      /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+        "div",
+        {
+          ref,
+          className: clsx_default(field_default3.description, className),
+          ...restProps
+        }
+      )
+    ] });
+  }
+);
+
+// packages/ui/build-module/form/primitives/field/control.mjs
+var import_element60 = __toESM(require_element(), 1);
+var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
+var Control = (0, import_element60.forwardRef)(
+  function Control2(props, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(index_parts_exports2.Control, { ref, ...props });
+  }
+);
+
+// packages/ui/build-module/form/input-control/input-control.mjs
+var import_element61 = __toESM(require_element(), 1);
+var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
+var InputControl = (0, import_element61.forwardRef)(
+  function InputControl2({
+    className,
+    label,
+    description,
+    details,
+    hideLabelFromVision,
+    ...restProps
+  }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(field_exports.Root, { className, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(Input3, { ref, ...restProps }),
+      description && /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(field_exports.Description, { children: description }),
+      details && /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(field_exports.Details, { children: details })
+    ] });
+  }
+);
+
+// packages/ui/build-module/form/with-validation/validated-input-control/validated-input-control.mjs
+var import_element62 = __toESM(require_element(), 1);
+var import_compose4 = __toESM(require_compose(), 1);
+var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
+var ValidatedInputControl = (0, import_element62.forwardRef)(function ValidatedInputControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
+  const validityTargetRef = (0, import_element62.useRef)(null);
+  const mergedRefs = (0, import_compose4.useMergeRefs)([forwardedRef, validityTargetRef]);
+  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+    ControlWithError,
+    {
+      required,
+      markWhenOptional,
+      customValidity,
+      getValidityTarget: () => validityTargetRef.current,
+      children: /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(InputControl, { ref: mergedRefs, ...restProps })
+    }
+  );
+});
+
+// packages/ui/build-module/link/link.mjs
+var import_element63 = __toESM(require_element(), 1);
+var import_i18n7 = __toESM(require_i18n(), 1);
+var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE34 = "data-wp-hash";
+function getRuntime34() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument34(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash34(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE34}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE34) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle34(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime34();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash34(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE34, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument34(targetDocument) {
+  const runtime = getRuntime34();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle34(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle34(hash, css) {
+  const runtime = getRuntime34();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle34(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle34("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 }
 var resets_default7 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 if (typeof process === "undefined" || true) {
-  registerStyle33("96553466c8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+  registerStyle34("96553466c8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
 }
 var focus_module_default5 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
 if (typeof process === "undefined" || true) {
-  registerStyle33("e8e6a9be37", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d4250949359b05ce__link{text-decoration-thickness:from-font;text-underline-offset:.2em}.c6055659b8e2cd2c__is-brand,.c6055659b8e2cd2c__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}.c6055659b8e2cd2c__is-brand:active,.c6055659b8e2cd2c__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._92e0dfcaeee15b88__is-neutral,._92e0dfcaeee15b88__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._92e0dfcaeee15b88__is-neutral:active,._92e0dfcaeee15b88__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}.cf122a9bf1035d42__is-unstyled{--_gcd-a-color:inherit;color:inherit;text-decoration:none}._0cb411afac4c86c7__link-icon{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._0cb411afac4c86c7__link-icon:after{content:"\\2197"}._0cb411afac4c86c7__link-icon:dir(rtl):after{content:"\\2196"}}}');
+  registerStyle34("e8e6a9be37", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d4250949359b05ce__link{text-decoration-thickness:from-font;text-underline-offset:.2em}.c6055659b8e2cd2c__is-brand,.c6055659b8e2cd2c__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}.c6055659b8e2cd2c__is-brand:active,.c6055659b8e2cd2c__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._92e0dfcaeee15b88__is-neutral,._92e0dfcaeee15b88__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._92e0dfcaeee15b88__is-neutral:active,._92e0dfcaeee15b88__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}.cf122a9bf1035d42__is-unstyled{--_gcd-a-color:inherit;color:inherit;text-decoration:none}._0cb411afac4c86c7__link-icon{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._0cb411afac4c86c7__link-icon:after{content:"\\2197"}._0cb411afac4c86c7__link-icon:dir(rtl):after{content:"\\2196"}}}');
 }
-var style_default28 = { "link": "d4250949359b05ce__link", "is-brand": "c6055659b8e2cd2c__is-brand", "is-neutral": "_92e0dfcaeee15b88__is-neutral", "is-unstyled": "cf122a9bf1035d42__is-unstyled", "link-icon": "_0cb411afac4c86c7__link-icon" };
+var style_default29 = { "link": "d4250949359b05ce__link", "is-brand": "c6055659b8e2cd2c__is-brand", "is-neutral": "_92e0dfcaeee15b88__is-neutral", "is-unstyled": "cf122a9bf1035d42__is-unstyled", "link-icon": "_0cb411afac4c86c7__link-icon" };
 if (typeof process === "undefined" || true) {
-  registerStyle33("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+  registerStyle34("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
 }
 var global_css_defense_default9 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
 var Link = (0, import_element63.forwardRef)(function Link2({
@@ -22881,9 +23023,9 @@ var Link = (0, import_element63.forwardRef)(function Link2({
         global_css_defense_default9.a,
         resets_default7["box-sizing"],
         focus_module_default5["outset-ring--focus-except-active"],
-        variant !== "unstyled" && style_default28.link,
-        variant !== "unstyled" && style_default28[`is-${tone}`],
-        variant === "unstyled" && style_default28["is-unstyled"],
+        variant !== "unstyled" && style_default29.link,
+        variant !== "unstyled" && style_default29[`is-${tone}`],
+        variant === "unstyled" && style_default29["is-unstyled"],
         className
       ),
       target: openInNewTab ? "_blank" : void 0,
@@ -22892,7 +23034,7 @@ var Link = (0, import_element63.forwardRef)(function Link2({
         openInNewTab && /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
           "span",
           {
-            className: style_default28["link-icon"],
+            className: style_default29["link-icon"],
             role: "img",
             "aria-label": (
               /* translators: accessibility text appended to link text */
@@ -23051,7 +23193,7 @@ var import_components3 = __toESM(require_components(), 1);
 var import_i18n10 = __toESM(require_i18n(), 1);
 var import_element65 = __toESM(require_element(), 1);
 var import_data = __toESM(require_data(), 1);
-var import_compose4 = __toESM(require_compose(), 1);
+var import_compose5 = __toESM(require_compose(), 1);
 
 // node_modules/tslib/tslib.es6.mjs
 var __assign = function() {
@@ -23244,7 +23386,7 @@ function ItemActions({
       eligibleActions: _eligibleActions
     };
   }, [actions, item]);
-  const isMobileViewport = (0, import_compose4.useViewportMatch)("medium", "<");
+  const isMobileViewport = (0, import_compose5.useViewportMatch)("medium", "<");
   if (isCompact) {
     return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
       CompactItemActions,
@@ -23343,7 +23485,7 @@ function PrimaryActions({
   buttonVariant
 }) {
   const [activeModalAction, setActiveModalAction] = (0, import_element65.useState)(null);
-  const isMobileViewport = (0, import_compose4.useViewportMatch)("medium", "<");
+  const isMobileViewport = (0, import_compose5.useViewportMatch)("medium", "<");
   if (isMobileViewport) {
     return null;
   }
@@ -23383,7 +23525,7 @@ var import_components4 = __toESM(require_components(), 1);
 var import_i18n12 = __toESM(require_i18n(), 1);
 var import_element66 = __toESM(require_element(), 1);
 var import_data2 = __toESM(require_data(), 1);
-var import_compose5 = __toESM(require_compose(), 1);
+var import_compose6 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/utils/get-footer-message.mjs
 var import_i18n11 = __toESM(require_i18n(), 1);
@@ -23514,7 +23656,7 @@ function ActionTrigger({
   items
 }) {
   const label = typeof action.label === "string" ? action.label : action.label(items);
-  const isMobile = (0, import_compose5.useViewportMatch)("medium", "<");
+  const isMobile = (0, import_compose6.useViewportMatch)("medium", "<");
   if (isMobile) {
     return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
       import_components4.Button,
@@ -23663,7 +23805,7 @@ function FooterContent({
     null
   );
   const footerContentRef = (0, import_element66.useRef)(void 0);
-  const isMobile = (0, import_compose5.useViewportMatch)("medium", "<");
+  const isMobile = (0, import_compose6.useViewportMatch)("medium", "<");
   const bulkActions = (0, import_element66.useMemo)(
     () => actions.filter((action) => action.supportsBulk),
     [actions]
@@ -25004,7 +25146,7 @@ var import_i18n19 = __toESM(require_i18n(), 1);
 // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
 var import_components9 = __toESM(require_components(), 1);
 var import_i18n18 = __toESM(require_i18n(), 1);
-var import_compose6 = __toESM(require_compose(), 1);
+var import_compose7 = __toESM(require_compose(), 1);
 var import_element77 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/preview-size-picker.mjs
@@ -25146,7 +25288,7 @@ var GridItem = (0, import_element77.forwardRef)(
       [forwardedRef]
     );
     useIntersectionObserver(elementRef, posinset);
-    const instanceId = (0, import_compose6.useInstanceId)(GridItem2);
+    const instanceId = (0, import_compose7.useInstanceId)(GridItem2);
     const isSelected2 = selection.includes(id);
     const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime102.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
     const rendersMediaField = showMedia && mediaField?.render;
@@ -25687,7 +25829,7 @@ function ViewGrid({
 var grid_default = ViewGrid;
 
 // packages/dataviews/build-module/components/dataviews-layouts/list/index.mjs
-var import_compose7 = __toESM(require_compose(), 1);
+var import_compose8 = __toESM(require_compose(), 1);
 var import_components11 = __toESM(require_components(), 1);
 var import_element78 = __toESM(require_element(), 1);
 var import_i18n20 = __toESM(require_i18n(), 1);
@@ -26018,7 +26160,7 @@ function ViewList(props) {
     className,
     empty
   } = props;
-  const baseId = (0, import_compose7.useInstanceId)(ViewList, "view-list");
+  const baseId = (0, import_compose8.useInstanceId)(ViewList, "view-list");
   const isDelayedLoading = useDelayedLoading(!!isLoading);
   const { paginationInfo } = (0, import_element78.useContext)(dataviews_context_default);
   const selectedItem = data?.findLast(
@@ -26065,7 +26207,7 @@ function ViewList(props) {
   const activeItemIndex = data.findIndex(
     (item) => isActiveCompositeItem(item, activeCompositeId ?? "")
   );
-  const previousActiveItemIndex = (0, import_compose7.usePrevious)(activeItemIndex);
+  const previousActiveItemIndex = (0, import_compose8.usePrevious)(activeItemIndex);
   const isActiveIdInList = activeItemIndex !== -1;
   const selectCompositeItem = (0, import_element78.useCallback)(
     (targetIndex, generateCompositeId) => {
@@ -26277,7 +26419,7 @@ function ActivityGroup({
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-item.mjs
 var import_element80 = __toESM(require_element(), 1);
 var import_data4 = __toESM(require_data(), 1);
-var import_compose8 = __toESM(require_compose(), 1);
+var import_compose9 = __toESM(require_compose(), 1);
 var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
 function ActivityItem(props) {
   const {
@@ -26314,7 +26456,7 @@ function ActivityItem(props) {
       eligibleActions: _eligibleActions
     };
   }, [actions, item]);
-  const isMobileViewport = (0, import_compose8.useViewportMatch)("medium", "<");
+  const isMobileViewport = (0, import_compose9.useViewportMatch)("medium", "<");
   const density = view.layout?.density ?? "balanced";
   const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
     mediaField.render,
@@ -26547,7 +26689,7 @@ function ViewActivity(props) {
 // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
 var import_components15 = __toESM(require_components(), 1);
 var import_i18n24 = __toESM(require_i18n(), 1);
-var import_compose9 = __toESM(require_compose(), 1);
+var import_compose10 = __toESM(require_compose(), 1);
 var import_element83 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
@@ -26837,7 +26979,7 @@ function GridGroup({
   showLabel = true,
   children
 }) {
-  const headerId = (0, import_compose9.useInstanceId)(
+  const headerId = (0, import_compose10.useInstanceId)(
     GridGroup,
     "dataviews-view-picker-grid-group__header"
   );
@@ -27519,7 +27661,7 @@ var picker_table_default = ViewPickerTable;
 // packages/dataviews/build-module/components/dataviews-layouts/picker-activity/index.mjs
 var import_components17 = __toESM(require_components(), 1);
 var import_element85 = __toESM(require_element(), 1);
-var import_compose10 = __toESM(require_compose(), 1);
+var import_compose11 = __toESM(require_compose(), 1);
 var import_i18n26 = __toESM(require_i18n(), 1);
 var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
 function isDefined4(item) {
@@ -27647,7 +27789,7 @@ function PickerActivityGroup({
   showLabel = true,
   children
 }) {
-  const headerId = (0, import_compose10.useInstanceId)(
+  const headerId = (0, import_compose11.useInstanceId)(
     PickerActivityGroup,
     "dataviews-view-picker-activity-group__header"
   );
@@ -32706,7 +32848,7 @@ function ComboboxProvider(props = {}) {
 
 // packages/dataviews/build-module/components/dataviews-filters/search-widget.mjs
 var import_remove_accents = __toESM(require_remove_accents(), 1);
-var import_compose11 = __toESM(require_compose(), 1);
+var import_compose12 = __toESM(require_compose(), 1);
 var import_i18n30 = __toESM(require_i18n(), 1);
 var import_element89 = __toESM(require_element(), 1);
 var import_components20 = __toESM(require_components(), 1);
@@ -32808,7 +32950,7 @@ var SingleSelectionOption = ({ selected }) => {
   );
 };
 function ListBox({ view, filter, onChangeView }) {
-  const baseId = (0, import_compose11.useInstanceId)(ListBox, "dataviews-filter-list-box");
+  const baseId = (0, import_compose12.useInstanceId)(ListBox, "dataviews-filter-list-box");
   const [activeCompositeId, setActiveCompositeId] = (0, import_element89.useState)(
     // When there are one or less operators, the first item is set as active
     // (by setting the initial `activeId` to `undefined`).
@@ -33066,7 +33208,7 @@ function SearchWidget(props) {
 
 // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
 var import_es6 = __toESM(require_es6(), 1);
-var import_compose12 = __toESM(require_compose(), 1);
+var import_compose13 = __toESM(require_compose(), 1);
 var import_element90 = __toESM(require_element(), 1);
 var import_components21 = __toESM(require_components(), 1);
 var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
@@ -33109,7 +33251,7 @@ function InputWidget({
       {}
     );
   }, [view.filters]);
-  const handleChange = (0, import_compose12.useEvent)((updatedData) => {
+  const handleChange = (0, import_compose13.useEvent)((updatedData) => {
     if (!field || !currentFilter) {
       return;
     }
@@ -34480,11 +34622,11 @@ function DataViewsFooter() {
 var import_i18n37 = __toESM(require_i18n(), 1);
 var import_element100 = __toESM(require_element(), 1);
 var import_components27 = __toESM(require_components(), 1);
-var import_compose13 = __toESM(require_compose(), 1);
+var import_compose14 = __toESM(require_compose(), 1);
 var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
 var DataViewsSearch = (0, import_element100.memo)(function Search({ label }) {
   const { view, onChangeView } = (0, import_element100.useContext)(dataviews_context_default);
-  const [search, setSearch, debouncedSearch] = (0, import_compose13.useDebouncedInput)(
+  const [search, setSearch, debouncedSearch] = (0, import_compose14.useDebouncedInput)(
     view.search
   );
   (0, import_element100.useEffect)(() => {
@@ -34528,7 +34670,7 @@ var import_components28 = __toESM(require_components(), 1);
 var import_i18n38 = __toESM(require_i18n(), 1);
 var import_element101 = __toESM(require_element(), 1);
 var import_warning = __toESM(require_warning(), 1);
-var import_compose14 = __toESM(require_compose(), 1);
+var import_compose15 = __toESM(require_compose(), 1);
 var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu5 } = unlock2(import_components28.privateApis);
 var DATAVIEWS_CONFIG_POPOVER_PROPS = {
@@ -34740,7 +34882,7 @@ function ResetViewButton() {
 }
 function DataviewsViewConfigDropdown() {
   const { view, onReset } = (0, import_element101.useContext)(dataviews_context_default);
-  const popoverId = (0, import_compose14.useInstanceId)(
+  const popoverId = (0, import_compose15.useInstanceId)(
     _DataViewsViewConfig,
     "dataviews-view-config-dropdown"
   );
@@ -34846,7 +34988,7 @@ var import_element110 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/validated-form-controls/checkbox-control.mjs
 var import_element102 = __toESM(require_element(), 1);
-var import_compose15 = __toESM(require_compose(), 1);
+var import_compose16 = __toESM(require_compose(), 1);
 var import_components29 = __toESM(require_components(), 1);
 var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedCheckboxControl = ({
@@ -34856,7 +34998,7 @@ var UnforwardedValidatedCheckboxControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element102.useRef)(null);
-  const mergedRefs = (0, import_compose15.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose16.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
     ControlWithError,
     {
@@ -34882,7 +35024,7 @@ ValidatedCheckboxControl.displayName = "ValidatedCheckboxControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/combobox-control.mjs
 var import_element103 = __toESM(require_element(), 1);
-var import_compose16 = __toESM(require_compose(), 1);
+var import_compose17 = __toESM(require_compose(), 1);
 var import_components30 = __toESM(require_components(), 1);
 var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedComboboxControl = ({
@@ -34892,7 +35034,7 @@ var UnforwardedValidatedComboboxControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element103.useRef)(null);
-  const mergedRefs = (0, import_compose16.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose17.useMergeRefs)([forwardedRef, validityTargetRef]);
   (0, import_element103.useEffect)(() => {
     const input = validityTargetRef.current?.querySelector(
       'input[role="combobox"]'
@@ -34977,7 +35119,7 @@ ValidatedFormTokenField.displayName = "ValidatedFormTokenField";
 
 // packages/dataviews/build-module/components/validated-form-controls/number-control.mjs
 var import_element105 = __toESM(require_element(), 1);
-var import_compose17 = __toESM(require_compose(), 1);
+var import_compose18 = __toESM(require_compose(), 1);
 var import_components32 = __toESM(require_components(), 1);
 var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedNumberControl = ({
@@ -34987,7 +35129,7 @@ var UnforwardedValidatedNumberControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element105.useRef)(null);
-  const mergedRefs = (0, import_compose17.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose18.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
     ControlWithError,
     {
@@ -35005,7 +35147,7 @@ ValidatedNumberControl.displayName = "ValidatedNumberControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/radio-control.mjs
 var import_element106 = __toESM(require_element(), 1);
-var import_compose18 = __toESM(require_compose(), 1);
+var import_compose19 = __toESM(require_compose(), 1);
 var import_components33 = __toESM(require_components(), 1);
 var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedRadioControl = ({
@@ -35015,7 +35157,7 @@ var UnforwardedValidatedRadioControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element106.useRef)(null);
-  const mergedRefs = (0, import_compose18.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose19.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
     ControlWithError,
     {
@@ -35036,7 +35178,7 @@ ValidatedRadioControl.displayName = "ValidatedRadioControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/select-control.mjs
 var import_element107 = __toESM(require_element(), 1);
-var import_compose19 = __toESM(require_compose(), 1);
+var import_compose20 = __toESM(require_compose(), 1);
 var import_components34 = __toESM(require_components(), 1);
 var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedSelectControl = ({
@@ -35046,7 +35188,7 @@ var UnforwardedValidatedSelectControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element107.useRef)(null);
-  const mergedRefs = (0, import_compose19.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose20.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
     ControlWithError,
     {
@@ -35072,7 +35214,7 @@ ValidatedSelectControl.displayName = "ValidatedSelectControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/toggle-control.mjs
 var import_element108 = __toESM(require_element(), 1);
-var import_compose20 = __toESM(require_compose(), 1);
+var import_compose21 = __toESM(require_compose(), 1);
 var import_components35 = __toESM(require_components(), 1);
 var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedToggleControl = ({
@@ -35082,7 +35224,7 @@ var UnforwardedValidatedToggleControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element108.useRef)(null);
-  const mergedRefs = (0, import_compose20.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose21.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
     ControlWithError,
     {
@@ -38687,7 +38829,7 @@ function useData({
 
 // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
 var import_element129 = __toESM(require_element(), 1);
-var import_compose21 = __toESM(require_compose(), 1);
+var import_compose22 = __toESM(require_compose(), 1);
 function captureAnchorElement(container, anchorElementRef, direction) {
   const containerRect = container.getBoundingClientRect();
   const centerY = containerRect.top + containerRect.height / 2;
@@ -38814,7 +38956,7 @@ function useInfiniteScroll({
     let lastScrollTop = 0;
     const BOTTOM_THRESHOLD = 600;
     const TOP_THRESHOLD = 800;
-    const handleScroll = (0, import_compose21.throttle)((event) => {
+    const handleScroll = (0, import_compose22.throttle)((event) => {
       const currentView = viewRef.current;
       const totalItems = totalItemsRef.current;
       const target = event.target;
@@ -38961,7 +39103,7 @@ function DataViews({
   });
   const containerRef = (0, import_element130.useRef)(null);
   const [containerWidth, setContainerWidth] = (0, import_element130.useState)(0);
-  const resizeObserverRef = (0, import_compose22.useResizeObserver)(
+  const resizeObserverRef = (0, import_compose23.useResizeObserver)(
     (resizeObserverEntries) => {
       setContainerWidth(
         resizeObserverEntries[0].borderBoxSize[0].inlineSize
@@ -39344,12 +39486,12 @@ function FormRegularField({
 var import_deepmerge2 = __toESM(require_cjs(), 1);
 var import_components53 = __toESM(require_components(), 1);
 var import_element136 = __toESM(require_element(), 1);
-var import_compose24 = __toESM(require_compose(), 1);
+var import_compose25 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 var import_components52 = __toESM(require_components(), 1);
 var import_i18n53 = __toESM(require_i18n(), 1);
-var import_compose23 = __toESM(require_compose(), 1);
+var import_compose24 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
 function getLabelClassName(labelPosition, showError) {
@@ -39441,7 +39583,7 @@ function SummaryButton({
       "dataforms-layouts-panel__field-trigger--edit-always": editVisibility === "always"
     }
   );
-  const controlId = (0, import_compose23.useInstanceId)(
+  const controlId = (0, import_compose24.useInstanceId)(
     SummaryButton,
     "dataforms-layouts-panel__field-control"
   );
@@ -40178,9 +40320,9 @@ function ModalContent({
       })
     );
   };
-  const focusOnMountRef = (0, import_compose24.useFocusOnMount)("firstInputElement");
+  const focusOnMountRef = (0, import_compose25.useFocusOnMount)("firstInputElement");
   const contentRef = (0, import_element136.useRef)(null);
-  const mergedRef = (0, import_compose24.useMergeRefs)([focusOnMountRef, contentRef]);
+  const mergedRef = (0, import_compose25.useMergeRefs)([focusOnMountRef, contentRef]);
   useRevealValidity(contentRef, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime177.jsxs)(
     import_components53.Modal,
@@ -40295,7 +40437,7 @@ var modal_default = PanelModal;
 var import_components54 = __toESM(require_components(), 1);
 var import_i18n55 = __toESM(require_i18n(), 1);
 var import_element137 = __toESM(require_element(), 1);
-var import_compose25 = __toESM(require_compose(), 1);
+var import_compose26 = __toESM(require_compose(), 1);
 var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
   title,
@@ -40352,7 +40494,7 @@ function PanelDropdown({
     }),
     [popoverAnchor]
   );
-  const [dialogRef, dialogProps] = (0, import_compose25.__experimentalUseDialog)({
+  const [dialogRef, dialogProps] = (0, import_compose26.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
   const form = (0, import_element137.useMemo)(
@@ -40478,7 +40620,7 @@ function FormPanelField({
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
 var import_element138 = __toESM(require_element(), 1);
-var import_compose26 = __toESM(require_compose(), 1);
+var import_compose27 = __toESM(require_compose(), 1);
 import { speak as speak4 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
@@ -40689,7 +40831,7 @@ function FormCardField({
       speak4(message2, "polite");
     }
   }, [isCollapsible, isOpen, revealValidity, validity]);
-  const focusOutsideProps = (0, import_compose26.__experimentalUseFocusOutside)(handleFocusOutside);
+  const focusOutsideProps = (0, import_compose27.__experimentalUseFocusOutside)(handleFocusOutside);
   let label = field.label;
   let withHeader;
   if (field.children) {
@@ -40845,7 +40987,7 @@ function FormRowField({
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
 var import_element139 = __toESM(require_element(), 1);
 var import_i18n57 = __toESM(require_i18n(), 1);
-var import_compose27 = __toESM(require_compose(), 1);
+var import_compose28 = __toESM(require_compose(), 1);
 import { speak as speak5 } from "@wordpress/a11y";
 var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
 function FormDetailsField({
@@ -40902,7 +41044,7 @@ function FormDetailsField({
       speak5(message2, "polite");
     }
   }, [revealValidity, validity]);
-  const focusOutsideProps = (0, import_compose27.__experimentalUseFocusOutside)(handleFocusOutside);
+  const focusOutsideProps = (0, import_compose28.__experimentalUseFocusOutside)(handleFocusOutside);
   if (!field.children) {
     return null;
   }
@@ -41130,8 +41272,8 @@ var import_i18n58 = __toESM(require_i18n());
 var import_url3 = __toESM(require_url());
 
 // packages/style-runtime/src/index.ts
-var STYLE_HASH_ATTRIBUTE34 = "data-wp-hash";
-function getRuntime34() {
+var STYLE_HASH_ATTRIBUTE35 = "data-wp-hash";
+function getRuntime35() {
   const globalScope = globalThis;
   if (globalScope.__wpStyleRuntime) {
     return globalScope.__wpStyleRuntime;
@@ -41142,28 +41284,28 @@ function getRuntime34() {
     injectedStyles: /* @__PURE__ */ new WeakMap()
   };
   if (typeof document !== "undefined") {
-    registerDocument34(document);
+    registerDocument35(document);
   }
   return globalScope.__wpStyleRuntime;
 }
-function documentContainsStyleHash34(targetDocument, hash) {
+function documentContainsStyleHash35(targetDocument, hash) {
   if (!targetDocument.head) {
     return false;
   }
   for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE34}]`
+    `style[${STYLE_HASH_ATTRIBUTE35}]`
   )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE34) === hash) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE35) === hash) {
       return true;
     }
   }
   return false;
 }
-function injectStyle34(targetDocument, hash, css) {
+function injectStyle35(targetDocument, hash, css) {
   if (!targetDocument.head) {
     return;
   }
-  const runtime = getRuntime34();
+  const runtime = getRuntime35();
   let injectedStyles = runtime.injectedStyles.get(targetDocument);
   if (!injectedStyles) {
     injectedStyles = /* @__PURE__ */ new Set();
@@ -41172,24 +41314,24 @@ function injectStyle34(targetDocument, hash, css) {
   if (injectedStyles.has(hash)) {
     return;
   }
-  if (documentContainsStyleHash34(targetDocument, hash)) {
+  if (documentContainsStyleHash35(targetDocument, hash)) {
     injectedStyles.add(hash);
     return;
   }
   const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE34, hash);
+  style.setAttribute(STYLE_HASH_ATTRIBUTE35, hash);
   style.appendChild(targetDocument.createTextNode(css));
   targetDocument.head.appendChild(style);
   injectedStyles.add(hash);
 }
-function registerDocument34(targetDocument) {
-  const runtime = getRuntime34();
+function registerDocument35(targetDocument) {
+  const runtime = getRuntime35();
   runtime.documents.set(
     targetDocument,
     (runtime.documents.get(targetDocument) ?? 0) + 1
   );
   for (const [hash, css] of runtime.styles) {
-    injectStyle34(targetDocument, hash, css);
+    injectStyle35(targetDocument, hash, css);
   }
   return () => {
     const count = runtime.documents.get(targetDocument);
@@ -41203,17 +41345,17 @@ function registerDocument34(targetDocument) {
     runtime.documents.set(targetDocument, count - 1);
   };
 }
-function registerStyle34(hash, css) {
-  const runtime = getRuntime34();
+function registerStyle35(hash, css) {
+  const runtime = getRuntime35();
   runtime.styles.set(hash, css);
   for (const targetDocument of runtime.documents.keys()) {
-    injectStyle34(targetDocument, hash, css);
+    injectStyle35(targetDocument, hash, css);
   }
 }
 
 // widgets/quick-draft/components/drafts-list/drafts-list.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle34("e1237767e8", "._27c1e13d297c9c75__root{flex:1;min-height:0;min-width:0;overflow:auto}._54b9ae86534218ea__titleHeader{border-top:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);padding-block-end:var(--wpds-dimension-padding-md,12px);padding-block-start:var(--wpds-dimension-padding-md,12px);padding-inline-start:var(--wpds-dimension-padding-md,12px)}._2e31af77792038af__thumbImage{object-fit:cover}._2e31af77792038af__thumbImage,.c4458e85b75cb2ca__thumbPlaceholder{border-radius:var(--wpds-border-radius-md,4px);height:100%;width:100%}.c4458e85b75cb2ca__thumbPlaceholder{align-items:center;background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;justify-content:center}._30dc10ae55a67d24__titleRow{min-width:0;width:100%}.eb5556cdba7ae763__titleLink{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._41963413d9183e83__date{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}");
+  registerStyle35("e1237767e8", "._27c1e13d297c9c75__root{flex:1;min-height:0;min-width:0;overflow:auto}._54b9ae86534218ea__titleHeader{border-top:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);padding-block-end:var(--wpds-dimension-padding-md,12px);padding-block-start:var(--wpds-dimension-padding-md,12px);padding-inline-start:var(--wpds-dimension-padding-md,12px)}._2e31af77792038af__thumbImage{object-fit:cover}._2e31af77792038af__thumbImage,.c4458e85b75cb2ca__thumbPlaceholder{border-radius:var(--wpds-border-radius-md,4px);height:100%;width:100%}.c4458e85b75cb2ca__thumbPlaceholder{align-items:center;background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;justify-content:center}._30dc10ae55a67d24__titleRow{min-width:0;width:100%}.eb5556cdba7ae763__titleLink{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._41963413d9183e83__date{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}");
 }
 var drafts_list_default = { "root": "_27c1e13d297c9c75__root", "titleHeader": "_54b9ae86534218ea__titleHeader", "thumbImage": "_2e31af77792038af__thumbImage", "thumbPlaceholder": "c4458e85b75cb2ca__thumbPlaceholder", "titleRow": "_30dc10ae55a67d24__titleRow", "titleLink": "eb5556cdba7ae763__titleLink", "date": "_41963413d9183e83__date" };
 
@@ -41389,7 +41531,7 @@ var import_url4 = __toESM(require_url());
 
 // widgets/quick-draft/components/saved-post/saved-post.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle34("985119c4a3", "._88880a636bc02513__body{height:100%}._20963e427e9696da__icon{background-color:var(--wpds-color-background-surface-success-weak,#ebffed);border-color:var(--wpds-color-stroke-surface-success,#94d29e);color:var(--wpds-color-foreground-content-success,#002900)}.ff3d1c6f8ba60167__continueLink{color:var(--wpds-color-foreground-interactive-brand-strong,#fff)}");
+  registerStyle35("985119c4a3", "._88880a636bc02513__body{height:100%}._20963e427e9696da__icon{background-color:var(--wpds-color-background-surface-success-weak,#ebffed);border-color:var(--wpds-color-stroke-surface-success,#94d29e);color:var(--wpds-color-foreground-content-success,#002900)}.ff3d1c6f8ba60167__continueLink{color:var(--wpds-color-foreground-interactive-brand-strong,#fff)}");
 }
 var saved_post_default = { "body": "_88880a636bc02513__body", "icon": "_20963e427e9696da__icon", "continueLink": "ff3d1c6f8ba60167__continueLink" };
 
@@ -41465,7 +41607,7 @@ var import_element144 = __toESM(require_element());
 
 // widgets/quick-draft/fields/quick-draft-content-field/quick-draft-content-field.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle34("ca3754f0d9", ".d6b34c2200336d18__root{height:100%;min-height:0}.d6b34c2200336d18__root .components-base-control,.d6b34c2200336d18__root .components-base-control__field{display:flex;flex:1;flex-direction:column;min-height:0}.d6b34c2200336d18__root .components-textarea-control__input{flex:1;min-height:0;resize:none}.dataforms-layouts-regular__field:has(.d6b34c2200336d18__root){flex:1;min-height:0}");
+  registerStyle35("ca3754f0d9", ".d6b34c2200336d18__root{height:100%;min-height:0}.d6b34c2200336d18__root .components-base-control,.d6b34c2200336d18__root .components-base-control__field{display:flex;flex:1;flex-direction:column;min-height:0}.d6b34c2200336d18__root .components-textarea-control__input{flex:1;min-height:0;resize:none}.dataforms-layouts-regular__field:has(.d6b34c2200336d18__root){flex:1;min-height:0}");
 }
 var quick_draft_content_field_default = { "root": "d6b34c2200336d18__root" };
 
@@ -41516,14 +41658,14 @@ function QuickDraftContentField({
 }
 
 // widgets/quick-draft/hooks/use-widget-size/use-widget-size.ts
-var import_compose28 = __toESM(require_compose());
+var import_compose29 = __toESM(require_compose());
 var import_element145 = __toESM(require_element());
 var WIDE_MIN_WIDTH = 560;
 var TALL_MIN_HEIGHT = 420;
 var INITIAL_SIZE = { width: 0, height: 0 };
 function useWidgetSize() {
   const [size4, setSize] = (0, import_element145.useState)(INITIAL_SIZE);
-  const ref = (0, import_compose28.useResizeObserver)(
+  const ref = (0, import_compose29.useResizeObserver)(
     (entries) => {
       const entry = entries[0];
       if (!entry) {
@@ -41552,9 +41694,9 @@ function useWidgetSize() {
 
 // widgets/quick-draft/style.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle34("eb62be714d", "._1ceea6985c028257__body,.e95823d50a99f185__fill{height:100%}._0325357a2c3b57a4__primaryPane{border-top:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);flex:1;min-height:0;min-width:0;padding:var(--wpds-dimension-padding-lg,16px)}._20004de4c12366b1__listPane{flex:1;min-height:0;min-width:0}._809476aa1889889d__backRow{border-top:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);padding:var(--wpds-dimension-padding-sm,8px)}._264d0da8d26b736f__row ._0325357a2c3b57a4__primaryPane{border-inline-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);margin:0 auto;max-width:var(--wpds-dimension-surface-width-md,400px)}._6b9679a01ecee959__formContainer,._6b9679a01ecee959__formContainer>.dataforms-layouts__wrapper{flex:1;min-height:0}");
+  registerStyle35("eb62be714d", "._1ceea6985c028257__body,.e95823d50a99f185__fill{height:100%}._0325357a2c3b57a4__primaryPane{border-top:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);flex:1;min-height:0;min-width:0;padding:var(--wpds-dimension-padding-lg,16px)}._20004de4c12366b1__listPane{flex:1;min-height:0;min-width:0}._809476aa1889889d__backRow{border-top:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);padding:var(--wpds-dimension-padding-sm,8px)}._264d0da8d26b736f__row ._0325357a2c3b57a4__primaryPane{border-inline-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);margin:0 auto;max-width:var(--wpds-dimension-surface-width-md,400px)}._6b9679a01ecee959__formContainer,._6b9679a01ecee959__formContainer>.dataforms-layouts__wrapper{flex:1;min-height:0}");
 }
-var style_default29 = { "body": "_1ceea6985c028257__body", "fill": "e95823d50a99f185__fill", "primaryPane": "_0325357a2c3b57a4__primaryPane", "listPane": "_20004de4c12366b1__listPane", "backRow": "_809476aa1889889d__backRow", "row": "_264d0da8d26b736f__row", "formContainer": "_6b9679a01ecee959__formContainer" };
+var style_default30 = { "body": "_1ceea6985c028257__body", "fill": "e95823d50a99f185__fill", "primaryPane": "_0325357a2c3b57a4__primaryPane", "listPane": "_20004de4c12366b1__listPane", "backRow": "_809476aa1889889d__backRow", "row": "_264d0da8d26b736f__row", "formContainer": "_6b9679a01ecee959__formContainer" };
 
 // widgets/quick-draft/render.tsx
 var import_jsx_runtime190 = __toESM(require_jsx_runtime());
@@ -41661,9 +41803,9 @@ function QuickDraft() {
         direction: "column",
         gap: "md",
         justify: "space-between",
-        className: style_default29.fill,
+        className: style_default30.fill,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { direction: "column", className: style_default29.formContainer, children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { direction: "column", className: style_default30.formContainer, children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
             DataForm,
             {
               data,
@@ -41701,14 +41843,14 @@ function QuickDraft() {
     );
   }
   if (!showDraftsList && isListOpenInCompact) {
-    return /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(Stack, { ref, direction: "column", className: style_default29.body, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { direction: "column", className: style_default29.listPane, children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(DraftsList, {}) }),
+    return /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(Stack, { ref, direction: "column", className: style_default30.body, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { direction: "column", className: style_default30.listPane, children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(DraftsList, {}) }),
       /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
         Stack,
         {
           direction: "row",
           justify: "flex-start",
-          className: style_default29.backRow,
+          className: style_default30.backRow,
           children: /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(
             Button4,
             {
@@ -41727,7 +41869,7 @@ function QuickDraft() {
     ] });
   }
   if (!showDraftsList) {
-    return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { ref, direction: "column", className: style_default29.body, children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { direction: "column", className: style_default29.primaryPane, children: primary }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { ref, direction: "column", className: style_default30.body, children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { direction: "column", className: style_default30.primaryPane, children: primary }) });
   }
   return /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(
     Stack,
@@ -41735,12 +41877,12 @@ function QuickDraft() {
       ref,
       direction: listBeside ? "row" : "column",
       className: clsx_default(
-        style_default29.body,
-        listBeside ? style_default29.row : style_default29.column
+        style_default30.body,
+        listBeside ? style_default30.row : style_default30.column
       ),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { direction: "column", className: style_default29.primaryPane, children: primary }),
-        /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { direction: "column", className: style_default29.listPane, children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(DraftsList, {}) })
+        /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { direction: "column", className: style_default30.primaryPane, children: primary }),
+        /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { direction: "column", className: style_default30.listPane, children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(DraftsList, {}) })
       ]
     }
   );
