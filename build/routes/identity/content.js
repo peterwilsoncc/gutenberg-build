@@ -17840,6 +17840,9 @@ var import_primitives18 = __toESM(require_primitives(), 1);
 var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
 var video_default = /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives18.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives18.Path, { d: "M18.7 3H5.3C4 3 3 4 3 5.3v13.4C3 20 4 21 5.3 21h13.4c1.3 0 2.3-1 2.3-2.3V5.3C21 4 20 3 18.7 3zm.8 15.7c0 .4-.4.8-.8.8H5.3c-.4 0-.8-.4-.8-.8V5.3c0-.4.4-.8.8-.8h13.4c.4 0 .8.4.8.8v13.4zM10 15l5-3-5-3v6z" }) });
 
+// packages/ui/build-module/calendar/utils/components.mjs
+var import_i18n4 = __toESM(require_i18n(), 1);
+
 // packages/ui/build-module/icon-button/icon-button.mjs
 var import_element22 = __toESM(require_element(), 1);
 
@@ -18673,13 +18676,25 @@ function Day2(props) {
   ] });
 }
 function Root3({ rootRef, ...props }) {
-  const { render: render4, ref } = (0, import_element24.useContext)(RootContext);
+  const { render: render4, ref, role, defaultAriaLabel } = (0, import_element24.useContext)(RootContext);
+  const { months, labels } = useDayPicker();
+  const hasExplicitLabel = props["aria-label"] !== void 0 || props["aria-labelledby"] !== void 0;
+  let ariaLabel = props["aria-label"];
+  if (!hasExplicitLabel && defaultAriaLabel && role === "application") {
+    const currentMonth = months[0];
+    ariaLabel = currentMonth ? (0, import_i18n4.sprintf)(
+      // translators: 1: Calendar type. 2: Current month and year.
+      (0, import_i18n4.__)("%1$s, %2$s"),
+      defaultAriaLabel,
+      labels.labelGrid(currentMonth.date)
+    ) : defaultAriaLabel;
+  }
   const mergedRef = (0, import_compose.useMergeRefs)([rootRef ?? null, ref ?? null]);
   return useRender({
     render: render4,
     defaultTagName: "div",
     ref: mergedRef,
-    props
+    props: { ...props, role, "aria-label": ariaLabel }
   });
 }
 function NavButton({
@@ -18868,8 +18883,6 @@ var COMMON_PROPS = {
   hideNavigation: false,
   // Class names
   classNames: CLASSNAMES,
-  // Default role
-  role: "application",
   components: {
     Day: Day2,
     Root: Root3,
@@ -18913,7 +18926,7 @@ function useControlledValue2({
 }
 
 // packages/ui/build-module/calendar/utils/use-localization-props.mjs
-var import_i18n4 = __toESM(require_i18n(), 1);
+var import_i18n5 = __toESM(require_i18n(), 1);
 var import_element26 = __toESM(require_element(), 1);
 function isLocaleRTL(locale) {
   const direction = (locale.getTextInfo?.() ?? locale.textInfo)?.direction;
@@ -18978,7 +18991,7 @@ var useLocalizationProps = ({
     );
     const localeCode = supportedLocaleCode ?? "en-US";
     const intlLocale = new Intl.Locale(localeCode);
-    const isRightToLeft = supportedLocaleCode !== void 0 ? isLocaleRTL(intlLocale) : (0, import_i18n4.isRTL)();
+    const isRightToLeft = supportedLocaleCode !== void 0 ? isLocaleRTL(intlLocale) : (0, import_i18n5.isRTL)();
     const weekStartsOn = isLocaleString || supportedLocaleCode !== void 0 ? getWeekStartsOn(intlLocale) : void 0;
     const monthNameFormatter = new Intl.DateTimeFormat(localeCode, {
       calendar: "gregory",
@@ -19010,10 +19023,10 @@ var useLocalizationProps = ({
       timeZone
     });
     return {
-      "aria-label": mode === "single" ? (0, import_i18n4.__)("Date calendar") : (0, import_i18n4.__)("Date range calendar"),
+      "aria-label": mode === "single" ? (0, import_i18n5.__)("Date calendar") : (0, import_i18n5.__)("Date range calendar"),
       labels: {
         /** The label for the navigation toolbar. */
-        labelNav: () => (0, import_i18n4.__)("Navigation bar"),
+        labelNav: () => (0, import_i18n5.__)("Navigation bar"),
         /**
          * The label for the month grid.
          * @param date
@@ -19028,18 +19041,18 @@ var useLocalizationProps = ({
           const formattedDate = fullDateFormatter.format(date);
           let label = formattedDate;
           if (modifiers?.today) {
-            label = (0, import_i18n4.sprintf)(
+            label = (0, import_i18n5.sprintf)(
               // translators: %s is the full date (e.g. "Monday, April 29, 2025")
-              (0, import_i18n4.__)("Today, %s"),
+              (0, import_i18n5.__)("Today, %s"),
               formattedDate
             );
           }
           return label;
         },
         /** The label for the "next month" button. */
-        labelNext: () => (0, import_i18n4.__)("Next month"),
+        labelNext: () => (0, import_i18n5.__)("Next month"),
         /** The label for the "previous month" button. */
-        labelPrevious: () => (0, import_i18n4.__)("Previous month"),
+        labelPrevious: () => (0, import_i18n5.__)("Previous month"),
         /**
          * The label for the day button.
          * @param date
@@ -19049,23 +19062,23 @@ var useLocalizationProps = ({
           const formattedDate = fullDateFormatter.format(date);
           let label = formattedDate;
           if (modifiers?.today && modifiers?.selected) {
-            return (0, import_i18n4.sprintf)(
+            return (0, import_i18n5.sprintf)(
               // translators: %s is the full date (e.g. "Monday, April 29, 2025")
-              (0, import_i18n4.__)("Today, %s, selected"),
+              (0, import_i18n5.__)("Today, %s, selected"),
               formattedDate
             );
           }
           if (modifiers?.today) {
-            label = (0, import_i18n4.sprintf)(
+            label = (0, import_i18n5.sprintf)(
               // translators: %s is the full date (e.g. "Monday, April 29, 2025")
-              (0, import_i18n4.__)("Today, %s"),
+              (0, import_i18n5.__)("Today, %s"),
               formattedDate
             );
           }
           if (modifiers?.selected) {
-            label = (0, import_i18n4.sprintf)(
+            label = (0, import_i18n5.sprintf)(
               // translators: %s is the full date (e.g. "Monday, April 29, 2025")
-              (0, import_i18n4.__)("%s, selected"),
+              (0, import_i18n5.__)("%s, selected"),
               formattedDate
             );
           }
@@ -19146,10 +19159,12 @@ var Calendar = (0, import_element28.forwardRef)(
     timeZone,
     month,
     render: render4,
+    role = "application",
+    "aria-label": ariaLabel,
     labels: customLabels,
     ...props
   }, ref) {
-    const localizationProps = useLocalizationProps({
+    const { "aria-label": defaultAriaLabel, ...localizationProps } = useLocalizationProps({
       locale,
       timeZone,
       mode: "single"
@@ -19176,8 +19191,13 @@ var Calendar = (0, import_element28.forwardRef)(
     });
     const dayFocusProps = usePreserveDayFocus(ref, month);
     const rootContextValue = (0, import_element28.useMemo)(
-      () => ({ render: render4, ref: dayFocusProps.ref }),
-      [render4, dayFocusProps.ref]
+      () => ({
+        render: render4,
+        ref: dayFocusProps.ref,
+        role,
+        defaultAriaLabel
+      }),
+      [render4, dayFocusProps.ref, role, defaultAriaLabel]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(RootContext.Provider, { value: rootContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
       DayPicker,
@@ -19185,7 +19205,7 @@ var Calendar = (0, import_element28.forwardRef)(
         ...COMMON_PROPS,
         ...localizationProps,
         ...props,
-        role: "application",
+        "aria-label": ariaLabel,
         mode: "single",
         month,
         numberOfMonths: clampNumberOfMonths(numberOfMonths),
@@ -19285,10 +19305,12 @@ var RangeCalendar = (0, import_element29.forwardRef)(
     timeZone,
     month,
     render: render4,
+    role = "application",
+    "aria-label": ariaLabel,
     labels: customLabels,
     ...props
   }, ref) {
-    const localizationProps = useLocalizationProps({
+    const { "aria-label": defaultAriaLabel, ...localizationProps } = useLocalizationProps({
       locale,
       timeZone,
       mode: "range"
@@ -19333,8 +19355,13 @@ var RangeCalendar = (0, import_element29.forwardRef)(
       };
     }, [previewRange]);
     const rootContextValue = (0, import_element29.useMemo)(
-      () => ({ render: render4, ref: dayFocusProps.ref }),
-      [render4, dayFocusProps.ref]
+      () => ({
+        render: render4,
+        ref: dayFocusProps.ref,
+        role,
+        defaultAriaLabel
+      }),
+      [render4, dayFocusProps.ref, role, defaultAriaLabel]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(RootContext.Provider, { value: rootContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
       DayPicker,
@@ -19342,7 +19369,7 @@ var RangeCalendar = (0, import_element29.forwardRef)(
         ...COMMON_PROPS,
         ...localizationProps,
         ...props,
-        role: "application",
+        "aria-label": ariaLabel,
         mode: "range",
         month,
         numberOfMonths: clampNumberOfMonths(numberOfMonths),
@@ -20773,7 +20800,7 @@ var Input3 = (0, import_element46.forwardRef)(function Input22({ className, size
 });
 
 // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
-var import_i18n5 = __toESM(require_i18n(), 1);
+var import_i18n6 = __toESM(require_i18n(), 1);
 var import_element48 = __toESM(require_element(), 1);
 
 // packages/ui/build-module/spinner/spinner.mjs
@@ -21029,9 +21056,9 @@ var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
 function appendRequiredIndicator(label, required, markWhenOptional) {
   let suffix;
   if (required && !markWhenOptional) {
-    suffix = `(${(0, import_i18n5.__)("Required")})`;
+    suffix = `(${(0, import_i18n6.__)("Required")})`;
   } else if (!required && markWhenOptional) {
-    suffix = `(${(0, import_i18n5.__)("Optional")})`;
+    suffix = `(${(0, import_i18n6.__)("Optional")})`;
   }
   if (!suffix) {
     return label;
@@ -21563,7 +21590,7 @@ var Description = (0, import_element52.forwardRef)(function Description2({ class
 
 // packages/ui/build-module/form/primitives/field/details.mjs
 var import_element53 = __toESM(require_element(), 1);
-var import_i18n6 = __toESM(require_i18n(), 1);
+var import_i18n7 = __toESM(require_i18n(), 1);
 var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE27 = "data-wp-hash";
 function getRuntime27() {
@@ -21652,7 +21679,7 @@ var field_default3 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c421
 var Details = (0, import_element53.forwardRef)(
   function Details2({ className, ...restProps }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(import_jsx_runtime70.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(index_parts_exports2.Description, {}), children: (0, import_i18n6.__)("More details follow the field.") }),
+      /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(index_parts_exports2.Description, {}), children: (0, import_i18n7.__)("More details follow the field.") }),
       /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
         "div",
         {
@@ -21888,7 +21915,7 @@ var ValidatedTextareaControl = (0, import_element59.forwardRef)(function Validat
 
 // packages/ui/build-module/link/link.mjs
 var import_element60 = __toESM(require_element(), 1);
-var import_i18n7 = __toESM(require_i18n(), 1);
+var import_i18n8 = __toESM(require_i18n(), 1);
 var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE29 = "data-wp-hash";
 function getRuntime29() {
@@ -22019,7 +22046,7 @@ var Link = (0, import_element60.forwardRef)(function Link2({
             role: "img",
             "aria-label": (
               /* translators: accessibility text appended to link text */
-              (0, import_i18n7.__)("(opens in a new tab)")
+              (0, import_i18n8.__)("(opens in a new tab)")
             )
           }
         )
@@ -22052,7 +22079,7 @@ NavigableRegion.displayName = "NavigableRegion";
 var navigable_region_default = NavigableRegion;
 
 // packages/admin-ui/build-module/navigation/index.mjs
-var import_i18n8 = __toESM(require_i18n(), 1);
+var import_i18n9 = __toESM(require_i18n(), 1);
 var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE30 = "data-wp-hash";
 function getRuntime30() {
@@ -22141,7 +22168,7 @@ var style_default25 = { "list": "bfb5a2dd8cceebd3__list", "li": "a4759b4cb2c8bd9
 var Navigation = ({
   items,
   currentHref,
-  ariaLabel = (0, import_i18n8.__)("Sections"),
+  ariaLabel = (0, import_i18n9.__)("Sections"),
   linkComponent,
   className
 }) => {
@@ -22526,12 +22553,12 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/identity/stage.tsx
-var import_i18n31 = __toESM(require_i18n());
+var import_i18n32 = __toESM(require_i18n());
 var import_data2 = __toESM(require_data());
 var import_core_data2 = __toESM(require_core_data());
 
 // packages/dataviews/build-module/constants.mjs
-var import_i18n9 = __toESM(require_i18n(), 1);
+var import_i18n10 = __toESM(require_i18n(), 1);
 var OPERATOR_IS_ANY = "isAny";
 var OPERATOR_IS_NONE = "isNone";
 var OPERATOR_IS_ALL = "isAll";
@@ -22555,8 +22582,8 @@ var OPERATOR_STARTS_WITH = "startsWith";
 var OPERATOR_ON = "on";
 var OPERATOR_NOT_ON = "notOn";
 var sortLabels = {
-  asc: (0, import_i18n9.__)("Sort ascending"),
-  desc: (0, import_i18n9.__)("Sort descending")
+  asc: (0, import_i18n10.__)("Sort ascending"),
+  desc: (0, import_i18n10.__)("Sort descending")
 };
 
 // packages/dataviews/build-module/hooks/use-elements.mjs
@@ -22601,7 +22628,7 @@ function useElements({
 }
 
 // packages/dataviews/build-module/utils/operators.mjs
-var import_i18n10 = __toESM(require_i18n(), 1);
+var import_i18n11 = __toESM(require_i18n(), 1);
 var import_element63 = __toESM(require_element(), 1);
 var import_date2 = __toESM(require_date(), 1);
 
@@ -22655,11 +22682,11 @@ function getRelativeDate(value, unit) {
 }
 var isNoneOperatorDefinition = {
   /* translators: DataViews operator name */
-  label: (0, import_i18n10.__)("Is none of"),
+  label: (0, import_i18n11.__)("Is none of"),
   filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-    (0, import_i18n10.sprintf)(
+    (0, import_i18n11.sprintf)(
       /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
-      (0, import_i18n10.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
+      (0, import_i18n11.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
       filter.name,
       activeElements.map((element) => element.label).join(", ")
     ),
@@ -22685,11 +22712,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS_ANY,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Includes"),
+    label: (0, import_i18n11.__)("Includes"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
-        (0, import_i18n10.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
+        (0, import_i18n11.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements.map((element) => element.label).join(", ")
       ),
@@ -22718,11 +22745,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS_ALL,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Includes all"),
+    label: (0, import_i18n11.__)("Includes all"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
-        (0, import_i18n10.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
+        (0, import_i18n11.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements.map((element) => element.label).join(", ")
       ),
@@ -22745,11 +22772,11 @@ var OPERATORS = [
   {
     name: OPERATOR_BETWEEN,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Between (inc)"),
+    label: (0, import_i18n11.__)("Between (inc)"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
-        (0, import_i18n10.__)(
+        (0, import_i18n11.__)(
           "<Name>%1$s between (inc): </Name><Value>%2$s and %3$s</Value>"
         ),
         filter.name,
@@ -22781,11 +22808,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IN_THE_PAST,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("In the past"),
+    label: (0, import_i18n11.__)("In the past"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
-        (0, import_i18n10.__)(
+        (0, import_i18n11.__)(
           "<Name>%1$s is in the past: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -22809,11 +22836,11 @@ var OPERATORS = [
   {
     name: OPERATOR_OVER,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Over"),
+    label: (0, import_i18n11.__)("Over"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
-        (0, import_i18n10.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
+        (0, import_i18n11.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
         filter.name,
         `${activeElements[0].value.value} ${activeElements[0].value.unit}`
       ),
@@ -22835,11 +22862,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Is"),
+    label: (0, import_i18n11.__)("Is"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
-        (0, import_i18n10.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+        (0, import_i18n11.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -22853,11 +22880,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS_NOT,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Is not"),
+    label: (0, import_i18n11.__)("Is not"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
-        (0, import_i18n10.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+        (0, import_i18n11.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -22871,11 +22898,11 @@ var OPERATORS = [
   {
     name: OPERATOR_LESS_THAN,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Less than"),
+    label: (0, import_i18n11.__)("Less than"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
-        (0, import_i18n10.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
+        (0, import_i18n11.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -22893,11 +22920,11 @@ var OPERATORS = [
   {
     name: OPERATOR_GREATER_THAN,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Greater than"),
+    label: (0, import_i18n11.__)("Greater than"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
-        (0, import_i18n10.__)(
+        (0, import_i18n11.__)(
           "<Name>%1$s is greater than: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -22917,11 +22944,11 @@ var OPERATORS = [
   {
     name: OPERATOR_LESS_THAN_OR_EQUAL,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Less than or equal"),
+    label: (0, import_i18n11.__)("Less than or equal"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
-        (0, import_i18n10.__)(
+        (0, import_i18n11.__)(
           "<Name>%1$s is less than or equal to: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -22941,11 +22968,11 @@ var OPERATORS = [
   {
     name: OPERATOR_GREATER_THAN_OR_EQUAL,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Greater than or equal"),
+    label: (0, import_i18n11.__)("Greater than or equal"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
-        (0, import_i18n10.__)(
+        (0, import_i18n11.__)(
           "<Name>%1$s is greater than or equal to: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -22965,11 +22992,11 @@ var OPERATORS = [
   {
     name: OPERATOR_BEFORE,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Before"),
+    label: (0, import_i18n11.__)("Before"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
-        (0, import_i18n10.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
+        (0, import_i18n11.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -22990,11 +23017,11 @@ var OPERATORS = [
   {
     name: OPERATOR_AFTER,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("After"),
+    label: (0, import_i18n11.__)("After"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
-        (0, import_i18n10.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
+        (0, import_i18n11.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -23015,11 +23042,11 @@ var OPERATORS = [
   {
     name: OPERATOR_BEFORE_INC,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Before (inc)"),
+    label: (0, import_i18n11.__)("Before (inc)"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
-        (0, import_i18n10.__)(
+        (0, import_i18n11.__)(
           "<Name>%1$s is on or before: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -23042,11 +23069,11 @@ var OPERATORS = [
   {
     name: OPERATOR_AFTER_INC,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("After (inc)"),
+    label: (0, import_i18n11.__)("After (inc)"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
-        (0, import_i18n10.__)(
+        (0, import_i18n11.__)(
           "<Name>%1$s is on or after: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -23069,11 +23096,11 @@ var OPERATORS = [
   {
     name: OPERATOR_CONTAINS,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Contains"),
+    label: (0, import_i18n11.__)("Contains"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
-        (0, import_i18n10.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
+        (0, import_i18n11.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -23091,11 +23118,11 @@ var OPERATORS = [
   {
     name: OPERATOR_NOT_CONTAINS,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Doesn't contain"),
+    label: (0, import_i18n11.__)("Doesn't contain"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
-        (0, import_i18n10.__)(
+        (0, import_i18n11.__)(
           "<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -23115,11 +23142,11 @@ var OPERATORS = [
   {
     name: OPERATOR_STARTS_WITH,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Starts with"),
+    label: (0, import_i18n11.__)("Starts with"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
-        (0, import_i18n10.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
+        (0, import_i18n11.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -23137,11 +23164,11 @@ var OPERATORS = [
   {
     name: OPERATOR_ON,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("On"),
+    label: (0, import_i18n11.__)("On"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
-        (0, import_i18n10.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+        (0, import_i18n11.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -23162,11 +23189,11 @@ var OPERATORS = [
   {
     name: OPERATOR_NOT_ON,
     /* translators: DataViews operator name */
-    label: (0, import_i18n10.__)("Not on"),
+    label: (0, import_i18n11.__)("Not on"),
     filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
-      (0, import_i18n10.sprintf)(
+      (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
-        (0, import_i18n10.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+        (0, import_i18n11.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -23604,27 +23631,27 @@ function Combobox({
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
 var import_components13 = __toESM(require_components(), 1);
 var import_element76 = __toESM(require_element(), 1);
-var import_i18n12 = __toESM(require_i18n(), 1);
+var import_i18n13 = __toESM(require_i18n(), 1);
 var import_date4 = __toESM(require_date(), 1);
 import { speak as speak2 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
 var import_components12 = __toESM(require_components(), 1);
 var import_element74 = __toESM(require_element(), 1);
-var import_i18n11 = __toESM(require_i18n(), 1);
+var import_i18n12 = __toESM(require_i18n(), 1);
 var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
 var TIME_UNITS_OPTIONS = {
   [OPERATOR_IN_THE_PAST]: [
-    { value: "days", label: (0, import_i18n11.__)("Days") },
-    { value: "weeks", label: (0, import_i18n11.__)("Weeks") },
-    { value: "months", label: (0, import_i18n11.__)("Months") },
-    { value: "years", label: (0, import_i18n11.__)("Years") }
+    { value: "days", label: (0, import_i18n12.__)("Days") },
+    { value: "weeks", label: (0, import_i18n12.__)("Weeks") },
+    { value: "months", label: (0, import_i18n12.__)("Months") },
+    { value: "years", label: (0, import_i18n12.__)("Years") }
   ],
   [OPERATOR_OVER]: [
-    { value: "days", label: (0, import_i18n11.__)("Days ago") },
-    { value: "weeks", label: (0, import_i18n11.__)("Weeks ago") },
-    { value: "months", label: (0, import_i18n11.__)("Months ago") },
-    { value: "years", label: (0, import_i18n11.__)("Years ago") }
+    { value: "days", label: (0, import_i18n12.__)("Days ago") },
+    { value: "weeks", label: (0, import_i18n12.__)("Weeks ago") },
+    { value: "months", label: (0, import_i18n12.__)("Months ago") },
+    { value: "years", label: (0, import_i18n12.__)("Years ago") }
   ]
 };
 function RelativeDateControl({
@@ -23683,7 +23710,7 @@ function RelativeDateControl({
           import_components12.SelectControl,
           {
             className: "dataviews-controls__relative-date-unit",
-            label: (0, import_i18n11.__)("Unit"),
+            label: (0, import_i18n12.__)("Unit"),
             value: unit,
             options,
             onChange: onChangeUnit,
@@ -23853,9 +23880,9 @@ function CalendarDateTimeControl({
   const locale = getCalendarLocale((0, import_date4.getSettings)().l10n.locale);
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n12.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n13.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n12.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n13.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
     import_components13.BaseControl,
@@ -23872,7 +23899,7 @@ function CalendarDateTimeControl({
             required: !!isValid2?.required,
             customValidity: getCustomValidity(isValid2, validity),
             type: "datetime-local",
-            label: (0, import_i18n12.__)("Date time"),
+            label: (0, import_i18n13.__)("Date time"),
             hideLabelFromVision: true,
             value: formatDateTime(value),
             onValueChange: handleManualDateTimeChange,
@@ -23891,7 +23918,7 @@ function CalendarDateTimeControl({
             onMonthChange: setCalendarMonth,
             timeZone,
             locale,
-            dir: (0, import_i18n12.isRTL)() ? "rtl" : "ltr",
+            dir: (0, import_i18n13.isRTL)() ? "rtl" : "ltr",
             weekStartsOn,
             disabled: disabled2 || disabledMatchers
           }
@@ -23940,19 +23967,19 @@ function DateTime({
 // packages/dataviews/build-module/components/dataform-controls/date.mjs
 var import_components14 = __toESM(require_components(), 1);
 var import_element77 = __toESM(require_element(), 1);
-var import_i18n13 = __toESM(require_i18n(), 1);
+var import_i18n14 = __toESM(require_i18n(), 1);
 var import_date5 = __toESM(require_date(), 1);
 import { speak as speak3 } from "@wordpress/a11y";
 var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
 var DATE_PRESETS = [
   {
     id: "today",
-    label: (0, import_i18n13.__)("Today"),
+    label: (0, import_i18n14.__)("Today"),
     getValue: () => (0, import_date5.getDate)(null)
   },
   {
     id: "yesterday",
-    label: (0, import_i18n13.__)("Yesterday"),
+    label: (0, import_i18n14.__)("Yesterday"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return subDays(today, 1);
@@ -23960,7 +23987,7 @@ var DATE_PRESETS = [
   },
   {
     id: "past-week",
-    label: (0, import_i18n13.__)("Past week"),
+    label: (0, import_i18n14.__)("Past week"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return subDays(today, 7);
@@ -23968,7 +23995,7 @@ var DATE_PRESETS = [
   },
   {
     id: "past-month",
-    label: (0, import_i18n13.__)("Past month"),
+    label: (0, import_i18n14.__)("Past month"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return subMonths(today, 1);
@@ -23978,7 +24005,7 @@ var DATE_PRESETS = [
 var DATE_RANGE_PRESETS = [
   {
     id: "last-7-days",
-    label: (0, import_i18n13.__)("Last 7 days"),
+    label: (0, import_i18n14.__)("Last 7 days"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [subDays(today, 7), today];
@@ -23986,7 +24013,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "last-30-days",
-    label: (0, import_i18n13.__)("Last 30 days"),
+    label: (0, import_i18n14.__)("Last 30 days"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [subDays(today, 30), today];
@@ -23994,7 +24021,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "month-to-date",
-    label: (0, import_i18n13.__)("Month to date"),
+    label: (0, import_i18n14.__)("Month to date"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [startOfMonth(today), today];
@@ -24002,7 +24029,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "last-year",
-    label: (0, import_i18n13.__)("Last year"),
+    label: (0, import_i18n14.__)("Last year"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [subYears(today, 1), today];
@@ -24010,7 +24037,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "year-to-date",
-    label: (0, import_i18n13.__)("Year to date"),
+    label: (0, import_i18n14.__)("Year to date"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [startOfYear(today), today];
@@ -24196,9 +24223,9 @@ function CalendarDateControl({
   );
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n13.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n14.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n13.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n14.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
     ValidatedDateControl,
@@ -24251,7 +24278,7 @@ function CalendarDateControl({
                       size: "small",
                       disabled: !!selectedPresetId || disabled2,
                       accessibleWhenDisabled: true,
-                      children: (0, import_i18n13.__)("Custom")
+                      children: (0, import_i18n14.__)("Custom")
                     }
                   )
                 ]
@@ -24262,7 +24289,7 @@ function CalendarDateControl({
               {
                 ref: validityTargetRef,
                 type: "date",
-                label: (0, import_i18n13.__)("Date"),
+                label: (0, import_i18n14.__)("Date"),
                 hideLabelFromVision: true,
                 value,
                 onChange: handleManualDateChange,
@@ -24281,7 +24308,7 @@ function CalendarDateControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 locale,
-                dir: (0, import_i18n13.isRTL)() ? "rtl" : "ltr",
+                dir: (0, import_i18n14.isRTL)() ? "rtl" : "ltr",
                 weekStartsOn,
                 disabled: disabled2 || disabledMatchers,
                 disableNavigation: disabled2
@@ -24421,9 +24448,9 @@ function CalendarDateRangeControl({
   );
   let displayLabel = label;
   if (field.isValid?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n13.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n14.__)("Required")})`;
   } else if (!field.isValid?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n13.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n14.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
     ValidatedDateControl,
@@ -24476,7 +24503,7 @@ function CalendarDateRangeControl({
                       size: "small",
                       accessibleWhenDisabled: true,
                       disabled: !!selectedPresetId || disabled2,
-                      children: (0, import_i18n13.__)("Custom")
+                      children: (0, import_i18n14.__)("Custom")
                     }
                   )
                 ]
@@ -24495,7 +24522,7 @@ function CalendarDateRangeControl({
                     {
                       ref: fromInputRef,
                       type: "date",
-                      label: (0, import_i18n13.__)("From"),
+                      label: (0, import_i18n14.__)("From"),
                       hideLabelFromVision: true,
                       value: value?.[0],
                       onChange: (newValue) => handleManualDateChange("from", newValue),
@@ -24510,7 +24537,7 @@ function CalendarDateRangeControl({
                     {
                       ref: toInputRef,
                       type: "date",
-                      label: (0, import_i18n13.__)("To"),
+                      label: (0, import_i18n14.__)("To"),
                       hideLabelFromVision: true,
                       value: value?.[1],
                       onChange: (newValue) => handleManualDateChange("to", newValue),
@@ -24532,7 +24559,7 @@ function CalendarDateRangeControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 locale,
-                dir: (0, import_i18n13.isRTL)() ? "rtl" : "ltr",
+                dir: (0, import_i18n14.isRTL)() ? "rtl" : "ltr",
                 weekStartsOn,
                 disabled: disabled2 || disabledMatchers
               }
@@ -24785,7 +24812,7 @@ function Url({
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
 var import_components16 = __toESM(require_components(), 1);
 var import_element80 = __toESM(require_element(), 1);
-var import_i18n14 = __toESM(require_i18n(), 1);
+var import_i18n15 = __toESM(require_i18n(), 1);
 var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
@@ -24812,12 +24839,12 @@ function BetweenControls({
   return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
     import_components16.BaseControl,
     {
-      help: (0, import_i18n14.__)("The max. value must be greater than the min. value."),
+      help: (0, import_i18n15.__)("The max. value must be greater than the min. value."),
       children: /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(import_components16.Flex, { direction: "row", gap: 4, children: [
         /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
           import_components16.__experimentalNumberControl,
           {
-            label: (0, import_i18n14.__)("Min."),
+            label: (0, import_i18n15.__)("Min."),
             value: min3,
             max: max3 ? Number(max3) - step : void 0,
             onChange: onChangeMin,
@@ -24828,7 +24855,7 @@ function BetweenControls({
         /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
           import_components16.__experimentalNumberControl,
           {
-            label: (0, import_i18n14.__)("Max."),
+            label: (0, import_i18n15.__)("Max."),
             value: max3,
             min: min3 ? Number(min3) + step : void 0,
             onChange: onChangeMax,
@@ -25003,7 +25030,7 @@ function Text3({
 // packages/dataviews/build-module/components/dataform-controls/time.mjs
 var import_components18 = __toESM(require_components(), 1);
 var import_element83 = __toESM(require_element(), 1);
-var import_i18n15 = __toESM(require_i18n(), 1);
+var import_i18n16 = __toESM(require_i18n(), 1);
 var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
 function getStep(timeFormat, values) {
   const tokens = (timeFormat ?? "").replace(/\\./g, "");
@@ -25045,13 +25072,13 @@ function BetweenControls2({
   return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
     import_components18.BaseControl,
     {
-      help: (0, import_i18n15.__)("The end time must be later than the start time."),
+      help: (0, import_i18n16.__)("The end time must be later than the start time."),
       children: /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
         /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
           ValidatedInputControl,
           {
             type: "time",
-            label: (0, import_i18n15.__)("From"),
+            label: (0, import_i18n16.__)("From"),
             value: from,
             onValueChange: onChangeFrom,
             hideLabelFromVision,
@@ -25065,7 +25092,7 @@ function BetweenControls2({
           ValidatedInputControl,
           {
             type: "time",
-            label: (0, import_i18n15.__)("To"),
+            label: (0, import_i18n16.__)("To"),
             value: to2,
             onValueChange: onChangeTo,
             hideLabelFromVision,
@@ -25538,7 +25565,7 @@ var w = function(r3) {
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
 var import_components21 = __toESM(require_components(), 1);
 var import_element88 = __toESM(require_element(), 1);
-var import_i18n16 = __toESM(require_i18n(), 1);
+var import_i18n17 = __toESM(require_i18n(), 1);
 var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
 var ColorPickerDropdown = ({
   color,
@@ -25555,7 +25582,7 @@ var ColorPickerDropdown = ({
         import_components21.Button,
         {
           onClick: onToggle,
-          "aria-label": (0, import_i18n16.__)("Open color picker"),
+          "aria-label": (0, import_i18n17.__)("Open color picker"),
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
@@ -25626,7 +25653,7 @@ function Color({
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
 var import_components22 = __toESM(require_components(), 1);
 var import_element89 = __toESM(require_element(), 1);
-var import_i18n17 = __toESM(require_i18n(), 1);
+var import_i18n18 = __toESM(require_i18n(), 1);
 var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
@@ -25658,7 +25685,7 @@ function Password({
             icon: isVisible ? unseen_default : seen_default,
             onClick: toggleVisibility,
             size: "small",
-            label: isVisible ? (0, import_i18n17.__)("Hide password") : (0, import_i18n17.__)("Show password"),
+            label: isVisible ? (0, import_i18n18.__)("Hide password") : (0, import_i18n18.__)("Show password"),
             disabled: disabled2,
             accessibleWhenDisabled: true
           }
@@ -25783,7 +25810,7 @@ var setValueFromId = (id) => ({ value }) => {
 var set_value_from_id_default = setValueFromId;
 
 // packages/dataviews/build-module/field-types/email.mjs
-var import_i18n18 = __toESM(require_i18n(), 1);
+var import_i18n19 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
 function RenderFromElements({
@@ -25893,7 +25920,7 @@ var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{
 function isValidCustom(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-    return (0, import_i18n18.__)("Value must be a valid email address.");
+    return (0, import_i18n19.__)("Value must be a valid email address.");
   }
   return null;
 }
@@ -25930,7 +25957,7 @@ var email_default = {
 };
 
 // packages/dataviews/build-module/field-types/integer.mjs
-var import_i18n19 = __toESM(require_i18n(), 1);
+var import_i18n20 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/sort-number.mjs
 var sort_number_default = (a2, b2, direction) => {
@@ -25996,7 +26023,7 @@ function getValueFormatted2({
 function isValidCustom2(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-    return (0, import_i18n19.__)("Value must be an integer.");
+    return (0, import_i18n20.__)("Value must be an integer.");
   }
   return null;
 }
@@ -26043,7 +26070,7 @@ var integer_default = {
 };
 
 // packages/dataviews/build-module/field-types/number.mjs
-var import_i18n20 = __toESM(require_i18n(), 1);
+var import_i18n21 = __toESM(require_i18n(), 1);
 var format3 = {
   separatorThousand: ",",
   separatorDecimal: ".",
@@ -26079,7 +26106,7 @@ function isEmpty(value) {
 function isValidCustom3(item, field) {
   const value = field.getValue({ item });
   if (!isEmpty(value) && !Number.isFinite(value)) {
-    return (0, import_i18n20.__)("Value must be a number.");
+    return (0, import_i18n21.__)("Value must be a number.");
   }
   return null;
 }
@@ -26405,7 +26432,7 @@ var time_default = {
 };
 
 // packages/dataviews/build-module/field-types/boolean.mjs
-var import_i18n21 = __toESM(require_i18n(), 1);
+var import_i18n22 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
 function isValidRequiredForBool(item, field) {
@@ -26420,17 +26447,17 @@ function getValueFormatted7({
 }) {
   const value = field.getValue({ item });
   if (value === true) {
-    return (0, import_i18n21.__)("True");
+    return (0, import_i18n22.__)("True");
   }
   if (value === false) {
-    return (0, import_i18n21.__)("False");
+    return (0, import_i18n22.__)("False");
   }
   return "";
 }
 function isValidCustom4(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-    return (0, import_i18n21.__)("Value must be true, false, or undefined");
+    return (0, import_i18n22.__)("Value must be true, false, or undefined");
   }
   return null;
 }
@@ -26482,7 +26509,7 @@ var media_default = {
 };
 
 // packages/dataviews/build-module/field-types/array.mjs
-var import_i18n22 = __toESM(require_i18n(), 1);
+var import_i18n23 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
 function isValidRequiredForArray(item, field) {
@@ -26510,10 +26537,10 @@ function isValidCustom5(item, field) {
     return null;
   }
   if (!Array.isArray(value)) {
-    return (0, import_i18n22.__)("Value must be an array.");
+    return (0, import_i18n23.__)("Value must be an array.");
   }
   if (!value.every((v2) => typeof v2 === "string")) {
-    return (0, import_i18n22.__)("Every value must be a string.");
+    return (0, import_i18n23.__)("Every value must be a string.");
   }
   return null;
 }
@@ -26611,7 +26638,7 @@ var telephone_default = {
 };
 
 // packages/dataviews/build-module/field-types/color.mjs
-var import_i18n23 = __toESM(require_i18n(), 1);
+var import_i18n24 = __toESM(require_i18n(), 1);
 var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
@@ -26641,7 +26668,7 @@ function render3({ item, field }) {
 function isValidCustom6(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-    return (0, import_i18n23.__)("Value must be a valid color.");
+    return (0, import_i18n24.__)("Value must be a valid color.");
   }
   return null;
 }
@@ -26929,7 +26956,7 @@ var import_element91 = __toESM(require_element(), 1);
 var import_components23 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
-var import_i18n24 = __toESM(require_i18n(), 1);
+var import_i18n25 = __toESM(require_i18n(), 1);
 var DEFAULT_LAYOUT = {
   type: "regular",
   labelPosition: "top"
@@ -26960,14 +26987,14 @@ function normalizeLayout(layout) {
     if (typeof openAs === "object" && openAs.type === "modal") {
       normalizedOpenAs = {
         type: "modal",
-        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n24.__)("Apply"),
-        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n24.__)("Cancel")
+        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n25.__)("Apply"),
+        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n25.__)("Cancel")
       };
     } else if (openAs === "modal") {
       normalizedOpenAs = {
         type: "modal",
-        applyLabel: (0, import_i18n24.__)("Apply"),
-        cancelLabel: (0, import_i18n24.__)("Cancel")
+        applyLabel: (0, import_i18n25.__)("Apply"),
+        cancelLabel: (0, import_i18n25.__)("Cancel")
       };
     } else {
       normalizedOpenAs = { type: "dropdown" };
@@ -27167,7 +27194,7 @@ var import_compose13 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 var import_components25 = __toESM(require_components(), 1);
-var import_i18n25 = __toESM(require_i18n(), 1);
+var import_i18n26 = __toESM(require_i18n(), 1);
 var import_compose12 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
@@ -27265,13 +27292,13 @@ function SummaryButton({
     "dataforms-layouts-panel__field-control"
   );
   const errorId = `${controlId}-error`;
-  const ariaLabel = showError ? (0, import_i18n25.sprintf)(
+  const ariaLabel = showError ? (0, import_i18n26.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n25._x)("Edit %s (has errors)", "field"),
+    (0, import_i18n26._x)("Edit %s (has errors)", "field"),
     fieldLabel || ""
-  ) : (0, import_i18n25.sprintf)(
+  ) : (0, import_i18n26.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n25._x)("Edit %s", "field"),
+    (0, import_i18n26._x)("Edit %s", "field"),
     fieldLabel || ""
   );
   return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)("div", { className, children: [
@@ -27352,7 +27379,7 @@ function SummaryButton({
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es6 = __toESM(require_es6(), 1);
 var import_element92 = __toESM(require_element(), 1);
-var import_i18n26 = __toESM(require_i18n(), 1);
+var import_i18n27 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
     return true;
@@ -27482,7 +27509,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n26.__)("Could not validate elements.")
+              message: (0, import_i18n27.__)("Could not validate elements.")
             }
           },
           [...path, formField.id]
@@ -27501,7 +27528,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n26.__)(
+              message: (0, import_i18n27.__)(
                 "Value must be one of the elements."
               )
             }
@@ -27527,7 +27554,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n26.__)(
+      errorMessage = String(error2) || (0, import_i18n27.__)(
         "Unknown error when running elements validation asynchronously."
       );
     }
@@ -27586,7 +27613,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
         {
           custom: {
             type: "invalid",
-            message: (0, import_i18n26.__)("Validation could not be processed.")
+            message: (0, import_i18n27.__)("Validation could not be processed.")
           }
         },
         [...path, formField.id]
@@ -27601,7 +27628,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n26.__)(
+      errorMessage = String(error2) || (0, import_i18n27.__)(
         "Unknown error when running custom validation asynchronously."
       );
     }
@@ -27643,7 +27670,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       pattern: {
         type: "invalid",
-        message: (0, import_i18n26.__)("Value does not match the required pattern.")
+        message: (0, import_i18n27.__)("Value does not match the required pattern.")
       }
     };
   }
@@ -27651,7 +27678,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       min: {
         type: "invalid",
-        message: (0, import_i18n26.__)("Value is below the minimum.")
+        message: (0, import_i18n27.__)("Value is below the minimum.")
       }
     };
   }
@@ -27659,7 +27686,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       max: {
         type: "invalid",
-        message: (0, import_i18n26.__)("Value is above the maximum.")
+        message: (0, import_i18n27.__)("Value is above the maximum.")
       }
     };
   }
@@ -27667,7 +27694,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       minLength: {
         type: "invalid",
-        message: (0, import_i18n26.__)("Value is too short.")
+        message: (0, import_i18n27.__)("Value is too short.")
       }
     };
   }
@@ -27675,7 +27702,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       maxLength: {
         type: "invalid",
-        message: (0, import_i18n26.__)("Value is too long.")
+        message: (0, import_i18n27.__)("Value is too long.")
       }
     };
   }
@@ -27683,7 +27710,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       elements: {
         type: "invalid",
-        message: (0, import_i18n26.__)("Value must be one of the elements.")
+        message: (0, import_i18n27.__)("Value must be one of the elements.")
       }
     };
   }
@@ -27706,7 +27733,7 @@ function validateFormField(item, formField, promiseHandler) {
       if (error2 instanceof Error) {
         errorMessage = error2.message;
       } else {
-        errorMessage = String(error2) || (0, import_i18n26.__)("Unknown error when running custom validation.");
+        errorMessage = String(error2) || (0, import_i18n27.__)("Unknown error when running custom validation.");
       }
       return {
         custom: {
@@ -27733,14 +27760,14 @@ function validateFormField(item, formField, promiseHandler) {
     );
     fieldValidity.elements = {
       type: "validating",
-      message: (0, import_i18n26.__)("Validating\u2026")
+      message: (0, import_i18n27.__)("Validating\u2026")
     };
   }
   if (customError instanceof Promise) {
     handleCustomValidationAsync(customError, formField, promiseHandler);
     fieldValidity.custom = {
       type: "validating",
-      message: (0, import_i18n26.__)("Validating\u2026")
+      message: (0, import_i18n27.__)("Validating\u2026")
     };
   }
   if (Object.keys(fieldValidity).length > 0) {
@@ -28112,7 +28139,7 @@ var modal_default = PanelModal;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
 var import_components27 = __toESM(require_components(), 1);
-var import_i18n27 = __toESM(require_i18n(), 1);
+var import_i18n28 = __toESM(require_i18n(), 1);
 var import_element96 = __toESM(require_element(), 1);
 var import_compose14 = __toESM(require_compose(), 1);
 var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
@@ -28132,7 +28159,7 @@ function DropdownHeader({
         onClose && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
           import_components27.Button,
           {
-            label: (0, import_i18n27.__)("Close"),
+            label: (0, import_i18n28.__)("Close"),
             icon: close_small_default,
             onClick: onClose,
             size: "small"
@@ -28301,7 +28328,7 @@ var import_compose15 = __toESM(require_compose(), 1);
 import { speak as speak4 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
-var import_i18n28 = __toESM(require_i18n(), 1);
+var import_i18n29 = __toESM(require_i18n(), 1);
 function countInvalidFields(validity) {
   if (!validity) {
     return 0;
@@ -28328,9 +28355,9 @@ function getValidationMessage(validity) {
   if (invalidCount === 0) {
     return void 0;
   }
-  return (0, import_i18n28.sprintf)(
+  return (0, import_i18n29.sprintf)(
     /* translators: %d: Number of fields that need attention */
-    (0, import_i18n28._n)(
+    (0, import_i18n29._n)(
       "%d field needs attention",
       "%d fields need attention",
       invalidCount
@@ -28663,7 +28690,7 @@ function FormRowField({
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
 var import_element98 = __toESM(require_element(), 1);
-var import_i18n29 = __toESM(require_i18n(), 1);
+var import_i18n30 = __toESM(require_i18n(), 1);
 var import_compose16 = __toESM(require_compose(), 1);
 import { speak as speak5 } from "@wordpress/a11y";
 var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
@@ -28731,7 +28758,7 @@ function FormDetailsField({
   if (summaryField && summaryField.render) {
     summaryContent = /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(summaryField.render, { item: data, field: summaryField });
   } else {
-    summaryContent = field.label || (0, import_i18n29.__)("More details");
+    summaryContent = field.label || (0, import_i18n30.__)("More details");
   }
   return /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(
     "details",
@@ -28947,7 +28974,7 @@ var import_blob = __toESM(require_blob(), 1);
 var import_core_data = __toESM(require_core_data(), 1);
 var import_data = __toESM(require_data(), 1);
 var import_element102 = __toESM(require_element(), 1);
-var import_i18n30 = __toESM(require_i18n(), 1);
+var import_i18n31 = __toESM(require_i18n(), 1);
 var import_html_entities = __toESM(require_html_entities(), 1);
 var import_media_utils = __toESM(require_media_utils(), 1);
 var import_notices = __toESM(require_notices(), 1);
@@ -29110,7 +29137,7 @@ function eachSafely(values, each2) {
 }
 
 // node_modules/@react-spring/shared/dist/react-spring-shared.esm.js
-var import_react48 = __toESM(require_react());
+var import_react49 = __toESM(require_react());
 function noop4() {
 }
 var defineHidden = (obj, key, value) => Object.defineProperty(obj, key, {
@@ -29714,9 +29741,9 @@ var warnDirectCall = once(console.warn);
 function isAnimatedString(value) {
   return is.str(value) && (value[0] == "#" || /\d/.test(value) || !isSSR() && cssVariableRegex.test(value) || value in (colors$1 || {}));
 }
-var useIsomorphicLayoutEffect2 = isSSR() ? import_react48.useEffect : import_react48.useLayoutEffect;
+var useIsomorphicLayoutEffect2 = isSSR() ? import_react49.useEffect : import_react49.useLayoutEffect;
 var useIsMounted = () => {
-  const isMounted = (0, import_react48.useRef)(false);
+  const isMounted = (0, import_react49.useRef)(false);
   useIsomorphicLayoutEffect2(() => {
     isMounted.current = true;
     return () => {
@@ -29726,7 +29753,7 @@ var useIsMounted = () => {
   return isMounted;
 };
 function useForceUpdate() {
-  const update4 = (0, import_react48.useState)()[1];
+  const update4 = (0, import_react49.useState)()[1];
   const isMounted = useIsMounted();
   return () => {
     if (isMounted.current) {
@@ -29735,11 +29762,11 @@ function useForceUpdate() {
   };
 }
 function useMemoOne(getResult, inputs) {
-  const [initial2] = (0, import_react48.useState)(() => ({
+  const [initial2] = (0, import_react49.useState)(() => ({
     inputs,
     result: getResult()
   }));
-  const committed = (0, import_react48.useRef)();
+  const committed = (0, import_react49.useRef)();
   const prevCache = committed.current;
   let cache = prevCache;
   if (cache) {
@@ -29753,7 +29780,7 @@ function useMemoOne(getResult, inputs) {
   } else {
     cache = initial2;
   }
-  (0, import_react48.useEffect)(() => {
+  (0, import_react49.useEffect)(() => {
     committed.current = cache;
     if (prevCache == initial2) {
       initial2.inputs = initial2.result = void 0;
@@ -29772,16 +29799,16 @@ function areInputsEqual(next, prev) {
   }
   return true;
 }
-var useOnce = (effect) => (0, import_react48.useEffect)(effect, emptyDeps);
+var useOnce = (effect) => (0, import_react49.useEffect)(effect, emptyDeps);
 var emptyDeps = [];
 
 // node_modules/@react-spring/core/dist/react-spring-core.esm.js
 var React103 = __toESM(require_react());
-var import_react50 = __toESM(require_react());
+var import_react51 = __toESM(require_react());
 
 // node_modules/@react-spring/animated/dist/react-spring-animated.esm.js
 var React102 = __toESM(require_react());
-var import_react49 = __toESM(require_react());
+var import_react50 = __toESM(require_react());
 var $node = /* @__PURE__ */ Symbol.for("Animated:node");
 var isAnimated = (value) => !!value && value[$node] === value;
 var getAnimated = (owner) => owner && owner[$node];
@@ -29980,9 +30007,9 @@ function _extends2() {
 }
 var withAnimated = (Component, host2) => {
   const hasInstance = !is.fun(Component) || Component.prototype && Component.prototype.isReactComponent;
-  return (0, import_react49.forwardRef)((givenProps, givenRef) => {
-    const instanceRef = (0, import_react49.useRef)(null);
-    const ref = hasInstance && (0, import_react49.useCallback)((value) => {
+  return (0, import_react50.forwardRef)((givenProps, givenRef) => {
+    const instanceRef = (0, import_react50.useRef)(null);
+    const ref = hasInstance && (0, import_react50.useCallback)((value) => {
       instanceRef.current = updateRef(givenRef, value);
     }, [givenRef]);
     const [props, deps] = getAnimatedState(givenProps, host2);
@@ -29998,7 +30025,7 @@ var withAnimated = (Component, host2) => {
       }
     };
     const observer = new PropsObserver(callback, deps);
-    const observerRef = (0, import_react49.useRef)();
+    const observerRef = (0, import_react50.useRef)();
     useIsomorphicLayoutEffect2(() => {
       observerRef.current = observer;
       each(deps, (dep) => addFluidObserver(dep, observer));
@@ -30009,7 +30036,7 @@ var withAnimated = (Component, host2) => {
         }
       };
     });
-    (0, import_react49.useEffect)(callback, []);
+    (0, import_react50.useEffect)(callback, []);
     useOnce(() => () => {
       const observer2 = observerRef.current;
       each(observer2.deps, (dep) => removeFluidObserver(dep, observer2));
@@ -31523,7 +31550,7 @@ var SpringContext = (_ref) => {
   let {
     children
   } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$3);
-  const inherited = (0, import_react50.useContext)(ctx);
+  const inherited = (0, import_react51.useContext)(ctx);
   const pause = props.pause || !!inherited.pause, immediate = props.immediate || !!inherited.immediate;
   props = useMemoOne(() => ({
     pause,
@@ -32035,7 +32062,7 @@ function MoveButtons({
       {
         __next40pxDefaultSize: true,
         icon: isHorizontal ? chevron_left_default : chevron_up_default,
-        label: isHorizontal ? (0, import_i18n30.__)("Move left") : (0, import_i18n30.__)("Move up"),
+        label: isHorizontal ? (0, import_i18n31.__)("Move left") : (0, import_i18n31.__)("Move up"),
         size: "small",
         disabled: isUploading || index2 === 0,
         accessibleWhenDisabled: true,
@@ -32051,7 +32078,7 @@ function MoveButtons({
       {
         __next40pxDefaultSize: true,
         icon: isHorizontal ? chevron_right_default : chevron_down_default,
-        label: isHorizontal ? (0, import_i18n30.__)("Move right") : (0, import_i18n30.__)("Move down"),
+        label: isHorizontal ? (0, import_i18n31.__)("Move right") : (0, import_i18n31.__)("Move down"),
         size: "small",
         disabled: isUploading || index2 === totalItems - 1,
         accessibleWhenDisabled: true,
@@ -32124,13 +32151,13 @@ function ExpandedMediaEditAttachments({
                       setTargetItemId(attachmentNumericId);
                       open();
                     },
-                    label: !isBlob ? (0, import_i18n30.sprintf)(
+                    label: !isBlob ? (0, import_i18n31.sprintf)(
                       /* translators: %s: The title of the media item. */
-                      (0, import_i18n30.__)("Replace %s"),
+                      (0, import_i18n31.__)("Replace %s"),
                       (0, import_html_entities.decodeEntities)(
                         attachment.title.rendered
                       )
-                    ) : (0, import_i18n30.__)("Replace"),
+                    ) : (0, import_i18n31.__)("Replace"),
                     showTooltip: true,
                     onFilesDrop,
                     attachment,
@@ -32176,7 +32203,7 @@ function ExpandedMediaEditAttachments({
                         {
                           __next40pxDefaultSize: true,
                           icon: close_small_default,
-                          label: (0, import_i18n30.__)("Remove"),
+                          label: (0, import_i18n31.__)("Remove"),
                           size: "small",
                           disabled: isUploading,
                           accessibleWhenDisabled: true,
@@ -32248,7 +32275,7 @@ function CompactMediaEditAttachments({
                       );
                       open();
                     },
-                    label: (0, import_i18n30.__)("Replace"),
+                    label: (0, import_i18n31.__)("Replace"),
                     showTooltip: true,
                     onFilesDrop,
                     attachment,
@@ -32293,7 +32320,7 @@ function CompactMediaEditAttachments({
                         {
                           __next40pxDefaultSize: true,
                           icon: close_small_default,
-                          label: (0, import_i18n30.__)("Remove"),
+                          label: (0, import_i18n31.__)("Remove"),
                           size: "small",
                           disabled: isUploading,
                           accessibleWhenDisabled: true,
@@ -32490,7 +32517,7 @@ function MediaEdit({
       receiveEntityRecords
     ]
   );
-  const addButtonLabel = field.placeholder || (multiple ? (0, import_i18n30.__)("Choose files") : (0, import_i18n30.__)("Choose file"));
+  const addButtonLabel = field.placeholder || (multiple ? (0, import_i18n31.__)("Choose files") : (0, import_i18n31.__)("Choose file"));
   const allItems = (0, import_element102.useMemo)(() => {
     if (!blobs.length) {
       return orderedAttachments;
@@ -32526,7 +32553,7 @@ function MediaEdit({
       setCustomValidity(customValidityResult);
       if (customValidityResult?.type === "invalid") {
         input.setCustomValidity(
-          customValidityResult.message || (0, import_i18n30.__)("Invalid")
+          customValidityResult.message || (0, import_i18n31.__)("Invalid")
         );
       } else {
         input.setCustomValidity("");
@@ -32661,8 +32688,8 @@ var fields = [
   {
     id: "title",
     type: "text",
-    label: (0, import_i18n31.__)("Site Title"),
-    description: (0, import_i18n31.__)(
+    label: (0, import_i18n32.__)("Site Title"),
+    description: (0, import_i18n32.__)(
       "Displays in your site's layout via the Site Title block."
     ),
     getValue: ({ item }) => (0, import_html_entities2.decodeEntities)(item.title ?? "")
@@ -32670,8 +32697,8 @@ var fields = [
   {
     id: "description",
     type: "text",
-    label: (0, import_i18n31.__)("Site Tagline"),
-    description: (0, import_i18n31.__)(
+    label: (0, import_i18n32.__)("Site Tagline"),
+    description: (0, import_i18n32.__)(
       "In a few words, explain what this site is about. Displays in your site's layout via the Site Tagline block."
     ),
     getValue: ({ item }) => (0, import_html_entities2.decodeEntities)(item.description ?? "")
@@ -32679,11 +32706,11 @@ var fields = [
   {
     id: "site_logo",
     type: "media",
-    label: (0, import_i18n31.__)("Site Logo"),
-    description: (0, import_i18n31.__)(
+    label: (0, import_i18n32.__)("Site Logo"),
+    description: (0, import_i18n32.__)(
       "Displays in your site's layout via the Site Logo block."
     ),
-    placeholder: (0, import_i18n31.__)("Choose logo"),
+    placeholder: (0, import_i18n32.__)("Choose logo"),
     Edit: MediaEdit,
     setValue: ({ value }) => ({
       site_logo: value ?? 0
@@ -32692,11 +32719,11 @@ var fields = [
   {
     id: "site_icon",
     type: "media",
-    label: (0, import_i18n31.__)("Site Icon"),
-    description: (0, import_i18n31.__)(
+    label: (0, import_i18n32.__)("Site Icon"),
+    description: (0, import_i18n32.__)(
       "Shown in browser tabs, bookmarks, and mobile apps. It should be square and at least 512 by 512 pixels."
     ),
-    placeholder: (0, import_i18n31.__)("Choose icon"),
+    placeholder: (0, import_i18n32.__)("Choose icon"),
     Edit: MediaEdit,
     setValue: ({ value }) => ({
       site_icon: value ?? 0
@@ -32727,7 +32754,7 @@ function Identity() {
   return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
     page_default,
     {
-      title: (0, import_i18n31._x)("Identity", "site identity"),
+      title: (0, import_i18n32._x)("Identity", "site identity"),
       headingLevel: 2,
       hasPadding: true,
       children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(

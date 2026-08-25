@@ -504,7 +504,7 @@ var require_api_fetch = __commonJS({
 });
 
 // packages/admin-ui/build-module/breadcrumbs/index.mjs
-var import_i18n8 = __toESM(require_i18n(), 1);
+var import_i18n9 = __toESM(require_i18n(), 1);
 import { Link as RouterLink } from "@wordpress/route";
 
 // node_modules/clsx/dist/clsx.mjs
@@ -19440,6 +19440,9 @@ var import_primitives28 = __toESM(require_primitives(), 1);
 var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
 var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives28.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives28.Path, { d: "M20.7 12.7s0-.1-.1-.2c0-.2-.2-.4-.4-.6-.3-.5-.9-1.2-1.6-1.8-.7-.6-1.5-1.3-2.6-1.8l-.6 1.4c.9.4 1.6 1 2.1 1.5.6.6 1.1 1.2 1.4 1.6.1.2.3.4.3.5v.1l.7-.3.7-.3Zm-5.2-9.3-1.8 4c-.5-.1-1.1-.2-1.7-.2-3 0-5.2 1.4-6.6 2.7-.7.7-1.2 1.3-1.6 1.8-.2.3-.3.5-.4.6 0 0 0 .1-.1.2s0 0 .7.3l.7.3V13c0-.1.2-.3.3-.5.3-.4.7-1 1.4-1.6 1.2-1.2 3-2.3 5.5-2.3H13v.3c-.4 0-.8-.1-1.1-.1-1.9 0-3.5 1.6-3.5 3.5s.6 2.3 1.6 2.9l-2 4.4.9.4 7.6-16.2-.9-.4Zm-3 12.6c1.7-.2 3-1.7 3-3.5s-.2-1.4-.6-1.9L12.4 16Z" }) });
 
+// packages/ui/build-module/calendar/utils/components.mjs
+var import_i18n4 = __toESM(require_i18n(), 1);
+
 // packages/ui/build-module/icon-button/icon-button.mjs
 var import_element22 = __toESM(require_element(), 1);
 
@@ -20256,13 +20259,25 @@ function Day2(props) {
   ] });
 }
 function Root3({ rootRef, ...props }) {
-  const { render: render4, ref } = (0, import_element24.useContext)(RootContext);
+  const { render: render4, ref, role, defaultAriaLabel } = (0, import_element24.useContext)(RootContext);
+  const { months, labels } = useDayPicker();
+  const hasExplicitLabel = props["aria-label"] !== void 0 || props["aria-labelledby"] !== void 0;
+  let ariaLabel = props["aria-label"];
+  if (!hasExplicitLabel && defaultAriaLabel && role === "application") {
+    const currentMonth = months[0];
+    ariaLabel = currentMonth ? (0, import_i18n4.sprintf)(
+      // translators: 1: Calendar type. 2: Current month and year.
+      (0, import_i18n4.__)("%1$s, %2$s"),
+      defaultAriaLabel,
+      labels.labelGrid(currentMonth.date)
+    ) : defaultAriaLabel;
+  }
   const mergedRef = (0, import_compose.useMergeRefs)([rootRef ?? null, ref ?? null]);
   return useRender({
     render: render4,
     defaultTagName: "div",
     ref: mergedRef,
-    props
+    props: { ...props, role, "aria-label": ariaLabel }
   });
 }
 function NavButton({
@@ -20451,8 +20466,6 @@ var COMMON_PROPS = {
   hideNavigation: false,
   // Class names
   classNames: CLASSNAMES,
-  // Default role
-  role: "application",
   components: {
     Day: Day2,
     Root: Root3,
@@ -20496,7 +20509,7 @@ function useControlledValue2({
 }
 
 // packages/ui/build-module/calendar/utils/use-localization-props.mjs
-var import_i18n4 = __toESM(require_i18n(), 1);
+var import_i18n5 = __toESM(require_i18n(), 1);
 var import_element26 = __toESM(require_element(), 1);
 function isLocaleRTL(locale) {
   const direction = (locale.getTextInfo?.() ?? locale.textInfo)?.direction;
@@ -20561,7 +20574,7 @@ var useLocalizationProps = ({
     );
     const localeCode = supportedLocaleCode ?? "en-US";
     const intlLocale = new Intl.Locale(localeCode);
-    const isRightToLeft = supportedLocaleCode !== void 0 ? isLocaleRTL(intlLocale) : (0, import_i18n4.isRTL)();
+    const isRightToLeft = supportedLocaleCode !== void 0 ? isLocaleRTL(intlLocale) : (0, import_i18n5.isRTL)();
     const weekStartsOn = isLocaleString || supportedLocaleCode !== void 0 ? getWeekStartsOn(intlLocale) : void 0;
     const monthNameFormatter = new Intl.DateTimeFormat(localeCode, {
       calendar: "gregory",
@@ -20593,10 +20606,10 @@ var useLocalizationProps = ({
       timeZone
     });
     return {
-      "aria-label": mode === "single" ? (0, import_i18n4.__)("Date calendar") : (0, import_i18n4.__)("Date range calendar"),
+      "aria-label": mode === "single" ? (0, import_i18n5.__)("Date calendar") : (0, import_i18n5.__)("Date range calendar"),
       labels: {
         /** The label for the navigation toolbar. */
-        labelNav: () => (0, import_i18n4.__)("Navigation bar"),
+        labelNav: () => (0, import_i18n5.__)("Navigation bar"),
         /**
          * The label for the month grid.
          * @param date
@@ -20611,18 +20624,18 @@ var useLocalizationProps = ({
           const formattedDate = fullDateFormatter.format(date);
           let label = formattedDate;
           if (modifiers?.today) {
-            label = (0, import_i18n4.sprintf)(
+            label = (0, import_i18n5.sprintf)(
               // translators: %s is the full date (e.g. "Monday, April 29, 2025")
-              (0, import_i18n4.__)("Today, %s"),
+              (0, import_i18n5.__)("Today, %s"),
               formattedDate
             );
           }
           return label;
         },
         /** The label for the "next month" button. */
-        labelNext: () => (0, import_i18n4.__)("Next month"),
+        labelNext: () => (0, import_i18n5.__)("Next month"),
         /** The label for the "previous month" button. */
-        labelPrevious: () => (0, import_i18n4.__)("Previous month"),
+        labelPrevious: () => (0, import_i18n5.__)("Previous month"),
         /**
          * The label for the day button.
          * @param date
@@ -20632,23 +20645,23 @@ var useLocalizationProps = ({
           const formattedDate = fullDateFormatter.format(date);
           let label = formattedDate;
           if (modifiers?.today && modifiers?.selected) {
-            return (0, import_i18n4.sprintf)(
+            return (0, import_i18n5.sprintf)(
               // translators: %s is the full date (e.g. "Monday, April 29, 2025")
-              (0, import_i18n4.__)("Today, %s, selected"),
+              (0, import_i18n5.__)("Today, %s, selected"),
               formattedDate
             );
           }
           if (modifiers?.today) {
-            label = (0, import_i18n4.sprintf)(
+            label = (0, import_i18n5.sprintf)(
               // translators: %s is the full date (e.g. "Monday, April 29, 2025")
-              (0, import_i18n4.__)("Today, %s"),
+              (0, import_i18n5.__)("Today, %s"),
               formattedDate
             );
           }
           if (modifiers?.selected) {
-            label = (0, import_i18n4.sprintf)(
+            label = (0, import_i18n5.sprintf)(
               // translators: %s is the full date (e.g. "Monday, April 29, 2025")
-              (0, import_i18n4.__)("%s, selected"),
+              (0, import_i18n5.__)("%s, selected"),
               formattedDate
             );
           }
@@ -20729,10 +20742,12 @@ var Calendar = (0, import_element28.forwardRef)(
     timeZone,
     month,
     render: render4,
+    role = "application",
+    "aria-label": ariaLabel,
     labels: customLabels,
     ...props
   }, ref) {
-    const localizationProps = useLocalizationProps({
+    const { "aria-label": defaultAriaLabel, ...localizationProps } = useLocalizationProps({
       locale,
       timeZone,
       mode: "single"
@@ -20759,8 +20774,13 @@ var Calendar = (0, import_element28.forwardRef)(
     });
     const dayFocusProps = usePreserveDayFocus(ref, month);
     const rootContextValue = (0, import_element28.useMemo)(
-      () => ({ render: render4, ref: dayFocusProps.ref }),
-      [render4, dayFocusProps.ref]
+      () => ({
+        render: render4,
+        ref: dayFocusProps.ref,
+        role,
+        defaultAriaLabel
+      }),
+      [render4, dayFocusProps.ref, role, defaultAriaLabel]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(RootContext.Provider, { value: rootContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
       DayPicker,
@@ -20768,7 +20788,7 @@ var Calendar = (0, import_element28.forwardRef)(
         ...COMMON_PROPS,
         ...localizationProps,
         ...props,
-        role: "application",
+        "aria-label": ariaLabel,
         mode: "single",
         month,
         numberOfMonths: clampNumberOfMonths(numberOfMonths),
@@ -20868,10 +20888,12 @@ var RangeCalendar = (0, import_element29.forwardRef)(
     timeZone,
     month,
     render: render4,
+    role = "application",
+    "aria-label": ariaLabel,
     labels: customLabels,
     ...props
   }, ref) {
-    const localizationProps = useLocalizationProps({
+    const { "aria-label": defaultAriaLabel, ...localizationProps } = useLocalizationProps({
       locale,
       timeZone,
       mode: "range"
@@ -20916,8 +20938,13 @@ var RangeCalendar = (0, import_element29.forwardRef)(
       };
     }, [previewRange]);
     const rootContextValue = (0, import_element29.useMemo)(
-      () => ({ render: render4, ref: dayFocusProps.ref }),
-      [render4, dayFocusProps.ref]
+      () => ({
+        render: render4,
+        ref: dayFocusProps.ref,
+        role,
+        defaultAriaLabel
+      }),
+      [render4, dayFocusProps.ref, role, defaultAriaLabel]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(RootContext.Provider, { value: rootContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
       DayPicker,
@@ -20925,7 +20952,7 @@ var RangeCalendar = (0, import_element29.forwardRef)(
         ...COMMON_PROPS,
         ...localizationProps,
         ...props,
-        role: "application",
+        "aria-label": ariaLabel,
         mode: "range",
         month,
         numberOfMonths: clampNumberOfMonths(numberOfMonths),
@@ -22387,7 +22414,7 @@ var Input3 = (0, import_element47.forwardRef)(function Input22({ className, size
 });
 
 // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
-var import_i18n5 = __toESM(require_i18n(), 1);
+var import_i18n6 = __toESM(require_i18n(), 1);
 var import_element49 = __toESM(require_element(), 1);
 
 // packages/ui/build-module/spinner/spinner.mjs
@@ -22643,9 +22670,9 @@ var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
 function appendRequiredIndicator(label, required, markWhenOptional) {
   let suffix;
   if (required && !markWhenOptional) {
-    suffix = `(${(0, import_i18n5.__)("Required")})`;
+    suffix = `(${(0, import_i18n6.__)("Required")})`;
   } else if (!required && markWhenOptional) {
-    suffix = `(${(0, import_i18n5.__)("Optional")})`;
+    suffix = `(${(0, import_i18n6.__)("Optional")})`;
   }
   if (!suffix) {
     return label;
@@ -23177,7 +23204,7 @@ var Description = (0, import_element53.forwardRef)(function Description2({ class
 
 // packages/ui/build-module/form/primitives/field/details.mjs
 var import_element54 = __toESM(require_element(), 1);
-var import_i18n6 = __toESM(require_i18n(), 1);
+var import_i18n7 = __toESM(require_i18n(), 1);
 var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE27 = "data-wp-hash";
 function getRuntime27() {
@@ -23266,7 +23293,7 @@ var field_default3 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c421
 var Details = (0, import_element54.forwardRef)(
   function Details2({ className, ...restProps }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(import_jsx_runtime85.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(index_parts_exports2.Description, {}), children: (0, import_i18n6.__)("More details follow the field.") }),
+      /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(index_parts_exports2.Description, {}), children: (0, import_i18n7.__)("More details follow the field.") }),
       /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
         "div",
         {
@@ -23502,7 +23529,7 @@ var ValidatedTextareaControl = (0, import_element60.forwardRef)(function Validat
 
 // packages/ui/build-module/link/link.mjs
 var import_element61 = __toESM(require_element(), 1);
-var import_i18n7 = __toESM(require_i18n(), 1);
+var import_i18n8 = __toESM(require_i18n(), 1);
 var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE29 = "data-wp-hash";
 function getRuntime29() {
@@ -23633,7 +23660,7 @@ var Link = (0, import_element61.forwardRef)(function Link2({
             role: "img",
             "aria-label": (
               /* translators: accessibility text appended to link text */
-              (0, import_i18n7.__)("(opens in a new tab)")
+              (0, import_i18n8.__)("(opens in a new tab)")
             )
           }
         )
@@ -24241,7 +24268,7 @@ var Breadcrumbs = ({ items }) => {
       );
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("nav", { "aria-label": (0, import_i18n8.__)("Breadcrumbs"), children: /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("nav", { "aria-label": (0, import_i18n9.__)("Breadcrumbs"), children: /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(
     Stack,
     {
       render: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("ul", {}),
@@ -24325,7 +24352,7 @@ NavigableRegion.displayName = "NavigableRegion";
 var navigable_region_default = NavigableRegion;
 
 // packages/admin-ui/build-module/navigation/index.mjs
-var import_i18n9 = __toESM(require_i18n(), 1);
+var import_i18n10 = __toESM(require_i18n(), 1);
 var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE34 = "data-wp-hash";
 function getRuntime34() {
@@ -24414,7 +24441,7 @@ var style_default28 = { "list": "bfb5a2dd8cceebd3__list", "li": "a4759b4cb2c8bd9
 var Navigation = ({
   items,
   currentHref,
-  ariaLabel = (0, import_i18n9.__)("Sections"),
+  ariaLabel = (0, import_i18n10.__)("Sections"),
   linkComponent,
   className
 }) => {
@@ -24803,7 +24830,7 @@ var import_core_data3 = __toESM(require_core_data());
 var import_data10 = __toESM(require_data());
 var import_editor = __toESM(require_editor());
 var import_html_entities = __toESM(require_html_entities());
-var import_i18n47 = __toESM(require_i18n());
+var import_i18n48 = __toESM(require_i18n());
 
 // packages/media-editor/build-module/components/media-editor-provider/index.mjs
 var import_element68 = __toESM(require_element(), 1);
@@ -24837,7 +24864,7 @@ function useMediaEditorContext() {
 // packages/media-editor/build-module/components/media-preview/index.mjs
 var import_components3 = __toESM(require_components(), 1);
 var import_element69 = __toESM(require_element(), 1);
-var import_i18n10 = __toESM(require_i18n(), 1);
+var import_i18n11 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/utils/get-media-type.mjs
 function getMediaTypeFromMimeType(mimeType) {
@@ -24895,7 +24922,7 @@ function MediaPreviewContent({
             target: "_blank",
             rel: "noopener",
             className: "media-editor-preview__download-link",
-            children: (0, import_i18n10.__)("View file")
+            children: (0, import_i18n11.__)("View file")
           }
         )
       ] });
@@ -24912,11 +24939,11 @@ function MediaPreview(props) {
   } = media || {};
   const mediaType = getMediaTypeFromMimeType(mimeType);
   if (!mediaUrl) {
-    return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("div", { className: "media-editor-preview media-editor-preview--empty", children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("p", { children: (0, import_i18n10.__)("No media file available.") }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("div", { className: "media-editor-preview media-editor-preview--empty", children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("p", { children: (0, import_i18n11.__)("No media file available.") }) });
   }
   if (loadingState === "error") {
     return /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("div", { className: "media-editor-preview media-editor-preview--error", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("p", { children: (0, import_i18n10.__)("Failed to load media file.") }),
+      /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("p", { children: (0, import_i18n11.__)("Failed to load media file.") }),
       /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("p", { className: "media-editor-preview__url", children: mediaUrl })
     ] });
   }
@@ -24947,7 +24974,7 @@ function MediaPreview(props) {
 }
 
 // packages/dataviews/build-module/constants.mjs
-var import_i18n11 = __toESM(require_i18n(), 1);
+var import_i18n12 = __toESM(require_i18n(), 1);
 var OPERATOR_IS_ANY = "isAny";
 var OPERATOR_IS_NONE = "isNone";
 var OPERATOR_IS_ALL = "isAll";
@@ -24971,8 +24998,8 @@ var OPERATOR_STARTS_WITH = "startsWith";
 var OPERATOR_ON = "on";
 var OPERATOR_NOT_ON = "notOn";
 var sortLabels = {
-  asc: (0, import_i18n11.__)("Sort ascending"),
-  desc: (0, import_i18n11.__)("Sort descending")
+  asc: (0, import_i18n12.__)("Sort ascending"),
+  desc: (0, import_i18n12.__)("Sort descending")
 };
 
 // packages/dataviews/build-module/hooks/use-elements.mjs
@@ -25017,7 +25044,7 @@ function useElements({
 }
 
 // packages/dataviews/build-module/utils/operators.mjs
-var import_i18n12 = __toESM(require_i18n(), 1);
+var import_i18n13 = __toESM(require_i18n(), 1);
 var import_element71 = __toESM(require_element(), 1);
 var import_date2 = __toESM(require_date(), 1);
 
@@ -25071,11 +25098,11 @@ function getRelativeDate(value, unit) {
 }
 var isNoneOperatorDefinition = {
   /* translators: DataViews operator name */
-  label: (0, import_i18n12.__)("Is none of"),
+  label: (0, import_i18n13.__)("Is none of"),
   filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-    (0, import_i18n12.sprintf)(
+    (0, import_i18n13.sprintf)(
       /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
-      (0, import_i18n12.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
+      (0, import_i18n13.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
       filter.name,
       activeElements.map((element) => element.label).join(", ")
     ),
@@ -25101,11 +25128,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS_ANY,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Includes"),
+    label: (0, import_i18n13.__)("Includes"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
-        (0, import_i18n12.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
+        (0, import_i18n13.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements.map((element) => element.label).join(", ")
       ),
@@ -25134,11 +25161,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS_ALL,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Includes all"),
+    label: (0, import_i18n13.__)("Includes all"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
-        (0, import_i18n12.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
+        (0, import_i18n13.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements.map((element) => element.label).join(", ")
       ),
@@ -25161,11 +25188,11 @@ var OPERATORS = [
   {
     name: OPERATOR_BETWEEN,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Between (inc)"),
+    label: (0, import_i18n13.__)("Between (inc)"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
-        (0, import_i18n12.__)(
+        (0, import_i18n13.__)(
           "<Name>%1$s between (inc): </Name><Value>%2$s and %3$s</Value>"
         ),
         filter.name,
@@ -25197,11 +25224,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IN_THE_PAST,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("In the past"),
+    label: (0, import_i18n13.__)("In the past"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
-        (0, import_i18n12.__)(
+        (0, import_i18n13.__)(
           "<Name>%1$s is in the past: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -25225,11 +25252,11 @@ var OPERATORS = [
   {
     name: OPERATOR_OVER,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Over"),
+    label: (0, import_i18n13.__)("Over"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
-        (0, import_i18n12.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
+        (0, import_i18n13.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
         filter.name,
         `${activeElements[0].value.value} ${activeElements[0].value.unit}`
       ),
@@ -25251,11 +25278,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Is"),
+    label: (0, import_i18n13.__)("Is"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
-        (0, import_i18n12.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+        (0, import_i18n13.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -25269,11 +25296,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS_NOT,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Is not"),
+    label: (0, import_i18n13.__)("Is not"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
-        (0, import_i18n12.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+        (0, import_i18n13.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -25287,11 +25314,11 @@ var OPERATORS = [
   {
     name: OPERATOR_LESS_THAN,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Less than"),
+    label: (0, import_i18n13.__)("Less than"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
-        (0, import_i18n12.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
+        (0, import_i18n13.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -25309,11 +25336,11 @@ var OPERATORS = [
   {
     name: OPERATOR_GREATER_THAN,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Greater than"),
+    label: (0, import_i18n13.__)("Greater than"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
-        (0, import_i18n12.__)(
+        (0, import_i18n13.__)(
           "<Name>%1$s is greater than: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -25333,11 +25360,11 @@ var OPERATORS = [
   {
     name: OPERATOR_LESS_THAN_OR_EQUAL,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Less than or equal"),
+    label: (0, import_i18n13.__)("Less than or equal"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
-        (0, import_i18n12.__)(
+        (0, import_i18n13.__)(
           "<Name>%1$s is less than or equal to: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -25357,11 +25384,11 @@ var OPERATORS = [
   {
     name: OPERATOR_GREATER_THAN_OR_EQUAL,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Greater than or equal"),
+    label: (0, import_i18n13.__)("Greater than or equal"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
-        (0, import_i18n12.__)(
+        (0, import_i18n13.__)(
           "<Name>%1$s is greater than or equal to: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -25381,11 +25408,11 @@ var OPERATORS = [
   {
     name: OPERATOR_BEFORE,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Before"),
+    label: (0, import_i18n13.__)("Before"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
-        (0, import_i18n12.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
+        (0, import_i18n13.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -25406,11 +25433,11 @@ var OPERATORS = [
   {
     name: OPERATOR_AFTER,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("After"),
+    label: (0, import_i18n13.__)("After"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
-        (0, import_i18n12.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
+        (0, import_i18n13.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -25431,11 +25458,11 @@ var OPERATORS = [
   {
     name: OPERATOR_BEFORE_INC,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Before (inc)"),
+    label: (0, import_i18n13.__)("Before (inc)"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
-        (0, import_i18n12.__)(
+        (0, import_i18n13.__)(
           "<Name>%1$s is on or before: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -25458,11 +25485,11 @@ var OPERATORS = [
   {
     name: OPERATOR_AFTER_INC,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("After (inc)"),
+    label: (0, import_i18n13.__)("After (inc)"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
-        (0, import_i18n12.__)(
+        (0, import_i18n13.__)(
           "<Name>%1$s is on or after: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -25485,11 +25512,11 @@ var OPERATORS = [
   {
     name: OPERATOR_CONTAINS,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Contains"),
+    label: (0, import_i18n13.__)("Contains"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
-        (0, import_i18n12.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
+        (0, import_i18n13.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -25507,11 +25534,11 @@ var OPERATORS = [
   {
     name: OPERATOR_NOT_CONTAINS,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Doesn't contain"),
+    label: (0, import_i18n13.__)("Doesn't contain"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
-        (0, import_i18n12.__)(
+        (0, import_i18n13.__)(
           "<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -25531,11 +25558,11 @@ var OPERATORS = [
   {
     name: OPERATOR_STARTS_WITH,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Starts with"),
+    label: (0, import_i18n13.__)("Starts with"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
-        (0, import_i18n12.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
+        (0, import_i18n13.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -25553,11 +25580,11 @@ var OPERATORS = [
   {
     name: OPERATOR_ON,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("On"),
+    label: (0, import_i18n13.__)("On"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
-        (0, import_i18n12.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+        (0, import_i18n13.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -25578,11 +25605,11 @@ var OPERATORS = [
   {
     name: OPERATOR_NOT_ON,
     /* translators: DataViews operator name */
-    label: (0, import_i18n12.__)("Not on"),
+    label: (0, import_i18n13.__)("Not on"),
     filterText: (filter, activeElements) => (0, import_element71.createInterpolateElement)(
-      (0, import_i18n12.sprintf)(
+      (0, import_i18n13.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
-        (0, import_i18n12.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+        (0, import_i18n13.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -26020,27 +26047,27 @@ function Combobox({
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
 var import_components14 = __toESM(require_components(), 1);
 var import_element84 = __toESM(require_element(), 1);
-var import_i18n14 = __toESM(require_i18n(), 1);
+var import_i18n15 = __toESM(require_i18n(), 1);
 var import_date4 = __toESM(require_date(), 1);
 import { speak as speak2 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
 var import_components13 = __toESM(require_components(), 1);
 var import_element82 = __toESM(require_element(), 1);
-var import_i18n13 = __toESM(require_i18n(), 1);
+var import_i18n14 = __toESM(require_i18n(), 1);
 var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
 var TIME_UNITS_OPTIONS = {
   [OPERATOR_IN_THE_PAST]: [
-    { value: "days", label: (0, import_i18n13.__)("Days") },
-    { value: "weeks", label: (0, import_i18n13.__)("Weeks") },
-    { value: "months", label: (0, import_i18n13.__)("Months") },
-    { value: "years", label: (0, import_i18n13.__)("Years") }
+    { value: "days", label: (0, import_i18n14.__)("Days") },
+    { value: "weeks", label: (0, import_i18n14.__)("Weeks") },
+    { value: "months", label: (0, import_i18n14.__)("Months") },
+    { value: "years", label: (0, import_i18n14.__)("Years") }
   ],
   [OPERATOR_OVER]: [
-    { value: "days", label: (0, import_i18n13.__)("Days ago") },
-    { value: "weeks", label: (0, import_i18n13.__)("Weeks ago") },
-    { value: "months", label: (0, import_i18n13.__)("Months ago") },
-    { value: "years", label: (0, import_i18n13.__)("Years ago") }
+    { value: "days", label: (0, import_i18n14.__)("Days ago") },
+    { value: "weeks", label: (0, import_i18n14.__)("Weeks ago") },
+    { value: "months", label: (0, import_i18n14.__)("Months ago") },
+    { value: "years", label: (0, import_i18n14.__)("Years ago") }
   ]
 };
 function RelativeDateControl({
@@ -26099,7 +26126,7 @@ function RelativeDateControl({
           import_components13.SelectControl,
           {
             className: "dataviews-controls__relative-date-unit",
-            label: (0, import_i18n13.__)("Unit"),
+            label: (0, import_i18n14.__)("Unit"),
             value: unit,
             options,
             onChange: onChangeUnit,
@@ -26269,9 +26296,9 @@ function CalendarDateTimeControl({
   const locale = getCalendarLocale((0, import_date4.getSettings)().l10n.locale);
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n14.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n15.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n14.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n15.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
     import_components14.BaseControl,
@@ -26288,7 +26315,7 @@ function CalendarDateTimeControl({
             required: !!isValid2?.required,
             customValidity: getCustomValidity(isValid2, validity),
             type: "datetime-local",
-            label: (0, import_i18n14.__)("Date time"),
+            label: (0, import_i18n15.__)("Date time"),
             hideLabelFromVision: true,
             value: formatDateTime(value),
             onValueChange: handleManualDateTimeChange,
@@ -26307,7 +26334,7 @@ function CalendarDateTimeControl({
             onMonthChange: setCalendarMonth,
             timeZone,
             locale,
-            dir: (0, import_i18n14.isRTL)() ? "rtl" : "ltr",
+            dir: (0, import_i18n15.isRTL)() ? "rtl" : "ltr",
             weekStartsOn,
             disabled: disabled2 || disabledMatchers
           }
@@ -26356,19 +26383,19 @@ function DateTime({
 // packages/dataviews/build-module/components/dataform-controls/date.mjs
 var import_components15 = __toESM(require_components(), 1);
 var import_element85 = __toESM(require_element(), 1);
-var import_i18n15 = __toESM(require_i18n(), 1);
+var import_i18n16 = __toESM(require_i18n(), 1);
 var import_date5 = __toESM(require_date(), 1);
 import { speak as speak3 } from "@wordpress/a11y";
 var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
 var DATE_PRESETS = [
   {
     id: "today",
-    label: (0, import_i18n15.__)("Today"),
+    label: (0, import_i18n16.__)("Today"),
     getValue: () => (0, import_date5.getDate)(null)
   },
   {
     id: "yesterday",
-    label: (0, import_i18n15.__)("Yesterday"),
+    label: (0, import_i18n16.__)("Yesterday"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return subDays(today, 1);
@@ -26376,7 +26403,7 @@ var DATE_PRESETS = [
   },
   {
     id: "past-week",
-    label: (0, import_i18n15.__)("Past week"),
+    label: (0, import_i18n16.__)("Past week"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return subDays(today, 7);
@@ -26384,7 +26411,7 @@ var DATE_PRESETS = [
   },
   {
     id: "past-month",
-    label: (0, import_i18n15.__)("Past month"),
+    label: (0, import_i18n16.__)("Past month"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return subMonths(today, 1);
@@ -26394,7 +26421,7 @@ var DATE_PRESETS = [
 var DATE_RANGE_PRESETS = [
   {
     id: "last-7-days",
-    label: (0, import_i18n15.__)("Last 7 days"),
+    label: (0, import_i18n16.__)("Last 7 days"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [subDays(today, 7), today];
@@ -26402,7 +26429,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "last-30-days",
-    label: (0, import_i18n15.__)("Last 30 days"),
+    label: (0, import_i18n16.__)("Last 30 days"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [subDays(today, 30), today];
@@ -26410,7 +26437,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "month-to-date",
-    label: (0, import_i18n15.__)("Month to date"),
+    label: (0, import_i18n16.__)("Month to date"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [startOfMonth(today), today];
@@ -26418,7 +26445,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "last-year",
-    label: (0, import_i18n15.__)("Last year"),
+    label: (0, import_i18n16.__)("Last year"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [subYears(today, 1), today];
@@ -26426,7 +26453,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "year-to-date",
-    label: (0, import_i18n15.__)("Year to date"),
+    label: (0, import_i18n16.__)("Year to date"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [startOfYear(today), today];
@@ -26612,9 +26639,9 @@ function CalendarDateControl({
   );
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n15.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n16.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n15.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n16.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
     ValidatedDateControl,
@@ -26667,7 +26694,7 @@ function CalendarDateControl({
                       size: "small",
                       disabled: !!selectedPresetId || disabled2,
                       accessibleWhenDisabled: true,
-                      children: (0, import_i18n15.__)("Custom")
+                      children: (0, import_i18n16.__)("Custom")
                     }
                   )
                 ]
@@ -26678,7 +26705,7 @@ function CalendarDateControl({
               {
                 ref: validityTargetRef,
                 type: "date",
-                label: (0, import_i18n15.__)("Date"),
+                label: (0, import_i18n16.__)("Date"),
                 hideLabelFromVision: true,
                 value,
                 onChange: handleManualDateChange,
@@ -26697,7 +26724,7 @@ function CalendarDateControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 locale,
-                dir: (0, import_i18n15.isRTL)() ? "rtl" : "ltr",
+                dir: (0, import_i18n16.isRTL)() ? "rtl" : "ltr",
                 weekStartsOn,
                 disabled: disabled2 || disabledMatchers,
                 disableNavigation: disabled2
@@ -26837,9 +26864,9 @@ function CalendarDateRangeControl({
   );
   let displayLabel = label;
   if (field.isValid?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n15.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n16.__)("Required")})`;
   } else if (!field.isValid?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n15.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n16.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
     ValidatedDateControl,
@@ -26892,7 +26919,7 @@ function CalendarDateRangeControl({
                       size: "small",
                       accessibleWhenDisabled: true,
                       disabled: !!selectedPresetId || disabled2,
-                      children: (0, import_i18n15.__)("Custom")
+                      children: (0, import_i18n16.__)("Custom")
                     }
                   )
                 ]
@@ -26911,7 +26938,7 @@ function CalendarDateRangeControl({
                     {
                       ref: fromInputRef,
                       type: "date",
-                      label: (0, import_i18n15.__)("From"),
+                      label: (0, import_i18n16.__)("From"),
                       hideLabelFromVision: true,
                       value: value?.[0],
                       onChange: (newValue) => handleManualDateChange("from", newValue),
@@ -26926,7 +26953,7 @@ function CalendarDateRangeControl({
                     {
                       ref: toInputRef,
                       type: "date",
-                      label: (0, import_i18n15.__)("To"),
+                      label: (0, import_i18n16.__)("To"),
                       hideLabelFromVision: true,
                       value: value?.[1],
                       onChange: (newValue) => handleManualDateChange("to", newValue),
@@ -26948,7 +26975,7 @@ function CalendarDateRangeControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 locale,
-                dir: (0, import_i18n15.isRTL)() ? "rtl" : "ltr",
+                dir: (0, import_i18n16.isRTL)() ? "rtl" : "ltr",
                 weekStartsOn,
                 disabled: disabled2 || disabledMatchers
               }
@@ -27201,7 +27228,7 @@ function Url({
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
 var import_components17 = __toESM(require_components(), 1);
 var import_element88 = __toESM(require_element(), 1);
-var import_i18n16 = __toESM(require_i18n(), 1);
+var import_i18n17 = __toESM(require_i18n(), 1);
 var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
@@ -27228,12 +27255,12 @@ function BetweenControls({
   return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
     import_components17.BaseControl,
     {
-      help: (0, import_i18n16.__)("The max. value must be greater than the min. value."),
+      help: (0, import_i18n17.__)("The max. value must be greater than the min. value."),
       children: /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)(import_components17.Flex, { direction: "row", gap: 4, children: [
         /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
           import_components17.__experimentalNumberControl,
           {
-            label: (0, import_i18n16.__)("Min."),
+            label: (0, import_i18n17.__)("Min."),
             value: min4,
             max: max4 ? Number(max4) - step : void 0,
             onChange: onChangeMin,
@@ -27244,7 +27271,7 @@ function BetweenControls({
         /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
           import_components17.__experimentalNumberControl,
           {
-            label: (0, import_i18n16.__)("Max."),
+            label: (0, import_i18n17.__)("Max."),
             value: max4,
             min: min4 ? Number(min4) + step : void 0,
             onChange: onChangeMax,
@@ -27419,7 +27446,7 @@ function Text3({
 // packages/dataviews/build-module/components/dataform-controls/time.mjs
 var import_components19 = __toESM(require_components(), 1);
 var import_element91 = __toESM(require_element(), 1);
-var import_i18n17 = __toESM(require_i18n(), 1);
+var import_i18n18 = __toESM(require_i18n(), 1);
 var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
 function getStep(timeFormat, values) {
   const tokens = (timeFormat ?? "").replace(/\\./g, "");
@@ -27461,13 +27488,13 @@ function BetweenControls2({
   return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
     import_components19.BaseControl,
     {
-      help: (0, import_i18n17.__)("The end time must be later than the start time."),
+      help: (0, import_i18n18.__)("The end time must be later than the start time."),
       children: /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
         /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
           ValidatedInputControl,
           {
             type: "time",
-            label: (0, import_i18n17.__)("From"),
+            label: (0, import_i18n18.__)("From"),
             value: from,
             onValueChange: onChangeFrom,
             hideLabelFromVision,
@@ -27481,7 +27508,7 @@ function BetweenControls2({
           ValidatedInputControl,
           {
             type: "time",
-            label: (0, import_i18n17.__)("To"),
+            label: (0, import_i18n18.__)("To"),
             value: to,
             onValueChange: onChangeTo,
             hideLabelFromVision,
@@ -27954,7 +27981,7 @@ var w = function(r3) {
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
 var import_components22 = __toESM(require_components(), 1);
 var import_element96 = __toESM(require_element(), 1);
-var import_i18n18 = __toESM(require_i18n(), 1);
+var import_i18n19 = __toESM(require_i18n(), 1);
 var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
 var ColorPickerDropdown = ({
   color,
@@ -27971,7 +27998,7 @@ var ColorPickerDropdown = ({
         import_components22.Button,
         {
           onClick: onToggle,
-          "aria-label": (0, import_i18n18.__)("Open color picker"),
+          "aria-label": (0, import_i18n19.__)("Open color picker"),
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
@@ -28042,7 +28069,7 @@ function Color({
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
 var import_components23 = __toESM(require_components(), 1);
 var import_element97 = __toESM(require_element(), 1);
-var import_i18n19 = __toESM(require_i18n(), 1);
+var import_i18n20 = __toESM(require_i18n(), 1);
 var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
@@ -28074,7 +28101,7 @@ function Password({
             icon: isVisible ? unseen_default : seen_default,
             onClick: toggleVisibility,
             size: "small",
-            label: isVisible ? (0, import_i18n19.__)("Hide password") : (0, import_i18n19.__)("Show password"),
+            label: isVisible ? (0, import_i18n20.__)("Hide password") : (0, import_i18n20.__)("Show password"),
             disabled: disabled2,
             accessibleWhenDisabled: true
           }
@@ -28199,7 +28226,7 @@ var setValueFromId = (id) => ({ value }) => {
 var set_value_from_id_default = setValueFromId;
 
 // packages/dataviews/build-module/field-types/email.mjs
-var import_i18n20 = __toESM(require_i18n(), 1);
+var import_i18n21 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
 function RenderFromElements({
@@ -28309,7 +28336,7 @@ var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{
 function isValidCustom(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-    return (0, import_i18n20.__)("Value must be a valid email address.");
+    return (0, import_i18n21.__)("Value must be a valid email address.");
   }
   return null;
 }
@@ -28346,7 +28373,7 @@ var email_default = {
 };
 
 // packages/dataviews/build-module/field-types/integer.mjs
-var import_i18n21 = __toESM(require_i18n(), 1);
+var import_i18n22 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/sort-number.mjs
 var sort_number_default = (a2, b2, direction) => {
@@ -28412,7 +28439,7 @@ function getValueFormatted2({
 function isValidCustom2(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-    return (0, import_i18n21.__)("Value must be an integer.");
+    return (0, import_i18n22.__)("Value must be an integer.");
   }
   return null;
 }
@@ -28459,7 +28486,7 @@ var integer_default = {
 };
 
 // packages/dataviews/build-module/field-types/number.mjs
-var import_i18n22 = __toESM(require_i18n(), 1);
+var import_i18n23 = __toESM(require_i18n(), 1);
 var format3 = {
   separatorThousand: ",",
   separatorDecimal: ".",
@@ -28495,7 +28522,7 @@ function isEmpty(value) {
 function isValidCustom3(item, field) {
   const value = field.getValue({ item });
   if (!isEmpty(value) && !Number.isFinite(value)) {
-    return (0, import_i18n22.__)("Value must be a number.");
+    return (0, import_i18n23.__)("Value must be a number.");
   }
   return null;
 }
@@ -28821,7 +28848,7 @@ var time_default = {
 };
 
 // packages/dataviews/build-module/field-types/boolean.mjs
-var import_i18n23 = __toESM(require_i18n(), 1);
+var import_i18n24 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
 function isValidRequiredForBool(item, field) {
@@ -28836,17 +28863,17 @@ function getValueFormatted7({
 }) {
   const value = field.getValue({ item });
   if (value === true) {
-    return (0, import_i18n23.__)("True");
+    return (0, import_i18n24.__)("True");
   }
   if (value === false) {
-    return (0, import_i18n23.__)("False");
+    return (0, import_i18n24.__)("False");
   }
   return "";
 }
 function isValidCustom4(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-    return (0, import_i18n23.__)("Value must be true, false, or undefined");
+    return (0, import_i18n24.__)("Value must be true, false, or undefined");
   }
   return null;
 }
@@ -28898,7 +28925,7 @@ var media_default = {
 };
 
 // packages/dataviews/build-module/field-types/array.mjs
-var import_i18n24 = __toESM(require_i18n(), 1);
+var import_i18n25 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
 function isValidRequiredForArray(item, field) {
@@ -28926,10 +28953,10 @@ function isValidCustom5(item, field) {
     return null;
   }
   if (!Array.isArray(value)) {
-    return (0, import_i18n24.__)("Value must be an array.");
+    return (0, import_i18n25.__)("Value must be an array.");
   }
   if (!value.every((v2) => typeof v2 === "string")) {
-    return (0, import_i18n24.__)("Every value must be a string.");
+    return (0, import_i18n25.__)("Every value must be a string.");
   }
   return null;
 }
@@ -29027,7 +29054,7 @@ var telephone_default = {
 };
 
 // packages/dataviews/build-module/field-types/color.mjs
-var import_i18n25 = __toESM(require_i18n(), 1);
+var import_i18n26 = __toESM(require_i18n(), 1);
 var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
@@ -29057,7 +29084,7 @@ function render3({ item, field }) {
 function isValidCustom6(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-    return (0, import_i18n25.__)("Value must be a valid color.");
+    return (0, import_i18n26.__)("Value must be a valid color.");
   }
   return null;
 }
@@ -29345,7 +29372,7 @@ var import_element99 = __toESM(require_element(), 1);
 var import_components24 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
-var import_i18n26 = __toESM(require_i18n(), 1);
+var import_i18n27 = __toESM(require_i18n(), 1);
 var DEFAULT_LAYOUT = {
   type: "regular",
   labelPosition: "top"
@@ -29376,14 +29403,14 @@ function normalizeLayout(layout) {
     if (typeof openAs === "object" && openAs.type === "modal") {
       normalizedOpenAs = {
         type: "modal",
-        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n26.__)("Apply"),
-        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n26.__)("Cancel")
+        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n27.__)("Apply"),
+        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n27.__)("Cancel")
       };
     } else if (openAs === "modal") {
       normalizedOpenAs = {
         type: "modal",
-        applyLabel: (0, import_i18n26.__)("Apply"),
-        cancelLabel: (0, import_i18n26.__)("Cancel")
+        applyLabel: (0, import_i18n27.__)("Apply"),
+        cancelLabel: (0, import_i18n27.__)("Cancel")
       };
     } else {
       normalizedOpenAs = { type: "dropdown" };
@@ -29583,7 +29610,7 @@ var import_compose14 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 var import_components26 = __toESM(require_components(), 1);
-var import_i18n27 = __toESM(require_i18n(), 1);
+var import_i18n28 = __toESM(require_i18n(), 1);
 var import_compose13 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
@@ -29681,13 +29708,13 @@ function SummaryButton({
     "dataforms-layouts-panel__field-control"
   );
   const errorId = `${controlId}-error`;
-  const ariaLabel = showError ? (0, import_i18n27.sprintf)(
+  const ariaLabel = showError ? (0, import_i18n28.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n27._x)("Edit %s (has errors)", "field"),
+    (0, import_i18n28._x)("Edit %s (has errors)", "field"),
     fieldLabel || ""
-  ) : (0, import_i18n27.sprintf)(
+  ) : (0, import_i18n28.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n27._x)("Edit %s", "field"),
+    (0, import_i18n28._x)("Edit %s", "field"),
     fieldLabel || ""
   );
   return /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)("div", { className, children: [
@@ -29768,7 +29795,7 @@ function SummaryButton({
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es6 = __toESM(require_es6(), 1);
 var import_element100 = __toESM(require_element(), 1);
-var import_i18n28 = __toESM(require_i18n(), 1);
+var import_i18n29 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
     return true;
@@ -29898,7 +29925,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n28.__)("Could not validate elements.")
+              message: (0, import_i18n29.__)("Could not validate elements.")
             }
           },
           [...path, formField.id]
@@ -29917,7 +29944,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n28.__)(
+              message: (0, import_i18n29.__)(
                 "Value must be one of the elements."
               )
             }
@@ -29943,7 +29970,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n28.__)(
+      errorMessage = String(error2) || (0, import_i18n29.__)(
         "Unknown error when running elements validation asynchronously."
       );
     }
@@ -30002,7 +30029,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
         {
           custom: {
             type: "invalid",
-            message: (0, import_i18n28.__)("Validation could not be processed.")
+            message: (0, import_i18n29.__)("Validation could not be processed.")
           }
         },
         [...path, formField.id]
@@ -30017,7 +30044,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n28.__)(
+      errorMessage = String(error2) || (0, import_i18n29.__)(
         "Unknown error when running custom validation asynchronously."
       );
     }
@@ -30059,7 +30086,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       pattern: {
         type: "invalid",
-        message: (0, import_i18n28.__)("Value does not match the required pattern.")
+        message: (0, import_i18n29.__)("Value does not match the required pattern.")
       }
     };
   }
@@ -30067,7 +30094,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       min: {
         type: "invalid",
-        message: (0, import_i18n28.__)("Value is below the minimum.")
+        message: (0, import_i18n29.__)("Value is below the minimum.")
       }
     };
   }
@@ -30075,7 +30102,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       max: {
         type: "invalid",
-        message: (0, import_i18n28.__)("Value is above the maximum.")
+        message: (0, import_i18n29.__)("Value is above the maximum.")
       }
     };
   }
@@ -30083,7 +30110,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       minLength: {
         type: "invalid",
-        message: (0, import_i18n28.__)("Value is too short.")
+        message: (0, import_i18n29.__)("Value is too short.")
       }
     };
   }
@@ -30091,7 +30118,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       maxLength: {
         type: "invalid",
-        message: (0, import_i18n28.__)("Value is too long.")
+        message: (0, import_i18n29.__)("Value is too long.")
       }
     };
   }
@@ -30099,7 +30126,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       elements: {
         type: "invalid",
-        message: (0, import_i18n28.__)("Value must be one of the elements.")
+        message: (0, import_i18n29.__)("Value must be one of the elements.")
       }
     };
   }
@@ -30122,7 +30149,7 @@ function validateFormField(item, formField, promiseHandler) {
       if (error2 instanceof Error) {
         errorMessage = error2.message;
       } else {
-        errorMessage = String(error2) || (0, import_i18n28.__)("Unknown error when running custom validation.");
+        errorMessage = String(error2) || (0, import_i18n29.__)("Unknown error when running custom validation.");
       }
       return {
         custom: {
@@ -30149,14 +30176,14 @@ function validateFormField(item, formField, promiseHandler) {
     );
     fieldValidity.elements = {
       type: "validating",
-      message: (0, import_i18n28.__)("Validating\u2026")
+      message: (0, import_i18n29.__)("Validating\u2026")
     };
   }
   if (customError instanceof Promise) {
     handleCustomValidationAsync(customError, formField, promiseHandler);
     fieldValidity.custom = {
       type: "validating",
-      message: (0, import_i18n28.__)("Validating\u2026")
+      message: (0, import_i18n29.__)("Validating\u2026")
     };
   }
   if (Object.keys(fieldValidity).length > 0) {
@@ -30528,7 +30555,7 @@ var modal_default = PanelModal;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
 var import_components28 = __toESM(require_components(), 1);
-var import_i18n29 = __toESM(require_i18n(), 1);
+var import_i18n30 = __toESM(require_i18n(), 1);
 var import_element104 = __toESM(require_element(), 1);
 var import_compose15 = __toESM(require_compose(), 1);
 var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
@@ -30548,7 +30575,7 @@ function DropdownHeader({
         onClose && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
           import_components28.Button,
           {
-            label: (0, import_i18n29.__)("Close"),
+            label: (0, import_i18n30.__)("Close"),
             icon: close_small_default,
             onClick: onClose,
             size: "small"
@@ -30717,7 +30744,7 @@ var import_compose16 = __toESM(require_compose(), 1);
 import { speak as speak4 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
-var import_i18n30 = __toESM(require_i18n(), 1);
+var import_i18n31 = __toESM(require_i18n(), 1);
 function countInvalidFields(validity) {
   if (!validity) {
     return 0;
@@ -30744,9 +30771,9 @@ function getValidationMessage(validity) {
   if (invalidCount === 0) {
     return void 0;
   }
-  return (0, import_i18n30.sprintf)(
+  return (0, import_i18n31.sprintf)(
     /* translators: %d: Number of fields that need attention */
-    (0, import_i18n30._n)(
+    (0, import_i18n31._n)(
       "%d field needs attention",
       "%d fields need attention",
       invalidCount
@@ -31079,7 +31106,7 @@ function FormRowField({
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
 var import_element106 = __toESM(require_element(), 1);
-var import_i18n31 = __toESM(require_i18n(), 1);
+var import_i18n32 = __toESM(require_i18n(), 1);
 var import_compose17 = __toESM(require_compose(), 1);
 import { speak as speak5 } from "@wordpress/a11y";
 var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
@@ -31147,7 +31174,7 @@ function FormDetailsField({
   if (summaryField && summaryField.render) {
     summaryContent = /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(summaryField.render, { item: data, field: summaryField });
   } else {
-    summaryContent = field.label || (0, import_i18n31.__)("More details");
+    summaryContent = field.label || (0, import_i18n32.__)("More details");
   }
   return /* @__PURE__ */ (0, import_jsx_runtime150.jsxs)(
     "details",
@@ -31352,7 +31379,7 @@ function DataForm({
 
 // packages/media-editor/build-module/components/media-form/index.mjs
 var import_components30 = __toESM(require_components(), 1);
-var import_i18n32 = __toESM(require_i18n(), 1);
+var import_i18n33 = __toESM(require_i18n(), 1);
 var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
 function MediaForm({
   form: formOverrides,
@@ -31390,7 +31417,7 @@ function MediaForm({
   };
   const form = formOverrides || defaultForm;
   return /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(import_components30.__experimentalVStack, { spacing: 4, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("h2", {}), children: (0, import_i18n32.__)("Media details") }),
+    /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("h2", {}), children: (0, import_i18n33.__)("Media details") }),
     header,
     /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
       DataForm,
@@ -31495,7 +31522,7 @@ var store = (0, import_data.createReduxStore)(STORE_NAME, {
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
 var import_components43 = __toESM(require_components(), 1);
 var import_data9 = __toESM(require_data(), 1);
-var import_i18n46 = __toESM(require_i18n(), 1);
+var import_i18n47 = __toESM(require_i18n(), 1);
 var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
 var import_notices3 = __toESM(require_notices(), 1);
 
@@ -31505,14 +31532,14 @@ var import_compose20 = __toESM(require_compose(), 1);
 var import_data8 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
 var import_element129 = __toESM(require_element(), 1);
-var import_i18n45 = __toESM(require_i18n(), 1);
+var import_i18n46 = __toESM(require_i18n(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
 var import_notices2 = __toESM(require_notices(), 1);
 
 // packages/interface/build-module/components/complementary-area/index.mjs
 var import_components35 = __toESM(require_components(), 1);
 var import_data6 = __toESM(require_data(), 1);
-var import_i18n33 = __toESM(require_i18n(), 1);
+var import_i18n34 = __toESM(require_i18n(), 1);
 var import_element110 = __toESM(require_element(), 1);
 var import_viewport = __toESM(require_viewport(), 1);
 var import_preferences3 = __toESM(require_preferences(), 1);
@@ -32094,7 +32121,7 @@ function useAdjustComplementaryListener(scope, identifier, activeArea, isActive,
 function ComplementaryArea({
   children,
   className,
-  closeLabel = (0, import_i18n33.__)("Close plugin"),
+  closeLabel = (0, import_i18n34.__)("Close plugin"),
   identifier: identifierProp,
   header,
   headerClassName,
@@ -32231,7 +32258,7 @@ function ComplementaryArea({
                   {
                     className: "interface-complementary-area__pin-unpin-item",
                     icon: isPinned ? star_filled_default : star_empty_default,
-                    label: isPinned ? (0, import_i18n33.__)("Unpin from toolbar") : (0, import_i18n33.__)("Pin to toolbar"),
+                    label: isPinned ? (0, import_i18n34.__)("Unpin from toolbar") : (0, import_i18n34.__)("Pin to toolbar"),
                     onClick: () => (isPinned ? unpinItem2 : pinItem2)(
                       scope,
                       identifier
@@ -32255,7 +32282,7 @@ var complementary_area_default = ComplementaryArea;
 // packages/interface/build-module/components/interface-skeleton/index.mjs
 var import_element111 = __toESM(require_element(), 1);
 var import_components36 = __toESM(require_components(), 1);
-var import_i18n34 = __toESM(require_i18n(), 1);
+var import_i18n35 = __toESM(require_i18n(), 1);
 var import_compose19 = __toESM(require_compose(), 1);
 var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
 var ANIMATION_DURATION2 = 0.25;
@@ -32324,17 +32351,17 @@ function InterfaceSkeleton({
   useHTMLClass("interface-interface-skeleton__html-container");
   const defaultLabels = {
     /* translators: accessibility text for the top bar landmark region. */
-    header: (0, import_i18n34._x)("Header", "header landmark area"),
+    header: (0, import_i18n35._x)("Header", "header landmark area"),
     /* translators: accessibility text for the content landmark region. */
-    body: (0, import_i18n34.__)("Content"),
+    body: (0, import_i18n35.__)("Content"),
     /* translators: accessibility text for the secondary sidebar landmark region. */
-    secondarySidebar: (0, import_i18n34.__)("Block Library"),
+    secondarySidebar: (0, import_i18n35.__)("Block Library"),
     /* translators: accessibility text for the settings landmark region. */
-    sidebar: (0, import_i18n34._x)("Settings", "settings landmark area"),
+    sidebar: (0, import_i18n35._x)("Settings", "settings landmark area"),
     /* translators: accessibility text for the publish landmark region. */
-    actions: (0, import_i18n34.__)("Publish"),
+    actions: (0, import_i18n35.__)("Publish"),
     /* translators: accessibility text for the footer landmark region. */
-    footer: (0, import_i18n34.__)("Footer")
+    footer: (0, import_i18n35.__)("Footer")
   };
   const mergedLabels = { ...defaultLabels, ...labels };
   return /* @__PURE__ */ (0, import_jsx_runtime161.jsxs)(
@@ -32439,10 +32466,10 @@ var interface_skeleton_default = (0, import_element111.forwardRef)(InterfaceSkel
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
 var import_element122 = __toESM(require_element(), 1);
 var import_components38 = __toESM(require_components(), 1);
-var import_i18n39 = __toESM(require_i18n(), 1);
+var import_i18n40 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/constants.mjs
-var import_i18n35 = __toESM(require_i18n(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
 var MIN_ZOOM = 1;
 var ABSOLUTE_MIN_ZOOM = 0.1;
 var MAX_ZOOM = 10;
@@ -32482,15 +32509,15 @@ var DEFAULT_STATE2 = {
 };
 var ORIGINAL_ASPECT_RATIO = -1;
 var DEFAULT_ASPECT_RATIOS = [
-  { label: (0, import_i18n35.__)("Free"), value: 0 },
-  { label: (0, import_i18n35.__)("Original"), value: ORIGINAL_ASPECT_RATIO },
-  { label: (0, import_i18n35.__)("Square (1:1)"), value: 1 },
-  { label: (0, import_i18n35.__)("Landscape (16:9)"), value: 16 / 9 },
-  { label: (0, import_i18n35.__)("Portrait (9:16)"), value: 9 / 16 },
-  { label: (0, import_i18n35.__)("Classic (4:3)"), value: 4 / 3 },
-  { label: (0, import_i18n35.__)("Classic portrait (3:4)"), value: 3 / 4 },
-  { label: (0, import_i18n35.__)("Photo (3:2)"), value: 3 / 2 },
-  { label: (0, import_i18n35.__)("Photo portrait (2:3)"), value: 2 / 3 }
+  { label: (0, import_i18n36.__)("Free"), value: 0 },
+  { label: (0, import_i18n36.__)("Original"), value: ORIGINAL_ASPECT_RATIO },
+  { label: (0, import_i18n36.__)("Square (1:1)"), value: 1 },
+  { label: (0, import_i18n36.__)("Landscape (16:9)"), value: 16 / 9 },
+  { label: (0, import_i18n36.__)("Portrait (9:16)"), value: 9 / 16 },
+  { label: (0, import_i18n36.__)("Classic (4:3)"), value: 4 / 3 },
+  { label: (0, import_i18n36.__)("Classic portrait (3:4)"), value: 3 / 4 },
+  { label: (0, import_i18n36.__)("Photo (3:2)"), value: 3 / 2 },
+  { label: (0, import_i18n36.__)("Photo portrait (2:3)"), value: 2 / 3 }
 ];
 
 // node_modules/gl-matrix/esm/common.js
@@ -33876,7 +33903,7 @@ function buildCropperSetters(dispatchCropperAction, getCropperState) {
 
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
 var import_element119 = __toESM(require_element(), 1);
-var import_i18n38 = __toESM(require_i18n(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/crop-rect.mjs
 function computeInscribedRect(aspectRatio, visualSize) {
@@ -34883,7 +34910,7 @@ function useTransformStyle(state, imageSize) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
 var import_element114 = __toESM(require_element(), 1);
-var import_i18n36 = __toESM(require_i18n(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 import { speak as speak6 } from "@wordpress/a11y";
 
 // packages/media-editor/build-module/image-editor/core/source-region.mjs
@@ -35050,15 +35077,15 @@ function getFlipAnnouncement(state, previousState) {
   }
   const { horizontal, vertical } = state.flip;
   if (horizontal && vertical) {
-    return (0, import_i18n36.__)("Flipped horizontally and vertically");
+    return (0, import_i18n37.__)("Flipped horizontally and vertically");
   }
   if (horizontal) {
-    return (0, import_i18n36.__)("Flipped horizontally");
+    return (0, import_i18n37.__)("Flipped horizontally");
   }
   if (vertical) {
-    return (0, import_i18n36.__)("Flipped vertically");
+    return (0, import_i18n37.__)("Flipped vertically");
   }
-  return (0, import_i18n36.__)("Flip removed");
+  return (0, import_i18n37.__)("Flip removed");
 }
 function getRotationAnnouncement(state, previousState) {
   if (previousState && Math.round(previousState.rotation) === Math.round(state.rotation)) {
@@ -35074,18 +35101,18 @@ function getRotationAnnouncement(state, previousState) {
     visualRotation += 360;
   }
   if (visualRotation === 0) {
-    return previousState ? (0, import_i18n36.__)("Rotation 0 degrees") : void 0;
+    return previousState ? (0, import_i18n37.__)("Rotation 0 degrees") : void 0;
   }
   if (visualRotation > 0) {
-    return (0, import_i18n36.sprintf)(
+    return (0, import_i18n37.sprintf)(
       /* translators: %d: rotation angle in degrees. */
-      (0, import_i18n36.__)("Rotated %d degrees clockwise"),
+      (0, import_i18n37.__)("Rotated %d degrees clockwise"),
       visualRotation
     );
   }
-  return (0, import_i18n36.sprintf)(
+  return (0, import_i18n37.sprintf)(
     /* translators: %d: rotation angle in degrees. */
-    (0, import_i18n36.__)("Rotated %d degrees counterclockwise"),
+    (0, import_i18n37.__)("Rotated %d degrees counterclockwise"),
     Math.abs(visualRotation)
   );
 }
@@ -35107,9 +35134,9 @@ function getCropAnnouncement(state, previousState) {
       return void 0;
     }
   }
-  return (0, import_i18n36.sprintf)(
+  return (0, import_i18n37.sprintf)(
     /* translators: 1: crop width in pixels, 2: crop height in pixels. */
-    (0, import_i18n36.__)("Crop %1$d by %2$d pixels"),
+    (0, import_i18n37.__)("Crop %1$d by %2$d pixels"),
     Math.round(region.width),
     Math.round(region.height)
   );
@@ -35118,9 +35145,9 @@ function getZoomAnnouncement(state, previousState) {
   if (previousState && Math.round(previousState.zoom * 100) === Math.round(state.zoom * 100)) {
     return void 0;
   }
-  return (0, import_i18n36.sprintf)(
+  return (0, import_i18n37.sprintf)(
     /* translators: %d: zoom level as a percentage. */
-    (0, import_i18n36.__)("Zoom %d%%"),
+    (0, import_i18n37.__)("Zoom %d%%"),
     Math.round(state.zoom * 100)
   );
 }
@@ -35170,7 +35197,7 @@ function useAriaAnnouncer(state) {
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
 var import_element115 = __toESM(require_element(), 1);
-var import_i18n37 = __toESM(require_i18n(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/react/visually-hidden-style.mjs
 var VISUALLY_HIDDEN_STYLE = {
@@ -35201,21 +35228,21 @@ var ALL_POSITIONS = [
 function getHandleLabel(pos) {
   switch (pos) {
     case "n":
-      return (0, import_i18n37.__)("Resize from top edge");
+      return (0, import_i18n38.__)("Resize from top edge");
     case "s":
-      return (0, import_i18n37.__)("Resize from bottom edge");
+      return (0, import_i18n38.__)("Resize from bottom edge");
     case "e":
-      return (0, import_i18n37.__)("Resize from right edge");
+      return (0, import_i18n38.__)("Resize from right edge");
     case "w":
-      return (0, import_i18n37.__)("Resize from left edge");
+      return (0, import_i18n38.__)("Resize from left edge");
     case "nw":
-      return (0, import_i18n37.__)("Resize from top-left corner");
+      return (0, import_i18n38.__)("Resize from top-left corner");
     case "ne":
-      return (0, import_i18n37.__)("Resize from top-right corner");
+      return (0, import_i18n38.__)("Resize from top-right corner");
     case "sw":
-      return (0, import_i18n37.__)("Resize from bottom-left corner");
+      return (0, import_i18n38.__)("Resize from bottom-left corner");
     case "se":
-      return (0, import_i18n37.__)("Resize from bottom-right corner");
+      return (0, import_i18n38.__)("Resize from bottom-right corner");
   }
 }
 var KEYBOARD_SETTLE_DELAY = 500;
@@ -35532,7 +35559,7 @@ function RectangleStencil({
           {
             id: resizeHandleDescriptionId,
             style: VISUALLY_HIDDEN_STYLE,
-            children: (0, import_i18n37.__)(
+            children: (0, import_i18n38.__)(
               "Use arrow keys to resize the crop area. Hold Shift for larger steps."
             )
           }
@@ -36452,7 +36479,7 @@ function CropperInner({
           ),
           tabIndex: 0,
           role: "group",
-          "aria-label": (0, import_i18n38.__)("Crop area"),
+          "aria-label": (0, import_i18n39.__)("Crop area"),
           "aria-describedby": isCropAreaFocused ? cropAreaDescriptionId : void 0,
           onFocus: handleCropAreaFocus,
           onBlur: handleCropAreaBlur,
@@ -36463,7 +36490,7 @@ function CropperInner({
               {
                 id: cropAreaDescriptionId,
                 style: VISUALLY_HIDDEN_STYLE,
-                children: (0, import_i18n38.__)(
+                children: (0, import_i18n39.__)(
                   "When this area is focused, use arrow keys to move the image and plus or minus to zoom. Tab to resize handles and controls."
                 )
               }
@@ -36973,7 +37000,7 @@ function MediaEditorCanvas({
     return null;
   }
   if (status === "error") {
-    return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("div", { className: "media-editor-canvas__error", role: "alert", children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("p", { children: (0, import_i18n39.__)("Failed to load image.") }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("div", { className: "media-editor-canvas__error", role: "alert", children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("p", { children: (0, import_i18n40.__)("Failed to load image.") }) }) });
   }
   return /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)("div", { className: "media-editor-canvas", children: [
     status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("div", { className: "media-editor-canvas__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(import_components38.Spinner, {}) }),
@@ -37002,7 +37029,7 @@ function MediaEditorCanvas({
 }
 
 // packages/media-editor/build-module/components/media-editor-fine-rotation/index.mjs
-var import_i18n40 = __toESM(require_i18n(), 1);
+var import_i18n41 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/hooks/use-crop-gesture-handlers.mjs
 var import_element123 = __toESM(require_element(), 1);
@@ -37373,7 +37400,7 @@ function MediaEditorFineRotation({
       children: /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(
         RotationRuler,
         {
-          label: (0, import_i18n40.__)("Fine rotation"),
+          label: (0, import_i18n41.__)("Fine rotation"),
           min: -MAX_ROTATION_OFFSET,
           max: MAX_ROTATION_OFFSET,
           value: fineOffset,
@@ -37386,7 +37413,7 @@ function MediaEditorFineRotation({
 
 // packages/media-editor/build-module/components/media-editor-image-controls/index.mjs
 var import_components39 = __toESM(require_components(), 1);
-var import_i18n41 = __toESM(require_i18n(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/components/media-editor/use-crop-options.mjs
 var import_element126 = __toESM(require_element(), 1);
@@ -37443,7 +37470,7 @@ function MediaEditorImageControls({
       {
         size: "compact",
         icon: rotate_left_default,
-        label: (0, import_i18n41.__)("Rotate 90\xB0 counter-clockwise"),
+        label: (0, import_i18n42.__)("Rotate 90\xB0 counter-clockwise"),
         showTooltip: true,
         onClick: () => snapRotate90(-1)
       }
@@ -37453,7 +37480,7 @@ function MediaEditorImageControls({
       {
         size: "compact",
         icon: rotate_right_default,
-        label: (0, import_i18n41.__)("Rotate 90\xB0 clockwise"),
+        label: (0, import_i18n42.__)("Rotate 90\xB0 clockwise"),
         showTooltip: true,
         onClick: () => snapRotate90(1)
       }
@@ -37465,7 +37492,7 @@ function MediaEditorImageControls({
       {
         size: "compact",
         icon: flip_horizontal_default,
-        label: (0, import_i18n41.__)("Flip horizontal"),
+        label: (0, import_i18n42.__)("Flip horizontal"),
         showTooltip: true,
         isPressed: state.flip.horizontal,
         onClick: () => setFlip({
@@ -37479,7 +37506,7 @@ function MediaEditorImageControls({
       {
         size: "compact",
         icon: flip_vertical_default,
-        label: (0, import_i18n41.__)("Flip vertical"),
+        label: (0, import_i18n42.__)("Flip vertical"),
         showTooltip: true,
         isPressed: state.flip.vertical,
         onClick: () => setFlip({
@@ -37495,7 +37522,7 @@ function MediaEditorImageControls({
       {
         size: "compact",
         icon: plus_default,
-        label: (0, import_i18n41.__)("Zoom in"),
+        label: (0, import_i18n42.__)("Zoom in"),
         showTooltip: true,
         disabled: state.zoom >= MAX_ZOOM,
         accessibleWhenDisabled: true,
@@ -37507,7 +37534,7 @@ function MediaEditorImageControls({
       {
         size: "compact",
         icon: line_solid_default,
-        label: (0, import_i18n41.__)("Zoom out"),
+        label: (0, import_i18n42.__)("Zoom out"),
         showTooltip: true,
         disabled: state.zoom <= minZoom,
         accessibleWhenDisabled: true,
@@ -37519,10 +37546,10 @@ function MediaEditorImageControls({
     import_components39.DropdownMenu,
     {
       icon: aspect_ratio_default,
-      label: (0, import_i18n41.__)("Aspect ratio"),
+      label: (0, import_i18n42.__)("Aspect ratio"),
       popoverProps: { placement: "top" },
       toggleProps: { size: "compact" },
-      children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(import_components39.MenuGroup, { label: (0, import_i18n41.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
+      children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(import_components39.MenuGroup, { label: (0, import_i18n42.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
         const value = preset.value.toString();
         const isSelected = value === aspectRatioValue;
         return /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(
@@ -37550,14 +37577,14 @@ function MediaEditorImageControls({
           {
             className: "media-editor-image-controls__group",
             role: "group",
-            "aria-label": (0, import_i18n41.__)("Rotate"),
+            "aria-label": (0, import_i18n42.__)("Rotate"),
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(
                 "span",
                 {
                   className: "media-editor-image-controls__label",
                   "aria-hidden": "true",
-                  children: (0, import_i18n41.__)("Rotate")
+                  children: (0, import_i18n42.__)("Rotate")
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime172.jsx)("div", { className: "media-editor-image-controls__buttons", children: rotateButtons })
@@ -37569,14 +37596,14 @@ function MediaEditorImageControls({
           {
             className: "media-editor-image-controls__group",
             role: "group",
-            "aria-label": (0, import_i18n41.__)("Flip"),
+            "aria-label": (0, import_i18n42.__)("Flip"),
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(
                 "span",
                 {
                   className: "media-editor-image-controls__label",
                   "aria-hidden": "true",
-                  children: (0, import_i18n41.__)("Flip")
+                  children: (0, import_i18n42.__)("Flip")
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime172.jsx)("div", { className: "media-editor-image-controls__buttons", children: flipButtons })
@@ -37589,14 +37616,14 @@ function MediaEditorImageControls({
         {
           className: "media-editor-image-controls__group",
           role: "group",
-          "aria-label": (0, import_i18n41.__)("Zoom"),
+          "aria-label": (0, import_i18n42.__)("Zoom"),
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(
               "span",
               {
                 className: "media-editor-image-controls__label",
                 "aria-hidden": "true",
-                children: (0, import_i18n41.__)("Zoom")
+                children: (0, import_i18n42.__)("Zoom")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime172.jsx)("div", { className: "media-editor-image-controls__buttons", children: zoomButtons })
@@ -37615,7 +37642,7 @@ function MediaEditorImageControls({
 
 // packages/media-editor/build-module/components/media-editor-crop-panel/index.mjs
 var import_components40 = __toESM(require_components(), 1);
-var import_i18n42 = __toESM(require_i18n(), 1);
+var import_i18n43 = __toESM(require_i18n(), 1);
 var import_jsx_runtime173 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCropPanel({
   aspectRatioValue,
@@ -37634,12 +37661,12 @@ function MediaEditorCropPanel({
         gap: "xl",
         ...{ [CROP_CONTROL_ATTR]: true },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)("h2", {}), children: (0, import_i18n42.__)("Crop options") }),
+          /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)("h2", {}), children: (0, import_i18n43.__)("Crop options") }),
           showTransformControls && /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(MediaEditorImageControls, { withLabels: true }),
           /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
             import_components40.SelectControl,
             {
-              label: (0, import_i18n42.__)("Aspect ratio"),
+              label: (0, import_i18n43.__)("Aspect ratio"),
               value: aspectRatioValue,
               onChange: onAspectRatioChange,
               options: aspectRatioOptions.map((preset) => ({
@@ -37657,55 +37684,55 @@ function MediaEditorCropPanel({
 // packages/media-editor/build-module/components/media-editor-keyboard-shortcuts-modal/index.mjs
 var import_components41 = __toESM(require_components(), 1);
 var import_element127 = __toESM(require_element(), 1);
-var import_i18n43 = __toESM(require_i18n(), 1);
+var import_i18n44 = __toESM(require_i18n(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
 var import_jsx_runtime174 = __toESM(require_jsx_runtime(), 1);
 var SHORTCUTS = [
   {
-    description: (0, import_i18n43.__)("Undo"),
+    description: (0, import_i18n44.__)("Undo"),
     keyCombination: { modifier: "primary", character: "z" }
   },
   {
-    description: (0, import_i18n43.__)("Redo"),
+    description: (0, import_i18n44.__)("Redo"),
     keyCombination: { modifier: "primaryShift", character: "z" }
   },
   {
-    description: (0, import_i18n43.__)("Pan"),
+    description: (0, import_i18n44.__)("Pan"),
     keyCombination: {
       character: ["\u2191", "\u2193", "\u2190", "\u2192"],
-      ariaLabel: (0, import_i18n43.__)("Arrow keys")
+      ariaLabel: (0, import_i18n44.__)("Arrow keys")
     }
   },
   {
-    description: (0, import_i18n43.__)("Zoom in"),
+    description: (0, import_i18n44.__)("Zoom in"),
     keyCombination: { character: "+" }
   },
   {
-    description: (0, import_i18n43.__)("Zoom out"),
+    description: (0, import_i18n44.__)("Zoom out"),
     keyCombination: { character: "-" }
   },
   {
-    description: (0, import_i18n43.__)("Rotate 90\xB0 clockwise"),
+    description: (0, import_i18n44.__)("Rotate 90\xB0 clockwise"),
     keyCombination: { character: "R" }
   },
   {
-    description: (0, import_i18n43.__)("Rotate 90\xB0 counter-clockwise"),
+    description: (0, import_i18n44.__)("Rotate 90\xB0 counter-clockwise"),
     keyCombination: { modifier: "shift", character: "R" }
   },
   {
-    description: (0, import_i18n43.__)("Flip horizontal"),
+    description: (0, import_i18n44.__)("Flip horizontal"),
     keyCombination: { character: "H" }
   },
   {
-    description: (0, import_i18n43.__)("Flip vertical"),
+    description: (0, import_i18n44.__)("Flip vertical"),
     keyCombination: { character: "V" }
   },
   {
-    description: (0, import_i18n43.__)("Pan or resize crop (large step)"),
+    description: (0, import_i18n44.__)("Pan or resize crop (large step)"),
     keyCombination: {
       modifier: "shift",
       character: ["\u2191", "\u2193", "\u2190", "\u2192"],
-      ariaLabel: (0, import_i18n43.__)("Shift + Arrow keys")
+      ariaLabel: (0, import_i18n44.__)("Shift + Arrow keys")
     }
   }
 ];
@@ -37758,10 +37785,10 @@ function MediaEditorKeyboardShortcutsModal({
     import_components41.Modal,
     {
       className: "media-editor-keyboard-shortcuts-modal",
-      title: (0, import_i18n43.__)("Keyboard shortcuts"),
+      title: (0, import_i18n44.__)("Keyboard shortcuts"),
       onRequestClose: onClose,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime174.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n43.__)(
+        /* @__PURE__ */ (0, import_jsx_runtime174.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n44.__)(
           "These shortcuts work when the image editor has focus."
         ) }),
         /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(
@@ -37797,7 +37824,7 @@ var import_api_fetch = __toESM(require_api_fetch(), 1);
 var import_data7 = __toESM(require_data(), 1);
 var import_core_data = __toESM(require_core_data(), 1);
 var import_element128 = __toESM(require_element(), 1);
-var import_i18n44 = __toESM(require_i18n(), 1);
+var import_i18n45 = __toESM(require_i18n(), 1);
 var import_notices = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor-modal/build-modifiers.mjs
@@ -37965,15 +37992,15 @@ function useSaveMediaEditor({
         });
       }
     } catch (error2) {
-      const message2 = error2 instanceof Error ? error2.message : error2?.message ?? (0, import_i18n44.__)("An unknown error occurred.");
+      const message2 = error2 instanceof Error ? error2.message : error2?.message ?? (0, import_i18n45.__)("An unknown error occurred.");
       createErrorNotice(
-        isImage ? (0, import_i18n44.sprintf)(
+        isImage ? (0, import_i18n45.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n44.__)("Could not save image. %s"),
+          (0, import_i18n45.__)("Could not save image. %s"),
           message2
-        ) : (0, import_i18n44.sprintf)(
+        ) : (0, import_i18n45.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n44.__)("Could not save media. %s"),
+          (0, import_i18n45.__)("Could not save media. %s"),
           message2
         ),
         {
@@ -38015,13 +38042,13 @@ function MediaEditorSidebar({
     {
       scope,
       identifier: "media-editor/details",
-      title: (0, import_i18n45.__)("Details"),
+      title: (0, import_i18n46.__)("Details"),
       icon: drawer_right_default,
       isActiveByDefault: true,
       className: "media-editor__sidebar",
       panelClassName: "media-editor__sidebar-panel",
       headerClassName: "media-editor__sidebar-header",
-      closeLabel: (0, import_i18n45.__)("Close media panel"),
+      closeLabel: (0, import_i18n46.__)("Close media panel"),
       render: /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
         tabs_exports.Root,
         {
@@ -38060,7 +38087,7 @@ function HeaderActions({ showCloseButton = false }) {
           {
             size: "compact",
             icon: keyboard_default,
-            label: (0, import_i18n45.__)("Keyboard shortcuts"),
+            label: (0, import_i18n46.__)("Keyboard shortcuts"),
             onClick: () => setIsShortcutsModalOpen(true)
           }
         ),
@@ -38070,7 +38097,7 @@ function HeaderActions({ showCloseButton = false }) {
           {
             size: "compact",
             icon: close_default,
-            label: (0, import_i18n45.__)("Close"),
+            label: (0, import_i18n46.__)("Close"),
             onClick: onCancel,
             disabled: isSaving,
             accessibleWhenDisabled: true
@@ -38134,7 +38161,7 @@ function HistoryActions() {
             disabled: !isDirty,
             accessibleWhenDisabled: true,
             onClick: handleReset,
-            children: (0, import_i18n45.__)("Reset")
+            children: (0, import_i18n46.__)("Reset")
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
@@ -38142,7 +38169,7 @@ function HistoryActions() {
           {
             size: "compact",
             icon: undo_default,
-            label: (0, import_i18n45.__)("Undo"),
+            label: (0, import_i18n46.__)("Undo"),
             showTooltip: true,
             shortcut: import_keycodes2.displayShortcut.primary("z"),
             disabled: isUndoRedoDisabled || !hasUndo,
@@ -38155,7 +38182,7 @@ function HistoryActions() {
           {
             size: "compact",
             icon: redo_default,
-            label: (0, import_i18n45.__)("Redo"),
+            label: (0, import_i18n46.__)("Redo"),
             showTooltip: true,
             shortcut: (0, import_keycodes2.isAppleOS)() ? import_keycodes2.displayShortcut.primaryShift("z") : import_keycodes2.displayShortcut.primary("y"),
             disabled: isUndoRedoDisabled || !hasRedo,
@@ -38187,7 +38214,7 @@ function SaveActions({ size: size4 = "default" }) {
             onClick: onCancel,
             disabled: isSaving,
             accessibleWhenDisabled: true,
-            children: (0, import_i18n45.__)("Cancel")
+            children: (0, import_i18n46.__)("Cancel")
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
@@ -38200,7 +38227,7 @@ function SaveActions({ size: size4 = "default" }) {
             isBusy: isSaving,
             disabled: saveDisabled,
             accessibleWhenDisabled: true,
-            children: (0, import_i18n45.__)("Save")
+            children: (0, import_i18n46.__)("Save")
           }
         )
       ]
@@ -38321,7 +38348,7 @@ function MediaEditorContent({
   const tabs = (0, import_element129.useMemo)(() => {
     const detailsTab = {
       id: "details",
-      title: (0, import_i18n45.__)("Details"),
+      title: (0, import_i18n46.__)("Details"),
       panel: /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
         Stack,
         {
@@ -38338,7 +38365,7 @@ function MediaEditorContent({
     return [
       {
         id: "crop",
-        title: (0, import_i18n45.__)("Crop"),
+        title: (0, import_i18n46.__)("Crop"),
         panel: /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
           Stack,
           {
@@ -38453,8 +38480,8 @@ function MediaEditorContent({
             {
               className: "media-editor__skeleton",
               labels: {
-                body: isImage ? (0, import_i18n45.__)("Image editor") : (0, import_i18n45.__)("Media preview"),
-                sidebar: (0, import_i18n45.__)("Media details")
+                body: isImage ? (0, import_i18n46.__)("Image editor") : (0, import_i18n46.__)("Media preview"),
+                sidebar: (0, import_i18n46.__)("Media details")
               },
               content: /* @__PURE__ */ (0, import_jsx_runtime175.jsxs)("div", { className: "media-editor__content", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime175.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
@@ -38475,14 +38502,14 @@ function MediaEditorContent({
           import_components42.__experimentalConfirmDialog,
           {
             isOpen: isDiscardDialogOpen,
-            confirmButtonText: (0, import_i18n45.__)("Discard"),
-            cancelButtonText: (0, import_i18n45.__)("Keep editing"),
+            confirmButtonText: (0, import_i18n46.__)("Discard"),
+            cancelButtonText: (0, import_i18n46.__)("Keep editing"),
             onCancel: () => setIsDiscardDialogOpen(false),
             onConfirm: () => {
               setIsDiscardDialogOpen(false);
               discardAndClose();
             },
-            children: (0, import_i18n45.__)(
+            children: (0, import_i18n46.__)(
               "Are you sure you want to discard your unsaved changes?"
             )
           }
@@ -38532,7 +38559,7 @@ function ModalFooter({ layout }) {
     {
       className: `media-editor-modal__footer is-${layout}`,
       role: "region",
-      "aria-label": (0, import_i18n46.__)("Editor actions"),
+      "aria-label": (0, import_i18n47.__)("Editor actions"),
       children: layout === "wide" ? (
         // Sidebar is a column: the image controls live in the Crop
         // panel, so the footer is just History + Cancel/Save.
@@ -38599,11 +38626,11 @@ function MediaEditorModal({
         }
         handleClose();
         if (previous && savedId !== previous.id && onUpdate) {
-          createSuccessNotice((0, import_i18n46.__)("Image edited."), {
+          createSuccessNotice((0, import_i18n47.__)("Image edited."), {
             type: "snackbar",
             actions: [
               {
-                label: (0, import_i18n46.__)("Undo"),
+                label: (0, import_i18n47.__)("Undo"),
                 onClick: () => {
                   onUpdate({
                     id: previous.id,
@@ -38630,7 +38657,7 @@ function MediaEditorModal({
             import_components43.Modal,
             {
               className: "media-editor-modal",
-              title: (0, import_i18n46.__)("Edit media"),
+              title: (0, import_i18n47.__)("Edit media"),
               size: "fill",
               isDismissible: false,
               shouldCloseOnClickOutside,
@@ -38688,7 +38715,7 @@ function isMediaEditorAdminPage() {
 }
 function getMediaTitle(media) {
   const title = typeof media?.title === "string" ? media.title : media?.title?.rendered || media?.title?.raw;
-  return title ? (0, import_html_entities.decodeEntities)(title) : (0, import_i18n47.__)("Edit media");
+  return title ? (0, import_html_entities.decodeEntities)(title) : (0, import_i18n48.__)("Edit media");
 }
 function MediaEditorRoute() {
   const { id } = useParams({ from: "/media-editor/$id" });
@@ -38761,7 +38788,7 @@ function MediaEditorRoute() {
                     {
                       items: isStandaloneAdminPage ? [{ label: title }] : [
                         {
-                          label: (0, import_i18n47.__)("Media"),
+                          label: (0, import_i18n48.__)("Media"),
                           to: MEDIA_LIST_PATH
                         },
                         { label: title }
