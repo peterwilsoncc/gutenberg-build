@@ -38203,6 +38203,7 @@ This message will only show in development mode. It won't appear in production. 
     isOpen,
     position: position2,
     color: color2,
+    disablePositioning,
     ...additionalProps
   }) {
     const instanceId = (0, import_compose41.useInstanceId)(ControlPointButton);
@@ -38225,7 +38226,7 @@ This message will only show in development mode. It won't appear in production. 
         ...additionalProps
       }), /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(component_default2, {
         id: descriptionId,
-        children: (0, import_i18n31.__)("Use your left or right arrow keys or drag and drop with the mouse to change the gradient position. Press the button to change the color or remove the control point.")
+        children: disablePositioning ? (0, import_i18n31.__)("Press the button to change the color.") : (0, import_i18n31.__)("Use your left or right arrow keys or drag and drop with the mouse to change the gradient position. Press the button to change the color or remove the control point.")
       })]
     });
   }
@@ -38253,6 +38254,7 @@ This message will only show in development mode. It won't appear in production. 
   function ControlPoints({
     disableRemove,
     disableAlpha,
+    disablePositioning,
     gradientPickerDomRef,
     ignoreMarkerPosition,
     value: controlPoints,
@@ -38314,6 +38316,9 @@ This message will only show in development mode. It won't appear in production. 
               onToggle();
             },
             onMouseDown: () => {
+              if (disablePositioning) {
+                return;
+              }
               if (window && window.addEventListener) {
                 controlPointMoveStateRef.current = {
                   initialPosition,
@@ -38327,6 +38332,12 @@ This message will only show in development mode. It won't appear in production. 
               }
             },
             onKeyDown: (event) => {
+              if (disablePositioning) {
+                if (event.code === "ArrowLeft" || event.code === "ArrowRight") {
+                  event.stopPropagation();
+                }
+                return;
+              }
               if (event.code === "ArrowLeft") {
                 event.stopPropagation();
                 onChange(updateControlPointPosition(controlPoints, index2, clampPercent(point.position - KEYBOARD_CONTROL_POINT_VARIATION)));
@@ -38337,7 +38348,8 @@ This message will only show in development mode. It won't appear in production. 
             },
             isOpen,
             position: point.position,
-            color: point.color
+            color: point.color,
+            disablePositioning
           }, index2),
           renderContent: ({
             onClose
@@ -38489,6 +38501,7 @@ This message will only show in development mode. It won't appear in production. 
     onChange,
     disableInserter = false,
     disableAlpha = false,
+    disablePositioning = false,
     __experimentalIsRenderedInSidebar = false
   }) {
     const gradientMarkersContainerDomRef = (0, import_element103.useRef)(null);
@@ -38558,6 +38571,7 @@ This message will only show in development mode. It won't appear in production. 
           __experimentalIsRenderedInSidebar,
           disableAlpha,
           disableRemove: disableInserter,
+          disablePositioning,
           gradientPickerDomRef: gradientMarkersContainerDomRef,
           ignoreMarkerPosition: isInsertingControlPoint ? gradientBarState.insertPosition : void 0,
           value: controlPoints,
@@ -39291,6 +39305,7 @@ This message will only show in development mode. It won't appear in production. 
     const controlPoints = getColorStopsFromColors(values);
     return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(CustomGradientBar, {
       disableInserter: true,
+      disablePositioning: true,
       background,
       hasGradient,
       value: controlPoints,
