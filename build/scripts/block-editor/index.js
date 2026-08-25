@@ -90546,7 +90546,6 @@ var wp;
     inheritedValue = value,
     settings: settings2,
     panelId,
-    name,
     defaultControls = DEFAULT_CONTROLS6,
     showInheritanceLabelIndicators = isGlobalStylesInheritanceEnabled()
   }) {
@@ -90720,7 +90719,6 @@ var wp;
     const showBorderByDefault = defaultControls?.color || defaultControls?.width;
     const hasBorderControl = showBorderColor || showBorderStyle || showBorderWidth || showBorderRadius;
     const label = useBorderPanelLabel({
-      blockName: name,
       hasShadowControl,
       hasBorderControl
     });
@@ -92706,6 +92704,7 @@ var wp;
   var import_jsx_runtime469 = __toESM(require_jsx_runtime(), 1);
   var BORDER_SUPPORT_KEY2 = "__experimentalBorder";
   var SHADOW_SUPPORT_KEY = "shadow";
+  var EMPTY_ARRAY16 = [];
   var getColorByProperty = (colors2, property, value) => {
     let matchedColor;
     colors2.some(
@@ -92869,13 +92868,33 @@ var wp;
     return !!support?.[feature];
   }
   function useBorderPanelLabel({
-    blockName,
+    clientId,
     hasBorderControl,
     hasShadowControl
   } = {}) {
-    const settings2 = useBlockSettings(blockName);
+    const [color, radius, style, width, shadow] = (0, import_data169.useSelect)(
+      (select3) => {
+        if (!clientId) {
+          return EMPTY_ARRAY16;
+        }
+        const { getBlockSettings: getBlockSettings2 } = unlock(select3(store));
+        return getBlockSettings2(
+          clientId,
+          "border.color",
+          "border.radius",
+          "border.style",
+          "border.width",
+          "shadow"
+        );
+      },
+      [clientId]
+    );
+    const settings2 = (0, import_element286.useMemo)(
+      () => ({ border: { color, radius, style, width }, shadow }),
+      [color, radius, style, width, shadow]
+    );
     const controls = useHasBorderPanelControls(settings2);
-    if (!hasBorderControl && !hasShadowControl && blockName) {
+    if (!hasBorderControl && !hasShadowControl && clientId) {
       hasBorderControl = controls?.hasBorderColor || controls?.hasBorderStyle || controls?.hasBorderWidth || controls?.hasBorderRadius;
       hasShadowControl = controls?.hasShadow;
     }
@@ -94610,7 +94629,7 @@ var wp;
     isSectionBlock: isSectionBlock2,
     contentClientIds
   }) => {
-    const borderPanelLabel = useBorderPanelLabel({ blockName });
+    const borderPanelLabel = useBorderPanelLabel({ clientId });
     return /* @__PURE__ */ (0, import_jsx_runtime478.jsxs)(import_jsx_runtime478.Fragment, { children: [
       hasBlockStyles && /* @__PURE__ */ (0, import_jsx_runtime478.jsx)(block_styles_default, { clientId }),
       isSectionBlock2 && blockName !== "core/template-part" && /* @__PURE__ */ (0, import_jsx_runtime478.jsx)(
@@ -94945,7 +94964,7 @@ var wp;
   // packages/block-editor/build-module/components/inspector-controls-tabs/use-inspector-controls-tabs.mjs
   var import_components216 = __toESM(require_components(), 1);
   var import_data180 = __toESM(require_data(), 1);
-  var EMPTY_ARRAY16 = [];
+  var EMPTY_ARRAY17 = [];
   function getShowTabs(blockName, tabSettings = {}) {
     if (tabSettings[blockName] !== void 0) {
       return tabSettings[blockName];
@@ -95017,7 +95036,7 @@ var wp;
       tabs.push(TAB_STYLES);
     }
     const showTabs = getShowTabs(blockName, tabSettings);
-    return showTabs ? tabs : EMPTY_ARRAY16;
+    return showTabs ? tabs : EMPTY_ARRAY17;
   }
 
   // packages/block-editor/build-module/components/inspector-controls/last-item.mjs
@@ -95149,12 +95168,12 @@ var wp;
   // packages/block-editor/build-module/components/block-inspector/index.mjs
   var import_jsx_runtime484 = __toESM(require_jsx_runtime(), 1);
   function StyleInspectorSlots({
-    blockName,
+    clientId,
     showAdvancedControls = true,
     showPositionControls = true,
     showBindingsControls = true
   }) {
-    const borderPanelLabel = useBorderPanelLabel({ blockName });
+    const borderPanelLabel = useBorderPanelLabel({ clientId });
     return /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(import_jsx_runtime484.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(inspector_controls_default.Slot, {}),
       /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
@@ -95210,7 +95229,7 @@ var wp;
     isSectionBlock: isSectionBlock2,
     selectedBlockStyleState: selectedBlockStyleState2
   }) {
-    const borderPanelLabel = useBorderPanelLabel({ blockName });
+    const borderPanelLabel = useBorderPanelLabel({ clientId });
     const showLayoutControls = hasViewportBlockStyleState(selectedBlockStyleState2) && !hasPseudoBlockStyleState(selectedBlockStyleState2);
     const showSectionStyleControls = isSectionBlock2 && blockName !== "core/template-part";
     return /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(import_jsx_runtime484.Fragment, { children: [
@@ -95389,7 +95408,6 @@ var wp;
         hasMultipleTabs ? /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(InspectorControlsTabs, { tabs: availableTabs }) : /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
           StyleInspectorSlots,
           {
-            blockName: renderedBlockName,
             showAdvancedControls: false,
             showPositionControls: false,
             showBindingsControls: false
@@ -95562,7 +95580,6 @@ var wp;
       isEditingStyleState && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
         StyleStateInspectorSlots,
         {
-          blockName,
           clientId: renderedBlockClientId,
           contentClientIds,
           isSectionBlock: isSectionBlock2,
@@ -95586,7 +95603,12 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(inspector_controls_default.Slot, { group: "content" }),
         /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(inspector_controls_default.Slot, { group: "list", ref: listViewRef }),
         /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(ListViewContentPopover, { listViewRef }),
-        !isSectionBlock2 && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(StyleInspectorSlots, { blockName })
+        !isSectionBlock2 && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
+          StyleInspectorSlots,
+          {
+            clientId: renderedBlockClientId
+          }
+        )
       ] }),
       !isEditingStyleState && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(last_item_default.Slot, {}),
       /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(SkipToSelectedBlock, {}, "back")
@@ -97418,12 +97440,12 @@ var wp;
 
   // packages/dataviews/build-module/hooks/use-elements.mjs
   var import_element307 = __toESM(require_element(), 1);
-  var EMPTY_ARRAY17 = [];
+  var EMPTY_ARRAY18 = [];
   function useElements({
     elements,
     getElements
   }) {
-    const staticElements = Array.isArray(elements) && elements.length > 0 ? elements : EMPTY_ARRAY17;
+    const staticElements = Array.isArray(elements) && elements.length > 0 ? elements : EMPTY_ARRAY18;
     const [records, setRecords] = (0, import_element307.useState)(staticElements);
     const [isLoading, setIsLoading] = (0, import_element307.useState)(false);
     (0, import_element307.useEffect)(() => {
@@ -105375,7 +105397,7 @@ var wp;
   var import_data193 = __toESM(require_data(), 1);
   var import_jsx_runtime558 = __toESM(require_jsx_runtime(), 1);
   var { getDuotoneFilter: getDuotoneFilter2, getDuotoneStylesheet: getDuotoneStylesheet2, getDuotoneUnsetStylesheet: getDuotoneUnsetStylesheet2 } = unlock(privateApis);
-  var EMPTY_ARRAY18 = [];
+  var EMPTY_ARRAY19 = [];
   var isSafari = window?.navigator.userAgent && window.navigator.userAgent.includes("Safari") && !window.navigator.userAgent.includes("Chrome") && !window.navigator.userAgent.includes("Chromium");
   k([names_default]);
   function useMultiOriginPresets({ presetSetting, defaultSetting }) {
@@ -105387,9 +105409,9 @@ var wp;
     );
     return (0, import_element353.useMemo)(
       () => [
-        ...userPresets || EMPTY_ARRAY18,
-        ...themePresets || EMPTY_ARRAY18,
-        ...enableDefault && defaultPresets || EMPTY_ARRAY18
+        ...userPresets || EMPTY_ARRAY19,
+        ...themePresets || EMPTY_ARRAY19,
+        ...enableDefault && defaultPresets || EMPTY_ARRAY19
       ],
       [enableDefault, userPresets, themePresets, defaultPresets]
     );
