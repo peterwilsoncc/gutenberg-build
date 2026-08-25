@@ -32722,12 +32722,7 @@ function Identity() {
   );
   const { editEntityRecord } = (0, import_data2.useDispatch)(import_core_data2.store);
   const onChange = (edits) => {
-    editEntityRecord(
-      "root",
-      "site",
-      void 0,
-      edits
-    );
+    editEntityRecord("root", "site", void 0, edits);
   };
   return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
     page_default,

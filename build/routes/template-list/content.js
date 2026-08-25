@@ -44982,11 +44982,10 @@ function useSetActiveTemplateAction() {
             activeTemplates[item.slug] = item.id;
           }
         }
-        const siteRecordKey = void 0;
-        await editEntityRecord("root", "site", siteRecordKey, {
+        await editEntityRecord("root", "site", void 0, {
           active_templates: activeTemplates
         });
-        await saveEditedEntityRecord("root", "site", siteRecordKey);
+        await saveEditedEntityRecord("root", "site");
       }
     }),
     [
