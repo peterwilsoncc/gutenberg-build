@@ -4996,6 +4996,7 @@ var wp;
       lock: false
     },
     selectors: {
+      spacing: ".wp-block-accordion-heading .wp-block-accordion-heading__toggle",
       typography: {
         letterSpacing: ".wp-block-accordion-heading .wp-block-accordion-heading__toggle-title",
         textDecoration: ".wp-block-accordion-heading .wp-block-accordion-heading__toggle-title"

@@ -167,6 +167,7 @@ return array(
 			'lock' => false
 		),
 		'selectors' => array(
+			'spacing' => '.wp-block-accordion-heading .wp-block-accordion-heading__toggle',
 			'typography' => array(
 				'letterSpacing' => '.wp-block-accordion-heading .wp-block-accordion-heading__toggle-title',
 				'textDecoration' => '.wp-block-accordion-heading .wp-block-accordion-heading__toggle-title'
