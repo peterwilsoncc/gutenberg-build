@@ -2828,7 +2828,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   grid-column: 2;
   grid-row: 1;
 }
-.components-radio-control:not(:disabled) .components-radio-control__label {
+.components-radio-control__input:not(:disabled) + .components-radio-control__label {
   cursor: var(--wpds-cursor-control, pointer);
 }
 .components-radio-control__label {

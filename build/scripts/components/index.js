@@ -48873,6 +48873,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             type: "radio",
             name: id3,
             value: option.value,
+            disabled: option.disabled,
             onChange: onChangeValue,
             checked: option.value === selected,
             "aria-describedby": !!option.description ? generateOptionDescriptionId(id3, index2) : void 0,
