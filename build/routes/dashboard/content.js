@@ -148,14 +148,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React236 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef130 = React236.useRef, useEffect82 = React236.useEffect, useMemo111 = React236.useMemo, useDebugValue2 = React236.useDebugValue;
+      var React236 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef130 = React236.useRef, useEffect82 = React236.useEffect, useMemo112 = React236.useMemo, useDebugValue2 = React236.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef130(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo111(
+        instRef = useMemo112(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -43881,7 +43881,7 @@ var page_default = Page;
 // routes/dashboard/stage.tsx
 var import_core_data = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
-var import_element262 = __toESM(require_element());
+var import_element263 = __toESM(require_element());
 var import_i18n85 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_viewport2 = __toESM(require_viewport());
@@ -44679,6 +44679,17 @@ function splitWidgetActions(widgetType) {
 
 // packages/widget-dashboard/build-module/components/widget-footer/widget-footer.mjs
 var import_i18n21 = __toESM(require_i18n(), 1);
+import { useWidgetHost } from "@wordpress/widget-primitives";
+
+// packages/widget-dashboard/build-module/components/widget-actions/get-action-route.mjs
+function getActionRoute(links, action) {
+  if (!links || action.download || action.openInNewTab) {
+    return null;
+  }
+  return links.match(action.href);
+}
+
+// packages/widget-dashboard/build-module/components/widget-footer/widget-footer.mjs
 var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE87 = "data-wp-hash";
 function getRuntime87() {
@@ -44764,7 +44775,10 @@ if (typeof process === "undefined" || true) {
   registerStyle87("57b3a79a04", ".a3e067538ad701bf__widget-footer{border-block-start-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-block-start-style:solid;border-block-start-width:var(--wpds-border-width-xs,1px);padding-block:var(--wpds-dimension-padding-md,12px);padding-inline:var(--wp-ui-card-padding)}.b7d8b6ddfcf30003__compact-actions{margin-inline-start:auto}._767e14b4bc49e9b5__prefixed-action{align-items:center;display:inline-flex;gap:var(--wpds-dimension-gap-xs,4px)}._031b4fd8e77c13ce__icon-action{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}");
 }
 var widget_footer_default = { "widget-footer": "a3e067538ad701bf__widget-footer", "compact-actions": "b7d8b6ddfcf30003__compact-actions", "prefixed-action": "_767e14b4bc49e9b5__prefixed-action", "icon-action": "_031b4fd8e77c13ce__icon-action" };
-function IconAction({ action }) {
+function IconAction({
+  action,
+  routeRender
+}) {
   const label = action.openInNewTab ? (0, import_i18n21.sprintf)(
     /* translators: %s: action label. */
     (0, import_i18n21.__)("%s (opens in a new tab)"),
@@ -44782,13 +44796,15 @@ function IconAction({ action }) {
             size: "compact",
             className: widget_footer_default["icon-action"],
             "aria-label": label,
-            href: action.href,
-            download: action.download,
-            render: action.openInNewTab ? (
+            ...routeRender ? {} : {
+              href: action.href,
+              download: action.download
+            },
+            render: routeRender ?? (action.openInNewTab ? (
               /* href and content merge in at runtime. */
               // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
               /* @__PURE__ */ (0, import_jsx_runtime228.jsx)("a", { target: "_blank", rel: "noopener noreferrer" })
-            ) : void 0
+            ) : void 0)
           }
         ),
         children: /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(LinkButton3.Icon, { icon: action.icon })
@@ -44801,6 +44817,8 @@ function WidgetFooter({
   actions,
   editMode = false
 }) {
+  const { links } = useWidgetHost();
+  const HostLink = links?.Link;
   if (actions.length === 0) {
     return null;
   }
@@ -44819,20 +44837,33 @@ function WidgetFooter({
       className: widget_footer_default["widget-footer"],
       ...editMode ? { inert: "true" } : {},
       children: [
-        highActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(Stack, { direction: "row", align: "center", gap: "lg", wrap: "wrap", children: highActions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)(
-          Link,
-          {
-            href: action.href,
-            download: action.download,
-            openInNewTab: action.openInNewTab,
-            className: action.icon ? widget_footer_default["prefixed-action"] : void 0,
-            children: [
-              action.icon && /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(Icon, { icon: action.icon }),
-              action.label
-            ]
-          },
-          action.id
-        )) }),
+        highActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(Stack, { direction: "row", align: "center", gap: "lg", wrap: "wrap", children: highActions.map((action) => {
+          const path = getActionRoute(links, action);
+          const className = action.icon ? widget_footer_default["prefixed-action"] : void 0;
+          const children = /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)(import_jsx_runtime228.Fragment, { children: [
+            action.icon && /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(Icon, { icon: action.icon }),
+            action.label
+          ] });
+          return path !== null && HostLink ? /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
+            Link,
+            {
+              className,
+              render: /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(HostLink, { path }),
+              children
+            },
+            action.id
+          ) : /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
+            Link,
+            {
+              href: action.href,
+              download: action.download,
+              openInNewTab: action.openInNewTab,
+              className,
+              children
+            },
+            action.id
+          );
+        }) }),
         mediumActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
           Stack,
           {
@@ -44840,17 +44871,23 @@ function WidgetFooter({
             align: "center",
             gap: "xs",
             className: widget_footer_default["compact-actions"],
-            children: /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(tooltip_exports.Provider, { children: mediumActions.map(
-              (action) => action.icon ? /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
-                IconAction,
-                {
-                  action: {
-                    ...action,
-                    icon: action.icon
-                  }
-                },
-                action.id
-              ) : /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(tooltip_exports.Provider, { children: mediumActions.map((action) => {
+              const path = getActionRoute(links, action);
+              const routeRender = path !== null && HostLink ? /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(HostLink, { path }) : void 0;
+              if (action.icon) {
+                return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
+                  IconAction,
+                  {
+                    action: {
+                      ...action,
+                      icon: action.icon
+                    },
+                    routeRender
+                  },
+                  action.id
+                );
+              }
+              return routeRender ? /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(Link, { render: routeRender, children: action.label }, action.id) : /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
                 Link,
                 {
                   href: action.href,
@@ -44859,8 +44896,8 @@ function WidgetFooter({
                   children: action.label
                 },
                 action.id
-              )
-            ) })
+              );
+            }) })
           }
         )
       ]
@@ -71431,6 +71468,7 @@ function useDashboardContainerColumnCount(forwardedRef) {
 // packages/widget-dashboard/build-module/components/widget-actions/widget-actions.mjs
 var import_components59 = __toESM(require_components(), 1);
 var import_i18n81 = __toESM(require_i18n(), 1);
+import { useWidgetHost as useWidgetHost2 } from "@wordpress/widget-primitives";
 var import_jsx_runtime341 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE101 = "data-wp-hash";
 function getRuntime101() {
@@ -71521,6 +71559,7 @@ function WidgetActions({
   actions
 }) {
   const reserveRef = useReserveHeaderSpace("actions");
+  const { links } = useWidgetHost2();
   if (actions.length === 0) {
     return null;
   }
@@ -71540,23 +71579,33 @@ function WidgetActions({
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(Menu2.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(Menu2.Group, { className: widget_actions_default["widget-action-items"], children: actions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
-      Menu2.Item,
-      {
-        prefix: action.icon ? /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(Icon, { icon: action.icon }) : void 0,
-        render: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
-          Link,
-          {
-            href: action.href,
-            download: action.download,
-            openInNewTab: action.openInNewTab,
-            className: widget_actions_default["widget-action-link"]
-          }
-        ),
-        children: action.label
-      },
-      action.id
-    )) }) })
+    /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(Menu2.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(Menu2.Group, { className: widget_actions_default["widget-action-items"], children: actions.map((action) => {
+      const path = getActionRoute(links, action);
+      const HostLink = links?.Link;
+      return /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
+        Menu2.Item,
+        {
+          prefix: action.icon ? /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(Icon, { icon: action.icon }) : void 0,
+          render: path !== null && HostLink ? /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
+            Link,
+            {
+              className: widget_actions_default["widget-action-link"],
+              render: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(HostLink, { path })
+            }
+          ) : /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
+            Link,
+            {
+              href: action.href,
+              download: action.download,
+              openInNewTab: action.openInNewTab,
+              className: widget_actions_default["widget-action-link"]
+            }
+          ),
+          children: action.label
+        },
+        action.id
+      );
+    }) }) })
   ] }) });
 }
 
@@ -72892,8 +72941,64 @@ function useDashboardGridSettings() {
   }, []);
 }
 
-// routes/dashboard/stage.tsx
+// routes/dashboard/widget-host/dashboard-widget-host-provider.tsx
+var import_element262 = __toESM(require_element());
+import { Link as Link3 } from "@wordpress/route";
+import { WidgetHostProvider } from "@wordpress/widget-primitives";
+
+// routes/dashboard/widget-host/match-dashboard-href.ts
+function matchDashboardHref(href, base = window.location.href) {
+  let url;
+  let baseUrl;
+  try {
+    baseUrl = new URL(base);
+    url = new URL(href, baseUrl);
+  } catch {
+    return null;
+  }
+  if (url.origin !== baseUrl.origin || url.pathname !== baseUrl.pathname || url.hash) {
+    return null;
+  }
+  if (url.searchParams.get("page") !== baseUrl.searchParams.get("page")) {
+    return null;
+  }
+  for (const key2 of url.searchParams.keys()) {
+    if (key2 !== "page" && key2 !== "p") {
+      return null;
+    }
+  }
+  if (url.searchParams.getAll("page").length > 1 || url.searchParams.getAll("p").length > 1) {
+    return null;
+  }
+  const path = url.searchParams.get("p") || "/";
+  if (!/^\/(?!\/)/.test(path) || path.includes("?") || path.includes("#")) {
+    return null;
+  }
+  return path;
+}
+
+// routes/dashboard/widget-host/dashboard-widget-host-provider.tsx
 var import_jsx_runtime351 = __toESM(require_jsx_runtime());
+var DashboardRouteLink = (0, import_element262.forwardRef)(function DashboardRouteLink2({ path, ...props }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(Link3, { ref, to: path, ...props });
+});
+function DashboardWidgetHostProvider({
+  children
+}) {
+  const host = (0, import_element262.useMemo)(
+    () => ({
+      links: {
+        match: matchDashboardHref,
+        Link: DashboardRouteLink
+      }
+    }),
+    []
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(WidgetHostProvider, { value: host, children });
+}
+
+// routes/dashboard/stage.tsx
+var import_jsx_runtime352 = __toESM(require_jsx_runtime());
 registerDashboardFieldTypes();
 function Dashboard() {
   const [layout, setLayout, resetLayout] = useDashboardLayout(
@@ -72905,7 +73010,7 @@ function Dashboard() {
     []
   );
   const [widgetTypes, isResolving] = useWidgetTypes(widgetsModules);
-  const [editMode, setEditMode] = (0, import_element262.useState)(false);
+  const [editMode, setEditMode] = (0, import_element263.useState)(false);
   const isMobileViewport = (0, import_data9.useSelect)(
     (select) => select(import_viewport2.store).isViewportMatch("< small"),
     []
@@ -72918,7 +73023,7 @@ function Dashboard() {
     });
   };
   const pageTitle = editMode ? (0, import_i18n85.__)("Customize Dashboard") : (0, import_i18n85.__)("Dashboard");
-  return /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(DashboardWidgetHostProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime352.jsxs)(
     WidgetDashboard,
     {
       widgetTypes,
@@ -72930,23 +73035,23 @@ function Dashboard() {
       editMode,
       onEditChange: setEditMode,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime352.jsxs)(
           page_default,
           {
-            breadcrumbs: editMode && isMobileViewport ? void 0 : /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(breadcrumbs_default, { items: [{ label: pageTitle }] }),
+            breadcrumbs: editMode && isMobileViewport ? void 0 : /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(breadcrumbs_default, { items: [{ label: pageTitle }] }),
             ariaLabel: pageTitle,
-            actions: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(WidgetDashboard.Actions, {}),
+            actions: /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(WidgetDashboard.Actions, {}),
             hasPadding: true,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(WidgetDashboard.NoWidgetsState, {}),
-              /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(WidgetDashboard.Widgets, {})
+              /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(WidgetDashboard.NoWidgetsState, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(WidgetDashboard.Widgets, {})
             ]
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(WidgetDashboard.Commands, {})
+        /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(WidgetDashboard.Commands, {})
       ]
     }
-  );
+  ) });
 }
 var stage = Dashboard;
 export {

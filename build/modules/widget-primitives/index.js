@@ -302,10 +302,31 @@ function useWidgetTypes(records) {
   }, [records]);
   return [widgetTypes, isResolvingWidgetTypes];
 }
+
+// packages/widget-primitives/build-module/widget-host/widget-host.mjs
+var import_element3 = __toESM(require_element(), 1);
+var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+var WidgetHostContext = (0, import_element3.createContext)({});
+function WidgetHostProvider({
+  value,
+  children
+}) {
+  const inherited = (0, import_element3.useContext)(WidgetHostContext);
+  const merged = (0, import_element3.useMemo)(
+    () => ({ ...inherited, ...value }),
+    [inherited, value]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(WidgetHostContext.Provider, { value: merged, children });
+}
+function useWidgetHost() {
+  return (0, import_element3.useContext)(WidgetHostContext);
+}
 export {
+  WidgetHostProvider,
   WidgetRender,
   registerFieldType,
   registerIconResolver,
+  useWidgetHost,
   useWidgetTypes
 };
 //# sourceMappingURL=index.js.map
