@@ -38317,7 +38317,8 @@ var List = (0, import_element96.forwardRef)(
       {
         className: clsx_default(item_popup_default5.list, className),
         ref,
-        ...restProps
+        ...restProps,
+        "aria-orientation": void 0
       }
     );
   }
