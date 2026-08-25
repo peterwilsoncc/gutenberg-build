@@ -8476,10 +8476,10 @@ textarea.editor-post-text-editor::placeholder {
   width: 100%;
   height: 72px;
   background-color: #fff;
-  margin-left: -32px;
-  margin-right: -32px;
-  padding-left: 32px;
-  padding-right: 32px;
+  margin-left: -24px;
+  margin-right: -24px;
+  padding-left: 24px;
+  padding-right: 24px;
   border-top: 1px solid #ddd;
   z-index: 1;
 }
@@ -8523,10 +8523,10 @@ textarea.editor-post-text-editor::placeholder {
   width: 100%;
   height: 92px;
   background-color: #fff;
-  margin-left: -32px;
-  margin-right: -32px;
-  padding-left: 32px;
-  padding-right: 32px;
+  margin-left: -24px;
+  margin-right: -24px;
+  padding-left: 24px;
+  padding-right: 24px;
   border-top: 1px solid #ddd;
   z-index: 1;
 }
