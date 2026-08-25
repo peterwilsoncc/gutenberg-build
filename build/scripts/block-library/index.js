@@ -68855,6 +68855,14 @@ ${text}
         gradients: true,
         link: true
       },
+      spacing: {
+        padding: true,
+        margin: true,
+        __experimentalDefaultControls: {
+          margin: false,
+          padding: false
+        }
+      },
       typography: {
         fontSize: true,
         lineHeight: true,
@@ -68870,8 +68878,15 @@ ${text}
       },
       interactivity: {
         clientNavigation: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
       }
-    }
+    },
+    style: "wp-block-query-no-results"
   };
 
   // packages/block-library/build-module/query-no-results/edit.mjs

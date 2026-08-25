@@ -6785,6 +6785,14 @@ return array(
 				'gradients' => true,
 				'link' => true
 			),
+			'spacing' => array(
+				'padding' => true,
+				'margin' => true,
+				'__experimentalDefaultControls' => array(
+					'margin' => false,
+					'padding' => false
+				)
+			),
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
@@ -6800,8 +6808,15 @@ return array(
 			),
 			'interactivity' => array(
 				'clientNavigation' => true
+			),
+			'__experimentalBorder' => array(
+				'radius' => true,
+				'color' => true,
+				'width' => true,
+				'style' => true
 			)
-		)
+		),
+		'style' => 'wp-block-query-no-results'
 	),
 	'query-pagination' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',

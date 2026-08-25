@@ -4222,6 +4222,10 @@ p.has-text-align-left[style*="writing-mode:vertical-lr"] {
   margin-inline-end: auto;
 }
 
+:where(.wp-block-query-no-results) {
+  box-sizing: border-box;
+}
+
 .wp-block-query-pagination.is-content-justification-space-between > .wp-block-query-pagination-next:last-of-type {
   margin-inline-start: auto;
 }
