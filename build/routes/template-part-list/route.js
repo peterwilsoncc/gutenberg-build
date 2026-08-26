@@ -216,22 +216,7 @@ async function ensureView(area, search) {
   });
 }
 function viewToQuery(view) {
-  const result = {};
-  if (void 0 !== view.perPage) {
-    result.per_page = view.perPage;
-  }
-  if (void 0 !== view.page) {
-    result.page = view.page;
-  }
-  if (![void 0, ""].includes(view.search)) {
-    result.search = view.search;
-  }
-  if (void 0 !== view.sort?.field) {
-    result.orderby = view.sort.field;
-  }
-  if (void 0 !== view.sort?.direction) {
-    result.order = view.sort.direction;
-  }
+  const result = { per_page: -1 };
   const areaFilter = view.filters?.find(
     (filter) => filter.field === "area"
   );
@@ -272,7 +257,7 @@ var route = {
     const posts = await (0, import_data4.resolveSelect)(import_core_data2.store).getEntityRecords(
       "postType",
       "wp_template_part",
-      { ...query, per_page: 1 }
+      query
     );
     if (posts && posts.length > 0) {
       const postId = posts[0].id.toString();

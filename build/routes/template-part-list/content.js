@@ -758,15 +758,15 @@ var require_remove_accents = __commonJS({
     function matcher(match2) {
       return characterMap[match2];
     }
-    var removeAccents2 = function(string) {
+    var removeAccents3 = function(string) {
       return string.replace(allAccents, matcher);
     };
     var hasAccents = function(string) {
       return !!string.match(firstAccent);
     };
-    module.exports = removeAccents2;
+    module.exports = removeAccents3;
     module.exports.has = hasAccents;
-    module.exports.remove = removeAccents2;
+    module.exports.remove = removeAccents3;
   }
 });
 
@@ -830,6 +830,13 @@ var require_es6 = __commonJS({
 var require_date = __commonJS({
   "package-external:@wordpress/date"(exports, module) {
     module.exports = window.wp.date;
+  }
+});
+
+// package-external:@wordpress/deprecated
+var require_deprecated = __commonJS({
+  "package-external:@wordpress/deprecated"(exports, module) {
+    module.exports = window.wp.deprecated;
   }
 });
 
@@ -44040,6 +44047,102 @@ DataViewsSubComponents.ViewConfig = DataviewsViewConfigDropdown;
 DataViewsSubComponents.Footer = DataViewsFooter;
 var dataviews_default = DataViewsSubComponents;
 
+// packages/dataviews/build-module/utils/filter-sort-and-paginate.mjs
+var import_remove_accents2 = __toESM(require_remove_accents(), 1);
+var import_deprecated = __toESM(require_deprecated(), 1);
+function normalizeSearchInput2(input = "") {
+  return (0, import_remove_accents2.default)(input.trim().toLowerCase());
+}
+var EMPTY_ARRAY7 = [];
+function filterSortAndPaginate(data, view, fields) {
+  if (!data) {
+    return {
+      data: EMPTY_ARRAY7,
+      paginationInfo: { totalItems: 0, totalPages: 0 }
+    };
+  }
+  const _fields = normalizeFields(fields);
+  let filteredData = [...data];
+  if (view.search) {
+    const normalizedSearch = normalizeSearchInput2(view.search);
+    filteredData = filteredData.filter((item) => {
+      return _fields.filter((field) => field.enableGlobalSearch).some((field) => {
+        const fieldValue = field.getValue({ item });
+        const values = Array.isArray(fieldValue) ? fieldValue : [fieldValue];
+        return values.some(
+          (value) => normalizeSearchInput2(String(value)).includes(
+            normalizedSearch
+          )
+        );
+      });
+    });
+  }
+  if (view.filters && view.filters?.length > 0) {
+    view.filters.forEach((filter) => {
+      const field = _fields.find(
+        (_field) => _field.id === filter.field
+      );
+      if (field) {
+        if (filter.operator === OPERATOR_IS_NOT_ALL) {
+          (0, import_deprecated.default)("The 'isNotAll' filter operator", {
+            since: "7.0",
+            alternative: "'isNone'"
+          });
+        }
+        const handler = field.filter[filter.operator];
+        if (handler) {
+          filteredData = filteredData.filter(
+            (item) => handler(item, field, filter.value)
+          );
+        }
+      }
+    });
+  }
+  const sortByField = view.sort?.field ? _fields.find((field) => {
+    return field.enableSorting !== false && field.id === view.sort?.field;
+  }) : null;
+  const groupByField = view.groupBy?.field ? _fields.find((field) => {
+    return field.enableSorting !== false && field.id === view.groupBy?.field;
+  }) : null;
+  if (sortByField || groupByField) {
+    filteredData.sort((a2, b2) => {
+      if (groupByField) {
+        const groupCompare = groupByField.sort(
+          a2,
+          b2,
+          view.groupBy?.direction ?? "asc"
+        );
+        if (groupCompare !== 0) {
+          return groupCompare;
+        }
+      }
+      if (sortByField) {
+        return sortByField.sort(a2, b2, view.sort?.direction ?? "desc");
+      }
+      return 0;
+    });
+  }
+  let totalItems = filteredData.length;
+  let totalPages = 1;
+  if (view.infiniteScrollEnabled && view.startPosition !== void 0 && view.perPage !== void 0) {
+    const start = view.startPosition - 1;
+    const end = Math.min(start + view.perPage, totalItems);
+    filteredData = filteredData?.slice(start, end);
+  } else if (view.page !== void 0 && view.perPage !== void 0) {
+    const start = (view.page - 1) * view.perPage;
+    totalItems = filteredData?.length || 0;
+    totalPages = Math.ceil(totalItems / view.perPage);
+    filteredData = filteredData?.slice(start, start + view.perPage);
+  }
+  return {
+    data: filteredData,
+    paginationInfo: {
+      totalItems,
+      totalPages
+    }
+  };
+}
+
 // packages/admin-ui/build-module/navigable-region/index.mjs
 var import_element137 = __toESM(require_element(), 1);
 var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
@@ -44556,14 +44659,14 @@ var import_blocks = __toESM(require_blocks(), 1);
 // packages/fields/build-module/components/create-template-part-modal/utils.mjs
 var import_data9 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
-var EMPTY_ARRAY7 = [];
+var EMPTY_ARRAY8 = [];
 function useExistingTemplateParts() {
   return (0, import_data9.useSelect)(
     (select2) => select2(import_core_data2.store).getEntityRecords(
       "postType",
       "wp_template_part",
       { per_page: -1 }
-    ) ?? EMPTY_ARRAY7,
+    ) ?? EMPTY_ARRAY8,
     []
   );
 }
@@ -44857,22 +44960,7 @@ function getActiveViewOverridesForTab(area) {
   };
 }
 function viewToQuery(view) {
-  const result = {};
-  if (void 0 !== view.perPage) {
-    result.per_page = view.perPage;
-  }
-  if (void 0 !== view.page) {
-    result.page = view.page;
-  }
-  if (![void 0, ""].includes(view.search)) {
-    result.search = view.search;
-  }
-  if (void 0 !== view.sort?.field) {
-    result.orderby = view.sort.field;
-  }
-  if (void 0 !== view.sort?.direction) {
-    result.order = view.sort.direction;
-  }
+  const result = { per_page: -1 };
   const areaFilter = view.filters?.find(
     (filter) => filter.field === "area"
   );
@@ -44976,12 +45064,7 @@ function TemplatePartList() {
     }
   };
   const postTypeQuery = (0, import_element139.useMemo)(() => viewToQuery(view), [view]);
-  const {
-    records: posts,
-    totalItems,
-    totalPages,
-    isResolving
-  } = useEntityRecordsWithPermissions(
+  const { records, isResolving } = useEntityRecordsWithPermissions(
     "postType",
     "wp_template_part",
     postTypeQuery
@@ -45007,6 +45090,9 @@ function TemplatePartList() {
       })
     );
   }, [allFields, area]);
+  const { data: posts, paginationInfo } = (0, import_element139.useMemo)(() => {
+    return filterSortAndPaginate(records, view, fields);
+  }, [records, view, fields]);
   const cleanupDeletedPostIdsFromUrl = (0, import_element139.useCallback)(
     (deletedItems) => {
       const deletedIds = deletedItems.map(
@@ -45112,10 +45198,7 @@ function TemplatePartList() {
             onChangeView,
             actions,
             isLoading: isResolving,
-            paginationInfo: {
-              totalItems,
-              totalPages
-            },
+            paginationInfo,
             getItemId,
             selection,
             onReset: isModified ? onReset : false,
