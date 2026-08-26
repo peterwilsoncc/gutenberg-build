@@ -48695,10 +48695,7 @@ function QuickDraft() {
     {
       ref,
       direction: listBeside ? "row" : "column",
-      className: clsx_default(
-        style_default45.body,
-        listBeside ? style_default45.row : style_default45.column
-      ),
+      className: clsx_default(style_default45.body, listBeside && style_default45.row),
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Stack, { direction: "column", className: style_default45.primaryPane, children: primary }),
         /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Stack, { direction: "column", className: style_default45.listPane, children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(DraftsList, {}) })
