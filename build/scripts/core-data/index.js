@@ -731,6 +731,16 @@ var wp;
     }
   }
 
+  // packages/core-data/build-module/utils/get-pagination-meta.mjs
+  function getPaginationMeta(headers) {
+    const totalItems = parseInt(headers.get("X-WP-Total") ?? "");
+    const totalPages = parseInt(headers.get("X-WP-TotalPages") ?? "");
+    return {
+      totalItems: Number.isFinite(totalItems) ? totalItems : null,
+      totalPages: Number.isFinite(totalPages) ? totalPages : null
+    };
+  }
+
   // packages/core-data/build-module/queried-data/actions.mjs
   function receiveItems(items2, edits, meta) {
     return {
@@ -3500,7 +3510,11 @@ var wp;
         getTitle: (record) => record?.title?.rendered || record?.title || (isTemplate ? capitalCase(record.slug ?? "") : String(record.id)),
         __unstablePrePersist: (persistedRecord, edits) => prePersistPostType(persistedRecord, edits, name, isTemplate),
         __unstable_rest_base: postType.rest_base,
-        supportsPagination: true,
+        // The templates controller returns the whole collection and never
+        // paginates. It serves `wp_template_part` always, and `wp_template`
+        // until the template activate experiment moves it to a posts
+        // controller.
+        supportsPagination: window?.__experimentalTemplateActivate ? name !== "wp_template_part" : !isTemplate,
         getRevisionsUrl: (parentId, revisionId) => `/${namespace}/${postType.rest_base}/${parentId}/revisions${revisionId ? "/" + revisionId : ""}`,
         revisionKey: isTemplate && !window?.__experimentalTemplateActivate ? "wp_id" : DEFAULT_ENTITY_KEY
       };
@@ -6799,14 +6813,7 @@ var wp;
       if (entityConfig.supportsPagination && query.per_page !== -1) {
         const response = await (0, import_api_fetch9.default)({ path, parse: false });
         records = Object.values(await response.json());
-        meta = {
-          totalItems: parseInt(
-            response.headers.get("X-WP-Total")
-          ),
-          totalPages: parseInt(
-            response.headers.get("X-WP-TotalPages")
-          )
-        };
+        meta = getPaginationMeta(response.headers);
       } else if (query.per_page === -1 && query[RECEIVE_INTERMEDIATE_RESULTS] === true) {
         let page = 1;
         let totalPages;
@@ -6816,14 +6823,11 @@ var wp;
             parse: false
           });
           const pageRecords = Object.values(await response.json());
-          totalPages = parseInt(
-            response.headers.get("X-WP-TotalPages")
-          );
+          const pageMeta = getPaginationMeta(response.headers);
+          totalPages = pageMeta.totalPages ?? 1;
           if (!meta) {
             meta = {
-              totalItems: parseInt(
-                response.headers.get("X-WP-Total")
-              ),
+              totalItems: pageMeta.totalItems,
               totalPages: 1
             };
           }
@@ -7241,9 +7245,9 @@ var wp;
       if (response) {
         if (isPaginated) {
           records = Object.values(await response.json());
-          meta.totalItems = parseInt(
-            response.headers.get("X-WP-Total")
-          );
+          meta.totalItems = getPaginationMeta(
+            response.headers
+          ).totalItems;
         } else {
           records = Object.values(response);
         }
