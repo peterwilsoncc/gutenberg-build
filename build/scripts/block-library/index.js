@@ -26580,7 +26580,7 @@ var wp;
                       value: overlayColor.color,
                       onChange: onSetOverlayColor,
                       clearable: false,
-                      asButtons: true,
+                      presentation: "toggle-buttons",
                       "aria-label": (0, import_i18n56.__)("Overlay color")
                     }
                   ) })

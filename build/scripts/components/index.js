@@ -33449,7 +33449,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/circular-option-picker/circular-option-picker.mjs
   var import_compose33 = __toESM(require_compose(), 1);
-  var import_i18n17 = __toESM(require_i18n(), 1);
+  var import_i18n18 = __toESM(require_i18n(), 1);
   var import_element78 = __toESM(require_element(), 1);
 
   // packages/components/build-module/circular-option-picker/circular-option-picker-context.mjs
@@ -33514,7 +33514,7 @@ This message will only show in development mode. It won't appear in production. 
   }) {
     const {
       baseId,
-      setActiveId
+      presentation = "toggle-buttons"
     } = (0, import_element77.useContext)(CircularOptionPickerContext);
     const id3 = (0, import_compose32.useInstanceId)(Option, baseId || "components-circular-option-picker__option");
     const commonProps = {
@@ -33522,19 +33522,18 @@ This message will only show in development mode. It won't appear in production. 
       className: "components-circular-option-picker__option",
       ...additionalProps
     };
-    const isListbox = setActiveId !== void 0;
-    const optionControl = isListbox ? /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(OptionAsOption, {
+    const optionControl = presentation === "listbox" ? /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(OptionAsOption, {
       ...commonProps,
       label: tooltipText,
       isSelected: isSelected2
     }) : /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(OptionAsButton, {
       ...commonProps,
       label: tooltipText,
-      isPressed: isSelected2
+      isPressed: presentation === "toggle-buttons" ? !!isSelected2 : void 0
     });
     return /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)("div", {
       className: clsx_default(className, "components-circular-option-picker__option-wrapper"),
-      children: [optionControl, isSelected2 && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(icon_default2, {
+      children: [optionControl, presentation !== "command-buttons" && isSelected2 && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(icon_default2, {
         icon: check_default,
         ...selectedIconProps
       })]
@@ -33595,6 +33594,41 @@ This message will only show in development mode. It won't appear in production. 
     });
   }
 
+  // packages/components/build-module/circular-option-picker/utils.mjs
+  var import_i18n17 = __toESM(require_i18n(), 1);
+  var import_deprecated8 = __toESM(require_deprecated(), 1);
+  function warnIfCircularOptionPickerAsButtonsIsSet(componentName, asButtons) {
+    if (asButtons === void 0) {
+      return;
+    }
+    (0, import_deprecated8.default)(`\`asButtons\` prop in wp.components.${componentName}`, {
+      since: "7.2",
+      alternative: "`presentation`",
+      hint: '`asButtons={ true }` maps to `presentation="toggle-buttons"`. Explicit `presentation` takes precedence.'
+    });
+  }
+  function resolveCircularOptionPickerPresentation(presentation, asButtons) {
+    return presentation ?? (asButtons ? "toggle-buttons" : "listbox");
+  }
+  function getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby, presentation) {
+    const resolvedPresentation = resolveCircularOptionPickerPresentation(presentation, asButtons);
+    const metaProps = resolvedPresentation === "listbox" ? {
+      presentation: "listbox",
+      loop
+    } : {
+      presentation: resolvedPresentation
+    };
+    const labelProps = {
+      "aria-labelledby": ariaLabelledby,
+      "aria-label": ariaLabelledby ? void 0 : ariaLabel || (0, import_i18n17.__)("Custom color picker")
+    };
+    return {
+      metaProps,
+      labelProps,
+      resolvedPresentation
+    };
+  }
+
   // packages/components/build-module/circular-option-picker/circular-option-picker.mjs
   var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
   function ListboxCircularOptionPicker(props) {
@@ -33611,7 +33645,8 @@ This message will only show in development mode. It won't appear in production. 
     const contextValue = (0, import_element78.useMemo)(() => ({
       baseId,
       activeId,
-      setActiveId
+      setActiveId,
+      presentation: "listbox"
     }), [baseId, activeId, setActiveId]);
     return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", {
       className,
@@ -33621,7 +33656,7 @@ This message will only show in development mode. It won't appear in production. 
           ...additionalProps,
           id: baseId,
           focusLoop: loop,
-          rtl: (0, import_i18n17.isRTL)(),
+          rtl: (0, import_i18n18.isRTL)(),
           role: "listbox",
           activeId,
           setActiveId,
@@ -33636,11 +33671,13 @@ This message will only show in development mode. It won't appear in production. 
       options: options2,
       children,
       baseId,
+      presentation,
       ...additionalProps
     } = props;
     const contextValue = (0, import_element78.useMemo)(() => ({
-      baseId
-    }), [baseId]);
+      baseId,
+      presentation
+    }), [baseId, presentation]);
     return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", {
       ...additionalProps,
       role: "group",
@@ -33654,14 +33691,17 @@ This message will only show in development mode. It won't appear in production. 
   function CircularOptionPicker(props) {
     const {
       asButtons,
+      presentation,
+      loop,
       actions: actionsProp,
       options: optionsProp,
       children,
       className,
       ...additionalProps
     } = props;
+    warnIfCircularOptionPickerAsButtonsIsSet("CircularOptionPicker", asButtons);
+    const resolvedPresentation = resolveCircularOptionPickerPresentation(presentation, asButtons);
     const baseId = (0, import_compose33.useInstanceId)(CircularOptionPicker, "components-circular-option-picker", additionalProps.id);
-    const OptionPickerImplementation = asButtons ? ButtonsCircularOptionPicker : ListboxCircularOptionPicker;
     const actions = actionsProp ? /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", {
       className: "components-circular-option-picker__custom-clear-wrapper",
       children: actionsProp
@@ -33670,13 +33710,24 @@ This message will only show in development mode. It won't appear in production. 
       className: "components-circular-option-picker__swatches",
       children: optionsProp
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(OptionPickerImplementation, {
-      ...additionalProps,
+    const sharedProps = {
       baseId,
       className: clsx_default("components-circular-option-picker", className),
       actions,
       options: options2,
       children
+    };
+    if (resolvedPresentation === "listbox") {
+      return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(ListboxCircularOptionPicker, {
+        ...additionalProps,
+        ...sharedProps,
+        loop
+      });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(ButtonsCircularOptionPicker, {
+      ...additionalProps,
+      ...sharedProps,
+      presentation: resolvedPresentation
     });
   }
   CircularOptionPicker.Option = Option;
@@ -33685,25 +33736,6 @@ This message will only show in development mode. It won't appear in production. 
   CircularOptionPicker.DropdownLinkAction = DropdownLinkAction;
   CircularOptionPicker.displayName = "CircularOptionPicker";
   var circular_option_picker_default = CircularOptionPicker;
-
-  // packages/components/build-module/circular-option-picker/utils.mjs
-  var import_i18n18 = __toESM(require_i18n(), 1);
-  function getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby) {
-    const metaProps = asButtons ? {
-      asButtons: true
-    } : {
-      asButtons: false,
-      loop
-    };
-    const labelProps = {
-      "aria-labelledby": ariaLabelledby,
-      "aria-label": ariaLabelledby ? void 0 : ariaLabel || (0, import_i18n18.__)("Custom color picker")
-    };
-    return {
-      metaProps,
-      labelProps
-    };
-  }
 
   // packages/components/build-module/circular-option-picker/index.mjs
   var circular_option_picker_default2 = circular_option_picker_default;
@@ -34023,6 +34055,7 @@ This message will only show in development mode. It won't appear in production. 
     onChange,
     value,
     selectedSlug,
+    presentation,
     ...additionalProps
   }) {
     const colorOptions = (0, import_element79.useMemo)(() => {
@@ -34032,7 +34065,7 @@ This message will only show in development mode. It won't appear in production. 
         slug
       }, index2) => {
         const colordColor = w(color2);
-        const isSelected2 = selectedSlug ? slug === selectedSlug : value === color2;
+        const isSelected2 = presentation !== "command-buttons" && (selectedSlug ? slug === selectedSlug : value === color2);
         return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(circular_option_picker_default2.Option, {
           isSelected: isSelected2,
           selectedIconProps: isSelected2 ? {
@@ -34047,7 +34080,7 @@ This message will only show in development mode. It won't appear in production. 
           onClick: isSelected2 ? clearColor : () => onChange(color2, index2, slug)
         }, slug ?? `${color2}-${index2}`);
       });
-    }, [colors, value, selectedSlug, onChange, clearColor]);
+    }, [colors, value, selectedSlug, onChange, clearColor, presentation]);
     return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(circular_option_picker_default2.OptionGroup, {
       className,
       options: colorOptions,
@@ -34061,7 +34094,8 @@ This message will only show in development mode. It won't appear in production. 
     onChange,
     value,
     selectedSlug,
-    headingLevel
+    headingLevel,
+    presentation
   }) {
     const instanceId = (0, import_compose34.useInstanceId)(MultiplePalettes, "color-palette");
     if (colors.length === 0) {
@@ -34088,6 +34122,7 @@ This message will only show in development mode. It won't appear in production. 
             onChange: (newColor, _colorIndex, slug) => onChange(newColor, index2, slug),
             value,
             selectedSlug,
+            presentation,
             "aria-labelledby": id3
           })]
         }, index2);
@@ -34126,6 +34161,7 @@ This message will only show in development mode. It won't appear in production. 
   function UnforwardedColorPalette(props, forwardedRef) {
     const {
       asButtons,
+      presentation,
       loop,
       clearable = true,
       colors = [],
@@ -34140,6 +34176,7 @@ This message will only show in development mode. It won't appear in production. 
       "aria-labelledby": ariaLabelledby,
       ...additionalProps
     } = props;
+    warnIfCircularOptionPickerAsButtonsIsSet("ColorPalette", asButtons);
     const [normalizedColorValue, setNormalizedColorValue] = (0, import_element79.useState)(value);
     const clearColor = (0, import_element79.useCallback)(() => onChange(void 0), [onChange]);
     const customColorPaletteCallbackRef = (0, import_element79.useCallback)((node2) => {
@@ -34163,11 +34200,17 @@ This message will only show in development mode. It won't appear in production. 
       buttonLabelName,
       displayValue
     ) : (0, import_i18n20.__)("Custom color picker");
+    const {
+      metaProps,
+      labelProps,
+      resolvedPresentation
+    } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby, presentation);
     const paletteCommonProps = {
       clearColor,
       onChange,
       value,
-      selectedSlug
+      selectedSlug,
+      presentation: resolvedPresentation
     };
     const actions = !!clearable && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(circular_option_picker_default2.ButtonAction, {
       onClick: clearColor,
@@ -34175,10 +34218,6 @@ This message will only show in development mode. It won't appear in production. 
       disabled: !value,
       children: (0, import_i18n20.__)("Clear")
     });
-    const {
-      metaProps,
-      labelProps
-    } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
     if (disableCustomColors && colors.length === 0 && !actions) {
       return null;
     }
@@ -34824,7 +34863,7 @@ This message will only show in development mode. It won't appear in production. 
   var component_default20 = ConnectedBorderControlDropdown;
 
   // packages/components/build-module/unit-control/index.mjs
-  var import_deprecated8 = __toESM(require_deprecated(), 1);
+  var import_deprecated9 = __toESM(require_deprecated(), 1);
   var import_element81 = __toESM(require_element(), 1);
   var import_i18n23 = __toESM(require_i18n(), 1);
 
@@ -34940,7 +34979,7 @@ This message will only show in development mode. It won't appear in production. 
       ...props
     } = unitControlProps;
     if ("unit" in unitControlProps) {
-      (0, import_deprecated8.default)("UnitControl unit prop", {
+      (0, import_deprecated9.default)("UnitControl unit prop", {
         since: "5.6",
         hint: "The unit should be provided within the `value` prop.",
         version: "6.2"
@@ -36868,7 +36907,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/button-group/index.mjs
   var import_element89 = __toESM(require_element(), 1);
-  var import_deprecated9 = __toESM(require_deprecated(), 1);
+  var import_deprecated10 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime159 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedButtonGroup(props, ref) {
     const {
@@ -36878,7 +36917,7 @@ This message will only show in development mode. It won't appear in production. 
     } = props;
     const classes = clsx_default("components-button-group", className);
     if (!__shouldNotWarnDeprecated) {
-      (0, import_deprecated9.default)("wp.components.ButtonGroup", {
+      (0, import_deprecated10.default)("wp.components.ButtonGroup", {
         since: "6.8",
         alternative: "wp.components.__experimentalToggleGroupControl"
       });
@@ -37148,11 +37187,11 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/card/card/hook.mjs
-  var import_deprecated11 = __toESM(require_deprecated(), 1);
+  var import_deprecated12 = __toESM(require_deprecated(), 1);
   var import_element91 = __toESM(require_element(), 1);
 
   // packages/components/build-module/surface/component.mjs
-  var import_deprecated10 = __toESM(require_deprecated(), 1);
+  var import_deprecated11 = __toESM(require_deprecated(), 1);
 
   // packages/components/build-module/surface/hook.mjs
   var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
@@ -37270,7 +37309,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/surface/component.mjs
   var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedSurface(props, forwardedRef) {
-    (0, import_deprecated10.default)("wp.components.__experimentalSurface", {
+    (0, import_deprecated11.default)("wp.components.__experimentalSurface", {
       since: "7.2",
       version: "7.4"
     });
@@ -37294,7 +37333,7 @@ This message will only show in development mode. It won't appear in production. 
     };
     let computedElevation = elevation;
     if (isElevated) {
-      (0, import_deprecated11.default)("Card isElevated prop", {
+      (0, import_deprecated12.default)("Card isElevated prop", {
         since: "5.9",
         alternative: "elevation"
       });
@@ -37809,7 +37848,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/checkbox-control/index.mjs
   var import_element98 = __toESM(require_element(), 1);
   var import_compose39 = __toESM(require_compose(), 1);
-  var import_deprecated12 = __toESM(require_deprecated(), 1);
+  var import_deprecated13 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime170 = __toESM(require_jsx_runtime(), 1);
   function CheckboxControl(props) {
     const {
@@ -37827,7 +37866,7 @@ This message will only show in development mode. It won't appear in production. 
       ...additionalProps
     } = props;
     if (heading) {
-      (0, import_deprecated12.default)("`heading` prop in `CheckboxControl`", {
+      (0, import_deprecated13.default)("`heading` prop in `CheckboxControl`", {
         alternative: "a separate element to implement a heading",
         since: "5.8"
       });
@@ -37894,7 +37933,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/clipboard-button/index.mjs
   var import_element99 = __toESM(require_element(), 1);
   var import_compose40 = __toESM(require_compose(), 1);
-  var import_deprecated13 = __toESM(require_deprecated(), 1);
+  var import_deprecated14 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime171 = __toESM(require_jsx_runtime(), 1);
   var TIMEOUT = 4e3;
   function ClipboardButton({
@@ -37905,7 +37944,7 @@ This message will only show in development mode. It won't appear in production. 
     text,
     ...buttonProps
   }) {
-    (0, import_deprecated13.default)("wp.components.ClipboardButton", {
+    (0, import_deprecated14.default)("wp.components.ClipboardButton", {
       since: "5.8",
       alternative: "wp.compose.useCopyToClipboard"
     });
@@ -39167,6 +39206,7 @@ This message will only show in development mode. It won't appear in production. 
     onChange,
     value,
     selectedSlug,
+    presentation,
     ...additionalProps
   }) {
     const gradientOptions = (0, import_element104.useMemo)(() => {
@@ -39175,7 +39215,7 @@ This message will only show in development mode. It won't appear in production. 
         name,
         slug
       }, index2) => {
-        const isSelected2 = selectedSlug ? slug === selectedSlug : value === gradient;
+        const isSelected2 = presentation !== "command-buttons" && (selectedSlug ? slug === selectedSlug : value === gradient);
         return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(circular_option_picker_default2.Option, {
           value: gradient,
           isSelected: isSelected2,
@@ -39195,7 +39235,7 @@ This message will only show in development mode. It won't appear in production. 
           )
         }, slug);
       });
-    }, [gradients, value, onChange, clearGradient, selectedSlug]);
+    }, [gradients, value, onChange, clearGradient, selectedSlug, presentation]);
     return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(circular_option_picker_default2.OptionGroup, {
       className,
       options: gradientOptions,
@@ -39209,7 +39249,8 @@ This message will only show in development mode. It won't appear in production. 
     onChange,
     value,
     selectedSlug,
-    headingLevel
+    headingLevel,
+    presentation
   }) {
     const instanceId = (0, import_compose42.useInstanceId)(MultipleOrigin);
     return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(component_default18, {
@@ -39233,6 +39274,7 @@ This message will only show in development mode. It won't appear in production. 
             onChange: (gradient, _index, slug) => onChange(gradient, index2, slug),
             value,
             selectedSlug,
+            presentation,
             "aria-labelledby": id3
           })]
         }, index2);
@@ -39242,6 +39284,7 @@ This message will only show in development mode. It won't appear in production. 
   function Component3(props) {
     const {
       asButtons,
+      presentation,
       loop,
       actions,
       headingLevel,
@@ -39249,16 +39292,20 @@ This message will only show in development mode. It won't appear in production. 
       "aria-labelledby": ariaLabelledby,
       ...additionalProps
     } = props;
-    const options2 = isMultipleOriginArray(props.gradients) ? /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(MultipleOrigin, {
-      headingLevel,
-      ...additionalProps
-    }) : /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(SingleOrigin, {
-      ...additionalProps
-    });
+    warnIfCircularOptionPickerAsButtonsIsSet("GradientPicker", asButtons);
     const {
       metaProps,
-      labelProps
-    } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
+      labelProps,
+      resolvedPresentation
+    } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby, presentation);
+    const options2 = isMultipleOriginArray(props.gradients) ? /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(MultipleOrigin, {
+      headingLevel,
+      ...additionalProps,
+      presentation: resolvedPresentation
+    }) : /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(SingleOrigin, {
+      ...additionalProps,
+      presentation: resolvedPresentation
+    });
     return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(circular_option_picker_default2, {
       ...metaProps,
       ...labelProps,
@@ -39454,6 +39501,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
   function DuotonePicker({
     asButtons,
+    presentation,
     loop,
     clearable = true,
     unsetable = true,
@@ -39468,17 +39516,24 @@ This message will only show in development mode. It won't appear in production. 
     "aria-labelledby": ariaLabelledby,
     ...otherProps
   }) {
+    warnIfCircularOptionPickerAsButtonsIsSet("DuotonePicker", asButtons);
+    const {
+      metaProps,
+      labelProps,
+      resolvedPresentation
+    } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby, presentation);
     const [defaultDark, defaultLight] = (0, import_element106.useMemo)(() => getDefaultColors(colorPalette), [colorPalette]);
     const isUnset = value === "unset";
+    const isUnsetSelected = resolvedPresentation !== "command-buttons" && isUnset;
     const unsetOptionLabel = (0, import_i18n36.__)("Unset");
     const unsetOption = /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(circular_option_picker_default2.Option, {
       value: "unset",
-      isSelected: isUnset,
+      isSelected: isUnsetSelected,
       tooltipText: unsetOptionLabel,
       "aria-label": unsetOptionLabel,
       className: "components-duotone-picker__color-indicator",
       onClick: () => {
-        onChange(isUnset ? void 0 : "unset");
+        onChange(isUnsetSelected ? void 0 : "unset");
       }
     }, "unset");
     const duotoneOptions = duotonePalette.map(({
@@ -39500,7 +39555,7 @@ This message will only show in development mode. It won't appear in production. 
         (0, import_i18n36.__)("Duotone: %s"),
         name
       ) : tooltipText;
-      const isSelected2 = selectedSlug ? slug === selectedSlug : (0, import_es62.default)(colors, value);
+      const isSelected2 = resolvedPresentation !== "command-buttons" && (selectedSlug ? slug === selectedSlug : (0, import_es62.default)(colors, value));
       return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(circular_option_picker_default2.Option, {
         value: colors,
         isSelected: isSelected2,
@@ -39516,10 +39571,6 @@ This message will only show in development mode. It won't appear in production. 
         )
       }, slug);
     });
-    const {
-      metaProps,
-      labelProps
-    } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
     const options2 = unsetable ? [unsetOption, ...duotoneOptions] : duotoneOptions;
     return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(circular_option_picker_default2, {
       ...otherProps,
@@ -40479,12 +40530,14 @@ This message will only show in development mode. It won't appear in production. 
           element: elements2[editingElement ?? -1],
           popoverProps
         }), !isEditing && variant === "gradient" && /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(gradient_picker_default, {
+          presentation: "command-buttons",
           "aria-labelledby": paletteLabelId,
           gradients,
           onChange: onSelectPaletteItem,
           clearable: false,
           disableCustomGradients: true
         }), !isEditing && variant === "duotone" && /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(duotone_picker_default, {
+          presentation: "command-buttons",
           "aria-labelledby": paletteLabelId,
           duotonePalette: duotones ?? [],
           colorPalette: duotoneColorPalette,
@@ -40494,6 +40547,7 @@ This message will only show in development mode. It won't appear in production. 
           disableCustomDuotone: true,
           disableCustomColors: true
         }), !isEditing && variant === "color" && /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(color_palette_default, {
+          presentation: "command-buttons",
           "aria-labelledby": paletteLabelId,
           colors,
           onChange: onSelectPaletteItem,
@@ -41106,7 +41160,7 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/composite/legacy/index.mjs
   var import_element115 = __toESM(require_element(), 1);
   var import_compose49 = __toESM(require_compose(), 1);
-  var import_deprecated14 = __toESM(require_deprecated(), 1);
+  var import_deprecated15 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
   function mapLegacyStatePropsToComponentProps(legacyProps) {
     if (legacyProps.state) {
@@ -41135,7 +41189,7 @@ This message will only show in development mode. It won't appear in production. 
   function proxyComposite(ProxiedComponent, propMap = {}) {
     const displayName = ProxiedComponent.displayName ?? "";
     const Component7 = (legacyProps) => {
-      (0, import_deprecated14.default)(`wp.components.${displayName}`, {
+      (0, import_deprecated15.default)(`wp.components.${displayName}`, {
         since: "6.7",
         alternative: LEGACY_TO_NEW_DISPLAY_NAME.hasOwnProperty(displayName) ? LEGACY_TO_NEW_DISPLAY_NAME[displayName] : void 0
       });
@@ -41190,7 +41244,7 @@ This message will only show in development mode. It won't appear in production. 
     focusable: "accessibleWhenDisabled"
   });
   function useCompositeState(legacyStateOptions = {}) {
-    (0, import_deprecated14.default)(`wp.components.__unstableUseCompositeState`, {
+    (0, import_deprecated15.default)(`wp.components.__unstableUseCompositeState`, {
       since: "6.7",
       alternative: LEGACY_TO_NEW_DISPLAY_NAME.__unstableUseCompositeState
     });
@@ -44978,11 +45032,11 @@ This message will only show in development mode. It won't appear in production. 
   var drop_zone_default = DropZoneComponent;
 
   // packages/components/build-module/drop-zone/provider.mjs
-  var import_deprecated15 = __toESM(require_deprecated(), 1);
+  var import_deprecated16 = __toESM(require_deprecated(), 1);
   function DropZoneProvider({
     children
   }) {
-    (0, import_deprecated15.default)("wp.components.DropZoneProvider", {
+    (0, import_deprecated16.default)("wp.components.DropZoneProvider", {
       since: "5.8",
       hint: "wp.component.DropZone no longer needs a provider. wp.components.DropZoneProvider is safe to remove from your code."
     });
@@ -45556,14 +45610,14 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/focusable-iframe/index.mjs
   var import_compose56 = __toESM(require_compose(), 1);
-  var import_deprecated16 = __toESM(require_deprecated(), 1);
+  var import_deprecated17 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime217 = __toESM(require_jsx_runtime(), 1);
   function FocusableIframe({
     iframeRef,
     ...props
   }) {
     const ref = (0, import_compose56.useMergeRefs)([iframeRef, (0, import_compose56.useFocusableIframe)()]);
-    (0, import_deprecated16.default)("wp.components.FocusableIframe", {
+    (0, import_deprecated17.default)("wp.components.FocusableIframe", {
       since: "5.9",
       alternative: "wp.compose.useFocusableIframe"
     });
@@ -46021,7 +46075,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_compose59 = __toESM(require_compose(), 1);
   var import_a11y6 = __toESM(require_a11y(), 1);
   var import_is_shallow_equal2 = __toESM(require_is_shallow_equal(), 1);
-  var import_deprecated17 = __toESM(require_deprecated(), 1);
+  var import_deprecated18 = __toESM(require_deprecated(), 1);
   var import_keycodes5 = __toESM(require_keycodes(), 1);
 
   // packages/components/build-module/form-token-field/token.mjs
@@ -46210,7 +46264,7 @@ This message will only show in development mode. It won't appear in production. 
     const defaultHelp = tokenizeOnSpace ? (0, import_i18n58.__)("Separate with commas, spaces, or the Enter key.") : (0, import_i18n58.__)("Separate with commas or the Enter key.");
     let computedHelp = help !== void 0 ? help : defaultHelp;
     if (typeof __experimentalShowHowTo === "boolean") {
-      (0, import_deprecated17.default)("`__experimentalShowHowTo` prop in wp.components.FormTokenField", {
+      (0, import_deprecated18.default)("`__experimentalShowHowTo` prop in wp.components.FormTokenField", {
         since: "7.1",
         alternative: "`help` prop",
         hint: "The `help` prop now defaults to the previous how-to text. Pass an empty string to hide it."
@@ -46721,7 +46775,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/guide/index.mjs
   var import_element141 = __toESM(require_element(), 1);
-  var import_deprecated18 = __toESM(require_deprecated(), 1);
+  var import_deprecated19 = __toESM(require_deprecated(), 1);
   var import_i18n60 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/guide/page-control.mjs
@@ -46794,7 +46848,7 @@ This message will only show in development mode. It won't appear in production. 
     }, [currentPage]);
     (0, import_element141.useEffect)(() => {
       if (import_element141.Children.count(children)) {
-        (0, import_deprecated18.default)("Passing children to <Guide>", {
+        (0, import_deprecated19.default)("Passing children to <Guide>", {
           since: "5.5",
           alternative: "the `pages` prop"
         });
@@ -46873,11 +46927,11 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/guide/page.mjs
   var import_element142 = __toESM(require_element(), 1);
-  var import_deprecated19 = __toESM(require_deprecated(), 1);
+  var import_deprecated20 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
   function GuidePage(props) {
     (0, import_element142.useEffect)(() => {
-      (0, import_deprecated19.default)("<GuidePage>", {
+      (0, import_deprecated20.default)("<GuidePage>", {
         since: "5.5",
         alternative: "the `pages` prop in <Guide>"
       });
@@ -46888,7 +46942,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/button/deprecated.mjs
-  var import_deprecated20 = __toESM(require_deprecated(), 1);
+  var import_deprecated21 = __toESM(require_deprecated(), 1);
   var import_element143 = __toESM(require_element(), 1);
   var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedIconButton({
@@ -46898,7 +46952,7 @@ This message will only show in development mode. It won't appear in production. 
     tooltip,
     ...props
   }, ref) {
-    (0, import_deprecated20.default)("wp.components.IconButton", {
+    (0, import_deprecated21.default)("wp.components.IconButton", {
       since: "5.4",
       alternative: "wp.components.Button",
       version: "6.2"
@@ -47094,7 +47148,7 @@ This message will only show in development mode. It won't appear in production. 
   var menu_items_choice_default = MenuItemsChoice;
 
   // packages/components/build-module/navigator/navigator/component.mjs
-  var import_deprecated21 = __toESM(require_deprecated(), 1);
+  var import_deprecated22 = __toESM(require_deprecated(), 1);
   var import_element148 = __toESM(require_element(), 1);
   var import_is_shallow_equal3 = __toESM(require_is_shallow_equal(), 1);
   var import_warning7 = __toESM(require_warning(), 1);
@@ -47728,7 +47782,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         options: options2
       }),
       goToParent: (options2) => {
-        (0, import_deprecated21.default)(`wp.components.useNavigator().goToParent`, {
+        (0, import_deprecated22.default)(`wp.components.useNavigator().goToParent`, {
           since: "6.7",
           alternative: "wp.components.useNavigator().goBack"
         });
@@ -48035,10 +48089,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var NavigatorBackButton = contextConnect(UnconnectedNavigatorBackButton, "Navigator.BackButton");
 
   // packages/components/build-module/navigator/navigator-to-parent-button/component.mjs
-  var import_deprecated22 = __toESM(require_deprecated(), 1);
+  var import_deprecated23 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedNavigatorToParentButton(props, forwardedRef) {
-    (0, import_deprecated22.default)("wp.components.NavigatorToParentButton", {
+    (0, import_deprecated23.default)("wp.components.NavigatorToParentButton", {
       since: "6.7",
       alternative: "wp.components.Navigator.BackButton"
     });
@@ -48904,7 +48958,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var radio_default = Radio22;
 
   // packages/components/build-module/radio-group/index.mjs
-  var import_deprecated23 = __toESM(require_deprecated(), 1);
+  var import_deprecated24 = __toESM(require_deprecated(), 1);
   var import_element164 = __toESM(require_element(), 1);
   var import_i18n65 = __toESM(require_i18n(), 1);
   var import_jsx_runtime252 = __toESM(require_jsx_runtime(), 1);
@@ -48929,7 +48983,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       store: radioStore,
       disabled
     }), [radioStore, disabled]);
-    (0, import_deprecated23.default)("wp.components.__experimentalRadioGroup", {
+    (0, import_deprecated24.default)("wp.components.__experimentalRadioGroup", {
       alternative: "wp.components.RadioControl or wp.components.__experimentalToggleGroupControl",
       since: "6.8"
     });
@@ -50691,7 +50745,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_compose69 = __toESM(require_compose(), 1);
   var import_i18n67 = __toESM(require_i18n(), 1);
   var import_element171 = __toESM(require_element(), 1);
-  var import_deprecated24 = __toESM(require_deprecated(), 1);
+  var import_deprecated25 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE40 = "data-wp-hash";
   function getRuntime40() {
@@ -50778,7 +50832,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     onClose
   }) {
     if (onClose) {
-      (0, import_deprecated24.default)("`onClose` prop in wp.components.SearchControl", {
+      (0, import_deprecated25.default)("`onClose` prop in wp.components.SearchControl", {
         since: "6.8"
       });
     }
@@ -51447,7 +51501,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toolbar/toolbar/index.mjs
   var import_element185 = __toESM(require_element(), 1);
-  var import_deprecated25 = __toESM(require_deprecated(), 1);
+  var import_deprecated26 = __toESM(require_deprecated(), 1);
 
   // packages/components/build-module/toolbar/toolbar-group/index.mjs
   var import_element183 = __toESM(require_element(), 1);
@@ -51730,7 +51784,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       };
     }, [isVariantDefined]);
     if (!label) {
-      (0, import_deprecated25.default)("Using Toolbar without label prop", {
+      (0, import_deprecated26.default)("Using Toolbar without label prop", {
         since: "5.6",
         alternative: "ToolbarGroup component",
         link: "https://developer.wordpress.org/block-editor/components/toolbar/"
@@ -53062,13 +53116,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/isolated-event-container/index.mjs
   var import_element197 = __toESM(require_element(), 1);
-  var import_deprecated26 = __toESM(require_deprecated(), 1);
+  var import_deprecated27 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
   function stopPropagation(event) {
     event.stopPropagation();
   }
   var IsolatedEventContainer = (0, import_element197.forwardRef)((props, ref) => {
-    (0, import_deprecated26.default)("wp.components.IsolatedEventContainer", {
+    (0, import_deprecated27.default)("wp.components.IsolatedEventContainer", {
       since: "5.7"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)("div", {
@@ -53386,7 +53440,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-focus-return/index.mjs
   var import_element202 = __toESM(require_element(), 1);
   var import_compose80 = __toESM(require_compose(), 1);
-  var import_deprecated27 = __toESM(require_deprecated(), 1);
+  var import_deprecated28 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
   function isComponentLike(object) {
     return object instanceof import_element202.Component || typeof object === "function";
@@ -53419,7 +53473,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var Provider3 = ({
     children
   }) => {
-    (0, import_deprecated27.default)("wp.components.FocusReturnProvider component", {
+    (0, import_deprecated28.default)("wp.components.FocusReturnProvider component", {
       since: "5.7",
       hint: "This provider is not used anymore. You can just remove it from your codebase"
     });
@@ -54530,7 +54584,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/input-control.mjs
   var import_element224 = __toESM(require_element(), 1);
   var import_compose86 = __toESM(require_compose(), 1);
-  var import_deprecated28 = __toESM(require_deprecated(), 1);
+  var import_deprecated29 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedInputControl = ({
     required,
@@ -54538,7 +54592,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    (0, import_deprecated28.default)("wp.components.privateApis.ValidatedInputControl", {
+    (0, import_deprecated29.default)("wp.components.privateApis.ValidatedInputControl", {
       since: "7.2",
       alternative: "ValidatedInputControl from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
@@ -54742,7 +54796,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
   var import_element227 = __toESM(require_element(), 1);
   var import_compose88 = __toESM(require_compose(), 1);
-  var import_deprecated29 = __toESM(require_deprecated(), 1);
+  var import_deprecated30 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
     required,
@@ -54750,7 +54804,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    (0, import_deprecated29.default)("wp.components.privateApis.ValidatedTextareaControl", {
+    (0, import_deprecated30.default)("wp.components.privateApis.ValidatedTextareaControl", {
       since: "7.2",
       alternative: "ValidatedTextareaControl from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
