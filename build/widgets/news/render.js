@@ -44412,9 +44412,9 @@ function registerStyle43(hash, css) {
 
 // widgets/news/components/news-list/news-list.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle43("9549c96cba", ".bdaa5dfae93273b5__root{flex:1;min-height:0;min-width:0;overflow:auto}._2861fc2db3e2384a__feedIcon{align-items:center;background-color:var(--wpds-color-background-track-neutral-weak,#f0f0f0);border-radius:var(--wpds-border-radius-md,4px);color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;height:100%;justify-content:center;width:100%}._0b17b846e53f552a__titleLink{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._33e124d0c35f629a__meta{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}");
+  registerStyle43("96612f19e4", ".bdaa5dfae93273b5__root{flex:1;min-height:0;min-width:0;overflow:auto}._4150fa664d4fdc31__feed-icon{align-items:center;background-color:var(--wpds-color-background-track-neutral-weak,#f0f0f0);border-radius:var(--wpds-border-radius-md,4px);color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;height:100%;justify-content:center;width:100%}._65cf349c14278af7__title-link{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._33e124d0c35f629a__meta{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}");
 }
-var news_list_default = { "root": "bdaa5dfae93273b5__root", "feedIcon": "_2861fc2db3e2384a__feedIcon", "titleLink": "_0b17b846e53f552a__titleLink", "meta": "_33e124d0c35f629a__meta" };
+var news_list_default = { "root": "bdaa5dfae93273b5__root", "feed-icon": "_4150fa664d4fdc31__feed-icon", "title-link": "_65cf349c14278af7__title-link", "meta": "_33e124d0c35f629a__meta" };
 
 // widgets/news/components/news-list/news-list.tsx
 var import_jsx_runtime196 = __toESM(require_jsx_runtime());
@@ -44447,10 +44447,18 @@ var INITIAL_VIEW = {
   layout: { density: "compact" }
 };
 function FeedIcon({ item }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)("div", { className: news_list_default.feedIcon, "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(Icon, { icon: item.feedKey === "news" ? wordpress_default : globe_default }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)("div", { className: news_list_default["feed-icon"], "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(Icon, { icon: item.feedKey === "news" ? wordpress_default : globe_default }) });
 }
 function NewsTitle({ item }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(Link, { href: item.url, openInNewTab: true, className: news_list_default.titleLink, children: item.title });
+  return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
+    Link,
+    {
+      href: item.url,
+      openInNewTab: true,
+      className: news_list_default["title-link"],
+      children: item.title
+    }
+  );
 }
 function NewsMeta({ item }) {
   return /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(Text, { variant: "body-sm", className: news_list_default.meta, children: [

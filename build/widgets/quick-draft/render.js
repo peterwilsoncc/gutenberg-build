@@ -48265,9 +48265,9 @@ function registerStyle51(hash, css) {
 
 // widgets/quick-draft/components/drafts-list/drafts-list.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle51("e1237767e8", "._27c1e13d297c9c75__root{flex:1;min-height:0;min-width:0;overflow:auto}._54b9ae86534218ea__titleHeader{border-top:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);padding-block-end:var(--wpds-dimension-padding-md,12px);padding-block-start:var(--wpds-dimension-padding-md,12px);padding-inline-start:var(--wpds-dimension-padding-md,12px)}._2e31af77792038af__thumbImage{object-fit:cover}._2e31af77792038af__thumbImage,.c4458e85b75cb2ca__thumbPlaceholder{border-radius:var(--wpds-border-radius-md,4px);height:100%;width:100%}.c4458e85b75cb2ca__thumbPlaceholder{align-items:center;background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;justify-content:center}._30dc10ae55a67d24__titleRow{min-width:0;width:100%}.eb5556cdba7ae763__titleLink{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._41963413d9183e83__date{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}");
+  registerStyle51("519bd4d72f", "._27c1e13d297c9c75__root{flex:1;min-height:0;min-width:0;overflow:auto}._57ed975ce632c8df__title-header{border-top:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);padding-block-end:var(--wpds-dimension-padding-md,12px);padding-block-start:var(--wpds-dimension-padding-md,12px);padding-inline-start:var(--wpds-dimension-padding-md,12px)}._2bb35535621845e5__thumb-image{border-radius:var(--wpds-border-radius-md,4px);height:100%;object-fit:cover;width:100%}._18f1d20f0106d341__thumb-placeholder{align-items:center;background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border-radius:var(--wpds-border-radius-md,4px);color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;height:100%;justify-content:center;width:100%}._431a472b2f8fba21__title-row{min-width:0;width:100%}._852699bbc46ff2ba__title-link{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._41963413d9183e83__date{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}");
 }
-var drafts_list_default = { "root": "_27c1e13d297c9c75__root", "titleHeader": "_54b9ae86534218ea__titleHeader", "thumbImage": "_2e31af77792038af__thumbImage", "thumbPlaceholder": "c4458e85b75cb2ca__thumbPlaceholder", "titleRow": "_30dc10ae55a67d24__titleRow", "titleLink": "eb5556cdba7ae763__titleLink", "date": "_41963413d9183e83__date" };
+var drafts_list_default = { "root": "_27c1e13d297c9c75__root", "title-header": "_57ed975ce632c8df__title-header", "thumb-image": "_2bb35535621845e5__thumb-image", "thumb-placeholder": "_18f1d20f0106d341__thumb-placeholder", "title-row": "_431a472b2f8fba21__title-row", "title-link": "_852699bbc46ff2ba__title-link", "date": "_41963413d9183e83__date" };
 
 // widgets/quick-draft/components/drafts-list/drafts-list.tsx
 var import_jsx_runtime223 = __toESM(require_jsx_runtime());
@@ -48306,14 +48306,14 @@ function DraftThumbnail({ post }) {
     return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
       "img",
       {
-        className: drafts_list_default.thumbImage,
+        className: drafts_list_default["thumb-image"],
         src: url,
         alt: "",
         loading: "lazy"
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)("div", { className: drafts_list_default.thumbPlaceholder, "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(Icon, { icon: post_featured_image_default }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)("div", { className: drafts_list_default["thumb-placeholder"], "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(Icon, { icon: post_featured_image_default }) });
 }
 function DraftTitle({
   post,
@@ -48327,14 +48327,14 @@ function DraftTitle({
       align: "center",
       justify: "space-between",
       gap: "sm",
-      className: drafts_list_default.titleRow,
+      className: drafts_list_default["title-row"],
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
           Link,
           {
             href: getEditUrl(post.id),
             openInNewTab: true,
-            className: drafts_list_default.titleLink,
+            className: drafts_list_default["title-link"],
             children: title
           }
         ),
@@ -48412,7 +48412,7 @@ function DraftsList() {
     [deleteDraft]
   );
   return /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(Stack, { direction: "column", className: drafts_list_default.root, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(Text, { variant: "heading-md", className: drafts_list_default.titleHeader, children: (0, import_i18n61.__)("Your recent drafts") }),
+    /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(Text, { variant: "heading-md", className: drafts_list_default["title-header"], children: (0, import_i18n61.__)("Your recent drafts") }),
     /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
       dataviews_default,
       {
@@ -48597,9 +48597,9 @@ function useWidgetSize() {
 
 // widgets/quick-draft/style.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle51("eb62be714d", "._1ceea6985c028257__body,.e95823d50a99f185__fill{height:100%}._0325357a2c3b57a4__primaryPane{border-top:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);flex:1;min-height:0;min-width:0;padding:var(--wpds-dimension-padding-lg,16px)}._20004de4c12366b1__listPane{flex:1;min-height:0;min-width:0}._809476aa1889889d__backRow{border-top:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);padding:var(--wpds-dimension-padding-sm,8px)}._264d0da8d26b736f__row ._0325357a2c3b57a4__primaryPane{border-inline-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);margin:0 auto;max-width:var(--wpds-dimension-surface-width-md,400px)}._6b9679a01ecee959__formContainer,._6b9679a01ecee959__formContainer>.dataforms-layouts__wrapper{flex:1;min-height:0}");
+  registerStyle51("b13537359d", "._1ceea6985c028257__body,.e95823d50a99f185__fill{height:100%}._12c99e3672d02fc4__primary-pane{border-top:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);flex:1;min-height:0;min-width:0;padding:var(--wpds-dimension-padding-lg,16px)}.b047c7c06c82b717__list-pane{flex:1;min-height:0;min-width:0}._2ed2814c166952e3__back-row{border-top:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);padding:var(--wpds-dimension-padding-sm,8px)}._264d0da8d26b736f__row ._12c99e3672d02fc4__primary-pane{border-inline-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);margin:0 auto;max-width:var(--wpds-dimension-surface-width-md,400px)}._1caf31c87d5089b4__form-container,._1caf31c87d5089b4__form-container>.dataforms-layouts__wrapper{flex:1;min-height:0}");
 }
-var style_default46 = { "body": "_1ceea6985c028257__body", "fill": "e95823d50a99f185__fill", "primaryPane": "_0325357a2c3b57a4__primaryPane", "listPane": "_20004de4c12366b1__listPane", "backRow": "_809476aa1889889d__backRow", "row": "_264d0da8d26b736f__row", "formContainer": "_6b9679a01ecee959__formContainer" };
+var style_default46 = { "body": "_1ceea6985c028257__body", "fill": "e95823d50a99f185__fill", "primary-pane": "_12c99e3672d02fc4__primary-pane", "list-pane": "b047c7c06c82b717__list-pane", "back-row": "_2ed2814c166952e3__back-row", "row": "_264d0da8d26b736f__row", "form-container": "_1caf31c87d5089b4__form-container" };
 
 // widgets/quick-draft/render.tsx
 var import_jsx_runtime226 = __toESM(require_jsx_runtime());
@@ -48708,16 +48708,23 @@ function QuickDraft() {
         justify: "space-between",
         className: style_default46.fill,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Stack, { direction: "column", className: style_default46.formContainer, children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
-            DataForm,
+          /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
+            Stack,
             {
-              data,
-              fields,
-              form: FORM,
-              validity,
-              onChange: (edits) => setData((prev) => ({ ...prev, ...edits }))
+              direction: "column",
+              className: style_default46["form-container"],
+              children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
+                DataForm,
+                {
+                  data,
+                  fields,
+                  form: FORM,
+                  validity,
+                  onChange: (edits) => setData((prev) => ({ ...prev, ...edits }))
+                }
+              )
             }
-          ) }),
+          ),
           /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(Stack, { direction: "row", gap: "md", justify: "flex-start", children: [
             /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
               Button4,
@@ -48747,13 +48754,13 @@ function QuickDraft() {
   }
   if (!showDraftsList && isListOpenInCompact) {
     return /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(Stack, { ref, direction: "column", className: style_default46.body, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Stack, { direction: "column", className: style_default46.listPane, children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(DraftsList, {}) }),
+      /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Stack, { direction: "column", className: style_default46["list-pane"], children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(DraftsList, {}) }),
       /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
         Stack,
         {
           direction: "row",
           justify: "flex-start",
-          className: style_default46.backRow,
+          className: style_default46["back-row"],
           children: /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(
             Button4,
             {
@@ -48772,7 +48779,14 @@ function QuickDraft() {
     ] });
   }
   if (!showDraftsList) {
-    return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Stack, { ref, direction: "column", className: style_default46.body, children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Stack, { direction: "column", className: style_default46.primaryPane, children: primary }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Stack, { ref, direction: "column", className: style_default46.body, children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
+      Stack,
+      {
+        direction: "column",
+        className: style_default46["primary-pane"],
+        children: primary
+      }
+    ) });
   }
   return /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(
     Stack,
@@ -48781,8 +48795,8 @@ function QuickDraft() {
       direction: listBeside ? "row" : "column",
       className: clsx_default(style_default46.body, listBeside && style_default46.row),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Stack, { direction: "column", className: style_default46.primaryPane, children: primary }),
-        /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Stack, { direction: "column", className: style_default46.listPane, children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(DraftsList, {}) })
+        /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Stack, { direction: "column", className: style_default46["primary-pane"], children: primary }),
+        /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Stack, { direction: "column", className: style_default46["list-pane"], children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(DraftsList, {}) })
       ]
     }
   );

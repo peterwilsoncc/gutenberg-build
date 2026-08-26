@@ -44418,9 +44418,9 @@ function registerStyle43(hash, css) {
 
 // widgets/events/components/events-list/events-list.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle43("333cf105cc", ".b193ea4f98c12441__listArea,.fae84950ff6b687a__root{flex:1;min-height:0;min-width:0;overflow:hidden}.f2470afe387696bb__eventIcon{background-color:var(--wpds-color-background-track-neutral-weak,#f0f0f0);color:var(--wpds-color-foreground-content-neutral-weak,#707070);height:100%}.e97858c521f8ff5d__titleLink{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._767c9a42070266bb__meta{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.a8c460f12aae4f63__emptyState{margin-block:var(--wpds-dimension-padding-2xl,24px)}.b0e50a045a1f92c2__eventNone{color:var(--wpds-color-foreground-content-neutral-weak,#707070);flex-shrink:0;padding-block:var(--wpds-dimension-padding-md,12px);padding-inline:var(--wpds-dimension-padding-2xl,24px)}");
+  registerStyle43("471727f53c", "._5c593e4ca6cc86ae__list-area,.fae84950ff6b687a__root{flex:1;min-height:0;min-width:0;overflow:hidden}._16c93663fd1bedff__event-icon{background-color:var(--wpds-color-background-track-neutral-weak,#f0f0f0);color:var(--wpds-color-foreground-content-neutral-weak,#707070);height:100%}._8f18163fc0731ff9__title-link{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._767c9a42070266bb__meta{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}._12de8cd80a28406f__empty-state{margin-block:var(--wpds-dimension-padding-2xl,24px)}.c4d5e454fd07e2d4__event-none{color:var(--wpds-color-foreground-content-neutral-weak,#707070);flex-shrink:0;padding-block:var(--wpds-dimension-padding-md,12px);padding-inline:var(--wpds-dimension-padding-2xl,24px)}");
 }
-var events_list_default = { "root": "fae84950ff6b687a__root", "listArea": "b193ea4f98c12441__listArea", "eventIcon": "f2470afe387696bb__eventIcon", "titleLink": "e97858c521f8ff5d__titleLink", "meta": "_767c9a42070266bb__meta", "emptyState": "a8c460f12aae4f63__emptyState", "eventNone": "b0e50a045a1f92c2__eventNone" };
+var events_list_default = { "root": "fae84950ff6b687a__root", "list-area": "_5c593e4ca6cc86ae__list-area", "event-icon": "_16c93663fd1bedff__event-icon", "title-link": "_8f18163fc0731ff9__title-link", "meta": "_767c9a42070266bb__meta", "empty-state": "_12de8cd80a28406f__empty-state", "event-none": "c4d5e454fd07e2d4__event-none" };
 
 // widgets/events/components/events-list/events-list.tsx
 var import_jsx_runtime197 = __toESM(require_jsx_runtime());
@@ -44556,7 +44556,7 @@ function EventIcon({ item }) {
   return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
     Stack,
     {
-      className: events_list_default.eventIcon,
+      className: events_list_default["event-icon"],
       direction: "column",
       align: "center",
       justify: "center",
@@ -44565,7 +44565,15 @@ function EventIcon({ item }) {
   );
 }
 function EventTitle({ item }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Link, { href: item.url, openInNewTab: true, className: events_list_default.titleLink, children: item.title });
+  return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
+    Link,
+    {
+      href: item.url,
+      openInNewTab: true,
+      className: events_list_default["title-link"],
+      children: item.title
+    }
+  );
 }
 function EventMeta({ item }) {
   return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Text, { variant: "body-sm", className: events_list_default.meta, children: item.description });
@@ -44614,18 +44622,26 @@ function EventsList({
     }
     return (0, import_i18n55.__)("No events near you");
   };
-  const empty = showEmptyState ? /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Stack, { align: "center", justify: "center", className: events_list_default.emptyState, children: /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(empty_state_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(empty_state_exports.Icon, { icon: calendar_default }),
-    /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(empty_state_exports.Title, { children: emptyTitle() }),
-    /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(empty_state_exports.Description, { children: (0, import_element142.createInterpolateElement)(
-      (0, import_i18n55.__)("<a>Help organize the next one!</a>"),
-      {
-        a: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Link, { href: organizeUrl, openInNewTab: true })
-      }
-    ) })
-  ] }) }) : void 0;
+  const empty = showEmptyState ? /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
+    Stack,
+    {
+      align: "center",
+      justify: "center",
+      className: events_list_default["empty-state"],
+      children: /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(empty_state_exports.Root, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(empty_state_exports.Icon, { icon: calendar_default }),
+        /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(empty_state_exports.Title, { children: emptyTitle() }),
+        /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(empty_state_exports.Description, { children: (0, import_element142.createInterpolateElement)(
+          (0, import_i18n55.__)("<a>Help organize the next one!</a>"),
+          {
+            a: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Link, { href: organizeUrl, openInNewTab: true })
+          }
+        ) })
+      ] })
+    }
+  ) : void 0;
   return /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(Stack, { className: events_list_default.root, direction: "column", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Stack, { className: events_list_default.listArea, direction: "column", children: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Stack, { className: events_list_default["list-area"], direction: "column", children: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
       dataviews_default,
       {
         data: items,
@@ -44643,7 +44659,7 @@ function EventsList({
         children: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(dataviews_default.Layout, {})
       }
     ) }),
-    events.length > 0 && events.length <= 2 && /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Text, { variant: "body-sm", className: events_list_default.eventNone, children: (0, import_element142.createInterpolateElement)(
+    events.length > 0 && events.length <= 2 && /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Text, { variant: "body-sm", className: events_list_default["event-none"], children: (0, import_element142.createInterpolateElement)(
       (0, import_i18n55.__)(
         "Want more events? <a>Help organize the next one!</a>"
       ),
@@ -44656,9 +44672,9 @@ function EventsList({
 
 // widgets/events/style.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle43("2222ab87ae", "._8eae235c5e84e11a__container{block-size:100%;min-height:200px}.a8467f8a7e71416b__locationPickerInWidget{flex-grow:1;padding:var(--wpds-dimension-padding-2xl,24px)}._8035a0c4b6216adf__statusText{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0;padding-inline:var(--wpds-dimension-padding-2xl,24px)}.a55a5460581ee126__noLocationSelected{flex-grow:1}");
+  registerStyle43("9447326d61", "._8eae235c5e84e11a__container{block-size:100%;min-height:200px}._63e793416c54d80e__location-picker-in-widget{flex-grow:1;padding:var(--wpds-dimension-padding-2xl,24px)}._04db2c3a201775c9__status-text{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0;padding-inline:var(--wpds-dimension-padding-2xl,24px)}._4c7ef41a427766e7__no-location-selected{flex-grow:1}");
 }
-var style_default38 = { "container": "_8eae235c5e84e11a__container", "locationPickerInWidget": "a8467f8a7e71416b__locationPickerInWidget", "statusText": "_8035a0c4b6216adf__statusText", "noLocationSelected": "a55a5460581ee126__noLocationSelected" };
+var style_default38 = { "container": "_8eae235c5e84e11a__container", "location-picker-in-widget": "_63e793416c54d80e__location-picker-in-widget", "status-text": "_04db2c3a201775c9__status-text", "no-location-selected": "_4c7ef41a427766e7__no-location-selected" };
 
 // widgets/events/render.tsx
 var import_jsx_runtime198 = __toESM(require_jsx_runtime());
@@ -44671,7 +44687,7 @@ function EventsListSection({
   location
 }) {
   if (error2) {
-    return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("p", { className: style_default38.statusText, children: (0, import_i18n56.__)("An error occurred. Please try again.") });
+    return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("p", { className: style_default38["status-text"], children: (0, import_i18n56.__)("An error occurred. Please try again.") });
   }
   return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
     EventsList,
@@ -44734,7 +44750,7 @@ function WordPressEvents({
       {
         align: "center",
         justify: "center",
-        className: style_default38.noLocationSelected,
+        className: style_default38["no-location-selected"],
         children: /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(empty_state_exports.Root, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(empty_state_exports.Visual, { children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(Icon, { icon: map_marker_default }) }),
           /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(empty_state_exports.Title, { children: (0, import_i18n56.__)("Attend an upcoming event near you.") }),
@@ -44745,7 +44761,7 @@ function WordPressEvents({
     hasSelectedLocation && eventsLoading && /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
       Stack,
       {
-        className: style_default38.locationPickerInWidget,
+        className: style_default38["location-picker-in-widget"],
         direction: "column",
         align: "center",
         justify: "center",
