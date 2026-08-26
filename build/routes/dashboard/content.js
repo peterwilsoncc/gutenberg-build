@@ -82,7 +82,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState94({
+        cachedValue = useState95({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -94,7 +94,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot]
         );
-        useEffect82(
+        useEffect83(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React236 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState94 = React236.useState, useEffect82 = React236.useEffect, useLayoutEffect13 = React236.useLayoutEffect, useDebugValue2 = React236.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React236 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState95 = React236.useState, useEffect83 = React236.useEffect, useLayoutEffect13 = React236.useLayoutEffect, useDebugValue2 = React236.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React236.useSyncExternalStore ? React236.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -148,9 +148,9 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React236 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef130 = React236.useRef, useEffect82 = React236.useEffect, useMemo112 = React236.useMemo, useDebugValue2 = React236.useDebugValue;
+      var React236 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef131 = React236.useRef, useEffect83 = React236.useEffect, useMemo112 = React236.useMemo, useDebugValue2 = React236.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
-        var instRef = useRef130(null);
+        var instRef = useRef131(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -191,7 +191,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector2, isEqual]
         );
         var value = useSyncExternalStore4(subscribe2, instRef[0], instRef[1]);
-        useEffect82(
+        useEffect83(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -41671,33 +41671,184 @@ var RadioItem = (0, import_element130.forwardRef)(
   }
 );
 
+// packages/ui/build-module/menu/use-iframe-dismissal-bridge.mjs
+var import_element131 = __toESM(require_element(), 1);
+function getIframeDocument(iframe) {
+  try {
+    return iframe.contentDocument;
+  } catch {
+    return null;
+  }
+}
+function forEachIframe(node, callback) {
+  if (node.nodeType !== Node.ELEMENT_NODE) {
+    return;
+  }
+  const element = node;
+  if (element.tagName === "IFRAME") {
+    callback(element);
+  }
+  element.querySelectorAll("iframe").forEach(callback);
+}
+function isInsideCurrentMenu(event, trigger) {
+  const target = event.target;
+  const targetElement = target?.nodeType === Node.ELEMENT_NODE ? target : target?.parentElement;
+  const popupId = trigger.getAttribute("aria-controls");
+  if (!targetElement || !popupId) {
+    return false;
+  }
+  const popup = targetElement.ownerDocument.getElementById(popupId);
+  if (!popup) {
+    return false;
+  }
+  const rootOwnerId = popup.getAttribute("data-rootownerid");
+  if (!rootOwnerId) {
+    return popup.contains(targetElement);
+  }
+  return targetElement.closest("[data-rootownerid]")?.getAttribute("data-rootownerid") === rootOwnerId;
+}
+function useCloseOnIframePointerDown({
+  enabled,
+  onPointerDown,
+  ownerDocument: ownerDocument2
+}) {
+  (0, import_element131.useEffect)(() => {
+    if (!enabled || !ownerDocument2) {
+      return;
+    }
+    const observeDocument = (document2, listenForPointerDown) => {
+      if (listenForPointerDown) {
+        document2.addEventListener("pointerdown", onPointerDown, true);
+      }
+      const iframeCleanups = /* @__PURE__ */ new Map();
+      const addIframe = (iframe) => {
+        if (iframeCleanups.has(iframe)) {
+          return;
+        }
+        let iframeDocument = null;
+        let iframeDocumentCleanup;
+        const updateIframeDocument = () => {
+          const nextIframeDocument = getIframeDocument(iframe);
+          if (nextIframeDocument === iframeDocument) {
+            return;
+          }
+          iframeDocumentCleanup?.();
+          iframeDocument = nextIframeDocument;
+          iframeDocumentCleanup = iframeDocument ? observeDocument(iframeDocument, true) : void 0;
+        };
+        iframe.addEventListener("load", updateIframeDocument);
+        updateIframeDocument();
+        iframeCleanups.set(iframe, () => {
+          iframe.removeEventListener("load", updateIframeDocument);
+          iframeDocumentCleanup?.();
+        });
+      };
+      const removeIframe = (iframe) => {
+        iframeCleanups.get(iframe)?.();
+        iframeCleanups.delete(iframe);
+      };
+      document2.querySelectorAll("iframe").forEach(addIframe);
+      const MutationObserverConstructor = document2.defaultView?.MutationObserver;
+      const observer = MutationObserverConstructor ? new MutationObserverConstructor((records) => {
+        records.forEach((record) => {
+          record.removedNodes.forEach(
+            (node) => forEachIframe(node, removeIframe)
+          );
+          record.addedNodes.forEach(
+            (node) => forEachIframe(node, addIframe)
+          );
+        });
+      }) : null;
+      observer?.observe(document2.documentElement, {
+        childList: true,
+        subtree: true
+      });
+      return () => {
+        observer?.disconnect();
+        iframeCleanups.forEach((cleanup) => cleanup());
+        if (listenForPointerDown) {
+          document2.removeEventListener(
+            "pointerdown",
+            onPointerDown,
+            true
+          );
+        }
+      };
+    };
+    return observeDocument(ownerDocument2, false);
+  }, [enabled, onPointerDown, ownerDocument2]);
+}
+function useIframeDismissalBridge({
+  actionsRef,
+  defaultOpen,
+  disabled: disabled2,
+  modal,
+  onOpenChange,
+  open: openProp
+}) {
+  const fallbackActionsRef = (0, import_element131.useRef)(null);
+  const resolvedActionsRef = actionsRef ?? fallbackActionsRef;
+  const [uncontrolledOpen, setUncontrolledOpen] = (0, import_element131.useState)(
+    defaultOpen ?? false
+  );
+  const [trigger, setTrigger] = (0, import_element131.useState)(null);
+  const open = openProp ?? uncontrolledOpen;
+  const handleIframePointerDown = (0, import_element131.useCallback)(
+    (event) => {
+      if (trigger && !isInsideCurrentMenu(event, trigger)) {
+        resolvedActionsRef.current?.close();
+      }
+    },
+    [resolvedActionsRef, trigger]
+  );
+  useCloseOnIframePointerDown({
+    enabled: open && modal === false && !disabled2 && trigger !== null,
+    onPointerDown: handleIframePointerDown,
+    ownerDocument: trigger?.ownerDocument ?? null
+  });
+  const handleOpenChange = (nextOpen, eventDetails) => {
+    onOpenChange(nextOpen, eventDetails);
+    if (eventDetails.isCanceled) {
+      return;
+    }
+    setUncontrolledOpen(nextOpen);
+    setTrigger(nextOpen ? eventDetails.trigger ?? null : null);
+  };
+  return {
+    actionsRef: resolvedActionsRef,
+    onOpenChange: handleOpenChange
+  };
+}
+
 // packages/ui/build-module/menu/root.mjs
 var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
 function Root12(props) {
-  const { onOpenChange, ...rootProps } = props;
-  const handleOpenChange = (open, eventDetails) => {
+  const { onOpenChange } = props;
+  const handleOpenChange = (nextOpen, eventDetails) => {
     const trigger = eventDetails.trigger;
     const TriggerElement = trigger?.ownerDocument.defaultView?.HTMLElement;
     const EventTargetElement = trigger?.ownerDocument.defaultView?.Element;
     const activeElementBeforeOpenChange = trigger?.ownerDocument.activeElement;
     const eventTarget = eventDetails.event.target;
     const menuElement = EventTargetElement && eventTarget instanceof EventTargetElement ? eventTarget.closest('[role="menu"]') : null;
-    onOpenChange?.(open, eventDetails);
-    if (!open && eventDetails.reason === "item-press" && !eventDetails.isCanceled && TriggerElement && trigger instanceof TriggerElement && menuElement?.contains(activeElementBeforeOpenChange ?? null) && trigger.ownerDocument.activeElement === activeElementBeforeOpenChange) {
+    onOpenChange?.(nextOpen, eventDetails);
+    if (!nextOpen && eventDetails.reason === "item-press" && !eventDetails.isCanceled && TriggerElement && trigger instanceof TriggerElement && menuElement?.contains(activeElementBeforeOpenChange ?? null) && trigger.ownerDocument.activeElement === activeElementBeforeOpenChange) {
       trigger.focus();
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(MenuContext.Provider, { value: { isSubmenu: false }, children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
-    index_parts_exports4.Root,
-    {
-      ...rootProps,
-      onOpenChange: handleOpenChange
-    }
-  ) }) });
+  const iframeDismissalProps = useIframeDismissalBridge({
+    actionsRef: props.actionsRef,
+    defaultOpen: props.defaultOpen,
+    disabled: props.disabled,
+    modal: props.modal,
+    onOpenChange: handleOpenChange,
+    open: props.open
+  });
+  return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(MenuContext.Provider, { value: { isSubmenu: false }, children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(index_parts_exports4.Root, { ...props, ...iframeDismissalProps }) }) });
 }
 
 // packages/ui/build-module/menu/separator.mjs
-var import_element131 = __toESM(require_element(), 1);
+var import_element132 = __toESM(require_element(), 1);
 var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE69 = "data-wp-hash";
 function getRuntime69() {
@@ -41783,7 +41934,7 @@ if (typeof process === "undefined" || true) {
   registerStyle69("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
 }
 var style_default58 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
-var Separator2 = (0, import_element131.forwardRef)(
+var Separator2 = (0, import_element132.forwardRef)(
   function MenuSeparator({ className, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
       index_parts_exports4.Separator,
@@ -41803,7 +41954,7 @@ function SubmenuRoot(props) {
 }
 
 // packages/ui/build-module/menu/submenu-trigger.mjs
-var import_element132 = __toESM(require_element(), 1);
+var import_element133 = __toESM(require_element(), 1);
 var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE70 = "data-wp-hash";
 function getRuntime70() {
@@ -41893,7 +42044,7 @@ if (typeof process === "undefined" || true) {
   registerStyle70("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
 }
 var style_default59 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
-var SubmenuTrigger = (0, import_element132.forwardRef)(
+var SubmenuTrigger = (0, import_element133.forwardRef)(
   function MenuSubmenuTrigger3({
     children,
     className,
@@ -41949,9 +42100,9 @@ var SubmenuTrigger = (0, import_element132.forwardRef)(
 );
 
 // packages/ui/build-module/menu/trigger.mjs
-var import_element133 = __toESM(require_element(), 1);
+var import_element134 = __toESM(require_element(), 1);
 var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
-var Trigger6 = (0, import_element133.forwardRef)(
+var Trigger6 = (0, import_element134.forwardRef)(
   function MenuTrigger3(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(index_parts_exports4.Trigger, { ref, ...props });
   }
@@ -41970,7 +42121,7 @@ __export(notice_exports, {
 });
 
 // packages/ui/build-module/notice/root.mjs
-var import_element134 = __toESM(require_element(), 1);
+var import_element135 = __toESM(require_element(), 1);
 import { speak as speak3 } from "@wordpress/a11y";
 var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE71 = "data-wp-hash";
@@ -42079,20 +42230,20 @@ function safeRenderToString(message2) {
     return message2;
   }
   try {
-    return (0, import_element134.renderToString)(message2);
+    return (0, import_element135.renderToString)(message2);
   } catch {
     return void 0;
   }
 }
 function useSpokenMessage(message2, politeness) {
   const spokenMessage = safeRenderToString(message2);
-  (0, import_element134.useEffect)(() => {
+  (0, import_element135.useEffect)(() => {
     if (spokenMessage) {
       speak3(spokenMessage, politeness);
     }
   }, [spokenMessage, politeness]);
 }
-var Root13 = (0, import_element134.forwardRef)(function Notice({
+var Root13 = (0, import_element135.forwardRef)(function Notice({
   intent = "neutral",
   children,
   icon,
@@ -42133,7 +42284,7 @@ var Root13 = (0, import_element134.forwardRef)(function Notice({
 });
 
 // packages/ui/build-module/notice/title.mjs
-var import_element135 = __toESM(require_element(), 1);
+var import_element136 = __toESM(require_element(), 1);
 var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE72 = "data-wp-hash";
 function getRuntime72() {
@@ -42219,7 +42370,7 @@ if (typeof process === "undefined" || true) {
   registerStyle72("726c480820", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._1904b570a89bb815__description{text-wrap:pretty}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#a9c6e7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bc7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#926300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#94d29e);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#dab1aa);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
 }
 var style_default61 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-var Title5 = (0, import_element135.forwardRef)(
+var Title5 = (0, import_element136.forwardRef)(
   function NoticeTitle({ className, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
       Text,
@@ -42234,7 +42385,7 @@ var Title5 = (0, import_element135.forwardRef)(
 );
 
 // packages/ui/build-module/notice/description.mjs
-var import_element136 = __toESM(require_element(), 1);
+var import_element137 = __toESM(require_element(), 1);
 var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE73 = "data-wp-hash";
 function getRuntime73() {
@@ -42320,7 +42471,7 @@ if (typeof process === "undefined" || true) {
   registerStyle73("726c480820", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._1904b570a89bb815__description{text-wrap:pretty}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#a9c6e7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bc7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#926300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#94d29e);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#dab1aa);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
 }
 var style_default62 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-var Description5 = (0, import_element136.forwardRef)(
+var Description5 = (0, import_element137.forwardRef)(
   function NoticeDescription({ className, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
       Text,
@@ -42335,7 +42486,7 @@ var Description5 = (0, import_element136.forwardRef)(
 );
 
 // packages/ui/build-module/notice/actions.mjs
-var import_element137 = __toESM(require_element(), 1);
+var import_element138 = __toESM(require_element(), 1);
 var STYLE_HASH_ATTRIBUTE74 = "data-wp-hash";
 function getRuntime74() {
   const globalScope = globalThis;
@@ -42420,7 +42571,7 @@ if (typeof process === "undefined" || true) {
   registerStyle74("726c480820", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._1904b570a89bb815__description{text-wrap:pretty}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#a9c6e7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bc7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#926300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#94d29e);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#dab1aa);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
 }
 var style_default63 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-var Actions2 = (0, import_element137.forwardRef)(
+var Actions2 = (0, import_element138.forwardRef)(
   function NoticeActions({ render: render4, ...props }, ref) {
     const element = useRender({
       defaultTagName: "div",
@@ -42438,7 +42589,7 @@ var Actions2 = (0, import_element137.forwardRef)(
 );
 
 // packages/ui/build-module/notice/close-icon.mjs
-var import_element138 = __toESM(require_element(), 1);
+var import_element139 = __toESM(require_element(), 1);
 var import_i18n14 = __toESM(require_i18n(), 1);
 var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE75 = "data-wp-hash";
@@ -42525,7 +42676,7 @@ if (typeof process === "undefined" || true) {
   registerStyle75("726c480820", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._1904b570a89bb815__description{text-wrap:pretty}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#a9c6e7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bc7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#926300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#94d29e);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#dab1aa);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
 }
 var style_default64 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-var CloseIcon3 = (0, import_element138.forwardRef)(
+var CloseIcon3 = (0, import_element139.forwardRef)(
   function NoticeCloseIcon({ className, icon = close_small_default, label = (0, import_i18n14.__)("Dismiss"), ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
       IconButton,
@@ -42544,7 +42695,7 @@ var CloseIcon3 = (0, import_element138.forwardRef)(
 );
 
 // packages/ui/build-module/notice/action-button.mjs
-var import_element139 = __toESM(require_element(), 1);
+var import_element140 = __toESM(require_element(), 1);
 var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE76 = "data-wp-hash";
 function getRuntime76() {
@@ -42630,7 +42781,7 @@ if (typeof process === "undefined" || true) {
   registerStyle76("726c480820", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._1904b570a89bb815__description{text-wrap:pretty}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#a9c6e7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bc7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#926300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#94d29e);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#dab1aa);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
 }
 var style_default65 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-var ActionButton = (0, import_element139.forwardRef)(
+var ActionButton = (0, import_element140.forwardRef)(
   function NoticeActionButton({ className, loading, loadingAnnouncement, variant, ...props }, ref) {
     const loadingProps = loading !== void 0 ? { loading, loadingAnnouncement: loadingAnnouncement ?? "" } : {};
     return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
@@ -42653,7 +42804,7 @@ var ActionButton = (0, import_element139.forwardRef)(
 );
 
 // packages/ui/build-module/notice/action-link.mjs
-var import_element140 = __toESM(require_element(), 1);
+var import_element141 = __toESM(require_element(), 1);
 var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE77 = "data-wp-hash";
 function getRuntime77() {
@@ -42739,7 +42890,7 @@ if (typeof process === "undefined" || true) {
   registerStyle77("726c480820", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._4145abab73d17514__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;padding:var(--wpds-dimension-padding-md,12px)}.d0a25570cb528528__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._1904b570a89bb815__description,.b5397fb9d05389e3__title{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._1904b570a89bb815__description{text-wrap:pretty}._0a1270dcdd79c031__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._4145abab73d17514__notice:has(._1904b570a89bb815__description) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}._983740ab855c4e09__action-button{flex-shrink:0}.d329e7416d368d31__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._487e6a5c1375f7dc__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._531c140826094795__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#a9c6e7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}.ae2e1004697cce95__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bc7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#926300)}._2e614a76af494837__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#94d29e);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}.af00331ae17a0065__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#dab1aa);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._0a1270dcdd79c031__actions,._4145abab73d17514__notice:has(.b5397fb9d05389e3__title) ._1904b570a89bb815__description{grid-column:1/3}}}@layer compositions{.d329e7416d368d31__action-link{margin-block:auto}._487e6a5c1375f7dc__close-icon,._983740ab855c4e09__action-button:is(._8ddb8fb33fbf3d38__is-action-button-outline,._77bbde495a8a0af3__is-action-button-minimal){--wp-ui-button-background-color-active:color-mix(in srgb,transparent 50%,var(--wpds-color-background-interactive-neutral-weak-active,#ededed))}}}");
 }
 var style_default66 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
-var ActionLink = (0, import_element140.forwardRef)(
+var ActionLink = (0, import_element141.forwardRef)(
   function NoticeActionLink({ className, render: render4, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
       Text,
@@ -42769,7 +42920,7 @@ __export(popover_exports, {
 });
 
 // packages/ui/build-module/popover/arrow.mjs
-var import_element141 = __toESM(require_element(), 1);
+var import_element142 = __toESM(require_element(), 1);
 var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE78 = "data-wp-hash";
 function getRuntime78() {
@@ -42883,7 +43034,7 @@ function DefaultArrowSvg(props) {
     }
   );
 }
-var Arrow = (0, import_element141.forwardRef)(function PopoverArrow3({ children, className, ...props }, ref) {
+var Arrow = (0, import_element142.forwardRef)(function PopoverArrow3({ children, className, ...props }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
     index_parts_exports8.Arrow,
     {
@@ -42896,9 +43047,9 @@ var Arrow = (0, import_element141.forwardRef)(function PopoverArrow3({ children,
 });
 
 // packages/ui/build-module/popover/close.mjs
-var import_element142 = __toESM(require_element(), 1);
+var import_element143 = __toESM(require_element(), 1);
 var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
-var Close = (0, import_element142.forwardRef)(
+var Close = (0, import_element143.forwardRef)(
   function PopoverClose3(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
       index_parts_exports8.Close,
@@ -42912,9 +43063,9 @@ var Close = (0, import_element142.forwardRef)(
 );
 
 // packages/ui/build-module/popover/description.mjs
-var import_element143 = __toESM(require_element(), 1);
+var import_element144 = __toESM(require_element(), 1);
 var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
-var Description6 = (0, import_element143.forwardRef)(
+var Description6 = (0, import_element144.forwardRef)(
   function PopoverDescription3({ children, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(
       Text,
@@ -42929,7 +43080,7 @@ var Description6 = (0, import_element143.forwardRef)(
 );
 
 // packages/ui/build-module/popover/popup.mjs
-var import_element146 = __toESM(require_element(), 1);
+var import_element147 = __toESM(require_element(), 1);
 var import_compose14 = __toESM(require_compose(), 1);
 
 // packages/ui/build-module/popover/context.mjs
@@ -42938,9 +43089,9 @@ var usePopoverValidationContext = popoverTitleValidation.useValidationContext;
 var PopoverValidationProvider = popoverTitleValidation.ValidationProvider;
 
 // packages/ui/build-module/popover/portal.mjs
-var import_element144 = __toESM(require_element(), 1);
+var import_element145 = __toESM(require_element(), 1);
 var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
-var Portal7 = (0, import_element144.forwardRef)(
+var Portal7 = (0, import_element145.forwardRef)(
   function PopoverPortal3({ container, ...restProps }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
       index_parts_exports8.Portal,
@@ -42954,7 +43105,7 @@ var Portal7 = (0, import_element144.forwardRef)(
 );
 
 // packages/ui/build-module/popover/positioner.mjs
-var import_element145 = __toESM(require_element(), 1);
+var import_element146 = __toESM(require_element(), 1);
 var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE79 = "data-wp-hash";
 function getRuntime79() {
@@ -43044,7 +43195,7 @@ if (typeof process === "undefined" || true) {
   registerStyle79("4246f24b57", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._10450722b9676f78__positioner{z-index:var(--wp-ui-popover-z-index,initial)}._84e8f597bcf683b8__popup{outline:0}._972134b6cd5808d8__surface{--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-md,24px);padding:var(--wpds-dimension-padding-lg,16px)}.e4d544aa033f05c6__backdrop~* ._972134b6cd5808d8__surface{border-color:transparent}@media (forced-colors:active){._972134b6cd5808d8__surface,.e4d544aa033f05c6__backdrop~* ._972134b6cd5808d8__surface{border-color:CanvasText}}.ca05d3eb89321fcd__arrow{display:flex;&[data-side=top]{bottom:-8px;rotate:180deg}&[data-side=bottom]{rotate:0deg;top:-8px}&[data-side=left]{inset-inline-end:-13px;rotate:90deg}&[data-side=right]{inset-inline-start:-13px;rotate:-90deg}}._12d8edd9eb946b5f__arrow-fill{fill:var(--wpds-color-background-surface-neutral-strong,#fff)}._6ddab482bd929dad__arrow-stroke{fill:var(--wpds-color-stroke-surface-neutral,#dbdbdb)}._6d7e4729cd96960e__title{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.e4d544aa033f05c6__backdrop{background-color:rgba(0,0,0,.15);inset:0;opacity:1;position:fixed;z-index:var(--wp-ui-popover-z-index,initial);&[data-ending-style],&[data-starting-style]{opacity:0}@media not (prefers-reduced-motion){transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}}}');
 }
 var style_default68 = { "positioner": "_10450722b9676f78__positioner", "popup": "_84e8f597bcf683b8__popup _380b81b8f79fb10f__dropdown-motion", "surface": "_972134b6cd5808d8__surface", "backdrop": "e4d544aa033f05c6__backdrop", "arrow": "ca05d3eb89321fcd__arrow", "arrow-fill": "_12d8edd9eb946b5f__arrow-fill", "arrow-stroke": "_6ddab482bd929dad__arrow-stroke", "title": "_6d7e4729cd96960e__title" };
-var Positioner4 = (0, import_element145.forwardRef)(
+var Positioner4 = (0, import_element146.forwardRef)(
   function PopoverPositioner3({
     align = "center",
     // Matches the popup's border-radius (--wpds-border-radius-md).
@@ -43160,7 +43311,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default69 = { "positioner": "_10450722b9676f78__positioner", "popup": "_84e8f597bcf683b8__popup _380b81b8f79fb10f__dropdown-motion", "surface": "_972134b6cd5808d8__surface", "backdrop": "e4d544aa033f05c6__backdrop", "arrow": "ca05d3eb89321fcd__arrow", "arrow-fill": "_12d8edd9eb946b5f__arrow-fill", "arrow-stroke": "_6ddab482bd929dad__arrow-stroke", "title": "_6d7e4729cd96960e__title" };
 var CLOSE_ATTR = "data-wp-ui-popover-close";
-var Popup7 = (0, import_element146.forwardRef)(function PopoverPopup3({
+var Popup7 = (0, import_element147.forwardRef)(function PopoverPopup3({
   backdrop = false,
   children,
   className,
@@ -43214,7 +43365,7 @@ function Root14(props) {
 
 // packages/ui/build-module/popover/title.mjs
 var import_compose15 = __toESM(require_compose(), 1);
-var import_element147 = __toESM(require_element(), 1);
+var import_element148 = __toESM(require_element(), 1);
 var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE81 = "data-wp-hash";
 function getRuntime81() {
@@ -43300,12 +43451,12 @@ if (typeof process === "undefined" || true) {
   registerStyle81("4246f24b57", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._10450722b9676f78__positioner{z-index:var(--wp-ui-popover-z-index,initial)}._84e8f597bcf683b8__popup{outline:0}._972134b6cd5808d8__surface{--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-md,24px);padding:var(--wpds-dimension-padding-lg,16px)}.e4d544aa033f05c6__backdrop~* ._972134b6cd5808d8__surface{border-color:transparent}@media (forced-colors:active){._972134b6cd5808d8__surface,.e4d544aa033f05c6__backdrop~* ._972134b6cd5808d8__surface{border-color:CanvasText}}.ca05d3eb89321fcd__arrow{display:flex;&[data-side=top]{bottom:-8px;rotate:180deg}&[data-side=bottom]{rotate:0deg;top:-8px}&[data-side=left]{inset-inline-end:-13px;rotate:90deg}&[data-side=right]{inset-inline-start:-13px;rotate:-90deg}}._12d8edd9eb946b5f__arrow-fill{fill:var(--wpds-color-background-surface-neutral-strong,#fff)}._6ddab482bd929dad__arrow-stroke{fill:var(--wpds-color-stroke-surface-neutral,#dbdbdb)}._6d7e4729cd96960e__title{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.e4d544aa033f05c6__backdrop{background-color:rgba(0,0,0,.15);inset:0;opacity:1;position:fixed;z-index:var(--wp-ui-popover-z-index,initial);&[data-ending-style],&[data-starting-style]{opacity:0}@media not (prefers-reduced-motion){transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}}}');
 }
 var style_default70 = { "positioner": "_10450722b9676f78__positioner", "popup": "_84e8f597bcf683b8__popup _380b81b8f79fb10f__dropdown-motion", "surface": "_972134b6cd5808d8__surface", "backdrop": "e4d544aa033f05c6__backdrop", "arrow": "ca05d3eb89321fcd__arrow", "arrow-fill": "_12d8edd9eb946b5f__arrow-fill", "arrow-stroke": "_6ddab482bd929dad__arrow-stroke", "title": "_6d7e4729cd96960e__title" };
-var Title6 = (0, import_element147.forwardRef)(
+var Title6 = (0, import_element148.forwardRef)(
   function PopoverTitle3({ children, ...props }, forwardedRef) {
     const validationContext = usePopoverValidationContext();
-    const internalRef = (0, import_element147.useRef)(null);
+    const internalRef = (0, import_element148.useRef)(null);
     const mergedRef = (0, import_compose15.useMergeRefs)([internalRef, forwardedRef]);
-    (0, import_element147.useEffect)(() => {
+    (0, import_element148.useEffect)(() => {
       if (validationContext) {
         return validationContext.registerTitle(internalRef.current);
       }
@@ -43325,9 +43476,9 @@ var Title6 = (0, import_element147.forwardRef)(
 );
 
 // packages/ui/build-module/popover/trigger.mjs
-var import_element148 = __toESM(require_element(), 1);
+var import_element149 = __toESM(require_element(), 1);
 var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
-var Trigger7 = (0, import_element148.forwardRef)(
+var Trigger7 = (0, import_element149.forwardRef)(
   function PopoverTrigger3(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(index_parts_exports8.Trigger, { ref, ...props });
   }
@@ -43495,9 +43646,9 @@ var Breadcrumbs = ({ items }) => {
 var breadcrumbs_default = Breadcrumbs;
 
 // packages/admin-ui/build-module/navigable-region/index.mjs
-var import_element149 = __toESM(require_element(), 1);
+var import_element150 = __toESM(require_element(), 1);
 var import_jsx_runtime217 = __toESM(require_jsx_runtime(), 1);
-var NavigableRegion = (0, import_element149.forwardRef)(
+var NavigableRegion = (0, import_element150.forwardRef)(
   ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
       Tag,
@@ -43993,7 +44144,7 @@ var page_default = Page;
 // routes/dashboard/stage.tsx
 var import_core_data = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
-var import_element263 = __toESM(require_element());
+var import_element264 = __toESM(require_element());
 var import_i18n86 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_viewport2 = __toESM(require_viewport());
@@ -44001,7 +44152,7 @@ var import_viewport2 = __toESM(require_viewport());
 // packages/widget-dashboard/build-module/context/dashboard-context.mjs
 var import_es6 = __toESM(require_es6(), 1);
 var import_compose16 = __toESM(require_compose(), 1);
-var import_element150 = __toESM(require_element(), 1);
+var import_element151 = __toESM(require_element(), 1);
 
 // packages/widget-dashboard/build-module/types.mjs
 var WIDGET_DASHBOARD_COLUMN_COUNT = 4;
@@ -44086,9 +44237,9 @@ function canonicalize(layout) {
     return { ...widget, placement };
   });
 }
-var Context = (0, import_element150.createContext)(null);
+var Context = (0, import_element151.createContext)(null);
 function useDashboardInternalContext() {
-  const ctx8 = (0, import_element150.useContext)(Context);
+  const ctx8 = (0, import_element151.useContext)(Context);
   if (!ctx8) {
     throw new Error(
       "Dashboard compound used outside a WidgetDashboard subtree."
@@ -44108,15 +44259,15 @@ function WidgetDashboardProvider({
   gridSettings: committedGridSettings = DEFAULT_GRID,
   children
 }) {
-  const [stagingLayout, setStagingLayout] = (0, import_element150.useState)(committedLayout);
-  (0, import_element150.useEffect)(() => {
+  const [stagingLayout, setStagingLayout] = (0, import_element151.useState)(committedLayout);
+  (0, import_element151.useEffect)(() => {
     setStagingLayout(committedLayout);
   }, [committedLayout]);
-  const gridSettings = (0, import_element150.useMemo)(
+  const gridSettings = (0, import_element151.useMemo)(
     () => resolveGridSettings(committedGridSettings),
     [committedGridSettings]
   );
-  const hasLayoutChanges = (0, import_element150.useMemo)(
+  const hasLayoutChanges = (0, import_element151.useMemo)(
     () => !(0, import_es6.default)(
       canonicalize(committedLayout),
       canonicalize(stagingLayout)
@@ -44124,7 +44275,7 @@ function WidgetDashboardProvider({
     [committedLayout, stagingLayout]
   );
   const hasUncommittedChanges = hasLayoutChanges;
-  const commit = (0, import_element150.useCallback)(
+  const commit = (0, import_element151.useCallback)(
     (options) => {
       if (hasLayoutChanges) {
         onLayoutChange(canonicalize(stagingLayout));
@@ -44136,31 +44287,31 @@ function WidgetDashboardProvider({
     [hasLayoutChanges, onLayoutChange, stagingLayout, onEditChange]
   );
   const publishAutoSave = (0, import_compose16.useEvent)(() => commit({ exitEditMode: false }));
-  const scheduleAutoSave = (0, import_element150.useMemo)(
+  const scheduleAutoSave = (0, import_element151.useMemo)(
     () => (0, import_compose16.debounce)(publishAutoSave, AUTO_SAVE_DELAY_MS),
     [publishAutoSave]
   );
-  const flushAutoSave = (0, import_element150.useCallback)(
+  const flushAutoSave = (0, import_element151.useCallback)(
     () => scheduleAutoSave.flush(),
     [scheduleAutoSave]
   );
-  (0, import_element150.useEffect)(() => {
+  (0, import_element151.useEffect)(() => {
     if (!editMode) {
       return;
     }
     scheduleAutoSave.flush();
   }, [editMode, scheduleAutoSave]);
-  (0, import_element150.useEffect)(() => () => scheduleAutoSave.flush(), [scheduleAutoSave]);
-  const cancel = (0, import_element150.useCallback)(() => {
+  (0, import_element151.useEffect)(() => () => scheduleAutoSave.flush(), [scheduleAutoSave]);
+  const cancel = (0, import_element151.useCallback)(() => {
     setStagingLayout(committedLayout);
     onEditChange?.(false);
   }, [committedLayout, onEditChange]);
-  (0, import_element150.useEffect)(() => {
+  (0, import_element151.useEffect)(() => {
     if (stagingLayout.length === 0) {
       onEditChange?.(true);
     }
   }, [stagingLayout.length === 0]);
-  const value = (0, import_element150.useMemo)(
+  const value = (0, import_element151.useMemo)(
     () => ({
       widgetTypes,
       isResolvingWidgetTypes,
@@ -44197,11 +44348,11 @@ function WidgetDashboardProvider({
 }
 
 // packages/widget-dashboard/build-module/context/ui-context.mjs
-var import_element151 = __toESM(require_element(), 1);
+var import_element152 = __toESM(require_element(), 1);
 var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
-var Context2 = (0, import_element151.createContext)(null);
+var Context2 = (0, import_element152.createContext)(null);
 function useDashboardUIContext() {
-  const ctx8 = (0, import_element151.useContext)(Context2);
+  const ctx8 = (0, import_element152.useContext)(Context2);
   if (!ctx8) {
     throw new Error(
       "Dashboard compound used outside a WidgetDashboard subtree."
@@ -44210,10 +44361,10 @@ function useDashboardUIContext() {
   return ctx8;
 }
 function WidgetDashboardUIProvider({ children }) {
-  const [inserterOpen, setInserterOpen] = (0, import_element151.useState)(false);
-  const [resetDialogOpen, setResetDialogOpen] = (0, import_element151.useState)(false);
-  const [settingsWidgetUuid, setSettingsWidgetUuid] = (0, import_element151.useState)(null);
-  const value = (0, import_element151.useMemo)(
+  const [inserterOpen, setInserterOpen] = (0, import_element152.useState)(false);
+  const [resetDialogOpen, setResetDialogOpen] = (0, import_element152.useState)(false);
+  const [settingsWidgetUuid, setSettingsWidgetUuid] = (0, import_element152.useState)(null);
+  const value = (0, import_element152.useMemo)(
     () => ({
       inserterOpen,
       setInserterOpen,
@@ -44229,7 +44380,7 @@ function WidgetDashboardUIProvider({ children }) {
 
 // packages/widget-dashboard/build-module/components/actions/actions.mjs
 var import_data = __toESM(require_data(), 1);
-var import_element152 = __toESM(require_element(), 1);
+var import_element153 = __toESM(require_element(), 1);
 var import_i18n18 = __toESM(require_i18n(), 1);
 var import_viewport = __toESM(require_viewport(), 1);
 
@@ -44398,9 +44549,9 @@ function Actions3() {
     cancel: cancelStaging,
     hasUncommittedChanges
   } = useDashboardInternalContext();
-  const [isEditActionsMounted, setIsEditActionsMounted] = (0, import_element152.useState)(editMode);
-  const [isExitingEditActions, setIsExitingEditActions] = (0, import_element152.useState)(false);
-  (0, import_element152.useEffect)(() => {
+  const [isEditActionsMounted, setIsEditActionsMounted] = (0, import_element153.useState)(editMode);
+  const [isExitingEditActions, setIsExitingEditActions] = (0, import_element153.useState)(false);
+  (0, import_element153.useEffect)(() => {
     if (editMode) {
       setIsEditActionsMounted(true);
       setIsExitingEditActions(false);
@@ -44421,16 +44572,16 @@ function Actions3() {
     (select) => select(import_viewport.store).isViewportMatch("< small"),
     []
   );
-  const handleEditMode = (0, import_element152.useCallback)(() => {
+  const handleEditMode = (0, import_element153.useCallback)(() => {
     onEditChange?.(!editMode);
   }, [editMode, onEditChange]);
-  const insert = (0, import_element152.useCallback)(() => {
+  const insert = (0, import_element153.useCallback)(() => {
     setInserterOpen(true);
   }, [setInserterOpen]);
-  const cancel = (0, import_element152.useCallback)(() => {
+  const cancel = (0, import_element153.useCallback)(() => {
     cancelStaging();
   }, [cancelStaging]);
-  const done = (0, import_element152.useCallback)(() => {
+  const done = (0, import_element153.useCallback)(() => {
     commit();
   }, [commit]);
   const menuItems = [
@@ -44509,19 +44660,19 @@ function Actions3() {
 }
 
 // packages/widget-dashboard/build-module/components/commands/commands.mjs
-var import_element154 = __toESM(require_element(), 1);
+var import_element155 = __toESM(require_element(), 1);
 var import_i18n19 = __toESM(require_i18n(), 1);
 var import_commands = __toESM(require_commands(), 1);
 
 // packages/widget-dashboard/build-module/components/commands/use-pending-when-edit-mode.mjs
-var import_element153 = __toESM(require_element(), 1);
+var import_element154 = __toESM(require_element(), 1);
 function usePendingWhenEditMode({
   editMode,
   onEditChange
 }) {
-  const pendingRef = (0, import_element153.useRef)(null);
-  const wasEditingRef = (0, import_element153.useRef)(editMode);
-  (0, import_element153.useEffect)(() => {
+  const pendingRef = (0, import_element154.useRef)(null);
+  const wasEditingRef = (0, import_element154.useRef)(editMode);
+  (0, import_element154.useEffect)(() => {
     if (!wasEditingRef.current && editMode && pendingRef.current) {
       const action = pendingRef.current;
       pendingRef.current = null;
@@ -44529,7 +44680,7 @@ function usePendingWhenEditMode({
     }
     wasEditingRef.current = editMode;
   }, [editMode]);
-  return (0, import_element153.useCallback)(
+  return (0, import_element154.useCallback)(
     (action) => {
       if (editMode) {
         action();
@@ -44553,14 +44704,14 @@ function Commands() {
     editMode,
     onEditChange
   });
-  const resetToDefault = (0, import_element154.useCallback)(
+  const resetToDefault = (0, import_element155.useCallback)(
     ({ close }) => {
       close();
       setResetDialogOpen(true);
     },
     [setResetDialogOpen]
   );
-  const addWidgets = (0, import_element154.useCallback)(
+  const addWidgets = (0, import_element155.useCallback)(
     ({ close }) => {
       close();
       runWhenInEditMode(() => {
@@ -44569,14 +44720,14 @@ function Commands() {
     },
     [runWhenInEditMode, setInserterOpen]
   );
-  const customize = (0, import_element154.useCallback)(
+  const customize = (0, import_element155.useCallback)(
     ({ close }) => {
       close();
       onEditChange?.(true);
     },
     [onEditChange]
   );
-  const commands = (0, import_element154.useMemo)(
+  const commands = (0, import_element155.useMemo)(
     () => [
       {
         name: "core/dashboard/customize",
@@ -44757,13 +44908,13 @@ function ResetConfirmation() {
 }
 
 // packages/widget-dashboard/build-module/components/widget-chrome/widget-chrome.mjs
-var import_element161 = __toESM(require_element(), 1);
+var import_element162 = __toESM(require_element(), 1);
 var import_i18n25 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/context/widget-context.mjs
-var import_element155 = __toESM(require_element(), 1);
+var import_element156 = __toESM(require_element(), 1);
 var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
-var WidgetContext = (0, import_element155.createContext)(null);
+var WidgetContext = (0, import_element156.createContext)(null);
 function WidgetContextProvider({
   value,
   children
@@ -44773,7 +44924,7 @@ function WidgetContextProvider({
 
 // packages/widget-dashboard/build-module/components/widget-frame/widget-frame.mjs
 var import_components4 = __toESM(require_components(), 1);
-var import_element160 = __toESM(require_element(), 1);
+var import_element161 = __toESM(require_element(), 1);
 var import_i18n24 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/utils/split-widget-actions.mjs
@@ -45019,10 +45170,10 @@ function WidgetFooter({
 
 // packages/widget-dashboard/build-module/components/widget-header/widget-header.mjs
 var import_compose18 = __toESM(require_compose(), 1);
-var import_element158 = __toESM(require_element(), 1);
+var import_element159 = __toESM(require_element(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-header/widget-header-infotip.mjs
-var import_element156 = __toESM(require_element(), 1);
+var import_element157 = __toESM(require_element(), 1);
 var import_i18n23 = __toESM(require_i18n(), 1);
 var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE89 = "data-wp-hash";
@@ -45131,7 +45282,7 @@ function WidgetInfotip({
           /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(popover_exports.Arrow, {}),
           /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(popover_exports.Title, {}), children: (0, import_i18n23.__)("More information") }),
           /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(Stack, { direction: "column", align: "start", gap: "sm", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(popover_exports.Description, { children: (0, import_element156.createInterpolateElement)(content, {
+            /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(popover_exports.Description, { children: (0, import_element157.createInterpolateElement)(content, {
               em: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)("em", {}),
               strong: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)("strong", {})
             }) }),
@@ -45153,13 +45304,13 @@ function WidgetInfotip({
 
 // packages/widget-dashboard/build-module/components/widget-header/widget-header-fit.mjs
 var import_compose17 = __toESM(require_compose(), 1);
-var import_element157 = __toESM(require_element(), 1);
-var WidgetHeaderAvailableSizeContext = (0, import_element157.createContext)(null);
+var import_element158 = __toESM(require_element(), 1);
+var WidgetHeaderAvailableSizeContext = (0, import_element158.createContext)(null);
 var WidgetHeaderAvailableSizeProvider = WidgetHeaderAvailableSizeContext.Provider;
 function useWidgetHeaderAvailableSize() {
-  return (0, import_element157.useContext)(WidgetHeaderAvailableSizeContext);
+  return (0, import_element158.useContext)(WidgetHeaderAvailableSizeContext);
 }
-var WidgetHeaderReserveContext = (0, import_element157.createContext)({
+var WidgetHeaderReserveContext = (0, import_element158.createContext)({
   registerReserved: () => {
   },
   unregisterReserved: () => {
@@ -45167,7 +45318,7 @@ var WidgetHeaderReserveContext = (0, import_element157.createContext)({
 });
 var WidgetHeaderReserveProvider = WidgetHeaderReserveContext.Provider;
 function useReserveHeaderSpace(id) {
-  const { registerReserved, unregisterReserved } = (0, import_element157.useContext)(
+  const { registerReserved, unregisterReserved } = (0, import_element158.useContext)(
     WidgetHeaderReserveContext
   );
   const ref = (0, import_compose17.useResizeObserver)(
@@ -45182,14 +45333,14 @@ function useReserveHeaderSpace(id) {
     },
     { box: "border-box" }
   );
-  (0, import_element157.useEffect)(
+  (0, import_element158.useEffect)(
     () => () => unregisterReserved(id),
     [id, unregisterReserved]
   );
   return ref;
 }
 function useReserveHeaderPadding(id) {
-  const { registerReserved, unregisterReserved } = (0, import_element157.useContext)(
+  const { registerReserved, unregisterReserved } = (0, import_element158.useContext)(
     WidgetHeaderReserveContext
   );
   const ref = (0, import_compose17.useResizeObserver)(
@@ -45200,7 +45351,7 @@ function useReserveHeaderPadding(id) {
     },
     { box: "border-box" }
   );
-  (0, import_element157.useEffect)(
+  (0, import_element158.useEffect)(
     () => () => unregisterReserved(id),
     [id, unregisterReserved]
   );
@@ -45301,11 +45452,11 @@ function WidgetHeader({
   editMode = false,
   children
 }) {
-  const [headerWidth, setHeaderWidth] = (0, import_element158.useState)(0);
+  const [headerWidth, setHeaderWidth] = (0, import_element159.useState)(0);
   const headerMeasureRef = (0, import_compose18.useResizeObserver)(
     ([entry]) => setHeaderWidth(entry.contentRect.width)
   );
-  const [identityReserve, setIdentityReserve] = (0, import_element158.useState)(0);
+  const [identityReserve, setIdentityReserve] = (0, import_element159.useState)(0);
   const identityMeasureRef = (0, import_compose18.useResizeObserver)(
     ([entry]) => {
       const { columnGap } = getComputedStyle(
@@ -45316,15 +45467,15 @@ function WidgetHeader({
       );
     }
   );
-  const [reserved, setReserved] = (0, import_element158.useState)(
+  const [reserved, setReserved] = (0, import_element159.useState)(
     {}
   );
-  const registerReserved = (0, import_element158.useCallback)((id, width) => {
+  const registerReserved = (0, import_element159.useCallback)((id, width) => {
     setReserved(
       (current) => current[id] === width ? current : { ...current, [id]: width }
     );
   }, []);
-  const unregisterReserved = (0, import_element158.useCallback)((id) => {
+  const unregisterReserved = (0, import_element159.useCallback)((id) => {
     setReserved((current) => {
       if (!(id in current)) {
         return current;
@@ -45334,7 +45485,7 @@ function WidgetHeader({
       return next;
     });
   }, []);
-  const reserveContext = (0, import_element158.useMemo)(
+  const reserveContext = (0, import_element159.useMemo)(
     () => ({ registerReserved, unregisterReserved }),
     [registerReserved, unregisterReserved]
   );
@@ -45396,12 +45547,12 @@ function WidgetHeader({
 }
 
 // packages/widget-dashboard/build-module/components/widget-render/widget-render.mjs
-var import_element159 = __toESM(require_element(), 1);
+var import_element160 = __toESM(require_element(), 1);
 import { WidgetRender as WidgetRenderPrimitive } from "@wordpress/widget-primitives";
 var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
 function WidgetRender({ widget, widgetType }) {
   const { layout, onLayoutChange, resolveWidgetModule } = useDashboardInternalContext();
-  const setAttributes = (0, import_element159.useCallback)(
+  const setAttributes = (0, import_element160.useCallback)(
     (next) => {
       onLayoutChange(
         layout.map(
@@ -45514,7 +45665,7 @@ if (typeof process === "undefined" || true) {
   registerStyle91("ca39d884d8", "._5848d9de101def77__content{flex:1;height:100%;min-height:0;min-width:0;overflow-y:auto}._998dd9aeb82b1f6a__bleed-content{padding:0}._605aa8383905f0a9__loading{height:100%}");
 }
 var widget_frame_default = { "content": "_5848d9de101def77__content", "bleed-content": "_998dd9aeb82b1f6a__bleed-content", "loading": "_605aa8383905f0a9__loading" };
-var WidgetErrorBoundary = class extends import_element160.Component {
+var WidgetErrorBoundary = class extends import_element161.Component {
   state = { hasError: false };
   static getDerivedStateFromError() {
     return { hasError: true };
@@ -45540,7 +45691,7 @@ function WidgetFrame({
   const isHeaderHidden = presentation === "full-bleed";
   const isBodyBleeding = presentation === "full-bleed" || presentation === "content-bleed";
   const { footer: footerActions } = splitWidgetActions(widgetType);
-  const body = /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(import_element160.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetRender, { widget, widgetType }) }) });
+  const body = /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(import_element161.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetRender, { widget, widgetType }) }) });
   return /* @__PURE__ */ (0, import_jsx_runtime232.jsxs)(import_jsx_runtime232.Fragment, { children: [
     !isHeaderHidden && /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
       WidgetHeader,
@@ -45682,12 +45833,12 @@ function UnavailableWidget({ widgetTypeName }) {
     ) })
   ] });
 }
-var WidgetChrome = (0, import_element161.forwardRef)(
+var WidgetChrome = (0, import_element162.forwardRef)(
   function WidgetChrome2({ widget, index: index2, className, headerToolbar }, ref) {
     const { widgetTypes, isResolvingWidgetTypes, editMode } = useDashboardInternalContext();
     const widgetType = widgetTypes.find((t2) => t2.name === widget.type);
-    const titleId = (0, import_element161.useId)();
-    const contextValue = (0, import_element161.useMemo)(
+    const titleId = (0, import_element162.useId)();
+    const contextValue = (0, import_element162.useMemo)(
       () => ({
         uuid: widget.uuid,
         name: widget.type,
@@ -45755,7 +45906,7 @@ var WidgetChrome = (0, import_element161.forwardRef)(
 );
 
 // packages/widget-dashboard/build-module/components/widget-inserter/widget-inserter.mjs
-var import_element242 = __toESM(require_element(), 1);
+var import_element243 = __toESM(require_element(), 1);
 var import_i18n78 = __toESM(require_i18n(), 1);
 
 // node_modules/uuid/dist/stringify.js
@@ -45818,7 +45969,7 @@ function createDashboardWidget(widgetType, initialAttributes) {
 }
 
 // packages/dataviews/build-module/components/dataviews-context/index.mjs
-var import_element162 = __toESM(require_element(), 1);
+var import_element163 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/constants.mjs
 var import_i18n26 = __toESM(require_i18n(), 1);
@@ -45873,7 +46024,7 @@ var MEDIA_ASPECT_RATIOS = [
 ];
 
 // packages/dataviews/build-module/components/dataviews-context/index.mjs
-var DataViewsContext = (0, import_element162.createContext)({
+var DataViewsContext = (0, import_element163.createContext)({
   view: { type: LAYOUT_TABLE },
   onChangeView: () => {
   },
@@ -45893,7 +46044,7 @@ var DataViewsContext = (0, import_element162.createContext)({
   isItemClickable: () => true,
   renderItemLink: void 0,
   containerWidth: 0,
-  containerRef: (0, import_element162.createRef)(),
+  containerRef: (0, import_element163.createRef)(),
   resizeObserverRef: () => {
   },
   defaultLayouts: { list: {}, grid: {}, table: {} },
@@ -45916,7 +46067,7 @@ var import_i18n48 = __toESM(require_i18n(), 1);
 // packages/dataviews/build-module/components/dataviews-layouts/table/index.mjs
 var import_i18n34 = __toESM(require_i18n(), 1);
 var import_components10 = __toESM(require_components(), 1);
-var import_element171 = __toESM(require_element(), 1);
+var import_element172 = __toESM(require_element(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
 
 // packages/dataviews/build-module/components/dataviews-selection-checkbox/index.mjs
@@ -45960,7 +46111,7 @@ function DataViewsSelectionCheckbox({
 // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
 var import_components6 = __toESM(require_components(), 1);
 var import_i18n28 = __toESM(require_i18n(), 1);
-var import_element163 = __toESM(require_element(), 1);
+var import_element164 = __toESM(require_element(), 1);
 var import_data2 = __toESM(require_data(), 1);
 var import_compose19 = __toESM(require_compose(), 1);
 
@@ -46097,7 +46248,7 @@ function ActionsMenuGroup({
   registry,
   setActiveModalAction
 }) {
-  const { primaryActions, regularActions } = (0, import_element163.useMemo)(() => {
+  const { primaryActions, regularActions } = (0, import_element164.useMemo)(() => {
     return actions.reduce(
       (acc, action) => {
         (action.isPrimary ? acc.primaryActions : acc.regularActions).push(action);
@@ -46135,7 +46286,7 @@ function ItemActions({
   isCompact
 }) {
   const registry = (0, import_data2.useRegistry)();
-  const { primaryActions, eligibleActions } = (0, import_element163.useMemo)(() => {
+  const { primaryActions, eligibleActions } = (0, import_element164.useMemo)(() => {
     const _eligibleActions = actions.filter(
       (action) => !action.isEligible || action.isEligible(item)
     );
@@ -46198,7 +46349,7 @@ function CompactItemActions({
   isSmall,
   registry
 }) {
-  const [activeModalAction, setActiveModalAction] = (0, import_element163.useState)(
+  const [activeModalAction, setActiveModalAction] = (0, import_element164.useState)(
     null
   );
   return /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)(import_jsx_runtime235.Fragment, { children: [
@@ -46245,7 +46396,7 @@ function PrimaryActions({
   registry,
   buttonVariant
 }) {
-  const [activeModalAction, setActiveModalAction] = (0, import_element163.useState)(null);
+  const [activeModalAction, setActiveModalAction] = (0, import_element164.useState)(null);
   const isMobileViewport = (0, import_compose19.useViewportMatch)("medium", "<");
   if (isMobileViewport) {
     return null;
@@ -46284,7 +46435,7 @@ function PrimaryActions({
 // packages/dataviews/build-module/components/dataviews-bulk-actions/index.mjs
 var import_components7 = __toESM(require_components(), 1);
 var import_i18n30 = __toESM(require_i18n(), 1);
-var import_element164 = __toESM(require_element(), 1);
+var import_element165 = __toESM(require_element(), 1);
 var import_data3 = __toESM(require_data(), 1);
 var import_compose20 = __toESM(require_compose(), 1);
 
@@ -46321,13 +46472,13 @@ function hasAPossibleBulkAction(actions, item) {
   );
 }
 function useHasAPossibleBulkAction(actions, item) {
-  return (0, import_element164.useMemo)(
+  return (0, import_element165.useMemo)(
     () => hasAPossibleBulkAction(actions, item),
     [actions, item]
   );
 }
 function useSomeItemHasAPossibleBulkAction(actions, data) {
-  return (0, import_element164.useMemo)(
+  return (0, import_element165.useMemo)(
     () => data.some((item) => hasAPossibleBulkAction(actions, item)),
     [actions, data]
   );
@@ -46340,7 +46491,7 @@ function BulkSelectionCheckbox({
   getItemId: getItemId2,
   disableSelectAll = false
 }) {
-  const selectableItems = (0, import_element164.useMemo)(() => {
+  const selectableItems = (0, import_element165.useMemo)(() => {
     return data.filter((item) => {
       return actions.some(
         (action) => action.supportsBulk && (!action.isEligible || action.isEligible(item))
@@ -46389,7 +46540,7 @@ function BulkSelectionCheckbox({
 // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
 var import_i18n31 = __toESM(require_i18n(), 1);
 var import_components8 = __toESM(require_components(), 1);
-var import_element165 = __toESM(require_element(), 1);
+var import_element166 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/utils/get-hideable-fields.mjs
 function getHideableFields(view, fields2) {
@@ -46406,12 +46557,12 @@ function getHideableFields(view, fields2) {
 // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
 var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
 function WithMenuSeparators({ children }) {
-  return import_element165.Children.toArray(children).filter(Boolean).map((child, i2) => /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)(import_element165.Fragment, { children: [
+  return import_element166.Children.toArray(children).filter(Boolean).map((child, i2) => /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)(import_element166.Fragment, { children: [
     i2 > 0 && /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(menu_exports.Separator, {}),
     child
   ] }, i2));
 }
-var _HeaderMenu = (0, import_element165.forwardRef)(function HeaderMenu({
+var _HeaderMenu = (0, import_element166.forwardRef)(function HeaderMenu({
   fieldId,
   view,
   fields: fields2,
@@ -46430,7 +46581,7 @@ var _HeaderMenu = (0, import_element165.forwardRef)(function HeaderMenu({
   let canAddFilter = false;
   let operators = [];
   const field = fields2.find((f2) => f2.id === fieldId);
-  const { setIsShowingFilter } = (0, import_element165.useContext)(dataviews_context_default);
+  const { setIsShowingFilter } = (0, import_element166.useContext)(dataviews_context_default);
   if (!field) {
     return null;
   }
@@ -46645,7 +46796,7 @@ var ColumnHeaderMenu = _HeaderMenu;
 var column_header_menu_default = ColumnHeaderMenu;
 
 // packages/dataviews/build-module/components/dataviews-layouts/utils/item-click-wrapper.mjs
-var import_element166 = __toESM(require_element(), 1);
+var import_element167 = __toESM(require_element(), 1);
 var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
 function getClickableItemProps({
   item,
@@ -46691,7 +46842,7 @@ function ItemClickWrapper({
       ...extraProps,
       children
     });
-    return (0, import_element166.cloneElement)(renderedElement, {
+    return (0, import_element167.cloneElement)(renderedElement, {
       onClick: (event) => {
         event.stopPropagation();
         if (renderedElement.props.onClick) {
@@ -46797,7 +46948,7 @@ function ColumnPrimary({
 var column_primary_default = ColumnPrimary;
 
 // packages/dataviews/build-module/components/dataviews-layouts/table/use-scroll-state.mjs
-var import_element167 = __toESM(require_element(), 1);
+var import_element168 = __toESM(require_element(), 1);
 var import_i18n32 = __toESM(require_i18n(), 1);
 var isScrolledToEnd = (element) => {
   if ((0, import_i18n32.isRTL)()) {
@@ -46810,9 +46961,9 @@ function useScrollState({
   scrollContainerRef,
   enabledHorizontal = false
 }) {
-  const [isHorizontalScrollEnd, setIsHorizontalScrollEnd] = (0, import_element167.useState)(false);
-  const [isVerticallyScrolled, setIsVerticallyScrolled] = (0, import_element167.useState)(false);
-  const handleScroll = (0, import_element167.useCallback)(() => {
+  const [isHorizontalScrollEnd, setIsHorizontalScrollEnd] = (0, import_element168.useState)(false);
+  const [isVerticallyScrolled, setIsVerticallyScrolled] = (0, import_element168.useState)(false);
+  const handleScroll = (0, import_element168.useCallback)(() => {
     const scrollContainer = scrollContainerRef.current;
     if (!scrollContainer) {
       return;
@@ -46822,7 +46973,7 @@ function useScrollState({
     }
     setIsVerticallyScrolled(scrollContainer.scrollTop > 0);
   }, [scrollContainerRef, enabledHorizontal]);
-  (0, import_element167.useEffect)(() => {
+  (0, import_element168.useEffect)(() => {
     if (typeof window === "undefined" || !scrollContainerRef.current) {
       return () => {
       };
@@ -46852,7 +47003,7 @@ function getDataByGroup(data, groupByField) {
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/utils/use-selection-props.mjs
-var import_element168 = __toESM(require_element(), 1);
+var import_element169 = __toESM(require_element(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
 function getRange(orderedIds, fromIndex, toIndex) {
   return orderedIds.slice(
@@ -46919,12 +47070,12 @@ function useSelectionProps({
 }) {
   const isMultiselect = selectionMode === "multi";
   const allowDeselect = selectionMode !== "single-required";
-  const gestureRef = (0, import_element168.useRef)(null);
+  const gestureRef = (0, import_element169.useRef)(null);
   const anchorTo = (id) => {
     gestureRef.current = { anchorId: id, lastTargetId: null };
   };
-  const isTouchDeviceRef = (0, import_element168.useRef)(false);
-  (0, import_element168.useEffect)(() => {
+  const isTouchDeviceRef = (0, import_element169.useRef)(false);
+  (0, import_element169.useEffect)(() => {
     const markTouchDevice = () => {
       isTouchDeviceRef.current = true;
     };
@@ -47024,7 +47175,7 @@ function useSelectionProps({
 // packages/dataviews/build-module/components/dataviews-view-config/properties-section.mjs
 var import_components9 = __toESM(require_components(), 1);
 var import_i18n33 = __toESM(require_i18n(), 1);
-var import_element169 = __toESM(require_element(), 1);
+var import_element170 = __toESM(require_element(), 1);
 var import_jsx_runtime240 = __toESM(require_jsx_runtime(), 1);
 function FieldItem3({
   field,
@@ -47042,7 +47193,7 @@ function isDefined(item) {
 function PropertiesSection({
   showLabel = true
 }) {
-  const { view, fields: fields2, onChangeView } = (0, import_element169.useContext)(dataviews_context_default);
+  const { view, fields: fields2, onChangeView } = (0, import_element170.useContext)(dataviews_context_default);
   const regularFields = getHideableFields(view, fields2);
   if (!regularFields?.length) {
     return null;
@@ -47128,10 +47279,10 @@ function PropertiesSection({
 }
 
 // packages/dataviews/build-module/hooks/use-delayed-loading.mjs
-var import_element170 = __toESM(require_element(), 1);
+var import_element171 = __toESM(require_element(), 1);
 function useDelayedLoading(isLoading, options = { delay: 400 }) {
-  const [showLoader, setShowLoader] = (0, import_element170.useState)(false);
-  (0, import_element170.useEffect)(() => {
+  const [showLoader, setShowLoader] = (0, import_element171.useState)(false);
+  (0, import_element171.useEffect)(() => {
     if (!isLoading) {
       return;
     }
@@ -47196,7 +47347,7 @@ function TableRow({
   isActionsColumnSticky,
   posinset
 }) {
-  const { paginationInfo } = (0, import_element171.useContext)(dataviews_context_default);
+  const { paginationInfo } = (0, import_element172.useContext)(dataviews_context_default);
   const hasPossibleBulkAction = useHasAPossibleBulkAction(actions, item);
   const isSelected2 = hasPossibleBulkAction && selection.includes(id);
   const {
@@ -47314,7 +47465,7 @@ function ViewTable({
   className,
   empty
 }) {
-  const { containerRef } = (0, import_element171.useContext)(dataviews_context_default);
+  const { containerRef } = (0, import_element172.useContext)(dataviews_context_default);
   const isDelayedLoading = useDelayedLoading(isLoading);
   const groupField = view.groupBy?.field ? fields2.find((f2) => f2.id === view.groupBy?.field) : null;
   const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
@@ -47328,17 +47479,17 @@ function ViewTable({
     selectionMode: "multi",
     shouldSelectOnClick: false
   });
-  const headerMenuRefs = (0, import_element171.useRef)(/* @__PURE__ */ new Map());
-  const headerMenuToFocusRef = (0, import_element171.useRef)(void 0);
-  const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element171.useState)();
-  const [contextMenuAnchor, setContextMenuAnchor] = (0, import_element171.useState)(null);
-  (0, import_element171.useEffect)(() => {
+  const headerMenuRefs = (0, import_element172.useRef)(/* @__PURE__ */ new Map());
+  const headerMenuToFocusRef = (0, import_element172.useRef)(void 0);
+  const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element172.useState)();
+  const [contextMenuAnchor, setContextMenuAnchor] = (0, import_element172.useState)(null);
+  (0, import_element172.useEffect)(() => {
     if (headerMenuToFocusRef.current) {
       headerMenuToFocusRef.current.focus();
       headerMenuToFocusRef.current = void 0;
     }
   });
-  const tableNoticeId = (0, import_element171.useId)();
+  const tableNoticeId = (0, import_element172.useId)();
   const { isHorizontalScrollEnd, isVerticallyScrolled } = useScrollState({
     scrollContainerRef: containerRef,
     enabledHorizontal: !!actions?.length
@@ -47644,12 +47795,12 @@ var import_i18n37 = __toESM(require_i18n(), 1);
 var import_components12 = __toESM(require_components(), 1);
 var import_i18n36 = __toESM(require_i18n(), 1);
 var import_compose21 = __toESM(require_compose(), 1);
-var import_element175 = __toESM(require_element(), 1);
+var import_element176 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/preview-size-picker.mjs
 var import_components11 = __toESM(require_components(), 1);
 var import_i18n35 = __toESM(require_i18n(), 1);
-var import_element172 = __toESM(require_element(), 1);
+var import_element173 = __toESM(require_element(), 1);
 var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
 var imageSizes = [
   {
@@ -47682,9 +47833,9 @@ var imageSizes = [
 ];
 var DEFAULT_PREVIEW_SIZE = imageSizes[2].value;
 function useGridColumns() {
-  const context = (0, import_element172.useContext)(dataviews_context_default);
+  const context = (0, import_element173.useContext)(dataviews_context_default);
   const view = context.view;
-  return (0, import_element172.useMemo)(() => {
+  return (0, import_element173.useMemo)(() => {
     const containerWidth = context.containerWidth;
     const gap = 32;
     const previewSize = view.layout?.previewSize ?? DEFAULT_PREVIEW_SIZE;
@@ -47696,9 +47847,9 @@ function useGridColumns() {
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/utils/grid-items.mjs
-var import_element173 = __toESM(require_element(), 1);
+var import_element174 = __toESM(require_element(), 1);
 var import_jsx_runtime243 = __toESM(require_jsx_runtime(), 1);
-var GridItems = (0, import_element173.forwardRef)(({ className, previewSize, style, ...props }, ref) => {
+var GridItems = (0, import_element174.forwardRef)(({ className, previewSize, style, ...props }, ref) => {
   return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
     "div",
     {
@@ -47714,10 +47865,10 @@ var GridItems = (0, import_element173.forwardRef)(({ className, previewSize, sty
 });
 
 // packages/dataviews/build-module/components/dataviews-layouts/utils/use-infinite-scroll.mjs
-var import_element174 = __toESM(require_element(), 1);
+var import_element175 = __toESM(require_element(), 1);
 function useIntersectionObserver(elementRef, posinset) {
-  const { intersectionObserver } = (0, import_element174.useContext)(dataviews_context_default);
-  (0, import_element174.useEffect)(() => {
+  const { intersectionObserver } = (0, import_element175.useContext)(dataviews_context_default);
+  (0, import_element175.useEffect)(() => {
     const element = elementRef.current;
     if (!element || posinset === void 0 || !intersectionObserver) {
       return;
@@ -47743,7 +47894,7 @@ function chunk(array, size4) {
   }
   return chunks;
 }
-var GridItem = (0, import_element175.forwardRef)(
+var GridItem = (0, import_element176.forwardRef)(
   function GridItem2({
     view,
     selection,
@@ -47772,8 +47923,8 @@ var GridItem = (0, import_element175.forwardRef)(
     } = view;
     const hasBulkAction = useHasAPossibleBulkAction(actions, item);
     const id = getItemId2(item);
-    const elementRef = (0, import_element175.useRef)(null);
-    const setRefs = (0, import_element175.useCallback)(
+    const elementRef = (0, import_element176.useRef)(null);
+    const setRefs = (0, import_element176.useCallback)(
       (node) => {
         elementRef.current = node;
         if (typeof forwardedRef === "function") {
@@ -47988,7 +48139,7 @@ function CompositeGrid({
   actions,
   getSelectionProps
 }) {
-  const { paginationInfo, resizeObserverRef } = (0, import_element175.useContext)(dataviews_context_default);
+  const { paginationInfo, resizeObserverRef } = (0, import_element176.useContext)(dataviews_context_default);
   const gridColumns = useGridColumns();
   const gridStyle = {
     "--wp-dataviews-media-aspect-ratio": view.layout?.aspectRatio && MEDIA_ASPECT_RATIOS.includes(view.layout.aspectRatio) ? view.layout.aspectRatio : "1/1"
@@ -48331,7 +48482,7 @@ var grid_default = ViewGrid;
 // packages/dataviews/build-module/components/dataviews-layouts/list/index.mjs
 var import_compose22 = __toESM(require_compose(), 1);
 var import_components14 = __toESM(require_components(), 1);
-var import_element176 = __toESM(require_element(), 1);
+var import_element177 = __toESM(require_element(), 1);
 var import_i18n38 = __toESM(require_i18n(), 1);
 var import_data4 = __toESM(require_data(), 1);
 var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
@@ -48350,7 +48501,7 @@ function PrimaryActionGridCell({
   item
 }) {
   const registry = (0, import_data4.useRegistry)();
-  const [isModalOpen, setIsModalOpen] = (0, import_element176.useState)(false);
+  const [isModalOpen, setIsModalOpen] = (0, import_element177.useState)(false);
   const compositeItemId = generatePrimaryActionCompositeId(
     idPrefix,
     primaryAction.id
@@ -48418,20 +48569,20 @@ function ListItem({
     showDescription = true,
     infiniteScrollEnabled
   } = view;
-  const itemRef = (0, import_element176.useRef)(null);
+  const itemRef = (0, import_element177.useRef)(null);
   const labelId = `${idPrefix}-label`;
   const descriptionId = `${idPrefix}-description`;
   const registry = (0, import_data4.useRegistry)();
-  const [isHovered, setIsHovered] = (0, import_element176.useState)(false);
-  const [activeModalAction, setActiveModalAction] = (0, import_element176.useState)(
+  const [isHovered, setIsHovered] = (0, import_element177.useState)(false);
+  const [activeModalAction, setActiveModalAction] = (0, import_element177.useState)(
     null
   );
   const handleHover = ({ type }) => {
     const isHover = type === "mouseenter";
     setIsHovered(isHover);
   };
-  const { paginationInfo } = (0, import_element176.useContext)(dataviews_context_default);
-  (0, import_element176.useEffect)(() => {
+  const { paginationInfo } = (0, import_element177.useContext)(dataviews_context_default);
+  (0, import_element177.useEffect)(() => {
     if (isSelected2) {
       itemRef.current?.scrollIntoView({
         behavior: "auto",
@@ -48440,7 +48591,7 @@ function ListItem({
       });
     }
   }, [isSelected2]);
-  const { primaryAction, eligibleActions } = (0, import_element176.useMemo)(() => {
+  const { primaryAction, eligibleActions } = (0, import_element177.useMemo)(() => {
     const _eligibleActions = actions.filter(
       (action) => !action.isEligible || action.isEligible(item)
     );
@@ -48668,7 +48819,7 @@ function ViewList(props) {
   } = props;
   const baseId = (0, import_compose22.useInstanceId)(ViewList, "view-list");
   const isDelayedLoading = useDelayedLoading(!!isLoading);
-  const { paginationInfo } = (0, import_element176.useContext)(dataviews_context_default);
+  const { paginationInfo } = (0, import_element177.useContext)(dataviews_context_default);
   const selectedItem = data?.findLast(
     (item) => selection.includes(getItemId2(item))
   );
@@ -48687,11 +48838,11 @@ function ViewList(props) {
     selectionMode: "single-required",
     shouldSelectOnClick: true
   });
-  const generateCompositeItemIdPrefix = (0, import_element176.useCallback)(
+  const generateCompositeItemIdPrefix = (0, import_element177.useCallback)(
     (item) => `${baseId}-${getItemId2(item)}`,
     [baseId, getItemId2]
   );
-  const isActiveCompositeItem = (0, import_element176.useCallback)(
+  const isActiveCompositeItem = (0, import_element177.useCallback)(
     (item, idToCheck) => {
       return idToCheck.startsWith(
         generateCompositeItemIdPrefix(item)
@@ -48699,9 +48850,9 @@ function ViewList(props) {
     },
     [generateCompositeItemIdPrefix]
   );
-  const [activeCompositeId, setActiveCompositeId] = (0, import_element176.useState)(void 0);
-  const compositeRef = (0, import_element176.useRef)(null);
-  (0, import_element176.useEffect)(() => {
+  const [activeCompositeId, setActiveCompositeId] = (0, import_element177.useState)(void 0);
+  const compositeRef = (0, import_element177.useRef)(null);
+  (0, import_element177.useEffect)(() => {
     if (selectedItem) {
       setActiveCompositeId(
         generateItemWrapperCompositeId(
@@ -48715,7 +48866,7 @@ function ViewList(props) {
   );
   const previousActiveItemIndex = (0, import_compose22.usePrevious)(activeItemIndex);
   const isActiveIdInList = activeItemIndex !== -1;
-  const selectCompositeItem = (0, import_element176.useCallback)(
+  const selectCompositeItem = (0, import_element177.useCallback)(
     (targetIndex, generateCompositeId) => {
       const clampedIndex = Math.min(
         data.length - 1,
@@ -48737,7 +48888,7 @@ function ViewList(props) {
     },
     [data, generateCompositeItemIdPrefix]
   );
-  (0, import_element176.useEffect)(() => {
+  (0, import_element177.useEffect)(() => {
     const wasActiveIdInList = previousActiveItemIndex !== void 0 && previousActiveItemIndex !== -1;
     if (!isActiveIdInList && wasActiveIdInList) {
       selectCompositeItem(
@@ -48746,7 +48897,7 @@ function ViewList(props) {
       );
     }
   }, [isActiveIdInList, selectCompositeItem, previousActiveItemIndex]);
-  const onDropdownTriggerKeyDown = (0, import_element176.useCallback)(
+  const onDropdownTriggerKeyDown = (0, import_element177.useCallback)(
     (event) => {
       if (event.key === "ArrowDown") {
         event.preventDefault();
@@ -48888,7 +49039,7 @@ var import_components15 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-group.mjs
 var import_i18n39 = __toESM(require_i18n(), 1);
-var import_element177 = __toESM(require_element(), 1);
+var import_element178 = __toESM(require_element(), 1);
 var import_jsx_runtime247 = __toESM(require_jsx_runtime(), 1);
 function ActivityGroup({
   groupName,
@@ -48897,7 +49048,7 @@ function ActivityGroup({
   showLabel = true,
   children
 }) {
-  const groupHeader = showLabel ? (0, import_element177.createInterpolateElement)(
+  const groupHeader = showLabel ? (0, import_element178.createInterpolateElement)(
     // translators: %s: The label of the field e.g. "Status".
     (0, import_i18n39.sprintf)((0, import_i18n39.__)("%s: <groupName />"), groupField.label).trim(),
     {
@@ -48925,7 +49076,7 @@ function ActivityGroup({
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-item.mjs
-var import_element178 = __toESM(require_element(), 1);
+var import_element179 = __toESM(require_element(), 1);
 var import_data5 = __toESM(require_data(), 1);
 var import_compose23 = __toESM(require_compose(), 1);
 var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
@@ -48949,10 +49100,10 @@ function ActivityItem(props) {
     showDescription = true,
     infiniteScrollEnabled
   } = view;
-  const itemRef = (0, import_element178.useRef)(null);
+  const itemRef = (0, import_element179.useRef)(null);
   const registry = (0, import_data5.useRegistry)();
-  const { paginationInfo } = (0, import_element178.useContext)(dataviews_context_default);
-  const { primaryActions, eligibleActions } = (0, import_element178.useMemo)(() => {
+  const { paginationInfo } = (0, import_element179.useContext)(dataviews_context_default);
+  const { primaryActions, eligibleActions } = (0, import_element179.useMemo)(() => {
     const _eligibleActions = actions.filter(
       (action) => !action.isEligible || action.isEligible(item)
     );
@@ -48984,7 +49135,7 @@ function ActivityItem(props) {
     }
   ) });
   const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(titleField.render, { item, field: titleField }) : null;
-  const verticalGap = (0, import_element178.useMemo)(() => {
+  const verticalGap = (0, import_element179.useMemo)(() => {
     switch (density) {
       case "comfortable":
         return "md";
@@ -49198,24 +49349,24 @@ function ViewActivity(props) {
 var import_components18 = __toESM(require_components(), 1);
 var import_i18n42 = __toESM(require_i18n(), 1);
 var import_compose24 = __toESM(require_compose(), 1);
-var import_element181 = __toESM(require_element(), 1);
+var import_element182 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
 var import_components17 = __toESM(require_components(), 1);
 var import_data6 = __toESM(require_data(), 1);
-var import_element180 = __toESM(require_element(), 1);
+var import_element181 = __toESM(require_element(), 1);
 var import_i18n41 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/components/dataviews-pagination/index.mjs
 var import_components16 = __toESM(require_components(), 1);
-var import_element179 = __toESM(require_element(), 1);
+var import_element180 = __toESM(require_element(), 1);
 var import_i18n40 = __toESM(require_i18n(), 1);
 var import_jsx_runtime250 = __toESM(require_jsx_runtime(), 1);
 function hasPaginationControls(view, paginationInfo) {
   return !view.infiniteScrollEnabled && paginationInfo.totalItems > 0 && paginationInfo.totalPages > 1;
 }
 function DataViewsPagination() {
-  const { view, onChangeView, paginationInfo } = (0, import_element179.useContext)(dataviews_context_default);
+  const { view, onChangeView, paginationInfo } = (0, import_element180.useContext)(dataviews_context_default);
   if (!hasPaginationControls(view, paginationInfo)) {
     return null;
   }
@@ -49253,7 +49404,7 @@ function DataViewsPagination() {
             align: "center",
             gap: "xs",
             className: "dataviews-pagination__page-select",
-            children: (0, import_element179.createInterpolateElement)(
+            children: (0, import_element180.createInterpolateElement)(
               (0, import_i18n40.sprintf)(
                 // translators: 1: Current page number, 2: Total number of pages.
                 (0, import_i18n40._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"),
@@ -49318,13 +49469,13 @@ function DataViewsPagination() {
     }
   );
 }
-var dataviews_pagination_default = (0, import_element179.memo)(DataViewsPagination);
+var dataviews_pagination_default = (0, import_element180.memo)(DataViewsPagination);
 
 // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
 var import_jsx_runtime251 = __toESM(require_jsx_runtime(), 1);
 var EMPTY_ARRAY2 = [];
 function useIsMultiselectPicker(actions) {
-  return (0, import_element180.useMemo)(() => {
+  return (0, import_element181.useMemo)(() => {
     return !!actions?.length && actions?.every((action) => action.supportsBulk);
   }, [actions]);
 }
@@ -49385,7 +49536,7 @@ function ActionButtons({
   selection
 }) {
   const registry = (0, import_data6.useRegistry)();
-  const [actionInProgress, setActionInProgress] = (0, import_element180.useState)(
+  const [actionInProgress, setActionInProgress] = (0, import_element181.useState)(
     null
   );
   return /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(Stack, { direction: "row", gap: "xs", children: actions.map((action) => {
@@ -49427,9 +49578,9 @@ function PickerBulkSelectionInfo() {
     actions = EMPTY_ARRAY2,
     paginationInfo,
     view
-  } = (0, import_element180.useContext)(dataviews_context_default);
+  } = (0, import_element181.useContext)(dataviews_context_default);
   const isMultiselect = useIsMultiselectPicker(actions);
-  const selectedItems = (0, import_element180.useMemo)(
+  const selectedItems = (0, import_element181.useMemo)(
     () => data.filter((item) => selection.includes(getItemId2(item))),
     [selection, getItemId2, data]
   );
@@ -49472,8 +49623,8 @@ function PickerActions() {
     selection,
     getItemId: getItemId2,
     actions = EMPTY_ARRAY2
-  } = (0, import_element180.useContext)(dataviews_context_default);
-  const selectedItems = (0, import_element180.useMemo)(
+  } = (0, import_element181.useContext)(dataviews_context_default);
+  const selectedItems = (0, import_element181.useMemo)(
     () => data.filter((item) => selection.includes(getItemId2(item))),
     [selection, getItemId2, data]
   );
@@ -49500,7 +49651,7 @@ function DataViewsPickerFooter() {
     actions = EMPTY_ARRAY2,
     paginationInfo,
     view
-  } = (0, import_element180.useContext)(dataviews_context_default);
+  } = (0, import_element181.useContext)(dataviews_context_default);
   const hasPagination = !view.infiniteScrollEnabled && !!paginationInfo.totalItems && paginationInfo.totalPages > 1;
   if (!actions.length && !hasPagination) {
     return null;
@@ -49542,7 +49693,7 @@ function GridItem3({
 }) {
   const { showTitle = true, showMedia = true, showDescription = true } = view;
   const id = getItemId2(item);
-  const elementRef = (0, import_element181.useRef)(null);
+  const elementRef = (0, import_element182.useRef)(null);
   const isSelected2 = selection.includes(id);
   useIntersectionObserver(elementRef, posinset);
   const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
@@ -49724,7 +49875,7 @@ function ViewPickerGrid({
   className,
   empty
 }) {
-  const { resizeObserverRef, paginationInfo, itemListLabel } = (0, import_element181.useContext)(dataviews_context_default);
+  const { resizeObserverRef, paginationInfo, itemListLabel } = (0, import_element182.useContext)(dataviews_context_default);
   const titleField = fields2.find(
     (field) => field.id === view?.titleField
   );
@@ -49951,7 +50102,7 @@ var picker_grid_default = ViewPickerGrid;
 // packages/dataviews/build-module/components/dataviews-layouts/picker-table/index.mjs
 var import_i18n43 = __toESM(require_i18n(), 1);
 var import_components19 = __toESM(require_components(), 1);
-var import_element182 = __toESM(require_element(), 1);
+var import_element183 = __toESM(require_element(), 1);
 var import_jsx_runtime253 = __toESM(require_jsx_runtime(), 1);
 function TableColumnField2({
   item,
@@ -49983,10 +50134,10 @@ function TableRow2({
   selectionProps,
   posinset
 }) {
-  const { paginationInfo } = (0, import_element182.useContext)(dataviews_context_default);
+  const { paginationInfo } = (0, import_element183.useContext)(dataviews_context_default);
   const isSelected2 = selection.includes(id);
-  const [isHovered, setIsHovered] = (0, import_element182.useState)(false);
-  const elementRef = (0, import_element182.useRef)(null);
+  const [isHovered, setIsHovered] = (0, import_element183.useState)(false);
+  const elementRef = (0, import_element183.useRef)(null);
   useIntersectionObserver(elementRef, posinset);
   const {
     showTitle = true,
@@ -50114,11 +50265,11 @@ function ViewPickerTable({
   className,
   empty
 }) {
-  const headerMenuRefs = (0, import_element182.useRef)(/* @__PURE__ */ new Map());
-  const headerMenuToFocusRef = (0, import_element182.useRef)(void 0);
-  const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element182.useState)();
+  const headerMenuRefs = (0, import_element183.useRef)(/* @__PURE__ */ new Map());
+  const headerMenuToFocusRef = (0, import_element183.useRef)(void 0);
+  const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element183.useState)();
   const isMultiselect = useIsMultiselectPicker(actions) ?? false;
-  (0, import_element182.useEffect)(() => {
+  (0, import_element183.useEffect)(() => {
     if (headerMenuToFocusRef.current) {
       headerMenuToFocusRef.current.focus();
       headerMenuToFocusRef.current = void 0;
@@ -50137,7 +50288,7 @@ function ViewPickerTable({
     selectionMode: isMultiselect ? "multi" : "single-clearable",
     shouldSelectOnClick: true
   });
-  const tableNoticeId = (0, import_element182.useId)();
+  const tableNoticeId = (0, import_element183.useId)();
   if (nextHeaderMenuToFocus) {
     headerMenuToFocusRef.current = nextHeaderMenuToFocus;
     setNextHeaderMenuToFocus(void 0);
@@ -50362,7 +50513,7 @@ var picker_table_default = ViewPickerTable;
 
 // packages/dataviews/build-module/components/dataviews-layouts/picker-activity/index.mjs
 var import_components20 = __toESM(require_components(), 1);
-var import_element183 = __toESM(require_element(), 1);
+var import_element184 = __toESM(require_element(), 1);
 var import_compose25 = __toESM(require_compose(), 1);
 var import_i18n44 = __toESM(require_i18n(), 1);
 var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
@@ -50382,7 +50533,7 @@ function PickerActivityItem({
   posinset,
   setsize
 }) {
-  const elementRef = (0, import_element183.useRef)(null);
+  const elementRef = (0, import_element184.useRef)(null);
   useIntersectionObserver(elementRef, posinset);
   const { showTitle = true, showMedia = true, showDescription = true } = view;
   const id = getItemId2(item);
@@ -50407,7 +50558,7 @@ function PickerActivityItem({
   ) });
   const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(titleField.render, { item, field: titleField }) : null;
   const renderedDescriptionField = showDescription && descriptionField?.render ? /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(descriptionField.render, { item, field: descriptionField }) : null;
-  const verticalGap = (0, import_element183.useMemo)(() => {
+  const verticalGap = (0, import_element184.useMemo)(() => {
     switch (density) {
       case "comfortable":
         return "md";
@@ -50533,7 +50684,7 @@ function ViewPickerActivity({
   className,
   empty
 }) {
-  const { itemListLabel, paginationInfo } = (0, import_element183.useContext)(dataviews_context_default);
+  const { itemListLabel, paginationInfo } = (0, import_element184.useContext)(dataviews_context_default);
   const isMultiselect = useIsMultiselectPicker(actions);
   const titleField = fields2.find(
     (field) => field.id === view?.titleField
@@ -50626,10 +50777,10 @@ function ViewPickerActivity({
 // packages/dataviews/build-module/components/dataviews-layouts/utils/density-picker.mjs
 var import_components21 = __toESM(require_components(), 1);
 var import_i18n45 = __toESM(require_i18n(), 1);
-var import_element184 = __toESM(require_element(), 1);
+var import_element185 = __toESM(require_element(), 1);
 var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
 function DensityPicker() {
-  const context = (0, import_element184.useContext)(dataviews_context_default);
+  const context = (0, import_element185.useContext)(dataviews_context_default);
   const view = context.view;
   return /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(
     import_components21.__experimentalToggleGroupControl,
@@ -50682,10 +50833,10 @@ function DensityPicker() {
 // packages/dataviews/build-module/components/dataviews-layouts/utils/media-fit-control.mjs
 var import_components22 = __toESM(require_components(), 1);
 var import_i18n46 = __toESM(require_i18n(), 1);
-var import_element185 = __toESM(require_element(), 1);
+var import_element186 = __toESM(require_element(), 1);
 var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
 function MediaFitControl() {
-  const context = (0, import_element185.useContext)(dataviews_context_default);
+  const context = (0, import_element186.useContext)(dataviews_context_default);
   const view = context.view;
   if (!context.config?.mediaFitControl) {
     return null;
@@ -50715,7 +50866,7 @@ function MediaFitControl() {
 // packages/dataviews/build-module/components/dataviews-layouts/utils/preview-size-picker.mjs
 var import_components23 = __toESM(require_components(), 1);
 var import_i18n47 = __toESM(require_i18n(), 1);
-var import_element186 = __toESM(require_element(), 1);
+var import_element187 = __toESM(require_element(), 1);
 var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
 var imageSizes2 = [
   {
@@ -50747,7 +50898,7 @@ var imageSizes2 = [
   }
 ];
 function PreviewSizePicker() {
-  const context = (0, import_element186.useContext)(dataviews_context_default);
+  const context = (0, import_element187.useContext)(dataviews_context_default);
   const view = context.view;
   const breakValues = imageSizes2.filter((size4) => {
     return context.containerWidth >= size4.breakpoint;
@@ -50850,12 +51001,12 @@ var VIEW_LAYOUTS = [
 ];
 
 // packages/dataviews/build-module/components/dataviews-filters/filters.mjs
-var import_element194 = __toESM(require_element(), 1);
+var import_element195 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataviews-filters/filter.mjs
 var import_components26 = __toESM(require_components(), 1);
 var import_i18n51 = __toESM(require_i18n(), 1);
-var import_element191 = __toESM(require_element(), 1);
+var import_element192 = __toESM(require_element(), 1);
 
 // node_modules/@ariakit/react-components/dist/button/utils.js
 function withDefaultButtonType(props) {
@@ -53415,11 +53566,11 @@ function useStoreProps(store, props, key2, setKey) {
 function useStore2(createStore2, props) {
   const [store, setStore] = React232.useState(() => createStore2(props));
   useSafeLayoutEffect(() => init(store), [store]);
-  const useState94 = React232.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+  const useState95 = React232.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
   return [React232.useMemo(() => ({
     ...store,
-    useState: useState94
-  }), [store, useState94]), useEvent2(() => {
+    useState: useState95
+  }), [store, useState95]), useEvent2(() => {
     setStore((store2) => createStore2({
       ...props,
       ...store2.getState()
@@ -55586,7 +55737,7 @@ function ComboboxProvider(props = {}) {
 var import_remove_accents = __toESM(require_remove_accents(), 1);
 var import_compose26 = __toESM(require_compose(), 1);
 var import_i18n49 = __toESM(require_i18n(), 1);
-var import_element188 = __toESM(require_element(), 1);
+var import_element189 = __toESM(require_element(), 1);
 var import_components24 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataviews-filters/utils.mjs
@@ -55605,16 +55756,16 @@ var getCurrentValue = (filterDefinition, currentFilter) => {
 };
 
 // packages/dataviews/build-module/hooks/use-elements.mjs
-var import_element187 = __toESM(require_element(), 1);
+var import_element188 = __toESM(require_element(), 1);
 var EMPTY_ARRAY4 = [];
 function useElements({
   elements,
   getElements
 }) {
   const staticElements = Array.isArray(elements) && elements.length > 0 ? elements : EMPTY_ARRAY4;
-  const [records, setRecords] = (0, import_element187.useState)(staticElements);
-  const [isLoading, setIsLoading] = (0, import_element187.useState)(false);
-  (0, import_element187.useEffect)(() => {
+  const [records, setRecords] = (0, import_element188.useState)(staticElements);
+  const [isLoading, setIsLoading] = (0, import_element188.useState)(false);
+  (0, import_element188.useEffect)(() => {
     if (!getElements) {
       setRecords(staticElements);
       return;
@@ -55687,7 +55838,7 @@ var SingleSelectionOption = ({ selected }) => {
 };
 function ListBox({ view, filter, onChangeView }) {
   const baseId = (0, import_compose26.useInstanceId)(ListBox, "dataviews-filter-list-box");
-  const [activeCompositeId, setActiveCompositeId] = (0, import_element188.useState)(
+  const [activeCompositeId, setActiveCompositeId] = (0, import_element189.useState)(
     // When there are one or less operators, the first item is set as active
     // (by setting the initial `activeId` to `undefined`).
     // With 2 or more operators, the focus is moved on the operators control
@@ -55810,13 +55961,13 @@ function ListBox({ view, filter, onChangeView }) {
   );
 }
 function ComboboxList22({ view, filter, onChangeView }) {
-  const [searchValue, setSearchValue] = (0, import_element188.useState)("");
-  const deferredSearchValue = (0, import_element188.useDeferredValue)(searchValue);
+  const [searchValue, setSearchValue] = (0, import_element189.useState)("");
+  const deferredSearchValue = (0, import_element189.useDeferredValue)(searchValue);
   const currentFilter = view.filters?.find(
     (_filter) => _filter.field === filter.field
   );
   const currentValue = getCurrentValue(filter, currentFilter);
-  const matches2 = (0, import_element188.useMemo)(() => {
+  const matches2 = (0, import_element189.useMemo)(() => {
     const normalizedSearch = normalizeSearchInput(deferredSearchValue);
     return filter.elements.filter(
       (item) => normalizeSearchInput(item.label).includes(normalizedSearch)
@@ -55945,7 +56096,7 @@ function SearchWidget(props) {
 // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
 var import_es62 = __toESM(require_es6(), 1);
 var import_compose27 = __toESM(require_compose(), 1);
-var import_element189 = __toESM(require_element(), 1);
+var import_element190 = __toESM(require_element(), 1);
 var import_components25 = __toESM(require_components(), 1);
 var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
 function InputWidget({
@@ -55958,7 +56109,7 @@ function InputWidget({
     (f2) => f2.field === filter.field
   );
   const currentValue = getCurrentValue(filter, currentFilter);
-  const field = (0, import_element189.useMemo)(() => {
+  const field = (0, import_element190.useMemo)(() => {
     const currentField = fields2.find((f2) => f2.id === filter.field);
     if (currentField) {
       return {
@@ -55978,7 +56129,7 @@ function InputWidget({
     }
     return currentField;
   }, [fields2, filter.field]);
-  const data = (0, import_element189.useMemo)(() => {
+  const data = (0, import_element190.useMemo)(() => {
     return (view.filters ?? []).reduce(
       (acc, activeFilter) => {
         acc[activeFilter.field] = activeFilter.value;
@@ -56037,7 +56188,7 @@ function InputWidget({
 
 // packages/dataviews/build-module/utils/operators.mjs
 var import_i18n50 = __toESM(require_i18n(), 1);
-var import_element190 = __toESM(require_element(), 1);
+var import_element191 = __toESM(require_element(), 1);
 var import_date2 = __toESM(require_date(), 1);
 
 // packages/dataviews/build-module/field-types/utils/parse-time.mjs
@@ -56091,7 +56242,7 @@ function getRelativeDate(value, unit) {
 var isNoneOperatorDefinition = {
   /* translators: DataViews operator name */
   label: (0, import_i18n50.__)("Is none of"),
-  filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+  filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
     (0, import_i18n50.sprintf)(
       /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
       (0, import_i18n50.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
@@ -56121,7 +56272,7 @@ var OPERATORS = [
     name: OPERATOR_IS_ANY,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Includes"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
         (0, import_i18n50.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
@@ -56154,7 +56305,7 @@ var OPERATORS = [
     name: OPERATOR_IS_ALL,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Includes all"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
         (0, import_i18n50.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
@@ -56181,7 +56332,7 @@ var OPERATORS = [
     name: OPERATOR_BETWEEN,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Between (inc)"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
         (0, import_i18n50.__)(
@@ -56217,7 +56368,7 @@ var OPERATORS = [
     name: OPERATOR_IN_THE_PAST,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("In the past"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
         (0, import_i18n50.__)(
@@ -56245,7 +56396,7 @@ var OPERATORS = [
     name: OPERATOR_OVER,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Over"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
         (0, import_i18n50.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
@@ -56271,7 +56422,7 @@ var OPERATORS = [
     name: OPERATOR_IS,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Is"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
         (0, import_i18n50.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
@@ -56289,7 +56440,7 @@ var OPERATORS = [
     name: OPERATOR_IS_NOT,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Is not"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
         (0, import_i18n50.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
@@ -56307,7 +56458,7 @@ var OPERATORS = [
     name: OPERATOR_LESS_THAN,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Less than"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
         (0, import_i18n50.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
@@ -56329,7 +56480,7 @@ var OPERATORS = [
     name: OPERATOR_GREATER_THAN,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Greater than"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
         (0, import_i18n50.__)(
@@ -56353,7 +56504,7 @@ var OPERATORS = [
     name: OPERATOR_LESS_THAN_OR_EQUAL,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Less than or equal"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
         (0, import_i18n50.__)(
@@ -56377,7 +56528,7 @@ var OPERATORS = [
     name: OPERATOR_GREATER_THAN_OR_EQUAL,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Greater than or equal"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
         (0, import_i18n50.__)(
@@ -56401,7 +56552,7 @@ var OPERATORS = [
     name: OPERATOR_BEFORE,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Before"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
         (0, import_i18n50.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
@@ -56426,7 +56577,7 @@ var OPERATORS = [
     name: OPERATOR_AFTER,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("After"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
         (0, import_i18n50.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
@@ -56451,7 +56602,7 @@ var OPERATORS = [
     name: OPERATOR_BEFORE_INC,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Before (inc)"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
         (0, import_i18n50.__)(
@@ -56478,7 +56629,7 @@ var OPERATORS = [
     name: OPERATOR_AFTER_INC,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("After (inc)"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
         (0, import_i18n50.__)(
@@ -56505,7 +56656,7 @@ var OPERATORS = [
     name: OPERATOR_CONTAINS,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Contains"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
         (0, import_i18n50.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
@@ -56527,7 +56678,7 @@ var OPERATORS = [
     name: OPERATOR_NOT_CONTAINS,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Doesn't contain"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
         (0, import_i18n50.__)(
@@ -56551,7 +56702,7 @@ var OPERATORS = [
     name: OPERATOR_STARTS_WITH,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Starts with"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
         (0, import_i18n50.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
@@ -56573,7 +56724,7 @@ var OPERATORS = [
     name: OPERATOR_ON,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("On"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
         (0, import_i18n50.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
@@ -56598,7 +56749,7 @@ var OPERATORS = [
     name: OPERATOR_NOT_ON,
     /* translators: DataViews operator name */
     label: (0, import_i18n50.__)("Not on"),
-    filterText: (filter, activeElements) => (0, import_element190.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element191.createInterpolateElement)(
       (0, import_i18n50.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
         (0, import_i18n50.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
@@ -56734,13 +56885,13 @@ function Filter({
   fields: fields2,
   ...commonProps
 }) {
-  const toggleRef = (0, import_element191.useRef)(null);
+  const toggleRef = (0, import_element192.useRef)(null);
   const { filter, view, onChangeView } = commonProps;
   const filterInView = view.filters?.find(
     (f2) => f2.field === filter.field
   );
   let activeElements = [];
-  const field = (0, import_element191.useMemo)(() => {
+  const field = (0, import_element192.useMemo)(() => {
     const currentField = fields2.find((f2) => f2.id === filter.field);
     if (currentField) {
       return {
@@ -56922,7 +57073,7 @@ function Filter({
 // packages/dataviews/build-module/components/dataviews-filters/add-filter.mjs
 var import_components27 = __toESM(require_components(), 1);
 var import_i18n52 = __toESM(require_i18n(), 1);
-var import_element192 = __toESM(require_element(), 1);
+var import_element193 = __toESM(require_element(), 1);
 var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
 function AddFilterMenu({
   filters,
@@ -56991,7 +57142,7 @@ function AddFilter({ filters, view, onChangeView, setOpenedFilter }, ref) {
     }
   );
 }
-var add_filter_default = (0, import_element192.forwardRef)(AddFilter);
+var add_filter_default = (0, import_element193.forwardRef)(AddFilter);
 
 // packages/dataviews/build-module/components/dataviews-filters/reset-filters.mjs
 var import_components28 = __toESM(require_components(), 1);
@@ -57030,9 +57181,9 @@ function ResetFilter({
 }
 
 // packages/dataviews/build-module/components/dataviews-filters/use-filters.mjs
-var import_element193 = __toESM(require_element(), 1);
+var import_element194 = __toESM(require_element(), 1);
 function useFilters(fields2, view) {
-  return (0, import_element193.useMemo)(() => {
+  return (0, import_element194.useMemo)(() => {
     const filters = [];
     fields2.forEach((field) => {
       if (field.filterBy === false || !field.hasElements && !field.Edit) {
@@ -57083,8 +57234,8 @@ var use_filters_default = useFilters;
 // packages/dataviews/build-module/components/dataviews-filters/filters.mjs
 var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
 function Filters({ className }) {
-  const { fields: fields2, view, onChangeView, openedFilter, setOpenedFilter } = (0, import_element194.useContext)(dataviews_context_default);
-  const addFilterRef = (0, import_element194.useRef)(null);
+  const { fields: fields2, view, onChangeView, openedFilter, setOpenedFilter } = (0, import_element195.useContext)(dataviews_context_default);
+  const addFilterRef = (0, import_element195.useRef)(null);
   const filters = use_filters_default(fields2, view);
   const addFilter = /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
     add_filter_default,
@@ -57142,10 +57293,10 @@ function Filters({ className }) {
     }
   );
 }
-var filters_default = (0, import_element194.memo)(Filters);
+var filters_default = (0, import_element195.memo)(Filters);
 
 // packages/dataviews/build-module/components/dataviews-filters/toggle.mjs
-var import_element195 = __toESM(require_element(), 1);
+var import_element196 = __toESM(require_element(), 1);
 var import_components29 = __toESM(require_components(), 1);
 var import_i18n54 = __toESM(require_i18n(), 1);
 var import_jsx_runtime275 = __toESM(require_jsx_runtime(), 1);
@@ -57157,9 +57308,9 @@ function FiltersToggle() {
     setOpenedFilter,
     isShowingFilter,
     setIsShowingFilter
-  } = (0, import_element195.useContext)(dataviews_context_default);
-  const buttonRef = (0, import_element195.useRef)(null);
-  const onChangeViewWithFilterVisibility = (0, import_element195.useCallback)(
+  } = (0, import_element196.useContext)(dataviews_context_default);
+  const buttonRef = (0, import_element196.useRef)(null);
+  const onChangeViewWithFilterVisibility = (0, import_element196.useCallback)(
     (_view) => {
       onChangeView(_view);
       setIsShowingFilter(true);
@@ -57224,7 +57375,7 @@ function FilterVisibilityToggle({
   filtersCount,
   children
 }) {
-  (0, import_element195.useEffect)(
+  (0, import_element196.useEffect)(
     () => () => {
       buttonRef.current?.focus();
     },
@@ -57238,10 +57389,10 @@ function FilterVisibilityToggle({
 var toggle_default = FiltersToggle;
 
 // packages/dataviews/build-module/components/dataviews-filters/filters-toggled.mjs
-var import_element196 = __toESM(require_element(), 1);
+var import_element197 = __toESM(require_element(), 1);
 var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
 function FiltersToggled(props) {
-  const { isShowingFilter } = (0, import_element196.useContext)(dataviews_context_default);
+  const { isShowingFilter } = (0, import_element197.useContext)(dataviews_context_default);
   if (!isShowingFilter) {
     return null;
   }
@@ -57250,7 +57401,7 @@ function FiltersToggled(props) {
 var filters_toggled_default = FiltersToggled;
 
 // packages/dataviews/build-module/components/dataviews-layout/index.mjs
-var import_element197 = __toESM(require_element(), 1);
+var import_element198 = __toESM(require_element(), 1);
 var import_components30 = __toESM(require_components(), 1);
 var import_i18n55 = __toESM(require_i18n(), 1);
 var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
@@ -57274,7 +57425,7 @@ function DataViewsLayout({ className }) {
     defaultLayouts,
     containerRef,
     empty = /* @__PURE__ */ (0, import_jsx_runtime277.jsx)("p", { children: (0, import_i18n55.__)("No results") })
-  } = (0, import_element197.useContext)(dataviews_context_default);
+  } = (0, import_element198.useContext)(dataviews_context_default);
   const isDelayedInitialLoading = useDelayedLoading(!hasInitiallyLoaded, {
     delay: 200
   });
@@ -57312,27 +57463,27 @@ function DataViewsLayout({ className }) {
 
 // packages/dataviews/build-module/components/dataviews-search/index.mjs
 var import_i18n56 = __toESM(require_i18n(), 1);
-var import_element198 = __toESM(require_element(), 1);
+var import_element199 = __toESM(require_element(), 1);
 var import_components31 = __toESM(require_components(), 1);
 var import_compose28 = __toESM(require_compose(), 1);
 var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
-var DataViewsSearch = (0, import_element198.memo)(function Search({ label }) {
-  const { view, onChangeView } = (0, import_element198.useContext)(dataviews_context_default);
+var DataViewsSearch = (0, import_element199.memo)(function Search({ label }) {
+  const { view, onChangeView } = (0, import_element199.useContext)(dataviews_context_default);
   const [search, setSearch, debouncedSearch] = (0, import_compose28.useDebouncedInput)(
     view.search
   );
-  (0, import_element198.useEffect)(() => {
+  (0, import_element199.useEffect)(() => {
     if (view.search !== debouncedSearch) {
       setSearch(view.search ?? "");
     }
   }, [view.search, setSearch]);
-  const onChangeViewRef = (0, import_element198.useRef)(onChangeView);
-  const viewRef = (0, import_element198.useRef)(view);
-  (0, import_element198.useEffect)(() => {
+  const onChangeViewRef = (0, import_element199.useRef)(onChangeView);
+  const viewRef = (0, import_element199.useRef)(view);
+  (0, import_element199.useEffect)(() => {
     onChangeViewRef.current = onChangeView;
     viewRef.current = view;
   }, [onChangeView, view]);
-  (0, import_element198.useEffect)(() => {
+  (0, import_element199.useEffect)(() => {
     if (debouncedSearch !== viewRef.current?.search) {
       onChangeViewRef.current({
         ...viewRef.current,
@@ -57360,7 +57511,7 @@ var dataviews_search_default = DataViewsSearch;
 // packages/dataviews/build-module/components/dataviews-view-config/index.mjs
 var import_components32 = __toESM(require_components(), 1);
 var import_i18n57 = __toESM(require_i18n(), 1);
-var import_element199 = __toESM(require_element(), 1);
+var import_element200 = __toESM(require_element(), 1);
 var import_warning = __toESM(require_warning(), 1);
 var import_compose29 = __toESM(require_compose(), 1);
 var import_jsx_runtime279 = __toESM(require_jsx_runtime(), 1);
@@ -57370,7 +57521,7 @@ var DATAVIEWS_CONFIG_POPOVER_PROPS = {
   offset: 9
 };
 function ViewTypeMenu() {
-  const { view, onChangeView, defaultLayouts } = (0, import_element199.useContext)(dataviews_context_default);
+  const { view, onChangeView, defaultLayouts } = (0, import_element200.useContext)(dataviews_context_default);
   const availableLayouts = Object.keys(defaultLayouts);
   if (availableLayouts.length <= 1) {
     return null;
@@ -57437,8 +57588,8 @@ function ViewTypeMenu() {
   ] });
 }
 function SortFieldControl() {
-  const { view, fields: fields2, onChangeView } = (0, import_element199.useContext)(dataviews_context_default);
-  const orderOptions = (0, import_element199.useMemo)(() => {
+  const { view, fields: fields2, onChangeView } = (0, import_element200.useContext)(dataviews_context_default);
+  const orderOptions = (0, import_element200.useMemo)(() => {
     const sortableFields = fields2.filter(
       (field) => field.enableSorting !== false
     );
@@ -57469,7 +57620,7 @@ function SortFieldControl() {
   );
 }
 function SortDirectionControl() {
-  const { view, fields: fields2, onChangeView } = (0, import_element199.useContext)(dataviews_context_default);
+  const { view, fields: fields2, onChangeView } = (0, import_element200.useContext)(dataviews_context_default);
   const sortableFields = fields2.filter(
     (field) => field.enableSorting !== false
   );
@@ -57519,7 +57670,7 @@ function SortDirectionControl() {
   );
 }
 function ItemsPerPageControl() {
-  const { view, config, onChangeView } = (0, import_element199.useContext)(dataviews_context_default);
+  const { view, config, onChangeView } = (0, import_element200.useContext)(dataviews_context_default);
   const { infiniteScrollEnabled } = view;
   if (!config || !config.perPageSizes || config.perPageSizes.length < 2 || config.perPageSizes.length > 6 || infiniteScrollEnabled) {
     return null;
@@ -57553,7 +57704,7 @@ function ItemsPerPageControl() {
   );
 }
 function ResetViewButton() {
-  const { onReset } = (0, import_element199.useContext)(dataviews_context_default);
+  const { onReset } = (0, import_element200.useContext)(dataviews_context_default);
   if (onReset === void 0) {
     return null;
   }
@@ -57576,7 +57727,7 @@ function ResetViewButton() {
   );
 }
 function DataviewsViewConfigDropdown() {
-  const { view, onReset } = (0, import_element199.useContext)(dataviews_context_default);
+  const { view, onReset } = (0, import_element200.useContext)(dataviews_context_default);
   const popoverId = (0, import_compose29.useInstanceId)(
     _DataViewsViewConfig,
     "dataviews-view-config-dropdown"
@@ -57675,14 +57826,14 @@ function _DataViewsViewConfig() {
     /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(DataviewsViewConfigDropdown, {})
   ] });
 }
-var DataViewsViewConfig = (0, import_element199.memo)(_DataViewsViewConfig);
+var DataViewsViewConfig = (0, import_element200.memo)(_DataViewsViewConfig);
 var dataviews_view_config_default = DataViewsViewConfig;
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-var import_element208 = __toESM(require_element(), 1);
+var import_element209 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/validated-form-controls/checkbox-control.mjs
-var import_element200 = __toESM(require_element(), 1);
+var import_element201 = __toESM(require_element(), 1);
 var import_compose30 = __toESM(require_compose(), 1);
 var import_components33 = __toESM(require_components(), 1);
 var import_jsx_runtime280 = __toESM(require_jsx_runtime(), 1);
@@ -57692,7 +57843,7 @@ var UnforwardedValidatedCheckboxControl = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element200.useRef)(null);
+  const validityTargetRef = (0, import_element201.useRef)(null);
   const mergedRefs = (0, import_compose30.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
     ControlWithError,
@@ -57714,11 +57865,11 @@ var UnforwardedValidatedCheckboxControl = ({
     }
   );
 };
-var ValidatedCheckboxControl = (0, import_element200.forwardRef)(UnforwardedValidatedCheckboxControl);
+var ValidatedCheckboxControl = (0, import_element201.forwardRef)(UnforwardedValidatedCheckboxControl);
 ValidatedCheckboxControl.displayName = "ValidatedCheckboxControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/combobox-control.mjs
-var import_element201 = __toESM(require_element(), 1);
+var import_element202 = __toESM(require_element(), 1);
 var import_compose31 = __toESM(require_compose(), 1);
 var import_components34 = __toESM(require_components(), 1);
 var import_jsx_runtime281 = __toESM(require_jsx_runtime(), 1);
@@ -57728,9 +57879,9 @@ var UnforwardedValidatedComboboxControl = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element201.useRef)(null);
+  const validityTargetRef = (0, import_element202.useRef)(null);
   const mergedRefs = (0, import_compose31.useMergeRefs)([forwardedRef, validityTargetRef]);
-  (0, import_element201.useEffect)(() => {
+  (0, import_element202.useEffect)(() => {
     const input = validityTargetRef.current?.querySelector(
       'input[role="combobox"]'
     );
@@ -57756,11 +57907,11 @@ var UnforwardedValidatedComboboxControl = ({
     )
   );
 };
-var ValidatedComboboxControl = (0, import_element201.forwardRef)(UnforwardedValidatedComboboxControl);
+var ValidatedComboboxControl = (0, import_element202.forwardRef)(UnforwardedValidatedComboboxControl);
 ValidatedComboboxControl.displayName = "ValidatedComboboxControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/form-token-field.mjs
-var import_element202 = __toESM(require_element(), 1);
+var import_element203 = __toESM(require_element(), 1);
 var import_components35 = __toESM(require_components(), 1);
 var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedFormTokenField = ({
@@ -57769,7 +57920,7 @@ var UnforwardedValidatedFormTokenField = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element202.useRef)(null);
+  const validityTargetRef = (0, import_element203.useRef)(null);
   return /* @__PURE__ */ (0, import_jsx_runtime282.jsxs)(
     "div",
     {
@@ -57809,11 +57960,11 @@ var UnforwardedValidatedFormTokenField = ({
     }
   );
 };
-var ValidatedFormTokenField = (0, import_element202.forwardRef)(UnforwardedValidatedFormTokenField);
+var ValidatedFormTokenField = (0, import_element203.forwardRef)(UnforwardedValidatedFormTokenField);
 ValidatedFormTokenField.displayName = "ValidatedFormTokenField";
 
 // packages/dataviews/build-module/components/validated-form-controls/number-control.mjs
-var import_element203 = __toESM(require_element(), 1);
+var import_element204 = __toESM(require_element(), 1);
 var import_compose32 = __toESM(require_compose(), 1);
 var import_components36 = __toESM(require_components(), 1);
 var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
@@ -57823,7 +57974,7 @@ var UnforwardedValidatedNumberControl = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element203.useRef)(null);
+  const validityTargetRef = (0, import_element204.useRef)(null);
   const mergedRefs = (0, import_compose32.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
     ControlWithError,
@@ -57837,11 +57988,11 @@ var UnforwardedValidatedNumberControl = ({
     }
   );
 };
-var ValidatedNumberControl = (0, import_element203.forwardRef)(UnforwardedValidatedNumberControl);
+var ValidatedNumberControl = (0, import_element204.forwardRef)(UnforwardedValidatedNumberControl);
 ValidatedNumberControl.displayName = "ValidatedNumberControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/radio-control.mjs
-var import_element204 = __toESM(require_element(), 1);
+var import_element205 = __toESM(require_element(), 1);
 var import_compose33 = __toESM(require_compose(), 1);
 var import_components37 = __toESM(require_components(), 1);
 var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
@@ -57851,7 +58002,7 @@ var UnforwardedValidatedRadioControl = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element204.useRef)(null);
+  const validityTargetRef = (0, import_element205.useRef)(null);
   const mergedRefs = (0, import_compose33.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
     ControlWithError,
@@ -57868,11 +58019,11 @@ var UnforwardedValidatedRadioControl = ({
     }
   );
 };
-var ValidatedRadioControl = (0, import_element204.forwardRef)(UnforwardedValidatedRadioControl);
+var ValidatedRadioControl = (0, import_element205.forwardRef)(UnforwardedValidatedRadioControl);
 ValidatedRadioControl.displayName = "ValidatedRadioControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/select-control.mjs
-var import_element205 = __toESM(require_element(), 1);
+var import_element206 = __toESM(require_element(), 1);
 var import_compose34 = __toESM(require_compose(), 1);
 var import_components38 = __toESM(require_components(), 1);
 var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
@@ -57882,7 +58033,7 @@ var UnforwardedValidatedSelectControl = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element205.useRef)(null);
+  const validityTargetRef = (0, import_element206.useRef)(null);
   const mergedRefs = (0, import_compose34.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
     ControlWithError,
@@ -57904,11 +58055,11 @@ var UnforwardedValidatedSelectControl = ({
     }
   );
 };
-var ValidatedSelectControl = (0, import_element205.forwardRef)(UnforwardedValidatedSelectControl);
+var ValidatedSelectControl = (0, import_element206.forwardRef)(UnforwardedValidatedSelectControl);
 ValidatedSelectControl.displayName = "ValidatedSelectControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/toggle-control.mjs
-var import_element206 = __toESM(require_element(), 1);
+var import_element207 = __toESM(require_element(), 1);
 var import_compose35 = __toESM(require_compose(), 1);
 var import_components39 = __toESM(require_components(), 1);
 var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
@@ -57918,7 +58069,7 @@ var UnforwardedValidatedToggleControl = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element206.useRef)(null);
+  const validityTargetRef = (0, import_element207.useRef)(null);
   const mergedRefs = (0, import_compose35.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
     ControlWithError,
@@ -57939,11 +58090,11 @@ var UnforwardedValidatedToggleControl = ({
     }
   );
 };
-var ValidatedToggleControl = (0, import_element206.forwardRef)(UnforwardedValidatedToggleControl);
+var ValidatedToggleControl = (0, import_element207.forwardRef)(UnforwardedValidatedToggleControl);
 ValidatedToggleControl.displayName = "ValidatedToggleControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/toggle-group-control.mjs
-var import_element207 = __toESM(require_element(), 1);
+var import_element208 = __toESM(require_element(), 1);
 var import_components40 = __toESM(require_components(), 1);
 var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedToggleGroupControl = ({
@@ -57952,8 +58103,8 @@ var UnforwardedValidatedToggleGroupControl = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element207.useRef)(null);
-  const nameAttr = (0, import_element207.useId)();
+  const validityTargetRef = (0, import_element208.useRef)(null);
+  const nameAttr = (0, import_element208.useId)();
   return /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)("div", { className: "dataviews-validated-control__wrapper-with-error-delegate", children: [
     /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
       ControlWithError,
@@ -57987,7 +58138,7 @@ var UnforwardedValidatedToggleGroupControl = ({
     )
   ] });
 };
-var ValidatedToggleGroupControl = (0, import_element207.forwardRef)(UnforwardedValidatedToggleGroupControl);
+var ValidatedToggleGroupControl = (0, import_element208.forwardRef)(UnforwardedValidatedToggleGroupControl);
 ValidatedToggleGroupControl.displayName = "ValidatedToggleGroupControl";
 
 // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.mjs
@@ -58028,7 +58179,7 @@ function Checkbox({
 }) {
   const { getValue, setValue, label, description, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element208.useCallback)(() => {
+  const onChangeControl = (0, import_element209.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
     );
@@ -58051,7 +58202,7 @@ function Checkbox({
 
 // packages/dataviews/build-module/components/dataform-controls/combobox.mjs
 var import_components41 = __toESM(require_components(), 1);
-var import_element209 = __toESM(require_element(), 1);
+var import_element210 = __toESM(require_element(), 1);
 var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
 function Combobox3({
   data,
@@ -58062,7 +58213,7 @@ function Combobox3({
 }) {
   const { label, description, placeholder, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data }) ?? "";
-  const onChangeControl = (0, import_element209.useCallback)(
+  const onChangeControl = (0, import_element210.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue ?? "" })),
     [data, onChange, setValue]
   );
@@ -58093,14 +58244,14 @@ function Combobox3({
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
 var import_components43 = __toESM(require_components(), 1);
-var import_element212 = __toESM(require_element(), 1);
+var import_element213 = __toESM(require_element(), 1);
 var import_i18n59 = __toESM(require_i18n(), 1);
 var import_date4 = __toESM(require_date(), 1);
 import { speak as speak4 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
 var import_components42 = __toESM(require_components(), 1);
-var import_element210 = __toESM(require_element(), 1);
+var import_element211 = __toESM(require_element(), 1);
 var import_i18n58 = __toESM(require_i18n(), 1);
 var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
 var TIME_UNITS_OPTIONS = {
@@ -58130,7 +58281,7 @@ function RelativeDateControl({
   const disabled2 = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
-  const onChangeValue = (0, import_element210.useCallback)(
+  const onChangeValue = (0, import_element211.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -58139,7 +58290,7 @@ function RelativeDateControl({
     ),
     [onChange, setValue, data, unit]
   );
-  const onChangeUnit = (0, import_element210.useCallback)(
+  const onChangeUnit = (0, import_element211.useCallback)(
     (newUnit) => onChange(
       setValue({
         item: data,
@@ -58192,11 +58343,11 @@ function toCalendarDate(date, timeZone) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/utils/use-disabled-date-matchers.mjs
-var import_element211 = __toESM(require_element(), 1);
+var import_element212 = __toESM(require_element(), 1);
 function useDisabledDateMatchers(isValid2, parseDateFn) {
   const minConstraint = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
   const maxConstraint = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
-  const disabledMatchers = (0, import_element211.useMemo)(() => {
+  const disabledMatchers = (0, import_element212.useMemo)(() => {
     const matchers = [];
     if (minConstraint) {
       const minDate = parseDateFn(minConstraint);
@@ -58271,11 +58422,11 @@ function CalendarDateTimeControl({
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
   const { timezone } = (0, import_date4.getSettings)();
   const timeZone = timezone.string || (0, import_date4.dateI18n)("P");
-  const [calendarMonth, setCalendarMonth] = (0, import_element212.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element213.useState)(() => {
     const parsedDate = parseDateTime(value);
     return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timeZone);
   });
-  (0, import_element212.useEffect)(() => {
+  (0, import_element213.useEffect)(() => {
     const parsedDate = parseDateTime(value);
     if (parsedDate) {
       const targetMonth = toCalendarDate(parsedDate, timeZone);
@@ -58287,17 +58438,17 @@ function CalendarDateTimeControl({
       );
     }
   }, [timeZone, value]);
-  const inputControlRef = (0, import_element212.useRef)(null);
-  const validationTimeoutRef = (0, import_element212.useRef)(void 0);
+  const inputControlRef = (0, import_element213.useRef)(null);
+  const validationTimeoutRef = (0, import_element213.useRef)(void 0);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
-  const onChangeCallback = (0, import_element212.useCallback)(
+  const onChangeCallback = (0, import_element213.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  (0, import_element212.useEffect)(() => {
+  (0, import_element213.useEffect)(() => {
     return () => clearTimeout(validationTimeoutRef.current);
   }, []);
-  const onSelectDate = (0, import_element212.useCallback)(
+  const onSelectDate = (0, import_element213.useCallback)(
     (newDate) => {
       if (newDate) {
         const wpDate = (0, import_date4.dateI18n)("Y-m-d", newDate);
@@ -58323,7 +58474,7 @@ function CalendarDateTimeControl({
     },
     [onChangeCallback, value]
   );
-  const handleManualDateTimeChange = (0, import_element212.useCallback)(
+  const handleManualDateTimeChange = (0, import_element213.useCallback)(
     (newValue) => {
       if (newValue) {
         const dateTime = (0, import_date4.getDate)(newValue);
@@ -58429,7 +58580,7 @@ function DateTime({
 
 // packages/dataviews/build-module/components/dataform-controls/date.mjs
 var import_components44 = __toESM(require_components(), 1);
-var import_element213 = __toESM(require_element(), 1);
+var import_element214 = __toESM(require_element(), 1);
 var import_i18n60 = __toESM(require_i18n(), 1);
 var import_date5 = __toESM(require_date(), 1);
 import { speak as speak5 } from "@wordpress/a11y";
@@ -58529,8 +58680,8 @@ function ValidatedDateControl({
   children
 }) {
   const { isValid: isValid2 } = field;
-  const [customValidity, setCustomValidity] = (0, import_element213.useState)(void 0);
-  const validateRefs = (0, import_element213.useCallback)(() => {
+  const [customValidity, setCustomValidity] = (0, import_element214.useState)(void 0);
+  const validateRefs = (0, import_element214.useCallback)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     for (const ref of refs) {
       const input = ref.current;
@@ -58544,7 +58695,7 @@ function ValidatedDateControl({
     }
     setCustomValidity(void 0);
   }, [inputRefs]);
-  (0, import_element213.useEffect)(() => {
+  (0, import_element214.useEffect)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     const result = validity ? getCustomValidity(isValid2, validity) : void 0;
     for (const ref of refs) {
@@ -58556,7 +58707,7 @@ function ValidatedDateControl({
       }
     }
   }, [inputRefs, isValid2, validity]);
-  (0, import_element213.useEffect)(() => {
+  (0, import_element214.useEffect)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     const handleInvalid = (event) => {
       event.preventDefault();
@@ -58571,7 +58722,7 @@ function ValidatedDateControl({
       }
     };
   }, [inputRefs, setIsTouched]);
-  (0, import_element213.useEffect)(() => {
+  (0, import_element214.useEffect)(() => {
     if (!isTouched) {
       return;
     }
@@ -58582,7 +58733,7 @@ function ValidatedDateControl({
       validateRefs();
     }
   }, [isTouched, isValid2, validity, validateRefs]);
-  (0, import_element213.useEffect)(() => {
+  (0, import_element214.useEffect)(() => {
     if (isTouched && customValidity?.message) {
       speak5(customValidity.message);
     }
@@ -58624,18 +58775,18 @@ function CalendarDateControl({
     format: fieldFormat
   } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const [selectedPresetId, setSelectedPresetId] = (0, import_element213.useState)(
+  const [selectedPresetId, setSelectedPresetId] = (0, import_element214.useState)(
     null
   );
   const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
   const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
-  const [calendarMonth, setCalendarMonth] = (0, import_element213.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element214.useState)(() => {
     const parsedDate = parseDate2(value);
     return parsedDate || /* @__PURE__ */ new Date();
   });
-  (0, import_element213.useEffect)(() => {
+  (0, import_element214.useEffect)(() => {
     const parsedDate = parseDate2(value);
     if (parsedDate) {
       setCalendarMonth(
@@ -58643,14 +58794,14 @@ function CalendarDateControl({
       );
     }
   }, [value]);
-  const [isTouched, setIsTouched] = (0, import_element213.useState)(false);
-  const validityTargetRef = (0, import_element213.useRef)(null);
+  const [isTouched, setIsTouched] = (0, import_element214.useState)(false);
+  const validityTargetRef = (0, import_element214.useRef)(null);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
-  const onChangeCallback = (0, import_element213.useCallback)(
+  const onChangeCallback = (0, import_element214.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  const onSelectDate = (0, import_element213.useCallback)(
+  const onSelectDate = (0, import_element214.useCallback)(
     (newDate) => {
       const dateValue = newDate ? formatDate(newDate) : void 0;
       onChangeCallback(dateValue);
@@ -58659,7 +58810,7 @@ function CalendarDateControl({
     },
     [onChangeCallback]
   );
-  const handlePresetClick = (0, import_element213.useCallback)(
+  const handlePresetClick = (0, import_element214.useCallback)(
     (preset) => {
       const presetDate = preset.getValue();
       const dateValue = formatDate(presetDate);
@@ -58670,7 +58821,7 @@ function CalendarDateControl({
     },
     [onChangeCallback]
   );
-  const handleManualDateChange = (0, import_element213.useCallback)(
+  const handleManualDateChange = (0, import_element214.useCallback)(
     (newValue) => {
       onChangeCallback(newValue);
       if (newValue) {
@@ -58809,7 +58960,7 @@ function CalendarDateRangeControl({
   const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
   const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
-  const onChangeCallback = (0, import_element213.useCallback)(
+  const onChangeCallback = (0, import_element214.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -58820,10 +58971,10 @@ function CalendarDateRangeControl({
     },
     [data, onChange, setValue]
   );
-  const [selectedPresetId, setSelectedPresetId] = (0, import_element213.useState)(
+  const [selectedPresetId, setSelectedPresetId] = (0, import_element214.useState)(
     null
   );
-  const selectedRange = (0, import_element213.useMemo)(() => {
+  const selectedRange = (0, import_element214.useMemo)(() => {
     if (!value) {
       return null;
     }
@@ -58833,11 +58984,11 @@ function CalendarDateRangeControl({
       to: parseDate2(to) || void 0
     };
   }, [value]);
-  const [calendarMonth, setCalendarMonth] = (0, import_element213.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element214.useState)(() => {
     return selectedRange?.from || /* @__PURE__ */ new Date();
   });
   const [fromValue, toValue] = value ?? [];
-  (0, import_element213.useEffect)(() => {
+  (0, import_element214.useEffect)(() => {
     setCalendarMonth((currentMonth) => {
       const from = parseDate2(fromValue);
       const to = parseDate2(toValue);
@@ -58855,10 +59006,10 @@ function CalendarDateRangeControl({
       return targetMonth && !isRangeVisible ? targetMonth : currentMonth;
     });
   }, [fromValue, toValue]);
-  const [isTouched, setIsTouched] = (0, import_element213.useState)(false);
-  const fromInputRef = (0, import_element213.useRef)(null);
-  const toInputRef = (0, import_element213.useRef)(null);
-  const updateDateRange = (0, import_element213.useCallback)(
+  const [isTouched, setIsTouched] = (0, import_element214.useState)(false);
+  const fromInputRef = (0, import_element214.useRef)(null);
+  const toInputRef = (0, import_element214.useRef)(null);
+  const updateDateRange = (0, import_element214.useCallback)(
     (fromDate, toDate2) => {
       if (!fromDate && !toDate2) {
         onChangeCallback(void 0);
@@ -58871,7 +59022,7 @@ function CalendarDateRangeControl({
     },
     [onChangeCallback]
   );
-  const onSelectCalendarRange = (0, import_element213.useCallback)(
+  const onSelectCalendarRange = (0, import_element214.useCallback)(
     (newRange) => {
       updateDateRange(newRange?.from, newRange?.to);
       setSelectedPresetId(null);
@@ -58879,7 +59030,7 @@ function CalendarDateRangeControl({
     },
     [updateDateRange]
   );
-  const handlePresetClick = (0, import_element213.useCallback)(
+  const handlePresetClick = (0, import_element214.useCallback)(
     (preset) => {
       const [startDate, endDate] = preset.getValue();
       setCalendarMonth(startDate);
@@ -58889,7 +59040,7 @@ function CalendarDateRangeControl({
     },
     [updateDateRange]
   );
-  const handleManualDateChange = (0, import_element213.useCallback)(
+  const handleManualDateChange = (0, import_element214.useCallback)(
     (fromOrTo, newValue) => {
       const [currentFrom, currentTo] = value || [
         void 0,
@@ -59083,7 +59234,7 @@ function DateControl({
 
 // packages/dataviews/build-module/components/dataform-controls/select.mjs
 var import_components45 = __toESM(require_components(), 1);
-var import_element214 = __toESM(require_element(), 1);
+var import_element215 = __toESM(require_element(), 1);
 var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
 function Select2({
   data,
@@ -59097,7 +59248,7 @@ function Select2({
   const disabled2 = field.isDisabled({ item: data, field });
   const isMultiple = type === "array";
   const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
-  const onChangeControl = (0, import_element214.useCallback)(
+  const onChangeControl = (0, import_element215.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -59142,7 +59293,7 @@ function AdaptiveSelect(props) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.mjs
-var import_element215 = __toESM(require_element(), 1);
+var import_element216 = __toESM(require_element(), 1);
 var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
 function ValidatedText({
   data,
@@ -59158,7 +59309,7 @@ function ValidatedText({
   const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data });
   const disabled2 = field.isDisabled({ item: data, field });
-  const onValueChangeControl = (0, import_element215.useCallback)(
+  const onValueChangeControl = (0, import_element216.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -59274,7 +59425,7 @@ function Url({
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
 var import_components46 = __toESM(require_components(), 1);
-var import_element216 = __toESM(require_element(), 1);
+var import_element217 = __toESM(require_element(), 1);
 var import_i18n61 = __toESM(require_i18n(), 1);
 var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
 function toNumberOrEmpty(value) {
@@ -59291,11 +59442,11 @@ function BetweenControls({
   step
 }) {
   const [min3 = "", max3 = ""] = value;
-  const onChangeMin = (0, import_element216.useCallback)(
+  const onChangeMin = (0, import_element217.useCallback)(
     (newValue) => onChange([toNumberOrEmpty(newValue), max3]),
     [onChange, max3]
   );
-  const onChangeMax = (0, import_element216.useCallback)(
+  const onChangeMax = (0, import_element217.useCallback)(
     (newValue) => onChange([min3, toNumberOrEmpty(newValue)]),
     [onChange, min3]
   );
@@ -59344,7 +59495,7 @@ function ValidatedNumber({
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data }) ?? "";
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element216.useCallback)(
+  const onChangeControl = (0, import_element217.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -59358,7 +59509,7 @@ function ValidatedNumber({
     },
     [data, onChange, setValue]
   );
-  const onChangeBetweenControls = (0, import_element216.useCallback)(
+  const onChangeBetweenControls = (0, import_element217.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -59419,7 +59570,7 @@ function Number2(props) {
 
 // packages/dataviews/build-module/components/dataform-controls/radio.mjs
 var import_components47 = __toESM(require_components(), 1);
-var import_element217 = __toESM(require_element(), 1);
+var import_element218 = __toESM(require_element(), 1);
 var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
 function Radio({
   data,
@@ -59436,7 +59587,7 @@ function Radio({
     getElements: field.getElements
   });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element217.useCallback)(
+  const onChangeControl = (0, import_element218.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -59461,7 +59612,7 @@ function Radio({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/text.mjs
-var import_element218 = __toESM(require_element(), 1);
+var import_element219 = __toESM(require_element(), 1);
 var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
 function Text3({
   data,
@@ -59483,8 +59634,8 @@ function Text3({
         hideLabelFromVision,
         markWhenOptional,
         validity,
-        prefix: prefix ? (0, import_element218.createElement)(prefix) : void 0,
-        suffix: suffix ? (0, import_element218.createElement)(suffix) : void 0
+        prefix: prefix ? (0, import_element219.createElement)(prefix) : void 0,
+        suffix: suffix ? (0, import_element219.createElement)(suffix) : void 0
       }
     }
   );
@@ -59492,7 +59643,7 @@ function Text3({
 
 // packages/dataviews/build-module/components/dataform-controls/time.mjs
 var import_components48 = __toESM(require_components(), 1);
-var import_element219 = __toESM(require_element(), 1);
+var import_element220 = __toESM(require_element(), 1);
 var import_i18n62 = __toESM(require_i18n(), 1);
 var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
 function getStep(timeFormat, values) {
@@ -59524,11 +59675,11 @@ function BetweenControls2({
   max: max3
 }) {
   const [from = "", to = ""] = value;
-  const onChangeFrom = (0, import_element219.useCallback)(
+  const onChangeFrom = (0, import_element220.useCallback)(
     (newValue) => onChange([newValue ?? "", to]),
     [onChange, to]
   );
-  const onChangeTo = (0, import_element219.useCallback)(
+  const onChangeTo = (0, import_element220.useCallback)(
     (newValue) => onChange([from, newValue ?? ""]),
     [onChange, from]
   );
@@ -59584,7 +59735,7 @@ function Time({
   const timeFormat = field.format?.time;
   const min3 = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
   const max3 = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
-  const onChangeControl = (0, import_element219.useCallback)(
+  const onChangeControl = (0, import_element220.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -59593,7 +59744,7 @@ function Time({
     ),
     [data, onChange, setValue]
   );
-  const onChangeBetweenControls = (0, import_element219.useCallback)(
+  const onChangeBetweenControls = (0, import_element220.useCallback)(
     ([from, to]) => onChange(
       setValue({
         item: data,
@@ -59648,7 +59799,7 @@ function Time({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
-var import_element220 = __toESM(require_element(), 1);
+var import_element221 = __toESM(require_element(), 1);
 var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
 function Toggle({
   field,
@@ -59660,7 +59811,7 @@ function Toggle({
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element220.useCallback)(() => {
+  const onChangeControl = (0, import_element221.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
     );
@@ -59682,7 +59833,7 @@ function Toggle({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
-var import_element221 = __toESM(require_element(), 1);
+var import_element222 = __toESM(require_element(), 1);
 var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
 function Textarea3({
   data,
@@ -59697,7 +59848,7 @@ function Textarea3({
   const disabled2 = field.isDisabled({ item: data, field });
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const value = field.getValue({ item: data });
-  const onValueChangeControl = (0, import_element221.useCallback)(
+  const onValueChangeControl = (0, import_element222.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -59724,7 +59875,7 @@ function Textarea3({
 
 // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
 var import_components49 = __toESM(require_components(), 1);
-var import_element222 = __toESM(require_element(), 1);
+var import_element223 = __toESM(require_element(), 1);
 var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
 function ToggleGroup({
   data,
@@ -59737,7 +59888,7 @@ function ToggleGroup({
   const { getValue, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element222.useCallback)(
+  const onChangeControl = (0, import_element223.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -59779,7 +59930,7 @@ function ToggleGroup({
 
 // packages/dataviews/build-module/components/dataform-controls/array.mjs
 var import_components50 = __toESM(require_components(), 1);
-var import_element223 = __toESM(require_element(), 1);
+var import_element224 = __toESM(require_element(), 1);
 var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
 function ArrayControl({
   data,
@@ -59796,7 +59947,7 @@ function ArrayControl({
     elements: field.elements,
     getElements: field.getElements
   });
-  const arrayValueAsElements = (0, import_element223.useMemo)(
+  const arrayValueAsElements = (0, import_element224.useMemo)(
     () => Array.isArray(value) ? value.map((token) => {
       const element = elements?.find(
         (suggestion) => suggestion.value === token
@@ -59805,7 +59956,7 @@ function ArrayControl({
     }) : [],
     [value, elements]
   );
-  const onChangeControl = (0, import_element223.useCallback)(
+  const onChangeControl = (0, import_element224.useCallback)(
     (tokens) => {
       const valueTokens = tokens.map((token) => {
         if (typeof token === "object" && "value" in token) {
@@ -60027,7 +60178,7 @@ var w = function(r3) {
 
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
 var import_components51 = __toESM(require_components(), 1);
-var import_element224 = __toESM(require_element(), 1);
+var import_element225 = __toESM(require_element(), 1);
 var import_i18n63 = __toESM(require_i18n(), 1);
 var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
 var ColorPickerDropdown = ({
@@ -60074,13 +60225,13 @@ function Color({
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = field.getValue({ item: data }) || "";
-  const handleColorChange = (0, import_element224.useCallback)(
+  const handleColorChange = (0, import_element225.useCallback)(
     (newColor) => {
       onChange(setValue({ item: data, value: newColor }));
     },
     [data, onChange, setValue]
   );
-  const handleInputChange = (0, import_element224.useCallback)(
+  const handleInputChange = (0, import_element225.useCallback)(
     (newValue) => {
       onChange(setValue({ item: data, value: newValue || "" }));
     },
@@ -60115,7 +60266,7 @@ function Color({
 
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
 var import_components52 = __toESM(require_components(), 1);
-var import_element225 = __toESM(require_element(), 1);
+var import_element226 = __toESM(require_element(), 1);
 var import_i18n64 = __toESM(require_i18n(), 1);
 var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
 function Password({
@@ -60126,9 +60277,9 @@ function Password({
   markWhenOptional,
   validity
 }) {
-  const [isVisible2, setIsVisible] = (0, import_element225.useState)(false);
+  const [isVisible2, setIsVisible] = (0, import_element226.useState)(false);
   const disabled2 = field.isDisabled({ item: data, field });
-  const toggleVisibility = (0, import_element225.useCallback)(() => {
+  const toggleVisibility = (0, import_element226.useCallback)(() => {
     setIsVisible((prev) => !prev);
   }, []);
   return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
@@ -61394,7 +61545,7 @@ function normalizeFields(fields2) {
 }
 
 // packages/dataviews/build-module/hooks/use-data.mjs
-var import_element226 = __toESM(require_element(), 1);
+var import_element227 = __toESM(require_element(), 1);
 function useData({
   view,
   data: shownData,
@@ -61404,34 +61555,34 @@ function useData({
   selection
 }) {
   const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element226.useState)(
+  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element227.useState)(
     !isLoading
   );
-  (0, import_element226.useEffect)(() => {
+  (0, import_element227.useEffect)(() => {
     if (!isLoading) {
       setHasInitiallyLoaded(true);
     }
   }, [isLoading]);
-  const previousDataRef = (0, import_element226.useRef)(shownData);
-  const previousPaginationInfoRef = (0, import_element226.useRef)(paginationInfo);
-  (0, import_element226.useEffect)(() => {
+  const previousDataRef = (0, import_element227.useRef)(shownData);
+  const previousPaginationInfoRef = (0, import_element227.useRef)(paginationInfo);
+  (0, import_element227.useEffect)(() => {
     if (!isLoading) {
       previousDataRef.current = shownData;
       previousPaginationInfoRef.current = paginationInfo;
     }
   }, [shownData, isLoading, paginationInfo]);
-  const [visibleEntries, setVisibleEntries] = (0, import_element226.useState)([]);
-  const positionMapRef = (0, import_element226.useRef)(/* @__PURE__ */ new Map());
-  const allLoadedRecordsRef = (0, import_element226.useRef)([]);
-  const prevViewParamsRef = (0, import_element226.useRef)({
+  const [visibleEntries, setVisibleEntries] = (0, import_element227.useState)([]);
+  const positionMapRef = (0, import_element227.useRef)(/* @__PURE__ */ new Map());
+  const allLoadedRecordsRef = (0, import_element227.useRef)([]);
+  const prevViewParamsRef = (0, import_element227.useRef)({
     search: void 0,
     filters: void 0,
     perPage: void 0
   });
-  const scrollDirectionRef = (0, import_element226.useRef)(void 0);
-  const prevStartPositionRef = (0, import_element226.useRef)(void 0);
-  const hasInitializedRef = (0, import_element226.useRef)(false);
-  const allLoadedRecords = (0, import_element226.useMemo)(() => {
+  const scrollDirectionRef = (0, import_element227.useRef)(void 0);
+  const prevStartPositionRef = (0, import_element227.useRef)(void 0);
+  const hasInitializedRef = (0, import_element227.useRef)(false);
+  const allLoadedRecords = (0, import_element227.useMemo)(() => {
     if (view.startPosition !== void 0 && prevStartPositionRef.current !== void 0) {
       if (view.startPosition < prevStartPositionRef.current) {
         scrollDirectionRef.current = "up";
@@ -61553,7 +61704,7 @@ function useData({
 }
 
 // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
-var import_element227 = __toESM(require_element(), 1);
+var import_element228 = __toESM(require_element(), 1);
 var import_compose36 = __toESM(require_compose(), 1);
 function captureAnchorElement(container, anchorElementRef, direction) {
   const containerRect = container.getBoundingClientRect();
@@ -61589,18 +61740,18 @@ function useInfiniteScroll({
   containerRef,
   setVisibleEntries
 }) {
-  const anchorElementRef = (0, import_element227.useRef)(null);
-  const viewRef = (0, import_element227.useRef)(view);
-  const isLoadingRef = (0, import_element227.useRef)(isLoading);
-  const onChangeViewRef = (0, import_element227.useRef)(onChangeView);
-  const totalItemsRef = (0, import_element227.useRef)(paginationInfo.totalItems);
-  (0, import_element227.useLayoutEffect)(() => {
+  const anchorElementRef = (0, import_element228.useRef)(null);
+  const viewRef = (0, import_element228.useRef)(view);
+  const isLoadingRef = (0, import_element228.useRef)(isLoading);
+  const onChangeViewRef = (0, import_element228.useRef)(onChangeView);
+  const totalItemsRef = (0, import_element228.useRef)(paginationInfo.totalItems);
+  (0, import_element228.useLayoutEffect)(() => {
     viewRef.current = view;
     isLoadingRef.current = isLoading;
     onChangeViewRef.current = onChangeView;
     totalItemsRef.current = paginationInfo.totalItems;
   }, [view, isLoading, onChangeView, paginationInfo.totalItems]);
-  const intersectionObserverCallback = (0, import_element227.useCallback)(
+  const intersectionObserverCallback = (0, import_element228.useCallback)(
     (entries) => {
       if (!setVisibleEntries) {
         return;
@@ -61632,7 +61783,7 @@ function useInfiniteScroll({
     },
     [setVisibleEntries]
   );
-  (0, import_element227.useLayoutEffect)(() => {
+  (0, import_element228.useLayoutEffect)(() => {
     const container = containerRef.current;
     const anchor = anchorElementRef.current;
     if (!container || !view.infiniteScrollEnabled || !anchor || isLoading) {
@@ -61652,10 +61803,10 @@ function useInfiniteScroll({
     }
     anchorElementRef.current = null;
   }, [containerRef, isLoading, view.infiniteScrollEnabled]);
-  const intersectionObserverRef = (0, import_element227.useRef)(
+  const intersectionObserverRef = (0, import_element228.useRef)(
     null
   );
-  (0, import_element227.useEffect)(() => {
+  (0, import_element228.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !intersectionObserverCallback) {
       if (intersectionObserverRef.current) {
         intersectionObserverRef.current.disconnect();
@@ -61674,7 +61825,7 @@ function useInfiniteScroll({
       }
     };
   }, [view.infiniteScrollEnabled, intersectionObserverCallback]);
-  (0, import_element227.useEffect)(() => {
+  (0, import_element228.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !containerRef.current) {
       return;
     }
@@ -61734,7 +61885,7 @@ function useInfiniteScroll({
 }
 
 // packages/dataviews/build-module/dataviews-picker/index.mjs
-var import_element228 = __toESM(require_element(), 1);
+var import_element229 = __toESM(require_element(), 1);
 var import_compose37 = __toESM(require_compose(), 1);
 var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
 var isItemClickable = () => false;
@@ -61751,7 +61902,7 @@ function DefaultUI({
   search = true,
   searchLabel = void 0
 }) {
-  const { view } = (0, import_element228.useContext)(dataviews_context_default);
+  const { view } = (0, import_element229.useContext)(dataviews_context_default);
   const isInfiniteScroll = view.infiniteScrollEnabled;
   return /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)(import_jsx_runtime314.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)(
@@ -61814,8 +61965,8 @@ function DataViewsPicker({
     selection,
     paginationInfo
   });
-  const containerRef = (0, import_element228.useRef)(null);
-  const [containerWidth, setContainerWidth] = (0, import_element228.useState)(0);
+  const containerRef = (0, import_element229.useRef)(null);
+  const [containerWidth, setContainerWidth] = (0, import_element229.useState)(0);
   const resizeObserverRef = (0, import_compose37.useResizeObserver)(
     (resizeObserverEntries) => {
       setContainerWidth(
@@ -61824,22 +61975,22 @@ function DataViewsPicker({
     },
     { box: "border-box" }
   );
-  const [openedFilter, setOpenedFilter] = (0, import_element228.useState)(null);
+  const [openedFilter, setOpenedFilter] = (0, import_element229.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === "function" ? value(selection) : value;
     if (onChangeSelection) {
       onChangeSelection(newValue);
     }
   }
-  const _fields = (0, import_element228.useMemo)(() => normalizeFields(fields2), [fields2]);
+  const _fields = (0, import_element229.useMemo)(() => normalizeFields(fields2), [fields2]);
   const filters = use_filters_default(_fields, view);
-  const hasPrimaryOrLockedFilters = (0, import_element228.useMemo)(
+  const hasPrimaryOrLockedFilters = (0, import_element229.useMemo)(
     () => (filters || []).some(
       (filter) => filter.isPrimary || filter.isLocked
     ),
     [filters]
   );
-  const [isShowingFilter, setIsShowingFilter] = (0, import_element228.useState)(
+  const [isShowingFilter, setIsShowingFilter] = (0, import_element229.useState)(
     hasPrimaryOrLockedFilters
   );
   const { intersectionObserver } = useInfiniteScroll({
@@ -61850,12 +62001,12 @@ function DataViewsPicker({
     containerRef,
     setVisibleEntries
   });
-  (0, import_element228.useEffect)(() => {
+  (0, import_element229.useEffect)(() => {
     if (hasPrimaryOrLockedFilters && !isShowingFilter) {
       setIsShowingFilter(true);
     }
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-  const defaultLayouts = (0, import_element228.useMemo)(
+  const defaultLayouts = (0, import_element229.useMemo)(
     () => Object.fromEntries(
       Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
         return dataViewsPickerLayouts.some(
@@ -61920,12 +62071,12 @@ DataViewsPickerSubComponents.ViewConfig = DataviewsViewConfigDropdown;
 var dataviews_picker_default = DataViewsPickerSubComponents;
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_element239 = __toESM(require_element(), 1);
+var import_element240 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-context/index.mjs
-var import_element229 = __toESM(require_element(), 1);
+var import_element230 = __toESM(require_element(), 1);
 var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
-var DataFormContext = (0, import_element229.createContext)({
+var DataFormContext = (0, import_element230.createContext)({
   fields: []
 });
 DataFormContext.displayName = "DataFormContext";
@@ -61938,10 +62089,10 @@ function DataFormProvider({
 var dataform_context_default = DataFormContext;
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_element238 = __toESM(require_element(), 1);
+var import_element239 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-var import_element230 = __toESM(require_element(), 1);
+var import_element231 = __toESM(require_element(), 1);
 var import_components53 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
@@ -62083,9 +62234,9 @@ function FormRegularField({
   markWhenOptional,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element230.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element231.useContext)(dataform_context_default);
   const layout = field.layout;
-  const form = (0, import_element230.useMemo)(
+  const form = (0, import_element231.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : []
@@ -62178,7 +62329,7 @@ function FormRegularField({
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
 var import_deepmerge2 = __toESM(require_cjs(), 1);
 var import_components56 = __toESM(require_components(), 1);
-var import_element234 = __toESM(require_element(), 1);
+var import_element235 = __toESM(require_element(), 1);
 var import_compose39 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
@@ -62367,7 +62518,7 @@ function SummaryButton({
 // packages/dataviews/build-module/hooks/use-form-validity.mjs
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es63 = __toESM(require_es6(), 1);
-var import_element231 = __toESM(require_element(), 1);
+var import_element232 = __toESM(require_element(), 1);
 var import_i18n73 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
@@ -62801,11 +62952,11 @@ function getFormFieldValue(formField, item) {
   };
 }
 function useFormValidity(item, fields2, form) {
-  const [formValidity, setFormValidity] = (0, import_element231.useState)();
-  const customCounterRef = (0, import_element231.useRef)({});
-  const elementsCounterRef = (0, import_element231.useRef)({});
-  const previousValuesRef = (0, import_element231.useRef)({});
-  const validate = (0, import_element231.useCallback)(() => {
+  const [formValidity, setFormValidity] = (0, import_element232.useState)();
+  const customCounterRef = (0, import_element232.useRef)({});
+  const elementsCounterRef = (0, import_element232.useRef)({});
+  const previousValuesRef = (0, import_element232.useRef)({});
+  const validate = (0, import_element232.useCallback)(() => {
     const promiseHandler = {
       customCounterRef,
       elementsCounterRef,
@@ -62863,7 +63014,7 @@ function useFormValidity(item, fields2, form) {
       return validity;
     });
   }, [item, fields2, form]);
-  (0, import_element231.useEffect)(() => {
+  (0, import_element232.useEffect)(() => {
     validate();
   }, [validate]);
   return {
@@ -62874,9 +63025,9 @@ function useFormValidity(item, fields2, form) {
 var use_form_validity_default = useFormValidity;
 
 // packages/dataviews/build-module/hooks/use-reveal-validity.mjs
-var import_element232 = __toESM(require_element(), 1);
+var import_element233 = __toESM(require_element(), 1);
 function useRevealValidity(ref, shouldReveal) {
-  const revealValidity = (0, import_element232.useCallback)(() => {
+  const revealValidity = (0, import_element233.useCallback)(() => {
     const inputs = ref.current?.querySelectorAll("input, textarea, select");
     let revealedCount = 0;
     inputs?.forEach((input) => {
@@ -62889,7 +63040,7 @@ function useRevealValidity(ref, shouldReveal) {
     });
     return revealedCount;
   }, [ref]);
-  (0, import_element232.useEffect)(() => {
+  (0, import_element233.useEffect)(() => {
     if (shouldReveal) {
       revealValidity();
     }
@@ -62898,7 +63049,7 @@ function useRevealValidity(ref, shouldReveal) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
-var import_element233 = __toESM(require_element(), 1);
+var import_element234 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
 function extractSummaryIds(summary) {
@@ -62939,7 +63090,7 @@ var getFieldDefinition = (field, fields2) => {
   return fieldDefinition;
 };
 function useFieldFromFormField(field) {
-  const { fields: fields2 } = (0, import_element233.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element234.useContext)(dataform_context_default);
   const layout = field.layout;
   const summaryFields = getSummaryFields(layout.summary, fields2);
   const fieldDefinition = getFieldDefinition(field, fields2);
@@ -62971,14 +63122,14 @@ function ModalContent({
 }) {
   const { openAs } = field.layout;
   const { applyLabel, cancelLabel } = openAs;
-  const { fields: fields2 } = (0, import_element234.useContext)(dataform_context_default);
-  const [changes, setChanges] = (0, import_element234.useState)({});
-  const modalData = (0, import_element234.useMemo)(() => {
+  const { fields: fields2 } = (0, import_element235.useContext)(dataform_context_default);
+  const [changes, setChanges] = (0, import_element235.useState)({});
+  const modalData = (0, import_element235.useMemo)(() => {
     return (0, import_deepmerge2.default)(data, changes, {
       arrayMerge: (target, source) => source
     });
   }, [data, changes]);
-  const form = (0, import_element234.useMemo)(
+  const form = (0, import_element235.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -63014,7 +63165,7 @@ function ModalContent({
     );
   };
   const focusOnMountRef = (0, import_compose39.useFocusOnMount)("firstInputElement");
-  const contentRef = (0, import_element234.useRef)(null);
+  const contentRef = (0, import_element235.useRef)(null);
   const mergedRef = (0, import_compose39.useMergeRefs)([focusOnMountRef, contentRef]);
   useRevealValidity(contentRef, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)(
@@ -63086,8 +63237,8 @@ function PanelModal({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element234.useState)(false);
-  const [isOpen, setIsOpen] = (0, import_element234.useState)(false);
+  const [touched, setTouched] = (0, import_element235.useState)(false);
+  const [isOpen, setIsOpen] = (0, import_element235.useState)(false);
   const { fieldDefinition, fieldLabel, summaryFields } = use_field_from_form_field_default(field);
   if (!fieldDefinition) {
     return null;
@@ -63129,7 +63280,7 @@ var modal_default = PanelModal;
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
 var import_components57 = __toESM(require_components(), 1);
 var import_i18n74 = __toESM(require_i18n(), 1);
-var import_element235 = __toESM(require_element(), 1);
+var import_element236 = __toESM(require_element(), 1);
 var import_compose40 = __toESM(require_compose(), 1);
 var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
@@ -63162,7 +63313,7 @@ function DropdownContentWithValidation({
   touched,
   children
 }) {
-  const ref = (0, import_element235.useRef)(null);
+  const ref = (0, import_element236.useRef)(null);
   useRevealValidity(ref, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("div", { ref, children });
 }
@@ -63172,11 +63323,11 @@ function PanelDropdown({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element235.useState)(false);
-  const [popoverAnchor, setPopoverAnchor] = (0, import_element235.useState)(
+  const [touched, setTouched] = (0, import_element236.useState)(false);
+  const [popoverAnchor, setPopoverAnchor] = (0, import_element236.useState)(
     null
   );
-  const popoverProps = (0, import_element235.useMemo)(
+  const popoverProps = (0, import_element236.useMemo)(
     () => ({
       // Anchor the popover to the middle of the entire row so that it doesn't
       // move around when the label changes.
@@ -63190,7 +63341,7 @@ function PanelDropdown({
   const [dialogRef, dialogProps] = (0, import_compose40.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
-  const form = (0, import_element235.useMemo)(
+  const form = (0, import_element236.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -63200,7 +63351,7 @@ function PanelDropdown({
     }),
     [field]
   );
-  const formValidity = (0, import_element235.useMemo)(() => {
+  const formValidity = (0, import_element236.useMemo)(() => {
     if (validity === void 0) {
       return void 0;
     }
@@ -63312,7 +63463,7 @@ function FormPanelField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_element236 = __toESM(require_element(), 1);
+var import_element237 = __toESM(require_element(), 1);
 var import_compose41 = __toESM(require_compose(), 1);
 import { speak as speak6 } from "@wordpress/a11y";
 
@@ -63480,11 +63631,11 @@ function FormCardField({
   markWhenOptional,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element236.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element237.useContext)(dataform_context_default);
   const layout = field.layout;
-  const contentRef = (0, import_element236.useRef)(null);
-  const hasFocusedContentRef = (0, import_element236.useRef)(false);
-  const form = (0, import_element236.useMemo)(
+  const contentRef = (0, import_element237.useRef)(null);
+  const hasFocusedContentRef = (0, import_element237.useRef)(false);
+  const form = (0, import_element237.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
@@ -63492,12 +63643,12 @@ function FormCardField({
     [field]
   );
   const { isOpened, isCollapsible } = layout;
-  const [isOpen, setIsOpen] = (0, import_element236.useState)(isOpened);
-  const [touched, setTouched] = (0, import_element236.useState)(false);
-  (0, import_element236.useEffect)(() => {
+  const [isOpen, setIsOpen] = (0, import_element237.useState)(isOpened);
+  const [touched, setTouched] = (0, import_element237.useState)(false);
+  (0, import_element237.useEffect)(() => {
     setIsOpen(isOpened);
   }, [isOpened]);
-  const handleOpenChange = (0, import_element236.useCallback)((open) => {
+  const handleOpenChange = (0, import_element237.useCallback)((open) => {
     if (!open) {
       setTouched(true);
     }
@@ -63507,10 +63658,10 @@ function FormCardField({
     contentRef,
     (isCollapsible ? isOpen : true) && touched
   );
-  const handleContentFocus = (0, import_element236.useCallback)(() => {
+  const handleContentFocus = (0, import_element237.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element236.useCallback)(() => {
+  const handleFocusOutside = (0, import_element237.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -63678,7 +63829,7 @@ function FormRowField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
-var import_element237 = __toESM(require_element(), 1);
+var import_element238 = __toESM(require_element(), 1);
 var import_i18n76 = __toESM(require_i18n(), 1);
 var import_compose42 = __toESM(require_compose(), 1);
 import { speak as speak7 } from "@wordpress/a11y";
@@ -63689,20 +63840,20 @@ function FormDetailsField({
   onChange,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element237.useContext)(dataform_context_default);
-  const detailsRef = (0, import_element237.useRef)(null);
-  const contentRef = (0, import_element237.useRef)(null);
-  const hasFocusedContentRef = (0, import_element237.useRef)(false);
-  const [touched, setTouched] = (0, import_element237.useState)(false);
-  const [isOpen, setIsOpen] = (0, import_element237.useState)(false);
-  const form = (0, import_element237.useMemo)(
+  const { fields: fields2 } = (0, import_element238.useContext)(dataform_context_default);
+  const detailsRef = (0, import_element238.useRef)(null);
+  const contentRef = (0, import_element238.useRef)(null);
+  const hasFocusedContentRef = (0, import_element238.useRef)(false);
+  const [touched, setTouched] = (0, import_element238.useState)(false);
+  const [isOpen, setIsOpen] = (0, import_element238.useState)(false);
+  const form = (0, import_element238.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
     }),
     [field]
   );
-  (0, import_element237.useEffect)(() => {
+  (0, import_element238.useEffect)(() => {
     const details = detailsRef.current;
     if (!details) {
       return;
@@ -63720,10 +63871,10 @@ function FormDetailsField({
     };
   }, []);
   const revealValidity = useRevealValidity(contentRef, isOpen && touched);
-  const handleContentFocus = (0, import_element237.useCallback)(() => {
+  const handleContentFocus = (0, import_element238.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element237.useCallback)(() => {
+  const handleFocusOutside = (0, import_element238.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -63877,8 +64028,8 @@ function DataFormLayout({
   children,
   as
 }) {
-  const { fields: fieldDefinitions } = (0, import_element238.useContext)(dataform_context_default);
-  const markWhenOptional = (0, import_element238.useMemo)(() => {
+  const { fields: fieldDefinitions } = (0, import_element239.useContext)(dataform_context_default);
+  const markWhenOptional = (0, import_element239.useMemo)(() => {
     const requiredCount = fieldDefinitions.filter(
       (f2) => !!f2.isValid?.required
     ).length;
@@ -63931,8 +64082,8 @@ function DataForm({
   onChange,
   validity
 }) {
-  const normalizedForm = (0, import_element239.useMemo)(() => normalize_form_default(form), [form]);
-  const normalizedFields = (0, import_element239.useMemo)(
+  const normalizedForm = (0, import_element240.useMemo)(() => normalize_form_default(form), [form]);
+  const normalizedFields = (0, import_element240.useMemo)(
     () => normalizeFields(fields2),
     [fields2]
   );
@@ -64047,11 +64198,11 @@ function filterSortAndPaginate(data, view, fields2) {
 }
 
 // packages/widget-dashboard/build-module/components/widget-picker/widget-picker.mjs
-var import_element241 = __toESM(require_element(), 1);
+var import_element242 = __toESM(require_element(), 1);
 var import_i18n77 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-preview-chrome/widget-preview-chrome.mjs
-var import_element240 = __toESM(require_element(), 1);
+var import_element241 = __toESM(require_element(), 1);
 var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE93 = "data-wp-hash";
 function getRuntime93() {
@@ -64142,8 +64293,8 @@ function WidgetPreviewChrome({
   widgetType,
   index: index2 = 0
 }) {
-  const titleId = (0, import_element240.useId)();
-  const contextValue = (0, import_element240.useMemo)(
+  const titleId = (0, import_element241.useId)();
+  const contextValue = (0, import_element241.useMemo)(
     () => ({
       uuid: widget.uuid,
       name: widget.type,
@@ -64182,7 +64333,7 @@ var DEFAULT_VIEW = {
 };
 var getItemId = (item) => item.name;
 function WidgetPreview({ item }) {
-  const exampleWidget = (0, import_element241.useMemo)(
+  const exampleWidget = (0, import_element242.useMemo)(
     () => createDashboardWidget(item, item.example?.attributes),
     [item]
   );
@@ -64215,14 +64366,14 @@ function WidgetPicker({
   itemListLabel = (0, import_i18n77.__)("Widget list")
 }) {
   const { widgetTypes: registeredTypes } = useDashboardInternalContext();
-  const [selection, setSelection] = (0, import_element241.useState)([]);
-  const [view, setView] = (0, import_element241.useState)(DEFAULT_VIEW);
+  const [selection, setSelection] = (0, import_element242.useState)([]);
+  const [view, setView] = (0, import_element242.useState)(DEFAULT_VIEW);
   const { data: widgetTypes } = filterSortAndPaginate(
     registeredTypes,
     view,
     fields
   );
-  const actions = (0, import_element241.useMemo)(
+  const actions = (0, import_element242.useMemo)(
     () => [
       {
         id: "select",
@@ -64261,7 +64412,7 @@ var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
 function WidgetInserter() {
   const { layout, onLayoutChange } = useDashboardInternalContext();
   const { inserterOpen, setInserterOpen } = useDashboardUIContext();
-  const insertWidgets = (0, import_element242.useCallback)(
+  const insertWidgets = (0, import_element243.useCallback)(
     (widgetTypes) => {
       if (widgetTypes.length > 0) {
         const newWidgets = widgetTypes.map(
@@ -64300,7 +64451,7 @@ function WidgetInserter() {
 }
 
 // packages/widget-dashboard/build-module/components/widget-settings/widget-settings.mjs
-var import_element243 = __toESM(require_element(), 1);
+var import_element244 = __toESM(require_element(), 1);
 var import_i18n80 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-settings/utils/get-widget-settings.mjs
@@ -64410,10 +64561,10 @@ function WidgetSettings() {
   } = useDashboardInternalContext();
   const { settingsWidgetUuid, setSettingsWidgetUuid } = useDashboardUIContext();
   const open = settingsWidgetUuid !== null;
-  const [lastWidgetUuid, setLastWidgetUuid] = (0, import_element243.useState)(
+  const [lastWidgetUuid, setLastWidgetUuid] = (0, import_element244.useState)(
     settingsWidgetUuid
   );
-  (0, import_element243.useEffect)(() => {
+  (0, import_element244.useEffect)(() => {
     if (settingsWidgetUuid) {
       setLastWidgetUuid(settingsWidgetUuid);
     }
@@ -64421,18 +64572,18 @@ function WidgetSettings() {
   const activeUuid = settingsWidgetUuid ?? lastWidgetUuid;
   const widget = activeUuid ? layout.find((instance) => instance.uuid === activeUuid) : void 0;
   const widgetType = widget ? widgetTypes.find((type) => type.name === widget.type) : void 0;
-  const fields2 = (0, import_element243.useMemo)(
+  const fields2 = (0, import_element244.useMemo)(
     () => widgetType?.attributes ?? [],
     [widgetType?.attributes]
   );
-  const form = (0, import_element243.useMemo)(
+  const form = (0, import_element244.useMemo)(
     () => ({
       layout: { type: "regular", labelPosition: "top" },
       fields: fields2.map((field) => field.id)
     }),
     [fields2]
   );
-  const handleChange = (0, import_element243.useCallback)(
+  const handleChange = (0, import_element244.useCallback)(
     (edits) => {
       if (!widget) {
         return;
@@ -64451,15 +64602,15 @@ function WidgetSettings() {
     },
     [layout, onLayoutChange, widget]
   );
-  const close = (0, import_element243.useCallback)(
+  const close = (0, import_element244.useCallback)(
     () => setSettingsWidgetUuid(null),
     [setSettingsWidgetUuid]
   );
-  const handleSave = (0, import_element243.useCallback)(() => {
+  const handleSave = (0, import_element244.useCallback)(() => {
     commit();
     close();
   }, [commit, close]);
-  const handleOpenChange = (0, import_element243.useCallback)(
+  const handleOpenChange = (0, import_element244.useCallback)(
     (nextOpen) => {
       if (!nextOpen) {
         cancelStaging();
@@ -64528,16 +64679,16 @@ function WidgetSettings() {
 var import_i18n81 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-settings/use-widget-settings-toggle.mjs
-var import_element244 = __toESM(require_element(), 1);
+var import_element245 = __toESM(require_element(), 1);
 function useWidgetSettingsToggle(widget) {
   const { settingsWidgetUuid, setSettingsWidgetUuid } = useDashboardUIContext();
   const { cancel, flushAutoSave } = useDashboardInternalContext();
   const isOpen = settingsWidgetUuid === widget.uuid;
-  const open = (0, import_element244.useCallback)(() => {
+  const open = (0, import_element245.useCallback)(() => {
     flushAutoSave();
     setSettingsWidgetUuid(widget.uuid);
   }, [flushAutoSave, setSettingsWidgetUuid, widget.uuid]);
-  const toggle = (0, import_element244.useCallback)(() => {
+  const toggle = (0, import_element245.useCallback)(() => {
     if (isOpen) {
       cancel();
       setSettingsWidgetUuid(null);
@@ -64575,7 +64726,7 @@ function WidgetSettingsTrigger({
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widgets.mjs
-var import_element259 = __toESM(require_element(), 1);
+var import_element260 = __toESM(require_element(), 1);
 
 // node_modules/@dnd-kit/core/dist/core.esm.js
 var import_react84 = __toESM(require_react());
@@ -68822,17 +68973,17 @@ function isAfter2(a2, b2) {
 
 // packages/grid/build-module/dashboard-grid/index.mjs
 var import_compose45 = __toESM(require_compose(), 1);
-var import_element250 = __toESM(require_element(), 1);
+var import_element251 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-grid/grid-item.mjs
-var import_element246 = __toESM(require_element(), 1);
+var import_element247 = __toESM(require_element(), 1);
 var import_compose44 = __toESM(require_compose(), 1);
 
 // packages/grid/build-module/shared/grid-item-key.mjs
 var GRID_ITEM_DATA_KEY = "data-wp-grid-item-key";
 
 // packages/grid/build-module/shared/resize-handle.mjs
-var import_element245 = __toESM(require_element(), 1);
+var import_element246 = __toESM(require_element(), 1);
 var import_compose43 = __toESM(require_compose(), 1);
 var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE95 = "data-wp-hash";
@@ -68936,12 +69087,12 @@ function ResizeHandle({
     id: "draggable",
     data: { itemId }
   });
-  const ownerDocumentRef = (0, import_element245.useRef)(null);
-  const setOwnerDocumentRef = (0, import_element245.useCallback)((node) => {
+  const ownerDocumentRef = (0, import_element246.useRef)(null);
+  const setOwnerDocumentRef = (0, import_element246.useCallback)((node) => {
     ownerDocumentRef.current = node?.ownerDocument ?? null;
   }, []);
   const mergedRef = (0, import_compose43.useMergeRefs)([setOwnerDocumentRef, setNodeRef]);
-  (0, import_element245.useEffect)(() => {
+  (0, import_element246.useEffect)(() => {
     if (!isDragging) {
       return;
     }
@@ -69145,12 +69296,12 @@ function GridItem4({
   minResizeHeightPx,
   renderResizeHandle
 }) {
-  const [resizeDelta, setResizeDelta] = (0, import_element246.useState)(
+  const [resizeDelta, setResizeDelta] = (0, import_element247.useState)(
     null
   );
-  const [initialContentSize, setInitialContentSize] = (0, import_element246.useState)(null);
-  const itemRef = (0, import_element246.useRef)(null);
-  const contentRef = (0, import_element246.useRef)(null);
+  const [initialContentSize, setInitialContentSize] = (0, import_element247.useState)(null);
+  const itemRef = (0, import_element247.useRef)(null);
+  const contentRef = (0, import_element247.useRef)(null);
   const {
     attributes,
     listeners,
@@ -69284,7 +69435,7 @@ function SnapPreviewOverlay({ snap }) {
 }
 
 // packages/grid/build-module/shared/grid-overlay.mjs
-var import_element247 = __toESM(require_element(), 1);
+var import_element248 = __toESM(require_element(), 1);
 var import_jsx_runtime336 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE97 = "data-wp-hash";
 function getRuntime97() {
@@ -69377,8 +69528,8 @@ function GridOverlay({
   isActive
 }) {
   const showRows = typeof rowHeight === "number" && typeof rows === "number" && rows > 0;
-  const [waveKey, setWaveKey] = (0, import_element247.useState)(0);
-  (0, import_element247.useEffect)(() => {
+  const [waveKey, setWaveKey] = (0, import_element248.useState)(0);
+  (0, import_element248.useEffect)(() => {
     if (isActive) {
       setWaveKey((key2) => key2 + 1);
     }
@@ -69541,7 +69692,7 @@ function ItemExitOverlay({
 }
 
 // packages/grid/build-module/shared/use-layout-shift-animation.mjs
-var import_element248 = __toESM(require_element(), 1);
+var import_element249 = __toESM(require_element(), 1);
 function queryGridItems(container) {
   return Array.from(
     container.querySelectorAll(
@@ -69600,15 +69751,15 @@ function useLayoutShiftAnimation({
   layoutFingerprint,
   excludeItemKey = null
 }) {
-  const snapshotBeforeChangeRef = (0, import_element248.useRef)(null);
-  const lastRenderedPositionsRef = (0, import_element248.useRef)(null);
-  const positionsBeforeLastChangeRef = (0, import_element248.useRef)(null);
-  const captureLayoutSnapshot = (0, import_element248.useCallback)(() => {
+  const snapshotBeforeChangeRef = (0, import_element249.useRef)(null);
+  const lastRenderedPositionsRef = (0, import_element249.useRef)(null);
+  const positionsBeforeLastChangeRef = (0, import_element249.useRef)(null);
+  const captureLayoutSnapshot = (0, import_element249.useCallback)(() => {
     if (container) {
       snapshotBeforeChangeRef.current = snapshotPositions(container);
     }
   }, [container]);
-  (0, import_element248.useLayoutEffect)(() => {
+  (0, import_element249.useLayoutEffect)(() => {
     if (!container || !enabled) {
       snapshotBeforeChangeRef.current = null;
       lastRenderedPositionsRef.current = null;
@@ -69645,10 +69796,10 @@ function useLayoutShiftAnimation({
       }
     }
   }, [container, enabled, layoutFingerprint, excludeItemKey]);
-  const getLastPositions = (0, import_element248.useCallback)(() => {
+  const getLastPositions = (0, import_element249.useCallback)(() => {
     return lastRenderedPositionsRef.current;
   }, []);
-  const getPositionsBeforeLastChange = (0, import_element248.useCallback)(() => {
+  const getPositionsBeforeLastChange = (0, import_element249.useCallback)(() => {
     return positionsBeforeLastChangeRef.current;
   }, []);
   return {
@@ -69675,7 +69826,7 @@ function getPlacementFingerprint(itemStyles) {
 }
 
 // packages/grid/build-module/shared/use-item-exit-animation.mjs
-var import_element249 = __toESM(require_element(), 1);
+var import_element250 = __toESM(require_element(), 1);
 var EXIT_SAFETY_TIMEOUT_MS = 1e3;
 function prefersReducedMotion() {
   return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -69687,12 +69838,12 @@ function useItemExitAnimation({
   getPositionsBeforeLastChange,
   childrenCacheRef
 }) {
-  const [exitingItems, setExitingItems] = (0, import_element249.useState)(
+  const [exitingItems, setExitingItems] = (0, import_element250.useState)(
     []
   );
-  const prevLayoutKeysRef = (0, import_element249.useRef)(/* @__PURE__ */ new Set());
-  const exitTimeoutsRef = (0, import_element249.useRef)(/* @__PURE__ */ new Map());
-  const clearExitingItem = (0, import_element249.useCallback)(
+  const prevLayoutKeysRef = (0, import_element250.useRef)(/* @__PURE__ */ new Set());
+  const exitTimeoutsRef = (0, import_element250.useRef)(/* @__PURE__ */ new Map());
+  const clearExitingItem = (0, import_element250.useCallback)(
     (key2) => {
       const timeout = exitTimeoutsRef.current.get(key2);
       if (timeout) {
@@ -69706,7 +69857,7 @@ function useItemExitAnimation({
     },
     [childrenCacheRef]
   );
-  const scheduleExitComplete = (0, import_element249.useCallback)(
+  const scheduleExitComplete = (0, import_element250.useCallback)(
     (key2) => {
       if (exitTimeoutsRef.current.has(key2)) {
         return;
@@ -69719,7 +69870,7 @@ function useItemExitAnimation({
     },
     [clearExitingItem]
   );
-  (0, import_element249.useLayoutEffect)(() => {
+  (0, import_element250.useLayoutEffect)(() => {
     if (!enabled || !container) {
       prevLayoutKeysRef.current = new Set(layoutKeys);
       for (const timeout of exitTimeoutsRef.current.values()) {
@@ -69778,7 +69929,7 @@ function useItemExitAnimation({
     childrenCacheRef,
     scheduleExitComplete
   ]);
-  (0, import_element249.useLayoutEffect)(() => {
+  (0, import_element250.useLayoutEffect)(() => {
     const exitTimeouts = exitTimeoutsRef.current;
     return () => {
       for (const timeout of exitTimeouts.values()) {
@@ -70091,7 +70242,7 @@ var dashboardDragDropAnimation = createDashboardDragDropAnimation(
 var FALLBACK_GAP_PX = 24;
 var DEFAULT_COLUMNS = 6;
 var NO_SORT_STRATEGY = () => null;
-var DashboardGrid = (0, import_element250.forwardRef)(
+var DashboardGrid = (0, import_element251.forwardRef)(
   function DashboardGrid2(props, ref) {
     const {
       layout,
@@ -70109,25 +70260,25 @@ var DashboardGrid = (0, import_element250.forwardRef)(
       renderGridOverlay,
       ...divProps
     } = props;
-    const [temporaryLayout, setTemporaryLayout] = (0, import_element250.useState)();
-    const [activeId, setActiveId] = (0, import_element250.useState)(null);
-    const [isResizing, setIsResizing] = (0, import_element250.useState)(false);
-    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element250.useState)(null);
-    const latestLayoutRef = (0, import_element250.useRef)();
-    const lastReorderCursorRef = (0, import_element250.useRef)(null);
-    const resizeBaselineRef = (0, import_element250.useRef)(null);
-    const captureLayoutSnapshotRef = (0, import_element250.useRef)(() => {
+    const [temporaryLayout, setTemporaryLayout] = (0, import_element251.useState)();
+    const [activeId, setActiveId] = (0, import_element251.useState)(null);
+    const [isResizing, setIsResizing] = (0, import_element251.useState)(false);
+    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element251.useState)(null);
+    const latestLayoutRef = (0, import_element251.useRef)();
+    const lastReorderCursorRef = (0, import_element251.useRef)(null);
+    const resizeBaselineRef = (0, import_element251.useRef)(null);
+    const captureLayoutSnapshotRef = (0, import_element251.useRef)(() => {
     });
-    const childrenCacheRef = (0, import_element250.useRef)(
+    const childrenCacheRef = (0, import_element251.useRef)(
       /* @__PURE__ */ new Map()
     );
     const activeLayout = temporaryLayout ?? layout;
-    const [gridRoot, setGridRoot] = (0, import_element250.useState)(
+    const [gridRoot, setGridRoot] = (0, import_element251.useState)(
       null
     );
-    const [containerWidth, setContainerWidth] = (0, import_element250.useState)(0);
-    const [containerHeight, setContainerHeight] = (0, import_element250.useState)(0);
-    const [gapPx, setGapPx] = (0, import_element250.useState)(FALLBACK_GAP_PX);
+    const [containerWidth, setContainerWidth] = (0, import_element251.useState)(0);
+    const [containerHeight, setContainerHeight] = (0, import_element251.useState)(0);
+    const [gapPx, setGapPx] = (0, import_element251.useState)(FALLBACK_GAP_PX);
     const resizeObserverRef = (0, import_compose45.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
@@ -70139,7 +70290,7 @@ var DashboardGrid = (0, import_element250.forwardRef)(
       resizeObserverRef,
       ref
     ]);
-    (0, import_element250.useLayoutEffect)(() => {
+    (0, import_element251.useLayoutEffect)(() => {
       if (!gridRoot) {
         return;
       }
@@ -70157,7 +70308,7 @@ var DashboardGrid = (0, import_element250.forwardRef)(
         setGapPx(parsed);
       }
     }, [gridRoot]);
-    const effectiveColumns = (0, import_element250.useMemo)(() => {
+    const effectiveColumns = (0, import_element251.useMemo)(() => {
       if (!minColumnWidth) {
         return columns ?? DEFAULT_COLUMNS;
       }
@@ -70178,23 +70329,23 @@ var DashboardGrid = (0, import_element250.forwardRef)(
     ).widthPx;
     const rowHeightPx = typeof rowHeight === "number" ? rowHeight : null;
     const minResizeHeightPx = rowHeightPx === null ? void 0 : gridSpanToPixelSize(1, 1, columnWidth, gapPx, rowHeightPx).heightPx ?? void 0;
-    const layoutMap = (0, import_element250.useMemo)(() => {
+    const layoutMap = (0, import_element251.useMemo)(() => {
       const map = /* @__PURE__ */ new Map();
       activeLayout.forEach((item) => map.set(item.key, item));
       return map;
     }, [activeLayout]);
-    const layoutKeys = (0, import_element250.useMemo)(
+    const layoutKeys = (0, import_element251.useMemo)(
       () => new Set(layout.map((item) => item.key)),
       [layout]
     );
-    const sortedItems = (0, import_element250.useMemo)(
+    const sortedItems = (0, import_element251.useMemo)(
       () => activeLayout.map((item, index2) => ({ item, index: index2 })).sort(
         (a2, b2) => (a2.item.order ?? a2.index) - (b2.item.order ?? b2.index)
       ).map(({ item }) => item.key),
       [activeLayout]
     );
     const items = sortedItems;
-    const resolvedItemMap = (0, import_element250.useMemo)(() => {
+    const resolvedItemMap = (0, import_element251.useMemo)(() => {
       const fillWidths = resolveFillWidths(
         items,
         layoutMap,
@@ -70213,13 +70364,13 @@ var DashboardGrid = (0, import_element250.forwardRef)(
       }
       return map;
     }, [items, layoutMap, effectiveColumns]);
-    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element250.useMemo)(() => {
+    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element251.useMemo)(() => {
       const childMap = /* @__PURE__ */ new Map();
       const actionableMap = /* @__PURE__ */ new Map();
       const rest = [];
       const byKey = /* @__PURE__ */ new Map();
-      import_element250.Children.forEach(children, (child) => {
-        if (!(0, import_element250.isValidElement)(child)) {
+      import_element251.Children.forEach(children, (child) => {
+        if (!(0, import_element251.isValidElement)(child)) {
           rest.push(child);
           return;
         }
@@ -70229,7 +70380,7 @@ var DashboardGrid = (0, import_element250.forwardRef)(
           return;
         }
         const { actionableArea } = child.props;
-        const stripped = actionableArea !== void 0 ? (0, import_element250.cloneElement)(child, {
+        const stripped = actionableArea !== void 0 ? (0, import_element251.cloneElement)(child, {
           actionableArea: void 0
         }) : child;
         byKey.set(key2, stripped);
@@ -70244,7 +70395,7 @@ var DashboardGrid = (0, import_element250.forwardRef)(
       });
       return [childMap, actionableMap, rest, byKey];
     }, [children, layoutKeys]);
-    (0, import_element250.useLayoutEffect)(() => {
+    (0, import_element251.useLayoutEffect)(() => {
       for (const [key2, child] of renderedByKey) {
         childrenCacheRef.current.set(key2, child);
       }
@@ -70399,7 +70550,7 @@ var DashboardGrid = (0, import_element250.forwardRef)(
     const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime338.jsx)("div", { className: grid_default2["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime338.jsx)("div", { className: grid_default2["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
     const Overlay = renderGridOverlay ?? GridOverlay;
     const overlayRowHeight = typeof rowHeight === "number" ? rowHeight : void 0;
-    const overlayRows = (0, import_element250.useMemo)(() => {
+    const overlayRows = (0, import_element251.useMemo)(() => {
       if (overlayRowHeight === void 0 || containerHeight <= 0) {
         return void 0;
       }
@@ -70409,7 +70560,7 @@ var DashboardGrid = (0, import_element250.forwardRef)(
         Math.floor((containerHeight + gapPx) / rowTile)
       );
     }, [overlayRowHeight, containerHeight, gapPx]);
-    const gridOverlay = (0, import_element250.useMemo)(
+    const gridOverlay = (0, import_element251.useMemo)(
       () => /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(
         Overlay,
         {
@@ -70427,7 +70578,7 @@ var DashboardGrid = (0, import_element250.forwardRef)(
         overlayRows
       ]
     );
-    const layoutFingerprint = (0, import_element250.useMemo)(
+    const layoutFingerprint = (0, import_element251.useMemo)(
       () => getLayoutFingerprint([...resolvedItemMap.values()]),
       [resolvedItemMap]
     );
@@ -70446,7 +70597,7 @@ var DashboardGrid = (0, import_element250.forwardRef)(
       childrenCacheRef
     });
     const layoutAnimating = editMode;
-    (0, import_element250.useLayoutEffect)(() => {
+    (0, import_element251.useLayoutEffect)(() => {
       captureLayoutSnapshotRef.current = captureLayoutSnapshot;
     }, [captureLayoutSnapshot]);
     return /* @__PURE__ */ (0, import_jsx_runtime338.jsxs)(
@@ -70526,10 +70677,10 @@ var DashboardGrid = (0, import_element250.forwardRef)(
 
 // packages/grid/build-module/dashboard-lanes/index.mjs
 var import_compose47 = __toESM(require_compose(), 1);
-var import_element253 = __toESM(require_element(), 1);
+var import_element254 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-lanes/lanes-item.mjs
-var import_element251 = __toESM(require_element(), 1);
+var import_element252 = __toESM(require_element(), 1);
 var import_compose46 = __toESM(require_compose(), 1);
 var import_jsx_runtime339 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE100 = "data-wp-hash";
@@ -70643,12 +70794,12 @@ function LanesItem({
   renderResizeHandle,
   dragging = false
 }) {
-  const [resizeDelta, setResizeDelta] = (0, import_element251.useState)(
+  const [resizeDelta, setResizeDelta] = (0, import_element252.useState)(
     null
   );
-  const [initialContentSize, setInitialContentSize] = (0, import_element251.useState)(null);
-  const itemRef = (0, import_element251.useRef)(null);
-  const contentRef = (0, import_element251.useRef)(null);
+  const [initialContentSize, setInitialContentSize] = (0, import_element252.useState)(null);
+  const itemRef = (0, import_element252.useRef)(null);
+  const contentRef = (0, import_element252.useRef)(null);
   const {
     attributes,
     listeners,
@@ -70771,7 +70922,7 @@ function LanesItem({
 }
 
 // packages/grid/build-module/dashboard-lanes/use-lane-placement.mjs
-var import_element252 = __toESM(require_element(), 1);
+var import_element253 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-lanes/lane-placement.mjs
 function clampSpan(span, lanes) {
@@ -70870,9 +71021,9 @@ function clampSpan2(span) {
   return Math.max(1, Math.floor(span));
 }
 function useLanePlacement(container, input) {
-  const [isPolyfilled] = (0, import_element252.useState)(() => !supportsGridLanes());
-  const [itemStyles, setItemStyles] = (0, import_element252.useState)(() => /* @__PURE__ */ new Map());
-  const nativeStyles = (0, import_element252.useMemo)(() => {
+  const [isPolyfilled] = (0, import_element253.useState)(() => !supportsGridLanes());
+  const [itemStyles, setItemStyles] = (0, import_element253.useState)(() => /* @__PURE__ */ new Map());
+  const nativeStyles = (0, import_element253.useMemo)(() => {
     const map = /* @__PURE__ */ new Map();
     for (const item of input.items) {
       map.set(item.key, {
@@ -70881,14 +71032,14 @@ function useLanePlacement(container, input) {
     }
     return map;
   }, [input.items]);
-  const itemsSignature = (0, import_element252.useMemo)(() => {
+  const itemsSignature = (0, import_element253.useMemo)(() => {
     return input.items.map(
       (item) => `${item.key}/${item.span ?? 1}/${item.lane ?? ""}`
     ).join("\0");
   }, [input.items]);
-  const itemsForPlacement = (0, import_element252.useMemo)(() => input.items, [itemsSignature]);
+  const itemsForPlacement = (0, import_element253.useMemo)(() => input.items, [itemsSignature]);
   const { lanes, gap, flowTolerance, rowUnit } = input;
-  (0, import_element252.useLayoutEffect)(() => {
+  (0, import_element253.useLayoutEffect)(() => {
     if (!isPolyfilled || !container) {
       return;
     }
@@ -71127,7 +71278,7 @@ var dashboardDragDropAnimation2 = createDashboardDragDropAnimation(
 var FALLBACK_GAP_PX2 = 24;
 var DEFAULT_COLUMNS2 = 6;
 var NO_SORT_STRATEGY2 = () => null;
-var DashboardLanes = (0, import_element253.forwardRef)(
+var DashboardLanes = (0, import_element254.forwardRef)(
   function DashboardLanes2(props, ref) {
     const {
       layout,
@@ -71146,24 +71297,24 @@ var DashboardLanes = (0, import_element253.forwardRef)(
       renderGridOverlay,
       ...divProps
     } = props;
-    const [temporaryLayout, setTemporaryLayout] = (0, import_element253.useState)();
-    const [activeId, setActiveId] = (0, import_element253.useState)(null);
-    const [isResizing, setIsResizing] = (0, import_element253.useState)(false);
-    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element253.useState)(null);
-    const latestLayoutRef = (0, import_element253.useRef)();
-    const lastReorderCursorRef = (0, import_element253.useRef)(null);
-    const resizeBaselineRef = (0, import_element253.useRef)(null);
-    const captureLayoutSnapshotRef = (0, import_element253.useRef)(() => {
+    const [temporaryLayout, setTemporaryLayout] = (0, import_element254.useState)();
+    const [activeId, setActiveId] = (0, import_element254.useState)(null);
+    const [isResizing, setIsResizing] = (0, import_element254.useState)(false);
+    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element254.useState)(null);
+    const latestLayoutRef = (0, import_element254.useRef)();
+    const lastReorderCursorRef = (0, import_element254.useRef)(null);
+    const resizeBaselineRef = (0, import_element254.useRef)(null);
+    const captureLayoutSnapshotRef = (0, import_element254.useRef)(() => {
     });
-    const childrenCacheRef = (0, import_element253.useRef)(
+    const childrenCacheRef = (0, import_element254.useRef)(
       /* @__PURE__ */ new Map()
     );
     const activeLayout = temporaryLayout ?? layout;
-    const [container, setContainer] = (0, import_element253.useState)(
+    const [container, setContainer] = (0, import_element254.useState)(
       null
     );
-    const [containerWidth, setContainerWidth] = (0, import_element253.useState)(0);
-    const [gapPx, setGapPx] = (0, import_element253.useState)(FALLBACK_GAP_PX2);
+    const [containerWidth, setContainerWidth] = (0, import_element254.useState)(0);
+    const [gapPx, setGapPx] = (0, import_element254.useState)(FALLBACK_GAP_PX2);
     const resizeObserverRef = (0, import_compose47.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
@@ -71174,7 +71325,7 @@ var DashboardLanes = (0, import_element253.forwardRef)(
       resizeObserverRef,
       ref
     ]);
-    (0, import_element253.useLayoutEffect)(() => {
+    (0, import_element254.useLayoutEffect)(() => {
       if (!container) {
         return;
       }
@@ -71189,7 +71340,7 @@ var DashboardLanes = (0, import_element253.forwardRef)(
         setGapPx(parsed);
       }
     }, [container]);
-    const effectiveColumns = (0, import_element253.useMemo)(() => {
+    const effectiveColumns = (0, import_element254.useMemo)(() => {
       if (!minColumnWidth) {
         return columns ?? DEFAULT_COLUMNS2;
       }
@@ -71208,23 +71359,23 @@ var DashboardLanes = (0, import_element253.forwardRef)(
       gapPx,
       null
     ).widthPx;
-    const layoutMap = (0, import_element253.useMemo)(() => {
+    const layoutMap = (0, import_element254.useMemo)(() => {
       const map = /* @__PURE__ */ new Map();
       activeLayout.forEach((item) => map.set(item.key, item));
       return map;
     }, [activeLayout]);
-    const layoutKeys = (0, import_element253.useMemo)(
+    const layoutKeys = (0, import_element254.useMemo)(
       () => new Set(layout.map((item) => item.key)),
       [layout]
     );
-    const sortedItems = (0, import_element253.useMemo)(
+    const sortedItems = (0, import_element254.useMemo)(
       () => activeLayout.map((item, index2) => ({ item, index: index2 })).sort(
         (a2, b2) => (a2.item.order ?? a2.index) - (b2.item.order ?? b2.index)
       ).map(({ item }) => item.key),
       [activeLayout]
     );
     const items = sortedItems;
-    const placementItems = (0, import_element253.useMemo)(() => {
+    const placementItems = (0, import_element254.useMemo)(() => {
       return items.map((key2) => {
         const item = layoutMap.get(key2);
         const width = item?.width;
@@ -71239,13 +71390,13 @@ var DashboardLanes = (0, import_element253.forwardRef)(
       flowTolerance,
       rowUnit
     });
-    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element253.useMemo)(() => {
+    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element254.useMemo)(() => {
       const childMap = /* @__PURE__ */ new Map();
       const actionableMap = /* @__PURE__ */ new Map();
       const rest = [];
       const byKey = /* @__PURE__ */ new Map();
-      import_element253.Children.forEach(children, (child) => {
-        if (!(0, import_element253.isValidElement)(child)) {
+      import_element254.Children.forEach(children, (child) => {
+        if (!(0, import_element254.isValidElement)(child)) {
           rest.push(child);
           return;
         }
@@ -71255,7 +71406,7 @@ var DashboardLanes = (0, import_element253.forwardRef)(
           return;
         }
         const { actionableArea } = child.props;
-        const stripped = actionableArea !== void 0 ? (0, import_element253.cloneElement)(
+        const stripped = actionableArea !== void 0 ? (0, import_element254.cloneElement)(
           child,
           { actionableArea: void 0 }
         ) : child;
@@ -71271,7 +71422,7 @@ var DashboardLanes = (0, import_element253.forwardRef)(
       });
       return [childMap, actionableMap, rest, byKey];
     }, [children, layoutKeys]);
-    (0, import_element253.useLayoutEffect)(() => {
+    (0, import_element254.useLayoutEffect)(() => {
       for (const [key2, child] of renderedByKey) {
         childrenCacheRef.current.set(key2, child);
       }
@@ -71409,11 +71560,11 @@ var DashboardLanes = (0, import_element253.forwardRef)(
     const DragPreview = renderDragPreview;
     const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime340.jsx)("div", { className: lanes_default["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime340.jsx)("div", { className: lanes_default["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
     const Overlay = renderGridOverlay ?? GridOverlay;
-    const gridOverlay = (0, import_element253.useMemo)(
+    const gridOverlay = (0, import_element254.useMemo)(
       () => /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(Overlay, { columns: effectiveColumns, isActive: editMode }),
       [Overlay, editMode, effectiveColumns]
     );
-    const layoutFingerprint = (0, import_element253.useMemo)(() => {
+    const layoutFingerprint = (0, import_element254.useMemo)(() => {
       const layoutSig = getLayoutFingerprint(activeLayout);
       const placementSig = getPlacementFingerprint(itemStyles);
       return `${layoutSig}\0${placementSig}`;
@@ -71433,7 +71584,7 @@ var DashboardLanes = (0, import_element253.forwardRef)(
       childrenCacheRef
     });
     const layoutAnimating = editMode;
-    (0, import_element253.useLayoutEffect)(() => {
+    (0, import_element254.useLayoutEffect)(() => {
       captureLayoutSnapshotRef.current = captureLayoutSnapshot;
     }, [captureLayoutSnapshot]);
     return /* @__PURE__ */ (0, import_jsx_runtime340.jsxs)(
@@ -71529,7 +71680,7 @@ var DashboardLanes = (0, import_element253.forwardRef)(
 
 // packages/widget-dashboard/build-module/hooks/use-dashboard-container-column-count.mjs
 var import_compose48 = __toESM(require_compose(), 1);
-var import_element254 = __toESM(require_element(), 1);
+var import_element255 = __toESM(require_element(), 1);
 
 // packages/widget-dashboard/build-module/utils/resolve-dashboard-column-count/resolve-dashboard-column-count.mjs
 var WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_ONE_COLUMN = 600;
@@ -71549,10 +71700,10 @@ function resolveDashboardColumnCount(containerWidth) {
 
 // packages/widget-dashboard/build-module/hooks/use-dashboard-container-column-count.mjs
 function useDashboardContainerColumnCount(forwardedRef) {
-  const [container, setContainer] = (0, import_element254.useState)(
+  const [container, setContainer] = (0, import_element255.useState)(
     null
   );
-  const [containerWidth, setContainerWidth] = (0, import_element254.useState)(0);
+  const [containerWidth, setContainerWidth] = (0, import_element255.useState)(0);
   const resizeObserverRef = (0, import_compose48.useResizeObserver)(([{ contentRect }]) => {
     setContainerWidth(contentRect.width);
   });
@@ -71561,7 +71712,7 @@ function useDashboardContainerColumnCount(forwardedRef) {
     resizeObserverRef,
     forwardedRef ?? null
   ]);
-  (0, import_element254.useLayoutEffect)(() => {
+  (0, import_element255.useLayoutEffect)(() => {
     if (!container) {
       return;
     }
@@ -71570,7 +71721,7 @@ function useDashboardContainerColumnCount(forwardedRef) {
       setContainerWidth(width);
     }
   }, [container]);
-  const columnCount = (0, import_element254.useMemo)(
+  const columnCount = (0, import_element255.useMemo)(
     () => resolveDashboardColumnCount(containerWidth),
     [containerWidth]
   );
@@ -71722,10 +71873,10 @@ function WidgetActions({
 }
 
 // packages/widget-dashboard/build-module/components/widget-attributes/widget-attributes.mjs
-var import_element257 = __toESM(require_element(), 1);
+var import_element258 = __toESM(require_element(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-attributes/attributes-dropdown.mjs
-var import_element255 = __toESM(require_element(), 1);
+var import_element256 = __toESM(require_element(), 1);
 var import_i18n83 = __toESM(require_i18n(), 1);
 var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE103 = "data-wp-hash";
@@ -71818,7 +71969,7 @@ function AttributesDropdown({
   onChange,
   onOpenChange
 }) {
-  const form = (0, import_element255.useMemo)(
+  const form = (0, import_element256.useMemo)(
     () => ({
       layout: { type: "regular", labelPosition: "top" },
       fields: fields2.map((field) => field.id)
@@ -71866,16 +72017,16 @@ function AttributesDropdown({
 
 // packages/widget-dashboard/build-module/components/widget-attributes/use-inline-fit.mjs
 var import_compose49 = __toESM(require_compose(), 1);
-var import_element256 = __toESM(require_element(), 1);
+var import_element257 = __toESM(require_element(), 1);
 function useInlineFit(options = {}) {
   const { locked = false } = options;
   const availableSize = useWidgetHeaderAvailableSize();
-  const [naturalSize, setNaturalSize] = (0, import_element256.useState)(0);
+  const [naturalSize, setNaturalSize] = (0, import_element257.useState)(0);
   const measureRef = (0, import_compose49.useResizeObserver)(
     ([entry]) => setNaturalSize(entry.contentRect.width)
   );
   const computed = availableSize !== null && naturalSize > 0 && naturalSize > availableSize;
-  const [held, setHeld] = (0, import_element256.useState)(computed);
+  const [held, setHeld] = (0, import_element257.useState)(computed);
   if (!locked && held !== computed) {
     setHeld(computed);
   }
@@ -71977,26 +72128,26 @@ function WidgetAttributes({
     (attribute) => attribute.relevance !== "high"
   );
   const settingsReserveRef = useReserveHeaderSpace("settings");
-  const [dropdownOpen, setDropdownOpen] = (0, import_element257.useState)(false);
-  const [inlineHasFocus, setInlineHasFocus] = (0, import_element257.useState)(false);
-  const [dropdownTriggerHasFocus, setDropdownTriggerHasFocus] = (0, import_element257.useState)(false);
+  const [dropdownOpen, setDropdownOpen] = (0, import_element258.useState)(false);
+  const [inlineHasFocus, setInlineHasFocus] = (0, import_element258.useState)(false);
+  const [dropdownTriggerHasFocus, setDropdownTriggerHasFocus] = (0, import_element258.useState)(false);
   const { measureRef, collapsed } = useInlineFit({
     locked: dropdownOpen || inlineHasFocus || dropdownTriggerHasFocus
   });
-  (0, import_element257.useEffect)(() => {
+  (0, import_element258.useEffect)(() => {
     if (collapsed) {
       setInlineHasFocus(false);
     } else {
       setDropdownTriggerHasFocus(false);
     }
   }, [collapsed]);
-  const fields2 = (0, import_element257.useMemo)(
+  const fields2 = (0, import_element258.useMemo)(
     () => (widgetType.attributes ?? []).filter(
       (attribute) => attribute.relevance === "high"
     ),
     [widgetType.attributes]
   );
-  const form = (0, import_element257.useMemo)(
+  const form = (0, import_element258.useMemo)(
     () => ({
       layout: { type: "row", alignment: "center" },
       fields: fields2.map((field) => ({
@@ -72006,7 +72157,7 @@ function WidgetAttributes({
     }),
     [fields2]
   );
-  const handleChange = (0, import_element257.useCallback)(
+  const handleChange = (0, import_element258.useCallback)(
     (edits) => {
       onLayoutChange(
         layout.map(
@@ -72282,7 +72433,7 @@ function WidgetToolbar({
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widget-resize-handle.mjs
-var import_element258 = __toESM(require_element(), 1);
+var import_element259 = __toESM(require_element(), 1);
 var import_jsx_runtime346 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE106 = "data-wp-hash";
 function getRuntime106() {
@@ -72368,7 +72519,7 @@ if (typeof process === "undefined" || true) {
   registerStyle106("415a4244a3", '.a70c7d5347a2f54b__handle{--widget-resize-handle-visual-inset:var(--wpds-dimension-padding-xs,4px);--widget-resize-handle-hover-scale:1.18;background:transparent;bottom:0;box-sizing:border-box;inset-inline-end:0;padding:0;position:absolute;z-index:1}.a70c7d5347a2f54b__handle:focus-visible{border-radius:var(--wpds-border-radius-sm,2px);outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa1d4aafe4d24e03__resizing{opacity:.72}._000e7ddc64fb1ac6__handle-corner{cursor:nwse-resize;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px)}._000e7ddc64fb1ac6__handle-corner:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-block-start:none;border-end-end-radius:var(--wpds-border-radius-md,4px);border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:none;bottom:var(--widget-resize-handle-visual-inset);box-sizing:border-box;content:"";height:var(--wpds-dimension-size-4xs,8px);inset-inline-end:var(--widget-resize-handle-visual-inset);position:absolute;transform:scale(1);transform-origin:100% 100%;width:var(--wpds-dimension-size-4xs,8px)}[dir=rtl] ._000e7ddc64fb1ac6__handle-corner:after{transform-origin:0 100%}._000e7ddc64fb1ac6__handle-corner.aa1d4aafe4d24e03__resizing:after,._000e7ddc64fb1ac6__handle-corner:focus-visible:after,._000e7ddc64fb1ac6__handle-corner:hover:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}.f227b7c826e4b495__handle-horizontal{align-items:center;border:none;cursor:ew-resize;display:flex;height:var(--wpds-dimension-size-lg,40px);justify-content:center;padding-inline-end:var(--widget-resize-handle-visual-inset);width:var(--wpds-dimension-size-sm,24px)}@media not (prefers-reduced-motion){._000e7ddc64fb1ac6__handle-corner:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-block-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-inline-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}.f227b7c826e4b495__handle-horizontal:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),background-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}}.f227b7c826e4b495__handle-horizontal:after{background-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));content:"";height:var(--wpds-dimension-size-3xs,12px);transform:scale(1);transform-origin:50% 100%;width:var(--wpds-border-width-sm,2px)}.f227b7c826e4b495__handle-horizontal.aa1d4aafe4d24e03__resizing:after,.f227b7c826e4b495__handle-horizontal:focus-visible:after,.f227b7c826e4b495__handle-horizontal:hover:after{background-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}@media (forced-colors:active){._000e7ddc64fb1ac6__handle-corner.aa1d4aafe4d24e03__resizing:after,._000e7ddc64fb1ac6__handle-corner:after,._000e7ddc64fb1ac6__handle-corner:focus-visible:after,._000e7ddc64fb1ac6__handle-corner:hover:after{border-block-end-color:Highlight;border-inline-end-color:Highlight}.f227b7c826e4b495__handle-horizontal.aa1d4aafe4d24e03__resizing:after,.f227b7c826e4b495__handle-horizontal:after,.f227b7c826e4b495__handle-horizontal:focus-visible:after,.f227b7c826e4b495__handle-horizontal:hover:after{background-color:Highlight}}');
 }
 var widget_resize_handle_default = { "handle": "a70c7d5347a2f54b__handle", "resizing": "aa1d4aafe4d24e03__resizing", "handle-corner": "_000e7ddc64fb1ac6__handle-corner", "handle-horizontal": "f227b7c826e4b495__handle-horizontal" };
-var WidgetResizeHandle = (0, import_element258.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
+var WidgetResizeHandle = (0, import_element259.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
   if (!verticalResizable) {
     return /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
       "div",
@@ -72529,22 +72680,22 @@ function applyMasonryChange(widgets, masonryLayout) {
     };
   });
 }
-var Widgets = (0, import_element259.forwardRef)(
+var Widgets = (0, import_element260.forwardRef)(
   function Widgets2({ className }, ref) {
     const { layout, onLayoutChange, editMode, gridSettings, widgetTypes } = useDashboardInternalContext();
     const { containerRef, columnCount } = useDashboardContainerColumnCount(ref);
     const isMasonry = gridSettings.model === "masonry";
-    const gridLayout = (0, import_element259.useMemo)(
+    const gridLayout = (0, import_element260.useMemo)(
       () => isMasonry ? toMasonryLayout(layout) : toGridLayout(layout),
       [layout, isMasonry]
     );
-    const handleGridChange = (0, import_element259.useCallback)(
+    const handleGridChange = (0, import_element260.useCallback)(
       (newGridLayout) => {
         onLayoutChange(applyGridChange(layout, newGridLayout));
       },
       [layout, onLayoutChange]
     );
-    const handleMasonryChange = (0, import_element259.useCallback)(
+    const handleMasonryChange = (0, import_element260.useCallback)(
       (newMasonryLayout) => {
         onLayoutChange(
           applyMasonryChange(layout, newMasonryLayout)
@@ -72592,7 +72743,7 @@ var Widgets = (0, import_element259.forwardRef)(
         widget.uuid
       );
     });
-    const renderDragPreview = (0, import_element259.useCallback)(
+    const renderDragPreview = (0, import_element260.useCallback)(
       ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime347.jsx)("div", { className: widgets_default["drag-preview"], children: clone }),
       []
     );
@@ -72686,10 +72837,10 @@ import {
 import { registerFieldType } from "@wordpress/widget-primitives";
 
 // routes/dashboard/field-types/location-control/location-control.tsx
-var import_element261 = __toESM(require_element());
+var import_element262 = __toESM(require_element());
 
 // routes/dashboard/field-types/location-picker/location-picker.tsx
-var import_element260 = __toESM(require_element());
+var import_element261 = __toESM(require_element());
 var import_i18n85 = __toESM(require_i18n());
 
 // packages/style-runtime/src/index.ts
@@ -72792,11 +72943,11 @@ function LocationPicker({
   selectButton = true,
   onChange
 }) {
-  const locationInputId = (0, import_element260.useId)();
-  const [locationInput, setLocationInput] = (0, import_element260.useState)(seedInput);
-  const [locationOptions, setLocationOptions] = (0, import_element260.useState)([]);
-  const [isLocatingCity, setIsLocatingCity] = (0, import_element260.useState)(false);
-  (0, import_element260.useEffect)(() => {
+  const locationInputId = (0, import_element261.useId)();
+  const [locationInput, setLocationInput] = (0, import_element261.useState)(seedInput);
+  const [locationOptions, setLocationOptions] = (0, import_element261.useState)([]);
+  const [isLocatingCity, setIsLocatingCity] = (0, import_element261.useState)(false);
+  (0, import_element261.useEffect)(() => {
     if (!selectButton || seedInput) {
       setLocationInput(seedInput);
     }
@@ -72832,7 +72983,7 @@ function LocationPicker({
       setIsLocatingCity(false);
     }
   };
-  (0, import_element260.useEffect)(() => {
+  (0, import_element261.useEffect)(() => {
     const query = locationInput.trim();
     if (query.length < 2) {
       setLocationOptions([]);
@@ -72979,7 +73130,7 @@ function LocationControl({
   hideLabelFromVision
 }) {
   const value = field.getValue({ item: data });
-  const onLocationChange = (0, import_element261.useCallback)(
+  const onLocationChange = (0, import_element262.useCallback)(
     (location) => {
       onChange(
         field.setValue({
@@ -73054,7 +73205,7 @@ function useDashboardGridSettings() {
 }
 
 // routes/dashboard/widget-host/dashboard-widget-host-provider.tsx
-var import_element262 = __toESM(require_element());
+var import_element263 = __toESM(require_element());
 import { Link as Link3 } from "@wordpress/route";
 import { WidgetHostProvider } from "@wordpress/widget-primitives";
 
@@ -73091,13 +73242,13 @@ function matchDashboardHref(href, base = window.location.href) {
 
 // routes/dashboard/widget-host/dashboard-widget-host-provider.tsx
 var import_jsx_runtime351 = __toESM(require_jsx_runtime());
-var DashboardRouteLink = (0, import_element262.forwardRef)(function DashboardRouteLink2({ path, ...props }, ref) {
+var DashboardRouteLink = (0, import_element263.forwardRef)(function DashboardRouteLink2({ path, ...props }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(Link3, { ref, to: path, ...props });
 });
 function DashboardWidgetHostProvider({
   children
 }) {
-  const host = (0, import_element262.useMemo)(
+  const host = (0, import_element263.useMemo)(
     () => ({
       links: {
         match: matchDashboardHref,
@@ -73122,7 +73273,7 @@ function Dashboard() {
     []
   );
   const [widgetTypes, isResolving] = useWidgetTypes(widgetsModules);
-  const [editMode, setEditMode] = (0, import_element263.useState)(false);
+  const [editMode, setEditMode] = (0, import_element264.useState)(false);
   const isMobileViewport = (0, import_data9.useSelect)(
     (select) => select(import_viewport2.store).isViewportMatch("< small"),
     []
