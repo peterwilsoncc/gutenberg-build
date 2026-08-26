@@ -1680,10 +1680,9 @@ var POPOVER_PROPS = {
   placement: "bottom-start"
 };
 function LeafMoreMenu({
-  block,
+  clientId,
   ...props
 }) {
-  const { clientId } = block;
   const {
     moveBlocksDown,
     moveBlocksUp,
@@ -1701,6 +1700,7 @@ function LeafMoreMenu({
     (select) => {
       const {
         getBlockRootClientId,
+        getBlockName,
         canInsertBlockType,
         getDirectInsertBlock,
         getBlockIndex,
@@ -1708,6 +1708,7 @@ function LeafMoreMenu({
       } = select(import_block_editor.store);
       const { getDefaultBlockName } = select(import_blocks.store);
       const _rootClientId = getBlockRootClientId(clientId);
+      const _blockName = getBlockName(clientId);
       const canInsertDefaultBlock = canInsertBlockType(
         getDefaultBlockName(),
         _rootClientId
@@ -1715,13 +1716,13 @@ function LeafMoreMenu({
       const directInsertBlock = _rootClientId ? getDirectInsertBlock(_rootClientId) : null;
       return {
         rootClientId: _rootClientId,
-        canDuplicate: !!block && (0, import_blocks.hasBlockSupport)(block.name, "multiple", true) && canInsertBlockType(block.name, _rootClientId),
-        canInsertBlock: (canInsertDefaultBlock || !!directInsertBlock) && !!block && canInsertBlockType(block.name, _rootClientId),
+        canDuplicate: (0, import_blocks.hasBlockSupport)(_blockName, "multiple", true) && canInsertBlockType(_blockName, _rootClientId),
+        canInsertBlock: (canInsertDefaultBlock || !!directInsertBlock) && canInsertBlockType(_blockName, _rootClientId),
         isFirst: getBlockIndex(clientId) === 0,
         isLast: getBlockIndex(clientId) === getBlockCount(_rootClientId) - 1
       };
     },
-    [clientId, block]
+    [clientId]
   );
   return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
     import_components2.DropdownMenu,
