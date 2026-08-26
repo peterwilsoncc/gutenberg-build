@@ -54893,7 +54893,7 @@ var wp;
   var item_popup_default4 = { "popup": "_234b520016b4e56f__popup _380b81b8f79fb10f__dropdown-motion", "list": "f43dc7c768d7b622__list", "list-scrollable-container": "_233cd60cdb84a2ef__list-scrollable-container", "list-footer": "ec4db6f0122263e7__list-footer", "group": "b3c0d7f103fb10a2__group", "group-label": "_21b59380477c306c__group-label", "item": "_684ccb7988365b4f__item", "is-size-small": "_38f7faff93c61958__is-size-small", "item-indicator-icon": "_92fbe4765dfad5ee__item-indicator-icon", "item-icon": "a3adcfd0b73ffd40__item-icon", "empty": "_06c7ff39d2f685b9__empty" };
   var Popup2 = (0, import_element98.forwardRef)(
     function Popup22({ className, portal, positioner, children, ...restProps }, ref) {
-      const popupContent = /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(ThemeProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
+      const popupContent = /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
         index_parts_exports3.Popup,
         {
           ref,
@@ -54907,7 +54907,7 @@ var wp;
             }
           ) })
         }
-      ) });
+      );
       const positionedPopup = renderSlotWithChildren(
         positioner,
         /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(Positioner2, {}),
