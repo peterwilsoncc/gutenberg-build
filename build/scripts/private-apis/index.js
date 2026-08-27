@@ -52,7 +52,6 @@ var wp;
     "@wordpress/format-library",
     "@wordpress/patterns",
     "@wordpress/preferences",
-    "@wordpress/reusable-blocks",
     "@wordpress/rich-text",
     "@wordpress/route",
     "@wordpress/router",

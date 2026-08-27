@@ -100,7 +100,7 @@ return array(
 	array(
 		'handle' => 'wp-reusable-blocks',
 		'path' => 'reusable-blocks/style',
-		'dependencies' => array('wp-block-editor', 'wp-components', 'wp-core-data', 'wp-notices'),
+		'dependencies' => array(),
 	),
 	array(
 		'handle' => 'wp-widgets',
