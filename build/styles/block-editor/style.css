@@ -4383,10 +4383,6 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
   margin-right: 8px;
 }
 
-.block-editor-inserter__preview-container__popover {
-  top: 16px !important;
-}
-
 .block-editor-inserter__preview-container {
   display: none;
   width: 280px;
