@@ -98472,23 +98472,21 @@ If there's a particular need for this, please submit a feature request at https:
     return "";
   }
   function StylesCanvas() {
-    const { stylesPath: stylesPath2, showStylebook: showStylebook2, showListViewByDefault } = (0, import_data100.useSelect)(
-      (select9) => {
-        const { getStylesPath: getStylesPath2, getShowStylebook: getShowStylebook2 } = unlock(
-          select9(store)
-        );
-        const _showListViewByDefault = select9(import_preferences11.store).get(
-          "core",
-          "showListViewByDefault"
-        );
-        return {
-          stylesPath: getStylesPath2(),
-          showStylebook: getShowStylebook2(),
-          showListViewByDefault: _showListViewByDefault
-        };
-      },
-      []
-    );
+    const { stylesPath: stylesPath2, showStylebook: showStylebook2, showListViewByDefault, isPreviewMode } = (0, import_data100.useSelect)((select9) => {
+      const { getStylesPath: getStylesPath2, getShowStylebook: getShowStylebook2 } = unlock(
+        select9(store)
+      );
+      const _showListViewByDefault = select9(import_preferences11.store).get(
+        "core",
+        "showListViewByDefault"
+      );
+      return {
+        stylesPath: getStylesPath2(),
+        showStylebook: getShowStylebook2(),
+        showListViewByDefault: _showListViewByDefault,
+        isPreviewMode: select9(store).getEditorSettings().isPreviewMode
+      };
+    }, []);
     const { resetStylesNavigation: resetStylesNavigation2, setStylesPath: setStylesPath2 } = unlock(
       (0, import_data100.useDispatch)(store)
     );
@@ -98525,28 +98523,36 @@ If there's a particular need for this, please submit a feature request at https:
         onCloseCanvas();
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime462.jsx)("div", { className: "editor-styles-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(resizable_editor_default, { enableResizing: false, children: /* @__PURE__ */ (0, import_jsx_runtime462.jsxs)(
-      "section",
+    return /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
+      "div",
       {
-        className: "editor-styles-canvas__section",
-        ref: focusOnMountRef,
-        onKeyDown: closeOnEscape,
-        "aria-label": title,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
-            import_components162.Button,
-            {
-              size: "compact",
-              className: "editor-styles-canvas__close-button",
-              icon: close_small_default,
-              label: (0, import_i18n224.__)("Close"),
-              onClick: onCloseCanvas
-            }
-          ),
-          content
-        ]
+        className: clsx_default("editor-styles-canvas", {
+          "is-preview-mode": isPreviewMode
+        }),
+        children: /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(resizable_editor_default, { enableResizing: false, children: /* @__PURE__ */ (0, import_jsx_runtime462.jsxs)(
+          "section",
+          {
+            className: "editor-styles-canvas__section",
+            ref: isPreviewMode ? void 0 : focusOnMountRef,
+            onKeyDown: isPreviewMode ? void 0 : closeOnEscape,
+            "aria-label": title,
+            children: [
+              !isPreviewMode && /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
+                import_components162.Button,
+                {
+                  size: "compact",
+                  className: "editor-styles-canvas__close-button",
+                  icon: close_small_default,
+                  label: (0, import_i18n224.__)("Close"),
+                  onClick: onCloseCanvas
+                }
+              ),
+              content
+            ]
+          }
+        ) })
       }
-    ) }) });
+    );
   }
 
   // packages/editor/build-module/components/document-bar/useEditedSectionDetails.mjs
