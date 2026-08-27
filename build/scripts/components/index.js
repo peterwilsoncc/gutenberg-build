@@ -16431,13 +16431,13 @@ If there's a particular need for this, please submit a feature request at https:
     update() {
       if (!this.node.presenceContext)
         return;
-      const { isPresent, onExitComplete } = this.node.presenceContext;
+      const { isPresent: isPresent2, onExitComplete } = this.node.presenceContext;
       const { isPresent: prevIsPresent } = this.node.prevPresenceContext || {};
-      if (!this.node.animationState || isPresent === prevIsPresent) {
+      if (!this.node.animationState || isPresent2 === prevIsPresent) {
         return;
       }
-      const exitAnimation = this.node.animationState.setActive("exit", !isPresent);
-      if (onExitComplete && !isPresent) {
+      const exitAnimation = this.node.animationState.setActive("exit", !isPresent2);
+      if (onExitComplete && !isPresent2) {
         exitAnimation.then(() => onExitComplete(this.id));
       }
     }
@@ -17523,11 +17523,17 @@ If there's a particular need for this, please submit a feature request at https:
     const context = (0, import_react59.useContext)(PresenceContext);
     if (context === null)
       return [true, null];
-    const { isPresent, onExitComplete, register } = context;
+    const { isPresent: isPresent2, onExitComplete, register } = context;
     const id3 = (0, import_react59.useId)();
     (0, import_react59.useEffect)(() => register(id3), []);
     const safeToRemove = (0, import_react59.useCallback)(() => onExitComplete && onExitComplete(id3), [id3, onExitComplete]);
-    return !isPresent && onExitComplete ? [false, safeToRemove] : [true];
+    return !isPresent2 && onExitComplete ? [false, safeToRemove] : [true];
+  }
+  function useIsPresent() {
+    return isPresent((0, import_react59.useContext)(PresenceContext));
+  }
+  function isPresent(context) {
+    return context === null ? true : context.isPresent;
   }
 
   // packages/components/node_modules/framer-motion/dist/es/context/LayoutGroupContext.mjs
@@ -17635,18 +17641,18 @@ If there's a particular need for this, please submit a feature request at https:
       globalProjectionState.hasEverUpdated = true;
     }
     getSnapshotBeforeUpdate(prevProps) {
-      const { layoutDependency, visualElement, drag: drag2, isPresent } = this.props;
+      const { layoutDependency, visualElement, drag: drag2, isPresent: isPresent2 } = this.props;
       const projection = visualElement.projection;
       if (!projection)
         return null;
-      projection.isPresent = isPresent;
+      projection.isPresent = isPresent2;
       if (drag2 || prevProps.layoutDependency !== layoutDependency || layoutDependency === void 0) {
         projection.willUpdate();
       } else {
         this.safeToRemove();
       }
-      if (prevProps.isPresent !== isPresent) {
-        if (isPresent) {
+      if (prevProps.isPresent !== isPresent2) {
+        if (isPresent2) {
           projection.promote();
         } else if (!projection.relegate()) {
           frame.postRender(() => {
@@ -17690,9 +17696,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
   function MeasureLayout(props) {
-    const [isPresent, safeToRemove] = usePresence();
+    const [isPresent2, safeToRemove] = usePresence();
     const layoutGroup = (0, import_react62.useContext)(LayoutGroupContext);
-    return (0, import_jsx_runtime39.jsx)(MeasureLayoutWithContext, { ...props, layoutGroup, switchLayoutGroup: (0, import_react62.useContext)(SwitchLayoutGroupContext), isPresent, safeToRemove });
+    return (0, import_jsx_runtime39.jsx)(MeasureLayoutWithContext, { ...props, layoutGroup, switchLayoutGroup: (0, import_react62.useContext)(SwitchLayoutGroupContext), isPresent: isPresent2, safeToRemove });
   }
   var defaultScaleCorrectors = {
     borderRadius: {
@@ -20708,7 +20714,7 @@ If there's a particular need for this, please submit a feature request at https:
       return this.props.children;
     }
   };
-  function PopChild({ children, isPresent }) {
+  function PopChild({ children, isPresent: isPresent2 }) {
     const id3 = (0, import_react77.useId)();
     const ref = (0, import_react77.useRef)(null);
     const size4 = (0, import_react77.useRef)({
@@ -20720,7 +20726,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { nonce } = (0, import_react77.useContext)(MotionConfigContext);
     (0, import_react77.useInsertionEffect)(() => {
       const { width, height, top, left } = size4.current;
-      if (isPresent || !ref.current || !width || !height)
+      if (isPresent2 || !ref.current || !width || !height)
         return;
       ref.current.dataset.motionPopId = id3;
       const style2 = document.createElement("style");
@@ -20741,12 +20747,12 @@ If there's a particular need for this, please submit a feature request at https:
       return () => {
         document.head.removeChild(style2);
       };
-    }, [isPresent]);
-    return (0, import_jsx_runtime41.jsx)(PopChildMeasure, { isPresent, childRef: ref, sizeRef: size4, children: React3.cloneElement(children, { ref }) });
+    }, [isPresent2]);
+    return (0, import_jsx_runtime41.jsx)(PopChildMeasure, { isPresent: isPresent2, childRef: ref, sizeRef: size4, children: React3.cloneElement(children, { ref }) });
   }
 
   // packages/components/node_modules/framer-motion/dist/es/components/AnimatePresence/PresenceChild.mjs
-  var PresenceChild = ({ children, initial, isPresent, onExitComplete, custom, presenceAffectsLayout, mode: mode2 }) => {
+  var PresenceChild = ({ children, initial, isPresent: isPresent2, onExitComplete, custom, presenceAffectsLayout, mode: mode2 }) => {
     const presenceChildren = useConstant(newChildrenMap);
     const id3 = (0, import_react78.useId)();
     const memoizedOnExitComplete = (0, import_react78.useCallback)((childId) => {
@@ -20761,7 +20767,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => ({
         id: id3,
         initial,
-        isPresent,
+        isPresent: isPresent2,
         custom,
         onExitComplete: memoizedOnExitComplete,
         register: (childId) => {
@@ -20774,16 +20780,16 @@ If there's a particular need for this, please submit a feature request at https:
        * we want to make a new context value to ensure they get re-rendered
        * so they can detect that layout change.
        */
-      presenceAffectsLayout ? [Math.random(), memoizedOnExitComplete] : [isPresent, memoizedOnExitComplete]
+      presenceAffectsLayout ? [Math.random(), memoizedOnExitComplete] : [isPresent2, memoizedOnExitComplete]
     );
     (0, import_react78.useMemo)(() => {
       presenceChildren.forEach((_2, key) => presenceChildren.set(key, false));
-    }, [isPresent]);
+    }, [isPresent2]);
     React4.useEffect(() => {
-      !isPresent && !presenceChildren.size && onExitComplete && onExitComplete();
-    }, [isPresent]);
+      !isPresent2 && !presenceChildren.size && onExitComplete && onExitComplete();
+    }, [isPresent2]);
     if (mode2 === "popLayout") {
-      children = (0, import_jsx_runtime42.jsx)(PopChild, { isPresent, children });
+      children = (0, import_jsx_runtime42.jsx)(PopChild, { isPresent: isPresent2, children });
     }
     return (0, import_jsx_runtime42.jsx)(PresenceContext.Provider, { value: context, children });
   };
@@ -20851,7 +20857,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { forceRender } = (0, import_react80.useContext)(LayoutGroupContext);
     return (0, import_jsx_runtime43.jsx)(import_jsx_runtime43.Fragment, { children: renderedChildren.map((child) => {
       const key = getChildKey(child);
-      const isPresent = presentChildren === renderedChildren || presentKeys.includes(key);
+      const isPresent2 = presentChildren === renderedChildren || presentKeys.includes(key);
       const onExit = () => {
         if (exitComplete.has(key)) {
           exitComplete.set(key, true);
@@ -20869,7 +20875,7 @@ If there's a particular need for this, please submit a feature request at https:
           onExitComplete && onExitComplete();
         }
       };
-      return (0, import_jsx_runtime43.jsx)(PresenceChild, { isPresent, initial: !isInitialRender.current || initial ? void 0 : false, custom: isPresent ? void 0 : custom, presenceAffectsLayout, mode: mode2, onExitComplete: isPresent ? void 0 : onExit, children: child }, key);
+      return (0, import_jsx_runtime43.jsx)(PresenceChild, { isPresent: isPresent2, initial: !isInitialRender.current || initial ? void 0 : false, custom: isPresent2 ? void 0 : custom, presenceAffectsLayout, mode: mode2, onExitComplete: isPresent2 ? void 0 : onExit, children: child }, key);
     }) });
   };
 
@@ -50934,6 +50940,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     onDismiss,
     listRef
   }, ref) {
+    const isPresent2 = useIsPresent();
     function dismissMe(event) {
       if (event && event.preventDefault) {
         event.preventDefault();
@@ -50961,14 +50968,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       };
     });
     (0, import_element172.useEffect)(() => {
+      if (explicitDismiss || !isPresent2) {
+        return;
+      }
       const timeoutHandle = setTimeout(() => {
-        if (!explicitDismiss) {
-          callbacksRef.current.onDismiss?.();
-          callbacksRef.current.onRemove?.();
-        }
+        callbacksRef.current.onDismiss?.();
+        callbacksRef.current.onRemove?.();
       }, NOTICE_TIMEOUT);
       return () => clearTimeout(timeoutHandle);
-    }, [explicitDismiss]);
+    }, [explicitDismiss, isPresent2]);
     const classes = clsx_default(className, "components-snackbar", {
       "components-snackbar-explicit-dismiss": !!explicitDismiss
     });
