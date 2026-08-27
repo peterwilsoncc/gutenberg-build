@@ -2626,8 +2626,11 @@ var wp;
         }
         const transforms = state.blockTypes[blockName]?.transforms;
         for (const transform of transforms?.to ?? []) {
+          if (transform.type !== "block") {
+            continue;
+          }
           const targetBlockName = transform.blocks?.[0];
-          if (transform.type !== "block" || !targetBlockName) {
+          if (!targetBlockName) {
             continue;
           }
           for (const shortcut of transform.shortcuts ?? []) {
@@ -3274,6 +3277,7 @@ var wp;
   var import_hooks2 = __toESM(require_hooks(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
   var import_warning3 = __toESM(require_warning(), 1);
+  var isBlockTypeTransform = (transform) => transform?.type === "block";
   var getBlockTypeWithTransformMetadata = (blockType, transform) => transform.variationName ? { ...blockType, variationName: transform.variationName } : blockType;
   function createBlock(name, attributes = {}, innerBlocks = [], innerContent) {
     if (!isBlockRegistered(name)) {
@@ -3377,10 +3381,6 @@ var wp;
     if (!isWildcardBlockTransform(transform) && !blocks.every((block) => block.name === firstBlockName)) {
       return false;
     }
-    const isBlockType = transform.type === "block";
-    if (!isBlockType) {
-      return false;
-    }
     const sourceBlock = blocks[0];
     const hasMatchingName = direction !== "from" || transform.blocks.indexOf(sourceBlock.name) !== -1 || isWildcardBlockTransform(transform);
     if (!hasMatchingName) {
@@ -3402,7 +3402,7 @@ var wp;
     const blockTypesWithPossibleFromTransforms = allBlockTypes.flatMap(
       (blockType) => {
         const fromTransforms = getBlockTransforms("from", blockType.name);
-        return fromTransforms.filter(
+        return fromTransforms.filter(isBlockTypeTransform).filter(
           (transform) => isPossibleTransformForSource(transform, "from", blocks)
         ).map(
           (transform) => getBlockTypeWithTransformMetadata(blockType, transform)
@@ -3418,11 +3418,11 @@ var wp;
     const sourceBlock = blocks[0];
     const blockType = getBlockType(sourceBlock.name);
     const transformsTo = blockType ? getBlockTransforms("to", blockType.name) : [];
-    const possibleTransforms = transformsTo.filter((transform) => {
-      return transform && isPossibleTransformForSource(transform, "to", blocks);
-    });
+    const possibleTransforms = transformsTo.filter(isBlockTypeTransform).filter(
+      (transform) => isPossibleTransformForSource(transform, "to", blocks)
+    );
     return possibleTransforms.flatMap((transformation) => {
-      return (transformation.blocks || []).map((name) => {
+      return (transformation.blocks ?? []).map((name) => {
         const transformedBlockType = getBlockType(name);
         return transformedBlockType ? getBlockTypeWithTransformMetadata(
           transformedBlockType,
@@ -3431,7 +3431,7 @@ var wp;
       });
     }).filter((bt) => !!bt);
   };
-  var isWildcardBlockTransform = (t3) => !!t3 && t3.type === "block" && Array.isArray(t3.blocks) && t3.blocks.includes("*");
+  var isWildcardBlockTransform = (t3) => isBlockTypeTransform(t3) && Array.isArray(t3.blocks) && t3.blocks.includes("*");
   var isContainerGroupBlock = (name) => name === getGroupingBlockName();
   function getPossibleBlockTransformations(blocks) {
     if (!blocks.length) {
@@ -3471,35 +3471,13 @@ var wp;
       return getBlockTypes().map(({ name }) => getBlockTransforms(direction, name)).flat();
     }
     const blockType = normalizeBlockType(blockTypeOrName);
-    const { name: blockName, transforms } = blockType || {};
-    const directionTransforms = transforms?.[direction];
-    if (!transforms || !Array.isArray(directionTransforms)) {
+    const directionTransforms = blockType?.transforms?.[direction];
+    if (!blockType || !Array.isArray(directionTransforms)) {
       return [];
     }
-    const usingMobileTransformations = transforms.supportedMobileTransforms && Array.isArray(transforms.supportedMobileTransforms);
-    const filteredTransforms = usingMobileTransformations ? directionTransforms.filter((t3) => {
-      if (t3.type === "raw") {
-        return true;
-      }
-      if (t3.type === "prefix") {
-        return true;
-      }
-      if (!t3.blocks || !t3.blocks.length) {
-        return false;
-      }
-      if (isWildcardBlockTransform(t3)) {
-        return true;
-      }
-      return t3.blocks.every(
-        (transformBlockName) => transforms.supportedMobileTransforms.includes(
-          transformBlockName
-        )
-      );
-    }) : directionTransforms;
-    return filteredTransforms.map((transform) => ({
+    return directionTransforms.map((transform) => ({
       ...transform,
-      blockName,
-      usingMobileTransformations
+      blockName: blockType.name
     }));
   }
   function maybeCheckTransformIsMatch(transform, blocks) {
@@ -3516,15 +3494,19 @@ var wp;
     const isMultiBlock = blocksArray.length > 1;
     const firstBlock = blocksArray[0];
     const sourceName = firstBlock.name;
-    const transformationsFrom = getBlockTransforms("from", name);
-    const transformationsTo = getBlockTransforms("to", sourceName);
+    const transformationsFrom = getBlockTransforms("from", name).filter(
+      isBlockTypeTransform
+    );
+    const transformationsTo = getBlockTransforms("to", sourceName).filter(
+      isBlockTypeTransform
+    );
     const isMatchingVariation = (t3) => variationName ? t3.variationName === variationName : !t3.variationName;
     const transformation = findTransform(
       transformationsTo,
-      (t3) => t3.type === "block" && isMatchingVariation(t3) && (isWildcardBlockTransform(t3) || t3.blocks.indexOf(name) !== -1) && (!isMultiBlock || !!t3.isMultiBlock) && maybeCheckTransformIsMatch(t3, blocksArray)
+      (t3) => isMatchingVariation(t3) && (isWildcardBlockTransform(t3) || t3.blocks.indexOf(name) !== -1) && (!isMultiBlock || !!t3.isMultiBlock) && maybeCheckTransformIsMatch(t3, blocksArray)
     ) || findTransform(
       transformationsFrom,
-      (t3) => t3.type === "block" && isMatchingVariation(t3) && (isWildcardBlockTransform(t3) || t3.blocks.indexOf(sourceName) !== -1) && (!isMultiBlock || !!t3.isMultiBlock) && maybeCheckTransformIsMatch(t3, blocksArray)
+      (t3) => isMatchingVariation(t3) && (isWildcardBlockTransform(t3) || t3.blocks.indexOf(sourceName) !== -1) && (!isMultiBlock || !!t3.isMultiBlock) && maybeCheckTransformIsMatch(t3, blocksArray)
     );
     if (!transformation) {
       return null;
@@ -5554,7 +5536,10 @@ var wp;
     }
   );
   function parseHtml(innerHTML) {
-    return parse(innerHTML, (h2) => h2);
+    return parse(
+      innerHTML ?? "",
+      (h2) => h2
+    );
   }
   function parseWithAttributeSchema(innerHTML, attributeSchema) {
     return matcherFromSource(attributeSchema)(
@@ -5892,12 +5877,12 @@ var wp;
 
   // packages/blocks/build-module/api/raw-handling/get-raw-transforms.mjs
   function getRawTransforms() {
-    return getBlockTransforms("from").filter(({ type }) => type === "raw").map((transform) => {
-      return transform.isMatch ? transform : {
-        ...transform,
-        isMatch: (node) => transform.selector && node.matches(transform.selector)
-      };
-    });
+    return getBlockTransforms("from").filter(
+      (transform) => transform.type === "raw"
+    ).map((transform) => ({
+      ...transform,
+      isMatch: transform.isMatch ?? ((node) => !!transform.selector && node.matches(transform.selector))
+    }));
   }
 
   // packages/blocks/build-module/api/raw-handling/html-to-blocks.mjs
@@ -5908,10 +5893,7 @@ var wp;
       const transforms = getRawTransforms();
       const rawTransform = findTransform(
         transforms,
-        ((t3) => {
-          const transform2 = t3;
-          return transform2.isMatch(node);
-        })
+        (transform2) => transform2.isMatch(node)
       );
       if (!rawTransform) {
         return createBlock(
@@ -6151,17 +6133,14 @@ var wp;
   var beforeLineRegexp = /(\n|<p>|<br\s*\/?>)\s*$/;
   var afterLineRegexp = /^\s*(\n|<\/p>|<br\s*\/?>)/;
   function segmentHTMLToShortcodeBlock(HTML, lastIndex = 0, excludedBlockNames = []) {
-    const transformsFrom = getBlockTransforms(
-      "from"
+    const transformsFrom = getBlockTransforms("from").filter(
+      (transform) => transform.type === "shortcode"
     );
     const transformation = findTransform(
       transformsFrom,
-      ((transform) => {
-        const t3 = transform;
-        return excludedBlockNames.indexOf(t3.blockName) === -1 && t3.type === "shortcode" && castArray(t3.tag).some(
-          (tag) => (0, import_shortcode.regexp)(tag).test(HTML)
-        );
-      })
+      (transform) => excludedBlockNames.indexOf(transform.blockName) === -1 && castArray(transform.tag).some(
+        (tag) => (0, import_shortcode.regexp)(tag).test(HTML)
+      )
     );
     if (!transformation) {
       return [HTML];
@@ -6170,74 +6149,72 @@ var wp;
     const transformTag = transformTags.find(
       (tag) => (0, import_shortcode.regexp)(tag).test(HTML)
     );
-    let match;
     const previousIndex = lastIndex;
-    if (match = (0, import_shortcode.next)(transformTag, HTML, lastIndex)) {
-      lastIndex = match.index + match.content.length;
-      const beforeHTML = HTML.substr(0, match.index);
-      const afterHTML = HTML.substr(lastIndex);
-      if (!match.shortcode.content?.includes("<") && !(beforeLineRegexp.test(beforeHTML) && afterLineRegexp.test(afterHTML))) {
-        return segmentHTMLToShortcodeBlock(HTML, lastIndex);
-      }
-      if (transformation.isMatch && !transformation.isMatch(match.shortcode.attrs)) {
-        return segmentHTMLToShortcodeBlock(HTML, previousIndex, [
-          ...excludedBlockNames,
-          transformation.blockName
-        ]);
-      }
-      let blocks = [];
-      if (typeof transformation.transform === "function") {
-        blocks = [].concat(
-          transformation.transform(match.shortcode.attrs, match)
-        );
-        blocks = blocks.map((block) => {
-          block.originalContent = match.shortcode.content;
-          return applyBuiltInValidationFixes(
-            block,
-            getBlockType(block.name)
-          );
-        });
-      } else {
-        const attributes = Object.fromEntries(
-          Object.entries(transformation.attributes).filter(([, schema]) => schema.shortcode).map(([key, schema]) => [
-            key,
-            schema.shortcode(match.shortcode.attrs, match)
-          ])
-        );
-        const blockType = getBlockType(transformation.blockName);
-        if (!blockType) {
-          return [HTML];
-        }
-        const transformationBlockType = {
-          ...blockType,
-          attributes: transformation.attributes
-        };
-        let block = createBlock(
-          transformation.blockName,
-          getBlockAttributes(
-            transformationBlockType,
-            match.shortcode.content,
-            attributes
-          )
-        );
-        block.originalContent = match.shortcode.content;
-        block = applyBuiltInValidationFixes(
-          block,
-          transformationBlockType
-        );
-        blocks = [block];
-      }
-      return [
-        ...segmentHTMLToShortcodeBlock(
-          beforeHTML.replace(beforeLineRegexp, "")
-        ),
-        ...blocks,
-        ...segmentHTMLToShortcodeBlock(
-          afterHTML.replace(afterLineRegexp, "")
-        )
-      ];
+    const match = (0, import_shortcode.next)(transformTag, HTML, lastIndex);
+    if (!match) {
+      return [HTML];
     }
-    return [HTML];
+    lastIndex = match.index + match.content.length;
+    const beforeHTML = HTML.substr(0, match.index);
+    const afterHTML = HTML.substr(lastIndex);
+    if (!match.shortcode.content?.includes("<") && !(beforeLineRegexp.test(beforeHTML) && afterLineRegexp.test(afterHTML))) {
+      return segmentHTMLToShortcodeBlock(HTML, lastIndex);
+    }
+    if (transformation.isMatch && !transformation.isMatch(match.shortcode.attrs)) {
+      return segmentHTMLToShortcodeBlock(HTML, previousIndex, [
+        ...excludedBlockNames,
+        transformation.blockName
+      ]);
+    }
+    let blocks = [];
+    if (typeof transformation.transform === "function") {
+      blocks = [].concat(
+        transformation.transform(match.shortcode.attrs, match)
+      );
+      blocks = blocks.map((block) => {
+        block.originalContent = match.shortcode.content;
+        return applyBuiltInValidationFixes(
+          block,
+          getBlockType(block.name)
+        );
+      });
+    } else {
+      const blockType = getBlockType(transformation.blockName);
+      if (!blockType) {
+        return [HTML];
+      }
+      const transformAttributes = transformation.attributes ?? blockType.attributes;
+      const attributes = Object.fromEntries(
+        Object.entries(transformAttributes).filter(([, schema]) => schema.shortcode).map(([key, schema]) => [
+          key,
+          schema.shortcode(match.shortcode.attrs, match)
+        ])
+      );
+      const transformationBlockType = {
+        ...blockType,
+        attributes: transformAttributes
+      };
+      let block = createBlock(
+        transformation.blockName,
+        getBlockAttributes(
+          transformationBlockType,
+          match.shortcode.content,
+          attributes
+        )
+      );
+      block.originalContent = match.shortcode.content;
+      block = applyBuiltInValidationFixes(block, transformationBlockType);
+      blocks = [block];
+    }
+    return [
+      ...segmentHTMLToShortcodeBlock(
+        beforeHTML.replace(beforeLineRegexp, "")
+      ),
+      ...blocks,
+      ...segmentHTMLToShortcodeBlock(
+        afterHTML.replace(afterLineRegexp, "")
+      )
+    ];
   }
   var shortcode_converter_default = segmentHTMLToShortcodeBlock;
 
