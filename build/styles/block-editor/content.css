@@ -912,6 +912,12 @@ figcaption.block-editor-rich-text__editable [data-rich-text-placeholder]::before
   background-color: transparent;
 }
 
+.is-selected .non-breaking-space {
+  outline: 1px solid currentColor;
+  outline-offset: -1px;
+  opacity: 0.8;
+}
+
 .block-editor-warning {
   align-items: center;
   display: flex;

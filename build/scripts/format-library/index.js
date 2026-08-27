@@ -8566,26 +8566,57 @@ var wp;
   var import_i18n22 = __toESM(require_i18n(), 1);
   var import_rich_text17 = __toESM(require_rich_text(), 1);
   var import_block_editor17 = __toESM(require_block_editor(), 1);
+  var import_components7 = __toESM(require_components(), 1);
   var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
   var name15 = "core/non-breaking-space";
   var title15 = (0, import_i18n22.__)("Non breaking space");
+  function PopoverAnchor({ contentRef }) {
+    const popoverAnchor = (0, import_rich_text17.useAnchor)({
+      editableContentElement: contentRef.current,
+      settings: nonBreakingSpace
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(import_components7.Popover, { anchor: popoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("div", { style: { whiteSpace: "nowrap", padding: "4px" }, children: (0, import_i18n22.__)("Non-breaking space") }) });
+  }
   var nonBreakingSpace = {
     name: name15,
     title: title15,
-    tagName: "nbsp",
-    className: null,
-    edit({ value, onChange }) {
+    tagName: "span",
+    className: "non-breaking-space",
+    edit({ value, onChange, contentRef }) {
       function addNonBreakingSpace() {
         onChange((0, import_rich_text17.insert)(value, "\xA0"));
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
-        import_block_editor17.RichTextShortcut,
-        {
-          type: "primaryShift",
-          character: " ",
-          onUse: addNonBreakingSpace
-        }
-      );
+      const selectedValue = value.start && value.end ? value.text.slice(value.start, value.end) : null;
+      return /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(import_jsx_runtime70.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+          import_block_editor17.RichTextShortcut,
+          {
+            type: "primaryShift",
+            character: " ",
+            onUse: addNonBreakingSpace
+          }
+        ),
+        selectedValue === "\xA0" && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(PopoverAnchor, { contentRef })
+      ] });
+    },
+    __experimentalCreatePrepareEditableTree() {
+      return (formats, text) => {
+        const NBSP = "\xA0";
+        let record = { formats, text };
+        let index = -1;
+        do {
+          index = text.indexOf(NBSP, index + 1);
+          if (index !== -1) {
+            record = (0, import_rich_text17.applyFormat)(
+              record,
+              { type: name15 },
+              index,
+              index + 1
+            );
+          }
+        } while (index !== -1);
+        return record.formats;
+      };
     }
   };
 
