@@ -48498,8 +48498,30 @@ var import_core_data3 = __toESM(require_core_data());
 var import_components57 = __toESM(require_components());
 var import_element163 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
+import { loadEditorAssets } from "@wordpress/lazy-editor";
 var import_jsx_runtime220 = __toESM(require_jsx_runtime());
 var { usePostFields, PostCardPanel } = unlock3(import_editor.privateApis);
+function withEditorAssets(FieldEdit) {
+  return function EditWithEditorAssets(props) {
+    const [isReady, setIsReady] = (0, import_element163.useState)(
+      () => !!window.wp?.media
+    );
+    (0, import_element163.useEffect)(() => {
+      if (!isReady) {
+        loadEditorAssets().then(() => setIsReady(true));
+      }
+    }, [isReady]);
+    return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
+      "div",
+      {
+        "aria-busy": !isReady || void 0,
+        style: !isReady ? { opacity: 0.6 } : void 0,
+        inert: !isReady ? "true" : void 0,
+        children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(FieldEdit, { ...props })
+      }
+    );
+  };
+}
 var fieldsWithBulkEditSupport = ["status", "date", "author", "discussion"];
 function QuickEditModal({
   postType,
@@ -48554,6 +48576,12 @@ function QuickEditModal({
         return {
           ...field,
           readOnly: !canSwitchTemplate
+        };
+      }
+      if (field.id === "featured_media" && field.Edit) {
+        return {
+          ...field,
+          Edit: withEditorAssets(field.Edit)
         };
       }
       return field;

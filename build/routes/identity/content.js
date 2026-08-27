@@ -82,7 +82,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState36({
+        cachedValue = useState37({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -94,7 +94,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe, value, getSnapshot]
         );
-        useEffect33(
+        useEffect34(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe(function() {
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React104 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState36 = React104.useState, useEffect33 = React104.useEffect, useLayoutEffect6 = React104.useLayoutEffect, useDebugValue2 = React104.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React104 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState37 = React104.useState, useEffect34 = React104.useEffect, useLayoutEffect6 = React104.useLayoutEffect, useDebugValue2 = React104.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React104.useSyncExternalStore ? React104.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -148,7 +148,7 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React104 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore3 = shim.useSyncExternalStore, useRef55 = React104.useRef, useEffect33 = React104.useEffect, useMemo42 = React104.useMemo, useDebugValue2 = React104.useDebugValue;
+      var React104 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore3 = shim.useSyncExternalStore, useRef55 = React104.useRef, useEffect34 = React104.useEffect, useMemo42 = React104.useMemo, useDebugValue2 = React104.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual2) {
         var instRef = useRef55(null);
         if (null === instRef.current) {
@@ -191,7 +191,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector, isEqual2]
         );
         var value = useSyncExternalStore3(subscribe, instRef[0], instRef[1]);
-        useEffect33(
+        useEffect34(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -32766,8 +32766,29 @@ function MediaEdit({
 }
 
 // routes/identity/stage.tsx
+var import_element103 = __toESM(require_element());
 var import_html_entities2 = __toESM(require_html_entities());
 var import_jsx_runtime132 = __toESM(require_jsx_runtime());
+import { loadEditorAssets } from "@wordpress/lazy-editor";
+function MediaEditWithEditorAssets(props) {
+  const [isReady, setIsReady] = (0, import_element103.useState)(
+    () => !!window.wp?.media
+  );
+  (0, import_element103.useEffect)(() => {
+    if (!isReady) {
+      loadEditorAssets().then(() => setIsReady(true));
+    }
+  }, [isReady]);
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+    "div",
+    {
+      "aria-busy": !isReady || void 0,
+      style: !isReady ? { opacity: 0.6 } : void 0,
+      inert: !isReady ? "true" : void 0,
+      children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(MediaEdit, { ...props })
+    }
+  );
+}
 var fields = [
   {
     id: "title",
@@ -32795,7 +32816,7 @@ var fields = [
       "Displays in your site's layout via the Site Logo block."
     ),
     placeholder: (0, import_i18n32.__)("Choose logo"),
-    Edit: MediaEdit,
+    Edit: MediaEditWithEditorAssets,
     setValue: ({ value }) => ({
       site_logo: value ?? 0
     })
@@ -32808,7 +32829,7 @@ var fields = [
       "Shown in browser tabs, bookmarks, and mobile apps. It should be square and at least 512 by 512 pixels."
     ),
     placeholder: (0, import_i18n32.__)("Choose icon"),
-    Edit: MediaEdit,
+    Edit: MediaEditWithEditorAssets,
     setValue: ({ value }) => ({
       site_icon: value ?? 0
     })
