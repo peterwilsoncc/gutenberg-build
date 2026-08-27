@@ -148,9 +148,9 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React153 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef98 = React153.useRef, useEffect58 = React153.useEffect, useMemo81 = React153.useMemo, useDebugValue2 = React153.useDebugValue;
+      var React153 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef99 = React153.useRef, useEffect58 = React153.useEffect, useMemo81 = React153.useMemo, useDebugValue2 = React153.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
-        var instRef = useRef98(null);
+        var instRef = useRef99(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -48383,7 +48383,7 @@ function GuidelineAccordionForm({
   );
   const form = (0, import_element163.useMemo)(
     () => ({
-      layout: { type: "regular", labelPosition: "none" },
+      layout: { type: "regular", labelPosition: "top" },
       fields: ["guidelines"]
     }),
     []
@@ -48449,19 +48449,7 @@ function GuidelineAccordionForm({
         }
       ),
       error2 && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(import_components58.Notice, { status: "error", onRemove: () => setError(null), children: error2 }),
-      /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)(import_components58.__experimentalHStack, { spacing: 4, alignment: "left", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
-          import_components58.Button,
-          {
-            variant: "primary",
-            type: "submit",
-            disabled: loading || !draft,
-            accessibleWhenDisabled: true,
-            isBusy: loading,
-            __next40pxDefaultSize: true,
-            children: (0, import_i18n62.__)("Save guidelines")
-          }
-        ),
+      /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)(import_components58.__experimentalHStack, { spacing: 4, alignment: "right", children: [
         /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
           import_components58.Button,
           {
@@ -48472,7 +48460,19 @@ function GuidelineAccordionForm({
             isBusy: loading,
             onClick: handleClearClick,
             __next40pxDefaultSize: true,
-            children: (0, import_i18n62.__)("Clear guidelines")
+            children: (0, import_i18n62.__)("Clear")
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
+          import_components58.Button,
+          {
+            variant: "primary",
+            type: "submit",
+            disabled: loading || !draft,
+            accessibleWhenDisabled: true,
+            isBusy: loading,
+            __next40pxDefaultSize: true,
+            children: (0, import_i18n62.__)("Save")
           }
         )
       ] })
@@ -48483,18 +48483,18 @@ function GuidelineAccordionForm({
         isOpen: showClearConfirmation,
         title: (0, import_i18n62.sprintf)(
           /* translators: %s: Guideline section title. */
-          (0, import_i18n62.__)("Clear %s guidelines"),
+          (0, import_i18n62.__)("Clear %s guideline"),
           scope.title
         ),
         __experimentalHideHeader: false,
         onConfirm: handleClearConfirm,
         onCancel: () => setShowClearConfirmation(false),
-        confirmButtonText: (0, import_i18n62.__)("Clear guidelines"),
+        confirmButtonText: (0, import_i18n62.__)("Clear"),
         isBusy: loading,
         size: "small",
         children: (0, import_i18n62.sprintf)(
           /* translators: %s: Guideline section title. */
-          (0, import_i18n62.__)("You are about to clear the %s guidelines."),
+          (0, import_i18n62.__)("You are about to clear the %s guideline."),
           scope.title
         )
       }
@@ -48531,7 +48531,8 @@ function BlockGuidelineModal({
   initialBlock,
   contentBlocks,
   bySlug,
-  query
+  query,
+  onRemoved
 }) {
   const [selectedBlock, setSelectedBlock] = (0, import_element164.useState)(
     initialBlock
@@ -48580,14 +48581,17 @@ function BlockGuidelineModal({
     operation.then(() => {
       setError(null);
       createSuccessNotice(
-        value ? (0, import_i18n63.__)("Guidelines saved.") : (0, import_i18n63.__)("Guidelines removed."),
+        value ? (0, import_i18n63.__)("Guideline saved.") : (0, import_i18n63.__)("Guideline removed."),
         { type: "snackbar" }
       );
+      if (!value && existingId) {
+        onRemoved?.();
+      }
       closeModal();
     }).catch((e2) => setError(e2.message)).finally(() => setIsSaving(false));
   };
   const canSubmit = selectedBlock && guidelineText.trim().length > 0;
-  let submitButtonLabel = (0, import_i18n63.__)("Save guidelines");
+  let submitButtonLabel = (0, import_i18n63.__)("Save");
   if (isSaving) {
     submitButtonLabel = (0, import_i18n63.__)("Saving\u2026");
   }
@@ -48595,7 +48599,7 @@ function BlockGuidelineModal({
     import_components59.Modal,
     {
       className: "block-guideline-modal",
-      title: isEditing ? (0, import_i18n63.__)("Edit guidelines") : (0, import_i18n63.__)("Add guidelines"),
+      title: isEditing ? (0, import_i18n63.__)("Edit guideline") : (0, import_i18n63.__)("Add guideline"),
       onRequestClose: closeModal,
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime222.jsxs)(import_components59.__experimentalVStack, { spacing: 4, children: [
@@ -48675,7 +48679,7 @@ function BlockGuidelineModal({
           import_components59.__experimentalConfirmDialog,
           {
             isOpen: showRemoveConfirmation,
-            title: (0, import_i18n63.__)("Remove block guidelines"),
+            title: (0, import_i18n63.__)("Remove block guideline"),
             __experimentalHideHeader: false,
             onConfirm: () => {
               handleSave("");
@@ -48688,7 +48692,7 @@ function BlockGuidelineModal({
             children: (0, import_i18n63.sprintf)(
               /* translators: %s: Block name. */
               (0, import_i18n63.__)(
-                "You are about to remove the block guidelines for the %s block."
+                "You are about to remove the block guideline for the %s block."
               ),
               selectedBlockLabel
             )
@@ -48757,6 +48761,8 @@ function BlockGuidelines({
     null
   );
   const { createSuccessNotice } = (0, import_data11.useDispatch)(import_notices3.store);
+  const addButtonRef = (0, import_element165.useRef)(null);
+  const [shouldFocusAddButton, setShouldFocusAddButton] = (0, import_element165.useState)(false);
   const rows = (0, import_element165.useMemo)(
     () => contentBlocks.filter((block) => bySlug[blockSlug(block.name)]).map((block) => ({
       id: block.name,
@@ -48768,10 +48774,13 @@ function BlockGuidelines({
     })),
     [contentBlocks, bySlug]
   );
-  const handleRowClick = (id) => {
-    setSelectedItem(id);
-    setIsOpen(true);
-  };
+  const handleRowClick = (0, import_element165.useCallback)(
+    (id) => {
+      setSelectedItem(id);
+      setIsOpen(true);
+    },
+    [setSelectedItem, setIsOpen]
+  );
   const actions = (0, import_element165.useMemo)(
     () => [
       {
@@ -48789,7 +48798,7 @@ function BlockGuidelines({
         }
       }
     ],
-    [setItemToDelete]
+    [setItemToDelete, handleRowClick]
   );
   const handleDelete = () => {
     if (!itemToDelete) {
@@ -48803,9 +48812,10 @@ function BlockGuidelines({
     setBusy(true);
     deleteGuidelineRow(row.id).then(() => {
       setError(null);
-      createSuccessNotice((0, import_i18n64.__)("Guidelines removed."), {
+      createSuccessNotice((0, import_i18n64.__)("Guideline removed."), {
         type: "snackbar"
       });
+      setShouldFocusAddButton(true);
     }).catch((e2) => setError(e2.message)).finally(() => {
       setBusy(false);
       setItemToDelete(null);
@@ -48826,6 +48836,12 @@ function BlockGuidelines({
       );
     }
   }, [paginationInfo.totalPages, view.page]);
+  (0, import_element165.useEffect)(() => {
+    if (shouldFocusAddButton) {
+      addButtonRef.current?.focus();
+      setShouldFocusAddButton(false);
+    }
+  }, [shouldFocusAddButton]);
   const closeModal = () => {
     setIsOpen(false);
     setSelectedItem(void 0);
@@ -48864,13 +48880,14 @@ function BlockGuidelines({
         ] })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(import_components60.__experimentalHStack, { children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(import_components60.__experimentalHStack, { alignment: "right", children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
       import_components60.Button,
       {
+        ref: addButtonRef,
         variant: "primary",
         onClick: openModal,
         __next40pxDefaultSize: true,
-        children: (0, import_i18n64.__)("Add guidelines")
+        children: (0, import_i18n64.__)("Add")
       }
     ) }),
     isOpen && /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
@@ -48880,14 +48897,15 @@ function BlockGuidelines({
         initialBlock: selectedItem,
         contentBlocks,
         bySlug,
-        query
+        query,
+        onRemoved: () => setShouldFocusAddButton(true)
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
       import_components60.__experimentalConfirmDialog,
       {
         isOpen: !!itemToDelete,
-        title: (0, import_i18n64.__)("Remove block guidelines"),
+        title: (0, import_i18n64.__)("Remove block guideline"),
         __experimentalHideHeader: false,
         onConfirm: handleDelete,
         onCancel: () => setItemToDelete(null),
@@ -48897,7 +48915,7 @@ function BlockGuidelines({
         children: (0, import_i18n64.sprintf)(
           /* translators: %s: Block name. */
           (0, import_i18n64.__)(
-            "You are about to remove the block guidelines for the %s block."
+            "You are about to remove the block guideline for the %s block."
           ),
           itemToDelete?.label ?? ""
         )
@@ -49158,7 +49176,7 @@ function GuidelineActionsSection({
       title: (0, import_i18n66.__)("Import"),
       description: (0, import_i18n66.__)("Upload a JSON file to import your guidelines."),
       buttonLabel: (0, import_i18n66.__)("Upload"),
-      ariaLabel: (0, import_i18n66.__)("Import guidelines"),
+      ariaLabel: (0, import_i18n66.__)("Upload guidelines"),
       onClick: handleImportClick,
       isBusy: isImporting,
       disabled: isImporting || !!pendingImport
@@ -49168,12 +49186,12 @@ function GuidelineActionsSection({
       title: (0, import_i18n66.__)("Export"),
       description: (0, import_i18n66.__)("Export your guidelines to a JSON file."),
       buttonLabel: (0, import_i18n66.__)("Download"),
-      ariaLabel: (0, import_i18n66.__)("Export guidelines"),
+      ariaLabel: (0, import_i18n66.__)("Download guidelines"),
       onClick: handleExportClick
     }
   ];
   return /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(import_components62.__experimentalVStack, { spacing: 4, className: "guidelines__actions", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(import_components62.__experimentalHeading, { level: 3, size: 15, children: (0, import_i18n66.__)("Actions") }),
+    /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(import_components62.__experimentalHeading, { level: 2, size: 15, children: (0, import_i18n66.__)("Actions") }),
     /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
       "input",
       {
