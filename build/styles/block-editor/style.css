@@ -3861,14 +3861,6 @@ iframe[name=editor-canvas] {
   margin-bottom: 16px;
 }
 
-.block-editor-hooks__position-control-item {
-  /**
-   * Try to make items match the width of the anchor, subtract any margin on
-   * items to calculate the correct inner width.
-   */
-  max-inline-size: max(var(--anchor-width) - 2 * var(--wp-ui-popup-padding), 223px);
-}
-
 .block-editor-hooks__position-control-item-hint {
   color: var(--wpds-color-foreground-content-neutral-weak, #707070);
   margin-block-start: 4px;
