@@ -1635,7 +1635,7 @@ var page_default = Page;
 
 // routes/navigation-edit/stage.tsx
 var import_data3 = __toESM(require_data());
-var import_core_data2 = __toESM(require_core_data());
+var import_core_data3 = __toESM(require_core_data());
 var import_i18n5 = __toESM(require_i18n());
 var import_html_entities = __toESM(require_html_entities());
 
@@ -1644,6 +1644,7 @@ var import_element6 = __toESM(require_element());
 var import_block_editor3 = __toESM(require_block_editor());
 var import_blocks3 = __toESM(require_blocks());
 var import_components3 = __toESM(require_components());
+var import_core_data2 = __toESM(require_core_data());
 import { useEditorAssets } from "@wordpress/lazy-editor";
 
 // routes/navigation-edit/editor/style.scss
@@ -1827,6 +1828,9 @@ var PAGES_QUERY = [
 function NavigationMenuContent({
   rootClientId
 }) {
+  const { NavigationLinkUI } = unlock(
+    window.wp.blockLibrary.privateApis
+  );
   const { listViewRootClientId, isLoading } = (0, import_data2.useSelect)(
     (select) => {
       const {
@@ -1872,7 +1876,8 @@ function NavigationMenuContent({
         rootClientId: listViewRootClientId,
         onSelect: offCanvasOnselect,
         blockSettingsMenu: LeafMoreMenu,
-        showAppender: false,
+        showAppender: true,
+        additionalBlockContent: NavigationLinkUI,
         isExpanded: true
       }
     ),
@@ -1892,6 +1897,12 @@ function NavigationMenuEditor({ id }) {
     }
     return [(0, import_blocks3.createBlock)("core/navigation", { ref: id })];
   }, [assetsReady, id]);
+  const settings = (0, import_element6.useMemo)(
+    () => ({
+      __experimentalFetchLinkSuggestions: (search, searchOptions) => (0, import_core_data2.__experimentalFetchLinkSuggestions)(search, searchOptions, {})
+    }),
+    []
+  );
   if (!assetsReady || !blocks.length) {
     return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
       "div",
@@ -1909,7 +1920,7 @@ function NavigationMenuEditor({ id }) {
   return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
     import_block_editor3.BlockEditorProvider,
     {
-      settings: {},
+      settings,
       value: blocks,
       onChange: noop,
       onInput: noop,
@@ -1926,7 +1937,7 @@ function NavigationEditStage() {
   const navigationId = parseInt(id);
   const { navigationMenu } = (0, import_data3.useSelect)(
     (select) => {
-      const { getEntityRecord } = select(import_core_data2.store);
+      const { getEntityRecord } = select(import_core_data3.store);
       return {
         navigationMenu: getEntityRecord(
           "postType",
