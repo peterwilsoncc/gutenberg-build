@@ -1347,7 +1347,7 @@ var wp;
   var media_upload_default = MediaUpload;
 
   // packages/media-utils/build-module/utils/upload-media.mjs
-  var import_i18n5 = __toESM(require_i18n(), 1);
+  var import_i18n6 = __toESM(require_i18n(), 1);
   var import_blob = __toESM(require_blob(), 1);
 
   // packages/media-utils/build-module/utils/upload-to-server.mjs
@@ -1516,6 +1516,25 @@ var wp;
     }
   }
 
+  // packages/media-utils/build-module/utils/get-upload-error-message.mjs
+  var import_i18n5 = __toESM(require_i18n(), 1);
+  var OPAQUE_ERROR_CODES = ["invalid_json", "unknown_error"];
+  function getUploadErrorMessage(error2, fileName) {
+    const serverError = (0, import_i18n5.sprintf)(
+      /* translators: %s: file name */
+      (0, import_i18n5.__)('Failed to upload "%s". Please try again.'),
+      fileName
+    );
+    if (typeof error2 === "string") {
+      return error2 || serverError;
+    }
+    const { code, message: message2 } = error2 ?? {};
+    if (typeof code === "string" && OPAQUE_ERROR_CODES.includes(code)) {
+      return serverError;
+    }
+    return typeof message2 === "string" && message2 ? message2 : serverError;
+  }
+
   // packages/media-utils/build-module/utils/upload-media.mjs
   function uploadMedia({
     wpAllowedMimeTypes,
@@ -1529,7 +1548,7 @@ var wp;
     multiple = true
   }) {
     if (!multiple && filesList.length > 1) {
-      onError?.(new Error((0, import_i18n5.__)("Only one file can be used here.")));
+      onError?.(new Error((0, import_i18n6.__)("Only one file can be used here.")));
       return;
     }
     const validFiles = [];
@@ -1580,20 +1599,10 @@ var wp;
         setAndUpdateFiles(index2, attachment);
       } catch (error2) {
         setAndUpdateFiles(index2, null);
-        let message2;
-        if (typeof error2 === "object" && error2 !== null && "message" in error2) {
-          message2 = typeof error2.message === "string" ? error2.message : String(error2.message);
-        } else {
-          message2 = (0, import_i18n5.sprintf)(
-            // translators: %s: file name
-            (0, import_i18n5.__)("Error while uploading file %s to the media library."),
-            file.name
-          );
-        }
         onError?.(
           new UploadError({
             code: "GENERAL",
-            message: message2,
+            message: getUploadErrorMessage(error2, file.name),
             file,
             cause: error2 instanceof Error ? error2 : void 0
           })
@@ -1601,9 +1610,6 @@ var wp;
       }
     });
   }
-
-  // packages/media-utils/build-module/utils/sideload-media.mjs
-  var import_i18n6 = __toESM(require_i18n(), 1);
 
   // packages/media-utils/build-module/utils/sideload-to-server.mjs
   var import_api_fetch2 = __toESM(require_api_fetch(), 1);
@@ -1645,20 +1651,10 @@ var wp;
       );
       onSuccess?.(subSizeData);
     } catch (error2) {
-      let message2;
-      if (error2 instanceof Error) {
-        message2 = error2.message;
-      } else {
-        message2 = (0, import_i18n6.sprintf)(
-          // translators: %s: file name
-          (0, import_i18n6.__)("Error while sideloading file %s to the server."),
-          file.name
-        );
-      }
       onError(
         new UploadError({
           code: "GENERAL",
-          message: message2,
+          message: getUploadErrorMessage(error2, file.name),
           file,
           cause: error2 instanceof Error ? error2 : void 0
         })
