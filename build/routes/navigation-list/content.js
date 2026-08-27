@@ -848,7 +848,7 @@ var require_notices = __commonJS({
 });
 
 // routes/navigation-list/stage.tsx
-var import_core_data3 = __toESM(require_core_data());
+var import_core_data4 = __toESM(require_core_data());
 var import_element140 = __toESM(require_element());
 import { useNavigate as useNavigate3, useSearch } from "@wordpress/route";
 
@@ -28404,6 +28404,24 @@ var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptIn
   "@wordpress/views"
 );
 
+// packages/views/build-module/use-view-config.mjs
+function useViewConfig({
+  kind,
+  name,
+  fields
+}) {
+  const fieldList = Array.isArray(fields) ? fields : fields?.split(",");
+  const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
+  return (0, import_data3.useSelect)(
+    (select2) => {
+      return unlock2(select2(import_core_data.store)).getViewConfig(kind, name, {
+        fields: fieldsKey
+      });
+    },
+    [kind, name, fieldsKey]
+  );
+}
+
 // packages/dataviews/build-module/dataviews/index.mjs
 var import_element138 = __toESM(require_element(), 1);
 var import_compose23 = __toESM(require_compose(), 1);
@@ -44671,16 +44689,10 @@ var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptIn
 );
 
 // routes/navigation-list/view-utils.ts
-var DEFAULT_VIEW = {
-  type: "list",
-  sort: {
-    field: "date",
-    direction: "desc"
-  },
-  titleField: "title"
-};
-function getDefaultView() {
-  return DEFAULT_VIEW;
+var import_data9 = __toESM(require_data());
+var import_core_data2 = __toESM(require_core_data());
+function getActiveViewOverrides(viewList, slug) {
+  return viewList?.find((v2) => v2.slug === slug)?.view ?? {};
 }
 
 // routes/navigation-list/actions/edit-navigation.tsx
@@ -44708,9 +44720,9 @@ function useEditNavigationAction() {
 // routes/navigation-list/add-navigation.tsx
 var import_element139 = __toESM(require_element());
 var import_i18n57 = __toESM(require_i18n());
-var import_core_data2 = __toESM(require_core_data());
+var import_core_data3 = __toESM(require_core_data());
 var import_notices = __toESM(require_notices());
-var import_data9 = __toESM(require_data());
+var import_data10 = __toESM(require_data());
 var import_components51 = __toESM(require_components());
 var import_jsx_runtime195 = __toESM(require_jsx_runtime());
 import { useNavigate as useNavigate2 } from "@wordpress/route";
@@ -44721,8 +44733,8 @@ var AddNavigationModal = ({
   const [menuTitle, setMenuTitle] = (0, import_element139.useState)("");
   const [isBusy, setIsBusy] = (0, import_element139.useState)(false);
   const navigate = useNavigate2();
-  const { saveEntityRecord } = (0, import_data9.useDispatch)(import_core_data2.store);
-  const { createSuccessNotice, createErrorNotice } = (0, import_data9.useDispatch)(import_notices.store);
+  const { saveEntityRecord } = (0, import_data10.useDispatch)(import_core_data3.store);
+  const { createSuccessNotice, createErrorNotice } = (0, import_data10.useDispatch)(import_notices.store);
   const handleConfirmAdd = async () => {
     if (!menuTitle || !menuTitle.trim()) {
       return;
@@ -44838,7 +44850,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 
 // routes/navigation-list/stage.tsx
 var import_jsx_runtime196 = __toESM(require_jsx_runtime());
-var { useEntityRecordsWithPermissions } = unlock3(import_core_data3.privateApis);
+var { useEntityRecordsWithPermissions } = unlock3(import_core_data4.privateApis);
 var { usePostActions, usePostFields } = unlock3(import_editor.privateApis);
 var NAVIGATION_POST_TYPE2 = "wp_navigation";
 var PRELOADED_NAVIGATION_MENUS_QUERY = {
@@ -44853,9 +44865,39 @@ function getItemId(item) {
 function NavigationList() {
   const navigate = useNavigate3();
   const searchParams = useSearch({ from: "/navigation/list" });
-  const defaultView = (0, import_element140.useMemo)(() => {
-    return getDefaultView();
-  }, []);
+  const {
+    default_view: defaultView,
+    default_layouts: defaultLayouts,
+    view_list: viewList
+  } = useViewConfig({
+    kind: "postType",
+    name: NAVIGATION_POST_TYPE2
+  });
+  const activeViewOverrides = (0, import_element140.useMemo)(
+    () => getActiveViewOverrides(viewList, "all"),
+    [viewList]
+  );
+  if (!defaultView) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
+    NavigationListView,
+    {
+      defaultView,
+      defaultLayouts,
+      activeViewOverrides,
+      navigate,
+      searchParams
+    }
+  );
+}
+function NavigationListView({
+  defaultView,
+  defaultLayouts,
+  activeViewOverrides,
+  navigate,
+  searchParams
+}) {
   const handleQueryParamsChange = (0, import_element140.useCallback)(
     (params) => {
       navigate({
@@ -44872,6 +44914,8 @@ function NavigationList() {
     name: NAVIGATION_POST_TYPE2,
     slug: "default-new",
     defaultView,
+    defaultLayouts,
+    activeViewOverrides,
     queryParams: searchParams,
     onChangeQueryParams: handleQueryParamsChange
   });
@@ -44950,9 +44994,7 @@ function NavigationList() {
               totalItems,
               totalPages
             },
-            defaultLayouts: {
-              list: true
-            },
+            defaultLayouts,
             getItemId,
             selection,
             onReset: isModified ? resetToDefault : false,
