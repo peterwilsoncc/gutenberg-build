@@ -44121,20 +44121,14 @@ ${text}
   var import_blocks46 = __toESM(require_blocks(), 1);
   function useOutdentListItem() {
     const registry = (0, import_data57.useRegistry)();
-    const {
-      moveBlocksToPosition,
-      removeBlock,
-      insertBlock,
-      updateBlockListSettings
-    } = (0, import_data57.useDispatch)(import_block_editor128.store);
+    const { moveBlocksToPosition, removeBlock, removeBlocks, insertBlock } = (0, import_data57.useDispatch)(import_block_editor128.store);
     const {
       getBlockRootClientId,
       getBlockName,
       getBlockOrder,
       getBlockIndex,
       getSelectedBlockClientIds,
-      getBlock,
-      getBlockListSettings
+      getBlock
     } = (0, import_data57.useSelect)(import_block_editor128.store);
     function getParentListItemId(id) {
       const listId = getBlockRootClientId(id);
@@ -44170,25 +44164,22 @@ ${text}
       );
       registry.batch(() => {
         if (followingListItems.length) {
-          let nestedListId = getBlockOrder(firstClientId)[0];
-          if (!nestedListId) {
+          const nestedListId = getBlockOrder(firstClientId)[0];
+          if (nestedListId) {
+            moveBlocksToPosition(
+              followingListItems,
+              parentListId,
+              nestedListId
+            );
+          } else {
             const nestedListBlock = (0, import_blocks46.cloneBlock)(
               getBlock(parentListId),
               {},
-              []
+              followingListItems.map((id) => getBlock(id))
             );
-            nestedListId = nestedListBlock.clientId;
+            removeBlocks(followingListItems, false);
             insertBlock(nestedListBlock, 0, firstClientId, false);
-            updateBlockListSettings(
-              nestedListId,
-              getBlockListSettings(parentListId)
-            );
           }
-          moveBlocksToPosition(
-            followingListItems,
-            parentListId,
-            nestedListId
-          );
         }
         moveBlocksToPosition(
           clientIds,
