@@ -2517,6 +2517,9 @@ var wp;
     (select) => (state, blockName) => {
       const widgetAreas = select(import_block_editor2.store).getBlocks();
       const [firstWidgetArea] = widgetAreas;
+      if (!firstWidgetArea) {
+        return false;
+      }
       return select(import_block_editor2.store).canInsertBlockType(
         blockName,
         firstWidgetArea.clientId
