@@ -34225,7 +34225,7 @@ ${url}
         "has-nested-images",
         // In dynamic mode there are no inner blocks and the gallery isn't
         // rendered through the `Gallery` component, so the classes that
-        // component normally composes onto the `<figure>` (see `gallery.js`)
+        // component normally composes onto the `<figure>` (see `gallery.jsx`)
         // must be added here to keep the preview's flex/crop layout matching
         // the static gallery and the frontend.
         isDynamic && [
