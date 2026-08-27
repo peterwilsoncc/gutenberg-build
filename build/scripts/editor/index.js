@@ -396,7 +396,7 @@ var wp;
             inst: { value, getSnapshot: getSnapshot2 }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-          useLayoutEffect19(
+          useLayoutEffect20(
             function() {
               inst.value = value;
               inst.getSnapshot = getSnapshot2;
@@ -430,7 +430,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React167 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState173 = React167.useState, useEffect135 = React167.useEffect, useLayoutEffect19 = React167.useLayoutEffect, useDebugValue2 = React167.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React167 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState173 = React167.useState, useEffect135 = React167.useEffect, useLayoutEffect20 = React167.useLayoutEffect, useDebugValue2 = React167.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React167.useSyncExternalStore ? React167.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -113161,6 +113161,15 @@ ${content}
       };
     }, []);
     const { setShowRevisionDiff: setShowRevisionDiff2 } = unlock((0, import_data225.useDispatch)(store));
+    const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data225.useDispatch)(store);
+    const registry = (0, import_data225.useRegistry)();
+    (0, import_element373.useLayoutEffect)(() => {
+      const isMediumOrBigger = window.matchMedia("(min-width: 782px)").matches;
+      const { get } = registry.select(import_preferences24.store);
+      setIsListViewOpened2(
+        !isPreviewMode && isMediumOrBigger && !!get("core", "showListViewByDefault") && !get("core", "distractionFree")
+      );
+    }, [isPreviewMode, registry, setIsListViewOpened2]);
     useCollaboratorNotifications(postId2, postType2);
     const isLargeViewport = (0, import_compose92.useViewportMatch)("medium");
     const secondarySidebarLabel = isListViewOpened2 ? (0, import_i18n321.__)("Document Overview") : (0, import_i18n321.__)("Block Library");

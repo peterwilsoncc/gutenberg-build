@@ -11854,7 +11854,6 @@ var wp;
     import_api_fetch2.default.privateApis
   );
   function initializeEditor(id, postType, postId, settings, initialEdits) {
-    const isMediumOrBigger = window.matchMedia("(min-width: 782px)").matches;
     const target = document.getElementById(id);
     const root = (0, import_element30.createRoot)(target);
     (0, import_data27.dispatch)(import_preferences12.store).setDefaults("core/edit-post", {
@@ -11888,9 +11887,6 @@ var wp;
       });
     }
     (0, import_data27.dispatch)(import_blocks2.store).reapplyBlockTypeFilters();
-    if (isMediumOrBigger && (0, import_data27.select)(import_preferences12.store).get("core", "showListViewByDefault") && !(0, import_data27.select)(import_preferences12.store).get("core", "distractionFree")) {
-      (0, import_data27.dispatch)(import_editor20.store).setIsListViewOpened(true);
-    }
     (0, import_block_library.registerCoreBlocks)();
     registerCoreBlockBindingsSources();
     (0, import_widgets.registerLegacyWidgetBlock)({ inserter: false });

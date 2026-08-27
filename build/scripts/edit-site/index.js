@@ -1104,7 +1104,7 @@ var wp;
   var import_deprecated6 = __toESM(require_deprecated(), 1);
   var import_element256 = __toESM(require_element(), 1);
   var import_editor42 = __toESM(require_editor(), 1);
-  var import_preferences14 = __toESM(require_preferences(), 1);
+  var import_preferences13 = __toESM(require_preferences(), 1);
   var import_widgets = __toESM(require_widgets(), 1);
 
   // packages/edit-site/build-module/store/index.mjs
@@ -35451,7 +35451,7 @@ var wp;
   var import_html_entities3 = __toESM(require_html_entities(), 1);
   var import_block_editor5 = __toESM(require_block_editor(), 1);
   var import_url9 = __toESM(require_url(), 1);
-  var import_preferences10 = __toESM(require_preferences(), 1);
+  var import_preferences9 = __toESM(require_preferences(), 1);
 
   // packages/edit-site/build-module/components/welcome-guide/editor.mjs
   var import_data17 = __toESM(require_data(), 1);
@@ -39137,21 +39137,17 @@ var wp;
   var import_block_editor4 = __toESM(require_block_editor(), 1);
   var import_editor15 = __toESM(require_editor(), 1);
   var import_element103 = __toESM(require_element(), 1);
-  var import_preferences9 = __toESM(require_preferences(), 1);
   function useAdaptEditorToCanvas(canvas) {
     const { clearSelectedBlock } = (0, import_data30.useDispatch)(import_block_editor4.store);
     const {
       editPost,
       setDeviceType,
       closePublishSidebar,
-      setIsListViewOpened: setIsListViewOpened2,
       setIsInserterOpened: setIsInserterOpened2
     } = (0, import_data30.useDispatch)(import_editor15.store);
-    const { get: getPreference } = (0, import_data30.useSelect)(import_preferences9.store);
     const { getCurrentPost } = (0, import_data30.useSelect)(import_editor15.store);
     const registry = (0, import_data30.useRegistry)();
     (0, import_element103.useLayoutEffect)(() => {
-      const isMediumOrBigger = window.matchMedia("(min-width: 782px)").matches;
       registry.batch(() => {
         clearSelectedBlock();
         if (getCurrentPost()?.type) {
@@ -39160,11 +39156,6 @@ var wp;
         setDeviceType(DEFAULT_DEVICE_TYPE);
         closePublishSidebar();
         setIsInserterOpened2(false);
-        if (isMediumOrBigger && canvas === "edit" && getPreference("core", "showListViewByDefault") && !getPreference("core", "distractionFree")) {
-          setIsListViewOpened2(true);
-        } else {
-          setIsListViewOpened2(false);
-        }
       });
     }, [
       canvas,
@@ -39174,8 +39165,6 @@ var wp;
       setDeviceType,
       closePublishSidebar,
       setIsInserterOpened2,
-      setIsListViewOpened2,
-      getPreference,
       getCurrentPost
     ]);
   }
@@ -39395,7 +39384,7 @@ var wp;
       []
     );
     const showIconLabels = (0, import_data33.useSelect)(
-      (select4) => select4(import_preferences10.store).get("core", "showIconLabels"),
+      (select4) => select4(import_preferences9.store).get("core", "showIconLabels"),
       []
     );
     const postWithTemplate = !!context?.postId;
@@ -58729,7 +58718,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n134 = __toESM(require_i18n(), 1);
   var import_data53 = __toESM(require_data(), 1);
   var import_element219 = __toESM(require_element(), 1);
-  var import_preferences11 = __toESM(require_preferences(), 1);
+  var import_preferences10 = __toESM(require_preferences(), 1);
   var import_editor19 = __toESM(require_editor(), 1);
   var import_router18 = __toESM(require_router(), 1);
   var import_url13 = __toESM(require_url(), 1);
@@ -70869,7 +70858,7 @@ If there's a particular need for this, please submit a feature request at https:
     } = useGlobalStylesRevisions();
     const { openGeneralSidebar: openGeneralSidebar2 } = (0, import_data53.useDispatch)(store);
     const { setStylesPath } = unlock((0, import_data53.useDispatch)(import_editor19.store));
-    const { set: setPreference } = (0, import_data53.useDispatch)(import_preferences11.store);
+    const { set: setPreference } = (0, import_data53.useDispatch)(import_preferences10.store);
     const openGlobalStyles = (0, import_element219.useCallback)(async () => {
       history.navigate((0, import_url13.addQueryArgs)(path, { canvas: "edit" }), {
         transition: "canvas-mode-edit-transition"
@@ -72032,7 +72021,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/views/build-module/use-view.mjs
   var import_element226 = __toESM(require_element(), 1);
   var import_data61 = __toESM(require_data(), 1);
-  var import_preferences12 = __toESM(require_preferences(), 1);
+  var import_preferences11 = __toESM(require_preferences(), 1);
 
   // packages/views/build-module/preference-keys.mjs
   function generatePreferenceKey(kind, name2, slug) {
@@ -72156,14 +72145,14 @@ If there's a particular need for this, please submit a feature request at https:
     const preferenceKey = generatePreferenceKey(kind, name2, slug);
     const persistedView = (0, import_data61.useSelect)(
       (select4) => {
-        return select4(import_preferences12.store).get(
+        return select4(import_preferences11.store).get(
           "core/views",
           preferenceKey
         );
       },
       [preferenceKey]
     );
-    const { set: set3 } = (0, import_data61.useDispatch)(import_preferences12.store);
+    const { set: set3 } = (0, import_data61.useDispatch)(import_preferences11.store);
     const page = Number(queryParams?.page ?? 1);
     const search = queryParams?.search ?? "";
     const view = (0, import_element226.useMemo)(
@@ -72229,7 +72218,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/views/build-module/load-view.mjs
   var import_data62 = __toESM(require_data(), 1);
-  var import_preferences13 = __toESM(require_preferences(), 1);
+  var import_preferences12 = __toESM(require_preferences(), 1);
   async function loadView(config2) {
     const {
       kind,
@@ -72242,7 +72231,7 @@ If there's a particular need for this, please submit a feature request at https:
     } = config2;
     const preferenceKey = generatePreferenceKey(kind, name2, slug);
     const persistedView = (0, import_data62.select)(
-      import_preferences13.store
+      import_preferences12.store
     ).get("core/views", preferenceKey);
     return resolveView({
       defaultView,
@@ -78145,13 +78134,13 @@ If there's a particular need for this, please submit a feature request at https:
         enableFSEBlocks: true
       });
     }
-    (0, import_data88.dispatch)(import_preferences14.store).setDefaults("core/edit-site", {
+    (0, import_data88.dispatch)(import_preferences13.store).setDefaults("core/edit-site", {
       welcomeGuide: true,
       welcomeGuideStyles: true,
       welcomeGuidePage: true,
       welcomeGuideTemplate: true
     });
-    (0, import_data88.dispatch)(import_preferences14.store).setDefaults("core", {
+    (0, import_data88.dispatch)(import_preferences13.store).setDefaults("core", {
       allowRightClickOverrides: true,
       distractionFree: false,
       editorMode: "visual",
@@ -78170,7 +78159,7 @@ If there's a particular need for this, please submit a feature request at https:
       showCollaborationPostSaveNotifications: true
     });
     if (window.__clientSideMediaProcessing) {
-      (0, import_data88.dispatch)(import_preferences14.store).setDefaults("core/media", {
+      (0, import_data88.dispatch)(import_preferences13.store).setDefaults("core/media", {
         requireApproval: true,
         optimizeOnUpload: true
       });
