@@ -1241,6 +1241,24 @@ var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnl
   "@wordpress/views"
 );
 
+// packages/views/build-module/use-view-config.mjs
+function useViewConfig({
+  kind,
+  name,
+  fields
+}) {
+  const fieldList = Array.isArray(fields) ? fields : fields?.split(",");
+  const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
+  return (0, import_data3.useSelect)(
+    (select2) => {
+      return unlock(select2(import_core_data.store)).getViewConfig(kind, name, {
+        fields: fieldsKey
+      });
+    },
+    [kind, name, fieldsKey]
+  );
+}
+
 // node_modules/clsx/dist/clsx.mjs
 function r(e2) {
   var t2, f2, n2 = "";
@@ -48347,79 +48365,8 @@ var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptIn
 // routes/post-list/view-utils.ts
 var import_data9 = __toESM(require_data());
 var import_core_data2 = __toESM(require_core_data());
-var DEFAULT_VIEW = {
-  type: "table",
-  sort: {
-    field: "date",
-    direction: "desc"
-  },
-  fields: ["author", "status", "date"],
-  titleField: "title",
-  mediaField: "featured_media",
-  descriptionField: "excerpt"
-};
-var DEFAULT_TABLE_LAYOUT = {
-  layout: {
-    styles: {
-      author: {
-        align: "start"
-      }
-    }
-  }
-};
-var DEFAULT_LAYOUTS2 = {
-  table: DEFAULT_TABLE_LAYOUT,
-  grid: true,
-  list: true
-};
-var DEFAULT_VIEWS = [
-  {
-    slug: "all",
-    label: "All"
-  },
-  {
-    slug: "publish",
-    label: "Published"
-  },
-  {
-    slug: "draft",
-    label: "Draft"
-  },
-  {
-    slug: "pending",
-    label: "Pending"
-  },
-  {
-    slug: "private",
-    label: "Private"
-  },
-  {
-    slug: "trash",
-    label: "Trash"
-  }
-];
-function getActiveViewOverridesForTab(slug) {
-  if (slug === "all") {
-    return {
-      ...DEFAULT_TABLE_LAYOUT
-    };
-  }
-  return {
-    ...DEFAULT_TABLE_LAYOUT,
-    filters: [
-      {
-        field: "status",
-        operator: "is",
-        value: slug
-      }
-    ]
-  };
-}
-function getDefaultView(postType) {
-  return {
-    ...DEFAULT_VIEW,
-    showLevels: postType?.hierarchical
-  };
+function getActiveViewOverrides(viewList, slug) {
+  return viewList?.find((v2) => v2.slug === slug)?.view ?? {};
 }
 function viewToQuery(view, postType) {
   const result = { _embed: "author,wp:featuredmedia" };
@@ -48739,10 +48686,45 @@ function getItemLevel(item) {
   return item.level ?? 0;
 }
 function PostList() {
-  const invalidate = useInvalidate();
   const { type: postType, slug = "all" } = useParams({
     from: "/types/$type/list/$slug"
   });
+  const {
+    default_view: defaultView,
+    default_layouts: defaultLayouts,
+    view_list: viewList
+  } = useViewConfig({
+    kind: "postType",
+    name: postType
+  });
+  const activeViewOverrides = (0, import_element164.useMemo)(
+    () => getActiveViewOverrides(viewList, slug),
+    [viewList, slug]
+  );
+  if (!defaultView) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
+    PostListView,
+    {
+      postType,
+      slug,
+      defaultView,
+      defaultLayouts,
+      viewList,
+      activeViewOverrides
+    }
+  );
+}
+function PostListView({
+  postType,
+  slug,
+  defaultView,
+  defaultLayouts,
+  viewList,
+  activeViewOverrides
+}) {
+  const invalidate = useInvalidate();
   const navigate = useNavigate();
   const searchParams = useSearch({ from: "/types/$type/list/$slug" });
   const postTypeObject = (0, import_data11.useSelect)(
@@ -48756,13 +48738,6 @@ function PostList() {
       name: postType
     }),
     [postType]
-  );
-  const defaultView = (0, import_element164.useMemo)(() => {
-    return getDefaultView(postTypeObject);
-  }, [postTypeObject]);
-  const activeViewOverrides = (0, import_element164.useMemo)(
-    () => getActiveViewOverridesForTab(slug),
-    [slug]
   );
   const handleQueryParamsChange = (0, import_element164.useCallback)(
     (params) => {
@@ -48780,6 +48755,7 @@ function PostList() {
     name: postType,
     slug: "default-new",
     defaultView,
+    defaultLayouts,
     activeViewOverrides,
     queryParams: searchParams,
     onChangeQueryParams: handleQueryParamsChange
@@ -48969,23 +48945,14 @@ function PostList() {
       ),
       hasPadding: false,
       children: [
-        DEFAULT_VIEWS.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)("div", { className: "routes-post-list__tabs-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
-          Tabs,
+        viewList && viewList.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)("div", { className: "routes-post-list__tabs-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(Tabs, { onSelect: handleTabChange, selectedTabId: slug, children: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(Tabs.TabList, { children: viewList.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
+          Tabs.Tab,
           {
-            onSelect: handleTabChange,
-            selectedTabId: slug ?? "all",
-            children: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(Tabs.TabList, { children: DEFAULT_VIEWS.map(
-              (filter) => /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
-                Tabs.Tab,
-                {
-                  tabId: filter.slug,
-                  children: filter.label
-                },
-                filter.slug
-              )
-            ) })
-          }
-        ) }),
+            tabId: entry.slug,
+            children: entry.title
+          },
+          entry.slug
+        )) }) }) }),
         /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
           dataviews_default,
           {
@@ -48999,7 +48966,7 @@ function PostList() {
               totalItems,
               totalPages
             },
-            defaultLayouts: DEFAULT_LAYOUTS2,
+            defaultLayouts,
             getItemId,
             getItemLevel,
             selection,
