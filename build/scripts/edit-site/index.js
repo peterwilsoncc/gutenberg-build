@@ -59190,7 +59190,7 @@ If there's a particular need for this, please submit a feature request at https:
     return String(Math.min(Math.max(400, start2), end));
   }
   function formatFontFamily(input) {
-    const regex = /^(?!generic\([ a-zA-Z\-]+\)$)(?!^[a-zA-Z\-]+$).+/;
+    const regex = /^(?!generic\([ a-zA-Z\-]+\)$)(?!var\(\s*--[\w-]+\s*\)$)(?!^[a-zA-Z\-]+$).+/;
     const output = input.trim();
     const formatItem = (item) => {
       item = item.trim();
