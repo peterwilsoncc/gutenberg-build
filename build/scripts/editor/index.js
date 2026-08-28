@@ -1026,15 +1026,15 @@ var wp;
       function matcher(match3) {
         return characterMap[match3];
       }
-      var removeAccents7 = function(string) {
+      var removeAccents8 = function(string) {
         return string.replace(allAccents, matcher);
       };
       var hasAccents = function(string) {
         return !!string.match(firstAccent);
       };
-      module.exports = removeAccents7;
+      module.exports = removeAccents8;
       module.exports.has = hasAccents;
-      module.exports.remove = removeAccents7;
+      module.exports.remove = removeAccents8;
     }
   });
 
@@ -45475,6 +45475,7 @@ var wp;
   }
 
   // packages/fields/build-module/actions/export-pattern.mjs
+  var import_remove_accents2 = __toESM(require_remove_accents(), 1);
   var import_blob2 = __toESM(require_blob(), 1);
   var import_i18n65 = __toESM(require_i18n(), 1);
   function getJsonFromItem(item) {
@@ -45499,7 +45500,9 @@ var wp;
       if (items.length === 1) {
         return (0, import_blob2.downloadBlob)(
           `${paramCase(
-            getItemTitle(items[0]) || items[0].slug
+            (0, import_remove_accents2.default)(
+              getItemTitle(items[0]) || items[0].slug
+            )
           )}.json`,
           getJsonFromItem(items[0]),
           "application/json"
@@ -45507,7 +45510,9 @@ var wp;
       }
       const nameCount = {};
       const filesToZip = items.map((item) => {
-        const name2 = paramCase(getItemTitle(item) || item.slug);
+        const name2 = paramCase(
+          (0, import_remove_accents2.default)(getItemTitle(item) || item.slug)
+        );
         nameCount[name2] = (nameCount[name2] || 0) + 1;
         return {
           name: `${name2 + (nameCount[name2] > 1 ? "-" + (nameCount[name2] - 1) : "")}.json`,
@@ -57134,7 +57139,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataviews-filters/search-widget.mjs
-  var import_remove_accents2 = __toESM(require_remove_accents(), 1);
+  var import_remove_accents3 = __toESM(require_remove_accents(), 1);
   var import_compose19 = __toESM(require_compose(), 1);
   var import_i18n111 = __toESM(require_i18n(), 1);
   var import_element152 = __toESM(require_element(), 1);
@@ -57199,7 +57204,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataviews-filters/search-widget.mjs
   var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
   function normalizeSearchInput(input = "") {
-    return (0, import_remove_accents2.default)(input.trim().toLowerCase());
+    return (0, import_remove_accents3.default)(input.trim().toLowerCase());
   }
   var getNewValue = (filterDefinition, currentFilter, value) => {
     if (filterDefinition.singleSelection) {
@@ -65344,10 +65349,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/utils/filter-sort-and-paginate.mjs
-  var import_remove_accents3 = __toESM(require_remove_accents(), 1);
+  var import_remove_accents4 = __toESM(require_remove_accents(), 1);
   var import_deprecated2 = __toESM(require_deprecated(), 1);
   function normalizeSearchInput2(input = "") {
-    return (0, import_remove_accents3.default)(input.trim().toLowerCase());
+    return (0, import_remove_accents4.default)(input.trim().toLowerCase());
   }
   var EMPTY_ARRAY11 = [];
   function filterSortAndPaginate(data, view, fields2) {
@@ -99571,7 +99576,7 @@ ${content}
   var import_core_data71 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/page-attributes/parent.mjs
-  var import_remove_accents4 = __toESM(require_remove_accents(), 1);
+  var import_remove_accents5 = __toESM(require_remove_accents(), 1);
   var import_i18n233 = __toESM(require_i18n(), 1);
   var import_components170 = __toESM(require_components(), 1);
   var import_compose55 = __toESM(require_compose(), 1);
@@ -99651,8 +99656,8 @@ ${content}
     return post2?.title?.rendered ? (0, import_html_entities18.decodeEntities)(post2.title.rendered) : `#${post2.id} (${(0, import_i18n233.__)("no title")})`;
   }
   var getItemPriority2 = (name2, searchValue) => {
-    const normalizedName = (0, import_remove_accents4.default)(name2 || "").toLowerCase();
-    const normalizedSearch = (0, import_remove_accents4.default)(searchValue || "").toLowerCase();
+    const normalizedName = (0, import_remove_accents5.default)(name2 || "").toLowerCase();
+    const normalizedSearch = (0, import_remove_accents5.default)(searchValue || "").toLowerCase();
     if (normalizedName === normalizedSearch) {
       return 0;
     }
@@ -100630,9 +100635,9 @@ ${content}
   var import_blocks26 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/utils/search-templates.mjs
-  var import_remove_accents5 = __toESM(require_remove_accents(), 1);
+  var import_remove_accents6 = __toESM(require_remove_accents(), 1);
   function normalizeSearchInput3(input = "") {
-    input = (0, import_remove_accents5.default)(input);
+    input = (0, import_remove_accents6.default)(input);
     input = input.trim().toLowerCase();
     return input;
   }
@@ -103688,12 +103693,12 @@ ${content}
   var import_html_entities25 = __toESM(require_html_entities(), 1);
 
   // packages/editor/build-module/utils/normalize-text-string.mjs
-  var import_remove_accents6 = __toESM(require_remove_accents(), 1);
+  var import_remove_accents7 = __toESM(require_remove_accents(), 1);
   var ALL_UNICODE_DASH_CHARACTERS = new RegExp(
     /[\u007e\u00ad\u2053\u207b\u208b\u2212\p{Pd}]/gu
   );
   var normalizeTextString = (value) => {
-    return (0, import_remove_accents6.default)(value).normalize("NFKC").toLocaleLowerCase().replace(ALL_UNICODE_DASH_CHARACTERS, "-");
+    return (0, import_remove_accents7.default)(value).normalize("NFKC").toLocaleLowerCase().replace(ALL_UNICODE_DASH_CHARACTERS, "-");
   };
 
   // packages/editor/build-module/components/post-taxonomies/hierarchical-term-selector.mjs
