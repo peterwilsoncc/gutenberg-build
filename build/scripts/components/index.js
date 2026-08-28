@@ -23218,10 +23218,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element15 = __toESM(require_element(), 1);
   var import_warning = __toESM(require_warning(), 1);
   var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
-  var ComponentsContext = (0, import_element15.createContext)(
-    /** @type {Record<string, any>} */
-    {}
-  );
+  var ComponentsContext = (0, import_element15.createContext)({});
   ComponentsContext.displayName = "ComponentsContext";
   var useComponentsContext = () => (0, import_element15.useContext)(ComponentsContext);
   function useContextSystemBridge({
@@ -23413,13 +23410,18 @@ If there's a particular need for this, please submit a feature request at https:
       ...getNamespace(namespace)
     };
     const {
-      _overrides: overrideProps,
+      _overrides,
       ...otherContextProps
     } = contextProps;
+    const overrideProps = (
+      /** @type {Record<string, unknown>} */
+      _overrides
+    );
     const initialMergedProps = Object.entries(otherContextProps).length ? Object.assign({}, otherContextProps, props) : props;
+    const propsWithChildren = initialMergedProps;
     const cx2 = useCx();
     const classes = cx2(getStyledClassNameFromKey(namespace), props.className);
-    const rendered = typeof initialMergedProps.renderChildren === "function" ? initialMergedProps.renderChildren(initialMergedProps) : initialMergedProps.children;
+    const rendered = typeof propsWithChildren.renderChildren === "function" ? propsWithChildren.renderChildren(initialMergedProps) : propsWithChildren.children;
     for (const key in initialMergedProps) {
       finalComponentProps[key] = initialMergedProps[key];
     }
