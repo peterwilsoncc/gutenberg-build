@@ -169,9 +169,7 @@
   height: auto;
   padding: 12px;
   margin: 0;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  appearance: none;
   background: none;
   border: 0;
   text-align: left;

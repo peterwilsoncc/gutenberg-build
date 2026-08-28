@@ -279,9 +279,7 @@
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   margin: 0;
   cursor: var(--wpds-cursor-control, pointer);
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  appearance: none;
   background: none;
   height: 36px;
   align-items: center;
@@ -594,9 +592,6 @@ p + .components-button.is-tertiary {
   border-color: var(--wpds-color-stroke-interactive-neutral, #8d8d8d);
   box-shadow: none;
 }
-.components-checkbox-control__input[type=checkbox]::-moz-placeholder {
-  color: rgba(30, 30, 30, 0.62);
-}
 .components-checkbox-control__input[type=checkbox]::placeholder {
   color: rgba(30, 30, 30, 0.62);
 }
@@ -658,9 +653,7 @@ p + .components-button.is-tertiary {
   vertical-align: top;
   width: var(--checkbox-input-size);
   height: var(--checkbox-input-size);
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  appearance: none;
 }
 @media not (prefers-reduced-motion) {
   .components-checkbox-control__input[type=checkbox] {
@@ -706,7 +699,6 @@ svg.components-checkbox-control__indeterminate {
   width: var(--checkmark-size);
   height: var(--checkmark-size);
   -webkit-user-select: none;
-     -moz-user-select: none;
           user-select: none;
   pointer-events: none;
 }
@@ -932,9 +924,6 @@ input.components-combobox-control__input[type=text]:focus {
   outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
   border-color: var(--wpds-color-stroke-interactive-neutral, #8d8d8d);
   box-shadow: none;
-}
-.components-combobox-control__suggestions-container::-moz-placeholder {
-  color: rgba(30, 30, 30, 0.62);
 }
 .components-combobox-control__suggestions-container::placeholder {
   color: rgba(30, 30, 30, 0.62);
@@ -1474,9 +1463,6 @@ input.components-combobox-control__input[type=text]:focus {
   outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
   border-color: var(--wpds-color-stroke-interactive-neutral, #8d8d8d);
   box-shadow: none;
-}
-.components-form-token-field__input-container::-moz-placeholder {
-  color: rgba(30, 30, 30, 0.62);
 }
 .components-form-token-field__input-container::placeholder {
   color: rgba(30, 30, 30, 0.62);
@@ -2484,9 +2470,6 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   border-color: var(--wpds-color-stroke-interactive-neutral, #8d8d8d);
   box-shadow: none;
 }
-.components-placeholder__input[type=url]::-moz-placeholder {
-  color: rgba(30, 30, 30, 0.62);
-}
 .components-placeholder__input[type=url]::placeholder {
   color: rgba(30, 30, 30, 0.62);
 }
@@ -2624,7 +2607,6 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   box-shadow: 0 0 0 1px #ccc, 0 2px 3px rgba(0, 0, 0, 0.05), 0 4px 5px rgba(0, 0, 0, 0.04), 0 12px 12px rgba(0, 0, 0, 0.03), 0 16px 16px rgba(0, 0, 0, 0.02);
   border-radius: 4px;
   box-sizing: border-box;
-  width: -moz-min-content;
   width: min-content;
 }
 .is-alternate .components-popover__content {
@@ -2733,8 +2715,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-rows: auto minmax(0, max-content);
-  -moz-column-gap: 8px;
-       column-gap: 8px;
+  column-gap: 8px;
   align-items: center;
 }
 
@@ -2794,9 +2775,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   display: inline-flex;
   margin: 0;
   padding: 0;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  appearance: none;
 }
 .components-radio-control__input[type=radio]:not(:disabled) {
   cursor: var(--wpds-cursor-control, pointer);
@@ -3060,7 +3039,6 @@ body.lockscroll {
 }
 @media (min-width: 600px) {
   .components-snackbar {
-    width: -moz-fit-content;
     width: fit-content;
   }
 }
@@ -3295,9 +3273,6 @@ body.lockscroll {
   border-color: var(--wpds-color-stroke-interactive-neutral, #8d8d8d);
   box-shadow: none;
 }
-.components-text-control__input::-moz-placeholder, .components-text-control__input[type=text]::-moz-placeholder, .components-text-control__input[type=tel]::-moz-placeholder, .components-text-control__input[type=time]::-moz-placeholder, .components-text-control__input[type=url]::-moz-placeholder, .components-text-control__input[type=week]::-moz-placeholder, .components-text-control__input[type=password]::-moz-placeholder, .components-text-control__input[type=color]::-moz-placeholder, .components-text-control__input[type=date]::-moz-placeholder, .components-text-control__input[type=datetime]::-moz-placeholder, .components-text-control__input[type=datetime-local]::-moz-placeholder, .components-text-control__input[type=email]::-moz-placeholder, .components-text-control__input[type=month]::-moz-placeholder, .components-text-control__input[type=number]::-moz-placeholder {
-  color: rgba(30, 30, 30, 0.62);
-}
 .components-text-control__input::placeholder,
 .components-text-control__input[type=text]::placeholder,
 .components-text-control__input[type=tel]::placeholder,
@@ -3330,9 +3305,6 @@ body.lockscroll {
 .components-text-control__input[type=number] {
   padding-left: 12px;
   padding-right: 12px;
-}
-.components-text-control__input::-moz-placeholder, .components-text-control__input[type=text]::-moz-placeholder, .components-text-control__input[type=tel]::-moz-placeholder, .components-text-control__input[type=time]::-moz-placeholder, .components-text-control__input[type=url]::-moz-placeholder, .components-text-control__input[type=week]::-moz-placeholder, .components-text-control__input[type=password]::-moz-placeholder, .components-text-control__input[type=color]::-moz-placeholder, .components-text-control__input[type=date]::-moz-placeholder, .components-text-control__input[type=datetime]::-moz-placeholder, .components-text-control__input[type=datetime-local]::-moz-placeholder, .components-text-control__input[type=email]::-moz-placeholder, .components-text-control__input[type=month]::-moz-placeholder, .components-text-control__input[type=number]::-moz-placeholder {
-  color: color-mix(in srgb, var(--wp-components-color-foreground, var(--wpds-color-foreground-content-neutral, #1e1e1e)), transparent 38%);
 }
 .components-text-control__input::placeholder,
 .components-text-control__input[type=text]::placeholder,

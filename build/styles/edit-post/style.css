@@ -137,9 +137,7 @@
   }
 }
 .edit-post-meta-boxes-main__presenter > button {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  appearance: none;
   padding: 0;
   border: none;
   outline: none;
@@ -327,8 +325,7 @@
 .edit-template-welcome-guide__image > img {
   display: block;
   max-width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .edit-post-welcome-guide__heading,
 .edit-template-welcome-guide__heading {
