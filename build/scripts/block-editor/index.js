@@ -66809,6 +66809,7 @@ var wp;
   var InspectorControlsTypography = (0, import_components65.createSlotFill)(
     "InspectorControlsTypography"
   );
+  var InspectorControlsViewport = (0, import_components65.createSlotFill)("InspectorControlsViewport");
   var InspectorControlsListView = (0, import_components65.createSlotFill)("InspectorControlsListView");
   var InspectorControlsStyles = (0, import_components65.createSlotFill)("InspectorControlsStyles");
   var InspectorControlsEffects = (0, import_components65.createSlotFill)("InspectorControlsEffects");
@@ -66831,7 +66832,8 @@ var wp;
     settings: InspectorControlsDefault,
     // Alias for default.
     styles: InspectorControlsStyles,
-    typography: InspectorControlsTypography
+    typography: InspectorControlsTypography,
+    viewport: InspectorControlsViewport
   };
   var groups_default = groups;
   var PrivateInspectorControlsAllowedBlocks = (0, import_components65.createSlotFill)(
@@ -95465,7 +95467,7 @@ var wp;
     selectedBlockStyleState: selectedBlockStyleState2
   }) {
     const borderPanelLabel = useBorderPanelLabel({ clientId });
-    const showLayoutControls = hasViewportBlockStyleState(selectedBlockStyleState2) && !hasPseudoBlockStyleState(selectedBlockStyleState2);
+    const isViewportStyleState = hasViewportBlockStyleState(selectedBlockStyleState2) && !hasPseudoBlockStyleState(selectedBlockStyleState2);
     const showSectionStyleControls = isSectionBlock2 && blockName !== "core/template-part";
     return /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(import_jsx_runtime484.Fragment, { children: [
       showSectionStyleControls && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(BlockStyleStateProvider, { value: selectedBlockStyleState2, children: /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
@@ -95500,7 +95502,7 @@ var wp;
             className: "background-block-support-panel__inner-wrapper"
           }
         ),
-        showLayoutControls && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
+        isViewportStyleState && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
           inspector_controls_default.Slot,
           {
             group: "layout",
@@ -95529,7 +95531,8 @@ var wp;
             className: "elements-block-support-panel__inner-wrapper"
           }
         )
-      ] })
+      ] }),
+      isViewportStyleState && /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(inspector_controls_default.Slot, { group: "viewport" })
     ] });
   }
   function BlockInspector() {

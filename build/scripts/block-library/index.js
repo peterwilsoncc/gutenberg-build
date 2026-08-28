@@ -31488,6 +31488,7 @@ ${url}
   var LINK_DESTINATION_MEDIA_WP_CORE = "file";
   var LINK_DESTINATION_ATTACHMENT_WP_CORE = "post";
   var DEFAULT_MEDIA_SIZE_SLUG2 = "large";
+  var MAX_COLUMNS = 8;
 
   // packages/block-library/build-module/gallery/deprecated.mjs
   var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
@@ -32708,7 +32709,7 @@ ${url}
     );
   }
 
-  // packages/block-library/build-module/gallery/gap-styles.mjs
+  // packages/block-library/build-module/gallery/flex-styles.mjs
   var import_block_editor95 = __toESM(require_block_editor(), 1);
   var import_data37 = __toESM(require_data(), 1);
 
@@ -33278,7 +33279,97 @@ ${url}
     getVariationStyle
   });
 
-  // packages/block-library/build-module/gallery/gap-styles.mjs
+  // packages/block-library/build-module/gallery/responsive-styles.mjs
+  function isObject2(value) {
+    return !!value && typeof value === "object" && !Array.isArray(value);
+  }
+  function isValidGalleryColumns(value) {
+    return Number.isInteger(value) && value >= 1 && value <= MAX_COLUMNS;
+  }
+  function getViewportGalleryStyle(style2, viewport) {
+    if (!isObject2(style2) || !isObject2(style2[viewport])) {
+      return {};
+    }
+    return style2[viewport];
+  }
+  function cleanObject(value) {
+    if (!isObject2(value)) {
+      return value;
+    }
+    const entries = Object.entries(value).filter(
+      ([, entryValue]) => entryValue !== void 0
+    );
+    return entries.length ? Object.fromEntries(entries) : void 0;
+  }
+  function getUpdatedGalleryStyle({
+    style: style2,
+    viewport,
+    baseSettings,
+    settings: settings121
+  }) {
+    const currentStyle = isObject2(style2) ? style2 : {};
+    const nextViewportStyle = {
+      ...getViewportGalleryStyle(currentStyle, viewport)
+    };
+    Object.entries(settings121).forEach(([key, value]) => {
+      if (value === void 0 || value === baseSettings[key]) {
+        delete nextViewportStyle[key];
+      } else {
+        nextViewportStyle[key] = value;
+      }
+    });
+    const cleanedViewportStyle = cleanObject(nextViewportStyle);
+    const nextStyle = { ...currentStyle };
+    if (cleanedViewportStyle) {
+      nextStyle[viewport] = cleanedViewportStyle;
+    } else {
+      delete nextStyle[viewport];
+    }
+    return cleanObject(nextStyle);
+  }
+  function getGallerySelector(selector) {
+    return `${selector}.wp-block-gallery.has-nested-images:where(.is-layout-flex)`;
+  }
+  function getImageSelector(selector) {
+    return `${getGallerySelector(
+      selector
+    )} figure.wp-block-image:not(#individual-image)`;
+  }
+  function getColumnsCSS(selector, columns) {
+    const width = columns === 1 ? "100%" : `calc((100% - (var(--wp--style--unstable-gallery-gap, 16px) * ${columns - 1})) / ${columns})`;
+    return `${getImageSelector(selector)}{width:${width} !important;}`;
+  }
+  function getImageCropCSS(selector, imageCrop) {
+    const imageSelector = getImageSelector(selector);
+    const wrapperSelector = `${imageSelector} > div:not(.components-drop-zone)`;
+    const linkSelector = `${imageSelector} > a`;
+    const mediaSelector = `${imageSelector} a,${imageSelector} img`;
+    if (imageCrop) {
+      return `${imageSelector}{align-self:inherit !important;margin-bottom:0 !important;}${wrapperSelector},${linkSelector}{display:flex !important;}${mediaSelector}{width:100% !important;flex:1 0 0% !important;height:100% !important;object-fit:cover !important;}`;
+    }
+    return `${imageSelector}{align-self:auto !important;margin-top:0 !important;margin-bottom:auto !important;}${wrapperSelector}{display:block !important;}${linkSelector}{display:inline-block !important;}${mediaSelector}{width:auto !important;flex:0 1 auto !important;height:auto !important;object-fit:fill !important;}`;
+  }
+  function getGalleryResponsiveFlexCSS(selector, style2, mediaQueries) {
+    if (!isObject2(mediaQueries)) {
+      return "";
+    }
+    return Object.entries(mediaQueries).map(([viewport, mediaQuery]) => {
+      if (typeof mediaQuery !== "string") {
+        return "";
+      }
+      const viewportStyle = getViewportGalleryStyle(style2, viewport);
+      let css = "";
+      if (isValidGalleryColumns(viewportStyle.columns)) {
+        css += getColumnsCSS(selector, viewportStyle.columns);
+      }
+      if (typeof viewportStyle.imageCrop === "boolean") {
+        css += getImageCropCSS(selector, viewportStyle.imageCrop);
+      }
+      return css ? `${mediaQuery}{${css}}` : "";
+    }).join("");
+  }
+
+  // packages/block-library/build-module/gallery/flex-styles.mjs
   var { getResponsiveMediaQueries: getResponsiveMediaQueries2 } = unlock(privateApis);
   var { globalStylesDataKey } = unlock(import_block_editor95.privateApis);
   var GALLERY_BLOCK_NAME = "core/gallery";
@@ -33298,8 +33389,8 @@ ${url}
     }
     return style2.spacing.blockGap;
   }
-  function GalleryGapCustomProperties({ style: style2, clientId }) {
-    const selector = `#block-${clientId}`;
+  function GalleryFlexStyles({ style: style2, clientId }) {
+    const selector = `.wp-block-gallery-${clientId}`;
     const [viewportSettings] = (0, import_block_editor95.useSettings)("viewport");
     const globalStyles = (0, import_data37.useSelect)(
       (select10) => select10(import_block_editor95.store).getSettings()?.[globalStylesDataKey],
@@ -33309,8 +33400,9 @@ ${url}
     const styleBlockGap = getBlockGapValue(style2);
     const globalGalleryBlockGap = globalGalleryStyles?.spacing?.blockGap ?? FALLBACK_VALUE;
     const blockGap = styleBlockGap === void 0 ? globalGalleryBlockGap : styleBlockGap;
-    let gap = getGalleryGapCustomPropertyStyle(selector, blockGap);
-    Object.entries(getResponsiveMediaQueries2(viewportSettings)).forEach(
+    let css = getGalleryGapCustomPropertyStyle(selector, blockGap);
+    const responsiveMediaQueries = getResponsiveMediaQueries2(viewportSettings);
+    Object.entries(responsiveMediaQueries).forEach(
       ([viewport, mediaQuery]) => {
         const styleViewportBlockGap = getBlockGapValue(
           style2?.[viewport]
@@ -33320,13 +33412,18 @@ ${url}
         if (viewportBlockGap === void 0 || viewportBlockGap === null) {
           return;
         }
-        gap += `${mediaQuery}{${getGalleryGapCustomPropertyStyle(
+        css += `${mediaQuery}{${getGalleryGapCustomPropertyStyle(
           selector,
           viewportBlockGap
         )}}`;
       }
     );
-    (0, import_block_editor95.useStyleOverride)({ css: gap });
+    css += getGalleryResponsiveFlexCSS(
+      selector,
+      style2,
+      responsiveMediaQueries
+    );
+    (0, import_block_editor95.useStyleOverride)({ css });
     return null;
   }
 
@@ -33814,7 +33911,6 @@ ${url}
 
   // packages/block-library/build-module/gallery/edit.mjs
   var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
-  var MAX_COLUMNS = 8;
   var LINK_OPTIONS = [
     {
       icon: custom_link_default,
@@ -33929,14 +34025,21 @@ ${url}
         setAttributes({ layout: nextLayout });
       }
     }, [layout, setAttributes, __unstableMarkNextChangeAsNotPersistent]);
-    const { getBlock, getSettings: getSettings2, innerBlockImages, multiGallerySelection } = (0, import_data39.useSelect)(
+    const {
+      getBlock,
+      getSettings: getSettings2,
+      innerBlockImages,
+      multiGallerySelection,
+      selectedStyleState
+    } = (0, import_data39.useSelect)(
       (select10) => {
         const {
           getBlockName,
           getMultiSelectedBlockClientIds,
           getSettings: _getSettings,
-          getBlock: _getBlock
-        } = select10(import_block_editor98.store);
+          getBlock: _getBlock,
+          getSelectedBlockStyleState
+        } = unlock(select10(import_block_editor98.store));
         const multiSelectedClientIds = getMultiSelectedBlockClientIds();
         return {
           getBlock: _getBlock,
@@ -33944,11 +34047,23 @@ ${url}
           innerBlockImages: _getBlock(clientId)?.innerBlocks ?? EMPTY_ARRAY4,
           multiGallerySelection: multiSelectedClientIds.length && multiSelectedClientIds.every(
             (_clientId) => getBlockName(_clientId) === "core/gallery"
-          )
+          ),
+          selectedStyleState: getSelectedBlockStyleState(clientId)
         };
       },
       [clientId]
     );
+    const isViewportStyleState = selectedStyleState?.viewport && selectedStyleState.viewport !== "default";
+    const viewportStyle = isViewportStyleState ? getViewportGalleryStyle(
+      attributes2.style,
+      selectedStyleState.viewport
+    ) : {};
+    const baseColumns = isValidGalleryColumns(columns) ? columns : void 0;
+    const baseImageCrop = typeof imageCrop === "boolean" ? imageCrop : true;
+    const hasViewportColumns = isViewportStyleState && Object.hasOwn(viewportStyle, "columns") && isValidGalleryColumns(viewportStyle.columns);
+    const hasViewportImageCrop = isViewportStyleState && Object.hasOwn(viewportStyle, "imageCrop") && typeof viewportStyle.imageCrop === "boolean";
+    const activeColumns = hasViewportColumns ? viewportStyle.columns : baseColumns;
+    const activeImageCrop = hasViewportImageCrop ? viewportStyle.imageCrop : baseImageCrop;
     const images = (0, import_element60.useMemo)(
       () => innerBlockImages?.map((block) => ({
         clientId: block.clientId,
@@ -34149,11 +34264,28 @@ ${url}
         }
       );
     }
+    function setGalleryFlexSettings(settings121) {
+      if (!isViewportStyleState) {
+        setAttributes(settings121);
+        return;
+      }
+      setAttributes({
+        style: getUpdatedGalleryStyle({
+          style: attributes2.style,
+          viewport: selectedStyleState.viewport,
+          baseSettings: {
+            columns: baseColumns,
+            imageCrop: baseImageCrop
+          },
+          settings: settings121
+        })
+      });
+    }
     function setColumnsNumber(value) {
-      setAttributes({ columns: value });
+      setGalleryFlexSettings({ columns: value });
     }
     function toggleImageCrop() {
-      setAttributes({ imageCrop: !imageCrop });
+      setGalleryFlexSettings({ imageCrop: !activeImageCrop });
     }
     function toggleRandomOrder() {
       setAttributes({ randomOrder: !randomOrder });
@@ -34256,6 +34388,7 @@ ${url}
       className: clsx_default(
         className,
         "has-nested-images",
+        `wp-block-gallery-${clientId}`,
         // In dynamic mode there are no inner blocks and the gallery isn't
         // rendered through the `Gallery` component, so the classes that
         // component normally composes onto the `<figure>` (see `gallery.jsx`)
@@ -34323,196 +34456,211 @@ ${url}
     }
     const hasLinkTo = linkTo && linkTo !== "none";
     return /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)(import_jsx_runtime301.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)(import_block_editor98.InspectorControls, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-          GallerySourcePanel,
-          {
-            dynamic,
-            dropdownMenuProps,
-            hasImages
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)(
-          import_components45.__experimentalToolsPanel,
-          {
-            label: (0, import_i18n85.__)("Settings"),
-            resetAll: () => {
-              setAttributes({
-                navigationButtonType: "icon",
-                randomOrder: false,
-                ...isFlexLayout && {
-                  columns: void 0,
-                  imageCrop: true
-                }
-              });
-              setAspectRatio("auto");
-              if (sizeSlug !== DEFAULT_MEDIA_SIZE_SLUG2) {
-                updateImagesSize(DEFAULT_MEDIA_SIZE_SLUG2);
+      /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)(
+        import_block_editor98.InspectorControls,
+        {
+          group: isViewportStyleState && isFlexLayout ? "viewport" : "default",
+          children: [
+            !isViewportStyleState && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+              GallerySourcePanel,
+              {
+                dynamic,
+                dropdownMenuProps,
+                hasImages
               }
-              if (linkTarget) {
-                toggleOpenInNewTab(false);
-              }
-            },
-            dropdownMenuProps,
-            children: [
-              isFlexLayout && displayedImageCount > 1 && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                import_components45.__experimentalToolsPanelItem,
-                {
-                  isShownByDefault: true,
-                  label: (0, import_i18n85.__)("Columns"),
-                  hasValue: () => !!columns && columns !== displayedImageCount,
-                  onDeselect: () => setColumnsNumber(void 0),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                    import_components45.RangeControl,
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)(
+              import_components45.__experimentalToolsPanel,
+              {
+                label: (0, import_i18n85.__)("Settings"),
+                resetAll: () => {
+                  if (isViewportStyleState) {
+                    setGalleryFlexSettings({
+                      columns: void 0,
+                      imageCrop: void 0
+                    });
+                    return;
+                  }
+                  setAttributes({
+                    navigationButtonType: "icon",
+                    randomOrder: false,
+                    ...isFlexLayout && {
+                      columns: void 0,
+                      imageCrop: true
+                    }
+                  });
+                  setAspectRatio("auto");
+                  if (sizeSlug !== DEFAULT_MEDIA_SIZE_SLUG2) {
+                    updateImagesSize(DEFAULT_MEDIA_SIZE_SLUG2);
+                  }
+                  if (linkTarget) {
+                    toggleOpenInNewTab(false);
+                  }
+                },
+                dropdownMenuProps,
+                children: [
+                  isFlexLayout && displayedImageCount > 1 && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                    import_components45.__experimentalToolsPanelItem,
                     {
+                      isShownByDefault: true,
                       label: (0, import_i18n85.__)("Columns"),
-                      value: columns ? columns : defaultColumnsNumber(
-                        displayedImageCount
-                      ),
-                      onChange: setColumnsNumber,
-                      min: 1,
-                      max: Math.min(
-                        MAX_COLUMNS,
-                        displayedImageCount
-                      ),
-                      required: true
+                      hasValue: () => isViewportStyleState ? hasViewportColumns : !!activeColumns && activeColumns !== displayedImageCount,
+                      onDeselect: () => setColumnsNumber(void 0),
+                      children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                        import_components45.RangeControl,
+                        {
+                          label: (0, import_i18n85.__)("Columns"),
+                          value: activeColumns ? activeColumns : defaultColumnsNumber(
+                            displayedImageCount
+                          ),
+                          onChange: setColumnsNumber,
+                          min: 1,
+                          max: Math.min(
+                            MAX_COLUMNS,
+                            displayedImageCount
+                          ),
+                          required: true
+                        }
+                      )
                     }
-                  )
-                }
-              ),
-              imageSizeOptions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                import_components45.__experimentalToolsPanelItem,
-                {
-                  isShownByDefault: true,
-                  label: (0, import_i18n85.__)("Resolution"),
-                  hasValue: () => sizeSlug !== DEFAULT_MEDIA_SIZE_SLUG2,
-                  onDeselect: () => updateImagesSize(DEFAULT_MEDIA_SIZE_SLUG2),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                    import_components45.SelectControl,
+                  ),
+                  !isViewportStyleState && imageSizeOptions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                    import_components45.__experimentalToolsPanelItem,
                     {
+                      isShownByDefault: true,
                       label: (0, import_i18n85.__)("Resolution"),
-                      help: (0, import_i18n85.__)(
-                        "Select the size of the source images."
-                      ),
-                      value: sizeSlug,
-                      options: imageSizeOptions,
-                      onChange: updateImagesSize,
-                      hideCancelButton: true
+                      hasValue: () => sizeSlug !== DEFAULT_MEDIA_SIZE_SLUG2,
+                      onDeselect: () => updateImagesSize(DEFAULT_MEDIA_SIZE_SLUG2),
+                      children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                        import_components45.SelectControl,
+                        {
+                          label: (0, import_i18n85.__)("Resolution"),
+                          help: (0, import_i18n85.__)(
+                            "Select the size of the source images."
+                          ),
+                          value: sizeSlug,
+                          options: imageSizeOptions,
+                          onChange: updateImagesSize,
+                          hideCancelButton: true
+                        }
+                      )
                     }
-                  )
-                }
-              ),
-              isFlexLayout && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                import_components45.__experimentalToolsPanelItem,
-                {
-                  isShownByDefault: true,
-                  label: (0, import_i18n85.__)("Crop images to fit"),
-                  hasValue: () => !imageCrop,
-                  onDeselect: () => setAttributes({ imageCrop: true }),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                    import_components45.ToggleControl,
+                  ),
+                  isFlexLayout && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                    import_components45.__experimentalToolsPanelItem,
                     {
+                      isShownByDefault: true,
                       label: (0, import_i18n85.__)("Crop images to fit"),
-                      checked: !!imageCrop,
-                      onChange: toggleImageCrop
+                      hasValue: () => isViewportStyleState ? hasViewportImageCrop : !activeImageCrop,
+                      onDeselect: () => setGalleryFlexSettings({
+                        imageCrop: isViewportStyleState ? void 0 : true
+                      }),
+                      children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                        import_components45.ToggleControl,
+                        {
+                          label: (0, import_i18n85.__)("Crop images to fit"),
+                          checked: activeImageCrop,
+                          onChange: toggleImageCrop
+                        }
+                      )
                     }
-                  )
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                import_components45.__experimentalToolsPanelItem,
-                {
-                  isShownByDefault: true,
-                  label: (0, import_i18n85.__)("Randomize order"),
-                  hasValue: () => !!randomOrder,
-                  onDeselect: () => setAttributes({ randomOrder: false }),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                    import_components45.ToggleControl,
+                  ),
+                  !isViewportStyleState && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                    import_components45.__experimentalToolsPanelItem,
                     {
+                      isShownByDefault: true,
                       label: (0, import_i18n85.__)("Randomize order"),
-                      checked: !!randomOrder,
-                      onChange: toggleRandomOrder
+                      hasValue: () => !!randomOrder,
+                      onDeselect: () => setAttributes({ randomOrder: false }),
+                      children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                        import_components45.ToggleControl,
+                        {
+                          label: (0, import_i18n85.__)("Randomize order"),
+                          checked: !!randomOrder,
+                          onChange: toggleRandomOrder
+                        }
+                      )
                     }
-                  )
-                }
-              ),
-              hasLinkTo && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                import_components45.__experimentalToolsPanelItem,
-                {
-                  isShownByDefault: true,
-                  label: (0, import_i18n85.__)("Open images in new tab"),
-                  hasValue: () => !!linkTarget,
-                  onDeselect: () => toggleOpenInNewTab(false),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                    import_components45.ToggleControl,
+                  ),
+                  !isViewportStyleState && hasLinkTo && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                    import_components45.__experimentalToolsPanelItem,
                     {
+                      isShownByDefault: true,
                       label: (0, import_i18n85.__)("Open images in new tab"),
-                      checked: linkTarget === "_blank",
-                      onChange: toggleOpenInNewTab
+                      hasValue: () => !!linkTarget,
+                      onDeselect: () => toggleOpenInNewTab(false),
+                      children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                        import_components45.ToggleControl,
+                        {
+                          label: (0, import_i18n85.__)("Open images in new tab"),
+                          checked: linkTarget === "_blank",
+                          onChange: toggleOpenInNewTab
+                        }
+                      )
                     }
-                  )
-                }
-              ),
-              aspectRatioOptions.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                import_components45.__experimentalToolsPanelItem,
-                {
-                  hasValue: () => !!aspectRatio && aspectRatio !== "auto",
-                  label: (0, import_i18n85.__)("Aspect ratio"),
-                  onDeselect: () => setAspectRatio("auto"),
-                  isShownByDefault: true,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                    import_components45.SelectControl,
+                  ),
+                  !isViewportStyleState && aspectRatioOptions.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                    import_components45.__experimentalToolsPanelItem,
                     {
+                      hasValue: () => !!aspectRatio && aspectRatio !== "auto",
                       label: (0, import_i18n85.__)("Aspect ratio"),
-                      help: (0, import_i18n85.__)(
-                        "Set a consistent aspect ratio for all images in the gallery."
-                      ),
-                      value: aspectRatio,
-                      options: aspectRatioOptions,
-                      onChange: setAspectRatio
+                      onDeselect: () => setAspectRatio("auto"),
+                      isShownByDefault: true,
+                      children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                        import_components45.SelectControl,
+                        {
+                          label: (0, import_i18n85.__)("Aspect ratio"),
+                          help: (0, import_i18n85.__)(
+                            "Set a consistent aspect ratio for all images in the gallery."
+                          ),
+                          value: aspectRatio,
+                          options: aspectRatioOptions,
+                          onChange: setAspectRatio
+                        }
+                      )
                     }
-                  )
-                }
-              ),
-              lightboxSetting?.allowEditing && hasLightboxImages && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                import_components45.__experimentalToolsPanelItem,
-                {
-                  label: (0, import_i18n85.__)("Navigation button type"),
-                  isShownByDefault: true,
-                  hasValue: () => navigationButtonType !== "icon",
-                  onDeselect: () => setAttributes({
-                    navigationButtonType: "icon"
-                  }),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                    import_components45.__experimentalToggleGroupControl,
+                  ),
+                  !isViewportStyleState && lightboxSetting?.allowEditing && hasLightboxImages && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                    import_components45.__experimentalToolsPanelItem,
                     {
                       label: (0, import_i18n85.__)("Navigation button type"),
-                      value: navigationButtonType,
-                      onChange: (value) => setAttributes({
-                        navigationButtonType: value
+                      isShownByDefault: true,
+                      hasValue: () => navigationButtonType !== "icon",
+                      onDeselect: () => setAttributes({
+                        navigationButtonType: "icon"
                       }),
-                      isBlock: true,
-                      help: (0, import_i18n85.__)(
-                        "Adjust the appearance of buttons in the lightbox."
-                      ),
-                      children: NAVIGATION_BUTTON_TYPE_OPTIONS.map(
-                        (option) => /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                          import_components45.__experimentalToggleGroupControlOption,
-                          {
-                            value: option.value,
-                            label: option.label
-                          },
-                          option.value
-                        )
+                      children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                        import_components45.__experimentalToggleGroupControl,
+                        {
+                          label: (0, import_i18n85.__)("Navigation button type"),
+                          value: navigationButtonType,
+                          onChange: (value) => setAttributes({
+                            navigationButtonType: value
+                          }),
+                          isBlock: true,
+                          help: (0, import_i18n85.__)(
+                            "Adjust the appearance of buttons in the lightbox."
+                          ),
+                          children: NAVIGATION_BUTTON_TYPE_OPTIONS.map(
+                            (option) => /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+                              import_components45.__experimentalToggleGroupControlOption,
+                              {
+                                value: option.value,
+                                label: option.label
+                              },
+                              option.value
+                            )
+                          )
+                        }
                       )
                     }
                   )
-                }
-              )
-            ]
-          }
-        )
-      ] }),
+                ]
+              }
+            )
+          ]
+        }
+      ),
       /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(import_block_editor98.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(import_components45.ToolbarDropdownMenu, { icon: link_default, label: (0, import_i18n85.__)("Link"), children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(import_components45.MenuGroup, { children: linkOptions.map((linkItem) => {
         const isOptionSelected = linkTo === linkItem.value;
         return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
@@ -34553,7 +34701,7 @@ ${url}
           }
         ) }),
         isFlexLayout && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-          GalleryGapCustomProperties,
+          GalleryFlexStyles,
           {
             style: attributes2.style,
             clientId
@@ -71406,7 +71554,7 @@ ${text}
   }
 
   // packages/block-library/build-module/block/deprecated.mjs
-  var isObject2 = (obj) => typeof obj === "object" && !Array.isArray(obj) && obj !== null;
+  var isObject3 = (obj) => typeof obj === "object" && !Array.isArray(obj) && obj !== null;
   var v219 = {
     attributes: {
       ref: {
@@ -71429,7 +71577,7 @@ ${text}
     // the likelihood, it doesn't solve it completely.
     isEligible({ content }) {
       return !!content && Object.keys(content).every(
-        (contentKey) => content[contentKey].values && isObject2(content[contentKey].values)
+        (contentKey) => content[contentKey].values && isObject3(content[contentKey].values)
       );
     },
     /*
