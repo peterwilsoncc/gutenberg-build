@@ -44590,6 +44590,7 @@ ${text}
       getPreviousBlockClientId,
       getNextBlockClientId,
       getBlockOrder,
+      getBlockIndex,
       getBlockRootClientId,
       getBlockName,
       getBlock
@@ -44625,6 +44626,13 @@ ${text}
                 clientIdB,
                 clientIdA
               );
+            } else if (getParentListItemId(clientIdB) === clientIdA) {
+              moveBlocksToPosition(
+                getBlockOrder(nestedListClientId),
+                nestedListClientId,
+                getBlockRootClientId(clientIdB),
+                getBlockIndex(clientIdB) + 1
+              );
             } else {
               moveBlocksToPosition(
                 getBlockOrder(nestedListClientId),
@@ -44633,7 +44641,11 @@ ${text}
               );
             }
           }
+          const listId = getBlockRootClientId(clientIdB);
           mergeBlocks(clientIdA, clientIdB);
+          if (!getBlockOrder(listId).length) {
+            removeBlock(listId, false);
+          }
         });
       }
       if (forward) {
@@ -44683,20 +44695,19 @@ ${text}
               }
             }
           }
-        } else if (getParentListItemId(nextBlockClientId)) {
-          outdentListItem(nextBlockClientId);
         } else {
           mergeWithNested(clientId, nextBlockClientId);
         }
       } else {
-        if (getParentListItemId(clientId)) {
-          outdentListItem(clientId);
-          return;
-        }
         const previousBlockClientId = getPreviousBlockClientId(clientId);
         if (previousBlockClientId) {
           const trailingId = getTrailingId(previousBlockClientId);
           mergeWithNested(trailingId, clientId);
+          return;
+        }
+        const parentListItemId = getParentListItemId(clientId);
+        if (parentListItemId) {
+          mergeWithNested(parentListItemId, clientId);
           return;
         }
         const blockOrder = getBlockOrder(clientId);
