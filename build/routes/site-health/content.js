@@ -44618,6 +44618,7 @@ function filterSortAndPaginate(data, view, fields) {
 var import_dom28 = __toESM(require_dom());
 var import_element138 = __toESM(require_element());
 var import_i18n57 = __toESM(require_i18n());
+import { useNavigate, useSearch } from "@wordpress/route";
 var import_jsx_runtime195 = __toESM(require_jsx_runtime());
 var ASYNC_TEST_PATHS = [
   "/wp-site-health/v1/tests/background-updates",
@@ -44652,6 +44653,14 @@ var STATUS_ELEMENTS = STATUSES.map((value) => ({
 }));
 function isHealthCheckStatus(value) {
   return typeof value === "string" && STATUSES.includes(value);
+}
+function statusesFromSearch(value) {
+  if (typeof value !== "string") {
+    return [];
+  }
+  return Array.from(
+    new Set(value.split(",").filter(isHealthCheckStatus))
+  );
 }
 function descriptionToLines(html) {
   return html.split(/<\/(?:p|li)>/i).map((chunk2) => (0, import_dom28.__unstableStripHTML)(chunk2).replace(/\s+/g, " ").trim()).filter((line) => line !== "");
@@ -44692,11 +44701,57 @@ var DEFAULT_VIEW = {
   fields: ["status", "category"],
   sort: { field: "status", direction: "asc" }
 };
+function statusesFromView(view) {
+  const filter = view.filters?.find(({ field }) => field === "status");
+  if (!filter || !Array.isArray(filter.value)) {
+    return [];
+  }
+  return filter.value.filter(isHealthCheckStatus);
+}
+function withStatuses(view, statuses) {
+  const filters = (view.filters ?? []).filter(
+    ({ field }) => field !== "status"
+  );
+  if (statuses.length > 0) {
+    filters.push({ field: "status", operator: "isAny", value: statuses });
+  }
+  return { ...view, filters };
+}
 function SiteHealthPage() {
+  const search = useSearch({ from: "/site-health" });
+  const navigate = useNavigate();
+  const statuses = (0, import_element138.useMemo)(
+    () => statusesFromSearch(search.status),
+    [search.status]
+  );
   const [checks, setChecks] = (0, import_element138.useState)(null);
   const [unavailable, setUnavailable] = (0, import_element138.useState)(0);
   const [errorMessage, setErrorMessage] = (0, import_element138.useState)(null);
-  const [view, setView] = (0, import_element138.useState)(DEFAULT_VIEW);
+  const [view, setView] = (0, import_element138.useState)(
+    () => withStatuses(DEFAULT_VIEW, statuses)
+  );
+  (0, import_element138.useEffect)(() => {
+    setView(
+      (current) => statusesFromView(current).join(",") === statuses.join(",") ? current : withStatuses(current, statuses)
+    );
+  }, [statuses]);
+  const onChangeView = (0, import_element138.useCallback)(
+    (next) => {
+      setView(next);
+      const nextStatuses = statusesFromView(next);
+      if (nextStatuses.join(",") === statuses.join(",")) {
+        return;
+      }
+      navigate({
+        search: (previous) => ({
+          ...previous,
+          status: nextStatuses.length > 0 ? nextStatuses.join(",") : void 0
+        }),
+        replace: true
+      });
+    },
+    [navigate, statuses]
+  );
   (0, import_element138.useEffect)(() => {
     let cancelled = false;
     void Promise.allSettled(
@@ -44747,6 +44802,7 @@ function SiteHealthPage() {
         id: "status",
         label: (0, import_i18n57.__)("Status"),
         elements: STATUS_ELEMENTS,
+        filterBy: { operators: ["isAny"] },
         render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(Badge, { intent: STATUS_INTENTS[item.status], children: STATUS_LABELS[item.status] }),
         sort: (a2, b2, direction) => {
           const delta = STATUS_ORDER[a2] - STATUS_ORDER[b2];
@@ -44838,7 +44894,7 @@ function SiteHealthPage() {
             data,
             fields,
             view,
-            onChangeView: setView,
+            onChangeView,
             isLoading,
             defaultLayouts: { table: {} },
             paginationInfo,

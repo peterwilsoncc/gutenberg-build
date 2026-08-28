@@ -73763,6 +73763,22 @@ import { Link as Link3 } from "@wordpress/route";
 import { WidgetHostProvider } from "@wordpress/widget-primitives";
 
 // routes/dashboard/widget-host/match-dashboard-href.ts
+function isPlainQuery(query) {
+  const seen = /* @__PURE__ */ new Set();
+  for (const [key2, value] of new URLSearchParams(query)) {
+    let isJson = true;
+    try {
+      JSON.parse(value);
+    } catch {
+      isJson = false;
+    }
+    if (seen.has(key2) || isJson) {
+      return false;
+    }
+    seen.add(key2);
+  }
+  return true;
+}
 function matchDashboardHref(href, base = window.location.href) {
   let url;
   let baseUrl;
@@ -73787,7 +73803,12 @@ function matchDashboardHref(href, base = window.location.href) {
     return null;
   }
   const path = url.searchParams.get("p") || "/";
-  if (!/^\/(?!\/)/.test(path) || path.includes("?") || path.includes("#")) {
+  const queryStart = path.indexOf("?");
+  const pathname = queryStart === -1 ? path : path.slice(0, queryStart);
+  if (!/^\/(?!\/)/.test(pathname) || path.includes("#")) {
+    return null;
+  }
+  if (queryStart !== -1 && !isPlainQuery(path.slice(queryStart + 1))) {
     return null;
   }
   return path;
@@ -73795,8 +73816,20 @@ function matchDashboardHref(href, base = window.location.href) {
 
 // routes/dashboard/widget-host/dashboard-widget-host-provider.tsx
 var import_jsx_runtime352 = __toESM(require_jsx_runtime());
+function toRouteTarget(path) {
+  const queryStart = path.indexOf("?");
+  if (queryStart === -1) {
+    return { to: path };
+  }
+  return {
+    to: path.slice(0, queryStart),
+    search: Object.fromEntries(
+      new URLSearchParams(path.slice(queryStart + 1))
+    )
+  };
+}
 var DashboardRouteLink = (0, import_element265.forwardRef)(function DashboardRouteLink2({ path, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(Link3, { ref, to: path, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(Link3, { ref, ...toRouteTarget(path), ...props });
 });
 function DashboardWidgetHostProvider({
   children
