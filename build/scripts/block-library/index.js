@@ -67946,7 +67946,7 @@ ${text}
               import_components127.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n210.__)("Exclude"),
-                hasValue: () => excludeCurrent !== null,
+                hasValue: () => excludeCurrent !== void 0 && excludeCurrent !== null,
                 onDeselect: () => setQuery({ excludeCurrent: null }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(
                   import_components127.ToggleControl,
@@ -68230,7 +68230,7 @@ ${text}
       } else if (!query.perPage && postsPerPage) {
         newQuery.perPage = postsPerPage;
       }
-      if (!shouldExcludeCurrentPost && query.excludeCurrent !== null) {
+      if (!shouldExcludeCurrentPost && query.excludeCurrent !== void 0 && query.excludeCurrent !== null) {
         newQuery.excludeCurrent = null;
       }
       if (!!Object.keys(newQuery).length) {
