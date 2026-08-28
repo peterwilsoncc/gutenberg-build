@@ -636,7 +636,7 @@ _::-webkit-full-page-media, _:future, :root [data-has-multi-selection=true] .blo
   border: none;
 }
 .is-layout-constrained.block-editor-block-list__block:not(.is-selected) > .block-list-appender:only-child:has(.block-editor-button-block-appender).is-drag-over .block-editor-inserter, .is-layout-flow.block-editor-block-list__block:not(.is-selected) > .block-list-appender:only-child:has(.block-editor-button-block-appender).is-drag-over .block-editor-inserter, .block-editor-block-list__block:not(.is-selected) > .is-layout-constrained.wp-block-group__inner-container > .block-list-appender:only-child:has(.block-editor-button-block-appender).is-drag-over .block-editor-inserter, .block-editor-block-list__block:not(.is-selected) > .is-layout-flow.wp-block-group__inner-container > .block-list-appender:only-child:has(.block-editor-button-block-appender).is-drag-over .block-editor-inserter {
-  visibility: visible;
+  opacity: 1;
 }
 .block-editor-block-list__block:not(.is-selected) > .block-editor-block-list__block > .block-list-appender:only-child:has(.block-editor-button-block-appender)::after {
   border: none;
