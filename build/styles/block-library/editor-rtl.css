@@ -2214,6 +2214,10 @@ html[dir=rtl] .has-drop-cap:not(:focus)::first-letter {
   border: 1px dashed;
 }
 
+.wp-block-site-title.has-fit-text > * {
+  white-space: inherit !important;
+}
+
 .wp-block-social-links .wp-social-link {
   line-height: 0;
 }

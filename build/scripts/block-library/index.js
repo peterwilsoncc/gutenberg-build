@@ -74307,6 +74307,7 @@ ${text}
         __experimentalFontWeight: true,
         __experimentalLetterSpacing: true,
         __experimentalWritingMode: true,
+        fitText: true,
         __experimentalDefaultControls: {
           fontSize: true
         }
