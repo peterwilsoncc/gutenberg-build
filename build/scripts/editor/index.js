@@ -97118,9 +97118,13 @@ If there's a particular need for this, please submit a feature request at https:
     const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
     return (0, import_data242.useSelect)(
       (select9) => {
-        return unlock8(select9(import_core_data130.store)).getViewConfig(kind, name2, {
-          fields: fieldsKey
-        });
+        return unlock8(select9(import_core_data130.store)).getViewConfig(
+          kind,
+          name2,
+          fieldsKey ? {
+            fields: fieldsKey
+          } : void 0
+        );
       },
       [kind, name2, fieldsKey]
     );
