@@ -84364,8 +84364,10 @@ var wp;
         value: (0, import_rich_text7.insert)(value, START_OF_SELECTED_AREA, 0, start2)
       });
       const block = transformation.transform(content);
-      selectionChange2(...findSelection([block]));
-      onReplace([block]);
+      registry.batch(() => {
+        selectionChange2(...findSelection([block]));
+        onReplace([block]);
+      });
       registry.dispatch(store).__unstableMarkAutomaticChange();
       return true;
     }
