@@ -52761,11 +52761,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const isRegistered = menuItems?.[menuGroup]?.[label] !== void 0;
     const isValueSet = hasValue();
     (0, import_element189.useEffect)(() => {
-      if (!isShownByDefault && !isValueSet) {
+      if (!hasMatchingPanel || !isShownByDefault && !isValueSet) {
         return;
       }
       flagItemCustomization(isValueSet, label, menuGroup);
-    }, [isValueSet, menuGroup, label, flagItemCustomization, isShownByDefault]);
+    }, [hasMatchingPanel, isValueSet, menuGroup, label, flagItemCustomization, isShownByDefault]);
     (0, import_element189.useEffect)(() => {
       if (!isRegistered || isResetting || !hasMatchingPanel) {
         return;
