@@ -72264,9 +72264,13 @@ If there's a particular need for this, please submit a feature request at https:
     const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
     return (0, import_data63.useSelect)(
       (select4) => {
-        return unlock6(select4(import_core_data40.store)).getViewConfig(kind, name2, {
-          fields: fieldsKey
-        });
+        return unlock6(select4(import_core_data40.store)).getViewConfig(
+          kind,
+          name2,
+          fieldsKey ? {
+            fields: fieldsKey
+          } : void 0
+        );
       },
       [kind, name2, fieldsKey]
     );

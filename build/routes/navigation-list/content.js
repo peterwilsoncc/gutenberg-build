@@ -28414,9 +28414,13 @@ function useViewConfig({
   const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
   return (0, import_data3.useSelect)(
     (select2) => {
-      return unlock2(select2(import_core_data.store)).getViewConfig(kind, name, {
-        fields: fieldsKey
-      });
+      return unlock2(select2(import_core_data.store)).getViewConfig(
+        kind,
+        name,
+        fieldsKey ? {
+          fields: fieldsKey
+        } : void 0
+      );
     },
     [kind, name, fieldsKey]
   );

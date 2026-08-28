@@ -114535,9 +114535,13 @@ ${content}
     const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
     return (0, import_data242.useSelect)(
       (select9) => {
-        return unlock7(select9(import_core_data134.store)).getViewConfig(kind, name2, {
-          fields: fieldsKey
-        });
+        return unlock7(select9(import_core_data134.store)).getViewConfig(
+          kind,
+          name2,
+          fieldsKey ? {
+            fields: fieldsKey
+          } : void 0
+        );
       },
       [kind, name2, fieldsKey]
     );

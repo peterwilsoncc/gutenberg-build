@@ -1251,9 +1251,13 @@ function useViewConfig({
   const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
   return (0, import_data3.useSelect)(
     (select2) => {
-      return unlock(select2(import_core_data.store)).getViewConfig(kind, name, {
-        fields: fieldsKey
-      });
+      return unlock(select2(import_core_data.store)).getViewConfig(
+        kind,
+        name,
+        fieldsKey ? {
+          fields: fieldsKey
+        } : void 0
+      );
     },
     [kind, name, fieldsKey]
   );
