@@ -3095,7 +3095,12 @@ return array(
 			'layout' => array(
 				'allowSwitching' => false,
 				'allowInheriting' => false,
-				'allowEditing' => false,
+				'allowEditing' => true,
+				'allowOrientation' => false,
+				'allowJustification' => false,
+				'allowVerticalAlignment' => false,
+				'allowWrap' => false,
+				'allowSizingOnChildren' => true,
 				'default' => array(
 					'type' => 'flex'
 				)

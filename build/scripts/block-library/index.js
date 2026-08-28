@@ -32445,6 +32445,13 @@ ${url}
   function defaultColumnsNumber(imageCount) {
     return imageCount ? Math.min(3, imageCount) : 3;
   }
+  function isObject(value) {
+    return !!value && typeof value === "object" && !Array.isArray(value);
+  }
+  function isGalleryFlexLayout(layout) {
+    const layoutType = isObject(layout) ? layout.type : void 0;
+    return typeof layoutType !== "string" || layoutType === "" || layoutType === "flex";
+  }
   var pickRelevantMediaFiles = (image, sizeSlug = "large") => {
     const imageProps = Object.fromEntries(
       Object.entries(image ?? {}).filter(
@@ -32568,7 +32575,8 @@ ${url}
       isContentLocked,
       multiGallerySelection
     } = props;
-    const { align, columns, imageCrop } = attributes2;
+    const { align, columns, imageCrop, layout } = attributes2;
+    const isFlexLayout = isGalleryFlexLayout(layout);
     return /* @__PURE__ */ (0, import_jsx_runtime299.jsxs)(
       "figure",
       {
@@ -32579,9 +32587,9 @@ ${url}
           "blocks-gallery-grid",
           {
             [`align${align}`]: align,
-            [`columns-${columns}`]: columns !== void 0,
-            [`columns-default`]: columns === void 0,
-            "is-cropped": imageCrop
+            [`columns-${columns}`]: isFlexLayout && columns !== void 0,
+            [`columns-default`]: isFlexLayout && columns === void 0,
+            "is-cropped": isFlexLayout && imageCrop
           }
         ),
         children: [
@@ -33887,8 +33895,11 @@ ${url}
       linkTarget,
       linkTo,
       sizeSlug,
-      aspectRatio
+      aspectRatio,
+      layout
     } = attributes2;
+    const isFlexLayout = isGalleryFlexLayout(layout);
+    const previousLayoutRef = (0, import_element60.useRef)(layout);
     const {
       __unstableMarkNextChangeAsNotPersistent,
       replaceInnerBlocks,
@@ -33896,6 +33907,28 @@ ${url}
       selectBlock
     } = (0, import_data39.useDispatch)(import_block_editor98.store);
     const { createSuccessNotice, createErrorNotice } = (0, import_data39.useDispatch)(import_notices6.store);
+    (0, import_element60.useEffect)(() => {
+      const previousLayout = previousLayoutRef.current;
+      previousLayoutRef.current = layout;
+      if (!isObject(previousLayout) || !isObject(layout) || previousLayout.type === layout.type) {
+        return;
+      }
+      const nextLayout = { ...layout };
+      let hasPreservedGridSetting = false;
+      if (!Object.hasOwn(layout, "columnCount") && Number.isInteger(previousLayout.columnCount) && previousLayout.columnCount > 0) {
+        nextLayout.columnCount = previousLayout.columnCount;
+        hasPreservedGridSetting = true;
+      }
+      if (!Object.hasOwn(layout, "minimumColumnWidth") && typeof previousLayout.minimumColumnWidth === "string") {
+        nextLayout.minimumColumnWidth = previousLayout.minimumColumnWidth;
+        hasPreservedGridSetting = true;
+      }
+      if (hasPreservedGridSetting) {
+        previousLayoutRef.current = nextLayout;
+        __unstableMarkNextChangeAsNotPersistent();
+        setAttributes({ layout: nextLayout });
+      }
+    }, [layout, setAttributes, __unstableMarkNextChangeAsNotPersistent]);
     const { getBlock, getSettings: getSettings2, innerBlockImages, multiGallerySelection } = (0, import_data39.useSelect)(
       (select10) => {
         const {
@@ -34233,9 +34266,9 @@ ${url}
           "blocks-gallery-grid",
           {
             [`align${align}`]: align,
-            [`columns-${columns}`]: columns !== void 0,
-            "columns-default": columns === void 0,
-            "is-cropped": imageCrop
+            [`columns-${columns}`]: isFlexLayout && columns !== void 0,
+            "columns-default": isFlexLayout && columns === void 0,
+            "is-cropped": isFlexLayout && imageCrop
           }
         ]
       )
@@ -34306,9 +34339,11 @@ ${url}
             resetAll: () => {
               setAttributes({
                 navigationButtonType: "icon",
-                columns: void 0,
-                imageCrop: true,
-                randomOrder: false
+                randomOrder: false,
+                ...isFlexLayout && {
+                  columns: void 0,
+                  imageCrop: true
+                }
               });
               setAspectRatio("auto");
               if (sizeSlug !== DEFAULT_MEDIA_SIZE_SLUG2) {
@@ -34320,7 +34355,7 @@ ${url}
             },
             dropdownMenuProps,
             children: [
-              displayedImageCount > 1 && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+              isFlexLayout && displayedImageCount > 1 && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
                 import_components45.__experimentalToolsPanelItem,
                 {
                   isShownByDefault: true,
@@ -34367,7 +34402,7 @@ ${url}
                   )
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+              isFlexLayout && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
                 import_components45.__experimentalToolsPanelItem,
                 {
                   isShownByDefault: true,
@@ -34517,7 +34552,7 @@ ${url}
             variant: "toolbar"
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+        isFlexLayout && /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
           GalleryGapCustomProperties,
           {
             style: attributes2.style,
@@ -34711,7 +34746,12 @@ ${url}
       layout: {
         allowSwitching: false,
         allowInheriting: false,
-        allowEditing: false,
+        allowEditing: true,
+        allowOrientation: false,
+        allowJustification: false,
+        allowVerticalAlignment: false,
+        allowWrap: false,
+        allowSizingOnChildren: true,
         default: {
           type: "flex"
         }
@@ -34729,7 +34769,8 @@ ${url}
   var import_block_editor99 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
   function saveWithInnerBlocks({ attributes: attributes2 }) {
-    const { caption, columns, imageCrop, dynamicContent } = attributes2;
+    const { caption, columns, imageCrop, dynamicContent, layout } = attributes2;
+    const isFlexLayout = isGalleryFlexLayout(layout);
     const captionElement = !import_block_editor99.RichText.isEmpty(caption) && /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
       import_block_editor99.RichText.Content,
       {
@@ -34745,9 +34786,9 @@ ${url}
       return captionElement || null;
     }
     const className = clsx_default("has-nested-images", {
-      [`columns-${columns}`]: columns !== void 0,
-      [`columns-default`]: columns === void 0,
-      "is-cropped": imageCrop
+      [`columns-${columns}`]: isFlexLayout && columns !== void 0,
+      [`columns-default`]: isFlexLayout && columns === void 0,
+      "is-cropped": isFlexLayout && imageCrop
     });
     const blockProps = import_block_editor99.useBlockProps.save({ className });
     const innerBlocksProps = import_block_editor99.useInnerBlocksProps.save(blockProps);
@@ -35025,6 +35066,32 @@ ${url}
       // of scope. Revisit adding `'inserter'` in a follow-up as the feature grows
       // beyond the post-attached source.
       scope: []
+    },
+    {
+      name: "gallery-flex",
+      title: (0, import_i18n86.__)("Gallery"),
+      description: (0, import_i18n86.__)("Arrange images in flexible rows."),
+      icon: gallery_default,
+      attributes: {
+        layout: {
+          type: "flex"
+        }
+      },
+      isActive: (blockAttributes8) => isGalleryFlexLayout(blockAttributes8.layout),
+      scope: ["transform"]
+    },
+    {
+      name: "gallery-grid",
+      title: (0, import_i18n86.__)("Gallery Grid"),
+      description: (0, import_i18n86.__)("Arrange images in a grid."),
+      icon: grid_default,
+      attributes: {
+        layout: {
+          type: "grid"
+        }
+      },
+      isActive: (blockAttributes8) => blockAttributes8.layout?.type === "grid",
+      scope: ["transform"]
     }
   ];
   var variations_default9 = variations9;
@@ -71339,7 +71406,7 @@ ${text}
   }
 
   // packages/block-library/build-module/block/deprecated.mjs
-  var isObject = (obj) => typeof obj === "object" && !Array.isArray(obj) && obj !== null;
+  var isObject2 = (obj) => typeof obj === "object" && !Array.isArray(obj) && obj !== null;
   var v219 = {
     attributes: {
       ref: {
@@ -71362,7 +71429,7 @@ ${text}
     // the likelihood, it doesn't solve it completely.
     isEligible({ content }) {
       return !!content && Object.keys(content).every(
-        (contentKey) => content[contentKey].values && isObject(content[contentKey].values)
+        (contentKey) => content[contentKey].values && isObject2(content[contentKey].values)
       );
     },
     /*
