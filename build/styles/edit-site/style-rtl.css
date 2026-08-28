@@ -4470,7 +4470,7 @@ button.font-library__upload-area {
 }
 .edit-site-add-new-template__modal .edit-site-add-new-template__template-button svg,
 .edit-site-add-new-template__modal .edit-site-add-new-template__custom-template-button svg {
-  fill: var(--wp-admin-theme-color);
+  color: var(--wp-admin-theme-color);
 }
 .edit-site-add-new-template__modal .edit-site-add-new-template__custom-template-button .edit-site-add-new-template__template-name {
   flex-grow: 1;

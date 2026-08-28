@@ -2582,11 +2582,17 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
   // packages/icons/build-module/icon/index.mjs
   var import_element = __toESM(require_element(), 1);
   var icon_default = (0, import_element.forwardRef)(
-    ({ icon, size = 24, ...props }, ref) => {
+    ({ icon, size = 24, style, ...props }, ref) => {
+      const intrinsicStyle = icon.props.style;
+      const mergedStyle = intrinsicStyle || style ? { ...intrinsicStyle, ...style } : void 0;
       return (0, import_element.cloneElement)(icon, {
         width: size,
         height: size,
         ...props,
+        // Merge styles so the icon's intrinsic style (e.g. `fill: none` on
+        // stroke-based icons) is preserved unless the consumer overrides
+        // the same property explicitly.
+        ...mergedStyle ? { style: mergedStyle } : {},
         ref
       });
     }

@@ -91,7 +91,10 @@ var pencil_default = /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primiti
 // packages/icons/build-module/library/styles.mjs
 var import_primitives3 = __toESM(require_primitives(), 1);
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
-var styles_default = /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-1.5 0a6.5 6.5 0 0 1-6.5 6.5v-13a6.5 6.5 0 0 1 6.5 6.5Z" }) });
+var styles_default = /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.Path, { d: "M12 4.75C7.99594 4.75 4.75 7.99593 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25L12 4.75Z", fill: "currentColor", stroke: "none" }),
+  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_primitives3.Path, { d: "M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z", strokeLinejoin: "round", vectorEffect: "non-scaling-stroke" })
+] });
 
 // node_modules/clsx/dist/clsx.mjs
 function r(e) {
@@ -689,13 +692,15 @@ var Text = (0, import_element.forwardRef)(function Text2({ variant = "body-md", 
 var import_element2 = __toESM(require_element(), 1);
 var import_primitives4 = __toESM(require_primitives(), 1);
 var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
-var Icon = (0, import_element2.forwardRef)(function Icon2({ icon, size = 24, ...restProps }, ref) {
+var Icon = (0, import_element2.forwardRef)(function Icon2({ icon, size = 24, style, ...restProps }, ref) {
+  const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
   return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
     import_primitives4.SVG,
     {
       ref,
       ...icon.props,
       ...restProps,
+      ...mergedStyle ? { style: mergedStyle } : {},
       width: size,
       height: size
     }

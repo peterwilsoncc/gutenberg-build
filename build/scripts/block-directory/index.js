@@ -9041,11 +9041,17 @@ var wp;
   // packages/icons/build-module/icon/index.mjs
   var import_element11 = __toESM(require_element(), 1);
   var icon_default = (0, import_element11.forwardRef)(
-    ({ icon, size: size4 = 24, ...props }, ref) => {
+    ({ icon, size: size4 = 24, style, ...props }, ref) => {
+      const intrinsicStyle = icon.props.style;
+      const mergedStyle = intrinsicStyle || style ? { ...intrinsicStyle, ...style } : void 0;
       return (0, import_element11.cloneElement)(icon, {
         width: size4,
         height: size4,
         ...props,
+        // Merge styles so the icon's intrinsic style (e.g. `fill: none` on
+        // stroke-based icons) is preserved unless the consumer overrides
+        // the same property explicitly.
+        ...mergedStyle ? { style: mergedStyle } : {},
         ref
       });
     }
@@ -9054,17 +9060,20 @@ var wp;
   // packages/icons/build-module/library/star-empty.mjs
   var import_primitives = __toESM(require_primitives(), 1);
   var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
-  var star_empty_default = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M9.706 8.646a.25.25 0 01-.188.137l-4.626.672a.25.25 0 00-.139.427l3.348 3.262a.25.25 0 01.072.222l-.79 4.607a.25.25 0 00.362.264l4.138-2.176a.25.25 0 01.233 0l4.137 2.175a.25.25 0 00.363-.263l-.79-4.607a.25.25 0 01.072-.222l3.347-3.262a.25.25 0 00-.139-.427l-4.626-.672a.25.25 0 01-.188-.137l-2.069-4.192a.25.25 0 00-.448 0L9.706 8.646zM12 7.39l-.948 1.921a1.75 1.75 0 01-1.317.957l-2.12.308 1.534 1.495c.412.402.6.982.503 1.55l-.362 2.11 1.896-.997a1.75 1.75 0 011.629 0l1.895.997-.362-2.11a1.75 1.75 0 01.504-1.55l1.533-1.495-2.12-.308a1.75 1.75 0 01-1.317-.957L12 7.39z" }) });
+  var star_empty_default = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/icons/build-module/library/star-filled.mjs
   var import_primitives2 = __toESM(require_primitives(), 1);
   var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-  var star_filled_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives2.Path, { d: "M11.776 4.454a.25.25 0 01.448 0l2.069 4.192a.25.25 0 00.188.137l4.626.672a.25.25 0 01.139.426l-3.348 3.263a.25.25 0 00-.072.222l.79 4.607a.25.25 0 01-.362.263l-4.138-2.175a.25.25 0 00-.232 0l-4.138 2.175a.25.25 0 01-.363-.263l.79-4.607a.25.25 0 00-.071-.222L4.754 9.881a.25.25 0 01.139-.426l4.626-.672a.25.25 0 00.188-.137l2.069-4.192z" }) });
+  var star_filled_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives2.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z", fill: "currentColor", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/icons/build-module/library/star-half.mjs
   var import_primitives3 = __toESM(require_primitives(), 1);
   var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
-  var star_half_default = /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives3.Path, { d: "M9.518 8.783a.25.25 0 00.188-.137l2.069-4.192a.25.25 0 01.448 0l2.07 4.192a.25.25 0 00.187.137l4.626.672a.25.25 0 01.139.427l-3.347 3.262a.25.25 0 00-.072.222l.79 4.607a.25.25 0 01-.363.264l-4.137-2.176a.25.25 0 00-.233 0l-4.138 2.175a.25.25 0 01-.362-.263l.79-4.607a.25.25 0 00-.072-.222L4.753 9.882a.25.25 0 01.14-.427l4.625-.672zM12 14.533c.28 0 .559.067.814.2l1.895.997-.362-2.11a1.75 1.75 0 01.504-1.55l1.533-1.495-2.12-.308a1.75 1.75 0 01-1.317-.957L12 7.39v7.143z" }) });
+  var star_half_default = /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives3.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z", vectorEffect: "non-scaling-stroke" }),
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives3.Path, { d: "M11.4653 15.4048C11.7941 15.232 12 14.8912 12 14.5197V5.71576L10.3894 8.97924C10.2437 9.27438 9.96215 9.47895 9.63644 9.52628L6.03497 10.0496L8.64102 12.5899C8.8767 12.8196 8.98425 13.1506 8.92861 13.475L8.31341 17.0619L11.4653 15.4048Z", fill: "currentColor", stroke: "none" })
+  ] });
 
   // packages/ui/build-module/tooltip/index.mjs
   var tooltip_exports = {};

@@ -9033,13 +9033,15 @@ var import_element14 = __toESM(require_element(), 1);
 var import_element13 = __toESM(require_element(), 1);
 var import_primitives = __toESM(require_primitives(), 1);
 var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
-var Icon = (0, import_element13.forwardRef)(function Icon2({ icon, size: size4 = 24, ...restProps }, ref) {
+var Icon = (0, import_element13.forwardRef)(function Icon2({ icon, size: size4 = 24, style, ...restProps }, ref) {
+  const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
   return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
     import_primitives.SVG,
     {
       ref,
       ...icon.props,
       ...restProps,
+      ...mergedStyle ? { style: mergedStyle } : {},
       width: size4,
       height: size4
     }
@@ -9160,7 +9162,7 @@ var Button4 = Object.assign(Button3, {
 // packages/icons/build-module/library/caution.mjs
 var import_primitives2 = __toESM(require_primitives(), 1);
 var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
-var caution_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives2.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm-.75 12v-1.5h1.5V16h-1.5Zm0-8v5h1.5V8h-1.5Z" }) });
+var caution_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives2.Path, { d: "M12 8L12 13M12 14.5L12 16M4.75 12C4.75 7.99593 7.99594 4.75 12 4.75C16.0041 4.75 19.25 7.99594 19.25 12C19.25 16.0041 16.0041 19.25 12 19.25C7.99594 19.25 4.75 16.0041 4.75 12Z", strokeLinejoin: "round", vectorEffect: "non-scaling-stroke" }) });
 
 // packages/icons/build-module/library/close-small.mjs
 var import_primitives3 = __toESM(require_primitives(), 1);
@@ -9175,12 +9177,15 @@ var error_default = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_primiti
 // packages/icons/build-module/library/info.mjs
 var import_primitives5 = __toESM(require_primitives(), 1);
 var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
-var info_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives5.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm.75 4v1.5h-1.5V8h1.5Zm0 8v-5h-1.5v5h1.5Z" }) });
+var info_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives5.Path, { d: "M12 16V11M12 9.5V8M19.25 12C19.25 16.0041 16.0041 19.25 12 19.25C7.99594 19.25 4.75 16.0041 4.75 12C4.75 7.99594 7.99594 4.75 12 4.75C16.0041 4.75 19.25 7.99594 19.25 12Z", strokeLinejoin: "round", vectorEffect: "non-scaling-stroke" }) });
 
 // packages/icons/build-module/library/published.mjs
 var import_primitives6 = __toESM(require_primitives(), 1);
 var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
-var published_default = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives6.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm11.53-1.47-1.06-1.06L11 12.94l-1.47-1.47-1.06 1.06L11 15.06l4.53-4.53Z" }) });
+var published_default = /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+  /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives6.Path, { d: "M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z", strokeLinejoin: "round", vectorEffect: "non-scaling-stroke" }),
+  /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives6.Path, { d: "M9 12L11 14L15 10", vectorEffect: "non-scaling-stroke" })
+] });
 
 // packages/ui/build-module/icon-button/icon-button.mjs
 var import_element22 = __toESM(require_element(), 1);

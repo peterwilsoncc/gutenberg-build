@@ -8558,13 +8558,15 @@ var Text = (0, import_element10.forwardRef)(function Text2({ variant = "body-md"
 var import_element11 = __toESM(require_element(), 1);
 var import_primitives = __toESM(require_primitives(), 1);
 var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
-var Icon = (0, import_element11.forwardRef)(function Icon2({ icon, size: size4 = 24, ...restProps }, ref) {
+var Icon = (0, import_element11.forwardRef)(function Icon2({ icon, size: size4 = 24, style, ...restProps }, ref) {
+  const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
   return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
     import_primitives.SVG,
     {
       ref,
       ...icon.props,
       ...restProps,
+      ...mergedStyle ? { style: mergedStyle } : {},
       width: size4,
       height: size4
     }
@@ -8574,7 +8576,7 @@ var Icon = (0, import_element11.forwardRef)(function Icon2({ icon, size: size4 =
 // packages/icons/build-module/library/caution.mjs
 var import_primitives2 = __toESM(require_primitives(), 1);
 var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-var caution_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives2.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm-.75 12v-1.5h1.5V16h-1.5Zm0-8v5h1.5V8h-1.5Z" }) });
+var caution_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives2.Path, { d: "M12 8L12 13M12 14.5L12 16M4.75 12C4.75 7.99593 7.99594 4.75 12 4.75C16.0041 4.75 19.25 7.99594 19.25 12C19.25 16.0041 16.0041 19.25 12 19.25C7.99594 19.25 4.75 16.0041 4.75 12Z", strokeLinejoin: "round", vectorEffect: "non-scaling-stroke" }) });
 
 // packages/icons/build-module/library/check.mjs
 var import_primitives3 = __toESM(require_primitives(), 1);

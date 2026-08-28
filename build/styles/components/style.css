@@ -3335,7 +3335,7 @@ body.lockscroll {
 }
 .components-tip svg {
   align-self: center;
-  fill: #f0b849;
+  color: #f0b849;
   flex-shrink: 0;
   margin-right: 16px;
 }

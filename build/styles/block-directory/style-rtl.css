@@ -116,11 +116,11 @@
   display: flex;
 }
 .block-directory-block-ratings svg {
-  fill: #1e1e1e;
+  color: #1e1e1e;
   margin-right: -4px;
 }
 .block-directory-block-ratings .block-directory-block-ratings__star-empty {
-  fill: #ccc;
+  color: #ccc;
 }
 
 .block-directory-compact-list {

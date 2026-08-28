@@ -8707,11 +8707,17 @@ var Text = (0, import_element10.forwardRef)(function Text2({ variant = "body-md"
 // packages/icons/build-module/icon/index.mjs
 var import_element11 = __toESM(require_element(), 1);
 var icon_default = (0, import_element11.forwardRef)(
-  ({ icon, size: size4 = 24, ...props }, ref) => {
+  ({ icon, size: size4 = 24, style, ...props }, ref) => {
+    const intrinsicStyle = icon.props.style;
+    const mergedStyle = intrinsicStyle || style ? { ...intrinsicStyle, ...style } : void 0;
     return (0, import_element11.cloneElement)(icon, {
       width: size4,
       height: size4,
       ...props,
+      // Merge styles so the icon's intrinsic style (e.g. `fill: none` on
+      // stroke-based icons) is preserved unless the consumer overrides
+      // the same property explicitly.
+      ...mergedStyle ? { style: mergedStyle } : {},
       ref
     });
   }

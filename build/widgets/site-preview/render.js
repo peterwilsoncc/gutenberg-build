@@ -1185,13 +1185,15 @@ var import_element4 = __toESM(require_element(), 1);
 var import_element3 = __toESM(require_element(), 1);
 var import_primitives2 = __toESM(require_primitives(), 1);
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
-var Icon = (0, import_element3.forwardRef)(function Icon2({ icon, size = 24, ...restProps }, ref) {
+var Icon = (0, import_element3.forwardRef)(function Icon2({ icon, size = 24, style, ...restProps }, ref) {
+  const mergedStyle = icon.props.style || style ? { ...icon.props.style, ...style } : void 0;
   return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
     import_primitives2.SVG,
     {
       ref,
       ...icon.props,
       ...restProps,
+      ...mergedStyle ? { style: mergedStyle } : {},
       width: size,
       height: size
     }

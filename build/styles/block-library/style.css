@@ -1800,6 +1800,9 @@ h6.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]) {
   width: 100%;
   height: 100%;
 }
+:where(.wp-block-icon) svg :where(path, rect, circle, ellipse, line, polygon, polyline) {
+  vector-effect: none;
+}
 
 .wp-block-image > a,
 .wp-block-image > figure > a {

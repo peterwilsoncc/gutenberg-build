@@ -24501,11 +24501,17 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/icon/index.mjs
   var import_element22 = __toESM(require_element(), 1);
   var icon_default2 = (0, import_element22.forwardRef)(
-    ({ icon, size: size4 = 24, ...props }, ref) => {
+    ({ icon, size: size4 = 24, style: style2, ...props }, ref) => {
+      const intrinsicStyle = icon.props.style;
+      const mergedStyle = intrinsicStyle || style2 ? { ...intrinsicStyle, ...style2 } : void 0;
       return (0, import_element22.cloneElement)(icon, {
         width: size4,
         height: size4,
         ...props,
+        // Merge styles so the icon's intrinsic style (e.g. `fill: none` on
+        // stroke-based icons) is preserved unless the consumer overrides
+        // the same property explicitly.
+        ...mergedStyle ? { style: mergedStyle } : {},
         ref
       });
     }
@@ -24524,7 +24530,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/library/caution.mjs
   var import_primitives4 = __toESM(require_primitives(), 1);
   var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
-  var caution_default = /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives4.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm-.75 12v-1.5h1.5V16h-1.5Zm0-8v5h1.5V8h-1.5Z" }) });
+  var caution_default = /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives4.Path, { d: "M12 8L12 13M12 14.5L12 16M4.75 12C4.75 7.99593 7.99594 4.75 12 4.75C16.0041 4.75 19.25 7.99594 19.25 12C19.25 16.0041 16.0041 19.25 12 19.25C7.99594 19.25 4.75 16.0041 4.75 12Z", strokeLinejoin: "round", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/icons/build-module/library/check.mjs
   var import_primitives5 = __toESM(require_primitives(), 1);
@@ -24574,7 +24580,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/library/info.mjs
   var import_primitives14 = __toESM(require_primitives(), 1);
   var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
-  var info_default = /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives14.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm.75 4v1.5h-1.5V8h1.5Zm0 8v-5h-1.5v5h1.5Z" }) });
+  var info_default = /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(import_primitives14.Path, { d: "M12 16V11M12 9.5V8M19.25 12C19.25 16.0041 16.0041 19.25 12 19.25C7.99594 19.25 4.75 16.0041 4.75 12C4.75 7.99594 7.99594 4.75 12 4.75C16.0041 4.75 19.25 7.99594 19.25 12Z", strokeLinejoin: "round", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/icons/build-module/library/line-dashed.mjs
   var import_primitives15 = __toESM(require_primitives(), 1);
@@ -24594,12 +24600,12 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/library/link-off.mjs
   var import_primitives18 = __toESM(require_primitives(), 1);
   var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
-  var link_off_default = /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_primitives18.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_primitives18.Path, { d: "M17.031 4.703 15.576 4l-1.56 3H14v.03l-2.324 4.47H9.5V13h1.396l-1.502 2.889h-.95a3.694 3.694 0 0 1 0-7.389H10V7H8.444a5.194 5.194 0 1 0 0 10.389h.17L7.5 19.53l1.416.719L15.049 8.5h.507a3.694 3.694 0 0 1 0 7.39H14v1.5h1.556a5.194 5.194 0 0 0 .273-10.383l1.202-2.304Z" }) });
+  var link_off_default = /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_primitives18.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_primitives18.Path, { d: "M9.5 12H12.5M10 7.75H8.25C5.90279 7.75 4 9.65279 4 12C4 14.3472 5.90279 16.25 8.25 16.25H10.2333M14 16.25H15.75C18.0972 16.25 20 14.3472 20 12C20 9.65279 18.0972 7.75 15.75 7.75H14.7667M8.5 19.5L16.5 4.5", strokeLinejoin: "round", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/icons/build-module/library/link.mjs
   var import_primitives19 = __toESM(require_primitives(), 1);
   var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
-  var link_default = /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_primitives19.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_primitives19.Path, { d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z" }) });
+  var link_default = /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_primitives19.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_primitives19.Path, { d: "M9.5 12L14.5 12M10 7.75H8.25C5.90279 7.75 4 9.65279 4 12C4 14.3472 5.90279 16.25 8.25 16.25H10M14 16.25H15.75C18.0972 16.25 20 14.3472 20 12C20 9.65279 18.0972 7.75 15.75 7.75L14 7.75", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/icons/build-module/library/menu.mjs
   var import_primitives20 = __toESM(require_primitives(), 1);
@@ -24619,7 +24625,10 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/library/published.mjs
   var import_primitives23 = __toESM(require_primitives(), 1);
   var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
-  var published_default = /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_primitives23.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_primitives23.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm11.53-1.47-1.06-1.06L11 12.94l-1.47-1.47-1.06 1.06L11 15.06l4.53-4.53Z" }) });
+  var published_default = /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(import_primitives23.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_primitives23.Path, { d: "M12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99594 4.75 12C4.75 16.0041 7.99594 19.25 12 19.25Z", strokeLinejoin: "round", vectorEffect: "non-scaling-stroke" }),
+    /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(import_primitives23.Path, { d: "M9 12L11 14L15 10", vectorEffect: "non-scaling-stroke" })
+  ] });
 
   // packages/icons/build-module/library/reset.mjs
   var import_primitives24 = __toESM(require_primitives(), 1);
@@ -24647,7 +24656,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/library/tip.mjs
   var import_primitives28 = __toESM(require_primitives(), 1);
   var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
-  var tip_default = /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_primitives28.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_primitives28.Path, { d: "M12 15.8c-3.7 0-6.8-3-6.8-6.8s3-6.8 6.8-6.8c3.7 0 6.8 3 6.8 6.8s-3.1 6.8-6.8 6.8zm0-12C9.1 3.8 6.8 6.1 6.8 9s2.4 5.2 5.2 5.2c2.9 0 5.2-2.4 5.2-5.2S14.9 3.8 12 3.8zM8 17.5h8V19H8zM10 20.5h4V22h-4z" }) });
+  var tip_default = /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_primitives28.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_primitives28.Path, { d: "M8 18.25L16 18.25M10 21.25H14M18 9C18 12.3137 15.3137 15 12 15C8.68629 15 6 12.3137 6 9C6 5.68629 8.68629 3 12 3C15.3137 3 18 5.68629 18 9Z", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/icons/build-module/library/upload.mjs
   var import_primitives29 = __toESM(require_primitives(), 1);
@@ -27809,23 +27818,41 @@ This message will only show in development mode. It won't appear in production. 
         ...additionalProps
       });
     }
-    if (icon && (icon.type === "svg" || icon.type === import_primitives30.SVG)) {
-      const appliedProps = {
-        ...icon.props,
-        width: size4,
-        height: size4,
-        ...additionalProps
-      };
-      return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_primitives30.SVG, {
-        ...appliedProps
-      });
-    }
     if ((0, import_element33.isValidElement)(icon)) {
+      const {
+        style: consumerStyle,
+        ...restProps
+      } = additionalProps;
+      const mergedStyle = icon.props.style || consumerStyle ? {
+        ...icon.props.style,
+        ...consumerStyle
+      } : void 0;
+      const styleProps = mergedStyle ? {
+        style: mergedStyle
+      } : {};
+      if (icon.type === "svg" || icon.type === import_primitives30.SVG) {
+        const appliedProps = {
+          ...icon.props,
+          width: size4,
+          height: size4,
+          ...restProps,
+          // Merge styles so the icon's intrinsic style (e.g. `fill: none` on
+          // stroke-based icons) is preserved unless the consumer overrides
+          // the same property explicitly.
+          ...styleProps
+        };
+        return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_primitives30.SVG, {
+          ...appliedProps
+        });
+      }
       return (0, import_element33.cloneElement)(icon, {
         size: size4,
         width: size4,
         height: size4,
-        ...additionalProps
+        ...restProps,
+        // Merge styles so the icon's intrinsic style is preserved unless
+        // the consumer overrides the same property explicitly.
+        ...styleProps
       });
     }
     return icon;
@@ -38099,7 +38126,7 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle24("5c81a85f17", "._68553e70f1f1cb4e__item-group._55756ee749a180e1__is-bordered{border:1px solid rgba(0,0,0,.1)}._68553e70f1f1cb4e__item-group._4e8285db01e0c630__is-separated>:not(marquee)>*{border-block-end:1px solid rgba(0,0,0,.1)}._68553e70f1f1cb4e__item-group._4e8285db01e0c630__is-separated>:last-of-type>*{border-block-end-color:transparent}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded{border-radius:var(--wpds-border-radius-sm,2px)}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded>:first-of-type>*{border-start-end-radius:var(--wpds-border-radius-sm,2px);border-start-start-radius:var(--wpds-border-radius-sm,2px)}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded>:last-of-type>*{border-end-end-radius:var(--wpds-border-radius-sm,2px);border-end-start-radius:var(--wpds-border-radius-sm,2px)}._4f562a88cd53281b__item-wrapper,.fc4c000709063bb0__item{display:block;width:100%}.fc4c000709063bb0__item{box-sizing:border-box;color:inherit;margin:0}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button{appearance:none;background:none;border:1px solid transparent;cursor:var(--wpds-cursor-control,pointer);font-family:inherit;font-size:13px;text-align:start}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link path,.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link svg,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button path,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button svg{fill:currentColor}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:hover,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:hover{color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:focus,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:focus{box-shadow:none;outline:none}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:focus-visible,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:focus-visible{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link{text-decoration:none}.fc4c000709063bb0__item._62800b4fe741b26a__is-spaced-around{border-radius:var(--wpds-border-radius-sm,2px)}.fc4c000709063bb0__item.ff341e6676e9138f__is-size-small{padding:4.3px 8px}.fc4c000709063bb0__item._715af0bb13514a58__is-size-medium{padding:7.9px 12px}.fc4c000709063bb0__item.b141618c0c420070__is-size-large{padding:11.5px 16.0008px}");
+    registerStyle24("d5c166f26a", "._68553e70f1f1cb4e__item-group._55756ee749a180e1__is-bordered{border:1px solid rgba(0,0,0,.1)}._68553e70f1f1cb4e__item-group._4e8285db01e0c630__is-separated>:not(marquee)>*{border-block-end:1px solid rgba(0,0,0,.1)}._68553e70f1f1cb4e__item-group._4e8285db01e0c630__is-separated>:last-of-type>*{border-block-end-color:transparent}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded{border-radius:var(--wpds-border-radius-sm,2px)}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded>:first-of-type>*{border-start-end-radius:var(--wpds-border-radius-sm,2px);border-start-start-radius:var(--wpds-border-radius-sm,2px)}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded>:last-of-type>*{border-end-end-radius:var(--wpds-border-radius-sm,2px);border-end-start-radius:var(--wpds-border-radius-sm,2px)}._4f562a88cd53281b__item-wrapper,.fc4c000709063bb0__item{display:block;width:100%}.fc4c000709063bb0__item{box-sizing:border-box;color:inherit;margin:0}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button{appearance:none;background:none;border:1px solid transparent;cursor:var(--wpds-cursor-control,pointer);font-family:inherit;font-size:13px;text-align:start}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link svg,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button svg{fill:currentColor}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:hover,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:hover{color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:focus,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:focus{box-shadow:none;outline:none}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:focus-visible,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:focus-visible{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link{text-decoration:none}.fc4c000709063bb0__item._62800b4fe741b26a__is-spaced-around{border-radius:var(--wpds-border-radius-sm,2px)}.fc4c000709063bb0__item.ff341e6676e9138f__is-size-small{padding:4.3px 8px}.fc4c000709063bb0__item._715af0bb13514a58__is-size-medium{padding:7.9px 12px}.fc4c000709063bb0__item.b141618c0c420070__is-size-large{padding:11.5px 16.0008px}");
   }
   var style_module_default24 = { "item-group": "_68553e70f1f1cb4e__item-group", "is-bordered": "_55756ee749a180e1__is-bordered", "is-separated": "_4e8285db01e0c630__is-separated", "is-rounded": "_58738db58e87759e__is-rounded", "item-wrapper": "_4f562a88cd53281b__item-wrapper", "item": "fc4c000709063bb0__item", "is-unstyled-button": "d204dc5a680d24cf__is-unstyled-button", "is-unstyled-link": "a5802f3508d737a0__is-unstyled-link", "is-spaced-around": "_62800b4fe741b26a__is-spaced-around", "is-size-small": "ff341e6676e9138f__is-size-small", "is-size-medium": "_715af0bb13514a58__is-size-medium", "is-size-large": "b141618c0c420070__is-size-large" };
   var sizeClassName = {
@@ -38231,7 +38258,7 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle25("5c81a85f17", "._68553e70f1f1cb4e__item-group._55756ee749a180e1__is-bordered{border:1px solid rgba(0,0,0,.1)}._68553e70f1f1cb4e__item-group._4e8285db01e0c630__is-separated>:not(marquee)>*{border-block-end:1px solid rgba(0,0,0,.1)}._68553e70f1f1cb4e__item-group._4e8285db01e0c630__is-separated>:last-of-type>*{border-block-end-color:transparent}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded{border-radius:var(--wpds-border-radius-sm,2px)}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded>:first-of-type>*{border-start-end-radius:var(--wpds-border-radius-sm,2px);border-start-start-radius:var(--wpds-border-radius-sm,2px)}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded>:last-of-type>*{border-end-end-radius:var(--wpds-border-radius-sm,2px);border-end-start-radius:var(--wpds-border-radius-sm,2px)}._4f562a88cd53281b__item-wrapper,.fc4c000709063bb0__item{display:block;width:100%}.fc4c000709063bb0__item{box-sizing:border-box;color:inherit;margin:0}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button{appearance:none;background:none;border:1px solid transparent;cursor:var(--wpds-cursor-control,pointer);font-family:inherit;font-size:13px;text-align:start}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link path,.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link svg,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button path,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button svg{fill:currentColor}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:hover,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:hover{color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:focus,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:focus{box-shadow:none;outline:none}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:focus-visible,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:focus-visible{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link{text-decoration:none}.fc4c000709063bb0__item._62800b4fe741b26a__is-spaced-around{border-radius:var(--wpds-border-radius-sm,2px)}.fc4c000709063bb0__item.ff341e6676e9138f__is-size-small{padding:4.3px 8px}.fc4c000709063bb0__item._715af0bb13514a58__is-size-medium{padding:7.9px 12px}.fc4c000709063bb0__item.b141618c0c420070__is-size-large{padding:11.5px 16.0008px}");
+    registerStyle25("d5c166f26a", "._68553e70f1f1cb4e__item-group._55756ee749a180e1__is-bordered{border:1px solid rgba(0,0,0,.1)}._68553e70f1f1cb4e__item-group._4e8285db01e0c630__is-separated>:not(marquee)>*{border-block-end:1px solid rgba(0,0,0,.1)}._68553e70f1f1cb4e__item-group._4e8285db01e0c630__is-separated>:last-of-type>*{border-block-end-color:transparent}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded{border-radius:var(--wpds-border-radius-sm,2px)}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded>:first-of-type>*{border-start-end-radius:var(--wpds-border-radius-sm,2px);border-start-start-radius:var(--wpds-border-radius-sm,2px)}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded>:last-of-type>*{border-end-end-radius:var(--wpds-border-radius-sm,2px);border-end-start-radius:var(--wpds-border-radius-sm,2px)}._4f562a88cd53281b__item-wrapper,.fc4c000709063bb0__item{display:block;width:100%}.fc4c000709063bb0__item{box-sizing:border-box;color:inherit;margin:0}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button{appearance:none;background:none;border:1px solid transparent;cursor:var(--wpds-cursor-control,pointer);font-family:inherit;font-size:13px;text-align:start}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link svg,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button svg{fill:currentColor}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:hover,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:hover{color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:focus,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:focus{box-shadow:none;outline:none}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:focus-visible,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:focus-visible{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link{text-decoration:none}.fc4c000709063bb0__item._62800b4fe741b26a__is-spaced-around{border-radius:var(--wpds-border-radius-sm,2px)}.fc4c000709063bb0__item.ff341e6676e9138f__is-size-small{padding:4.3px 8px}.fc4c000709063bb0__item._715af0bb13514a58__is-size-medium{padding:7.9px 12px}.fc4c000709063bb0__item.b141618c0c420070__is-size-large{padding:11.5px 16.0008px}");
   }
   var style_module_default25 = { "item-group": "_68553e70f1f1cb4e__item-group", "is-bordered": "_55756ee749a180e1__is-bordered", "is-separated": "_4e8285db01e0c630__is-separated", "is-rounded": "_58738db58e87759e__is-rounded", "item-wrapper": "_4f562a88cd53281b__item-wrapper", "item": "fc4c000709063bb0__item", "is-unstyled-button": "d204dc5a680d24cf__is-unstyled-button", "is-unstyled-link": "a5802f3508d737a0__is-unstyled-link", "is-spaced-around": "_62800b4fe741b26a__is-spaced-around", "is-size-small": "ff341e6676e9138f__is-size-small", "is-size-medium": "_715af0bb13514a58__is-size-medium", "is-size-large": "b141618c0c420070__is-size-large" };
   function useItemGroup(props) {
@@ -44125,13 +44152,15 @@ This message will only show in development mode. It won't appear in production. 
   var import_element129 = __toESM(require_element(), 1);
   var import_primitives32 = __toESM(require_primitives(), 1);
   var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
-  var Icon2 = (0, import_element129.forwardRef)(function Icon22({ icon, size: size4 = 24, ...restProps }, ref) {
+  var Icon2 = (0, import_element129.forwardRef)(function Icon22({ icon, size: size4 = 24, style: style2, ...restProps }, ref) {
+    const mergedStyle = icon.props.style || style2 ? { ...icon.props.style, ...style2 } : void 0;
     return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
       import_primitives32.SVG,
       {
         ref,
         ...icon.props,
         ...restProps,
+        ...mergedStyle ? { style: mergedStyle } : {},
         width: size4,
         height: size4
       }
