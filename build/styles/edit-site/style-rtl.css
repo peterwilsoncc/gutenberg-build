@@ -4389,11 +4389,6 @@ button.font-library__upload-area {
 .edit-site-custom-template-modal__contents-wrapper > * {
   width: 100%;
 }
-.edit-site-custom-template-modal__contents-wrapper__suggestions_list {
-  margin-right: -12px;
-  margin-left: -12px;
-  width: calc(100% + 24px);
-}
 .edit-site-custom-template-modal__contents > .components-button {
   height: auto;
   justify-content: center;
@@ -4405,8 +4400,12 @@ button.font-library__upload-area {
 }
 @media (min-width: 600px) {
   .edit-site-custom-template-modal .edit-site-custom-template-modal__suggestions_list {
-    max-height: 224px;
     overflow-y: auto;
+    max-height: calc(224px + 4 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
+    padding: calc(2 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
+    margin-inline: calc(-2 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
+    width: calc(100% + 4 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
+    scroll-padding-block: calc(2 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
   }
 }
 .edit-site-custom-template-modal .edit-site-custom-template-modal__suggestions_list__list-item {
@@ -4433,9 +4432,6 @@ button.font-library__upload-area {
 }
 .edit-site-custom-template-modal .edit-site-custom-template-modal__suggestions_list__list-item:focus {
   background-color: #f0f0f0;
-}
-.edit-site-custom-template-modal .edit-site-custom-template-modal__suggestions_list__list-item:focus:not(:disabled) {
-  box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color) inset;
 }
 .edit-site-custom-template-modal .edit-site-custom-template-modal__suggestions_list__list-item__title, .edit-site-custom-template-modal .edit-site-custom-template-modal__suggestions_list__list-item__info {
   overflow: hidden;
@@ -4491,7 +4487,6 @@ button.font-library__upload-area {
   flex-direction: column;
   border: 1px solid #ddd;
   justify-content: center;
-  outline: 1px solid transparent;
 }
 .edit-site-custom-template-modal__contents > .components-button span:first-child,
 .edit-site-add-new-template__template-list__contents > .components-button span:first-child {
@@ -4510,12 +4505,6 @@ button.font-library__upload-area {
 .edit-site-custom-template-modal__contents > .components-button:hover span,
 .edit-site-add-new-template__template-list__contents > .components-button:hover span {
   color: var(--wp-admin-theme-color);
-}
-.edit-site-custom-template-modal__contents > .components-button:focus,
-.edit-site-add-new-template__template-list__contents > .components-button:focus {
-  box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
-  border-color: transparent;
-  outline: 3px solid transparent;
 }
 .edit-site-custom-template-modal__contents > .components-button:focus span:first-child,
 .edit-site-add-new-template__template-list__contents > .components-button:focus span:first-child {
