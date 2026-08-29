@@ -105571,7 +105571,7 @@ var wp;
     });
     return rules.length > 0 ? rules.join("") : void 0;
   }
-  function useBlockProps13({ name, style }) {
+  function useBlockProps13({ clientId, name, style }) {
     const blockElementsContainerIdentifier = (0, import_compose122.useInstanceId)(
       STYLE_BLOCK_PROPS_REFERENCE,
       "wp-elements"
@@ -105608,7 +105608,7 @@ var wp;
       style,
       viewportSettings
     ]);
-    useStyleOverride({ css: styles });
+    usePrivateStyleOverride({ css: styles, clientId });
     return addSaveProps9(
       { className: blockElementsContainerIdentifier },
       name,
