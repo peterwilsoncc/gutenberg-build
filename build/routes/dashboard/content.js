@@ -37208,7 +37208,7 @@ var Popup3 = (0, import_element74.forwardRef)(
             /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
               index_parts_exports.Close,
               {
-                render: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(Button4, { variant: "minimal" }),
+                render: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(Button4, { variant: "minimal", tone: "neutral" }),
                 disabled: buttonsDisabled,
                 children: cancelButtonText
               }
