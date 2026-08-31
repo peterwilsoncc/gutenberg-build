@@ -1929,6 +1929,94 @@ function NavigationMenuEditor({ id }) {
   );
 }
 
+// packages/style-runtime/src/index.ts
+var STYLE_HASH_ATTRIBUTE8 = "data-wp-hash";
+function getRuntime8() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument8(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash8(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE8}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE8) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle8(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime8();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash8(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE8, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument8(targetDocument) {
+  const runtime = getRuntime8();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle8(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle8(hash, css) {
+  const runtime = getRuntime8();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle8(targetDocument, hash, css);
+  }
+}
+
+// routes/navigation-edit/style.module.scss
+if (typeof process === "undefined" || true) {
+  registerStyle8("70af410a92", "._813be682e01d3b06__content{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);flex-grow:1;min-height:0;overflow:auto;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}");
+}
+var style_module_default = { "content": "_813be682e01d3b06__content" };
+
 // routes/navigation-edit/stage.tsx
 var import_jsx_runtime13 = __toESM(require_jsx_runtime());
 var NAVIGATION_POST_TYPE = "wp_navigation";
@@ -1971,8 +2059,7 @@ function NavigationEditStage() {
           ]
         }
       ),
-      hasPadding: true,
-      children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(NavigationMenuEditor, { id: navigationId })
+      children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: style_module_default.content, children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(NavigationMenuEditor, { id: navigationId }) })
     }
   );
 }

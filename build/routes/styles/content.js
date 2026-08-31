@@ -10269,10 +10269,10 @@ function ActivatePanel({
 }
 
 // routes/styles/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='1153641d9c']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='f4ae13b25a']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "1153641d9c");
-  style.appendChild(document.createTextNode(".routes-styles__page .global-styles-ui-screen-root{box-shadow:none}.routes-styles__page .global-styles-ui-screen-root>div>hr{display:none}.routes-styles__page .global-styles-ui-sidebar__navigator-provider .components-tools-panel{border-top:none}.routes-styles__page .global-styles-ui-sidebar__navigator-provider{overflow-y:auto;padding-inline:0}"));
+  style.setAttribute("data-wp-hash", "f4ae13b25a");
+  style.appendChild(document.createTextNode(".routes-styles__page .global-styles-ui-screen-root{box-shadow:none}.routes-styles__page .global-styles-ui-screen-root>div>hr{display:none}.routes-styles__page .global-styles-ui-sidebar__navigator-provider .components-tools-panel{border-top:none}.routes-styles__page .global-styles-ui-sidebar__navigator-provider{overflow-y:auto;padding-inline:0}.routes-styles__content{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);flex-grow:1;min-height:0}"));
   document.head.appendChild(style);
 }
 
@@ -10395,14 +10395,14 @@ function Stage() {
       className: "routes-styles__page",
       title: isPreviewingTheme ? getPreviewTitle(themeName) : (0, import_i18n6.__)("Styles"),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "routes-styles__content", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
           GlobalStylesUIWrapper,
           {
             path: section,
             onPathChange: onChangeSection,
             settings: editorSettings
           }
-        ),
+        ) }),
         isActivatePanelOpen && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
           import_components2.Modal,
           {

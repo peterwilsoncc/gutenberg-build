@@ -12897,7 +12897,8 @@ function Root3() {
                 {
                   color: {
                     ...themeColors,
-                    background: "#ffffff"
+                    // Reset to the default background color.
+                    background: "#fcfcfc"
                   },
                   children: [
                     /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Outlet, {}),
@@ -13304,7 +13305,8 @@ function RootSinglePage() {
                 {
                   color: {
                     ...themeColors,
-                    background: "#ffffff"
+                    // Reset to the default background color.
+                    background: "#fcfcfc"
                   },
                   children: [
                     /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(Outlet2, {}),

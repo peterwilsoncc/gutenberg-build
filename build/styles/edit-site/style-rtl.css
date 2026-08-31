@@ -5522,6 +5522,12 @@ body:has(.edit-site-resizable-frame__inner.is-resizing) {
   color: var(--wpds-color-foreground-interactive-neutral, #1e1e1e);
 }
 
+.edit-site-styles__content {
+  flex-grow: 1;
+  min-height: 0;
+  background-color: var(--wpds-color-background-surface-neutral-strong, #fff);
+}
+
 .show-icon-labels .edit-site-styles__header-actions .components-button.has-icon {
   width: auto;
   padding: 0 var(--wpds-dimension-padding-xs, 4px);
@@ -5532,6 +5538,14 @@ body:has(.edit-site-resizable-frame__inner.is-resizing) {
 .show-icon-labels .edit-site-styles__header-actions .components-button.has-icon::after {
   content: attr(aria-label);
   font-size: var(--wpds-typography-font-size-sm, 12px);
+}
+
+.edit-site-sidebar-identity__form {
+  flex-grow: 1;
+  min-height: 0;
+  overflow: auto;
+  background-color: var(--wpds-color-background-surface-neutral-strong, #fff);
+  padding: var(--wpds-dimension-padding-lg, 16px) var(--wpds-dimension-padding-2xl, 24px);
 }
 
 ::view-transition-image-pair(root) {

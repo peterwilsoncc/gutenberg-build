@@ -32767,8 +32767,98 @@ function MediaEdit({
 // routes/identity/stage.tsx
 var import_element103 = __toESM(require_element());
 var import_html_entities2 = __toESM(require_html_entities());
-var import_jsx_runtime132 = __toESM(require_jsx_runtime());
 import { loadEditorAssets } from "@wordpress/lazy-editor";
+
+// packages/style-runtime/src/index.ts
+var STYLE_HASH_ATTRIBUTE34 = "data-wp-hash";
+function getRuntime34() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument34(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash34(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE34}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE34) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle34(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime34();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash34(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE34, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument34(targetDocument) {
+  const runtime = getRuntime34();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle34(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle34(hash, css) {
+  const runtime = getRuntime34();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle34(targetDocument, hash, css);
+  }
+}
+
+// routes/identity/style.module.scss
+if (typeof process === "undefined" || true) {
+  registerStyle34("95479f68d7", ".ec88ce3dd902eabd__form{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);flex-grow:1;min-height:0;overflow:auto;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}");
+}
+var style_module_default = { "form": "ec88ce3dd902eabd__form" };
+
+// routes/identity/stage.tsx
+var import_jsx_runtime132 = __toESM(require_jsx_runtime());
 function MediaEditWithEditorAssets(props) {
   const [isReady, setIsReady] = (0, import_element103.useState)(
     () => !!window.wp?.media
@@ -32855,23 +32945,15 @@ function Identity() {
   const onChange = (edits) => {
     editEntityRecord("root", "site", void 0, edits);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
-    page_default,
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(page_default, { title: (0, import_i18n32._x)("Identity", "site identity"), headingLevel: 2, children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { className: style_module_default.form, children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+    DataForm,
     {
-      title: (0, import_i18n32._x)("Identity", "site identity"),
-      headingLevel: 2,
-      hasPadding: true,
-      children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
-        DataForm,
-        {
-          data,
-          fields,
-          form,
-          onChange
-        }
-      )
+      data,
+      fields,
+      form,
+      onChange
     }
-  );
+  ) }) });
 }
 var stage = Identity;
 export {

@@ -34768,7 +34768,7 @@ var wp;
   var { useLocation: useLocation6 } = unlock(import_router6.privateApis);
   var { useStyle, UploadProgressSnackbar } = unlock(import_editor4.privateApis);
   var ANIMATION_DURATION2 = 0.3;
-  var CONTENT_COLOR = { background: "#ffffff" };
+  var CONTENT_COLOR = { background: "#fcfcfc" };
   function Layout() {
     const { query, name: routeKey, areas: areas2, widths } = useLocation6();
     const canvas = routeKey === "notfound" ? "view" : query?.canvas ?? "view";
@@ -58699,23 +58699,15 @@ If there's a particular need for this, please submit a feature request at https:
     const onChange = (edits) => {
       editEntityRecord("root", "site", void 0, edits);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-      page_default2,
+    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(page_default2, { title: (0, import_i18n85._x)("Identity", "site identity"), headingLevel: 2, children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("div", { className: "edit-site-sidebar-identity__form", children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
+      DataForm,
       {
-        title: (0, import_i18n85._x)("Identity", "site identity"),
-        headingLevel: 2,
-        hasPadding: true,
-        children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-          DataForm,
-          {
-            data,
-            fields,
-            form,
-            onChange
-          }
-        )
+        data,
+        fields,
+        form,
+        onChange
       }
-    );
+    ) }) });
   }
 
   // packages/edit-site/build-module/components/site-editor-routes/identity.mjs
@@ -71004,14 +70996,14 @@ If there's a particular need for this, please submit a feature request at https:
         className: "edit-site-styles",
         title: (0, import_i18n135.__)("Styles"),
         headingLevel: 2,
-        children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)("div", { className: "edit-site-styles__content", children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
           GlobalStylesUIWrapper,
           {
             path: section,
             onPathChange: onChangeSection,
             settings: settings2
           }
-        )
+        ) })
       }
     );
   }
