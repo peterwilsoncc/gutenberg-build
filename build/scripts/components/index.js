@@ -52361,13 +52361,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const newMenuItems = emptyMenuItems();
     const menuItems = emptyMenuItems();
     panelItems.forEach(({
+      defaultShown,
       hasValue,
       isShownByDefault,
       label
     }) => {
       const group = isShownByDefault ? "default" : "optional";
       const existingItemValue = currentMenuItems?.[group]?.[label];
-      const value = existingItemValue ? existingItemValue : hasValue();
+      const initialValue2 = hasValue() || !isShownByDefault && !!defaultShown;
+      const value = existingItemValue ?? initialValue2;
       newMenuItems[group][label] = shouldReset ? false : value;
     });
     menuItemOrder.forEach((key) => {
@@ -52560,11 +52562,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }, [menuItems]);
     const classes = clsx_default(style_module_default40["tools-panel"], hasInnerWrapper && style_module_default40["tools-panel-with-inner-wrapper"], areAllOptionalControlsHidden && style_module_default40["tools-panel-hidden-inner-wrapper"], className);
     const toggleItem = (0, import_element188.useCallback)((label) => {
+      const currentItem = panelItems.find((item) => item.label === label);
+      if (!currentItem) {
+        return;
+      }
       panelDispatch({
         type: "TOGGLE_VALUE",
         label
       });
-    }, []);
+      if (currentItem.isShownByDefault) {
+        return;
+      }
+      currentItem.onShownChange?.(!menuItems.optional[label]);
+    }, [menuItems, panelItems]);
     const resetAllItems = (0, import_element188.useCallback)(() => {
       if (typeof resetAll === "function") {
         isResettingRef.current = true;
@@ -52733,6 +52743,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   function useToolsPanelItem(props) {
     const {
       className,
+      defaultShown,
       hasValue,
       isShownByDefault = false,
       label,
@@ -52740,6 +52751,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       resetAllFilter = noop25,
       onDeselect,
       onSelect,
+      onShownChange,
       ...otherProps
     } = useContextSystem(props, "ToolsPanelItem");
     const {
@@ -52759,14 +52771,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = useToolsPanelContext();
     const hasValueCallback = (0, import_element189.useCallback)(hasValue, [panelId]);
     const resetAllFilterCallback = (0, import_element189.useCallback)(resetAllFilter, [panelId]);
+    const defaultShownRef = (0, import_element189.useRef)(defaultShown);
+    (0, import_element189.useLayoutEffect)(() => {
+      defaultShownRef.current = defaultShown;
+    });
+    const onShownChangeCallback = (0, import_compose75.useEvent)(onShownChange);
     const previousPanelId = (0, import_compose75.usePrevious)(currentPanelId);
     const hasMatchingPanel = currentPanelId === panelId || currentPanelId === null;
     (0, import_element189.useLayoutEffect)(() => {
       if (hasMatchingPanel && previousPanelId !== null) {
         registerPanelItem({
+          defaultShown: defaultShownRef.current,
           hasValue: hasValueCallback,
           isShownByDefault,
           label,
+          onShownChange: onShownChangeCallback,
           panelId
         });
       }
@@ -52775,7 +52794,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           deregisterPanelItem(label);
         }
       };
-    }, [currentPanelId, hasMatchingPanel, isShownByDefault, label, hasValueCallback, panelId, previousPanelId, registerPanelItem, deregisterPanelItem]);
+    }, [currentPanelId, hasMatchingPanel, isShownByDefault, label, hasValueCallback, onShownChangeCallback, panelId, previousPanelId, registerPanelItem, deregisterPanelItem]);
     (0, import_element189.useEffect)(() => {
       if (hasMatchingPanel) {
         registerResetAllFilter(resetAllFilterCallback);
@@ -52797,8 +52816,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       flagItemCustomization(isValueSet, label, menuGroup);
     }, [hasMatchingPanel, isValueSet, menuGroup, label, flagItemCustomization, isShownByDefault]);
+    const wasRegistered = wasMenuItemChecked !== void 0;
     (0, import_element189.useEffect)(() => {
-      if (!isRegistered || isResetting || !hasMatchingPanel) {
+      if (!isRegistered || !wasRegistered || isResetting || !hasMatchingPanel) {
         return;
       }
       if (isMenuItemChecked && !isValueSet && !wasMenuItemChecked) {
@@ -52807,7 +52827,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       if (!isMenuItemChecked && isValueSet && wasMenuItemChecked) {
         onDeselect?.();
       }
-    }, [hasMatchingPanel, isMenuItemChecked, isRegistered, isResetting, isValueSet, wasMenuItemChecked, onSelect, onDeselect]);
+    }, [hasMatchingPanel, isMenuItemChecked, isRegistered, isResetting, isValueSet, wasMenuItemChecked, wasRegistered, onSelect, onDeselect]);
     const isShown = isShownByDefault ? menuItems?.[menuGroup]?.[label] !== void 0 : isMenuItemChecked;
     const shouldApplyPlaceholderStyles = shouldRenderPlaceholder && !isShown;
     const classes = clsx_default(style_module_default41["tools-panel-item"], shouldApplyPlaceholderStyles && style_module_default41["tools-panel-item-placeholder"], !shouldApplyPlaceholderStyles && className, firstDisplayedItem === label && __experimentalFirstVisibleItemClass, lastDisplayedItem === label && __experimentalLastVisibleItemClass);
