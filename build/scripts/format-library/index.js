@@ -8058,6 +8058,9 @@ var wp;
   var title8 = (0, import_i18n15.__)("Highlight");
   var EMPTY_ARRAY3 = [];
   function getComputedStyleProperty(element, property) {
+    if (!element) {
+      return;
+    }
     const { ownerDocument: ownerDocument2 } = element;
     const { defaultView } = ownerDocument2;
     const style = defaultView.getComputedStyle(element);
