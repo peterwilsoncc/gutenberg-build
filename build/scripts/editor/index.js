@@ -7158,7 +7158,7 @@ var wp;
   var import_escape_html = __toESM(require_escape_html(), 1);
   var import_deprecated9 = __toESM(require_deprecated(), 1);
   var import_blocks20 = __toESM(require_blocks(), 1);
-  var import_notices21 = __toESM(require_notices(), 1);
+  var import_notices20 = __toESM(require_notices(), 1);
   var import_core_data59 = __toESM(require_core_data(), 1);
   var import_block_editor37 = __toESM(require_block_editor(), 1);
   var import_hooks40 = __toESM(require_hooks(), 1);
@@ -7351,7 +7351,7 @@ var wp;
   var import_core_data58 = __toESM(require_core_data(), 1);
   var import_block_editor36 = __toESM(require_block_editor(), 1);
   var import_i18n217 = __toESM(require_i18n(), 1);
-  var import_notices20 = __toESM(require_notices(), 1);
+  var import_notices19 = __toESM(require_notices(), 1);
   var import_preferences9 = __toESM(require_preferences(), 1);
   var import_url14 = __toESM(require_url(), 1);
   var import_api_fetch7 = __toESM(require_api_fetch(), 1);
@@ -44798,11 +44798,10 @@ var wp;
         if (isCreatingPage) {
           return;
         }
-        const isTemplate2 = item.type === "wp_template";
         const newItemObject = {
-          status: isTemplate2 ? "publish" : "draft",
+          status: "draft",
           title: item.title,
-          slug: isTemplate2 ? item.slug : item.title || (0, import_i18n61.__)("No title"),
+          slug: item.title || (0, import_i18n61.__)("No title"),
           comment_status: item.comment_status,
           content: typeof item.content === "string" ? item.content : item.content.raw,
           excerpt: typeof item.excerpt === "string" ? item.excerpt : item.excerpt?.raw,
@@ -44860,9 +44859,6 @@ var wp;
         }
       }
       return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)("form", { onSubmit: createPage, children: /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(import_components15.__experimentalVStack, { spacing: 3, children: [
-        typeof item.id === "string" && /* @__PURE__ */ (0, import_jsx_runtime225.jsx)("div", { children: (0, import_i18n61.__)(
-          "You are about to duplicate a bundled template. Changes will not be live until you activate the new template."
-        ) }),
         /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
           import_components15.__experimentalInputControl,
           {
@@ -44920,17 +44916,10 @@ var wp;
       if (post2.status === "trash") {
         return false;
       }
-      if (post2.type === "wp_template" && typeof post2.id === "string" && window?.__experimentalTemplateActivate) {
-        return false;
-      }
-      const specialChecks = ["wp_template", "wp_template_part"];
-      if (!window?.__experimentalTemplateActivate) {
-        specialChecks.push("wp_template");
-      }
-      if (!specialChecks.includes(post2.type)) {
+      if (!["wp_template", "wp_template_part"].includes(post2.type)) {
         return post2.permissions?.update;
       }
-      if (isTemplate(post2) && !window?.__experimentalTemplateActivate) {
+      if (isTemplate(post2)) {
         return isTemplateRemovable(post2) && post2.is_custom && post2.permissions?.update;
       }
       if (isTemplatePart(post2)) {
@@ -45132,9 +45121,6 @@ var wp;
     id: "reset-post",
     label: (0, import_i18n63.__)("Reset"),
     isEligible: (item) => {
-      if (window?.__experimentalTemplateActivate) {
-        return item.type === "wp_template_part" && item?.source === "custom" && item?.has_theme_file;
-      }
       return isTemplateOrTemplatePart(item) && item?.source === "custom" && (Boolean(item.type === "wp_template" && item?.plugin) || item?.has_theme_file);
     },
     icon: backup_default,
@@ -47110,7 +47096,6 @@ var wp;
   var import_data88 = __toESM(require_data(), 1);
   var import_core_data55 = __toESM(require_core_data(), 1);
   var import_block_editor34 = __toESM(require_block_editor(), 1);
-  var import_notices19 = __toESM(require_notices(), 1);
   var import_patterns8 = __toESM(require_patterns(), 1);
   var import_blocks18 = __toESM(require_blocks(), 1);
 
@@ -95176,7 +95161,6 @@ If there's a particular need for this, please submit a feature request at https:
         },
         [editEntityRecord, post2.type, post2.id]
       );
-      const { removeNotice } = (0, import_data88.useDispatch)(import_notices19.store);
       (0, import_element281.useLayoutEffect)(() => {
         if (recovery) {
           return;
@@ -95189,11 +95173,8 @@ If there's a particular need for this, please submit a feature request at https:
       useAutosaveNotice({ post: post2, recovery, settings });
       (0, import_element281.useEffect)(() => {
         setEditedPost2(post2.type, post2.id);
-        if (typeof window !== "undefined" && window.__experimentalTemplateActivate) {
-          removeNotice("template-activate-notice");
-        }
         return () => setEditedPost2(null, null);
-      }, [post2.type, post2.id, setEditedPost2, removeNotice]);
+      }, [post2.type, post2.id, setEditedPost2]);
       (0, import_element281.useEffect)(() => {
         if (initialViewport) {
           setCanvasWidth2(initialCanvasWidth);
@@ -95430,15 +95411,10 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const currentTheme = await registry.resolveSelect(import_core_data57.store).getCurrentTheme();
     const { disablePostFormats } = registry.select(store).getEditorSettings();
-    let canDuplicate = !["wp_block", "wp_template_part"].includes(
+    let canDuplicate = !["wp_block", "wp_template_part", "wp_template"].includes(
       postTypeConfig.slug
     ) && canCreate && duplicate_post_default;
     if (false) {
-      if ("wp_template" !== postTypeConfig.slug) {
-        canDuplicate = void 0;
-      }
-    }
-    if (postTypeConfig.slug === "wp_template" && !window?.__experimentalTemplateActivate) {
       canDuplicate = void 0;
     }
     const actions2 = [
@@ -95547,7 +95523,7 @@ If there's a particular need for this, please submit a feature request at https:
         template: savedTemplate.slug
       }
     );
-    registry.dispatch(import_notices20.store).createSuccessNotice(
+    registry.dispatch(import_notices19.store).createSuccessNotice(
       (0, import_i18n217.__)("Custom template created. You're in template mode now."),
       {
         type: "snackbar",
@@ -95580,9 +95556,9 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var revertTemplate2 = (template2, { allowUndo = true } = {}) => async ({ registry }) => {
     const noticeId = "edit-site-template-reverted";
-    registry.dispatch(import_notices20.store).removeNotice(noticeId);
+    registry.dispatch(import_notices19.store).removeNotice(noticeId);
     if (!isTemplateRevertable(template2)) {
-      registry.dispatch(import_notices20.store).createErrorNotice((0, import_i18n217.__)("This template is not revertable."), {
+      registry.dispatch(import_notices19.store).createErrorNotice((0, import_i18n217.__)("This template is not revertable."), {
         type: "snackbar"
       });
       return;
@@ -95590,7 +95566,7 @@ If there's a particular need for this, please submit a feature request at https:
     try {
       const templateEntityConfig = registry.select(import_core_data58.store).getEntityConfig("postType", template2.type);
       if (!templateEntityConfig) {
-        registry.dispatch(import_notices20.store).createErrorNotice(
+        registry.dispatch(import_notices19.store).createErrorNotice(
           (0, import_i18n217.__)(
             "The editor has encountered an unexpected error. Please reload."
           ),
@@ -95604,7 +95580,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
       const fileTemplate = await (0, import_api_fetch7.default)({ path: fileTemplatePath });
       if (!fileTemplate) {
-        registry.dispatch(import_notices20.store).createErrorNotice(
+        registry.dispatch(import_notices19.store).createErrorNotice(
           (0, import_i18n217.__)(
             "The editor has encountered an unexpected error. Please reload."
           ),
@@ -95656,7 +95632,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           );
         };
-        registry.dispatch(import_notices20.store).createSuccessNotice((0, import_i18n217.__)("Template reset."), {
+        registry.dispatch(import_notices19.store).createSuccessNotice((0, import_i18n217.__)("Template reset."), {
           type: "snackbar",
           id: noticeId,
           actions: [
@@ -95669,7 +95645,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     } catch (error2) {
       const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n217.__)("Template revert failed. Please reload.");
-      registry.dispatch(import_notices20.store).createErrorNotice(errorMessage, { type: "snackbar" });
+      registry.dispatch(import_notices19.store).createErrorNotice(errorMessage, { type: "snackbar" });
     }
   };
   var removeTemplates = (items) => async ({ registry }) => {
@@ -95708,7 +95684,7 @@ If there's a particular need for this, please submit a feature request at https:
       } else {
         successMessage = isResetting ? (0, import_i18n217.__)("Items reset.") : (0, import_i18n217.__)("Items deleted.");
       }
-      registry.dispatch(import_notices20.store).createSuccessNotice(successMessage, {
+      registry.dispatch(import_notices19.store).createSuccessNotice(successMessage, {
         type: "snackbar",
         id: "editor-template-deleted-success"
       });
@@ -95764,7 +95740,7 @@ If there's a particular need for this, please submit a feature request at https:
           );
         }
       }
-      registry.dispatch(import_notices20.store).createErrorNotice(errorMessage, { type: "snackbar" });
+      registry.dispatch(import_notices19.store).createErrorNotice(errorMessage, { type: "snackbar" });
     }
   };
   var setDefaultRenderingMode = (mode) => ({ select: select9, registry }) => {
@@ -95845,7 +95821,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
   };
   function createRevisionsLoadFailedNotice(registry) {
-    registry.dispatch(import_notices20.store).createNotice("warning", (0, import_i18n217.__)("Revisions could not be loaded."), {
+    registry.dispatch(import_notices19.store).createNotice("warning", (0, import_i18n217.__)("Revisions could not be loaded."), {
       type: "snackbar",
       id: "editor-revisions-load-failed"
     });
@@ -95891,7 +95867,7 @@ If there's a particular need for this, please submit a feature request at https:
           return;
         }
         dispatch8.setCurrentRevisionId(null);
-        registry.dispatch(import_notices20.store).createNotice("warning", (0, import_i18n217.__)("Invalid revision ID."), {
+        registry.dispatch(import_notices19.store).createNotice("warning", (0, import_i18n217.__)("Invalid revision ID."), {
           type: "snackbar",
           id: "editor-revision-invalid"
         });
@@ -95963,8 +95939,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (select9.didPostSaveRequestFail()) {
       return;
     }
-    registry.dispatch(import_notices20.store).removeNotice("autosave-exists");
-    registry.dispatch(import_notices20.store).createSuccessNotice(
+    registry.dispatch(import_notices19.store).removeNotice("autosave-exists");
+    registry.dispatch(import_notices19.store).createSuccessNotice(
       (0, import_i18n217.sprintf)(
         /* translators: %s: Date and time of the revision. */
         (0, import_i18n217.__)("Restored to revision from %s."),
@@ -96122,9 +96098,6 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }
     dispatch8({ type: "REQUEST_POST_UPDATE_FINISH", options });
-    if (typeof window !== "undefined" && window.__experimentalTemplateActivate && !options.isAutosave && previousRecord.type === "wp_template" && (typeof previousRecord.id === "number" || /^\d+$/.test(previousRecord.id))) {
-      templateActivationNotice({ select: select9, dispatch: dispatch8, registry });
-    }
     if (error2) {
       const args = getNotificationArgumentsForSaveFail({
         post: previousRecord,
@@ -96149,7 +96122,7 @@ If there's a particular need for this, please submit a feature request at https:
           };
           (0, import_a11y11.speak)(noticeMessage, "assertive");
         }
-        registry.dispatch(import_notices21.store).createErrorNotice(...args);
+        registry.dispatch(import_notices20.store).createErrorNotice(...args);
       }
     } else {
       const updatedRecord = select9.getCurrentPost();
@@ -96160,75 +96133,13 @@ If there's a particular need for this, please submit a feature request at https:
         options
       });
       if (args.length) {
-        registry.dispatch(import_notices21.store).createSuccessNotice(...args);
+        registry.dispatch(import_notices20.store).createSuccessNotice(...args);
       }
       if (!options.isAutosave) {
         registry.dispatch(import_block_editor37.store).__unstableMarkLastChangeAsPersistent();
       }
     }
   };
-  async function templateActivationNotice({ select: select9, registry }) {
-    const editorSettings2 = select9.getEditorSettings();
-    if (editorSettings2.onNavigateToPreviousEntityRecord) {
-      return;
-    }
-    const { id, slug } = select9.getCurrentPost();
-    const site = await registry.select(import_core_data59.store).getEntityRecord("root", "site");
-    if (site.active_templates[slug] === id) {
-      return;
-    }
-    const currentTheme = await registry.resolveSelect(import_core_data59.store).getCurrentTheme();
-    const templateType = currentTheme?.default_template_types.find(
-      (type) => type.slug === slug
-    );
-    await registry.dispatch(import_notices21.store).createNotice(
-      "info",
-      (0, import_i18n218.sprintf)(
-        // translators: %s: The name (or slug) of the type of template.
-        (0, import_i18n218.__)('Do you want to activate this "%s" template?'),
-        templateType?.title ?? slug
-      ),
-      {
-        id: "template-activate-notice",
-        actions: [
-          {
-            label: (0, import_i18n218.__)("Activate"),
-            onClick: async () => {
-              await registry.dispatch(import_notices21.store).createNotice(
-                "info",
-                (0, import_i18n218.__)("Activating template\u2026"),
-                { id: "template-activate-notice" }
-              );
-              try {
-                const currentSite = await registry.select(import_core_data59.store).getEntityRecord("root", "site");
-                await registry.dispatch(import_core_data59.store).saveEntityRecord(
-                  "root",
-                  "site",
-                  {
-                    active_templates: {
-                      ...currentSite.active_templates,
-                      [slug]: id
-                    }
-                  },
-                  { throwOnError: true }
-                );
-                await registry.dispatch(import_notices21.store).createSuccessNotice(
-                  (0, import_i18n218.__)("Template activated."),
-                  { id: "template-activate-notice" }
-                );
-              } catch (error2) {
-                await registry.dispatch(import_notices21.store).createErrorNotice(
-                  (0, import_i18n218.__)("Template activation failed."),
-                  { id: "template-activate-notice" }
-                );
-                throw error2;
-              }
-            }
-          }
-        ]
-      }
-    );
-  }
   function refreshPost() {
     (0, import_deprecated9.default)("wp.data.dispatch( 'core/editor' ).refreshPost", {
       since: "6.0",
@@ -96250,7 +96161,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
       await dispatch8.savePost();
     } catch (error2) {
-      registry.dispatch(import_notices21.store).createErrorNotice(
+      registry.dispatch(import_notices20.store).createErrorNotice(
         ...getNotificationArgumentsForTrashFail({ error: error2 })
       );
     }
@@ -96452,7 +96363,7 @@ If there's a particular need for this, please submit a feature request at https:
     registry.batch(() => {
       registry.dispatch(import_preferences10.store).set("core", "distractionFree", !isDistractionFree);
       if (createNotice) {
-        registry.dispatch(import_notices21.store).createInfoNotice(
+        registry.dispatch(import_notices20.store).createInfoNotice(
           isDistractionFree ? (0, import_i18n218.__)("Distraction free mode deactivated.") : (0, import_i18n218.__)("Distraction free mode activated."),
           {
             id: "core/editor/distraction-free-mode/notice",
@@ -96483,7 +96394,7 @@ If there's a particular need for this, please submit a feature request at https:
   var toggleSpotlightMode = () => ({ registry }) => {
     registry.dispatch(import_preferences10.store).toggle("core", "focusMode");
     const isFocusMode = registry.select(import_preferences10.store).get("core", "focusMode");
-    registry.dispatch(import_notices21.store).createInfoNotice(
+    registry.dispatch(import_notices20.store).createInfoNotice(
       isFocusMode ? (0, import_i18n218.__)("Spotlight mode activated.") : (0, import_i18n218.__)("Spotlight mode deactivated."),
       {
         id: "core/editor/toggle-spotlight-mode/notice",
@@ -96502,7 +96413,7 @@ If there's a particular need for this, please submit a feature request at https:
   var toggleTopToolbar = () => ({ registry }) => {
     registry.dispatch(import_preferences10.store).toggle("core", "fixedToolbar");
     const isTopToolbar = registry.select(import_preferences10.store).get("core", "fixedToolbar");
-    registry.dispatch(import_notices21.store).createInfoNotice(
+    registry.dispatch(import_notices20.store).createInfoNotice(
       isTopToolbar ? (0, import_i18n218.__)("Top toolbar activated.") : (0, import_i18n218.__)("Top toolbar deactivated."),
       {
         id: "core/editor/toggle-top-toolbar/notice",
@@ -99138,7 +99049,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_deprecated10 = __toESM(require_deprecated(), 1);
   var import_data108 = __toESM(require_data(), 1);
   var import_block_editor46 = __toESM(require_block_editor(), 1);
-  var import_notices22 = __toESM(require_notices(), 1);
+  var import_notices21 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/template-validation-notice/index.mjs
   var import_components167 = __toESM(require_components(), 1);
@@ -99209,7 +99120,7 @@ If there's a particular need for this, please submit a feature request at https:
       return select9(import_block_editor46.store).isValidTemplate();
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime470.jsx)(
-      import_notices22.InlineNotices,
+      import_notices21.InlineNotices,
       {
         pinnedNoticesClassName: "components-editor-notices__pinned",
         dismissibleNoticesClassName: "components-editor-notices__dismissible",
@@ -99221,7 +99132,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/editor-snackbars/index.mjs
   var import_deprecated11 = __toESM(require_deprecated(), 1);
-  var import_notices23 = __toESM(require_notices(), 1);
+  var import_notices22 = __toESM(require_notices(), 1);
   var import_jsx_runtime471 = __toESM(require_jsx_runtime(), 1);
   function EditorSnackbars() {
     (0, import_deprecated11.default)("wp.editor.EditorSnackbars", {
@@ -99229,7 +99140,7 @@ If there's a particular need for this, please submit a feature request at https:
       version: "7.2",
       alternative: "wp.notices.SnackbarNotices"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(import_notices23.SnackbarNotices, { className: "components-editor-notices__snackbar" });
+    return /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(import_notices22.SnackbarNotices, { className: "components-editor-notices__snackbar" });
   }
 
   // packages/editor/build-module/components/error-boundary/index.mjs
@@ -99389,7 +99300,7 @@ ${content}
   var import_data110 = __toESM(require_data(), 1);
   var import_i18n231 = __toESM(require_i18n(), 1);
   var import_blocks24 = __toESM(require_blocks(), 1);
-  var import_notices24 = __toESM(require_notices(), 1);
+  var import_notices23 = __toESM(require_notices(), 1);
   var import_jsx_runtime473 = __toESM(require_jsx_runtime(), 1);
   var requestIdleCallback = window.requestIdleCallback ? window.requestIdleCallback : window.requestAnimationFrame;
   var hasStorageSupport;
@@ -99457,7 +99368,7 @@ ${content}
       if (hasRemoteAutosave) {
         return;
       }
-      const { createWarningNotice, removeNotice } = registry.dispatch(import_notices24.store);
+      const { createWarningNotice, removeNotice } = registry.dispatch(import_notices23.store);
       const { editPost: editPost2, resetEditorBlocks: resetEditorBlocks2 } = registry.dispatch(store);
       const id = "wpEditorAutosaveRestore";
       createWarningNotice(
@@ -99959,7 +99870,7 @@ ${content}
   var import_core_data73 = __toESM(require_core_data(), 1);
   var import_block_editor48 = __toESM(require_block_editor(), 1);
   var import_element303 = __toESM(require_element(), 1);
-  var import_notices25 = __toESM(require_notices(), 1);
+  var import_notices24 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/post-template/create-new-template-modal.mjs
   var import_data116 = __toESM(require_data(), 1);
@@ -100322,7 +100233,7 @@ ${content}
     );
     const selectedOption = options.find((option) => option.value === selectedTemplateSlug) ?? options.find((option) => !option.value);
     const { editPost: editPost2 } = (0, import_data118.useDispatch)(store);
-    const { createSuccessNotice } = (0, import_data118.useDispatch)(import_notices25.store);
+    const { createSuccessNotice } = (0, import_data118.useDispatch)(import_notices24.store);
     const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element303.useState)(false);
     return /* @__PURE__ */ (0, import_jsx_runtime479.jsxs)("div", { className: "editor-post-template__classic-theme-dropdown", children: [
       /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(
@@ -100669,7 +100580,7 @@ ${content}
   var import_element306 = __toESM(require_element(), 1);
   var import_i18n240 = __toESM(require_i18n(), 1);
   var import_core_data77 = __toESM(require_core_data(), 1);
-  var import_notices26 = __toESM(require_notices(), 1);
+  var import_notices25 = __toESM(require_notices(), 1);
   var import_preferences13 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/post-template/swap-template-button.mjs
@@ -100891,17 +100802,14 @@ ${content}
       onNavigateToEntityRecord,
       getEditorSettings: getEditorSettings2,
       hasGoBack,
-      hasSpecificTemplate,
       id
     } = (0, import_data124.useSelect)((select9) => {
       const {
         getRenderingMode: getRenderingMode2,
         getEditorSettings: _getEditorSettings,
-        getCurrentPost: getCurrentPost2,
         getCurrentTemplateId: getCurrentTemplateId2
       } = unlock(select9(store));
       const editorSettings2 = _getEditorSettings();
-      const currentPost = getCurrentPost2();
       return {
         isTemplateHidden: getRenderingMode2() === "post-only",
         onNavigateToEntityRecord: editorSettings2.onNavigateToEntityRecord,
@@ -100909,7 +100817,6 @@ ${content}
         hasGoBack: editorSettings2.hasOwnProperty(
           "onNavigateToPreviousEntityRecord"
         ),
-        hasSpecificTemplate: !!currentPost.template,
         id: getCurrentTemplateId2()
       };
     }, []);
@@ -100919,9 +100826,7 @@ ${content}
       "wp_template",
       id
     );
-    const { getEntityRecord } = (0, import_data124.useSelect)(import_core_data77.store);
-    const { editEntityRecord } = (0, import_data124.useDispatch)(import_core_data77.store);
-    const { createSuccessNotice } = (0, import_data124.useDispatch)(import_notices26.store);
+    const { createSuccessNotice } = (0, import_data124.useDispatch)(import_notices25.store);
     const { setRenderingMode: setRenderingMode2, setDefaultRenderingMode: setDefaultRenderingMode2 } = unlock(
       (0, import_data124.useDispatch)(store)
     );
@@ -100982,30 +100887,11 @@ ${content}
             canCreateTemplate && /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
               import_components182.MenuItem,
               {
-                onClick: async () => {
+                onClick: () => {
                   onNavigateToEntityRecord({
                     postId: template2.id,
                     postType: "wp_template"
                   });
-                  if (!hasSpecificTemplate && window?.__experimentalTemplateActivate) {
-                    const activeTemplates = await getEntityRecord(
-                      "root",
-                      "site"
-                    ).active_templates;
-                    if (activeTemplates[template2.slug] !== template2.id) {
-                      editEntityRecord(
-                        "root",
-                        "site",
-                        void 0,
-                        {
-                          active_templates: {
-                            ...activeTemplates,
-                            [template2.slug]: template2.id
-                          }
-                        }
-                      );
-                    }
-                  }
                   onClose();
                   mayShowTemplateEditNotice();
                 },
@@ -103334,7 +103220,7 @@ ${content}
   var import_core_data91 = __toESM(require_core_data(), 1);
   var import_compose63 = __toESM(require_compose(), 1);
   var import_a11y13 = __toESM(require_a11y(), 1);
-  var import_notices27 = __toESM(require_notices(), 1);
+  var import_notices26 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/most-used-terms.mjs
   var import_components203 = __toESM(require_components(), 1);
@@ -103478,7 +103364,7 @@ ${content}
     }, [searchResults]);
     const { editPost: editPost2 } = (0, import_data154.useDispatch)(store);
     const { saveEntityRecord } = (0, import_data154.useDispatch)(import_core_data91.store);
-    const { createErrorNotice } = (0, import_data154.useDispatch)(import_notices27.store);
+    const { createErrorNotice } = (0, import_data154.useDispatch)(import_notices26.store);
     if (!hasAssignAction) {
       return null;
     }
@@ -103732,7 +103618,7 @@ ${content}
   // packages/editor/build-module/components/post-taxonomies/hierarchical-term-selector.mjs
   var import_i18n266 = __toESM(require_i18n(), 1);
   var import_element320 = __toESM(require_element(), 1);
-  var import_notices28 = __toESM(require_notices(), 1);
+  var import_notices27 = __toESM(require_notices(), 1);
   var import_components207 = __toESM(require_components(), 1);
   var import_data157 = __toESM(require_data(), 1);
   var import_compose64 = __toESM(require_compose(), 1);
@@ -103891,7 +103777,7 @@ ${content}
     );
     const { editPost: editPost2 } = (0, import_data157.useDispatch)(store);
     const { saveEntityRecord } = (0, import_data157.useDispatch)(import_core_data94.store);
-    const { createErrorNotice } = (0, import_data157.useDispatch)(import_notices28.store);
+    const { createErrorNotice } = (0, import_data157.useDispatch)(import_notices27.store);
     const selectedTerms = (0, import_element320.useMemo)(() => new Set(terms), [terms]);
     const availableTermsTree = (0, import_element320.useMemo)(
       () => sortBySelected(buildTermsTree2(availableTerms), terms),
@@ -105929,7 +105815,7 @@ ${content}
   var import_block_editor61 = __toESM(require_block_editor(), 1);
   var import_i18n282 = __toESM(require_i18n(), 1);
   var import_components221 = __toESM(require_components(), 1);
-  var import_notices29 = __toESM(require_notices(), 1);
+  var import_notices28 = __toESM(require_notices(), 1);
   var import_core_data104 = __toESM(require_core_data(), 1);
   var import_compose71 = __toESM(require_compose(), 1);
   var import_jsx_runtime544 = __toESM(require_jsx_runtime(), 1);
@@ -105962,7 +105848,7 @@ ${content}
       };
     }, []);
     const { editPost: editPost2 } = (0, import_data181.useDispatch)(store);
-    const { createNotice } = (0, import_data181.useDispatch)(import_notices29.store);
+    const { createNotice } = (0, import_data181.useDispatch)(import_notices28.store);
     const [forceEmptyField, setForceEmptyField] = (0, import_element335.useState)(false);
     const copyButtonRef = (0, import_compose71.useCopyToClipboard)(permalink, () => {
       createNotice("info", (0, import_i18n282.__)("Copied Permalink to clipboard."), {
@@ -106953,7 +106839,7 @@ ${content}
   var import_blocks30 = __toESM(require_blocks(), 1);
   var import_element346 = __toESM(require_element(), 1);
   var import_data195 = __toESM(require_data(), 1);
-  var import_notices30 = __toESM(require_notices(), 1);
+  var import_notices29 = __toESM(require_notices(), 1);
   var import_core_data109 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/utils/set-nested-value.mjs
@@ -107604,7 +107490,7 @@ ${content}
     const rows = useChangesToPush(name2, attributes, userConfig);
     const [isModalOpen, setIsModalOpen] = (0, import_element346.useState)(false);
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data195.useDispatch)(import_block_editor68.store);
-    const { createSuccessNotice } = (0, import_data195.useDispatch)(import_notices30.store);
+    const { createSuccessNotice } = (0, import_data195.useDispatch)(import_notices29.store);
     const pushChanges = (0, import_element346.useCallback)(
       (rowsToPush) => {
         const update4 = getStylesUpdate({
@@ -107807,7 +107693,7 @@ ${content}
   var import_compose92 = __toESM(require_compose(), 1);
   var import_element373 = __toESM(require_element(), 1);
   var import_html_entities30 = __toESM(require_html_entities(), 1);
-  var import_notices33 = __toESM(require_notices(), 1);
+  var import_notices32 = __toESM(require_notices(), 1);
   var import_theme = __toESM(require_theme(), 1);
 
   // packages/editor/build-module/components/header/index.mjs
@@ -108080,10 +107966,10 @@ ${content}
   var import_data199 = __toESM(require_data(), 1);
   var import_i18n297 = __toESM(require_i18n(), 1);
   var import_compose77 = __toESM(require_compose(), 1);
-  var import_notices31 = __toESM(require_notices(), 1);
+  var import_notices30 = __toESM(require_notices(), 1);
   var import_jsx_runtime561 = __toESM(require_jsx_runtime(), 1);
   function CopyContentMenuItem() {
-    const { createNotice } = (0, import_data199.useDispatch)(import_notices31.store);
+    const { createNotice } = (0, import_data199.useDispatch)(import_notices30.store);
     const { getEditedPostContent: getEditedPostContent2 } = (0, import_data199.useSelect)(store);
     function getText() {
       return getEditedPostContent2();
@@ -112842,7 +112728,7 @@ ${content}
   var import_data222 = __toESM(require_data(), 1);
   var import_element370 = __toESM(require_element(), 1);
   var import_i18n318 = __toESM(require_i18n(), 1);
-  var import_notices32 = __toESM(require_notices(), 1);
+  var import_notices31 = __toESM(require_notices(), 1);
   var import_core_data122 = __toESM(require_core_data(), 1);
   var import_preferences23 = __toESM(require_preferences(), 1);
   var { useOnCollaboratorJoin, useOnCollaboratorLeave, useOnPostSave } = unlock(import_core_data122.privateApis);
@@ -112888,7 +112774,7 @@ ${content}
         )
       };
     }, []);
-    const { createNotice } = (0, import_data222.useDispatch)(import_notices32.store);
+    const { createNotice } = (0, import_data222.useDispatch)(import_notices31.store);
     const shouldShowJoinNotifications = isCollaborationEnabled && showJoinNotifications;
     const shouldShowLeaveNotifications = isCollaborationEnabled && showLeaveNotifications;
     const shouldShowPostSaveNotifications = isCollaborationEnabled && showPostSaveNotifications;
@@ -113141,7 +113027,7 @@ ${content}
       return select9(import_block_editor87.store).isValidTemplate();
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime590.jsx)(import_theme.ThemeProvider, { cornerRadius: "none", children: /* @__PURE__ */ (0, import_jsx_runtime590.jsx)(
-      import_notices33.InlineNotices,
+      import_notices32.InlineNotices,
       {
         className: "editor-notices",
         pinnedNoticesClassName: "editor-notices__pinned",
@@ -113379,7 +113265,7 @@ ${content}
   var import_components253 = __toESM(require_components(), 1);
   var import_data227 = __toESM(require_data(), 1);
   var import_core_data124 = __toESM(require_core_data(), 1);
-  var import_notices34 = __toESM(require_notices(), 1);
+  var import_notices33 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/utils/get-item-title.mjs
   var import_html_entities31 = __toESM(require_html_entities(), 1);
@@ -113418,7 +113304,7 @@ ${content}
       }
     );
     const { saveEntityRecord } = (0, import_data227.useDispatch)(import_core_data124.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data227.useDispatch)(import_notices34.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data227.useDispatch)(import_notices33.store);
     async function onSetPageAsHomepage(event) {
       event.preventDefault();
       try {
@@ -113529,7 +113415,7 @@ ${content}
   var import_components254 = __toESM(require_components(), 1);
   var import_data228 = __toESM(require_data(), 1);
   var import_core_data125 = __toESM(require_core_data(), 1);
-  var import_notices35 = __toESM(require_notices(), 1);
+  var import_notices34 = __toESM(require_notices(), 1);
   var import_jsx_runtime593 = __toESM(require_jsx_runtime(), 1);
   var SetAsPostsPageModal = ({ items, closeModal: closeModal2 }) => {
     const [item] = items;
@@ -113551,7 +113437,7 @@ ${content}
       }
     );
     const { saveEntityRecord } = (0, import_data228.useDispatch)(import_core_data125.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data228.useDispatch)(import_notices35.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data228.useDispatch)(import_notices34.store);
     async function onSetPageAsPostsPage(event) {
       event.preventDefault();
       try {
@@ -115444,7 +115330,7 @@ ${content}
   var import_i18n342 = __toESM(require_i18n(), 1);
   var import_html_entities34 = __toESM(require_html_entities(), 1);
   var import_keycodes20 = __toESM(require_keycodes(), 1);
-  var import_notices36 = __toESM(require_notices(), 1);
+  var import_notices35 = __toESM(require_notices(), 1);
   var import_preferences27 = __toESM(require_preferences(), 1);
   var import_jsx_runtime614 = __toESM(require_jsx_runtime(), 1);
   function TemplateActionsPanelContent() {
@@ -115477,7 +115363,7 @@ ${content}
       };
     }, []);
     const { get: getPreference } = (0, import_data251.useSelect)(import_preferences27.store);
-    const { createSuccessNotice } = (0, import_data251.useDispatch)(import_notices36.store);
+    const { createSuccessNotice } = (0, import_data251.useDispatch)(import_notices35.store);
     const { editedRecord: template2, hasResolved } = (0, import_core_data139.useEntityRecord)(
       "postType",
       "wp_template",
@@ -115607,7 +115493,7 @@ ${content}
   var import_element390 = __toESM(require_element(), 1);
   var import_i18n343 = __toESM(require_i18n(), 1);
   var import_html_entities35 = __toESM(require_html_entities(), 1);
-  var import_notices37 = __toESM(require_notices(), 1);
+  var import_notices36 = __toESM(require_notices(), 1);
   var import_preferences28 = __toESM(require_preferences(), 1);
   var import_jsx_runtime615 = __toESM(require_jsx_runtime(), 1);
   function ClassicThemeContent() {
@@ -115637,7 +115523,7 @@ ${content}
       };
     }, []);
     const { get: getPreference } = (0, import_data252.useSelect)(import_preferences28.store);
-    const { createSuccessNotice } = (0, import_data252.useDispatch)(import_notices37.store);
+    const { createSuccessNotice } = (0, import_data252.useDispatch)(import_notices36.store);
     const { editedRecord: template2 } = (0, import_core_data140.useEntityRecord)(
       "postType",
       "wp_template",
@@ -117186,7 +117072,7 @@ ${content}
   var import_core_data143 = __toESM(require_core_data(), 1);
   var import_data262 = __toESM(require_data(), 1);
   var import_block_editor103 = __toESM(require_block_editor(), 1);
-  var import_notices38 = __toESM(require_notices(), 1);
+  var import_notices37 = __toESM(require_notices(), 1);
   var import_dom36 = __toESM(require_dom(), 1);
   var import_html_entities36 = __toESM(require_html_entities(), 1);
   var import_rich_text9 = __toESM(require_rich_text(), 1);
@@ -117424,7 +117310,7 @@ ${content}
     }
   }
   function useNoteActions() {
-    const { createNotice } = (0, import_data262.useDispatch)(import_notices38.store);
+    const { createNotice } = (0, import_data262.useDispatch)(import_notices37.store);
     const { saveEntityRecord, deleteEntityRecord } = (0, import_data262.useDispatch)(import_core_data143.store);
     const { getCurrentPostId: getCurrentPostId2 } = (0, import_data262.useSelect)(store);
     const {
@@ -119259,7 +119145,7 @@ ${content}
   var import_data274 = __toESM(require_data(), 1);
   var import_blob4 = __toESM(require_blob(), 1);
   var import_core_data147 = __toESM(require_core_data(), 1);
-  var import_notices39 = __toESM(require_notices(), 1);
+  var import_notices38 = __toESM(require_notices(), 1);
   var import_jsx_runtime643 = __toESM(require_jsx_runtime(), 1);
   function SiteExport() {
     const canExport = (0, import_data274.useSelect)((select9) => {
@@ -119270,7 +119156,7 @@ ${content}
       const targetHints = select9(import_core_data147.store).getCurrentTheme()?._links?.["wp:export-theme"]?.[0]?.targetHints ?? {};
       return !!targetHints.allow?.includes("GET");
     }, []);
-    const { createErrorNotice } = (0, import_data274.useDispatch)(import_notices39.store);
+    const { createErrorNotice } = (0, import_data274.useDispatch)(import_notices38.store);
     if (!canExport) {
       return null;
     }
@@ -119752,7 +119638,7 @@ ${content}
   var import_i18n367 = __toESM(require_i18n(), 1);
   var import_a11y18 = __toESM(require_a11y(), 1);
   var import_upload_media3 = __toESM(require_upload_media(), 1);
-  var import_notices40 = __toESM(require_notices(), 1);
+  var import_notices39 = __toESM(require_notices(), 1);
   var import_components284 = __toESM(require_components(), 1);
   var import_jsx_runtime644 = __toESM(require_jsx_runtime(), 1);
   var NOTICE_ID = "upload-progress";
@@ -119796,7 +119682,7 @@ ${content}
     const remaining = csmRemaining + trackedRemaining;
     const sessionTotal = csmRemaining + (tracker ? tracker.total : 0);
     const peakRef = (0, import_element407.useRef)(0);
-    const { createNotice, removeNotice } = (0, import_data275.useDispatch)(import_notices40.store);
+    const { createNotice, removeNotice } = (0, import_data275.useDispatch)(import_notices39.store);
     const dismissedRef = (0, import_element407.useRef)(false);
     const wasUploadingRef = (0, import_element407.useRef)(false);
     const failuresAtStartRef = (0, import_element407.useRef)(0);

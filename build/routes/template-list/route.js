@@ -188,23 +188,14 @@ var DEFAULT_VIEW = {
     field: "title",
     direction: "asc"
   },
-  fields: ["author", "active", "slug"],
+  fields: ["author"],
   titleField: "title",
   descriptionField: "description",
   mediaField: "preview",
   filters: []
 };
-var DEFAULT_VIEW_LEGACY = {
-  ...DEFAULT_VIEW,
-  fields: ["author"]
-};
 function getActiveViewOverridesForTab(activeView) {
-  if (activeView === "user") {
-    return {
-      sort: { field: "date", direction: "desc" }
-    };
-  }
-  if (activeView === "active") {
+  if (activeView === "all") {
     return {};
   }
   return {
@@ -224,7 +215,7 @@ async function ensureView(activeView, search) {
     slug: "default-new",
     defaultView: DEFAULT_VIEW,
     activeViewOverrides: getActiveViewOverridesForTab(
-      activeView ?? "active"
+      activeView ?? "all"
     ),
     queryParams: search
   });

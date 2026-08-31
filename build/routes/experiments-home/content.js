@@ -29046,26 +29046,19 @@ function ExperimentsPage() {
     for (const [key, value] of Object.entries(gutenbergExperiments)) {
       combined[key] = Boolean(value);
     }
-    const activeTemplates = siteSettings?.active_templates;
-    combined.active_templates = typeof activeTemplates === "object" && activeTemplates !== null;
     return combined;
-  }, [experiments, gutenbergExperiments, siteSettings]);
+  }, [experiments, gutenbergExperiments]);
   const setSettings = async (values) => {
     const [changedId] = Object.keys(values);
     const changedExperiment = (experiments ?? []).find(
       (exp) => exp.id === changedId
     );
-    const editPayload = {};
-    if ("active_templates" in values) {
-      editPayload.active_templates = values.active_templates ? {} : null;
-      delete values.active_templates;
-    }
-    if (Object.keys(values).length > 0) {
-      editPayload["gutenberg-experiments"] = {
+    const editPayload = {
+      "gutenberg-experiments": {
         ...gutenbergExperiments,
         ...values
-      };
-    }
+      }
+    };
     const groupLabel = changedExperiment?.groupLabel ?? "";
     edit(editPayload);
     try {

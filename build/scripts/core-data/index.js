@@ -3380,14 +3380,6 @@ var wp;
       supportsPagination: false
     },
     {
-      label: (0, import_i18n.__)("Registered Templates"),
-      name: "registeredTemplate",
-      kind: "root",
-      baseURL: "/wp/v2/registered-templates",
-      key: "id",
-      supportsPagination: false
-    },
-    {
       label: (0, import_i18n.__)("Font Collections"),
       name: "fontCollection",
       kind: "root",
@@ -3511,12 +3503,10 @@ var wp;
         __unstablePrePersist: (persistedRecord, edits) => prePersistPostType(persistedRecord, edits, name, isTemplate),
         __unstable_rest_base: postType.rest_base,
         // The templates controller returns the whole collection and never
-        // paginates. It serves `wp_template_part` always, and `wp_template`
-        // until the template activate experiment moves it to a posts
-        // controller.
-        supportsPagination: window?.__experimentalTemplateActivate ? name !== "wp_template_part" : !isTemplate,
+        // paginates.
+        supportsPagination: !isTemplate,
         getRevisionsUrl: (parentId, revisionId) => `/${namespace}/${postType.rest_base}/${parentId}/revisions${revisionId ? "/" + revisionId : ""}`,
-        revisionKey: isTemplate && !window?.__experimentalTemplateActivate ? "wp_id" : DEFAULT_ENTITY_KEY
+        revisionKey: isTemplate ? "wp_id" : DEFAULT_ENTITY_KEY
       };
       if (!window.__experimentalEnableRealTimeCollaboration) {
         return entity2;
@@ -5512,10 +5502,7 @@ var wp;
         recordId
       });
       let hasError = false;
-      let { baseURL } = entityConfig;
-      if (kind === "postType" && name === "wp_template" && (recordId && typeof recordId === "string" && !/^\d+$/.test(recordId) || !window?.__experimentalTemplateActivate)) {
-        baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
-      }
+      const { baseURL } = entityConfig;
       try {
         let path = `${baseURL}/${recordId}`;
         if (query) {
@@ -5717,10 +5704,7 @@ var wp;
       let updatedRecord;
       let error;
       let hasError = false;
-      let { baseURL } = entityConfig;
-      if (kind === "postType" && name === "wp_template" && (recordId && typeof recordId === "string" && !/^\d+$/.test(recordId) || !window?.__experimentalTemplateActivate)) {
-        baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
-      }
+      const { baseURL } = entityConfig;
       try {
         const path = `${baseURL}${recordId ? "/" + recordId : ""}`;
         const persistedRecord = !isNewRecord ? select5.getRawEntityRecord(kind, name, recordId) : {};
@@ -6607,10 +6591,7 @@ var wp;
           return;
         }
       }
-      let { baseURL } = entityConfig;
-      if (kind === "postType" && name === "wp_template" && (key && typeof key === "string" && !/^\d+$/.test(key) || !window?.__experimentalTemplateActivate)) {
-        baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
-      }
+      const { baseURL } = entityConfig;
       const path = (0, import_url6.addQueryArgs)(baseURL + (key ? "/" + key : ""), {
         ...entityConfig.baseURLParams,
         ...query
@@ -6800,11 +6781,7 @@ var wp;
           ].join()
         };
       }
-      let { baseURL } = entityConfig;
-      const { combinedTemplates = true } = query;
-      if (kind === "postType" && name === "wp_template" && combinedTemplates) {
-        baseURL = baseURL.slice(0, baseURL.lastIndexOf("/")) + "/templates";
-      }
+      const { baseURL } = entityConfig;
       const path = (0, import_url6.addQueryArgs)(baseURL, {
         ...entityConfig.baseURLParams,
         ...query
@@ -7183,7 +7160,7 @@ var wp;
       path: (0, import_url6.addQueryArgs)("/wp/v2/templates/lookup", query)
     });
     await resolveSelect2.getEntitiesConfig("postType");
-    const id = window?.__experimentalTemplateActivate ? template?.wp_id || template?.id : template?.id;
+    const id = template?.id;
     registry.batch(() => {
       dispatch3.receiveDefaultTemplateId(query, id || "");
       if (id) {
@@ -7200,9 +7177,6 @@ var wp;
         ]);
       }
     });
-  };
-  getDefaultTemplateId2.shouldInvalidate = (action) => {
-    return action.type === "RECEIVE_ITEMS" && action.kind === "root" && action.name === "site" && !!action.persistedEdits;
   };
   var getRevisions2 = (kind, name, recordKey, query = {}) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     const configs = await resolveSelect2.getEntitiesConfig(kind);

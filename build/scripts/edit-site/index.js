@@ -177,7 +177,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState101({
+          cachedValue = useState96({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -189,7 +189,7 @@ var wp;
             },
             [subscribe3, value, getSnapshot]
           );
-          useEffect85(
+          useEffect82(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe3(function() {
@@ -215,7 +215,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React155 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState101 = React155.useState, useEffect85 = React155.useEffect, useLayoutEffect12 = React155.useLayoutEffect, useDebugValue2 = React155.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React155 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState96 = React155.useState, useEffect82 = React155.useEffect, useLayoutEffect12 = React155.useLayoutEffect, useDebugValue2 = React155.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React155.useSyncExternalStore ? React155.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -243,14 +243,14 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React155 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore4 = shim.useSyncExternalStore, useRef118 = React155.useRef, useEffect85 = React155.useEffect, useMemo123 = React155.useMemo, useDebugValue2 = React155.useDebugValue;
+        var React155 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore4 = shim.useSyncExternalStore, useRef116 = React155.useRef, useEffect82 = React155.useEffect, useMemo119 = React155.useMemo, useDebugValue2 = React155.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe3, getSnapshot, getServerSnapshot, selector2, isEqual2) {
-          var instRef = useRef118(null);
+          var instRef = useRef116(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo123(
+          instRef = useMemo119(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -286,7 +286,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector2, isEqual2]
           );
           var value = useSyncExternalStore4(subscribe3, instRef[0], instRef[1]);
-          useEffect85(
+          useEffect82(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -1100,10 +1100,10 @@ var wp;
   });
   var import_blocks15 = __toESM(require_blocks(), 1);
   var import_block_library3 = __toESM(require_block_library(), 1);
-  var import_data88 = __toESM(require_data(), 1);
+  var import_data82 = __toESM(require_data(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
-  var import_element256 = __toESM(require_element(), 1);
-  var import_editor42 = __toESM(require_editor(), 1);
+  var import_element250 = __toESM(require_element(), 1);
+  var import_editor41 = __toESM(require_editor(), 1);
   var import_preferences13 = __toESM(require_preferences(), 1);
   var import_widgets = __toESM(require_widgets(), 1);
 
@@ -1212,11 +1212,6 @@ var wp;
   var NAVIGATION_POST_TYPE = "wp_navigation";
   var TEMPLATE_POST_TYPE = "wp_template";
   var TEMPLATE_PART_POST_TYPE = "wp_template_part";
-  var TEMPLATE_ORIGINS = {
-    custom: "custom",
-    theme: "theme",
-    plugin: "plugin"
-  };
   var TEMPLATE_PART_AREA_DEFAULT_CATEGORY = "uncategorized";
   var TEMPLATE_PART_ALL_AREAS_CATEGORY = "all-parts";
   var {
@@ -1735,10 +1730,10 @@ var wp;
   unlock(store).registerPrivateActions(private_actions_exports);
 
   // packages/edit-site/build-module/components/app/index.mjs
-  var import_data87 = __toESM(require_data(), 1);
-  var import_router37 = __toESM(require_router(), 1);
-  var import_element255 = __toESM(require_element(), 1);
-  var import_core_data69 = __toESM(require_core_data(), 1);
+  var import_data81 = __toESM(require_data(), 1);
+  var import_router34 = __toESM(require_router(), 1);
+  var import_element249 = __toESM(require_element(), 1);
+  var import_core_data61 = __toESM(require_core_data(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
   function r(e2) {
@@ -14369,7 +14364,7 @@ var wp;
       ignoreMouse: false,
       stickIfOpen: parent.type === void 0 ? stickIfOpen : false
     });
-    const focus8 = useFocus(floatingRootContext, {
+    const focus6 = useFocus(floatingRootContext, {
       enabled: !disabled2 && parentMenubarHasSubmenuOpen
     });
     const mixedToggleHandlers = useMixedToggleClickHandler({
@@ -14377,7 +14372,7 @@ var wp;
       enabled: isInMenubar,
       mouseDownAction: "open"
     });
-    const localInteractionProps = React92.useMemo(() => mergeProps(focus8.reference, click.reference), [focus8.reference, click.reference]);
+    const localInteractionProps = React92.useMemo(() => mergeProps(focus6.reference, click.reference), [focus6.reference, click.reference]);
     const rootTriggerProps = store2.useState("triggerProps", isMountedByThisTrigger);
     const {
       preFocusGuardRef,
@@ -35148,8 +35143,8 @@ var wp;
   }
 
   // packages/edit-site/build-module/components/site-editor-routes/index.mjs
-  var import_data86 = __toESM(require_data(), 1);
-  var import_element254 = __toESM(require_element(), 1);
+  var import_data80 = __toESM(require_data(), 1);
+  var import_element248 = __toESM(require_element(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-main/index.mjs
   var import_components11 = __toESM(require_components(), 1);
@@ -40765,7 +40760,7 @@ var wp;
     titleField,
     mediaField,
     mediaAspectRatio,
-    descriptionField: descriptionField2,
+    descriptionField,
     onClickItem,
     renderItemLink,
     isItemClickable
@@ -40822,11 +40817,11 @@ var wp;
                 ]
               }
             ),
-            descriptionField2 && /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
-              descriptionField2.render,
+            descriptionField && /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
+              descriptionField.render,
               {
                 item,
-                field: descriptionField2
+                field: descriptionField
               }
             )
           ]
@@ -41089,7 +41084,7 @@ var wp;
     }
     const titleField = fields2.find((f2) => f2.id === view.titleField);
     const previewField3 = fields2.find((f2) => f2.id === view.mediaField);
-    const descriptionField2 = fields2.find(
+    const descriptionField = fields2.find(
       (f2) => f2.id === view.descriptionField
     );
     const lockedFields = [
@@ -41102,7 +41097,7 @@ var wp;
         isVisibleFlag: "showMedia"
       },
       {
-        field: descriptionField2,
+        field: descriptionField,
         isVisibleFlag: "showDescription"
       }
     ].filter(({ field }) => isDefined(field));
@@ -41224,7 +41219,7 @@ var wp;
     titleField,
     mediaField,
     mediaAspectRatio,
-    descriptionField: descriptionField2,
+    descriptionField,
     selection,
     getItemId: getItemId2,
     isItemClickable,
@@ -41246,7 +41241,7 @@ var wp;
       infiniteScrollEnabled
     } = view;
     const columns = view.fields ?? [];
-    const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField2 && showDescription;
+    const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
     return /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(
       "tr",
       {
@@ -41285,7 +41280,7 @@ var wp;
               titleField: showTitle ? titleField : void 0,
               mediaField: showMedia ? mediaField : void 0,
               mediaAspectRatio,
-              descriptionField: showDescription ? descriptionField2 : void 0,
+              descriptionField: showDescription ? descriptionField : void 0,
               isItemClickable,
               onClickItem,
               renderItemLink
@@ -41417,11 +41412,11 @@ var wp;
     const hasData = !!data?.length;
     const titleField = fields2.find((field) => field.id === view.titleField);
     const mediaField = fields2.find((field) => field.id === view.mediaField);
-    const descriptionField2 = fields2.find(
+    const descriptionField = fields2.find(
       (field) => field.id === view.descriptionField
     );
     const { showTitle = true, showMedia = true, showDescription = true } = view;
-    const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField2 && showDescription;
+    const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
     const columns = view.fields ?? [];
     const headerMenuRef = (column, index2) => (node) => {
       if (node) {
@@ -41625,7 +41620,7 @@ var wp;
                       titleField,
                       mediaField,
                       mediaAspectRatio,
-                      descriptionField: descriptionField2,
+                      descriptionField,
                       selection,
                       getItemId: getItemId2,
                       onChangeSelection,
@@ -41654,7 +41649,7 @@ var wp;
                   titleField,
                   mediaField,
                   mediaAspectRatio,
-                  descriptionField: descriptionField2,
+                  descriptionField,
                   selection,
                   getItemId: getItemId2,
                   onChangeSelection,
@@ -41796,7 +41791,7 @@ var wp;
       actions,
       mediaField,
       titleField,
-      descriptionField: descriptionField2,
+      descriptionField,
       regularFields,
       badgeFields,
       hasBulkActions,
@@ -41921,11 +41916,11 @@ var wp;
               }
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(Stack, { direction: "column", gap: "xs", children: [
-              showDescription && descriptionField2?.render && /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
-                descriptionField2.render,
+              showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
+                descriptionField.render,
                 {
                   item,
-                  field: descriptionField2
+                  field: descriptionField
                 }
               ),
               !!badgeFields?.length && /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
@@ -42041,7 +42036,7 @@ var wp;
     const mediaField = fields2.find(
       (field) => field.id === view?.mediaField
     );
-    const descriptionField2 = fields2.find(
+    const descriptionField = fields2.find(
       (field) => field.id === view?.descriptionField
     );
     const otherFields = view.fields ?? [];
@@ -42149,7 +42144,7 @@ var wp;
                         },
                         mediaField,
                         titleField,
-                        descriptionField: descriptionField2,
+                        descriptionField,
                         regularFields,
                         badgeFields,
                         hasBulkActions,
@@ -42242,7 +42237,7 @@ var wp;
                           },
                           mediaField,
                           titleField,
-                          descriptionField: descriptionField2,
+                          descriptionField,
                           regularFields,
                           badgeFields,
                           hasBulkActions,
@@ -42446,7 +42441,7 @@ var wp;
     item,
     titleField,
     mediaField,
-    descriptionField: descriptionField2,
+    descriptionField,
     selectionProps,
     otherFields,
     onDropdownTriggerKeyDown,
@@ -42502,7 +42497,7 @@ var wp;
       }
     ) }) : null;
     const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(titleField.render, { item, field: titleField }) : null;
-    const renderDescription = showDescription && descriptionField2?.render;
+    const renderDescription = showDescription && descriptionField?.render;
     const hasOnlyMediaAndTitle = !!renderedMediaField && !renderDescription && !otherFields.length;
     const usedActions = eligibleActions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(
       Stack,
@@ -42641,10 +42636,10 @@ var wp;
                             usedActions
                           ] }),
                           renderDescription && /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("div", { className: "dataviews-view-list__field", children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
-                            descriptionField2.render,
+                            descriptionField.render,
                             {
                               item,
-                              field: descriptionField2
+                              field: descriptionField
                             }
                           ) }),
                           /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
@@ -42714,7 +42709,7 @@ var wp;
     );
     const titleField = fields2.find((field) => field.id === view.titleField);
     const mediaField = fields2.find((field) => field.id === view.mediaField);
-    const descriptionField2 = fields2.find(
+    const descriptionField = fields2.find(
       (field) => field.id === view.descriptionField
     );
     const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f2) => fieldId === f2.id)).filter(isDefined2);
@@ -42865,7 +42860,7 @@ var wp;
                     ),
                     mediaField,
                     titleField,
-                    descriptionField: descriptionField2,
+                    descriptionField,
                     otherFields,
                     onDropdownTriggerKeyDown
                   },
@@ -42899,7 +42894,7 @@ var wp;
                 ),
                 mediaField,
                 titleField,
-                descriptionField: descriptionField2,
+                descriptionField,
                 otherFields,
                 onDropdownTriggerKeyDown,
                 posinset: view.infiniteScrollEnabled ? index2 + 1 : void 0
@@ -42976,7 +42971,7 @@ var wp;
       item,
       titleField,
       mediaField,
-      descriptionField: descriptionField2,
+      descriptionField,
       otherFields,
       posinset,
       onClickItem,
@@ -43075,11 +43070,11 @@ var wp;
                     children: renderedTitleField
                   }
                 ),
-                showDescription && descriptionField2 && /* @__PURE__ */ (0, import_jsx_runtime200.jsx)("div", { className: "dataviews-view-activity__item-description", children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
-                  descriptionField2.render,
+                showDescription && descriptionField && /* @__PURE__ */ (0, import_jsx_runtime200.jsx)("div", { className: "dataviews-view-activity__item-description", children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+                  descriptionField.render,
                   {
                     item,
-                    field: descriptionField2
+                    field: descriptionField
                   }
                 ) }),
                 /* @__PURE__ */ (0, import_jsx_runtime200.jsx)("div", { className: "dataviews-view-activity__item-fields", children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)(
@@ -43144,7 +43139,7 @@ var wp;
     const { data, fields: fields2, getItemId: getItemId2, view } = props;
     const titleField = fields2.find((field) => field.id === view.titleField);
     const mediaField = fields2.find((field) => field.id === view.mediaField);
-    const descriptionField2 = fields2.find(
+    const descriptionField = fields2.find(
       (field) => field.id === view.descriptionField
     );
     const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f2) => fieldId === f2.id)).filter(isDefined3);
@@ -43157,7 +43152,7 @@ var wp;
           item,
           mediaField,
           titleField,
-          descriptionField: descriptionField2,
+          descriptionField,
           otherFields,
           posinset: view.infiniteScrollEnabled ? index2 + 1 : void 0
         }
@@ -43379,7 +43374,7 @@ var wp;
     item,
     mediaField,
     titleField,
-    descriptionField: descriptionField2,
+    descriptionField,
     regularFields,
     badgeFields,
     config: config2,
@@ -43439,11 +43434,11 @@ var wp;
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(Stack, { direction: "column", gap: "xs", children: [
-            showDescription && descriptionField2?.render && /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
-              descriptionField2.render,
+            showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
+              descriptionField.render,
               {
                 item,
-                field: descriptionField2
+                field: descriptionField
               }
             ),
             !!badgeFields?.length && /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
@@ -43577,7 +43572,7 @@ var wp;
     const mediaField = fields2.find(
       (field) => field.id === view?.mediaField
     );
-    const descriptionField2 = fields2.find(
+    const descriptionField = fields2.find(
       (field) => field.id === view?.descriptionField
     );
     const otherFields = view.fields ?? [];
@@ -43678,7 +43673,7 @@ var wp;
                             item,
                             mediaField,
                             titleField,
-                            descriptionField: descriptionField2,
+                            descriptionField,
                             regularFields,
                             badgeFields,
                             config: {
@@ -43762,7 +43757,7 @@ var wp;
                     item,
                     mediaField,
                     titleField,
-                    descriptionField: descriptionField2,
+                    descriptionField,
                     regularFields,
                     badgeFields,
                     config: {
@@ -43822,7 +43817,7 @@ var wp;
     view,
     titleField,
     mediaField,
-    descriptionField: descriptionField2,
+    descriptionField,
     selection,
     getItemId: getItemId2,
     onChangeSelection,
@@ -43847,7 +43842,7 @@ var wp;
       setIsHovered(false);
     };
     const columns = view.fields ?? [];
-    const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField2 && showDescription;
+    const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
     return /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)(
       import_components34.Composite.Item,
       {
@@ -43911,7 +43906,7 @@ var wp;
                   item,
                   titleField: showTitle ? titleField : void 0,
                   mediaField: showMedia ? mediaField : void 0,
-                  descriptionField: showDescription ? descriptionField2 : void 0,
+                  descriptionField: showDescription ? descriptionField : void 0,
                   isItemClickable: () => false
                 }
               )
@@ -43997,11 +43992,11 @@ var wp;
     const hasData = !!data?.length;
     const titleField = fields2.find((field) => field.id === view.titleField);
     const mediaField = fields2.find((field) => field.id === view.mediaField);
-    const descriptionField2 = fields2.find(
+    const descriptionField = fields2.find(
       (field) => field.id === view.descriptionField
     );
     const { showTitle = true, showMedia = true, showDescription = true } = view;
-    const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField2 && showDescription;
+    const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
     const columns = view.fields ?? [];
     const headerMenuRef = (column, index2) => (node) => {
       if (node) {
@@ -44137,7 +44132,7 @@ var wp;
                           view,
                           titleField,
                           mediaField,
-                          descriptionField: descriptionField2,
+                          descriptionField,
                           selection,
                           getItemId: getItemId2,
                           onChangeSelection,
@@ -44171,7 +44166,7 @@ var wp;
                       view,
                       titleField,
                       mediaField,
-                      descriptionField: descriptionField2,
+                      descriptionField,
                       selection,
                       getItemId: getItemId2,
                       onChangeSelection,
@@ -44223,7 +44218,7 @@ var wp;
     item,
     titleField,
     mediaField,
-    descriptionField: descriptionField2,
+    descriptionField,
     otherFields,
     posinset,
     setsize
@@ -44252,7 +44247,7 @@ var wp;
       }
     ) });
     const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(titleField.render, { item, field: titleField }) : null;
-    const renderedDescriptionField = showDescription && descriptionField2?.render ? /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(descriptionField2.render, { item, field: descriptionField2 }) : null;
+    const renderedDescriptionField = showDescription && descriptionField?.render ? /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(descriptionField.render, { item, field: descriptionField }) : null;
     const verticalGap = (0, import_element127.useMemo)(() => {
       switch (density) {
         case "comfortable":
@@ -44387,7 +44382,7 @@ var wp;
     const mediaField = fields2.find(
       (field) => field.id === view?.mediaField
     );
-    const descriptionField2 = fields2.find(
+    const descriptionField = fields2.find(
       (field) => field.id === view?.descriptionField
     );
     const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f2) => fieldId === f2.id)).filter(isDefined4);
@@ -44417,7 +44412,7 @@ var wp;
         item,
         titleField,
         mediaField,
-        descriptionField: descriptionField2,
+        descriptionField,
         otherFields,
         posinset: item.position,
         setsize
@@ -46937,7 +46932,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (isItem(store2, activeElement2)) return true;
     return !!getPopupElement(store2)?.contains(activeElement2);
   }
-  function presentItem({ store: store2, id, focus: focus8, markedOnly, requireFocus, scrollIntoView }) {
+  function presentItem({ store: store2, id, focus: focus6, markedOnly, requireFocus, scrollIntoView }) {
     let element = null;
     let resolvedId;
     let focused = false;
@@ -47005,12 +47000,12 @@ If there's a particular need for this, please submit a feature request at https:
       }
       if (restoreFocus) focused = false;
       else if (!stillOwnsFocus(element)) return cancel();
-      const focusWithheld = focus8 && startedOnComposite && entersClosedPopup(state, element);
+      const focusWithheld = focus6 && startedOnComposite && entersClosedPopup(state, element);
       if (focusWithheld) {
         const { activeId } = state;
         if (activeId != null && activeId !== resolvedId) return cancel();
       }
-      if (focus8 && !focused && !focusWithheld) {
+      if (focus6 && !focused && !focusWithheld) {
         focused = true;
         focusLeftElement = false;
         const itemElement = element;
@@ -47261,11 +47256,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore2(createStore2, props) {
     const [store2, setStore] = React154.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store2), [store2]);
-    const useState101 = React154.useCallback((keyOrSelector) => useStoreState(store2, keyOrSelector), [store2]);
+    const useState96 = React154.useCallback((keyOrSelector) => useStoreState(store2, keyOrSelector), [store2]);
     return [React154.useMemo(() => ({
       ...store2,
-      useState: useState101
-    }), [store2, useState101]), useEvent(() => {
+      useState: useState96
+    }), [store2, useState96]), useEvent(() => {
       setStore((store3) => createStore2({
         ...props,
         ...store3.getState()
@@ -51117,7 +51112,7 @@ If there's a particular need for this, please submit a feature request at https:
       onClickItem,
       isItemClickable,
       renderItemLink,
-      defaultLayouts: defaultLayouts2,
+      defaultLayouts,
       containerRef,
       empty = /* @__PURE__ */ (0, import_jsx_runtime229.jsx)("p", { children: (0, import_i18n62.__)("No results") })
     } = (0, import_element141.useContext)(dataviews_context_default);
@@ -51131,7 +51126,7 @@ If there's a particular need for this, please submit a feature request at https:
       return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)("div", { className: "dataviews-loading", children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(import_components45.Spinner, {}) }) });
     }
     const ViewComponent = VIEW_LAYOUTS.find(
-      (v2) => v2.type === view.type && defaultLayouts2[v2.type]
+      (v2) => v2.type === view.type && defaultLayouts[v2.type]
     )?.component;
     return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)("div", { className: "dataviews-layout__container", ref: containerRef, children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
       ViewComponent,
@@ -51264,8 +51259,8 @@ If there's a particular need for this, please submit a feature request at https:
     offset: 9
   };
   function ViewTypeMenu() {
-    const { view, onChangeView, defaultLayouts: defaultLayouts2 } = (0, import_element144.useContext)(dataviews_context_default);
-    const availableLayouts = Object.keys(defaultLayouts2);
+    const { view, onChangeView, defaultLayouts } = (0, import_element144.useContext)(dataviews_context_default);
+    const availableLayouts = Object.keys(defaultLayouts);
     if (availableLayouts.length <= 1) {
       return null;
     }
@@ -51304,7 +51299,7 @@ If there's a particular need for this, please submit a feature request at https:
                 return onChangeView({
                   ...viewWithoutLayout,
                   type: value,
-                  ...defaultLayouts2[value]
+                  ...defaultLayouts[value]
                 });
             }
             (0, import_warning.default)("Invalid dataview");
@@ -55614,7 +55609,7 @@ If there's a particular need for this, please submit a feature request at https:
         setIsShowingFilter(true);
       }
     }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-    const defaultLayouts2 = (0, import_element173.useMemo)(
+    const defaultLayouts = (0, import_element173.useMemo)(
       () => Object.fromEntries(
         Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
           return dataViewsLayouts.some(
@@ -55627,7 +55622,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [defaultLayoutsProperty]
     );
-    if (!defaultLayouts2[view.type]) {
+    if (!defaultLayouts[view.type]) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(
@@ -55653,7 +55648,7 @@ If there's a particular need for this, please submit a feature request at https:
           containerWidth,
           containerRef,
           resizeObserverRef,
-          defaultLayouts: defaultLayouts2,
+          defaultLayouts,
           filters,
           isShowingFilter,
           setIsShowingFilter,
@@ -63072,8 +63067,8 @@ If there's a particular need for this, please submit a feature request at https:
                             ringbuffer,
                             ringbuffer_size
                           );
-                          for (var _x24 = 0; _x24 < copy_dst - ringbuffer_end; _x24++)
-                            ringbuffer[_x24] = ringbuffer[ringbuffer_end + _x24];
+                          for (var _x22 = 0; _x22 < copy_dst - ringbuffer_end; _x22++)
+                            ringbuffer[_x22] = ringbuffer[ringbuffer_end + _x22];
                         }
                       } else {
                         throw new Error(
@@ -63952,12 +63947,12 @@ If there's a particular need for this, please submit a feature request at https:
             var STR_APPLY_UIA_OK = true;
             try {
               String.fromCharCode.apply(null, [0]);
-            } catch (__159) {
+            } catch (__153) {
               STR_APPLY_OK = false;
             }
             try {
               String.fromCharCode.apply(null, new Uint8Array(1));
-            } catch (__159) {
+            } catch (__153) {
               STR_APPLY_UIA_OK = false;
             }
             var _utf8len = new utils.Buf8(256);
@@ -72106,8 +72101,8 @@ If there's a particular need for this, please submit a feature request at https:
     return { ...view, filters: [...locked, ...rest] };
   }
   function resolveBaseView(layers, effectiveType) {
-    const { defaultView, defaultLayouts: defaultLayouts2, activeViewOverrides } = layers;
-    const layoutDefaults = defaultLayouts2?.[effectiveType];
+    const { defaultView, defaultLayouts, activeViewOverrides } = layers;
+    const layoutDefaults = defaultLayouts?.[effectiveType];
     return applyLockedFilters(
       [layoutDefaults, activeViewOverrides].reduce(
         (lower, upper) => mergeLayer(lower, withoutQueryParams(upper)),
@@ -72154,7 +72149,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: name2,
       slug,
       defaultView,
-      defaultLayouts: defaultLayouts2,
+      defaultLayouts,
       activeViewOverrides,
       queryParams,
       onChangeQueryParams
@@ -72175,7 +72170,7 @@ If there's a particular need for this, please submit a feature request at https:
     const view = (0, import_element226.useMemo)(
       () => resolveView({
         defaultView,
-        defaultLayouts: defaultLayouts2,
+        defaultLayouts,
         activeViewOverrides,
         persistedView,
         page,
@@ -72183,7 +72178,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [
         defaultView,
-        defaultLayouts2,
+        defaultLayouts,
         activeViewOverrides,
         persistedView,
         page,
@@ -72202,7 +72197,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
         const modifications = getUserModifications(newView, {
           defaultView,
-          defaultLayouts: defaultLayouts2,
+          defaultLayouts,
           activeViewOverrides,
           persistedView
         });
@@ -72215,7 +72210,7 @@ If there's a particular need for this, please submit a feature request at https:
         page,
         search,
         defaultView,
-        defaultLayouts2,
+        defaultLayouts,
         activeViewOverrides,
         persistedView,
         set3,
@@ -72242,7 +72237,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: name2,
       slug,
       defaultView,
-      defaultLayouts: defaultLayouts2,
+      defaultLayouts,
       activeViewOverrides,
       queryParams
     } = config2;
@@ -72252,7 +72247,7 @@ If there's a particular need for this, please submit a feature request at https:
     ).get("core/views", preferenceKey);
     return resolveView({
       defaultView,
-      defaultLayouts: defaultLayouts2,
+      defaultLayouts,
       activeViewOverrides,
       persistedView,
       page: queryParams?.page,
@@ -72950,10 +72945,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n153 = __toESM(require_i18n(), 1);
   var import_element237 = __toESM(require_element(), 1);
   var import_block_editor26 = __toESM(require_block_editor(), 1);
-  var import_core_data50 = __toESM(require_core_data(), 1);
+  var import_core_data49 = __toESM(require_core_data(), 1);
   var import_editor28 = __toESM(require_editor(), 1);
   var import_router29 = __toESM(require_router(), 1);
-  var import_data72 = __toESM(require_data(), 1);
+  var import_data71 = __toESM(require_data(), 1);
   var import_url17 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/page-patterns/use-pattern-settings.mjs
@@ -73375,59 +73370,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n151 = __toESM(require_i18n(), 1);
   var import_element235 = __toESM(require_element(), 1);
   var import_router28 = __toESM(require_router(), 1);
-  var import_data71 = __toESM(require_data(), 1);
-  var import_core_data49 = __toESM(require_core_data(), 1);
   var import_url16 = __toESM(require_url(), 1);
   var { useLocation: useLocation25, useHistory: useHistory20 } = unlock(import_router28.privateApis);
-  var useSetActiveTemplateAction = () => {
-    const activeTheme = (0, import_data71.useSelect)(
-      (select4) => select4(import_core_data49.store).getCurrentTheme()
-    );
-    const { getEntityRecord } = (0, import_data71.useSelect)(import_core_data49.store);
-    const { editEntityRecord, saveEditedEntityRecord } = (0, import_data71.useDispatch)(import_core_data49.store);
-    return (0, import_element235.useMemo)(
-      () => ({
-        id: "set-active-template",
-        label(items) {
-          return items.some((item) => item._isActive) ? (0, import_i18n151.__)("Deactivate") : (0, import_i18n151.__)("Activate");
-        },
-        isPrimary: true,
-        icon: pencil_default,
-        isEligible(item) {
-          if (item.theme !== activeTheme.stylesheet) {
-            return false;
-          }
-          if (typeof item.id !== "number") {
-            return item._isActive === false;
-          }
-          return true;
-        },
-        async callback(items) {
-          const deactivate = items.some((item) => item._isActive);
-          const activeTemplates = {
-            ...await getEntityRecord("root", "site").active_templates ?? {}
-          };
-          for (const item of items) {
-            if (deactivate) {
-              delete activeTemplates[item.slug];
-            } else {
-              activeTemplates[item.slug] = item.id;
-            }
-          }
-          await editEntityRecord("root", "site", void 0, {
-            active_templates: activeTemplates
-          });
-          await saveEditedEntityRecord("root", "site");
-        }
-      }),
-      [
-        editEntityRecord,
-        saveEditedEntityRecord,
-        getEntityRecord,
-        activeTheme
-      ]
-    );
-  };
   var useEditPostAction = () => {
     const history = useHistory20();
     return (0, import_element235.useMemo)(
@@ -73535,8 +73479,8 @@ If there's a particular need for this, please submit a feature request at https:
   var VIEW_CONFIG_FIELDS2 = ["default_view", "default_layouts"];
   function usePagePatternsHeader(type, categoryId) {
     const { patternCategories } = usePatternCategories();
-    const templatePartAreas = (0, import_data72.useSelect)(
-      (select4) => select4(import_core_data50.store).getCurrentTheme()?.default_template_part_areas || [],
+    const templatePartAreas = (0, import_data71.useSelect)(
+      (select4) => select4(import_core_data49.store).getCurrentTheme()?.default_template_part_areas || [],
       []
     );
     let title, description, patternCategory;
@@ -73560,7 +73504,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { postType: postType2 = "wp_block", categoryId: categoryIdFromURL } = query;
     const history = useHistory21();
     const categoryId = categoryIdFromURL || PATTERN_DEFAULT_CATEGORY;
-    const { default_view: defaultView, default_layouts: defaultLayouts2 } = useViewConfig({
+    const { default_view: defaultView, default_layouts: defaultLayouts } = useViewConfig({
       kind: "postType",
       name: postType2,
       fields: VIEW_CONFIG_FIELDS2
@@ -73570,7 +73514,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: postType2,
       slug: "default",
       defaultView,
-      defaultLayouts: defaultLayouts2,
+      defaultLayouts,
       queryParams: {
         page: query.pageNumber,
         search: query.search
@@ -73659,7 +73603,7 @@ If there's a particular need for this, please submit a feature request at https:
             },
             view,
             onChangeView: updateView,
-            defaultLayouts: defaultLayouts2,
+            defaultLayouts,
             onReset: isModified ? resetToDefault : false
           },
           categoryId + postType2
@@ -73723,166 +73667,22 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/templates.mjs
-  var import_data81 = __toESM(require_data(), 1);
-  var import_core_data63 = __toESM(require_core_data(), 1);
+  var import_data75 = __toESM(require_data(), 1);
+  var import_core_data55 = __toESM(require_core_data(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/index.mjs
-  var import_i18n155 = __toESM(require_i18n(), 1);
-
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content.mjs
-  var import_core_data52 = __toESM(require_core_data(), 1);
-  var import_element238 = __toESM(require_element(), 1);
-  var import_components144 = __toESM(require_components(), 1);
   var import_i18n154 = __toESM(require_i18n(), 1);
-  var import_router30 = __toESM(require_router(), 1);
-  var import_url18 = __toESM(require_url(), 1);
-
-  // packages/edit-site/build-module/components/page-templates/hooks.mjs
-  var import_core_data51 = __toESM(require_core_data(), 1);
-  var import_data73 = __toESM(require_data(), 1);
-  function useAddedBy(postType2, postId) {
-    return (0, import_data73.useSelect)(
-      (select4) => {
-        const { getEntityRecord, getUser, getEditedEntityRecord } = select4(import_core_data51.store);
-        const template = getEditedEntityRecord(
-          "postType",
-          postType2,
-          postId
-        );
-        const originalSource = template?.original_source;
-        const authorText = template?.author_text;
-        switch (originalSource) {
-          case "theme": {
-            return {
-              type: originalSource,
-              icon: layout_default,
-              text: authorText,
-              isCustomized: template.source === TEMPLATE_ORIGINS.custom
-            };
-          }
-          case "plugin": {
-            return {
-              type: originalSource,
-              icon: plugins_default,
-              text: authorText,
-              isCustomized: template.source === TEMPLATE_ORIGINS.custom
-            };
-          }
-          case "site": {
-            const siteData = getEntityRecord(
-              "root",
-              "__unstableBase"
-            );
-            return {
-              type: originalSource,
-              icon: globe_default,
-              imageUrl: siteData?.site_logo ? getEntityRecord(
-                "postType",
-                "attachment",
-                siteData.site_logo
-              )?.source_url : void 0,
-              text: authorText,
-              isCustomized: false
-            };
-          }
-          default: {
-            const user = getUser(template.author);
-            return {
-              type: "user",
-              icon: comment_author_avatar_default,
-              imageUrl: user?.avatar_urls?.[48],
-              text: authorText ?? user?.name,
-              isCustomized: false
-            };
-          }
-        }
-      },
-      [postType2, postId]
-    );
-  }
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content.mjs
-  var import_jsx_runtime384 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation27 } = unlock(import_router30.privateApis);
-  var EMPTY_ARRAY12 = [];
-  function TemplateDataviewItem({ template, isActive }) {
-    const { text, icon } = useAddedBy(template.type, template.id);
-    return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
-      SidebarNavigationItem,
-      {
-        to: (0, import_url18.addQueryArgs)("/template", { activeView: text }),
-        icon,
-        "aria-current": isActive,
-        children: text
-      }
-    );
-  }
-  function DataviewsTemplatesSidebarContent() {
-    const {
-      query: { activeView = "active" }
-    } = useLocation27();
-    const { records } = (0, import_core_data52.useEntityRecords)("root", "registeredTemplate", {
-      // This should not be needed, the endpoint returns all registered
-      // templates, but it's not possible right now to turn off pagination for
-      // entity configs.
-      per_page: -1
-    });
-    const firstItemPerAuthorText = (0, import_element238.useMemo)(() => {
-      const firstItemPerAuthor = records?.reduce((acc, template) => {
-        const author = template.author_text;
-        if (author && !acc[author]) {
-          acc[author] = template;
-        }
-        return acc;
-      }, {});
-      return (firstItemPerAuthor && Object.values(firstItemPerAuthor)) ?? EMPTY_ARRAY12;
-    }, [records]);
-    return /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)(import_components144.__experimentalItemGroup, { className: "edit-site-sidebar-navigation-screen-templates-browse", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
-        SidebarNavigationItem,
-        {
-          to: "/template",
-          icon: published_default,
-          "aria-current": activeView === "active",
-          children: (0, import_i18n154.__)("Active templates")
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
-        SidebarNavigationItem,
-        {
-          to: (0, import_url18.addQueryArgs)("/template", { activeView: "user" }),
-          icon: comment_author_avatar_default,
-          "aria-current": activeView === "user",
-          // Let's avoid calling them "custom templates" to avoid
-          // confusion. "Created" is closest to meaning database
-          // templates, created by users.
-          // https://developer.wordpress.org/themes/classic-themes/templates/page-template-files/#creating-custom-page-templates-for-global-use
-          children: (0, import_i18n154.__)("Created templates")
-        }
-      ),
-      firstItemPerAuthorText.map((template) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
-          TemplateDataviewItem,
-          {
-            template,
-            isActive: activeView === template.author_text
-          },
-          template.author_text
-        );
-      })
-    ] });
-  }
-
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content-legacy.mjs
-  var import_core_data53 = __toESM(require_core_data(), 1);
-  var import_data74 = __toESM(require_data(), 1);
+  var import_core_data50 = __toESM(require_core_data(), 1);
+  var import_data72 = __toESM(require_data(), 1);
 
   // packages/edit-site/build-module/components/sidebar-dataviews/index.mjs
-  var import_components145 = __toESM(require_components(), 1);
-  var import_router31 = __toESM(require_router(), 1);
-  var import_url19 = __toESM(require_url(), 1);
-  var import_jsx_runtime385 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation28 } = unlock(import_router31.privateApis);
+  var import_components144 = __toESM(require_components(), 1);
+  var import_router30 = __toESM(require_router(), 1);
+  var import_url18 = __toESM(require_url(), 1);
+  var import_jsx_runtime384 = __toESM(require_jsx_runtime(), 1);
+  var { useLocation: useLocation27 } = unlock(import_router30.privateApis);
   var VIEW_CONFIG_FIELDS3 = ["view_list"];
   var SLUG_TO_ICON = {
     all: pages_default,
@@ -73903,7 +73703,7 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       path,
       query: { activeView = "all" }
-    } = useLocation28();
+    } = useLocation27();
     const { view_list: viewList } = useViewConfig({
       kind: "postType",
       name: postType2,
@@ -73912,15 +73712,15 @@ If there's a particular need for this, please submit a feature request at https:
     if (!postType2) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(import_jsx_runtime385.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(import_components145.__experimentalItemGroup, { className: "edit-site-sidebar-dataviews", children: viewList?.map((view) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_jsx_runtime384.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_components144.__experimentalItemGroup, { className: "edit-site-sidebar-dataviews", children: viewList?.map((view) => {
       const isActive = view.slug === activeView;
       const slug = view.slug === "all" ? void 0 : view.slug;
       const icon = resolveIcon(view);
-      return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
         SidebarNavigationItem,
         {
           icon,
-          to: (0, import_url19.addQueryArgs)(path, {
+          to: (0, import_url18.addQueryArgs)(path, {
             activeView: slug
           }),
           "aria-current": isActive ? "true" : void 0,
@@ -73931,17 +73731,17 @@ If there's a particular need for this, please submit a feature request at https:
     }) }) });
   }
 
-  // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content-legacy.mjs
-  var import_jsx_runtime386 = __toESM(require_jsx_runtime(), 1);
+  // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content.mjs
+  var import_jsx_runtime385 = __toESM(require_jsx_runtime(), 1);
   var SOURCE_TO_ICON = {
     user: comment_author_avatar_default,
     theme: layout_default,
     plugin: plugins_default,
     site: globe_default
   };
-  function DataviewsTemplatesSidebarContent2() {
-    const authorSourceMap = (0, import_data74.useSelect)((select4) => {
-      const templates = select4(import_core_data53.store).getEntityRecords(
+  function DataviewsTemplatesSidebarContent() {
+    const authorSourceMap = (0, import_data72.useSelect)((select4) => {
+      const templates = select4(import_core_data50.store).getEntityRecords(
         "postType",
         TEMPLATE_POST_TYPE,
         { per_page: -1 }
@@ -73961,7 +73761,7 @@ If there's a particular need for this, please submit a feature request at https:
       const source = authorSourceMap[view.slug];
       return SOURCE_TO_ICON[source] ?? layout_default;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
       DataViewsSidebarContent,
       {
         postType: TEMPLATE_POST_TYPE,
@@ -73971,63 +73771,59 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/index.mjs
-  var import_jsx_runtime387 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime386 = __toESM(require_jsx_runtime(), 1);
   function SidebarNavigationScreenTemplatesBrowse({ backPath }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
       SidebarNavigationScreen,
       {
-        title: (0, import_i18n155.__)("Templates"),
-        description: (0, import_i18n155.__)(
+        title: (0, import_i18n154.__)("Templates"),
+        description: (0, import_i18n154.__)(
           "Manage the templates that define the structure of your pages, or reset any customizations made to those supplied by your theme."
         ),
         backPath,
-        content: window?.__experimentalTemplateActivate ? /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(DataviewsTemplatesSidebarContent, {}) : /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(DataviewsTemplatesSidebarContent2, {})
+        content: /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(DataviewsTemplatesSidebarContent, {})
       }
     );
   }
 
   // packages/edit-site/build-module/components/page-templates/index.mjs
-  var import_i18n161 = __toESM(require_i18n(), 1);
-  var import_html_entities15 = __toESM(require_html_entities(), 1);
-  var import_element244 = __toESM(require_element(), 1);
-  var import_core_data58 = __toESM(require_core_data(), 1);
-  var import_router33 = __toESM(require_router(), 1);
+  var import_i18n160 = __toESM(require_i18n(), 1);
+  var import_element243 = __toESM(require_element(), 1);
+  var import_core_data54 = __toESM(require_core_data(), 1);
+  var import_router32 = __toESM(require_router(), 1);
   var import_editor32 = __toESM(require_editor(), 1);
-  var import_url22 = __toESM(require_url(), 1);
-  var import_data78 = __toESM(require_data(), 1);
+  var import_url21 = __toESM(require_url(), 1);
   var import_compose44 = __toESM(require_compose(), 1);
-  var import_components150 = __toESM(require_components(), 1);
-  var import_notices8 = __toESM(require_notices(), 1);
 
   // packages/edit-site/build-module/components/add-new-template/index.mjs
-  var import_components148 = __toESM(require_components(), 1);
+  var import_components147 = __toESM(require_components(), 1);
   var import_html_entities13 = __toESM(require_html_entities(), 1);
-  var import_element242 = __toESM(require_element(), 1);
-  var import_data76 = __toESM(require_data(), 1);
-  var import_core_data56 = __toESM(require_core_data(), 1);
+  var import_element241 = __toESM(require_element(), 1);
+  var import_data74 = __toESM(require_data(), 1);
+  var import_core_data53 = __toESM(require_core_data(), 1);
   var import_compose43 = __toESM(require_compose(), 1);
-  var import_i18n159 = __toESM(require_i18n(), 1);
+  var import_i18n158 = __toESM(require_i18n(), 1);
   var import_notices7 = __toESM(require_notices(), 1);
-  var import_router32 = __toESM(require_router(), 1);
+  var import_router31 = __toESM(require_router(), 1);
   var import_dom32 = __toESM(require_dom(), 1);
 
   // packages/edit-site/build-module/components/add-new-template/add-custom-template-modal-content.mjs
-  var import_element240 = __toESM(require_element(), 1);
-  var import_i18n157 = __toESM(require_i18n(), 1);
-  var import_components146 = __toESM(require_components(), 1);
-  var import_core_data55 = __toESM(require_core_data(), 1);
+  var import_element239 = __toESM(require_element(), 1);
+  var import_i18n156 = __toESM(require_i18n(), 1);
+  var import_components145 = __toESM(require_components(), 1);
+  var import_core_data52 = __toESM(require_core_data(), 1);
   var import_html_entities12 = __toESM(require_html_entities(), 1);
   var import_compose42 = __toESM(require_compose(), 1);
   var import_dom31 = __toESM(require_dom(), 1);
-  var import_url21 = __toESM(require_url(), 1);
+  var import_url20 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/add-new-template/utils.mjs
-  var import_data75 = __toESM(require_data(), 1);
-  var import_core_data54 = __toESM(require_core_data(), 1);
+  var import_data73 = __toESM(require_data(), 1);
+  var import_core_data51 = __toESM(require_core_data(), 1);
   var import_html_entities11 = __toESM(require_html_entities(), 1);
-  var import_element239 = __toESM(require_element(), 1);
-  var import_i18n156 = __toESM(require_i18n(), 1);
-  var import_url20 = __toESM(require_url(), 1);
+  var import_element238 = __toESM(require_element(), 1);
+  var import_i18n155 = __toESM(require_i18n(), 1);
+  var import_url19 = __toESM(require_url(), 1);
   var EMPTY_OBJECT2 = {};
   var getValueFromObjectPath2 = (object, path) => {
     let value = object;
@@ -74037,7 +73833,7 @@ If there's a particular need for this, please submit a feature request at https:
     return value;
   };
   function prefixSlug(prefix2, slug) {
-    return `${prefix2}-${(0, import_url20.safeDecodeURI)(slug)}`;
+    return `${prefix2}-${(0, import_url19.safeDecodeURI)(slug)}`;
   }
   var mapToIHasNameAndId = (entities, path) => {
     return (entities || []).map((entity) => ({
@@ -74046,8 +73842,8 @@ If there's a particular need for this, please submit a feature request at https:
     }));
   };
   var useExistingTemplates = () => {
-    return (0, import_data75.useSelect)(
-      (select4) => select4(import_core_data54.store).getEntityRecords(
+    return (0, import_data73.useSelect)(
+      (select4) => select4(import_core_data51.store).getEntityRecords(
         "postType",
         TEMPLATE_POST_TYPE,
         {
@@ -74058,17 +73854,17 @@ If there's a particular need for this, please submit a feature request at https:
     );
   };
   var useDefaultTemplateTypes = () => {
-    return (0, import_data75.useSelect)(
-      (select4) => select4(import_core_data54.store).getCurrentTheme()?.default_template_types || [],
+    return (0, import_data73.useSelect)(
+      (select4) => select4(import_core_data51.store).getCurrentTheme()?.default_template_types || [],
       []
     );
   };
   var usePublicPostTypes = () => {
-    const postTypes = (0, import_data75.useSelect)(
-      (select4) => select4(import_core_data54.store).getPostTypes({ per_page: -1 }),
+    const postTypes = (0, import_data73.useSelect)(
+      (select4) => select4(import_core_data51.store).getPostTypes({ per_page: -1 }),
       []
     );
-    return (0, import_element239.useMemo)(() => {
+    return (0, import_element238.useMemo)(() => {
       const excludedPostTypes = ["attachment"];
       return postTypes?.filter(
         ({ viewable, slug }) => viewable && !excludedPostTypes.includes(slug)
@@ -74081,11 +73877,11 @@ If there's a particular need for this, please submit a feature request at https:
     }, [postTypes]);
   };
   var usePublicTaxonomies = () => {
-    const taxonomies = (0, import_data75.useSelect)(
-      (select4) => select4(import_core_data54.store).getTaxonomies({ per_page: -1 }),
+    const taxonomies = (0, import_data73.useSelect)(
+      (select4) => select4(import_core_data51.store).getTaxonomies({ per_page: -1 }),
       []
     );
-    return (0, import_element239.useMemo)(() => {
+    return (0, import_element238.useMemo)(() => {
       return taxonomies?.filter(
         ({ visibility }) => visibility?.publicly_queryable
       );
@@ -74093,12 +73889,12 @@ If there's a particular need for this, please submit a feature request at https:
   };
   function usePostTypeArchiveMenuItems() {
     const publicPostTypes = usePublicPostTypes();
-    const postTypesWithArchives = (0, import_element239.useMemo)(
+    const postTypesWithArchives = (0, import_element238.useMemo)(
       () => publicPostTypes?.filter((postType2) => postType2.has_archive),
       [publicPostTypes]
     );
     const existingTemplates = useExistingTemplates();
-    const postTypeLabels = (0, import_element239.useMemo)(
+    const postTypeLabels = (0, import_element238.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { labels }) => {
         const singularName = labels.singular_name.toLowerCase();
         accumulator[singularName] = (accumulator[singularName] || 0) + 1;
@@ -74106,14 +73902,14 @@ If there's a particular need for this, please submit a feature request at https:
       }, {}),
       [publicPostTypes]
     );
-    const needsUniqueIdentifier = (0, import_element239.useCallback)(
+    const needsUniqueIdentifier = (0, import_element238.useCallback)(
       ({ labels, slug }) => {
         const singularName = labels.singular_name.toLowerCase();
         return postTypeLabels[singularName] > 1 && singularName !== slug;
       },
       [postTypeLabels]
     );
-    return (0, import_element239.useMemo)(
+    return (0, import_element238.useMemo)(
       () => postTypesWithArchives?.filter(
         (postType2) => !(existingTemplates || []).some(
           (existingTemplate) => existingTemplate.slug === "archive-" + postType2.slug
@@ -74121,24 +73917,24 @@ If there's a particular need for this, please submit a feature request at https:
       ).map((postType2) => {
         let title;
         if (needsUniqueIdentifier(postType2)) {
-          title = (0, import_i18n156.sprintf)(
+          title = (0, import_i18n155.sprintf)(
             // translators: %1s: Name of the post type e.g: "Post"; %2s: Slug of the post type e.g: "book".
-            (0, import_i18n156.__)("Archive: %1$s (%2$s)"),
+            (0, import_i18n155.__)("Archive: %1$s (%2$s)"),
             postType2.labels.singular_name,
             postType2.slug
           );
         } else {
-          title = (0, import_i18n156.sprintf)(
+          title = (0, import_i18n155.sprintf)(
             // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n156.__)("Archive: %s"),
+            (0, import_i18n155.__)("Archive: %s"),
             postType2.labels.singular_name
           );
         }
         return {
           slug: "archive-" + postType2.slug,
-          description: (0, import_i18n156.sprintf)(
+          description: (0, import_i18n155.sprintf)(
             // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n156.__)(
+            (0, import_i18n155.__)(
               "Displays an archive with the latest posts of type: %s."
             ),
             postType2.labels.singular_name
@@ -74156,8 +73952,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var usePostTypeMenuItems = (onClickMenuItem) => {
     const publicPostTypes = usePublicPostTypes();
+    const existingTemplates = useExistingTemplates();
     const defaultTemplateTypes = useDefaultTemplateTypes();
-    const templateLabels = (0, import_element239.useMemo)(
+    const templateLabels = (0, import_element238.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { labels }) => {
         const templateName = (labels.template_name || labels.singular_name).toLowerCase();
         accumulator[templateName] = (accumulator[templateName] || 0) + 1;
@@ -74165,14 +73962,14 @@ If there's a particular need for this, please submit a feature request at https:
       }, {}),
       [publicPostTypes]
     );
-    const needsUniqueIdentifier = (0, import_element239.useCallback)(
+    const needsUniqueIdentifier = (0, import_element238.useCallback)(
       ({ labels, slug }) => {
         const templateName = (labels.template_name || labels.singular_name).toLowerCase();
         return templateLabels[templateName] > 1 && templateName !== slug;
       },
       [templateLabels]
     );
-    const templatePrefixes = (0, import_element239.useMemo)(
+    const templatePrefixes = (0, import_element238.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { slug }) => {
         let suffix = slug;
         if (slug !== "page") {
@@ -74184,6 +73981,9 @@ If there's a particular need for this, please submit a feature request at https:
       [publicPostTypes]
     );
     const postTypesInfo = useEntitiesInfo("postType", templatePrefixes);
+    const existingTemplateSlugs = (existingTemplates || []).map(
+      ({ slug }) => slug
+    );
     const menuItems = (publicPostTypes || []).reduce(
       (accumulator, postType2) => {
         const { slug, labels, icon } = postType2;
@@ -74191,21 +73991,22 @@ If there's a particular need for this, please submit a feature request at https:
         const defaultTemplateType = defaultTemplateTypes?.find(
           ({ slug: _slug }) => _slug === generalTemplateSlug
         );
+        const hasGeneralTemplate = existingTemplateSlugs?.includes(generalTemplateSlug);
         const _needsUniqueIdentifier = needsUniqueIdentifier(postType2);
-        let menuItemTitle = labels.template_name || (0, import_i18n156.sprintf)(
+        let menuItemTitle = labels.template_name || (0, import_i18n155.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n156.__)("Single item: %s"),
+          (0, import_i18n155.__)("Single item: %s"),
           labels.singular_name
         );
         if (_needsUniqueIdentifier) {
-          menuItemTitle = labels.template_name ? (0, import_i18n156.sprintf)(
+          menuItemTitle = labels.template_name ? (0, import_i18n155.sprintf)(
             // translators: 1: Name of the template e.g: "Single Item: Post". 2: Slug of the post type e.g: "book".
-            (0, import_i18n156._x)("%1$s (%2$s)", "post type menu label"),
+            (0, import_i18n155._x)("%1$s (%2$s)", "post type menu label"),
             labels.template_name,
             slug
-          ) : (0, import_i18n156.sprintf)(
+          ) : (0, import_i18n155.sprintf)(
             // translators: 1: Name of the post type e.g: "Post". 2: Slug of the post type e.g: "book".
-            (0, import_i18n156._x)(
+            (0, import_i18n155._x)(
               "Single item: %1$s (%2$s)",
               "post type menu label"
             ),
@@ -74219,9 +74020,9 @@ If there's a particular need for this, please submit a feature request at https:
         } : {
           slug: generalTemplateSlug,
           title: menuItemTitle,
-          description: (0, import_i18n156.sprintf)(
+          description: (0, import_i18n155.sprintf)(
             // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n156.__)("Displays a single item: %s."),
+            (0, import_i18n155.__)("Displays a single item: %s."),
             labels.singular_name
           ),
           // `icon` is the `menu_icon` property of a post type. We
@@ -74258,18 +74059,19 @@ If there's a particular need for this, please submit a feature request at https:
                 }
               },
               labels,
+              hasGeneralTemplate,
               template
             });
           };
         }
-        if (hasEntities) {
+        if (!hasGeneralTemplate || hasEntities) {
           accumulator.push(menuItem);
         }
         return accumulator;
       },
       []
     );
-    const postTypesMenuItems = (0, import_element239.useMemo)(
+    const postTypesMenuItems = (0, import_element238.useMemo)(
       () => menuItems.reduce(
         (accumulator, postType2) => {
           const { slug } = postType2;
@@ -74290,7 +74092,7 @@ If there's a particular need for this, please submit a feature request at https:
     const publicTaxonomies = usePublicTaxonomies();
     const existingTemplates = useExistingTemplates();
     const defaultTemplateTypes = useDefaultTemplateTypes();
-    const templatePrefixes = (0, import_element239.useMemo)(
+    const templatePrefixes = (0, import_element238.useMemo)(
       () => publicTaxonomies?.reduce((accumulator, { slug }) => {
         let suffix = slug;
         if (!["category", "post_tag"].includes(slug)) {
@@ -74337,14 +74139,14 @@ If there's a particular need for this, please submit a feature request at https:
         );
         let menuItemTitle = labels.template_name || labels.singular_name;
         if (_needsUniqueIdentifier) {
-          menuItemTitle = labels.template_name ? (0, import_i18n156.sprintf)(
+          menuItemTitle = labels.template_name ? (0, import_i18n155.sprintf)(
             // translators: 1: Name of the template e.g: "Products by Category". 2: Slug of the taxonomy e.g: "product_cat".
-            (0, import_i18n156._x)("%1$s (%2$s)", "taxonomy template menu label"),
+            (0, import_i18n155._x)("%1$s (%2$s)", "taxonomy template menu label"),
             labels.template_name,
             slug
-          ) : (0, import_i18n156.sprintf)(
+          ) : (0, import_i18n155.sprintf)(
             // translators: 1: Name of the taxonomy e.g: "Category". 2: Slug of the taxonomy e.g: "product_cat".
-            (0, import_i18n156._x)("%1$s (%2$s)", "taxonomy menu label"),
+            (0, import_i18n155._x)("%1$s (%2$s)", "taxonomy menu label"),
             labels.singular_name,
             slug
           );
@@ -74355,9 +74157,9 @@ If there's a particular need for this, please submit a feature request at https:
         } : {
           slug: generalTemplateSlug,
           title: menuItemTitle,
-          description: (0, import_i18n156.sprintf)(
+          description: (0, import_i18n155.sprintf)(
             // translators: %s: Name of the taxonomy e.g: "Product Categories".
-            (0, import_i18n156.__)("Displays taxonomy: %s."),
+            (0, import_i18n155.__)("Displays taxonomy: %s."),
             labels.singular_name
           ),
           icon: block_meta_default,
@@ -74402,7 +74204,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const taxonomiesMenuItems = (0, import_element239.useMemo)(
+    const taxonomiesMenuItems = (0, import_element238.useMemo)(
       () => menuItems.reduce(
         (accumulator, taxonomy) => {
           const { slug } = taxonomy;
@@ -74434,7 +74236,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     if (!authorMenuItem) {
       authorMenuItem = {
-        description: (0, import_i18n156.__)(
+        description: (0, import_i18n155.__)(
           "Displays latest posts written by a single author."
         ),
         slug: "author",
@@ -74465,21 +74267,17 @@ If there's a particular need for this, please submit a feature request at https:
                 suggestion.slug
               );
               return {
-                title: (0, import_i18n156.sprintf)(
-                  // translators: %s: Name of the author e.g: "Admin".
-                  (0, import_i18n156.__)("Author: %s"),
-                  suggestion.name
-                ),
+                title: templateSlug,
                 slug: templateSlug,
                 templatePrefix: "author"
               };
             }
           },
           labels: {
-            singular_name: (0, import_i18n156.__)("Author"),
-            search_items: (0, import_i18n156.__)("Search Authors"),
-            not_found: (0, import_i18n156.__)("No authors found."),
-            all_items: (0, import_i18n156.__)("All Authors")
+            singular_name: (0, import_i18n155.__)("Author"),
+            search_items: (0, import_i18n155.__)("Search Authors"),
+            not_found: (0, import_i18n155.__)("No authors found."),
+            all_items: (0, import_i18n155.__)("All Authors")
           },
           hasGeneralTemplate,
           template
@@ -74490,18 +74288,82 @@ If there's a particular need for this, please submit a feature request at https:
       return authorMenuItem;
     }
   }
+  var useExistingTemplateSlugs = (templatePrefixes) => {
+    const existingTemplates = useExistingTemplates();
+    const existingSlugs = (0, import_element238.useMemo)(() => {
+      return Object.entries(templatePrefixes || {}).reduce(
+        (accumulator, [slug, prefix2]) => {
+          const slugsWithTemplates = (existingTemplates || []).reduce(
+            (_accumulator, existingTemplate) => {
+              const _prefix = `${prefix2}-`;
+              if (existingTemplate.slug.startsWith(_prefix)) {
+                _accumulator.push(
+                  existingTemplate.slug.substring(
+                    _prefix.length
+                  )
+                );
+              }
+              return _accumulator;
+            },
+            []
+          );
+          if (slugsWithTemplates.length) {
+            accumulator[slug] = slugsWithTemplates;
+          }
+          return accumulator;
+        },
+        {}
+      );
+    }, [templatePrefixes, existingTemplates]);
+    return existingSlugs;
+  };
+  var useTemplatesToExclude = (entityName, templatePrefixes, additionalQueryParameters = {}) => {
+    const slugsToExcludePerEntity = useExistingTemplateSlugs(templatePrefixes);
+    const recordsToExcludePerEntity = (0, import_data73.useSelect)(
+      (select4) => {
+        return Object.entries(slugsToExcludePerEntity || {}).reduce(
+          (accumulator, [slug, slugsWithTemplates]) => {
+            const entitiesWithTemplates = select4(
+              import_core_data51.store
+            ).getEntityRecords(entityName, slug, {
+              _fields: "id",
+              context: "view",
+              slug: slugsWithTemplates,
+              ...additionalQueryParameters[slug]
+            });
+            if (entitiesWithTemplates?.length) {
+              accumulator[slug] = entitiesWithTemplates;
+            }
+            return accumulator;
+          },
+          {}
+        );
+      },
+      [slugsToExcludePerEntity]
+    );
+    return recordsToExcludePerEntity;
+  };
   var useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters = EMPTY_OBJECT2) => {
-    const entitiesHasRecords = (0, import_data75.useSelect)(
+    const recordsToExcludePerEntity = useTemplatesToExclude(
+      entityName,
+      templatePrefixes,
+      additionalQueryParameters
+    );
+    const entitiesHasRecords = (0, import_data73.useSelect)(
       (select4) => {
         return Object.keys(templatePrefixes || {}).reduce(
           (accumulator, slug) => {
-            const records = select4(import_core_data54.store).getEntityRecords(
+            const existingEntitiesIds = recordsToExcludePerEntity?.[slug]?.map(
+              ({ id }) => id
+            ) || [];
+            const records = select4(import_core_data51.store).getEntityRecords(
               entityName,
               slug,
               {
                 per_page: 1,
                 _fields: "id",
                 context: "view",
+                exclude: existingEntitiesIds,
                 ...additionalQueryParameters[slug]
               }
             );
@@ -74511,25 +74373,34 @@ If there's a particular need for this, please submit a feature request at https:
           {}
         );
       },
-      [templatePrefixes, entityName, additionalQueryParameters]
+      [
+        templatePrefixes,
+        recordsToExcludePerEntity,
+        entityName,
+        additionalQueryParameters
+      ]
     );
-    const entitiesInfo = (0, import_element239.useMemo)(() => {
+    const entitiesInfo = (0, import_element238.useMemo)(() => {
       return Object.keys(templatePrefixes || {}).reduce(
         (accumulator, slug) => {
+          const existingEntitiesIds = recordsToExcludePerEntity?.[slug]?.map(
+            ({ id }) => id
+          ) || [];
           accumulator[slug] = {
-            hasEntities: entitiesHasRecords[slug]
+            hasEntities: entitiesHasRecords[slug],
+            existingEntitiesIds
           };
           return accumulator;
         },
         {}
       );
-    }, [templatePrefixes, entitiesHasRecords]);
+    }, [templatePrefixes, recordsToExcludePerEntity, entitiesHasRecords]);
     return entitiesInfo;
   };
 
   // packages/edit-site/build-module/components/add-new-template/add-custom-template-modal-content.mjs
-  var import_jsx_runtime388 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY13 = [];
+  var import_jsx_runtime387 = __toESM(require_jsx_runtime(), 1);
+  var EMPTY_ARRAY12 = [];
   function SuggestionListItem({
     suggestion,
     search,
@@ -74537,11 +74408,11 @@ If there's a particular need for this, please submit a feature request at https:
     entityForSuggestions
   }) {
     const baseCssClass = "edit-site-custom-template-modal__suggestions_list__list-item";
-    return /* @__PURE__ */ (0, import_jsx_runtime388.jsxs)(
-      import_components146.Composite.Item,
+    return /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)(
+      import_components145.Composite.Item,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-          import_components146.Button,
+        render: /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+          import_components145.Button,
           {
             __next40pxDefaultSize: true,
             role: "option",
@@ -74554,15 +74425,15 @@ If there's a particular need for this, please submit a feature request at https:
           }
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-            import_components146.__experimentalText,
+          /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+            import_components145.__experimentalText,
             {
               size: "body",
               lineHeight: 1.53846153846,
               weight: "var(--wpds-typography-font-weight-emphasis, 600)",
               className: `${baseCssClass}__title`,
-              children: /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-                import_components146.TextHighlight,
+              children: /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+                import_components145.TextHighlight,
                 {
                   text: (0, import_html_entities12.decodeEntities)(suggestion.name),
                   highlight: search
@@ -74570,13 +74441,13 @@ If there's a particular need for this, please submit a feature request at https:
               )
             }
           ),
-          suggestion.link && /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-            import_components146.__experimentalText,
+          suggestion.link && /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+            import_components145.__experimentalText,
             {
               size: "body",
               lineHeight: 1.53846153846,
               className: `${baseCssClass}__info`,
-              children: (0, import_url21.safeDecodeURI)(suggestion.link)
+              children: (0, import_url20.safeDecodeURI)(suggestion.link)
             }
           )
         ]
@@ -74585,7 +74456,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useSearchSuggestions(entityForSuggestions, search) {
     const { config: config2 } = entityForSuggestions;
-    const query = (0, import_element240.useMemo)(
+    const query = (0, import_element239.useMemo)(
       () => ({
         order: "asc",
         context: "view",
@@ -74595,17 +74466,17 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [search, config2]
     );
-    const { records: searchResults, hasResolved: searchHasResolved } = (0, import_core_data55.useEntityRecords)(
+    const { records: searchResults, hasResolved: searchHasResolved } = (0, import_core_data52.useEntityRecords)(
       entityForSuggestions.type,
       entityForSuggestions.slug,
       query
     );
-    const [suggestions, setSuggestions] = (0, import_element240.useState)(EMPTY_ARRAY13);
-    (0, import_element240.useEffect)(() => {
+    const [suggestions, setSuggestions] = (0, import_element239.useState)(EMPTY_ARRAY12);
+    (0, import_element239.useEffect)(() => {
       if (!searchHasResolved) {
         return;
       }
-      let newSuggestions = EMPTY_ARRAY13;
+      let newSuggestions = EMPTY_ARRAY12;
       if (searchResults?.length) {
         newSuggestions = searchResults;
         if (config2.recordNamePath) {
@@ -74626,13 +74497,13 @@ If there's a particular need for this, please submit a feature request at https:
       debouncedSearch
     );
     const { labels } = entityForSuggestions;
-    const [showSearchControl, setShowSearchControl] = (0, import_element240.useState)(false);
+    const [showSearchControl, setShowSearchControl] = (0, import_element239.useState)(false);
     if (!showSearchControl && suggestions?.length > 9) {
       setShowSearchControl(true);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime388.jsxs)(import_jsx_runtime388.Fragment, { children: [
-      showSearchControl && /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-        import_components146.SearchControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)(import_jsx_runtime387.Fragment, { children: [
+      showSearchControl && /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+        import_components145.SearchControl,
         {
           onChange: setSearch,
           value: search,
@@ -74640,14 +74511,14 @@ If there's a particular need for this, please submit a feature request at https:
           placeholder: labels.search_items
         }
       ),
-      !!suggestions?.length && /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-        import_components146.Composite,
+      !!suggestions?.length && /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+        import_components145.Composite,
         {
           orientation: "vertical",
           role: "listbox",
           className: "edit-site-custom-template-modal__suggestions_list",
-          "aria-label": (0, import_i18n157.__)("Suggestions list"),
-          children: suggestions.map((suggestion) => /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
+          "aria-label": (0, import_i18n156.__)("Suggestions list"),
+          children: suggestions.map((suggestion) => /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
             SuggestionListItem,
             {
               suggestion,
@@ -74659,8 +74530,8 @@ If there's a particular need for this, please submit a feature request at https:
           ))
         }
       ),
-      debouncedSearch && !suggestions?.length && /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-        import_components146.__experimentalText,
+      debouncedSearch && !suggestions?.length && /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+        import_components145.__experimentalText,
         {
           as: "p",
           className: "edit-site-custom-template-modal__no-results",
@@ -74675,8 +74546,10 @@ If there's a particular need for this, please submit a feature request at https:
     onBack,
     containerRef
   }) {
-    const [showSearchEntities, setShowSearchEntities] = (0, import_element240.useState)();
-    (0, import_element240.useEffect)(() => {
+    const [showSearchEntities, setShowSearchEntities] = (0, import_element239.useState)(
+      entityForSuggestions.hasGeneralTemplate
+    );
+    (0, import_element239.useEffect)(() => {
       if (containerRef.current) {
         const [firstFocusable] = import_dom31.focus.focusable.find(
           containerRef.current
@@ -74684,29 +74557,29 @@ If there's a particular need for this, please submit a feature request at https:
         firstFocusable?.focus();
       }
     }, [showSearchEntities]);
-    return /* @__PURE__ */ (0, import_jsx_runtime388.jsxs)(
-      import_components146.__experimentalVStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)(
+      import_components145.__experimentalVStack,
       {
         spacing: 4,
         className: "edit-site-custom-template-modal__contents-wrapper",
         alignment: "left",
         children: [
-          !showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime388.jsxs)(import_jsx_runtime388.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(import_components146.__experimentalText, { as: "p", children: (0, import_i18n157.__)(
+          !showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)(import_jsx_runtime387.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_components145.__experimentalText, { as: "p", children: (0, import_i18n156.__)(
               "Select whether to create a single template for all items or a specific one."
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime388.jsxs)(
-              import_components146.Flex,
+            /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)(
+              import_components145.Flex,
               {
                 className: "edit-site-custom-template-modal__contents",
                 gap: "4",
                 align: "initial",
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime388.jsxs)(
-                    import_components146.FlexItem,
+                  /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)(
+                    import_components145.FlexItem,
                     {
                       isBlock: true,
-                      as: import_components146.Button,
+                      as: import_components145.Button,
                       onClick: () => {
                         const {
                           slug,
@@ -74722,8 +74595,8 @@ If there's a particular need for this, please submit a feature request at https:
                         });
                       },
                       children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-                          import_components146.__experimentalText,
+                        /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+                          import_components145.__experimentalText,
                           {
                             as: "span",
                             weight: "var(--wpds-typography-font-weight-emphasis, 600)",
@@ -74731,29 +74604,29 @@ If there's a particular need for this, please submit a feature request at https:
                             children: entityForSuggestions.labels.all_items
                           }
                         ),
-                        /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-                          import_components146.__experimentalText,
+                        /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+                          import_components145.__experimentalText,
                           {
                             as: "span",
                             lineHeight: 1.53846153846,
                             // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-                            children: (0, import_i18n157.__)("For all items")
+                            children: (0, import_i18n156.__)("For all items")
                           }
                         )
                       ]
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime388.jsxs)(
-                    import_components146.FlexItem,
+                  /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)(
+                    import_components145.FlexItem,
                     {
                       isBlock: true,
-                      as: import_components146.Button,
+                      as: import_components145.Button,
                       onClick: () => {
                         setShowSearchEntities(true);
                       },
                       children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-                          import_components146.__experimentalText,
+                        /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+                          import_components145.__experimentalText,
                           {
                             as: "span",
                             weight: "var(--wpds-typography-font-weight-emphasis, 600)",
@@ -74761,13 +74634,13 @@ If there's a particular need for this, please submit a feature request at https:
                             children: entityForSuggestions.labels.singular_name
                           }
                         ),
-                        /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-                          import_components146.__experimentalText,
+                        /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+                          import_components145.__experimentalText,
                           {
                             as: "span",
                             lineHeight: 1.53846153846,
                             // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-                            children: (0, import_i18n157.__)("For a specific item")
+                            children: (0, import_i18n156.__)("For a specific item")
                           }
                         )
                       ]
@@ -74776,29 +74649,29 @@ If there's a particular need for this, please submit a feature request at https:
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(import_components146.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-              import_components146.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_components145.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+              import_components145.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: onBack,
-                children: (0, import_i18n157.__)("Back")
+                children: (0, import_i18n156.__)("Back")
               }
             ) })
           ] }),
-          showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime388.jsxs)(import_jsx_runtime388.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(import_components146.__experimentalText, { as: "p", children: (0, import_i18n157.__)(
+          showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)(import_jsx_runtime387.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_components145.__experimentalText, { as: "p", children: (0, import_i18n156.__)(
               "This template will be used only for the specific item chosen."
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
               SuggestionList,
               {
                 entityForSuggestions,
                 onSelect
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(import_components146.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-              import_components146.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_components145.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+              import_components145.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
@@ -74809,7 +74682,7 @@ If there's a particular need for this, please submit a feature request at https:
                     setShowSearchEntities(false);
                   }
                 },
-                children: (0, import_i18n157.__)("Back")
+                children: (0, import_i18n156.__)("Back")
               }
             ) })
           ] })
@@ -74820,16 +74693,16 @@ If there's a particular need for this, please submit a feature request at https:
   var add_custom_template_modal_content_default = AddCustomTemplateModalContent;
 
   // packages/edit-site/build-module/components/add-new-template/add-custom-generic-template-modal-content.mjs
-  var import_element241 = __toESM(require_element(), 1);
-  var import_i18n158 = __toESM(require_i18n(), 1);
-  var import_components147 = __toESM(require_components(), 1);
-  var import_jsx_runtime389 = __toESM(require_jsx_runtime(), 1);
+  var import_element240 = __toESM(require_element(), 1);
+  var import_i18n157 = __toESM(require_i18n(), 1);
+  var import_components146 = __toESM(require_components(), 1);
+  var import_jsx_runtime388 = __toESM(require_jsx_runtime(), 1);
   function AddCustomGenericTemplateModalContent({ createTemplate, onBack }) {
-    const [title, setTitle] = (0, import_element241.useState)("");
-    const defaultTitle = (0, import_i18n158.__)("Custom Template");
-    const [isBusy, setIsBusy] = (0, import_element241.useState)(false);
-    const inputRef = (0, import_element241.useRef)();
-    (0, import_element241.useEffect)(() => {
+    const [title, setTitle] = (0, import_element240.useState)("");
+    const defaultTitle = (0, import_i18n157.__)("Custom Template");
+    const [isBusy, setIsBusy] = (0, import_element240.useState)(false);
+    const inputRef = (0, import_element240.useRef)();
+    (0, import_element240.useEffect)(() => {
       if (inputRef.current) {
         inputRef.current.focus();
       }
@@ -74852,46 +74725,46 @@ If there's a particular need for this, please submit a feature request at https:
         setIsBusy(false);
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime389.jsx)("form", { onSubmit: onCreateTemplate, children: /* @__PURE__ */ (0, import_jsx_runtime389.jsxs)(import_components147.__experimentalVStack, { spacing: 6, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
-        import_components147.TextControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("form", { onSubmit: onCreateTemplate, children: /* @__PURE__ */ (0, import_jsx_runtime388.jsxs)(import_components146.__experimentalVStack, { spacing: 6, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
+        import_components146.TextControl,
         {
-          label: (0, import_i18n158.__)("Name"),
+          label: (0, import_i18n157.__)("Name"),
           value: title,
           onChange: setTitle,
           placeholder: defaultTitle,
           disabled: isBusy,
           ref: inputRef,
-          help: (0, import_i18n158.__)(
+          help: (0, import_i18n157.__)(
             // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
             'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.'
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime389.jsxs)(
-        import_components147.__experimentalHStack,
+      /* @__PURE__ */ (0, import_jsx_runtime388.jsxs)(
+        import_components146.__experimentalHStack,
         {
           className: "edit-site-custom-generic-template__modal-actions",
           justify: "right",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
-              import_components147.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
+              import_components146.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: onBack,
-                children: (0, import_i18n158.__)("Back")
+                children: (0, import_i18n157.__)("Back")
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
-              import_components147.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
+              import_components146.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "primary",
                 type: "submit",
                 isBusy,
                 "aria-disabled": isBusy,
-                children: (0, import_i18n158.__)("Create")
+                children: (0, import_i18n157.__)("Create")
               }
             )
           ]
@@ -74902,8 +74775,8 @@ If there's a particular need for this, please submit a feature request at https:
   var add_custom_generic_template_modal_content_default = AddCustomGenericTemplateModalContent;
 
   // packages/edit-site/build-module/components/add-new-template/index.mjs
-  var import_jsx_runtime390 = __toESM(require_jsx_runtime(), 1);
-  var { useHistory: useHistory22 } = unlock(import_router32.privateApis);
+  var import_jsx_runtime389 = __toESM(require_jsx_runtime(), 1);
+  var { useHistory: useHistory22 } = unlock(import_router31.privateApis);
   var DEFAULT_TEMPLATE_SLUGS = [
     "front-page",
     "home",
@@ -74943,16 +74816,16 @@ If there's a particular need for this, please submit a feature request at https:
     onClick,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
-      import_components148.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
+      import_components147.Button,
       {
         __next40pxDefaultSize: true,
         className,
         onClick,
         label: description,
         showTooltip: !!description,
-        children: /* @__PURE__ */ (0, import_jsx_runtime390.jsxs)(
-          import_components148.Flex,
+        children: /* @__PURE__ */ (0, import_jsx_runtime389.jsxs)(
+          import_components147.Flex,
           {
             as: "span",
             spacing: 2,
@@ -74961,16 +74834,16 @@ If there's a particular need for this, please submit a feature request at https:
             style: { width: "100%" },
             direction,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime390.jsx)("div", { className: "edit-site-add-new-template__template-icon", children: /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(import_components148.Icon, { icon }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime390.jsxs)(
-                import_components148.__experimentalVStack,
+              /* @__PURE__ */ (0, import_jsx_runtime389.jsx)("div", { className: "edit-site-add-new-template__template-icon", children: /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(import_components147.Icon, { icon }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime389.jsxs)(
+                import_components147.__experimentalVStack,
                 {
                   className: "edit-site-add-new-template__template-name",
                   alignment: "center",
                   spacing: 0,
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
-                      import_components148.__experimentalText,
+                    /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
+                      import_components147.__experimentalText,
                       {
                         align: "center",
                         weight: "var(--wpds-typography-font-weight-emphasis, 600)",
@@ -74994,32 +74867,32 @@ If there's a particular need for this, please submit a feature request at https:
     customGenericTemplate: 3
   };
   function NewTemplateModal({ onClose }) {
-    const [modalContent, setModalContent] = (0, import_element242.useState)(
+    const [modalContent, setModalContent] = (0, import_element241.useState)(
       modalContentMap.templatesList
     );
-    const [entityForSuggestions, setEntityForSuggestions] = (0, import_element242.useState)({});
-    const [isSubmitting, setIsSubmitting] = (0, import_element242.useState)(false);
+    const [entityForSuggestions, setEntityForSuggestions] = (0, import_element241.useState)({});
+    const [isSubmitting, setIsSubmitting] = (0, import_element241.useState)(false);
     const missingTemplates = useMissingTemplates(
       setEntityForSuggestions,
       () => setModalContent(modalContentMap.customTemplate)
     );
     const history = useHistory22();
-    const { saveEntityRecord } = (0, import_data76.useDispatch)(import_core_data56.store);
-    const { createErrorNotice, createSuccessNotice } = (0, import_data76.useDispatch)(import_notices7.store);
-    const containerRef = (0, import_element242.useRef)(null);
+    const { saveEntityRecord } = (0, import_data74.useDispatch)(import_core_data53.store);
+    const { createErrorNotice, createSuccessNotice } = (0, import_data74.useDispatch)(import_notices7.store);
+    const containerRef = (0, import_element241.useRef)(null);
     const isMobile = (0, import_compose43.useViewportMatch)("medium", "<");
-    const homeUrl = (0, import_data76.useSelect)((select4) => {
-      return select4(import_core_data56.store).getEntityRecord("root", "__unstableBase")?.home;
+    const homeUrl = (0, import_data74.useSelect)((select4) => {
+      return select4(import_core_data53.store).getEntityRecord("root", "__unstableBase")?.home;
     }, []);
     const TEMPLATE_SHORT_DESCRIPTIONS = {
       "front-page": homeUrl,
-      date: (0, import_i18n159.sprintf)(
+      date: (0, import_i18n158.sprintf)(
         // translators: %s: The homepage url.
-        (0, import_i18n159.__)("E.g. %s"),
+        (0, import_i18n158.__)("E.g. %s"),
         homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
       )
     };
-    (0, import_element242.useEffect)(() => {
+    (0, import_element241.useEffect)(() => {
       if (containerRef.current && modalContent === modalContentMap.templatesList) {
         const [firstFocusable] = import_dom32.focus.focusable.find(
           containerRef.current
@@ -75044,9 +74917,7 @@ If there's a particular need for this, please submit a feature request at https:
             status: "publish",
             title,
             // This adds a post meta field in template that is part of `is_custom` value calculation.
-            meta: {
-              is_wp_suggestion: isWPSuggestion
-            }
+            is_wp_suggestion: isWPSuggestion
           },
           { throwOnError: true }
         );
@@ -75054,17 +74925,17 @@ If there's a particular need for this, please submit a feature request at https:
           `/${TEMPLATE_POST_TYPE}/${newTemplate.id}?canvas=edit`
         );
         createSuccessNotice(
-          (0, import_i18n159.sprintf)(
+          (0, import_i18n158.sprintf)(
             // translators: %s: Title of the created post or template, e.g: "Hello world".
-            (0, import_i18n159.__)('"%s" successfully created.'),
-            (0, import_html_entities13.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n159.__)("(no title)")
+            (0, import_i18n158.__)('"%s" successfully created.'),
+            (0, import_html_entities13.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n158.__)("(no title)")
           ),
           {
             type: "snackbar"
           }
         );
       } catch (error2) {
-        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n159.__)("An error occurred while creating the template.");
+        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n158.__)("An error occurred while creating the template.");
         createErrorNotice(errorMessage, {
           type: "snackbar"
         });
@@ -75076,18 +74947,18 @@ If there's a particular need for this, please submit a feature request at https:
       onClose();
       setModalContent(modalContentMap.templatesList);
     };
-    let modalTitle = (0, import_i18n159.__)("Add template");
+    let modalTitle = (0, import_i18n158.__)("Add template");
     if (modalContent === modalContentMap.customTemplate) {
-      modalTitle = (0, import_i18n159.sprintf)(
+      modalTitle = (0, import_i18n158.sprintf)(
         // translators: %s: Name of the post type e.g: "Post".
-        (0, import_i18n159.__)("Add template: %s"),
+        (0, import_i18n158.__)("Add template: %s"),
         entityForSuggestions.labels.singular_name
       );
     } else if (modalContent === modalContentMap.customGenericTemplate) {
-      modalTitle = (0, import_i18n159.__)("Create custom template");
+      modalTitle = (0, import_i18n158.__)("Create custom template");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime390.jsxs)(
-      import_components148.Modal,
+    return /* @__PURE__ */ (0, import_jsx_runtime389.jsxs)(
+      import_components147.Modal,
       {
         title: modalTitle,
         className: clsx_default("edit-site-add-new-template__modal", {
@@ -75098,8 +74969,8 @@ If there's a particular need for this, please submit a feature request at https:
         overlayClassName: modalContent === modalContentMap.customGenericTemplate ? "edit-site-custom-generic-template__modal" : void 0,
         ref: containerRef,
         children: [
-          modalContent === modalContentMap.templatesList && /* @__PURE__ */ (0, import_jsx_runtime390.jsxs)(
-            import_components148.__experimentalGrid,
+          modalContent === modalContentMap.templatesList && /* @__PURE__ */ (0, import_jsx_runtime389.jsxs)(
+            import_components147.__experimentalGrid,
             {
               columns: isMobile ? 2 : 3,
               gap: 4,
@@ -75107,12 +74978,12 @@ If there's a particular need for this, please submit a feature request at https:
               justify: "center",
               className: "edit-site-add-new-template__template-list__contents",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(import_components148.Flex, { className: "edit-site-add-new-template__template-list__prompt", children: (0, import_i18n159.__)(
+                /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(import_components147.Flex, { className: "edit-site-add-new-template__template-list__prompt", children: (0, import_i18n158.__)(
                   "Select what the new template should apply to:"
                 ) }),
                 missingTemplates.map((template) => {
                   const { title, slug, onClick } = template;
-                  return /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
                     TemplateListItem,
                     {
                       title,
@@ -75125,21 +74996,21 @@ If there's a particular need for this, please submit a feature request at https:
                     slug
                   );
                 }),
-                /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
                   TemplateListItem,
                   {
-                    title: (0, import_i18n159.__)("Custom template"),
+                    title: (0, import_i18n158.__)("Custom template"),
                     direction: "row",
                     className: "edit-site-add-new-template__custom-template-button",
                     icon: pencil_default,
                     onClick: () => setModalContent(
                       modalContentMap.customGenericTemplate
                     ),
-                    children: /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
-                      import_components148.__experimentalText,
+                    children: /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
+                      import_components147.__experimentalText,
                       {
                         lineHeight: 1.53846153846,
-                        children: (0, import_i18n159.__)(
+                        children: (0, import_i18n158.__)(
                           "A custom template can be manually applied to any post or page."
                         )
                       }
@@ -75149,7 +75020,7 @@ If there's a particular need for this, please submit a feature request at https:
               ]
             }
           ),
-          modalContent === modalContentMap.customTemplate && /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
+          modalContent === modalContentMap.customTemplate && /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
             add_custom_template_modal_content_default,
             {
               onSelect: createTemplate,
@@ -75158,7 +75029,7 @@ If there's a particular need for this, please submit a feature request at https:
               containerRef
             }
           ),
-          modalContent === modalContentMap.customGenericTemplate && /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
+          modalContent === modalContentMap.customGenericTemplate && /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
             add_custom_generic_template_modal_content_default,
             {
               createTemplate,
@@ -75170,9 +75041,9 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function NewTemplate() {
-    const [showModal, setShowModal] = (0, import_element242.useState)(false);
-    const { postType: postType2 } = (0, import_data76.useSelect)((select4) => {
-      const { getPostType: getPostType2 } = select4(import_core_data56.store);
+    const [showModal, setShowModal] = (0, import_element241.useState)(false);
+    const { postType: postType2 } = (0, import_data74.useSelect)((select4) => {
+      const { getPostType: getPostType2 } = select4(import_core_data53.store);
       return {
         postType: getPostType2(TEMPLATE_POST_TYPE)
       };
@@ -75180,9 +75051,9 @@ If there's a particular need for this, please submit a feature request at https:
     if (!postType2) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime390.jsxs)(import_jsx_runtime390.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
-        import_components148.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime389.jsxs)(import_jsx_runtime389.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
+        import_components147.Button,
         {
           variant: "primary",
           onClick: () => setShowModal(true),
@@ -75192,13 +75063,17 @@ If there's a particular need for this, please submit a feature request at https:
           children: postType2.labels.add_new_item
         }
       ),
-      showModal && /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(NewTemplateModal, { onClose: () => setShowModal(false) })
+      showModal && /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(NewTemplateModal, { onClose: () => setShowModal(false) })
     ] });
   }
   function useMissingTemplates(setEntityForSuggestions, onClick) {
+    const existingTemplates = useExistingTemplates();
     const defaultTemplateTypes = useDefaultTemplateTypes();
+    const existingTemplateSlugs = (existingTemplates || []).map(
+      ({ slug }) => slug
+    );
     const missingDefaultTemplates = (defaultTemplateTypes || []).filter(
-      (template) => DEFAULT_TEMPLATE_SLUGS.includes(template.slug)
+      (template) => DEFAULT_TEMPLATE_SLUGS.includes(template.slug) && !existingTemplateSlugs.includes(template.slug)
     );
     const onClickMenuItem = (_entityForSuggestions) => {
       onClick?.();
@@ -75236,1844 +75111,62 @@ If there's a particular need for this, please submit a feature request at https:
     ];
     return missingTemplates;
   }
-  var add_new_template_default = (0, import_element242.memo)(NewTemplate);
+  var add_new_template_default = (0, import_element241.memo)(NewTemplate);
 
   // packages/edit-site/build-module/components/page-templates/fields.mjs
-  var import_components149 = __toESM(require_components(), 1);
-  var import_i18n160 = __toESM(require_i18n(), 1);
-  var import_element243 = __toESM(require_element(), 1);
-  var import_html_entities14 = __toESM(require_html_entities(), 1);
+  var import_i18n159 = __toESM(require_i18n(), 1);
+  var import_element242 = __toESM(require_element(), 1);
   var import_blocks13 = __toESM(require_blocks(), 1);
   var import_block_editor27 = __toESM(require_block_editor(), 1);
   var import_editor31 = __toESM(require_editor(), 1);
-  var import_core_data57 = __toESM(require_core_data(), 1);
-  var import_data77 = __toESM(require_data(), 1);
-  var import_jsx_runtime391 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge2 } = unlock(import_components149.privateApis);
-  var { useEntityRecordsWithPermissions } = unlock(import_core_data57.privateApis);
+  var import_jsx_runtime390 = __toESM(require_jsx_runtime(), 1);
   var { useStyle: useStyle5 } = unlock(import_editor31.privateApis);
-  function useAllDefaultTemplateTypes() {
-    const defaultTemplateTypes = useDefaultTemplateTypes();
-    const { records: staticRecords } = useEntityRecordsWithPermissions(
-      "root",
-      "registeredTemplate"
-    );
-    return [
-      ...defaultTemplateTypes,
-      ...staticRecords?.filter((record) => !record.is_custom).map((record) => {
-        return {
-          slug: record.slug,
-          title: record.title.rendered,
-          description: record.description
-        };
-      })
-    ];
-  }
   function PreviewField2({ item }) {
     const settings2 = usePatternSettings();
     const backgroundColor = useStyle5("color.background") ?? "white";
-    const blocks = (0, import_element243.useMemo)(() => {
+    const blocks = (0, import_element242.useMemo)(() => {
       return (0, import_blocks13.parse)(item.content.raw);
     }, [item.content.raw]);
     const isEmpty2 = !blocks?.length;
-    return /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(import_editor31.EditorProvider, { post: item, settings: settings2, children: /* @__PURE__ */ (0, import_jsx_runtime391.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(import_editor31.EditorProvider, { post: item, settings: settings2, children: /* @__PURE__ */ (0, import_jsx_runtime390.jsxs)(
       "div",
       {
         className: "page-templates-preview-field",
         style: { backgroundColor },
         children: [
-          isEmpty2 && (0, import_i18n160.__)("Empty template"),
-          !isEmpty2 && /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(import_block_editor27.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(import_block_editor27.BlockPreview, { blocks }) })
+          isEmpty2 && (0, import_i18n159.__)("Empty template"),
+          !isEmpty2 && /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(import_block_editor27.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(import_block_editor27.BlockPreview, { blocks }) })
         ]
       }
     ) });
   }
   var previewField2 = {
-    label: (0, import_i18n160.__)("Preview"),
+    label: (0, import_i18n159.__)("Preview"),
     id: "preview",
     render: PreviewField2,
     enableSorting: false
   };
-  var descriptionField = {
-    label: (0, import_i18n160.__)("Description"),
-    id: "description",
-    render: window?.__experimentalTemplateActivate ? function RenderDescription({ item }) {
-      const defaultTemplateTypes = useAllDefaultTemplateTypes();
-      const defaultTemplateType = defaultTemplateTypes.find(
-        (type) => type.slug === item.slug
-      );
-      return item.description ? (0, import_html_entities14.decodeEntities)(item.description) : defaultTemplateType?.description;
-    } : ({ item }) => {
-      return item.description && (0, import_html_entities14.decodeEntities)(item.description);
-    },
-    enableSorting: false,
-    enableGlobalSearch: true
-  };
-  function AuthorField({ item }) {
-    const [isImageLoaded, setIsImageLoaded] = (0, import_element243.useState)(false);
-    const { text, icon, imageUrl } = useAddedBy(item.type, item.id);
-    return /* @__PURE__ */ (0, import_jsx_runtime391.jsxs)(import_components149.__experimentalHStack, { alignment: "left", spacing: 0, children: [
-      imageUrl && /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(
-        "div",
-        {
-          className: clsx_default("fields-controls__author-avatar", {
-            "is-loaded": isImageLoaded
-          }),
-          children: /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(
-            "img",
-            {
-              onLoad: () => setIsImageLoaded(true),
-              alt: "",
-              src: imageUrl
-            }
-          )
-        }
-      ),
-      !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime391.jsx)("div", { className: "fields-controls__author-icon", children: /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(import_components149.Icon, { icon }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime391.jsx)("span", { className: "fields-controls__author-name", children: text })
-    ] });
-  }
-  var authorField = {
-    label: (0, import_i18n160.__)("Author"),
-    id: "author",
-    getValue: ({ item }) => item.author_text ?? item.author,
-    render: AuthorField
-  };
-  var activeField = {
-    label: (0, import_i18n160.__)("Status"),
-    id: "active",
-    type: "boolean",
-    getValue: ({ item }) => item._isActive,
-    render: function Render({ item }) {
-      const activeLabel = item._isCustom ? (0, import_i18n160._x)("Active when used", "template") : (0, import_i18n160._x)("Active", "template");
-      const activeIntent = item._isCustom ? "info" : "success";
-      const isActive = item._isActive;
-      return /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(WCBadge2, { intent: isActive ? activeIntent : "default", children: isActive ? activeLabel : (0, import_i18n160._x)("Inactive", "template") });
-    }
-  };
-  var useThemeField = () => {
-    const activeTheme = (0, import_data77.useSelect)(
-      (select4) => select4(import_core_data57.store).getCurrentTheme()
-    );
-    return (0, import_element243.useMemo)(
-      () => ({
-        label: (0, import_i18n160.__)("Compatible Theme"),
-        id: "theme",
-        getValue: ({ item }) => item.theme,
-        render: function Render3({ item }) {
-          if (item.theme === activeTheme.stylesheet) {
-            return /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(WCBadge2, { intent: "success", children: item.theme });
-          }
-          return /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(WCBadge2, { intent: "error", children: item.theme });
-        }
-      }),
-      [activeTheme]
-    );
-  };
-  var slugField = {
-    label: (0, import_i18n160.__)("Template Type"),
-    id: "slug",
-    getValue: ({ item }) => item.slug,
-    render: function Render2({ item }) {
-      const defaultTemplateTypes = useAllDefaultTemplateTypes();
-      const defaultTemplateType = defaultTemplateTypes.find(
-        (type) => type.slug === item.slug
-      );
-      return defaultTemplateType?.title || (0, import_i18n160._x)("Custom", "template type");
-    }
-  };
-
-  // packages/edit-site/build-module/components/page-templates/view-utils.mjs
-  var defaultLayouts = {
-    table: {
-      showMedia: false
-    },
-    grid: {
-      showMedia: true
-    },
-    list: {
-      showMedia: false
-    }
-  };
-  var DEFAULT_VIEW = {
-    type: "grid",
-    perPage: 20,
-    sort: {
-      field: "title",
-      direction: "asc"
-    },
-    titleField: "title",
-    descriptionField: "description",
-    mediaField: "preview",
-    fields: ["author", "active", "slug", "theme"],
-    filters: [],
-    ...defaultLayouts.grid
-  };
-  function getActiveViewOverridesForTab(activeView) {
-    if (activeView === "user") {
-      return {
-        sort: { field: "date", direction: "desc" }
-      };
-    }
-    if (activeView === "active") {
-      return {};
-    }
-    return {
-      filters: [
-        {
-          field: "author",
-          operator: "is",
-          value: activeView,
-          isLocked: true
-        }
-      ]
-    };
-  }
 
   // packages/edit-site/build-module/components/page-templates/index.mjs
-  var import_jsx_runtime392 = __toESM(require_jsx_runtime(), 1);
-  var { usePostActions: usePostActions2, usePostFields: usePostFields2, templateTitleField } = unlock(import_editor32.privateApis);
-  var { useHistory: useHistory23, useLocation: useLocation29 } = unlock(import_router33.privateApis);
-  var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions2 } = unlock(import_core_data58.privateApis);
-  function PageTemplates() {
-    const { path, query } = useLocation29();
-    const { activeView = "active", postId } = query;
-    const [selection, setSelection] = (0, import_element244.useState)([postId]);
-    const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element244.useState)(false);
-    const defaultView = DEFAULT_VIEW;
-    const activeViewOverrides = (0, import_element244.useMemo)(
-      () => getActiveViewOverridesForTab(activeView),
-      [activeView]
-    );
-    const { view, updateView, isModified, resetToDefault } = useView({
-      kind: "postType",
-      name: TEMPLATE_POST_TYPE,
-      slug: "default",
-      defaultView,
-      activeViewOverrides,
-      queryParams: {
-        page: query.pageNumber,
-        search: query.search
-      },
-      onChangeQueryParams: (newQueryParams) => {
-        history.navigate(
-          (0, import_url22.addQueryArgs)(path, {
-            ...query,
-            pageNumber: newQueryParams.page,
-            search: newQueryParams.search || void 0
-          })
-        );
-      }
-    });
-    const { activeTemplatesOption, activeTheme, defaultTemplateTypes } = (0, import_data78.useSelect)((select4) => {
-      const { getEntityRecord, getCurrentTheme } = select4(import_core_data58.store);
-      return {
-        activeTemplatesOption: getEntityRecord("root", "site")?.active_templates,
-        activeTheme: getCurrentTheme(),
-        defaultTemplateTypes: select4(import_core_data58.store).getCurrentTheme()?.default_template_types
-      };
-    });
-    const { records: userRecords, isResolving: isLoadingUserRecords } = useEntityRecordsWithPermissions2("postType", TEMPLATE_POST_TYPE, {
-      per_page: -1,
-      combinedTemplates: false
-    });
-    const { records: staticRecords, isResolving: isLoadingStaticData } = useEntityRecordsWithPermissions2("root", "registeredTemplate", {
-      // This should not be needed, the endpoint returns all registered
-      // templates, but it's not possible right now to turn off pagination
-      // for entity configs.
-      per_page: -1
-    });
-    const activeTemplates = (0, import_element244.useMemo)(() => {
-      const _active = [...staticRecords];
-      if (activeTemplatesOption) {
-        for (const activeSlug in activeTemplatesOption) {
-          const activeId = activeTemplatesOption[activeSlug];
-          const template = userRecords.find(
-            (userRecord) => userRecord.id === activeId && userRecord.theme === activeTheme.stylesheet
-          );
-          if (template) {
-            const index2 = _active.findIndex(
-              ({ slug }) => slug === template.slug
-            );
-            if (index2 !== -1) {
-              _active[index2] = template;
-            } else {
-              _active.push(template);
-            }
-          }
-        }
-      }
-      return _active;
-    }, [userRecords, staticRecords, activeTemplatesOption, activeTheme]);
-    let isLoadingData;
-    if (activeView === "active") {
-      isLoadingData = isLoadingUserRecords || isLoadingStaticData;
-    } else if (activeView === "user") {
-      isLoadingData = isLoadingUserRecords;
-    } else {
-      isLoadingData = isLoadingStaticData;
-    }
-    const records = (0, import_element244.useMemo)(() => {
-      function isCustom(record) {
-        return record.is_custom ?? // For user templates it's custom if the is_wp_suggestion meta
-        // field is not set and the slug is not found in the default
-        // template types.
-        (!record.meta?.is_wp_suggestion && !defaultTemplateTypes.some(
-          (type) => type.slug === record.slug
-        ));
-      }
-      let _records;
-      if (activeView === "active") {
-        _records = activeTemplates.filter(
-          (record) => !isCustom(record)
-        );
-      } else if (activeView === "user") {
-        _records = userRecords;
-      } else {
-        _records = staticRecords;
-      }
-      return _records.map((record) => ({
-        ...record,
-        _isActive: activeTemplates.some(
-          (template) => template.id === record.id
-        ),
-        _isCustom: isCustom(record)
-      }));
-    }, [
-      activeTemplates,
-      defaultTemplateTypes,
-      userRecords,
-      staticRecords,
-      activeView
-    ]);
-    const users = (0, import_data78.useSelect)(
-      (select4) => {
-        const { getUser } = select4(import_core_data58.store);
-        return records.reduce((acc, record) => {
-          if (record.author_text) {
-            if (!acc[record.author_text]) {
-              acc[record.author_text] = record.author_text;
-            }
-          } else if (record.author) {
-            if (!acc[record.author]) {
-              acc[record.author] = getUser(record.author);
-            }
-          }
-          return acc;
-        }, {});
-      },
-      [records]
-    );
-    const history = useHistory23();
-    const onChangeSelection = (0, import_element244.useCallback)(
-      (items) => {
-        setSelection(items);
-        if (view?.type === "list") {
-          history.navigate(
-            (0, import_url22.addQueryArgs)(path, {
-              postId: items.length === 1 ? items[0] : void 0
-            })
-          );
-        }
-      },
-      [history, path, view?.type]
-    );
-    const postTypeFields = usePostFields2({
-      postType: TEMPLATE_POST_TYPE
-    });
-    const dateField = postTypeFields.find((field) => field.id === "date");
-    const themeField = useThemeField();
-    const fields2 = (0, import_element244.useMemo)(() => {
-      const _fields = [
-        previewField2,
-        templateTitleField,
-        descriptionField,
-        activeField,
-        slugField
-      ];
-      if (activeView === "user") {
-        _fields.push(themeField);
-        if (dateField) {
-          _fields.push(dateField);
-        }
-      }
-      const elements2 = [];
-      for (const author in users) {
-        elements2.push({
-          value: users[author]?.id ?? author,
-          label: users[author]?.name ?? author
-        });
-      }
-      _fields.push({
-        ...authorField,
-        elements: elements2
-      });
-      return _fields;
-    }, [users, activeView, themeField, dateField]);
-    const { data, paginationInfo } = (0, import_element244.useMemo)(() => {
-      return filterSortAndPaginate(records, view, fields2);
-    }, [records, view, fields2]);
-    const { createSuccessNotice } = (0, import_data78.useDispatch)(import_notices8.store);
-    const onActionPerformed = (0, import_element244.useCallback)(
-      (actionId, items) => {
-        switch (actionId) {
-          case "duplicate-post":
-            {
-              const newItem = items[0];
-              const _title = typeof newItem.title === "string" ? newItem.title : newItem.title?.rendered;
-              history.navigate(`/template?activeView=user`);
-              createSuccessNotice(
-                (0, import_i18n161.sprintf)(
-                  // translators: %s: Title of the created post or template, e.g: "Hello world".
-                  (0, import_i18n161.__)('"%s" successfully created.'),
-                  (0, import_html_entities15.decodeEntities)(_title) || (0, import_i18n161.__)("(no title)")
-                ),
-                {
-                  type: "snackbar",
-                  id: "duplicate-post-action",
-                  actions: [
-                    {
-                      label: (0, import_i18n161.__)("Edit"),
-                      onClick: () => {
-                        history.navigate(
-                          `/${newItem.type}/${newItem.id}?canvas=edit`
-                        );
-                      }
-                    }
-                  ]
-                }
-              );
-            }
-            break;
-        }
-      },
-      [history, createSuccessNotice]
-    );
-    const postTypeActions = usePostActions2({
-      postType: TEMPLATE_POST_TYPE,
-      context: "list",
-      onActionPerformed
-    });
-    const editAction = useEditPostAction();
-    const setActiveTemplateAction = useSetActiveTemplateAction();
-    const actions = (0, import_element244.useMemo)(
-      () => activeView === "user" ? [setActiveTemplateAction, editAction, ...postTypeActions] : [setActiveTemplateAction, ...postTypeActions],
-      [postTypeActions, setActiveTemplateAction, editAction, activeView]
-    );
-    const onChangeView = (0, import_compose44.useEvent)((newView) => {
-      updateView(newView);
-      if (newView.type !== view.type) {
-        history.invalidate();
-      }
-    });
-    const duplicateAction = actions.find(
-      (action) => action.id === "duplicate-post"
-    );
-    return /* @__PURE__ */ (0, import_jsx_runtime392.jsxs)(
-      page_default2,
-      {
-        className: "edit-site-page-templates",
-        title: (0, import_i18n161.__)("Templates"),
-        headingLevel: 2,
-        actions: /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(add_new_template_default, {}),
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(
-            dataviews_default,
-            {
-              paginationInfo,
-              fields: fields2,
-              actions,
-              data,
-              isLoading: isLoadingData,
-              view,
-              onChangeView,
-              onChangeSelection,
-              isItemClickable: () => true,
-              onClickItem: (item) => {
-                if (typeof item.id === "string") {
-                  setSelectedRegisteredTemplate(item);
-                } else {
-                  history.navigate(
-                    `/${item.type}/${item.id}?canvas=edit`
-                  );
-                }
-              },
-              selection,
-              defaultLayouts,
-              onReset: isModified ? () => {
-                resetToDefault();
-                history.invalidate();
-              } : false
-            },
-            activeView
-          ),
-          selectedRegisteredTemplate && duplicateAction && /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(
-            import_components150.Modal,
-            {
-              title: (0, import_i18n161.__)("Duplicate"),
-              onRequestClose: () => setSelectedRegisteredTemplate(),
-              size: "small",
-              children: /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(
-                duplicateAction.RenderModal,
-                {
-                  items: [selectedRegisteredTemplate],
-                  closeModal: () => setSelectedRegisteredTemplate()
-                }
-              )
-            }
-          )
-        ]
-      }
-    );
-  }
-
-  // packages/edit-site/build-module/components/page-templates/index-legacy.mjs
-  var import_i18n166 = __toESM(require_i18n(), 1);
-  var import_element249 = __toESM(require_element(), 1);
-  var import_core_data62 = __toESM(require_core_data(), 1);
-  var import_router35 = __toESM(require_router(), 1);
-  var import_editor33 = __toESM(require_editor(), 1);
-  var import_url25 = __toESM(require_url(), 1);
-  var import_compose47 = __toESM(require_compose(), 1);
-
-  // packages/edit-site/build-module/components/add-new-template-legacy/index.mjs
-  var import_components153 = __toESM(require_components(), 1);
-  var import_html_entities18 = __toESM(require_html_entities(), 1);
-  var import_element248 = __toESM(require_element(), 1);
-  var import_data80 = __toESM(require_data(), 1);
-  var import_core_data61 = __toESM(require_core_data(), 1);
-  var import_compose46 = __toESM(require_compose(), 1);
-  var import_i18n165 = __toESM(require_i18n(), 1);
-  var import_notices9 = __toESM(require_notices(), 1);
-  var import_router34 = __toESM(require_router(), 1);
-  var import_dom34 = __toESM(require_dom(), 1);
-
-  // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-template-modal-content.mjs
-  var import_element246 = __toESM(require_element(), 1);
-  var import_i18n163 = __toESM(require_i18n(), 1);
-  var import_components151 = __toESM(require_components(), 1);
-  var import_core_data60 = __toESM(require_core_data(), 1);
-  var import_html_entities17 = __toESM(require_html_entities(), 1);
-  var import_compose45 = __toESM(require_compose(), 1);
-  var import_dom33 = __toESM(require_dom(), 1);
-  var import_url24 = __toESM(require_url(), 1);
-
-  // packages/edit-site/build-module/components/add-new-template-legacy/utils.mjs
-  var import_data79 = __toESM(require_data(), 1);
-  var import_core_data59 = __toESM(require_core_data(), 1);
-  var import_html_entities16 = __toESM(require_html_entities(), 1);
-  var import_element245 = __toESM(require_element(), 1);
-  var import_i18n162 = __toESM(require_i18n(), 1);
-  var import_url23 = __toESM(require_url(), 1);
-  var EMPTY_OBJECT3 = {};
-  var getValueFromObjectPath3 = (object, path) => {
-    let value = object;
-    path.split(".").forEach((fieldName) => {
-      value = value?.[fieldName];
-    });
-    return value;
-  };
-  function prefixSlug2(prefix2, slug) {
-    return `${prefix2}-${(0, import_url23.safeDecodeURI)(slug)}`;
-  }
-  var mapToIHasNameAndId2 = (entities, path) => {
-    return (entities || []).map((entity) => ({
-      ...entity,
-      name: (0, import_html_entities16.decodeEntities)(getValueFromObjectPath3(entity, path))
-    }));
-  };
-  var useExistingTemplates2 = () => {
-    return (0, import_data79.useSelect)(
-      (select4) => select4(import_core_data59.store).getEntityRecords(
-        "postType",
-        TEMPLATE_POST_TYPE,
-        {
-          per_page: -1
-        }
-      ),
-      []
-    );
-  };
-  var useDefaultTemplateTypes2 = () => {
-    return (0, import_data79.useSelect)(
-      (select4) => select4(import_core_data59.store).getCurrentTheme()?.default_template_types || [],
-      []
-    );
-  };
-  var usePublicPostTypes2 = () => {
-    const postTypes = (0, import_data79.useSelect)(
-      (select4) => select4(import_core_data59.store).getPostTypes({ per_page: -1 }),
-      []
-    );
-    return (0, import_element245.useMemo)(() => {
-      const excludedPostTypes = ["attachment"];
-      return postTypes?.filter(
-        ({ viewable, slug }) => viewable && !excludedPostTypes.includes(slug)
-      ).sort((a2, b2) => {
-        if (a2.slug === "post" || b2.slug === "post") {
-          return 0;
-        }
-        return a2.name.localeCompare(b2.name);
-      });
-    }, [postTypes]);
-  };
-  var usePublicTaxonomies2 = () => {
-    const taxonomies = (0, import_data79.useSelect)(
-      (select4) => select4(import_core_data59.store).getTaxonomies({ per_page: -1 }),
-      []
-    );
-    return (0, import_element245.useMemo)(() => {
-      return taxonomies?.filter(
-        ({ visibility }) => visibility?.publicly_queryable
-      );
-    }, [taxonomies]);
-  };
-  function usePostTypeArchiveMenuItems2() {
-    const publicPostTypes = usePublicPostTypes2();
-    const postTypesWithArchives = (0, import_element245.useMemo)(
-      () => publicPostTypes?.filter((postType2) => postType2.has_archive),
-      [publicPostTypes]
-    );
-    const existingTemplates = useExistingTemplates2();
-    const postTypeLabels = (0, import_element245.useMemo)(
-      () => publicPostTypes?.reduce((accumulator, { labels }) => {
-        const singularName = labels.singular_name.toLowerCase();
-        accumulator[singularName] = (accumulator[singularName] || 0) + 1;
-        return accumulator;
-      }, {}),
-      [publicPostTypes]
-    );
-    const needsUniqueIdentifier = (0, import_element245.useCallback)(
-      ({ labels, slug }) => {
-        const singularName = labels.singular_name.toLowerCase();
-        return postTypeLabels[singularName] > 1 && singularName !== slug;
-      },
-      [postTypeLabels]
-    );
-    return (0, import_element245.useMemo)(
-      () => postTypesWithArchives?.filter(
-        (postType2) => !(existingTemplates || []).some(
-          (existingTemplate) => existingTemplate.slug === "archive-" + postType2.slug
-        )
-      ).map((postType2) => {
-        let title;
-        if (needsUniqueIdentifier(postType2)) {
-          title = (0, import_i18n162.sprintf)(
-            // translators: %1s: Name of the post type e.g: "Post"; %2s: Slug of the post type e.g: "book".
-            (0, import_i18n162.__)("Archive: %1$s (%2$s)"),
-            postType2.labels.singular_name,
-            postType2.slug
-          );
-        } else {
-          title = (0, import_i18n162.sprintf)(
-            // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n162.__)("Archive: %s"),
-            postType2.labels.singular_name
-          );
-        }
-        return {
-          slug: "archive-" + postType2.slug,
-          description: (0, import_i18n162.sprintf)(
-            // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n162.__)(
-              "Displays an archive with the latest posts of type: %s."
-            ),
-            postType2.labels.singular_name
-          ),
-          title,
-          // `icon` is the `menu_icon` property of a post type. We
-          // only handle `dashicons` for now, even if the `menu_icon`
-          // also supports urls and svg as values.
-          icon: typeof postType2.icon === "string" && postType2.icon.startsWith("dashicons-") ? postType2.icon.slice(10) : archive_default,
-          templatePrefix: "archive"
-        };
-      }) || [],
-      [postTypesWithArchives, existingTemplates, needsUniqueIdentifier]
-    );
-  }
-  var usePostTypeMenuItems2 = (onClickMenuItem) => {
-    const publicPostTypes = usePublicPostTypes2();
-    const existingTemplates = useExistingTemplates2();
-    const defaultTemplateTypes = useDefaultTemplateTypes2();
-    const templateLabels = (0, import_element245.useMemo)(
-      () => publicPostTypes?.reduce((accumulator, { labels }) => {
-        const templateName = (labels.template_name || labels.singular_name).toLowerCase();
-        accumulator[templateName] = (accumulator[templateName] || 0) + 1;
-        return accumulator;
-      }, {}),
-      [publicPostTypes]
-    );
-    const needsUniqueIdentifier = (0, import_element245.useCallback)(
-      ({ labels, slug }) => {
-        const templateName = (labels.template_name || labels.singular_name).toLowerCase();
-        return templateLabels[templateName] > 1 && templateName !== slug;
-      },
-      [templateLabels]
-    );
-    const templatePrefixes = (0, import_element245.useMemo)(
-      () => publicPostTypes?.reduce((accumulator, { slug }) => {
-        let suffix = slug;
-        if (slug !== "page") {
-          suffix = `single-${suffix}`;
-        }
-        accumulator[slug] = suffix;
-        return accumulator;
-      }, {}),
-      [publicPostTypes]
-    );
-    const postTypesInfo = useEntitiesInfo2("postType", templatePrefixes);
-    const existingTemplateSlugs = (existingTemplates || []).map(
-      ({ slug }) => slug
-    );
-    const menuItems = (publicPostTypes || []).reduce(
-      (accumulator, postType2) => {
-        const { slug, labels, icon } = postType2;
-        const generalTemplateSlug = templatePrefixes[slug];
-        const defaultTemplateType = defaultTemplateTypes?.find(
-          ({ slug: _slug }) => _slug === generalTemplateSlug
-        );
-        const hasGeneralTemplate = existingTemplateSlugs?.includes(generalTemplateSlug);
-        const _needsUniqueIdentifier = needsUniqueIdentifier(postType2);
-        let menuItemTitle = labels.template_name || (0, import_i18n162.sprintf)(
-          // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n162.__)("Single item: %s"),
-          labels.singular_name
-        );
-        if (_needsUniqueIdentifier) {
-          menuItemTitle = labels.template_name ? (0, import_i18n162.sprintf)(
-            // translators: 1: Name of the template e.g: "Single Item: Post". 2: Slug of the post type e.g: "book".
-            (0, import_i18n162._x)("%1$s (%2$s)", "post type menu label"),
-            labels.template_name,
-            slug
-          ) : (0, import_i18n162.sprintf)(
-            // translators: 1: Name of the post type e.g: "Post". 2: Slug of the post type e.g: "book".
-            (0, import_i18n162._x)(
-              "Single item: %1$s (%2$s)",
-              "post type menu label"
-            ),
-            labels.singular_name,
-            slug
-          );
-        }
-        const menuItem = defaultTemplateType ? {
-          ...defaultTemplateType,
-          templatePrefix: templatePrefixes[slug]
-        } : {
-          slug: generalTemplateSlug,
-          title: menuItemTitle,
-          description: (0, import_i18n162.sprintf)(
-            // translators: %s: Name of the post type e.g: "Post".
-            (0, import_i18n162.__)("Displays a single item: %s."),
-            labels.singular_name
-          ),
-          // `icon` is the `menu_icon` property of a post type. We
-          // only handle `dashicons` for now, even if the `menu_icon`
-          // also supports urls and svg as values.
-          icon: typeof icon === "string" && icon.startsWith("dashicons-") ? icon.slice(10) : post_default,
-          templatePrefix: templatePrefixes[slug]
-        };
-        const hasEntities = postTypesInfo?.[slug]?.hasEntities;
-        if (hasEntities) {
-          menuItem.onClick = (template) => {
-            onClickMenuItem({
-              type: "postType",
-              slug,
-              config: {
-                recordNamePath: "title.rendered",
-                queryArgs: ({ search }) => {
-                  return {
-                    _fields: "id,title,slug,link",
-                    orderBy: search ? "relevance" : "modified",
-                    exclude: postTypesInfo[slug].existingEntitiesIds
-                  };
-                },
-                getSpecificTemplate: (suggestion) => {
-                  const templateSlug = prefixSlug2(
-                    templatePrefixes[slug],
-                    suggestion.slug
-                  );
-                  return {
-                    title: templateSlug,
-                    slug: templateSlug,
-                    templatePrefix: templatePrefixes[slug]
-                  };
-                }
-              },
-              labels,
-              hasGeneralTemplate,
-              template
-            });
-          };
-        }
-        if (!hasGeneralTemplate || hasEntities) {
-          accumulator.push(menuItem);
-        }
-        return accumulator;
-      },
-      []
-    );
-    const postTypesMenuItems = (0, import_element245.useMemo)(
-      () => menuItems.reduce(
-        (accumulator, postType2) => {
-          const { slug } = postType2;
-          let key = "postTypesMenuItems";
-          if (slug === "page") {
-            key = "defaultPostTypesMenuItems";
-          }
-          accumulator[key].push(postType2);
-          return accumulator;
-        },
-        { defaultPostTypesMenuItems: [], postTypesMenuItems: [] }
-      ),
-      [menuItems]
-    );
-    return postTypesMenuItems;
-  };
-  var useTaxonomiesMenuItems2 = (onClickMenuItem) => {
-    const publicTaxonomies = usePublicTaxonomies2();
-    const existingTemplates = useExistingTemplates2();
-    const defaultTemplateTypes = useDefaultTemplateTypes2();
-    const templatePrefixes = (0, import_element245.useMemo)(
-      () => publicTaxonomies?.reduce((accumulator, { slug }) => {
-        let suffix = slug;
-        if (!["category", "post_tag"].includes(slug)) {
-          suffix = `taxonomy-${suffix}`;
-        }
-        if (slug === "post_tag") {
-          suffix = `tag`;
-        }
-        accumulator[slug] = suffix;
-        return accumulator;
-      }, {}),
-      [publicTaxonomies]
-    );
-    const taxonomyLabels = publicTaxonomies?.reduce(
-      (accumulator, { labels }) => {
-        const templateName = (labels.template_name || labels.singular_name).toLowerCase();
-        accumulator[templateName] = (accumulator[templateName] || 0) + 1;
-        return accumulator;
-      },
-      {}
-    );
-    const needsUniqueIdentifier = (labels, slug) => {
-      if (["category", "post_tag"].includes(slug)) {
-        return false;
-      }
-      const templateName = (labels.template_name || labels.singular_name).toLowerCase();
-      return taxonomyLabels[templateName] > 1 && templateName !== slug;
-    };
-    const taxonomiesInfo = useEntitiesInfo2("taxonomy", templatePrefixes);
-    const existingTemplateSlugs = (existingTemplates || []).map(
-      ({ slug }) => slug
-    );
-    const menuItems = (publicTaxonomies || []).reduce(
-      (accumulator, taxonomy) => {
-        const { slug, labels } = taxonomy;
-        const generalTemplateSlug = templatePrefixes[slug];
-        const defaultTemplateType = defaultTemplateTypes?.find(
-          ({ slug: _slug }) => _slug === generalTemplateSlug
-        );
-        const hasGeneralTemplate = existingTemplateSlugs?.includes(generalTemplateSlug);
-        const _needsUniqueIdentifier = needsUniqueIdentifier(
-          labels,
-          slug
-        );
-        let menuItemTitle = labels.template_name || labels.singular_name;
-        if (_needsUniqueIdentifier) {
-          menuItemTitle = labels.template_name ? (0, import_i18n162.sprintf)(
-            // translators: 1: Name of the template e.g: "Products by Category". 2: Slug of the taxonomy e.g: "product_cat".
-            (0, import_i18n162._x)("%1$s (%2$s)", "taxonomy template menu label"),
-            labels.template_name,
-            slug
-          ) : (0, import_i18n162.sprintf)(
-            // translators: 1: Name of the taxonomy e.g: "Category". 2: Slug of the taxonomy e.g: "product_cat".
-            (0, import_i18n162._x)("%1$s (%2$s)", "taxonomy menu label"),
-            labels.singular_name,
-            slug
-          );
-        }
-        const menuItem = defaultTemplateType ? {
-          ...defaultTemplateType,
-          templatePrefix: templatePrefixes[slug]
-        } : {
-          slug: generalTemplateSlug,
-          title: menuItemTitle,
-          description: (0, import_i18n162.sprintf)(
-            // translators: %s: Name of the taxonomy e.g: "Product Categories".
-            (0, import_i18n162.__)("Displays taxonomy: %s."),
-            labels.singular_name
-          ),
-          icon: block_meta_default,
-          templatePrefix: templatePrefixes[slug]
-        };
-        const hasEntities = taxonomiesInfo?.[slug]?.hasEntities;
-        if (hasEntities) {
-          menuItem.onClick = (template) => {
-            onClickMenuItem({
-              type: "taxonomy",
-              slug,
-              config: {
-                queryArgs: ({ search }) => {
-                  return {
-                    _fields: "id,name,slug,link",
-                    orderBy: search ? "name" : "count",
-                    exclude: taxonomiesInfo[slug].existingEntitiesIds
-                  };
-                },
-                getSpecificTemplate: (suggestion) => {
-                  const templateSlug = prefixSlug2(
-                    templatePrefixes[slug],
-                    suggestion.slug
-                  );
-                  return {
-                    title: templateSlug,
-                    slug: templateSlug,
-                    templatePrefix: templatePrefixes[slug]
-                  };
-                }
-              },
-              labels,
-              hasGeneralTemplate,
-              template
-            });
-          };
-        }
-        if (!hasGeneralTemplate || hasEntities) {
-          accumulator.push(menuItem);
-        }
-        return accumulator;
-      },
-      []
-    );
-    const taxonomiesMenuItems = (0, import_element245.useMemo)(
-      () => menuItems.reduce(
-        (accumulator, taxonomy) => {
-          const { slug } = taxonomy;
-          let key = "taxonomiesMenuItems";
-          if (["category", "tag"].includes(slug)) {
-            key = "defaultTaxonomiesMenuItems";
-          }
-          accumulator[key].push(taxonomy);
-          return accumulator;
-        },
-        { defaultTaxonomiesMenuItems: [], taxonomiesMenuItems: [] }
-      ),
-      [menuItems]
-    );
-    return taxonomiesMenuItems;
-  };
-  var USE_AUTHOR_MENU_ITEM_TEMPLATE_PREFIX2 = { user: "author" };
-  var USE_AUTHOR_MENU_ITEM_QUERY_PARAMETERS2 = { user: { who: "authors" } };
-  function useAuthorMenuItem2(onClickMenuItem) {
-    const existingTemplates = useExistingTemplates2();
-    const defaultTemplateTypes = useDefaultTemplateTypes2();
-    const authorInfo = useEntitiesInfo2(
-      "root",
-      USE_AUTHOR_MENU_ITEM_TEMPLATE_PREFIX2,
-      USE_AUTHOR_MENU_ITEM_QUERY_PARAMETERS2
-    );
-    let authorMenuItem = defaultTemplateTypes?.find(
-      ({ slug }) => slug === "author"
-    );
-    if (!authorMenuItem) {
-      authorMenuItem = {
-        description: (0, import_i18n162.__)(
-          "Displays latest posts written by a single author."
-        ),
-        slug: "author",
-        title: "Author"
-      };
-    }
-    const hasGeneralTemplate = !!existingTemplates?.find(
-      ({ slug }) => slug === "author"
-    );
-    if (authorInfo.user?.hasEntities) {
-      authorMenuItem = { ...authorMenuItem, templatePrefix: "author" };
-      authorMenuItem.onClick = (template) => {
-        onClickMenuItem({
-          type: "root",
-          slug: "user",
-          config: {
-            queryArgs: ({ search }) => {
-              return {
-                _fields: "id,name,slug,link",
-                orderBy: search ? "name" : "registered_date",
-                exclude: authorInfo.user.existingEntitiesIds,
-                who: "authors"
-              };
-            },
-            getSpecificTemplate: (suggestion) => {
-              const templateSlug = prefixSlug2(
-                "author",
-                suggestion.slug
-              );
-              return {
-                title: templateSlug,
-                slug: templateSlug,
-                templatePrefix: "author"
-              };
-            }
-          },
-          labels: {
-            singular_name: (0, import_i18n162.__)("Author"),
-            search_items: (0, import_i18n162.__)("Search Authors"),
-            not_found: (0, import_i18n162.__)("No authors found."),
-            all_items: (0, import_i18n162.__)("All Authors")
-          },
-          hasGeneralTemplate,
-          template
-        });
-      };
-    }
-    if (!hasGeneralTemplate || authorInfo.user?.hasEntities) {
-      return authorMenuItem;
-    }
-  }
-  var useExistingTemplateSlugs = (templatePrefixes) => {
-    const existingTemplates = useExistingTemplates2();
-    const existingSlugs = (0, import_element245.useMemo)(() => {
-      return Object.entries(templatePrefixes || {}).reduce(
-        (accumulator, [slug, prefix2]) => {
-          const slugsWithTemplates = (existingTemplates || []).reduce(
-            (_accumulator, existingTemplate) => {
-              const _prefix = `${prefix2}-`;
-              if (existingTemplate.slug.startsWith(_prefix)) {
-                _accumulator.push(
-                  existingTemplate.slug.substring(
-                    _prefix.length
-                  )
-                );
-              }
-              return _accumulator;
-            },
-            []
-          );
-          if (slugsWithTemplates.length) {
-            accumulator[slug] = slugsWithTemplates;
-          }
-          return accumulator;
-        },
-        {}
-      );
-    }, [templatePrefixes, existingTemplates]);
-    return existingSlugs;
-  };
-  var useTemplatesToExclude = (entityName, templatePrefixes, additionalQueryParameters = {}) => {
-    const slugsToExcludePerEntity = useExistingTemplateSlugs(templatePrefixes);
-    const recordsToExcludePerEntity = (0, import_data79.useSelect)(
-      (select4) => {
-        return Object.entries(slugsToExcludePerEntity || {}).reduce(
-          (accumulator, [slug, slugsWithTemplates]) => {
-            const entitiesWithTemplates = select4(
-              import_core_data59.store
-            ).getEntityRecords(entityName, slug, {
-              _fields: "id",
-              context: "view",
-              slug: slugsWithTemplates,
-              ...additionalQueryParameters[slug]
-            });
-            if (entitiesWithTemplates?.length) {
-              accumulator[slug] = entitiesWithTemplates;
-            }
-            return accumulator;
-          },
-          {}
-        );
-      },
-      [slugsToExcludePerEntity]
-    );
-    return recordsToExcludePerEntity;
-  };
-  var useEntitiesInfo2 = (entityName, templatePrefixes, additionalQueryParameters = EMPTY_OBJECT3) => {
-    const recordsToExcludePerEntity = useTemplatesToExclude(
-      entityName,
-      templatePrefixes,
-      additionalQueryParameters
-    );
-    const entitiesHasRecords = (0, import_data79.useSelect)(
-      (select4) => {
-        return Object.keys(templatePrefixes || {}).reduce(
-          (accumulator, slug) => {
-            const existingEntitiesIds = recordsToExcludePerEntity?.[slug]?.map(
-              ({ id }) => id
-            ) || [];
-            const records = select4(import_core_data59.store).getEntityRecords(
-              entityName,
-              slug,
-              {
-                per_page: 1,
-                _fields: "id",
-                context: "view",
-                exclude: existingEntitiesIds,
-                ...additionalQueryParameters[slug]
-              }
-            );
-            accumulator[slug] = records === null || records.length > 0;
-            return accumulator;
-          },
-          {}
-        );
-      },
-      [
-        templatePrefixes,
-        recordsToExcludePerEntity,
-        entityName,
-        additionalQueryParameters
-      ]
-    );
-    const entitiesInfo = (0, import_element245.useMemo)(() => {
-      return Object.keys(templatePrefixes || {}).reduce(
-        (accumulator, slug) => {
-          const existingEntitiesIds = recordsToExcludePerEntity?.[slug]?.map(
-            ({ id }) => id
-          ) || [];
-          accumulator[slug] = {
-            hasEntities: entitiesHasRecords[slug],
-            existingEntitiesIds
-          };
-          return accumulator;
-        },
-        {}
-      );
-    }, [templatePrefixes, recordsToExcludePerEntity, entitiesHasRecords]);
-    return entitiesInfo;
-  };
-
-  // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-template-modal-content.mjs
-  var import_jsx_runtime393 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY14 = [];
-  function SuggestionListItem2({
-    suggestion,
-    search,
-    onSelect,
-    entityForSuggestions
-  }) {
-    const baseCssClass = "edit-site-custom-template-modal__suggestions_list__list-item";
-    return /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(
-      import_components151.Composite.Item,
-      {
-        render: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-          import_components151.Button,
-          {
-            __next40pxDefaultSize: true,
-            role: "option",
-            className: baseCssClass,
-            onClick: () => onSelect(
-              entityForSuggestions.config.getSpecificTemplate(
-                suggestion
-              )
-            )
-          }
-        ),
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-            import_components151.__experimentalText,
-            {
-              size: "body",
-              lineHeight: 1.53846153846,
-              weight: "var(--wpds-typography-font-weight-emphasis, 600)",
-              className: `${baseCssClass}__title`,
-              children: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-                import_components151.TextHighlight,
-                {
-                  text: (0, import_html_entities17.decodeEntities)(suggestion.name),
-                  highlight: search
-                }
-              )
-            }
-          ),
-          suggestion.link && /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-            import_components151.__experimentalText,
-            {
-              size: "body",
-              lineHeight: 1.53846153846,
-              className: `${baseCssClass}__info`,
-              children: (0, import_url24.safeDecodeURI)(suggestion.link)
-            }
-          )
-        ]
-      }
-    );
-  }
-  function useSearchSuggestions2(entityForSuggestions, search) {
-    const { config: config2 } = entityForSuggestions;
-    const query = (0, import_element246.useMemo)(
-      () => ({
-        order: "asc",
-        context: "view",
-        search,
-        per_page: search ? 20 : 10,
-        ...config2.queryArgs(search)
-      }),
-      [search, config2]
-    );
-    const { records: searchResults, hasResolved: searchHasResolved } = (0, import_core_data60.useEntityRecords)(
-      entityForSuggestions.type,
-      entityForSuggestions.slug,
-      query
-    );
-    const [suggestions, setSuggestions] = (0, import_element246.useState)(EMPTY_ARRAY14);
-    (0, import_element246.useEffect)(() => {
-      if (!searchHasResolved) {
-        return;
-      }
-      let newSuggestions = EMPTY_ARRAY14;
-      if (searchResults?.length) {
-        newSuggestions = searchResults;
-        if (config2.recordNamePath) {
-          newSuggestions = mapToIHasNameAndId2(
-            newSuggestions,
-            config2.recordNamePath
-          );
-        }
-      }
-      setSuggestions(newSuggestions);
-    }, [searchResults, searchHasResolved]);
-    return suggestions;
-  }
-  function SuggestionList2({ entityForSuggestions, onSelect }) {
-    const [search, setSearch, debouncedSearch] = (0, import_compose45.useDebouncedInput)();
-    const suggestions = useSearchSuggestions2(
-      entityForSuggestions,
-      debouncedSearch
-    );
-    const { labels } = entityForSuggestions;
-    const [showSearchControl, setShowSearchControl] = (0, import_element246.useState)(false);
-    if (!showSearchControl && suggestions?.length > 9) {
-      setShowSearchControl(true);
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(import_jsx_runtime393.Fragment, { children: [
-      showSearchControl && /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-        import_components151.SearchControl,
-        {
-          onChange: setSearch,
-          value: search,
-          label: labels.search_items,
-          placeholder: labels.search_items
-        }
-      ),
-      !!suggestions?.length && /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-        import_components151.Composite,
-        {
-          orientation: "vertical",
-          role: "listbox",
-          className: "edit-site-custom-template-modal__suggestions_list",
-          "aria-label": (0, import_i18n163.__)("Suggestions list"),
-          children: suggestions.map((suggestion) => /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-            SuggestionListItem2,
-            {
-              suggestion,
-              search: debouncedSearch,
-              onSelect,
-              entityForSuggestions
-            },
-            suggestion.slug
-          ))
-        }
-      ),
-      debouncedSearch && !suggestions?.length && /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-        import_components151.__experimentalText,
-        {
-          as: "p",
-          className: "edit-site-custom-template-modal__no-results",
-          children: labels.not_found
-        }
-      )
-    ] });
-  }
-  function AddCustomTemplateModalContent2({
-    onSelect,
-    entityForSuggestions,
-    onBack,
-    containerRef
-  }) {
-    const [showSearchEntities, setShowSearchEntities] = (0, import_element246.useState)(
-      entityForSuggestions.hasGeneralTemplate
-    );
-    (0, import_element246.useEffect)(() => {
-      if (containerRef.current) {
-        const [firstFocusable] = import_dom33.focus.focusable.find(
-          containerRef.current
-        );
-        firstFocusable?.focus();
-      }
-    }, [showSearchEntities]);
-    return /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(
-      import_components151.__experimentalVStack,
-      {
-        spacing: 4,
-        className: "edit-site-custom-template-modal__contents-wrapper",
-        alignment: "left",
-        children: [
-          !showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(import_jsx_runtime393.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(import_components151.__experimentalText, { as: "p", children: (0, import_i18n163.__)(
-              "Select whether to create a single template for all items or a specific one."
-            ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(
-              import_components151.Flex,
-              {
-                className: "edit-site-custom-template-modal__contents",
-                gap: "4",
-                align: "initial",
-                children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(
-                    import_components151.FlexItem,
-                    {
-                      isBlock: true,
-                      as: import_components151.Button,
-                      onClick: () => {
-                        const {
-                          slug,
-                          title,
-                          description,
-                          templatePrefix
-                        } = entityForSuggestions.template;
-                        onSelect({
-                          slug,
-                          title,
-                          description,
-                          templatePrefix
-                        });
-                      },
-                      children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-                          import_components151.__experimentalText,
-                          {
-                            as: "span",
-                            weight: "var(--wpds-typography-font-weight-emphasis, 600)",
-                            lineHeight: 1.53846153846,
-                            children: entityForSuggestions.labels.all_items
-                          }
-                        ),
-                        /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-                          import_components151.__experimentalText,
-                          {
-                            as: "span",
-                            lineHeight: 1.53846153846,
-                            // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-                            children: (0, import_i18n163.__)("For all items")
-                          }
-                        )
-                      ]
-                    }
-                  ),
-                  /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(
-                    import_components151.FlexItem,
-                    {
-                      isBlock: true,
-                      as: import_components151.Button,
-                      onClick: () => {
-                        setShowSearchEntities(true);
-                      },
-                      children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-                          import_components151.__experimentalText,
-                          {
-                            as: "span",
-                            weight: "var(--wpds-typography-font-weight-emphasis, 600)",
-                            lineHeight: 1.53846153846,
-                            children: entityForSuggestions.labels.singular_name
-                          }
-                        ),
-                        /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-                          import_components151.__experimentalText,
-                          {
-                            as: "span",
-                            lineHeight: 1.53846153846,
-                            // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-                            children: (0, import_i18n163.__)("For a specific item")
-                          }
-                        )
-                      ]
-                    }
-                  )
-                ]
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(import_components151.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-              import_components151.Button,
-              {
-                __next40pxDefaultSize: true,
-                variant: "tertiary",
-                onClick: onBack,
-                children: (0, import_i18n163.__)("Back")
-              }
-            ) })
-          ] }),
-          showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(import_jsx_runtime393.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(import_components151.__experimentalText, { as: "p", children: (0, import_i18n163.__)(
-              "This template will be used only for the specific item chosen."
-            ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-              SuggestionList2,
-              {
-                entityForSuggestions,
-                onSelect
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(import_components151.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-              import_components151.Button,
-              {
-                __next40pxDefaultSize: true,
-                variant: "tertiary",
-                onClick: () => {
-                  if (entityForSuggestions.hasGeneralTemplate) {
-                    onBack();
-                  } else {
-                    setShowSearchEntities(false);
-                  }
-                },
-                children: (0, import_i18n163.__)("Back")
-              }
-            ) })
-          ] })
-        ]
-      }
-    );
-  }
-  var add_custom_template_modal_content_default2 = AddCustomTemplateModalContent2;
-
-  // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-generic-template-modal-content.mjs
-  var import_element247 = __toESM(require_element(), 1);
-  var import_i18n164 = __toESM(require_i18n(), 1);
-  var import_components152 = __toESM(require_components(), 1);
-  var import_jsx_runtime394 = __toESM(require_jsx_runtime(), 1);
-  function AddCustomGenericTemplateModalContent2({ createTemplate, onBack }) {
-    const [title, setTitle] = (0, import_element247.useState)("");
-    const defaultTitle = (0, import_i18n164.__)("Custom Template");
-    const [isBusy, setIsBusy] = (0, import_element247.useState)(false);
-    const inputRef = (0, import_element247.useRef)();
-    (0, import_element247.useEffect)(() => {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    }, []);
-    async function onCreateTemplate(event) {
-      event.preventDefault();
-      if (isBusy) {
-        return;
-      }
-      setIsBusy(true);
-      try {
-        await createTemplate(
-          {
-            slug: paramCase(title || defaultTitle) || "wp-custom-template",
-            title: title || defaultTitle
-          },
-          false
-        );
-      } finally {
-        setIsBusy(false);
-      }
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime394.jsx)("form", { onSubmit: onCreateTemplate, children: /* @__PURE__ */ (0, import_jsx_runtime394.jsxs)(import_components152.__experimentalVStack, { spacing: 6, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
-        import_components152.TextControl,
-        {
-          label: (0, import_i18n164.__)("Name"),
-          value: title,
-          onChange: setTitle,
-          placeholder: defaultTitle,
-          disabled: isBusy,
-          ref: inputRef,
-          help: (0, import_i18n164.__)(
-            // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
-            'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.'
-          )
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime394.jsxs)(
-        import_components152.__experimentalHStack,
-        {
-          className: "edit-site-custom-generic-template__modal-actions",
-          justify: "right",
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
-              import_components152.Button,
-              {
-                __next40pxDefaultSize: true,
-                variant: "tertiary",
-                onClick: onBack,
-                children: (0, import_i18n164.__)("Back")
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
-              import_components152.Button,
-              {
-                __next40pxDefaultSize: true,
-                variant: "primary",
-                type: "submit",
-                isBusy,
-                "aria-disabled": isBusy,
-                children: (0, import_i18n164.__)("Create")
-              }
-            )
-          ]
-        }
-      )
-    ] }) });
-  }
-  var add_custom_generic_template_modal_content_default2 = AddCustomGenericTemplateModalContent2;
-
-  // packages/edit-site/build-module/components/add-new-template-legacy/index.mjs
-  var import_jsx_runtime395 = __toESM(require_jsx_runtime(), 1);
-  var { useHistory: useHistory24 } = unlock(import_router34.privateApis);
-  var DEFAULT_TEMPLATE_SLUGS2 = [
-    "front-page",
-    "home",
-    "single",
-    "page",
-    "index",
-    "archive",
-    "author",
-    "category",
-    "date",
-    "tag",
-    "search",
-    "404"
-  ];
-  var TEMPLATE_ICONS2 = {
-    "front-page": home_default,
-    home: verse_default,
-    single: pin_default,
-    page: page_default,
-    archive: archive_default,
-    search: search_default,
-    404: not_found_default,
-    index: list_default,
-    category: category_default,
-    author: comment_author_avatar_default,
-    taxonomy: block_meta_default,
-    date: calendar_default,
-    tag: tag_default,
-    attachment: media_default
-  };
-  function TemplateListItem2({
-    title,
-    direction,
-    className,
-    description,
-    icon,
-    onClick,
-    children
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-      import_components153.Button,
-      {
-        __next40pxDefaultSize: true,
-        className,
-        onClick,
-        label: description,
-        showTooltip: !!description,
-        children: /* @__PURE__ */ (0, import_jsx_runtime395.jsxs)(
-          import_components153.Flex,
-          {
-            as: "span",
-            spacing: 2,
-            align: "center",
-            justify: "center",
-            style: { width: "100%" },
-            direction,
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime395.jsx)("div", { className: "edit-site-add-new-template__template-icon", children: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(import_components153.Icon, { icon }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime395.jsxs)(
-                import_components153.__experimentalVStack,
-                {
-                  className: "edit-site-add-new-template__template-name",
-                  alignment: "center",
-                  spacing: 0,
-                  children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-                      import_components153.__experimentalText,
-                      {
-                        align: "center",
-                        weight: "var(--wpds-typography-font-weight-emphasis, 600)",
-                        lineHeight: 1.53846153846,
-                        children: title
-                      }
-                    ),
-                    children
-                  ]
-                }
-              )
-            ]
-          }
-        )
-      }
-    );
-  }
-  var modalContentMap2 = {
-    templatesList: 1,
-    customTemplate: 2,
-    customGenericTemplate: 3
-  };
-  function NewTemplateModal2({ onClose }) {
-    const [modalContent, setModalContent] = (0, import_element248.useState)(
-      modalContentMap2.templatesList
-    );
-    const [entityForSuggestions, setEntityForSuggestions] = (0, import_element248.useState)({});
-    const [isSubmitting, setIsSubmitting] = (0, import_element248.useState)(false);
-    const missingTemplates = useMissingTemplates2(
-      setEntityForSuggestions,
-      () => setModalContent(modalContentMap2.customTemplate)
-    );
-    const history = useHistory24();
-    const { saveEntityRecord } = (0, import_data80.useDispatch)(import_core_data61.store);
-    const { createErrorNotice, createSuccessNotice } = (0, import_data80.useDispatch)(import_notices9.store);
-    const containerRef = (0, import_element248.useRef)(null);
-    const isMobile = (0, import_compose46.useViewportMatch)("medium", "<");
-    const homeUrl = (0, import_data80.useSelect)((select4) => {
-      return select4(import_core_data61.store).getEntityRecord("root", "__unstableBase")?.home;
-    }, []);
-    const TEMPLATE_SHORT_DESCRIPTIONS = {
-      "front-page": homeUrl,
-      date: (0, import_i18n165.sprintf)(
-        // translators: %s: The homepage url.
-        (0, import_i18n165.__)("E.g. %s"),
-        homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
-      )
-    };
-    (0, import_element248.useEffect)(() => {
-      if (containerRef.current && modalContent === modalContentMap2.templatesList) {
-        const [firstFocusable] = import_dom34.focus.focusable.find(
-          containerRef.current
-        );
-        firstFocusable?.focus();
-      }
-    }, [modalContent]);
-    async function createTemplate(template, isWPSuggestion = true) {
-      if (isSubmitting) {
-        return;
-      }
-      setIsSubmitting(true);
-      try {
-        const { title, description, slug } = template;
-        const newTemplate = await saveEntityRecord(
-          "postType",
-          TEMPLATE_POST_TYPE,
-          {
-            description,
-            // Slugs need to be strings, so this is for template `404`
-            slug: slug.toString(),
-            status: "publish",
-            title,
-            // This adds a post meta field in template that is part of `is_custom` value calculation.
-            is_wp_suggestion: isWPSuggestion
-          },
-          { throwOnError: true }
-        );
-        history.navigate(
-          `/${TEMPLATE_POST_TYPE}/${newTemplate.id}?canvas=edit`
-        );
-        createSuccessNotice(
-          (0, import_i18n165.sprintf)(
-            // translators: %s: Title of the created post or template, e.g: "Hello world".
-            (0, import_i18n165.__)('"%s" successfully created.'),
-            (0, import_html_entities18.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n165.__)("(no title)")
-          ),
-          {
-            type: "snackbar"
-          }
-        );
-      } catch (error2) {
-        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n165.__)("An error occurred while creating the template.");
-        createErrorNotice(errorMessage, {
-          type: "snackbar"
-        });
-      } finally {
-        setIsSubmitting(false);
-      }
-    }
-    const onModalClose = () => {
-      onClose();
-      setModalContent(modalContentMap2.templatesList);
-    };
-    let modalTitle = (0, import_i18n165.__)("Add template");
-    if (modalContent === modalContentMap2.customTemplate) {
-      modalTitle = (0, import_i18n165.sprintf)(
-        // translators: %s: Name of the post type e.g: "Post".
-        (0, import_i18n165.__)("Add template: %s"),
-        entityForSuggestions.labels.singular_name
-      );
-    } else if (modalContent === modalContentMap2.customGenericTemplate) {
-      modalTitle = (0, import_i18n165.__)("Create custom template");
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime395.jsxs)(
-      import_components153.Modal,
-      {
-        title: modalTitle,
-        className: clsx_default("edit-site-add-new-template__modal", {
-          "edit-site-add-new-template__modal_template_list": modalContent === modalContentMap2.templatesList,
-          "edit-site-custom-template-modal": modalContent === modalContentMap2.customTemplate
-        }),
-        onRequestClose: onModalClose,
-        overlayClassName: modalContent === modalContentMap2.customGenericTemplate ? "edit-site-custom-generic-template__modal" : void 0,
-        ref: containerRef,
-        children: [
-          modalContent === modalContentMap2.templatesList && /* @__PURE__ */ (0, import_jsx_runtime395.jsxs)(
-            import_components153.__experimentalGrid,
-            {
-              columns: isMobile ? 2 : 3,
-              gap: 4,
-              align: "flex-start",
-              justify: "center",
-              className: "edit-site-add-new-template__template-list__contents",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(import_components153.Flex, { className: "edit-site-add-new-template__template-list__prompt", children: (0, import_i18n165.__)(
-                  "Select what the new template should apply to:"
-                ) }),
-                missingTemplates.map((template) => {
-                  const { title, slug, onClick } = template;
-                  return /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-                    TemplateListItem2,
-                    {
-                      title,
-                      direction: "column",
-                      className: "edit-site-add-new-template__template-button",
-                      description: TEMPLATE_SHORT_DESCRIPTIONS[slug],
-                      icon: TEMPLATE_ICONS2[slug] || layout_default,
-                      onClick: () => onClick ? onClick(template) : createTemplate(template)
-                    },
-                    slug
-                  );
-                }),
-                /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-                  TemplateListItem2,
-                  {
-                    title: (0, import_i18n165.__)("Custom template"),
-                    direction: "row",
-                    className: "edit-site-add-new-template__custom-template-button",
-                    icon: pencil_default,
-                    onClick: () => setModalContent(
-                      modalContentMap2.customGenericTemplate
-                    ),
-                    children: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-                      import_components153.__experimentalText,
-                      {
-                        lineHeight: 1.53846153846,
-                        children: (0, import_i18n165.__)(
-                          "A custom template can be manually applied to any post or page."
-                        )
-                      }
-                    )
-                  }
-                )
-              ]
-            }
-          ),
-          modalContent === modalContentMap2.customTemplate && /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-            add_custom_template_modal_content_default2,
-            {
-              onSelect: createTemplate,
-              entityForSuggestions,
-              onBack: () => setModalContent(modalContentMap2.templatesList),
-              containerRef
-            }
-          ),
-          modalContent === modalContentMap2.customGenericTemplate && /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-            add_custom_generic_template_modal_content_default2,
-            {
-              createTemplate,
-              onBack: () => setModalContent(modalContentMap2.templatesList)
-            }
-          )
-        ]
-      }
-    );
-  }
-  function NewTemplate2() {
-    const [showModal, setShowModal] = (0, import_element248.useState)(false);
-    const { postType: postType2 } = (0, import_data80.useSelect)((select4) => {
-      const { getPostType: getPostType2 } = select4(import_core_data61.store);
-      return {
-        postType: getPostType2(TEMPLATE_POST_TYPE)
-      };
-    }, []);
-    if (!postType2) {
-      return null;
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime395.jsxs)(import_jsx_runtime395.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-        import_components153.Button,
-        {
-          variant: "primary",
-          onClick: () => setShowModal(true),
-          label: postType2.labels.add_new_item,
-          size: "compact",
-          __next40pxDefaultSize: true,
-          children: postType2.labels.add_new_item
-        }
-      ),
-      showModal && /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(NewTemplateModal2, { onClose: () => setShowModal(false) })
-    ] });
-  }
-  function useMissingTemplates2(setEntityForSuggestions, onClick) {
-    const existingTemplates = useExistingTemplates2();
-    const defaultTemplateTypes = useDefaultTemplateTypes2();
-    const existingTemplateSlugs = (existingTemplates || []).map(
-      ({ slug }) => slug
-    );
-    const missingDefaultTemplates = (defaultTemplateTypes || []).filter(
-      (template) => DEFAULT_TEMPLATE_SLUGS2.includes(template.slug) && !existingTemplateSlugs.includes(template.slug)
-    );
-    const onClickMenuItem = (_entityForSuggestions) => {
-      onClick?.();
-      setEntityForSuggestions(_entityForSuggestions);
-    };
-    const enhancedMissingDefaultTemplateTypes = [...missingDefaultTemplates];
-    const { defaultTaxonomiesMenuItems, taxonomiesMenuItems } = useTaxonomiesMenuItems2(onClickMenuItem);
-    const { defaultPostTypesMenuItems, postTypesMenuItems } = usePostTypeMenuItems2(onClickMenuItem);
-    const authorMenuItem = useAuthorMenuItem2(onClickMenuItem);
-    [
-      ...defaultTaxonomiesMenuItems,
-      ...defaultPostTypesMenuItems,
-      authorMenuItem
-    ].forEach((menuItem) => {
-      if (!menuItem) {
-        return;
-      }
-      const matchIndex = enhancedMissingDefaultTemplateTypes.findIndex(
-        (template) => template.slug === menuItem.slug
-      );
-      if (matchIndex > -1) {
-        enhancedMissingDefaultTemplateTypes[matchIndex] = menuItem;
-      } else {
-        enhancedMissingDefaultTemplateTypes.push(menuItem);
-      }
-    });
-    enhancedMissingDefaultTemplateTypes?.sort((template1, template2) => {
-      return DEFAULT_TEMPLATE_SLUGS2.indexOf(template1.slug) - DEFAULT_TEMPLATE_SLUGS2.indexOf(template2.slug);
-    });
-    const missingTemplates = [
-      ...enhancedMissingDefaultTemplateTypes,
-      ...usePostTypeArchiveMenuItems2(),
-      ...postTypesMenuItems,
-      ...taxonomiesMenuItems
-    ];
-    return missingTemplates;
-  }
-  var add_new_template_legacy_default = (0, import_element248.memo)(NewTemplate2);
-
-  // packages/edit-site/build-module/components/page-templates/index-legacy.mjs
-  var import_jsx_runtime396 = __toESM(require_jsx_runtime(), 1);
-  var { usePostActions: usePostActions3, usePostFields: usePostFields3 } = unlock(import_editor33.privateApis);
-  var { useHistory: useHistory25, useLocation: useLocation30 } = unlock(import_router35.privateApis);
-  var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions3 } = unlock(import_core_data62.privateApis);
+  var import_jsx_runtime391 = __toESM(require_jsx_runtime(), 1);
+  var { usePostActions: usePostActions2, usePostFields: usePostFields2 } = unlock(import_editor32.privateApis);
+  var { useHistory: useHistory23, useLocation: useLocation28 } = unlock(import_router32.privateApis);
+  var { useEntityRecordsWithPermissions } = unlock(import_core_data54.privateApis);
   var VIEW_CONFIG_FIELDS4 = ["default_view", "default_layouts", "view_list"];
-  function PageTemplates2() {
-    const { path, query } = useLocation30();
+  function PageTemplates() {
+    const { path, query } = useLocation28();
     const { activeView = "all", postId } = query;
-    const [selection, setSelection] = (0, import_element249.useState)([postId]);
+    const [selection, setSelection] = (0, import_element243.useState)([postId]);
     const {
       default_view: defaultView,
-      default_layouts: defaultLayouts2,
+      default_layouts: defaultLayouts,
       view_list: viewList
     } = useViewConfig({
       kind: "postType",
       name: TEMPLATE_POST_TYPE,
       fields: VIEW_CONFIG_FIELDS4
     });
-    const activeViewOverrides = (0, import_element249.useMemo)(
+    const activeViewOverrides = (0, import_element243.useMemo)(
       () => viewList?.find((v2) => v2.slug === activeView)?.view ?? {},
       [viewList, activeView]
     );
@@ -77083,14 +75176,14 @@ If there's a particular need for this, please submit a feature request at https:
       slug: "default",
       defaultView,
       activeViewOverrides,
-      defaultLayouts: defaultLayouts2,
+      defaultLayouts,
       queryParams: {
         page: query.pageNumber,
         search: query.search
       },
       onChangeQueryParams: (newQueryParams) => {
         history.navigate(
-          (0, import_url25.addQueryArgs)(path, {
+          (0, import_url21.addQueryArgs)(path, {
             ...query,
             pageNumber: newQueryParams.page,
             search: newQueryParams.search || void 0
@@ -77098,16 +75191,16 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     });
-    const { records, isResolving: isLoadingData } = useEntityRecordsWithPermissions3("postType", TEMPLATE_POST_TYPE, {
+    const { records, isResolving: isLoadingData } = useEntityRecordsWithPermissions("postType", TEMPLATE_POST_TYPE, {
       per_page: -1
     });
-    const history = useHistory25();
-    const onChangeSelection = (0, import_element249.useCallback)(
+    const history = useHistory23();
+    const onChangeSelection = (0, import_element243.useCallback)(
       (items) => {
         setSelection(items);
         if (view?.type === "list") {
           history.navigate(
-            (0, import_url25.addQueryArgs)(path, {
+            (0, import_url21.addQueryArgs)(path, {
               postId: items.length === 1 ? items[0] : void 0
             })
           );
@@ -77115,36 +75208,36 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [history, path, view?.type]
     );
-    const postFields = usePostFields3({ postType: TEMPLATE_POST_TYPE });
-    const fields2 = (0, import_element249.useMemo)(() => {
+    const postFields = usePostFields2({ postType: TEMPLATE_POST_TYPE });
+    const fields2 = (0, import_element243.useMemo)(() => {
       return [previewField2, ...postFields || []];
     }, [postFields]);
-    const { data, paginationInfo } = (0, import_element249.useMemo)(() => {
+    const { data, paginationInfo } = (0, import_element243.useMemo)(() => {
       return filterSortAndPaginate(records, view, fields2);
     }, [records, view, fields2]);
-    const postTypeActions = usePostActions3({
+    const postTypeActions = usePostActions2({
       postType: TEMPLATE_POST_TYPE,
       context: "list"
     });
     const editAction = useEditPostAction();
-    const actions = (0, import_element249.useMemo)(
+    const actions = (0, import_element243.useMemo)(
       () => [editAction, ...postTypeActions],
       [postTypeActions, editAction]
     );
-    const onChangeView = (0, import_compose47.useEvent)((newView) => {
+    const onChangeView = (0, import_compose44.useEvent)((newView) => {
       updateView(newView);
       if (newView.type !== view.type) {
         history.invalidate();
       }
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(
       page_default2,
       {
         className: "edit-site-page-templates",
-        title: (0, import_i18n166.__)("Templates"),
+        title: (0, import_i18n160.__)("Templates"),
         headingLevel: 2,
-        actions: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(add_new_template_legacy_default, {}),
-        children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
+        actions: /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(add_new_template_default, {}),
+        children: /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(
           dataviews_default,
           {
             paginationInfo,
@@ -77160,7 +75253,7 @@ If there's a particular need for this, please submit a feature request at https:
               history.navigate(`/wp_template/${id}?canvas=edit`);
             },
             selection,
-            defaultLayouts: defaultLayouts2,
+            defaultLayouts,
             onReset: isModified ? () => {
               resetToDefault();
               history.invalidate();
@@ -77173,10 +75266,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/site-editor-routes/templates.mjs
-  var import_jsx_runtime397 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime392 = __toESM(require_jsx_runtime(), 1);
   async function isTemplateListView(query) {
     const { activeView = "active" } = query;
-    const config2 = await unlock((0, import_data81.resolveSelect)(import_core_data63.store)).getViewConfig(
+    const config2 = await unlock((0, import_data75.resolveSelect)(import_core_data55.store)).getViewConfig(
       "postType",
       "wp_template"
     );
@@ -77199,14 +75292,14 @@ If there's a particular need for this, please submit a feature request at https:
         if (!isThemeDataLoaded(siteData)) {
           return null;
         }
-        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(SidebarNavigationScreenTemplatesBrowse, { backPath: "/" }) : /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(SidebarNavigationScreenUnsupported, {});
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(SidebarNavigationScreenTemplatesBrowse, { backPath: "/" }) : /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(SidebarNavigationScreenUnsupported, {});
       },
       content({ siteData }) {
         const isBlockTheme = siteData.currentTheme?.is_block_theme;
         if (!isBlockTheme) {
           return void 0;
         }
-        return window?.__experimentalTemplateActivate ? /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(PageTemplates, {}) : /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(PageTemplates2, {});
+        return /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(PageTemplates, {});
       },
       async preview({ query, siteData }) {
         const isBlockTheme = siteData.currentTheme?.is_block_theme;
@@ -77214,14 +75307,14 @@ If there's a particular need for this, please submit a feature request at https:
           return void 0;
         }
         const isListView2 = await isTemplateListView(query);
-        return isListView2 ? /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(EditSiteEditor, {}) : void 0;
+        return isListView2 ? /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(EditSiteEditor, {}) : void 0;
       },
       mobileSidebar({ siteData }) {
         if (!isThemeDataLoaded(siteData)) {
-          return /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(import_jsx_runtime397.Fragment, {});
+          return /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(import_jsx_runtime392.Fragment, {});
         }
         if (!siteData.currentTheme.is_block_theme) {
-          return /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(SidebarNavigationScreenUnsupported, {});
+          return /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(SidebarNavigationScreenUnsupported, {});
         }
         return void 0;
       },
@@ -77230,8 +75323,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (!isBlockTheme) {
           return void 0;
         }
-        const isTemplateActivateEnabled = typeof window !== "undefined" && window.__experimentalTemplateActivate;
-        return isTemplateActivateEnabled ? /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(PageTemplates, {}) : /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(PageTemplates2, {});
+        return /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(PageTemplates, {});
       }
     },
     widths: {
@@ -77243,20 +75335,20 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/template-item.mjs
-  var import_jsx_runtime398 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime393 = __toESM(require_jsx_runtime(), 1);
   var areas = {
     sidebar({ siteData }) {
       if (!isThemeDataLoaded(siteData)) {
         return null;
       }
-      return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(SidebarNavigationScreenTemplatesBrowse, { backPath: "/" }) : /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(SidebarNavigationScreenUnsupported, {});
+      return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(SidebarNavigationScreenTemplatesBrowse, { backPath: "/" }) : /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(SidebarNavigationScreenUnsupported, {});
     },
     // Also rendered on mobile, where this route is only reached at canvas=edit.
     preview({ siteData }) {
       if (!isThemeDataLoaded(siteData)) {
         return null;
       }
-      return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(SidebarNavigationScreenUnsupported, {});
+      return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(SidebarNavigationScreenUnsupported, {});
     }
   };
   var templateItemRoute = {
@@ -77266,40 +75358,40 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/pages.mjs
-  var import_i18n169 = __toESM(require_i18n(), 1);
-  var import_data85 = __toESM(require_data(), 1);
-  var import_core_data68 = __toESM(require_core_data(), 1);
+  var import_i18n163 = __toESM(require_i18n(), 1);
+  var import_data79 = __toESM(require_data(), 1);
+  var import_core_data60 = __toESM(require_core_data(), 1);
 
   // packages/edit-site/build-module/components/post-list/index.mjs
-  var import_components156 = __toESM(require_components(), 1);
-  var import_core_data67 = __toESM(require_core_data(), 1);
-  var import_element253 = __toESM(require_element(), 1);
-  var import_router36 = __toESM(require_router(), 1);
-  var import_data84 = __toESM(require_data(), 1);
-  var import_editor37 = __toESM(require_editor(), 1);
-  var import_compose48 = __toESM(require_compose(), 1);
-  var import_url26 = __toESM(require_url(), 1);
+  var import_components150 = __toESM(require_components(), 1);
+  var import_core_data59 = __toESM(require_core_data(), 1);
+  var import_element247 = __toESM(require_element(), 1);
+  var import_router33 = __toESM(require_router(), 1);
+  var import_data78 = __toESM(require_data(), 1);
+  var import_editor36 = __toESM(require_editor(), 1);
+  var import_compose45 = __toESM(require_compose(), 1);
+  var import_url22 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/add-new-post/index.mjs
-  var import_components154 = __toESM(require_components(), 1);
-  var import_i18n167 = __toESM(require_i18n(), 1);
-  var import_data82 = __toESM(require_data(), 1);
-  var import_element250 = __toESM(require_element(), 1);
-  var import_core_data64 = __toESM(require_core_data(), 1);
-  var import_notices10 = __toESM(require_notices(), 1);
-  var import_html_entities19 = __toESM(require_html_entities(), 1);
+  var import_components148 = __toESM(require_components(), 1);
+  var import_i18n161 = __toESM(require_i18n(), 1);
+  var import_data76 = __toESM(require_data(), 1);
+  var import_element244 = __toESM(require_element(), 1);
+  var import_core_data56 = __toESM(require_core_data(), 1);
+  var import_notices8 = __toESM(require_notices(), 1);
+  var import_html_entities14 = __toESM(require_html_entities(), 1);
   var import_blocks14 = __toESM(require_blocks(), 1);
-  var import_jsx_runtime399 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime394 = __toESM(require_jsx_runtime(), 1);
   function AddNewPostModal({ postType: postType2, onSave, onClose }) {
-    const labels = (0, import_data82.useSelect)(
-      (select4) => select4(import_core_data64.store).getPostType(postType2)?.labels,
+    const labels = (0, import_data76.useSelect)(
+      (select4) => select4(import_core_data56.store).getPostType(postType2)?.labels,
       [postType2]
     );
-    const [isCreatingPost, setIsCreatingPost] = (0, import_element250.useState)(false);
-    const [title, setTitle] = (0, import_element250.useState)("");
-    const { saveEntityRecord } = (0, import_data82.useDispatch)(import_core_data64.store);
-    const { createErrorNotice, createSuccessNotice } = (0, import_data82.useDispatch)(import_notices10.store);
-    const { resolveSelect: resolveSelect4 } = (0, import_data82.useRegistry)();
+    const [isCreatingPost, setIsCreatingPost] = (0, import_element244.useState)(false);
+    const [title, setTitle] = (0, import_element244.useState)("");
+    const { saveEntityRecord } = (0, import_data76.useDispatch)(import_core_data56.store);
+    const { createErrorNotice, createSuccessNotice } = (0, import_data76.useDispatch)(import_notices8.store);
+    const { resolveSelect: resolveSelect4 } = (0, import_data76.useRegistry)();
     async function createPost(event) {
       event.preventDefault();
       if (isCreatingPost) {
@@ -77307,7 +75399,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       setIsCreatingPost(true);
       try {
-        const postTypeObject = await resolveSelect4(import_core_data64.store).getPostType(postType2);
+        const postTypeObject = await resolveSelect4(import_core_data56.store).getPostType(postType2);
         const newPage = await saveEntityRecord(
           "postType",
           postType2,
@@ -77326,15 +75418,15 @@ If there's a particular need for this, please submit a feature request at https:
         );
         onSave(newPage);
         createSuccessNotice(
-          (0, import_i18n167.sprintf)(
+          (0, import_i18n161.sprintf)(
             // translators: %s: Title of the created post or template, e.g: "Hello world".
-            (0, import_i18n167.__)('"%s" successfully created.'),
-            (0, import_html_entities19.decodeEntities)(newPage.title?.rendered || title) || (0, import_i18n167.__)("(no title)")
+            (0, import_i18n161.__)('"%s" successfully created.'),
+            (0, import_html_entities14.decodeEntities)(newPage.title?.rendered || title) || (0, import_i18n161.__)("(no title)")
           ),
           { type: "snackbar" }
         );
       } catch (error2) {
-        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n167.__)("An error occurred while creating the item.");
+        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n161.__)("An error occurred while creating the item.");
         createErrorNotice(errorMessage, {
           type: "snackbar"
         });
@@ -77342,45 +75434,45 @@ If there's a particular need for this, please submit a feature request at https:
         setIsCreatingPost(false);
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
-      import_components154.Modal,
+    return /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
+      import_components148.Modal,
       {
         title: (
           // translators: %s: post type singular_name label e.g: "Page".
-          (0, import_i18n167.sprintf)((0, import_i18n167.__)("Draft new: %s"), labels?.singular_name)
+          (0, import_i18n161.sprintf)((0, import_i18n161.__)("Draft new: %s"), labels?.singular_name)
         ),
         onRequestClose: onClose,
         focusOnMount: "firstContentElement",
         size: "small",
-        children: /* @__PURE__ */ (0, import_jsx_runtime399.jsx)("form", { onSubmit: createPost, children: /* @__PURE__ */ (0, import_jsx_runtime399.jsxs)(import_components154.__experimentalVStack, { spacing: 4, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
-            import_components154.TextControl,
+        children: /* @__PURE__ */ (0, import_jsx_runtime394.jsx)("form", { onSubmit: createPost, children: /* @__PURE__ */ (0, import_jsx_runtime394.jsxs)(import_components148.__experimentalVStack, { spacing: 4, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
+            import_components148.TextControl,
             {
-              label: (0, import_i18n167.__)("Title"),
+              label: (0, import_i18n161.__)("Title"),
               onChange: setTitle,
-              placeholder: (0, import_i18n167.__)("No title"),
+              placeholder: (0, import_i18n161.__)("No title"),
               value: title
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime399.jsxs)(import_components154.__experimentalHStack, { spacing: 2, justify: "end", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
-              import_components154.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime394.jsxs)(import_components148.__experimentalHStack, { spacing: 2, justify: "end", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
+              import_components148.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: onClose,
-                children: (0, import_i18n167.__)("Cancel")
+                children: (0, import_i18n161.__)("Cancel")
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
-              import_components154.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
+              import_components148.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "primary",
                 type: "submit",
                 isBusy: isCreatingPost,
                 "aria-disabled": isCreatingPost,
-                children: (0, import_i18n167.__)("Create draft")
+                children: (0, import_i18n161.__)("Create draft")
               }
             )
           ] })
@@ -77390,10 +75482,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/post-list/use-notes-count.mjs
-  var import_element251 = __toESM(require_element(), 1);
-  var import_core_data65 = __toESM(require_core_data(), 1);
+  var import_element245 = __toESM(require_element(), 1);
+  var import_core_data57 = __toESM(require_core_data(), 1);
   function useNotesCount(postIds) {
-    const { records: notes, isResolving } = (0, import_core_data65.useEntityRecords)(
+    const { records: notes, isResolving } = (0, import_core_data57.useEntityRecords)(
       "root",
       "comment",
       {
@@ -77407,7 +75499,7 @@ If there's a particular need for this, please submit a feature request at https:
         enabled: postIds?.length > 0
       }
     );
-    const notesCount = (0, import_element251.useMemo)(() => {
+    const notesCount = (0, import_element245.useMemo)(() => {
       if (!notes || notes.length === 0) {
         return {};
       }
@@ -77422,14 +75514,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/post-list/quick-edit-modal.mjs
-  var import_i18n168 = __toESM(require_i18n(), 1);
-  var import_data83 = __toESM(require_data(), 1);
-  var import_core_data66 = __toESM(require_core_data(), 1);
-  var import_components155 = __toESM(require_components(), 1);
-  var import_element252 = __toESM(require_element(), 1);
-  var import_editor36 = __toESM(require_editor(), 1);
-  var import_jsx_runtime400 = __toESM(require_jsx_runtime(), 1);
-  var { usePostFields: usePostFields4, PostCardPanel } = unlock(import_editor36.privateApis);
+  var import_i18n162 = __toESM(require_i18n(), 1);
+  var import_data77 = __toESM(require_data(), 1);
+  var import_core_data58 = __toESM(require_core_data(), 1);
+  var import_components149 = __toESM(require_components(), 1);
+  var import_element246 = __toESM(require_element(), 1);
+  var import_editor35 = __toESM(require_editor(), 1);
+  var import_jsx_runtime395 = __toESM(require_jsx_runtime(), 1);
+  var { usePostFields: usePostFields3, PostCardPanel } = unlock(import_editor35.privateApis);
   var fieldsWithBulkEditSupport = ["status", "date", "author", "discussion"];
   function QuickEditModal({
     postType: postType2,
@@ -77438,13 +75530,13 @@ If there's a particular need for this, please submit a feature request at https:
     quickEditForm
   }) {
     const isBulk = postId.length > 1;
-    const [localEdits, setLocalEdits] = (0, import_element252.useState)({});
-    const { record, hasFinishedResolution, canSwitchTemplate } = (0, import_data83.useSelect)(
+    const [localEdits, setLocalEdits] = (0, import_element246.useState)({});
+    const { record, hasFinishedResolution, canSwitchTemplate } = (0, import_data77.useSelect)(
       (select4) => {
         const {
           getEditedEntityRecord,
           hasFinishedResolution: hasFinished
-        } = select4(import_core_data66.store);
+        } = select4(import_core_data58.store);
         if (isBulk) {
           return {
             record: null,
@@ -77453,7 +75545,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
         const args = ["postType", postType2, postId[0]];
         const { getHomePage, getPostsPageId } = unlock(
-          select4(import_core_data66.store)
+          select4(import_core_data58.store)
         );
         const singlePostId = String(postId[0]);
         const isPostsPage = singlePostId !== void 0 && getPostsPageId() === singlePostId;
@@ -77469,9 +75561,9 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [postType2, postId, isBulk]
     );
-    const { editEntityRecord, saveEditedEntityRecord } = (0, import_data83.useDispatch)(import_core_data66.store);
-    const _fields = usePostFields4({ postType: postType2 });
-    const fields2 = (0, import_element252.useMemo)(
+    const { editEntityRecord, saveEditedEntityRecord } = (0, import_data77.useDispatch)(import_core_data58.store);
+    const _fields = usePostFields3({ postType: postType2 });
+    const fields2 = (0, import_element246.useMemo)(
       () => _fields?.map((field) => {
         if (field.id === "status") {
           return {
@@ -77491,7 +75583,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [_fields, canSwitchTemplate]
     );
-    const form2 = (0, import_element252.useMemo)(() => {
+    const form2 = (0, import_element246.useMemo)(() => {
       if (!quickEditForm) {
         return { layout: { type: "panel" }, fields: [] };
       }
@@ -77517,7 +75609,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       setLocalEdits((prev) => ({ ...prev, ...edits }));
     };
-    (0, import_element252.useEffect)(() => {
+    (0, import_element246.useEffect)(() => {
       setLocalEdits({});
     }, [postId]);
     const onSave = async () => {
@@ -77535,15 +75627,15 @@ If there's a particular need for this, please submit a feature request at https:
       }
       closeModal?.();
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime400.jsxs)(
-      import_components155.Modal,
+    return /* @__PURE__ */ (0, import_jsx_runtime395.jsxs)(
+      import_components149.Modal,
       {
         overlayClassName: "dataviews-action-modal__quick-edit",
         __experimentalHideHeader: true,
         onRequestClose: closeModal,
         focusOnMount: "firstElement",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime400.jsx)("div", { className: "dataviews-action-modal__quick-edit-header", children: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime395.jsx)("div", { className: "dataviews-action-modal__quick-edit-header", children: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
             PostCardPanel,
             {
               postType: postType2,
@@ -77551,7 +75643,7 @@ If there's a particular need for this, please submit a feature request at https:
               hideActions: true
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime400.jsx)("div", { className: "dataviews-action-modal__quick-edit-content", children: hasFinishedResolution && /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime395.jsx)("div", { className: "dataviews-action-modal__quick-edit-content", children: hasFinishedResolution && /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
             DataForm,
             {
               data: { ...record, ...localEdits },
@@ -77560,23 +75652,23 @@ If there's a particular need for this, please submit a feature request at https:
               onChange
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime400.jsxs)(import_components155.__experimentalHStack, { className: "dataviews-action-modal__quick-edit-footer", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(
-              import_components155.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime395.jsxs)(import_components149.__experimentalHStack, { className: "dataviews-action-modal__quick-edit-footer", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
+              import_components149.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "secondary",
                 onClick: closeModal,
-                children: (0, import_i18n168.__)("Cancel")
+                children: (0, import_i18n162.__)("Cancel")
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(
-              import_components155.Button,
+            /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
+              import_components149.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "primary",
                 onClick: onSave,
-                children: (0, import_i18n168.__)("Done")
+                children: (0, import_i18n162.__)("Done")
               }
             )
           ] })
@@ -77586,11 +75678,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/post-list/index.mjs
-  var import_jsx_runtime401 = __toESM(require_jsx_runtime(), 1);
-  var { usePostActions: usePostActions4, usePostFields: usePostFields5 } = unlock(import_editor37.privateApis);
-  var { useLocation: useLocation31, useHistory: useHistory26 } = unlock(import_router36.privateApis);
-  var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions4 } = unlock(import_core_data67.privateApis);
-  var EMPTY_ARRAY15 = [];
+  var import_jsx_runtime396 = __toESM(require_jsx_runtime(), 1);
+  var { usePostActions: usePostActions3, usePostFields: usePostFields4 } = unlock(import_editor36.privateApis);
+  var { useLocation: useLocation29, useHistory: useHistory24 } = unlock(import_router33.privateApis);
+  var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions2 } = unlock(import_core_data59.privateApis);
+  var EMPTY_ARRAY13 = [];
   var DEFAULT_STATUSES = "draft,future,pending,private,publish";
   function getItemId(item) {
     return item.id.toString();
@@ -77599,19 +75691,19 @@ If there's a particular need for this, please submit a feature request at https:
     return item.level;
   }
   function PostList({ postType: postType2 }) {
-    const { path, query } = useLocation31();
+    const { path, query } = useLocation29();
     const { activeView = "all", postId, quickEdit = false } = query;
-    const history = useHistory26();
+    const history = useHistory24();
     const {
       default_view: defaultView,
-      default_layouts: defaultLayouts2,
+      default_layouts: defaultLayouts,
       view_list: viewList,
       form: quickEditForm
     } = useViewConfig({
       kind: "postType",
       name: postType2
     });
-    const activeViewOverrides = (0, import_element253.useMemo)(
+    const activeViewOverrides = (0, import_element247.useMemo)(
       () => viewList?.find((v2) => v2.slug === activeView)?.view ?? {},
       [viewList, activeView]
     );
@@ -77620,7 +75712,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: postType2,
       slug: "default",
       defaultView,
-      defaultLayouts: defaultLayouts2,
+      defaultLayouts,
       activeViewOverrides,
       queryParams: {
         page: query.pageNumber,
@@ -77628,7 +75720,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       onChangeQueryParams: (newQueryParams) => {
         history.navigate(
-          (0, import_url26.addQueryArgs)(path, {
+          (0, import_url22.addQueryArgs)(path, {
             ...query,
             pageNumber: newQueryParams.page,
             search: newQueryParams.search || void 0
@@ -77636,32 +75728,32 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     });
-    const onChangeView = (0, import_compose48.useEvent)((newView) => {
+    const onChangeView = (0, import_compose45.useEvent)((newView) => {
       updateView(newView);
       if (newView.type !== view.type) {
         history.invalidate();
       }
     });
-    const [selection, setSelection] = (0, import_element253.useState)(postId?.split(",") ?? []);
-    const onChangeSelection = (0, import_element253.useCallback)(
+    const [selection, setSelection] = (0, import_element247.useState)(postId?.split(",") ?? []);
+    const onChangeSelection = (0, import_element247.useCallback)(
       (items) => {
         setSelection(items);
         history.navigate(
-          (0, import_url26.addQueryArgs)(path, {
+          (0, import_url22.addQueryArgs)(path, {
             postId: items.join(",")
           })
         );
       },
       [path, history]
     );
-    (0, import_element253.useEffect)(() => {
+    (0, import_element247.useEffect)(() => {
       const newSelection = postId?.split(",") ?? [];
       setSelection(newSelection);
     }, [postId]);
-    const fields2 = usePostFields5({
+    const fields2 = usePostFields4({
       postType: postType2
     });
-    const queryArgs = (0, import_element253.useMemo)(() => {
+    const queryArgs = (0, import_element247.useMemo)(() => {
       const filters = {};
       view.filters?.forEach((filter) => {
         if (filter.field === "status" && filter.operator === OPERATOR_IS_ANY) {
@@ -77703,13 +75795,13 @@ If there's a particular need for this, please submit a feature request at https:
       totalItems,
       totalPages,
       hasResolved
-    } = useEntityRecordsWithPermissions4("postType", postType2, queryArgs);
-    const postIds = (0, import_element253.useMemo)(
+    } = useEntityRecordsWithPermissions2("postType", postType2, queryArgs);
+    const postIds = (0, import_element247.useMemo)(
       () => records?.map((record) => record.id) ?? [],
       [records]
     );
     const { notesCount, isLoading: isLoadingNotesCount } = useNotesCount(postIds);
-    const data = (0, import_element253.useMemo)(() => {
+    const data = (0, import_element247.useMemo)(() => {
       let processedRecords = records;
       if (view?.sort?.field === "author") {
         processedRecords = filterSortAndPaginate(
@@ -77727,28 +75819,28 @@ If there's a particular need for this, please submit a feature request at https:
       return processedRecords;
     }, [records, fields2, view?.sort, notesCount]);
     const ids = data?.map((record) => getItemId(record)) ?? [];
-    const prevIds = (0, import_compose48.usePrevious)(ids) ?? [];
+    const prevIds = (0, import_compose45.usePrevious)(ids) ?? [];
     const deletedIds = prevIds.filter((id) => !ids.includes(id));
     const postIdWasDeleted = deletedIds.includes(postId);
-    (0, import_element253.useEffect)(() => {
+    (0, import_element247.useEffect)(() => {
       if (postIdWasDeleted) {
         history.navigate(
-          (0, import_url26.addQueryArgs)(path, {
+          (0, import_url22.addQueryArgs)(path, {
             postId: void 0
           })
         );
       }
     }, [history, postIdWasDeleted, path]);
-    const paginationInfo = (0, import_element253.useMemo)(
+    const paginationInfo = (0, import_element247.useMemo)(
       () => ({
         totalItems,
         totalPages
       }),
       [totalItems, totalPages]
     );
-    const { labels, canCreateRecord } = (0, import_data84.useSelect)(
+    const { labels, canCreateRecord } = (0, import_data78.useSelect)(
       (select4) => {
-        const { getPostType: getPostType2, canUser } = select4(import_core_data67.store);
+        const { getPostType: getPostType2, canUser } = select4(import_core_data59.store);
         return {
           labels: getPostType2(postType2)?.labels,
           canCreateRecord: canUser("create", {
@@ -77759,20 +75851,20 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [postType2]
     );
-    const postTypeActions = usePostActions4({
+    const postTypeActions = usePostActions3({
       postType: postType2,
       context: "list"
     });
     const editAction = useEditPostAction();
     const quickEditAction = useQuickEditPostAction();
-    const actions = (0, import_element253.useMemo)(() => {
+    const actions = (0, import_element247.useMemo)(() => {
       if (view.type === LAYOUT_LIST) {
         const editActionPrimary = { ...editAction, isPrimary: true };
         return [editActionPrimary, ...postTypeActions];
       }
       return [editAction, quickEditAction, ...postTypeActions];
     }, [view.type, editAction, quickEditAction, postTypeActions]);
-    const [showAddPostModal, setShowAddPostModal] = (0, import_element253.useState)(false);
+    const [showAddPostModal, setShowAddPostModal] = (0, import_element247.useState)(false);
     const openModal = () => setShowAddPostModal(true);
     const closeModal = () => setShowAddPostModal(false);
     const handleNewPage = ({ type, id }) => {
@@ -77781,20 +75873,20 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const closeQuickEditModal = () => {
       history.navigate(
-        (0, import_url26.addQueryArgs)(path, {
+        (0, import_url22.addQueryArgs)(path, {
           ...query,
           quickEdit: void 0
         })
       );
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime401.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(
       page_default2,
       {
         title: labels?.name,
         headingLevel: 2,
-        actions: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(import_jsx_runtime401.Fragment, { children: labels?.add_new_item && canCreateRecord && /* @__PURE__ */ (0, import_jsx_runtime401.jsxs)(import_jsx_runtime401.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
-            import_components156.Button,
+        actions: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_jsx_runtime396.Fragment, { children: labels?.add_new_item && canCreateRecord && /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(import_jsx_runtime396.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
+            import_components150.Button,
             {
               variant: "primary",
               onClick: openModal,
@@ -77803,7 +75895,7 @@ If there's a particular need for this, please submit a feature request at https:
               children: labels.add_new_item
             }
           ),
-          showAddPostModal && /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
+          showAddPostModal && /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
             AddNewPostModal,
             {
               postType: postType2,
@@ -77813,13 +75905,13 @@ If there's a particular need for this, please submit a feature request at https:
           )
         ] }) }),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
             dataviews_default,
             {
               paginationInfo,
               fields: fields2,
               actions,
-              data: data || EMPTY_ARRAY15,
+              data: data || EMPTY_ARRAY13,
               isLoading: isLoadingData || isLoadingNotesCount || !hasResolved,
               view,
               onChangeView,
@@ -77831,7 +75923,7 @@ If there's a particular need for this, please submit a feature request at https:
               },
               getItemId,
               getItemLevel,
-              defaultLayouts: defaultLayouts2,
+              defaultLayouts,
               onReset: isModified ? () => {
                 resetToDefault();
                 history.invalidate();
@@ -77839,7 +75931,7 @@ If there's a particular need for this, please submit a feature request at https:
             },
             activeView
           ),
-          quickEdit && !isLoadingData && selection.length > 0 && view.type !== LAYOUT_LIST && /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
+          quickEdit && !isLoadingData && selection.length > 0 && view.type !== LAYOUT_LIST && /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
             QuickEditModal,
             {
               postType: postType2,
@@ -77854,22 +75946,22 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/site-editor-routes/pages.mjs
-  var import_jsx_runtime402 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime397 = __toESM(require_jsx_runtime(), 1);
   async function isListView(query) {
     const { activeView = "all" } = query;
-    const config2 = await unlock((0, import_data85.resolveSelect)(import_core_data68.store)).getViewConfig(
+    const config2 = await unlock((0, import_data79.resolveSelect)(import_core_data60.store)).getViewConfig(
       "postType",
       "page"
     );
     const defaultView = config2?.default_view;
-    const defaultLayouts2 = config2?.default_layouts;
+    const defaultLayouts = config2?.default_layouts;
     const viewEntry = config2?.view_list?.find((v2) => v2.slug === activeView);
     const view = await loadView({
       kind: "postType",
       name: "page",
       slug: "default",
       defaultView,
-      defaultLayouts: defaultLayouts2,
+      defaultLayouts,
       activeViewOverrides: viewEntry?.view ?? {}
     });
     return view.type === "list";
@@ -77882,21 +75974,21 @@ If there's a particular need for this, please submit a feature request at https:
         if (!isThemeDataLoaded(siteData)) {
           return null;
         }
-        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
           SidebarNavigationScreen,
           {
-            title: (0, import_i18n169.__)("Pages"),
-            description: (0, import_i18n169.__)(
+            title: (0, import_i18n163.__)("Pages"),
+            description: (0, import_i18n163.__)(
               "Manage or edit the pages that make up your site, and their appearance."
             ),
             backPath: "/",
-            content: /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(DataViewsSidebarContent, { postType: "page" })
+            content: /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(DataViewsSidebarContent, { postType: "page" })
           }
-        ) : /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(SidebarNavigationScreenUnsupported, {});
+        ) : /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(SidebarNavigationScreenUnsupported, {});
       },
       content({ siteData }) {
         const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(PostList, { postType: "page" }) : void 0;
+        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(PostList, { postType: "page" }) : void 0;
       },
       async preview({ query, siteData }) {
         const isBlockTheme = siteData.currentTheme?.is_block_theme;
@@ -77904,17 +75996,17 @@ If there's a particular need for this, please submit a feature request at https:
           return void 0;
         }
         const isList = await isListView(query);
-        return isList ? /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(EditSiteEditor, {}) : void 0;
+        return isList ? /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(EditSiteEditor, {}) : void 0;
       },
       mobileSidebar({ siteData }) {
         if (!isThemeDataLoaded(siteData)) {
-          return /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(import_jsx_runtime402.Fragment, {});
+          return /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(import_jsx_runtime397.Fragment, {});
         }
-        return siteData.currentTheme.is_block_theme ? void 0 : /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(SidebarNavigationScreenUnsupported, {});
+        return siteData.currentTheme.is_block_theme ? void 0 : /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(SidebarNavigationScreenUnsupported, {});
       },
       mobileContent({ siteData }) {
         const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(PostList, { postType: "page" }) : void 0;
+        return isBlockTheme ? /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(PostList, { postType: "page" }) : void 0;
       }
     },
     widths: {
@@ -77926,8 +76018,8 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/page-item.mjs
-  var import_i18n170 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime403 = __toESM(require_jsx_runtime(), 1);
+  var import_i18n164 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime398 = __toESM(require_jsx_runtime(), 1);
   var pageItemRoute = {
     name: "page-item",
     path: "/page/:postId",
@@ -77936,30 +76028,30 @@ If there's a particular need for this, please submit a feature request at https:
         if (!isThemeDataLoaded(siteData)) {
           return null;
         }
-        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(
           SidebarNavigationScreen,
           {
-            title: (0, import_i18n170.__)("Pages"),
+            title: (0, import_i18n164.__)("Pages"),
             backPath: "/",
-            content: /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(DataViewsSidebarContent, { postType: "page" })
+            content: /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(DataViewsSidebarContent, { postType: "page" })
           }
-        ) : /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(SidebarNavigationScreenUnsupported, {});
+        ) : /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(SidebarNavigationScreenUnsupported, {});
       },
       // Also rendered on mobile, where this route is only reached at canvas=edit.
       preview({ siteData }) {
         if (!isThemeDataLoaded(siteData)) {
           return null;
         }
-        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(SidebarNavigationScreenUnsupported, {});
+        return siteData.currentTheme.is_block_theme ? /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(EditSiteEditor, {}) : /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(SidebarNavigationScreenUnsupported, {});
       }
     }
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/stylebook.mjs
-  var import_i18n171 = __toESM(require_i18n(), 1);
-  var import_editor40 = __toESM(require_editor(), 1);
-  var import_jsx_runtime404 = __toESM(require_jsx_runtime(), 1);
-  var { StyleBookPreview: StyleBookPreview2 } = unlock(import_editor40.privateApis);
+  var import_i18n165 = __toESM(require_i18n(), 1);
+  var import_editor39 = __toESM(require_editor(), 1);
+  var import_jsx_runtime399 = __toESM(require_jsx_runtime(), 1);
+  var { StyleBookPreview: StyleBookPreview2 } = unlock(import_editor39.privateApis);
   var stylebookRoute = {
     name: "stylebook",
     path: "/stylebook",
@@ -77968,19 +76060,19 @@ If there's a particular need for this, please submit a feature request at https:
         if (!isThemeDataLoaded(siteData)) {
           return null;
         }
-        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
+        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
           SidebarNavigationScreen,
           {
-            title: (0, import_i18n171.__)("Styles"),
+            title: (0, import_i18n165.__)("Styles"),
             backPath: "/",
-            description: (0, import_i18n171.__)(
+            description: (0, import_i18n165.__)(
               `Preview your website's visual identity: colors, typography, and blocks.`
             )
           }
-        ) : /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(SidebarNavigationScreenUnsupported, {});
+        ) : /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(SidebarNavigationScreenUnsupported, {});
       },
       preview({ siteData }) {
-        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
+        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
           StyleBookPreview2,
           {
             isStatic: true,
@@ -77989,7 +76081,7 @@ If there's a particular need for this, please submit a feature request at https:
         ) : void 0;
       },
       mobileContent({ siteData }) {
-        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
+        return isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime399.jsx)(
           StyleBookPreview2,
           {
             isStatic: true,
@@ -78001,11 +76093,11 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/notfound.mjs
-  var import_i18n172 = __toESM(require_i18n(), 1);
-  var import_components157 = __toESM(require_components(), 1);
-  var import_jsx_runtime405 = __toESM(require_jsx_runtime(), 1);
+  var import_i18n166 = __toESM(require_i18n(), 1);
+  var import_components151 = __toESM(require_components(), 1);
+  var import_jsx_runtime400 = __toESM(require_jsx_runtime(), 1);
   function NotFoundError() {
-    return /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(import_components157.Notice, { status: "error", isDismissible: false, children: (0, import_i18n172.__)(
+    return /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(import_components151.Notice, { status: "error", isDismissible: false, children: (0, import_i18n166.__)(
       "The requested page could not be found. Please check the URL."
     ) });
   }
@@ -78013,14 +76105,14 @@ If there's a particular need for this, please submit a feature request at https:
     name: "notfound",
     path: "*",
     areas: {
-      sidebar: /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(SidebarNavigationScreenMain, {}),
-      mobileSidebar: /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
+      sidebar: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(SidebarNavigationScreenMain, {}),
+      mobileSidebar: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(
         SidebarNavigationScreenMain,
         {
-          customDescription: /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(NotFoundError, {})
+          customDescription: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(NotFoundError, {})
         }
       ),
-      content: /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(import_components157.__experimentalSpacer, { padding: 2, children: /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(NotFoundError, {}) })
+      content: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(import_components151.__experimentalSpacer, { padding: 2, children: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(NotFoundError, {}) })
     }
   };
 
@@ -78042,9 +76134,9 @@ If there's a particular need for this, please submit a feature request at https:
     notFoundRoute
   ];
   function useRegisterSiteEditorRoutes() {
-    const registry = (0, import_data86.useRegistry)();
-    const { registerRoute: registerRoute2 } = unlock((0, import_data86.useDispatch)(store));
-    (0, import_element254.useEffect)(() => {
+    const registry = (0, import_data80.useRegistry)();
+    const { registerRoute: registerRoute2 } = unlock((0, import_data80.useDispatch)(store));
+    (0, import_element248.useEffect)(() => {
       registry.batch(() => {
         routes2.forEach(registerRoute2);
       });
@@ -78052,24 +76144,24 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/app/index.mjs
-  var import_jsx_runtime406 = __toESM(require_jsx_runtime(), 1);
-  var { RouterProvider } = unlock(import_router37.privateApis);
+  var import_jsx_runtime401 = __toESM(require_jsx_runtime(), 1);
+  var { RouterProvider } = unlock(import_router34.privateApis);
   function AppLayout() {
     useCommonCommands();
     useSetCommandContext();
-    return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(LayoutWithGlobalStylesProvider, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(LayoutWithGlobalStylesProvider, {});
   }
   function App() {
     useRegisterSiteEditorRoutes();
-    const { routes: routes3, currentTheme, editorSettings } = (0, import_data87.useSelect)((select4) => {
+    const { routes: routes3, currentTheme, editorSettings } = (0, import_data81.useSelect)((select4) => {
       return {
         routes: unlock(select4(store)).getRoutes(),
-        currentTheme: select4(import_core_data69.store).getCurrentTheme(),
+        currentTheme: select4(import_core_data61.store).getCurrentTheme(),
         // This is a temp solution until the has_theme_json value is available for the current theme.
         editorSettings: select4(store).getSettings()
       };
     }, []);
-    const beforeNavigate = (0, import_element255.useCallback)(({ path, query }) => {
+    const beforeNavigate = (0, import_element249.useCallback)(({ path, query }) => {
       if (!isPreviewingTheme()) {
         return { path, query };
       }
@@ -78081,30 +76173,30 @@ If there's a particular need for this, please submit a feature request at https:
         }
       };
     }, []);
-    const matchResolverArgsValue = (0, import_element255.useMemo)(
+    const matchResolverArgsValue = (0, import_element249.useMemo)(
       () => ({
         siteData: { currentTheme, editorSettings }
       }),
       [currentTheme, editorSettings]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
       RouterProvider,
       {
         routes: routes3,
         pathArg: "p",
         beforeNavigate,
         matchResolverArgs: matchResolverArgsValue,
-        children: /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(AppLayout, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(AppLayout, {})
       }
     );
   }
 
   // packages/edit-site/build-module/deprecated.mjs
-  var import_editor41 = __toESM(require_editor(), 1);
-  var import_url27 = __toESM(require_url(), 1);
+  var import_editor40 = __toESM(require_editor(), 1);
+  var import_url23 = __toESM(require_url(), 1);
   var import_deprecated5 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime407 = __toESM(require_jsx_runtime(), 1);
-  var isSiteEditor = (0, import_url27.getPath)(window.location.href)?.includes(
+  var import_jsx_runtime402 = __toESM(require_jsx_runtime(), 1);
+  var isSiteEditor = (0, import_url23.getPath)(window.location.href)?.includes(
     "site-editor.php"
   );
   var deprecateSlot = (name2) => {
@@ -78118,36 +76210,36 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     deprecateSlot("PluginMoreMenuItem");
-    return /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(import_editor41.PluginMoreMenuItem, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(import_editor40.PluginMoreMenuItem, { ...props });
   }
   function PluginSidebar(props) {
     if (!isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginSidebar");
-    return /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(import_editor41.PluginSidebar, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(import_editor40.PluginSidebar, { ...props });
   }
   function PluginSidebarMoreMenuItem(props) {
     if (!isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginSidebarMoreMenuItem");
-    return /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(import_editor41.PluginSidebarMoreMenuItem, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(import_editor40.PluginSidebarMoreMenuItem, { ...props });
   }
 
   // packages/edit-site/build-module/index.mjs
-  var import_jsx_runtime408 = __toESM(require_jsx_runtime(), 1);
-  var { registerCoreBlockBindingsSources } = unlock(import_editor42.privateApis);
+  var import_jsx_runtime403 = __toESM(require_jsx_runtime(), 1);
+  var { registerCoreBlockBindingsSources } = unlock(import_editor41.privateApis);
   function initializeEditor(id, settings2) {
     const target = document.getElementById(id);
-    const root = (0, import_element256.createRoot)(target);
-    (0, import_data88.dispatch)(import_blocks15.store).reapplyBlockTypeFilters();
+    const root = (0, import_element250.createRoot)(target);
+    (0, import_data82.dispatch)(import_blocks15.store).reapplyBlockTypeFilters();
     const coreBlocks = (0, import_block_library3.__experimentalGetCoreBlocks)().filter(
       ({ name: name2 }) => name2 !== "core/freeform"
     );
     (0, import_block_library3.registerCoreBlocks)(coreBlocks);
     registerCoreBlockBindingsSources();
-    (0, import_data88.dispatch)(import_blocks15.store).setFreeformFallbackBlockName("core/html");
+    (0, import_data82.dispatch)(import_blocks15.store).setFreeformFallbackBlockName("core/html");
     (0, import_widgets.registerLegacyWidgetBlock)({ inserter: false });
     (0, import_widgets.registerWidgetGroupBlock)({ inserter: false });
     if (true) {
@@ -78155,13 +76247,13 @@ If there's a particular need for this, please submit a feature request at https:
         enableFSEBlocks: true
       });
     }
-    (0, import_data88.dispatch)(import_preferences13.store).setDefaults("core/edit-site", {
+    (0, import_data82.dispatch)(import_preferences13.store).setDefaults("core/edit-site", {
       welcomeGuide: true,
       welcomeGuideStyles: true,
       welcomeGuidePage: true,
       welcomeGuideTemplate: true
     });
-    (0, import_data88.dispatch)(import_preferences13.store).setDefaults("core", {
+    (0, import_data82.dispatch)(import_preferences13.store).setDefaults("core", {
       allowRightClickOverrides: true,
       distractionFree: false,
       editorMode: "visual",
@@ -78180,16 +76272,16 @@ If there's a particular need for this, please submit a feature request at https:
       showCollaborationPostSaveNotifications: true
     });
     if (window.__clientSideMediaProcessing) {
-      (0, import_data88.dispatch)(import_preferences13.store).setDefaults("core/media", {
+      (0, import_data82.dispatch)(import_preferences13.store).setDefaults("core/media", {
         requireApproval: true,
         optimizeOnUpload: true
       });
     }
-    (0, import_data88.dispatch)(store).updateSettings(settings2);
+    (0, import_data82.dispatch)(store).updateSettings(settings2);
     window.addEventListener("dragover", (e2) => e2.preventDefault(), false);
     window.addEventListener("drop", (e2) => e2.preventDefault(), false);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(import_element256.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(import_element250.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(App, {}) })
     );
     return root;
   }
