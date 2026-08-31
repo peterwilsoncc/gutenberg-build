@@ -40350,6 +40350,7 @@ var import_element121 = __toESM(require_element(), 1);
 
 // packages/ui/build-module/menu/item-description.mjs
 var import_element119 = __toESM(require_element(), 1);
+var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE59 = "data-wp-hash";
 function getRuntime59() {
   const globalScope = globalThis;
@@ -40431,27 +40432,28 @@ function registerStyle59(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle59("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
+  registerStyle59("60037e730c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;color:inherit;min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere;padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default47 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var ItemDescription = (0, import_element119.forwardRef)(
-  function MenuItemDescription({ className, id, render: render4, ...props }, ref) {
+  function MenuItemDescription({ className, id, ...props }, ref) {
     const itemContentContext = useMenuItemContentContext();
-    return useRender({
-      defaultTagName: "span",
-      ref,
-      render: render4,
-      props: mergeProps(props, {
+    return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
+      Text,
+      {
+        ref,
+        variant: "body-sm",
+        ...props,
         id: id ?? itemContentContext?.descriptionId,
         className: clsx_default(style_default47["item-description"], className)
-      })
-    });
+      }
+    );
   }
 );
 
 // packages/ui/build-module/menu/item-label.mjs
 var import_element120 = __toESM(require_element(), 1);
-var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE60 = "data-wp-hash";
 function getRuntime60() {
   const globalScope = globalThis;
@@ -40533,30 +40535,31 @@ function registerStyle60(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle60("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
+  registerStyle60("60037e730c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;color:inherit;min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere;padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default48 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var ItemLabel = (0, import_element120.forwardRef)(
-  function MenuItemLabel({ children, className, id, render: render4, ...props }, ref) {
+  function MenuItemLabel({ children, className, id, ...props }, ref) {
     const itemContentContext = useMenuItemContentContext();
-    return useRender({
-      defaultTagName: "span",
-      ref,
-      render: render4,
-      props: mergeProps(props, {
-        children: /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)(import_jsx_runtime185.Fragment, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime186.jsxs)(
+      Text,
+      {
+        ref,
+        variant: "body-md",
+        ...props,
+        id: id ?? itemContentContext?.labelId,
+        className: clsx_default(style_default48["item-label"], className),
+        children: [
           children,
           itemContentContext?.labelTrailing
-        ] }),
-        id: id ?? itemContentContext?.labelId,
-        className: clsx_default(style_default48["item-label"], className)
-      })
-    });
+        ]
+      }
+    );
   }
 );
 
 // packages/ui/build-module/menu/item.mjs
-var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE61 = "data-wp-hash";
 function getRuntime61() {
   const globalScope = globalThis;
@@ -40642,7 +40645,7 @@ if (typeof process === "undefined" || true) {
 }
 var resets_default10 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 if (typeof process === "undefined" || true) {
-  registerStyle61("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
+  registerStyle61("60037e730c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;color:inherit;min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere;padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default49 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var VALIDATION_ENABLED2 = true;
@@ -40720,15 +40723,15 @@ function ItemContent({
   const hasTrailing = import_element121.Children.toArray(trailing).some(
     (child) => child !== ""
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime186.jsxs)(import_jsx_runtime186.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime186.jsxs)("span", { className: style_default49["item-content"], children: [
-      /* @__PURE__ */ (0, import_jsx_runtime186.jsx)("span", { className: style_default49["item-children"], children }),
-      hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime186.jsx)("span", { className: style_default49["item-suffix"], children: suffix }),
-      shortcut && /* @__PURE__ */ (0, import_jsx_runtime186.jsx)("span", { className: style_default49["item-shortcut"], children: /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(KeyboardShortcutDisplay, { shortcut }) }),
-      hasTrailing && /* @__PURE__ */ (0, import_jsx_runtime186.jsx)("span", { className: style_default49["item-trailing"], children: trailing })
+  return /* @__PURE__ */ (0, import_jsx_runtime187.jsxs)(import_jsx_runtime187.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime187.jsxs)("span", { className: style_default49["item-content"], children: [
+      /* @__PURE__ */ (0, import_jsx_runtime187.jsx)("span", { className: style_default49["item-children"], children }),
+      hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)("span", { className: style_default49["item-suffix"], children: suffix }),
+      shortcut && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)("span", { className: style_default49["item-shortcut"], children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(KeyboardShortcutDisplay, { shortcut }) }),
+      hasTrailing && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)("span", { className: style_default49["item-trailing"], children: trailing })
     ] }),
-    hasPrefix && /* @__PURE__ */ (0, import_jsx_runtime186.jsx)("span", { "aria-hidden": "true", className: style_default49["item-prefix"], children: prefix }),
-    shortcut && shortcutDescriptionId && /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
+    hasPrefix && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)("span", { "aria-hidden": "true", className: style_default49["item-prefix"], children: prefix }),
+    shortcut && shortcutDescriptionId && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
       KeyboardShortcutDescription,
       {
         descriptionId: shortcutDescriptionId,
@@ -40756,7 +40759,7 @@ var Item4 = (0, import_element121.forwardRef)(function MenuItem3({
     "aria-labelledby": ariaLabelledBy,
     shortcut
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
     index_parts_exports4.Item,
     {
       ref,
@@ -40767,7 +40770,7 @@ var Item4 = (0, import_element121.forwardRef)(function MenuItem3({
         className
       ),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
         ItemContent,
         {
           prefix,
@@ -40782,7 +40785,7 @@ var Item4 = (0, import_element121.forwardRef)(function MenuItem3({
 });
 
 // packages/ui/build-module/menu/checkbox-item.mjs
-var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE62 = "data-wp-hash";
 function getRuntime62() {
   const globalScope = globalThis;
@@ -40868,7 +40871,7 @@ if (typeof process === "undefined" || true) {
 }
 var resets_default11 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 if (typeof process === "undefined" || true) {
-  registerStyle62("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
+  registerStyle62("60037e730c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;color:inherit;min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere;padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default50 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var CheckboxItem = (0, import_element122.forwardRef)(
@@ -40891,7 +40894,7 @@ var CheckboxItem = (0, import_element122.forwardRef)(
       "aria-labelledby": ariaLabelledBy,
       shortcut
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime187.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime188.jsxs)(
       index_parts_exports4.CheckboxItem,
       {
         ref,
@@ -40903,15 +40906,15 @@ var CheckboxItem = (0, import_element122.forwardRef)(
         ),
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(
             index_parts_exports4.CheckboxItemIndicator,
             {
               keepMounted: true,
               className: style_default50["item-selection-indicator"],
-              children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(Icon, { icon: check_default, size: 24, "aria-hidden": "true" })
+              children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(Icon, { icon: check_default, size: 24, "aria-hidden": "true" })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(
             ItemContent,
             {
               prefix,
@@ -40929,7 +40932,7 @@ var CheckboxItem = (0, import_element122.forwardRef)(
 
 // packages/ui/build-module/menu/group.mjs
 var import_element123 = __toESM(require_element(), 1);
-var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE63 = "data-wp-hash";
 function getRuntime63() {
   const globalScope = globalThis;
@@ -41011,11 +41014,11 @@ function registerStyle63(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle63("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
+  registerStyle63("60037e730c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;color:inherit;min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere;padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default51 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var Group3 = (0, import_element123.forwardRef)(function MenuGroup3({ className, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(
     index_parts_exports4.Group,
     {
       ref,
@@ -41027,7 +41030,7 @@ var Group3 = (0, import_element123.forwardRef)(function MenuGroup3({ className, 
 
 // packages/ui/build-module/menu/group-label.mjs
 var import_element124 = __toESM(require_element(), 1);
-var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE64 = "data-wp-hash";
 function getRuntime64() {
   const globalScope = globalThis;
@@ -41109,12 +41112,12 @@ function registerStyle64(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle64("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
+  registerStyle64("60037e730c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;color:inherit;min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere;padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default52 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var GroupLabel3 = (0, import_element124.forwardRef)(
   function MenuGroupLabel3({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
       index_parts_exports4.GroupLabel,
       {
         ref,
@@ -41128,7 +41131,7 @@ var GroupLabel3 = (0, import_element124.forwardRef)(
 // packages/ui/build-module/menu/link-item.mjs
 var import_element125 = __toESM(require_element(), 1);
 var import_i18n13 = __toESM(require_i18n(), 1);
-var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE65 = "data-wp-hash";
 function getRuntime65() {
   const globalScope = globalThis;
@@ -41218,7 +41221,7 @@ if (typeof process === "undefined" || true) {
 }
 var resets_default12 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 if (typeof process === "undefined" || true) {
-  registerStyle65("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
+  registerStyle65("60037e730c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;color:inherit;min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere;padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default53 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var LinkItem = (0, import_element125.forwardRef)(function MenuLinkItem3({
@@ -41235,7 +41238,7 @@ var LinkItem = (0, import_element125.forwardRef)(function MenuLinkItem3({
   rel,
   ...props
 }, ref) {
-  const externalLinkIndicator = openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
+  const externalLinkIndicator = openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
     "span",
     {
       className: style_default53["external-link-indicator"],
@@ -41254,7 +41257,7 @@ var LinkItem = (0, import_element125.forwardRef)(function MenuLinkItem3({
     labelTrailing: externalLinkIndicator,
     shortcut
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
     index_parts_exports4.LinkItem,
     {
       ref,
@@ -41268,7 +41271,7 @@ var LinkItem = (0, import_element125.forwardRef)(function MenuLinkItem3({
         style_default53.item,
         className
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
         ItemContent,
         {
           prefix,
@@ -41287,9 +41290,9 @@ var import_element128 = __toESM(require_element(), 1);
 
 // packages/ui/build-module/menu/portal.mjs
 var import_element126 = __toESM(require_element(), 1);
-var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
 var Portal6 = (0, import_element126.forwardRef)(function MenuPortal3({ container, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
     index_parts_exports4.Portal,
     {
       ref,
@@ -41301,7 +41304,7 @@ var Portal6 = (0, import_element126.forwardRef)(function MenuPortal3({ container
 
 // packages/ui/build-module/menu/positioner.mjs
 var import_element127 = __toESM(require_element(), 1);
-var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE66 = "data-wp-hash";
 function getRuntime66() {
   const globalScope = globalThis;
@@ -41387,7 +41390,7 @@ if (typeof process === "undefined" || true) {
 }
 var resets_default13 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 if (typeof process === "undefined" || true) {
-  registerStyle66("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
+  registerStyle66("60037e730c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;color:inherit;min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere;padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default54 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var MENU_SUBMENU_POPUP_POSITIONER_PROPS = {
@@ -41400,7 +41403,7 @@ var Positioner3 = (0, import_element127.forwardRef)(
   function MenuPositioner3({ className, ...props }, ref) {
     const { isSubmenu } = useMenuContext();
     const defaultProps = isSubmenu ? MENU_SUBMENU_POPUP_POSITIONER_PROPS : ITEM_POPUP_POSITIONER_PROPS;
-    return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
       index_parts_exports4.Positioner,
       {
         ...defaultProps,
@@ -41417,7 +41420,7 @@ var Positioner3 = (0, import_element127.forwardRef)(
 );
 
 // packages/ui/build-module/menu/popup.mjs
-var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE67 = "data-wp-hash";
 function getRuntime67() {
   const globalScope = globalThis;
@@ -41499,12 +41502,12 @@ function registerStyle67(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle67("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
+  registerStyle67("60037e730c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;color:inherit;min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere;padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default55 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var Popup6 = (0, import_element128.forwardRef)(function MenuPopup3({ children, className, portal, positioner, ...props }, ref) {
   const { isSubmenu } = useMenuContext();
-  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
     index_parts_exports4.Popup,
     {
       ref,
@@ -41514,7 +41517,7 @@ var Popup6 = (0, import_element128.forwardRef)(function MenuPopup3({ children, c
         className
       ),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
         "div",
         {
           className: style_default55.list,
@@ -41525,15 +41528,15 @@ var Popup6 = (0, import_element128.forwardRef)(function MenuPopup3({ children, c
   );
   const positionedPopup = renderSlotWithChildren(
     positioner,
-    /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(Positioner3, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(Positioner3, {}),
     popupContent
   );
-  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(Portal6, {}), positionedPopup);
+  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(Portal6, {}), positionedPopup);
 });
 
 // packages/ui/build-module/menu/radio-group.mjs
 var import_element129 = __toESM(require_element(), 1);
-var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE68 = "data-wp-hash";
 function getRuntime68() {
   const globalScope = globalThis;
@@ -41615,12 +41618,12 @@ function registerStyle68(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle68("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
+  registerStyle68("60037e730c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;color:inherit;min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere;padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default56 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var RadioGroup = (0, import_element129.forwardRef)(
   function MenuRadioGroup3({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
       index_parts_exports4.RadioGroup,
       {
         ref,
@@ -41634,7 +41637,7 @@ var RadioGroup = (0, import_element129.forwardRef)(
 // packages/ui/build-module/menu/radio-item.mjs
 var import_element130 = __toESM(require_element(), 1);
 var import_primitives44 = __toESM(require_primitives(), 1);
-var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE69 = "data-wp-hash";
 function getRuntime69() {
   const globalScope = globalThis;
@@ -41720,10 +41723,10 @@ if (typeof process === "undefined" || true) {
 }
 var resets_default14 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 if (typeof process === "undefined" || true) {
-  registerStyle69("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
+  registerStyle69("60037e730c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;color:inherit;min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere;padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default57 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
-var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(import_primitives44.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(import_primitives44.Circle, { cx: 12, cy: 12, r: 3 }) });
+var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(import_primitives44.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(import_primitives44.Circle, { cx: 12, cy: 12, r: 3 }) });
 var RadioItem = (0, import_element130.forwardRef)(
   function MenuRadioItem3({
     children,
@@ -41744,7 +41747,7 @@ var RadioItem = (0, import_element130.forwardRef)(
       "aria-labelledby": ariaLabelledBy,
       shortcut
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(
       index_parts_exports4.RadioItem,
       {
         ref,
@@ -41756,12 +41759,12 @@ var RadioItem = (0, import_element130.forwardRef)(
         ),
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
             index_parts_exports4.RadioItemIndicator,
             {
               keepMounted: true,
               className: style_default57["item-selection-indicator"],
-              children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
                 Icon,
                 {
                   icon: radioCheck,
@@ -41771,7 +41774,7 @@ var RadioItem = (0, import_element130.forwardRef)(
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
             ItemContent,
             {
               prefix,
@@ -41937,7 +41940,7 @@ function useIframeDismissalBridge({
 }
 
 // packages/ui/build-module/menu/root.mjs
-var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
 function Root12(props) {
   const { onOpenChange } = props;
   const handleOpenChange = (nextOpen, eventDetails) => {
@@ -41960,12 +41963,12 @@ function Root12(props) {
     onOpenChange: handleOpenChange,
     open: props.open
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(MenuContext.Provider, { value: { isSubmenu: false }, children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(index_parts_exports4.Root, { ...props, ...iframeDismissalProps }) }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(MenuContext.Provider, { value: { isSubmenu: false }, children: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(index_parts_exports4.Root, { ...props, ...iframeDismissalProps }) }) });
 }
 
 // packages/ui/build-module/menu/separator.mjs
 var import_element132 = __toESM(require_element(), 1);
-var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE70 = "data-wp-hash";
 function getRuntime70() {
   const globalScope = globalThis;
@@ -42047,12 +42050,12 @@ function registerStyle70(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle70("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
+  registerStyle70("60037e730c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;color:inherit;min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere;padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default58 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var Separator2 = (0, import_element132.forwardRef)(
   function MenuSeparator({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
       index_parts_exports4.Separator,
       {
         ref,
@@ -42064,14 +42067,14 @@ var Separator2 = (0, import_element132.forwardRef)(
 );
 
 // packages/ui/build-module/menu/submenu-root.mjs
-var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
 function SubmenuRoot(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(MenuContext.Provider, { value: { isSubmenu: true }, children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(index_parts_exports4.SubmenuRoot, { ...props }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(MenuContext.Provider, { value: { isSubmenu: true }, children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(index_parts_exports4.SubmenuRoot, { ...props }) });
 }
 
 // packages/ui/build-module/menu/submenu-trigger.mjs
 var import_element133 = __toESM(require_element(), 1);
-var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE71 = "data-wp-hash";
 function getRuntime71() {
   const globalScope = globalThis;
@@ -42157,7 +42160,7 @@ if (typeof process === "undefined" || true) {
 }
 var resets_default15 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 if (typeof process === "undefined" || true) {
-  registerStyle71("5319ab5c9b", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{color:inherit;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-width:0}._5ed41da4abcf8958__item-label,.fa88c9f1a96a4c5a__item-description{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400);overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{color:inherit}}}');
+  registerStyle71("60037e730c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._380b81b8f79fb10f__dropdown-motion,._7f344b94e270e039__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._380b81b8f79fb10f__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d61e2d85c0ee0699__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._34e81249f419a5a5__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-md,400px);--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-group-head-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-sm,24px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._42313b48c5459be3__item-selection-indicator){--wp-ui-menu-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:var(--wpds-dimension-gap-sm,8px)}}._33f07ab17005471d__list{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._33f07ab17005471d__list,.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];min-width:0}.e05914e1005d7c2e__radio-group,.f11085533c0056b0__group{grid-column:1/-1}._33f07ab17005471d__list:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.e05914e1005d7c2e__radio-group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix),.f11085533c0056b0__group:has(>._5c913bce0d8bb0d6__item>._64924ecabf65a5d6__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._4a0fd085d76fd23c__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:1/-1;line-height:var(--wpds-typography-line-height-xs,16px);min-height:var(--wpds-dimension-size-md,32px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-menu-group-head-padding-inline);text-transform:uppercase}.bfc11368eadf3b39__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:1/-1;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:var(--wp-ui-menu-group-head-padding-inline);@media (forced-colors:active){background-color:CanvasText}}._5c913bce0d8bb0d6__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-highlighted]:not([aria-disabled=true]){background-color:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:none;@media (forced-colors:active){outline:var(--wpds-border-width-xs,1px) solid Highlight}}&[aria-disabled=true]{background-color:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}._42313b48c5459be3__item-selection-indicator,._64924ecabf65a5d6__item-prefix,.af879698ede76757__item-content{grid-row:1}._42313b48c5459be3__item-selection-indicator{align-items:center;align-self:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--wp-ui-menu-selection-indicator-size);justify-content:center;justify-self:center;pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._59aa9b3b3a651148__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-xs,20px);width:var(--wpds-dimension-size-xs,20px)}._64924ecabf65a5d6__item-prefix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.af879698ede76757__item-content{align-items:center;box-sizing:border-box;display:grid;grid-column:content-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none}._943a932d9f81c78c__item-children{display:inline-flex;flex-direction:column;gap:2px;grid-column:label-start/label-end;min-width:0}._5ed41da4abcf8958__item-label{--_gcd-heading-color:currentColor;color:inherit;min-width:0;overflow-wrap:anywhere}.fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere;padding-block-end:var(--wpds-dimension-padding-xs,4px)}._091406749ed93e6e__item-suffix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end}._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._23630f40071a29ff__item-shortcut{grid-column:shortcut-start/shortcut-end}._06be17a91bf434a0__item-trailing{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:trailing-start/trailing-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._943a932d9f81c78c__item-children+:is(._091406749ed93e6e__item-suffix,._23630f40071a29ff__item-shortcut,._06be17a91bf434a0__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._23630f40071a29ff__item-shortcut+._06be17a91bf434a0__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.b78aec79bf93eba0__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.b78aec79bf93eba0__submenu-chevron:dir(rtl){transform:rotate(180deg)}._60da3b6f9718cf76__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._60da3b6f9718cf76__external-link-indicator:after{content:"\\2197"}._60da3b6f9718cf76__external-link-indicator:dir(rtl):after{content:"\\2196"}._5c913bce0d8bb0d6__item[aria-disabled=true] ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[aria-disabled=true] ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[aria-disabled=true] ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[aria-disabled=true] ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[aria-disabled=true] ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[aria-disabled=true] .fa88c9f1a96a4c5a__item-description,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._06be17a91bf434a0__item-trailing,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._091406749ed93e6e__item-suffix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._23630f40071a29ff__item-shortcut,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._42313b48c5459be3__item-selection-indicator,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) ._64924ecabf65a5d6__item-prefix,._5c913bce0d8bb0d6__item[data-highlighted]:not([aria-disabled=true]) .fa88c9f1a96a4c5a__item-description{--_gcd-heading-color:currentColor;color:inherit}}}');
 }
 var style_default59 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
 var SubmenuTrigger = (0, import_element133.forwardRef)(
@@ -42180,7 +42183,7 @@ var SubmenuTrigger = (0, import_element133.forwardRef)(
       "aria-labelledby": ariaLabelledBy,
       shortcut
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
       index_parts_exports4.SubmenuTrigger,
       {
         ref,
@@ -42191,14 +42194,14 @@ var SubmenuTrigger = (0, import_element133.forwardRef)(
           className
         ),
         ...props,
-        children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(MenuItemContentContext.Provider, { value: contentContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
           ItemContent,
           {
             prefix,
             shortcut,
             shortcutDescriptionId,
             suffix,
-            trailing: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+            trailing: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
               Icon,
               {
                 className: style_default59["submenu-chevron"],
@@ -42217,10 +42220,10 @@ var SubmenuTrigger = (0, import_element133.forwardRef)(
 
 // packages/ui/build-module/menu/trigger.mjs
 var import_element134 = __toESM(require_element(), 1);
-var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
 var Trigger6 = (0, import_element134.forwardRef)(
   function MenuTrigger3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(index_parts_exports4.Trigger, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(index_parts_exports4.Trigger, { ref, ...props });
   }
 );
 
@@ -42239,7 +42242,7 @@ __export(notice_exports, {
 // packages/ui/build-module/notice/root.mjs
 var import_element135 = __toESM(require_element(), 1);
 import { speak as speak3 } from "@wordpress/a11y";
-var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE72 = "data-wp-hash";
 function getRuntime72() {
   const globalScope = globalThis;
@@ -42382,9 +42385,9 @@ var Root13 = (0, import_element135.forwardRef)(function Notice({
     props: mergeProps(
       {
         className: mergedClassName,
-        children: /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(import_jsx_runtime201.Fragment, { children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime202.jsxs)(import_jsx_runtime202.Fragment, { children: [
           children,
-          iconElement && /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
+          iconElement && /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
             Icon,
             {
               className: style_default60.icon,
@@ -42401,7 +42404,7 @@ var Root13 = (0, import_element135.forwardRef)(function Notice({
 
 // packages/ui/build-module/notice/title.mjs
 var import_element136 = __toESM(require_element(), 1);
-var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE73 = "data-wp-hash";
 function getRuntime73() {
   const globalScope = globalThis;
@@ -42488,7 +42491,7 @@ if (typeof process === "undefined" || true) {
 var style_default61 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
 var Title5 = (0, import_element136.forwardRef)(
   function NoticeTitle({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
       Text,
       {
         ref,
@@ -42502,7 +42505,7 @@ var Title5 = (0, import_element136.forwardRef)(
 
 // packages/ui/build-module/notice/description.mjs
 var import_element137 = __toESM(require_element(), 1);
-var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE74 = "data-wp-hash";
 function getRuntime74() {
   const globalScope = globalThis;
@@ -42589,7 +42592,7 @@ if (typeof process === "undefined" || true) {
 var style_default62 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
 var Description5 = (0, import_element137.forwardRef)(
   function NoticeDescription({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
       Text,
       {
         ref,
@@ -42707,7 +42710,7 @@ var Actions2 = (0, import_element138.forwardRef)(
 // packages/ui/build-module/notice/close-icon.mjs
 var import_element139 = __toESM(require_element(), 1);
 var import_i18n14 = __toESM(require_i18n(), 1);
-var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE76 = "data-wp-hash";
 function getRuntime76() {
   const globalScope = globalThis;
@@ -42794,7 +42797,7 @@ if (typeof process === "undefined" || true) {
 var style_default64 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
 var CloseIcon3 = (0, import_element139.forwardRef)(
   function NoticeCloseIcon({ className, icon = close_small_default, label = (0, import_i18n14.__)("Dismiss"), ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
       IconButton,
       {
         ...props,
@@ -42812,7 +42815,7 @@ var CloseIcon3 = (0, import_element139.forwardRef)(
 
 // packages/ui/build-module/notice/action-button.mjs
 var import_element140 = __toESM(require_element(), 1);
-var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE77 = "data-wp-hash";
 function getRuntime77() {
   const globalScope = globalThis;
@@ -42900,7 +42903,7 @@ var style_default65 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570
 var ActionButton = (0, import_element140.forwardRef)(
   function NoticeActionButton({ className, loading, loadingAnnouncement, variant, ...props }, ref) {
     const loadingProps = loading !== void 0 ? { loading, loadingAnnouncement: loadingAnnouncement ?? "" } : {};
-    return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
       Button4,
       {
         ...props,
@@ -42921,7 +42924,7 @@ var ActionButton = (0, import_element140.forwardRef)(
 
 // packages/ui/build-module/notice/action-link.mjs
 var import_element141 = __toESM(require_element(), 1);
-var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE78 = "data-wp-hash";
 function getRuntime78() {
   const globalScope = globalThis;
@@ -43008,14 +43011,14 @@ if (typeof process === "undefined" || true) {
 var style_default66 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
 var ActionLink = (0, import_element141.forwardRef)(
   function NoticeActionLink({ className, render: render4, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
       Text,
       {
         ref,
         className: clsx_default(style_default66["action-link"], className),
         ...props,
         variant: "body-md",
-        render: /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Link, { tone: "neutral", variant: "default", render: render4 })
+        render: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(Link, { tone: "neutral", variant: "default", render: render4 })
       }
     );
   }
@@ -43037,7 +43040,7 @@ __export(popover_exports, {
 
 // packages/ui/build-module/popover/arrow.mjs
 var import_element142 = __toESM(require_element(), 1);
-var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE79 = "data-wp-hash";
 function getRuntime79() {
   const globalScope = globalThis;
@@ -43123,7 +43126,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default67 = { "positioner": "_10450722b9676f78__positioner", "popup": "_84e8f597bcf683b8__popup _380b81b8f79fb10f__dropdown-motion", "surface": "_972134b6cd5808d8__surface", "backdrop": "e4d544aa033f05c6__backdrop", "arrow": "ca05d3eb89321fcd__arrow", "arrow-fill": "_12d8edd9eb946b5f__arrow-fill", "arrow-stroke": "_6ddab482bd929dad__arrow-stroke", "title": "_6d7e4729cd96960e__title" };
 function DefaultArrowSvg(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(
     "svg",
     {
       width: "20",
@@ -43132,14 +43135,14 @@ function DefaultArrowSvg(props) {
       fill: "none",
       ...props,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
           "path",
           {
             d: "M20 10H0V8h1.465a4 4 0 0 0 2.676-1.027l5.19-4.388c.378-.341.96-.341 1.338 0l5.19 4.388A4 4 0 0 0 18.535 8H20z",
             className: style_default67["arrow-fill"]
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
           "path",
           {
             d: "M10 3.097 4.81 7.486A5 5 0 0 1 1.465 8.77H0V8h1.465a4 4 0 0 0 2.676-1.027l5.19-4.388c.378-.341.96-.341 1.338 0l5.19 4.388A4 4 0 0 0 18.535 8H20v.77h-1.465a5 5 0 0 1-3.345-1.284z",
@@ -43151,23 +43154,23 @@ function DefaultArrowSvg(props) {
   );
 }
 var Arrow = (0, import_element142.forwardRef)(function PopoverArrow3({ children, className, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
     index_parts_exports8.Arrow,
     {
       ref,
       className: clsx_default(style_default67.arrow, className),
       ...props,
-      children: children ?? /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(DefaultArrowSvg, {})
+      children: children ?? /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(DefaultArrowSvg, {})
     }
   );
 });
 
 // packages/ui/build-module/popover/close.mjs
 var import_element143 = __toESM(require_element(), 1);
-var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
 var Close = (0, import_element143.forwardRef)(
   function PopoverClose3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(
       index_parts_exports8.Close,
       {
         ref,
@@ -43180,15 +43183,15 @@ var Close = (0, import_element143.forwardRef)(
 
 // packages/ui/build-module/popover/description.mjs
 var import_element144 = __toESM(require_element(), 1);
-var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
 var Description6 = (0, import_element144.forwardRef)(
   function PopoverDescription3({ children, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
       Text,
       {
         ref,
         variant: "body-md",
-        render: /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(index_parts_exports8.Description, { ...props }),
+        render: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(index_parts_exports8.Description, { ...props }),
         children
       }
     );
@@ -43206,10 +43209,10 @@ var PopoverValidationProvider = popoverTitleValidation.ValidationProvider;
 
 // packages/ui/build-module/popover/portal.mjs
 var import_element145 = __toESM(require_element(), 1);
-var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
 var Portal7 = (0, import_element145.forwardRef)(
   function PopoverPortal3({ container, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
       index_parts_exports8.Portal,
       {
         container: container ?? getWpCompatOverlaySlot(),
@@ -43222,7 +43225,7 @@ var Portal7 = (0, import_element145.forwardRef)(
 
 // packages/ui/build-module/popover/positioner.mjs
 var import_element146 = __toESM(require_element(), 1);
-var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE80 = "data-wp-hash";
 function getRuntime80() {
   const globalScope = globalThis;
@@ -43321,7 +43324,7 @@ var Positioner4 = (0, import_element146.forwardRef)(
     sideOffset = 8,
     ...props
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
       index_parts_exports8.Positioner,
       {
         ref,
@@ -43341,7 +43344,7 @@ var Positioner4 = (0, import_element146.forwardRef)(
 );
 
 // packages/ui/build-module/popover/popup.mjs
-var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE81 = "data-wp-hash";
 function getRuntime81() {
   const globalScope = globalThis;
@@ -43444,10 +43447,10 @@ var Popup7 = (0, import_element147.forwardRef)(function PopoverPopup3({
   });
   const mergedPopupRef = (0, import_compose14.useMergeRefs)([ref, popupRef]);
   const useDefaultSurface = variant !== "unstyled";
-  const validatedChildren = /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(PopoverValidationProvider, { children });
-  const popupChildren = useDefaultSurface ? /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("div", { className: style_default69.surface, children: validatedChildren }) : validatedChildren;
-  const backdropElement = backdrop ? /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(index_parts_exports8.Backdrop, { className: style_default69.backdrop }) : null;
-  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+  const validatedChildren = /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(PopoverValidationProvider, { children });
+  const popupChildren = useDefaultSurface ? /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("div", { className: style_default69.surface, children: validatedChildren }) : validatedChildren;
+  const backdropElement = backdrop ? /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(index_parts_exports8.Backdrop, { className: style_default69.backdrop }) : null;
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
     index_parts_exports8.Popup,
     {
       ref: mergedPopupRef,
@@ -43460,26 +43463,26 @@ var Popup7 = (0, import_element147.forwardRef)(function PopoverPopup3({
   );
   const positionedPopup = renderSlotWithChildren(
     positioner,
-    /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Positioner4, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Positioner4, {}),
     popupContent
   );
-  const portalChildren = /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(import_jsx_runtime212.Fragment, { children: [
+  const portalChildren = /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(import_jsx_runtime213.Fragment, { children: [
     backdropElement,
     positionedPopup
   ] });
-  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Portal7, {}), portalChildren);
+  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Portal7, {}), portalChildren);
 });
 
 // packages/ui/build-module/popover/root.mjs
-var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
 function Root14(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(index_parts_exports8.Root, { ...props }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(index_parts_exports8.Root, { ...props }) });
 }
 
 // packages/ui/build-module/popover/title.mjs
 var import_compose15 = __toESM(require_compose(), 1);
 var import_element148 = __toESM(require_element(), 1);
-var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE82 = "data-wp-hash";
 function getRuntime82() {
   const globalScope = globalThis;
@@ -43575,12 +43578,12 @@ var Title6 = (0, import_element148.forwardRef)(
       }
       return void 0;
     }, [validationContext]);
-    return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
       Text,
       {
         ref: mergedRef,
         variant: "heading-xl",
-        render: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(index_parts_exports8.Title, { ...props }),
+        render: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(index_parts_exports8.Title, { ...props }),
         className: style_default70.title,
         children
       }
@@ -43590,15 +43593,15 @@ var Title6 = (0, import_element148.forwardRef)(
 
 // packages/ui/build-module/popover/trigger.mjs
 var import_element149 = __toESM(require_element(), 1);
-var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
 var Trigger7 = (0, import_element149.forwardRef)(
   function PopoverTrigger3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(index_parts_exports8.Trigger, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(index_parts_exports8.Trigger, { ref, ...props });
   }
 );
 
 // packages/admin-ui/build-module/breadcrumbs/index.mjs
-var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime217 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE83 = "data-wp-hash";
 function getRuntime83() {
   const globalScope = globalThis;
@@ -43697,30 +43700,30 @@ var Breadcrumbs = ({ items }) => {
       );
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("nav", { "aria-label": (0, import_i18n15.__)("Breadcrumbs"), children: /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("nav", { "aria-label": (0, import_i18n15.__)("Breadcrumbs"), children: /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)(
     Stack,
     {
-      render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("ul", {}),
+      render: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("ul", {}),
       direction: "row",
       align: "center",
       className: style_default71.list,
       children: [
-        precedingItems.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)("li", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+        precedingItems.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)("li", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
             Text,
             {
               variant: "body-lg",
-              render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+              render: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
                 Link,
                 {
                   tone: "neutral",
-                  render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(RouterLink, { to: item.to })
+                  render: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(RouterLink, { to: item.to })
                 }
               ),
               children: item.label
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
             Text,
             {
               variant: "body-lg",
@@ -43730,24 +43733,24 @@ var Breadcrumbs = ({ items }) => {
             }
           )
         ] }, index2)),
-        /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("li", { children: lastItem.to ? /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("li", { children: lastItem.to ? /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
           Text,
           {
             variant: "body-lg",
-            render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+            render: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
               Link,
               {
                 tone: "neutral",
-                render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(RouterLink, { to: lastItem.to })
+                render: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(RouterLink, { to: lastItem.to })
               }
             ),
             children: lastItem.label
           }
-        ) : /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+        ) : /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
           Text,
           {
             variant: "heading-lg",
-            render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("h1", {}),
+            render: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("h1", {}),
             className: style_default71.current,
             children: lastItem.label
           }
@@ -43760,10 +43763,10 @@ var breadcrumbs_default = Breadcrumbs;
 
 // packages/admin-ui/build-module/navigable-region/index.mjs
 var import_element150 = __toESM(require_element(), 1);
-var import_jsx_runtime217 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
 var NavigableRegion = (0, import_element150.forwardRef)(
   ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
       Tag,
       {
         ref,
@@ -43782,7 +43785,7 @@ var navigable_region_default = NavigableRegion;
 
 // packages/admin-ui/build-module/navigation/index.mjs
 var import_i18n16 = __toESM(require_i18n(), 1);
-var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE84 = "data-wp-hash";
 function getRuntime84() {
   const globalScope = globalThis;
@@ -43896,25 +43899,25 @@ var Navigation = ({
       );
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("nav", { "aria-label": ariaLabel, className, children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)("nav", { "aria-label": ariaLabel, className, children: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
     Stack,
     {
-      render: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("ul", { role: "list" }),
+      render: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)("ul", { role: "list" }),
       direction: "row",
       align: "center",
       gap: "md",
       className: style_default72.list,
-      children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("li", { className: style_default72.li, children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+      children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime219.jsx)("li", { className: style_default72.li, children: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
         Text,
         {
           variant: "body-md",
           className: style_default72.item,
-          render: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
             Link,
             {
               variant: "unstyled",
               "aria-current": item.href === currentHref ? "page" : void 0,
-              render: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(LinkComponent, { href: item.href })
+              render: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(LinkComponent, { href: item.href })
             }
           ),
           children: item.label
@@ -43930,7 +43933,7 @@ var import_components2 = __toESM(require_components(), 1);
 var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components2.createSlotFill)("SidebarToggle");
 
 // packages/admin-ui/build-module/page/header.mjs
-var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE85 = "data-wp-hash";
 function getRuntime85() {
   const globalScope = globalThis;
@@ -44029,7 +44032,7 @@ function Header5({
 }) {
   const HeadingTag = `h${headingLevel}`;
   const hasNavigation = !!navigation?.items?.length;
-  return /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(
     Stack,
     {
       direction: "column",
@@ -44038,7 +44041,7 @@ function Header5({
         hasNavigation && style_default73["has-navigation"]
       ),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(
           Stack,
           {
             className: style_default73["header-content"],
@@ -44046,7 +44049,7 @@ function Header5({
             gap: "sm",
             justify: "space-between",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(
                 Stack,
                 {
                   direction: "row",
@@ -44055,14 +44058,14 @@ function Header5({
                   justify: "start",
                   className: style_default73["header-lockup"],
                   children: [
-                    showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
+                    showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
                       SidebarToggleSlot,
                       {
                         bubblesVirtually: true,
                         className: style_default73["sidebar-toggle-slot"]
                       }
                     ),
-                    visual && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
+                    visual && /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
                       "div",
                       {
                         className: style_default73["header-visual"],
@@ -44070,11 +44073,11 @@ function Header5({
                         children: visual
                       }
                     ),
-                    title && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
+                    title && /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
                       Text,
                       {
                         className: style_default73["header-title"],
-                        render: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(HeadingTag, {}),
+                        render: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(HeadingTag, {}),
                         variant: "heading-lg",
                         children: title
                       }
@@ -44084,7 +44087,7 @@ function Header5({
                   ]
                 }
               ),
-              actions && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
+              actions && /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
                 Stack,
                 {
                   align: "center",
@@ -44097,16 +44100,16 @@ function Header5({
             ]
           }
         ),
-        subTitle && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
+        subTitle && /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
           Text,
           {
-            render: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)("p", {}),
+            render: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)("p", {}),
             variant: "body-md",
             className: style_default73["header-subtitle"],
             children: subTitle
           }
         ),
-        hasNavigation && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
+        hasNavigation && /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
           navigation_default,
           {
             ...navigation,
@@ -44120,7 +44123,7 @@ function Header5({
 }
 
 // packages/admin-ui/build-module/page/index.mjs
-var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime221 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE86 = "data-wp-hash";
 function getRuntime86() {
   const globalScope = globalThis;
@@ -44223,8 +44226,8 @@ function Page({
 }) {
   const classes = clsx_default(style_default74.page, className);
   const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
-  return /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
-    (title || breadcrumbs || badges || actions || visual || !!navigation?.items?.length) && /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
+    (title || breadcrumbs || badges || actions || visual || !!navigation?.items?.length) && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
       Header5,
       {
         headingLevel,
@@ -44239,7 +44242,7 @@ function Page({
         showSidebarToggle
       }
     ),
-    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
+    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
       "div",
       {
         className: clsx_default(
@@ -44323,7 +44326,7 @@ function normalizeGridSettings(settings, defaultRowHeight) {
 
 // packages/widget-dashboard/build-module/components/dashboard-policy/dashboard-policy.mjs
 var import_element151 = __toESM(require_element(), 1);
-var import_jsx_runtime221 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
 var PolicyContext = (0, import_element151.createContext)(
   null
 );
@@ -44336,14 +44339,14 @@ function WidgetDashboardPolicy({
     () => parent ? (request) => parent(request) && canPerform(request) : canPerform,
     [parent, canPerform]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(PolicyContext.Provider, { value, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(PolicyContext.Provider, { value, children });
 }
 function useDashboardPolicy() {
   return (0, import_element151.useContext)(PolicyContext);
 }
 
 // packages/widget-dashboard/build-module/context/dashboard-context.mjs
-var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
 function resolveGridSettings(settings) {
   const normalized = normalizeGridSettings(settings, DEFAULT_ROW_HEIGHT);
   return {
@@ -44518,12 +44521,12 @@ function WidgetDashboardProvider({
       canPerform
     ]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(Context.Provider, { value, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(Context.Provider, { value, children });
 }
 
 // packages/widget-dashboard/build-module/context/ui-context.mjs
 var import_element153 = __toESM(require_element(), 1);
-var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
 var Context2 = (0, import_element153.createContext)(null);
 function useDashboardUIContext() {
   const ctx8 = (0, import_element153.useContext)(Context2);
@@ -44549,7 +44552,7 @@ function WidgetDashboardUIProvider({ children }) {
     }),
     [inserterOpen, resetDialogOpen, settingsWidgetUuid]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(Context2.Provider, { value, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(Context2.Provider, { value, children });
 }
 
 // packages/widget-dashboard/build-module/components/actions/actions.mjs
@@ -44570,49 +44573,49 @@ var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptIn
 );
 
 // packages/widget-dashboard/build-module/components/actions-menu/actions-menu.mjs
-var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
 var { Menu } = unlock2(import_components3.privateApis);
 function ActionsMenuEntry({ item }) {
   const showDisabledTooltip = item.disabled && item.disabledTooltip;
-  const menuItem = /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+  const menuItem = /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
     Menu.Item,
     {
       disabled: item.disabled,
       onClick: item.onClick,
-      render: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(Button4, { variant: "minimal", tone: "neutral" }),
+      render: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(Button4, { variant: "minimal", tone: "neutral" }),
       children: item.label
     }
   );
   if (!showDisabledTooltip) {
     return menuItem;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(tooltip_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(tooltip_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
       tooltip_exports.Trigger,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
           Menu.Item,
           {
             disabled: item.disabled,
             onClick: item.onClick,
-            render: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(Button4, { variant: "minimal", tone: "neutral" })
+            render: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(Button4, { variant: "minimal", tone: "neutral" })
           }
         ),
         children: item.label
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(tooltip_exports.Popup, { positioner: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(tooltip_exports.Positioner, { side: "bottom" }), children: item.disabledTooltip })
+    /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(tooltip_exports.Popup, { positioner: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(tooltip_exports.Positioner, { side: "bottom" }), children: item.disabledTooltip })
   ] });
 }
 function ActionsMenu({ items }) {
   if (items.length === 0) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(Menu, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(Menu, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
       Menu.TriggerButton,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
           IconButton,
           {
             icon: more_vertical_default,
@@ -44624,12 +44627,12 @@ function ActionsMenu({ items }) {
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(Menu.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(tooltip_exports.Provider, { delay: 0, children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(Menu.Group, { children: items.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(ActionsMenuEntry, { item }, index2)) }) }) })
+    /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(Menu.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(tooltip_exports.Provider, { delay: 0, children: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(Menu.Group, { children: items.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(ActionsMenuEntry, { item }, index2)) }) }) })
   ] });
 }
 
 // packages/widget-dashboard/build-module/components/actions/actions.mjs
-var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE87 = "data-wp-hash";
 function getRuntime87() {
   const globalScope = globalThis;
@@ -44777,16 +44780,16 @@ function Actions3() {
     return null;
   }
   const canCustomize = canPerform({ operation: "customize" });
-  return /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(Stack, { direction: "row", gap: "sm", children: [
-    isEditActionsMounted ? /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(Stack, { direction: "row", gap: "sm", children: [
+    isEditActionsMounted ? /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(
       Stack,
       {
         direction: "row",
         gap: "sm",
         className: isExitingEditActions ? actions_default["edit-actions-exit"] : actions_default["edit-actions-enter"],
         children: [
-          canInsertAny && /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(import_jsx_runtime225.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(
+          canInsertAny && /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(import_jsx_runtime226.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(
               Button4,
               {
                 variant: "minimal",
@@ -44794,12 +44797,12 @@ function Actions3() {
                 size: "compact",
                 onClick: insert,
                 children: [
-                  !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(Button4.Icon, { icon: plus_default }),
+                  !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Button4.Icon, { icon: plus_default }),
                   (0, import_i18n18.__)("Add widget")
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
               "div",
               {
                 className: actions_default["edit-actions-divider"],
@@ -44807,7 +44810,7 @@ function Actions3() {
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
             Button4,
             {
               variant: "minimal",
@@ -44817,7 +44820,7 @@ function Actions3() {
               children: (0, import_i18n18.__)("Cancel")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
             Button4,
             {
               variant: "solid",
@@ -44830,7 +44833,7 @@ function Actions3() {
           )
         ]
       }
-    ) : canCustomize && /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
+    ) : canCustomize && /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
       Button4,
       {
         variant: "minimal",
@@ -44840,7 +44843,7 @@ function Actions3() {
         children: (0, import_i18n18.__)("Customize")
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(ActionsMenu, { items: menuItems })
+    /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(ActionsMenu, { items: menuItems })
   ] });
 }
 
@@ -44970,7 +44973,7 @@ function Commands() {
 
 // packages/widget-dashboard/build-module/components/no-widgets-state/no-widgets-state.mjs
 var import_i18n20 = __toESM(require_i18n(), 1);
-var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE88 = "data-wp-hash";
 function getRuntime88() {
   const globalScope = globalThis;
@@ -45062,10 +45065,10 @@ function NoWidgetsState({
   if (layout.length > 0) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Stack, { justify: "center", align: "center", className: no_widgets_state_default.root, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(empty_state_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(empty_state_exports.Icon, { icon: home_default }),
-    /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(empty_state_exports.Title, { children: (0, import_i18n20.__)("Your dashboard is empty") }),
-    /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(empty_state_exports.Description, { children: (0, import_i18n20.__)(
+  return /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(Stack, { justify: "center", align: "center", className: no_widgets_state_default.root, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(empty_state_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(empty_state_exports.Icon, { icon: home_default }),
+    /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(empty_state_exports.Title, { children: (0, import_i18n20.__)("Your dashboard is empty") }),
+    /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(empty_state_exports.Description, { children: (0, import_i18n20.__)(
       "Add widgets to start customizing your dashboard."
     ) })
   ] }) });
@@ -45073,11 +45076,11 @@ function NoWidgetsState({
 
 // packages/widget-dashboard/build-module/components/reset-confirmation/reset-confirmation.mjs
 var import_i18n21 = __toESM(require_i18n(), 1);
-var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
 function ResetConfirmation() {
   const { onLayoutReset, onEditChange } = useDashboardInternalContext();
   const { resetDialogOpen, setResetDialogOpen } = useDashboardUIContext();
-  return /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
     alert_dialog_exports.Root,
     {
       open: resetDialogOpen,
@@ -45087,7 +45090,7 @@ function ResetConfirmation() {
         onEditChange?.(false);
         setResetDialogOpen(false);
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
         alert_dialog_exports.Popup,
         {
           intent: "irreversible",
@@ -45108,13 +45111,13 @@ var import_i18n25 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/context/widget-context.mjs
 var import_element157 = __toESM(require_element(), 1);
-var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
 var WidgetContext = (0, import_element157.createContext)(null);
 function WidgetContextProvider({
   value,
   children
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(WidgetContext.Provider, { value, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(WidgetContext.Provider, { value, children });
 }
 
 // packages/widget-dashboard/build-module/components/widget-frame/widget-frame.mjs
@@ -45148,7 +45151,7 @@ function getActionRoute(links, action) {
 }
 
 // packages/widget-dashboard/build-module/components/widget-footer/widget-footer.mjs
-var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE89 = "data-wp-hash";
 function getRuntime89() {
   const globalScope = globalThis;
@@ -45242,11 +45245,11 @@ function IconAction({
     (0, import_i18n22.__)("%s (opens in a new tab)"),
     action.label
   ) : action.label;
-  return /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(tooltip_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(tooltip_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
       tooltip_exports.Trigger,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
           LinkButton3,
           {
             variant: "minimal",
@@ -45261,14 +45264,14 @@ function IconAction({
             render: routeRender ?? (action.openInNewTab ? (
               /* href and content merge in at runtime. */
               // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-              /* @__PURE__ */ (0, import_jsx_runtime229.jsx)("a", { target: "_blank", rel: "noopener noreferrer" })
+              /* @__PURE__ */ (0, import_jsx_runtime230.jsx)("a", { target: "_blank", rel: "noopener noreferrer" })
             ) : void 0)
           }
         ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(LinkButton3.Icon, { icon: action.icon })
+        children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(LinkButton3.Icon, { icon: action.icon })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(tooltip_exports.Popup, { children: action.label })
+    /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(tooltip_exports.Popup, { children: action.label })
   ] });
 }
 function WidgetFooter({
@@ -45286,7 +45289,7 @@ function WidgetFooter({
   const mediumActions = actions.filter(
     (action) => action.relevance === "medium"
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(
     Stack,
     {
       direction: "row",
@@ -45295,22 +45298,22 @@ function WidgetFooter({
       className: widget_footer_default["widget-footer"],
       ...editMode ? { inert: "true" } : {},
       children: [
-        highActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Stack, { direction: "row", align: "center", gap: "lg", wrap: "wrap", children: highActions.map((action) => {
+        highActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Stack, { direction: "row", align: "center", gap: "lg", wrap: "wrap", children: highActions.map((action) => {
           const path = getActionRoute(links, action);
           const className = action.icon ? widget_footer_default["prefixed-action"] : void 0;
-          const children = /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(import_jsx_runtime229.Fragment, { children: [
-            action.icon && /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Icon, { icon: action.icon }),
+          const children = /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(import_jsx_runtime230.Fragment, { children: [
+            action.icon && /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Icon, { icon: action.icon }),
             action.label
           ] });
-          return path !== null && HostLink ? /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+          return path !== null && HostLink ? /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
             Link,
             {
               className,
-              render: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(HostLink, { path }),
+              render: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(HostLink, { path }),
               children
             },
             action.id
-          ) : /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+          ) : /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
             Link,
             {
               href: action.href,
@@ -45322,18 +45325,18 @@ function WidgetFooter({
             action.id
           );
         }) }),
-        mediumActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+        mediumActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
           Stack,
           {
             direction: "row",
             align: "center",
             gap: "xs",
             className: widget_footer_default["compact-actions"],
-            children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(tooltip_exports.Provider, { children: mediumActions.map((action) => {
+            children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(tooltip_exports.Provider, { children: mediumActions.map((action) => {
               const path = getActionRoute(links, action);
-              const routeRender = path !== null && HostLink ? /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(HostLink, { path }) : void 0;
+              const routeRender = path !== null && HostLink ? /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(HostLink, { path }) : void 0;
               if (action.icon) {
-                return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+                return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
                   IconAction,
                   {
                     action: {
@@ -45345,7 +45348,7 @@ function WidgetFooter({
                   action.id
                 );
               }
-              return routeRender ? /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Link, { render: routeRender, children: action.label }, action.id) : /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+              return routeRender ? /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Link, { render: routeRender, children: action.label }, action.id) : /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
                 Link,
                 {
                   href: action.href,
@@ -45370,7 +45373,7 @@ var import_element160 = __toESM(require_element(), 1);
 // packages/widget-dashboard/build-module/components/widget-header/widget-header-infotip.mjs
 var import_element158 = __toESM(require_element(), 1);
 var import_i18n23 = __toESM(require_i18n(), 1);
-var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE90 = "data-wp-hash";
 function getRuntime90() {
   const globalScope = globalThis;
@@ -45459,29 +45462,29 @@ function WidgetInfotip({
   content,
   links
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(popover_exports.Root, { modal: "trap-focus", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)(popover_exports.Root, { modal: "trap-focus", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
       popover_exports.Trigger,
       {
         "aria-label": (0, import_i18n23.__)("More information"),
         className: widget_header_default.help,
-        children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Icon, { icon: info_default, size: 20 })
+        children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(Icon, { icon: info_default, size: 20 })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)(
       popover_exports.Popup,
       {
         className: widget_header_default["popover-popup"],
-        positioner: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(popover_exports.Positioner, { side: "top", align: "start" }),
+        positioner: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(popover_exports.Positioner, { side: "top", align: "start" }),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(popover_exports.Arrow, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(popover_exports.Title, {}), children: (0, import_i18n23.__)("More information") }),
-          /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(Stack, { direction: "column", align: "start", gap: "sm", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(popover_exports.Description, { children: (0, import_element158.createInterpolateElement)(content, {
-              em: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)("em", {}),
-              strong: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)("strong", {})
+          /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(popover_exports.Arrow, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(popover_exports.Title, {}), children: (0, import_i18n23.__)("More information") }),
+          /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)(Stack, { direction: "column", align: "start", gap: "sm", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(popover_exports.Description, { children: (0, import_element158.createInterpolateElement)(content, {
+              em: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("em", {}),
+              strong: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("strong", {})
             }) }),
-            links && links.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Stack, { direction: "row", align: "start", gap: "sm", children: links.map((link) => /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
+            links && links.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(Stack, { direction: "row", align: "start", gap: "sm", children: links.map((link) => /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
               Link,
               {
                 href: link.href,
@@ -45554,7 +45557,7 @@ function useReserveHeaderPadding(id) {
 }
 
 // packages/widget-dashboard/build-module/components/widget-header/widget-header.mjs
-var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE91 = "data-wp-hash";
 function getRuntime91() {
   const globalScope = globalThis;
@@ -45690,7 +45693,7 @@ function WidgetHeader({
     0
   );
   const availableSize = headerWidth > 0 ? headerWidth - (hasIdentity ? identityReserve : 0) - totalReserved : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime232.jsxs)(
     card_exports.Header,
     {
       ref: headerMeasureRef,
@@ -45699,7 +45702,7 @@ function WidgetHeader({
         overlay && widget_header_default2.overlay
       ),
       children: [
-        showIdentity && widgetType?.title && /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)(
+        showIdentity && widgetType?.title && /* @__PURE__ */ (0, import_jsx_runtime232.jsxs)(
           Stack,
           {
             ref: identityMeasureRef,
@@ -45709,17 +45712,17 @@ function WidgetHeader({
             className: widget_header_default2.identity,
             ...editMode ? { inert: "true" } : {},
             children: [
-              widgetType.icon && /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("span", { className: widget_header_default2.icon, "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(Icon, { icon: widgetType.icon }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
+              widgetType.icon && /* @__PURE__ */ (0, import_jsx_runtime232.jsx)("span", { className: widget_header_default2.icon, "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(Icon, { icon: widgetType.icon }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
                 card_exports.Title,
                 {
                   id: titleId,
-                  render: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("h2", {}),
+                  render: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)("h2", {}),
                   className: widget_header_default2.title,
                   children: widgetType.title
                 }
               ),
-              widgetType.help && /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
+              widgetType.help && /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
                 WidgetInfotip,
                 {
                   content: widgetType.help.content,
@@ -45729,7 +45732,7 @@ function WidgetHeader({
             ]
           }
         ),
-        children && /* @__PURE__ */ (0, import_jsx_runtime231.jsx)("div", { className: widget_header_default2.toolbar, children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(WidgetHeaderReserveProvider, { value: reserveContext, children: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
+        children && /* @__PURE__ */ (0, import_jsx_runtime232.jsx)("div", { className: widget_header_default2.toolbar, children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetHeaderReserveProvider, { value: reserveContext, children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
           WidgetHeaderAvailableSizeProvider,
           {
             value: availableSize,
@@ -45744,7 +45747,7 @@ function WidgetHeader({
 // packages/widget-dashboard/build-module/components/widget-render/widget-render.mjs
 var import_element161 = __toESM(require_element(), 1);
 import { WidgetRender as WidgetRenderPrimitive } from "@wordpress/widget-primitives";
-var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
 function WidgetRender({ widget, widgetType }) {
   const { layout, onLayoutChange, resolveWidgetModule, canPerform } = useDashboardInternalContext();
   const canEdit = canPerform({ operation: "edit", widget, widgetType });
@@ -45764,7 +45767,7 @@ function WidgetRender({ widget, widgetType }) {
     },
     [widget.uuid, layout, onLayoutChange]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(
     WidgetRenderPrimitive,
     {
       widgetType,
@@ -45776,7 +45779,7 @@ function WidgetRender({ widget, widgetType }) {
 }
 
 // packages/widget-dashboard/build-module/components/widget-frame/widget-frame.mjs
-var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE92 = "data-wp-hash";
 function getRuntime92() {
   const globalScope = globalThis;
@@ -45868,13 +45871,13 @@ var WidgetErrorBoundary = class extends import_element162.Component {
   }
   render() {
     if (this.state.hasError) {
-      return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(notice_exports.Root, { intent: "error", children: /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(notice_exports.Description, { children: (0, import_i18n24.__)("This widget encountered an error.") }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(notice_exports.Root, { intent: "error", children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(notice_exports.Description, { children: (0, import_i18n24.__)("This widget encountered an error.") }) });
     }
     return this.props.children;
   }
 };
 function LoadingOverlay() {
-  return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(Stack, { justify: "center", align: "center", className: widget_frame_default.loading, children: /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(import_components4.Spinner, {}) });
+  return /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(Stack, { justify: "center", align: "center", className: widget_frame_default.loading, children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(import_components4.Spinner, {}) });
 }
 function WidgetFrame({
   widget,
@@ -45887,9 +45890,9 @@ function WidgetFrame({
   const isHeaderHidden = presentation === "full-bleed";
   const isBodyBleeding = presentation === "full-bleed" || presentation === "content-bleed";
   const { footer: footerActions } = splitWidgetActions(widgetType);
-  const body = /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(import_element162.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(WidgetRender, { widget, widgetType }) }) });
-  return /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)(import_jsx_runtime233.Fragment, { children: [
-    !isHeaderHidden && /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(
+  const body = /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(import_element162.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetRender, { widget, widgetType }) }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(import_jsx_runtime234.Fragment, { children: [
+    !isHeaderHidden && /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
       WidgetHeader,
       {
         showIdentity: true,
@@ -45899,7 +45902,7 @@ function WidgetFrame({
         children: headerToolbar
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(
       card_exports.Content,
       {
         className: clsx_default(
@@ -45908,17 +45911,17 @@ function WidgetFrame({
         ),
         ...editMode ? { inert: "true" } : {},
         children: [
-          isHeaderHidden && widgetType.title && /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime233.jsx)("h2", { id: titleId }), children: widgetType.title }),
+          isHeaderHidden && widgetType.title && /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)("h2", { id: titleId }), children: widgetType.title }),
           body
         ]
       }
     ),
-    footerActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(WidgetFooter, { actions: footerActions, editMode })
+    footerActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetFooter, { actions: footerActions, editMode })
   ] });
 }
 
 // packages/widget-dashboard/build-module/components/widget-chrome/widget-chrome.mjs
-var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE93 = "data-wp-hash";
 function getRuntime93() {
   const globalScope = globalThis;
@@ -46004,16 +46007,16 @@ if (typeof process === "undefined" || true) {
 }
 var widget_chrome_default = { "widget-chrome": "c10bdb70b86e7888__widget-chrome", "widget-chrome-header-icon": "_05be5860e5abb8bb__widget-chrome-header-icon", "widget-chrome-content": "a7e5c80edbcdf3f5__widget-chrome-content", "unavailable": "_9b694d63bdec1a98__unavailable" };
 function UnavailableWidget({ widgetTypeName }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(import_jsx_runtime234.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(card_exports.Header, { children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)(import_jsx_runtime235.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(card_exports.Header, { children: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
       "span",
       {
         className: widget_chrome_default["widget-chrome-header-icon"],
         "aria-hidden": "true",
-        children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(Icon, { icon: plugins_default })
+        children: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(Icon, { icon: plugins_default })
       }
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(card_exports.Content, { className: widget_chrome_default["widget-chrome-content"], children: /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(card_exports.Content, { className: widget_chrome_default["widget-chrome-content"], children: /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)(
       Stack,
       {
         direction: "column",
@@ -46022,8 +46025,8 @@ function UnavailableWidget({ widgetTypeName }) {
         gap: "md",
         className: widget_chrome_default.unavailable,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(Text, { children: (0, import_i18n25.__)("Widget is no longer available.") }),
-          /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(Text, { render: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)("code", {}), children: widgetTypeName })
+          /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(Text, { children: (0, import_i18n25.__)("Widget is no longer available.") }),
+          /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(Text, { render: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)("code", {}), children: widgetTypeName })
         ]
       }
     ) })
@@ -46044,10 +46047,10 @@ var WidgetChrome = (0, import_element163.forwardRef)(
     );
     if (!widgetType) {
       if (isResolvingWidgetTypes) {
-        return /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
           card_exports.Root,
           {
-            render: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)("section", {}),
+            render: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)("section", {}),
             ref,
             className: clsx_default(
               widget_chrome_default["widget-chrome"],
@@ -46055,38 +46058,38 @@ var WidgetChrome = (0, import_element163.forwardRef)(
             ),
             "aria-busy": "true",
             "aria-label": (0, import_i18n25.__)("Loading"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
               card_exports.Content,
               {
                 className: widget_chrome_default["widget-chrome-content"],
-                children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(LoadingOverlay, {})
+                children: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(LoadingOverlay, {})
               }
             )
           }
         ) });
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
         card_exports.Root,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)("section", {}),
+          render: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)("section", {}),
           ref,
           className: clsx_default(
             widget_chrome_default["widget-chrome"],
             className
           ),
           "aria-label": (0, import_i18n25.__)("Missing widget"),
-          children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(UnavailableWidget, { widgetTypeName: widget.type })
+          children: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(UnavailableWidget, { widgetTypeName: widget.type })
         }
       ) });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
       card_exports.Root,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)("section", {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)("section", {}),
         ref,
         className: clsx_default(widget_chrome_default["widget-chrome"], className),
         "aria-labelledby": widgetType.title ? titleId : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
           WidgetFrame,
           {
             widget,
@@ -46269,7 +46272,7 @@ var import_keycodes2 = __toESM(require_keycodes(), 1);
 // packages/dataviews/build-module/components/dataviews-selection-checkbox/index.mjs
 var import_components5 = __toESM(require_components(), 1);
 var import_i18n27 = __toESM(require_i18n(), 1);
-var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime236 = __toESM(require_jsx_runtime(), 1);
 var SELECTION_CHECKBOX_CLASS = "dataviews-selection-checkbox";
 function DataViewsSelectionCheckbox({
   selection,
@@ -46284,7 +46287,7 @@ function DataViewsSelectionCheckbox({
   const isInSelectionArray = selection.includes(id);
   const checked = !disabled2 && isInSelectionArray;
   const selectionLabel = titleField?.getValue?.({ item }) || (0, import_i18n27.__)("(no title)");
-  return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
     import_components5.CheckboxControl,
     {
       className: SELECTION_CHECKBOX_CLASS,
@@ -46388,7 +46391,7 @@ function kebabCase(str) {
 }
 
 // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
-var import_jsx_runtime236 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
 function ButtonTrigger({
   action,
   onClick,
@@ -46396,7 +46399,7 @@ function ButtonTrigger({
   variant
 }) {
   const label = typeof action.label === "string" ? action.label : action.label(items);
-  return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
     import_components6.Button,
     {
       disabled: !!action.disabled,
@@ -46414,7 +46417,7 @@ function MenuItemTrigger({
   items
 }) {
   const label = typeof action.label === "string" ? action.label : action.label(items);
-  return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(menu_exports.Item, { disabled: action.disabled, onClick, children: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(menu_exports.ItemLabel, { children: label }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(menu_exports.Item, { disabled: action.disabled, onClick, children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(menu_exports.ItemLabel, { children: label }) });
 }
 function ActionModal({
   action,
@@ -46423,7 +46426,7 @@ function ActionModal({
 }) {
   const label = typeof action.label === "string" ? action.label : action.label(items);
   const modalHeader = typeof action.modalHeader === "function" ? action.modalHeader(items) : action.modalHeader;
-  return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
     import_components6.Modal,
     {
       title: modalHeader || label,
@@ -46434,7 +46437,7 @@ function ActionModal({
       overlayClassName: `dataviews-action-modal dataviews-action-modal__${kebabCase(
         action.id
       )}`,
-      children: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(action.RenderModal, { items, closeModal })
+      children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(action.RenderModal, { items, closeModal })
     }
   );
 }
@@ -46456,7 +46459,7 @@ function ActionsMenuGroup({
       }
     );
   }, [actions]);
-  const renderActionGroup = (actionList) => actionList.map((action) => /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+  const renderActionGroup = (actionList) => actionList.map((action) => /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
     MenuItemTrigger,
     {
       action,
@@ -46471,7 +46474,7 @@ function ActionsMenuGroup({
     },
     action.id
   ));
-  return /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(menu_exports.Group, { children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)(menu_exports.Group, { children: [
     renderActionGroup(primaryActions),
     renderActionGroup(regularActions)
   ] });
@@ -46496,7 +46499,7 @@ function ItemActions({
   }, [actions, item]);
   const isMobileViewport = (0, import_compose19.useViewportMatch)("medium", "<");
   if (isCompact) {
-    return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
       CompactItemActions,
       {
         item,
@@ -46506,7 +46509,7 @@ function ItemActions({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)(
     Stack,
     {
       direction: "row",
@@ -46517,7 +46520,7 @@ function ItemActions({
         width: "auto"
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
           PrimaryActions,
           {
             item,
@@ -46527,7 +46530,7 @@ function ItemActions({
         ),
         (primaryActions.length < eligibleActions.length || // Since we hide primary actions on mobile, we need to show the menu
         // there if there are any actions at all.
-        isMobileViewport) && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+        isMobileViewport) && /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
           CompactItemActions,
           {
             item,
@@ -46548,12 +46551,12 @@ function CompactItemActions({
   const [activeModalAction, setActiveModalAction] = (0, import_element165.useState)(
     null
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(import_jsx_runtime236.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(menu_exports.Root, { disabled: !actions.length, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)(import_jsx_runtime237.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)(menu_exports.Root, { disabled: !actions.length, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
         menu_exports.Trigger,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
             import_components6.Button,
             {
               size: isSmall ? "small" : "compact",
@@ -46566,7 +46569,7 @@ function CompactItemActions({
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(menu_exports.Popup, { positioner: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(menu_exports.Positioner, { align: "end" }), children: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(menu_exports.Popup, { positioner: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(menu_exports.Positioner, { align: "end" }), children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
         ActionsMenuGroup,
         {
           actions,
@@ -46576,7 +46579,7 @@ function CompactItemActions({
         }
       ) })
     ] }),
-    !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+    !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
       ActionModal,
       {
         action: activeModalAction,
@@ -46600,8 +46603,8 @@ function PrimaryActions({
   if (!Array.isArray(actions) || actions.length === 0) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(import_jsx_runtime236.Fragment, { children: [
-    actions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)(import_jsx_runtime237.Fragment, { children: [
+    actions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
       ButtonTrigger,
       {
         action,
@@ -46617,7 +46620,7 @@ function PrimaryActions({
       },
       action.id
     )),
-    !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+    !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
       ActionModal,
       {
         action: activeModalAction,
@@ -46661,7 +46664,7 @@ function getFooterMessage(selectionCount, itemsCount, totalItems, onlyTotalCount
 }
 
 // packages/dataviews/build-module/components/dataviews-bulk-actions/index.mjs
-var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
 function hasAPossibleBulkAction(actions, item) {
   return actions.some(
     (action) => action.supportsBulk && (!action.isEligible || action.isEligible(item))
@@ -46700,7 +46703,7 @@ function BulkSelectionCheckbox({
   const hasSelection = selection.length > 0;
   const areAllSelected = selectedItems.length === selectableItems.length;
   if (disableSelectAll) {
-    return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
       import_components7.CheckboxControl,
       {
         className: "dataviews-view-table-selection-checkbox",
@@ -46713,7 +46716,7 @@ function BulkSelectionCheckbox({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
     import_components7.CheckboxControl,
     {
       className: "dataviews-view-table-selection-checkbox",
@@ -46751,10 +46754,10 @@ function getHideableFields(view, fields2) {
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
-var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
 function WithMenuSeparators({ children }) {
-  return import_element167.Children.toArray(children).filter(Boolean).map((child, i2) => /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(import_element167.Fragment, { children: [
-    i2 > 0 && /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.Separator, {}),
+  return import_element167.Children.toArray(children).filter(Boolean).map((child, i2) => /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(import_element167.Fragment, { children: [
+    i2 > 0 && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.Separator, {}),
     child
   ] }, i2));
 }
@@ -46794,11 +46797,11 @@ var _HeaderMenu = (0, import_element167.forwardRef)(function HeaderMenu({
   );
   const canInsert = (canInsertLeft || canInsertRight) && !!hiddenFields.length;
   const isRtl = (0, import_i18n31.isRTL)();
-  return /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(menu_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(menu_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(
       menu_exports.Trigger,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
           import_components8.Button,
           {
             size: "compact",
@@ -46809,12 +46812,12 @@ var _HeaderMenu = (0, import_element167.forwardRef)(function HeaderMenu({
         ),
         children: [
           header,
-          view.sort && isSorted && /* @__PURE__ */ (0, import_jsx_runtime238.jsx)("span", { "aria-hidden": "true", children: sortArrows[view.sort.direction] })
+          view.sort && isSorted && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)("span", { "aria-hidden": "true", children: sortArrows[view.sort.direction] })
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.Popup, { style: { minWidth: "240px" }, children: /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(WithMenuSeparators, { children: [
-      isSortable && /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.Popup, { style: { minWidth: "240px" }, children: /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(WithMenuSeparators, { children: [
+      isSortable && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
         menu_exports.RadioGroup,
         {
           value: isSorted && view.sort ? view.sort.direction : null,
@@ -46829,21 +46832,21 @@ var _HeaderMenu = (0, import_element167.forwardRef)(function HeaderMenu({
             });
           },
           children: SORTING_DIRECTIONS.map(
-            (direction) => /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+            (direction) => /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
               menu_exports.RadioItem,
               {
                 value: direction,
-                children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.ItemLabel, { children: sortLabels[direction] })
+                children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.ItemLabel, { children: sortLabels[direction] })
               },
               direction
             )
           )
         }
       ),
-      canAddFilter && /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.Group, { children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+      canAddFilter && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.Group, { children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
         menu_exports.Item,
         {
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(Icon, { icon: funnel_default }),
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(Icon, { icon: funnel_default }),
           onClick: () => {
             setOpenedFilter(fieldId);
             setIsShowingFilter(true);
@@ -46860,14 +46863,14 @@ var _HeaderMenu = (0, import_element167.forwardRef)(function HeaderMenu({
               ]
             });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n31.__)("Add filter") })
+          children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n31.__)("Add filter") })
         }
       ) }),
-      (canMove || isHidable || canInsert) && field && /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(menu_exports.Group, { children: [
-        canMove && /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+      (canMove || isHidable || canInsert) && field && /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(menu_exports.Group, { children: [
+        canMove && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
           menu_exports.Item,
           {
-            prefix: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(Icon, { icon: arrow_left_default }),
+            prefix: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(Icon, { icon: arrow_left_default }),
             disabled: isRtl ? index2 >= visibleFieldIds.length - 1 : index2 < 1,
             onClick: () => {
               const targetIndex = isRtl ? index2 + 1 : index2 - 1;
@@ -46885,13 +46888,13 @@ var _HeaderMenu = (0, import_element167.forwardRef)(function HeaderMenu({
                 fields: newFields
               });
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n31.__)("Move left") })
+            children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n31.__)("Move left") })
           }
         ),
-        canMove && /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+        canMove && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
           menu_exports.Item,
           {
-            prefix: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(Icon, { icon: arrow_right_default }),
+            prefix: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(Icon, { icon: arrow_right_default }),
             disabled: isRtl ? index2 < 1 : index2 >= visibleFieldIds.length - 1,
             onClick: () => {
               const targetIndex = isRtl ? index2 - 1 : index2 + 1;
@@ -46909,14 +46912,14 @@ var _HeaderMenu = (0, import_element167.forwardRef)(function HeaderMenu({
                 fields: newFields
               });
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n31.__)("Move right") })
+            children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n31.__)("Move right") })
           }
         ),
-        canInsertLeft && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(menu_exports.SubmenuRoot, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.SubmenuTrigger, { children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n31.__)("Insert left") }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.Popup, { children: hiddenFields.map((hiddenField) => {
+        canInsertLeft && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(menu_exports.SubmenuRoot, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.SubmenuTrigger, { children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n31.__)("Insert left") }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.Popup, { children: hiddenFields.map((hiddenField) => {
             const insertIndex = isRtl ? index2 + 1 : index2;
-            return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
               menu_exports.Item,
               {
                 onClick: () => {
@@ -46934,17 +46937,17 @@ var _HeaderMenu = (0, import_element167.forwardRef)(function HeaderMenu({
                     ]
                   });
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.ItemLabel, { children: hiddenField.label })
+                children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.ItemLabel, { children: hiddenField.label })
               },
               hiddenField.id
             );
           }) })
         ] }),
-        canInsertRight && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(menu_exports.SubmenuRoot, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.SubmenuTrigger, { children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n31.__)("Insert right") }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.Popup, { children: hiddenFields.map((hiddenField) => {
+        canInsertRight && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime239.jsxs)(menu_exports.SubmenuRoot, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.SubmenuTrigger, { children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n31.__)("Insert right") }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.Popup, { children: hiddenFields.map((hiddenField) => {
             const insertIndex = isRtl ? index2 : index2 + 1;
-            return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
               menu_exports.Item,
               {
                 onClick: () => {
@@ -46962,16 +46965,16 @@ var _HeaderMenu = (0, import_element167.forwardRef)(function HeaderMenu({
                     ]
                   });
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.ItemLabel, { children: hiddenField.label })
+                children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.ItemLabel, { children: hiddenField.label })
               },
               hiddenField.id
             );
           }) })
         ] }),
-        isHidable && field && /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
+        isHidable && field && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
           menu_exports.Item,
           {
-            prefix: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(Icon, { icon: unseen_default }),
+            prefix: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(Icon, { icon: unseen_default }),
             onClick: () => {
               onHide(field);
               onChangeView({
@@ -46981,7 +46984,7 @@ var _HeaderMenu = (0, import_element167.forwardRef)(function HeaderMenu({
                 )
               });
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n31.__)("Hide column") })
+            children: /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n31.__)("Hide column") })
           }
         )
       ] })
@@ -46993,7 +46996,7 @@ var column_header_menu_default = ColumnHeaderMenu;
 
 // packages/dataviews/build-module/components/dataviews-layouts/utils/item-click-wrapper.mjs
 var import_element168 = __toESM(require_element(), 1);
-var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime240 = __toESM(require_jsx_runtime(), 1);
 function getClickableItemProps({
   item,
   isItemClickable: isItemClickable2,
@@ -47029,7 +47032,7 @@ function ItemClickWrapper({
   ...extraProps
 }) {
   if (!isItemClickable2(item)) {
-    return /* @__PURE__ */ (0, import_jsx_runtime239.jsx)("div", { className, ...extraProps, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("div", { className, ...extraProps, children });
   }
   if (renderItemLink) {
     const renderedElement = renderItemLink({
@@ -47061,11 +47064,11 @@ function ItemClickWrapper({
     onClickItem,
     className
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime239.jsx)("div", { ...clickProps, ...extraProps, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)("div", { ...clickProps, ...extraProps, children });
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/table/column-primary.mjs
-var import_jsx_runtime240 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
 function ColumnPrimary({
   item,
   level,
@@ -47085,8 +47088,8 @@ function ColumnPrimary({
       Math.round(32 * ratioWidth / ratioHeight)
     )}px`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(Stack, { direction: "row", gap: "md", align: "flex-start", justify: "flex-start", children: [
-    mediaField && /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(Stack, { direction: "row", gap: "md", align: "flex-start", justify: "flex-start", children: [
+    mediaField && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
       ItemClickWrapper,
       {
         item,
@@ -47095,7 +47098,7 @@ function ColumnPrimary({
         renderItemLink,
         className: "dataviews-view-table__cell-content-wrapper dataviews-column-primary__media",
         "aria-label": isItemClickable2(item) && (!!onClickItem || !!renderItemLink) && !!titleField ? titleField.getValue?.({ item }) : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
           mediaField.render,
           {
             item,
@@ -47105,14 +47108,14 @@ function ColumnPrimary({
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(
       Stack,
       {
         direction: "column",
         align: "flex-start",
         className: "dataviews-view-table__primary-column-content",
         children: [
-          titleField && /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)(
+          titleField && /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(
             ItemClickWrapper,
             {
               item,
@@ -47121,15 +47124,15 @@ function ColumnPrimary({
               renderItemLink,
               className: "dataviews-view-table__cell-content-wrapper dataviews-title-field",
               children: [
-                level !== void 0 && level > 0 && /* @__PURE__ */ (0, import_jsx_runtime240.jsxs)("span", { className: "dataviews-view-table__level", children: [
+                level !== void 0 && level > 0 && /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)("span", { className: "dataviews-view-table__level", children: [
                   Array(level).fill("\u2014").join(" "),
                   "\xA0"
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(titleField.render, { item, field: titleField })
+                /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(titleField.render, { item, field: titleField })
               ]
             }
           ),
-          descriptionField && /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(
+          descriptionField && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
             descriptionField.render,
             {
               item,
@@ -47372,15 +47375,15 @@ function useSelectionProps({
 var import_components9 = __toESM(require_components(), 1);
 var import_i18n33 = __toESM(require_i18n(), 1);
 var import_element171 = __toESM(require_element(), 1);
-var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
 function FieldItem3({
   field,
   isVisible: isVisible2,
   onToggleVisibility
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(import_components9.__experimentalItem, { onClick: field.enableHiding ? onToggleVisibility : void 0, children: /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(Stack, { direction: "row", gap: "sm", justify: "flex-start", align: "center", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime241.jsx)("div", { style: { height: 24, width: 24 }, children: isVisible2 && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(import_components9.Icon, { icon: check_default }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime241.jsx)("span", { className: "dataviews-view-config__label", children: field.label })
+  return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components9.__experimentalItem, { onClick: field.enableHiding ? onToggleVisibility : void 0, children: /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)(Stack, { direction: "row", gap: "sm", justify: "flex-start", align: "center", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("div", { style: { height: 24, width: 24 }, children: isVisible2 && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components9.Icon, { icon: check_default }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("span", { className: "dataviews-view-config__label", children: field.label })
   ] }) });
 }
 function isDefined(item) {
@@ -47422,18 +47425,18 @@ function PropertiesSection({
   );
   const totalVisibleFields = visibleLockedFields.length + visibleRegularFieldsCount;
   const isSingleVisibleLockedField = totalVisibleFields === 1 && visibleLockedFields.length === 1;
-  return /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(Stack, { direction: "column", className: "dataviews-field-control", children: [
-    showLabel && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(import_components9.BaseControl.VisualLabel, { children: (0, import_i18n33.__)("Properties") }),
-    /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)(Stack, { direction: "column", className: "dataviews-field-control", children: [
+    showLabel && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components9.BaseControl.VisualLabel, { children: (0, import_i18n33.__)("Properties") }),
+    /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
       Stack,
       {
         direction: "column",
         className: "dataviews-view-config__properties",
-        children: /* @__PURE__ */ (0, import_jsx_runtime241.jsxs)(import_components9.__experimentalItemGroup, { isBordered: true, isSeparated: true, size: "medium", children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)(import_components9.__experimentalItemGroup, { isBordered: true, isSeparated: true, size: "medium", children: [
           lockedFields.map(({ field, isVisibleFlag }) => {
             const isVisible2 = view[isVisibleFlag] ?? true;
             const fieldToRender = isSingleVisibleLockedField && isVisible2 ? { ...field, enableHiding: false } : field;
-            return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
               FieldItem3,
               {
                 field: fieldToRender,
@@ -47451,7 +47454,7 @@ function PropertiesSection({
           regularFields.map((field) => {
             const isVisible2 = visibleFieldIds.includes(field.id);
             const fieldToRender = totalVisibleFields === 1 && isVisible2 ? { ...field, enableHiding: false } : field;
-            return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
               FieldItem3,
               {
                 field: fieldToRender,
@@ -47494,7 +47497,7 @@ function useDelayedLoading(isLoading, options = { delay: 400 }) {
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/table/index.mjs
-var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime243 = __toESM(require_jsx_runtime(), 1);
 function getEffectiveAlign(explicitAlign, fieldType) {
   if (explicitAlign) {
     return explicitAlign;
@@ -47518,7 +47521,7 @@ function TableColumnField({
     "dataviews-view-table__cell-align-end": align === "end",
     "dataviews-view-table__cell-align-center": align === "center"
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("div", { className, children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(field.render, { item, field }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className, children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(field.render, { item, field }) });
 }
 function TableRow({
   hasBulkActions,
@@ -47554,7 +47557,7 @@ function TableRow({
   } = view;
   const columns = view.fields ?? [];
   const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
-  return /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)(
     "tr",
     {
       className: clsx_default("dataviews-view-table__row", {
@@ -47573,7 +47576,7 @@ function TableRow({
         onMouseDown(event);
       },
       children: [
-        hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("td", { className: "dataviews-view-table__checkbox-column", children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("div", { className: "dataviews-view-table__cell-content-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+        hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("td", { className: "dataviews-view-table__checkbox-column", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "dataviews-view-table__cell-content-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
           DataViewsSelectionCheckbox,
           {
             item,
@@ -47584,7 +47587,7 @@ function TableRow({
             disabled: !hasPossibleBulkAction
           }
         ) }) }),
-        hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+        hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
           column_primary_default,
           {
             item,
@@ -47602,7 +47605,7 @@ function TableRow({
           const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
           const field = fields2.find((f2) => f2.id === column);
           const effectiveAlign = getEffectiveAlign(align, field?.type);
-          return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
             "td",
             {
               style: {
@@ -47610,7 +47613,7 @@ function TableRow({
                 maxWidth,
                 minWidth
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
                 TableColumnField,
                 {
                   fields: fields2,
@@ -47628,7 +47631,7 @@ function TableRow({
         // table row. This allows us to add a click handler to the row
         // itself (to toggle row selection) without erroneously
         // intercepting click events from ItemActions.
-        /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
           "td",
           {
             className: clsx_default("dataviews-view-table__actions-column", {
@@ -47636,7 +47639,7 @@ function TableRow({
               "dataviews-view-table__actions-column--stuck": isActionsColumnSticky
             }),
             onClick: (e2) => e2.stopPropagation(),
-            children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(ItemActions, { item, actions })
+            children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(ItemActions, { item, actions })
           }
         )
       ]
@@ -47747,7 +47750,7 @@ function ViewTable({
     "--wp-dataviews-media-aspect-ratio": mediaAspectRatio ?? "1/1"
   };
   if (!hasData) {
-    return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
       "div",
       {
         className: clsx_default("dataviews-no-results", {
@@ -47758,8 +47761,8 @@ function ViewTable({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)(import_jsx_runtime242.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)(import_jsx_runtime243.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)(
       "table",
       {
         className: clsx_default("dataviews-view-table", className, {
@@ -47776,10 +47779,10 @@ function ViewTable({
         role: isInfiniteScroll ? "feed" : void 0,
         inert: !isInfiniteScroll && isLoading ? "true" : void 0,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)("colgroup", { children: [
-            hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("col", { className: "dataviews-view-table__col-checkbox" }),
-            hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("col", { className: "dataviews-view-table__col-first-data" }),
-            columns.map((column, index2) => /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("colgroup", { children: [
+            hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("col", { className: "dataviews-view-table__col-checkbox" }),
+            hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("col", { className: "dataviews-view-table__col-first-data" }),
+            columns.map((column, index2) => /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
               "col",
               {
                 className: clsx_default(
@@ -47791,32 +47794,32 @@ function ViewTable({
               },
               `col-${column}`
             )),
-            !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("col", { className: "dataviews-view-table__col-actions" })
+            !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("col", { className: "dataviews-view-table__col-actions" })
           ] }),
-          contextMenuAnchor && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+          contextMenuAnchor && /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
             import_components10.Popover,
             {
               anchor: contextMenuAnchor,
               onClose: () => setContextMenuAnchor(null),
               placement: "bottom-start",
-              children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(PropertiesSection, { showLabel: false })
+              children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(PropertiesSection, { showLabel: false })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
             "thead",
             {
               className: clsx_default({
                 "dataviews-view-table__thead--stuck": isVerticallyScrolled
               }),
               onContextMenu: handleHeaderContextMenu,
-              children: /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)("tr", { className: "dataviews-view-table__row", children: [
-                hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("tr", { className: "dataviews-view-table__row", children: [
+                hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
                   "th",
                   {
                     className: "dataviews-view-table__checkbox-column",
                     scope: "col",
                     onContextMenu: handleHeaderContextMenu,
-                    children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+                    children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
                       BulkSelectionCheckbox,
                       {
                         selection,
@@ -47828,7 +47831,7 @@ function ViewTable({
                     )
                   }
                 ),
-                hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("th", { scope: "col", children: titleField && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+                hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("th", { scope: "col", children: titleField && /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
                   column_header_menu_default,
                   {
                     ref: headerMenuRef(
@@ -47856,7 +47859,7 @@ function ViewTable({
                     field?.type
                   );
                   const canInsertOrMove = view.layout?.enableMoving ?? true;
-                  return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
                     "th",
                     {
                       style: {
@@ -47867,7 +47870,7 @@ function ViewTable({
                       },
                       "aria-sort": view.sort?.direction && view.sort?.field === column ? sortValues[view.sort.direction] : void 0,
                       scope: "col",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
                         column_header_menu_default,
                         {
                           ref: headerMenuRef(column, index2),
@@ -47886,7 +47889,7 @@ function ViewTable({
                     column
                   );
                 }),
-                !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+                !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
                   "th",
                   {
                     className: clsx_default(
@@ -47896,15 +47899,15 @@ function ViewTable({
                         "dataviews-view-table__actions-column--stuck": !isHorizontalScrollEnd
                       }
                     ),
-                    children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("span", { className: "dataviews-view-table-header", children: (0, import_i18n34.__)("Actions") })
+                    children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("span", { className: "dataviews-view-table-header", children: (0, import_i18n34.__)("Actions") })
                   }
                 )
               ] })
             }
           ),
           hasData && groupField && dataByGroup ? Array.from(dataByGroup.entries()).map(
-            ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime242.jsxs)("tbody", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("tr", { className: "dataviews-view-table__group-header-row", children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+            ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)("tbody", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("tr", { className: "dataviews-view-table__group-header-row", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
                 "td",
                 {
                   colSpan: columns.length + (hasPrimaryColumn ? 1 : 0) + (hasBulkActions ? 1 : 0) + (actions?.length ? 1 : 0),
@@ -47919,7 +47922,7 @@ function ViewTable({
               ) }),
               groupItems.map((item, index2) => {
                 const id = getItemId2(item) || index2.toString();
-                return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+                return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
                   TableRow,
                   {
                     item,
@@ -47946,9 +47949,9 @@ function ViewTable({
                 );
               })
             ] }, `group-${groupName}`)
-          ) : /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("tbody", { children: hasData && data.map((item, index2) => {
+          ) : /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("tbody", { children: hasData && data.map((item, index2) => {
             const id = getItemId2(item) || index2.toString();
-            return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
               TableRow,
               {
                 item,
@@ -47978,7 +47981,7 @@ function ViewTable({
         ]
       }
     ),
-    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("div", { className: "dataviews-loading", id: tableNoticeId, children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components10.Spinner, {}) }) })
+    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", { className: "dataviews-loading", id: tableNoticeId, children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(import_components10.Spinner, {}) }) })
   ] });
 }
 var table_default = ViewTable;
@@ -47997,7 +48000,7 @@ var import_element177 = __toESM(require_element(), 1);
 var import_components11 = __toESM(require_components(), 1);
 var import_i18n35 = __toESM(require_i18n(), 1);
 var import_element174 = __toESM(require_element(), 1);
-var import_jsx_runtime243 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime244 = __toESM(require_jsx_runtime(), 1);
 var imageSizes = [
   {
     value: 120,
@@ -48044,9 +48047,9 @@ function useGridColumns() {
 
 // packages/dataviews/build-module/components/dataviews-layouts/utils/grid-items.mjs
 var import_element175 = __toESM(require_element(), 1);
-var import_jsx_runtime244 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
 var GridItems = (0, import_element175.forwardRef)(({ className, previewSize, style, ...props }, ref) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
     "div",
     {
       ref,
@@ -48082,7 +48085,7 @@ function usePlaceholdersNeeded(data, isInfiniteScroll, gridColumns) {
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
-var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
 function chunk(array, size4) {
   const chunks = [];
   for (let i2 = 0, j2 = array.length; i2 < j2; i2 += size4) {
@@ -48134,9 +48137,9 @@ var GridItem = (0, import_element177.forwardRef)(
     useIntersectionObserver(elementRef, posinset);
     const instanceId = (0, import_compose21.useInstanceId)(GridItem2);
     const isSelected2 = selection.includes(id);
-    const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime245.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
+    const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime246.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
     const rendersMediaField = showMedia && mediaField?.render;
-    const renderedMediaField = rendersMediaField ? /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+    const renderedMediaField = rendersMediaField ? /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
       mediaField.render,
       {
         item,
@@ -48144,7 +48147,7 @@ var GridItem = (0, import_element177.forwardRef)(
         config
       }
     ) : mediaPlaceholder;
-    const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(titleField.render, { item, field: titleField }) : null;
+    const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(titleField.render, { item, field: titleField }) : null;
     let mediaA11yProps;
     let titleA11yProps;
     if (isItemClickable2(item) && onClickItem) {
@@ -48161,7 +48164,7 @@ var GridItem = (0, import_element177.forwardRef)(
         };
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(
       Stack,
       {
         direction: "column",
@@ -48178,7 +48181,7 @@ var GridItem = (0, import_element177.forwardRef)(
           }
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             ItemClickWrapper,
             {
               item,
@@ -48192,7 +48195,7 @@ var GridItem = (0, import_element177.forwardRef)(
               children: renderedMediaField
             }
           ),
-          hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+          hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             DataViewsSelectionCheckbox,
             {
               item,
@@ -48203,7 +48206,7 @@ var GridItem = (0, import_element177.forwardRef)(
               disabled: !hasBulkAction
             }
           ),
-          !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)("div", { className: "dataviews-view-grid__media-actions", children: /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+          !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)("div", { className: "dataviews-view-grid__media-actions", children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             ItemActions,
             {
               item,
@@ -48211,7 +48214,7 @@ var GridItem = (0, import_element177.forwardRef)(
               isCompact: true
             }
           ) }),
-          showTitle && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)("div", { className: "dataviews-view-grid__title-actions", children: /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+          showTitle && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)("div", { className: "dataviews-view-grid__title-actions", children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             ItemClickWrapper,
             {
               item,
@@ -48227,15 +48230,15 @@ var GridItem = (0, import_element177.forwardRef)(
               children: renderedTitleField
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(Stack, { direction: "column", gap: "xs", children: [
-            showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(Stack, { direction: "column", gap: "xs", children: [
+            showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
               descriptionField.render,
               {
                 item,
                 field: descriptionField
               }
             ),
-            !!badgeFields?.length && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+            !!badgeFields?.length && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
               Stack,
               {
                 direction: "row",
@@ -48247,11 +48250,11 @@ var GridItem = (0, import_element177.forwardRef)(
                 children: badgeFields.map((field) => {
                   return (
                     /* @ts-expect-error `Badge` is text-only, but a badge field renders whatever its `render` returns. */
-                    /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                       Badge,
                       {
                         className: "dataviews-view-grid__field-value",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+                        children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                           field.render,
                           {
                             item,
@@ -48265,14 +48268,14 @@ var GridItem = (0, import_element177.forwardRef)(
                 })
               }
             ),
-            !!regularFields?.length && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+            !!regularFields?.length && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
               Stack,
               {
                 direction: "column",
                 className: "dataviews-view-grid__fields",
                 gap: "xs",
                 children: regularFields.map((field) => {
-                  return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                     import_components12.Flex,
                     {
                       className: "dataviews-view-grid__field",
@@ -48281,22 +48284,22 @@ var GridItem = (0, import_element177.forwardRef)(
                       expanded: true,
                       style: { height: "auto" },
                       direction: "row",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(import_jsx_runtime245.Fragment, { children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(tooltip_exports.Root, { children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(import_jsx_runtime246.Fragment, { children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(tooltip_exports.Root, { children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                             tooltip_exports.Trigger,
                             {
-                              render: /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(import_components12.FlexItem, { className: "dataviews-view-grid__field-name", children: field.header })
+                              render: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(import_components12.FlexItem, { className: "dataviews-view-grid__field-name", children: field.header })
                             }
                           ),
-                          /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(tooltip_exports.Popup, { children: field.label })
+                          /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(tooltip_exports.Popup, { children: field.label })
                         ] }),
-                        /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+                        /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                           import_components12.FlexItem,
                           {
                             className: "dataviews-view-grid__field-value",
                             style: { maxHeight: "none" },
-                            children: /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+                            children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                               field.render,
                               {
                                 item,
@@ -48371,13 +48374,13 @@ function CompositeGrid({
     isInfiniteScroll,
     gridColumns
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(import_jsx_runtime245.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(import_jsx_runtime246.Fragment, {
     // Render infinite scroll layout (no rows, feed semantics)
     children: [
-      isInfiniteScroll && /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(
+      isInfiniteScroll && /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(
         import_components12.Composite,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             GridItems,
             {
               className: clsx_default(
@@ -48402,10 +48405,10 @@ function CompositeGrid({
           inert,
           children: [
             Array.from({ length: placeholdersNeeded }).map(
-              (_, index2) => /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+              (_, index2) => /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                 import_components12.Composite.Item,
                 {
-                  render: (props) => /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+                  render: (props) => /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                     Stack,
                     {
                       ...props,
@@ -48424,10 +48427,10 @@ function CompositeGrid({
               const itemId = getItemId2(item);
               const selectionProps = getSelectionProps(itemId);
               const stablePosition = item.position;
-              return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+              return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                 import_components12.Composite.Item,
                 {
-                  render: (props) => /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+                  render: (props) => /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                     GridItem,
                     {
                       ...props,
@@ -48475,7 +48478,7 @@ function CompositeGrid({
         }
       ),
       // Render standard grid layout (with rows, grid semantics)
-      !isInfiniteScroll && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+      !isInfiniteScroll && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
         import_components12.Composite,
         {
           role: "grid",
@@ -48491,10 +48494,10 @@ function CompositeGrid({
           "aria-rowcount": totalRows,
           ref: resizeObserverRef,
           inert,
-          children: chunk(data, gridColumns).map((row, i2) => /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+          children: chunk(data, gridColumns).map((row, i2) => /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
             import_components12.Composite.Row,
             {
-              render: /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+              render: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                 "div",
                 {
                   role: "row",
@@ -48513,10 +48516,10 @@ function CompositeGrid({
               children: row.map((item) => {
                 const itemId = getItemId2(item);
                 const selectionProps = getSelectionProps(itemId);
-                return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+                return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                   import_components12.Composite.Item,
                   {
-                    render: (props) => /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+                    render: (props) => /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
                       GridItem,
                       {
                         ...props,
@@ -48572,7 +48575,7 @@ function CompositeGrid({
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/index.mjs
-var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime247 = __toESM(require_jsx_runtime(), 1);
 function ViewGrid({
   actions,
   data,
@@ -48604,7 +48607,7 @@ function ViewGrid({
     shouldSelectOnClick: false
   });
   if (!hasData) {
-    return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
       "div",
       {
         className: clsx_default("dataviews-no-results", {
@@ -48631,23 +48634,23 @@ function ViewGrid({
     actions,
     getSelectionProps
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(import_jsx_runtime246.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(import_jsx_runtime247.Fragment, {
     // Render multiple groups.
     children: [
-      hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(Stack, { direction: "column", gap: "lg", children: Array.from(dataByGroup.entries()).map(
-        ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(
+      hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(Stack, { direction: "column", gap: "lg", children: Array.from(dataByGroup.entries()).map(
+        ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(
           Stack,
           {
             direction: "column",
             gap: "sm",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime246.jsx)("h3", { className: "dataviews-view-grid__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n37.sprintf)(
+              /* @__PURE__ */ (0, import_jsx_runtime247.jsx)("h3", { className: "dataviews-view-grid__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n37.sprintf)(
                 // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
                 (0, import_i18n37.__)("%1$s: %2$s"),
                 groupField.label,
                 groupName
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
                 CompositeGrid,
                 {
                   ...gridProps,
@@ -48661,7 +48664,7 @@ function ViewGrid({
         )
       ) }),
       // Render a single grid with all data.
-      !dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+      !dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
         CompositeGrid,
         {
           ...gridProps,
@@ -48669,7 +48672,7 @@ function ViewGrid({
           isInfiniteScroll: !!isInfiniteScroll
         }
       ),
-      isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(import_components13.Spinner, {}) })
+      isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime247.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components13.Spinner, {}) })
     ]
   });
 }
@@ -48681,7 +48684,7 @@ var import_components14 = __toESM(require_components(), 1);
 var import_element178 = __toESM(require_element(), 1);
 var import_i18n38 = __toESM(require_i18n(), 1);
 var import_data4 = __toESM(require_data(), 1);
-var import_jsx_runtime247 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
 function generateItemWrapperCompositeId(idPrefix) {
   return `${idPrefix}-item-wrapper`;
 }
@@ -48703,11 +48706,11 @@ function PrimaryActionGridCell({
     primaryAction.id
   );
   const label = typeof primaryAction.label === "string" ? primaryAction.label : primaryAction.label([item]);
-  return "RenderModal" in primaryAction ? /* @__PURE__ */ (0, import_jsx_runtime247.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+  return "RenderModal" in primaryAction ? /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
     import_components14.Composite.Item,
     {
       id: compositeItemId,
-      render: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+      render: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
         import_components14.Button,
         {
           disabled: !!primaryAction.disabled,
@@ -48717,7 +48720,7 @@ function PrimaryActionGridCell({
           onClick: () => setIsModalOpen(true)
         }
       ),
-      children: isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+      children: isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
         ActionModal,
         {
           action: primaryAction,
@@ -48726,11 +48729,11 @@ function PrimaryActionGridCell({
         }
       )
     }
-  ) }, primaryAction.id) : /* @__PURE__ */ (0, import_jsx_runtime247.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+  ) }, primaryAction.id) : /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
     import_components14.Composite.Item,
     {
       id: compositeItemId,
-      render: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+      render: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
         import_components14.Button,
         {
           disabled: !!primaryAction.disabled,
@@ -48800,7 +48803,7 @@ function ListItem({
     };
   }, [actions, item]);
   const hasOnlyOnePrimaryAction = primaryAction && actions.length === 1;
-  const renderedMediaField = showMedia && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime247.jsx)("div", { className: "dataviews-view-list__media-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+  const renderedMediaField = showMedia && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", { className: "dataviews-view-list__media-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
     mediaField.render,
     {
       item,
@@ -48808,17 +48811,17 @@ function ListItem({
       config: { sizes: "52px" }
     }
   ) }) : null;
-  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(titleField.render, { item, field: titleField }) : null;
+  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(titleField.render, { item, field: titleField }) : null;
   const renderDescription = showDescription && descriptionField?.render;
   const hasOnlyMediaAndTitle = !!renderedMediaField && !renderDescription && !otherFields.length;
-  const usedActions = eligibleActions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(
+  const usedActions = eligibleActions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)(
     Stack,
     {
       direction: "row",
       gap: "md",
       className: "dataviews-view-list__item-actions",
       children: [
-        primaryAction && /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+        primaryAction && /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
           PrimaryActionGridCell,
           {
             idPrefix,
@@ -48826,19 +48829,19 @@ function ListItem({
             item
           }
         ),
-        !hasOnlyOnePrimaryAction && /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)("div", { role: "gridcell", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(menu_exports.Root, { disabled: !actions.length, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+        !hasOnlyOnePrimaryAction && /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)("div", { role: "gridcell", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)(menu_exports.Root, { disabled: !actions.length, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
               menu_exports.Trigger,
               {
-                render: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+                render: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
                   import_components14.Composite.Item,
                   {
                     id: generateDropdownTriggerCompositeId(
                       idPrefix
                     ),
                     accessibleWhenDisabled: true,
-                    render: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+                    render: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
                       import_components14.Button,
                       {
                         size: "small",
@@ -48853,11 +48856,11 @@ function ListItem({
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
               menu_exports.Popup,
               {
-                positioner: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(menu_exports.Positioner, { align: "end" }),
-                children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+                positioner: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(menu_exports.Positioner, { align: "end" }),
+                children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
                   ActionsMenuGroup,
                   {
                     actions: eligibleActions,
@@ -48869,7 +48872,7 @@ function ListItem({
               }
             )
           ] }),
-          !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+          !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
             ActionModal,
             {
               action: activeModalAction,
@@ -48881,13 +48884,13 @@ function ListItem({
       ]
     }
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
     import_components14.Composite.Row,
     {
       ref: itemRef,
       render: (
         /* aria-posinset breaks Composite.Row if passed to it directly. */
-        /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
           "div",
           {
             "aria-posinset": posinset,
@@ -48902,13 +48905,13 @@ function ListItem({
       }),
       onMouseEnter: handleHover,
       onMouseLeave: handleHover,
-      children: /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)(
         Stack,
         {
           direction: "row",
           className: "dataviews-view-list__item-wrapper",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime247.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
               import_components14.Composite.Item,
               {
                 id: generateItemWrapperCompositeId(idPrefix),
@@ -48919,7 +48922,7 @@ function ListItem({
                 ...selectionProps
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -48929,15 +48932,15 @@ function ListItem({
                 style: { flex: 1, minWidth: 0 },
                 children: [
                   renderedMediaField,
-                  /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(
+                  /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)(
                     Stack,
                     {
                       direction: "column",
                       gap: "xs",
                       className: "dataviews-view-list__field-wrapper",
                       children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(Stack, { direction: "row", align: "center", children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+                        /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)(Stack, { direction: "row", align: "center", children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
                             "div",
                             {
                               className: "dataviews-title-field dataviews-view-list__title-field",
@@ -48947,32 +48950,32 @@ function ListItem({
                           ),
                           usedActions
                         ] }),
-                        renderDescription && /* @__PURE__ */ (0, import_jsx_runtime247.jsx)("div", { className: "dataviews-view-list__field", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+                        renderDescription && /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", { className: "dataviews-view-list__field", children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
                           descriptionField.render,
                           {
                             item,
                             field: descriptionField
                           }
                         ) }),
-                        /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+                        /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
                           "div",
                           {
                             className: "dataviews-view-list__fields",
                             id: descriptionId,
-                            children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(
+                            children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)(
                               "div",
                               {
                                 className: "dataviews-view-list__field",
                                 children: [
-                                  /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+                                  /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
                                     VisuallyHidden,
                                     {
                                       className: "dataviews-view-list__field-label",
-                                      render: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)("span", {}),
+                                      render: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("span", {}),
                                       children: field.label
                                     }
                                   ),
-                                  /* @__PURE__ */ (0, import_jsx_runtime247.jsx)("span", { className: "dataviews-view-list__field-value", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+                                  /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("span", { className: "dataviews-view-list__field-value", children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
                                     field.render,
                                     {
                                       item,
@@ -49126,13 +49129,13 @@ function ViewList(props) {
   const compositeProps = {
     ref: compositeRef,
     id: baseId,
-    render: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)("div", {}),
+    render: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", {}),
     activeId: activeCompositeId,
     setActiveId: setActiveCompositeId,
     inert: !isInfiniteScroll && !!isLoading ? "true" : void 0
   };
   if (!hasData) {
-    return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
       "div",
       {
         className: clsx_default("dataviews-no-results", {
@@ -49143,15 +49146,15 @@ function ViewList(props) {
     );
   }
   if (hasData && groupField && dataByGroup) {
-    return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
       import_components14.Composite,
       {
         ...compositeProps,
         className: "dataviews-view-list__group",
         role: "grid",
-        children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(Stack, { direction: "column", gap: "lg", className: listClassName, children: Array.from(dataByGroup.entries()).map(
-          ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(Stack, { direction: "column", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime247.jsx)("h3", { className: "dataviews-view-list__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n38.sprintf)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(Stack, { direction: "column", gap: "lg", className: listClassName, children: Array.from(dataByGroup.entries()).map(
+          ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)(Stack, { direction: "column", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("h3", { className: "dataviews-view-list__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n38.sprintf)(
               // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
               (0, import_i18n38.__)("%1$s: %2$s"),
               groupField.label,
@@ -49159,7 +49162,7 @@ function ViewList(props) {
             ) }),
             groupItems.map((item) => {
               const id = generateCompositeItemIdPrefix(item);
-              return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+              return /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
                 ListItem,
                 {
                   view,
@@ -49184,8 +49187,8 @@ function ViewList(props) {
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(import_jsx_runtime247.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)(import_jsx_runtime248.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
       import_components14.Composite,
       {
         ...compositeProps,
@@ -49193,7 +49196,7 @@ function ViewList(props) {
         role: view.infiniteScrollEnabled ? "feed" : "grid",
         children: data.map((item, index2) => {
           const id = generateCompositeItemIdPrefix(item);
-          return /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
             ListItem,
             {
               view,
@@ -49219,12 +49222,12 @@ function ViewList(props) {
     (hasMoreItems || isInfiniteScroll && isLoading) && // Keep the spinner's height reserved while loading more so the
     // scroll position doesn't bounce. Hidden, and silent to a11y,
     // while idle.
-    /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
       "p",
       {
         className: "dataviews-loading-more",
         "aria-hidden": !isLoading,
-        children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components14.Spinner, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(import_components14.Spinner, {})
       }
     )
   ] });
@@ -49236,7 +49239,7 @@ var import_components15 = __toESM(require_components(), 1);
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-group.mjs
 var import_i18n39 = __toESM(require_i18n(), 1);
 var import_element179 = __toESM(require_element(), 1);
-var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime249 = __toESM(require_jsx_runtime(), 1);
 function ActivityGroup({
   groupName,
   groupData,
@@ -49248,7 +49251,7 @@ function ActivityGroup({
     // translators: %s: The label of the field e.g. "Status".
     (0, import_i18n39.sprintf)((0, import_i18n39.__)("%s: <groupName />"), groupField.label).trim(),
     {
-      groupName: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
+      groupName: /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
         groupField.render,
         {
           item: groupData[0],
@@ -49256,14 +49259,14 @@ function ActivityGroup({
         }
       )
     }
-  ) : /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(groupField.render, { item: groupData[0], field: groupField });
-  return /* @__PURE__ */ (0, import_jsx_runtime248.jsxs)(
+  ) : /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(groupField.render, { item: groupData[0], field: groupField });
+  return /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)(
     Stack,
     {
       direction: "column",
       className: "dataviews-view-activity__group",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("h3", { className: "dataviews-view-activity__group-header", children: groupHeader }),
+        /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("h3", { className: "dataviews-view-activity__group-header", children: groupHeader }),
         children
       ]
     },
@@ -49275,7 +49278,7 @@ function ActivityGroup({
 var import_element180 = __toESM(require_element(), 1);
 var import_data5 = __toESM(require_data(), 1);
 var import_compose23 = __toESM(require_compose(), 1);
-var import_jsx_runtime249 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime250 = __toESM(require_jsx_runtime(), 1);
 function ActivityItem(props) {
   const {
     view,
@@ -49313,7 +49316,7 @@ function ActivityItem(props) {
   }, [actions, item]);
   const isMobileViewport = (0, import_compose23.useViewportMatch)("medium", "<");
   const density = view.layout?.density ?? "balanced";
-  const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
+  const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
     mediaField.render,
     {
       item,
@@ -49323,14 +49326,14 @@ function ActivityItem(props) {
       }
     }
   ) : null;
-  const renderedMediaField = /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("div", { className: "dataviews-view-activity__item-type-icon", children: mediaContent || /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
+  const renderedMediaField = /* @__PURE__ */ (0, import_jsx_runtime250.jsx)("div", { className: "dataviews-view-activity__item-type-icon", children: mediaContent || /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
     "span",
     {
       className: "dataviews-view-activity__item-bullet",
       "aria-hidden": "true"
     }
   ) });
-  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(titleField.render, { item, field: titleField }) : null;
+  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(titleField.render, { item, field: titleField }) : null;
   const verticalGap = (0, import_element180.useMemo)(() => {
     switch (density) {
       case "comfortable":
@@ -49339,7 +49342,7 @@ function ActivityItem(props) {
         return "sm";
     }
   }, [density]);
-  return /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
     "div",
     {
       ref: itemRef,
@@ -49352,8 +49355,8 @@ function ActivityItem(props) {
         density === "balanced" && "is-balanced",
         density === "comfortable" && "is-comfortable"
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)(Stack, { direction: "row", gap: "lg", justify: "start", align: "flex-start", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime250.jsxs)(Stack, { direction: "row", gap: "lg", justify: "start", align: "flex-start", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
           Stack,
           {
             direction: "column",
@@ -49363,7 +49366,7 @@ function ActivityItem(props) {
             children: renderedMediaField
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime250.jsxs)(
           Stack,
           {
             direction: "column",
@@ -49371,7 +49374,7 @@ function ActivityItem(props) {
             align: "flex-start",
             className: "dataviews-view-activity__item-content",
             children: [
-              renderedTitleField && /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
+              renderedTitleField && /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
                 ItemClickWrapper,
                 {
                   item,
@@ -49382,27 +49385,27 @@ function ActivityItem(props) {
                   children: renderedTitleField
                 }
               ),
-              showDescription && descriptionField && /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("div", { className: "dataviews-view-activity__item-description", children: /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
+              showDescription && descriptionField && /* @__PURE__ */ (0, import_jsx_runtime250.jsx)("div", { className: "dataviews-view-activity__item-description", children: /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
                 descriptionField.render,
                 {
                   item,
                   field: descriptionField
                 }
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("div", { className: "dataviews-view-activity__item-fields", children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime250.jsx)("div", { className: "dataviews-view-activity__item-fields", children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime250.jsxs)(
                 "div",
                 {
                   className: "dataviews-view-activity__item-field",
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
                       VisuallyHidden,
                       {
                         className: "dataviews-view-activity__item-field-label",
-                        render: /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("span", {}),
+                        render: /* @__PURE__ */ (0, import_jsx_runtime250.jsx)("span", {}),
                         children: field.label
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("span", { className: "dataviews-view-activity__item-field-value", children: /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime250.jsx)("span", { className: "dataviews-view-activity__item-field-value", children: /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
                       field.render,
                       {
                         item,
@@ -49413,7 +49416,7 @@ function ActivityItem(props) {
                 },
                 field.id
               )) }),
-              !!primaryActions?.length && /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
+              !!primaryActions?.length && /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
                 PrimaryActions,
                 {
                   item,
@@ -49428,7 +49431,7 @@ function ActivityItem(props) {
         (primaryActions.length < eligibleActions.length || // Since we hide primary actions on mobile, we need to show the menu
         // there if there are any actions at all.
         isMobileViewport && // At the same time, only show the menu if there are actions to show.
-        eligibleActions.length > 0) && /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("div", { className: "dataviews-view-activity__item-actions", children: /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
+        eligibleActions.length > 0) && /* @__PURE__ */ (0, import_jsx_runtime250.jsx)("div", { className: "dataviews-view-activity__item-actions", children: /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
           ItemActions,
           {
             item,
@@ -49443,7 +49446,7 @@ function ActivityItem(props) {
 var activity_item_default = ActivityItem;
 
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-items.mjs
-var import_react63 = __toESM(require_react(), 1);
+var import_react61 = __toESM(require_react(), 1);
 function isDefined3(item) {
   return !!item;
 }
@@ -49456,7 +49459,7 @@ function ActivityItems(props) {
   );
   const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f2) => fieldId === f2.id)).filter(isDefined3);
   return data.map((item, index2) => {
-    return /* @__PURE__ */ (0, import_react63.createElement)(
+    return /* @__PURE__ */ (0, import_react61.createElement)(
       activity_item_default,
       {
         ...props,
@@ -49473,7 +49476,7 @@ function ActivityItems(props) {
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/activity/index.mjs
-var import_jsx_runtime250 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime251 = __toESM(require_jsx_runtime(), 1);
 function ViewActivity(props) {
   const { empty, data, fields: fields2, isLoading, view, className } = props;
   const isDelayedLoading = useDelayedLoading(!!isLoading);
@@ -49482,7 +49485,7 @@ function ViewActivity(props) {
   const dataByGroup = hasData && groupField ? getDataByGroup(data, groupField) : null;
   const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   if (!hasData) {
-    return /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
       "div",
       {
         className: clsx_default("dataviews-no-results", {
@@ -49498,7 +49501,7 @@ function ViewActivity(props) {
   });
   const groupedEntries = dataByGroup ? Array.from(dataByGroup.entries()) : [];
   if (hasData && groupField && dataByGroup) {
-    return /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
       Stack,
       {
         direction: "column",
@@ -49506,14 +49509,14 @@ function ViewActivity(props) {
         className: wrapperClassName,
         inert: isInert2 ? "true" : void 0,
         children: groupedEntries.map(
-          ([groupName, groupData]) => /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
+          ([groupName, groupData]) => /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
             ActivityGroup,
             {
               groupName,
               groupData,
               groupField,
               showLabel: view.groupBy?.showLabel !== false,
-              children: /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
                 ActivityItems,
                 {
                   ...props,
@@ -49527,17 +49530,17 @@ function ViewActivity(props) {
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime250.jsxs)(import_jsx_runtime250.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime251.jsxs)(import_jsx_runtime251.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
       "div",
       {
         className: wrapperClassName,
         role: view.infiniteScrollEnabled ? "feed" : void 0,
         inert: isInert2 ? "true" : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(ActivityItems, { ...props })
+        children: /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(ActivityItems, { ...props })
       }
     ),
-    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime250.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(import_components15.Spinner, {}) })
+    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime251.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(import_components15.Spinner, {}) })
   ] });
 }
 
@@ -49557,7 +49560,7 @@ var import_i18n41 = __toESM(require_i18n(), 1);
 var import_components16 = __toESM(require_components(), 1);
 var import_element181 = __toESM(require_element(), 1);
 var import_i18n40 = __toESM(require_i18n(), 1);
-var import_jsx_runtime251 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime252 = __toESM(require_jsx_runtime(), 1);
 function hasPaginationControls(view, paginationInfo) {
   return !view.infiniteScrollEnabled && paginationInfo.totalItems > 0 && paginationInfo.totalPages > 1;
 }
@@ -49583,7 +49586,7 @@ function DataViewsPagination() {
       };
     }
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime251.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(
     Stack,
     {
       direction: "row",
@@ -49592,7 +49595,7 @@ function DataViewsPagination() {
       align: "center",
       gap: "xl",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
           Stack,
           {
             direction: "row",
@@ -49608,9 +49611,9 @@ function DataViewsPagination() {
                 totalPages
               ),
               {
-                div: /* @__PURE__ */ (0, import_jsx_runtime251.jsx)("div", { "aria-hidden": true }),
+                div: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("div", { "aria-hidden": true }),
                 // @ts-expect-error — Tag injected via sprintf argument, not visible in format string.
-                CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
+                CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
                   import_components16.SelectControl,
                   {
                     "aria-label": (0, import_i18n40.__)("Current page"),
@@ -49630,8 +49633,8 @@ function DataViewsPagination() {
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime251.jsxs)(Stack, { direction: "row", gap: "xs", align: "center", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(Stack, { direction: "row", gap: "xs", align: "center", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
             import_components16.Button,
             {
               onClick: () => onChangeView({
@@ -49647,7 +49650,7 @@ function DataViewsPagination() {
               tooltipPosition: "top"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
             import_components16.Button,
             {
               onClick: () => onChangeView({ ...view, page: currentPage + 1 }),
@@ -49668,7 +49671,7 @@ function DataViewsPagination() {
 var dataviews_pagination_default = (0, import_element181.memo)(DataViewsPagination);
 
 // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
-var import_jsx_runtime252 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime253 = __toESM(require_jsx_runtime(), 1);
 var EMPTY_ARRAY2 = [];
 function useIsMultiselectPicker(actions) {
   return (0, import_element182.useMemo)(() => {
@@ -49686,7 +49689,7 @@ function BulkSelectionCheckbox2({
   const hasSelection = selection.length > 0;
   const areAllSelected = selectedItems.length === data.length;
   if (disableSelectAll) {
-    return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
       import_components17.CheckboxControl,
       {
         className: "dataviews-view-table-selection-checkbox",
@@ -49699,7 +49702,7 @@ function BulkSelectionCheckbox2({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
     import_components17.CheckboxControl,
     {
       className: "dataviews-view-table-selection-checkbox",
@@ -49735,7 +49738,7 @@ function ActionButtons({
   const [actionInProgress, setActionInProgress] = (0, import_element182.useState)(
     null
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(Stack, { direction: "row", gap: "xs", children: actions.map((action) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(Stack, { direction: "row", gap: "xs", children: actions.map((action) => {
     if (!("callback" in action)) {
       return null;
     }
@@ -49743,7 +49746,7 @@ function ActionButtons({
     const _label = typeof label === "string" ? label : label(items);
     const variant = isPrimary ? "primary" : "tertiary";
     const isInProgress = id === actionInProgress;
-    return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
       import_components17.Button,
       {
         accessibleWhenDisabled: true,
@@ -49789,7 +49792,7 @@ function PickerBulkSelectionInfo() {
     paginationInfo.totalItems,
     !!view.infiniteScrollEnabled
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(
     Stack,
     {
       direction: "row",
@@ -49797,7 +49800,7 @@ function PickerBulkSelectionInfo() {
       gap: "md",
       align: "center",
       children: [
-        isMultiselect && /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+        isMultiselect && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
           BulkSelectionCheckbox2,
           {
             selection,
@@ -49808,7 +49811,7 @@ function PickerBulkSelectionInfo() {
             disableSelectAll: !!view.infiniteScrollEnabled
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("span", { className: "dataviews-bulk-actions-footer__item-count", children: message2 })
+        /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("span", { className: "dataviews-bulk-actions-footer__item-count", children: message2 })
       ]
     }
   );
@@ -49827,7 +49830,7 @@ function PickerActions() {
   if (!actions.length) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime252.jsx)("div", { className: "dataviews-picker-footer__actions", children: /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", { className: "dataviews-picker-footer__actions", children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
     ActionButtons,
     {
       actions,
@@ -49837,9 +49840,9 @@ function PickerActions() {
   ) });
 }
 function DataViewsPickerBulkActionToolbar() {
-  return /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(Stack, { direction: "row", gap: "md", align: "center", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(PickerBulkSelectionInfo, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(PickerActions, {})
+  return /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(Stack, { direction: "row", gap: "md", align: "center", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(PickerBulkSelectionInfo, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(PickerActions, {})
   ] });
 }
 function DataViewsPickerFooter() {
@@ -49852,7 +49855,7 @@ function DataViewsPickerFooter() {
   if (!actions.length && !hasPagination) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime252.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(
     Stack,
     {
       direction: "row",
@@ -49861,16 +49864,16 @@ function DataViewsPickerFooter() {
       className: "dataviews-footer",
       gap: "sm",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(PickerBulkSelectionInfo, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(dataviews_pagination_default, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime252.jsx)(PickerActions, {})
+        /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(PickerBulkSelectionInfo, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(dataviews_pagination_default, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(PickerActions, {})
       ]
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
-var import_jsx_runtime253 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
 function GridItem3({
   view,
   selection,
@@ -49892,7 +49895,7 @@ function GridItem3({
   const elementRef = (0, import_element183.useRef)(null);
   const isSelected2 = selection.includes(id);
   useIntersectionObserver(elementRef, posinset);
-  const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+  const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
     mediaField.render,
     {
       item,
@@ -49900,13 +49903,13 @@ function GridItem3({
       config
     }
   ) : null;
-  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(titleField.render, { item, field: titleField }) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(
+  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(titleField.render, { item, field: titleField }) : null;
+  return /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(
     import_components18.Composite.Item,
     {
       ref: elementRef,
       "aria-label": titleField ? titleField.getValue({ item }) || (0, import_i18n42.__)("(no title)") : void 0,
-      render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(Stack, { direction: "column", children, ...props }),
+      render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(Stack, { direction: "column", children, ...props }),
       role: "option",
       "aria-posinset": posinset,
       "aria-setsize": setsize,
@@ -49916,8 +49919,8 @@ function GridItem3({
       "aria-selected": isSelected2,
       ...selectionProps,
       children: [
-        showMedia && renderedMediaField && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", { className: "dataviews-view-picker-grid__media", children: renderedMediaField }),
-        showMedia && renderedMediaField && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+        showMedia && renderedMediaField && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", { className: "dataviews-view-picker-grid__media", children: renderedMediaField }),
+        showMedia && renderedMediaField && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
           DataViewsSelectionCheckbox,
           {
             item,
@@ -49930,24 +49933,24 @@ function GridItem3({
             tabIndex: -1
           }
         ),
-        showTitle && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+        showTitle && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
           Stack,
           {
             direction: "row",
             justify: "space-between",
             className: "dataviews-view-picker-grid__title-actions",
-            children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", { className: "dataviews-view-picker-grid__title-field dataviews-title-field", children: renderedTitleField })
+            children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", { className: "dataviews-view-picker-grid__title-field dataviews-title-field", children: renderedTitleField })
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(Stack, { direction: "column", gap: "xs", children: [
-          showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(Stack, { direction: "column", gap: "xs", children: [
+          showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
             descriptionField.render,
             {
               item,
               field: descriptionField
             }
           ),
-          !!badgeFields?.length && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+          !!badgeFields?.length && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
             Stack,
             {
               direction: "row",
@@ -49959,11 +49962,11 @@ function GridItem3({
               children: badgeFields.map((field) => {
                 return (
                   /* @ts-expect-error `Badge` is text-only, but a badge field renders whatever its `render` returns. */
-                  /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
                     Badge,
                     {
                       className: "dataviews-view-picker-grid__field-value",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
                         field.render,
                         {
                           item,
@@ -49977,14 +49980,14 @@ function GridItem3({
               })
             }
           ),
-          !!regularFields?.length && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+          !!regularFields?.length && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
             Stack,
             {
               direction: "column",
               className: "dataviews-view-picker-grid__fields",
               gap: "xs",
               children: regularFields.map((field) => {
-                return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+                return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
                   import_components18.Flex,
                   {
                     className: "dataviews-view-picker-grid__field",
@@ -49993,14 +49996,14 @@ function GridItem3({
                     expanded: true,
                     style: { height: "auto" },
                     direction: "row",
-                    children: /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(import_jsx_runtime253.Fragment, { children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(import_components18.FlexItem, { className: "dataviews-view-picker-grid__field-name", children: field.header }),
-                      /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+                    children: /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(import_jsx_runtime254.Fragment, { children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(import_components18.FlexItem, { className: "dataviews-view-picker-grid__field-name", children: field.header }),
+                      /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
                         import_components18.FlexItem,
                         {
                           className: "dataviews-view-picker-grid__field-value",
                           style: { maxHeight: "none" },
-                          children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+                          children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
                             field.render,
                             {
                               item,
@@ -50032,7 +50035,7 @@ function GridGroup({
     GridGroup,
     "dataviews-view-picker-grid-group__header"
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(
     Stack,
     {
       direction: "column",
@@ -50040,7 +50043,7 @@ function GridGroup({
       role: "group",
       "aria-labelledby": headerId,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
           "h3",
           {
             className: "dataviews-view-picker-grid-group__header",
@@ -50121,10 +50124,10 @@ function ViewPickerGrid({
     isInfiniteScroll,
     gridColumns
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(import_jsx_runtime253.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(import_jsx_runtime254.Fragment, {
     // Render multiple groups.
     children: [
-      hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+      hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
         import_components18.Composite,
         {
           virtualFocus: true,
@@ -50142,7 +50145,7 @@ function ViewPickerGrid({
             }
           ),
           "aria-label": itemListLabel,
-          render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+          render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
             Stack,
             {
               direction: "column",
@@ -50152,13 +50155,13 @@ function ViewPickerGrid({
             }
           ),
           children: Array.from(dataByGroup.entries()).map(
-            ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+            ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
               GridGroup,
               {
                 groupName,
                 groupField,
                 showLabel: view.groupBy?.showLabel !== false,
-                children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
                   GridItems,
                   {
                     previewSize: usedPreviewSize,
@@ -50166,7 +50169,7 @@ function ViewPickerGrid({
                     ref: resizeObserverRef,
                     children: groupItems.map((item) => {
                       const posInSet = item.position ?? (currentPage - 1) * perPage + data.indexOf(item) + 1;
-                      return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+                      return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
                         GridItem3,
                         {
                           view,
@@ -50200,10 +50203,10 @@ function ViewPickerGrid({
         }
       ),
       // Render a single grid with all data.
-      hasData && !dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)(
+      hasData && !dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(
         import_components18.Composite,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
             GridItems,
             {
               className: clsx_default(
@@ -50229,10 +50232,10 @@ function ViewPickerGrid({
           "aria-label": itemListLabel,
           children: [
             Array.from({ length: placeholdersNeeded }).map(
-              (_, index2) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+              (_, index2) => /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
                 import_components18.Composite.Item,
                 {
-                  render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+                  render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
                     Stack,
                     {
                       direction: "column",
@@ -50250,7 +50253,7 @@ function ViewPickerGrid({
             ),
             data.map((item) => {
               const posinset = item.position;
-              return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+              return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
                 GridItem3,
                 {
                   view,
@@ -50279,17 +50282,17 @@ function ViewPickerGrid({
         }
       ),
       // Render empty state.
-      !hasData && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+      !hasData && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
         "div",
         {
           className: clsx_default({
             "dataviews-loading": isLoading,
             "dataviews-no-results": !isLoading
           }),
-          children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(import_components18.Spinner, {}) }) : empty
+          children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(import_components18.Spinner, {}) }) : empty
         }
       ),
-      hasData && isLoading && /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(import_components18.Spinner, {}) })
+      hasData && isLoading && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(import_components18.Spinner, {}) })
     ]
   });
 }
@@ -50299,7 +50302,7 @@ var picker_grid_default = ViewPickerGrid;
 var import_i18n43 = __toESM(require_i18n(), 1);
 var import_components19 = __toESM(require_components(), 1);
 var import_element184 = __toESM(require_element(), 1);
-var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
 function TableColumnField2({
   item,
   fields: fields2,
@@ -50314,7 +50317,7 @@ function TableColumnField2({
     "dataviews-view-table__cell-align-end": align === "end",
     "dataviews-view-table__cell-align-center": align === "center"
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", { className, children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(field.render, { item, field }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", { className, children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(field.render, { item, field }) });
 }
 function TableRow2({
   item,
@@ -50349,11 +50352,11 @@ function TableRow2({
   };
   const columns = view.fields ?? [];
   const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
-  return /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(
     import_components19.Composite.Item,
     {
       ref: elementRef,
-      render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+      render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
         "tr",
         {
           className: clsx_default("dataviews-view-table__row", {
@@ -50382,12 +50385,12 @@ function TableRow2({
         selectionProps.onMouseDown(event);
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
           "td",
           {
             className: "dataviews-view-table__checkbox-column",
             role: "presentation",
-            children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", { className: "dataviews-view-table__cell-content-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", { className: "dataviews-view-table__cell-content-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
               DataViewsSelectionCheckbox,
               {
                 item,
@@ -50402,11 +50405,11 @@ function TableRow2({
             ) })
           }
         ),
-        hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+        hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
           "td",
           {
             role: "presentation",
-            children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
               column_primary_default,
               {
                 item,
@@ -50420,7 +50423,7 @@ function TableRow2({
         ),
         columns.map((column) => {
           const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
-          return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
             "td",
             {
               style: {
@@ -50429,7 +50432,7 @@ function TableRow2({
                 minWidth
               },
               role: "presentation",
-              children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
                 TableColumnField2,
                 {
                   fields: fields2,
@@ -50514,8 +50517,8 @@ function ViewPickerTable({
       headerMenuRefs.current.delete(column);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(import_jsx_runtime254.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(import_jsx_runtime255.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(
       "table",
       {
         className: clsx_default(
@@ -50532,13 +50535,13 @@ function ViewPickerTable({
         "aria-describedby": tableNoticeId,
         role: isInfiniteScroll ? "feed" : "listbox",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("thead", { role: "presentation", children: /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("thead", { role: "presentation", children: /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(
             "tr",
             {
               className: "dataviews-view-table__row",
               role: "presentation",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("th", { className: "dataviews-view-table__checkbox-column", children: isMultiselect && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("th", { className: "dataviews-view-table__checkbox-column", children: isMultiselect && /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
                   BulkSelectionCheckbox,
                   {
                     selection,
@@ -50549,7 +50552,7 @@ function ViewPickerTable({
                     disableSelectAll: isInfiniteScroll
                   }
                 ) }),
-                hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("th", { children: titleField && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+                hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("th", { children: titleField && /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
                   column_header_menu_default,
                   {
                     ref: headerMenuRef(
@@ -50567,7 +50570,7 @@ function ViewPickerTable({
                 ) }),
                 columns.map((column, index2) => {
                   const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
-                  return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
                     "th",
                     {
                       style: {
@@ -50578,7 +50581,7 @@ function ViewPickerTable({
                       },
                       "aria-sort": view.sort?.direction && view.sort?.field === column ? sortValues[view.sort.direction] : void 0,
                       scope: "col",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
                         column_header_menu_default,
                         {
                           ref: headerMenuRef(column, index2),
@@ -50599,19 +50602,19 @@ function ViewPickerTable({
             }
           ) }),
           hasData && groupField && dataByGroup ? Array.from(dataByGroup.entries()).map(
-            ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(
+            ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(
               import_components19.Composite,
               {
                 virtualFocus: true,
                 orientation: "vertical",
-                render: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("tbody", { role: "group" }),
+                render: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("tbody", { role: "group" }),
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
                     "tr",
                     {
                       className: "dataviews-view-table__group-header-row",
                       role: "presentation",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
                         "td",
                         {
                           colSpan: columns.length + (hasPrimaryColumn ? 1 : 0) + 1,
@@ -50629,7 +50632,7 @@ function ViewPickerTable({
                   ),
                   groupItems.map((item, index2) => {
                     const id = getItemId2(item) || index2.toString();
-                    return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+                    return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
                       TableRow2,
                       {
                         item,
@@ -50653,17 +50656,17 @@ function ViewPickerTable({
               },
               `group-${groupName}`
             )
-          ) : /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+          ) : /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
             import_components19.Composite,
             {
-              render: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("tbody", { role: "presentation" }),
+              render: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("tbody", { role: "presentation" }),
               virtualFocus: true,
               orientation: "vertical",
               children: hasData && data.map((item, index2) => {
                 const itemId = getItemId2(item);
                 const id = itemId || index2.toString();
                 const posinset = item.position;
-                return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(
+                return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
                   TableRow2,
                   {
                     item,
@@ -50689,7 +50692,7 @@ function ViewPickerTable({
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(
       "div",
       {
         className: clsx_default({
@@ -50698,8 +50701,8 @@ function ViewPickerTable({
         }),
         id: tableNoticeId,
         children: [
-          !hasData && (isLoading ? /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(import_components19.Spinner, {}) }) : empty),
-          hasData && isLoading && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(import_components19.Spinner, {}) })
+          !hasData && (isLoading ? /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(import_components19.Spinner, {}) }) : empty),
+          hasData && isLoading && /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(import_components19.Spinner, {}) })
         ]
       }
     )
@@ -50712,7 +50715,7 @@ var import_components20 = __toESM(require_components(), 1);
 var import_element185 = __toESM(require_element(), 1);
 var import_compose25 = __toESM(require_compose(), 1);
 var import_i18n44 = __toESM(require_i18n(), 1);
-var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
 function isDefined4(item) {
   return !!item;
 }
@@ -50735,7 +50738,7 @@ function PickerActivityItem({
   const id = getItemId2(item);
   const isSelected2 = selection.includes(id);
   const density = view.layout?.density ?? "balanced";
-  const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+  const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
     mediaField.render,
     {
       item,
@@ -50745,15 +50748,15 @@ function PickerActivityItem({
       }
     }
   ) : null;
-  const renderedMediaField = /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", { className: "dataviews-view-picker-activity__item-type-icon", children: mediaContent || /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+  const renderedMediaField = /* @__PURE__ */ (0, import_jsx_runtime256.jsx)("div", { className: "dataviews-view-picker-activity__item-type-icon", children: mediaContent || /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
     "span",
     {
       className: "dataviews-view-picker-activity__item-bullet",
       "aria-hidden": "true"
     }
   ) });
-  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(titleField.render, { item, field: titleField }) : null;
-  const renderedDescriptionField = showDescription && descriptionField?.render ? /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(descriptionField.render, { item, field: descriptionField }) : null;
+  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(titleField.render, { item, field: titleField }) : null;
+  const renderedDescriptionField = showDescription && descriptionField?.render ? /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(descriptionField.render, { item, field: descriptionField }) : null;
   const verticalGap = (0, import_element185.useMemo)(() => {
     switch (density) {
       case "comfortable":
@@ -50762,7 +50765,7 @@ function PickerActivityItem({
         return "sm";
     }
   }, [density]);
-  return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
     import_components20.Composite.Item,
     {
       ref: elementRef,
@@ -50779,9 +50782,9 @@ function PickerActivityItem({
         isSelected2 && "is-selected"
       ),
       ...selectionProps,
-      render: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", {}),
-      children: /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(Stack, { direction: "row", gap: "lg", justify: "start", align: "flex-start", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+      render: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)("div", {}),
+      children: /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(Stack, { direction: "row", gap: "lg", justify: "start", align: "flex-start", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
           Stack,
           {
             direction: "column",
@@ -50791,7 +50794,7 @@ function PickerActivityItem({
             children: renderedMediaField
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(
           Stack,
           {
             direction: "column",
@@ -50799,22 +50802,22 @@ function PickerActivityItem({
             align: "flex-start",
             className: "dataviews-view-picker-activity__item-content",
             children: [
-              renderedTitleField && /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", { className: "dataviews-view-picker-activity__item-title", children: renderedTitleField }),
-              renderedDescriptionField && /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", { className: "dataviews-view-picker-activity__item-description", children: renderedDescriptionField }),
-              /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", { className: "dataviews-view-picker-activity__item-fields", children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(
+              renderedTitleField && /* @__PURE__ */ (0, import_jsx_runtime256.jsx)("div", { className: "dataviews-view-picker-activity__item-title", children: renderedTitleField }),
+              renderedDescriptionField && /* @__PURE__ */ (0, import_jsx_runtime256.jsx)("div", { className: "dataviews-view-picker-activity__item-description", children: renderedDescriptionField }),
+              /* @__PURE__ */ (0, import_jsx_runtime256.jsx)("div", { className: "dataviews-view-picker-activity__item-fields", children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(
                 "div",
                 {
                   className: "dataviews-view-picker-activity__item-field",
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
                       VisuallyHidden,
                       {
-                        render: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("span", {}),
+                        render: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)("span", {}),
                         className: "dataviews-view-picker-activity__item-field-label",
                         children: field.label
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("span", { className: "dataviews-view-picker-activity__item-field-value", children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime256.jsx)("span", { className: "dataviews-view-picker-activity__item-field-value", children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
                       field.render,
                       {
                         item,
@@ -50842,7 +50845,7 @@ function PickerActivityGroup({
     PickerActivityGroup,
     "dataviews-view-picker-activity-group__header"
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(
     Stack,
     {
       direction: "column",
@@ -50850,7 +50853,7 @@ function PickerActivityGroup({
       "aria-labelledby": headerId,
       className: "dataviews-view-picker-activity-group",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
           "h3",
           {
             className: "dataviews-view-picker-activity-group__header",
@@ -50908,7 +50911,7 @@ function ViewPickerActivity({
     selectionMode: isMultiselect ? "multi" : "single-clearable",
     shouldSelectOnClick: true
   });
-  const renderItem = (item) => /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+  const renderItem = (item) => /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
     PickerActivityItem,
     {
       view,
@@ -50926,19 +50929,19 @@ function ViewPickerActivity({
     getItemId2(item)
   );
   if (!hasData) {
-    return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
       "div",
       {
         className: clsx_default({
           "dataviews-loading": isLoading,
           "dataviews-no-results": !isLoading
         }),
-        children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(import_components20.Spinner, {}) }) : empty
+        children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime256.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(import_components20.Spinner, {}) }) : empty
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime255.jsxs)(import_jsx_runtime255.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(import_jsx_runtime256.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
       import_components20.Composite,
       {
         virtualFocus: true,
@@ -50947,13 +50950,13 @@ function ViewPickerActivity({
         "aria-multiselectable": isMultiselect,
         "aria-label": itemListLabel,
         "aria-busy": isLoading,
-        render: isGrouped ? /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(Stack, { direction: "column", gap: "sm" }) : void 0,
+        render: isGrouped ? /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(Stack, { direction: "column", gap: "sm" }) : void 0,
         className: clsx_default(
           "dataviews-view-picker-activity",
           className
         ),
         children: isGrouped && dataByGroup ? Array.from(dataByGroup.entries()).map(
-          ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(
+          ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
             PickerActivityGroup,
             {
               groupName,
@@ -50966,7 +50969,7 @@ function ViewPickerActivity({
         ) : data.map(renderItem)
       }
     ),
-    isLoading && /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime255.jsx)(import_components20.Spinner, {}) })
+    isLoading && /* @__PURE__ */ (0, import_jsx_runtime256.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(import_components20.Spinner, {}) })
   ] });
 }
 
@@ -50974,11 +50977,11 @@ function ViewPickerActivity({
 var import_components21 = __toESM(require_components(), 1);
 var import_i18n45 = __toESM(require_i18n(), 1);
 var import_element186 = __toESM(require_element(), 1);
-var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
 function DensityPicker() {
   const context = (0, import_element186.useContext)(dataviews_context_default);
   const view = context.view;
-  return /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime257.jsxs)(
     import_components21.__experimentalToggleGroupControl,
     {
       label: (0, import_i18n45.__)("Density"),
@@ -50994,7 +50997,7 @@ function DensityPicker() {
       },
       isBlock: true,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(
           import_components21.__experimentalToggleGroupControlOption,
           {
             value: "comfortable",
@@ -51005,7 +51008,7 @@ function DensityPicker() {
           },
           "comfortable"
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(
           import_components21.__experimentalToggleGroupControlOption,
           {
             value: "balanced",
@@ -51013,7 +51016,7 @@ function DensityPicker() {
           },
           "balanced"
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(
           import_components21.__experimentalToggleGroupControlOption,
           {
             value: "compact",
@@ -51030,7 +51033,7 @@ function DensityPicker() {
 var import_components22 = __toESM(require_components(), 1);
 var import_i18n46 = __toESM(require_i18n(), 1);
 var import_element187 = __toESM(require_element(), 1);
-var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
 function MediaFitControl() {
   const context = (0, import_element187.useContext)(dataviews_context_default);
   const view = context.view;
@@ -51041,7 +51044,7 @@ function MediaFitControl() {
   if (!hasMediaField) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
     import_components22.ToggleControl,
     {
       label: (0, import_i18n46.__)("Original aspect ratio"),
@@ -51063,7 +51066,7 @@ function MediaFitControl() {
 var import_components23 = __toESM(require_components(), 1);
 var import_i18n47 = __toESM(require_i18n(), 1);
 var import_element188 = __toESM(require_element(), 1);
-var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
 var imageSizes2 = [
   {
     value: 120,
@@ -51106,7 +51109,7 @@ function PreviewSizePicker() {
       value: index2
     };
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
     import_components23.RangeControl,
     {
       showTooltip: false,
@@ -51131,12 +51134,12 @@ function PreviewSizePicker() {
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/utils/grid-config-options.mjs
-var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
 function GridConfigOptions() {
-  return /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(import_jsx_runtime259.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(DensityPicker, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(MediaFitControl, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(PreviewSizePicker, {})
+  return /* @__PURE__ */ (0, import_jsx_runtime260.jsxs)(import_jsx_runtime260.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(DensityPicker, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(MediaFitControl, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(PreviewSizePicker, {})
   ] });
 }
 
@@ -51215,8 +51218,8 @@ function withDefaultButtonType(props) {
 }
 
 // node_modules/@ariakit/react-components/dist/focusable/focusable-context.js
-var import_react64 = __toESM(require_react(), 1);
-var FocusableContext = (0, import_react64.createContext)(true);
+var import_react62 = __toESM(require_react(), 1);
+var FocusableContext = (0, import_react62.createContext)(true);
 
 // node_modules/@ariakit/utils/dist/index.js
 function toArray(arg) {
@@ -51665,8 +51668,8 @@ function createUndoManager({ limit = 100 } = {}) {
 
 // node_modules/@ariakit/react-utils/dist/index.js
 var React231 = __toESM(require_react(), 1);
-var import_react65 = __toESM(require_react(), 1);
-var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
+var import_react63 = __toESM(require_react(), 1);
+var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
 function setRef(ref, value) {
   if (typeof ref === "function") {
     const cleanup = ref(value);
@@ -51675,7 +51678,7 @@ function setRef(ref, value) {
 }
 function isValidElementWithRef(element) {
   if (!element) return false;
-  if (!(0, import_react65.isValidElement)(element)) return false;
+  if (!(0, import_react63.isValidElement)(element)) return false;
   if ("ref" in element.props) return true;
   if ("ref" in element) return true;
   return false;
@@ -51726,30 +51729,30 @@ var _React = { ...React231 };
 var useReactId = _React.useId;
 var useReactDeferredValue = _React.useDeferredValue;
 var useReactInsertionEffect = _React.useInsertionEffect;
-var useSafeLayoutEffect = canUseDOM ? import_react65.useLayoutEffect : import_react65.useEffect;
+var useSafeLayoutEffect = canUseDOM ? import_react63.useLayoutEffect : import_react63.useEffect;
 function useInitialValue(value) {
-  const [initialValue] = (0, import_react65.useState)(value);
+  const [initialValue] = (0, import_react63.useState)(value);
   return initialValue;
 }
 function useLiveRef(value) {
-  const ref = (0, import_react65.useRef)(value);
+  const ref = (0, import_react63.useRef)(value);
   useSafeLayoutEffect(() => {
     ref.current = value;
   });
   return ref;
 }
 function useEvent2(callback) {
-  const ref = (0, import_react65.useRef)(() => {
+  const ref = (0, import_react63.useRef)(() => {
     throw new Error("Cannot call an event handler while rendering.");
   });
   if (useReactInsertionEffect) useReactInsertionEffect(() => {
     ref.current = callback;
   });
   else ref.current = callback;
-  return (0, import_react65.useCallback)((...args) => ref.current?.(...args), []);
+  return (0, import_react63.useCallback)((...args) => ref.current?.(...args), []);
 }
 function useTransactionState(callback) {
-  const [state, setState] = (0, import_react65.useState)(null);
+  const [state, setState] = (0, import_react63.useState)(null);
   useSafeLayoutEffect(() => {
     if (state == null) return;
     if (!callback) return;
@@ -51765,7 +51768,7 @@ function useTransactionState(callback) {
   return [state, setState];
 }
 function useMergeRefs14(...refs) {
-  return (0, import_react65.useMemo)(() => {
+  return (0, import_react63.useMemo)(() => {
     if (!refs.some(Boolean)) return;
     return (value) => {
       const refEffects = [];
@@ -51791,7 +51794,7 @@ function useId9(defaultId) {
     if (defaultId) return defaultId;
     return reactId;
   }
-  const [id, setId] = (0, import_react65.useState)(defaultId);
+  const [id, setId] = (0, import_react63.useState)(defaultId);
   useSafeLayoutEffect(() => {
     if (defaultId || id) return;
     const random = Math.random().toString(36).slice(2, 8);
@@ -51801,8 +51804,8 @@ function useId9(defaultId) {
 }
 function useAttribute(refOrElement, attributeName, defaultValue3) {
   const initialValue = useInitialValue(defaultValue3);
-  const [attribute, setAttribute] = (0, import_react65.useState)(initialValue);
-  (0, import_react65.useEffect)(() => {
+  const [attribute, setAttribute] = (0, import_react63.useState)(initialValue);
+  (0, import_react63.useEffect)(() => {
     const element = refOrElement && "current" in refOrElement ? refOrElement.current : refOrElement;
     if (!element) return;
     const callback = () => {
@@ -51821,17 +51824,17 @@ function useAttribute(refOrElement, attributeName, defaultValue3) {
   return attribute;
 }
 function useUpdateEffect(effect, deps) {
-  const mounted = (0, import_react65.useRef)(false);
-  (0, import_react65.useEffect)(() => {
+  const mounted = (0, import_react63.useRef)(false);
+  (0, import_react63.useEffect)(() => {
     if (mounted.current) return effect();
     mounted.current = true;
   }, deps);
-  (0, import_react65.useEffect)(() => () => {
+  (0, import_react63.useEffect)(() => () => {
     mounted.current = false;
   }, []);
 }
 function useUpdateLayoutEffect(effect, deps) {
-  const mounted = (0, import_react65.useRef)(false);
+  const mounted = (0, import_react63.useRef)(false);
   useSafeLayoutEffect(() => {
     if (mounted.current) return effect();
     mounted.current = true;
@@ -51841,13 +51844,13 @@ function useUpdateLayoutEffect(effect, deps) {
   }, []);
 }
 function useForceUpdate() {
-  return (0, import_react65.useReducer)(() => [], []);
+  return (0, import_react63.useReducer)(() => [], []);
 }
 function useBooleanEvent(booleanOrCallback) {
   return useEvent2(typeof booleanOrCallback === "function" ? booleanOrCallback : () => booleanOrCallback);
 }
 function useWrapElement(props, callback, deps = []) {
-  const wrapElement = (0, import_react65.useCallback)((element) => {
+  const wrapElement = (0, import_react63.useCallback)((element) => {
     if (props.wrapElement) element = props.wrapElement(element);
     return callback(element);
   }, [...deps, props.wrapElement]);
@@ -51858,7 +51861,7 @@ function useWrapElement(props, callback, deps = []) {
 }
 function useMetadataProps(props, key2, value) {
   const parent = props.onLoadedMetadataCapture;
-  const onLoadedMetadataCapture = (0, import_react65.useMemo)(() => {
+  const onLoadedMetadataCapture = (0, import_react63.useMemo)(() => {
     return Object.assign(() => {
     }, parent, ...value !== void 0 ? [{ [key2]: value }] : []);
   }, [
@@ -51870,7 +51873,7 @@ function useMetadataProps(props, key2, value) {
 }
 var hasInstalledGlobalEventListeners = false;
 function useIsMouseMoving() {
-  (0, import_react65.useEffect)(() => {
+  (0, import_react63.useEffect)(() => {
     if (hasInstalledGlobalEventListeners) return;
     addGlobalEventListener("mousemove", setMouseMoving, true);
     addGlobalEventListener("mousedown", resetMouseMoving, true);
@@ -51920,7 +51923,7 @@ function createElement3(Type, props) {
     };
     element = React231.cloneElement(render4, mergeProps2(rest, renderProps));
   } else if (render4) element = render4(rest);
-  else element = /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(Type, { ...rest });
+  else element = /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(Type, { ...rest });
   if (wrapElement) return wrapElement(element);
   return element;
 }
@@ -51948,18 +51951,18 @@ function createStoreContext(providers = [], scopedProviders = []) {
     return store;
   };
   const ContextProvider = (props) => {
-    return providers.reduceRight((children, Provider2) => /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(Provider2, {
+    return providers.reduceRight((children, Provider2) => /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(Provider2, {
       ...props,
       children
-    }), /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(context.Provider, { ...props }));
+    }), /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(context.Provider, { ...props }));
   };
   const ScopedContextProvider = (props) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(ContextProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(ContextProvider, {
       ...props,
-      children: scopedProviders.reduceRight((children, Provider2) => /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(Provider2, {
+      children: scopedProviders.reduceRight((children, Provider2) => /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(Provider2, {
         ...props,
         children
-      }), /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(scopedContext.Provider, { ...props }))
+      }), /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(scopedContext.Provider, { ...props }))
     });
   };
   return {
@@ -51974,7 +51977,7 @@ function createStoreContext(providers = [], scopedProviders = []) {
 }
 
 // node_modules/@ariakit/react-components/dist/__chunks/CKgCZrim.js
-var import_react66 = __toESM(require_react(), 1);
+var import_react64 = __toESM(require_react(), 1);
 function isCompositeMoveKey(key2) {
   return key2 === "ArrowUp" || key2 === "ArrowRight" || key2 === "ArrowDown" || key2 === "ArrowLeft" || key2 === "Home" || key2 === "End" || key2 === "PageUp" || key2 === "PageDown";
 }
@@ -52075,10 +52078,10 @@ function onGlobalKeyDown(event) {
   isKeyboardModality = true;
 }
 var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = true, accessibleWhenDisabled, autoFocus, onFocusVisible, ...props }) {
-  const ref = (0, import_react66.useRef)(null);
+  const ref = (0, import_react64.useRef)(null);
   const [parentAccessibleWhenDisabled, metadataProps] = useMetadataProps(props, accessibleWhenDisabledSymbol, accessibleWhenDisabled);
   accessibleWhenDisabled ??= parentAccessibleWhenDisabled;
-  (0, import_react66.useEffect)(() => {
+  (0, import_react64.useEffect)(() => {
     if (!focusable2) return;
     if (hasInstalledGlobalEventListeners2) return;
     addGlobalEventListener("mousedown", onGlobalMouseDown, true);
@@ -52087,16 +52090,16 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
   }, [focusable2]);
   const disabled2 = focusable2 && disabledFromProps(props);
   const trulyDisabled = disabled2 && !accessibleWhenDisabled;
-  const [focusVisible, setFocusVisible] = (0, import_react66.useState)(false);
-  const focusVisibleRef = (0, import_react66.useRef)(false);
-  const nativeSubmitObserverCleanupRef = (0, import_react66.useRef)(null);
+  const [focusVisible, setFocusVisible] = (0, import_react64.useState)(false);
+  const focusVisibleRef = (0, import_react64.useRef)(false);
+  const nativeSubmitObserverCleanupRef = (0, import_react64.useRef)(null);
   const cleanupFocusVisible = useEvent2((element) => {
     nativeSubmitObserverCleanupRef.current?.();
     nativeSubmitObserverCleanupRef.current = null;
     focusVisibleRef.current = false;
     element?.removeAttribute("data-focus-visible");
   });
-  (0, import_react66.useEffect)(() => {
+  (0, import_react64.useEffect)(() => {
     if (focusable2 && !trulyDisabled) return;
     cleanupFocusVisible(ref.current);
     if (focusVisible) setFocusVisible(false);
@@ -52106,7 +52109,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
     focusVisible,
     cleanupFocusVisible
   ]);
-  (0, import_react66.useEffect)(() => {
+  (0, import_react64.useEffect)(() => {
     if (!focusable2) return;
     if (!focusVisible) return;
     const element = ref.current;
@@ -52121,7 +52124,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
     observer.observe(element);
     return () => observer.disconnect();
   }, [focusable2, focusVisible]);
-  (0, import_react66.useEffect)(() => {
+  (0, import_react64.useEffect)(() => {
     return () => nativeSubmitObserverCleanupRef.current?.();
   }, []);
   const onKeyPressCapture = useDisableEvent(props.onKeyPressCapture, disabled2);
@@ -52187,7 +52190,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
     cleanupFocusVisible(event.currentTarget);
     setFocusVisible(false);
   });
-  const autoFocusOnShow = (0, import_react66.useContext)(FocusableContext);
+  const autoFocusOnShow = (0, import_react64.useContext)(FocusableContext);
   const autoFocusRef = useEvent2((element) => {
     if (!focusable2) return;
     if (!autoFocus) return;
@@ -52199,7 +52202,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
       element.focus();
     });
   });
-  const [elementCapabilities, setElementCapabilities] = (0, import_react66.useState)(defaultElementCapabilities);
+  const [elementCapabilities, setElementCapabilities] = (0, import_react64.useState)(defaultElementCapabilities);
   useSafeLayoutEffect(() => {
     const element = ref.current;
     if (!element) return;
@@ -52209,8 +52212,8 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
   }, []);
   const nativeTabbable = focusable2 && !!(elementCapabilities & nativeTabbableMask);
   const supportsDisabled = focusable2 && !!(elementCapabilities & supportsDisabledMask);
-  const [safariTabIndex, setSafariTabIndex] = (0, import_react66.useState)(false);
-  if (isSafariBrowser) (0, import_react66.useEffect)(() => {
+  const [safariTabIndex, setSafariTabIndex] = (0, import_react64.useState)(false);
+  if (isSafariBrowser) (0, import_react64.useEffect)(() => {
     if (!focusable2) return;
     const element = ref.current;
     if (!element) return;
@@ -52219,7 +52222,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
     setSafariTabIndex(isButton(element) || isNativeCheckboxOrRadio);
   }, [focusable2]);
   const styleProp = props.style;
-  const style = (0, import_react66.useMemo)(() => {
+  const style = (0, import_react64.useMemo)(() => {
     if (trulyDisabled) return {
       pointerEvents: "none",
       ...styleProp
@@ -52259,7 +52262,7 @@ var Focusable = forwardRef207(function Focusable2(props) {
 });
 
 // node_modules/@ariakit/react-components/dist/command/command.js
-var import_react67 = __toESM(require_react(), 1);
+var import_react65 = __toESM(require_react(), 1);
 var TagName2 = "button";
 function isNativeClick(event) {
   if (!event.isTrusted) return false;
@@ -52270,18 +52273,18 @@ function isNativeClick(event) {
 }
 var symbol = /* @__PURE__ */ Symbol("command");
 var useCommand = createHook(function useCommand2({ clickOnEnter = true, clickOnSpace = true, ...props }) {
-  const ref = (0, import_react67.useRef)(null);
-  const [isNativeButton, setIsNativeButton] = (0, import_react67.useState)(false);
+  const ref = (0, import_react65.useRef)(null);
+  const [isNativeButton, setIsNativeButton] = (0, import_react65.useState)(false);
   const type = props.type;
-  (0, import_react67.useEffect)(() => {
+  (0, import_react65.useEffect)(() => {
     const element = ref.current;
     if (!element) return;
     const nativeButton = isButton(element);
     if (type !== void 0 && nativeButton && element.type === "button") return;
     setIsNativeButton(nativeButton);
   }, [type]);
-  const [active, setActive] = (0, import_react67.useState)(false);
-  const activeRef = (0, import_react67.useRef)(false);
+  const [active, setActive] = (0, import_react65.useState)(false);
+  const activeRef = (0, import_react65.useRef)(false);
   const disabled2 = disabledFromProps(props);
   const [isDuplicate, metadataProps] = useMetadataProps(props, symbol, true);
   useSafeLayoutEffect(() => {
@@ -52379,14 +52382,14 @@ var CollectionContextProvider = ctx.ContextProvider;
 var CollectionScopedContextProvider = ctx.ScopedContextProvider;
 
 // node_modules/@ariakit/react-components/dist/collection/collection-item.js
-var import_react68 = __toESM(require_react(), 1);
+var import_react66 = __toESM(require_react(), 1);
 var TagName3 = "div";
 var useCollectionItem = createHook(function useCollectionItem2({ store, shouldRegisterItem = true, getItem = identity, element, ...props }) {
   const context = useCollectionContext();
   store = store || context;
   const id = useId9(props.id);
-  const ref = (0, import_react68.useRef)(element);
-  (0, import_react68.useEffect)(() => {
+  const ref = (0, import_react66.useRef)(element);
+  (0, import_react66.useEffect)(() => {
     const element2 = ref.current;
     if (!id) return;
     if (!element2) return;
@@ -52414,18 +52417,18 @@ var CollectionItem = forwardRef207(function CollectionItem2(props) {
 });
 
 // node_modules/@ariakit/react-components/dist/composite/composite-context.js
-var import_react69 = __toESM(require_react(), 1);
+var import_react67 = __toESM(require_react(), 1);
 var ctx2 = createStoreContext([CollectionContextProvider], [CollectionScopedContextProvider]);
 var useCompositeContext = ctx2.useContext;
 var useCompositeScopedContext = ctx2.useScopedContext;
 var useCompositeProviderContext = ctx2.useProviderContext;
 var CompositeContextProvider = ctx2.ContextProvider;
 var CompositeScopedContextProvider = ctx2.ScopedContextProvider;
-var CompositeItemContext = (0, import_react69.createContext)(void 0);
-var CompositeRowContext = (0, import_react69.createContext)(void 0);
+var CompositeItemContext = (0, import_react67.createContext)(void 0);
+var CompositeRowContext = (0, import_react67.createContext)(void 0);
 
 // node_modules/@ariakit/react-components/dist/composite/utils.js
-var import_react70 = __toESM(require_react(), 1);
+var import_react68 = __toESM(require_react(), 1);
 
 // node_modules/@ariakit/store/dist/index.js
 function getInternal(store, key2) {
@@ -53560,13 +53563,13 @@ function presentItem({ store, id, focus, markedOnly, requireFocus, scrollIntoVie
   return cancel;
 }
 function usePresentItem(store) {
-  const cancelRef = (0, import_react70.useRef)(null);
-  const ownerRef = (0, import_react70.useRef)(store);
-  const cancel = (0, import_react70.useCallback)(() => {
+  const cancelRef = (0, import_react68.useRef)(null);
+  const ownerRef = (0, import_react68.useRef)(store);
+  const cancel = (0, import_react68.useCallback)(() => {
     cancelRef.current?.();
     cancelRef.current = null;
   }, []);
-  const present = (0, import_react70.useCallback)((params) => {
+  const present = (0, import_react68.useCallback)((params) => {
     if (!store) return;
     if (ownerRef.current !== store) return;
     cancel();
@@ -53618,8 +53621,8 @@ function isItem(store, element, exclude) {
 }
 
 // node_modules/@ariakit/react-components/dist/composite/composite-item.js
-var import_react71 = __toESM(require_react(), 1);
-var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
+var import_react69 = __toESM(require_react(), 1);
+var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
 
 // node_modules/@ariakit/react-store/dist/index.js
 var React232 = __toESM(require_react(), 1);
@@ -53827,15 +53830,15 @@ var useCompositeItem2 = createHook(function useCompositeItem3({ store, rowId: ro
   const context = useCompositeScopedContext();
   store = store || context;
   const id = useId9(props.id);
-  const ref = (0, import_react71.useRef)(null);
-  const mountedElementRef = (0, import_react71.useRef)(null);
-  const markUnmountingRef = (0, import_react71.useCallback)((element) => {
+  const ref = (0, import_react69.useRef)(null);
+  const mountedElementRef = (0, import_react69.useRef)(null);
+  const markUnmountingRef = (0, import_react69.useCallback)((element) => {
     const mountedElement = mountedElementRef.current;
     if (!element && mountedElement) markItemUnmounting(mountedElement);
     if (element) markItemMounted(element);
     mountedElementRef.current = element;
   }, []);
-  const row = (0, import_react71.useContext)(CompositeRowContext);
+  const row = (0, import_react69.useContext)(CompositeRowContext);
   const trulyDisabled = disabledFromProps(props) && !props.accessibleWhenDisabled;
   const shouldRegisterItem = props.shouldRegisterItem;
   const getRowId = (state) => {
@@ -53890,7 +53893,7 @@ var useCompositeItem2 = createHook(function useCompositeItem3({ store, rowId: ro
       return state.activeId === id;
     }
   });
-  const getItem = (0, import_react71.useCallback)((item) => {
+  const getItem = (0, import_react69.useCallback)((item) => {
     const nextItem = {
       ...item,
       id: id || item.id,
@@ -53909,8 +53912,8 @@ var useCompositeItem2 = createHook(function useCompositeItem3({ store, rowId: ro
     getItemProp
   ]);
   const onFocusProp = props.onFocus;
-  const hasFocusedComposite = (0, import_react71.useRef)(false);
-  const cancelScheduledFocusRedirectRef = (0, import_react71.useRef)(null);
+  const hasFocusedComposite = (0, import_react69.useRef)(false);
+  const cancelScheduledFocusRedirectRef = (0, import_react69.useRef)(null);
   const present = usePresentItem(store);
   const onFocus = useEvent2((event) => {
     onFocusProp?.(event);
@@ -54045,11 +54048,11 @@ var useCompositeItem2 = createHook(function useCompositeItem3({ store, rowId: ro
       }
     }
   });
-  const providerValue = (0, import_react71.useMemo)(() => ({
+  const providerValue = (0, import_react69.useMemo)(() => ({
     id,
     compositeElement
   }), [id, compositeElement]);
-  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(CompositeItemContext.Provider, {
+  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(CompositeItemContext.Provider, {
     value: providerValue,
     children: element
   }), [providerValue]);
@@ -54082,8 +54085,8 @@ var CompositeItem2 = memo5(forwardRef207(function CompositeItem3(props) {
 }));
 
 // node_modules/@ariakit/react-components/dist/composite/composite.js
-var import_react72 = __toESM(require_react(), 1);
-var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
+var import_react70 = __toESM(require_react(), 1);
+var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
 var TagName5 = "div";
 function isGrid(items) {
   return items.some((item) => !!item.rowId);
@@ -54119,7 +54122,7 @@ function findFirstEnabledItemInTheLastRow(items) {
 var CompositeFocusOnMove = memo5(function CompositeFocusOnMove2({ store, focusOnMove, previousElementRef, present, scrollIntoView }) {
   const moves = useStoreState(store, "moves");
   const compositeElement = useStoreState(store, "compositeElement");
-  (0, import_react72.useEffect)(() => {
+  (0, import_react70.useEffect)(() => {
     if (!moves) return;
     if (!focusOnMove) return;
     const { activeId } = store.getState();
@@ -54164,8 +54167,8 @@ var useComposite = createHook(function useComposite2({ store, composite = true, 
   const context = useCompositeProviderContext();
   store = store || context;
   invariant(store, "Composite must receive a `store` prop or be wrapped in a CompositeProvider component.");
-  const ref = (0, import_react72.useRef)(null);
-  const previousElementRef = (0, import_react72.useRef)(null);
+  const ref = (0, import_react70.useRef)(null);
+  const previousElementRef = (0, import_react70.useRef)(null);
   const present = usePresentItem(store);
   const [, setCompositeElement] = useTransactionState(composite ? store.setCompositeElement : null);
   const virtualFocus = useStoreState(store, "virtualFocus");
@@ -54316,9 +54319,9 @@ var useComposite = createHook(function useComposite2({ store, composite = true, 
       }
     }
   });
-  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime262.jsxs)(CompositeScopedContextProvider, {
+  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime263.jsxs)(CompositeScopedContextProvider, {
     value: store,
-    children: [element, composite && /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(CompositeFocusOnMove, {
+    children: [element, composite && /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(CompositeFocusOnMove, {
       store,
       focusOnMove,
       previousElementRef,
@@ -54368,19 +54371,19 @@ var DisclosureContextProvider = ctx3.ContextProvider;
 var DisclosureScopedContextProvider = ctx3.ScopedContextProvider;
 
 // node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
-var import_react73 = __toESM(require_react(), 1);
+var import_react71 = __toESM(require_react(), 1);
 var ctx4 = createStoreContext([DisclosureContextProvider], [DisclosureScopedContextProvider]);
 var useDialogContext = ctx4.useContext;
 var useDialogScopedContext = ctx4.useScopedContext;
 var useDialogProviderContext = ctx4.useProviderContext;
 var DialogContextProvider = ctx4.ContextProvider;
 var DialogScopedContextProvider = ctx4.ScopedContextProvider;
-var DialogHeadingContext = (0, import_react73.createContext)(void 0);
-var DialogDescriptionContext = (0, import_react73.createContext)(void 0);
+var DialogHeadingContext = (0, import_react71.createContext)(void 0);
+var DialogDescriptionContext = (0, import_react71.createContext)(void 0);
 
 // node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
-var import_react74 = __toESM(require_react(), 1);
-var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
+var import_react72 = __toESM(require_react(), 1);
+var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
 var import_react_dom3 = __toESM(require_react_dom(), 1);
 var TagName6 = "div";
 function afterTimeout(timeoutMs, cb) {
@@ -54417,9 +54420,9 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
   const context = useDisclosureProviderContext();
   store = store || context;
   invariant(store, "DisclosureContent must receive a `store` prop or be wrapped in a DisclosureProvider component.");
-  const ref = (0, import_react74.useRef)(null);
+  const ref = (0, import_react72.useRef)(null);
   const id = useId9(props.id);
-  const [transition, setTransition] = (0, import_react74.useState)(null);
+  const [transition, setTransition] = (0, import_react72.useState)(null);
   const { open, mounted, animated, contentElement } = useStoreStateObject(store, {
     open: "open",
     mounted: "mounted",
@@ -54427,7 +54430,7 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
     contentElement: "contentElement"
   });
   const otherElement = useStoreState(store.disclosure, "contentElement");
-  const hasClosedRef = (0, import_react74.useRef)(false);
+  const hasClosedRef = (0, import_react72.useRef)(false);
   useSafeLayoutEffect(() => {
     if (!ref.current) return;
     store?.setContentElement(ref.current);
@@ -54497,13 +54500,13 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
     open,
     transition
   ]);
-  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(DialogScopedContextProvider, {
+  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(DialogScopedContextProvider, {
     value: store,
     children: element
   }), [store]);
   const hidden = isHidden3(mounted, props.hidden, alwaysVisible);
   const styleProp = props.style;
-  const style = (0, import_react74.useMemo)(() => {
+  const style = (0, import_react72.useMemo)(() => {
     if (hidden) return {
       ...styleProp,
       display: "none"
@@ -54530,7 +54533,7 @@ var DisclosureContent = forwardRef207(function DisclosureContent2({ unmountOnHid
   const context = useDisclosureProviderContext();
   const store = props.store || context;
   if (useStoreState(store, ["mounted"], (state) => !unmountOnHide || state?.mounted) === false) return null;
-  return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(DisclosureContentImpl, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(DisclosureContentImpl, { ...props });
 });
 
 // node_modules/@ariakit/components/dist/disclosure/disclosure-store.js
@@ -54591,17 +54594,17 @@ var PopoverContextProvider = ctx5.ContextProvider;
 var PopoverScopedContextProvider = ctx5.ScopedContextProvider;
 
 // node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
-var import_react75 = __toESM(require_react(), 1);
-var ComboboxListRoleContext = (0, import_react75.createContext)(void 0);
+var import_react73 = __toESM(require_react(), 1);
+var ComboboxListRoleContext = (0, import_react73.createContext)(void 0);
 var ctx6 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
 var useComboboxContext = ctx6.useContext;
 var useComboboxScopedContext = ctx6.useScopedContext;
 var useComboboxProviderContext = ctx6.useProviderContext;
 var ComboboxContextProvider = ctx6.ContextProvider;
 var ComboboxScopedContextProvider = ctx6.ScopedContextProvider;
-var ComboboxItemValueContext = (0, import_react75.createContext)(void 0);
-var ComboboxItemCheckedContext = (0, import_react75.createContext)(false);
-var ComboboxHeadingContext = (0, import_react75.createContext)(null);
+var ComboboxItemValueContext = (0, import_react73.createContext)(void 0);
+var ComboboxItemCheckedContext = (0, import_react73.createContext)(false);
+var ComboboxHeadingContext = (0, import_react73.createContext)(null);
 
 // node_modules/@ariakit/react-components/dist/collection/collection-store.js
 function useCollectionStoreProps(store, update2, props) {
@@ -54696,7 +54699,7 @@ function usePopoverStoreProps(store, update2, props) {
 }
 
 // node_modules/@ariakit/react-components/dist/composite/composite-hover.js
-var import_react76 = __toESM(require_react(), 1);
+var import_react74 = __toESM(require_react(), 1);
 var TagName7 = "div";
 function hoveringInside(event) {
   const nextElement = event.relatedTarget;
@@ -54745,7 +54748,7 @@ var useCompositeHover = createHook(function useCompositeHover2({ store, focusOnH
     store?.setActiveId(null);
     store?.getState().compositeElement?.focus({ preventScroll: true });
   });
-  const ref = (0, import_react76.useCallback)((element) => {
+  const ref = (0, import_react74.useCallback)((element) => {
     if (!element) return;
     element[symbol2] = true;
   }, []);
@@ -54833,8 +54836,8 @@ function getScrollItemIntoView(store) {
 }
 
 // node_modules/@ariakit/react-components/dist/combobox/combobox.js
-var import_react77 = __toESM(require_react(), 1);
-var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
+var import_react75 = __toESM(require_react(), 1);
+var import_jsx_runtime265 = __toESM(require_jsx_runtime(), 1);
 var TagName8 = "input";
 function isFirstItemAutoSelected(items, activeValue, autoSelect) {
   if (!autoSelect) return false;
@@ -54863,11 +54866,11 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
   const context = useComboboxProviderContext();
   store = store || context || scopedContext;
   invariant(store, "Combobox must receive a `store` prop or be wrapped in a ComboboxProvider component.");
-  const ref = (0, import_react77.useRef)(null);
+  const ref = (0, import_react75.useRef)(null);
   const [valueUpdated, forceValueUpdate] = useForceUpdate();
-  const canAutoSelectRef = (0, import_react77.useRef)(false);
-  const composingRef = (0, import_react77.useRef)(false);
-  const compositionEndFrameRef = (0, import_react77.useRef)(null);
+  const canAutoSelectRef = (0, import_react75.useRef)(false);
+  const composingRef = (0, import_react75.useRef)(false);
+  const compositionEndFrameRef = (0, import_react75.useRef)(null);
   const cancelCompositionEndFrame = () => {
     const frame = compositionEndFrameRef.current;
     if (frame == null) return;
@@ -54876,7 +54879,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
   };
   const autoSelect = useStoreState(store, ["virtualFocus"], (state) => state.virtualFocus && autoSelectProp);
   const inline4 = autoComplete === "inline" || autoComplete === "both";
-  const [canInline, setCanInline] = (0, import_react77.useState)(inline4);
+  const [canInline, setCanInline] = (0, import_react75.useState)(inline4);
   useUpdateLayoutEffect(() => {
     if (!inline4) return;
     setCanInline(true);
@@ -54888,8 +54891,8 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     return state.selectedValue;
   });
   const multiSelectable = Array.isArray(selectedValue);
-  const prevSelectedValueRef = (0, import_react77.useRef)(void 0);
-  (0, import_react77.useEffect)(() => {
+  const prevSelectedValueRef = (0, import_react75.useRef)(void 0);
+  (0, import_react75.useEffect)(() => {
     return sync(store, ["selectedValue", "activeId"], (_, prev) => {
       prevSelectedValueRef.current = prev.selectedValue;
     });
@@ -54912,7 +54915,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
   const contentElement = useStoreState(store, "contentElement");
   const placing = useStoreState(store, "unstable_placing");
   const firstItemAutoSelected = isFirstItemAutoSelected(items, inlineActiveValue, autoSelect);
-  const inputValue = (0, import_react77.useMemo)(() => {
+  const inputValue = (0, import_react75.useMemo)(() => {
     if (!inline4) return storeInputValue;
     if (!canInline) return storeInputValue;
     if (firstItemAutoSelected) {
@@ -54930,7 +54933,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     inlineActiveValue,
     storeInputValue
   ]);
-  (0, import_react77.useEffect)(() => {
+  (0, import_react75.useEffect)(() => {
     const element = ref.current;
     if (!element) return;
     const onCompositeItemMove = () => setCanInline(true);
@@ -54939,7 +54942,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
       element.removeEventListener("combobox-item-move", onCompositeItemMove);
     };
   }, []);
-  (0, import_react77.useEffect)(() => {
+  (0, import_react75.useEffect)(() => {
     if (!inline4) return;
     if (!canInline) return;
     if (!inlineActiveValue) return;
@@ -54971,11 +54974,11 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     storeInputValue
   ]);
   const getAutoSelectIdProp = useEvent2(getAutoSelectId);
-  const autoSelectIdRef = (0, import_react77.useRef)(null);
-  const autoSelectMovedRef = (0, import_react77.useRef)(void 0);
-  const userScrolledRef = (0, import_react77.useRef)(false);
-  const isAutoScrollingRef = (0, import_react77.useRef)(false);
-  (0, import_react77.useEffect)(() => {
+  const autoSelectIdRef = (0, import_react75.useRef)(null);
+  const autoSelectMovedRef = (0, import_react75.useRef)(void 0);
+  const userScrolledRef = (0, import_react75.useRef)(false);
+  const isAutoScrollingRef = (0, import_react75.useRef)(false);
+  (0, import_react75.useEffect)(() => {
     if (!open) return;
     if (!contentElement) return;
     const scrollingElement = getScrollingElement(contentElement);
@@ -55075,7 +55078,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     getAutoSelectIdProp,
     items
   ]);
-  (0, import_react77.useEffect)(() => {
+  (0, import_react75.useEffect)(() => {
     if (!inline4) return;
     const combobox = ref.current;
     if (!combobox) return;
@@ -55129,7 +55132,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     if (showOnChangeProp(event)) store.show();
     if (!autoSelect || !canAutoSelectRef.current) store.setActiveId(null);
   });
-  (0, import_react77.useEffect)(() => cancelCompositionEndFrame, []);
+  (0, import_react75.useEffect)(() => cancelCompositionEndFrame, []);
   const onCompositionStartProp = props.onCompositionStart;
   const onCompositionStart = useEvent2((event) => {
     cancelCompositionEndFrame();
@@ -55208,7 +55211,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     if (!name) return element;
     if (!Array.isArray(selectedValue)) return element;
     if (composite && !compositeElement) return element;
-    return /* @__PURE__ */ (0, import_jsx_runtime264.jsxs)(import_jsx_runtime264.Fragment, { children: [element, selectedValue.map((value, index2) => /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("input", {
+    return /* @__PURE__ */ (0, import_jsx_runtime265.jsxs)(import_jsx_runtime265.Fragment, { children: [element, selectedValue.map((value, index2) => /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("input", {
       type: "hidden",
       name,
       form,
@@ -55267,8 +55270,8 @@ var Combobox = forwardRef207(function Combobox2(props) {
 });
 
 // node_modules/@ariakit/react-components/dist/combobox/combobox-item.js
-var import_react78 = __toESM(require_react(), 1);
-var import_jsx_runtime265 = __toESM(require_jsx_runtime(), 1);
+var import_react76 = __toESM(require_react(), 1);
+var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
 var TagName9 = "div";
 function isSelected(storeValue, itemValue) {
   if (itemValue == null) return;
@@ -55302,7 +55305,7 @@ var useComboboxItem = createHook(function useComboboxItem2({ store, value, hideO
   const autoFocusSelectedItem = !!selectElement;
   const selectMode = !!selectElement;
   const disabled2 = disabledFromProps(props);
-  const getItem = (0, import_react78.useCallback)((item) => {
+  const getItem = (0, import_react76.useCallback)((item) => {
     const nextItem = {
       ...item,
       value: selectMode && disabled2 ? void 0 : value
@@ -55318,7 +55321,7 @@ var useComboboxItem = createHook(function useComboboxItem2({ store, value, hideO
   setValueOnClick = setValueOnClick ?? (!selectMode && !multiSelectable);
   hideOnClick = hideOnClick ?? (value != null && !multiSelectable);
   preventScrollOnKeyDown = preventScrollOnKeyDown ?? selectMode;
-  const role = getItemRole((0, import_react78.useContext)(ComboboxListRoleContext));
+  const role = getItemRole((0, import_react76.useContext)(ComboboxListRoleContext));
   const onClickProp = props.onClick;
   const setValueOnClickProp = useBooleanEvent(setValueOnClick);
   const selectValueOnClickProp = useBooleanEvent(selectValueOnClick);
@@ -55367,9 +55370,9 @@ var useComboboxItem = createHook(function useComboboxItem2({ store, value, hideO
     "aria-selected": selected,
     ...props
   };
-  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(ComboboxItemValueContext.Provider, {
+  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(ComboboxItemValueContext.Provider, {
     value,
-    children: /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(ComboboxItemCheckedContext.Provider, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(ComboboxItemCheckedContext.Provider, {
       value: selected ?? false,
       children: element
     })
@@ -55419,8 +55422,8 @@ var ComboboxItem3 = memo5(forwardRef207(function ComboboxItem4(props) {
 }));
 
 // node_modules/@ariakit/react-components/dist/combobox/combobox-item-value.js
-var import_react79 = __toESM(require_react(), 1);
-var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
+var import_react77 = __toESM(require_react(), 1);
+var import_jsx_runtime267 = __toESM(require_jsx_runtime(), 1);
 var TagName10 = "span";
 function normalizeValue(value) {
   return normalizeString(value).toLowerCase();
@@ -55494,7 +55497,7 @@ function splitValue(itemValue, userValue) {
   if (!userValue) return itemValue;
   const userValues = toArray(userValue).map(normalizeValue);
   const parts = [];
-  const span = (value, autocomplete = false) => /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("span", {
+  const span = (value, autocomplete = false) => /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("span", {
     "data-autocomplete-value": autocomplete ? "" : void 0,
     "data-user-value": autocomplete ? void 0 : "",
     children: value
@@ -55519,11 +55522,11 @@ function splitValue(itemValue, userValue) {
 var useComboboxItemValue = createHook(function useComboboxItemValue2({ store, value, userValue, ...props }) {
   const context = useComboboxScopedContext();
   store = store || context;
-  const itemContext = (0, import_react79.useContext)(ComboboxItemValueContext);
+  const itemContext = (0, import_react77.useContext)(ComboboxItemValueContext);
   const itemValue = value ?? itemContext;
   const inputValue = useStoreState(store, ["inputValue"], (state) => userValue ?? state?.inputValue);
   props = {
-    children: (0, import_react79.useMemo)(() => {
+    children: (0, import_react77.useMemo)(() => {
       if (!itemValue) return;
       if (!inputValue) return itemValue;
       return splitValue(itemValue, inputValue);
@@ -55562,8 +55565,8 @@ var ComboboxLabel = memo5(forwardRef207(function ComboboxLabel2(props) {
 }));
 
 // node_modules/@ariakit/react-components/dist/combobox/combobox-list.js
-var import_react80 = __toESM(require_react(), 1);
-var import_jsx_runtime267 = __toESM(require_jsx_runtime(), 1);
+var import_react78 = __toESM(require_react(), 1);
+var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
 var TagName12 = "div";
 var useComboboxList = createHook(function useComboboxList2({ store, alwaysVisible, ...props }) {
   const scopedContext = useComboboxScopedContext(true);
@@ -55585,7 +55588,7 @@ var useComboboxList = createHook(function useComboboxList2({ store, alwaysVisibl
       compositeElement.focus();
     });
   });
-  const ref = (0, import_react80.useRef)(null);
+  const ref = (0, import_react78.useRef)(null);
   const id = useId9(props.id);
   const mounted = useStoreState(store, "mounted");
   const hidden = isHidden3(mounted, props.hidden, alwaysVisible);
@@ -55596,12 +55599,12 @@ var useComboboxList = createHook(function useComboboxList2({ store, alwaysVisibl
   const multiSelectable = useStoreState(store, ["selectedValue"], (state) => Array.isArray(state.selectedValue));
   const role = useAttribute(ref, "role", props.role);
   const ariaMultiSelectable = role === "listbox" || role === "tree" || role === "grid" ? multiSelectable || void 0 : void 0;
-  const [hasListboxInside, setHasListboxInside] = (0, import_react80.useState)(false);
+  const [hasListboxInside, setHasListboxInside] = (0, import_react78.useState)(false);
   const contentElement = useStoreState(store, "contentElement");
-  const parentHeadingContext = (0, import_react80.useContext)(ComboboxHeadingContext);
-  const headingState = (0, import_react80.useState)();
+  const parentHeadingContext = (0, import_react78.useContext)(ComboboxHeadingContext);
+  const headingState = (0, import_react78.useState)();
   const [headingId, setHeadingId] = parentHeadingContext || headingState;
-  const headingContext = (0, import_react80.useMemo)(() => [headingId, setHeadingId], [headingId, setHeadingId]);
+  const headingContext = (0, import_react78.useMemo)(() => [headingId, setHeadingId], [headingId, setHeadingId]);
   useSafeLayoutEffect(() => {
     if (!mounted) return;
     const element = ref.current;
@@ -55624,13 +55627,13 @@ var useComboboxList = createHook(function useComboboxList2({ store, alwaysVisibl
     "aria-multiselectable": ariaMultiSelectable,
     ...props
   };
-  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(ComboboxScopedContextProvider, {
+  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(ComboboxScopedContextProvider, {
     value: store,
-    children: /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(ComboboxHeadingContext.Provider, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(ComboboxHeadingContext.Provider, {
       value: headingContext,
-      children: /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(DialogHeadingContext.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(DialogHeadingContext.Provider, {
         value: setHeadingId,
-        children: /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(ComboboxListRoleContext.Provider, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(ComboboxListRoleContext.Provider, {
           value: role,
           children: element
         })
@@ -55666,9 +55669,9 @@ var ComboboxList3 = forwardRef207(function ComboboxList4(props) {
 });
 
 // node_modules/@ariakit/react-components/dist/tag/tag-context.js
-var import_react81 = __toESM(require_react(), 1);
-var TagValueContext = (0, import_react81.createContext)(null);
-var TagRemoveIdContext = (0, import_react81.createContext)(null);
+var import_react79 = __toESM(require_react(), 1);
+var TagValueContext = (0, import_react79.createContext)(null);
+var TagRemoveIdContext = (0, import_react79.createContext)(null);
 var ctx7 = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
 var useTagContext = ctx7.useContext;
 var useTagScopedContext = ctx7.useScopedContext;
@@ -55920,10 +55923,10 @@ function useComboboxStore(props = {}) {
 }
 
 // node_modules/@ariakit/react-components/dist/combobox/combobox-provider.js
-var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
 function ComboboxProvider(props = {}) {
   const store = useComboboxStore(props);
-  return /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(ComboboxContextProvider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(ComboboxContextProvider, {
     value: store,
     children: props.children
   });
@@ -55993,7 +55996,7 @@ function useElements({
 }
 
 // packages/dataviews/build-module/components/dataviews-filters/search-widget.mjs
-var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
 function normalizeSearchInput(input = "") {
   return (0, import_remove_accents.default)(input.trim().toLowerCase());
 }
@@ -56010,19 +56013,19 @@ function generateFilterElementCompositeItemId(prefix, filterElementValue) {
   return `${prefix}-${filterElementValue}`;
 }
 var MultiSelectionOption = ({ selected }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
     "span",
     {
       className: clsx_default(
         "dataviews-filters__search-widget-listitem-multi-selection",
         { "is-selected": selected }
       ),
-      children: selected && /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(import_components24.Icon, { icon: check_default })
+      children: selected && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(import_components24.Icon, { icon: check_default })
     }
   );
 };
 var SingleSelectionOption = ({ selected }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
     "span",
     {
       className: clsx_default(
@@ -56047,7 +56050,7 @@ function ListBox({ view, filter, onChangeView }) {
     (f2) => f2.field === filter.field
   );
   const currentValue = getCurrentValue(filter, currentFilter);
-  return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
     import_components24.Composite,
     {
       virtualFocus: true,
@@ -56071,18 +56074,18 @@ function ListBox({ view, filter, onChangeView }) {
           );
         }
       },
-      render: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(import_components24.Composite.Typeahead, {}),
-      children: filter.elements.map((element) => /* @__PURE__ */ (0, import_jsx_runtime269.jsxs)(
+      render: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(import_components24.Composite.Typeahead, {}),
+      children: filter.elements.map((element) => /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)(
         import_components24.Composite.Hover,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
             import_components24.Composite.Item,
             {
               id: generateFilterElementCompositeItemId(
                 baseId,
                 element.value
               ),
-              render: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+              render: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
                 "div",
                 {
                   "aria-label": element.label,
@@ -56129,19 +56132,19 @@ function ListBox({ view, filter, onChangeView }) {
             }
           ),
           children: [
-            filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+            filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
               SingleSelectionOption,
               {
                 selected: currentValue === element.value
               }
             ),
-            !filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+            !filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
               MultiSelectionOption,
               {
                 selected: currentValue.includes(element.value)
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
               "span",
               {
                 className: "dataviews-filters__search-widget-listitem-value",
@@ -56169,7 +56172,7 @@ function ComboboxList22({ view, filter, onChangeView }) {
       (item) => normalizeSearchInput(item.label).includes(normalizedSearch)
     );
   }, [filter.elements, deferredSearchValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime269.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)(
     ComboboxProvider,
     {
       selectedValue: currentValue,
@@ -56201,9 +56204,9 @@ function ComboboxList22({ view, filter, onChangeView }) {
       },
       setValue: setSearchValue,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime269.jsxs)("div", { className: "dataviews-filters__search-widget-filter-combobox__wrapper", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(ComboboxLabel, {}), children: (0, import_i18n49.__)("Search items") }),
-          /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)("div", { className: "dataviews-filters__search-widget-filter-combobox__wrapper", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(ComboboxLabel, {}), children: (0, import_i18n49.__)("Search items") }),
+          /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
             Combobox,
             {
               autoSelect: "always",
@@ -56211,16 +56214,16 @@ function ComboboxList22({ view, filter, onChangeView }) {
               className: "dataviews-filters__search-widget-filter-combobox__input"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime269.jsx)("div", { className: "dataviews-filters__search-widget-filter-combobox__icon", children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(import_components24.Icon, { icon: search_default }) })
+          /* @__PURE__ */ (0, import_jsx_runtime270.jsx)("div", { className: "dataviews-filters__search-widget-filter-combobox__icon", children: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(import_components24.Icon, { icon: search_default }) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime269.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)(
           ComboboxList3,
           {
             className: "dataviews-filters__search-widget-filter-combobox-list",
             alwaysVisible: true,
             children: [
               matches2.map((element) => {
-                return /* @__PURE__ */ (0, import_jsx_runtime269.jsxs)(
+                return /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)(
                   ComboboxItem3,
                   {
                     resetValueOnSelect: false,
@@ -56230,13 +56233,13 @@ function ComboboxList22({ view, filter, onChangeView }) {
                     setValueOnClick: false,
                     focusOnHover: true,
                     children: [
-                      filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+                      filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
                         SingleSelectionOption,
                         {
                           selected: currentValue === element.value
                         }
                       ),
-                      !filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+                      !filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
                         MultiSelectionOption,
                         {
                           selected: currentValue.includes(
@@ -56244,20 +56247,20 @@ function ComboboxList22({ view, filter, onChangeView }) {
                           )
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime269.jsxs)(
+                      /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)(
                         "span",
                         {
                           className: "dataviews-filters__search-widget-listitem-value",
                           title: element.label,
                           children: [
-                            /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
+                            /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
                               ComboboxItemValue,
                               {
                                 className: "dataviews-filters__search-widget-filter-combobox-item-value",
                                 value: element.label
                               }
                             ),
-                            !!element.description && /* @__PURE__ */ (0, import_jsx_runtime269.jsx)("span", { className: "dataviews-filters__search-widget-listitem-description", children: element.description })
+                            !!element.description && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)("span", { className: "dataviews-filters__search-widget-listitem-description", children: element.description })
                           ]
                         }
                       )
@@ -56266,7 +56269,7 @@ function ComboboxList22({ view, filter, onChangeView }) {
                   element.value
                 );
               }),
-              !matches2.length && /* @__PURE__ */ (0, import_jsx_runtime269.jsx)("p", { children: (0, import_i18n49.__)("No results found") })
+              !matches2.length && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)("p", { children: (0, import_i18n49.__)("No results found") })
             ]
           }
         )
@@ -56280,13 +56283,13 @@ function SearchWidget(props) {
     getElements: props.filter.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)("div", { className: "dataviews-filters__search-widget-no-elements", children: /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(import_components24.Spinner, {}) });
+    return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)("div", { className: "dataviews-filters__search-widget-no-elements", children: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(import_components24.Spinner, {}) });
   }
   if (elements.length === 0) {
-    return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)("div", { className: "dataviews-filters__search-widget-no-elements", children: (0, import_i18n49.__)("No elements found") });
+    return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)("div", { className: "dataviews-filters__search-widget-no-elements", children: (0, import_i18n49.__)("No elements found") });
   }
   const Widget = elements.length > 10 ? ComboboxList22 : ListBox;
-  return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(Widget, { ...props, filter: { ...props.filter, elements } });
+  return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(Widget, { ...props, filter: { ...props.filter, elements } });
 }
 
 // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
@@ -56294,7 +56297,7 @@ var import_es62 = __toESM(require_es6(), 1);
 var import_compose27 = __toESM(require_compose(), 1);
 var import_element191 = __toESM(require_element(), 1);
 var import_components25 = __toESM(require_components(), 1);
-var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
 function InputWidget({
   filter,
   view,
@@ -56362,13 +56365,13 @@ function InputWidget({
   if (!field || !field.Edit || !currentFilter) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
     import_components25.Flex,
     {
       className: "dataviews-filters__user-input-widget",
       gap: 2.5,
       direction: "column",
-      children: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
         field.Edit,
         {
           hideLabelFromVision: true,
@@ -56406,10 +56409,10 @@ function parseTime2(value) {
 }
 
 // packages/dataviews/build-module/utils/operators.mjs
-var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
 var filterTextWrappers = {
-  Name: /* @__PURE__ */ (0, import_jsx_runtime271.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
-  Value: /* @__PURE__ */ (0, import_jsx_runtime271.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
+  Name: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
+  Value: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
 };
 function toComparableTemporals(fieldValue, filterValue) {
   const filterTime = parseTime2(filterValue);
@@ -56975,7 +56978,7 @@ var isSingleSelectionOperator = (name) => OPERATORS.filter((op) => op.selection 
 var isRegisteredOperator = (name) => OPERATORS.some((op) => op.name === name);
 
 // packages/dataviews/build-module/components/dataviews-filters/filter.mjs
-var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
 var ENTER = "Enter";
 var SPACE = " ";
 var FilterText = ({
@@ -57009,7 +57012,7 @@ function OperatorSelector({
     (_filter) => _filter.field === filter.field
   );
   const value = currentFilter?.operator || filter.operators[0];
-  return operatorOptions.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime272.jsxs)(
+  return operatorOptions.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(
     Stack,
     {
       direction: "row",
@@ -57018,8 +57021,8 @@ function OperatorSelector({
       className: "dataviews-filters__summary-operators-container",
       align: "center",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(import_components26.FlexItem, { className: "dataviews-filters__summary-operators-filter-name", children: filter.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(import_components26.FlexItem, { className: "dataviews-filters__summary-operators-filter-name", children: filter.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
           import_components26.SelectControl,
           {
             className: "dataviews-filters__summary-operators-filter-select",
@@ -57151,7 +57154,7 @@ function Filter({
   const hasValues = !isLocked && filterInView?.value !== void 0;
   const canResetOrRemove = !isLocked && (!isPrimary || hasValues);
   const resetOrRemoveLabel = isPrimary ? (0, import_i18n51.__)("Reset") : (0, import_i18n51.__)("Remove");
-  return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
     import_components26.Dropdown,
     {
       defaultOpen: openedFilter === filter.field,
@@ -57160,12 +57163,12 @@ function Filter({
       onClose: () => {
         toggleRef.current?.focus();
       },
-      renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime272.jsxs)("div", { className: "dataviews-filters__summary-chip-container", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime272.jsxs)(tooltip_exports.Root, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
+      renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)("div", { className: "dataviews-filters__summary-chip-container", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(tooltip_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
             tooltip_exports.Trigger,
             {
-              render: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
+              render: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
                 "div",
                 {
                   className: clsx_default(
@@ -57195,7 +57198,7 @@ function Filter({
                   "aria-pressed": isOpen,
                   "aria-expanded": isOpen,
                   ref: toggleRef,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
+                  children: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
                     FilterText,
                     {
                       activeElements,
@@ -57207,17 +57210,17 @@ function Filter({
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(tooltip_exports.Popup, { children: (0, import_i18n51.sprintf)(
+          /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(tooltip_exports.Popup, { children: (0, import_i18n51.sprintf)(
             /* translators: 1: Filter name. */
             (0, import_i18n51.__)("Filter by: %1$s"),
             filter.name.toLowerCase()
           ) })
         ] }),
-        canResetOrRemove && /* @__PURE__ */ (0, import_jsx_runtime272.jsxs)(tooltip_exports.Root, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
+        canResetOrRemove && /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(tooltip_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
             tooltip_exports.Trigger,
             {
-              render: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
+              render: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
                 "button",
                 {
                   className: clsx_default(
@@ -57239,18 +57242,18 @@ function Filter({
                       toggleRef.current?.focus();
                     }
                   },
-                  children: /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(import_components26.Icon, { icon: close_small_default })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(import_components26.Icon, { icon: close_small_default })
                 }
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(tooltip_exports.Popup, { children: resetOrRemoveLabel })
+          /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(tooltip_exports.Popup, { children: resetOrRemoveLabel })
         ] })
       ] }),
       renderContent: () => {
-        return /* @__PURE__ */ (0, import_jsx_runtime272.jsxs)(Stack, { direction: "column", justify: "flex-start", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(OperatorSelector, { ...commonProps }),
-          commonProps.filter.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(Stack, { direction: "column", justify: "flex-start", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(OperatorSelector, { ...commonProps }),
+          commonProps.filter.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
             SearchWidget,
             {
               ...commonProps,
@@ -57259,7 +57262,7 @@ function Filter({
                 elements
               }
             }
-          ) : /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(InputWidget, { ...commonProps, fields: fields2 })
+          ) : /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(InputWidget, { ...commonProps, fields: fields2 })
         ] });
       }
     }
@@ -57270,7 +57273,7 @@ function Filter({
 var import_components27 = __toESM(require_components(), 1);
 var import_i18n52 = __toESM(require_i18n(), 1);
 var import_element194 = __toESM(require_element(), 1);
-var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
 function AddFilterMenu({
   filters,
   view,
@@ -57283,10 +57286,10 @@ function AddFilterMenu({
     // The `disabled` prop on `Menu.Root` (rather than on the trigger)
     // keeps the menu from opening while letting the trigger button stay
     // focusable via its own `accessibleWhenDisabled`.
-    /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(menu_exports.Root, { disabled: !inactiveFilters.length, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(menu_exports.Trigger, { ...triggerProps }),
-      /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(menu_exports.Popup, { children: inactiveFilters.map((filter) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(menu_exports.Root, { disabled: !inactiveFilters.length, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(menu_exports.Trigger, { ...triggerProps }),
+      /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(menu_exports.Popup, { children: inactiveFilters.map((filter) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
           menu_exports.Item,
           {
             onClick: () => {
@@ -57304,7 +57307,7 @@ function AddFilterMenu({
                 ]
               });
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(menu_exports.ItemLabel, { children: filter.name })
+            children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(menu_exports.ItemLabel, { children: filter.name })
           },
           filter.field
         );
@@ -57317,11 +57320,11 @@ function AddFilter({ filters, view, onChangeView, setOpenedFilter }, ref) {
     return null;
   }
   const inactiveFilters = filters.filter((filter) => !filter.isVisible);
-  return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
     AddFilterMenu,
     {
       triggerProps: {
-        render: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
           import_components27.Button,
           {
             accessibleWhenDisabled: true,
@@ -57343,7 +57346,7 @@ var add_filter_default = (0, import_element194.forwardRef)(AddFilter);
 // packages/dataviews/build-module/components/dataviews-filters/reset-filters.mjs
 var import_components28 = __toESM(require_components(), 1);
 var import_i18n53 = __toESM(require_i18n(), 1);
-var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime275 = __toESM(require_jsx_runtime(), 1);
 function ResetFilter({
   filters,
   view,
@@ -57355,7 +57358,7 @@ function ResetFilter({
   const isDisabled = !view.search && !view.filters?.some(
     (_filter) => !_filter.isLocked && (_filter.value !== void 0 || !isPrimary(_filter.field))
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
     import_components28.Button,
     {
       disabled: isDisabled,
@@ -57428,12 +57431,12 @@ function useFilters(fields2, view) {
 var use_filters_default = useFilters;
 
 // packages/dataviews/build-module/components/dataviews-filters/filters.mjs
-var import_jsx_runtime275 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
 function Filters({ className }) {
   const { fields: fields2, view, onChangeView, openedFilter, setOpenedFilter } = (0, import_element196.useContext)(dataviews_context_default);
   const addFilterRef = (0, import_element196.useRef)(null);
   const filters = use_filters_default(fields2, view);
-  const addFilter = /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
+  const addFilter = /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(
     add_filter_default,
     {
       filters,
@@ -57450,7 +57453,7 @@ function Filters({ className }) {
   }
   const filterComponents = [
     ...visibleFilters.map((filter) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(
         Filter,
         {
           filter,
@@ -57466,7 +57469,7 @@ function Filters({ className }) {
     addFilter
   ];
   filterComponents.push(
-    /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(
       ResetFilter,
       {
         filters,
@@ -57476,7 +57479,7 @@ function Filters({ className }) {
       "reset-filters"
     )
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(
     Stack,
     {
       direction: "row",
@@ -57495,7 +57498,7 @@ var filters_default = (0, import_element196.memo)(Filters);
 var import_element197 = __toESM(require_element(), 1);
 var import_components29 = __toESM(require_components(), 1);
 var import_i18n54 = __toESM(require_i18n(), 1);
-var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
 function FiltersToggle() {
   const {
     filters,
@@ -57536,7 +57539,7 @@ function FiltersToggle() {
   const hasPrimaryOrLockedFilters = filters.some(
     (filter) => filter.isPrimary || filter.isLocked
   );
-  const buttonComponent = /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(
+  const buttonComponent = /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
     import_components29.Button,
     {
       ref: buttonRef,
@@ -57548,7 +57551,7 @@ function FiltersToggle() {
       ...hasVisibleFilters ? toggleFiltersButtonProps : addFilterButtonProps
     }
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)("div", { className: "dataviews-filters__container-visibility-toggle", children: !hasVisibleFilters ? /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime277.jsx)("div", { className: "dataviews-filters__container-visibility-toggle", children: !hasVisibleFilters ? /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
     AddFilterMenu,
     {
       filters,
@@ -57557,7 +57560,7 @@ function FiltersToggle() {
       setOpenedFilter,
       triggerProps: { render: buttonComponent }
     }
-  ) : /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(
+  ) : /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
     FilterVisibilityToggle,
     {
       buttonRef,
@@ -57577,22 +57580,22 @@ function FilterVisibilityToggle({
     },
     [buttonRef]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime276.jsxs)(import_jsx_runtime276.Fragment, { children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime277.jsxs)(import_jsx_runtime277.Fragment, { children: [
     children,
-    !!filtersCount && /* @__PURE__ */ (0, import_jsx_runtime276.jsx)("span", { className: "dataviews-filters-toggle__count", children: filtersCount })
+    !!filtersCount && /* @__PURE__ */ (0, import_jsx_runtime277.jsx)("span", { className: "dataviews-filters-toggle__count", children: filtersCount })
   ] });
 }
 var toggle_default = FiltersToggle;
 
 // packages/dataviews/build-module/components/dataviews-filters/filters-toggled.mjs
 var import_element198 = __toESM(require_element(), 1);
-var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
 function FiltersToggled(props) {
   const { isShowingFilter } = (0, import_element198.useContext)(dataviews_context_default);
   if (!isShowingFilter) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(filters_default, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(filters_default, { ...props });
 }
 var filters_toggled_default = FiltersToggled;
 
@@ -57600,7 +57603,7 @@ var filters_toggled_default = FiltersToggled;
 var import_element199 = __toESM(require_element(), 1);
 var import_components30 = __toESM(require_components(), 1);
 var import_i18n55 = __toESM(require_i18n(), 1);
-var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime279 = __toESM(require_jsx_runtime(), 1);
 function DataViewsLayout({ className }) {
   const {
     actions = [],
@@ -57620,7 +57623,7 @@ function DataViewsLayout({ className }) {
     renderItemLink,
     defaultLayouts,
     containerRef,
-    empty = /* @__PURE__ */ (0, import_jsx_runtime278.jsx)("p", { children: (0, import_i18n55.__)("No results") })
+    empty = /* @__PURE__ */ (0, import_jsx_runtime279.jsx)("p", { children: (0, import_i18n55.__)("No results") })
   } = (0, import_element199.useContext)(dataviews_context_default);
   const isDelayedInitialLoading = useDelayedLoading(!hasInitiallyLoaded, {
     delay: 200
@@ -57629,12 +57632,12 @@ function DataViewsLayout({ className }) {
     if (!isDelayedInitialLoading) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime278.jsx)("div", { className: "dataviews-loading", children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components30.Spinner, {}) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime279.jsx)("div", { className: "dataviews-loading", children: /* @__PURE__ */ (0, import_jsx_runtime279.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(import_components30.Spinner, {}) }) });
   }
   const ViewComponent = VIEW_LAYOUTS.find(
     (v2) => v2.type === view.type && defaultLayouts[v2.type]
   )?.component;
-  return /* @__PURE__ */ (0, import_jsx_runtime278.jsx)("div", { className: "dataviews-layout__container", ref: containerRef, children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime279.jsx)("div", { className: "dataviews-layout__container", ref: containerRef, children: /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
     ViewComponent,
     {
       className,
@@ -57662,7 +57665,7 @@ var import_i18n56 = __toESM(require_i18n(), 1);
 var import_element200 = __toESM(require_element(), 1);
 var import_components31 = __toESM(require_components(), 1);
 var import_compose28 = __toESM(require_compose(), 1);
-var import_jsx_runtime279 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime280 = __toESM(require_jsx_runtime(), 1);
 var DataViewsSearch = (0, import_element200.memo)(function Search({ label }) {
   const { view, onChangeView } = (0, import_element200.useContext)(dataviews_context_default);
   const [search, setSearch, debouncedSearch] = (0, import_compose28.useDebouncedInput)(
@@ -57690,7 +57693,7 @@ var DataViewsSearch = (0, import_element200.memo)(function Search({ label }) {
     }
   }, [debouncedSearch]);
   const searchLabel = label || (0, import_i18n56.__)("Search");
-  return /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
     import_components31.SearchControl,
     {
       className: "dataviews-search",
@@ -57710,7 +57713,7 @@ var import_i18n57 = __toESM(require_i18n(), 1);
 var import_element201 = __toESM(require_element(), 1);
 var import_warning = __toESM(require_warning(), 1);
 var import_compose29 = __toESM(require_compose(), 1);
-var import_jsx_runtime280 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime281 = __toESM(require_jsx_runtime(), 1);
 var DATAVIEWS_CONFIG_POPOVER_PROPS = {
   className: "dataviews-config__popover",
   placement: "bottom-end",
@@ -57723,11 +57726,11 @@ function ViewTypeMenu() {
     return null;
   }
   const activeView = VIEW_LAYOUTS.find((v2) => view.type === v2.type);
-  return /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)(menu_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(menu_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
       menu_exports.Trigger,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
           import_components32.Button,
           {
             size: "compact",
@@ -57737,7 +57740,7 @@ function ViewTypeMenu() {
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(menu_exports.Popup, { children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(menu_exports.Popup, { children: /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
       menu_exports.RadioGroup,
       {
         value: view.type,
@@ -57769,12 +57772,12 @@ function ViewTypeMenu() {
           if (!config) {
             return null;
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
             menu_exports.RadioItem,
             {
               value: layout,
               closeOnClick: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(menu_exports.ItemLabel, { children: config.label })
+              children: /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(menu_exports.ItemLabel, { children: config.label })
             },
             layout
           );
@@ -57796,7 +57799,7 @@ function SortFieldControl() {
       };
     });
   }, [fields2]);
-  return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
     import_components32.SelectControl,
     {
       label: (0, import_i18n57.__)("Sort by"),
@@ -57827,7 +57830,7 @@ function SortDirectionControl() {
   if (!value && view.sort?.field) {
     value = "desc";
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
     import_components32.__experimentalToggleGroupControl,
     {
       className: "dataviews-view-config__sort-direction",
@@ -57852,7 +57855,7 @@ function SortDirectionControl() {
         (0, import_warning.default)("Invalid direction");
       },
       children: SORTING_DIRECTIONS.map((direction) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
           import_components32.__experimentalToggleGroupControlOptionIcon,
           {
             value: direction,
@@ -57871,7 +57874,7 @@ function ItemsPerPageControl() {
   if (!config || !config.perPageSizes || config.perPageSizes.length < 2 || config.perPageSizes.length > 6 || infiniteScrollEnabled) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
     import_components32.__experimentalToggleGroupControl,
     {
       isBlock: true,
@@ -57887,7 +57890,7 @@ function ItemsPerPageControl() {
         });
       },
       children: config.perPageSizes.map((value) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
           import_components32.__experimentalToggleGroupControlOption,
           {
             value,
@@ -57905,7 +57908,7 @@ function ResetViewButton() {
     return null;
   }
   const isDisabled = onReset === false;
-  return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
     import_components32.Button,
     {
       variant: "tertiary",
@@ -57932,7 +57935,7 @@ function DataviewsViewConfigDropdown() {
     (layout) => layout.type === view.type
   );
   const isModified = typeof onReset === "function";
-  return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
     import_components32.Dropdown,
     {
       expandOnMobile: true,
@@ -57941,8 +57944,8 @@ function DataviewsViewConfigDropdown() {
         id: popoverId
       },
       renderToggle: ({ onToggle, isOpen }) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)("div", { className: "dataviews-view-config__toggle-wrapper", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)("div", { className: "dataviews-view-config__toggle-wrapper", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
             import_components32.Button,
             {
               size: "compact",
@@ -57956,22 +57959,22 @@ function DataviewsViewConfigDropdown() {
               "aria-controls": popoverId
             }
           ),
-          isModified && /* @__PURE__ */ (0, import_jsx_runtime280.jsx)("span", { className: "dataviews-view-config__modified-indicator" })
+          isModified && /* @__PURE__ */ (0, import_jsx_runtime281.jsx)("span", { className: "dataviews-view-config__modified-indicator" })
         ] });
       },
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
         import_components32.__experimentalDropdownContentWrapper,
         {
           paddingSize: "medium",
           className: "dataviews-config__popover-content-wrapper",
-          children: /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(
             Stack,
             {
               direction: "column",
               className: "dataviews-view-config",
               gap: "xl",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)(
+                /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(
                   Stack,
                   {
                     direction: "row",
@@ -57979,7 +57982,7 @@ function DataviewsViewConfigDropdown() {
                     align: "center",
                     className: "dataviews-view-config__header",
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
+                      /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
                         import_components32.__experimentalHeading,
                         {
                           level: 2,
@@ -57987,26 +57990,26 @@ function DataviewsViewConfigDropdown() {
                           children: (0, import_i18n57.__)("Appearance")
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(ResetViewButton, {})
+                      /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(ResetViewButton, {})
                     ]
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)(
+                /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(
                     Stack,
                     {
                       direction: "row",
                       gap: "sm",
                       className: "dataviews-view-config__sort-controls",
                       children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(SortFieldControl, {}),
-                        /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(SortDirectionControl, {})
+                        /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(SortFieldControl, {}),
+                        /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(SortDirectionControl, {})
                       ]
                     }
                   ),
-                  !!activeLayout?.viewConfigOptions && /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(activeLayout.viewConfigOptions, {}),
-                  /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(ItemsPerPageControl, {}),
-                  /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(PropertiesSection, {})
+                  !!activeLayout?.viewConfigOptions && /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(activeLayout.viewConfigOptions, {}),
+                  /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(ItemsPerPageControl, {}),
+                  /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(PropertiesSection, {})
                 ] })
               ]
             }
@@ -58017,9 +58020,9 @@ function DataviewsViewConfigDropdown() {
   );
 }
 function _DataViewsViewConfig() {
-  return /* @__PURE__ */ (0, import_jsx_runtime280.jsxs)(import_jsx_runtime280.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(ViewTypeMenu, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(DataviewsViewConfigDropdown, {})
+  return /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(import_jsx_runtime281.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(ViewTypeMenu, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(DataviewsViewConfigDropdown, {})
   ] });
 }
 var DataViewsViewConfig = (0, import_element201.memo)(_DataViewsViewConfig);
@@ -58032,7 +58035,7 @@ var import_element210 = __toESM(require_element(), 1);
 var import_element202 = __toESM(require_element(), 1);
 var import_compose30 = __toESM(require_compose(), 1);
 var import_components33 = __toESM(require_components(), 1);
-var import_jsx_runtime281 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedCheckboxControl = ({
   required,
   customValidity,
@@ -58041,7 +58044,7 @@ var UnforwardedValidatedCheckboxControl = ({
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element202.useRef)(null);
   const mergedRefs = (0, import_compose30.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
     ControlWithError,
     {
       className: "dataviews-validated-control",
@@ -58052,7 +58055,7 @@ var UnforwardedValidatedCheckboxControl = ({
       getValidityTarget: () => validityTargetRef.current?.querySelector(
         'input[type="checkbox"]'
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
         import_components33.CheckboxControl,
         {
           ...restProps
@@ -58068,7 +58071,7 @@ ValidatedCheckboxControl.displayName = "ValidatedCheckboxControl";
 var import_element203 = __toESM(require_element(), 1);
 var import_compose31 = __toESM(require_compose(), 1);
 var import_components34 = __toESM(require_components(), 1);
-var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedComboboxControl = ({
   required,
   customValidity,
@@ -58087,7 +58090,7 @@ var UnforwardedValidatedComboboxControl = ({
   }, [required]);
   return (
     // TODO: Bug - Missing value error is not cleared immediately on change, waits for blur.
-    /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
       ControlWithError,
       {
         className: "dataviews-validated-control",
@@ -58098,7 +58101,7 @@ var UnforwardedValidatedComboboxControl = ({
         getValidityTarget: () => validityTargetRef.current?.querySelector(
           'input[role="combobox"]'
         ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime282.jsx)(import_components34.ComboboxControl, { ...restProps })
+        children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_components34.ComboboxControl, { ...restProps })
       }
     )
   );
@@ -58109,7 +58112,7 @@ ValidatedComboboxControl.displayName = "ValidatedComboboxControl";
 // packages/dataviews/build-module/components/validated-form-controls/form-token-field.mjs
 var import_element204 = __toESM(require_element(), 1);
 var import_components35 = __toESM(require_components(), 1);
-var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedFormTokenField = ({
   required,
   customValidity,
@@ -58117,13 +58120,13 @@ var UnforwardedValidatedFormTokenField = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element204.useRef)(null);
-  return /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(
     "div",
     {
       className: "dataviews-validated-control__wrapper-with-error-delegate",
       ref: forwardedRef,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
           ControlWithError,
           {
             className: "dataviews-validated-control",
@@ -58131,10 +58134,10 @@ var UnforwardedValidatedFormTokenField = ({
             markWhenOptional,
             customValidity,
             getValidityTarget: () => validityTargetRef.current,
-            children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_components35.FormTokenField, { ...restProps })
+            children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(import_components35.FormTokenField, { ...restProps })
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
           "input",
           {
             className: "dataviews-validated-control__error-delegate",
@@ -58163,7 +58166,7 @@ ValidatedFormTokenField.displayName = "ValidatedFormTokenField";
 var import_element205 = __toESM(require_element(), 1);
 var import_compose32 = __toESM(require_compose(), 1);
 var import_components36 = __toESM(require_components(), 1);
-var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedNumberControl = ({
   required,
   customValidity,
@@ -58172,7 +58175,7 @@ var UnforwardedValidatedNumberControl = ({
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element205.useRef)(null);
   const mergedRefs = (0, import_compose32.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
     ControlWithError,
     {
       className: "dataviews-validated-control",
@@ -58180,7 +58183,7 @@ var UnforwardedValidatedNumberControl = ({
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(import_components36.__experimentalNumberControl, { ref: mergedRefs, ...restProps })
+      children: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_components36.__experimentalNumberControl, { ref: mergedRefs, ...restProps })
     }
   );
 };
@@ -58191,7 +58194,7 @@ ValidatedNumberControl.displayName = "ValidatedNumberControl";
 var import_element206 = __toESM(require_element(), 1);
 var import_compose33 = __toESM(require_compose(), 1);
 var import_components37 = __toESM(require_components(), 1);
-var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedRadioControl = ({
   required,
   customValidity,
@@ -58200,7 +58203,7 @@ var UnforwardedValidatedRadioControl = ({
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element206.useRef)(null);
   const mergedRefs = (0, import_compose33.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
     ControlWithError,
     {
       className: "dataviews-validated-control",
@@ -58211,7 +58214,7 @@ var UnforwardedValidatedRadioControl = ({
       getValidityTarget: () => validityTargetRef.current?.querySelector(
         'input[type="radio"]'
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(import_components37.RadioControl, { ...restProps })
+      children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(import_components37.RadioControl, { ...restProps })
     }
   );
 };
@@ -58222,7 +58225,7 @@ ValidatedRadioControl.displayName = "ValidatedRadioControl";
 var import_element207 = __toESM(require_element(), 1);
 var import_compose34 = __toESM(require_compose(), 1);
 var import_components38 = __toESM(require_components(), 1);
-var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedSelectControl = ({
   required,
   customValidity,
@@ -58231,7 +58234,7 @@ var UnforwardedValidatedSelectControl = ({
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element207.useRef)(null);
   const mergedRefs = (0, import_compose34.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
     ControlWithError,
     {
       className: "dataviews-validated-control",
@@ -58239,7 +58242,7 @@ var UnforwardedValidatedSelectControl = ({
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
         import_components38.SelectControl,
         {
           ref: mergedRefs,
@@ -58258,7 +58261,7 @@ ValidatedSelectControl.displayName = "ValidatedSelectControl";
 var import_element208 = __toESM(require_element(), 1);
 var import_compose35 = __toESM(require_compose(), 1);
 var import_components39 = __toESM(require_components(), 1);
-var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedToggleControl = ({
   required,
   customValidity,
@@ -58267,7 +58270,7 @@ var UnforwardedValidatedToggleControl = ({
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element208.useRef)(null);
   const mergedRefs = (0, import_compose35.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
     ControlWithError,
     {
       className: "dataviews-validated-control",
@@ -58275,7 +58278,7 @@ var UnforwardedValidatedToggleControl = ({
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
         import_components39.ToggleControl,
         {
           ref: mergedRefs,
@@ -58292,7 +58295,7 @@ ValidatedToggleControl.displayName = "ValidatedToggleControl";
 // packages/dataviews/build-module/components/validated-form-controls/toggle-group-control.mjs
 var import_element209 = __toESM(require_element(), 1);
 var import_components40 = __toESM(require_components(), 1);
-var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedToggleGroupControl = ({
   required,
   customValidity,
@@ -58301,8 +58304,8 @@ var UnforwardedValidatedToggleGroupControl = ({
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element209.useRef)(null);
   const nameAttr = (0, import_element209.useId)();
-  return /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)("div", { className: "dataviews-validated-control__wrapper-with-error-delegate", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime289.jsxs)("div", { className: "dataviews-validated-control__wrapper-with-error-delegate", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
       ControlWithError,
       {
         className: "dataviews-validated-control",
@@ -58310,10 +58313,10 @@ var UnforwardedValidatedToggleGroupControl = ({
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components40.__experimentalToggleGroupControl, { ref: forwardedRef, ...restProps })
+        children: /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(import_components40.__experimentalToggleGroupControl, { ref: forwardedRef, ...restProps })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
       "input",
       {
         className: "dataviews-validated-control__error-delegate",
@@ -58364,7 +58367,7 @@ function getCustomValidity(isValid2, validity) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
 function Checkbox({
   field,
   onChange,
@@ -58380,7 +58383,7 @@ function Checkbox({
       setValue({ item: data, value: !getValue({ item: data }) })
     );
   }, [data, getValue, onChange, setValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
     ValidatedCheckboxControl,
     {
       required: !!field.isValid?.required,
@@ -58399,7 +58402,7 @@ function Checkbox({
 // packages/dataviews/build-module/components/dataform-controls/combobox.mjs
 var import_components41 = __toESM(require_components(), 1);
 var import_element211 = __toESM(require_element(), 1);
-var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
 function Combobox3({
   data,
   field,
@@ -58418,9 +58421,9 @@ function Combobox3({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(import_components41.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(import_components41.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
     ValidatedComboboxControl,
     {
       required: !!field.isValid?.required,
@@ -58449,7 +58452,7 @@ import { speak as speak4 } from "@wordpress/a11y";
 var import_components42 = __toESM(require_components(), 1);
 var import_element212 = __toESM(require_element(), 1);
 var import_i18n58 = __toESM(require_i18n(), 1);
-var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
 var TIME_UNITS_OPTIONS = {
   [OPERATOR_IN_THE_PAST]: [
     { value: "days", label: (0, import_i18n58.__)("Days") },
@@ -58495,7 +58498,7 @@ function RelativeDateControl({
     ),
     [onChange, setValue, data, relValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
     import_components42.BaseControl,
     {
       id,
@@ -58503,8 +58506,8 @@ function RelativeDateControl({
       label,
       hideLabelFromVision,
       help: description,
-      children: /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)(Stack, { direction: "row", gap: "sm", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime292.jsxs)(Stack, { direction: "row", gap: "sm", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
           import_components42.__experimentalNumberControl,
           {
             className: "dataviews-controls__relative-date-number",
@@ -58516,7 +58519,7 @@ function RelativeDateControl({
             disabled: disabled2
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
           import_components42.SelectControl,
           {
             className: "dataviews-controls__relative-date-unit",
@@ -58595,7 +58598,7 @@ function parseDateTime(dateTimeString) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
-var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
 var formatDateTime = (value) => {
   if (!value) {
     return "";
@@ -58694,15 +58697,15 @@ function CalendarDateTimeControl({
   } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
     displayLabel = `${label} (${(0, import_i18n59.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
     import_components43.BaseControl,
     {
       id,
       label: displayLabel,
       help: description,
       hideLabelFromVision,
-      children: /* @__PURE__ */ (0, import_jsx_runtime292.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
           ValidatedInputControl,
           {
             ref: inputControlRef,
@@ -58718,7 +58721,7 @@ function CalendarDateTimeControl({
             max: maxConstraint ? formatDateTime(maxConstraint) : void 0
           }
         ),
-        !compact && /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
+        !compact && /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
           Calendar,
           {
             style: { width: "100%" },
@@ -58748,7 +58751,7 @@ function DateTime({
   config
 }) {
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
       RelativeDateControl,
       {
         className: "dataviews-controls__datetime",
@@ -58760,7 +58763,7 @@ function DateTime({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
     CalendarDateTimeControl,
     {
       data,
@@ -58780,7 +58783,7 @@ var import_element215 = __toESM(require_element(), 1);
 var import_i18n60 = __toESM(require_i18n(), 1);
 var import_date5 = __toESM(require_date(), 1);
 import { speak as speak5 } from "@wordpress/a11y";
-var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
 var DATE_PRESETS = [
   {
     id: "today",
@@ -58942,9 +58945,9 @@ function ValidatedDateControl({
       setIsTouched(true);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)("div", { onBlur, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)("div", { onBlur, children: [
     children,
-    customValidity && /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+    customValidity && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
       ValidityIndicator,
       {
         type: customValidity.type,
@@ -59037,7 +59040,7 @@ function CalendarDateControl({
   } else if (!isValid2?.required && markWhenOptional) {
     displayLabel = `${label} (${(0, import_i18n60.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
     ValidatedDateControl,
     {
       field,
@@ -59045,7 +59048,7 @@ function CalendarDateControl({
       inputRefs: validityTargetRef,
       isTouched,
       setIsTouched,
-      children: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
         import_components44.BaseControl,
         {
           id,
@@ -59053,8 +59056,8 @@ function CalendarDateControl({
           label: displayLabel,
           help: description,
           hideLabelFromVision,
-          children: /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -59064,7 +59067,7 @@ function CalendarDateControl({
                 children: [
                   DATE_PRESETS.map((preset) => {
                     const isSelected2 = selectedPresetId === preset.id;
-                    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+                    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
                       import_components44.Button,
                       {
                         className: "dataviews-controls__date-preset",
@@ -59079,7 +59082,7 @@ function CalendarDateControl({
                       preset.id
                     );
                   }),
-                  /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
                     import_components44.Button,
                     {
                       className: "dataviews-controls__date-preset",
@@ -59094,7 +59097,7 @@ function CalendarDateControl({
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
               import_components44.__experimentalInputControl,
               {
                 ref: validityTargetRef,
@@ -59109,7 +59112,7 @@ function CalendarDateControl({
                 max: maxConstraint
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
               Calendar,
               {
                 style: { width: "100%" },
@@ -59262,7 +59265,7 @@ function CalendarDateRangeControl({
   } else if (!field.isValid?.required && markWhenOptional) {
     displayLabel = `${label} (${(0, import_i18n60.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
     ValidatedDateControl,
     {
       field,
@@ -59270,7 +59273,7 @@ function CalendarDateRangeControl({
       inputRefs: [fromInputRef, toInputRef],
       isTouched,
       setIsTouched,
-      children: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
         import_components44.BaseControl,
         {
           id,
@@ -59278,8 +59281,8 @@ function CalendarDateRangeControl({
           label: displayLabel,
           help: description,
           hideLabelFromVision,
-          children: /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -59289,7 +59292,7 @@ function CalendarDateRangeControl({
                 children: [
                   DATE_RANGE_PRESETS.map((preset) => {
                     const isSelected2 = selectedPresetId === preset.id;
-                    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+                    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
                       import_components44.Button,
                       {
                         className: "dataviews-controls__date-preset",
@@ -59304,7 +59307,7 @@ function CalendarDateRangeControl({
                       preset.id
                     );
                   }),
-                  /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
                     import_components44.Button,
                     {
                       className: "dataviews-controls__date-preset",
@@ -59319,7 +59322,7 @@ function CalendarDateRangeControl({
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -59327,7 +59330,7 @@ function CalendarDateRangeControl({
                 justify: "space-between",
                 className: "dataviews-controls__date-range-inputs",
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
                     import_components44.__experimentalInputControl,
                     {
                       ref: fromInputRef,
@@ -59342,7 +59345,7 @@ function CalendarDateRangeControl({
                       max: maxConstraint
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
                     import_components44.__experimentalInputControl,
                     {
                       ref: toInputRef,
@@ -59360,7 +59363,7 @@ function CalendarDateRangeControl({
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
               RangeCalendar,
               {
                 style: { width: "100%" },
@@ -59390,7 +59393,7 @@ function DateControl({
   validity
 }) {
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
       RelativeDateControl,
       {
         className: "dataviews-controls__date",
@@ -59403,7 +59406,7 @@ function DateControl({
     );
   }
   if (operator === OPERATOR_BETWEEN) {
-    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
       CalendarDateRangeControl,
       {
         data,
@@ -59415,7 +59418,7 @@ function DateControl({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
     CalendarDateControl,
     {
       data,
@@ -59431,7 +59434,7 @@ function DateControl({
 // packages/dataviews/build-module/components/dataform-controls/select.mjs
 var import_components45 = __toESM(require_components(), 1);
 var import_element216 = __toESM(require_element(), 1);
-var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
 function Select2({
   data,
   field,
@@ -59453,9 +59456,9 @@ function Select2({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components45.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components45.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
     ValidatedSelectControl,
     {
       required: !!field.isValid?.required,
@@ -59474,7 +59477,7 @@ function Select2({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/adaptive-select.mjs
-var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
 var ELEMENTS_THRESHOLD = 10;
 function AdaptiveSelect(props) {
   const { field } = props;
@@ -59483,14 +59486,14 @@ function AdaptiveSelect(props) {
     getElements: field.getElements
   });
   if (elements.length >= ELEMENTS_THRESHOLD) {
-    return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(Combobox3, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(Combobox3, { ...props });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(Select2, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(Select2, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.mjs
 var import_element217 = __toESM(require_element(), 1);
-var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
 function ValidatedText({
   data,
   field,
@@ -59514,7 +59517,7 @@ function ValidatedText({
     ),
     [data, setValue, onChange]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
     ValidatedInputControl,
     {
       required: !!isValid2.required,
@@ -59539,35 +59542,8 @@ function ValidatedText({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/email.mjs
-var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
-function Email({
-  data,
-  field,
-  onChange,
-  hideLabelFromVision,
-  markWhenOptional,
-  validity
-}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
-    ValidatedText,
-    {
-      ...{
-        data,
-        field,
-        onChange,
-        hideLabelFromVision,
-        markWhenOptional,
-        validity,
-        type: "email",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(Icon, { icon: envelope_default }) })
-      }
-    }
-  );
-}
-
-// packages/dataviews/build-module/components/dataform-controls/telephone.mjs
 var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
-function Telephone({
+function Email({
   data,
   field,
   onChange,
@@ -59585,16 +59561,16 @@ function Telephone({
         hideLabelFromVision,
         markWhenOptional,
         validity,
-        type: "tel",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(Icon, { icon: mobile_default }) })
+        type: "email",
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(Icon, { icon: envelope_default }) })
       }
     }
   );
 }
 
-// packages/dataviews/build-module/components/dataform-controls/url.mjs
+// packages/dataviews/build-module/components/dataform-controls/telephone.mjs
 var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
-function Url({
+function Telephone({
   data,
   field,
   onChange,
@@ -59612,8 +59588,35 @@ function Url({
         hideLabelFromVision,
         markWhenOptional,
         validity,
+        type: "tel",
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(Icon, { icon: mobile_default }) })
+      }
+    }
+  );
+}
+
+// packages/dataviews/build-module/components/dataform-controls/url.mjs
+var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
+function Url({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision,
+  markWhenOptional,
+  validity
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
+    ValidatedText,
+    {
+      ...{
+        data,
+        field,
+        onChange,
+        hideLabelFromVision,
+        markWhenOptional,
+        validity,
         type: "url",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(Icon, { icon: link_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(Icon, { icon: link_default }) })
       }
     }
   );
@@ -59623,7 +59626,7 @@ function Url({
 var import_components46 = __toESM(require_components(), 1);
 var import_element218 = __toESM(require_element(), 1);
 var import_i18n61 = __toESM(require_i18n(), 1);
-var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
     return "";
@@ -59646,12 +59649,12 @@ function BetweenControls({
     (newValue) => onChange([min3, toNumberOrEmpty(newValue)]),
     [onChange, min3]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
     import_components46.BaseControl,
     {
       help: (0, import_i18n61.__)("The max. value must be greater than the min. value."),
-      children: /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(import_components46.Flex, { direction: "row", gap: 4, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)(import_components46.Flex, { direction: "row", gap: 4, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
           import_components46.__experimentalNumberControl,
           {
             label: (0, import_i18n61.__)("Min."),
@@ -59662,7 +59665,7 @@ function BetweenControls({
             step
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
           import_components46.__experimentalNumberControl,
           {
             label: (0, import_i18n61.__)("Max."),
@@ -59723,7 +59726,7 @@ function ValidatedNumber({
     )) {
       valueBetween = value;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
       BetweenControls,
       {
         value: valueBetween,
@@ -59733,7 +59736,7 @@ function ValidatedNumber({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
     ValidatedNumberControl,
     {
       required: !!isValid2.required,
@@ -59753,21 +59756,21 @@ function ValidatedNumber({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/integer.mjs
-var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
 function Integer(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(ValidatedNumber, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(ValidatedNumber, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/number.mjs
-var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
 function Number2(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(ValidatedNumber, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(ValidatedNumber, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/radio.mjs
 var import_components47 = __toESM(require_components(), 1);
 var import_element219 = __toESM(require_element(), 1);
-var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
 function Radio({
   data,
   field,
@@ -59788,9 +59791,9 @@ function Radio({
     [data, onChange, setValue]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(import_components47.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(import_components47.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(
     ValidatedRadioControl,
     {
       required: !!field.isValid?.required,
@@ -59809,7 +59812,7 @@ function Radio({
 
 // packages/dataviews/build-module/components/dataform-controls/text.mjs
 var import_element220 = __toESM(require_element(), 1);
-var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
 function Text3({
   data,
   field,
@@ -59820,7 +59823,7 @@ function Text3({
   validity
 }) {
   const { prefix, suffix } = config || {};
-  return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
     ValidatedText,
     {
       ...{
@@ -59841,7 +59844,7 @@ function Text3({
 var import_components48 = __toESM(require_components(), 1);
 var import_element221 = __toESM(require_element(), 1);
 var import_i18n62 = __toESM(require_i18n(), 1);
-var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
 function getStep(timeFormat, values) {
   const tokens = (timeFormat ?? "").replace(/\\./g, "");
   const hasSeconds = tokens.includes("s") || values.some((value) => (parseTime2(value) ?? 0) % 60 !== 0);
@@ -59879,12 +59882,12 @@ function BetweenControls2({
     (newValue) => onChange([from, newValue ?? ""]),
     [onChange, from]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
     import_components48.BaseControl,
     {
       help: (0, import_i18n62.__)("The end time must be later than the start time."),
-      children: /* @__PURE__ */ (0, import_jsx_runtime305.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
           ValidatedInputControl,
           {
             type: "time",
@@ -59898,7 +59901,7 @@ function BetweenControls2({
             max: to || max3
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
           ValidatedInputControl,
           {
             type: "time",
@@ -59959,7 +59962,7 @@ function Time({
         toInputValue(value[1])
       ];
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
       BetweenControls2,
       {
         value: valueBetween,
@@ -59972,7 +59975,7 @@ function Time({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
     ValidatedInputControl,
     {
       required: !!isValid2.required,
@@ -59996,7 +59999,7 @@ function Time({
 
 // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
 var import_element222 = __toESM(require_element(), 1);
-var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
 function Toggle({
   field,
   onChange,
@@ -60012,7 +60015,7 @@ function Toggle({
       setValue({ item: data, value: !getValue({ item: data }) })
     );
   }, [onChange, setValue, data, getValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(
     ValidatedToggleControl,
     {
       required: !!isValid2.required,
@@ -60030,7 +60033,7 @@ function Toggle({
 
 // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
 var import_element223 = __toESM(require_element(), 1);
-var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
 function Textarea3({
   data,
   field,
@@ -60048,7 +60051,7 @@ function Textarea3({
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(
     ValidatedTextareaControl,
     {
       required: !!isValid2.required,
@@ -60072,7 +60075,7 @@ function Textarea3({
 // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
 var import_components49 = __toESM(require_components(), 1);
 var import_element224 = __toESM(require_element(), 1);
-var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
 function ToggleGroup({
   data,
   field,
@@ -60093,13 +60096,13 @@ function ToggleGroup({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(import_components49.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(import_components49.Spinner, {});
   }
   if (elements.length === 0) {
     return null;
   }
   const selectedOption = elements.find((el) => el.value === value);
-  return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(
     ValidatedToggleGroupControl,
     {
       required: !!field.isValid?.required,
@@ -60111,7 +60114,7 @@ function ToggleGroup({
       onChange: onChangeControl,
       value,
       hideLabelFromVision,
-      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(
+      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(
         import_components49.__experimentalToggleGroupControlOption,
         {
           label: el.label,
@@ -60127,7 +60130,7 @@ function ToggleGroup({
 // packages/dataviews/build-module/components/dataform-controls/array.mjs
 var import_components50 = __toESM(require_components(), 1);
 var import_element225 = __toESM(require_element(), 1);
-var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
 function ArrayControl({
   data,
   field,
@@ -60165,9 +60168,9 @@ function ArrayControl({
     [onChange, setValue, data]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(import_components50.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(import_components50.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
     ValidatedFormTokenField,
     {
       required: !!isValid2?.required,
@@ -60206,9 +60209,9 @@ function ArrayControl({
           const element = elements.find(
             (el) => el.value === item
           );
-          return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)("span", { children: element?.label || item });
+          return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)("span", { children: element?.label || item });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)("span", { children: item });
+        return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)("span", { children: item });
       }
     }
   );
@@ -60376,19 +60379,19 @@ var w = function(r3) {
 var import_components51 = __toESM(require_components(), 1);
 var import_element226 = __toESM(require_element(), 1);
 var import_i18n63 = __toESM(require_i18n(), 1);
-var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
 var ColorPickerDropdown = ({
   color,
   onColorChange,
   disabled: disabled2
 }) => {
   const validColor = color && w(color).isValid() ? color : "#ffffff";
-  return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
     import_components51.Dropdown,
     {
       className: "dataviews-controls__color-picker-dropdown",
       popoverProps: { resize: false },
-      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
+      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
         import_components51.Button,
         {
           onClick: onToggle,
@@ -60396,10 +60399,10 @@ var ColorPickerDropdown = ({
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
-          icon: () => /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(import_components51.ColorIndicator, { colorValue: validColor })
+          icon: () => /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(import_components51.ColorIndicator, { colorValue: validColor })
         }
       ),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(import_components51.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(import_components51.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
         import_components51.ColorPicker,
         {
           color: validColor,
@@ -60433,7 +60436,7 @@ function Color({
     },
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
     ValidatedInputControl,
     {
       required: !!field.isValid?.required,
@@ -60448,7 +60451,7 @@ function Color({
       hideLabelFromVision,
       type: "text",
       disabled: disabled2,
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
         ColorPickerDropdown,
         {
           color: value,
@@ -60464,7 +60467,7 @@ function Color({
 var import_components52 = __toESM(require_components(), 1);
 var import_element227 = __toESM(require_element(), 1);
 var import_i18n64 = __toESM(require_i18n(), 1);
-var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
   field,
@@ -60478,7 +60481,7 @@ function Password({
   const toggleVisibility = (0, import_element227.useCallback)(() => {
     setIsVisible((prev) => !prev);
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
     ValidatedText,
     {
       ...{
@@ -60489,7 +60492,7 @@ function Password({
         markWhenOptional,
         validity,
         type: isVisible2 ? "text" : "password",
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
           import_components52.Button,
           {
             icon: isVisible2 ? unseen_default : seen_default,
@@ -60511,7 +60514,7 @@ function hasElements(field) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/index.mjs
-var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
 var FORM_CONTROLS = {
   adaptiveSelect: AdaptiveSelect,
   array: ArrayControl,
@@ -60544,7 +60547,7 @@ function createConfiguredControl(config) {
     return null;
   }
   return function ConfiguredControl(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(BaseControlType, { ...props, config: controlConfig });
+    return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(BaseControlType, { ...props, config: controlConfig });
   };
 }
 function getControl(field, fallback) {
@@ -60642,13 +60645,13 @@ function RenderFromElements({
 }
 
 // packages/dataviews/build-module/field-types/utils/render-default.mjs
-var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
 function render({
   item,
   field
 }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(RenderFromElements, { item, field });
   }
   return field.getValueFormatted({ item, field });
 }
@@ -61449,17 +61452,17 @@ var telephone_default = {
 
 // packages/dataviews/build-module/field-types/color.mjs
 var import_i18n70 = __toESM(require_i18n(), 1);
-var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(RenderFromElements, { item, field });
   }
   const value = get_value_formatted_default_default({ item, field });
   if (!value || !w(value).isValid()) {
     return value;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
       "div",
       {
         style: {
@@ -61472,7 +61475,7 @@ function render3({ item, field }) {
         }
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime314.jsx)("span", { children: value })
+    /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("span", { children: value })
   ] });
 }
 function isValidCustom6(item, field) {
@@ -62083,7 +62086,7 @@ function useInfiniteScroll({
 // packages/dataviews/build-module/dataviews-picker/index.mjs
 var import_element230 = __toESM(require_element(), 1);
 var import_compose37 = __toESM(require_compose(), 1);
-var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
 var isItemClickable = () => false;
 var dataViewsPickerLayouts = VIEW_LAYOUTS.filter(
   (viewLayout) => viewLayout.isPicker
@@ -62100,8 +62103,8 @@ function DefaultUI({
 }) {
   const { view } = (0, import_element230.useContext)(dataviews_context_default);
   const isInfiniteScroll = view.infiniteScrollEnabled;
-  return /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(import_jsx_runtime315.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime316.jsxs)(import_jsx_runtime316.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime316.jsxs)(
       Stack,
       {
         direction: "row",
@@ -62112,7 +62115,7 @@ function DefaultUI({
         }),
         gap: "xs",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime316.jsxs)(
             Stack,
             {
               direction: "row",
@@ -62120,18 +62123,18 @@ function DefaultUI({
               justify: "start",
               className: "dataviews__search",
               children: [
-                search && /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(dataviews_search_default, { label: searchLabel }),
-                /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(toggle_default, {})
+                search && /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(dataviews_search_default, { label: searchLabel }),
+                /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(toggle_default, {})
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(dataviews_view_config_default, {}) })
+          /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(dataviews_view_config_default, {}) })
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
-    /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(DataViewsLayout, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(DataViewsPickerFooter, {})
+    /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
+    /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(DataViewsLayout, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(DataViewsPickerFooter, {})
   ] });
 }
 function DataViewsPicker({
@@ -62218,7 +62221,7 @@ function DataViewsPicker({
   if (!defaultLayouts[view.type]) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
     dataviews_context_default.Provider,
     {
       value: {
@@ -62249,7 +62252,7 @@ function DataViewsPicker({
         hasInitiallyLoaded: true,
         intersectionObserver
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("div", { className: "dataviews-picker-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(DefaultUI, { search, searchLabel }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)("div", { className: "dataviews-picker-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(DefaultUI, { search, searchLabel }) })
     }
   );
 }
@@ -62271,7 +62274,7 @@ var import_element241 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-context/index.mjs
 var import_element231 = __toESM(require_element(), 1);
-var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
 var DataFormContext = (0, import_element231.createContext)({
   fields: []
 });
@@ -62280,7 +62283,7 @@ function DataFormProvider({
   fields: fields2,
   children
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(DataFormContext.Provider, { value: { fields: fields2 }, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(DataFormContext.Provider, { value: { fields: fields2 }, children });
 }
 var dataform_context_default = DataFormContext;
 
@@ -62410,15 +62413,15 @@ function normalizeForm(form) {
 var normalize_form_default = normalizeForm;
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
 function Header6({ title }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-regular__header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_components53.__experimentalHeading, { level: 2, size: 13, children: title }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components53.__experimentalHeading, { level: 2, size: 13, children: title }) })
     }
   );
 }
@@ -62440,9 +62443,9 @@ function FormRegularField({
     [field]
   );
   if (!!field.children) {
-    return /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(import_jsx_runtime317.Fragment, { children: [
-      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(Header6, { title: field.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(import_jsx_runtime318.Fragment, { children: [
+      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(Header6, { title: field.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
         DataFormLayout,
         {
           data,
@@ -62461,30 +62464,30 @@ function FormRegularField({
     return null;
   }
   if (labelPosition === "side") {
-    return /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(
       Stack,
       {
         direction: "row",
         className: "dataforms-layouts-regular__field",
         gap: "sm",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
             "div",
             {
               className: clsx_default(
                 "dataforms-layouts-regular__field-label",
                 `dataforms-layouts-regular__field-label--label-position-${labelPosition}`
               ),
-              children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_components53.BaseControl.VisualLabel, { children: fieldDefinition.label })
+              children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components53.BaseControl.VisualLabel, { children: fieldDefinition.label })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime317.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
             fieldDefinition.render,
             {
               item: data,
               field: fieldDefinition
             }
-          ) : /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+          ) : /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
             fieldDefinition.Edit,
             {
               data,
@@ -62500,16 +62503,16 @@ function FormRegularField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_jsx_runtime317.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(import_jsx_runtime317.Fragment, { children: [
-    !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_components53.BaseControl.VisualLabel, { children: fieldDefinition.label }),
-    /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_jsx_runtime318.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(import_jsx_runtime318.Fragment, { children: [
+    !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components53.BaseControl.VisualLabel, { children: fieldDefinition.label }),
+    /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
       fieldDefinition.render,
       {
         item: data,
         field: fieldDefinition
       }
     )
-  ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
+  ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
     fieldDefinition.Edit,
     {
       data,
@@ -62545,7 +62548,7 @@ var get_label_classname_default = getLabelClassName;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/field-label-content.mjs
 var import_components54 = __toESM(require_components(), 1);
-var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
 function FieldLabelContent({
   showError,
   errorMessage,
@@ -62553,11 +62556,11 @@ function FieldLabelContent({
   errorId
 }) {
   if (!showError) {
-    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_jsx_runtime318.Fragment, { children: fieldLabel });
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(import_jsx_runtime319.Fragment, { children: fieldLabel });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_components54.Icon, { icon: error_default, size: 16 }),
-    /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(VisuallyHidden, { id: errorId, children: errorMessage }),
+  return /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(import_components54.Icon, { icon: error_default, size: 16 }),
+    /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(VisuallyHidden, { id: errorId, children: errorMessage }),
     fieldLabel
   ] });
 }
@@ -62599,7 +62602,7 @@ function getFirstValidationError(validity) {
 var get_first_validation_error_default = getFirstValidationError;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
-var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
 function SummaryButton({
   data,
   field,
@@ -62637,8 +62640,8 @@ function SummaryButton({
     (0, import_i18n72._x)("Edit %s", "field"),
     fieldLabel || ""
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)("div", { className, children: [
-    labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("span", { className: labelClassName, children: /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)("div", { className, children: [
+    labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("span", { className: labelClassName, children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
       field_label_content_default,
       {
         showError,
@@ -62647,7 +62650,7 @@ function SummaryButton({
         errorId
       }
     ) }),
-    labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+    labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
       field_label_content_default,
       {
         showError: true,
@@ -62655,12 +62658,12 @@ function SummaryButton({
         errorId
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
       "span",
       {
         id: `${controlId}`,
         className: "dataforms-layouts-panel__field-control",
-        children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+        children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
           "span",
           {
             style: {
@@ -62670,11 +62673,11 @@ function SummaryButton({
               width: "100%",
               gap: "2px"
             },
-            children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+            children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
               "span",
               {
                 style: { width: "100%" },
-                children: /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
                   summaryField.render,
                   {
                     item: data,
@@ -62685,7 +62688,7 @@ function SummaryButton({
               summaryField.id
             ))
           }
-        ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+        ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
           summaryField.render,
           {
             item: data,
@@ -62695,7 +62698,7 @@ function SummaryButton({
         ))
       }
     ),
-    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
+    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
       import_components55.Button,
       {
         className: "dataforms-layouts-panel__field-trigger-icon",
@@ -63307,7 +63310,7 @@ function useFieldFromFormField(field) {
 var use_field_from_form_field_default = useFieldFromFormField;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
-var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
 function ModalContent({
   data,
   field,
@@ -63364,7 +63367,7 @@ function ModalContent({
   const contentRef = (0, import_element236.useRef)(null);
   const mergedRef = (0, import_compose39.useMergeRefs)([focusOnMountRef, contentRef]);
   useRevealValidity(contentRef, touched);
-  return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime321.jsxs)(
     import_components56.Modal,
     {
       className: "dataforms-layouts-panel__modal",
@@ -63373,14 +63376,14 @@ function ModalContent({
       title: fieldLabel,
       size: "medium",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("div", { ref: mergedRef, children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime321.jsx)("div", { ref: mergedRef, children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
           DataFormLayout,
           {
             data: modalData,
             form,
             onChange: handleOnChange,
             validity,
-            children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
+            children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
               FieldLayout,
               {
                 data: modalData,
@@ -63394,15 +63397,15 @@ function ModalContent({
             )
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime321.jsxs)(
           Stack,
           {
             direction: "row",
             className: "dataforms-layouts-panel__modal-footer",
             gap: "md",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(import_components56.__experimentalSpacer, { style: { flex: 1 } }),
-              /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(import_components56.__experimentalSpacer, { style: { flex: 1 } }),
+              /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
                 import_components56.Button,
                 {
                   variant: "tertiary",
@@ -63411,7 +63414,7 @@ function ModalContent({
                   children: cancelLabel
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
                 import_components56.Button,
                 {
                   variant: "primary",
@@ -63443,8 +63446,8 @@ function PanelModal({
     setIsOpen(false);
     setTouched(true);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)(import_jsx_runtime320.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime321.jsxs)(import_jsx_runtime321.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
       SummaryButton,
       {
         data,
@@ -63458,7 +63461,7 @@ function PanelModal({
         isOpen
       }
     ),
-    isOpen && /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
+    isOpen && /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
       ModalContent,
       {
         data,
@@ -63478,21 +63481,21 @@ var import_components57 = __toESM(require_components(), 1);
 var import_i18n74 = __toESM(require_i18n(), 1);
 var import_element237 = __toESM(require_element(), 1);
 var import_compose40 = __toESM(require_compose(), 1);
-var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
   title,
   onClose
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-panel__dropdown-header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime321.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
-        title && /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(import_components57.__experimentalHeading, { level: 2, size: 13, children: title }),
-        /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(import_components57.__experimentalSpacer, { style: { flex: 1 } }),
-        onClose && /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
+        title && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_components57.__experimentalHeading, { level: 2, size: 13, children: title }),
+        /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_components57.__experimentalSpacer, { style: { flex: 1 } }),
+        onClose && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
           import_components57.Button,
           {
             label: (0, import_i18n74.__)("Close"),
@@ -63511,7 +63514,7 @@ function DropdownContentWithValidation({
 }) {
   const ref = (0, import_element237.useRef)(null);
   useRevealValidity(ref, touched);
-  return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)("div", { ref, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)("div", { ref, children });
 }
 function PanelDropdown({
   data,
@@ -63560,12 +63563,12 @@ function PanelDropdown({
   if (!fieldDefinition) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
     "div",
     {
       ref: setPopoverAnchor,
       className: "dataforms-layouts-panel__field-dropdown-anchor",
-      children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
         import_components57.Dropdown,
         {
           contentClassName: "dataforms-layouts-panel__field-dropdown",
@@ -63576,7 +63579,7 @@ function PanelDropdown({
               setTouched(true);
             }
           },
-          renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+          renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
             SummaryButton,
             {
               data,
@@ -63590,22 +63593,22 @@ function PanelDropdown({
               onClick: onToggle
             }
           ),
-          renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime321.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+          renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
               DropdownHeader,
               {
                 title: fieldLabel,
                 onClose
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
               DataFormLayout,
               {
                 data,
                 form,
                 onChange,
                 validity: formValidity,
-                children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+                children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
                   FieldLayout,
                   {
                     data,
@@ -63628,7 +63631,7 @@ function PanelDropdown({
 var dropdown_default = PanelDropdown;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/index.mjs
-var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
 function FormPanelField({
   data,
   field,
@@ -63637,7 +63640,7 @@ function FormPanelField({
 }) {
   const layout = field.layout;
   if (layout.openAs.type === "modal") {
-    return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(
       modal_default,
       {
         data,
@@ -63647,7 +63650,7 @@ function FormPanelField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(
     dropdown_default,
     {
       data,
@@ -63703,7 +63706,7 @@ function getValidationMessage(validity) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
-var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
 function ValidationBadge({
   validity
 }) {
@@ -63711,11 +63714,11 @@ function ValidationBadge({
   if (!message2) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(Badge, { intent: "high", children: message2 });
+  return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(Badge, { intent: "high", children: message2 });
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
 function isSummaryFieldVisible(summaryField, summaryConfig, isOpen) {
   if (!summaryConfig || Array.isArray(summaryConfig) && summaryConfig.length === 0) {
     return false;
@@ -63756,17 +63759,17 @@ function HeaderContent({
   );
   const hasBadge = touched && layout.isCollapsible;
   const hasSummary = visibleSummaryFields.length > 0 && layout.withHeader;
-  return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(
     Stack,
     {
       align: "center",
       justify: "space-between",
       className: "dataforms-layouts-card__field-header-content",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(card_exports.Title, { children: label }),
-        (hasBadge || hasSummary) && /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(collapsible_card_exports.HeaderDescription, { className: "dataforms-layouts-card__field-header-content-description", children: [
-          hasBadge && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ValidationBadge, { validity }),
-          hasSummary && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(card_exports.Title, { children: label }),
+        (hasBadge || hasSummary) && /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(collapsible_card_exports.HeaderDescription, { className: "dataforms-layouts-card__field-header-content-description", children: [
+          hasBadge && /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(ValidationBadge, { validity }),
+          hasSummary && /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
             summaryField.render,
             {
               item: data,
@@ -63790,9 +63793,9 @@ function BodyContent({
   withHeader
 }) {
   if (field.children) {
-    return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_jsx_runtime324.Fragment, { children: [
-      field.description && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
-      /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(import_jsx_runtime325.Fragment, { children: [
+      field.description && /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
+      /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
         DataFormLayout,
         {
           data,
@@ -63807,7 +63810,7 @@ function BodyContent({
   if (!SingleFieldLayout) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
     SingleFieldLayout,
     {
       data,
@@ -63886,7 +63889,7 @@ function FormCardField({
     label = fieldDefinition.label;
     withHeader = !!label && layout.withHeader;
   }
-  const bodyContent = /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+  const bodyContent = /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
     BodyContent,
     {
       data,
@@ -63899,7 +63902,7 @@ function FormCardField({
       withHeader
     }
   );
-  const headerContent = /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+  const headerContent = /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
     HeaderContent,
     {
       data,
@@ -63912,7 +63915,7 @@ function FormCardField({
     }
   );
   if (withHeader && isCollapsible) {
-    return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(
       collapsible_card_exports.Root,
       {
         className: "dataforms-layouts-card__field",
@@ -63920,8 +63923,8 @@ function FormCardField({
         onOpenChange: handleOpenChange,
         ...focusOutsideProps,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(collapsible_card_exports.Header, { children: headerContent }),
-          /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(collapsible_card_exports.Header, { children: headerContent }),
+          /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
             collapsible_card_exports.Content,
             {
               ref: contentRef,
@@ -63933,14 +63936,14 @@ function FormCardField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)(
     card_exports.Root,
     {
       className: "dataforms-layouts-card__field",
       ...focusOutsideProps,
       children: [
-        withHeader && /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(card_exports.Header, { children: headerContent }),
-        /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(card_exports.Content, { ref: contentRef, onFocus: handleContentFocus, children: bodyContent })
+        withHeader && /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(card_exports.Header, { children: headerContent }),
+        /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(card_exports.Content, { ref: contentRef, onFocus: handleContentFocus, children: bodyContent })
       ]
     }
   );
@@ -63948,19 +63951,19 @@ function FormCardField({
 
 // packages/dataviews/build-module/components/dataform-layouts/row/index.mjs
 var import_components58 = __toESM(require_components(), 1);
-var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
 function Header7({ title }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-row__header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(import_components58.__experimentalHeading, { level: 2, size: 13, children: title }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_components58.__experimentalHeading, { level: 2, size: 13, children: title }) })
     }
   );
 }
-var EMPTY_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(import_jsx_runtime325.Fragment, { children });
+var EMPTY_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_jsx_runtime326.Fragment, { children });
 function FormRowField({
   data,
   field,
@@ -63975,9 +63978,9 @@ function FormRowField({
       layout: DEFAULT_LAYOUT,
       fields: field.children
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
-      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(Header7, { title: field.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(Stack, { direction: "row", align: layout.alignment, gap: "lg", children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime326.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
+      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(Header7, { title: field.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(Stack, { direction: "row", align: layout.alignment, gap: "lg", children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
         DataFormLayout,
         {
           data,
@@ -63985,12 +63988,12 @@ function FormRowField({
           onChange,
           validity: validity?.children,
           as: EMPTY_WRAPPER,
-          children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+          children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
             "div",
             {
               className: "dataforms-layouts-row__field-control",
               style: layout.styles[childField.id],
-              children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
                 FieldLayout,
                 {
                   data,
@@ -64012,7 +64015,7 @@ function FormRowField({
   if (!RegularLayout) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(import_jsx_runtime325.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("div", { className: "dataforms-layouts-row__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_jsx_runtime326.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("div", { className: "dataforms-layouts-row__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
     RegularLayout,
     {
       data,
@@ -64029,7 +64032,7 @@ var import_element239 = __toESM(require_element(), 1);
 var import_i18n76 = __toESM(require_i18n(), 1);
 var import_compose42 = __toESM(require_compose(), 1);
 import { speak as speak7 } from "@wordpress/a11y";
-var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
 function FormDetailsField({
   data,
   field,
@@ -64092,18 +64095,18 @@ function FormDetailsField({
   const summaryField = summaryFieldId ? fields2.find((fieldDef) => fieldDef.id === summaryFieldId) : void 0;
   let summaryContent;
   if (summaryField && summaryField.render) {
-    summaryContent = /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(summaryField.render, { item: data, field: summaryField });
+    summaryContent = /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(summaryField.render, { item: data, field: summaryField });
   } else {
     summaryContent = field.label || (0, import_i18n76.__)("More details");
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime326.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime327.jsxs)(
     "details",
     {
       ref: detailsRef,
       className: "dataforms-layouts-details__details",
       ...focusOutsideProps,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime326.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime327.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime327.jsxs)(
           Stack,
           {
             direction: "row",
@@ -64112,17 +64115,17 @@ function FormDetailsField({
             className: "dataforms-layouts-details__summary-content",
             children: [
               summaryContent,
-              touched && /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(ValidationBadge, { validity })
+              touched && /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(ValidationBadge, { validity })
             ]
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
           "div",
           {
             ref: contentRef,
             className: "dataforms-layouts-details__content",
             onFocus: handleContentFocus,
-            children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
               DataFormLayout,
               {
                 data,
@@ -64139,12 +64142,12 @@ function FormDetailsField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/index.mjs
-var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
 var FORM_FIELD_LAYOUTS = [
   {
     type: "regular",
     component: FormRegularField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
       Stack,
       {
         direction: "column",
@@ -64157,7 +64160,7 @@ var FORM_FIELD_LAYOUTS = [
   {
     type: "panel",
     component: FormPanelField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
       Stack,
       {
         direction: "column",
@@ -64170,7 +64173,7 @@ var FORM_FIELD_LAYOUTS = [
   {
     type: "card",
     component: FormCardField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
       Stack,
       {
         direction: "column",
@@ -64186,13 +64189,13 @@ var FORM_FIELD_LAYOUTS = [
     wrapper: ({
       children,
       layout
-    }) => /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+    }) => /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
       Stack,
       {
         direction: "column",
         className: "dataforms-layouts__wrapper",
         gap: "lg",
-        children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
           Stack,
           {
             direction: "row",
@@ -64214,8 +64217,8 @@ function getFormFieldLayout(type) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
-var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "lg", children });
+var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
+var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "lg", children });
 function DataFormLayout({
   data,
   form,
@@ -64238,7 +64241,7 @@ function DataFormLayout({
     );
   }
   const Wrapper = as ?? getFormFieldLayout(form.layout.type)?.wrapper ?? DEFAULT_WRAPPER;
-  return /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
     const FieldLayout = getFormFieldLayout(formField.layout.type)?.component;
     if (!FieldLayout) {
       return null;
@@ -64255,7 +64258,7 @@ function DataFormLayout({
         markWhenOptional
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
       FieldLayout,
       {
         data,
@@ -64270,7 +64273,7 @@ function DataFormLayout({
 }
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
 function DataForm({
   data,
   form,
@@ -64286,7 +64289,7 @@ function DataForm({
   if (!form.fields) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
     DataFormLayout,
     {
       data,
@@ -64399,7 +64402,7 @@ var import_i18n77 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-preview-chrome/widget-preview-chrome.mjs
 var import_element242 = __toESM(require_element(), 1);
-var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE94 = "data-wp-hash";
 function getRuntime94() {
   const globalScope = globalThis;
@@ -64498,13 +64501,13 @@ function WidgetPreviewChrome({
     }),
     [widget.uuid, widget.type, index2]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)("div", { className: widget_preview_chrome_default.viewport, ...{ inert: "" }, children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)("div", { className: widget_preview_chrome_default.canvas, children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)("div", { className: widget_preview_chrome_default.viewport, ...{ inert: "" }, children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)("div", { className: widget_preview_chrome_default.canvas, children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
     card_exports.Root,
     {
-      render: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)("section", {}),
+      render: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)("section", {}),
       className: widget_preview_chrome_default.card,
       "aria-labelledby": widgetType.title ? titleId : void 0,
-      children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
         WidgetFrame,
         {
           widget,
@@ -64517,7 +64520,7 @@ function WidgetPreviewChrome({
 }
 
 // packages/widget-dashboard/build-module/components/widget-picker/widget-picker.mjs
-var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
 var DEFAULT_VIEW = {
   type: "pickerGrid",
   page: 1,
@@ -64533,7 +64536,7 @@ function WidgetPreview({ item }) {
     () => createDashboardWidget(item, item.example?.attributes),
     [item]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(WidgetPreviewChrome, { widget: exampleWidget, widgetType: item });
+  return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(WidgetPreviewChrome, { widget: exampleWidget, widgetType: item });
 }
 var fields = [
   {
@@ -64587,7 +64590,7 @@ function WidgetPicker({
     ],
     [onSelect]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
     dataviews_picker_default,
     {
       data: widgetTypes,
@@ -64610,7 +64613,7 @@ function WidgetPicker({
 }
 
 // packages/widget-dashboard/build-module/components/widget-inserter/widget-inserter.mjs
-var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
 function WidgetInserter() {
   const { layout, onLayoutChange } = useDashboardInternalContext();
   const { inserterOpen, setInserterOpen } = useDashboardUIContext();
@@ -64629,11 +64632,11 @@ function WidgetInserter() {
   if (!inserterOpen) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(dialog_exports.Root, { open: inserterOpen, onOpenChange: setInserterOpen, children: /* @__PURE__ */ (0, import_jsx_runtime332.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(dialog_exports.Root, { open: inserterOpen, onOpenChange: setInserterOpen, children: /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(
     dialog_exports.Popup,
     {
       size: "full",
-      portal: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(
+      portal: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
         dialog_exports.Portal,
         {
           style: {
@@ -64642,11 +64645,11 @@ function WidgetInserter() {
         }
       ),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime332.jsxs)(dialog_exports.Header, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(dialog_exports.Title, { children: (0, import_i18n78.__)("Add widget") }),
-          /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(dialog_exports.CloseIcon, {})
+        /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(dialog_exports.Header, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(dialog_exports.Title, { children: (0, import_i18n78.__)("Add widget") }),
+          /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(dialog_exports.CloseIcon, {})
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(dialog_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(WidgetPicker, { onSelect: insertWidgets }) })
+        /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(dialog_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(WidgetPicker, { onSelect: insertWidgets }) })
       ]
     }
   ) });
@@ -64667,7 +64670,7 @@ function getWidgetSettingsTitle(widgetType) {
 }
 
 // packages/widget-dashboard/build-module/components/widget-settings/widget-settings.mjs
-var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE95 = "data-wp-hash";
 function getRuntime95() {
   const globalScope = globalThis;
@@ -64841,7 +64844,7 @@ function WidgetSettings() {
   }
   const title = getWidgetSettingsTitle(widgetType);
   const data = widget?.attributes ?? widgetType?.example?.attributes ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
     drawer_exports.Root,
     {
       open,
@@ -64849,12 +64852,12 @@ function WidgetSettings() {
       swipeDirection: "right",
       modal: false,
       disablePointerDismissal: true,
-      children: /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(drawer_exports.Popup, { size: "medium", className: widget_settings_default.popup, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(drawer_exports.Header, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(drawer_exports.Title, { children: title }),
-          /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(drawer_exports.CloseIcon, {})
+      children: /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(drawer_exports.Popup, { size: "medium", className: widget_settings_default.popup, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(drawer_exports.Header, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(drawer_exports.Title, { children: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(drawer_exports.CloseIcon, {})
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(drawer_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(drawer_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
           DataForm,
           {
             data,
@@ -64863,8 +64866,8 @@ function WidgetSettings() {
             onChange: handleChange
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(drawer_exports.Footer, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(drawer_exports.Footer, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
             Button4,
             {
               variant: "minimal",
@@ -64874,7 +64877,7 @@ function WidgetSettings() {
               children: (0, import_i18n80.__)("Cancel")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
             Button4,
             {
               variant: "solid",
@@ -64916,7 +64919,7 @@ function useWidgetSettingsToggle(widget) {
 }
 
 // packages/widget-dashboard/build-module/components/widget-settings/widget-settings-trigger.mjs
-var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
 function WidgetSettingsTrigger({
   widget,
   widgetType
@@ -64928,7 +64931,7 @@ function WidgetSettingsTrigger({
   if (!hasNonPromotedAttributes) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(
     IconButton,
     {
       icon: drawer_right_default,
@@ -64945,16 +64948,16 @@ function WidgetSettingsTrigger({
 var import_element262 = __toESM(require_element(), 1);
 
 // node_modules/@dnd-kit/core/dist/core.esm.js
-var import_react84 = __toESM(require_react());
+var import_react82 = __toESM(require_react());
 var import_react_dom4 = __toESM(require_react_dom());
 
 // node_modules/@dnd-kit/utilities/dist/utilities.esm.js
-var import_react82 = __toESM(require_react());
+var import_react80 = __toESM(require_react());
 function useCombinedRefs() {
   for (var _len = arguments.length, refs = new Array(_len), _key = 0; _key < _len; _key++) {
     refs[_key] = arguments[_key];
   }
-  return (0, import_react82.useMemo)(
+  return (0, import_react80.useMemo)(
     () => (node) => {
       refs.forEach((ref) => ref(node));
     },
@@ -65017,13 +65020,13 @@ function getOwnerDocument(target) {
   }
   return document;
 }
-var useIsomorphicLayoutEffect3 = canUseDOM2 ? import_react82.useLayoutEffect : import_react82.useEffect;
+var useIsomorphicLayoutEffect3 = canUseDOM2 ? import_react80.useLayoutEffect : import_react80.useEffect;
 function useEvent4(handler) {
-  const handlerRef = (0, import_react82.useRef)(handler);
+  const handlerRef = (0, import_react80.useRef)(handler);
   useIsomorphicLayoutEffect3(() => {
     handlerRef.current = handler;
   });
-  return (0, import_react82.useCallback)(function() {
+  return (0, import_react80.useCallback)(function() {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
@@ -65031,11 +65034,11 @@ function useEvent4(handler) {
   }, []);
 }
 function useInterval() {
-  const intervalRef = (0, import_react82.useRef)(null);
-  const set3 = (0, import_react82.useCallback)((listener, duration) => {
+  const intervalRef = (0, import_react80.useRef)(null);
+  const set3 = (0, import_react80.useCallback)((listener, duration) => {
     intervalRef.current = setInterval(listener, duration);
   }, []);
-  const clear = (0, import_react82.useCallback)(() => {
+  const clear = (0, import_react80.useCallback)(() => {
     if (intervalRef.current !== null) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
@@ -65047,7 +65050,7 @@ function useLatestValue(value, dependencies) {
   if (dependencies === void 0) {
     dependencies = [value];
   }
-  const valueRef = (0, import_react82.useRef)(value);
+  const valueRef = (0, import_react80.useRef)(value);
   useIsomorphicLayoutEffect3(() => {
     if (valueRef.current !== value) {
       valueRef.current = value;
@@ -65056,8 +65059,8 @@ function useLatestValue(value, dependencies) {
   return valueRef;
 }
 function useLazyMemo(callback, dependencies) {
-  const valueRef = (0, import_react82.useRef)();
-  return (0, import_react82.useMemo)(
+  const valueRef = (0, import_react80.useRef)();
+  return (0, import_react80.useMemo)(
     () => {
       const newValue = callback(valueRef.current);
       valueRef.current = newValue;
@@ -65069,8 +65072,8 @@ function useLazyMemo(callback, dependencies) {
 }
 function useNodeRef(onChange) {
   const onChangeHandler = useEvent4(onChange);
-  const node = (0, import_react82.useRef)(null);
-  const setNodeRef = (0, import_react82.useCallback)(
+  const node = (0, import_react80.useRef)(null);
+  const setNodeRef = (0, import_react80.useCallback)(
     (element) => {
       if (element !== node.current) {
         onChangeHandler == null ? void 0 : onChangeHandler(element, node.current);
@@ -65083,15 +65086,15 @@ function useNodeRef(onChange) {
   return [node, setNodeRef];
 }
 function usePrevious2(value) {
-  const ref = (0, import_react82.useRef)();
-  (0, import_react82.useEffect)(() => {
+  const ref = (0, import_react80.useRef)();
+  (0, import_react80.useEffect)(() => {
     ref.current = value;
   }, [value]);
   return ref.current;
 }
 var ids = {};
 function useUniqueId(prefix, value) {
-  return (0, import_react82.useMemo)(() => {
+  return (0, import_react80.useMemo)(() => {
     if (value) {
       return value;
     }
@@ -65225,7 +65228,7 @@ function findFirstFocusableNode(element) {
 }
 
 // node_modules/@dnd-kit/accessibility/dist/accessibility.esm.js
-var import_react83 = __toESM(require_react());
+var import_react81 = __toESM(require_react());
 var hiddenStyles = {
   display: "none"
 };
@@ -65234,7 +65237,7 @@ function HiddenText(_ref) {
     id,
     value
   } = _ref;
-  return import_react83.default.createElement("div", {
+  return import_react81.default.createElement("div", {
     id,
     style: hiddenStyles
   }, value);
@@ -65259,7 +65262,7 @@ function LiveRegion(_ref) {
     clipPath: "inset(100%)",
     whiteSpace: "nowrap"
   };
-  return import_react83.default.createElement("div", {
+  return import_react81.default.createElement("div", {
     id,
     style: visuallyHidden2,
     role: "status",
@@ -65268,8 +65271,8 @@ function LiveRegion(_ref) {
   }, announcement);
 }
 function useAnnouncement() {
-  const [announcement, setAnnouncement] = (0, import_react83.useState)("");
-  const announce = (0, import_react83.useCallback)((value) => {
+  const [announcement, setAnnouncement] = (0, import_react81.useState)("");
+  const announce = (0, import_react81.useCallback)((value) => {
     if (value != null) {
       setAnnouncement(value);
     }
@@ -65281,10 +65284,10 @@ function useAnnouncement() {
 }
 
 // node_modules/@dnd-kit/core/dist/core.esm.js
-var DndMonitorContext = /* @__PURE__ */ (0, import_react84.createContext)(null);
+var DndMonitorContext = /* @__PURE__ */ (0, import_react82.createContext)(null);
 function useDndMonitor(listener) {
-  const registerListener = (0, import_react84.useContext)(DndMonitorContext);
-  (0, import_react84.useEffect)(() => {
+  const registerListener = (0, import_react82.useContext)(DndMonitorContext);
+  (0, import_react82.useEffect)(() => {
     if (!registerListener) {
       throw new Error("useDndMonitor must be used within a children of <DndContext>");
     }
@@ -65293,12 +65296,12 @@ function useDndMonitor(listener) {
   }, [listener, registerListener]);
 }
 function useDndMonitorProvider() {
-  const [listeners] = (0, import_react84.useState)(() => /* @__PURE__ */ new Set());
-  const registerListener = (0, import_react84.useCallback)((listener) => {
+  const [listeners] = (0, import_react82.useState)(() => /* @__PURE__ */ new Set());
+  const registerListener = (0, import_react82.useCallback)((listener) => {
     listeners.add(listener);
     return () => listeners.delete(listener);
   }, [listeners]);
-  const dispatch = (0, import_react84.useCallback)((_ref) => {
+  const dispatch = (0, import_react82.useCallback)((_ref) => {
     let {
       type,
       event
@@ -65359,11 +65362,11 @@ function Accessibility(_ref) {
     announcement
   } = useAnnouncement();
   const liveRegionId = useUniqueId("DndLiveRegion");
-  const [mounted, setMounted] = (0, import_react84.useState)(false);
-  (0, import_react84.useEffect)(() => {
+  const [mounted, setMounted] = (0, import_react82.useState)(false);
+  (0, import_react82.useEffect)(() => {
     setMounted(true);
   }, []);
-  useDndMonitor((0, import_react84.useMemo)(() => ({
+  useDndMonitor((0, import_react82.useMemo)(() => ({
     onDragStart(_ref2) {
       let {
         active
@@ -65418,10 +65421,10 @@ function Accessibility(_ref) {
   if (!mounted) {
     return null;
   }
-  const markup = import_react84.default.createElement(import_react84.default.Fragment, null, import_react84.default.createElement(HiddenText, {
+  const markup = import_react82.default.createElement(import_react82.default.Fragment, null, import_react82.default.createElement(HiddenText, {
     id: hiddenTextDescribedById,
     value: screenReaderInstructions.draggable
-  }), import_react84.default.createElement(LiveRegion, {
+  }), import_react82.default.createElement(LiveRegion, {
     id: liveRegionId,
     announcement
   }));
@@ -65441,7 +65444,7 @@ var Action3;
 function noop6() {
 }
 function useSensor(sensor, options) {
-  return (0, import_react84.useMemo)(
+  return (0, import_react82.useMemo)(
     () => ({
       sensor,
       options: options != null ? options : {}
@@ -65454,7 +65457,7 @@ function useSensors() {
   for (var _len = arguments.length, sensors = new Array(_len), _key = 0; _key < _len; _key++) {
     sensors[_key] = arguments[_key];
   }
-  return (0, import_react84.useMemo)(
+  return (0, import_react82.useMemo)(
     () => [...sensors].filter((sensor) => sensor != null),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [...sensors]
@@ -66669,15 +66672,15 @@ function useAutoScroller(_ref) {
     disabled: !enabled
   });
   const [setAutoScrollInterval, clearAutoScrollInterval] = useInterval();
-  const scrollSpeed = (0, import_react84.useRef)({
+  const scrollSpeed = (0, import_react82.useRef)({
     x: 0,
     y: 0
   });
-  const scrollDirection = (0, import_react84.useRef)({
+  const scrollDirection = (0, import_react82.useRef)({
     x: 0,
     y: 0
   });
-  const rect = (0, import_react84.useMemo)(() => {
+  const rect = (0, import_react82.useMemo)(() => {
     switch (activator) {
       case AutoScrollActivator.Pointer:
         return pointerCoordinates ? {
@@ -66690,8 +66693,8 @@ function useAutoScroller(_ref) {
         return draggingRect;
     }
   }, [activator, draggingRect, pointerCoordinates]);
-  const scrollContainerRef = (0, import_react84.useRef)(null);
-  const autoScroll = (0, import_react84.useCallback)(() => {
+  const scrollContainerRef = (0, import_react82.useRef)(null);
+  const autoScroll = (0, import_react82.useCallback)(() => {
     const scrollContainer = scrollContainerRef.current;
     if (!scrollContainer) {
       return;
@@ -66700,8 +66703,8 @@ function useAutoScroller(_ref) {
     const scrollTop = scrollSpeed.current.y * scrollDirection.current.y;
     scrollContainer.scrollBy(scrollLeft, scrollTop);
   }, []);
-  const sortedScrollableAncestors = (0, import_react84.useMemo)(() => order === TraversalOrder.TreeOrder ? [...scrollableAncestors].reverse() : scrollableAncestors, [order, scrollableAncestors]);
-  (0, import_react84.useEffect)(
+  const sortedScrollableAncestors = (0, import_react82.useMemo)(() => order === TraversalOrder.TreeOrder ? [...scrollableAncestors].reverse() : scrollableAncestors, [order, scrollableAncestors]);
+  (0, import_react82.useEffect)(
     () => {
       if (!enabled || !scrollableAncestors.length || !rect) {
         clearAutoScrollInterval();
@@ -66814,7 +66817,7 @@ function useCachedNode(draggableNodes, id) {
   }, [node, id]);
 }
 function useCombineActivators(sensors, getSyntheticHandler) {
-  return (0, import_react84.useMemo)(() => sensors.reduce((accumulator, sensor) => {
+  return (0, import_react82.useMemo)(() => sensors.reduce((accumulator, sensor) => {
     const {
       sensor: Sensor
     } = sensor;
@@ -66842,16 +66845,16 @@ function useDroppableMeasuring(containers, _ref) {
     dependencies,
     config
   } = _ref;
-  const [queue, setQueue] = (0, import_react84.useState)(null);
+  const [queue, setQueue] = (0, import_react82.useState)(null);
   const {
     frequency,
     measure,
     strategy
   } = config;
-  const containersRef = (0, import_react84.useRef)(containers);
+  const containersRef = (0, import_react82.useRef)(containers);
   const disabled2 = isDisabled();
   const disabledRef = useLatestValue(disabled2);
-  const measureDroppableContainers = (0, import_react84.useCallback)(function(ids2) {
+  const measureDroppableContainers = (0, import_react82.useCallback)(function(ids2) {
     if (ids2 === void 0) {
       ids2 = [];
     }
@@ -66865,7 +66868,7 @@ function useDroppableMeasuring(containers, _ref) {
       return value.concat(ids2.filter((id) => !value.includes(id)));
     });
   }, [disabledRef]);
-  const timeoutId = (0, import_react84.useRef)(null);
+  const timeoutId = (0, import_react82.useRef)(null);
   const droppableRects = useLazyMemo((previousValue) => {
     if (disabled2 && !dragging) {
       return defaultValue2;
@@ -66891,10 +66894,10 @@ function useDroppableMeasuring(containers, _ref) {
     }
     return previousValue;
   }, [containers, queue, dragging, disabled2, measure]);
-  (0, import_react84.useEffect)(() => {
+  (0, import_react82.useEffect)(() => {
     containersRef.current = containers;
   }, [containers]);
-  (0, import_react84.useEffect)(
+  (0, import_react82.useEffect)(
     () => {
       if (disabled2) {
         return;
@@ -66904,7 +66907,7 @@ function useDroppableMeasuring(containers, _ref) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [dragging, disabled2]
   );
-  (0, import_react84.useEffect)(
+  (0, import_react82.useEffect)(
     () => {
       if (queue && queue.length > 0) {
         setQueue(null);
@@ -66913,7 +66916,7 @@ function useDroppableMeasuring(containers, _ref) {
     //eslint-disable-next-line react-hooks/exhaustive-deps
     [JSON.stringify(queue)]
   );
-  (0, import_react84.useEffect)(
+  (0, import_react82.useEffect)(
     () => {
       if (disabled2 || typeof frequency !== "number" || timeoutId.current !== null) {
         return;
@@ -66962,7 +66965,7 @@ function useMutationObserver(_ref) {
     disabled: disabled2
   } = _ref;
   const handleMutations = useEvent4(callback);
-  const mutationObserver = (0, import_react84.useMemo)(() => {
+  const mutationObserver = (0, import_react82.useMemo)(() => {
     if (disabled2 || typeof window === "undefined" || typeof window.MutationObserver === "undefined") {
       return void 0;
     }
@@ -66971,7 +66974,7 @@ function useMutationObserver(_ref) {
     } = window;
     return new MutationObserver2(handleMutations);
   }, [handleMutations, disabled2]);
-  (0, import_react84.useEffect)(() => {
+  (0, import_react82.useEffect)(() => {
     return () => mutationObserver == null ? void 0 : mutationObserver.disconnect();
   }, [mutationObserver]);
   return mutationObserver;
@@ -66982,7 +66985,7 @@ function useResizeObserver4(_ref) {
     disabled: disabled2
   } = _ref;
   const handleResize = useEvent4(callback);
-  const resizeObserver = (0, import_react84.useMemo)(
+  const resizeObserver = (0, import_react82.useMemo)(
     () => {
       if (disabled2 || typeof window === "undefined" || typeof window.ResizeObserver === "undefined") {
         return void 0;
@@ -66995,7 +66998,7 @@ function useResizeObserver4(_ref) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [disabled2]
   );
-  (0, import_react84.useEffect)(() => {
+  (0, import_react82.useEffect)(() => {
     return () => resizeObserver == null ? void 0 : resizeObserver.disconnect();
   }, [resizeObserver]);
   return resizeObserver;
@@ -67007,7 +67010,7 @@ function useRect(element, measure, fallbackRect) {
   if (measure === void 0) {
     measure = defaultMeasure;
   }
-  const [rect, setRect] = (0, import_react84.useState)(null);
+  const [rect, setRect] = (0, import_react82.useState)(null);
   function measureRect() {
     setRect((currentRect) => {
       if (!element) {
@@ -67065,7 +67068,7 @@ function useRectDelta(rect) {
 }
 var defaultValue$1 = [];
 function useScrollableAncestors(node) {
-  const previousNode = (0, import_react84.useRef)(node);
+  const previousNode = (0, import_react82.useRef)(node);
   const ancestors = useLazyMemo((previousValue) => {
     if (!node) {
       return defaultValue$1;
@@ -67075,15 +67078,15 @@ function useScrollableAncestors(node) {
     }
     return getScrollableAncestors(node);
   }, [node]);
-  (0, import_react84.useEffect)(() => {
+  (0, import_react82.useEffect)(() => {
     previousNode.current = node;
   }, [node]);
   return ancestors;
 }
 function useScrollOffsets(elements) {
-  const [scrollCoordinates, setScrollCoordinates] = (0, import_react84.useState)(null);
-  const prevElements = (0, import_react84.useRef)(elements);
-  const handleScroll = (0, import_react84.useCallback)((event) => {
+  const [scrollCoordinates, setScrollCoordinates] = (0, import_react82.useState)(null);
+  const prevElements = (0, import_react82.useRef)(elements);
+  const handleScroll = (0, import_react82.useCallback)((event) => {
     const scrollingElement = getScrollableElement(event.target);
     if (!scrollingElement) {
       return;
@@ -67096,7 +67099,7 @@ function useScrollOffsets(elements) {
       return new Map(scrollCoordinates2);
     });
   }, []);
-  (0, import_react84.useEffect)(() => {
+  (0, import_react82.useEffect)(() => {
     const previousElements = prevElements.current;
     if (elements !== previousElements) {
       cleanup(previousElements);
@@ -67124,7 +67127,7 @@ function useScrollOffsets(elements) {
       });
     }
   }, [handleScroll, elements]);
-  return (0, import_react84.useMemo)(() => {
+  return (0, import_react82.useMemo)(() => {
     if (elements.length) {
       return scrollCoordinates ? Array.from(scrollCoordinates.values()).reduce((acc, coordinates) => add(acc, coordinates), defaultCoordinates) : getScrollOffsets(elements);
     }
@@ -67135,15 +67138,15 @@ function useScrollOffsetsDelta(scrollOffsets, dependencies) {
   if (dependencies === void 0) {
     dependencies = [];
   }
-  const initialScrollOffsets = (0, import_react84.useRef)(null);
-  (0, import_react84.useEffect)(
+  const initialScrollOffsets = (0, import_react82.useRef)(null);
+  (0, import_react82.useEffect)(
     () => {
       initialScrollOffsets.current = null;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     dependencies
   );
-  (0, import_react84.useEffect)(() => {
+  (0, import_react82.useEffect)(() => {
     const hasScrollOffsets = scrollOffsets !== defaultCoordinates;
     if (hasScrollOffsets && !initialScrollOffsets.current) {
       initialScrollOffsets.current = scrollOffsets;
@@ -67155,7 +67158,7 @@ function useScrollOffsetsDelta(scrollOffsets, dependencies) {
   return initialScrollOffsets.current ? subtract(scrollOffsets, initialScrollOffsets.current) : defaultCoordinates;
 }
 function useSensorSetup(sensors) {
-  (0, import_react84.useEffect)(
+  (0, import_react82.useEffect)(
     () => {
       if (!canUseDOM2) {
         return;
@@ -67183,7 +67186,7 @@ function useSensorSetup(sensors) {
   );
 }
 function useSyntheticListeners(listeners, id) {
-  return (0, import_react84.useMemo)(() => {
+  return (0, import_react82.useMemo)(() => {
     return listeners.reduce((acc, _ref) => {
       let {
         eventName,
@@ -67197,7 +67200,7 @@ function useSyntheticListeners(listeners, id) {
   }, [listeners, id]);
 }
 function useWindowRect(element) {
-  return (0, import_react84.useMemo)(() => element ? getWindowClientRect(element) : null, [element]);
+  return (0, import_react82.useMemo)(() => element ? getWindowClientRect(element) : null, [element]);
 }
 var defaultValue$2 = [];
 function useRects(elements, measure) {
@@ -67206,7 +67209,7 @@ function useRects(elements, measure) {
   }
   const [firstElement] = elements;
   const windowRect = useWindowRect(firstElement ? getWindow2(firstElement) : null);
-  const [rects, setRects] = (0, import_react84.useState)(defaultValue$2);
+  const [rects, setRects] = (0, import_react82.useState)(defaultValue$2);
   function measureRects() {
     setRects(() => {
       if (!elements.length) {
@@ -67239,8 +67242,8 @@ function useDragOverlayMeasuring(_ref) {
   let {
     measure
   } = _ref;
-  const [rect, setRect] = (0, import_react84.useState)(null);
-  const handleResize = (0, import_react84.useCallback)((entries) => {
+  const [rect, setRect] = (0, import_react82.useState)(null);
+  const handleResize = (0, import_react82.useCallback)((entries) => {
     for (const {
       target
     } of entries) {
@@ -67260,7 +67263,7 @@ function useDragOverlayMeasuring(_ref) {
   const resizeObserver = useResizeObserver4({
     callback: handleResize
   });
-  const handleNodeChange = (0, import_react84.useCallback)((element) => {
+  const handleNodeChange = (0, import_react82.useCallback)((element) => {
     const node = getMeasurableNode(element);
     resizeObserver == null ? void 0 : resizeObserver.disconnect();
     if (node) {
@@ -67269,7 +67272,7 @@ function useDragOverlayMeasuring(_ref) {
     setRect(node ? measure(node) : null);
   }, [measure, resizeObserver]);
   const [nodeRef, setRef2] = useNodeRef(handleNodeChange);
-  return (0, import_react84.useMemo)(() => ({
+  return (0, import_react82.useMemo)(() => ({
     nodeRef,
     rect,
     setRef: setRef2
@@ -67357,8 +67360,8 @@ var defaultInternalContext = {
   over: null,
   measureDroppableContainers: noop6
 };
-var InternalContext = /* @__PURE__ */ (0, import_react84.createContext)(defaultInternalContext);
-var PublicContext = /* @__PURE__ */ (0, import_react84.createContext)(defaultPublicContext);
+var InternalContext = /* @__PURE__ */ (0, import_react82.createContext)(defaultInternalContext);
+var PublicContext = /* @__PURE__ */ (0, import_react82.createContext)(defaultPublicContext);
 function getInitialState() {
   return {
     draggable: {
@@ -67492,10 +67495,10 @@ function RestoreFocus(_ref) {
     active,
     activatorEvent,
     draggableNodes
-  } = (0, import_react84.useContext)(InternalContext);
+  } = (0, import_react82.useContext)(InternalContext);
   const previousActivatorEvent = usePrevious2(activatorEvent);
   const previousActiveId = usePrevious2(active == null ? void 0 : active.id);
-  (0, import_react84.useEffect)(() => {
+  (0, import_react82.useEffect)(() => {
     if (disabled2) {
       return;
     }
@@ -67546,7 +67549,7 @@ function applyModifiers(modifiers, _ref) {
   }, transform) : transform;
 }
 function useMeasuringConfiguration(config) {
-  return (0, import_react84.useMemo)(
+  return (0, import_react82.useMemo)(
     () => ({
       draggable: {
         ...defaultMeasuringConfiguration.draggable,
@@ -67572,7 +67575,7 @@ function useLayoutShiftScrollCompensation(_ref) {
     initialRect,
     config = true
   } = _ref;
-  const initialized = (0, import_react84.useRef)(false);
+  const initialized = (0, import_react82.useRef)(false);
   const {
     x: x2,
     y: y2
@@ -67613,7 +67616,7 @@ function useLayoutShiftScrollCompensation(_ref) {
     }
   }, [activeNode, x2, y2, initialRect, measure]);
 }
-var ActiveDraggableContext = /* @__PURE__ */ (0, import_react84.createContext)({
+var ActiveDraggableContext = /* @__PURE__ */ (0, import_react82.createContext)({
   ...defaultCoordinates,
   scaleX: 1,
   scaleY: 1
@@ -67624,7 +67627,7 @@ var Status;
   Status2[Status2["Initializing"] = 1] = "Initializing";
   Status2[Status2["Initialized"] = 2] = "Initialized";
 })(Status || (Status = {}));
-var DndContext = /* @__PURE__ */ (0, import_react84.memo)(function DndContext2(_ref) {
+var DndContext = /* @__PURE__ */ (0, import_react82.memo)(function DndContext2(_ref) {
   var _sensorContext$curren, _dragOverlay$nodeRef$, _dragOverlay$rect, _over$rect;
   let {
     id,
@@ -67637,10 +67640,10 @@ var DndContext = /* @__PURE__ */ (0, import_react84.memo)(function DndContext2(_
     modifiers,
     ...props
   } = _ref;
-  const store = (0, import_react84.useReducer)(reducer, void 0, getInitialState);
+  const store = (0, import_react82.useReducer)(reducer, void 0, getInitialState);
   const [state, dispatch] = store;
   const [dispatchMonitorEvent, registerMonitorListener] = useDndMonitorProvider();
-  const [status, setStatus] = (0, import_react84.useState)(Status.Uninitialized);
+  const [status, setStatus] = (0, import_react82.useState)(Status.Uninitialized);
   const isInitialized = status === Status.Initialized;
   const {
     draggable: {
@@ -67653,11 +67656,11 @@ var DndContext = /* @__PURE__ */ (0, import_react84.memo)(function DndContext2(_
     }
   } = state;
   const node = activeId != null ? draggableNodes.get(activeId) : null;
-  const activeRects = (0, import_react84.useRef)({
+  const activeRects = (0, import_react82.useRef)({
     initial: null,
     translated: null
   });
-  const active = (0, import_react84.useMemo)(() => {
+  const active = (0, import_react82.useMemo)(() => {
     var _node$data;
     return activeId != null ? {
       id: activeId,
@@ -67666,12 +67669,12 @@ var DndContext = /* @__PURE__ */ (0, import_react84.memo)(function DndContext2(_
       rect: activeRects
     } : null;
   }, [activeId, node]);
-  const activeRef = (0, import_react84.useRef)(null);
-  const [activeSensor, setActiveSensor] = (0, import_react84.useState)(null);
-  const [activatorEvent, setActivatorEvent] = (0, import_react84.useState)(null);
+  const activeRef = (0, import_react82.useRef)(null);
+  const [activeSensor, setActiveSensor] = (0, import_react82.useState)(null);
+  const [activatorEvent, setActivatorEvent] = (0, import_react82.useState)(null);
   const latestProps = useLatestValue(props, Object.values(props));
   const draggableDescribedById = useUniqueId("DndDescribedBy", id);
-  const enabledDroppableContainers = (0, import_react84.useMemo)(() => droppableContainers.getEnabled(), [droppableContainers]);
+  const enabledDroppableContainers = (0, import_react82.useMemo)(() => droppableContainers.getEnabled(), [droppableContainers]);
   const measuringConfiguration = useMeasuringConfiguration(measuring);
   const {
     droppableRects,
@@ -67683,7 +67686,7 @@ var DndContext = /* @__PURE__ */ (0, import_react84.memo)(function DndContext2(_
     config: measuringConfiguration.droppable
   });
   const activeNode = useCachedNode(draggableNodes, activeId);
-  const activationCoordinates = (0, import_react84.useMemo)(() => activatorEvent ? getEventCoordinates(activatorEvent) : null, [activatorEvent]);
+  const activationCoordinates = (0, import_react82.useMemo)(() => activatorEvent ? getEventCoordinates(activatorEvent) : null, [activatorEvent]);
   const autoScrollOptions = getAutoScrollerOptions();
   const initialActiveNodeRect = useInitialRect(activeNode, measuringConfiguration.draggable.measure);
   useLayoutShiftScrollCompensation({
@@ -67694,7 +67697,7 @@ var DndContext = /* @__PURE__ */ (0, import_react84.memo)(function DndContext2(_
   });
   const activeNodeRect = useRect(activeNode, measuringConfiguration.draggable.measure, initialActiveNodeRect);
   const containerNodeRect = useRect(activeNode ? activeNode.parentElement : null);
-  const sensorContext = (0, import_react84.useRef)({
+  const sensorContext = (0, import_react82.useRef)({
     activatorEvent: null,
     active: null,
     activeNode,
@@ -67752,11 +67755,11 @@ var DndContext = /* @__PURE__ */ (0, import_react84.memo)(function DndContext2(_
     pointerCoordinates
   }) : null;
   const overId = getFirstCollision(collisions, "id");
-  const [over, setOver] = (0, import_react84.useState)(null);
+  const [over, setOver] = (0, import_react82.useState)(null);
   const appliedTranslate = usesDragOverlay ? modifiedTranslate : add(modifiedTranslate, activeNodeScrollDelta);
   const transform = adjustScale(appliedTranslate, (_over$rect = over == null ? void 0 : over.rect) != null ? _over$rect : null, activeNodeRect);
-  const activeSensorRef = (0, import_react84.useRef)(null);
-  const instantiateSensor = (0, import_react84.useCallback)(
+  const activeSensorRef = (0, import_react82.useRef)(null);
+  const instantiateSensor = (0, import_react82.useCallback)(
     (event, _ref2) => {
       let {
         sensor: Sensor,
@@ -67914,7 +67917,7 @@ var DndContext = /* @__PURE__ */ (0, import_react84.memo)(function DndContext2(_
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [draggableNodes]
   );
-  const bindActivatorToSensorInstantiator = (0, import_react84.useCallback)((handler, sensor) => {
+  const bindActivatorToSensorInstantiator = (0, import_react82.useCallback)((handler, sensor) => {
     return (event, active2) => {
       const nativeEvent = event.nativeEvent;
       const activeDraggableNode = draggableNodes.get(active2);
@@ -67946,7 +67949,7 @@ var DndContext = /* @__PURE__ */ (0, import_react84.memo)(function DndContext2(_
       setStatus(Status.Initialized);
     }
   }, [activeNodeRect, status]);
-  (0, import_react84.useEffect)(
+  (0, import_react82.useEffect)(
     () => {
       const {
         onDragMove
@@ -67981,7 +67984,7 @@ var DndContext = /* @__PURE__ */ (0, import_react84.memo)(function DndContext2(_
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [scrollAdjustedTranslate.x, scrollAdjustedTranslate.y]
   );
-  (0, import_react84.useEffect)(
+  (0, import_react82.useEffect)(
     () => {
       const {
         active: active2,
@@ -68054,7 +68057,7 @@ var DndContext = /* @__PURE__ */ (0, import_react84.memo)(function DndContext2(_
     scrollableAncestors,
     scrollableAncestorRects
   });
-  const publicContext = (0, import_react84.useMemo)(() => {
+  const publicContext = (0, import_react82.useMemo)(() => {
     const context = {
       active,
       activeNode,
@@ -68076,7 +68079,7 @@ var DndContext = /* @__PURE__ */ (0, import_react84.memo)(function DndContext2(_
     };
     return context;
   }, [active, activeNode, activeNodeRect, activatorEvent, collisions, containerNodeRect, dragOverlay, draggableNodes, droppableContainers, droppableRects, over, measureDroppableContainers, scrollableAncestors, scrollableAncestorRects, measuringConfiguration, measuringScheduled, windowRect]);
-  const internalContext = (0, import_react84.useMemo)(() => {
+  const internalContext = (0, import_react82.useMemo)(() => {
     const context = {
       activatorEvent,
       activators,
@@ -68092,17 +68095,17 @@ var DndContext = /* @__PURE__ */ (0, import_react84.memo)(function DndContext2(_
     };
     return context;
   }, [activatorEvent, activators, active, activeNodeRect, dispatch, draggableDescribedById, draggableNodes, over, measureDroppableContainers]);
-  return import_react84.default.createElement(DndMonitorContext.Provider, {
+  return import_react82.default.createElement(DndMonitorContext.Provider, {
     value: registerMonitorListener
-  }, import_react84.default.createElement(InternalContext.Provider, {
+  }, import_react82.default.createElement(InternalContext.Provider, {
     value: internalContext
-  }, import_react84.default.createElement(PublicContext.Provider, {
+  }, import_react82.default.createElement(PublicContext.Provider, {
     value: publicContext
-  }, import_react84.default.createElement(ActiveDraggableContext.Provider, {
+  }, import_react82.default.createElement(ActiveDraggableContext.Provider, {
     value: transform
-  }, children)), import_react84.default.createElement(RestoreFocus, {
+  }, children)), import_react82.default.createElement(RestoreFocus, {
     disabled: (accessibility == null ? void 0 : accessibility.restoreFocus) === false
-  })), import_react84.default.createElement(Accessibility, {
+  })), import_react82.default.createElement(Accessibility, {
     ...accessibility,
     hiddenTextDescribedById: draggableDescribedById
   }));
@@ -68121,7 +68124,7 @@ var DndContext = /* @__PURE__ */ (0, import_react84.memo)(function DndContext2(_
     };
   }
 });
-var NullContext = /* @__PURE__ */ (0, import_react84.createContext)(null);
+var NullContext = /* @__PURE__ */ (0, import_react82.createContext)(null);
 var defaultRole = "button";
 var ID_PREFIX = "Draggable";
 function useDraggable(_ref) {
@@ -68140,14 +68143,14 @@ function useDraggable(_ref) {
     ariaDescribedById,
     draggableNodes,
     over
-  } = (0, import_react84.useContext)(InternalContext);
+  } = (0, import_react82.useContext)(InternalContext);
   const {
     role = defaultRole,
     roleDescription = "draggable",
     tabIndex = 0
   } = attributes != null ? attributes : {};
   const isDragging = (active == null ? void 0 : active.id) === id;
-  const transform = (0, import_react84.useContext)(isDragging ? ActiveDraggableContext : NullContext);
+  const transform = (0, import_react82.useContext)(isDragging ? ActiveDraggableContext : NullContext);
   const [node, setNodeRef] = useNodeRef();
   const [activatorNode, setActivatorNodeRef] = useNodeRef();
   const listeners = useSyntheticListeners(activators, id);
@@ -68171,7 +68174,7 @@ function useDraggable(_ref) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [draggableNodes, id]
   );
-  const memoizedAttributes = (0, import_react84.useMemo)(() => ({
+  const memoizedAttributes = (0, import_react82.useMemo)(() => ({
     role,
     tabIndex,
     "aria-disabled": disabled2,
@@ -68194,7 +68197,7 @@ function useDraggable(_ref) {
   };
 }
 function useDndContext() {
-  return (0, import_react84.useContext)(PublicContext);
+  return (0, import_react82.useContext)(PublicContext);
 }
 var ID_PREFIX$1 = "Droppable";
 var defaultResizeObserverConfig = {
@@ -68213,13 +68216,13 @@ function useDroppable(_ref) {
     dispatch,
     over,
     measureDroppableContainers
-  } = (0, import_react84.useContext)(InternalContext);
-  const previous = (0, import_react84.useRef)({
+  } = (0, import_react82.useContext)(InternalContext);
+  const previous = (0, import_react82.useRef)({
     disabled: disabled2
   });
-  const resizeObserverConnected = (0, import_react84.useRef)(false);
-  const rect = (0, import_react84.useRef)(null);
-  const callbackId = (0, import_react84.useRef)(null);
+  const resizeObserverConnected = (0, import_react82.useRef)(false);
+  const rect = (0, import_react82.useRef)(null);
+  const callbackId = (0, import_react82.useRef)(null);
   const {
     disabled: resizeObserverDisabled,
     updateMeasurementsFor,
@@ -68229,7 +68232,7 @@ function useDroppable(_ref) {
     ...resizeObserverConfig
   };
   const ids2 = useLatestValue(updateMeasurementsFor != null ? updateMeasurementsFor : id);
-  const handleResize = (0, import_react84.useCallback)(
+  const handleResize = (0, import_react82.useCallback)(
     () => {
       if (!resizeObserverConnected.current) {
         resizeObserverConnected.current = true;
@@ -68250,7 +68253,7 @@ function useDroppable(_ref) {
     callback: handleResize,
     disabled: resizeObserverDisabled || !active
   });
-  const handleNodeChange = (0, import_react84.useCallback)((newElement, previousElement) => {
+  const handleNodeChange = (0, import_react82.useCallback)((newElement, previousElement) => {
     if (!resizeObserver) {
       return;
     }
@@ -68264,7 +68267,7 @@ function useDroppable(_ref) {
   }, [resizeObserver]);
   const [nodeRef, setNodeRef] = useNodeRef(handleNodeChange);
   const dataRef = useLatestValue(data);
-  (0, import_react84.useEffect)(() => {
+  (0, import_react82.useEffect)(() => {
     if (!resizeObserver || !nodeRef.current) {
       return;
     }
@@ -68272,7 +68275,7 @@ function useDroppable(_ref) {
     resizeObserverConnected.current = false;
     resizeObserver.observe(nodeRef.current);
   }, [nodeRef, resizeObserver]);
-  (0, import_react84.useEffect)(
+  (0, import_react82.useEffect)(
     () => {
       dispatch({
         type: Action3.RegisterDroppable,
@@ -68294,7 +68297,7 @@ function useDroppable(_ref) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [id]
   );
-  (0, import_react84.useEffect)(() => {
+  (0, import_react82.useEffect)(() => {
     if (disabled2 !== previous.current.disabled) {
       dispatch({
         type: Action3.SetDroppableDisabled,
@@ -68319,8 +68322,8 @@ function AnimationManager(_ref) {
     animation,
     children
   } = _ref;
-  const [clonedChildren, setClonedChildren] = (0, import_react84.useState)(null);
-  const [element, setElement] = (0, import_react84.useState)(null);
+  const [clonedChildren, setClonedChildren] = (0, import_react82.useState)(null);
+  const [element, setElement] = (0, import_react82.useState)(null);
   const previousChildren = usePrevious2(children);
   if (!children && !clonedChildren && previousChildren) {
     setClonedChildren(previousChildren);
@@ -68339,7 +68342,7 @@ function AnimationManager(_ref) {
       setClonedChildren(null);
     });
   }, [animation, clonedChildren, element]);
-  return import_react84.default.createElement(import_react84.default.Fragment, null, children, clonedChildren ? (0, import_react84.cloneElement)(clonedChildren, {
+  return import_react82.default.createElement(import_react82.default.Fragment, null, children, clonedChildren ? (0, import_react82.cloneElement)(clonedChildren, {
     ref: setElement
   }) : null);
 }
@@ -68353,9 +68356,9 @@ function NullifiedContextProvider(_ref) {
   let {
     children
   } = _ref;
-  return import_react84.default.createElement(InternalContext.Provider, {
+  return import_react82.default.createElement(InternalContext.Provider, {
     value: defaultInternalContext
-  }, import_react84.default.createElement(ActiveDraggableContext.Provider, {
+  }, import_react82.default.createElement(ActiveDraggableContext.Provider, {
     value: defaultTransform
   }, children));
 }
@@ -68367,7 +68370,7 @@ var defaultTransition = (activatorEvent) => {
   const isKeyboardActivator = isKeyboardEvent(activatorEvent);
   return isKeyboardActivator ? "transform 250ms ease" : void 0;
 };
-var PositionedOverlay = /* @__PURE__ */ (0, import_react84.forwardRef)((_ref, ref) => {
+var PositionedOverlay = /* @__PURE__ */ (0, import_react82.forwardRef)((_ref, ref) => {
   let {
     as,
     activatorEvent,
@@ -68398,7 +68401,7 @@ var PositionedOverlay = /* @__PURE__ */ (0, import_react84.forwardRef)((_ref, re
     transition: typeof transition === "function" ? transition(activatorEvent) : transition,
     ...style
   };
-  return import_react84.default.createElement(as, {
+  return import_react82.default.createElement(as, {
     className,
     style: styles,
     ref
@@ -68588,7 +68591,7 @@ function createDefaultDropAnimation(options) {
 }
 var key = 0;
 function useKey(id) {
-  return (0, import_react84.useMemo)(() => {
+  return (0, import_react82.useMemo)(() => {
     if (id == null) {
       return;
     }
@@ -68596,7 +68599,7 @@ function useKey(id) {
     return key;
   }, [id]);
 }
-var DragOverlay = /* @__PURE__ */ import_react84.default.memo((_ref) => {
+var DragOverlay = /* @__PURE__ */ import_react82.default.memo((_ref) => {
   let {
     adjustScale: adjustScale2 = false,
     children,
@@ -68622,7 +68625,7 @@ var DragOverlay = /* @__PURE__ */ import_react84.default.memo((_ref) => {
     scrollableAncestorRects,
     windowRect
   } = useDndContext();
-  const transform = (0, import_react84.useContext)(ActiveDraggableContext);
+  const transform = (0, import_react82.useContext)(ActiveDraggableContext);
   const key2 = useKey(active == null ? void 0 : active.id);
   const modifiedTransform = applyModifiers(modifiers, {
     activatorEvent,
@@ -68645,9 +68648,9 @@ var DragOverlay = /* @__PURE__ */ import_react84.default.memo((_ref) => {
     measuringConfiguration
   });
   const ref = initialRect ? dragOverlay.setRef : void 0;
-  return import_react84.default.createElement(NullifiedContextProvider, null, import_react84.default.createElement(AnimationManager, {
+  return import_react82.default.createElement(NullifiedContextProvider, null, import_react82.default.createElement(AnimationManager, {
     animation: dropAnimation
-  }, active && key2 ? import_react84.default.createElement(PositionedOverlay, {
+  }, active && key2 ? import_react82.default.createElement(PositionedOverlay, {
     key: key2,
     id: active.id,
     ref,
@@ -68666,7 +68669,7 @@ var DragOverlay = /* @__PURE__ */ import_react84.default.memo((_ref) => {
 });
 
 // node_modules/@dnd-kit/sortable/dist/sortable.esm.js
-var import_react85 = __toESM(require_react());
+var import_react83 = __toESM(require_react());
 function arrayMove(array, from, to) {
   const newArray = array.slice();
   newArray.splice(to < 0 ? newArray.length + to : to, 0, newArray.splice(from, 1)[0]);
@@ -68728,7 +68731,7 @@ var rectSortingStrategy = (_ref) => {
   };
 };
 var ID_PREFIX2 = "Sortable";
-var Context3 = /* @__PURE__ */ import_react85.default.createContext({
+var Context3 = /* @__PURE__ */ import_react83.default.createContext({
   activeIndex: -1,
   containerId: ID_PREFIX2,
   disableTransforms: false,
@@ -68759,11 +68762,11 @@ function SortableContext(_ref) {
   } = useDndContext();
   const containerId = useUniqueId(ID_PREFIX2, id);
   const useDragOverlay = Boolean(dragOverlay.rect !== null);
-  const items = (0, import_react85.useMemo)(() => userDefinedItems.map((item) => typeof item === "object" && "id" in item ? item.id : item), [userDefinedItems]);
+  const items = (0, import_react83.useMemo)(() => userDefinedItems.map((item) => typeof item === "object" && "id" in item ? item.id : item), [userDefinedItems]);
   const isDragging = active != null;
   const activeIndex = active ? items.indexOf(active.id) : -1;
   const overIndex = over ? items.indexOf(over.id) : -1;
-  const previousItemsRef = (0, import_react85.useRef)(items);
+  const previousItemsRef = (0, import_react83.useRef)(items);
   const itemsHaveChanged = !itemsEqual(items, previousItemsRef.current);
   const disableTransforms = overIndex !== -1 && activeIndex === -1 || itemsHaveChanged;
   const disabled2 = normalizeDisabled(disabledProp);
@@ -68772,10 +68775,10 @@ function SortableContext(_ref) {
       measureDroppableContainers(items);
     }
   }, [itemsHaveChanged, items, isDragging, measureDroppableContainers]);
-  (0, import_react85.useEffect)(() => {
+  (0, import_react83.useEffect)(() => {
     previousItemsRef.current = items;
   }, [items]);
-  const contextValue = (0, import_react85.useMemo)(
+  const contextValue = (0, import_react83.useMemo)(
     () => ({
       activeIndex,
       containerId,
@@ -68790,7 +68793,7 @@ function SortableContext(_ref) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [activeIndex, containerId, disabled2.draggable, disabled2.droppable, disableTransforms, items, overIndex, droppableRects, useDragOverlay, strategy]
   );
-  return import_react85.default.createElement(Context3.Provider, {
+  return import_react83.default.createElement(Context3.Provider, {
     value: contextValue
   }, children);
 }
@@ -68846,8 +68849,8 @@ function useDerivedTransform(_ref) {
     node,
     rect
   } = _ref;
-  const [derivedTransform, setDerivedtransform] = (0, import_react85.useState)(null);
-  const previousIndex = (0, import_react85.useRef)(index2);
+  const [derivedTransform, setDerivedtransform] = (0, import_react83.useState)(null);
+  const previousIndex = (0, import_react83.useRef)(index2);
   useIsomorphicLayoutEffect3(() => {
     if (!disabled2 && index2 !== previousIndex.current && node.current) {
       const initial2 = rect.current;
@@ -68870,7 +68873,7 @@ function useDerivedTransform(_ref) {
       previousIndex.current = index2;
     }
   }, [disabled2, index2, node, rect]);
-  (0, import_react85.useEffect)(() => {
+  (0, import_react83.useEffect)(() => {
     if (derivedTransform) {
       setDerivedtransform(null);
     }
@@ -68899,10 +68902,10 @@ function useSortable(_ref) {
     overIndex,
     useDragOverlay,
     strategy: globalStrategy
-  } = (0, import_react85.useContext)(Context3);
+  } = (0, import_react83.useContext)(Context3);
   const disabled2 = normalizeLocalDisabled(localDisabled, globalDisabled);
   const index2 = items.indexOf(id);
-  const data = (0, import_react85.useMemo)(() => ({
+  const data = (0, import_react83.useMemo)(() => ({
     sortable: {
       containerId,
       index: index2,
@@ -68910,7 +68913,7 @@ function useSortable(_ref) {
     },
     ...customData
   }), [containerId, customData, index2, items]);
-  const itemsAfterCurrentSortable = (0, import_react85.useMemo)(() => items.slice(items.indexOf(id)), [items, id]);
+  const itemsAfterCurrentSortable = (0, import_react83.useMemo)(() => items.slice(items.indexOf(id)), [items, id]);
   const {
     rect,
     node,
@@ -68965,7 +68968,7 @@ function useSortable(_ref) {
     overIndex
   }) : index2;
   const activeId = active == null ? void 0 : active.id;
-  const previous = (0, import_react85.useRef)({
+  const previous = (0, import_react83.useRef)({
     activeId,
     items,
     newIndex,
@@ -68992,7 +68995,7 @@ function useSortable(_ref) {
     node,
     rect
   });
-  (0, import_react85.useEffect)(() => {
+  (0, import_react83.useEffect)(() => {
     if (isSorting && previous.current.newIndex !== newIndex) {
       previous.current.newIndex = newIndex;
     }
@@ -69003,7 +69006,7 @@ function useSortable(_ref) {
       previous.current.items = items;
     }
   }, [isSorting, newIndex, containerId, items]);
-  (0, import_react85.useEffect)(() => {
+  (0, import_react83.useEffect)(() => {
     if (activeId === previous.current.activeId) {
       return;
     }
@@ -69201,7 +69204,7 @@ var GRID_ITEM_DATA_KEY = "data-wp-grid-item-key";
 // packages/grid/build-module/shared/resize-handle.mjs
 var import_element247 = __toESM(require_element(), 1);
 var import_compose43 = __toESM(require_compose(), 1);
-var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime336 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE96 = "data-wp-hash";
 function getRuntime96() {
   const globalScope = globalThis;
@@ -69320,7 +69323,7 @@ function ResizeHandle({
   }, [isDragging, verticalResizable]);
   if (renderResizeHandle) {
     const RenderResizeHandle = renderResizeHandle;
-    return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(
       RenderResizeHandle,
       {
         ref: mergedRef,
@@ -69332,7 +69335,7 @@ function ResizeHandle({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(
     "div",
     {
       ref: mergedRef,
@@ -69366,7 +69369,7 @@ function ResizeHandleWrapper(props) {
       props.onResizeEnd();
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(
     DndContext,
     {
       autoScroll: {
@@ -69375,7 +69378,7 @@ function ResizeHandleWrapper(props) {
       },
       onDragMove: handleDragMove,
       onDragEnd: handleDragEnd,
-      children: /* @__PURE__ */ (0, import_jsx_runtime335.jsx)("div", { className: resize_handle_default["resize-handle-slot"], children: /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(ResizeHandle, { ...props }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime336.jsx)("div", { className: resize_handle_default["resize-handle-slot"], children: /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(ResizeHandle, { ...props }) })
     }
   );
 }
@@ -69478,7 +69481,7 @@ function spanBoundsToPixelLimits(bounds, columnWidth, gapPx, rowHeightPx) {
 }
 
 // packages/grid/build-module/dashboard-grid/grid-item.mjs
-var import_jsx_runtime336 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE97 = "data-wp-hash";
 function getRuntime97() {
   const globalScope = globalThis;
@@ -69667,8 +69670,8 @@ function GridItem4({
     width: initialContentSize.width + resizeDelta.width,
     height: verticalResizable ? initialContentSize.height + resizeDelta.height : void 0
   } : void 0;
-  const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(SnapPreviewOverlay, { snap: resizeSnapPreview }) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime336.jsxs)(
+  const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(SnapPreviewOverlay, { snap: resizeSnapPreview }) : null;
+  return /* @__PURE__ */ (0, import_jsx_runtime337.jsxs)(
     "div",
     {
       ref: mergedRef,
@@ -69677,11 +69680,11 @@ function GridItem4({
       ...{ [GRID_ITEM_DATA_KEY]: item.key },
       "data-wp-grid-item-resizing": isResizing || void 0,
       children: [
-        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(
+        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
           "div",
           {
             className: actionable_area_slot_default["actionable-area-slot"],
-            children: /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
               "div",
               {
                 style: { display: "contents" },
@@ -69691,7 +69694,7 @@ function GridItem4({
             )
           }
         ) : null,
-        /* @__PURE__ */ (0, import_jsx_runtime336.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime337.jsxs)(
           "div",
           {
             ref: setActivatorNodeRef,
@@ -69702,7 +69705,7 @@ function GridItem4({
               cursor: getItemCursor(dragDisabled, interacting)
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime336.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime337.jsxs)(
                 "div",
                 {
                   ref: contentMergedRef,
@@ -69710,7 +69713,7 @@ function GridItem4({
                   style: continuousContentStyle,
                   children: [
                     children,
-                    !resizeDisabled && /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(
+                    !resizeDisabled && /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
                       ResizeHandleWrapper,
                       {
                         itemId: item.key,
@@ -69732,7 +69735,7 @@ function GridItem4({
   );
 }
 function SnapPreviewOverlay({ snap }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
     "div",
     {
       className: grid_item_default["preview-overlay"],
@@ -69766,7 +69769,7 @@ function arrayMoveWithPinned(items, from, to, isPinned) {
 
 // packages/grid/build-module/shared/grid-overlay.mjs
 var import_element249 = __toESM(require_element(), 1);
-var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime338 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE98 = "data-wp-hash";
 function getRuntime98() {
   const globalScope = globalThis;
@@ -69870,7 +69873,7 @@ function GridOverlay({
       "--wp-grid-overlay-row-height": `${rowHeight}px`
     } : {}
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(
     "div",
     {
       "aria-hidden": true,
@@ -69880,7 +69883,7 @@ function GridOverlay({
         showRows && grid_overlay_default["has-rows"]
       ),
       style,
-      children: Array.from({ length: columns }, (_column, columnIndex) => /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
+      children: Array.from({ length: columns }, (_column, columnIndex) => /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(
         "div",
         {
           className: grid_overlay_default.column,
@@ -69888,7 +69891,7 @@ function GridOverlay({
             "--wp-grid-overlay-column-index": columnIndex,
             "--wp-grid-overlay-row-index": 0
           },
-          children: showRows && Array.from({ length: rows }, (_row, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
+          children: showRows && Array.from({ length: rows }, (_row, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(
             "div",
             {
               className: grid_overlay_default.row,
@@ -69961,7 +69964,7 @@ function useResizePixelLimits(spanBounds, columnWidth, gapPx, rowHeightPx) {
 }
 
 // packages/grid/build-module/shared/item-exit-overlay.mjs
-var import_jsx_runtime338 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime339 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE99 = "data-wp-hash";
 function getRuntime99() {
   const globalScope = globalThis;
@@ -70052,7 +70055,7 @@ function ItemExitOverlay({
   children,
   onAnimationEnd
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
     "div",
     {
       className: item_exit_animation_default["exit-overlay"],
@@ -70548,7 +70551,7 @@ function createDashboardDragDropAnimation(dragPreviewFrameClassName, exitingFram
 }
 
 // packages/grid/build-module/dashboard-grid/index.mjs
-var import_jsx_runtime339 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime340 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE100 = "data-wp-hash";
 function getRuntime100() {
   const globalScope = globalThis;
@@ -71000,7 +71003,7 @@ var DashboardGrid = (0, import_element253.forwardRef)(
     });
     const activeClone = activeId ? childrenMap.get(activeId) : null;
     const DragPreview = renderDragPreview;
-    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime339.jsx)("div", { className: grid_default2["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime339.jsx)("div", { className: grid_default2["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
+    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime340.jsx)("div", { className: grid_default2["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime340.jsx)("div", { className: grid_default2["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
     const Overlay = renderGridOverlay ?? GridOverlay;
     const overlayRowHeight = typeof rowHeight === "number" ? rowHeight : void 0;
     const overlayRows = (0, import_element253.useMemo)(() => {
@@ -71014,7 +71017,7 @@ var DashboardGrid = (0, import_element253.forwardRef)(
       );
     }, [overlayRowHeight, containerHeight, gapPx]);
     const gridOverlay = (0, import_element253.useMemo)(
-      () => /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
+      () => /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
         Overlay,
         {
           columns: effectiveColumns,
@@ -71053,7 +71056,7 @@ var DashboardGrid = (0, import_element253.forwardRef)(
     (0, import_element253.useLayoutEffect)(() => {
       captureLayoutSnapshotRef.current = captureLayoutSnapshot;
     }, [captureLayoutSnapshot]);
-    return /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime340.jsxs)(
       DndContext,
       {
         sensors,
@@ -71066,7 +71069,7 @@ var DashboardGrid = (0, import_element253.forwardRef)(
           setActiveId(null);
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY, children: /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY, children: /* @__PURE__ */ (0, import_jsx_runtime340.jsxs)(
             "div",
             {
               ...divProps,
@@ -71087,7 +71090,7 @@ var DashboardGrid = (0, import_element253.forwardRef)(
                 gridOverlay,
                 items.map((id) => {
                   const limitsPx = resizeLimitsByKey.get(id);
-                  return /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
                     GridItem4,
                     {
                       item: resolvedItemMap.get(
@@ -71117,7 +71120,7 @@ var DashboardGrid = (0, import_element253.forwardRef)(
                   );
                 }),
                 remaining,
-                exitingItems.map(({ key: key2, rect, child }) => /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
+                exitingItems.map(({ key: key2, rect, child }) => /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
                   ItemExitOverlay,
                   {
                     itemKey: key2,
@@ -71130,7 +71133,7 @@ var DashboardGrid = (0, import_element253.forwardRef)(
               ]
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(DragOverlay, { dropAnimation: dashboardDragDropAnimation, children: dragOverlayContent })
+          /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(DragOverlay, { dropAnimation: dashboardDragDropAnimation, children: dragOverlayContent })
         ]
       }
     );
@@ -71144,7 +71147,7 @@ var import_element256 = __toESM(require_element(), 1);
 // packages/grid/build-module/dashboard-lanes/lanes-item.mjs
 var import_element254 = __toESM(require_element(), 1);
 var import_compose46 = __toESM(require_compose(), 1);
-var import_jsx_runtime340 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime341 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE101 = "data-wp-hash";
 function getRuntime101() {
   const globalScope = globalThis;
@@ -71317,7 +71320,7 @@ function LanesItem({
   const continuousContentStyle = resizeDelta && initialContentSize ? {
     width: initialContentSize.width + resizeDelta.width
   } : void 0;
-  const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
+  const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
     "div",
     {
       className: lanes_item_default["preview-overlay"],
@@ -71327,7 +71330,7 @@ function LanesItem({
       }
     }
   ) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime340.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(
     "div",
     {
       ref: mergedRef,
@@ -71336,11 +71339,11 @@ function LanesItem({
       ...{ [GRID_ITEM_DATA_KEY]: itemKey },
       "data-wp-grid-item-resizing": isResizing || void 0,
       children: [
-        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
+        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
           "div",
           {
             className: actionable_area_slot_default2["actionable-area-slot"],
-            children: /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
               "div",
               {
                 style: { display: "contents" },
@@ -71350,7 +71353,7 @@ function LanesItem({
             )
           }
         ) : null,
-        /* @__PURE__ */ (0, import_jsx_runtime340.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(
           "div",
           {
             ref: setActivatorNodeRef,
@@ -71361,7 +71364,7 @@ function LanesItem({
               cursor: getItemCursor2(dragDisabled, interacting)
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime340.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(
                 "div",
                 {
                   ref: contentMergedRef,
@@ -71369,7 +71372,7 @@ function LanesItem({
                   style: continuousContentStyle,
                   children: [
                     children,
-                    !resizeDisabled && /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
+                    !resizeDisabled && /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
                       ResizeHandleWrapper,
                       {
                         itemId: itemKey,
@@ -71652,7 +71655,7 @@ function useLanePlacement(container, input) {
 }
 
 // packages/grid/build-module/dashboard-lanes/index.mjs
-var import_jsx_runtime341 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE102 = "data-wp-hash";
 function getRuntime102() {
   const globalScope = globalThis;
@@ -72064,10 +72067,10 @@ var DashboardLanes = (0, import_element256.forwardRef)(
     const interacting = activeId !== null || isResizing;
     const activeClone = activeId ? childrenMap.get(activeId) : null;
     const DragPreview = renderDragPreview;
-    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime341.jsx)("div", { className: lanes_default["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)("div", { className: lanes_default["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
+    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime342.jsx)("div", { className: lanes_default["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime342.jsx)("div", { className: lanes_default["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
     const Overlay = renderGridOverlay ?? GridOverlay;
     const gridOverlay = (0, import_element256.useMemo)(
-      () => /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(Overlay, { columns: effectiveColumns, isActive: editMode }),
+      () => /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(Overlay, { columns: effectiveColumns, isActive: editMode }),
       [Overlay, editMode, effectiveColumns]
     );
     const layoutFingerprint = (0, import_element256.useMemo)(() => {
@@ -72093,7 +72096,7 @@ var DashboardLanes = (0, import_element256.forwardRef)(
     (0, import_element256.useLayoutEffect)(() => {
       captureLayoutSnapshotRef.current = captureLayoutSnapshot;
     }, [captureLayoutSnapshot]);
-    return /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime342.jsxs)(
       DndContext,
       {
         sensors,
@@ -72106,7 +72109,7 @@ var DashboardLanes = (0, import_element256.forwardRef)(
           setActiveId(null);
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY2, children: /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY2, children: /* @__PURE__ */ (0, import_jsx_runtime342.jsxs)(
             "div",
             {
               ...divProps,
@@ -72143,7 +72146,7 @@ var DashboardLanes = (0, import_element256.forwardRef)(
                     return null;
                   }
                   const limitsPx = resizeLimitsByKey.get(id);
-                  return /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
                     LanesItem,
                     {
                       itemKey: id,
@@ -72168,7 +72171,7 @@ var DashboardLanes = (0, import_element256.forwardRef)(
                   );
                 }),
                 remaining,
-                exitingItems.map(({ key: key2, rect, child }) => /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
+                exitingItems.map(({ key: key2, rect, child }) => /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
                   ItemExitOverlay,
                   {
                     itemKey: key2,
@@ -72181,7 +72184,7 @@ var DashboardLanes = (0, import_element256.forwardRef)(
               ]
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(DragOverlay, { dropAnimation: dashboardDragDropAnimation2, children: dragOverlayContent })
+          /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(DragOverlay, { dropAnimation: dashboardDragDropAnimation2, children: dragOverlayContent })
         ]
       }
     );
@@ -72242,7 +72245,7 @@ function useDashboardContainerColumnCount(forwardedRef) {
 var import_components59 = __toESM(require_components(), 1);
 var import_i18n82 = __toESM(require_i18n(), 1);
 import { useWidgetHost as useWidgetHost2 } from "@wordpress/widget-primitives";
-var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE103 = "data-wp-hash";
 function getRuntime103() {
   const globalScope = globalThis;
@@ -72336,11 +72339,11 @@ function WidgetActions({
   if (actions.length === 0) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime342.jsx)("span", { ref: reserveRef, className: widget_actions_default["widget-actions"], children: /* @__PURE__ */ (0, import_jsx_runtime342.jsxs)(Menu2, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime343.jsx)("span", { ref: reserveRef, className: widget_actions_default["widget-actions"], children: /* @__PURE__ */ (0, import_jsx_runtime343.jsxs)(Menu2, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
       Menu2.TriggerButton,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
           IconButton,
           {
             icon: more_vertical_default,
@@ -72352,20 +72355,20 @@ function WidgetActions({
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(Menu2.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(Menu2.Group, { className: widget_actions_default["widget-action-items"], children: actions.map((action) => {
+    /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(Menu2.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(Menu2.Group, { className: widget_actions_default["widget-action-items"], children: actions.map((action) => {
       const path = getActionRoute(links, action);
       const HostLink = links?.Link;
-      return /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
         Menu2.Item,
         {
-          prefix: action.icon ? /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(Icon, { icon: action.icon }) : void 0,
-          render: path !== null && HostLink ? /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
+          prefix: action.icon ? /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(Icon, { icon: action.icon }) : void 0,
+          render: path !== null && HostLink ? /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
             Link,
             {
               className: widget_actions_default["widget-action-link"],
-              render: /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(HostLink, { path })
+              render: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(HostLink, { path })
             }
-          ) : /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(
+          ) : /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
             Link,
             {
               href: action.href,
@@ -72388,7 +72391,7 @@ var import_element260 = __toESM(require_element(), 1);
 // packages/widget-dashboard/build-module/components/widget-attributes/attributes-dropdown.mjs
 var import_element258 = __toESM(require_element(), 1);
 var import_i18n83 = __toESM(require_i18n(), 1);
-var import_jsx_runtime343 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime344 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE104 = "data-wp-hash";
 function getRuntime104() {
   const globalScope = globalThis;
@@ -72486,11 +72489,11 @@ function AttributesDropdown({
     }),
     [fields2]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime343.jsxs)(popover_exports.Root, { onOpenChange, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime344.jsxs)(popover_exports.Root, { onOpenChange, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
       popover_exports.Trigger,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
           IconButton,
           {
             icon: settings_default,
@@ -72502,14 +72505,14 @@ function AttributesDropdown({
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
       popover_exports.Popup,
       {
         className: widget_attributes_default["dropdown-popup"],
-        positioner: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(popover_exports.Positioner, { side: "bottom", align: "end" }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime343.jsxs)(Stack, { direction: "column", gap: "lg", align: "flex-end", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(popover_exports.Title, {}), children: (0, import_i18n83.__)("Widget controls") }),
-          /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
+        positioner: /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(popover_exports.Positioner, { side: "bottom", align: "end" }),
+        children: /* @__PURE__ */ (0, import_jsx_runtime344.jsxs)(Stack, { direction: "column", gap: "lg", align: "flex-end", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(popover_exports.Title, {}), children: (0, import_i18n83.__)("Widget controls") }),
+          /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
             DataForm,
             {
               data,
@@ -72518,7 +72521,7 @@ function AttributesDropdown({
               onChange
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(popover_exports.Close, { render: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(Button4, { variant: "solid" }), children: (0, import_i18n83.__)("Close") })
+          /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(popover_exports.Close, { render: /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(Button4, { variant: "solid" }), children: (0, import_i18n83.__)("Close") })
         ] })
       }
     )
@@ -72544,7 +72547,7 @@ function useInlineFit(options = {}) {
 }
 
 // packages/widget-dashboard/build-module/components/widget-attributes/widget-attributes.mjs
-var import_jsx_runtime344 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime345 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE105 = "data-wp-hash";
 function getRuntime105() {
   const globalScope = globalThis;
@@ -72685,8 +72688,8 @@ function WidgetAttributes({
     [layout, onLayoutChange, widget.uuid, scheduleAutoSave]
   );
   const data = widget.attributes ?? widgetType.example?.attributes ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime344.jsxs)(import_jsx_runtime344.Fragment, { children: [
-    !collapsed ? fields2.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime345.jsxs)(import_jsx_runtime345.Fragment, { children: [
+    !collapsed ? fields2.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
       Stack,
       {
         direction: "row",
@@ -72702,7 +72705,7 @@ function WidgetAttributes({
             setInlineHasFocus(false);
           }
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
           DataForm,
           {
             data,
@@ -72712,7 +72715,7 @@ function WidgetAttributes({
           }
         )
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
+    ) : /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
       "span",
       {
         className: widget_attributes_default2["dropdown-area"],
@@ -72724,7 +72727,7 @@ function WidgetAttributes({
             setDropdownTriggerHasFocus(false);
           }
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
           AttributesDropdown,
           {
             fields: fields2,
@@ -72735,12 +72738,12 @@ function WidgetAttributes({
         )
       }
     ),
-    hasSettingsSurface && /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
+    hasSettingsSurface && /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
       "span",
       {
         ref: settingsReserveRef,
         className: widget_attributes_default2["persistent-controls"],
-        children: /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
           WidgetSettingsTrigger,
           {
             widget,
@@ -72755,7 +72758,7 @@ function WidgetAttributes({
 // packages/widget-dashboard/build-module/components/widget-layout-controls/widget-layout-controls.mjs
 var import_components60 = __toESM(require_components(), 1);
 var import_i18n84 = __toESM(require_i18n(), 1);
-var import_jsx_runtime345 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime346 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu3 } = unlock2(import_components60.privateApis);
 function WidgetLayoutControls({
   widget,
@@ -72786,12 +72789,12 @@ function WidgetLayoutControls({
       )
     );
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime345.jsxs)(import_jsx_runtime345.Fragment, { children: [
-    canResize && /* @__PURE__ */ (0, import_jsx_runtime345.jsxs)(Menu3, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime346.jsxs)(import_jsx_runtime346.Fragment, { children: [
+    canResize && /* @__PURE__ */ (0, import_jsx_runtime346.jsxs)(Menu3, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
         Menu3.TriggerButton,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
             IconButton,
             {
               icon: more_vertical_default,
@@ -72803,27 +72806,27 @@ function WidgetLayoutControls({
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(Menu3.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime345.jsxs)(Menu3.Group, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(Menu3.GroupLabel, { children: (0, import_i18n84.__)("Width") }),
-        /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(Menu3.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime346.jsxs)(Menu3.Group, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(Menu3.GroupLabel, { children: (0, import_i18n84.__)("Width") }),
+        /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
           Menu3.Item,
           {
             disabled: width === "fill",
             onClick: () => onNamedWidthChange("fill"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(Menu3.ItemLabel, { children: (0, import_i18n84.__)("Use available width") })
+            children: /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(Menu3.ItemLabel, { children: (0, import_i18n84.__)("Use available width") })
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
           Menu3.Item,
           {
             disabled: width === "full",
             onClick: () => onNamedWidthChange("full"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(Menu3.ItemLabel, { children: (0, import_i18n84.__)("Make full width") })
+            children: /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(Menu3.ItemLabel, { children: (0, import_i18n84.__)("Make full width") })
           }
         )
       ] }) })
     ] }),
-    canRemove && /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
+    canRemove && /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
       IconButton,
       {
         icon: trash_default,
@@ -72838,7 +72841,7 @@ function WidgetLayoutControls({
 }
 
 // packages/widget-dashboard/build-module/components/widget-toolbar/widget-toolbar.mjs
-var import_jsx_runtime346 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime347 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE106 = "data-wp-hash";
 function getRuntime106() {
   const globalScope = globalThis;
@@ -72928,7 +72931,7 @@ function WidgetToolbar({
   editMode = false
 }) {
   const paddingReserveRef = useReserveHeaderPadding("chip");
-  return /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(
     Stack,
     {
       ref: paddingReserveRef,
@@ -72946,7 +72949,7 @@ function WidgetToolbar({
 
 // packages/widget-dashboard/build-module/components/widgets/widget-resize-handle.mjs
 var import_element261 = __toESM(require_element(), 1);
-var import_jsx_runtime347 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime348 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE107 = "data-wp-hash";
 function getRuntime107() {
   const globalScope = globalThis;
@@ -73033,7 +73036,7 @@ if (typeof process === "undefined" || true) {
 var widget_resize_handle_default = { "handle": "a70c7d5347a2f54b__handle", "resizing": "aa1d4aafe4d24e03__resizing", "handle-corner": "_000e7ddc64fb1ac6__handle-corner", "handle-horizontal": "f227b7c826e4b495__handle-horizontal" };
 var WidgetResizeHandle = (0, import_element261.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
   if (!verticalResizable) {
-    return /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
       "div",
       {
         ref,
@@ -73047,7 +73050,7 @@ var WidgetResizeHandle = (0, import_element261.forwardRef)(function WidgetResize
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
     "div",
     {
       ref,
@@ -73063,7 +73066,7 @@ var WidgetResizeHandle = (0, import_element261.forwardRef)(function WidgetResize
 });
 
 // packages/widget-dashboard/build-module/components/widgets/widgets.mjs
-var import_jsx_runtime348 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime349 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE108 = "data-wp-hash";
 function getRuntime108() {
   const globalScope = globalThis;
@@ -73260,7 +73263,7 @@ var Widgets = (0, import_element262.forwardRef)(
       const hasActions = menuActions.length > 0;
       let controls;
       if (editMode) {
-        controls = removable || resizable ? /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
+        controls = removable || resizable ? /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
           WidgetLayoutControls,
           {
             widget,
@@ -73269,21 +73272,21 @@ var Widgets = (0, import_element262.forwardRef)(
           }
         ) : void 0;
       } else if ((hasSettings || hasActions) && widgetType) {
-        controls = /* @__PURE__ */ (0, import_jsx_runtime348.jsxs)(import_jsx_runtime348.Fragment, { children: [
-          hasSettings && /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
+        controls = /* @__PURE__ */ (0, import_jsx_runtime349.jsxs)(import_jsx_runtime349.Fragment, { children: [
+          hasSettings && /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
             WidgetAttributes,
             {
               widget,
               widgetType
             }
           ),
-          hasActions && /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(WidgetActions, { actions: menuActions })
+          hasActions && /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(WidgetActions, { actions: menuActions })
         ] });
       }
-      const toolbar = controls ? /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(WidgetToolbar, { editMode, children: controls }) : void 0;
+      const toolbar = controls ? /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(WidgetToolbar, { editMode, children: controls }) : void 0;
       const inSlot = editMode || isFullBleed;
-      const actionableArea = inSlot && toolbar ? /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(WidgetHeader, { overlay: true, children: toolbar }) : void 0;
-      return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
+      const actionableArea = inSlot && toolbar ? /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(WidgetHeader, { overlay: true, children: toolbar }) : void 0;
+      return /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
         WidgetChrome,
         {
           widget,
@@ -73298,7 +73301,7 @@ var Widgets = (0, import_element262.forwardRef)(
       );
     });
     const renderDragPreview = (0, import_element262.useCallback)(
-      ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime348.jsx)("div", { className: widgets_default["drag-preview"], children: clone }),
+      ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime349.jsx)("div", { className: widgets_default["drag-preview"], children: clone }),
       []
     );
     const sharedRenderProps = {
@@ -73306,7 +73309,7 @@ var Widgets = (0, import_element262.forwardRef)(
       renderDragPreview,
       renderResizeHandle: WidgetResizeHandle
     };
-    const surface = isMasonry ? /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
+    const surface = isMasonry ? /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
       DashboardLanes,
       {
         layout: gridLayout,
@@ -73316,7 +73319,7 @@ var Widgets = (0, import_element262.forwardRef)(
         ...sharedRenderProps,
         children
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
+    ) : /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
       DashboardGrid,
       {
         layout: gridLayout,
@@ -73327,7 +73330,7 @@ var Widgets = (0, import_element262.forwardRef)(
         children
       }
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
       "div",
       {
         ref: containerRef,
@@ -73339,7 +73342,7 @@ var Widgets = (0, import_element262.forwardRef)(
 );
 
 // packages/widget-dashboard/build-module/widget-dashboard.mjs
-var import_jsx_runtime349 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime350 = __toESM(require_jsx_runtime(), 1);
 var WidgetDashboard = Object.assign(
   function WidgetDashboard2({
     layout,
@@ -73353,7 +73356,7 @@ var WidgetDashboard = Object.assign(
     gridSettings,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
       WidgetDashboardProvider,
       {
         layout,
@@ -73365,16 +73368,16 @@ var WidgetDashboard = Object.assign(
         onEditChange,
         resolveWidgetModule,
         gridSettings,
-        children: /* @__PURE__ */ (0, import_jsx_runtime349.jsxs)(WidgetDashboardUIProvider, { children: [
-          children ?? /* @__PURE__ */ (0, import_jsx_runtime349.jsxs)(import_jsx_runtime349.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(NoWidgetsState, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(Actions3, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(Widgets, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(Commands, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime350.jsxs)(WidgetDashboardUIProvider, { children: [
+          children ?? /* @__PURE__ */ (0, import_jsx_runtime350.jsxs)(import_jsx_runtime350.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(NoWidgetsState, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(Actions3, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(Widgets, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(Commands, {})
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(WidgetInserter, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(WidgetSettings, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(ResetConfirmation, {})
+          /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(WidgetInserter, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(WidgetSettings, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(ResetConfirmation, {})
         ] })
       }
     );
@@ -73493,7 +73496,7 @@ if (typeof process === "undefined" || true) {
 var location_picker_default = { "location-input": "_9913e6cb32c68468__location-input" };
 
 // routes/dashboard/field-types/location-picker/location-picker.tsx
-var import_jsx_runtime350 = __toESM(require_jsx_runtime());
+var import_jsx_runtime351 = __toESM(require_jsx_runtime());
 var SEARCH_DEBOUNCE_MS = 500;
 function LocationPicker({
   onSubmit = () => {
@@ -73595,7 +73598,7 @@ function LocationPicker({
       controller.abort();
     };
   }, [locationInput]);
-  return /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
     "form",
     {
       onSubmit: (e2) => {
@@ -73604,8 +73607,8 @@ function LocationPicker({
           onSubmit(locationInput);
         }
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime350.jsxs)(Stack, { direction: "row", align: "start", wrap: "wrap", gap: "sm", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime350.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(Stack, { direction: "row", align: "start", wrap: "wrap", gap: "sm", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(
           autocomplete_exports.Root,
           {
             items: locationOptions,
@@ -73618,12 +73621,12 @@ function LocationPicker({
               }
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
                 autocomplete_exports.Input,
                 {
                   id: locationInputId,
                   className: location_picker_default["location-input"],
-                  render: /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
+                  render: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
                     InputControl,
                     {
                       autoComplete: "off",
@@ -73635,9 +73638,9 @@ function LocationPicker({
                       ) : void 0,
                       onValueChange: () => {
                       },
-                      suffix: /* @__PURE__ */ (0, import_jsx_runtime350.jsxs)(InputLayout3.Slot, { padding: "minimal", children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(autocomplete_exports.Clear, {}),
-                        /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
+                      suffix: /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(InputLayout3.Slot, { padding: "minimal", children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(autocomplete_exports.Clear, {}),
+                        /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
                           IconButton,
                           {
                             icon: map_marker_default,
@@ -73656,7 +73659,7 @@ function LocationPicker({
                   placeholder: (0, import_i18n85.__)("Select city\u2026")
                 }
               ),
-              locationOptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(autocomplete_exports.Popup, { children: /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(autocomplete_exports.List, { children: /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(autocomplete_exports.ListBody, { children: /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(autocomplete_exports.Collection, { children: (item) => /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
+              locationOptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(autocomplete_exports.Popup, { children: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(autocomplete_exports.List, { children: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(autocomplete_exports.ListBody, { children: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(autocomplete_exports.Collection, { children: (item) => /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
                 autocomplete_exports.Item,
                 {
                   value: item,
@@ -73667,7 +73670,7 @@ function LocationPicker({
             ]
           }
         ),
-        selectButton && /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
+        selectButton && /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
           Button4,
           {
             variant: "outline",
@@ -73683,7 +73686,7 @@ function LocationPicker({
 }
 
 // routes/dashboard/field-types/location-control/location-control.tsx
-var import_jsx_runtime351 = __toESM(require_jsx_runtime());
+var import_jsx_runtime352 = __toESM(require_jsx_runtime());
 function LocationControl({
   data,
   field,
@@ -73702,7 +73705,7 @@ function LocationControl({
     },
     [data, field, onChange]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(
     LocationPicker,
     {
       seedInput: value ?? "",
@@ -73823,7 +73826,7 @@ function matchDashboardHref(href, base = window.location.href) {
 }
 
 // routes/dashboard/widget-host/dashboard-widget-host-provider.tsx
-var import_jsx_runtime352 = __toESM(require_jsx_runtime());
+var import_jsx_runtime353 = __toESM(require_jsx_runtime());
 function toRouteTarget(path) {
   const queryStart = path.indexOf("?");
   if (queryStart === -1) {
@@ -73837,7 +73840,7 @@ function toRouteTarget(path) {
   };
 }
 var DashboardRouteLink = (0, import_element265.forwardRef)(function DashboardRouteLink2({ path, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(Link3, { ref, ...toRouteTarget(path), ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(Link3, { ref, ...toRouteTarget(path), ...props });
 });
 function DashboardWidgetHostProvider({
   children
@@ -73851,11 +73854,11 @@ function DashboardWidgetHostProvider({
     }),
     []
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(WidgetHostProvider, { value: host, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(WidgetHostProvider, { value: host, children });
 }
 
 // routes/dashboard/stage.tsx
-var import_jsx_runtime353 = __toESM(require_jsx_runtime());
+var import_jsx_runtime354 = __toESM(require_jsx_runtime());
 registerDashboardFieldTypes();
 function Dashboard() {
   const [layout, setLayout, resetLayout] = useDashboardLayout(
@@ -73880,7 +73883,7 @@ function Dashboard() {
     });
   };
   const pageTitle = editMode ? (0, import_i18n86.__)("Customize Dashboard") : (0, import_i18n86.__)("Dashboard");
-  return /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(DashboardWidgetHostProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(DashboardWidgetHostProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime354.jsxs)(
     WidgetDashboard,
     {
       widgetTypes,
@@ -73892,20 +73895,20 @@ function Dashboard() {
       editMode,
       onEditChange: setEditMode,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime354.jsxs)(
           page_default,
           {
-            breadcrumbs: editMode && isMobileViewport ? void 0 : /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(breadcrumbs_default, { items: [{ label: pageTitle }] }),
+            breadcrumbs: editMode && isMobileViewport ? void 0 : /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(breadcrumbs_default, { items: [{ label: pageTitle }] }),
             ariaLabel: pageTitle,
-            actions: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(WidgetDashboard.Actions, {}),
+            actions: /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(WidgetDashboard.Actions, {}),
             hasPadding: true,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(WidgetDashboard.NoWidgetsState, {}),
-              /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(WidgetDashboard.Widgets, {})
+              /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(WidgetDashboard.NoWidgetsState, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(WidgetDashboard.Widgets, {})
             ]
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(WidgetDashboard.Commands, {})
+        /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(WidgetDashboard.Commands, {})
       ]
     }
   ) });
