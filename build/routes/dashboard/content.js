@@ -45144,7 +45144,8 @@ import { useWidgetHost } from "@wordpress/widget-primitives";
 
 // packages/widget-dashboard/build-module/components/widget-actions/get-action-route.mjs
 function getActionRoute(links, action) {
-  if (!links || action.download || action.openInNewTab) {
+  const isDownload = action.download !== void 0 && action.download !== false;
+  if (!links || isDownload || action.openInNewTab) {
     return null;
   }
   return links.match(action.href);
