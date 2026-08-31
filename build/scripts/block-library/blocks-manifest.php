@@ -4168,6 +4168,9 @@ return array(
 				'__experimentalDefaultControls' => array(
 					'fontSize' => true
 				)
+			),
+			'interactivity' => array(
+				'clientNavigation' => true
 			)
 		),
 		'attributes' => array(

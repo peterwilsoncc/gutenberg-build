@@ -44183,6 +44183,9 @@ ${text}
         __experimentalDefaultControls: {
           fontSize: true
         }
+      },
+      interactivity: {
+        clientNavigation: true
       }
     },
     attributes: {
