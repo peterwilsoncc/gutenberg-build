@@ -97,7 +97,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState73({
+          cachedValue = useState74({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -135,7 +135,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React17 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState73 = React17.useState, useEffect71 = React17.useEffect, useLayoutEffect24 = React17.useLayoutEffect, useDebugValue = React17.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React17 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState74 = React17.useState, useEffect71 = React17.useEffect, useLayoutEffect24 = React17.useLayoutEffect, useDebugValue = React17.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React17.useSyncExternalStore ? React17.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -4900,11 +4900,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore(createStore2, props) {
     const [store, setStore] = React2.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store), [store]);
-    const useState73 = React2.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+    const useState74 = React2.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
     return [React2.useMemo(() => ({
       ...store,
-      useState: useState73
-    }), [store, useState73]), useEvent(() => {
+      useState: useState74
+    }), [store, useState74]), useEvent(() => {
       setStore((store2) => createStore2({
         ...props,
         ...store2.getState()
@@ -52339,64 +52339,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     registerStyle43("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
   var style_module_default40 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
-  function emptyMenuItems() {
-    return {
-      default: {},
-      optional: {}
-    };
-  }
   function emptyState() {
     return {
       panelItems: [],
       menuItemOrder: [],
-      menuItems: emptyMenuItems()
+      menuItemValues: {}
     };
   }
-  var generateMenuItems = ({
-    panelItems,
-    shouldReset,
-    currentMenuItems,
-    menuItemOrder
-  }) => {
-    const newMenuItems = emptyMenuItems();
-    const menuItems = emptyMenuItems();
-    panelItems.forEach(({
-      defaultShown,
-      hasValue,
-      isShownByDefault,
-      label
-    }) => {
-      const group = isShownByDefault ? "default" : "optional";
-      const existingItemValue = currentMenuItems?.[group]?.[label];
-      const initialValue2 = hasValue() || !isShownByDefault && !!defaultShown;
-      const value = existingItemValue ?? initialValue2;
-      newMenuItems[group][label] = shouldReset ? false : value;
-    });
-    menuItemOrder.forEach((key) => {
-      if (newMenuItems.default.hasOwnProperty(key)) {
-        menuItems.default[key] = newMenuItems.default[key];
-      }
-      if (newMenuItems.optional.hasOwnProperty(key)) {
-        menuItems.optional[key] = newMenuItems.optional[key];
-      }
-    });
-    Object.keys(newMenuItems.default).forEach((key) => {
-      if (!menuItems.default.hasOwnProperty(key)) {
-        menuItems.default[key] = newMenuItems.default[key];
-      }
-    });
-    Object.keys(newMenuItems.optional).forEach((key) => {
-      if (!menuItems.optional.hasOwnProperty(key)) {
-        menuItems.optional[key] = newMenuItems.optional[key];
-      }
-    });
-    return menuItems;
-  };
+  var getSeedValue = (item) => item.hasValue() || !item.isShownByDefault && !!item.defaultShown;
+  var getMenuGroup = (item) => item.isShownByDefault ? "default" : "optional";
   function panelItemsReducer(panelItems, action) {
     switch (action.type) {
       case "REGISTER_PANEL": {
+        const existingIndex = panelItems.findIndex((item) => item.label === action.item.label);
         const newItems = [...panelItems];
-        const existingIndex = newItems.findIndex((oldItem) => oldItem.label === action.item.label);
         if (existingIndex !== -1) {
           newItems.splice(existingIndex, 1);
         }
@@ -52405,12 +52361,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       case "UNREGISTER_PANEL": {
         const index2 = panelItems.findIndex((item) => item.label === action.label);
-        if (index2 !== -1) {
-          const newItems = [...panelItems];
-          newItems.splice(index2, 1);
-          return newItems;
+        if (index2 === -1) {
+          return panelItems;
         }
-        return panelItems;
+        if (action.item && panelItems[index2] !== action.item) {
+          return panelItems;
+        }
+        const newItems = [...panelItems];
+        newItems.splice(index2, 1);
+        return newItems;
       }
       default:
         return panelItems;
@@ -52428,66 +52387,74 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         return menuItemOrder;
     }
   }
-  function menuItemsReducer(state, action) {
+  function menuItemValuesReducer(state, action) {
+    const values = state.menuItemValues;
     switch (action.type) {
-      case "REGISTER_PANEL":
-      case "UNREGISTER_PANEL":
-        return generateMenuItems({
-          currentMenuItems: state.menuItems,
-          panelItems: state.panelItems,
-          menuItemOrder: state.menuItemOrder,
-          shouldReset: false
-        });
-      case "RESET_ALL":
-        return generateMenuItems({
-          panelItems: state.panelItems,
-          menuItemOrder: state.menuItemOrder,
-          shouldReset: true
-        });
+      case "REGISTER_PANEL": {
+        if (!values.hasOwnProperty(action.item.label)) {
+          return values;
+        }
+        const {
+          [action.item.label]: unusedValue,
+          ...rest
+        } = values;
+        return rest;
+      }
       case "UPDATE_VALUE": {
-        const oldValue = state.menuItems[action.group][action.label];
-        if (action.value === oldValue) {
-          return state.menuItems;
+        if (values[action.label] === action.value) {
+          return values;
         }
         return {
-          ...state.menuItems,
-          [action.group]: {
-            ...state.menuItems[action.group],
-            [action.label]: action.value
-          }
+          ...values,
+          [action.label]: action.value
         };
       }
       case "TOGGLE_VALUE": {
-        const currentItem = state.panelItems.find((item) => item.label === action.label);
-        if (!currentItem) {
-          return state.menuItems;
+        const item = state.panelItems.find(({
+          label
+        }) => label === action.label);
+        if (!item) {
+          return values;
         }
-        const menuGroup = currentItem.isShownByDefault ? "default" : "optional";
-        const newMenuItems = {
-          ...state.menuItems,
-          [menuGroup]: {
-            ...state.menuItems[menuGroup],
-            [action.label]: !state.menuItems[menuGroup][action.label]
-          }
+        const current = values[action.label] ?? getSeedValue(item);
+        return {
+          ...values,
+          [action.label]: !current
         };
-        return newMenuItems;
+      }
+      case "RESET_ALL": {
+        const hidden = state.panelItems.filter((item) => !item.isShownByDefault && values[item.label] !== false);
+        if (!hidden.length) {
+          return values;
+        }
+        const next2 = {
+          ...values
+        };
+        hidden.forEach(({
+          label
+        }) => {
+          next2[label] = false;
+        });
+        return next2;
       }
       default:
-        return state.menuItems;
+        return values;
     }
   }
   function panelReducer(state, action) {
     const panelItems = panelItemsReducer(state.panelItems, action);
     const menuItemOrder = menuItemOrderReducer(state.menuItemOrder, action);
-    const menuItems = menuItemsReducer({
-      panelItems,
-      menuItemOrder,
-      menuItems: state.menuItems
+    const menuItemValues = menuItemValuesReducer({
+      ...state,
+      panelItems
     }, action);
+    if (panelItems === state.panelItems && menuItemOrder === state.menuItemOrder && menuItemValues === state.menuItemValues) {
+      return state;
+    }
     return {
       panelItems,
       menuItemOrder,
-      menuItems
+      menuItemValues
     };
   }
   function resetAllFiltersReducer(filters, action) {
@@ -52513,28 +52480,29 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       __experimentalLastVisibleItemClass,
       ...otherProps
     } = useContextSystem(props, "ToolsPanel");
-    const isResettingRef = (0, import_element188.useRef)(false);
-    const wasResetting = isResettingRef.current;
+    const [isResetting, setIsResetting] = (0, import_element188.useState)(false);
     (0, import_element188.useEffect)(() => {
-      if (wasResetting) {
-        isResettingRef.current = false;
+      if (isResetting) {
+        setIsResetting(false);
       }
-    }, [wasResetting]);
+    }, [isResetting]);
     const [{
       panelItems,
-      menuItems
+      menuItemOrder,
+      menuItemValues
     }, panelDispatch] = (0, import_element188.useReducer)(panelReducer, void 0, emptyState);
-    const [resetAllFilters, dispatchResetAllFilters] = (0, import_element188.useReducer)(resetAllFiltersReducer, []);
+    const [externalResetAllFilters, dispatchResetAllFilters] = (0, import_element188.useReducer)(resetAllFiltersReducer, []);
     const registerPanelItem = (0, import_element188.useCallback)((item) => {
       panelDispatch({
         type: "REGISTER_PANEL",
         item
       });
     }, []);
-    const deregisterPanelItem = (0, import_element188.useCallback)((label) => {
+    const deregisterPanelItem = (0, import_element188.useCallback)((label, item) => {
       panelDispatch({
         type: "UNREGISTER_PANEL",
-        label
+        label,
+        item
       });
     }, []);
     const registerResetAllFilter = (0, import_element188.useCallback)((filter2) => {
@@ -52549,14 +52517,28 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         filter: filter2
       });
     }, []);
-    const flagItemCustomization = (0, import_element188.useCallback)((value, label, group = "default") => {
+    const flagItemCustomization = (0, import_element188.useCallback)((value, label) => {
       panelDispatch({
         type: "UPDATE_VALUE",
-        group,
         label,
         value
       });
     }, []);
+    const menuItems = (0, import_element188.useMemo)(() => {
+      const result = {
+        default: {},
+        optional: {}
+      };
+      const byLabel = new Map(panelItems.map((item) => [item.label, item]));
+      menuItemOrder.forEach((label) => {
+        const item = byLabel.get(label);
+        if (!item) {
+          return;
+        }
+        result[getMenuGroup(item)][label] = menuItemValues[label] ?? getSeedValue(item);
+      });
+      return result;
+    }, [panelItems, menuItemOrder, menuItemValues]);
     const areAllOptionalControlsHidden = (0, import_element188.useMemo)(() => {
       return isMenuItemTypeEmpty(menuItems.default) && !isMenuItemTypeEmpty(menuItems.optional) && Object.values(menuItems.optional).every((isSelected2) => !isSelected2);
     }, [menuItems]);
@@ -52575,9 +52557,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       currentItem.onShownChange?.(!menuItems.optional[label]);
     }, [menuItems, panelItems]);
+    const resetAllFilters = (0, import_element188.useMemo)(() => {
+      const itemFilters = panelItems.map((item) => item.resetAllFilter).filter((filter2) => !!filter2);
+      return [...itemFilters, ...externalResetAllFilters];
+    }, [panelItems, externalResetAllFilters]);
     const resetAllItems = (0, import_element188.useCallback)(() => {
       if (typeof resetAll === "function") {
-        isResettingRef.current = true;
+        setIsResetting(true);
         resetAll(resetAllFilters);
       }
       panelDispatch({
@@ -52599,7 +52585,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       firstDisplayedItem,
       flagItemCustomization,
       hasMenuItems,
-      isResetting: isResettingRef.current,
+      isResetting,
       lastDisplayedItem,
       menuItems,
       panelId,
@@ -52608,7 +52594,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       shouldRenderPlaceholderItems,
       __experimentalFirstVisibleItemClass,
       __experimentalLastVisibleItemClass
-    }), [areAllOptionalControlsHidden, deregisterPanelItem, deregisterResetAllFilter, firstDisplayedItem, flagItemCustomization, lastDisplayedItem, menuItems, panelId, hasMenuItems, registerResetAllFilter, registerPanelItem, shouldRenderPlaceholderItems, __experimentalFirstVisibleItemClass, __experimentalLastVisibleItemClass]);
+    }), [areAllOptionalControlsHidden, deregisterPanelItem, deregisterResetAllFilter, firstDisplayedItem, flagItemCustomization, isResetting, lastDisplayedItem, menuItems, panelId, hasMenuItems, registerResetAllFilter, registerPanelItem, shouldRenderPlaceholderItems, __experimentalFirstVisibleItemClass, __experimentalLastVisibleItemClass]);
     return {
       ...otherProps,
       headingLevel,
@@ -52757,8 +52743,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       panelId: currentPanelId,
       menuItems,
-      registerResetAllFilter,
-      deregisterResetAllFilter,
       registerPanelItem,
       deregisterPanelItem,
       flagItemCustomization,
@@ -52770,54 +52754,46 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       __experimentalLastVisibleItemClass
     } = useToolsPanelContext();
     const hasValueCallback = (0, import_element189.useCallback)(hasValue, [panelId]);
-    const resetAllFilterCallback = (0, import_element189.useCallback)(resetAllFilter, [panelId]);
+    const resetAllFilterCallback = (0, import_compose75.useEvent)(resetAllFilter);
     const defaultShownRef = (0, import_element189.useRef)(defaultShown);
     (0, import_element189.useLayoutEffect)(() => {
       defaultShownRef.current = defaultShown;
     });
     const onShownChangeCallback = (0, import_compose75.useEvent)(onShownChange);
-    const previousPanelId = (0, import_compose75.usePrevious)(currentPanelId);
     const hasMatchingPanel = currentPanelId === panelId || currentPanelId === null;
     (0, import_element189.useLayoutEffect)(() => {
-      if (hasMatchingPanel && previousPanelId !== null) {
-        registerPanelItem({
-          defaultShown: defaultShownRef.current,
-          hasValue: hasValueCallback,
-          isShownByDefault,
-          label,
-          onShownChange: onShownChangeCallback,
-          panelId
-        });
+      if (!hasMatchingPanel) {
+        return;
       }
-      return () => {
-        if (previousPanelId === null && !!currentPanelId || currentPanelId === panelId) {
-          deregisterPanelItem(label);
-        }
+      const item = {
+        defaultShown: defaultShownRef.current,
+        hasValue: hasValueCallback,
+        isShownByDefault,
+        label,
+        onShownChange: onShownChangeCallback,
+        panelId,
+        resetAllFilter: resetAllFilterCallback
       };
-    }, [currentPanelId, hasMatchingPanel, isShownByDefault, label, hasValueCallback, onShownChangeCallback, panelId, previousPanelId, registerPanelItem, deregisterPanelItem]);
-    (0, import_element189.useEffect)(() => {
-      if (hasMatchingPanel) {
-        registerResetAllFilter(resetAllFilterCallback);
-      }
+      registerPanelItem(item);
       return () => {
-        if (hasMatchingPanel) {
-          deregisterResetAllFilter(resetAllFilterCallback);
-        }
+        deregisterPanelItem(label, item);
       };
-    }, [registerResetAllFilter, deregisterResetAllFilter, resetAllFilterCallback, hasMatchingPanel]);
+    }, [deregisterPanelItem, hasMatchingPanel, hasValueCallback, isShownByDefault, label, onShownChangeCallback, panelId, registerPanelItem, resetAllFilterCallback]);
     const menuGroup = isShownByDefault ? "default" : "optional";
     const isMenuItemChecked = menuItems?.[menuGroup]?.[label];
-    const wasMenuItemChecked = (0, import_compose75.usePrevious)(isMenuItemChecked);
-    const isRegistered = menuItems?.[menuGroup]?.[label] !== void 0;
+    const isRegistered = isMenuItemChecked !== void 0;
+    const wasMenuItemCheckedRef = (0, import_element189.useRef)(void 0);
     const isValueSet = hasValue();
-    (0, import_element189.useEffect)(() => {
+    (0, import_element189.useLayoutEffect)(() => {
       if (!hasMatchingPanel || !isShownByDefault && !isValueSet) {
         return;
       }
-      flagItemCustomization(isValueSet, label, menuGroup);
-    }, [hasMatchingPanel, isValueSet, menuGroup, label, flagItemCustomization, isShownByDefault]);
-    const wasRegistered = wasMenuItemChecked !== void 0;
+      flagItemCustomization(isValueSet, label);
+    }, [hasMatchingPanel, isValueSet, label, flagItemCustomization, isShownByDefault]);
     (0, import_element189.useEffect)(() => {
+      const wasMenuItemChecked = wasMenuItemCheckedRef.current;
+      wasMenuItemCheckedRef.current = isMenuItemChecked;
+      const wasRegistered = wasMenuItemChecked !== void 0;
       if (!isRegistered || !wasRegistered || isResetting || !hasMatchingPanel) {
         return;
       }
@@ -52827,8 +52803,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       if (!isMenuItemChecked && isValueSet && wasMenuItemChecked) {
         onDeselect?.();
       }
-    }, [hasMatchingPanel, isMenuItemChecked, isRegistered, isResetting, isValueSet, wasMenuItemChecked, wasRegistered, onSelect, onDeselect]);
-    const isShown = isShownByDefault ? menuItems?.[menuGroup]?.[label] !== void 0 : isMenuItemChecked;
+    }, [hasMatchingPanel, isMenuItemChecked, isRegistered, isResetting, isValueSet, onSelect, onDeselect]);
+    const isShown = isShownByDefault ? isRegistered : isMenuItemChecked;
     const shouldApplyPlaceholderStyles = shouldRenderPlaceholder && !isShown;
     const classes = clsx_default(style_module_default41["tools-panel-item"], shouldApplyPlaceholderStyles && style_module_default41["tools-panel-item-placeholder"], !shouldApplyPlaceholderStyles && className, firstDisplayedItem === label && __experimentalFirstVisibleItemClass, lastDisplayedItem === label && __experimentalLastVisibleItemClass);
     return {
