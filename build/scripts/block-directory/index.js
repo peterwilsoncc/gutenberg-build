@@ -313,20 +313,6 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/a11y
-  var require_a11y = __commonJS({
-    "package-external:@wordpress/a11y"(exports, module) {
-      module.exports = window.wp.a11y;
-    }
-  });
-
-  // package-external:@wordpress/primitives
-  var require_primitives = __commonJS({
-    "package-external:@wordpress/primitives"(exports, module) {
-      module.exports = window.wp.primitives;
-    }
-  });
-
   // package-external:@wordpress/theme
   var require_theme = __commonJS({
     "package-external:@wordpress/theme"(exports, module) {
@@ -338,6 +324,20 @@ var wp;
   var require_private_apis = __commonJS({
     "package-external:@wordpress/private-apis"(exports, module) {
       module.exports = window.wp.privateApis;
+    }
+  });
+
+  // package-external:@wordpress/primitives
+  var require_primitives = __commonJS({
+    "package-external:@wordpress/primitives"(exports, module) {
+      module.exports = window.wp.primitives;
+    }
+  });
+
+  // package-external:@wordpress/a11y
+  var require_a11y = __commonJS({
+    "package-external:@wordpress/a11y"(exports, module) {
+      module.exports = window.wp.a11y;
     }
   });
 
@@ -9038,43 +9038,6 @@ var wp;
     return useRenderElement(params.defaultTagName ?? "div", params, params);
   }
 
-  // packages/icons/build-module/icon/index.mjs
-  var import_element11 = __toESM(require_element(), 1);
-  var icon_default = (0, import_element11.forwardRef)(
-    ({ icon, size: size4 = 24, style, ...props }, ref) => {
-      const intrinsicStyle = icon.props.style;
-      const mergedStyle = intrinsicStyle || style ? { ...intrinsicStyle, ...style } : void 0;
-      return (0, import_element11.cloneElement)(icon, {
-        width: size4,
-        height: size4,
-        ...props,
-        // Merge styles so the icon's intrinsic style (e.g. `fill: none` on
-        // stroke-based icons) is preserved unless the consumer overrides
-        // the same property explicitly.
-        ...mergedStyle ? { style: mergedStyle } : {},
-        ref
-      });
-    }
-  );
-
-  // packages/icons/build-module/library/star-empty.mjs
-  var import_primitives = __toESM(require_primitives(), 1);
-  var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
-  var star_empty_default = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z", vectorEffect: "non-scaling-stroke" }) });
-
-  // packages/icons/build-module/library/star-filled.mjs
-  var import_primitives2 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-  var star_filled_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives2.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z", fill: "currentColor", vectorEffect: "non-scaling-stroke" }) });
-
-  // packages/icons/build-module/library/star-half.mjs
-  var import_primitives3 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
-  var star_half_default = /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives3.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z", vectorEffect: "non-scaling-stroke" }),
-    /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives3.Path, { d: "M11.4653 15.4048C11.7941 15.232 12 14.8912 12 14.5197V5.71576L10.3894 8.97924C10.2437 9.27438 9.96215 9.47895 9.63644 9.52628L6.03497 10.0496L8.64102 12.5899C8.8767 12.8196 8.98425 13.1506 8.92861 13.475L8.31341 17.0619L11.4653 15.4048Z", fill: "currentColor", stroke: "none" })
-  ] });
-
   // packages/ui/build-module/tooltip/index.mjs
   var tooltip_exports = {};
   __export(tooltip_exports, {
@@ -9087,10 +9050,10 @@ var wp;
   });
 
   // packages/ui/build-module/tooltip/popup.mjs
-  var import_element15 = __toESM(require_element(), 1);
+  var import_element14 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/tooltip/portal.mjs
-  var import_element12 = __toESM(require_element(), 1);
+  var import_element11 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
   var STYLE_HASH_ATTRIBUTE = "data-wp-hash";
@@ -9233,10 +9196,10 @@ var wp;
   }
 
   // packages/ui/build-module/tooltip/portal.mjs
-  var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
-  var Portal = (0, import_element12.forwardRef)(
+  var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+  var Portal = (0, import_element11.forwardRef)(
     function TooltipPortal3({ container, ...restProps }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
         index_parts_exports.Portal,
         {
           container: container ?? getWpCompatOverlaySlot(),
@@ -9248,8 +9211,8 @@ var wp;
   );
 
   // packages/ui/build-module/tooltip/positioner.mjs
-  var import_element13 = __toESM(require_element(), 1);
-  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+  var import_element12 = __toESM(require_element(), 1);
+  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE2 = "data-wp-hash";
   function getRuntime2() {
     const globalScope = globalThis;
@@ -9338,9 +9301,9 @@ var wp;
     registerStyle2("19fcc06039", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
   }
   var style_default = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
-  var Positioner = (0, import_element13.forwardRef)(
+  var Positioner = (0, import_element12.forwardRef)(
     function TooltipPositioner3({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
         index_parts_exports.Positioner,
         {
           ref,
@@ -9359,9 +9322,9 @@ var wp;
   );
 
   // packages/ui/build-module/utils/render-slot-with-children.mjs
-  var import_element14 = __toESM(require_element(), 1);
+  var import_element13 = __toESM(require_element(), 1);
   function renderSlotWithChildren(slot, defaultSlot, children) {
-    return (0, import_element14.cloneElement)(slot ?? defaultSlot, { children });
+    return (0, import_element13.cloneElement)(slot ?? defaultSlot, { children });
   }
 
   // packages/ui/build-module/utils/theme-provider.mjs
@@ -9392,7 +9355,7 @@ var wp;
   var ThemeProvider = getThemeProvider();
 
   // packages/ui/build-module/tooltip/popup.mjs
-  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE3 = "data-wp-hash";
   function getRuntime3() {
     const globalScope = globalThis;
@@ -9478,8 +9441,8 @@ var wp;
   }
   var style_default2 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
   var POPUP_COLOR = { background: "#1e1e1e" };
-  var Popup = (0, import_element15.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+  var Popup = (0, import_element14.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
+    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
       index_parts_exports.Popup,
       {
         ref,
@@ -9490,39 +9453,76 @@ var wp;
     ) });
     const positionedPopup = renderSlotWithChildren(
       positioner,
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Positioner, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Positioner, {}),
       popupContent
     );
-    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Portal, {}), positionedPopup);
+    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Portal, {}), positionedPopup);
   });
 
   // packages/ui/build-module/tooltip/trigger.mjs
-  var import_element16 = __toESM(require_element(), 1);
-  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
-  var Trigger = (0, import_element16.forwardRef)(
+  var import_element15 = __toESM(require_element(), 1);
+  var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+  var Trigger = (0, import_element15.forwardRef)(
     function TooltipTrigger3(props, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(index_parts_exports.Trigger, { ref, ...props });
+      return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(index_parts_exports.Trigger, { ref, ...props });
     }
   );
 
   // packages/ui/build-module/utils/direction-provider.mjs
   var import_i18n2 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
   function DirectionProvider3({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(DirectionProvider, { direction: (0, import_i18n2.isRTL)() ? "rtl" : "ltr", children });
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DirectionProvider, { direction: (0, import_i18n2.isRTL)() ? "rtl" : "ltr", children });
   }
 
   // packages/ui/build-module/tooltip/root.mjs
-  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
   function Root(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(index_parts_exports.Root, { ...props }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(index_parts_exports.Root, { ...props }) });
   }
 
   // packages/ui/build-module/tooltip/provider.mjs
-  var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
   function Provider({ ...props }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(index_parts_exports.Provider, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(index_parts_exports.Provider, { ...props });
   }
+
+  // packages/icons/build-module/icon/index.mjs
+  var import_element16 = __toESM(require_element(), 1);
+  var icon_default = (0, import_element16.forwardRef)(
+    ({ icon, size: size4 = 24, style, ...props }, ref) => {
+      const intrinsicStyle = icon.props.style;
+      const mergedStyle = intrinsicStyle || style ? { ...intrinsicStyle, ...style } : void 0;
+      return (0, import_element16.cloneElement)(icon, {
+        width: size4,
+        height: size4,
+        ...props,
+        // Merge styles so the icon's intrinsic style (e.g. `fill: none` on
+        // stroke-based icons) is preserved unless the consumer overrides
+        // the same property explicitly.
+        ...mergedStyle ? { style: mergedStyle } : {},
+        ref
+      });
+    }
+  );
+
+  // packages/icons/build-module/library/star-empty.mjs
+  var import_primitives = __toESM(require_primitives(), 1);
+  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+  var star_empty_default = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_primitives.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z", vectorEffect: "non-scaling-stroke" }) });
+
+  // packages/icons/build-module/library/star-filled.mjs
+  var import_primitives2 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+  var star_filled_default = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_primitives2.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z", fill: "currentColor", vectorEffect: "non-scaling-stroke" }) });
+
+  // packages/icons/build-module/library/star-half.mjs
+  var import_primitives3 = __toESM(require_primitives(), 1);
+  var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+  var star_half_default = /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives3.Path, { d: "M12 5.71576L13.6106 8.97924C13.7563 9.27438 14.0379 9.47895 14.3636 9.52628L17.965 10.0496L15.359 12.5899C15.1233 12.8196 15.0157 13.1506 15.0714 13.475L15.6866 17.0619L12.4653 15.3684C12.174 15.2152 11.826 15.2152 11.5347 15.3684L8.31341 17.0619L8.92861 13.475C8.98425 13.1506 8.8767 12.8196 8.64102 12.5899L6.03497 10.0496L9.63644 9.52628C9.96215 9.47895 10.2437 9.27438 10.3894 8.97924L12 5.71576Z", vectorEffect: "non-scaling-stroke" }),
+    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_primitives3.Path, { d: "M11.4653 15.4048C11.7941 15.232 12 14.8912 12 14.5197V5.71576L10.3894 8.97924C10.2437 9.27438 9.96215 9.47895 9.63644 9.52628L6.03497 10.0496L8.64102 12.5899C8.8767 12.8196 8.98425 13.1506 8.92861 13.475L8.31341 17.0619L11.4653 15.4048Z", fill: "currentColor", stroke: "none" })
+  ] });
 
   // packages/ui/build-module/visually-hidden/visually-hidden.mjs
   var import_element17 = __toESM(require_element(), 1);
