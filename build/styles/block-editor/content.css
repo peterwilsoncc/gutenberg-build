@@ -188,11 +188,15 @@ _::-webkit-full-page-media, _:future, :root [data-has-multi-selection=true] .blo
 }
 .block-editor-block-list__layout .block-editor-block-list__block.is-highlighted,
 .block-editor-block-list__layout .block-editor-block-list__block.is-highlighted ~ .is-multi-selected,
+.block-editor-block-list__layout .block-editor-block-list__block.is-hovered-draggable[draggable=true]:not(.is-multi-selected),
+.block-editor-block-list__layout .block-editor-block-list__block.is-hovered-draggable[data-draggable=true]:not(.is-multi-selected),
 .block-editor-block-list__layout .block-editor-block-list__block:not([contenteditable=true]):focus {
   outline: none;
 }
 .block-editor-block-list__layout .block-editor-block-list__block.is-highlighted::after,
 .block-editor-block-list__layout .block-editor-block-list__block.is-highlighted ~ .is-multi-selected::after,
+.block-editor-block-list__layout .block-editor-block-list__block.is-hovered-draggable[draggable=true]:not(.is-multi-selected)::after,
+.block-editor-block-list__layout .block-editor-block-list__block.is-hovered-draggable[data-draggable=true]:not(.is-multi-selected)::after,
 .block-editor-block-list__layout .block-editor-block-list__block:not([contenteditable=true]):focus::after {
   content: "";
   position: absolute;

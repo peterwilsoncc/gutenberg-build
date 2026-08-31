@@ -25501,15 +25501,26 @@ var wp;
         if (!isEnabled) {
           return;
         }
+        let timeoutId;
         function listener(event) {
           if (event.defaultPrevented) {
             return;
           }
           event.preventDefault();
-          node.classList.toggle(
-            "is-hovered",
-            event.type === "mouseover"
-          );
+          const isHovered = event.type === "mouseover";
+          node.classList.toggle("is-hovered", isHovered);
+          clearTimeout(timeoutId);
+          if (!isHovered) {
+            node.classList.remove("is-hovered-draggable");
+            return;
+          }
+          const { target } = event;
+          timeoutId = setTimeout(() => {
+            node.classList.toggle(
+              "is-hovered-draggable",
+              !target.isContentEditable
+            );
+          }, 100);
         }
         const unsubscribeOut = subscribeDelegatedListener(
           node,
@@ -25524,7 +25535,9 @@ var wp;
         return () => {
           unsubscribeOut();
           unsubscribeOver();
+          clearTimeout(timeoutId);
           node.classList.remove("is-hovered");
+          node.classList.remove("is-hovered-draggable");
         };
       },
       [isEnabled]
