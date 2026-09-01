@@ -349,11 +349,11 @@
 }
 .edit-post-welcome-guide .components-button:hover svg,
 .edit-template-welcome-guide .components-button:hover svg {
-  fill: #fff;
+  color: #fff;
 }
 
 .edit-template-welcome-guide .components-button svg {
-  fill: #fff;
+  color: #fff;
 }
 
 body.js.block-editor-page {

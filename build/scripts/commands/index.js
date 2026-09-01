@@ -2601,7 +2601,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
   // packages/icons/build-module/library/arrow-right.mjs
   var import_primitives = __toESM(require_primitives(), 1);
   var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
-  var arrow_right_default = /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives.Path, { d: "m14.5 6.5-1 1 3.7 3.7H4v1.6h13.2l-3.7 3.7 1 1 5.6-5.5z" }) });
+  var arrow_right_default = /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives.Path, { d: "M4 12L19 12M14 17L19 12L14 7", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/icons/build-module/library/search.mjs
   var import_primitives2 = __toESM(require_primitives(), 1);

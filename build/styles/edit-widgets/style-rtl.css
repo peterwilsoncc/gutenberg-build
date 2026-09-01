@@ -871,7 +871,7 @@ body.is-dragging-components-draggable .wp-block[data-type="core/widget-area"] .c
   vertical-align: text-top;
 }
 .edit-widgets-welcome-guide .components-button:hover svg {
-  fill: #fff;
+  color: #fff;
 }
 
 .edit-widgets-block-editor {

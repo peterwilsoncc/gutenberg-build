@@ -690,7 +690,7 @@ p + .components-button.is-tertiary {
 svg.components-checkbox-control__checked,
 svg.components-checkbox-control__indeterminate {
   --checkmark-size: var(--checkbox-input-size);
-  fill: #fff;
+  color: #fff;
   cursor: var(--wpds-cursor-control, pointer);
   position: absolute;
   left: 50%;
@@ -711,7 +711,7 @@ svg.components-checkbox-control__indeterminate {
 
 .components-checkbox-control:has(:disabled) svg.components-checkbox-control__checked,
 .components-checkbox-control:has(:disabled) svg.components-checkbox-control__indeterminate {
-  fill: var(--wp-components-color-gray-400, var(--wpds-color-stroke-interactive-neutral, #8d8d8d));
+  color: var(--wp-components-color-gray-400, var(--wpds-color-stroke-interactive-neutral, #8d8d8d));
 }
 
 .components-checkbox-control__help {

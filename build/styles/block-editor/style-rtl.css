@@ -958,6 +958,7 @@ iframe[name=editor-canvas] {
 .block-editor-block-manager__checklist-item .block-editor-block-icon {
   margin-left: 10px;
   fill: #1e1e1e;
+  color: #1e1e1e;
 }
 
 .block-editor-block-manager__results {
