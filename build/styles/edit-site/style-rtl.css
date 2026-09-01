@@ -3104,7 +3104,7 @@ div.dataviews-view-list {
   display: grid;
   align-items: center;
   grid-template-columns: min-content 1fr min-content;
-  grid-gap: 4px 8px;
+  gap: 4px 8px;
   color: #1e1e1e;
 }
 

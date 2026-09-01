@@ -4360,7 +4360,7 @@ div.dataviews-view-list {
   display: grid;
   align-items: center;
   grid-template-columns: min-content 1fr min-content;
-  grid-gap: 4px 8px;
+  gap: 4px 8px;
   color: #1e1e1e;
 }
 
@@ -5608,7 +5608,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   margin: -1px;
   padding: 0;
   border: 0;
-  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
   overflow: hidden;
   white-space: nowrap;
 }

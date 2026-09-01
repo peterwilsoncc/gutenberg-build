@@ -131,7 +131,7 @@
   }
 }
 .block-editor-block-settings-menu__popover .block-editor-block-patterns-list {
-  grid-gap: 12px;
+  gap: 12px;
   min-width: 280px;
 }
 @media (min-width: 600px) {
