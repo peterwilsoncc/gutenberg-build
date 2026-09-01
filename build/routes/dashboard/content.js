@@ -44763,13 +44763,13 @@ function Actions3() {
   const done = (0, import_element154.useCallback)(() => {
     commit();
   }, [commit]);
-  const menuItems = [
+  const menuItems = canPerform({ operation: "reset" }) ? [
     {
       label: (0, import_i18n18.__)("Reset to default"),
       onClick: () => setResetDialogOpen(true),
       disabled: !onLayoutReset
     }
-  ];
+  ] : [];
   if (!onEditChange) {
     return null;
   }
@@ -44881,6 +44881,7 @@ var DASHBOARD_COMMAND_CONTEXT = "dashboard";
 function Commands() {
   const { editMode, onEditChange, onLayoutReset, canPerform, widgetTypes } = useDashboardInternalContext();
   const canCustomize = canPerform({ operation: "customize" });
+  const canReset = canPerform({ operation: "reset" });
   const canInsertAny = (0, import_element156.useMemo)(
     () => widgetTypes.some(
       (widgetType) => canPerform({ operation: "insert", widgetType })
@@ -44946,7 +44947,7 @@ function Commands() {
         category: "command",
         context: DASHBOARD_COMMAND_CONTEXT,
         keywords: [(0, import_i18n19.__)("reset"), (0, import_i18n19.__)("default")],
-        disabled: !onLayoutReset,
+        disabled: !onLayoutReset || !canReset,
         callback: resetToDefault
       }
     ],
@@ -44954,6 +44955,7 @@ function Commands() {
       onEditChange,
       editMode,
       canCustomize,
+      canReset,
       canInsertAny,
       customize,
       addWidgets,
@@ -45072,8 +45074,11 @@ function NoWidgetsState({
 var import_i18n21 = __toESM(require_i18n(), 1);
 var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
 function ResetConfirmation() {
-  const { onLayoutReset, onEditChange } = useDashboardInternalContext();
+  const { onLayoutReset, onEditChange, canPerform } = useDashboardInternalContext();
   const { resetDialogOpen, setResetDialogOpen } = useDashboardUIContext();
+  if (!canPerform({ operation: "reset" })) {
+    return null;
+  }
   return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
     alert_dialog_exports.Root,
     {
