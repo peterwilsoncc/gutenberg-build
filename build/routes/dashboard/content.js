@@ -44318,6 +44318,28 @@ function normalizeGridSettings(settings, defaultRowHeight) {
   };
 }
 
+// packages/widget-dashboard/build-module/utils/resolve-dashboard-column-count/resolve-dashboard-column-count.mjs
+var WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_ONE_COLUMN = 600;
+var WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_TWO_COLUMNS = 960;
+function resolveDashboardColumnCap(columns) {
+  if (typeof columns !== "number" || !Number.isFinite(columns)) {
+    return WIDGET_DASHBOARD_COLUMN_COUNT;
+  }
+  return Math.max(1, Math.floor(columns));
+}
+function resolveDashboardColumnCount(containerWidth, maxColumns = WIDGET_DASHBOARD_COLUMN_COUNT) {
+  if (containerWidth <= 0) {
+    return maxColumns;
+  }
+  if (containerWidth < WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_ONE_COLUMN) {
+    return 1;
+  }
+  if (containerWidth < WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_TWO_COLUMNS) {
+    return Math.min(2, maxColumns);
+  }
+  return maxColumns;
+}
+
 // packages/widget-dashboard/build-module/components/dashboard-policy/dashboard-policy.mjs
 var import_element151 = __toESM(require_element(), 1);
 var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
@@ -44345,7 +44367,7 @@ function resolveGridSettings(settings) {
   const normalized = normalizeGridSettings(settings, DEFAULT_ROW_HEIGHT);
   return {
     ...normalized,
-    columns: WIDGET_DASHBOARD_COLUMN_COUNT
+    columns: resolveDashboardColumnCap(normalized.columns)
   };
 }
 var DEFAULT_RESOLVE_WIDGET_MODULE = (moduleId) => import(
@@ -72194,25 +72216,7 @@ var DashboardLanes = (0, import_element256.forwardRef)(
 // packages/widget-dashboard/build-module/hooks/use-dashboard-container-column-count.mjs
 var import_compose48 = __toESM(require_compose(), 1);
 var import_element257 = __toESM(require_element(), 1);
-
-// packages/widget-dashboard/build-module/utils/resolve-dashboard-column-count/resolve-dashboard-column-count.mjs
-var WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_ONE_COLUMN = 600;
-var WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_TWO_COLUMNS = 960;
-function resolveDashboardColumnCount(containerWidth) {
-  if (containerWidth <= 0) {
-    return WIDGET_DASHBOARD_COLUMN_COUNT;
-  }
-  if (containerWidth < WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_ONE_COLUMN) {
-    return 1;
-  }
-  if (containerWidth < WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_TWO_COLUMNS) {
-    return 2;
-  }
-  return WIDGET_DASHBOARD_COLUMN_COUNT;
-}
-
-// packages/widget-dashboard/build-module/hooks/use-dashboard-container-column-count.mjs
-function useDashboardContainerColumnCount(forwardedRef) {
+function useDashboardContainerColumnCount(forwardedRef, maxColumns) {
   const [container, setContainer] = (0, import_element257.useState)(
     null
   );
@@ -72235,8 +72239,8 @@ function useDashboardContainerColumnCount(forwardedRef) {
     }
   }, [container]);
   const columnCount = (0, import_element257.useMemo)(
-    () => resolveDashboardColumnCount(containerWidth),
-    [containerWidth]
+    () => resolveDashboardColumnCount(containerWidth, maxColumns),
+    [containerWidth, maxColumns]
   );
   return { containerRef, columnCount };
 }
@@ -73217,7 +73221,10 @@ var Widgets = (0, import_element262.forwardRef)(
       widgetTypes,
       canPerform
     } = useDashboardInternalContext();
-    const { containerRef, columnCount } = useDashboardContainerColumnCount(ref);
+    const { containerRef, columnCount } = useDashboardContainerColumnCount(
+      ref,
+      gridSettings.columns
+    );
     const isMasonry = gridSettings.model === "masonry";
     const permissionsFor = (0, import_element262.useCallback)(
       (widget) => {
@@ -73761,10 +73768,15 @@ var KEY2 = "dashboardGridSettings";
 function useDashboardGridSettings() {
   return (0, import_data8.useSelect)((select) => {
     const stored = select(import_preferences2.store).get(SCOPE2, KEY2);
-    return normalizeGridSettings(
-      stored ?? DEFAULT_GRID,
-      DEFAULT_ROW_HEIGHT
-    );
+    return {
+      ...normalizeGridSettings(
+        stored ?? DEFAULT_GRID,
+        DEFAULT_ROW_HEIGHT
+      ),
+      // The removed Columns control persisted other counts into this
+      // preference; pinning on read keeps those stale values inert.
+      columns: WIDGET_DASHBOARD_COLUMN_COUNT
+    };
   }, []);
 }
 
