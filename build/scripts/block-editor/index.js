@@ -91718,6 +91718,20 @@ var wp;
       setIsUploading(false);
       focusToggleButton(containerRef);
     };
+    const onSelectURL = (newURL) => {
+      if (!newURL || newURL === url) {
+        return;
+      }
+      onChange(
+        setImmutably2(style, ["background"], {
+          ...style?.background,
+          backgroundImage: {
+            url: newURL,
+            source: "url"
+          }
+        })
+      );
+    };
     const onFilesDrop2 = (filesList) => {
       getSettings8().mediaUpload({
         allowedTypes: [IMAGE_BACKGROUND_TYPE],
@@ -91736,6 +91750,8 @@ var wp;
       })
     );
     const canRemove = !hasValue3 && hasBackgroundImageValue(inheritedValue);
+    const rawURL = typeof style?.background?.backgroundImage === "string" ? style.background.backgroundImage : url;
+    const currentURL = /^https?:\/\//.test(rawURL ?? "") ? rawURL : void 0;
     const imgLabel = title || (0, import_url11.getFilename)(url) || (0, import_i18n206.__)("Image");
     return /* @__PURE__ */ (0, import_jsx_runtime464.jsxs)("div", { className: "block-editor-global-styles-background-panel__image-tools-panel-item", children: [
       isUploading && /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(LoadingSpinner, {}),
@@ -91743,10 +91759,11 @@ var wp;
         media_replace_flow_default,
         {
           mediaId: id,
-          mediaURL: url,
+          mediaURL: currentURL,
           allowedTypes: [IMAGE_BACKGROUND_TYPE],
           accept: "image/*",
           onSelect: onSelectMedia,
+          onSelectURL,
           popoverProps: {
             className: clsx_default({
               "block-editor-global-styles-background-panel__media-replace-popover": displayInPanel

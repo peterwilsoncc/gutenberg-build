@@ -258,9 +258,9 @@
 }
 
 .block-editor-global-styles-background-panel__media-replace-popover .components-popover__content {
-  width: 226px;
+  width: auto;
 }
-.block-editor-global-styles-background-panel__media-replace-popover .components-button {
+.block-editor-global-styles-background-panel__media-replace-popover .components-menu-item__button.components-button {
   padding: 0 8px;
 }
 .block-editor-global-styles-background-panel__media-replace-popover .components-button .components-menu-items__item-icon.has-icon-right {
