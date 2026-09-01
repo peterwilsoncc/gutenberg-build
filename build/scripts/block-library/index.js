@@ -32788,10 +32788,13 @@ ${url}
     }
     const resolvedValue = getResolvedRefValue(ruleValue, tree);
     if (typeof resolvedValue === "object" && resolvedValue !== null && "url" in resolvedValue && resolvedValue?.url) {
-      resolvedValue.url = getResolvedThemeFilePath(
-        resolvedValue.url,
-        tree?._links?.["wp:theme-file"]
-      );
+      return {
+        ...resolvedValue,
+        url: getResolvedThemeFilePath(
+          resolvedValue.url,
+          tree?._links?.["wp:theme-file"]
+        )
+      };
     }
     return resolvedValue;
   }
