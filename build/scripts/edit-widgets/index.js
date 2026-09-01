@@ -848,7 +848,6 @@ var wp;
           }
         ),
         role: "menuitemcheckbox",
-        selectedIcon: check_default,
         name: target,
         scope,
         ...props

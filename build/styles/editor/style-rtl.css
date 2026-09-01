@@ -7073,10 +7073,6 @@ mark.wp-note {
   z-index: 35;
 }
 
-.components-popover.more-menu-dropdown__content {
-  z-index: 99998;
-}
-
 .editor-inserter-sidebar {
   box-sizing: border-box;
 }
@@ -7237,6 +7233,11 @@ mark.wp-note {
   font-size: 12px;
   line-height: 1.4;
   color: #757575;
+}
+
+.editor-more-menu__popup {
+  max-height: var(--available-height);
+  --wp-ui-menu-max-width: var(--wpds-dimension-surface-width-sm, 320px);
 }
 
 .editor-post-parent__panel,
