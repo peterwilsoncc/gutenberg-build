@@ -27493,17 +27493,6 @@ function getFormFieldsToValidate(form2, fields2) {
       if (processedChildren.length === 0) {
         return null;
       }
-      const fieldDef2 = fieldsMap.get(formField.id);
-      if (fieldDef2) {
-        const [normalizedField2] = normalizeFields([
-          fieldDef2
-        ]);
-        return {
-          id: formField.id,
-          children: processedChildren,
-          field: normalizedField2
-        };
-      }
       return {
         id: formField.id,
         children: processedChildren
@@ -28015,22 +28004,18 @@ var getSummaryFields = (summaryField, fields2) => {
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
 var getFieldDefinition = (field, fields2) => {
-  const fieldDefinition = fields2.find((_field) => _field.id === field.id);
-  if (!fieldDefinition) {
-    return fields2.find((_field) => {
-      if (!!field.children) {
-        const simpleChildren = field.children.filter(
-          (child) => !child.children
-        );
-        if (simpleChildren.length === 0) {
-          return false;
-        }
-        return _field.id === simpleChildren[0].id;
-      }
-      return _field.id === field.id;
-    });
+  if (!!field.children) {
+    const simpleChildren = field.children.filter(
+      (child) => !child.children
+    );
+    if (simpleChildren.length === 0) {
+      return void 0;
+    }
+    return fields2.find(
+      (_field) => _field.id === simpleChildren[0].id
+    );
   }
-  return fieldDefinition;
+  return fields2.find((_field) => _field.id === field.id);
 };
 function useFieldFromFormField(field) {
   const { fields: fields2 } = (0, import_element94.useContext)(dataform_context_default);

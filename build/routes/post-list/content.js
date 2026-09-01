@@ -46311,17 +46311,6 @@ function getFormFieldsToValidate(form, fields) {
       if (processedChildren.length === 0) {
         return null;
       }
-      const fieldDef2 = fieldsMap.get(formField.id);
-      if (fieldDef2) {
-        const [normalizedField2] = normalizeFields([
-          fieldDef2
-        ]);
-        return {
-          id: formField.id,
-          children: processedChildren,
-          field: normalizedField2
-        };
-      }
       return {
         id: formField.id,
         children: processedChildren
@@ -46833,22 +46822,18 @@ var getSummaryFields = (summaryField, fields) => {
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
 var getFieldDefinition = (field, fields) => {
-  const fieldDefinition = fields.find((_field) => _field.id === field.id);
-  if (!fieldDefinition) {
-    return fields.find((_field) => {
-      if (!!field.children) {
-        const simpleChildren = field.children.filter(
-          (child) => !child.children
-        );
-        if (simpleChildren.length === 0) {
-          return false;
-        }
-        return _field.id === simpleChildren[0].id;
-      }
-      return _field.id === field.id;
-    });
+  if (!!field.children) {
+    const simpleChildren = field.children.filter(
+      (child) => !child.children
+    );
+    if (simpleChildren.length === 0) {
+      return void 0;
+    }
+    return fields.find(
+      (_field) => _field.id === simpleChildren[0].id
+    );
   }
-  return fieldDefinition;
+  return fields.find((_field) => _field.id === field.id);
 };
 function useFieldFromFormField(field) {
   const { fields } = (0, import_element155.useContext)(dataform_context_default);
@@ -48558,6 +48543,10 @@ function QuickEditModal({
       {
         id: "status",
         label: (0, import_i18n62.__)("Status"),
+        layout: {
+          type: "panel",
+          summary: "status"
+        },
         children: [
           {
             id: "status",
@@ -48574,6 +48563,10 @@ function QuickEditModal({
       {
         id: "discussion",
         label: (0, import_i18n62.__)("Discussion"),
+        layout: {
+          type: "panel",
+          summary: "discussion"
+        },
         children: [
           {
             id: "comment_status",
