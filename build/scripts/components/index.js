@@ -30652,9 +30652,9 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle9("67ff33c72d", ".fa6e6c2331986855__linked-border-control.fa6e6c2331986855__linked-border-control{flex:1;margin-inline-end:24px}._48f63719b9dc7e1a__wrapper{position:relative}._902e774d37b6698b__linked-button{inset-inline-end:0;line-height:0;position:absolute;top:8px}._5978f65e1d08de6c__visualizer{border-bottom:var(--wp-components-border-box-visualizer-bottom);border-inline-end:var(--wp-components-border-box-visualizer-end);border-inline-start:var(--wp-components-border-box-visualizer-start);border-top:var(--wp-components-border-box-visualizer-top);bottom:20px;position:absolute;top:20px;inset-inline:39px}.afa8e78cec6a9f62__split-controls{flex:1;position:relative}.ec002fcdf4036950__centered-border-control{grid-column:span 2;margin:0 auto}.f9ea07d7127ab067__right-border-control{margin-inline-start:auto}");
+    registerStyle9("2eee37fabd", ".fa6e6c2331986855__linked-border-control.fa6e6c2331986855__linked-border-control{flex:1;margin-inline-end:24px}._6a6edeeb175d724f__linked-border-control-full-width._6a6edeeb175d724f__linked-border-control-full-width{margin-inline-end:0}.f5104488f80fa50f__header{margin-bottom:4px}.f5104488f80fa50f__header>span{margin-bottom:0}._48f63719b9dc7e1a__wrapper{position:relative}._48f63719b9dc7e1a__wrapper ._902e774d37b6698b__linked-button{inset-inline-end:0;position:absolute;top:8px}._902e774d37b6698b__linked-button{line-height:0}._5978f65e1d08de6c__visualizer{border-bottom:var(--wp-components-border-box-visualizer-bottom);border-inline-end:var(--wp-components-border-box-visualizer-end);border-inline-start:var(--wp-components-border-box-visualizer-start);border-top:var(--wp-components-border-box-visualizer-top);bottom:20px;position:absolute;top:20px;inset-inline:39px}.afa8e78cec6a9f62__split-controls{flex:1;position:relative}.ec002fcdf4036950__centered-border-control{grid-column:span 2;margin:0 auto}.f9ea07d7127ab067__right-border-control{margin-inline-start:auto}");
   }
-  var style_module_default9 = { "linked-border-control": "fa6e6c2331986855__linked-border-control", "wrapper": "_48f63719b9dc7e1a__wrapper", "linked-button": "_902e774d37b6698b__linked-button", "visualizer": "_5978f65e1d08de6c__visualizer", "split-controls": "afa8e78cec6a9f62__split-controls", "centered-border-control": "ec002fcdf4036950__centered-border-control", "right-border-control": "f9ea07d7127ab067__right-border-control" };
+  var style_module_default9 = { "linked-border-control": "fa6e6c2331986855__linked-border-control", "linked-border-control-full-width": "_6a6edeeb175d724f__linked-border-control-full-width", "header": "f5104488f80fa50f__header", "wrapper": "_48f63719b9dc7e1a__wrapper", "linked-button": "_902e774d37b6698b__linked-button", "visualizer": "_5978f65e1d08de6c__visualizer", "split-controls": "afa8e78cec6a9f62__split-controls", "centered-border-control": "ec002fcdf4036950__centered-border-control", "right-border-control": "f9ea07d7127ab067__right-border-control" };
   function useBorderBoxControlLinkedButton(props) {
     const {
       className,
@@ -30770,9 +30770,9 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle10("67ff33c72d", ".fa6e6c2331986855__linked-border-control.fa6e6c2331986855__linked-border-control{flex:1;margin-inline-end:24px}._48f63719b9dc7e1a__wrapper{position:relative}._902e774d37b6698b__linked-button{inset-inline-end:0;line-height:0;position:absolute;top:8px}._5978f65e1d08de6c__visualizer{border-bottom:var(--wp-components-border-box-visualizer-bottom);border-inline-end:var(--wp-components-border-box-visualizer-end);border-inline-start:var(--wp-components-border-box-visualizer-start);border-top:var(--wp-components-border-box-visualizer-top);bottom:20px;position:absolute;top:20px;inset-inline:39px}.afa8e78cec6a9f62__split-controls{flex:1;position:relative}.ec002fcdf4036950__centered-border-control{grid-column:span 2;margin:0 auto}.f9ea07d7127ab067__right-border-control{margin-inline-start:auto}");
+    registerStyle10("2eee37fabd", ".fa6e6c2331986855__linked-border-control.fa6e6c2331986855__linked-border-control{flex:1;margin-inline-end:24px}._6a6edeeb175d724f__linked-border-control-full-width._6a6edeeb175d724f__linked-border-control-full-width{margin-inline-end:0}.f5104488f80fa50f__header{margin-bottom:4px}.f5104488f80fa50f__header>span{margin-bottom:0}._48f63719b9dc7e1a__wrapper{position:relative}._48f63719b9dc7e1a__wrapper ._902e774d37b6698b__linked-button{inset-inline-end:0;position:absolute;top:8px}._902e774d37b6698b__linked-button{line-height:0}._5978f65e1d08de6c__visualizer{border-bottom:var(--wp-components-border-box-visualizer-bottom);border-inline-end:var(--wp-components-border-box-visualizer-end);border-inline-start:var(--wp-components-border-box-visualizer-start);border-top:var(--wp-components-border-box-visualizer-top);bottom:20px;position:absolute;top:20px;inset-inline:39px}.afa8e78cec6a9f62__split-controls{flex:1;position:relative}.ec002fcdf4036950__centered-border-control{grid-column:span 2;margin:0 auto}.f9ea07d7127ab067__right-border-control{margin-inline-start:auto}");
   }
-  var style_module_default10 = { "linked-border-control": "fa6e6c2331986855__linked-border-control", "wrapper": "_48f63719b9dc7e1a__wrapper", "linked-button": "_902e774d37b6698b__linked-button", "visualizer": "_5978f65e1d08de6c__visualizer", "split-controls": "afa8e78cec6a9f62__split-controls", "centered-border-control": "ec002fcdf4036950__centered-border-control", "right-border-control": "f9ea07d7127ab067__right-border-control" };
+  var style_module_default10 = { "linked-border-control": "fa6e6c2331986855__linked-border-control", "linked-border-control-full-width": "_6a6edeeb175d724f__linked-border-control-full-width", "header": "f5104488f80fa50f__header", "wrapper": "_48f63719b9dc7e1a__wrapper", "linked-button": "_902e774d37b6698b__linked-button", "visualizer": "_5978f65e1d08de6c__visualizer", "split-controls": "afa8e78cec6a9f62__split-controls", "centered-border-control": "ec002fcdf4036950__centered-border-control", "right-border-control": "f9ea07d7127ab067__right-border-control" };
   var borderBoxStyleWithFallback = (border) => {
     const {
       color: color2 = COLORS.gray[200],
@@ -35581,9 +35581,9 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle17("67ff33c72d", ".fa6e6c2331986855__linked-border-control.fa6e6c2331986855__linked-border-control{flex:1;margin-inline-end:24px}._48f63719b9dc7e1a__wrapper{position:relative}._902e774d37b6698b__linked-button{inset-inline-end:0;line-height:0;position:absolute;top:8px}._5978f65e1d08de6c__visualizer{border-bottom:var(--wp-components-border-box-visualizer-bottom);border-inline-end:var(--wp-components-border-box-visualizer-end);border-inline-start:var(--wp-components-border-box-visualizer-start);border-top:var(--wp-components-border-box-visualizer-top);bottom:20px;position:absolute;top:20px;inset-inline:39px}.afa8e78cec6a9f62__split-controls{flex:1;position:relative}.ec002fcdf4036950__centered-border-control{grid-column:span 2;margin:0 auto}.f9ea07d7127ab067__right-border-control{margin-inline-start:auto}");
+    registerStyle17("2eee37fabd", ".fa6e6c2331986855__linked-border-control.fa6e6c2331986855__linked-border-control{flex:1;margin-inline-end:24px}._6a6edeeb175d724f__linked-border-control-full-width._6a6edeeb175d724f__linked-border-control-full-width{margin-inline-end:0}.f5104488f80fa50f__header{margin-bottom:4px}.f5104488f80fa50f__header>span{margin-bottom:0}._48f63719b9dc7e1a__wrapper{position:relative}._48f63719b9dc7e1a__wrapper ._902e774d37b6698b__linked-button{inset-inline-end:0;position:absolute;top:8px}._902e774d37b6698b__linked-button{line-height:0}._5978f65e1d08de6c__visualizer{border-bottom:var(--wp-components-border-box-visualizer-bottom);border-inline-end:var(--wp-components-border-box-visualizer-end);border-inline-start:var(--wp-components-border-box-visualizer-start);border-top:var(--wp-components-border-box-visualizer-top);bottom:20px;position:absolute;top:20px;inset-inline:39px}.afa8e78cec6a9f62__split-controls{flex:1;position:relative}.ec002fcdf4036950__centered-border-control{grid-column:span 2;margin:0 auto}.f9ea07d7127ab067__right-border-control{margin-inline-start:auto}");
   }
-  var style_module_default17 = { "linked-border-control": "fa6e6c2331986855__linked-border-control", "wrapper": "_48f63719b9dc7e1a__wrapper", "linked-button": "_902e774d37b6698b__linked-button", "visualizer": "_5978f65e1d08de6c__visualizer", "split-controls": "afa8e78cec6a9f62__split-controls", "centered-border-control": "ec002fcdf4036950__centered-border-control", "right-border-control": "f9ea07d7127ab067__right-border-control" };
+  var style_module_default17 = { "linked-border-control": "fa6e6c2331986855__linked-border-control", "linked-border-control-full-width": "_6a6edeeb175d724f__linked-border-control-full-width", "header": "f5104488f80fa50f__header", "wrapper": "_48f63719b9dc7e1a__wrapper", "linked-button": "_902e774d37b6698b__linked-button", "visualizer": "_5978f65e1d08de6c__visualizer", "split-controls": "afa8e78cec6a9f62__split-controls", "centered-border-control": "ec002fcdf4036950__centered-border-control", "right-border-control": "f9ea07d7127ab067__right-border-control" };
   function useBorderBoxControlSplitControls(props) {
     const {
       className,
@@ -35895,9 +35895,9 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle18("67ff33c72d", ".fa6e6c2331986855__linked-border-control.fa6e6c2331986855__linked-border-control{flex:1;margin-inline-end:24px}._48f63719b9dc7e1a__wrapper{position:relative}._902e774d37b6698b__linked-button{inset-inline-end:0;line-height:0;position:absolute;top:8px}._5978f65e1d08de6c__visualizer{border-bottom:var(--wp-components-border-box-visualizer-bottom);border-inline-end:var(--wp-components-border-box-visualizer-end);border-inline-start:var(--wp-components-border-box-visualizer-start);border-top:var(--wp-components-border-box-visualizer-top);bottom:20px;position:absolute;top:20px;inset-inline:39px}.afa8e78cec6a9f62__split-controls{flex:1;position:relative}.ec002fcdf4036950__centered-border-control{grid-column:span 2;margin:0 auto}.f9ea07d7127ab067__right-border-control{margin-inline-start:auto}");
+    registerStyle18("2eee37fabd", ".fa6e6c2331986855__linked-border-control.fa6e6c2331986855__linked-border-control{flex:1;margin-inline-end:24px}._6a6edeeb175d724f__linked-border-control-full-width._6a6edeeb175d724f__linked-border-control-full-width{margin-inline-end:0}.f5104488f80fa50f__header{margin-bottom:4px}.f5104488f80fa50f__header>span{margin-bottom:0}._48f63719b9dc7e1a__wrapper{position:relative}._48f63719b9dc7e1a__wrapper ._902e774d37b6698b__linked-button{inset-inline-end:0;position:absolute;top:8px}._902e774d37b6698b__linked-button{line-height:0}._5978f65e1d08de6c__visualizer{border-bottom:var(--wp-components-border-box-visualizer-bottom);border-inline-end:var(--wp-components-border-box-visualizer-end);border-inline-start:var(--wp-components-border-box-visualizer-start);border-top:var(--wp-components-border-box-visualizer-top);bottom:20px;position:absolute;top:20px;inset-inline:39px}.afa8e78cec6a9f62__split-controls{flex:1;position:relative}.ec002fcdf4036950__centered-border-control{grid-column:span 2;margin:0 auto}.f9ea07d7127ab067__right-border-control{margin-inline-start:auto}");
   }
-  var style_module_default18 = { "linked-border-control": "fa6e6c2331986855__linked-border-control", "wrapper": "_48f63719b9dc7e1a__wrapper", "linked-button": "_902e774d37b6698b__linked-button", "visualizer": "_5978f65e1d08de6c__visualizer", "split-controls": "afa8e78cec6a9f62__split-controls", "centered-border-control": "ec002fcdf4036950__centered-border-control", "right-border-control": "f9ea07d7127ab067__right-border-control" };
+  var style_module_default18 = { "linked-border-control": "fa6e6c2331986855__linked-border-control", "linked-border-control-full-width": "_6a6edeeb175d724f__linked-border-control-full-width", "header": "f5104488f80fa50f__header", "wrapper": "_48f63719b9dc7e1a__wrapper", "linked-button": "_902e774d37b6698b__linked-button", "visualizer": "_5978f65e1d08de6c__visualizer", "split-controls": "afa8e78cec6a9f62__split-controls", "centered-border-control": "ec002fcdf4036950__centered-border-control", "right-border-control": "f9ea07d7127ab067__right-border-control" };
   function useBorderBoxControl(props) {
     const {
       className,
@@ -35905,6 +35905,8 @@ This message will only show in development mode. It won't appear in production. 
       onChange,
       enableAlpha = false,
       enableStyle = true,
+      hideLabelFromVision,
+      label,
       value,
       __experimentalIsRenderedInSidebar = false,
       // Deprecated props, no longer used.
@@ -35912,6 +35914,7 @@ This message will only show in development mode. It won't appear in production. 
       __next40pxDefaultSize: _next40pxDefaultSize,
       ...otherProps
     } = useContextSystem(props, "BorderBoxControl");
+    const hasVisibleLabel = !!label && !hideLabelFromVision;
     const mixedBorders = hasMixedBorders(value);
     const splitBorders = hasSplitBorders(value);
     const linkedValue = splitBorders ? getCommonBorder(value) : value;
@@ -35962,12 +35965,19 @@ This message will only show in development mode. It won't appear in production. 
         onChange(newBorder);
       }
     };
-    const linkedControlClassName = style_module_default18["linked-border-control"];
+    const linkedControlClassName = clsx_default(style_module_default18["linked-border-control"], {
+      [style_module_default18["linked-border-control-full-width"]]: hasVisibleLabel
+    });
     const wrapperClassName = style_module_default18.wrapper;
+    const headerClassName = style_module_default18.header;
     return {
       ...otherProps,
       className,
       colors,
+      hasVisibleLabel,
+      headerClassName,
+      hideLabelFromVision,
+      label,
       disableUnits: mixedBorders && !hasWidthValue,
       enableAlpha,
       enableStyle,
@@ -35997,7 +36007,7 @@ This message will only show in development mode. It won't appear in production. 
     return hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(component_default2, {
       as: "label",
       children: label
-    }) : /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(StyledLabel, {
+    }) : /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(base_control_default.VisualLabel, {
       children: label
     });
   };
@@ -36010,6 +36020,8 @@ This message will only show in development mode. It won't appear in production. 
       enableAlpha,
       enableStyle,
       hasMixedBorders: hasMixedBorders2,
+      hasVisibleLabel,
+      headerClassName,
       hideLabelFromVision,
       isLinked,
       label,
@@ -36037,7 +36049,24 @@ This message will only show in development mode. It won't appear in production. 
       className,
       ...otherProps,
       ref: mergedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime154.jsx)(BorderLabel2, {
+      children: [hasVisibleLabel ? (
+        // The toggle shares the label's row so that it lines up with
+        // the equivalent toggle on sibling controls, e.g. the border
+        // radius one.
+        /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(component_default22, {
+          className: headerClassName,
+          columns: 2,
+          templateColumns: "1fr min-content",
+          alignment: "center",
+          children: [/* @__PURE__ */ (0, import_jsx_runtime154.jsx)(BorderLabel2, {
+            label,
+            hideLabelFromVision
+          }), /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(component_default10, {
+            onClick: toggleLinked,
+            isLinked
+          })]
+        })
+      ) : /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(BorderLabel2, {
         label,
         hideLabelFromVision
       }), /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(component_default, {
@@ -36067,7 +36096,7 @@ This message will only show in development mode. It won't appear in production. 
           popoverOffset,
           value: splitValue,
           __experimentalIsRenderedInSidebar
-        }), /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(component_default10, {
+        }), !hasVisibleLabel && /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(component_default10, {
           onClick: toggleLinked,
           isLinked
         })]
