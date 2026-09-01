@@ -72997,6 +72997,25 @@ If there's a particular need for this, please submit a feature request at https:
     }, [themeColors, setThemeColors]);
     return window.__experimentalEnableColorRandomizer ? [randomizeColors] : [];
   }
+  function useStyleWithResolvedBackground(style) {
+    const { merged } = (0, import_element226.useContext)(GlobalStylesContext);
+    return (0, import_element226.useMemo)(() => {
+      if (!style?.background) {
+        return style;
+      }
+      const tree = { styles: merged?.styles, _links: merged?._links };
+      const background = {};
+      for (const [key, value] of Object.entries(
+        style.background
+      )) {
+        background[key] = getResolvedValue(
+          value && typeof value === "object" ? { ...value } : value,
+          tree
+        );
+      }
+      return { ...style, background };
+    }, [style, merged]);
+  }
 
   // packages/global-styles-ui/build-module/root-menu.mjs
   var import_jsx_runtime359 = __toESM(require_jsx_runtime(), 1);
@@ -74197,6 +74216,7 @@ If there's a particular need for this, please submit a feature request at https:
       false,
       hasSelectedState ? stateParam : void 0
     );
+    const inheritedStyleWithResolvedBackground = useStyleWithResolvedBackground(inheritedStyle);
     const [userSettings] = useSetting("", name2, "user");
     const [rawSettings, setSettings] = useSetting("", name2);
     const settingsForBlockElement = useSettingsForBlockElement3(
@@ -74373,7 +74393,7 @@ If there's a particular need for this, please submit a feature request at https:
       hasBackgroundPanel && /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
         StylesBackgroundPanel,
         {
-          inheritedValue: inheritedStyle,
+          inheritedValue: inheritedStyleWithResolvedBackground,
           value: style,
           onChange: setStyle2,
           settings,
@@ -87943,11 +87963,12 @@ If there's a particular need for this, please submit a feature request at https:
       "merged",
       false
     );
+    const resolvedInheritedStyle = useStyleWithResolvedBackground(inheritedStyle);
     const [settings] = useSetting("");
     return /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(
       StylesBackgroundPanel2,
       {
-        inheritedValue: inheritedStyle,
+        inheritedValue: resolvedInheritedStyle,
         value: style,
         onChange: setStyle2,
         settings,
