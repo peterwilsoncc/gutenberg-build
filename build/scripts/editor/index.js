@@ -2510,7 +2510,7 @@ var wp;
 
   // packages/editor/build-module/hooks/custom-sources-backwards-compatibility.mjs
   var import_data91 = __toESM(require_data(), 1);
-  var import_core_data60 = __toESM(require_core_data(), 1);
+  var import_core_data62 = __toESM(require_core_data(), 1);
   var import_element282 = __toESM(require_element(), 1);
   var import_compose49 = __toESM(require_compose(), 1);
   var import_hooks41 = __toESM(require_hooks(), 1);
@@ -2531,7 +2531,8 @@ var wp;
     blockStatesEditingEnabled: true,
     fontLibraryEnabled: true,
     enableCustomFields: void 0,
-    defaultRenderingMode: "post-only"
+    defaultRenderingMode: "post-only",
+    autoAttachMediaEnabled: true
   };
 
   // packages/editor/build-module/dataviews/store/reducer.mjs
@@ -7159,7 +7160,7 @@ var wp;
   var import_deprecated9 = __toESM(require_deprecated(), 1);
   var import_blocks20 = __toESM(require_blocks(), 1);
   var import_notices20 = __toESM(require_notices(), 1);
-  var import_core_data59 = __toESM(require_core_data(), 1);
+  var import_core_data61 = __toESM(require_core_data(), 1);
   var import_block_editor37 = __toESM(require_block_editor(), 1);
   var import_hooks40 = __toESM(require_hooks(), 1);
   var import_preferences10 = __toESM(require_preferences(), 1);
@@ -7321,6 +7322,106 @@ var wp;
     ];
   }
 
+  // packages/editor/build-module/store/utils/attach-media-in-post/index.mjs
+  var import_core_data4 = __toESM(require_core_data(), 1);
+
+  // packages/editor/build-module/store/utils/attach-media-in-post/media-ids-in-blocks.mjs
+  var MEDIA_ID_ATTRIBUTES = {
+    "core/image": "id"
+  };
+  var SHARED_CONTENT_BLOCKS = ["core/block", "core/template-part"];
+  function flattenBlocks(blocks) {
+    const result = [];
+    blocks.forEach((block) => {
+      result.push(block);
+      if (!SHARED_CONTENT_BLOCKS.includes(block.name)) {
+        result.push(...flattenBlocks(block.innerBlocks));
+      }
+    });
+    return result;
+  }
+  function getMediaIdsInBlocks(blocks) {
+    const mediaIds = /* @__PURE__ */ new Set();
+    flattenBlocks(blocks).forEach((block) => {
+      const attribute = MEDIA_ID_ATTRIBUTES[block.name];
+      if (!attribute) {
+        return;
+      }
+      const id = block.attributes?.[attribute];
+      if (Number.isInteger(id) && id > 0) {
+        mediaIds.add(id);
+      }
+    });
+    return [...mediaIds].sort((a3, b3) => a3 - b3);
+  }
+
+  // packages/editor/build-module/store/utils/attach-media-in-post/invalidate-attachment-resolutions.mjs
+  var import_core_data3 = __toESM(require_core_data(), 1);
+  function invalidateAttachmentResolutions(registry) {
+    const resolvers = registry.select(import_core_data3.store).getCachedResolvers();
+    const entityRecordResolutions = resolvers.getEntityRecords;
+    entityRecordResolutions?.forEach((_value, args) => {
+      if (args[0] === "postType" && args[1] === "attachment") {
+        registry.dispatch(import_core_data3.store).invalidateResolution("getEntityRecords", args);
+      }
+    });
+  }
+
+  // packages/editor/build-module/store/utils/attach-media-in-post/index.mjs
+  var MAX_MEDIA_TO_ATTACH = 100;
+  function warnAttachFailed(reason) {
+    console.warn("Could not attach media to the post.", reason);
+  }
+  async function attachMediaInPost(registry, post2) {
+    try {
+      await attach(registry, post2);
+    } catch (error2) {
+      warnAttachFailed(error2);
+    }
+  }
+  async function attach(registry, { id: postId2, type: postType2, blocks }) {
+    const mediaIds = getMediaIdsInBlocks(blocks);
+    if (!mediaIds.length) {
+      return;
+    }
+    if (mediaIds.length > MAX_MEDIA_TO_ATTACH) {
+      console.warn(
+        `Not attaching media: the post has more than ${MAX_MEDIA_TO_ATTACH} images.`
+      );
+      return;
+    }
+    const postTypeObject = await registry.resolveSelect(import_core_data4.store).getPostType(postType2);
+    if (!postTypeObject?.viewable) {
+      return;
+    }
+    const media = await registry.resolveSelect(import_core_data4.store).getEntityRecords("postType", "attachment", {
+      include: mediaIds,
+      per_page: MAX_MEDIA_TO_ATTACH
+    });
+    const unattached = (media ?? []).filter((item) => !item.post);
+    if (!unattached.length) {
+      return;
+    }
+    const { saveEntityRecord } = registry.dispatch(import_core_data4.store);
+    const results = await Promise.allSettled(
+      unattached.map(
+        (item) => saveEntityRecord("postType", "attachment", {
+          id: item.id,
+          post: postId2
+        })
+      )
+    );
+    results.forEach((result) => {
+      if (result.status === "rejected") {
+        warnAttachFailed(result.reason);
+      }
+    });
+    if (!results.some(({ status }) => status === "fulfilled")) {
+      return;
+    }
+    invalidateAttachmentResolutions(registry);
+  }
+
   // packages/editor/build-module/store/private-actions.mjs
   var private_actions_exports = {};
   __export(private_actions_exports, {
@@ -7348,7 +7449,7 @@ var wp;
     unregisterEntityAction: () => unregisterEntityAction,
     unregisterEntityField: () => unregisterEntityField
   });
-  var import_core_data58 = __toESM(require_core_data(), 1);
+  var import_core_data60 = __toESM(require_core_data(), 1);
   var import_block_editor36 = __toESM(require_block_editor(), 1);
   var import_i18n217 = __toESM(require_i18n(), 1);
   var import_notices19 = __toESM(require_notices(), 1);
@@ -7919,7 +8020,7 @@ var wp;
   var wordpress_default = /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_primitives94.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_primitives94.Path, { d: "M 22 12 C 22 6.49 17.51 2 12 2 C 6.48 2 2 6.49 2 12 C 2 17.52 6.48 22 12 22 C 17.51 22 22 17.52 22 12 M 9.78 17.37 L 6.37 8.22 C 6.92 8.2 7.54 8.14 7.54 8.14 C 8.04 8.08 7.98 7.01 7.48 7.03 C 7.48 7.03 6.03 7.14 5.11 7.14 C 4.93 7.14 4.74 7.14 4.53 7.13 C 6.12 4.69 8.87 3.11 12 3.11 C 14.33 3.11 16.45 3.98 18.05 5.45 C 17.37 5.34 16.4 5.84 16.4 7.03 C 16.4 7.77 16.85 8.39 17.3 9.13 C 17.65 9.74 17.85 10.49 17.85 11.59 C 17.85 13.08 16.45 16.59 16.45 16.59 L 13.42 8.22 C 13.96 8.2 14.24 8.05 14.24 8.05 C 14.74 8 14.68 6.8 14.18 6.83 C 14.18 6.83 12.74 6.95 11.8 6.95 C 10.93 6.95 9.47 6.83 9.47 6.83 C 8.97 6.8 8.91 8.03 9.41 8.05 L 10.33 8.13 L 11.59 11.54 L 9.78 17.37 M 19.41 12 C 19.65 11.36 20.15 10.13 19.84 7.75 C 20.54 9.04 20.89 10.46 20.89 12 C 20.89 15.29 19.16 18.24 16.49 19.78 C 17.46 17.19 18.43 14.58 19.41 12 M 8.1 20.09 C 5.12 18.65 3.11 15.53 3.11 12 C 3.11 10.7 3.34 9.52 3.83 8.41 C 5.25 12.3 6.67 16.2 8.1 20.09 M 12.13 13.46 L 14.71 20.44 C 13.85 20.73 12.95 20.89 12 20.89 C 11.21 20.89 10.43 20.78 9.71 20.56 C 10.52 18.18 11.33 15.82 12.13 13.46 L 12.13 13.46" }) });
 
   // packages/editor/build-module/store/private-selectors.mjs
-  var import_core_data3 = __toESM(require_core_data(), 1);
+  var import_core_data5 = __toESM(require_core_data(), 1);
   var import_preferences2 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/dataviews/store/private-selectors.mjs
@@ -7940,7 +8041,7 @@ var wp;
     insertionIndex: void 0,
     filterValue: void 0
   };
-  var { getTemplatePartIcon: getTemplatePartIcon2 } = unlock(import_core_data3.privateApis);
+  var { getTemplatePartIcon: getTemplatePartIcon2 } = unlock(import_core_data5.privateApis);
   var RENDERING_MODES = ["post-only", "template-locked"];
   var getInserter = (0, import_data5.createRegistrySelector)(
     (select9) => (0, import_data5.createSelector)(
@@ -8008,7 +8109,7 @@ var wp;
     (select9) => (state2, postType2, options) => {
       {
         if (postType2 === "wp_template_part" || postType2 === "wp_template") {
-          const templateAreas = select9(import_core_data3.store).getCurrentTheme()?.default_template_part_areas || [];
+          const templateAreas = select9(import_core_data5.store).getCurrentTheme()?.default_template_part_areas || [];
           const areaData = templateAreas.find(
             (item) => options.area === item.area
           );
@@ -8020,7 +8121,7 @@ var wp;
         if (CARD_ICONS[postType2]) {
           return CARD_ICONS[postType2];
         }
-        const postTypeEntity = select9(import_core_data3.store).getPostType(postType2);
+        const postTypeEntity = select9(import_core_data5.store).getPostType(postType2);
         if (typeof postTypeEntity?.icon === "string" && postTypeEntity.icon.startsWith("dashicons-")) {
           return postTypeEntity.icon.slice(10);
         }
@@ -8066,7 +8167,7 @@ var wp;
   );
   var getDefaultRenderingMode = (0, import_data5.createRegistrySelector)(
     (select9) => (state2, postType2) => {
-      const { getPostType, getCurrentTheme, hasFinishedResolution } = select9(import_core_data3.store);
+      const { getPostType, getCurrentTheme, hasFinishedResolution } = select9(import_core_data5.store);
       const currentTheme = getCurrentTheme();
       const postTypeEntity = getPostType(postType2);
       if (!hasFinishedResolution("getPostType", [postType2]) || !hasFinishedResolution("getCurrentTheme")) {
@@ -8148,12 +8249,12 @@ var wp;
       if (!postType2 || !postId2) {
         return null;
       }
-      const entityConfig = select9(import_core_data3.store).getEntityConfig(
+      const entityConfig = select9(import_core_data5.store).getEntityConfig(
         "postType",
         postType2
       );
       const revisionKey = entityConfig?.revisionKey || "id";
-      return select9(import_core_data3.store).getRevisions(
+      return select9(import_core_data5.store).getRevisions(
         "postType",
         postType2,
         postId2,
@@ -8181,12 +8282,12 @@ var wp;
         return null;
       }
       const { type: postType2, id: postId2 } = getCurrentPost(state2);
-      const entityConfig = select9(import_core_data3.store).getEntityConfig(
+      const entityConfig = select9(import_core_data5.store).getEntityConfig(
         "postType",
         postType2
       );
       const revisionKey = entityConfig?.revisionKey || "id";
-      const revisions = select9(import_core_data3.store).getRevisions(
+      const revisions = select9(import_core_data5.store).getRevisions(
         "postType",
         postType2,
         postId2,
@@ -8201,7 +8302,7 @@ var wp;
       if (revision) {
         return revision;
       }
-      return select9(import_core_data3.store).getRevision(
+      return select9(import_core_data5.store).getRevision(
         "postType",
         postType2,
         postId2,
@@ -8227,13 +8328,13 @@ var wp;
         return null;
       }
       const { type: postType2, id: postId2 } = getCurrentPost(state2);
-      const entityConfig = select9(import_core_data3.store).getEntityConfig(
+      const entityConfig = select9(import_core_data5.store).getEntityConfig(
         "postType",
         postType2
       );
       const revisionKey = entityConfig?.revisionKey || "id";
       const query = buildRevisionsPageQuery(revisionKey, page);
-      const revisions = select9(import_core_data3.store).getRevisions(
+      const revisions = select9(import_core_data5.store).getRevisions(
         "postType",
         postType2,
         postId2,
@@ -8251,7 +8352,7 @@ var wp;
       const totalRevisions = getCurrentPostRevisionsCount(state2);
       const totalPages = Math.ceil(totalRevisions / query.per_page) || 1;
       if (currentIndex === revisions.length - 1 && page < totalPages) {
-        const nextPageRevisions = select9(import_core_data3.store).getRevisions(
+        const nextPageRevisions = select9(import_core_data5.store).getRevisions(
           "postType",
           postType2,
           postId2,
@@ -8264,12 +8365,12 @@ var wp;
   );
   var isCollaborationEnabledForCurrentPost = (0, import_data5.createRegistrySelector)(
     (select9) => (state2) => {
-      if (!unlock(select9(import_core_data3.store)).isCollaborationSupported()) {
+      if (!unlock(select9(import_core_data5.store)).isCollaborationSupported()) {
         return false;
       }
       const currentPostType = getCurrentPostType(state2);
       const currentPostId = getCurrentPostId(state2);
-      const entityConfig = select9(import_core_data3.store).getEntityConfig(
+      const entityConfig = select9(import_core_data5.store).getEntityConfig(
         "postType",
         currentPostType
       );
@@ -8284,7 +8385,7 @@ var wp;
   );
 
   // packages/editor/build-module/dataviews/store/private-actions.mjs
-  var import_core_data57 = __toESM(require_core_data(), 1);
+  var import_core_data59 = __toESM(require_core_data(), 1);
   var import_hooks39 = __toESM(require_hooks(), 1);
 
   // packages/fields/build-module/fields/slug/index.mjs
@@ -8538,7 +8639,7 @@ var wp;
   // packages/fields/build-module/fields/page-title/view.mjs
   var import_i18n8 = __toESM(require_i18n(), 1);
   var import_data7 = __toESM(require_data(), 1);
-  var import_core_data4 = __toESM(require_core_data(), 1);
+  var import_core_data6 = __toESM(require_core_data(), 1);
   var import_components3 = __toESM(require_components(), 1);
 
   // packages/fields/build-module/lock-unlock.mjs
@@ -8553,7 +8654,7 @@ var wp;
   var { Badge: WCBadge } = unlock3(import_components3.privateApis);
   function PageTitleView({ item }) {
     const { frontPageId, postsPageId } = (0, import_data7.useSelect)((select9) => {
-      const { getEntityRecord } = select9(import_core_data4.store);
+      const { getEntityRecord } = select9(import_core_data6.store);
       const siteSettings = getEntityRecord(
         "root",
         "site"
@@ -39434,7 +39535,7 @@ var wp;
   // packages/fields/build-module/components/media-edit/index.mjs
   var import_components5 = __toESM(require_components(), 1);
   var import_blob = __toESM(require_blob(), 1);
-  var import_core_data5 = __toESM(require_core_data(), 1);
+  var import_core_data7 = __toESM(require_core_data(), 1);
   var import_data8 = __toESM(require_data(), 1);
   var import_element100 = __toESM(require_element(), 1);
   var import_i18n25 = __toESM(require_i18n(), 1);
@@ -42849,7 +42950,7 @@ var wp;
         }
         const normalizedValue = normalizeValue(value);
         const sortedIds = normalizedValue.toSorted((a3, b3) => a3 - b3);
-        const { getEntityRecords } = select9(import_core_data5.store);
+        const { getEntityRecords } = select9(import_core_data7.store);
         return getEntityRecords("postType", "attachment", {
           include: sortedIds
         });
@@ -42882,7 +42983,7 @@ var wp;
       return normalizedValue.map((id) => attachmentMap.get(id)).filter((a3) => a3 !== void 0);
     }, [stableAttachments, value]);
     const { createErrorNotice } = (0, import_data8.useDispatch)(import_notices2.store);
-    const { receiveEntityRecords } = (0, import_data8.useDispatch)(import_core_data5.store);
+    const { receiveEntityRecords } = (0, import_data8.useDispatch)(import_core_data7.store);
     const [targetItemId, setTargetItemId] = (0, import_element100.useState)();
     const openModalRef = (0, import_element100.useRef)(void 0);
     const [pendingOpen, setPendingOpen] = (0, import_element100.useState)(false);
@@ -43191,31 +43292,31 @@ var wp;
 
   // packages/fields/build-module/fields/template/template-edit.mjs
   var import_element101 = __toESM(require_element(), 1);
-  var import_core_data7 = __toESM(require_core_data(), 1);
+  var import_core_data9 = __toESM(require_core_data(), 1);
   var import_components6 = __toESM(require_components(), 1);
   var import_data10 = __toESM(require_data(), 1);
   var import_i18n27 = __toESM(require_i18n(), 1);
 
   // packages/fields/build-module/fields/template/hooks.mjs
   var import_data9 = __toESM(require_data(), 1);
-  var import_core_data6 = __toESM(require_core_data(), 1);
+  var import_core_data8 = __toESM(require_core_data(), 1);
   function useTemplateFieldMode(record) {
     const postType2 = record.type;
     const availableTemplates = record?.available_templates ?? {};
     const hasAvailableTemplates = Object.keys(availableTemplates).length > 0;
     return (0, import_data9.useSelect)(
       (select9) => {
-        const isBlockTheme = !!select9(import_core_data6.store).getCurrentTheme()?.is_block_theme;
-        const postTypeObj = select9(import_core_data6.store).getPostType(postType2);
+        const isBlockTheme = !!select9(import_core_data8.store).getCurrentTheme()?.is_block_theme;
+        const postTypeObj = select9(import_core_data8.store).getPostType(postType2);
         if (!postTypeObj?.viewable) {
           return null;
         }
-        const canCreateTemplates = isBlockTheme && (select9(import_core_data6.store).canUser("create", {
+        const canCreateTemplates = isBlockTheme && (select9(import_core_data8.store).canUser("create", {
           kind: "postType",
           name: "wp_template"
         }) ?? false);
         const isVisible2 = hasAvailableTemplates || canCreateTemplates;
-        const canViewTemplates = isVisible2 ? !!select9(import_core_data6.store).canUser("read", {
+        const canViewTemplates = isVisible2 ? !!select9(import_core_data8.store).canUser("read", {
           kind: "postType",
           name: "wp_template"
         }) : false;
@@ -43244,10 +43345,10 @@ var wp;
           return NAME_NOT_FOUND;
         }
         const postIdStr = String(postId2);
-        const homePage = unlock3(select9(import_core_data6.store)).getHomePage();
+        const homePage = unlock3(select9(import_core_data8.store)).getHomePage();
         if (postType2 === "page" && homePage?.postType === "page" && homePage?.postId === postIdStr) {
           const templates = select9(
-            import_core_data6.store
+            import_core_data8.store
           ).getEntityRecords("postType", "wp_template", {
             per_page: -1
           });
@@ -43258,16 +43359,16 @@ var wp;
             return getItemTitle(frontPage);
           }
         }
-        const postsPageId = unlock3(select9(import_core_data6.store)).getPostsPageId();
+        const postsPageId = unlock3(select9(import_core_data8.store)).getPostsPageId();
         if (postType2 === "page" && postsPageId === postIdStr) {
-          const templateId22 = select9(import_core_data6.store).getDefaultTemplateId({
+          const templateId22 = select9(import_core_data8.store).getDefaultTemplateId({
             slug: "home"
           });
           if (!templateId22) {
             return NAME_NOT_FOUND;
           }
           const template22 = select9(
-            import_core_data6.store
+            import_core_data8.store
           ).getEntityRecord(
             "postType",
             "wp_template",
@@ -43276,13 +43377,13 @@ var wp;
           return template22 ? getItemTitle(template22) : NAME_NOT_FOUND;
         }
         const slugToCheck = getTemplateSlugToCheck(postType2, slug);
-        const templateId2 = select9(import_core_data6.store).getDefaultTemplateId({
+        const templateId2 = select9(import_core_data8.store).getDefaultTemplateId({
           slug: slugToCheck
         });
         if (!templateId2) {
           return NAME_NOT_FOUND;
         }
-        const template2 = select9(import_core_data6.store).getEntityRecord(
+        const template2 = select9(import_core_data8.store).getEntityRecord(
           "postType",
           "wp_template",
           templateId2
@@ -43315,7 +43416,7 @@ var wp;
     const canSwitchTemplate = (0, import_data10.useSelect)(
       (select9) => {
         const { getHomePage, getPostsPageId } = unlock3(
-          select9(import_core_data7.store)
+          select9(import_core_data9.store)
         );
         const singlePostId = String(postId2);
         const isPostsPage = getPostsPageId() === singlePostId;
@@ -43346,7 +43447,7 @@ var wp;
     const slug = data.slug;
     const { templates, canSwitchTemplate } = (0, import_data10.useSelect)(
       (select9) => {
-        const allTemplates = select9(import_core_data7.store).getEntityRecords(
+        const allTemplates = select9(import_core_data9.store).getEntityRecords(
           "postType",
           "wp_template",
           {
@@ -43355,7 +43456,7 @@ var wp;
           }
         ) ?? EMPTY_ARRAY5;
         const { getHomePage, getPostsPageId } = unlock3(
-          select9(import_core_data7.store)
+          select9(import_core_data9.store)
         );
         const singlePostId = String(postId2);
         const isPostsPage = getPostsPageId() === singlePostId;
@@ -43416,7 +43517,7 @@ var wp;
 
   // packages/fields/build-module/fields/template/template-view.mjs
   var import_data11 = __toESM(require_data(), 1);
-  var import_core_data8 = __toESM(require_core_data(), 1);
+  var import_core_data10 = __toESM(require_core_data(), 1);
   var import_i18n28 = __toESM(require_i18n(), 1);
   var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
   function ClassicTemplateView({
@@ -43447,7 +43548,7 @@ var wp;
           return;
         }
         const allTemplates = select9(
-          import_core_data8.store
+          import_core_data10.store
         ).getEntityRecords("postType", "wp_template", {
           per_page: -1,
           post_type: postType2
@@ -43493,7 +43594,7 @@ var wp;
   var import_components7 = __toESM(require_components(), 1);
   var import_data12 = __toESM(require_data(), 1);
   var import_element102 = __toESM(require_element(), 1);
-  var import_core_data9 = __toESM(require_core_data(), 1);
+  var import_core_data11 = __toESM(require_core_data(), 1);
   var import_compose8 = __toESM(require_compose(), 1);
   var import_html_entities5 = __toESM(require_html_entities(), 1);
   var import_i18n31 = __toESM(require_i18n(), 1);
@@ -43563,7 +43664,7 @@ var wp;
     const postTypeSlug = data.type;
     const { parentPostTitle, pageItems, isHierarchical } = (0, import_data12.useSelect)(
       (select9) => {
-        const { getEntityRecord, getEntityRecords, getPostType } = select9(import_core_data9.store);
+        const { getEntityRecord, getEntityRecords, getPostType } = select9(import_core_data11.store);
         const postTypeInfo = getPostType(postTypeSlug);
         const postIsHierarchical = postTypeInfo?.hierarchical && postTypeInfo.viewable;
         const parentPost = pageId ? getEntityRecord(
@@ -43674,7 +43775,7 @@ var wp;
   }) => {
     const { id } = field;
     const homeUrl = (0, import_data12.useSelect)((select9) => {
-      return select9(import_core_data9.store).getEntityRecord("root", "__unstableBase")?.home;
+      return select9(import_core_data11.store).getEntityRecord("root", "__unstableBase")?.home;
     }, []);
     const onChangeControl = (0, import_element102.useCallback)(
       (newValue) => onChange({
@@ -43726,7 +43827,7 @@ var wp;
 
   // packages/fields/build-module/fields/parent/parent-view.mjs
   var import_data13 = __toESM(require_data(), 1);
-  var import_core_data10 = __toESM(require_core_data(), 1);
+  var import_core_data12 = __toESM(require_core_data(), 1);
   var import_i18n32 = __toESM(require_i18n(), 1);
   var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
   var ParentView = ({
@@ -43734,7 +43835,7 @@ var wp;
   }) => {
     const parent = (0, import_data13.useSelect)(
       (select9) => {
-        const { getEntityRecord } = select9(import_core_data10.store);
+        const { getEntityRecord } = select9(import_core_data12.store);
         return item?.parent ? getEntityRecord("postType", item.type, item.parent) : null;
       },
       [item.parent, item.type]
@@ -44157,14 +44258,14 @@ var wp;
   // packages/fields/build-module/fields/author/index.mjs
   var import_i18n47 = __toESM(require_i18n(), 1);
   var import_data15 = __toESM(require_data(), 1);
-  var import_core_data12 = __toESM(require_core_data(), 1);
+  var import_core_data14 = __toESM(require_core_data(), 1);
 
   // packages/fields/build-module/fields/author/author-view.mjs
   var import_i18n46 = __toESM(require_i18n(), 1);
   var import_element105 = __toESM(require_element(), 1);
   var import_components11 = __toESM(require_components(), 1);
   var import_data14 = __toESM(require_data(), 1);
-  var import_core_data11 = __toESM(require_core_data(), 1);
+  var import_core_data13 = __toESM(require_core_data(), 1);
   var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
   function AuthorView({ item }) {
     const authorId = item?.author;
@@ -44177,7 +44278,7 @@ var wp;
         if (!shouldFetch) {
           return null;
         }
-        const { getEntityRecord } = select9(import_core_data11.store);
+        const { getEntityRecord } = select9(import_core_data13.store);
         return authorId ? getEntityRecord("root", "user", authorId) : null;
       },
       [authorId, shouldFetch]
@@ -44214,7 +44315,7 @@ var wp;
     id: "author",
     type: "integer",
     getElements: async () => {
-      const authors = await (0, import_data15.resolveSelect)(import_core_data12.store).getEntityRecords(
+      const authors = await (0, import_data15.resolveSelect)(import_core_data14.store).getEntityRecords(
         "root",
         "user",
         {
@@ -44245,12 +44346,12 @@ var wp;
   // packages/fields/build-module/fields/template-author/index.mjs
   var import_i18n48 = __toESM(require_i18n(), 1);
   var import_data17 = __toESM(require_data(), 1);
-  var import_core_data14 = __toESM(require_core_data(), 1);
+  var import_core_data16 = __toESM(require_core_data(), 1);
 
   // packages/fields/build-module/fields/template-author/view.mjs
   var import_element106 = __toESM(require_element(), 1);
   var import_data16 = __toESM(require_data(), 1);
-  var import_core_data13 = __toESM(require_core_data(), 1);
+  var import_core_data15 = __toESM(require_core_data(), 1);
   var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
   function getIconForSource(originalSource) {
     switch (originalSource) {
@@ -44275,17 +44376,17 @@ var wp;
     const imageUrl = (0, import_data16.useSelect)(
       (select9) => {
         if (originalSource === "site") {
-          const siteData = select9(import_core_data13.store).getEntityRecord("root", "__unstableBase");
+          const siteData = select9(import_core_data15.store).getEntityRecord("root", "__unstableBase");
           const logoId = siteData?.site_logo;
           if (!logoId) {
             return void 0;
           }
-          return select9(import_core_data13.store).getEntityRecord("postType", "attachment", logoId)?.source_url;
+          return select9(import_core_data15.store).getEntityRecord("postType", "attachment", logoId)?.source_url;
         }
         if (originalSource !== "user" || !authorId) {
           return void 0;
         }
-        return select9(import_core_data13.store).getUser(authorId)?.avatar_urls?.[48];
+        return select9(import_core_data15.store).getUser(authorId)?.avatar_urls?.[48];
       },
       [originalSource, authorId]
     );
@@ -44313,7 +44414,7 @@ var wp;
 
   // packages/fields/build-module/fields/template-author/index.mjs
   async function getAuthorElements(postType2) {
-    const records = await (0, import_data17.resolveSelect)(import_core_data14.store).getEntityRecords(
+    const records = await (0, import_data17.resolveSelect)(import_core_data16.store).getEntityRecords(
       "postType",
       postType2,
       { per_page: -1, _fields: "id,author_text" }
@@ -44439,7 +44540,7 @@ var wp;
   // packages/fields/build-module/fields/format/index.mjs
   var import_i18n52 = __toESM(require_i18n(), 1);
   var import_data18 = __toESM(require_data(), 1);
-  var import_core_data15 = __toESM(require_core_data(), 1);
+  var import_core_data17 = __toESM(require_core_data(), 1);
   var POST_FORMATS = [
     { id: "aside", caption: (0, import_i18n52.__)("Aside") },
     { id: "audio", caption: (0, import_i18n52.__)("Audio") },
@@ -44471,7 +44572,7 @@ var wp;
     enableHiding: false,
     filterBy: false,
     getElements: async () => {
-      const themeSupports = await (0, import_data18.resolveSelect)(import_core_data15.store).getThemeSupports();
+      const themeSupports = await (0, import_data18.resolveSelect)(import_core_data17.store).getThemeSupports();
       return POST_FORMATS.filter(
         (f3) => themeSupports?.formats?.includes(
           f3.id
@@ -44667,7 +44768,7 @@ var wp;
 
   // packages/fields/build-module/actions/reorder-page.mjs
   var import_data19 = __toESM(require_data(), 1);
-  var import_core_data16 = __toESM(require_core_data(), 1);
+  var import_core_data18 = __toESM(require_core_data(), 1);
   var import_i18n60 = __toESM(require_i18n(), 1);
   var import_notices3 = __toESM(require_notices(), 1);
   var import_element108 = __toESM(require_element(), 1);
@@ -44682,7 +44783,7 @@ var wp;
     onActionPerformed
   }) {
     const [item, setItem] = (0, import_element108.useState)(items[0]);
-    const { editEntityRecord, saveEditedEntityRecord } = (0, import_data19.useDispatch)(import_core_data16.store);
+    const { editEntityRecord, saveEditedEntityRecord } = (0, import_data19.useDispatch)(import_core_data18.store);
     const { createSuccessNotice, createErrorNotice } = (0, import_data19.useDispatch)(import_notices3.store);
     const isValid2 = isItemValid(item);
     async function onOrder(event) {
@@ -44768,7 +44869,7 @@ var wp;
 
   // packages/fields/build-module/actions/duplicate-post.mjs
   var import_data20 = __toESM(require_data(), 1);
-  var import_core_data17 = __toESM(require_core_data(), 1);
+  var import_core_data19 = __toESM(require_core_data(), 1);
   var import_i18n61 = __toESM(require_i18n(), 1);
   var import_notices4 = __toESM(require_notices(), 1);
   var import_element109 = __toESM(require_element(), 1);
@@ -44791,7 +44892,7 @@ var wp;
         )
       });
       const [isCreatingPage, setIsCreatingPage] = (0, import_element109.useState)(false);
-      const { saveEntityRecord } = (0, import_data20.useDispatch)(import_core_data17.store);
+      const { saveEntityRecord } = (0, import_data20.useDispatch)(import_core_data19.store);
       const { createSuccessNotice, createErrorNotice } = (0, import_data20.useDispatch)(import_notices4.store);
       async function createPage(event) {
         event.preventDefault();
@@ -44900,7 +45001,7 @@ var wp;
 
   // packages/fields/build-module/actions/rename-post.mjs
   var import_data21 = __toESM(require_data(), 1);
-  var import_core_data18 = __toESM(require_core_data(), 1);
+  var import_core_data20 = __toESM(require_core_data(), 1);
   var import_i18n62 = __toESM(require_i18n(), 1);
   var import_element110 = __toESM(require_element(), 1);
   var import_patterns3 = __toESM(require_patterns(), 1);
@@ -44930,7 +45031,7 @@ var wp;
     RenderModal: ({ items, closeModal: closeModal2, onActionPerformed }) => {
       const [item] = items;
       const [title, setTitle] = (0, import_element110.useState)(() => getItemTitle(item, ""));
-      const { editEntityRecord, saveEditedEntityRecord } = (0, import_data21.useDispatch)(import_core_data18.store);
+      const { editEntityRecord, saveEditedEntityRecord } = (0, import_data21.useDispatch)(import_core_data20.store);
       const { createSuccessNotice, createErrorNotice } = (0, import_data21.useDispatch)(import_notices5.store);
       async function onRename(event) {
         event.preventDefault();
@@ -44992,7 +45093,7 @@ var wp;
 
   // packages/fields/build-module/actions/reset-post.mjs
   var import_data22 = __toESM(require_data(), 1);
-  var import_core_data19 = __toESM(require_core_data(), 1);
+  var import_core_data21 = __toESM(require_core_data(), 1);
   var import_i18n63 = __toESM(require_i18n(), 1);
   var import_notices6 = __toESM(require_notices(), 1);
   var import_element111 = __toESM(require_element(), 1);
@@ -45020,7 +45121,7 @@ var wp;
       return;
     }
     try {
-      const templateEntityConfig = (0, import_data22.select)(import_core_data19.store).getEntityConfig(
+      const templateEntityConfig = (0, import_data22.select)(import_core_data21.store).getEntityConfig(
         "postType",
         template2.type
       );
@@ -45050,12 +45151,12 @@ var wp;
         return;
       }
       const serializeBlocks = ({ blocks: blocksForSerialization = [] }) => (0, import_blocks4.__unstableSerializeAndClean)(blocksForSerialization);
-      const edited = (0, import_data22.select)(import_core_data19.store).getEditedEntityRecord(
+      const edited = (0, import_data22.select)(import_core_data21.store).getEditedEntityRecord(
         "postType",
         template2.type,
         template2.id
       );
-      (0, import_data22.dispatch)(import_core_data19.store).editEntityRecord(
+      (0, import_data22.dispatch)(import_core_data21.store).editEntityRecord(
         "postType",
         template2.type,
         template2.id,
@@ -45073,7 +45174,7 @@ var wp;
         }
       );
       const blocks = (0, import_blocks4.parse)(fileTemplate?.content?.raw);
-      (0, import_data22.dispatch)(import_core_data19.store).editEntityRecord(
+      (0, import_data22.dispatch)(import_core_data21.store).editEntityRecord(
         "postType",
         template2.type,
         fileTemplate.id,
@@ -45085,7 +45186,7 @@ var wp;
       );
       if (allowUndo) {
         const undoRevert = () => {
-          (0, import_data22.dispatch)(import_core_data19.store).editEntityRecord(
+          (0, import_data22.dispatch)(import_core_data21.store).editEntityRecord(
             "postType",
             template2.type,
             edited.id,
@@ -45129,7 +45230,7 @@ var wp;
     modalFocusOnMount: "firstContentElement",
     RenderModal: ({ items, closeModal: closeModal2, onActionPerformed }) => {
       const [isBusy, setIsBusy] = (0, import_element111.useState)(false);
-      const { saveEditedEntityRecord } = (0, import_data22.useDispatch)(import_core_data19.store);
+      const { saveEditedEntityRecord } = (0, import_data22.useDispatch)(import_core_data21.store);
       const { createSuccessNotice, createErrorNotice } = (0, import_data22.useDispatch)(import_notices6.store);
       const onConfirm = async () => {
         try {
@@ -45582,7 +45683,7 @@ var wp;
   var view_post_revisions_default = viewPostRevisions;
 
   // packages/fields/build-module/actions/permanently-delete-post.mjs
-  var import_core_data20 = __toESM(require_core_data(), 1);
+  var import_core_data22 = __toESM(require_core_data(), 1);
   var import_i18n67 = __toESM(require_i18n(), 1);
   var import_notices7 = __toESM(require_notices(), 1);
   var import_element112 = __toESM(require_element(), 1);
@@ -45607,7 +45708,7 @@ var wp;
     RenderModal: ({ items, closeModal: closeModal2, onActionPerformed }) => {
       const [isBusy, setIsBusy] = (0, import_element112.useState)(false);
       const { createSuccessNotice, createErrorNotice } = (0, import_data23.useDispatch)(import_notices7.store);
-      const { deleteEntityRecord } = (0, import_data23.useDispatch)(import_core_data20.store);
+      const { deleteEntityRecord } = (0, import_data23.useDispatch)(import_core_data22.store);
       return /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(import_components18.__experimentalVStack, { spacing: "5", children: [
         /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(import_components18.__experimentalText, { children: items.length > 1 ? (0, import_i18n67.sprintf)(
           // translators: %d: number of items to delete.
@@ -45740,7 +45841,7 @@ var wp;
   var permanently_delete_post_default = permanentlyDeletePost;
 
   // packages/fields/build-module/actions/restore-post.mjs
-  var import_core_data21 = __toESM(require_core_data(), 1);
+  var import_core_data23 = __toESM(require_core_data(), 1);
   var import_i18n68 = __toESM(require_i18n(), 1);
   var import_notices8 = __toESM(require_notices(), 1);
   var restorePost = {
@@ -45754,7 +45855,7 @@ var wp;
     },
     async callback(posts, { registry, onActionPerformed }) {
       const { createSuccessNotice, createErrorNotice } = registry.dispatch(import_notices8.store);
-      const { editEntityRecord, saveEditedEntityRecord } = registry.dispatch(import_core_data21.store);
+      const { editEntityRecord, saveEditedEntityRecord } = registry.dispatch(import_core_data23.store);
       await Promise.allSettled(
         posts.map((post2) => {
           return editEntityRecord("postType", post2.type, post2.id, {
@@ -45849,7 +45950,7 @@ var wp;
 
   // packages/fields/build-module/actions/trash-post.mjs
   var import_data24 = __toESM(require_data(), 1);
-  var import_core_data22 = __toESM(require_core_data(), 1);
+  var import_core_data24 = __toESM(require_core_data(), 1);
   var import_i18n69 = __toESM(require_i18n(), 1);
   var import_notices9 = __toESM(require_notices(), 1);
   var import_element113 = __toESM(require_element(), 1);
@@ -45875,7 +45976,7 @@ var wp;
     RenderModal: ({ items, closeModal: closeModal2, onActionPerformed }) => {
       const [isBusy, setIsBusy] = (0, import_element113.useState)(false);
       const { createSuccessNotice, createErrorNotice } = (0, import_data24.useDispatch)(import_notices9.store);
-      const { deleteEntityRecord } = (0, import_data24.useDispatch)(import_core_data22.store);
+      const { deleteEntityRecord } = (0, import_data24.useDispatch)(import_core_data24.store);
       return /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(import_components19.__experimentalVStack, { spacing: "5", children: [
         /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(import_components19.__experimentalText, { children: items.length === 1 ? (0, import_i18n69.sprintf)(
           // translators: %s: The item's title.
@@ -46024,7 +46125,7 @@ var wp;
 
   // packages/fields/build-module/mutation/index.mjs
   var import_notices10 = __toESM(require_notices(), 1);
-  var import_core_data23 = __toESM(require_core_data(), 1);
+  var import_core_data25 = __toESM(require_core_data(), 1);
   var import_data25 = __toESM(require_data(), 1);
   function getErrorMessagesFromPromises(allSettledResults) {
     const errorMessages = /* @__PURE__ */ new Set();
@@ -46048,7 +46149,7 @@ var wp;
   }
   var deletePostWithNotices = async (posts, notice, callbacks) => {
     const { createSuccessNotice, createErrorNotice } = (0, import_data25.dispatch)(import_notices10.store);
-    const { deleteEntityRecord } = (0, import_data25.dispatch)(import_core_data23.store);
+    const { deleteEntityRecord } = (0, import_data25.dispatch)(import_core_data25.store);
     const allSettledResults = await Promise.allSettled(
       posts.map((post2) => {
         return deleteEntityRecord(
@@ -46253,7 +46354,7 @@ var wp;
   // packages/fields/build-module/components/create-template-part-modal/index.mjs
   var import_components21 = __toESM(require_components(), 1);
   var import_compose9 = __toESM(require_compose(), 1);
-  var import_core_data25 = __toESM(require_core_data(), 1);
+  var import_core_data27 = __toESM(require_core_data(), 1);
   var import_data27 = __toESM(require_data(), 1);
   var import_element115 = __toESM(require_element(), 1);
   var import_i18n71 = __toESM(require_i18n(), 1);
@@ -46262,11 +46363,11 @@ var wp;
 
   // packages/fields/build-module/components/create-template-part-modal/utils.mjs
   var import_data26 = __toESM(require_data(), 1);
-  var import_core_data24 = __toESM(require_core_data(), 1);
+  var import_core_data26 = __toESM(require_core_data(), 1);
   var EMPTY_ARRAY6 = [];
   function useExistingTemplateParts() {
     return (0, import_data26.useSelect)(
-      (select9) => select9(import_core_data24.store).getEntityRecords(
+      (select9) => select9(import_core_data26.store).getEntityRecords(
         "postType",
         "wp_template_part",
         { per_page: -1 }
@@ -46305,7 +46406,7 @@ var wp;
     ...restProps
   }) {
     const defaultModalTitle = (0, import_data27.useSelect)(
-      (select9) => select9(import_core_data25.store).getPostType("wp_template_part")?.labels?.add_new_item,
+      (select9) => select9(import_core_data27.store).getPostType("wp_template_part")?.labels?.add_new_item,
       []
     );
     return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
@@ -46342,14 +46443,14 @@ var wp;
     defaultTitle = ""
   }) {
     const { createErrorNotice } = (0, import_data27.useDispatch)(import_notices11.store);
-    const { saveEntityRecord } = (0, import_data27.useDispatch)(import_core_data25.store);
+    const { saveEntityRecord } = (0, import_data27.useDispatch)(import_core_data27.store);
     const existingTemplateParts = useExistingTemplateParts();
     const [title, setTitle] = (0, import_element115.useState)(defaultTitle);
     const [area, setArea] = (0, import_element115.useState)(defaultArea);
     const [isSubmitting, setIsSubmitting] = (0, import_element115.useState)(false);
     const instanceId = (0, import_compose9.useInstanceId)(CreateTemplatePartModal);
     const defaultTemplatePartAreas = (0, import_data27.useSelect)(
-      (select9) => select9(import_core_data25.store).getCurrentTheme()?.default_template_part_areas,
+      (select9) => select9(import_core_data27.store).getCurrentTheme()?.default_template_part_areas,
       []
     );
     async function createTemplatePart() {
@@ -46642,7 +46743,7 @@ var wp;
   }
 
   // packages/media-fields/build-module/attached_to/edit.mjs
-  var import_core_data26 = __toESM(require_core_data(), 1);
+  var import_core_data28 = __toESM(require_core_data(), 1);
   var import_components23 = __toESM(require_components(), 1);
   var import_i18n75 = __toESM(require_i18n(), 1);
   var import_element118 = __toESM(require_element(), 1);
@@ -46670,7 +46771,7 @@ var wp;
       data?.post?.toString() ?? null
     );
     const postTypes = (0, import_data29.useSelect)(
-      (select9) => select9(import_core_data26.store).getPostTypes(),
+      (select9) => select9(import_core_data28.store).getPostTypes(),
       []
     );
     const handleDetach = () => {
@@ -46682,7 +46783,7 @@ var wp;
     };
     const onValueChange = async (filterValue) => {
       setIsLoading(true);
-      const results = await (0, import_core_data26.__experimentalFetchLinkSuggestions)(
+      const results = await (0, import_core_data28.__experimentalFetchLinkSuggestions)(
         filterValue,
         /*
          * @TODO `fetchLinkSuggestions()` should accept `perPage` as an option argument.
@@ -46767,7 +46868,7 @@ var wp;
   // packages/media-fields/build-module/author/index.mjs
   var import_i18n78 = __toESM(require_i18n(), 1);
   var import_data30 = __toESM(require_data(), 1);
-  var import_core_data27 = __toESM(require_core_data(), 1);
+  var import_core_data29 = __toESM(require_core_data(), 1);
 
   // packages/media-fields/build-module/author/view.mjs
   var import_i18n77 = __toESM(require_i18n(), 1);
@@ -46824,7 +46925,7 @@ var wp;
     id: "author",
     type: "integer",
     getElements: async () => {
-      const authors = await (0, import_data30.resolveSelect)(import_core_data27.store).getEntityRecords(
+      const authors = await (0, import_data30.resolveSelect)(import_core_data29.store).getEntityRecords(
         "root",
         "user",
         {
@@ -47089,12 +47190,12 @@ var wp;
   var import_i18n215 = __toESM(require_i18n(), 1);
   var import_block_editor35 = __toESM(require_block_editor(), 1);
   var import_data89 = __toESM(require_data(), 1);
-  var import_core_data56 = __toESM(require_core_data(), 1);
+  var import_core_data58 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/provider/index.mjs
   var import_element281 = __toESM(require_element(), 1);
   var import_data88 = __toESM(require_data(), 1);
-  var import_core_data55 = __toESM(require_core_data(), 1);
+  var import_core_data57 = __toESM(require_core_data(), 1);
   var import_block_editor34 = __toESM(require_block_editor(), 1);
   var import_patterns8 = __toESM(require_patterns(), 1);
   var import_blocks18 = __toESM(require_blocks(), 1);
@@ -47150,8 +47251,8 @@ var wp;
   // packages/editor/build-module/components/provider/use-entity-contains-snapshot.mjs
   var import_element122 = __toESM(require_element(), 1);
   var import_data32 = __toESM(require_data(), 1);
-  var import_core_data28 = __toESM(require_core_data(), 1);
-  var { entityContainsSnapshot } = unlock(import_core_data28.privateApis);
+  var import_core_data30 = __toESM(require_core_data(), 1);
+  var { entityContainsSnapshot } = unlock(import_core_data30.privateApis);
   var SNAPSHOT_STATUS_SYNC_WAIT_MS = 3e3;
   function useEntityContainsSnapshot({
     postType: postType2,
@@ -47171,7 +47272,7 @@ var wp;
           };
         }
         const connectionStatus = unlock(
-          select9(import_core_data28.store)
+          select9(import_core_data30.store)
         ).getEntitySyncConnectionStatus("postType", postType2, postId2);
         return {
           syncStatus: connectionStatus?.status,
@@ -47210,7 +47311,7 @@ var wp;
         registry.select(store)
       ).isCollaborationEnabledForCurrentPost();
       const connectionStatus = unlock(
-        registry.select(import_core_data28.store)
+        registry.select(import_core_data30.store)
       ).getEntitySyncConnectionStatus("postType", postType2, postId2);
       let nextSnapshotStatus;
       if (containsSnapshot) {
@@ -47299,7 +47400,7 @@ var wp;
   // packages/editor/build-module/components/provider/use-block-editor-settings.mjs
   var import_element259 = __toESM(require_element(), 1);
   var import_data62 = __toESM(require_data(), 1);
-  var import_core_data47 = __toESM(require_core_data(), 1);
+  var import_core_data49 = __toESM(require_core_data(), 1);
   var import_i18n201 = __toESM(require_i18n(), 1);
   var import_preferences3 = __toESM(require_preferences(), 1);
   var import_compose45 = __toESM(require_compose(), 1);
@@ -65613,7 +65714,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components88 = __toESM(require_components(), 1);
   var import_compose36 = __toESM(require_compose(), 1);
   var import_data41 = __toESM(require_data(), 1);
-  var import_core_data30 = __toESM(require_core_data(), 1);
+  var import_core_data32 = __toESM(require_core_data(), 1);
 
   // packages/admin-ui/build-module/navigable-region/index.mjs
   var import_element204 = __toESM(require_element(), 1);
@@ -71003,7 +71104,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-editor/build-module/components/media-editor/use-save-media-editor.mjs
   var import_api_fetch2 = __toESM(require_api_fetch(), 1);
   var import_data40 = __toESM(require_data(), 1);
-  var import_core_data29 = __toESM(require_core_data(), 1);
+  var import_core_data31 = __toESM(require_core_data(), 1);
   var import_element221 = __toESM(require_element(), 1);
   var import_i18n149 = __toESM(require_i18n(), 1);
   var import_notices14 = __toESM(require_notices(), 1);
@@ -71112,7 +71213,7 @@ If there's a particular need for this, please submit a feature request at https:
       clearEntityRecordEdits,
       receiveEntityRecords,
       saveEditedEntityRecord
-    } = (0, import_data40.useDispatch)(import_core_data29.store);
+    } = (0, import_data40.useDispatch)(import_core_data31.store);
     const { createErrorNotice, removeAllNotices } = (0, import_data40.useDispatch)(import_notices14.store);
     const [isSaving, setIsSaving] = (0, import_element221.useState)(false);
     const save = (0, import_element221.useCallback)(async () => {
@@ -71126,7 +71227,7 @@ If there's a particular need for this, please submit a feature request at https:
           url: media.source_url
         } : void 0;
         if (modifiers.length > 0) {
-          const pendingEdits = registry.select(import_core_data29.store).getEntityRecordNonTransientEdits(
+          const pendingEdits = registry.select(import_core_data31.store).getEntityRecordNonTransientEdits(
             "postType",
             "attachment",
             id
@@ -71470,7 +71571,7 @@ If there's a particular need for this, please submit a feature request at https:
           getEditedEntityRecord,
           getEntityRecord,
           hasEditsForEntityRecord
-        } = select9(import_core_data30.store);
+        } = select9(import_core_data32.store);
         getEntityRecord(
           "postType",
           "attachment",
@@ -71493,7 +71594,7 @@ If there's a particular need for this, please submit a feature request at https:
       [id]
     );
     const hasChanges = cropper.isCropperDirty || hasEdits;
-    const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, import_data41.useDispatch)(import_core_data30.store);
+    const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, import_data41.useDispatch)(import_core_data32.store);
     const { removeAllNotices } = (0, import_data41.useDispatch)(import_notices15.store);
     const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element222.useState)(false);
     const [isPlacementActive, setIsPlacementActive] = (0, import_element222.useState)(false);
@@ -71873,7 +71974,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n152 = __toESM(require_i18n(), 1);
   var import_data43 = __toESM(require_data(), 1);
   var import_html_entities10 = __toESM(require_html_entities(), 1);
-  var import_core_data31 = __toESM(require_core_data(), 1);
+  var import_core_data33 = __toESM(require_core_data(), 1);
   var getExternalLink = (url, text) => `<a ${getExternalLinkAttributes(url)}>${text}</a>`;
   var getExternalLinkAttributes = (url) => `href="${url}" target="_blank" rel="noopener"`;
   var getOpenverseLicense = (license, licenseVersion) => {
@@ -71955,17 +72056,17 @@ If there's a particular need for this, please submit a feature request at https:
   });
   var coreMediaFetch = async (query = {}) => {
     const finalQuery = getCoreMediaQuery(query);
-    const records = await (0, import_data43.resolveSelect)(import_core_data31.store).getEntityRecords(
+    const records = await (0, import_data43.resolveSelect)(import_core_data33.store).getEntityRecords(
       "postType",
       "attachment",
       finalQuery
     );
-    const totalItems = (0, import_data43.select)(import_core_data31.store).getEntityRecordsTotalItems(
+    const totalItems = (0, import_data43.select)(import_core_data33.store).getEntityRecordsTotalItems(
       "postType",
       "attachment",
       finalQuery
     );
-    const totalPages = (0, import_data43.select)(import_core_data31.store).getEntityRecordsTotalPages(
+    const totalPages = (0, import_data43.select)(import_core_data33.store).getEntityRecordsTotalPages(
       "postType",
       "attachment",
       finalQuery
@@ -71995,7 +72096,7 @@ If there's a particular need for this, please submit a feature request at https:
     // `throwOnError` so a failed REST write rejects (rather than being silently
     // swallowed), letting the attach/detach handlers surface an error notice
     // instead of a false success.
-    (0, import_data43.dispatch)(import_core_data31.store).saveEntityRecord(
+    (0, import_data43.dispatch)(import_core_data33.store).saveEntityRecord(
       "postType",
       "attachment",
       {
@@ -72014,7 +72115,7 @@ If there's a particular need for this, please submit a feature request at https:
     )
   ];
   var invalidateAttachedImagesQueries = (postId2, query = {}) => {
-    const { invalidateResolution } = (0, import_data43.dispatch)(import_core_data31.store);
+    const { invalidateResolution } = (0, import_data43.dispatch)(import_core_data33.store);
     invalidateResolution("getEntityRecords", [
       "postType",
       "attachment",
@@ -72022,7 +72123,7 @@ If there's a particular need for this, please submit a feature request at https:
     ]);
   };
   var subscribeToMediaInvalidation = (args, onChange) => {
-    const isResolved = () => (0, import_data43.select)(import_core_data31.store).hasFinishedResolution("getEntityRecords", args);
+    const isResolved = () => (0, import_data43.select)(import_core_data33.store).hasFinishedResolution("getEntityRecords", args);
     let wasResolved = isResolved();
     return (0, import_data43.subscribe)(() => {
       const nowResolved = isResolved();
@@ -72030,7 +72131,7 @@ If there's a particular need for this, please submit a feature request at https:
         onChange();
       }
       wasResolved = nowResolved;
-    }, import_core_data31.store);
+    }, import_core_data33.store);
   };
   var createCoreMediaCategory = ({ getQuery, ...category }) => ({
     ...category,
@@ -72213,7 +72314,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/utils/media-upload/index.mjs
   var import_data44 = __toESM(require_data(), 1);
-  var import_core_data32 = __toESM(require_core_data(), 1);
+  var import_core_data34 = __toESM(require_core_data(), 1);
   var import_media_utils2 = __toESM(require_media_utils(), 1);
   var import_i18n153 = __toESM(require_i18n(), 1);
 
@@ -72293,7 +72394,7 @@ If there's a particular need for this, please submit a feature request at https:
       onError((0, import_i18n153.__)("Only one file can be used here."));
       return;
     }
-    const { receiveEntityRecords } = (0, import_data44.dispatch)(import_core_data32.store);
+    const { receiveEntityRecords } = (0, import_data44.dispatch)(import_core_data34.store);
     const { getCurrentPost: getCurrentPost2, getEditorSettings: getEditorSettings2 } = (0, import_data44.select)(store);
     const {
       lockPostAutosaving: lockPostAutosaving2,
@@ -72381,9 +72482,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/utils/media-upload/on-success.mjs
   var import_data45 = __toESM(require_data(), 1);
-  var import_core_data33 = __toESM(require_core_data(), 1);
+  var import_core_data35 = __toESM(require_core_data(), 1);
   function mediaUploadOnSuccess(attachments) {
-    const { invalidateResolution } = (0, import_data45.dispatch)(import_core_data33.store);
+    const { invalidateResolution } = (0, import_data45.dispatch)(import_core_data35.store);
     for (const attachment of attachments) {
       if (attachment.id) {
         invalidateResolution("getEntityRecord", [
@@ -72456,7 +72557,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/global-styles/index.mjs
-  var import_core_data46 = __toESM(require_core_data(), 1);
+  var import_core_data48 = __toESM(require_core_data(), 1);
   var import_data61 = __toESM(require_data(), 1);
   var import_element258 = __toESM(require_element(), 1);
 
@@ -72511,7 +72612,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components96 = __toESM(require_components(), 1);
   var import_i18n158 = __toESM(require_i18n(), 1);
   var import_data48 = __toESM(require_data(), 1);
-  var import_core_data35 = __toESM(require_core_data(), 1);
+  var import_core_data37 = __toESM(require_core_data(), 1);
 
   // packages/global-styles-ui/build-module/icon-with-current-color.mjs
   var import_jsx_runtime357 = __toESM(require_jsx_runtime(), 1);
@@ -72581,7 +72682,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/hooks.mjs
   var import_element226 = __toESM(require_element(), 1);
   var import_data47 = __toESM(require_data(), 1);
-  var import_core_data34 = __toESM(require_core_data(), 1);
+  var import_core_data36 = __toESM(require_core_data(), 1);
   var import_i18n155 = __toESM(require_i18n(), 1);
 
   // packages/global-styles-ui/build-module/utils.mjs
@@ -72845,7 +72946,7 @@ If there's a particular need for this, please submit a feature request at https:
   function useCurrentMergeThemeStyleVariationsWithUserConfig(properties = []) {
     const { variationsFromTheme } = (0, import_data47.useSelect)((select9) => {
       const _variationsFromTheme = select9(
-        import_core_data34.store
+        import_core_data36.store
       ).__experimentalGetCurrentThemeGlobalStylesVariations?.();
       return {
         variationsFromTheme: _variationsFromTheme || EMPTY_ARRAY12
@@ -73432,7 +73533,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime364 = __toESM(require_jsx_runtime(), 1);
   function ScreenRoot() {
     const hasVariations = (0, import_data48.useSelect)((select9) => {
-      const { __experimentalGetCurrentThemeGlobalStylesVariations } = select9(import_core_data35.store);
+      const { __experimentalGetCurrentThemeGlobalStylesVariations } = select9(import_core_data37.store);
       return !!__experimentalGetCurrentThemeGlobalStylesVariations()?.length;
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime364.jsxs)(
@@ -73865,7 +73966,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor9 = __toESM(require_block_editor(), 1);
   var import_element231 = __toESM(require_element(), 1);
   var import_data51 = __toESM(require_data(), 1);
-  var import_core_data36 = __toESM(require_core_data(), 1);
+  var import_core_data38 = __toESM(require_core_data(), 1);
   var import_components102 = __toESM(require_components(), 1);
   var import_i18n161 = __toESM(require_i18n(), 1);
 
@@ -74138,7 +74239,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const hasVariationsPanel = !!blockVariations?.length && !variation && !hasSelectedState;
     const { canEditCSS } = (0, import_data51.useSelect)((select9) => {
-      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data36.store);
+      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data38.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
       const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
       return {
@@ -74658,15 +74759,15 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/font-library/context.mjs
   var import_element233 = __toESM(require_element(), 1);
   var import_data52 = __toESM(require_data(), 1);
-  var import_core_data38 = __toESM(require_core_data(), 1);
+  var import_core_data40 = __toESM(require_core_data(), 1);
   var import_i18n165 = __toESM(require_i18n(), 1);
 
   // packages/global-styles-ui/build-module/font-library/api.mjs
   var import_api_fetch6 = __toESM(require_api_fetch(), 1);
-  var import_core_data37 = __toESM(require_core_data(), 1);
+  var import_core_data39 = __toESM(require_core_data(), 1);
   var FONT_FAMILIES_URL = "/wp/v2/font-families";
   function invalidateFontFamilyCache(registry) {
-    const { receiveEntityRecords } = registry.dispatch(import_core_data37.store);
+    const { receiveEntityRecords } = registry.dispatch(import_core_data39.store);
     receiveEntityRecords(
       "postType",
       "wp_font_family",
@@ -75005,18 +75106,18 @@ If there's a particular need for this, please submit a feature request at https:
   FontLibraryContext.displayName = "FontLibraryContext";
   function FontLibraryProvider({ children }) {
     const registry = (0, import_data52.useRegistry)();
-    const { saveEntityRecord, deleteEntityRecord } = (0, import_data52.useDispatch)(import_core_data38.store);
+    const { saveEntityRecord, deleteEntityRecord } = (0, import_data52.useDispatch)(import_core_data40.store);
     const { globalStylesId } = (0, import_data52.useSelect)((select9) => {
-      const { __experimentalGetCurrentGlobalStylesId } = select9(import_core_data38.store);
+      const { __experimentalGetCurrentGlobalStylesId } = select9(import_core_data40.store);
       return { globalStylesId: __experimentalGetCurrentGlobalStylesId() };
     }, []);
-    const globalStyles = (0, import_core_data38.useEntityRecord)(
+    const globalStyles = (0, import_core_data40.useEntityRecord)(
       "root",
       "globalStyles",
       globalStylesId
     );
     const [isInstalling, setIsInstalling] = (0, import_element233.useState)(false);
-    const { records: libraryPosts = [], isResolving: isResolvingLibrary } = (0, import_core_data38.useEntityRecords)(
+    const { records: libraryPosts = [], isResolving: isResolvingLibrary } = (0, import_core_data40.useEntityRecords)(
       "postType",
       "wp_font_family",
       {
@@ -75109,7 +75210,7 @@ If there's a particular need for this, please submit a feature request at https:
         for (const fontFamilyToInstall of fontFamiliesToInstall) {
           let isANewFontFamily = false;
           const fontFamilyRecords = await (0, import_data52.resolveSelect)(
-            import_core_data38.store
+            import_core_data40.store
           ).getEntityRecords(
             "postType",
             "wp_font_family",
@@ -75340,12 +75441,12 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/font-library/modal.mjs
   var import_i18n171 = __toESM(require_i18n(), 1);
   var import_components114 = __toESM(require_components(), 1);
-  var import_core_data41 = __toESM(require_core_data(), 1);
+  var import_core_data43 = __toESM(require_core_data(), 1);
   var import_data54 = __toESM(require_data(), 1);
 
   // packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
   var import_components109 = __toESM(require_components(), 1);
-  var import_core_data39 = __toESM(require_core_data(), 1);
+  var import_core_data41 = __toESM(require_core_data(), 1);
   var import_data53 = __toESM(require_data(), 1);
   var import_element237 = __toESM(require_element(), 1);
   var import_i18n167 = __toESM(require_i18n(), 1);
@@ -75636,10 +75737,10 @@ If there's a particular need for this, please submit a feature request at https:
     const [notice, setNotice] = (0, import_element237.useState)(null);
     const [baseFontFamilies] = useSetting("typography.fontFamilies", void 0, "base");
     const globalStylesId = (0, import_data53.useSelect)((select9) => {
-      const { __experimentalGetCurrentGlobalStylesId } = select9(import_core_data39.store);
+      const { __experimentalGetCurrentGlobalStylesId } = select9(import_core_data41.store);
       return __experimentalGetCurrentGlobalStylesId();
     }, []);
-    const globalStyles = (0, import_core_data39.useEntityRecord)(
+    const globalStyles = (0, import_core_data41.useEntityRecord)(
       "root",
       "globalStyles",
       globalStylesId
@@ -75660,7 +75761,7 @@ If there's a particular need for this, please submit a feature request at https:
     const customFontFamilyId = libraryFontSelected?.source === "custom" && libraryFontSelected?.id;
     const canUserDelete = (0, import_data53.useSelect)(
       (select9) => {
-        const { canUser } = select9(import_core_data39.store);
+        const { canUser } = select9(import_core_data41.store);
         return customFontFamilyId && canUser("delete", {
           kind: "postType",
           name: "wp_font_family",
@@ -76034,7 +76135,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components112 = __toESM(require_components(), 1);
   var import_compose39 = __toESM(require_compose(), 1);
   var import_i18n169 = __toESM(require_i18n(), 1);
-  var import_core_data40 = __toESM(require_core_data(), 1);
+  var import_core_data42 = __toESM(require_core_data(), 1);
 
   // packages/global-styles-ui/build-module/font-library/utils/filter-fonts.mjs
   function filterFonts(fonts, filters) {
@@ -76179,7 +76280,7 @@ If there's a particular need for this, please submit a feature request at https:
       requiresPermission && !getGoogleFontsPermissionFromStorage()
     );
     const { installFonts, isInstalling } = (0, import_element239.useContext)(FontLibraryContext);
-    const { record: selectedCollection, isResolving: isLoading } = (0, import_core_data40.useEntityRecord)("root", "fontCollection", slug);
+    const { record: selectedCollection, isResolving: isLoading } = (0, import_core_data42.useEntityRecord)("root", "fontCollection", slug);
     (0, import_element239.useEffect)(() => {
       const handleStorage = () => {
         setRenderConfirmDialog(
@@ -86838,11 +86939,11 @@ If there's a particular need for this, please submit a feature request at https:
     onRequestClose,
     defaultTabId = "installed-fonts"
   }) {
-    const { records: collections = [] } = (0, import_core_data41.useEntityRecords)("root", "fontCollection", {
+    const { records: collections = [] } = (0, import_core_data43.useEntityRecords)("root", "fontCollection", {
       _fields: "slug,name,description"
     });
     const canUserCreate = (0, import_data54.useSelect)((select9) => {
-      return select9(import_core_data41.store).canUser("create", {
+      return select9(import_core_data43.store).canUser("create", {
         kind: "postType",
         name: "wp_font_family"
       });
@@ -88765,7 +88866,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components136 = __toESM(require_components(), 1);
 
   // packages/global-styles-ui/build-module/style-variations-container.mjs
-  var import_core_data42 = __toESM(require_core_data(), 1);
+  var import_core_data44 = __toESM(require_core_data(), 1);
   var import_data55 = __toESM(require_data(), 1);
   var import_element251 = __toESM(require_element(), 1);
   var import_components135 = __toESM(require_components(), 1);
@@ -88778,7 +88879,7 @@ If there's a particular need for this, please submit a feature request at https:
     const userStyles = user?.styles;
     const variations = (0, import_data55.useSelect)((select9) => {
       const result = select9(
-        import_core_data42.store
+        import_core_data44.store
       ).__experimentalGetCurrentThemeGlobalStylesVariations();
       return Array.isArray(result) ? result : void 0;
     }, []);
@@ -88951,7 +89052,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.mjs
   var import_data56 = __toESM(require_data(), 1);
-  var import_core_data43 = __toESM(require_core_data(), 1);
+  var import_core_data45 = __toESM(require_core_data(), 1);
   var import_element252 = __toESM(require_element(), 1);
   var SITE_EDITOR_AUTHORS_QUERY = {
     per_page: -1,
@@ -88986,7 +89087,7 @@ If there's a particular need for this, please submit a feature request at https:
           __experimentalGetCurrentGlobalStylesId,
           getEntityRecord,
           isResolving
-        } = select9(import_core_data43.store);
+        } = select9(import_core_data45.store);
         const dirtyEntityRecords = __experimentalGetDirtyEntityRecords() || [];
         const _currentUser = getCurrentUser();
         const _isDirty = dirtyEntityRecords.length > 0;
@@ -89092,7 +89193,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n195 = __toESM(require_i18n(), 1);
   var import_components139 = __toESM(require_components(), 1);
   var import_date17 = __toESM(require_date(), 1);
-  var import_core_data44 = __toESM(require_core_data(), 1);
+  var import_core_data46 = __toESM(require_core_data(), 1);
   var import_data57 = __toESM(require_data(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime419 = __toESM(require_jsx_runtime(), 1);
@@ -89151,7 +89252,7 @@ If there's a particular need for this, please submit a feature request at https:
     onApplyRevision
   }) {
     const { currentThemeName, currentUser } = (0, import_data57.useSelect)((select9) => {
-      const { getCurrentTheme, getCurrentUser } = select9(import_core_data44.store);
+      const { getCurrentTheme, getCurrentUser } = select9(import_core_data46.store);
       const currentTheme = getCurrentTheme();
       return {
         currentThemeName: currentTheme?.name?.rendered || currentTheme?.stylesheet,
@@ -90122,7 +90223,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/global-styles/hooks.mjs
   var import_element257 = __toESM(require_element(), 1);
-  var import_core_data45 = __toESM(require_core_data(), 1);
+  var import_core_data47 = __toESM(require_core_data(), 1);
   var import_data60 = __toESM(require_data(), 1);
   var import_block_editor20 = __toESM(require_block_editor(), 1);
   var { cleanEmptyObject } = unlock(import_block_editor20.privateApis);
@@ -90134,8 +90235,8 @@ If there's a particular need for this, please submit a feature request at https:
           getEditedEntityRecord: getEditedEntityRecord2,
           hasFinishedResolution,
           canUser
-        } = select9(import_core_data45.store);
-        const _globalStylesId = select9(import_core_data45.store).__experimentalGetCurrentGlobalStylesId();
+        } = select9(import_core_data47.store);
+        const _globalStylesId = select9(import_core_data47.store).__experimentalGetCurrentGlobalStylesId();
         let record;
         const userCanEditGlobalStyles = _globalStylesId ? canUser("update", {
           kind: "root",
@@ -90192,8 +90293,8 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const { getEditedEntityRecord } = (0, import_data60.useSelect)(import_core_data45.store);
-    const { editEntityRecord } = (0, import_data60.useDispatch)(import_core_data45.store);
+    const { getEditedEntityRecord } = (0, import_data60.useSelect)(import_core_data47.store);
+    const { editEntityRecord } = (0, import_data60.useDispatch)(import_core_data47.store);
     const config2 = (0, import_element257.useMemo)(() => {
       return {
         settings: settings ?? {},
@@ -90238,7 +90339,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useGlobalStylesBaseConfig() {
     const baseConfig = (0, import_data60.useSelect)(
-      (select9) => select9(import_core_data45.store).__experimentalGetCurrentThemeBaseGlobalStyles(),
+      (select9) => select9(import_core_data47.store).__experimentalGetCurrentThemeBaseGlobalStyles(),
       []
     );
     return [!!baseConfig, baseConfig];
@@ -90287,7 +90388,7 @@ If there's a particular need for this, please submit a feature request at https:
     const responsiveEditingEnabled = settings?.responsiveEditingEnabled ?? true;
     const blockStatesEditingEnabled = settings?.blockStatesEditingEnabled ?? true;
     const mediaUploadHandler = (0, import_data61.useSelect)((select9) => {
-      const { canUser } = select9(import_core_data46.store);
+      const { canUser } = select9(import_core_data48.store);
       const canUserUploadMedia = canUser("create", {
         kind: "postType",
         name: "attachment"
@@ -90388,15 +90489,15 @@ If there's a particular need for this, please submit a feature request at https:
   var { store: mediaEditorStore } = unlock(privateApis2);
   var EMPTY_OBJECT3 = {};
   function __experimentalReusableBlocksSelect(select9) {
-    const { RECEIVE_INTERMEDIATE_RESULTS: RECEIVE_INTERMEDIATE_RESULTS2 } = unlock(import_core_data47.privateApis);
-    const { getEntityRecords } = select9(import_core_data47.store);
+    const { RECEIVE_INTERMEDIATE_RESULTS: RECEIVE_INTERMEDIATE_RESULTS2 } = unlock(import_core_data49.privateApis);
+    const { getEntityRecords } = select9(import_core_data49.store);
     return getEntityRecords("postType", "wp_block", {
       per_page: -1,
       [RECEIVE_INTERMEDIATE_RESULTS2]: true
     });
   }
   function __experimentalUserPatternCategoriesSelect(select9) {
-    return select9(import_core_data47.store).getUserPatternCategories();
+    return select9(import_core_data49.store).getUserPatternCategories();
   }
   var BLOCK_EDITOR_SETTINGS = [
     "__experimentalBlockBindingsSupportedAttributes",
@@ -90503,7 +90604,7 @@ If there's a particular need for this, please submit a feature request at https:
           getEntityRecord,
           getBlockPatternCategories,
           getPostType
-        } = select9(import_core_data47.store);
+        } = select9(import_core_data49.store);
         const { get } = select9(import_preferences3.store);
         const { getBlockTypes: getBlockTypes6 } = select9(import_blocks12.store);
         const { getCurrentPostId: getCurrentPostId2, getCurrentPostType: getCurrentPostType2 } = select9(store);
@@ -90600,8 +90701,8 @@ If there's a particular need for this, please submit a feature request at https:
       [settingsBlockPatternCategories, restBlockPatternCategories]
     );
     const { undo: undo2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data62.useDispatch)(store);
-    const { editMediaEntity } = unlock((0, import_data62.useDispatch)(import_core_data47.store));
-    const { saveEntityRecord } = (0, import_data62.useDispatch)(import_core_data47.store);
+    const { editMediaEntity } = unlock((0, import_data62.useDispatch)(import_core_data49.store));
+    const { saveEntityRecord } = (0, import_data62.useDispatch)(import_core_data49.store);
     const { openMediaEditorModal: openMediaEditorModal2 } = (0, import_data62.useDispatch)(mediaEditorStore);
     const createPageEntity = (0, import_element259.useCallback)(
       (options) => {
@@ -90649,7 +90750,7 @@ If there's a particular need for this, please submit a feature request at https:
         isDistractionFree,
         keepCaretInsideBlock,
         [getMediaSelectKey]: (select9, attachmentId) => {
-          return select9(import_core_data47.store).getEntityRecord(
+          return select9(import_core_data49.store).getEntityRecord(
             "postType",
             "attachment",
             attachmentId
@@ -90665,16 +90766,16 @@ If there's a particular need for this, please submit a feature request at https:
         mediaDelete: hasUploadPermissions ? mediaDelete : void 0,
         __experimentalBlockPatterns: blockPatterns,
         [selectBlockPatternsKey]: (select9) => {
-          const { hasFinishedResolution, getBlockPatternsForPostType } = unlock(select9(import_core_data47.store));
+          const { hasFinishedResolution, getBlockPatternsForPostType } = unlock(select9(import_core_data49.store));
           const patterns2 = getBlockPatternsForPostType(postType2);
           return hasFinishedResolution("getBlockPatterns") ? patterns2 : void 0;
         },
         [reusableBlocksSelectKey]: __experimentalReusableBlocksSelect,
         [userPatternCategoriesSelectKey]: __experimentalUserPatternCategoriesSelect,
         __experimentalBlockPatternCategories: blockPatternCategories,
-        __experimentalFetchLinkSuggestions: (search, searchOptions) => (0, import_core_data47.__experimentalFetchLinkSuggestions)(search, searchOptions, settings),
+        __experimentalFetchLinkSuggestions: (search, searchOptions) => (0, import_core_data49.__experimentalFetchLinkSuggestions)(search, searchOptions, settings),
         inserterMediaCategories: inserterMediaCategories2,
-        __experimentalFetchRichUrlData: import_core_data47.__experimentalFetchUrlData,
+        __experimentalFetchRichUrlData: import_core_data49.__experimentalFetchUrlData,
         // Todo: This only checks the top level post, not the post within a template or any other entity that can be edited.
         // This might be better as a generic "canUser" selector.
         __experimentalCanUserUseUnfilteredHTML: canUseUnfilteredHTML,
@@ -92143,7 +92244,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_preferences7 = __toESM(require_preferences(), 1);
   var import_notices17 = __toESM(require_notices(), 1);
   var import_block_editor24 = __toESM(require_block_editor(), 1);
-  var import_core_data50 = __toESM(require_core_data(), 1);
+  var import_core_data52 = __toESM(require_core_data(), 1);
 
   // packages/interface/build-module/index.mjs
   var build_module_exports = {};
@@ -93119,7 +93220,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/pattern-rename-modal/index.mjs
   var import_data71 = __toESM(require_data(), 1);
   var import_patterns6 = __toESM(require_patterns(), 1);
-  var import_core_data48 = __toESM(require_core_data(), 1);
+  var import_core_data50 = __toESM(require_core_data(), 1);
   var import_jsx_runtime437 = __toESM(require_jsx_runtime(), 1);
   var { RenamePatternModal } = unlock(import_patterns6.privateApis);
   var modalName = "editor/pattern-rename";
@@ -93133,7 +93234,7 @@ If there's a particular need for this, please submit a feature request at https:
           return {};
         }
         const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select9(store);
-        const { getEditedEntityRecord } = select9(import_core_data48.store);
+        const { getEditedEntityRecord } = select9(import_core_data50.store);
         const _postType = getCurrentPostType2();
         return {
           record: getEditedEntityRecord(
@@ -93156,7 +93257,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/pattern-duplicate-modal/index.mjs
   var import_data72 = __toESM(require_data(), 1);
   var import_patterns7 = __toESM(require_patterns(), 1);
-  var import_core_data49 = __toESM(require_core_data(), 1);
+  var import_core_data51 = __toESM(require_core_data(), 1);
   var import_jsx_runtime438 = __toESM(require_jsx_runtime(), 1);
   var { DuplicatePatternModal } = unlock(import_patterns7.privateApis);
   var modalName2 = "editor/pattern-duplicate";
@@ -93170,7 +93271,7 @@ If there's a particular need for this, please submit a feature request at https:
           return {};
         }
         const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select9(store);
-        const { getEditedEntityRecord } = select9(import_core_data49.store);
+        const { getEditedEntityRecord } = select9(import_core_data51.store);
         const _postType = getCurrentPostType2();
         return {
           record: getEditedEntityRecord(
@@ -93249,7 +93350,7 @@ If there's a particular need for this, please submit a feature request at https:
         isCurrentPostPublished: isCurrentPostPublished2
       } = select9(store);
       const { getSettings: getSettings11 } = select9(import_block_editor24.store);
-      const { getPostType } = select9(import_core_data50.store);
+      const { getPostType } = select9(import_core_data52.store);
       const postType2 = getPostType(getCurrentPostType2());
       return {
         editorMode: get("core", "editorMode") ?? "visual",
@@ -93575,14 +93676,14 @@ If there's a particular need for this, please submit a feature request at https:
         goBack: editorSettings2.onNavigateToPreviousEntityRecord,
         templateId: _templateId,
         isPreviewMode: editorSettings2.isPreviewMode,
-        canEditTemplate: !!_templateId && select9(import_core_data50.store).canUser("update", {
+        canEditTemplate: !!_templateId && select9(import_core_data52.store).canUser("update", {
           kind: "postType",
           name: "wp_template",
           id: _templateId
         })
       };
     }, []);
-    const { editedRecord: template2, hasResolved } = (0, import_core_data50.useEntityRecord)(
+    const { editedRecord: template2, hasResolved } = (0, import_core_data52.useEntityRecord)(
       "postType",
       "wp_template",
       templateId2
@@ -93631,7 +93732,7 @@ If there's a particular need for this, please submit a feature request at https:
         postId: getCurrentPostId2()
       };
     }, []);
-    const { editedRecord: template2, hasResolved } = (0, import_core_data50.useEntityRecord)(
+    const { editedRecord: template2, hasResolved } = (0, import_core_data52.useEntityRecord)(
       "postType",
       postType2,
       postId2
@@ -93846,7 +93947,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element273 = __toESM(require_element(), 1);
   var import_block_editor26 = __toESM(require_block_editor(), 1);
   var import_data77 = __toESM(require_data(), 1);
-  var import_core_data51 = __toESM(require_core_data(), 1);
+  var import_core_data53 = __toESM(require_core_data(), 1);
   var import_blocks15 = __toESM(require_blocks(), 1);
   var import_preferences8 = __toESM(require_preferences(), 1);
   var import_jsx_runtime440 = __toESM(require_jsx_runtime(), 1);
@@ -93876,7 +93977,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [postType2, blockPatternsWithPostContentBlockType]);
   }
   function PatternSelection({ blockPatterns, onChoosePattern }) {
-    const { editEntityRecord } = (0, import_data77.useDispatch)(import_core_data51.store);
+    const { editEntityRecord } = (0, import_data77.useDispatch)(import_core_data53.store);
     const { postType: postType2, postId: postId2 } = (0, import_data77.useSelect)((select9) => {
       const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select9(store);
       return {
@@ -93952,7 +94053,7 @@ If there's a particular need for this, please submit a feature request at https:
   function StartPageOptions() {
     const [isOpen2, setIsOpen] = (0, import_element273.useState)(false);
     const { isEditedPostEmpty: isEditedPostEmpty2 } = (0, import_data77.useSelect)(store);
-    const { getEntityRecordNonTransientEdits } = (0, import_data77.useSelect)(import_core_data51.store);
+    const { getEntityRecordNonTransientEdits } = (0, import_data77.useSelect)(import_core_data53.store);
     const { isModalActive: isModalActive2 } = (0, import_data77.useSelect)(store3);
     const { enabled, postType: postType2, postId: postId2 } = (0, import_data77.useSelect)((select9) => {
       const { getCurrentPostId: getCurrentPostId2, getCurrentPostType: getCurrentPostType2 } = select9(store);
@@ -94304,12 +94405,12 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor27 = __toESM(require_block_editor(), 1);
   var import_data80 = __toESM(require_data(), 1);
   var import_blocks16 = __toESM(require_blocks(), 1);
-  var import_core_data52 = __toESM(require_core_data(), 1);
+  var import_core_data54 = __toESM(require_core_data(), 1);
   var import_jsx_runtime444 = __toESM(require_jsx_runtime(), 1);
   function useFallbackTemplateContent(slug, isCustom = false) {
     return (0, import_data80.useSelect)(
       (select9) => {
-        const { getEntityRecord, getDefaultTemplateId } = select9(import_core_data52.store);
+        const { getEntityRecord, getDefaultTemplateId } = select9(import_core_data54.store);
         const templateId2 = getDefaultTemplateId({
           slug,
           is_custom: isCustom,
@@ -94323,7 +94424,7 @@ If there's a particular need for this, please submit a feature request at https:
   function useStartPatterns2(fallbackContent) {
     const { slug, patterns: patterns2 } = (0, import_data80.useSelect)((select9) => {
       const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select9(store);
-      const { getEntityRecord, getBlockPatterns } = select9(import_core_data52.store);
+      const { getEntityRecord, getBlockPatterns } = select9(import_core_data54.store);
       const postId2 = getCurrentPostId2();
       const postType2 = getCurrentPostType2();
       const record = getEntityRecord("postType", postType2, postId2);
@@ -94333,7 +94434,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const currentThemeStylesheet = (0, import_data80.useSelect)(
-      (select9) => select9(import_core_data52.store).getCurrentTheme().stylesheet
+      (select9) => select9(import_core_data54.store).getCurrentTheme().stylesheet
     );
     function injectThemeAttributeInBlockTemplateContent2(block) {
       if (block.innerBlocks.find(
@@ -94374,7 +94475,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [fallbackContent, slug, patterns2]);
   }
   function PatternSelection2({ fallbackContent, onChoosePattern, postType: postType2 }) {
-    const [, , onChange] = (0, import_core_data52.useEntityBlockEditor)("postType", postType2);
+    const [, , onChange] = (0, import_core_data54.useEntityBlockEditor)("postType", postType2);
     const blockPatterns = useStartPatterns2(fallbackContent);
     return /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
       import_block_editor27.__experimentalBlockPatternsList,
@@ -94442,7 +94543,7 @@ If there's a particular need for this, please submit a feature request at https:
         const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select9(store);
         const _postType = getCurrentPostType2();
         const _postId = getCurrentPostId2();
-        const { getEditedEntityRecord, getEntityRecordNonTransientEdits } = select9(import_core_data52.store);
+        const { getEditedEntityRecord, getEntityRecordNonTransientEdits } = select9(import_core_data54.store);
         const templateRecord = getEditedEntityRecord(
           "postType",
           _postType,
@@ -94718,7 +94819,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/template-part-menu-items/convert-to-regular.mjs
   var import_data83 = __toESM(require_data(), 1);
   var import_block_editor30 = __toESM(require_block_editor(), 1);
-  var import_core_data53 = __toESM(require_core_data(), 1);
+  var import_core_data55 = __toESM(require_core_data(), 1);
   var import_components154 = __toESM(require_components(), 1);
   var import_i18n213 = __toESM(require_i18n(), 1);
   var import_html_entities12 = __toESM(require_html_entities(), 1);
@@ -94731,7 +94832,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { canRemove, templatePartTitle } = (0, import_data83.useSelect)(
       (select9) => {
         const { canRemoveBlock, getBlock: getBlock2 } = select9(import_block_editor30.store);
-        const { getEntityRecord, getCurrentTheme } = select9(import_core_data53.store);
+        const { getEntityRecord, getCurrentTheme } = select9(import_core_data55.store);
         const block = getBlock2(clientId);
         const { slug, theme: theme2 } = block?.attributes ?? {};
         const themeSlug = theme2 || getCurrentTheme()?.stylesheet;
@@ -94794,7 +94895,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n214 = __toESM(require_i18n(), 1);
   var import_element278 = __toESM(require_element(), 1);
   var import_notices18 = __toESM(require_notices(), 1);
-  var import_core_data54 = __toESM(require_core_data(), 1);
+  var import_core_data56 = __toESM(require_core_data(), 1);
   var import_jsx_runtime447 = __toESM(require_jsx_runtime(), 1);
   function ConvertToTemplatePart({ clientIds, blocks }) {
     const [isModalOpen, setIsModalOpen] = (0, import_element278.useState)(false);
@@ -94802,7 +94903,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { createSuccessNotice } = (0, import_data84.useDispatch)(import_notices18.store);
     const { isBlockBasedTheme, canCreate } = (0, import_data84.useSelect)((select9) => {
       return {
-        isBlockBasedTheme: select9(import_core_data54.store).getCurrentTheme()?.is_block_theme,
+        isBlockBasedTheme: select9(import_core_data56.store).getCurrentTheme()?.is_block_theme,
         canCreate: select9(import_block_editor31.store).canInsertBlockType(
           "core/template-part"
         )
@@ -94990,12 +95091,12 @@ If there's a particular need for this, please submit a feature request at https:
   function useBlockEditorProps(post2, template2, mode) {
     const revisionBlocks = useRevisionBlocks();
     const rootLevelPost = mode === "template-locked" ? "template" : "post";
-    const [postBlocks, onInput, onChange] = (0, import_core_data55.useEntityBlockEditor)(
+    const [postBlocks, onInput, onChange] = (0, import_core_data57.useEntityBlockEditor)(
       "postType",
       post2.type,
       { id: post2.id }
     );
-    const [templateBlocks, onInputTemplate, onChangeTemplate] = (0, import_core_data55.useEntityBlockEditor)("postType", template2?.type, {
+    const [templateBlocks, onInputTemplate, onChangeTemplate] = (0, import_core_data57.useEntityBlockEditor)("postType", template2?.type, {
       id: template2?.id
     });
     const maybeNavigationBlocks = (0, import_element281.useMemo)(() => {
@@ -95064,7 +95165,7 @@ If there's a particular need for this, please submit a feature request at https:
             isRevisionsMode: _isRevisionsMode,
             getCurrentRevisionId: _getCurrentRevisionId
           } = unlock(select9(store));
-          const { getEntitiesConfig, getEntityRecordEdits } = select9(import_core_data55.store);
+          const { getEntitiesConfig, getEntityRecordEdits } = select9(import_core_data57.store);
           const _mode = getRenderingMode2();
           const _defaultMode = getDefaultRenderingMode2(post2.type);
           const hasResolvedDefaultMode = _defaultMode === "template-locked" ? hasTemplate : _defaultMode !== void 0;
@@ -95147,7 +95248,7 @@ If there's a particular need for this, please submit a feature request at https:
         setRenderingMode: setRenderingMode2,
         setCanvasWidth: setCanvasWidth2
       } = unlock((0, import_data88.useDispatch)(store));
-      const { editEntityRecord } = (0, import_data88.useDispatch)(import_core_data55.store);
+      const { editEntityRecord } = (0, import_data88.useDispatch)(import_core_data57.store);
       const registry = (0, import_data88.useRegistry)();
       const onChangeSelection = (0, import_element281.useCallback)(
         (newSelection) => {
@@ -95204,8 +95305,8 @@ If there's a particular need for this, please submit a feature request at https:
       if (!isReady2 || !mode) {
         return null;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(import_core_data55.EntityProvider, { kind: "root", type: "site", children: /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
-        import_core_data55.EntityProvider,
+      return /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(import_core_data57.EntityProvider, { kind: "root", type: "site", children: /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
+        import_core_data57.EntityProvider,
         {
           kind: "postType",
           type: post2.type,
@@ -95264,10 +95365,10 @@ If there's a particular need for this, please submit a feature request at https:
     post: post2
   }) {
     const [backgroundColor = "white"] = useStyle2("color.background");
-    const [postBlocks] = (0, import_core_data56.useEntityBlockEditor)("postType", post2.type, {
+    const [postBlocks] = (0, import_core_data58.useEntityBlockEditor)("postType", post2.type, {
       id: post2.id
     });
-    const [templateBlocks] = (0, import_core_data56.useEntityBlockEditor)(
+    const [templateBlocks] = (0, import_core_data58.useEntityBlockEditor)(
       "postType",
       template2?.type,
       {
@@ -95293,7 +95394,7 @@ If there's a particular need for this, please submit a feature request at https:
   function PostPreviewView({ item }) {
     const { settings, template: template2 } = (0, import_data89.useSelect)(
       (select9) => {
-        const { canUser, getPostType, getTemplateId, getEntityRecord } = unlock(select9(import_core_data56.store));
+        const { canUser, getPostType, getTemplateId, getEntityRecord } = unlock(select9(import_core_data58.store));
         const canViewTemplate = canUser("read", {
           kind: "postType",
           name: "wp_template"
@@ -95404,12 +95505,12 @@ If there's a particular need for this, please submit a feature request at https:
       "postType",
       postType2
     );
-    const postTypeConfig = await registry.resolveSelect(import_core_data57.store).getPostType(postType2);
-    const canCreate = await registry.resolveSelect(import_core_data57.store).canUser("create", {
+    const postTypeConfig = await registry.resolveSelect(import_core_data59.store).getPostType(postType2);
+    const canCreate = await registry.resolveSelect(import_core_data59.store).canUser("create", {
       kind: "postType",
       name: postType2
     });
-    const currentTheme = await registry.resolveSelect(import_core_data57.store).getCurrentTheme();
+    const currentTheme = await registry.resolveSelect(import_core_data59.store).getCurrentTheme();
     const { disablePostFormats } = registry.select(store).getEditorSettings();
     let canDuplicate = !["wp_block", "wp_template_part", "wp_template"].includes(
       postTypeConfig.slug
@@ -95514,8 +95615,8 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   var createTemplate = (template2) => async ({ select: select9, dispatch: dispatch8, registry }) => {
-    const savedTemplate = await registry.dispatch(import_core_data58.store).saveEntityRecord("postType", "wp_template", template2);
-    registry.dispatch(import_core_data58.store).editEntityRecord(
+    const savedTemplate = await registry.dispatch(import_core_data60.store).saveEntityRecord("postType", "wp_template", template2);
+    registry.dispatch(import_core_data60.store).editEntityRecord(
       "postType",
       select9.getCurrentPostType(),
       select9.getCurrentPostId(),
@@ -95564,7 +95665,7 @@ If there's a particular need for this, please submit a feature request at https:
       return;
     }
     try {
-      const templateEntityConfig = registry.select(import_core_data58.store).getEntityConfig("postType", template2.type);
+      const templateEntityConfig = registry.select(import_core_data60.store).getEntityConfig("postType", template2.type);
       if (!templateEntityConfig) {
         registry.dispatch(import_notices19.store).createErrorNotice(
           (0, import_i18n217.__)(
@@ -95591,12 +95692,12 @@ If there's a particular need for this, please submit a feature request at https:
       const serializeBlocks = ({
         blocks: blocksForSerialization = []
       }) => (0, import_blocks19.__unstableSerializeAndClean)(blocksForSerialization);
-      const edited = registry.select(import_core_data58.store).getEditedEntityRecord(
+      const edited = registry.select(import_core_data60.store).getEditedEntityRecord(
         "postType",
         template2.type,
         template2.id
       );
-      registry.dispatch(import_core_data58.store).editEntityRecord(
+      registry.dispatch(import_core_data60.store).editEntityRecord(
         "postType",
         template2.type,
         template2.id,
@@ -95614,14 +95715,14 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
       const blocks = (0, import_blocks19.parse)(fileTemplate?.content?.raw);
-      registry.dispatch(import_core_data58.store).editEntityRecord("postType", template2.type, fileTemplate.id, {
+      registry.dispatch(import_core_data60.store).editEntityRecord("postType", template2.type, fileTemplate.id, {
         content: serializeBlocks,
         blocks,
         source: "theme"
       });
       if (allowUndo) {
         const undoRevert = () => {
-          registry.dispatch(import_core_data58.store).editEntityRecord(
+          registry.dispatch(import_core_data60.store).editEntityRecord(
             "postType",
             template2.type,
             edited.id,
@@ -95652,7 +95753,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isResetting = items.every((item) => item?.has_theme_file);
     const promiseResult = await Promise.allSettled(
       items.map((item) => {
-        return registry.dispatch(import_core_data58.store).deleteEntityRecord(
+        return registry.dispatch(import_core_data60.store).deleteEntityRecord(
           "postType",
           item.type,
           item.id,
@@ -95745,7 +95846,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var setDefaultRenderingMode = (mode) => ({ select: select9, registry }) => {
     const postType2 = select9.getCurrentPostType();
-    const theme2 = registry.select(import_core_data58.store).getCurrentTheme()?.stylesheet;
+    const theme2 = registry.select(import_core_data60.store).getCurrentTheme()?.stylesheet;
     const renderingModes = registry.select(import_preferences9.store).get("core", "renderingModes")?.[theme2] ?? {};
     if (renderingModes[postType2] === mode) {
       return;
@@ -95805,9 +95906,9 @@ If there's a particular need for this, please submit a feature request at https:
   var setRevisionPage = (page) => async ({ dispatch: dispatch8, select: select9, registry }) => {
     const postType2 = select9.getCurrentPostType();
     const postId2 = select9.getCurrentPostId();
-    const entityConfig = registry.select(import_core_data58.store).getEntityConfig("postType", postType2);
+    const entityConfig = registry.select(import_core_data60.store).getEntityConfig("postType", postType2);
     const revisionKey = entityConfig?.revisionKey || "id";
-    const revisions = await registry.resolveSelect(import_core_data58.store).getRevisions(
+    const revisions = await registry.resolveSelect(import_core_data60.store).getRevisions(
       "postType",
       postType2,
       postId2,
@@ -95830,9 +95931,9 @@ If there's a particular need for this, please submit a feature request at https:
     dispatch8.setCurrentRevisionId(revisionId2);
     const postType2 = select9.getCurrentPostType();
     const postId2 = select9.getCurrentPostId();
-    const entityConfig = registry.select(import_core_data58.store).getEntityConfig("postType", postType2);
+    const entityConfig = registry.select(import_core_data60.store).getEntityConfig("postType", postType2);
     const revisionKey = entityConfig?.revisionKey || "id";
-    const revisions = await registry.resolveSelect(import_core_data58.store).getRevisions("postType", postType2, postId2, {
+    const revisions = await registry.resolveSelect(import_core_data60.store).getRevisions("postType", postType2, postId2, {
       per_page: -1,
       context: "edit",
       orderby: "date",
@@ -95880,7 +95981,7 @@ If there's a particular need for this, please submit a feature request at https:
         createRevisionsLoadFailedNotice(registry);
         return;
       }
-      await registry.dispatch(import_core_data58.store).receiveRevisions("postType", postType2, postId2, revision, {
+      await registry.dispatch(import_core_data60.store).receiveRevisions("postType", postType2, postId2, revision, {
         context: "edit"
       });
       return;
@@ -95899,9 +96000,9 @@ If there's a particular need for this, please submit a feature request at https:
   var restoreRevision = (revisionId2) => async ({ select: select9, dispatch: dispatch8, registry }) => {
     const postType2 = select9.getCurrentPostType();
     const postId2 = select9.getCurrentPostId();
-    const entityConfig = registry.select(import_core_data58.store).getEntityConfig("postType", postType2);
+    const entityConfig = registry.select(import_core_data60.store).getEntityConfig("postType", postType2);
     const revisionKey = entityConfig?.revisionKey || "id";
-    const revision = await registry.resolveSelect(import_core_data58.store).getRevision("postType", postType2, postId2, revisionId2, {
+    const revision = await registry.resolveSelect(import_core_data60.store).getRevision("postType", postType2, postId2, revisionId2, {
       context: "edit",
       _fields: [
         .../* @__PURE__ */ new Set([
@@ -95961,7 +96062,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/store/actions.mjs
-  var { getEntitySnapshot } = unlock(import_core_data59.privateApis);
+  var { getEntitySnapshot } = unlock(import_core_data61.privateApis);
   var CLIENT_GENERATED_ERROR_CODES = ["offline_error", "fetch_error"];
   var setupEditor = (post2, edits, template2) => ({ dispatch: dispatch8 }) => {
     dispatch8.setEditedPost(post2.type, post2.id);
@@ -96027,7 +96128,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var editPost = (edits, options) => ({ select: select9, registry }) => {
     const { id, type } = select9.getCurrentPost();
-    registry.dispatch(import_core_data59.store).editEntityRecord("postType", type, id, edits, options);
+    registry.dispatch(import_core_data61.store).editEntityRecord("postType", type, id, edits, options);
   };
   var savePost = (options = {}) => async ({ select: select9, dispatch: dispatch8, registry }) => {
     if (!select9.isEditedPostSaveable()) {
@@ -96036,9 +96137,10 @@ If there's a particular need for this, please submit a feature request at https:
     const content = select9.getEditedPostContent();
     dispatch8.editPost({ content }, { undoIgnore: true });
     const previousRecord = select9.getCurrentPost();
+    const savedBlocks = select9.getEditorBlocks();
     let edits = {
       id: previousRecord.id,
-      ...registry.select(import_core_data59.store).getEntityRecordNonTransientEdits(
+      ...registry.select(import_core_data61.store).getEntityRecordNonTransientEdits(
         "postType",
         previousRecord.type,
         previousRecord.id
@@ -96058,7 +96160,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if (!error2) {
       try {
-        await registry.dispatch(import_core_data59.store).saveEntityRecord(
+        await registry.dispatch(import_core_data61.store).saveEntityRecord(
           "postType",
           previousRecord.type,
           edits,
@@ -96069,7 +96171,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }
     if (!error2) {
-      error2 = registry.select(import_core_data59.store).getLastEntitySaveError(
+      error2 = registry.select(import_core_data61.store).getLastEntitySaveError(
         "postType",
         previousRecord.type,
         previousRecord.id
@@ -96098,6 +96200,13 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }
     dispatch8({ type: "REQUEST_POST_UPDATE_FINISH", options });
+    if (!error2 && !options.isAutosave && !options.isPreview && !select9.isDeletingPost() && previousRecord.status !== "trash" && select9.getEditorSettings().autoAttachMediaEnabled) {
+      attachMediaInPost(registry, {
+        id: previousRecord.id,
+        type: previousRecord.type,
+        blocks: savedBlocks
+      });
+    }
     if (error2) {
       const args = getNotificationArgumentsForSaveFail({
         post: previousRecord,
@@ -96129,7 +96238,7 @@ If there's a particular need for this, please submit a feature request at https:
       const args = getNotificationArgumentsForSaveSuccess({
         previousPost: previousRecord,
         post: updatedRecord,
-        postType: await registry.resolveSelect(import_core_data59.store).getPostType(updatedRecord.type),
+        postType: await registry.resolveSelect(import_core_data61.store).getPostType(updatedRecord.type),
         options
       });
       if (args.length) {
@@ -96150,7 +96259,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var trashPost2 = () => async ({ select: select9, dispatch: dispatch8, registry }) => {
     const postTypeSlug = select9.getCurrentPostType();
-    const postType2 = await registry.resolveSelect(import_core_data59.store).getPostType(postTypeSlug);
+    const postType2 = await registry.resolveSelect(import_core_data61.store).getPostType(postTypeSlug);
     const { rest_base: restBase, rest_namespace: restNamespace = "wp/v2" } = postType2;
     dispatch8({ type: "REQUEST_POST_DELETE_START" });
     try {
@@ -96205,10 +96314,10 @@ If there's a particular need for this, please submit a feature request at https:
     return select9.getEditedPostPreviewLink();
   };
   var redo = () => ({ registry }) => {
-    registry.dispatch(import_core_data59.store).redo();
+    registry.dispatch(import_core_data61.store).redo();
   };
   var undo = () => ({ registry }) => {
-    registry.dispatch(import_core_data59.store).undo();
+    registry.dispatch(import_core_data61.store).undo();
   };
   function createUndoLevel() {
     (0, import_deprecated9.default)("wp.data.dispatch( 'core/editor' ).createUndoLevel", {
@@ -96259,9 +96368,9 @@ If there's a particular need for this, please submit a feature request at https:
     const edits = { blocks, selection };
     if (__unstableShouldCreateUndoLevel !== false) {
       const { id, type } = select9.getCurrentPost();
-      const noChange = registry.select(import_core_data59.store).getEditedEntityRecord("postType", type, id).blocks === edits.blocks;
+      const noChange = registry.select(import_core_data61.store).getEditedEntityRecord("postType", type, id).blocks === edits.blocks;
       if (noChange) {
-        registry.dispatch(import_core_data59.store).__unstableCreateUndoLevel("postType", type, id);
+        registry.dispatch(import_core_data61.store).__unstableCreateUndoLevel("postType", type, id);
         return;
       }
       edits.content = ({ blocks: blocksForSerialization = [] }) => (0, import_blocks20.__unstableSerializeAndClean)(blocksForSerialization);
@@ -96531,7 +96640,7 @@ If there's a particular need for this, please submit a feature request at https:
         (select9) => select9(store).getCurrentPostType(),
         []
       );
-      const [meta2, setMeta] = (0, import_core_data60.useEntityProp)(
+      const [meta2, setMeta] = (0, import_core_data62.useEntityProp)(
         "postType",
         postType2,
         "meta"
@@ -96598,7 +96707,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_hooks53 = __toESM(require_hooks(), 1);
 
   // packages/editor/build-module/components/index.mjs
-  var import_core_data108 = __toESM(require_core_data(), 1);
+  var import_core_data110 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/autocompleters/link.mjs
   var import_api_fetch9 = __toESM(require_api_fetch(), 1);
@@ -96639,7 +96748,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/autocompleters/user.mjs
   var import_element283 = __toESM(require_element(), 1);
   var import_data92 = __toESM(require_data(), 1);
-  var import_core_data61 = __toESM(require_core_data(), 1);
+  var import_core_data63 = __toESM(require_core_data(), 1);
   var import_jsx_runtime454 = __toESM(require_jsx_runtime(), 1);
   function getUserLabel(user) {
     const avatar = user.avatar_urls && user.avatar_urls[24] ? /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(
@@ -96663,7 +96772,7 @@ If there's a particular need for this, please submit a feature request at https:
     useItems(filterValue) {
       const users = (0, import_data92.useSelect)(
         (select9) => {
-          const { getUsers } = select9(import_core_data61.store);
+          const { getUsers } = select9(import_core_data63.store);
           return getUsers({
             context: "view",
             search: filterValue
@@ -96689,7 +96798,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/autosave-monitor/index.mjs
   var import_element284 = __toESM(require_element(), 1);
   var import_data93 = __toESM(require_data(), 1);
-  var import_core_data62 = __toESM(require_core_data(), 1);
+  var import_core_data64 = __toESM(require_core_data(), 1);
   function useInterval(callback, intervalInSeconds) {
     const callbackRef = (0, import_element284.useRef)(callback);
     (0, import_element284.useEffect)(() => {
@@ -96709,7 +96818,7 @@ If there's a particular need for this, please submit a feature request at https:
   function AutosaveMonitor({ interval, autosave: autosave2 }) {
     const { autosave: autosaveAction } = (0, import_data93.useDispatch)(store);
     const triggerAutosave = autosave2 ?? autosaveAction;
-    const { getReferenceByDistinctEdits } = (0, import_data93.useSelect)(import_core_data62.store);
+    const { getReferenceByDistinctEdits } = (0, import_data93.useSelect)(import_core_data64.store);
     const { isEditedPostDirty: isEditedPostDirty2, isEditedPostAutosaveable: isEditedPostAutosaveable2, isAutosavingPost: isAutosavingPost2 } = (0, import_data93.useSelect)(store);
     const autosaveInterval = (0, import_data93.useSelect)(
       (select9) => {
@@ -96740,7 +96849,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data102 = __toESM(require_data(), 1);
   var import_components163 = __toESM(require_components(), 1);
   var import_block_editor42 = __toESM(require_block_editor(), 1);
-  var import_core_data66 = __toESM(require_core_data(), 1);
+  var import_core_data68 = __toESM(require_core_data(), 1);
   var import_commands3 = __toESM(require_commands(), 1);
   var import_element291 = __toESM(require_element(), 1);
   var import_compose52 = __toESM(require_compose(), 1);
@@ -96750,10 +96859,10 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/utils/pageTypeBadge.mjs
   var import_i18n219 = __toESM(require_i18n(), 1);
   var import_data94 = __toESM(require_data(), 1);
-  var import_core_data63 = __toESM(require_core_data(), 1);
+  var import_core_data65 = __toESM(require_core_data(), 1);
   function usePageTypeBadge(postId2) {
     const { isFrontPage, isPostsPage } = (0, import_data94.useSelect)((select9) => {
-      const { canUser, getEditedEntityRecord } = select9(import_core_data63.store);
+      const { canUser, getEditedEntityRecord } = select9(import_core_data65.store);
       const siteSettings = canUser("read", {
         kind: "root",
         name: "site"
@@ -96791,7 +96900,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element287 = __toESM(require_element(), 1);
   var import_keycodes9 = __toESM(require_keycodes(), 1);
   var import_media_utils7 = __toESM(require_media_utils(), 1);
-  var import_core_data64 = __toESM(require_core_data(), 1);
+  var import_core_data66 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/style-book/constants.mjs
   var import_i18n220 = __toESM(require_i18n(), 1);
@@ -97722,7 +97831,7 @@ If there's a particular need for this, please submit a feature request at https:
       [settingsProp]
     );
     const canUserUploadMedia = (0, import_data97.useSelect)(
-      (select9) => select9(import_core_data64.store).canUser("create", {
+      (select9) => select9(import_core_data66.store).canUser("create", {
         kind: "postType",
         name: "attachment"
       }),
@@ -98512,7 +98621,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data101 = __toESM(require_data(), 1);
   var import_html_entities15 = __toESM(require_html_entities(), 1);
   var import_block_editor41 = __toESM(require_block_editor(), 1);
-  var import_core_data65 = __toESM(require_core_data(), 1);
+  var import_core_data67 = __toESM(require_core_data(), 1);
   function useEditedSectionDetails() {
     return (0, import_data101.useSelect)((select9) => {
       const {
@@ -98520,7 +98629,7 @@ If there's a particular need for this, please submit a feature request at https:
         getBlockName: getBlockName2,
         __experimentalGetParsedPattern
       } = select9(import_block_editor41.store);
-      const { getEditedEntityRecord, getCurrentTheme } = select9(import_core_data65.store);
+      const { getEditedEntityRecord, getCurrentTheme } = select9(import_core_data67.store);
       const { getEditedContentOnlySection } = unlock(
         select9(import_block_editor41.store)
       );
@@ -98577,7 +98686,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/document-bar/index.mjs
   var import_jsx_runtime464 = __toESM(require_jsx_runtime(), 1);
-  var { getTemplateInfo: getTemplateInfo2 } = unlock(import_core_data66.privateApis);
+  var { getTemplateInfo: getTemplateInfo2 } = unlock(import_core_data68.privateApis);
   var MotionButton = import_components163.__unstableMotion.create(import_components163.Button);
   function DocumentBar(props) {
     const { stopEditingContentOnlySection } = unlock(
@@ -98606,7 +98715,7 @@ If there's a particular need for this, please submit a feature request at https:
         getPostType,
         getCurrentTheme,
         isResolving: isResolvingSelector
-      } = select9(import_core_data66.store);
+      } = select9(import_core_data68.store);
       const _postType = getCurrentPostType2();
       const _postId = getCurrentPostId2();
       const _document = getEditedEntityRecord(
@@ -98740,7 +98849,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element292 = __toESM(require_element(), 1);
   var import_rich_text3 = __toESM(require_rich_text(), 1);
   var import_block_editor43 = __toESM(require_block_editor(), 1);
-  var import_core_data67 = __toESM(require_core_data(), 1);
+  var import_core_data69 = __toESM(require_core_data(), 1);
   var import_components164 = __toESM(require_components(), 1);
 
   // packages/editor/build-module/components/document-outline/item.mjs
@@ -98877,7 +98986,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { selectBlock: selectBlock2 } = (0, import_data103.useDispatch)(import_block_editor43.store);
     const { title, isTitleSupported } = (0, import_data103.useSelect)((select9) => {
       const { getEditedPostAttribute: getEditedPostAttribute2 } = select9(store);
-      const { getPostType } = select9(import_core_data67.store);
+      const { getPostType } = select9(import_core_data69.store);
       const postType2 = getPostType(getEditedPostAttribute2("type"));
       return {
         title: getEditedPostAttribute2("title"),
@@ -99446,11 +99555,11 @@ ${content}
 
   // packages/editor/build-module/components/page-attributes/check.mjs
   var import_data111 = __toESM(require_data(), 1);
-  var import_core_data68 = __toESM(require_core_data(), 1);
+  var import_core_data70 = __toESM(require_core_data(), 1);
   function PageAttributesCheck({ children }) {
     const supportsPageAttributes = (0, import_data111.useSelect)((select9) => {
       const { getEditedPostAttribute: getEditedPostAttribute2 } = select9(store);
-      const { getPostType } = select9(import_core_data68.store);
+      const { getPostType } = select9(import_core_data70.store);
       const postType2 = getPostType(getEditedPostAttribute2("type"));
       return !!postType2?.supports?.["page-attributes"];
     }, []);
@@ -99469,7 +99578,7 @@ ${content}
 
   // packages/editor/build-module/components/post-type-support-check/index.mjs
   var import_data112 = __toESM(require_data(), 1);
-  var import_core_data69 = __toESM(require_core_data(), 1);
+  var import_core_data71 = __toESM(require_core_data(), 1);
   function checkSupport(supports = {}, key) {
     if (supports[key] !== void 0) {
       return !!supports[key];
@@ -99481,7 +99590,7 @@ ${content}
   function PostTypeSupportCheck({ children, supportKeys }) {
     const postType2 = (0, import_data112.useSelect)((select9) => {
       const { getEditedPostAttribute: getEditedPostAttribute2 } = select9(store);
-      const { getPostType } = select9(import_core_data69.store);
+      const { getPostType } = select9(import_core_data71.store);
       return getPostType(getEditedPostAttribute2("type"));
     }, []);
     let isSupported = !!postType2;
@@ -99532,7 +99641,7 @@ ${content}
 
   // packages/editor/build-module/components/page-attributes/panel.mjs
   var import_data115 = __toESM(require_data(), 1);
-  var import_core_data71 = __toESM(require_core_data(), 1);
+  var import_core_data73 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/page-attributes/parent.mjs
   var import_remove_accents5 = __toESM(require_remove_accents(), 1);
@@ -99542,7 +99651,7 @@ ${content}
   var import_element300 = __toESM(require_element(), 1);
   var import_data114 = __toESM(require_data(), 1);
   var import_html_entities18 = __toESM(require_html_entities(), 1);
-  var import_core_data70 = __toESM(require_core_data(), 1);
+  var import_core_data72 = __toESM(require_core_data(), 1);
   var import_block_editor47 = __toESM(require_block_editor(), 1);
   var import_url16 = __toESM(require_url(), 1);
 
@@ -99641,7 +99750,7 @@ ${content}
           getEntityRecords,
           getEntityRecord,
           isResolving
-        } = select9(import_core_data70.store);
+        } = select9(import_core_data72.store);
         const { getCurrentPostId: getCurrentPostId2, getEditedPostAttribute: getEditedPostAttribute2 } = select9(store);
         const postTypeSlug = getEditedPostAttribute2("type");
         const pageId = getEditedPostAttribute2("parent");
@@ -99747,7 +99856,7 @@ ${content}
       if (!parentPostId) {
         return null;
       }
-      const { getEntityRecord } = select9(import_core_data70.store);
+      const { getEntityRecord } = select9(import_core_data72.store);
       const postTypeSlug = getEditedPostAttribute2("type");
       return getEntityRecord("postType", postTypeSlug, parentPostId);
     }, []);
@@ -99773,7 +99882,7 @@ ${content}
   }
   function ParentRow() {
     const homeUrl = (0, import_data114.useSelect)((select9) => {
-      return select9(import_core_data70.store).getEntityRecord("root", "__unstableBase")?.home;
+      return select9(import_core_data72.store).getEntityRecord("root", "__unstableBase")?.home;
     }, []);
     const [popoverAnchor, setPopoverAnchor] = (0, import_element300.useState)(null);
     const popoverProps = (0, import_element300.useMemo)(
@@ -99848,7 +99957,7 @@ ${content}
   function AttributesPanel() {
     const { isEnabled, postType: postType2 } = (0, import_data115.useSelect)((select9) => {
       const { getEditedPostAttribute: getEditedPostAttribute2, isEditorPanelEnabled: isEditorPanelEnabled2 } = select9(store);
-      const { getPostType } = select9(import_core_data71.store);
+      const { getPostType } = select9(import_core_data73.store);
       return {
         isEnabled: isEditorPanelEnabled2(PANEL_NAME),
         postType: getPostType(getEditedPostAttribute2("type"))
@@ -99867,7 +99976,7 @@ ${content}
   var import_i18n236 = __toESM(require_i18n(), 1);
   var import_components172 = __toESM(require_components(), 1);
   var import_data118 = __toESM(require_data(), 1);
-  var import_core_data73 = __toESM(require_core_data(), 1);
+  var import_core_data75 = __toESM(require_core_data(), 1);
   var import_block_editor48 = __toESM(require_block_editor(), 1);
   var import_element303 = __toESM(require_element(), 1);
   var import_notices24 = __toESM(require_notices(), 1);
@@ -100002,7 +100111,7 @@ ${content}
   // packages/editor/build-module/components/post-template/hooks.mjs
   var import_data117 = __toESM(require_data(), 1);
   var import_element302 = __toESM(require_element(), 1);
-  var import_core_data72 = __toESM(require_core_data(), 1);
+  var import_core_data74 = __toESM(require_core_data(), 1);
   var import_i18n235 = __toESM(require_i18n(), 1);
   function useEditedPostContext() {
     return (0, import_data117.useSelect)((select9) => {
@@ -100017,7 +100126,7 @@ ${content}
     const { postType: postType2, postId: postId2 } = useEditedPostContext();
     return (0, import_data117.useSelect)(
       (select9) => {
-        const { canUser, getEntityRecord, getEntityRecords } = select9(import_core_data72.store);
+        const { canUser, getEntityRecord, getEntityRecords } = select9(import_core_data74.store);
         const siteSettings = canUser("read", {
           kind: "root",
           name: "site"
@@ -100035,7 +100144,7 @@ ${content}
   }
   function useTemplates(postType2) {
     return (0, import_data117.useSelect)(
-      (select9) => select9(import_core_data72.store).getEntityRecords("postType", "wp_template", {
+      (select9) => select9(import_core_data74.store).getEntityRecords("postType", "wp_template", {
         per_page: -1,
         post_type: postType2
         // We look at the combined templates for now (old endpoint)
@@ -100046,7 +100155,7 @@ ${content}
   }
   function useAvailableTemplates() {
     const { postType: postType2, postId: postId2 } = useEditedPostContext();
-    const [postSlug] = (0, import_core_data72.useEntityProp)("postType", postType2, "slug", postId2);
+    const [postSlug] = (0, import_core_data74.useEntityProp)("postType", postType2, "slug", postId2);
     const currentTemplateSlug = useCurrentTemplateSlug();
     const allowSwitchingTemplate = useAllowSwitchingTemplates();
     const templates = useTemplates(postType2);
@@ -100058,7 +100167,7 @@ ${content}
         if (!currentTemplateSlug) {
           return null;
         }
-        const { getDefaultTemplateId, getEntityRecord } = select9(import_core_data72.store);
+        const { getDefaultTemplateId, getEntityRecord } = select9(import_core_data74.store);
         let slug;
         if (postSlug) {
           slug = postType2 === "page" ? `${postType2}-${postSlug}` : `single-${postType2}-${postSlug}`;
@@ -100104,7 +100213,7 @@ ${content}
   function usePostTemplatePanelMode() {
     return (0, import_data117.useSelect)((select9) => {
       const { getEditorSettings: getEditorSettings2, getCurrentTemplateId: getCurrentTemplateId2, getCurrentPostType: getCurrentPostType2 } = select9(store);
-      const { getPostType, canUser } = select9(import_core_data72.store);
+      const { getPostType, canUser } = select9(import_core_data74.store);
       const postTypeSlug = getCurrentPostType2();
       const postType2 = getPostType(postTypeSlug);
       const settings = getEditorSettings2();
@@ -100141,7 +100250,7 @@ ${content}
     const templates = useTemplates(postType2);
     const entityTemplate = (0, import_data117.useSelect)(
       (select9) => {
-        const post2 = select9(import_core_data72.store).getEditedEntityRecord(
+        const post2 = select9(import_core_data74.store).getEditedEntityRecord(
           "postType",
           postType2,
           postId2
@@ -100165,7 +100274,7 @@ ${content}
       if (!supportsTemplateMode && availableTemplates[templateSlug]) {
         return availableTemplates[templateSlug];
       }
-      const template2 = select9(import_core_data73.store).canUser("create", {
+      const template2 = select9(import_core_data75.store).canUser("create", {
         kind: "postType",
         name: "wp_template"
       }) && select9(store).getCurrentTemplateId();
@@ -100196,7 +100305,7 @@ ${content}
       getEditorSettings: getEditorSettings2
     } = (0, import_data118.useSelect)(
       (select9) => {
-        const { canUser, getEntityRecords } = select9(import_core_data73.store);
+        const { canUser, getEntityRecords } = select9(import_core_data75.store);
         const editorSettings2 = select9(store).getEditorSettings();
         const canCreateTemplates = canUser("create", {
           kind: "postType",
@@ -100579,7 +100688,7 @@ ${content}
   var import_components182 = __toESM(require_components(), 1);
   var import_element306 = __toESM(require_element(), 1);
   var import_i18n240 = __toESM(require_i18n(), 1);
-  var import_core_data77 = __toESM(require_core_data(), 1);
+  var import_core_data79 = __toESM(require_core_data(), 1);
   var import_notices25 = __toESM(require_notices(), 1);
   var import_preferences13 = __toESM(require_preferences(), 1);
 
@@ -100590,7 +100699,7 @@ ${content}
   var import_components179 = __toESM(require_components(), 1);
   var import_i18n237 = __toESM(require_i18n(), 1);
   var import_data121 = __toESM(require_data(), 1);
-  var import_core_data74 = __toESM(require_core_data(), 1);
+  var import_core_data76 = __toESM(require_core_data(), 1);
   var import_blocks26 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/utils/search-templates.mjs
@@ -100634,7 +100743,7 @@ ${content}
   var import_jsx_runtime491 = __toESM(require_jsx_runtime(), 1);
   function SwapTemplateModal({ onRequestClose, onSelect }) {
     const { postType: postType2, postId: postId2 } = useEditedPostContext();
-    const { editEntityRecord } = (0, import_data121.useDispatch)(import_core_data74.store);
+    const { editEntityRecord } = (0, import_data121.useDispatch)(import_core_data76.store);
     const onTemplateSelect = async (template2) => {
       editEntityRecord(
         "postType",
@@ -100723,13 +100832,13 @@ ${content}
   var import_components180 = __toESM(require_components(), 1);
   var import_i18n238 = __toESM(require_i18n(), 1);
   var import_data122 = __toESM(require_data(), 1);
-  var import_core_data75 = __toESM(require_core_data(), 1);
+  var import_core_data77 = __toESM(require_core_data(), 1);
   var import_jsx_runtime492 = __toESM(require_jsx_runtime(), 1);
   function ResetDefaultTemplate({ onClick }) {
     const currentTemplateSlug = useCurrentTemplateSlug();
     const allowSwitchingTemplate = useAllowSwitchingTemplates();
     const { postType: postType2, postId: postId2 } = useEditedPostContext();
-    const { editEntityRecord } = (0, import_data122.useDispatch)(import_core_data75.store);
+    const { editEntityRecord } = (0, import_data122.useDispatch)(import_core_data77.store);
     if (!currentTemplateSlug || !allowSwitchingTemplate) {
       return null;
     }
@@ -100755,12 +100864,12 @@ ${content}
   var import_components181 = __toESM(require_components(), 1);
   var import_i18n239 = __toESM(require_i18n(), 1);
   var import_data123 = __toESM(require_data(), 1);
-  var import_core_data76 = __toESM(require_core_data(), 1);
+  var import_core_data78 = __toESM(require_core_data(), 1);
   var import_element305 = __toESM(require_element(), 1);
   var import_jsx_runtime493 = __toESM(require_jsx_runtime(), 1);
   function CreateNewTemplate() {
     const { canCreateTemplates } = (0, import_data123.useSelect)((select9) => {
-      const { canUser } = select9(import_core_data76.store);
+      const { canUser } = select9(import_core_data78.store);
       return {
         canCreateTemplates: canUser("create", {
           kind: "postType",
@@ -100821,7 +100930,7 @@ ${content}
       };
     }, []);
     const { get: getPreference } = (0, import_data124.useSelect)(import_preferences13.store);
-    const { editedRecord: template2, hasResolved } = (0, import_core_data77.useEntityRecord)(
+    const { editedRecord: template2, hasResolved } = (0, import_core_data79.useEntityRecord)(
       "postType",
       "wp_template",
       id
@@ -100831,7 +100940,7 @@ ${content}
       (0, import_data124.useDispatch)(store)
     );
     const canCreateTemplate = (0, import_data124.useSelect)(
-      (select9) => !!select9(import_core_data77.store).canUser("create", {
+      (select9) => !!select9(import_core_data79.store).canUser("create", {
         kind: "postType",
         name: "wp_template"
       }),
@@ -100936,7 +101045,7 @@ ${content}
 
   // packages/editor/build-module/components/post-author/index.mjs
   var import_data128 = __toESM(require_data(), 1);
-  var import_core_data79 = __toESM(require_core_data(), 1);
+  var import_core_data81 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-author/combobox.mjs
   var import_compose57 = __toESM(require_compose(), 1);
@@ -100950,7 +101059,7 @@ ${content}
   var import_element307 = __toESM(require_element(), 1);
   var import_data125 = __toESM(require_data(), 1);
   var import_html_entities21 = __toESM(require_html_entities(), 1);
-  var import_core_data78 = __toESM(require_core_data(), 1);
+  var import_core_data80 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-author/constants.mjs
   var BASE_QUERY = {
@@ -100968,7 +101077,7 @@ ${content}
   function useAuthorsQuery(search) {
     const { authorId, authors, postAuthor, isLoading } = (0, import_data125.useSelect)(
       (select9) => {
-        const { getUser, getUsers, isResolving } = select9(import_core_data78.store);
+        const { getUser, getUsers, isResolving } = select9(import_core_data80.store);
         const { getEditedPostAttribute: getEditedPostAttribute2 } = select9(store);
         const _authorId = getEditedPostAttribute2("author");
         const query = { ...AUTHORS_QUERY };
@@ -101073,7 +101182,7 @@ ${content}
   var minimumUsersForCombobox = 25;
   function PostAuthor() {
     const showCombobox = (0, import_data128.useSelect)((select9) => {
-      const authors = select9(import_core_data79.store).getUsers(AUTHORS_QUERY);
+      const authors = select9(import_core_data81.store).getUsers(AUTHORS_QUERY);
       return authors?.length >= minimumUsersForCombobox;
     }, []);
     if (showCombobox) {
@@ -101107,13 +101216,13 @@ ${content}
   var import_html_entities22 = __toESM(require_html_entities(), 1);
   var import_block_editor51 = __toESM(require_block_editor(), 1);
   var import_data130 = __toESM(require_data(), 1);
-  var import_core_data80 = __toESM(require_core_data(), 1);
+  var import_core_data82 = __toESM(require_core_data(), 1);
   var import_jsx_runtime500 = __toESM(require_jsx_runtime(), 1);
   function PostAuthorToggle({ isOpen: isOpen2, onClick }) {
     const { postAuthor } = (0, import_data130.useSelect)((select9) => {
       const id = select9(store).getEditedPostAttribute("author");
       return {
-        postAuthor: select9(import_core_data80.store).getUser(id, BASE_QUERY)
+        postAuthor: select9(import_core_data82.store).getUser(id, BASE_QUERY)
       };
     }, []);
     const authorName = (0, import_html_entities22.decodeEntities)(postAuthor?.name) || (0, import_i18n244.__)("(No author)");
@@ -101222,7 +101331,7 @@ ${content}
   var import_data133 = __toESM(require_data(), 1);
   var import_element310 = __toESM(require_element(), 1);
   var import_block_editor52 = __toESM(require_block_editor(), 1);
-  var import_core_data81 = __toESM(require_core_data(), 1);
+  var import_core_data83 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-pingbacks/index.mjs
   var import_i18n246 = __toESM(require_i18n(), 1);
@@ -101284,7 +101393,7 @@ ${content}
       trackbacksSupported
     } = (0, import_data133.useSelect)((select9) => {
       const { getEditedPostAttribute: getEditedPostAttribute2 } = select9(store);
-      const { getPostType } = select9(import_core_data81.store);
+      const { getPostType } = select9(import_core_data83.store);
       const postType2 = getPostType(getEditedPostAttribute2("type"));
       return {
         commentStatus: getEditedPostAttribute2("comment_status") ?? "open",
@@ -101434,7 +101543,7 @@ ${content}
   var import_data135 = __toESM(require_data(), 1);
   var import_element312 = __toESM(require_element(), 1);
   var import_block_editor53 = __toESM(require_block_editor(), 1);
-  var import_core_data82 = __toESM(require_core_data(), 1);
+  var import_core_data84 = __toESM(require_core_data(), 1);
   var import_html_entities24 = __toESM(require_html_entities(), 1);
 
   // packages/editor/build-module/components/post-excerpt/plugin.mjs
@@ -101449,7 +101558,7 @@ ${content}
 
   // packages/editor/build-module/components/post-excerpt/panel.mjs
   var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
-  var { getTemplateInfo: getTemplateInfo3 } = unlock(import_core_data82.privateApis);
+  var { getTemplateInfo: getTemplateInfo3 } = unlock(import_core_data84.privateApis);
   var PANEL_NAME3 = "post-excerpt";
   function ExcerptPanel() {
     const { isOpened, isEnabled, postType: postType2 } = (0, import_data135.useSelect)((select9) => {
@@ -101510,14 +101619,14 @@ ${content}
       const _shouldBeUsedAsDescription = isTemplateOrTemplatePart2 || isPattern;
       const _usedAttribute = isTemplateOrTemplatePart2 ? "description" : "excerpt";
       const _excerpt = getEditedPostAttribute2(_usedAttribute);
-      const template2 = isTemplateOrTemplatePart2 && select9(import_core_data82.store).getEntityRecord(
+      const template2 = isTemplateOrTemplatePart2 && select9(import_core_data84.store).getEntityRecord(
         "postType",
         postType2,
         getCurrentPostId2()
       );
       const fallback = !_excerpt && isTemplateOrTemplatePart2 ? getTemplateInfo3({
         template: template2,
-        templateTypes: select9(import_core_data82.store).getCurrentTheme()?.default_template_types
+        templateTypes: select9(import_core_data84.store).getCurrentTheme()?.default_template_types
       })?.description : void 0;
       const _shouldRender = isEditorPanelEnabled2(PANEL_NAME3) || _shouldBeUsedAsDescription;
       return {
@@ -101605,16 +101714,16 @@ ${content}
   var import_compose58 = __toESM(require_compose(), 1);
   var import_data137 = __toESM(require_data(), 1);
   var import_block_editor54 = __toESM(require_block_editor(), 1);
-  var import_core_data84 = __toESM(require_core_data(), 1);
+  var import_core_data86 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/theme-support-check/index.mjs
   var import_data136 = __toESM(require_data(), 1);
-  var import_core_data83 = __toESM(require_core_data(), 1);
+  var import_core_data85 = __toESM(require_core_data(), 1);
   function ThemeSupportCheck({ children, supportKeys }) {
     const { postType: postType2, themeSupports } = (0, import_data136.useSelect)((select9) => {
       return {
         postType: select9(store).getEditedPostAttribute("type"),
-        themeSupports: select9(import_core_data83.store).getThemeSupports()
+        themeSupports: select9(import_core_data85.store).getThemeSupports()
       };
     }, []);
     const isSupported = (Array.isArray(supportKeys) ? supportKeys : [supportKeys]).some((key) => {
@@ -101847,7 +101956,7 @@ ${content}
     ] });
   }
   var applyWithSelect = (0, import_data137.withSelect)((select9) => {
-    const { getEntityRecord, getPostType, hasFinishedResolution } = select9(import_core_data84.store);
+    const { getEntityRecord, getPostType, hasFinishedResolution } = select9(import_core_data86.store);
     const { getCurrentPostId: getCurrentPostId2, getEditedPostAttribute: getEditedPostAttribute2 } = select9(store);
     const featuredImageId = getEditedPostAttribute2("featured_media");
     return {
@@ -101903,7 +102012,7 @@ ${content}
   var import_i18n251 = __toESM(require_i18n(), 1);
   var import_components193 = __toESM(require_components(), 1);
   var import_data138 = __toESM(require_data(), 1);
-  var import_core_data85 = __toESM(require_core_data(), 1);
+  var import_core_data87 = __toESM(require_core_data(), 1);
   var import_jsx_runtime510 = __toESM(require_jsx_runtime(), 1);
   var PANEL_NAME4 = "featured-image";
   function PostFeaturedImagePanel({ withPanelBody = true }) {
@@ -101913,7 +102022,7 @@ ${content}
         isEditorPanelEnabled: isEditorPanelEnabled2,
         isEditorPanelOpened: isEditorPanelOpened2
       } = select9(store);
-      const { getPostType } = select9(import_core_data85.store);
+      const { getPostType } = select9(import_core_data87.store);
       return {
         postType: getPostType(getEditedPostAttribute2("type")),
         isEnabled: isEditorPanelEnabled2(PANEL_NAME4),
@@ -101943,7 +102052,7 @@ ${content}
   var import_components194 = __toESM(require_components(), 1);
   var import_data140 = __toESM(require_data(), 1);
   var import_compose59 = __toESM(require_compose(), 1);
-  var import_core_data86 = __toESM(require_core_data(), 1);
+  var import_core_data88 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-format/check.mjs
   var import_data139 = __toESM(require_data(), 1);
@@ -101990,7 +102099,7 @@ ${content}
       (select9) => {
         const { getEditedPostAttribute: getEditedPostAttribute2, getSuggestedPostFormat: getSuggestedPostFormat2 } = select9(store);
         const _postFormat = getEditedPostAttribute2("format");
-        const themeSupports = select9(import_core_data86.store).getThemeSupports();
+        const themeSupports = select9(import_core_data88.store).getThemeSupports();
         return {
           postFormat: _postFormat ?? "standard",
           suggestedFormat: getSuggestedPostFormat2(),
@@ -102149,7 +102258,7 @@ ${content}
   var import_element314 = __toESM(require_element(), 1);
   var import_hooks51 = __toESM(require_hooks(), 1);
   var import_compose60 = __toESM(require_compose(), 1);
-  var import_core_data87 = __toESM(require_core_data(), 1);
+  var import_core_data89 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/utils/sync-error-messages.mjs
   var import_i18n254 = __toESM(require_i18n(), 1);
@@ -102208,7 +102317,7 @@ ${content}
         const {
           isCollaborationSupported: isSupported,
           getSyncConnectionStatus
-        } = unlock(select9(import_core_data87.store));
+        } = unlock(select9(import_core_data89.store));
         return {
           isCollaborationSupported: isSupported(),
           syncConnectionStatus: getSyncConnectionStatus()
@@ -102254,7 +102363,7 @@ ${content}
         getEditorSettings: getEditorSettings2,
         isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2
       } = unlock(select9(store));
-      const { getPostType } = select9(import_core_data87.store);
+      const { getPostType } = select9(import_core_data89.store);
       return {
         isCollaborationEnabled: isCollaborationEnabledForCurrentPost2(),
         isLocked: isPostLocked2(),
@@ -102498,7 +102607,7 @@ ${content}
   var import_i18n257 = __toESM(require_i18n(), 1);
   var import_data146 = __toESM(require_data(), 1);
   var import_hooks52 = __toESM(require_hooks(), 1);
-  var import_core_data88 = __toESM(require_core_data(), 1);
+  var import_core_data90 = __toESM(require_core_data(), 1);
   var import_jsx_runtime518 = __toESM(require_jsx_runtime(), 1);
   function buildInterstitialMarkup() {
     let markup = (0, import_element315.renderToString)(
@@ -102613,7 +102722,7 @@ ${content}
   function usePostPreviewProps({ forceIsAutosaveable, onPreview }) {
     const { postId: postId2, currentPostLink, previewLink, isSaveable, isViewable } = (0, import_data146.useSelect)((select9) => {
       const editor = select9(store);
-      const core = select9(import_core_data88.store);
+      const core = select9(import_core_data90.store);
       const postType2 = core.getPostType(
         editor.getCurrentPostType("type")
       );
@@ -102888,14 +102997,14 @@ ${content}
   var import_components212 = __toESM(require_components(), 1);
   var import_data162 = __toESM(require_data(), 1);
   var import_compose66 = __toESM(require_compose(), 1);
-  var import_core_data98 = __toESM(require_core_data(), 1);
+  var import_core_data100 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-publish-panel/prepublish.mjs
   var import_i18n269 = __toESM(require_i18n(), 1);
   var import_components210 = __toESM(require_components(), 1);
   var import_data160 = __toESM(require_data(), 1);
   var import_url19 = __toESM(require_url(), 1);
-  var import_core_data96 = __toESM(require_core_data(), 1);
+  var import_core_data98 = __toESM(require_core_data(), 1);
   var import_html_entities26 = __toESM(require_html_entities(), 1);
 
   // packages/editor/build-module/components/post-visibility/index.mjs
@@ -103017,7 +103126,7 @@ ${content}
   var import_data152 = __toESM(require_data(), 1);
   var import_block_editor56 = __toESM(require_block_editor(), 1);
   var import_element317 = __toESM(require_element(), 1);
-  var import_core_data89 = __toESM(require_core_data(), 1);
+  var import_core_data91 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-schedule/label.mjs
   var import_i18n261 = __toESM(require_i18n(), 1);
@@ -103146,7 +103255,7 @@ ${content}
       startOfMonth(new Date(postDate))
     );
     const eventsByPostType = (0, import_data152.useSelect)(
-      (select9) => select9(import_core_data89.store).getEntityRecords("postType", postType2, {
+      (select9) => select9(import_core_data91.store).getEntityRecords("postType", postType2, {
         status: "publish,future",
         after: startOfMonth(previewedMonth).toISOString(),
         before: endOfMonth(previewedMonth).toISOString(),
@@ -103210,14 +103319,14 @@ ${content}
   var import_element319 = __toESM(require_element(), 1);
   var import_data155 = __toESM(require_data(), 1);
   var import_components205 = __toESM(require_components(), 1);
-  var import_core_data92 = __toESM(require_core_data(), 1);
+  var import_core_data94 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/flat-term-selector.mjs
   var import_i18n263 = __toESM(require_i18n(), 1);
   var import_element318 = __toESM(require_element(), 1);
   var import_components204 = __toESM(require_components(), 1);
   var import_data154 = __toESM(require_data(), 1);
-  var import_core_data91 = __toESM(require_core_data(), 1);
+  var import_core_data93 = __toESM(require_core_data(), 1);
   var import_compose63 = __toESM(require_compose(), 1);
   var import_a11y13 = __toESM(require_a11y(), 1);
   var import_notices26 = __toESM(require_notices(), 1);
@@ -103225,7 +103334,7 @@ ${content}
   // packages/editor/build-module/components/post-taxonomies/most-used-terms.mjs
   var import_components203 = __toESM(require_components(), 1);
   var import_data153 = __toESM(require_data(), 1);
-  var import_core_data90 = __toESM(require_core_data(), 1);
+  var import_core_data92 = __toESM(require_core_data(), 1);
   var import_jsx_runtime522 = __toESM(require_jsx_runtime(), 1);
   var MIN_MOST_USED_TERMS = 3;
   var DEFAULT_QUERY2 = {
@@ -103239,7 +103348,7 @@ ${content}
   function MostUsedTerms({ onSelect, taxonomy }) {
     const { _terms, showTerms } = (0, import_data153.useSelect)(
       (select9) => {
-        const mostUsedTerms = select9(import_core_data90.store).getEntityRecords(
+        const mostUsedTerms = select9(import_core_data92.store).getEntityRecords(
           "taxonomy",
           taxonomy.slug,
           DEFAULT_QUERY2
@@ -103312,7 +103421,7 @@ ${content}
     } = (0, import_data154.useSelect)(
       (select9) => {
         const { getCurrentPost: getCurrentPost2, getEditedPostAttribute: getEditedPostAttribute2 } = select9(store);
-        const { getEntityRecords, getEntityRecord, hasFinishedResolution } = select9(import_core_data91.store);
+        const { getEntityRecords, getEntityRecord, hasFinishedResolution } = select9(import_core_data93.store);
         const post2 = getCurrentPost2();
         const _taxonomy = getEntityRecord("root", "taxonomy", slug);
         const _termIds = _taxonomy ? getEditedPostAttribute2(_taxonomy.rest_base) : EMPTY_ARRAY15;
@@ -103339,7 +103448,7 @@ ${content}
     );
     const { searchResults } = (0, import_data154.useSelect)(
       (select9) => {
-        const { getEntityRecords } = select9(import_core_data91.store);
+        const { getEntityRecords } = select9(import_core_data93.store);
         return {
           searchResults: !!search ? getEntityRecords("taxonomy", slug, {
             ...DEFAULT_QUERY3,
@@ -103363,7 +103472,7 @@ ${content}
       );
     }, [searchResults]);
     const { editPost: editPost2 } = (0, import_data154.useDispatch)(store);
-    const { saveEntityRecord } = (0, import_data154.useDispatch)(import_core_data91.store);
+    const { saveEntityRecord } = (0, import_data154.useDispatch)(import_core_data93.store);
     const { createErrorNotice } = (0, import_data154.useDispatch)(import_notices26.store);
     if (!hasAssignAction) {
       return null;
@@ -103485,7 +103594,7 @@ ${content}
   var import_jsx_runtime524 = __toESM(require_jsx_runtime(), 1);
   var TagsPanel = () => {
     const tagLabels = (0, import_data155.useSelect)((select9) => {
-      const taxonomy = select9(import_core_data92.store).getTaxonomy("post_tag");
+      const taxonomy = select9(import_core_data94.store).getTaxonomy("post_tag");
       return taxonomy?.labels;
     }, []);
     const addNewItem = tagLabels?.add_new_item ?? (0, import_i18n264.__)("Add tag");
@@ -103509,7 +103618,7 @@ ${content}
     const { postHasTags, siteHasTags, isPostTypeSupported } = (0, import_data155.useSelect)(
       (select9) => {
         const postType2 = select9(store).getCurrentPostType();
-        const tagsTaxonomy = select9(import_core_data92.store).getEntityRecord(
+        const tagsTaxonomy = select9(import_core_data94.store).getEntityRecord(
           "root",
           "taxonomy",
           "post_tag"
@@ -103519,7 +103628,7 @@ ${content}
         const tags = tagsTaxonomy && select9(store).getEditedPostAttribute(
           tagsTaxonomy.rest_base
         );
-        const siteTags = _isPostTypeSupported ? !!select9(import_core_data92.store).getEntityRecords(
+        const siteTags = _isPostTypeSupported ? !!select9(import_core_data94.store).getEntityRecords(
           "taxonomy",
           "post_tag",
           { per_page: 1 }
@@ -103547,7 +103656,7 @@ ${content}
   var import_components206 = __toESM(require_components(), 1);
   var import_data156 = __toESM(require_data(), 1);
   var import_i18n265 = __toESM(require_i18n(), 1);
-  var import_core_data93 = __toESM(require_core_data(), 1);
+  var import_core_data95 = __toESM(require_core_data(), 1);
   var import_jsx_runtime525 = __toESM(require_jsx_runtime(), 1);
   var getSuggestion = (supportedFormats, suggestedPostFormat) => {
     const formats = POST_FORMATS2.filter(
@@ -103571,7 +103680,7 @@ ${content}
   function PostFormatPanel() {
     const { currentPostFormat, suggestion } = (0, import_data156.useSelect)((select9) => {
       const { getEditedPostAttribute: getEditedPostAttribute2, getSuggestedPostFormat: getSuggestedPostFormat2 } = select9(store);
-      const supportedFormats = select9(import_core_data93.store).getThemeSupports().formats ?? [];
+      const supportedFormats = select9(import_core_data95.store).getThemeSupports().formats ?? [];
       return {
         currentPostFormat: getEditedPostAttribute2("format"),
         suggestion: getSuggestion(
@@ -103612,7 +103721,7 @@ ${content}
   var import_i18n267 = __toESM(require_i18n(), 1);
   var import_data158 = __toESM(require_data(), 1);
   var import_components208 = __toESM(require_components(), 1);
-  var import_core_data95 = __toESM(require_core_data(), 1);
+  var import_core_data97 = __toESM(require_core_data(), 1);
   var import_element321 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/hierarchical-term-selector.mjs
@@ -103622,7 +103731,7 @@ ${content}
   var import_components207 = __toESM(require_components(), 1);
   var import_data157 = __toESM(require_data(), 1);
   var import_compose64 = __toESM(require_compose(), 1);
-  var import_core_data94 = __toESM(require_core_data(), 1);
+  var import_core_data96 = __toESM(require_core_data(), 1);
   var import_a11y14 = __toESM(require_a11y(), 1);
   var import_html_entities25 = __toESM(require_html_entities(), 1);
 
@@ -103637,7 +103746,7 @@ ${content}
 
   // packages/editor/build-module/components/post-taxonomies/hierarchical-term-selector.mjs
   var import_jsx_runtime526 = __toESM(require_jsx_runtime(), 1);
-  var { RECEIVE_INTERMEDIATE_RESULTS } = unlock(import_core_data94.privateApis);
+  var { RECEIVE_INTERMEDIATE_RESULTS } = unlock(import_core_data96.privateApis);
   var DEFAULT_QUERY4 = {
     per_page: -1,
     orderby: "name",
@@ -103757,7 +103866,7 @@ ${content}
     } = (0, import_data157.useSelect)(
       (select9) => {
         const { getCurrentPost: getCurrentPost2, getEditedPostAttribute: getEditedPostAttribute2 } = select9(store);
-        const { getEntityRecord, getEntityRecords, isResolving } = select9(import_core_data94.store);
+        const { getEntityRecord, getEntityRecords, isResolving } = select9(import_core_data96.store);
         const _taxonomy = getEntityRecord("root", "taxonomy", slug);
         const post2 = getCurrentPost2();
         return {
@@ -103776,7 +103885,7 @@ ${content}
       [slug]
     );
     const { editPost: editPost2 } = (0, import_data157.useDispatch)(store);
-    const { saveEntityRecord } = (0, import_data157.useDispatch)(import_core_data94.store);
+    const { saveEntityRecord } = (0, import_data157.useDispatch)(import_core_data96.store);
     const { createErrorNotice } = (0, import_data157.useDispatch)(import_notices27.store);
     const selectedTerms = (0, import_element320.useMemo)(() => new Set(terms), [terms]);
     const availableTermsTree = (0, import_element320.useMemo)(
@@ -103985,7 +104094,7 @@ ${content}
   function MaybeCategoryPanel() {
     const { hasNoCategory, hasSiteCategories } = (0, import_data158.useSelect)((select9) => {
       const postType2 = select9(store).getCurrentPostType();
-      const { canUser, getEntityRecord } = select9(import_core_data95.store);
+      const { canUser, getEntityRecord } = select9(import_core_data97.store);
       const categoriesTaxonomy = getEntityRecord(
         "root",
         "taxonomy",
@@ -104000,7 +104109,7 @@ ${content}
       const categories = categoriesTaxonomy && select9(store).getEditedPostAttribute(
         categoriesTaxonomy.rest_base
       );
-      const siteCategories = postTypeSupportsCategories ? !!select9(import_core_data95.store).getEntityRecords("taxonomy", "category", {
+      const siteCategories = postTypeSupportsCategories ? !!select9(import_core_data97.store).getEntityRecords("taxonomy", "category", {
         exclude: [defaultCategoryId],
         per_page: 1
       })?.length : false;
@@ -104040,11 +104149,11 @@ ${content}
   var import_element322 = __toESM(require_element(), 1);
   var import_jsx_runtime528 = __toESM(require_jsx_runtime(), 1);
   var { mediaSideloadFromUrlKey: mediaSideloadFromUrlKey2 } = unlock(import_block_editor57.privateApis);
-  function flattenBlocks(blocks) {
+  function flattenBlocks2(blocks) {
     const result = [];
     blocks.forEach((block) => {
       result.push(block);
-      result.push(...flattenBlocks(block.innerBlocks));
+      result.push(...flattenBlocks2(block.innerBlocks));
     });
     return result;
   }
@@ -104112,7 +104221,7 @@ ${content}
       }),
       []
     );
-    const blocksWithExternalMedia = flattenBlocks(editorBlocks).filter(
+    const blocksWithExternalMedia = flattenBlocks2(editorBlocks).filter(
       (block) => hasExternalMedia(block)
     );
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data159.useDispatch)(import_block_editor57.store);
@@ -104228,7 +104337,7 @@ ${content}
       siteHome
     } = (0, import_data160.useSelect)((select9) => {
       const { getCurrentPost: getCurrentPost2, isEditedPostBeingScheduled: isEditedPostBeingScheduled2 } = select9(store);
-      const { getEntityRecord, isResolving } = select9(import_core_data96.store);
+      const { getEntityRecord, isResolving } = select9(import_core_data98.store);
       const siteData = getEntityRecord("root", "__unstableBase", void 0) || {};
       return {
         hasPublishAction: getCurrentPost2()._links?.["wp:action-publish"] ?? false,
@@ -104352,7 +104461,7 @@ ${content}
   var import_url20 = __toESM(require_url(), 1);
   var import_html_entities27 = __toESM(require_html_entities(), 1);
   var import_compose65 = __toESM(require_compose(), 1);
-  var import_core_data97 = __toESM(require_core_data(), 1);
+  var import_core_data99 = __toESM(require_core_data(), 1);
   var import_jsx_runtime530 = __toESM(require_jsx_runtime(), 1);
   var POSTNAME = "%postname%";
   var PAGENAME = "%pagename%";
@@ -104397,7 +104506,7 @@ ${content}
         getCurrentPost: getCurrentPost2,
         isCurrentPostScheduled: isCurrentPostScheduled2
       } = select9(store);
-      const { getPostType } = select9(import_core_data97.store);
+      const { getPostType } = select9(import_core_data99.store);
       return {
         post: getCurrentPost2(),
         postType: getPostType(getEditedPostAttribute2("type")),
@@ -104506,7 +104615,7 @@ ${content}
       isScheduled,
       currentPostId
     } = (0, import_data162.useSelect)((select9) => {
-      const { getPostType } = select9(import_core_data98.store);
+      const { getPostType } = select9(import_core_data100.store);
       const {
         getCurrentPost: getCurrentPost2,
         getCurrentPostId: getCurrentPostId2,
@@ -104636,7 +104745,7 @@ ${content}
   var import_i18n273 = __toESM(require_i18n(), 1);
   var import_data165 = __toESM(require_data(), 1);
   var import_element325 = __toESM(require_element(), 1);
-  var import_core_data99 = __toESM(require_core_data(), 1);
+  var import_core_data101 = __toESM(require_core_data(), 1);
   var import_block_editor58 = __toESM(require_block_editor(), 1);
   var import_compose67 = __toESM(require_compose(), 1);
 
@@ -104742,7 +104851,7 @@ ${content}
       PostStatus,
       "editor-change-status__password-input"
     );
-    const { editEntityRecord } = (0, import_data165.useDispatch)(import_core_data99.store);
+    const { editEntityRecord } = (0, import_data165.useDispatch)(import_core_data101.store);
     const [popoverAnchor, setPopoverAnchor] = (0, import_element325.useState)(null);
     const popoverProps = (0, import_element325.useMemo)(
       () => ({
@@ -105172,14 +105281,14 @@ ${content}
   // packages/editor/build-module/components/post-taxonomies/index.mjs
   var import_element329 = __toESM(require_element(), 1);
   var import_data171 = __toESM(require_data(), 1);
-  var import_core_data100 = __toESM(require_core_data(), 1);
+  var import_core_data102 = __toESM(require_core_data(), 1);
   var import_jsx_runtime538 = __toESM(require_jsx_runtime(), 1);
   var identity3 = (x2) => x2;
   function PostTaxonomies({ taxonomyWrapper = identity3 }) {
     const { postType: postType2, taxonomies } = (0, import_data171.useSelect)((select9) => {
       return {
         postType: select9(store).getCurrentPostType(),
-        taxonomies: select9(import_core_data100.store).getEntityRecords(
+        taxonomies: select9(import_core_data102.store).getEntityRecords(
           "root",
           "taxonomy"
         )
@@ -105204,11 +105313,11 @@ ${content}
 
   // packages/editor/build-module/components/post-taxonomies/check.mjs
   var import_data172 = __toESM(require_data(), 1);
-  var import_core_data101 = __toESM(require_core_data(), 1);
+  var import_core_data103 = __toESM(require_core_data(), 1);
   function PostTaxonomiesCheck({ children }) {
     const hasTaxonomies = (0, import_data172.useSelect)((select9) => {
       const postType2 = select9(store).getCurrentPostType();
-      const taxonomies = select9(import_core_data101.store).getEntityRecords(
+      const taxonomies = select9(import_core_data103.store).getEntityRecords(
         "root",
         "taxonomy"
       );
@@ -105272,7 +105381,7 @@ ${content}
   var import_react_autosize_textarea = __toESM(require_lib(), 1);
   var import_element330 = __toESM(require_element(), 1);
   var import_i18n278 = __toESM(require_i18n(), 1);
-  var import_core_data102 = __toESM(require_core_data(), 1);
+  var import_core_data104 = __toESM(require_core_data(), 1);
   var import_data174 = __toESM(require_data(), 1);
   var import_compose69 = __toESM(require_compose(), 1);
 
@@ -105399,7 +105508,7 @@ ${content}
         id: getCurrentPostId2()
       };
     }, []);
-    const { editEntityRecord } = (0, import_data174.useDispatch)(import_core_data102.store);
+    const { editEntityRecord } = (0, import_data174.useDispatch)(import_core_data104.store);
     (0, import_element330.useLayoutEffect)(() => {
       const textarea = textareaRef.current;
       const previousValue = previousValueRef.current;
@@ -105729,11 +105838,11 @@ ${content}
 
   // packages/editor/build-module/components/post-trash/check.mjs
   var import_data179 = __toESM(require_data(), 1);
-  var import_core_data103 = __toESM(require_core_data(), 1);
+  var import_core_data105 = __toESM(require_core_data(), 1);
   function PostTrashCheck({ children }) {
     const { canTrashPost } = (0, import_data179.useSelect)((select9) => {
       const { isEditedPostNew: isEditedPostNew2, getCurrentPostId: getCurrentPostId2, getCurrentPostType: getCurrentPostType2 } = select9(store);
-      const { canUser } = select9(import_core_data103.store);
+      const { canUser } = select9(import_core_data105.store);
       const postType2 = getCurrentPostType2();
       const postId2 = getCurrentPostId2();
       const isNew = isEditedPostNew2();
@@ -105816,7 +105925,7 @@ ${content}
   var import_i18n282 = __toESM(require_i18n(), 1);
   var import_components221 = __toESM(require_components(), 1);
   var import_notices28 = __toESM(require_notices(), 1);
-  var import_core_data104 = __toESM(require_core_data(), 1);
+  var import_core_data106 = __toESM(require_core_data(), 1);
   var import_compose71 = __toESM(require_compose(), 1);
   var import_jsx_runtime544 = __toESM(require_jsx_runtime(), 1);
   function PostURL({ onClose }) {
@@ -105830,7 +105939,7 @@ ${content}
     } = (0, import_data181.useSelect)((select9) => {
       const post2 = select9(store).getCurrentPost();
       const postTypeSlug = select9(store).getCurrentPostType();
-      const postType2 = select9(import_core_data104.store).getPostType(postTypeSlug);
+      const postType2 = select9(import_core_data106.store).getPostType(postTypeSlug);
       const permalinkParts = select9(store).getPermalinkParts();
       const hasPublishAction = post2?._links?.["wp:action-publish"] ?? false;
       return {
@@ -105962,11 +106071,11 @@ ${content}
 
   // packages/editor/build-module/components/post-url/check.mjs
   var import_data182 = __toESM(require_data(), 1);
-  var import_core_data105 = __toESM(require_core_data(), 1);
+  var import_core_data107 = __toESM(require_core_data(), 1);
   function PostURLCheck({ children }) {
     const isVisible2 = (0, import_data182.useSelect)((select9) => {
       const postTypeSlug = select9(store).getCurrentPostType();
-      const postType2 = select9(import_core_data105.store).getPostType(postTypeSlug);
+      const postType2 = select9(import_core_data107.store).getPostType(postTypeSlug);
       if (!postType2?.viewable) {
         return false;
       }
@@ -106006,12 +106115,12 @@ ${content}
   var import_components222 = __toESM(require_components(), 1);
   var import_i18n283 = __toESM(require_i18n(), 1);
   var import_url23 = __toESM(require_url(), 1);
-  var import_core_data106 = __toESM(require_core_data(), 1);
+  var import_core_data108 = __toESM(require_core_data(), 1);
   var import_jsx_runtime545 = __toESM(require_jsx_runtime(), 1);
   function PostURLPanel() {
     const { isFrontPage } = (0, import_data184.useSelect)((select9) => {
       const { getCurrentPostId: getCurrentPostId2 } = select9(store);
-      const { getEditedEntityRecord, canUser } = select9(import_core_data106.store);
+      const { getEditedEntityRecord, canUser } = select9(import_core_data108.store);
       const siteSettings = canUser("read", {
         kind: "root",
         name: "site"
@@ -106295,9 +106404,9 @@ ${content}
   var import_i18n288 = __toESM(require_i18n(), 1);
   var import_element339 = __toESM(require_element(), 1);
   var import_data191 = __toESM(require_data(), 1);
-  var import_core_data107 = __toESM(require_core_data(), 1);
+  var import_core_data109 = __toESM(require_core_data(), 1);
   function UnsavedChangesWarning() {
-    const { __experimentalGetDirtyEntityRecords } = (0, import_data191.useSelect)(import_core_data107.store);
+    const { __experimentalGetDirtyEntityRecords } = (0, import_data191.useSelect)(import_core_data109.store);
     (0, import_element339.useEffect)(() => {
       const warnIfUnsavedChanges = (event) => {
         const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
@@ -106522,7 +106631,7 @@ ${content}
   // packages/editor/build-module/components/index.mjs
   var VisualEditorGlobalKeyboardShortcuts = EditorKeyboardShortcuts;
   var TextEditorGlobalKeyboardShortcuts = EditorKeyboardShortcuts;
-  var { EntitiesSavedStates, useEntitiesSavedStatesIsDirty } = unlock(import_core_data108.privateApis);
+  var { EntitiesSavedStates, useEntitiesSavedStatesIsDirty } = unlock(import_core_data110.privateApis);
 
   // packages/editor/build-module/hooks/default-autocompleters.mjs
   function setDefaultCompleters(completers = []) {
@@ -106840,7 +106949,7 @@ ${content}
   var import_element346 = __toESM(require_element(), 1);
   var import_data195 = __toESM(require_data(), 1);
   var import_notices29 = __toESM(require_notices(), 1);
-  var import_core_data109 = __toESM(require_core_data(), 1);
+  var import_core_data111 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/utils/set-nested-value.mjs
   function setNestedValue(object, path, value) {
@@ -107579,7 +107688,7 @@ ${content}
   function PushChangesToGlobalStyles(props) {
     const blockEditingMode = (0, import_block_editor68.useBlockEditingMode)();
     const isBlockBasedTheme = (0, import_data195.useSelect)(
-      (select9) => select9(import_core_data109.store).getCurrentTheme()?.is_block_theme,
+      (select9) => select9(import_core_data111.store).getCurrentTheme()?.is_block_theme,
       []
     );
     const supportsStyles = SUPPORTED_STYLES.some(
@@ -107681,7 +107790,7 @@ ${content}
 
   // packages/editor/build-module/components/editor/index.mjs
   var import_data270 = __toESM(require_data(), 1);
-  var import_core_data146 = __toESM(require_core_data(), 1);
+  var import_core_data148 = __toESM(require_core_data(), 1);
   var import_components281 = __toESM(require_components(), 1);
   var import_i18n361 = __toESM(require_i18n(), 1);
 
@@ -108276,14 +108385,14 @@ ${content}
   // packages/editor/build-module/components/post-view-link/index.mjs
   var import_i18n300 = __toESM(require_i18n(), 1);
   var import_components238 = __toESM(require_components(), 1);
-  var import_core_data110 = __toESM(require_core_data(), 1);
+  var import_core_data112 = __toESM(require_core_data(), 1);
   var import_data203 = __toESM(require_data(), 1);
   var import_preferences17 = __toESM(require_preferences(), 1);
   var import_jsx_runtime567 = __toESM(require_jsx_runtime(), 1);
   function PostViewLink() {
     const { hasLoaded, permalink, isPublished, label, showIconLabels } = (0, import_data203.useSelect)((select9) => {
       const postTypeSlug = select9(store).getCurrentPostType();
-      const postType2 = select9(import_core_data110.store).getPostType(postTypeSlug);
+      const postType2 = select9(import_core_data112.store).getPostType(postTypeSlug);
       const { get } = select9(import_preferences17.store);
       return {
         permalink: select9(store).getPermalink(),
@@ -108314,7 +108423,7 @@ ${content}
   var import_components239 = __toESM(require_components(), 1);
   var import_i18n301 = __toESM(require_i18n(), 1);
   var import_data204 = __toESM(require_data(), 1);
-  var import_core_data111 = __toESM(require_core_data(), 1);
+  var import_core_data113 = __toESM(require_core_data(), 1);
   var import_preferences18 = __toESM(require_preferences(), 1);
   var import_block_editor71 = __toESM(require_block_editor(), 1);
 
@@ -108355,7 +108464,7 @@ ${content}
         getBlockSelectionStart: getBlockSelectionStart2,
         getSettings: getSettings11
       } = unlock(select9(import_block_editor71.store));
-      const { getEntityRecord, getPostType } = select9(import_core_data111.store);
+      const { getEntityRecord, getPostType } = select9(import_core_data113.store);
       const { get } = select9(import_preferences18.store);
       const _currentPostType = getCurrentPostType2();
       const viewportBreakpoints = getViewportBreakpoints5(
@@ -108616,7 +108725,7 @@ ${content}
   // packages/editor/build-module/components/collaborators-presence/index.mjs
   var import_components243 = __toESM(require_components(), 1);
   var import_element358 = __toESM(require_element(), 1);
-  var import_core_data116 = __toESM(require_core_data(), 1);
+  var import_core_data118 = __toESM(require_core_data(), 1);
   var import_i18n308 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/collaborators-presence/avatar/component.mjs
@@ -109540,7 +109649,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
-  var import_core_data114 = __toESM(require_core_data(), 1);
+  var import_core_data116 = __toESM(require_core_data(), 1);
   var import_block_editor74 = __toESM(require_block_editor(), 1);
   var import_element355 = __toESM(require_element(), 1);
 
@@ -109813,9 +109922,9 @@ ${content}
   );
 
   // packages/editor/build-module/components/collaborators-overlay/compute-selection.mjs
-  var import_core_data112 = __toESM(require_core_data(), 1);
+  var import_core_data114 = __toESM(require_core_data(), 1);
   var { SelectionDirection, SelectionType } = unlock(
-    import_core_data112.privateApis
+    import_core_data114.privateApis
   );
   function resolveTargetElement(editorDocument, resolvedSelection) {
     if (!resolvedSelection.localClientId) {
@@ -110011,8 +110120,8 @@ ${content}
   }
 
   // packages/editor/build-module/components/collaborators-overlay/resolve-start-position.mjs
-  var import_core_data113 = __toESM(require_core_data(), 1);
-  var { SelectionType: SelectionType2 } = unlock(import_core_data113.privateApis);
+  var import_core_data115 = __toESM(require_core_data(), 1);
+  var { SelectionType: SelectionType2 } = unlock(import_core_data115.privateApis);
   function resolveStartPosition(selection, resolveSelection) {
     if (!selection) {
       return null;
@@ -110038,9 +110147,9 @@ ${content}
   }
 
   // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
-  var { useActiveCollaborators, useResolvedSelection } = unlock(import_core_data114.privateApis);
+  var { useActiveCollaborators, useResolvedSelection } = unlock(import_core_data116.privateApis);
   var { isElementVisible: isElementVisible3 } = unlock(import_block_editor74.privateApis);
-  var { SelectionType: SelectionType3 } = unlock(import_core_data114.privateApis);
+  var { SelectionType: SelectionType3 } = unlock(import_core_data116.privateApis);
   function useBlockHighlighting(overlayElement, blockEditorDocument, postId2, postType2, delayMs) {
     const highlightedBlockIds = (0, import_element355.useRef)(/* @__PURE__ */ new Set());
     const userStates = useActiveCollaborators(
@@ -110301,12 +110410,12 @@ ${content}
   };
 
   // packages/editor/build-module/components/collaborators-overlay/use-render-cursors.mjs
-  var import_core_data115 = __toESM(require_core_data(), 1);
+  var import_core_data117 = __toESM(require_core_data(), 1);
   var import_data206 = __toESM(require_data(), 1);
   var import_element356 = __toESM(require_element(), 1);
   var import_preferences20 = __toESM(require_preferences(), 1);
-  var { useActiveCollaborators: useActiveCollaborators2, useResolvedSelection: useResolvedSelection2 } = unlock(import_core_data115.privateApis);
-  var { SelectionType: SelectionType4 } = unlock(import_core_data115.privateApis);
+  var { useActiveCollaborators: useActiveCollaborators2, useResolvedSelection: useResolvedSelection2 } = unlock(import_core_data117.privateApis);
+  var { SelectionType: SelectionType4 } = unlock(import_core_data117.privateApis);
   function useRenderCursors(overlayElement, blockEditorDocument, postId2, postType2, delayMs) {
     const sortedUsers = useActiveCollaborators2(
       postId2 ?? null,
@@ -110642,7 +110751,7 @@ ${content}
 
   // packages/editor/build-module/components/collaborators-presence/index.mjs
   var import_jsx_runtime575 = __toESM(require_jsx_runtime(), 1);
-  var { useActiveCollaborators: useActiveCollaborators3 } = unlock(import_core_data116.privateApis);
+  var { useActiveCollaborators: useActiveCollaborators3 } = unlock(import_core_data118.privateApis);
   function CollaboratorsPresence({
     postId: postId2,
     postType: postType2
@@ -111074,7 +111183,7 @@ ${content}
   // packages/editor/build-module/components/post-revisions-preview/revisions-slider.mjs
   var import_data210 = __toESM(require_data(), 1);
   var import_components245 = __toESM(require_components(), 1);
-  var import_core_data117 = __toESM(require_core_data(), 1);
+  var import_core_data119 = __toESM(require_core_data(), 1);
   var import_i18n311 = __toESM(require_i18n(), 1);
   var import_date21 = __toESM(require_date(), 1);
   var import_element362 = __toESM(require_element(), 1);
@@ -111092,7 +111201,7 @@ ${content}
       if (!postType2) {
         return {};
       }
-      const entityConfig = select9(import_core_data117.store).getEntityConfig(
+      const entityConfig = select9(import_core_data119.store).getEntityConfig(
         "postType",
         postType2
       );
@@ -111356,12 +111465,12 @@ ${content}
   var import_element366 = __toESM(require_element(), 1);
   var import_data218 = __toESM(require_data(), 1);
   var import_blocks33 = __toESM(require_blocks(), 1);
-  var import_core_data120 = __toESM(require_core_data(), 1);
+  var import_core_data122 = __toESM(require_core_data(), 1);
   var import_compose90 = __toESM(require_compose(), 1);
 
   // packages/editor/build-module/components/visual-editor/edit-template-blocks-notification.mjs
   var import_data212 = __toESM(require_data(), 1);
-  var import_core_data118 = __toESM(require_core_data(), 1);
+  var import_core_data120 = __toESM(require_core_data(), 1);
   var import_element363 = __toESM(require_element(), 1);
   var import_i18n313 = __toESM(require_i18n(), 1);
   var import_components247 = __toESM(require_components(), 1);
@@ -111375,7 +111484,7 @@ ${content}
       };
     }, []);
     const canEditTemplate = (0, import_data212.useSelect)(
-      (select9) => !!select9(import_core_data118.store).canUser("create", {
+      (select9) => !!select9(import_core_data120.store).canUser("create", {
         kind: "postType",
         name: "wp_template"
       }),
@@ -111613,7 +111722,7 @@ ${content}
   var import_data217 = __toESM(require_data(), 1);
   var import_compose89 = __toESM(require_compose(), 1);
   var import_blocks32 = __toESM(require_blocks(), 1);
-  var import_core_data119 = __toESM(require_core_data(), 1);
+  var import_core_data121 = __toESM(require_core_data(), 1);
   var import_block_editor83 = __toESM(require_block_editor(), 1);
   var import_components248 = __toESM(require_components(), 1);
   var import_hooks61 = __toESM(require_hooks(), 1);
@@ -111679,7 +111788,7 @@ ${content}
   // packages/editor/build-module/components/sync-connection-error-modal/index.mjs
   var import_jsx_runtime583 = __toESM(require_jsx_runtime(), 1);
   var { BlockCanvasCover: BlockCanvasCover2 } = unlock(import_block_editor83.privateApis);
-  var { retrySyncConnection } = unlock(import_core_data119.privateApis);
+  var { retrySyncConnection } = unlock(import_core_data121.privateApis);
   var INITIAL_DISCONNECTED_DEBOUNCE_MS = 2e4;
   function SyncConnectionErrorModal() {
     const [hasInitialized, setHasInitialized] = (0, import_element365.useState)(false);
@@ -111688,7 +111797,7 @@ ${content}
     const { connectionStatus, isCollaborationEnabled, postType: postType2 } = (0, import_data217.useSelect)(
       (selectFn) => {
         const { getSyncConnectionStatus, getPostType } = unlock(
-          selectFn(import_core_data119.store)
+          selectFn(import_core_data121.store)
         );
         const { getCurrentPostType: getCurrentPostType2, isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2 } = unlock(selectFn(store));
         const currentPostType = getCurrentPostType2();
@@ -111905,7 +112014,7 @@ ${content}
         getDeviceType: getDeviceType2,
         getCanvasWidth: getCanvasWidth2
       } = unlock(select9(store));
-      const { getPostType, getEditedEntityRecord } = select9(import_core_data120.store);
+      const { getPostType, getEditedEntityRecord } = select9(import_core_data122.store);
       const postTypeSlug = getCurrentPostType2();
       const _renderingMode = getRenderingMode2();
       let _wrapperBlockName;
@@ -112541,7 +112650,7 @@ ${content}
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-code-diff.mjs
   var import_components250 = __toESM(require_components(), 1);
-  var import_core_data121 = __toESM(require_core_data(), 1);
+  var import_core_data123 = __toESM(require_core_data(), 1);
   var import_data221 = __toESM(require_data(), 1);
   var import_element369 = __toESM(require_element(), 1);
   var import_i18n317 = __toESM(require_i18n(), 1);
@@ -112610,7 +112719,7 @@ ${content}
   function ConnectedRevisionsCodeDiff() {
     const revisionDiff = (0, import_data221.useSelect)((select9) => {
       const editorSelectors = select9(store);
-      const coreSelectors = select9(import_core_data121.store);
+      const coreSelectors = select9(import_core_data123.store);
       const {
         getCurrentRevision: getCurrentRevision2,
         getPreviousRevision: getPreviousRevision2,
@@ -112729,9 +112838,9 @@ ${content}
   var import_element370 = __toESM(require_element(), 1);
   var import_i18n318 = __toESM(require_i18n(), 1);
   var import_notices31 = __toESM(require_notices(), 1);
-  var import_core_data122 = __toESM(require_core_data(), 1);
+  var import_core_data124 = __toESM(require_core_data(), 1);
   var import_preferences23 = __toESM(require_preferences(), 1);
-  var { useOnCollaboratorJoin, useOnCollaboratorLeave, useOnPostSave } = unlock(import_core_data122.privateApis);
+  var { useOnCollaboratorJoin, useOnCollaboratorLeave, useOnPostSave } = unlock(import_core_data124.privateApis);
   var NOTIFICATION_TYPE = {
     COLLAB_POST_UPDATED: "collab-post-updated",
     COLLAB_USER_ENTERED: "collab-user-entered",
@@ -112877,10 +112986,10 @@ ${content}
   var import_components251 = __toESM(require_components(), 1);
   var import_i18n319 = __toESM(require_i18n(), 1);
   var import_element371 = __toESM(require_element(), 1);
-  var import_core_data123 = __toESM(require_core_data(), 1);
+  var import_core_data125 = __toESM(require_core_data(), 1);
   var import_jsx_runtime588 = __toESM(require_jsx_runtime(), 1);
   var { Fill: Fill11, Slot: Slot13 } = (0, import_components251.createSlotFill)("ActionsPanel");
-  var { EntitiesSavedStates: EntitiesSavedStates2 } = unlock(import_core_data123.privateApis);
+  var { EntitiesSavedStates: EntitiesSavedStates2 } = unlock(import_core_data125.privateApis);
   function SavePublishPanels({
     setEntitiesSavedStatesCallback,
     closeEntitiesSavedStates,
@@ -113241,7 +113350,7 @@ ${content}
 
   // packages/editor/build-module/components/post-card-panel/index.mjs
   var import_components256 = __toESM(require_components(), 1);
-  var import_core_data128 = __toESM(require_core_data(), 1);
+  var import_core_data130 = __toESM(require_core_data(), 1);
   var import_data231 = __toESM(require_data(), 1);
   var import_element378 = __toESM(require_element(), 1);
   var import_i18n325 = __toESM(require_i18n(), 1);
@@ -113252,19 +113361,19 @@ ${content}
   var import_element377 = __toESM(require_element(), 1);
   var import_i18n324 = __toESM(require_i18n(), 1);
   var import_components255 = __toESM(require_components(), 1);
-  var import_core_data127 = __toESM(require_core_data(), 1);
+  var import_core_data129 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-actions/actions.mjs
   var import_data229 = __toESM(require_data(), 1);
   var import_element376 = __toESM(require_element(), 1);
-  var import_core_data126 = __toESM(require_core_data(), 1);
+  var import_core_data128 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-actions/set-as-homepage.mjs
   var import_i18n322 = __toESM(require_i18n(), 1);
   var import_element374 = __toESM(require_element(), 1);
   var import_components253 = __toESM(require_components(), 1);
   var import_data227 = __toESM(require_data(), 1);
-  var import_core_data124 = __toESM(require_core_data(), 1);
+  var import_core_data126 = __toESM(require_core_data(), 1);
   var import_notices33 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/utils/get-item-title.mjs
@@ -113289,7 +113398,7 @@ ${content}
     const pageTitle = getItemTitle2(item);
     const { showOnFront, currentHomePage, isSaving } = (0, import_data227.useSelect)(
       (select9) => {
-        const { getEntityRecord, isSavingEntityRecord } = select9(import_core_data124.store);
+        const { getEntityRecord, isSavingEntityRecord } = select9(import_core_data126.store);
         const siteSettings = getEntityRecord("root", "site");
         const currentHomePageItem = getEntityRecord(
           "postType",
@@ -113303,7 +113412,7 @@ ${content}
         };
       }
     );
-    const { saveEntityRecord } = (0, import_data227.useDispatch)(import_core_data124.store);
+    const { saveEntityRecord } = (0, import_data227.useDispatch)(import_core_data126.store);
     const { createSuccessNotice, createErrorNotice } = (0, import_data227.useDispatch)(import_notices33.store);
     async function onSetPageAsHomepage(event) {
       event.preventDefault();
@@ -113373,7 +113482,7 @@ ${content}
   };
   var useSetAsHomepageAction = () => {
     const { pageOnFront, pageForPosts } = (0, import_data227.useSelect)((select9) => {
-      const { getEntityRecord, canUser } = select9(import_core_data124.store);
+      const { getEntityRecord, canUser } = select9(import_core_data126.store);
       const siteSettings = canUser("read", {
         kind: "root",
         name: "site"
@@ -113414,7 +113523,7 @@ ${content}
   var import_element375 = __toESM(require_element(), 1);
   var import_components254 = __toESM(require_components(), 1);
   var import_data228 = __toESM(require_data(), 1);
-  var import_core_data125 = __toESM(require_core_data(), 1);
+  var import_core_data127 = __toESM(require_core_data(), 1);
   var import_notices34 = __toESM(require_notices(), 1);
   var import_jsx_runtime593 = __toESM(require_jsx_runtime(), 1);
   var SetAsPostsPageModal = ({ items, closeModal: closeModal2 }) => {
@@ -113422,7 +113531,7 @@ ${content}
     const pageTitle = getItemTitle2(item);
     const { currentPostsPage, isPageForPostsSet, isSaving } = (0, import_data228.useSelect)(
       (select9) => {
-        const { getEntityRecord, isSavingEntityRecord } = select9(import_core_data125.store);
+        const { getEntityRecord, isSavingEntityRecord } = select9(import_core_data127.store);
         const siteSettings = getEntityRecord("root", "site");
         const currentPostsPageItem = getEntityRecord(
           "postType",
@@ -113436,7 +113545,7 @@ ${content}
         };
       }
     );
-    const { saveEntityRecord } = (0, import_data228.useDispatch)(import_core_data125.store);
+    const { saveEntityRecord } = (0, import_data228.useDispatch)(import_core_data127.store);
     const { createSuccessNotice, createErrorNotice } = (0, import_data228.useDispatch)(import_notices34.store);
     async function onSetPageAsPostsPage(event) {
       event.preventDefault();
@@ -113499,7 +113608,7 @@ ${content}
   };
   var useSetAsPostsPageAction = () => {
     const { pageOnFront, pageForPosts } = (0, import_data228.useSelect)((select9) => {
-      const { getEntityRecord, canUser } = select9(import_core_data125.store);
+      const { getEntityRecord, canUser } = select9(import_core_data127.store);
       const siteSettings = canUser("read", {
         kind: "root",
         name: "site"
@@ -113552,7 +113661,7 @@ ${content}
         if (postType2 !== "page") {
           return false;
         }
-        const { getDefaultTemplateId, getEntityRecord, canUser } = select9(import_core_data126.store);
+        const { getDefaultTemplateId, getEntityRecord, canUser } = select9(import_core_data128.store);
         const canUpdateSettings = canUser("update", {
           kind: "root",
           name: "site"
@@ -113663,7 +113772,7 @@ ${content}
     const [activeModalAction, setActiveModalAction] = (0, import_element377.useState)(null);
     const { item, permissions } = (0, import_data230.useSelect)(
       (select9) => {
-        const { getEditedEntityRecord, getEntityRecordPermissions } = unlock(select9(import_core_data127.store));
+        const { getEditedEntityRecord, getEntityRecordPermissions } = unlock(select9(import_core_data129.store));
         return {
           item: getEditedEntityRecord("postType", postType2, postId2),
           permissions: getEntityRecordPermissions(
@@ -113770,7 +113879,7 @@ ${content}
   // packages/editor/build-module/components/post-card-panel/index.mjs
   var import_jsx_runtime596 = __toESM(require_jsx_runtime(), 1);
   var { Badge: WCBadge3 } = unlock(import_components256.privateApis);
-  var { getTemplateInfo: getTemplateInfo4 } = unlock(import_core_data128.privateApis);
+  var { getTemplateInfo: getTemplateInfo4 } = unlock(import_core_data130.privateApis);
   function PostCardPanel({
     postType: postType2,
     postId: postId2,
@@ -113784,7 +113893,7 @@ ${content}
     );
     const { postTitle, icon, labels } = (0, import_data231.useSelect)(
       (select9) => {
-        const { getEditedEntityRecord, getCurrentTheme, getPostType } = select9(import_core_data128.store);
+        const { getEditedEntityRecord, getCurrentTheme, getPostType } = select9(import_core_data130.store);
         const {
           getPostIcon: getPostIcon2,
           getCurrentPostType: getCurrentPostType2,
@@ -113904,14 +114013,14 @@ ${content}
   var import_i18n326 = __toESM(require_i18n(), 1);
   var import_wordcount5 = __toESM(require_wordcount(), 1);
   var import_element379 = __toESM(require_element(), 1);
-  var import_core_data129 = __toESM(require_core_data(), 1);
+  var import_core_data131 = __toESM(require_core_data(), 1);
   var import_jsx_runtime597 = __toESM(require_jsx_runtime(), 1);
   var AVERAGE_READING_RATE3 = 189;
   function PostContentInformation() {
     const postContent = (0, import_data232.useSelect)((select9) => {
       const { getEditedPostAttribute: getEditedPostAttribute2, getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select9(store);
-      const { canUser } = select9(import_core_data129.store);
-      const { getEntityRecord } = select9(import_core_data129.store);
+      const { canUser } = select9(import_core_data131.store);
+      const { getEntityRecord } = select9(import_core_data131.store);
       const siteSettings = canUser("read", {
         kind: "root",
         name: "site"
@@ -114052,12 +114161,12 @@ ${content}
   // packages/editor/build-module/components/reading-settings-link/index.mjs
   var import_i18n329 = __toESM(require_i18n(), 1);
   var import_data235 = __toESM(require_data(), 1);
-  var import_core_data130 = __toESM(require_core_data(), 1);
+  var import_core_data132 = __toESM(require_core_data(), 1);
   var import_jsx_runtime601 = __toESM(require_jsx_runtime(), 1);
   function ReadingSettingsLink() {
     const isVisible2 = (0, import_data235.useSelect)((select9) => {
       const { getCurrentPostType: getCurrentPostType2, getEditedPostAttribute: getEditedPostAttribute2 } = select9(store);
-      const { canUser } = select9(import_core_data130.store);
+      const { canUser } = select9(import_core_data132.store);
       return getCurrentPostType2() === TEMPLATE_POST_TYPE && getEditedPostAttribute2("slug") === "front-page" && !!canUser("update", { kind: "root", name: "site" });
     }, []);
     if (!isVisible2) {
@@ -114070,7 +114179,7 @@ ${content}
   var import_i18n330 = __toESM(require_i18n(), 1);
   var import_compose93 = __toESM(require_compose(), 1);
   var import_data236 = __toESM(require_data(), 1);
-  var import_core_data131 = __toESM(require_core_data(), 1);
+  var import_core_data133 = __toESM(require_core_data(), 1);
   var import_html_entities32 = __toESM(require_html_entities(), 1);
   var import_components261 = __toESM(require_components(), 1);
   var import_element381 = __toESM(require_element(), 1);
@@ -114078,10 +114187,10 @@ ${content}
   var import_jsx_runtime602 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_OBJECT4 = {};
   function BlogTitle() {
-    const { editEntityRecord } = (0, import_data236.useDispatch)(import_core_data131.store);
+    const { editEntityRecord } = (0, import_data236.useDispatch)(import_core_data133.store);
     const { postsPageTitle, postsPageId, isTemplate: isTemplate2, postSlug } = (0, import_data236.useSelect)(
       (select9) => {
-        const { getEntityRecord, getEditedEntityRecord, canUser } = select9(import_core_data131.store);
+        const { getEntityRecord, getEditedEntityRecord, canUser } = select9(import_core_data133.store);
         const siteSettings = canUser("read", {
           kind: "root",
           name: "site"
@@ -114172,16 +114281,16 @@ ${content}
   // packages/editor/build-module/components/posts-per-page/index.mjs
   var import_i18n331 = __toESM(require_i18n(), 1);
   var import_data237 = __toESM(require_data(), 1);
-  var import_core_data132 = __toESM(require_core_data(), 1);
+  var import_core_data134 = __toESM(require_core_data(), 1);
   var import_components262 = __toESM(require_components(), 1);
   var import_element382 = __toESM(require_element(), 1);
   var import_block_editor90 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime603 = __toESM(require_jsx_runtime(), 1);
   function PostsPerPage() {
-    const { editEntityRecord } = (0, import_data237.useDispatch)(import_core_data132.store);
+    const { editEntityRecord } = (0, import_data237.useDispatch)(import_core_data134.store);
     const { postsPerPage, isTemplate: isTemplate2, postSlug } = (0, import_data237.useSelect)((select9) => {
       const { getEditedPostAttribute: getEditedPostAttribute2, getCurrentPostType: getCurrentPostType2 } = select9(store);
-      const { getEditedEntityRecord, canUser } = select9(import_core_data132.store);
+      const { getEditedEntityRecord, canUser } = select9(import_core_data134.store);
       const siteSettings = canUser("read", {
         kind: "root",
         name: "site"
@@ -114261,7 +114370,7 @@ ${content}
   // packages/editor/build-module/components/site-discussion/index.mjs
   var import_i18n332 = __toESM(require_i18n(), 1);
   var import_data238 = __toESM(require_data(), 1);
-  var import_core_data133 = __toESM(require_core_data(), 1);
+  var import_core_data135 = __toESM(require_core_data(), 1);
   var import_components263 = __toESM(require_components(), 1);
   var import_element383 = __toESM(require_element(), 1);
   var import_block_editor91 = __toESM(require_block_editor(), 1);
@@ -114282,11 +114391,11 @@ ${content}
     }
   ];
   function SiteDiscussion() {
-    const { editEntityRecord } = (0, import_data238.useDispatch)(import_core_data133.store);
+    const { editEntityRecord } = (0, import_data238.useDispatch)(import_core_data135.store);
     const { allowCommentsOnNewPosts, isTemplate: isTemplate2, postSlug } = (0, import_data238.useSelect)(
       (select9) => {
         const { getEditedPostAttribute: getEditedPostAttribute2, getCurrentPostType: getCurrentPostType2 } = select9(store);
-        const { getEditedEntityRecord, canUser } = select9(import_core_data133.store);
+        const { getEditedEntityRecord, canUser } = select9(import_core_data135.store);
         const siteSettings = canUser("read", {
           kind: "root",
           name: "site"
@@ -114430,7 +114539,7 @@ ${content}
   // packages/editor/build-module/components/sidebar/dataform-post-summary.mjs
   var import_i18n336 = __toESM(require_i18n(), 1);
   var import_data244 = __toESM(require_data(), 1);
-  var import_core_data135 = __toESM(require_core_data(), 1);
+  var import_core_data137 = __toESM(require_core_data(), 1);
   var import_element385 = __toESM(require_element(), 1);
 
   // packages/views/build-module/use-view.mjs
@@ -114444,7 +114553,7 @@ ${content}
 
   // packages/views/build-module/use-view-config.mjs
   var import_data242 = __toESM(require_data(), 1);
-  var import_core_data134 = __toESM(require_core_data(), 1);
+  var import_core_data136 = __toESM(require_core_data(), 1);
 
   // packages/views/build-module/lock-unlock.mjs
   var import_private_apis9 = __toESM(require_private_apis(), 1);
@@ -114463,7 +114572,7 @@ ${content}
     const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
     return (0, import_data242.useSelect)(
       (select9) => {
-        return unlock7(select9(import_core_data134.store)).getViewConfig(
+        return unlock7(select9(import_core_data136.store)).getViewConfig(
           kind,
           name2,
           fieldsKey ? {
@@ -114625,7 +114734,7 @@ ${content}
       posttype_page: {
         kind: "postType",
         name: "page",
-        getId: (select9) => select9(import_core_data135.store).getEditedEntityRecord("root", "site")?.page_for_posts,
+        getId: (select9) => select9(import_core_data137.store).getEditedEntityRecord("root", "site")?.page_for_posts,
         fields: ["posts_page_title"],
         isVisible: (item) => ["home", "index"].includes(item.slug ?? "")
       }
@@ -114652,7 +114761,7 @@ ${content}
         getEditorSettings: getEditorSettings2
       } = select9(store);
       const _availableTemplates = select9(
-        import_core_data135.store
+        import_core_data137.store
       ).getCurrentTheme()?.is_block_theme ? null : getEditorSettings2().availableTemplates ?? null;
       return {
         postType: getCurrentPostType2(),
@@ -114672,7 +114781,7 @@ ${content}
         if (!postType2 || !postId2) {
           return null;
         }
-        return select9(import_core_data135.store).getEditedEntityRecord(
+        return select9(import_core_data137.store).getEditedEntityRecord(
           "postType",
           postType2,
           postId2
@@ -114683,7 +114792,7 @@ ${content}
     const templatePanelMode = usePostTemplatePanelMode();
     const entityRecords = (0, import_data244.useSelect)(
       (select9) => {
-        const { getEditedEntityRecord, canUser } = select9(import_core_data135.store);
+        const { getEditedEntityRecord, canUser } = select9(import_core_data137.store);
         const records = {};
         for (const [namespace, entity] of Object.entries(
           ENTITIES[postType2] ?? {}
@@ -114718,7 +114827,7 @@ ${content}
       }
       return { ...record, ...extra };
     }, [record, entityRecords, availableTemplates]);
-    const { editEntityRecord } = (0, import_data244.useDispatch)(import_core_data135.store);
+    const { editEntityRecord } = (0, import_data244.useDispatch)(import_core_data137.store);
     const registry = (0, import_data244.useRegistry)();
     const fieldNamespaces = (0, import_element385.useMemo)(() => {
       const map = {};
@@ -114829,7 +114938,7 @@ ${content}
 
   // packages/editor/build-module/components/post-revisions-timeline/index.mjs
   var import_data245 = __toESM(require_data(), 1);
-  var import_core_data136 = __toESM(require_core_data(), 1);
+  var import_core_data138 = __toESM(require_core_data(), 1);
   var import_date23 = __toESM(require_date(), 1);
   var import_element386 = __toESM(require_element(), 1);
   var import_i18n337 = __toESM(require_i18n(), 1);
@@ -114872,7 +114981,7 @@ ${content}
           getRevisionPage: getRevisionPage2,
           getPageRevisions: getPageRevisions2
         } = unlock(select9(store));
-        const { getEntityConfig } = select9(import_core_data136.store);
+        const { getEntityConfig } = select9(import_core_data138.store);
         const _postType = getCurrentPostType2();
         const entityConfig = getEntityConfig("postType", _postType);
         const _revisionKey = entityConfig?.revisionKey || "id";
@@ -115135,7 +115244,7 @@ ${content}
 
   // packages/editor/build-module/components/post-transform-panel/index.mjs
   var import_data249 = __toESM(require_data(), 1);
-  var import_core_data138 = __toESM(require_core_data(), 1);
+  var import_core_data140 = __toESM(require_core_data(), 1);
   var import_components267 = __toESM(require_components(), 1);
   var import_i18n340 = __toESM(require_i18n(), 1);
   var import_block_editor92 = __toESM(require_block_editor(), 1);
@@ -115144,7 +115253,7 @@ ${content}
   // packages/editor/build-module/components/post-transform-panel/hooks.mjs
   var import_data248 = __toESM(require_data(), 1);
   var import_element388 = __toESM(require_element(), 1);
-  var import_core_data137 = __toESM(require_core_data(), 1);
+  var import_core_data139 = __toESM(require_core_data(), 1);
   var import_blocks35 = __toESM(require_blocks(), 1);
   var import_patterns11 = __toESM(require_patterns(), 1);
   var { EXCLUDED_PATTERN_SOURCES, PATTERN_TYPES: PATTERN_TYPES6 } = unlock(import_patterns11.privateApis);
@@ -115196,8 +115305,8 @@ ${content}
       const settings = getEditorSettings2();
       return {
         blockPatterns: settings.__experimentalAdditionalBlockPatterns ?? settings.__experimentalBlockPatterns,
-        restBlockPatterns: select9(import_core_data137.store).getBlockPatterns(),
-        currentThemeStylesheet: select9(import_core_data137.store).getCurrentTheme().stylesheet
+        restBlockPatterns: select9(import_core_data139.store).getBlockPatterns(),
+        currentThemeStylesheet: select9(import_core_data139.store).getCurrentTheme().stylesheet
       };
     }, []);
     return (0, import_element388.useMemo)(() => {
@@ -115240,7 +115349,7 @@ ${content}
   function PostTransform() {
     const { area, name: name2, slug, postType: postType2, postId: postId2 } = (0, import_data249.useSelect)((select9) => {
       const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select9(store);
-      const { getEditedEntityRecord } = select9(import_core_data138.store);
+      const { getEditedEntityRecord } = select9(import_core_data140.store);
       const type = getCurrentPostType2();
       const id = getCurrentPostId2();
       const record = getEditedEntityRecord("postType", type, id);
@@ -115252,7 +115361,7 @@ ${content}
         postId: id
       };
     }, []);
-    const { editEntityRecord } = (0, import_data249.useDispatch)(import_core_data138.store);
+    const { editEntityRecord } = (0, import_data249.useDispatch)(import_core_data140.store);
     const availablePatterns = useAvailablePatterns({ area, name: name2, slug });
     const onTemplateSelect = async (selectedTemplate) => {
       await editEntityRecord("postType", postType2, postId2, {
@@ -115323,7 +115432,7 @@ ${content}
 
   // packages/editor/build-module/components/template-actions-panel/block-theme-content.mjs
   var import_data251 = __toESM(require_data(), 1);
-  var import_core_data139 = __toESM(require_core_data(), 1);
+  var import_core_data141 = __toESM(require_core_data(), 1);
   var import_block_editor93 = __toESM(require_block_editor(), 1);
   var import_components268 = __toESM(require_components(), 1);
   var import_element389 = __toESM(require_element(), 1);
@@ -115352,7 +115461,7 @@ ${content}
       const editorSettings2 = _getEditorSettings();
       return {
         onNavigateToEntityRecord: editorSettings2.onNavigateToEntityRecord,
-        canCreateTemplate: !!select9(import_core_data139.store).canUser("create", {
+        canCreateTemplate: !!select9(import_core_data141.store).canUser("create", {
           kind: "postType",
           name: "wp_template"
         }),
@@ -115364,12 +115473,12 @@ ${content}
     }, []);
     const { get: getPreference } = (0, import_data251.useSelect)(import_preferences27.store);
     const { createSuccessNotice } = (0, import_data251.useDispatch)(import_notices35.store);
-    const { editedRecord: template2, hasResolved } = (0, import_core_data139.useEntityRecord)(
+    const { editedRecord: template2, hasResolved } = (0, import_core_data141.useEntityRecord)(
       "postType",
       "wp_template",
       templateId2
     );
-    const [blocks] = (0, import_core_data139.useEntityBlockEditor)("postType", "wp_template", {
+    const [blocks] = (0, import_core_data141.useEntityBlockEditor)("postType", "wp_template", {
       id: templateId2
     });
     if (!hasResolved) {
@@ -115487,7 +115596,7 @@ ${content}
 
   // packages/editor/build-module/components/template-actions-panel/classic-theme-content.mjs
   var import_data252 = __toESM(require_data(), 1);
-  var import_core_data140 = __toESM(require_core_data(), 1);
+  var import_core_data142 = __toESM(require_core_data(), 1);
   var import_block_editor94 = __toESM(require_block_editor(), 1);
   var import_components269 = __toESM(require_components(), 1);
   var import_element390 = __toESM(require_element(), 1);
@@ -115512,7 +115621,7 @@ ${content}
       const editorSettings2 = _getEditorSettings();
       return {
         onNavigateToEntityRecord: editorSettings2.onNavigateToEntityRecord,
-        canCreateTemplate: !!select9(import_core_data140.store).canUser("create", {
+        canCreateTemplate: !!select9(import_core_data142.store).canUser("create", {
           kind: "postType",
           name: "wp_template"
         }) && editorSettings2.supportsTemplateMode,
@@ -115524,12 +115633,12 @@ ${content}
     }, []);
     const { get: getPreference } = (0, import_data252.useSelect)(import_preferences28.store);
     const { createSuccessNotice } = (0, import_data252.useDispatch)(import_notices36.store);
-    const { editedRecord: template2 } = (0, import_core_data140.useEntityRecord)(
+    const { editedRecord: template2 } = (0, import_core_data142.useEntityRecord)(
       "postType",
       "wp_template",
       templateId2
     );
-    const [blocks] = (0, import_core_data140.useEntityBlockEditor)("postType", "wp_template", {
+    const [blocks] = (0, import_core_data142.useEntityBlockEditor)("postType", "wp_template", {
       id: templateId2
     });
     if (!templateId2 && !canCreateTemplate) {
@@ -115893,7 +116002,7 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/note-byline.mjs
   var import_i18n348 = __toESM(require_i18n(), 1);
   var import_date24 = __toESM(require_date(), 1);
-  var import_core_data141 = __toESM(require_core_data(), 1);
+  var import_core_data143 = __toESM(require_core_data(), 1);
   var import_data258 = __toESM(require_data(), 1);
   var import_block_editor100 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime621 = __toESM(require_jsx_runtime(), 1);
@@ -115907,7 +116016,7 @@ ${content}
       dateFormat = dateSettings.formats.date
     } = (0, import_data258.useSelect)(
       (select9) => {
-        const { canUser, getCurrentUser, getEntityRecord } = select9(import_core_data141.store);
+        const { canUser, getCurrentUser, getEntityRecord } = select9(import_core_data143.store);
         const siteSettings = canUser("read", {
           kind: "root",
           name: "site"
@@ -116024,7 +116133,7 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/note-mention-completer.mjs
   var import_element393 = __toESM(require_element(), 1);
   var import_data259 = __toESM(require_data(), 1);
-  var import_core_data142 = __toESM(require_core_data(), 1);
+  var import_core_data144 = __toESM(require_core_data(), 1);
   var import_jsx_runtime623 = __toESM(require_jsx_runtime(), 1);
   var noteMentionCompleter = {
     name: "note-mentions",
@@ -116033,7 +116142,7 @@ ${content}
     useItems(filterValue) {
       const users = (0, import_data259.useSelect)(
         (select9) => {
-          const { getUsers } = select9(import_core_data142.store);
+          const { getUsers } = select9(import_core_data144.store);
           return getUsers({
             context: "view",
             search: filterValue
@@ -117069,7 +117178,7 @@ ${content}
   var import_a11y17 = __toESM(require_a11y(), 1);
   var import_i18n353 = __toESM(require_i18n(), 1);
   var import_element399 = __toESM(require_element(), 1);
-  var import_core_data143 = __toESM(require_core_data(), 1);
+  var import_core_data145 = __toESM(require_core_data(), 1);
   var import_data262 = __toESM(require_data(), 1);
   var import_block_editor103 = __toESM(require_block_editor(), 1);
   var import_notices37 = __toESM(require_notices(), 1);
@@ -117172,7 +117281,7 @@ ${content}
       status: "all",
       per_page: -1
     };
-    const { records: threads } = (0, import_core_data143.useEntityRecords)(
+    const { records: threads } = (0, import_core_data145.useEntityRecords)(
       "root",
       "comment",
       queryArgs,
@@ -117311,7 +117420,7 @@ ${content}
   }
   function useNoteActions() {
     const { createNotice } = (0, import_data262.useDispatch)(import_notices37.store);
-    const { saveEntityRecord, deleteEntityRecord } = (0, import_data262.useDispatch)(import_core_data143.store);
+    const { saveEntityRecord, deleteEntityRecord } = (0, import_data262.useDispatch)(import_core_data145.store);
     const { getCurrentPostId: getCurrentPostId2 } = (0, import_data262.useSelect)(store);
     const {
       getBlockAttributes: getBlockAttributes2,
@@ -118145,7 +118254,7 @@ ${content}
   var import_element404 = __toESM(require_element(), 1);
   var import_preferences33 = __toESM(require_preferences(), 1);
   var import_compose99 = __toESM(require_compose(), 1);
-  var import_core_data145 = __toESM(require_core_data(), 1);
+  var import_core_data147 = __toESM(require_core_data(), 1);
   var import_block_editor109 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/global-styles/menu.mjs
@@ -118153,7 +118262,7 @@ ${content}
   var import_data267 = __toESM(require_data(), 1);
   var import_i18n358 = __toESM(require_i18n(), 1);
   var import_preferences31 = __toESM(require_preferences(), 1);
-  var import_core_data144 = __toESM(require_core_data(), 1);
+  var import_core_data146 = __toESM(require_core_data(), 1);
   var import_jsx_runtime635 = __toESM(require_jsx_runtime(), 1);
   function GlobalStylesActionMenu({
     hideWelcomeGuide = false,
@@ -118166,7 +118275,7 @@ ${content}
     };
     const { toggle } = (0, import_data267.useDispatch)(import_preferences31.store);
     const { canEditCSS } = (0, import_data267.useSelect)((select9) => {
-      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data144.store);
+      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data146.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
       const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
       return {
@@ -118366,7 +118475,7 @@ ${content}
       const _isVisualEditorMode = "visual" === getEditorMode2();
       const _showListViewByDefault = get("core", "showListViewByDefault");
       const _isDistractionFree = get("core", "distractionFree");
-      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data145.store);
+      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data147.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
       const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
       return {
@@ -118529,7 +118638,7 @@ ${content}
           getCurrentTheme,
           __experimentalGetCurrentGlobalStylesId,
           canUser
-        } = select9(import_core_data146.store);
+        } = select9(import_core_data148.store);
         const { getRenderingMode: getRenderingMode2, getCurrentPostType: getCurrentPostType2 } = select9(store);
         const postArgs = ["postType", postType2, postId2];
         const renderingMode2 = getRenderingMode2();
@@ -119144,7 +119253,7 @@ ${content}
   var import_api_fetch10 = __toESM(require_api_fetch(), 1);
   var import_data274 = __toESM(require_data(), 1);
   var import_blob4 = __toESM(require_blob(), 1);
-  var import_core_data147 = __toESM(require_core_data(), 1);
+  var import_core_data149 = __toESM(require_core_data(), 1);
   var import_notices38 = __toESM(require_notices(), 1);
   var import_jsx_runtime643 = __toESM(require_jsx_runtime(), 1);
   function SiteExport() {
@@ -119153,7 +119262,7 @@ ${content}
       if (postType2 !== TEMPLATE_POST_TYPE && postType2 !== TEMPLATE_PART_POST_TYPE) {
         return false;
       }
-      const targetHints = select9(import_core_data147.store).getCurrentTheme()?._links?.["wp:export-theme"]?.[0]?.targetHints ?? {};
+      const targetHints = select9(import_core_data149.store).getCurrentTheme()?._links?.["wp:export-theme"]?.[0]?.targetHints ?? {};
       return !!targetHints.allow?.includes("GET");
     }, []);
     const { createErrorNotice } = (0, import_data274.useDispatch)(import_notices38.store);
@@ -119280,7 +119389,7 @@ ${content}
 
   // packages/editor/build-module/bindings/post-data.mjs
   var import_i18n365 = __toESM(require_i18n(), 1);
-  var import_core_data148 = __toESM(require_core_data(), 1);
+  var import_core_data150 = __toESM(require_core_data(), 1);
   var import_block_editor112 = __toESM(require_block_editor(), 1);
   var NAVIGATION_BLOCK_TYPES = [
     "core/navigation-link",
@@ -119318,7 +119427,7 @@ ${content}
         postId2 = context?.postId;
         postType2 = context?.postType;
       }
-      const { getEditedEntityRecord } = select9(import_core_data148.store);
+      const { getEditedEntityRecord } = select9(import_core_data150.store);
       const entityDataValues = getEditedEntityRecord(
         "postType",
         postType2,
@@ -119349,7 +119458,7 @@ ${content}
       Object.values(bindings).forEach(({ args, newValue }) => {
         newData[args.field] = newValue;
       });
-      dispatch8(import_core_data148.store).editEntityRecord(
+      dispatch8(import_core_data150.store).editEntityRecord(
         "postType",
         context?.postType,
         context?.postId,
@@ -119369,7 +119478,7 @@ ${content}
       if (!context?.postType) {
         return false;
       }
-      const canUserEdit = select9(import_core_data148.store).canUser("update", {
+      const canUserEdit = select9(import_core_data150.store).canUser("update", {
         kind: "postType",
         name: context?.postType,
         id: context?.postId
@@ -119392,9 +119501,9 @@ ${content}
   };
 
   // packages/editor/build-module/bindings/post-meta.mjs
-  var import_core_data149 = __toESM(require_core_data(), 1);
+  var import_core_data151 = __toESM(require_core_data(), 1);
   function getPostMetaFields(select9, context) {
-    const { getRegisteredPostMeta } = unlock(select9(import_core_data149.store));
+    const { getRegisteredPostMeta } = unlock(select9(import_core_data151.store));
     const registeredFields = getRegisteredPostMeta(context?.postType);
     const metaFields = [];
     Object.entries(registeredFields).forEach(([key, props]) => {
@@ -119421,7 +119530,7 @@ ${content}
     if (!context?.postId) {
       return metaField.default || metaField.label || args.key;
     }
-    const { getEditedEntityRecord } = select9(import_core_data149.store);
+    const { getEditedEntityRecord } = select9(import_core_data151.store);
     const entityMetaValues = getEditedEntityRecord(
       "postType",
       context?.postType,
@@ -119447,7 +119556,7 @@ ${content}
       Object.values(bindings).forEach(({ args, newValue }) => {
         newMeta[args.key] = newValue;
       });
-      dispatch8(import_core_data149.store).editEntityRecord(
+      dispatch8(import_core_data151.store).editEntityRecord(
         "postType",
         context?.postType,
         context?.postId,
@@ -119474,7 +119583,7 @@ ${content}
       if (areCustomFieldsEnabled) {
         return false;
       }
-      const canUserEdit = select9(import_core_data149.store).canUser("update", {
+      const canUserEdit = select9(import_core_data151.store).canUser("update", {
         kind: "postType",
         name: context?.postType,
         id: context?.postId
@@ -119496,7 +119605,7 @@ ${content}
 
   // packages/editor/build-module/bindings/term-data.mjs
   var import_i18n366 = __toESM(require_i18n(), 1);
-  var import_core_data150 = __toESM(require_core_data(), 1);
+  var import_core_data152 = __toESM(require_core_data(), 1);
   var import_block_editor113 = __toESM(require_block_editor(), 1);
   var NAVIGATION_BLOCK_TYPES2 = [
     "core/navigation-link",
@@ -119543,7 +119652,7 @@ ${content}
     name: "core/term-data",
     usesContext: ["taxonomy", "termId", "termData"],
     getValues({ select: select9, context, bindings, clientId }) {
-      const { getEntityRecord } = select9(import_core_data150.store);
+      const { getEntityRecord } = select9(import_core_data152.store);
       const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select9(import_block_editor113.store);
       const blockName = getBlockName2(clientId);
       const isNavigationBlock = NAVIGATION_BLOCK_TYPES2.includes(blockName);
