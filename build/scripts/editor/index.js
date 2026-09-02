@@ -100784,16 +100784,24 @@ ${content}
   var plugin_block_settings_menu_item_default = PluginBlockSettingsMenuItem;
 
   // packages/editor/build-module/components/plugin-more-menu-item/index.mjs
+  var import_deprecated12 = __toESM(require_deprecated(), 1);
   var import_plugins5 = __toESM(require_plugins(), 1);
   var import_jsx_runtime484 = __toESM(require_jsx_runtime(), 1);
   function PluginMoreMenuItem(props) {
     const context = (0, import_plugins5.usePluginContext)();
+    const { as, ...itemProps } = props;
+    if (as) {
+      (0, import_deprecated12.default)("The `as` prop of wp.editor.PluginMoreMenuItem", {
+        since: "7.2",
+        hint: "The menu renders the item itself. The prop is ignored."
+      });
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
       action_item_default,
       {
         name: "core/plugin-more-menu",
-        icon: props.icon || context.icon,
-        ...props
+        icon: itemProps.icon || context.icon,
+        ...itemProps
       }
     );
   }
@@ -100861,16 +100869,24 @@ ${content}
   var plugin_pre_publish_panel_default = PluginPrePublishPanel;
 
   // packages/editor/build-module/components/plugin-preview-menu-item/index.mjs
+  var import_deprecated13 = __toESM(require_deprecated(), 1);
   var import_plugins8 = __toESM(require_plugins(), 1);
   var import_jsx_runtime488 = __toESM(require_jsx_runtime(), 1);
   function PluginPreviewMenuItem(props) {
     const context = (0, import_plugins8.usePluginContext)();
+    const { as, ...itemProps } = props;
+    if (as) {
+      (0, import_deprecated13.default)("The `as` prop of wp.editor.PluginPreviewMenuItem", {
+        since: "7.2",
+        hint: "The menu renders the item itself. The prop is ignored."
+      });
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
       action_item_default,
       {
         name: "core/plugin-preview-menu",
-        icon: props.icon || context.icon,
-        ...props
+        icon: itemProps.icon || context.icon,
+        ...itemProps
       }
     );
   }
@@ -100890,9 +100906,17 @@ ${content}
   }
 
   // packages/editor/build-module/components/plugin-sidebar-more-menu-item/index.mjs
+  var import_deprecated14 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime490 = __toESM(require_jsx_runtime(), 1);
   function PluginSidebarMoreMenuItem(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(ComplementaryAreaMoreMenuItem, { scope: "core", ...props });
+    const { as, ...itemProps } = props;
+    if (as) {
+      (0, import_deprecated14.default)("The `as` prop of wp.editor.PluginSidebarMoreMenuItem", {
+        since: "7.2",
+        hint: "The menu renders the item itself. The prop is ignored."
+      });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime490.jsx)(ComplementaryAreaMoreMenuItem, { scope: "core", ...itemProps });
   }
 
   // packages/editor/build-module/components/post-template/block-theme.mjs
@@ -105409,10 +105433,10 @@ ${content}
   var import_i18n277 = __toESM(require_i18n(), 1);
   var import_data169 = __toESM(require_data(), 1);
   var import_element330 = __toESM(require_element(), 1);
-  var import_deprecated12 = __toESM(require_deprecated(), 1);
+  var import_deprecated15 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime536 = __toESM(require_jsx_runtime(), 1);
   function PostSwitchToDraftButton() {
-    (0, import_deprecated12.default)("wp.editor.PostSwitchToDraftButton", {
+    (0, import_deprecated15.default)("wp.editor.PostSwitchToDraftButton", {
       since: "6.7",
       version: "6.9"
     });
@@ -106639,14 +106663,14 @@ ${content}
   }
 
   // packages/editor/build-module/components/deprecated.mjs
-  var import_deprecated13 = __toESM(require_deprecated(), 1);
+  var import_deprecated16 = __toESM(require_deprecated(), 1);
   var import_element342 = __toESM(require_element(), 1);
   var import_block_editor64 = __toESM(require_block_editor(), 1);
   var import_server_side_render = __toESM(require_server_side_render(), 1);
   var import_jsx_runtime550 = __toESM(require_jsx_runtime(), 1);
   function deprecateComponent(name2, Wrapped, staticsToHoist = []) {
     const Component3 = (0, import_element342.forwardRef)((props, ref) => {
-      (0, import_deprecated13.default)("wp.editor." + name2, {
+      (0, import_deprecated16.default)("wp.editor." + name2, {
         since: "5.3",
         alternative: "wp.blockEditor." + name2,
         version: "6.2"
@@ -106663,7 +106687,7 @@ ${content}
   }
   function deprecateFunction(name2, func) {
     return (...args) => {
-      (0, import_deprecated13.default)("wp.editor." + name2, {
+      (0, import_deprecated16.default)("wp.editor." + name2, {
         since: "5.3",
         alternative: "wp.blockEditor." + name2,
         version: "6.2"
@@ -106860,7 +106884,7 @@ ${content}
   // packages/editor/build-module/hooks/media-upload.mjs
   var import_element343 = __toESM(require_element(), 1);
   var import_hooks54 = __toESM(require_hooks(), 1);
-  var import_deprecated14 = __toESM(require_deprecated(), 1);
+  var import_deprecated17 = __toESM(require_deprecated(), 1);
   var import_media_utils8 = __toESM(require_media_utils(), 1);
   var import_jsx_runtime551 = __toESM(require_jsx_runtime(), 1);
   var { MediaUploadModal: MediaUploadModalComponent } = unlock(
@@ -106919,7 +106943,7 @@ ${content}
       "editor.MediaUpload",
       "core/editor/components/media-upload",
       () => {
-        (0, import_deprecated14.default)("Extending MediaUpload as a class component", {
+        (0, import_deprecated17.default)("Extending MediaUpload as a class component", {
           since: "7.0",
           version: "7.2",
           hint: "MediaUpload will become a function component in WordPress 7.2 Please update any custom implementations to use function components instead."
