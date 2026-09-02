@@ -3757,6 +3757,27 @@ var wp;
       meta: action.meta
     };
   });
+  function removeQueryItems(queryItems, removedItems) {
+    const itemIds = queryItems.itemIds.filter(
+      (itemId) => !removedItems[itemId]
+    );
+    const removedCount = queryItems.itemIds.length - itemIds.length;
+    if (removedCount === 0) {
+      return queryItems;
+    }
+    const nextQueryItems = { ...queryItems, itemIds };
+    if (Number.isFinite(queryItems.meta?.totalItems)) {
+      nextQueryItems.meta = {
+        ...queryItems.meta,
+        totalItems: Math.max(
+          0,
+          queryItems.meta.totalItems - removedCount
+        ),
+        totalPages: null
+      };
+    }
+    return nextQueryItems;
+  }
   var queries = (state = {}, action) => {
     switch (action.type) {
       case "RECEIVE_ITEMS":
@@ -3774,12 +3795,10 @@ var wp;
                 Object.entries(contextQueries).map(
                   ([query, queryItems]) => [
                     query,
-                    {
-                      ...queryItems,
-                      itemIds: queryItems.itemIds.filter(
-                        (queryId) => !removedItems[queryId]
-                      )
-                    }
+                    removeQueryItems(
+                      queryItems,
+                      removedItems
+                    )
                   ]
                 )
               )

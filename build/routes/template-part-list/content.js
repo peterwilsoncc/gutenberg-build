@@ -122,7 +122,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot]
         );
-        useEffect48(
+        useEffect49(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -148,7 +148,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React147 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState53 = React147.useState, useEffect48 = React147.useEffect, useLayoutEffect6 = React147.useLayoutEffect, useDebugValue2 = React147.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React147 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState53 = React147.useState, useEffect49 = React147.useEffect, useLayoutEffect6 = React147.useLayoutEffect, useDebugValue2 = React147.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React147.useSyncExternalStore ? React147.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -176,7 +176,7 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React147 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef90 = React147.useRef, useEffect48 = React147.useEffect, useMemo69 = React147.useMemo, useDebugValue2 = React147.useDebugValue;
+      var React147 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef90 = React147.useRef, useEffect49 = React147.useEffect, useMemo69 = React147.useMemo, useDebugValue2 = React147.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef90(null);
         if (null === instRef.current) {
@@ -219,7 +219,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector2, isEqual]
         );
         var value = useSyncExternalStore4(subscribe2, instRef[0], instRef[1]);
-        useEffect48(
+        useEffect49(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -1176,8 +1176,8 @@ function clsx() {
 var clsx_default = clsx;
 
 // packages/dataviews/build-module/dataviews/index.mjs
-var import_element138 = __toESM(require_element(), 1);
-var import_compose23 = __toESM(require_compose(), 1);
+var import_element139 = __toESM(require_element(), 1);
+var import_compose24 = __toESM(require_compose(), 1);
 
 // packages/ui/build-module/badge/badge.mjs
 var import_element16 = __toESM(require_element(), 1);
@@ -44162,6 +44162,30 @@ function useInfiniteScroll({
   };
 }
 
+// packages/dataviews/build-module/hooks/use-page-clamp.mjs
+var import_element138 = __toESM(require_element(), 1);
+var import_compose23 = __toESM(require_compose(), 1);
+function usePageClamp({
+  view,
+  onChangeView,
+  isLoading,
+  totalPages
+}) {
+  const lastPage = typeof totalPages === "number" && Number.isFinite(totalPages) ? Math.max(totalPages, 1) : null;
+  const page = view.page;
+  const goToLastPage = (0, import_compose23.useEvent)(() => {
+    if (lastPage !== null) {
+      onChangeView({ ...view, page: lastPage });
+    }
+  });
+  (0, import_element138.useEffect)(() => {
+    if (isLoading || lastPage === null || !page || page <= lastPage) {
+      return;
+    }
+    goToLastPage();
+  }, [isLoading, lastPage, page, goToLastPage]);
+}
+
 // packages/dataviews/build-module/dataviews/index.mjs
 var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
 var defaultGetItemId = (item) => item.id;
@@ -44176,7 +44200,7 @@ function DefaultUI({
   search = true,
   searchLabel = void 0
 }) {
-  const { view } = (0, import_element138.useContext)(dataviews_context_default);
+  const { view } = (0, import_element139.useContext)(dataviews_context_default);
   const isInfiniteScroll = view.infiniteScrollEnabled;
   return /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(import_jsx_runtime195.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(
@@ -44239,7 +44263,7 @@ function DataViews({
   empty,
   onReset
 }) {
-  const [selectionState, setSelectionState] = (0, import_element138.useState)([]);
+  const [selectionState, setSelectionState] = (0, import_element139.useState)([]);
   const isUncontrolled = selectionProperty === void 0 || onChangeSelection === void 0;
   const selection = isUncontrolled ? selectionState : selectionProperty;
   const {
@@ -44255,9 +44279,9 @@ function DataViews({
     selection,
     paginationInfo
   });
-  const containerRef = (0, import_element138.useRef)(null);
-  const [containerWidth, setContainerWidth] = (0, import_element138.useState)(0);
-  const resizeObserverRef = (0, import_compose23.useResizeObserver)(
+  const containerRef = (0, import_element139.useRef)(null);
+  const [containerWidth, setContainerWidth] = (0, import_element139.useState)(0);
+  const resizeObserverRef = (0, import_compose24.useResizeObserver)(
     (resizeObserverEntries) => {
       setContainerWidth(
         resizeObserverEntries[0].borderBoxSize[0].inlineSize
@@ -44265,7 +44289,7 @@ function DataViews({
     },
     { box: "border-box" }
   );
-  const [openedFilter, setOpenedFilter] = (0, import_element138.useState)(null);
+  const [openedFilter, setOpenedFilter] = (0, import_element139.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === "function" ? value(selection) : value;
     if (isUncontrolled) {
@@ -44275,8 +44299,8 @@ function DataViews({
       onChangeSelection(newValue);
     }
   }
-  const _fields = (0, import_element138.useMemo)(() => normalizeFields(fields), [fields]);
-  const _selection = (0, import_element138.useMemo)(() => {
+  const _fields = (0, import_element139.useMemo)(() => normalizeFields(fields), [fields]);
+  const _selection = (0, import_element139.useMemo)(() => {
     if (view.infiniteScrollEnabled) {
       return selection;
     }
@@ -44285,13 +44309,13 @@ function DataViews({
     );
   }, [selection, data, getItemId2, view.infiniteScrollEnabled]);
   const filters = use_filters_default(_fields, view);
-  const hasPrimaryOrLockedFilters = (0, import_element138.useMemo)(
+  const hasPrimaryOrLockedFilters = (0, import_element139.useMemo)(
     () => (filters || []).some(
       (filter) => filter.isPrimary || filter.isLocked
     ),
     [filters]
   );
-  const [isShowingFilter, setIsShowingFilter] = (0, import_element138.useState)(
+  const [isShowingFilter, setIsShowingFilter] = (0, import_element139.useState)(
     hasPrimaryOrLockedFilters
   );
   const { intersectionObserver } = useInfiniteScroll({
@@ -44302,12 +44326,18 @@ function DataViews({
     containerRef,
     setVisibleEntries
   });
-  (0, import_element138.useEffect)(() => {
+  usePageClamp({
+    view,
+    onChangeView,
+    isLoading,
+    totalPages: paginationInfo.totalPages
+  });
+  (0, import_element139.useEffect)(() => {
     if (hasPrimaryOrLockedFilters && !isShowingFilter) {
       setIsShowingFilter(true);
     }
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-  const defaultLayouts = (0, import_element138.useMemo)(
+  const defaultLayouts = (0, import_element139.useMemo)(
     () => Object.fromEntries(
       Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
         return dataViewsLayouts.some(
@@ -44477,9 +44507,9 @@ function filterSortAndPaginate(data, view, fields) {
 }
 
 // packages/admin-ui/build-module/navigable-region/index.mjs
-var import_element139 = __toESM(require_element(), 1);
+var import_element140 = __toESM(require_element(), 1);
 var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
-var NavigableRegion = (0, import_element139.forwardRef)(
+var NavigableRegion = (0, import_element140.forwardRef)(
   ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
       Tag,
@@ -44976,15 +45006,15 @@ var page_default = Page;
 var import_core_data4 = __toESM(require_core_data());
 var import_components52 = __toESM(require_components());
 var import_data11 = __toESM(require_data());
-var import_element141 = __toESM(require_element());
+var import_element142 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
 
 // packages/fields/build-module/components/create-template-part-modal/index.mjs
 var import_components51 = __toESM(require_components(), 1);
-var import_compose24 = __toESM(require_compose(), 1);
+var import_compose25 = __toESM(require_compose(), 1);
 var import_core_data3 = __toESM(require_core_data(), 1);
 var import_data10 = __toESM(require_data(), 1);
-var import_element140 = __toESM(require_element(), 1);
+var import_element141 = __toESM(require_element(), 1);
 var import_i18n57 = __toESM(require_i18n(), 1);
 var import_notices = __toESM(require_notices(), 1);
 var import_blocks = __toESM(require_blocks(), 1);
@@ -45073,10 +45103,10 @@ function CreateTemplatePartModalContents({
   const { createErrorNotice } = (0, import_data10.useDispatch)(import_notices.store);
   const { saveEntityRecord } = (0, import_data10.useDispatch)(import_core_data3.store);
   const existingTemplateParts = useExistingTemplateParts();
-  const [title, setTitle] = (0, import_element140.useState)(defaultTitle);
-  const [area, setArea] = (0, import_element140.useState)(defaultArea);
-  const [isSubmitting, setIsSubmitting] = (0, import_element140.useState)(false);
-  const instanceId = (0, import_compose24.useInstanceId)(CreateTemplatePartModal);
+  const [title, setTitle] = (0, import_element141.useState)(defaultTitle);
+  const [area, setArea] = (0, import_element141.useState)(defaultArea);
+  const [isSubmitting, setIsSubmitting] = (0, import_element141.useState)(false);
+  const instanceId = (0, import_compose25.useInstanceId)(CreateTemplatePartModal);
   const defaultTemplatePartAreas = (0, import_data10.useSelect)(
     (select2) => select2(import_core_data3.store).getCurrentTheme()?.default_template_part_areas,
     []
@@ -45360,13 +45390,13 @@ function TemplatePartList() {
     }),
     []
   );
-  const [showTemplatePartModal, setShowTemplatePartModal] = (0, import_element141.useState)(false);
+  const [showTemplatePartModal, setShowTemplatePartModal] = (0, import_element142.useState)(false);
   const defaultView = DEFAULT_VIEW;
-  const activeViewOverrides = (0, import_element141.useMemo)(
+  const activeViewOverrides = (0, import_element142.useMemo)(
     () => getActiveViewOverridesForTab(area),
     [area]
   );
-  const handleQueryParamsChange = (0, import_element141.useCallback)(
+  const handleQueryParamsChange = (0, import_element142.useCallback)(
     (params) => {
       navigate({
         search: {
@@ -45396,7 +45426,7 @@ function TemplatePartList() {
       invalidate();
     }
   };
-  const postTypeQuery = (0, import_element141.useMemo)(() => viewToQuery(view), [view]);
+  const postTypeQuery = (0, import_element142.useMemo)(() => viewToQuery(view), [view]);
   const { records, isResolving } = useEntityRecordsWithPermissions(
     "postType",
     "wp_template_part",
@@ -45405,7 +45435,7 @@ function TemplatePartList() {
   const allFields = usePostFields({
     postType: "wp_template_part"
   });
-  const fields = (0, import_element141.useMemo)(() => {
+  const fields = (0, import_element142.useMemo)(() => {
     return [previewField].concat(
       allFields.filter((field) => {
         if (field.id === "area" && area !== "all") {
@@ -45423,10 +45453,10 @@ function TemplatePartList() {
       })
     );
   }, [allFields, area]);
-  const { data: posts, paginationInfo } = (0, import_element141.useMemo)(() => {
+  const { data: posts, paginationInfo } = (0, import_element142.useMemo)(() => {
     return filterSortAndPaginate(records, view, fields);
   }, [records, view, fields]);
-  const cleanupDeletedPostIdsFromUrl = (0, import_element141.useCallback)(
+  const cleanupDeletedPostIdsFromUrl = (0, import_element142.useCallback)(
     (deletedItems) => {
       const deletedIds = deletedItems.map(
         (item) => item.id.toString()
@@ -45457,7 +45487,7 @@ function TemplatePartList() {
       }
     }
   });
-  const actions = (0, import_element141.useMemo)(() => {
+  const actions = (0, import_element142.useMemo)(() => {
     return [
       ...postTypeActions?.flatMap(
         (action) => {
@@ -45469,7 +45499,7 @@ function TemplatePartList() {
       )
     ];
   }, [postTypeActions]);
-  const handleTabChange = (0, import_element141.useCallback)(
+  const handleTabChange = (0, import_element142.useCallback)(
     (areaSlug) => {
       navigate({
         to: `/template-parts/list/${areaSlug}`

@@ -94,7 +94,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot]
         );
-        useEffect83(
+        useEffect84(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React236 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState95 = React236.useState, useEffect83 = React236.useEffect, useLayoutEffect13 = React236.useLayoutEffect, useDebugValue2 = React236.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React236 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState95 = React236.useState, useEffect84 = React236.useEffect, useLayoutEffect13 = React236.useLayoutEffect, useDebugValue2 = React236.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React236.useSyncExternalStore ? React236.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -148,7 +148,7 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React236 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef131 = React236.useRef, useEffect83 = React236.useEffect, useMemo115 = React236.useMemo, useDebugValue2 = React236.useDebugValue;
+      var React236 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef131 = React236.useRef, useEffect84 = React236.useEffect, useMemo115 = React236.useMemo, useDebugValue2 = React236.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef131(null);
         if (null === instRef.current) {
@@ -191,7 +191,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector2, isEqual]
         );
         var value = useSyncExternalStore4(subscribe2, instRef[0], instRef[1]);
-        useEffect83(
+        useEffect84(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -44504,7 +44504,7 @@ var page_default = Page;
 // routes/dashboard/stage.tsx
 var import_core_data = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
-var import_element268 = __toESM(require_element());
+var import_element269 = __toESM(require_element());
 var import_i18n87 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_viewport2 = __toESM(require_viewport());
@@ -46469,7 +46469,7 @@ var WidgetChrome = (0, import_element165.forwardRef)(
 );
 
 // packages/widget-dashboard/build-module/components/widget-inserter/widget-inserter.mjs
-var import_element246 = __toESM(require_element(), 1);
+var import_element247 = __toESM(require_element(), 1);
 var import_i18n79 = __toESM(require_i18n(), 1);
 
 // node_modules/uuid/dist/stringify.js
@@ -62473,9 +62473,33 @@ function useInfiniteScroll({
   };
 }
 
-// packages/dataviews/build-module/dataviews-picker/index.mjs
+// packages/dataviews/build-module/hooks/use-page-clamp.mjs
 var import_element232 = __toESM(require_element(), 1);
 var import_compose37 = __toESM(require_compose(), 1);
+function usePageClamp({
+  view,
+  onChangeView,
+  isLoading,
+  totalPages
+}) {
+  const lastPage = typeof totalPages === "number" && Number.isFinite(totalPages) ? Math.max(totalPages, 1) : null;
+  const page = view.page;
+  const goToLastPage = (0, import_compose37.useEvent)(() => {
+    if (lastPage !== null) {
+      onChangeView({ ...view, page: lastPage });
+    }
+  });
+  (0, import_element232.useEffect)(() => {
+    if (isLoading || lastPage === null || !page || page <= lastPage) {
+      return;
+    }
+    goToLastPage();
+  }, [isLoading, lastPage, page, goToLastPage]);
+}
+
+// packages/dataviews/build-module/dataviews-picker/index.mjs
+var import_element233 = __toESM(require_element(), 1);
+var import_compose38 = __toESM(require_compose(), 1);
 var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
 var isItemClickable = () => false;
 var dataViewsPickerLayouts = VIEW_LAYOUTS.filter(
@@ -62491,7 +62515,7 @@ function DefaultUI({
   search = true,
   searchLabel = void 0
 }) {
-  const { view } = (0, import_element232.useContext)(dataviews_context_default);
+  const { view } = (0, import_element233.useContext)(dataviews_context_default);
   const isInfiniteScroll = view.infiniteScrollEnabled;
   return /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(import_jsx_runtime317.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime317.jsxs)(
@@ -62554,9 +62578,9 @@ function DataViewsPicker({
     selection,
     paginationInfo
   });
-  const containerRef = (0, import_element232.useRef)(null);
-  const [containerWidth, setContainerWidth] = (0, import_element232.useState)(0);
-  const resizeObserverRef = (0, import_compose37.useResizeObserver)(
+  const containerRef = (0, import_element233.useRef)(null);
+  const [containerWidth, setContainerWidth] = (0, import_element233.useState)(0);
+  const resizeObserverRef = (0, import_compose38.useResizeObserver)(
     (resizeObserverEntries) => {
       setContainerWidth(
         resizeObserverEntries[0].borderBoxSize[0].inlineSize
@@ -62564,22 +62588,22 @@ function DataViewsPicker({
     },
     { box: "border-box" }
   );
-  const [openedFilter, setOpenedFilter] = (0, import_element232.useState)(null);
+  const [openedFilter, setOpenedFilter] = (0, import_element233.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === "function" ? value(selection) : value;
     if (onChangeSelection) {
       onChangeSelection(newValue);
     }
   }
-  const _fields = (0, import_element232.useMemo)(() => normalizeFields(fields2), [fields2]);
+  const _fields = (0, import_element233.useMemo)(() => normalizeFields(fields2), [fields2]);
   const filters = use_filters_default(_fields, view);
-  const hasPrimaryOrLockedFilters = (0, import_element232.useMemo)(
+  const hasPrimaryOrLockedFilters = (0, import_element233.useMemo)(
     () => (filters || []).some(
       (filter) => filter.isPrimary || filter.isLocked
     ),
     [filters]
   );
-  const [isShowingFilter, setIsShowingFilter] = (0, import_element232.useState)(
+  const [isShowingFilter, setIsShowingFilter] = (0, import_element233.useState)(
     hasPrimaryOrLockedFilters
   );
   const { intersectionObserver } = useInfiniteScroll({
@@ -62590,12 +62614,18 @@ function DataViewsPicker({
     containerRef,
     setVisibleEntries
   });
-  (0, import_element232.useEffect)(() => {
+  usePageClamp({
+    view,
+    onChangeView,
+    isLoading,
+    totalPages: paginationInfo.totalPages
+  });
+  (0, import_element233.useEffect)(() => {
     if (hasPrimaryOrLockedFilters && !isShowingFilter) {
       setIsShowingFilter(true);
     }
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-  const defaultLayouts = (0, import_element232.useMemo)(
+  const defaultLayouts = (0, import_element233.useMemo)(
     () => Object.fromEntries(
       Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
         return dataViewsPickerLayouts.some(
@@ -62660,12 +62690,12 @@ DataViewsPickerSubComponents.ViewConfig = DataviewsViewConfigDropdown;
 var dataviews_picker_default = DataViewsPickerSubComponents;
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_element243 = __toESM(require_element(), 1);
+var import_element244 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-context/index.mjs
-var import_element233 = __toESM(require_element(), 1);
+var import_element234 = __toESM(require_element(), 1);
 var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
-var DataFormContext = (0, import_element233.createContext)({
+var DataFormContext = (0, import_element234.createContext)({
   fields: []
 });
 DataFormContext.displayName = "DataFormContext";
@@ -62678,10 +62708,10 @@ function DataFormProvider({
 var dataform_context_default = DataFormContext;
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_element242 = __toESM(require_element(), 1);
+var import_element243 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-var import_element234 = __toESM(require_element(), 1);
+var import_element235 = __toESM(require_element(), 1);
 var import_components53 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
@@ -62823,9 +62853,9 @@ function FormRegularField({
   markWhenOptional,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element234.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element235.useContext)(dataform_context_default);
   const layout = field.layout;
-  const form = (0, import_element234.useMemo)(
+  const form = (0, import_element235.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : []
@@ -62918,13 +62948,13 @@ function FormRegularField({
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
 var import_deepmerge2 = __toESM(require_cjs(), 1);
 var import_components56 = __toESM(require_components(), 1);
-var import_element238 = __toESM(require_element(), 1);
-var import_compose39 = __toESM(require_compose(), 1);
+var import_element239 = __toESM(require_element(), 1);
+var import_compose40 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 var import_components55 = __toESM(require_components(), 1);
 var import_i18n73 = __toESM(require_i18n(), 1);
-var import_compose38 = __toESM(require_compose(), 1);
+var import_compose39 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
 function getLabelClassName(labelPosition, showError) {
@@ -63016,7 +63046,7 @@ function SummaryButton({
       "dataforms-layouts-panel__field-trigger--edit-always": editVisibility === "always"
     }
   );
-  const controlId = (0, import_compose38.useInstanceId)(
+  const controlId = (0, import_compose39.useInstanceId)(
     SummaryButton,
     "dataforms-layouts-panel__field-control"
   );
@@ -63107,7 +63137,7 @@ function SummaryButton({
 // packages/dataviews/build-module/hooks/use-form-validity.mjs
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es64 = __toESM(require_es6(), 1);
-var import_element235 = __toESM(require_element(), 1);
+var import_element236 = __toESM(require_element(), 1);
 var import_i18n74 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
@@ -63530,11 +63560,11 @@ function getFormFieldValue(formField, item) {
   };
 }
 function useFormValidity(item, fields2, form) {
-  const [formValidity, setFormValidity] = (0, import_element235.useState)();
-  const customCounterRef = (0, import_element235.useRef)({});
-  const elementsCounterRef = (0, import_element235.useRef)({});
-  const previousValuesRef = (0, import_element235.useRef)({});
-  const validate = (0, import_element235.useCallback)(() => {
+  const [formValidity, setFormValidity] = (0, import_element236.useState)();
+  const customCounterRef = (0, import_element236.useRef)({});
+  const elementsCounterRef = (0, import_element236.useRef)({});
+  const previousValuesRef = (0, import_element236.useRef)({});
+  const validate = (0, import_element236.useCallback)(() => {
     const promiseHandler = {
       customCounterRef,
       elementsCounterRef,
@@ -63592,7 +63622,7 @@ function useFormValidity(item, fields2, form) {
       return validity;
     });
   }, [item, fields2, form]);
-  (0, import_element235.useEffect)(() => {
+  (0, import_element236.useEffect)(() => {
     validate();
   }, [validate]);
   return {
@@ -63603,9 +63633,9 @@ function useFormValidity(item, fields2, form) {
 var use_form_validity_default = useFormValidity;
 
 // packages/dataviews/build-module/hooks/use-reveal-validity.mjs
-var import_element236 = __toESM(require_element(), 1);
+var import_element237 = __toESM(require_element(), 1);
 function useRevealValidity(ref, shouldReveal) {
-  const revealValidity = (0, import_element236.useCallback)(() => {
+  const revealValidity = (0, import_element237.useCallback)(() => {
     const inputs = ref.current?.querySelectorAll("input, textarea, select");
     let revealedCount = 0;
     inputs?.forEach((input) => {
@@ -63618,7 +63648,7 @@ function useRevealValidity(ref, shouldReveal) {
     });
     return revealedCount;
   }, [ref]);
-  (0, import_element236.useEffect)(() => {
+  (0, import_element237.useEffect)(() => {
     if (shouldReveal) {
       revealValidity();
     }
@@ -63627,7 +63657,7 @@ function useRevealValidity(ref, shouldReveal) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
-var import_element237 = __toESM(require_element(), 1);
+var import_element238 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
 function extractSummaryIds(summary) {
@@ -63664,7 +63694,7 @@ var getFieldDefinition = (field, fields2) => {
   return fields2.find((_field) => _field.id === field.id);
 };
 function useFieldFromFormField(field) {
-  const { fields: fields2 } = (0, import_element237.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element238.useContext)(dataform_context_default);
   const layout = field.layout;
   const summaryFields = getSummaryFields(layout.summary, fields2);
   const fieldDefinition = getFieldDefinition(field, fields2);
@@ -63696,14 +63726,14 @@ function ModalContent({
 }) {
   const { openAs } = field.layout;
   const { applyLabel, cancelLabel } = openAs;
-  const { fields: fields2 } = (0, import_element238.useContext)(dataform_context_default);
-  const [changes, setChanges] = (0, import_element238.useState)({});
-  const modalData = (0, import_element238.useMemo)(() => {
+  const { fields: fields2 } = (0, import_element239.useContext)(dataform_context_default);
+  const [changes, setChanges] = (0, import_element239.useState)({});
+  const modalData = (0, import_element239.useMemo)(() => {
     return (0, import_deepmerge2.default)(data, changes, {
       arrayMerge: (target, source) => source
     });
   }, [data, changes]);
-  const form = (0, import_element238.useMemo)(
+  const form = (0, import_element239.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -63738,9 +63768,9 @@ function ModalContent({
       })
     );
   };
-  const focusOnMountRef = (0, import_compose39.useFocusOnMount)("firstInputElement");
-  const contentRef = (0, import_element238.useRef)(null);
-  const mergedRef = (0, import_compose39.useMergeRefs)([focusOnMountRef, contentRef]);
+  const focusOnMountRef = (0, import_compose40.useFocusOnMount)("firstInputElement");
+  const contentRef = (0, import_element239.useRef)(null);
+  const mergedRef = (0, import_compose40.useMergeRefs)([focusOnMountRef, contentRef]);
   useRevealValidity(contentRef, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(
     import_components56.Modal,
@@ -63811,8 +63841,8 @@ function PanelModal({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element238.useState)(false);
-  const [isOpen, setIsOpen] = (0, import_element238.useState)(false);
+  const [touched, setTouched] = (0, import_element239.useState)(false);
+  const [isOpen, setIsOpen] = (0, import_element239.useState)(false);
   const { fieldDefinition, fieldLabel, summaryFields } = use_field_from_form_field_default(field);
   if (!fieldDefinition) {
     return null;
@@ -63854,8 +63884,8 @@ var modal_default = PanelModal;
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
 var import_components57 = __toESM(require_components(), 1);
 var import_i18n75 = __toESM(require_i18n(), 1);
-var import_element239 = __toESM(require_element(), 1);
-var import_compose40 = __toESM(require_compose(), 1);
+var import_element240 = __toESM(require_element(), 1);
+var import_compose41 = __toESM(require_compose(), 1);
 var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
   title,
@@ -63887,7 +63917,7 @@ function DropdownContentWithValidation({
   touched,
   children
 }) {
-  const ref = (0, import_element239.useRef)(null);
+  const ref = (0, import_element240.useRef)(null);
   useRevealValidity(ref, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("div", { ref, children });
 }
@@ -63897,11 +63927,11 @@ function PanelDropdown({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element239.useState)(false);
-  const [popoverAnchor, setPopoverAnchor] = (0, import_element239.useState)(
+  const [touched, setTouched] = (0, import_element240.useState)(false);
+  const [popoverAnchor, setPopoverAnchor] = (0, import_element240.useState)(
     null
   );
-  const popoverProps = (0, import_element239.useMemo)(
+  const popoverProps = (0, import_element240.useMemo)(
     () => ({
       // Anchor the popover to the middle of the entire row so that it doesn't
       // move around when the label changes.
@@ -63912,10 +63942,10 @@ function PanelDropdown({
     }),
     [popoverAnchor]
   );
-  const [dialogRef, dialogProps] = (0, import_compose40.__experimentalUseDialog)({
+  const [dialogRef, dialogProps] = (0, import_compose41.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
-  const form = (0, import_element239.useMemo)(
+  const form = (0, import_element240.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -63925,7 +63955,7 @@ function PanelDropdown({
     }),
     [field]
   );
-  const formValidity = (0, import_element239.useMemo)(() => {
+  const formValidity = (0, import_element240.useMemo)(() => {
     if (validity === void 0) {
       return void 0;
     }
@@ -64037,8 +64067,8 @@ function FormPanelField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_element240 = __toESM(require_element(), 1);
-var import_compose41 = __toESM(require_compose(), 1);
+var import_element241 = __toESM(require_element(), 1);
+var import_compose42 = __toESM(require_compose(), 1);
 import { speak as speak6 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
@@ -64205,11 +64235,11 @@ function FormCardField({
   markWhenOptional,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element240.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element241.useContext)(dataform_context_default);
   const layout = field.layout;
-  const contentRef = (0, import_element240.useRef)(null);
-  const hasFocusedContentRef = (0, import_element240.useRef)(false);
-  const form = (0, import_element240.useMemo)(
+  const contentRef = (0, import_element241.useRef)(null);
+  const hasFocusedContentRef = (0, import_element241.useRef)(false);
+  const form = (0, import_element241.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
@@ -64217,12 +64247,12 @@ function FormCardField({
     [field]
   );
   const { isOpened, isCollapsible } = layout;
-  const [isOpen, setIsOpen] = (0, import_element240.useState)(isOpened);
-  const [touched, setTouched] = (0, import_element240.useState)(false);
-  (0, import_element240.useEffect)(() => {
+  const [isOpen, setIsOpen] = (0, import_element241.useState)(isOpened);
+  const [touched, setTouched] = (0, import_element241.useState)(false);
+  (0, import_element241.useEffect)(() => {
     setIsOpen(isOpened);
   }, [isOpened]);
-  const handleOpenChange = (0, import_element240.useCallback)((open) => {
+  const handleOpenChange = (0, import_element241.useCallback)((open) => {
     if (!open) {
       setTouched(true);
     }
@@ -64232,10 +64262,10 @@ function FormCardField({
     contentRef,
     (isCollapsible ? isOpen : true) && touched
   );
-  const handleContentFocus = (0, import_element240.useCallback)(() => {
+  const handleContentFocus = (0, import_element241.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element240.useCallback)(() => {
+  const handleFocusOutside = (0, import_element241.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -64249,7 +64279,7 @@ function FormCardField({
       speak6(message2, "polite");
     }
   }, [isCollapsible, isOpen, revealValidity, validity]);
-  const focusOutsideProps = (0, import_compose41.__experimentalUseFocusOutside)(handleFocusOutside);
+  const focusOutsideProps = (0, import_compose42.__experimentalUseFocusOutside)(handleFocusOutside);
   let label = field.label;
   let withHeader;
   if (field.children) {
@@ -64403,9 +64433,9 @@ function FormRowField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
-var import_element241 = __toESM(require_element(), 1);
+var import_element242 = __toESM(require_element(), 1);
 var import_i18n77 = __toESM(require_i18n(), 1);
-var import_compose42 = __toESM(require_compose(), 1);
+var import_compose43 = __toESM(require_compose(), 1);
 import { speak as speak7 } from "@wordpress/a11y";
 var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
 function FormDetailsField({
@@ -64414,20 +64444,20 @@ function FormDetailsField({
   onChange,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element241.useContext)(dataform_context_default);
-  const detailsRef = (0, import_element241.useRef)(null);
-  const contentRef = (0, import_element241.useRef)(null);
-  const hasFocusedContentRef = (0, import_element241.useRef)(false);
-  const [touched, setTouched] = (0, import_element241.useState)(false);
-  const [isOpen, setIsOpen] = (0, import_element241.useState)(false);
-  const form = (0, import_element241.useMemo)(
+  const { fields: fields2 } = (0, import_element242.useContext)(dataform_context_default);
+  const detailsRef = (0, import_element242.useRef)(null);
+  const contentRef = (0, import_element242.useRef)(null);
+  const hasFocusedContentRef = (0, import_element242.useRef)(false);
+  const [touched, setTouched] = (0, import_element242.useState)(false);
+  const [isOpen, setIsOpen] = (0, import_element242.useState)(false);
+  const form = (0, import_element242.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
     }),
     [field]
   );
-  (0, import_element241.useEffect)(() => {
+  (0, import_element242.useEffect)(() => {
     const details = detailsRef.current;
     if (!details) {
       return;
@@ -64445,10 +64475,10 @@ function FormDetailsField({
     };
   }, []);
   const revealValidity = useRevealValidity(contentRef, isOpen && touched);
-  const handleContentFocus = (0, import_element241.useCallback)(() => {
+  const handleContentFocus = (0, import_element242.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element241.useCallback)(() => {
+  const handleFocusOutside = (0, import_element242.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -64462,7 +64492,7 @@ function FormDetailsField({
       speak7(message2, "polite");
     }
   }, [revealValidity, validity]);
-  const focusOutsideProps = (0, import_compose42.__experimentalUseFocusOutside)(handleFocusOutside);
+  const focusOutsideProps = (0, import_compose43.__experimentalUseFocusOutside)(handleFocusOutside);
   if (!field.children) {
     return null;
   }
@@ -64602,8 +64632,8 @@ function DataFormLayout({
   children,
   as
 }) {
-  const { fields: fieldDefinitions } = (0, import_element242.useContext)(dataform_context_default);
-  const markWhenOptional = (0, import_element242.useMemo)(() => {
+  const { fields: fieldDefinitions } = (0, import_element243.useContext)(dataform_context_default);
+  const markWhenOptional = (0, import_element243.useMemo)(() => {
     const requiredCount = fieldDefinitions.filter(
       (f2) => !!f2.isValid?.required
     ).length;
@@ -64656,8 +64686,8 @@ function DataForm({
   onChange,
   validity
 }) {
-  const normalizedForm = (0, import_element243.useMemo)(() => normalize_form_default(form), [form]);
-  const normalizedFields = (0, import_element243.useMemo)(
+  const normalizedForm = (0, import_element244.useMemo)(() => normalize_form_default(form), [form]);
+  const normalizedFields = (0, import_element244.useMemo)(
     () => normalizeFields(fields2),
     [fields2]
   );
@@ -64772,11 +64802,11 @@ function filterSortAndPaginate(data, view, fields2) {
 }
 
 // packages/widget-dashboard/build-module/components/widget-picker/widget-picker.mjs
-var import_element245 = __toESM(require_element(), 1);
+var import_element246 = __toESM(require_element(), 1);
 var import_i18n78 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-preview-chrome/widget-preview-chrome.mjs
-var import_element244 = __toESM(require_element(), 1);
+var import_element245 = __toESM(require_element(), 1);
 var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE96 = "data-wp-hash";
 function getRuntime96() {
@@ -64867,8 +64897,8 @@ function WidgetPreviewChrome({
   widgetType,
   index: index2 = 0
 }) {
-  const titleId = (0, import_element244.useId)();
-  const contextValue = (0, import_element244.useMemo)(
+  const titleId = (0, import_element245.useId)();
+  const contextValue = (0, import_element245.useMemo)(
     () => ({
       uuid: widget.uuid,
       name: widget.type,
@@ -64907,7 +64937,7 @@ var DEFAULT_VIEW = {
 };
 var getItemId = (item) => item.name;
 function WidgetPreview({ item }) {
-  const exampleWidget = (0, import_element245.useMemo)(
+  const exampleWidget = (0, import_element246.useMemo)(
     () => createDashboardWidget(item, item.example?.attributes),
     [item]
   );
@@ -64940,9 +64970,9 @@ function WidgetPicker({
   itemListLabel = (0, import_i18n78.__)("Widget list")
 }) {
   const { widgetTypes: registeredTypes, canPerform } = useDashboardInternalContext();
-  const [selection, setSelection] = (0, import_element245.useState)([]);
-  const [view, setView] = (0, import_element245.useState)(DEFAULT_VIEW);
-  const insertableTypes = (0, import_element245.useMemo)(
+  const [selection, setSelection] = (0, import_element246.useState)([]);
+  const [view, setView] = (0, import_element246.useState)(DEFAULT_VIEW);
+  const insertableTypes = (0, import_element246.useMemo)(
     () => registeredTypes.filter(
       (widgetType) => canPerform({ operation: "insert", widgetType })
     ),
@@ -64953,7 +64983,7 @@ function WidgetPicker({
     view,
     fields
   );
-  const actions = (0, import_element245.useMemo)(
+  const actions = (0, import_element246.useMemo)(
     () => [
       {
         id: "select",
@@ -64992,7 +65022,7 @@ var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
 function WidgetInserter() {
   const { layout, onLayoutChange } = useDashboardInternalContext();
   const { inserterOpen, setInserterOpen } = useDashboardUIContext();
-  const insertWidgets = (0, import_element246.useCallback)(
+  const insertWidgets = (0, import_element247.useCallback)(
     (widgetTypes) => {
       if (widgetTypes.length > 0) {
         const newWidgets = widgetTypes.map(
@@ -65031,7 +65061,7 @@ function WidgetInserter() {
 }
 
 // packages/widget-dashboard/build-module/components/widget-settings/widget-settings.mjs
-var import_element247 = __toESM(require_element(), 1);
+var import_element248 = __toESM(require_element(), 1);
 var import_i18n81 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-settings/utils/get-widget-settings.mjs
@@ -65149,10 +65179,10 @@ function WidgetSettings() {
       (type) => type.name === requestedWidget.type
     )
   });
-  const [lastWidgetUuid, setLastWidgetUuid] = (0, import_element247.useState)(
+  const [lastWidgetUuid, setLastWidgetUuid] = (0, import_element248.useState)(
     settingsWidgetUuid
   );
-  (0, import_element247.useEffect)(() => {
+  (0, import_element248.useEffect)(() => {
     if (settingsWidgetUuid) {
       setLastWidgetUuid(settingsWidgetUuid);
     }
@@ -65160,18 +65190,18 @@ function WidgetSettings() {
   const activeUuid = settingsWidgetUuid ?? lastWidgetUuid;
   const widget = activeUuid ? layout.find((instance) => instance.uuid === activeUuid) : void 0;
   const widgetType = widget ? widgetTypes.find((type) => type.name === widget.type) : void 0;
-  const fields2 = (0, import_element247.useMemo)(
+  const fields2 = (0, import_element248.useMemo)(
     () => widgetType?.attributes ?? [],
     [widgetType?.attributes]
   );
-  const form = (0, import_element247.useMemo)(
+  const form = (0, import_element248.useMemo)(
     () => ({
       layout: { type: "regular", labelPosition: "top" },
       fields: fields2.map((field) => field.id)
     }),
     [fields2]
   );
-  const handleChange = (0, import_element247.useCallback)(
+  const handleChange = (0, import_element248.useCallback)(
     (edits) => {
       if (!widget) {
         return;
@@ -65190,15 +65220,15 @@ function WidgetSettings() {
     },
     [layout, onLayoutChange, widget]
   );
-  const close = (0, import_element247.useCallback)(
+  const close = (0, import_element248.useCallback)(
     () => setSettingsWidgetUuid(null),
     [setSettingsWidgetUuid]
   );
-  const handleSave = (0, import_element247.useCallback)(() => {
+  const handleSave = (0, import_element248.useCallback)(() => {
     commit();
     close();
   }, [commit, close]);
-  const handleOpenChange = (0, import_element247.useCallback)(
+  const handleOpenChange = (0, import_element248.useCallback)(
     (nextOpen) => {
       if (!nextOpen) {
         cancelStaging();
@@ -65207,7 +65237,7 @@ function WidgetSettings() {
     },
     [cancelStaging, close]
   );
-  (0, import_element247.useEffect)(() => {
+  (0, import_element248.useEffect)(() => {
     if (requestedWidget && !open) {
       cancelStaging();
       close();
@@ -65273,16 +65303,16 @@ function WidgetSettings() {
 var import_i18n82 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-settings/use-widget-settings-toggle.mjs
-var import_element248 = __toESM(require_element(), 1);
+var import_element249 = __toESM(require_element(), 1);
 function useWidgetSettingsToggle(widget) {
   const { settingsWidgetUuid, setSettingsWidgetUuid } = useDashboardUIContext();
   const { cancel, flushAutoSave } = useDashboardInternalContext();
   const isOpen = settingsWidgetUuid === widget.uuid;
-  const open = (0, import_element248.useCallback)(() => {
+  const open = (0, import_element249.useCallback)(() => {
     flushAutoSave();
     setSettingsWidgetUuid(widget.uuid);
   }, [flushAutoSave, setSettingsWidgetUuid, widget.uuid]);
-  const toggle = (0, import_element248.useCallback)(() => {
+  const toggle = (0, import_element249.useCallback)(() => {
     if (isOpen) {
       cancel();
       setSettingsWidgetUuid(null);
@@ -65320,7 +65350,7 @@ function WidgetSettingsTrigger({
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widgets.mjs
-var import_element264 = __toESM(require_element(), 1);
+var import_element265 = __toESM(require_element(), 1);
 
 // node_modules/@dnd-kit/core/dist/core.esm.js
 var import_react83 = __toESM(require_react());
@@ -65396,7 +65426,7 @@ function getOwnerDocument(target) {
   return document;
 }
 var useIsomorphicLayoutEffect3 = canUseDOM2 ? import_react81.useLayoutEffect : import_react81.useEffect;
-function useEvent4(handler) {
+function useEvent5(handler) {
   const handlerRef = (0, import_react81.useRef)(handler);
   useIsomorphicLayoutEffect3(() => {
     handlerRef.current = handler;
@@ -65446,7 +65476,7 @@ function useLazyMemo(callback, dependencies) {
   );
 }
 function useNodeRef(onChange) {
-  const onChangeHandler = useEvent4(onChange);
+  const onChangeHandler = useEvent5(onChange);
   const node = (0, import_react81.useRef)(null);
   const setNodeRef = (0, import_react81.useCallback)(
     (element) => {
@@ -67339,7 +67369,7 @@ function useMutationObserver(_ref) {
     callback,
     disabled: disabled2
   } = _ref;
-  const handleMutations = useEvent4(callback);
+  const handleMutations = useEvent5(callback);
   const mutationObserver = (0, import_react83.useMemo)(() => {
     if (disabled2 || typeof window === "undefined" || typeof window.MutationObserver === "undefined") {
       return void 0;
@@ -67359,7 +67389,7 @@ function useResizeObserver4(_ref) {
     callback,
     disabled: disabled2
   } = _ref;
-  const handleResize = useEvent4(callback);
+  const handleResize = useEvent5(callback);
   const resizeObserver = (0, import_react83.useMemo)(
     () => {
       if (disabled2 || typeof window === "undefined" || typeof window.ResizeObserver === "undefined") {
@@ -68856,7 +68886,7 @@ function useDropAnimation(_ref3) {
     droppableContainers,
     measuringConfiguration
   } = _ref3;
-  return useEvent4((id, node) => {
+  return useEvent5((id, node) => {
     if (config === null) {
       return;
     }
@@ -69566,19 +69596,19 @@ function isAfter2(a2, b2) {
 }
 
 // packages/grid/build-module/dashboard-grid/index.mjs
-var import_compose45 = __toESM(require_compose(), 1);
-var import_element255 = __toESM(require_element(), 1);
+var import_compose46 = __toESM(require_compose(), 1);
+var import_element256 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-grid/grid-item.mjs
-var import_element250 = __toESM(require_element(), 1);
-var import_compose44 = __toESM(require_compose(), 1);
+var import_element251 = __toESM(require_element(), 1);
+var import_compose45 = __toESM(require_compose(), 1);
 
 // packages/grid/build-module/shared/grid-item-key.mjs
 var GRID_ITEM_DATA_KEY = "data-wp-grid-item-key";
 
 // packages/grid/build-module/shared/resize-handle.mjs
-var import_element249 = __toESM(require_element(), 1);
-var import_compose43 = __toESM(require_compose(), 1);
+var import_element250 = __toESM(require_element(), 1);
+var import_compose44 = __toESM(require_compose(), 1);
 var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE98 = "data-wp-hash";
 function getRuntime98() {
@@ -69681,12 +69711,12 @@ function ResizeHandle({
     id: "draggable",
     data: { itemId }
   });
-  const ownerDocumentRef = (0, import_element249.useRef)(null);
-  const setOwnerDocumentRef = (0, import_element249.useCallback)((node) => {
+  const ownerDocumentRef = (0, import_element250.useRef)(null);
+  const setOwnerDocumentRef = (0, import_element250.useCallback)((node) => {
     ownerDocumentRef.current = node?.ownerDocument ?? null;
   }, []);
-  const mergedRef = (0, import_compose43.useMergeRefs)([setOwnerDocumentRef, setNodeRef]);
-  (0, import_element249.useEffect)(() => {
+  const mergedRef = (0, import_compose44.useMergeRefs)([setOwnerDocumentRef, setNodeRef]);
+  (0, import_element250.useEffect)(() => {
     if (!isDragging) {
       return;
     }
@@ -69725,7 +69755,7 @@ function ResizeHandle({
 }
 function ResizeHandleWrapper(props) {
   const throttleDelay = 16;
-  const throttledResize = (0, import_compose43.useThrottle)((delta) => {
+  const throttledResize = (0, import_compose44.useThrottle)((delta) => {
     if (props.onResize) {
       props.onResize(delta);
     }
@@ -69974,12 +70004,12 @@ function GridItem4({
   maxResizeHeightPx,
   renderResizeHandle
 }) {
-  const [resizeDelta, setResizeDelta] = (0, import_element250.useState)(
+  const [resizeDelta, setResizeDelta] = (0, import_element251.useState)(
     null
   );
-  const [initialContentSize, setInitialContentSize] = (0, import_element250.useState)(null);
-  const itemRef = (0, import_element250.useRef)(null);
-  const contentRef = (0, import_element250.useRef)(null);
+  const [initialContentSize, setInitialContentSize] = (0, import_element251.useState)(null);
+  const itemRef = (0, import_element251.useRef)(null);
+  const contentRef = (0, import_element251.useRef)(null);
   const dragDisabled = disabled2 || !draggable;
   const resizeDisabled = disabled2 || !resizable;
   const {
@@ -69992,8 +70022,8 @@ function GridItem4({
     id: item.key,
     disabled: dragDisabled
   });
-  const mergedRef = (0, import_compose44.useMergeRefs)([itemRef, setNodeRef]);
-  const contentMergedRef = (0, import_compose44.useMergeRefs)([contentRef]);
+  const mergedRef = (0, import_compose45.useMergeRefs)([itemRef, setNodeRef]);
+  const contentMergedRef = (0, import_compose45.useMergeRefs)([contentRef]);
   const style = {
     gridColumnEnd: `span ${item.width === "full" ? maxColumns : Math.min(
       typeof item.width === "number" ? item.width : 1,
@@ -70143,7 +70173,7 @@ function arrayMoveWithPinned(items, from, to, isPinned) {
 }
 
 // packages/grid/build-module/shared/grid-overlay.mjs
-var import_element251 = __toESM(require_element(), 1);
+var import_element252 = __toESM(require_element(), 1);
 var import_jsx_runtime339 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE100 = "data-wp-hash";
 function getRuntime100() {
@@ -70236,8 +70266,8 @@ function GridOverlay({
   isActive
 }) {
   const showRows = typeof rowHeight === "number" && typeof rows === "number" && rows > 0;
-  const [waveKey, setWaveKey] = (0, import_element251.useState)(0);
-  (0, import_element251.useEffect)(() => {
+  const [waveKey, setWaveKey] = (0, import_element252.useState)(0);
+  (0, import_element252.useEffect)(() => {
     if (isActive) {
       setWaveKey((key2) => key2 + 1);
     }
@@ -70285,11 +70315,11 @@ function GridOverlay({
 }
 
 // packages/grid/build-module/shared/use-span-bounds.mjs
-var import_element252 = __toESM(require_element(), 1);
+var import_element253 = __toESM(require_element(), 1);
 var NO_BOUNDS = /* @__PURE__ */ new Map();
 var NO_LIMITS = /* @__PURE__ */ new Map();
 function useSpanBounds(itemLimits, columnWidth, gapPx, rowHeightPx, maxColumns) {
-  const computed = (0, import_element252.useMemo)(() => {
+  const computed = (0, import_element253.useMemo)(() => {
     if (!itemLimits) {
       return NO_BOUNDS;
     }
@@ -70308,17 +70338,17 @@ function useSpanBounds(itemLimits, columnWidth, gapPx, rowHeightPx, maxColumns) 
     }
     return map;
   }, [itemLimits, columnWidth, gapPx, rowHeightPx, maxColumns]);
-  const signature = (0, import_element252.useMemo)(() => {
+  const signature = (0, import_element253.useMemo)(() => {
     let value = "";
     for (const [key2, bounds] of computed) {
       value += `${key2}:${bounds.minWidth}:${bounds.minHeight}:${bounds.maxWidth}:${bounds.maxHeight}|`;
     }
     return value;
   }, [computed]);
-  return (0, import_element252.useMemo)(() => computed, [signature]);
+  return (0, import_element253.useMemo)(() => computed, [signature]);
 }
 function useResizePixelLimits(spanBounds, columnWidth, gapPx, rowHeightPx) {
-  return (0, import_element252.useMemo)(() => {
+  return (0, import_element253.useMemo)(() => {
     if (spanBounds.size === 0) {
       return NO_LIMITS;
     }
@@ -70454,7 +70484,7 @@ function ItemExitOverlay({
 }
 
 // packages/grid/build-module/shared/use-layout-shift-animation.mjs
-var import_element253 = __toESM(require_element(), 1);
+var import_element254 = __toESM(require_element(), 1);
 function queryGridItems(container) {
   return Array.from(
     container.querySelectorAll(
@@ -70513,15 +70543,15 @@ function useLayoutShiftAnimation({
   layoutFingerprint,
   excludeItemKey = null
 }) {
-  const snapshotBeforeChangeRef = (0, import_element253.useRef)(null);
-  const lastRenderedPositionsRef = (0, import_element253.useRef)(null);
-  const positionsBeforeLastChangeRef = (0, import_element253.useRef)(null);
-  const captureLayoutSnapshot = (0, import_element253.useCallback)(() => {
+  const snapshotBeforeChangeRef = (0, import_element254.useRef)(null);
+  const lastRenderedPositionsRef = (0, import_element254.useRef)(null);
+  const positionsBeforeLastChangeRef = (0, import_element254.useRef)(null);
+  const captureLayoutSnapshot = (0, import_element254.useCallback)(() => {
     if (container) {
       snapshotBeforeChangeRef.current = snapshotPositions(container);
     }
   }, [container]);
-  (0, import_element253.useLayoutEffect)(() => {
+  (0, import_element254.useLayoutEffect)(() => {
     if (!container || !enabled) {
       snapshotBeforeChangeRef.current = null;
       lastRenderedPositionsRef.current = null;
@@ -70558,10 +70588,10 @@ function useLayoutShiftAnimation({
       }
     }
   }, [container, enabled, layoutFingerprint, excludeItemKey]);
-  const getLastPositions = (0, import_element253.useCallback)(() => {
+  const getLastPositions = (0, import_element254.useCallback)(() => {
     return lastRenderedPositionsRef.current;
   }, []);
-  const getPositionsBeforeLastChange = (0, import_element253.useCallback)(() => {
+  const getPositionsBeforeLastChange = (0, import_element254.useCallback)(() => {
     return positionsBeforeLastChangeRef.current;
   }, []);
   return {
@@ -70588,7 +70618,7 @@ function getPlacementFingerprint(itemStyles) {
 }
 
 // packages/grid/build-module/shared/use-item-exit-animation.mjs
-var import_element254 = __toESM(require_element(), 1);
+var import_element255 = __toESM(require_element(), 1);
 var EXIT_SAFETY_TIMEOUT_MS = 1e3;
 function prefersReducedMotion() {
   return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -70600,12 +70630,12 @@ function useItemExitAnimation({
   getPositionsBeforeLastChange,
   childrenCacheRef
 }) {
-  const [exitingItems, setExitingItems] = (0, import_element254.useState)(
+  const [exitingItems, setExitingItems] = (0, import_element255.useState)(
     []
   );
-  const prevLayoutKeysRef = (0, import_element254.useRef)(/* @__PURE__ */ new Set());
-  const exitTimeoutsRef = (0, import_element254.useRef)(/* @__PURE__ */ new Map());
-  const clearExitingItem = (0, import_element254.useCallback)(
+  const prevLayoutKeysRef = (0, import_element255.useRef)(/* @__PURE__ */ new Set());
+  const exitTimeoutsRef = (0, import_element255.useRef)(/* @__PURE__ */ new Map());
+  const clearExitingItem = (0, import_element255.useCallback)(
     (key2) => {
       const timeout = exitTimeoutsRef.current.get(key2);
       if (timeout) {
@@ -70619,7 +70649,7 @@ function useItemExitAnimation({
     },
     [childrenCacheRef]
   );
-  const scheduleExitComplete = (0, import_element254.useCallback)(
+  const scheduleExitComplete = (0, import_element255.useCallback)(
     (key2) => {
       if (exitTimeoutsRef.current.has(key2)) {
         return;
@@ -70632,7 +70662,7 @@ function useItemExitAnimation({
     },
     [clearExitingItem]
   );
-  (0, import_element254.useLayoutEffect)(() => {
+  (0, import_element255.useLayoutEffect)(() => {
     if (!enabled || !container) {
       prevLayoutKeysRef.current = new Set(layoutKeys);
       for (const timeout of exitTimeoutsRef.current.values()) {
@@ -70691,7 +70721,7 @@ function useItemExitAnimation({
     childrenCacheRef,
     scheduleExitComplete
   ]);
-  (0, import_element254.useLayoutEffect)(() => {
+  (0, import_element255.useLayoutEffect)(() => {
     const exitTimeouts = exitTimeoutsRef.current;
     return () => {
       for (const timeout of exitTimeouts.values()) {
@@ -71022,7 +71052,7 @@ var dashboardDragDropAnimation = createDashboardDragDropAnimation(
 var FALLBACK_GAP_PX = 24;
 var DEFAULT_COLUMNS = 6;
 var NO_SORT_STRATEGY = () => null;
-var DashboardGrid = (0, import_element255.forwardRef)(
+var DashboardGrid = (0, import_element256.forwardRef)(
   function DashboardGrid2(props, ref) {
     const {
       layout,
@@ -71041,36 +71071,36 @@ var DashboardGrid = (0, import_element255.forwardRef)(
       renderGridOverlay,
       ...divProps
     } = props;
-    const [temporaryLayout, setTemporaryLayout] = (0, import_element255.useState)();
-    const [activeId, setActiveId] = (0, import_element255.useState)(null);
-    const [isResizing, setIsResizing] = (0, import_element255.useState)(false);
-    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element255.useState)(null);
-    const latestLayoutRef = (0, import_element255.useRef)();
-    const lastReorderCursorRef = (0, import_element255.useRef)(null);
-    const resizeBaselineRef = (0, import_element255.useRef)(null);
-    const captureLayoutSnapshotRef = (0, import_element255.useRef)(() => {
+    const [temporaryLayout, setTemporaryLayout] = (0, import_element256.useState)();
+    const [activeId, setActiveId] = (0, import_element256.useState)(null);
+    const [isResizing, setIsResizing] = (0, import_element256.useState)(false);
+    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element256.useState)(null);
+    const latestLayoutRef = (0, import_element256.useRef)();
+    const lastReorderCursorRef = (0, import_element256.useRef)(null);
+    const resizeBaselineRef = (0, import_element256.useRef)(null);
+    const captureLayoutSnapshotRef = (0, import_element256.useRef)(() => {
     });
-    const childrenCacheRef = (0, import_element255.useRef)(
+    const childrenCacheRef = (0, import_element256.useRef)(
       /* @__PURE__ */ new Map()
     );
-    const [gridRoot, setGridRoot] = (0, import_element255.useState)(
+    const [gridRoot, setGridRoot] = (0, import_element256.useState)(
       null
     );
-    const [containerWidth, setContainerWidth] = (0, import_element255.useState)(0);
-    const [containerHeight, setContainerHeight] = (0, import_element255.useState)(0);
-    const [gapPx, setGapPx] = (0, import_element255.useState)(FALLBACK_GAP_PX);
-    const resizeObserverRef = (0, import_compose45.useResizeObserver)(
+    const [containerWidth, setContainerWidth] = (0, import_element256.useState)(0);
+    const [containerHeight, setContainerHeight] = (0, import_element256.useState)(0);
+    const [gapPx, setGapPx] = (0, import_element256.useState)(FALLBACK_GAP_PX);
+    const resizeObserverRef = (0, import_compose46.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
         setContainerHeight(contentRect.height);
       }
     );
-    const mergedGridRef = (0, import_compose45.useMergeRefs)([
+    const mergedGridRef = (0, import_compose46.useMergeRefs)([
       setGridRoot,
       resizeObserverRef,
       ref
     ]);
-    (0, import_element255.useLayoutEffect)(() => {
+    (0, import_element256.useLayoutEffect)(() => {
       if (!gridRoot) {
         return;
       }
@@ -71088,7 +71118,7 @@ var DashboardGrid = (0, import_element255.forwardRef)(
         setGapPx(parsed);
       }
     }, [gridRoot]);
-    const effectiveColumns = (0, import_element255.useMemo)(() => {
+    const effectiveColumns = (0, import_element256.useMemo)(() => {
       if (!minColumnWidth) {
         return columns ?? DEFAULT_COLUMNS;
       }
@@ -71123,7 +71153,7 @@ var DashboardGrid = (0, import_element255.forwardRef)(
       rowHeightPx
     );
     const sourceLayout = temporaryLayout ?? layout;
-    const activeLayout = (0, import_element255.useMemo)(() => {
+    const activeLayout = (0, import_element256.useMemo)(() => {
       if (spanBoundsByKey.size === 0) {
         return sourceLayout;
       }
@@ -71151,23 +71181,23 @@ var DashboardGrid = (0, import_element255.forwardRef)(
       });
       return changed ? bounded : sourceLayout;
     }, [sourceLayout, spanBoundsByKey]);
-    const layoutMap = (0, import_element255.useMemo)(() => {
+    const layoutMap = (0, import_element256.useMemo)(() => {
       const map = /* @__PURE__ */ new Map();
       activeLayout.forEach((item) => map.set(item.key, item));
       return map;
     }, [activeLayout]);
-    const layoutKeys = (0, import_element255.useMemo)(
+    const layoutKeys = (0, import_element256.useMemo)(
       () => new Set(layout.map((item) => item.key)),
       [layout]
     );
-    const sortedItems = (0, import_element255.useMemo)(
+    const sortedItems = (0, import_element256.useMemo)(
       () => activeLayout.map((item, index2) => ({ item, index: index2 })).sort(
         (a2, b2) => (a2.item.order ?? a2.index) - (b2.item.order ?? b2.index)
       ).map(({ item }) => item.key),
       [activeLayout]
     );
     const items = sortedItems;
-    const resolvedItemMap = (0, import_element255.useMemo)(() => {
+    const resolvedItemMap = (0, import_element256.useMemo)(() => {
       const fillWidths = resolveFillWidths(
         items,
         layoutMap,
@@ -71187,13 +71217,13 @@ var DashboardGrid = (0, import_element255.forwardRef)(
       }
       return map;
     }, [items, layoutMap, effectiveColumns, spanBoundsByKey]);
-    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element255.useMemo)(() => {
+    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element256.useMemo)(() => {
       const childMap = /* @__PURE__ */ new Map();
       const actionableMap = /* @__PURE__ */ new Map();
       const rest = [];
       const byKey = /* @__PURE__ */ new Map();
-      import_element255.Children.forEach(children, (child) => {
-        if (!(0, import_element255.isValidElement)(child)) {
+      import_element256.Children.forEach(children, (child) => {
+        if (!(0, import_element256.isValidElement)(child)) {
           rest.push(child);
           return;
         }
@@ -71203,7 +71233,7 @@ var DashboardGrid = (0, import_element255.forwardRef)(
           return;
         }
         const { actionableArea } = child.props;
-        const stripped = actionableArea !== void 0 ? (0, import_element255.cloneElement)(child, {
+        const stripped = actionableArea !== void 0 ? (0, import_element256.cloneElement)(child, {
           actionableArea: void 0
         }) : child;
         byKey.set(key2, stripped);
@@ -71218,7 +71248,7 @@ var DashboardGrid = (0, import_element255.forwardRef)(
       });
       return [childMap, actionableMap, rest, byKey];
     }, [children, layoutKeys]);
-    (0, import_element255.useLayoutEffect)(() => {
+    (0, import_element256.useLayoutEffect)(() => {
       for (const [key2, child] of renderedByKey) {
         childrenCacheRef.current.set(key2, child);
       }
@@ -71229,11 +71259,11 @@ var DashboardGrid = (0, import_element255.forwardRef)(
         coordinateGetter: sortableKeyboardCoordinates
       })
     );
-    const handleDragStart = (0, import_compose45.useEvent)((event) => {
+    const handleDragStart = (0, import_compose46.useEvent)((event) => {
       setActiveId(String(event.active.id));
       lastReorderCursorRef.current = null;
     });
-    const handleDragCancel = (0, import_compose45.useEvent)(() => {
+    const handleDragCancel = (0, import_compose46.useEvent)(() => {
       setActiveId(null);
       latestLayoutRef.current = void 0;
       lastReorderCursorRef.current = null;
@@ -71242,7 +71272,7 @@ var DashboardGrid = (0, import_element255.forwardRef)(
       setResizeSnapPreview(null);
       setTemporaryLayout(void 0);
     });
-    const handleDragMove = (0, import_compose45.useEvent)((event) => {
+    const handleDragMove = (0, import_compose46.useEvent)((event) => {
       const { active, over } = event;
       if (!over || active.id === over.id) {
         return;
@@ -71299,7 +71329,7 @@ var DashboardGrid = (0, import_element255.forwardRef)(
       setTemporaryLayout(updatedLayout);
       onPreviewLayout?.(updatedLayout);
     });
-    const persistTemporaryLayout = (0, import_compose45.useEvent)(() => {
+    const persistTemporaryLayout = (0, import_compose46.useEvent)(() => {
       const latest = latestLayoutRef.current;
       latestLayoutRef.current = void 0;
       resizeBaselineRef.current = null;
@@ -71312,7 +71342,7 @@ var DashboardGrid = (0, import_element255.forwardRef)(
       onChangeLayout(latest);
       setTemporaryLayout(void 0);
     });
-    const handleResize = (0, import_compose45.useEvent)((id, delta) => {
+    const handleResize = (0, import_compose46.useEvent)((id, delta) => {
       if (!editMode) {
         return;
       }
@@ -71381,7 +71411,7 @@ var DashboardGrid = (0, import_element255.forwardRef)(
     const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime341.jsx)("div", { className: grid_default2["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)("div", { className: grid_default2["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
     const Overlay = renderGridOverlay ?? GridOverlay;
     const overlayRowHeight = typeof rowHeight === "number" ? rowHeight : void 0;
-    const overlayRows = (0, import_element255.useMemo)(() => {
+    const overlayRows = (0, import_element256.useMemo)(() => {
       if (overlayRowHeight === void 0 || containerHeight <= 0) {
         return void 0;
       }
@@ -71391,7 +71421,7 @@ var DashboardGrid = (0, import_element255.forwardRef)(
         Math.floor((containerHeight + gapPx) / rowTile)
       );
     }, [overlayRowHeight, containerHeight, gapPx]);
-    const gridOverlay = (0, import_element255.useMemo)(
+    const gridOverlay = (0, import_element256.useMemo)(
       () => /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
         Overlay,
         {
@@ -71409,7 +71439,7 @@ var DashboardGrid = (0, import_element255.forwardRef)(
         overlayRows
       ]
     );
-    const layoutFingerprint = (0, import_element255.useMemo)(
+    const layoutFingerprint = (0, import_element256.useMemo)(
       () => getLayoutFingerprint([...resolvedItemMap.values()]),
       [resolvedItemMap]
     );
@@ -71428,7 +71458,7 @@ var DashboardGrid = (0, import_element255.forwardRef)(
       childrenCacheRef
     });
     const layoutAnimating = editMode;
-    (0, import_element255.useLayoutEffect)(() => {
+    (0, import_element256.useLayoutEffect)(() => {
       captureLayoutSnapshotRef.current = captureLayoutSnapshot;
     }, [captureLayoutSnapshot]);
     return /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(
@@ -71516,12 +71546,12 @@ var DashboardGrid = (0, import_element255.forwardRef)(
 );
 
 // packages/grid/build-module/dashboard-lanes/index.mjs
-var import_compose47 = __toESM(require_compose(), 1);
-var import_element258 = __toESM(require_element(), 1);
+var import_compose48 = __toESM(require_compose(), 1);
+var import_element259 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-lanes/lanes-item.mjs
-var import_element256 = __toESM(require_element(), 1);
-var import_compose46 = __toESM(require_compose(), 1);
+var import_element257 = __toESM(require_element(), 1);
+var import_compose47 = __toESM(require_compose(), 1);
 var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE103 = "data-wp-hash";
 function getRuntime103() {
@@ -71637,12 +71667,12 @@ function LanesItem({
   renderResizeHandle,
   dragging = false
 }) {
-  const [resizeDelta, setResizeDelta] = (0, import_element256.useState)(
+  const [resizeDelta, setResizeDelta] = (0, import_element257.useState)(
     null
   );
-  const [initialContentSize, setInitialContentSize] = (0, import_element256.useState)(null);
-  const itemRef = (0, import_element256.useRef)(null);
-  const contentRef = (0, import_element256.useRef)(null);
+  const [initialContentSize, setInitialContentSize] = (0, import_element257.useState)(null);
+  const itemRef = (0, import_element257.useRef)(null);
+  const contentRef = (0, import_element257.useRef)(null);
   const dragDisabled = disabled2 || !draggable;
   const resizeDisabled = disabled2 || !resizable;
   const {
@@ -71655,8 +71685,8 @@ function LanesItem({
     id: itemKey,
     disabled: dragDisabled
   });
-  const mergedRef = (0, import_compose46.useMergeRefs)([itemRef, setNodeRef]);
-  const contentMergedRef = (0, import_compose46.useMergeRefs)([contentRef]);
+  const mergedRef = (0, import_compose47.useMergeRefs)([itemRef, setNodeRef]);
+  const contentMergedRef = (0, import_compose47.useMergeRefs)([contentRef]);
   const style = {
     ...placementStyle,
     alignSelf: "start"
@@ -71770,7 +71800,7 @@ function LanesItem({
 }
 
 // packages/grid/build-module/dashboard-lanes/use-lane-placement.mjs
-var import_element257 = __toESM(require_element(), 1);
+var import_element258 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-lanes/lane-placement.mjs
 function clampSpan2(span, lanes) {
@@ -71869,9 +71899,9 @@ function clampSpan3(span) {
   return Math.max(1, Math.floor(span));
 }
 function useLanePlacement(container, input) {
-  const [isPolyfilled] = (0, import_element257.useState)(() => !supportsGridLanes());
-  const [itemStyles, setItemStyles] = (0, import_element257.useState)(() => /* @__PURE__ */ new Map());
-  const nativeStyles = (0, import_element257.useMemo)(() => {
+  const [isPolyfilled] = (0, import_element258.useState)(() => !supportsGridLanes());
+  const [itemStyles, setItemStyles] = (0, import_element258.useState)(() => /* @__PURE__ */ new Map());
+  const nativeStyles = (0, import_element258.useMemo)(() => {
     const map = /* @__PURE__ */ new Map();
     for (const item of input.items) {
       map.set(item.key, {
@@ -71880,14 +71910,14 @@ function useLanePlacement(container, input) {
     }
     return map;
   }, [input.items]);
-  const itemsSignature = (0, import_element257.useMemo)(() => {
+  const itemsSignature = (0, import_element258.useMemo)(() => {
     return input.items.map(
       (item) => `${item.key}/${item.span ?? 1}/${item.lane ?? ""}`
     ).join("\0");
   }, [input.items]);
-  const itemsForPlacement = (0, import_element257.useMemo)(() => input.items, [itemsSignature]);
+  const itemsForPlacement = (0, import_element258.useMemo)(() => input.items, [itemsSignature]);
   const { lanes, gap, flowTolerance, rowUnit } = input;
-  (0, import_element257.useLayoutEffect)(() => {
+  (0, import_element258.useLayoutEffect)(() => {
     if (!isPolyfilled || !container) {
       return;
     }
@@ -72126,7 +72156,7 @@ var dashboardDragDropAnimation2 = createDashboardDragDropAnimation(
 var FALLBACK_GAP_PX2 = 24;
 var DEFAULT_COLUMNS2 = 6;
 var NO_SORT_STRATEGY2 = () => null;
-var DashboardLanes = (0, import_element258.forwardRef)(
+var DashboardLanes = (0, import_element259.forwardRef)(
   function DashboardLanes2(props, ref) {
     const {
       layout,
@@ -72146,35 +72176,35 @@ var DashboardLanes = (0, import_element258.forwardRef)(
       renderGridOverlay,
       ...divProps
     } = props;
-    const [temporaryLayout, setTemporaryLayout] = (0, import_element258.useState)();
-    const [activeId, setActiveId] = (0, import_element258.useState)(null);
-    const [isResizing, setIsResizing] = (0, import_element258.useState)(false);
-    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element258.useState)(null);
-    const latestLayoutRef = (0, import_element258.useRef)();
-    const lastReorderCursorRef = (0, import_element258.useRef)(null);
-    const resizeBaselineRef = (0, import_element258.useRef)(null);
-    const captureLayoutSnapshotRef = (0, import_element258.useRef)(() => {
+    const [temporaryLayout, setTemporaryLayout] = (0, import_element259.useState)();
+    const [activeId, setActiveId] = (0, import_element259.useState)(null);
+    const [isResizing, setIsResizing] = (0, import_element259.useState)(false);
+    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element259.useState)(null);
+    const latestLayoutRef = (0, import_element259.useRef)();
+    const lastReorderCursorRef = (0, import_element259.useRef)(null);
+    const resizeBaselineRef = (0, import_element259.useRef)(null);
+    const captureLayoutSnapshotRef = (0, import_element259.useRef)(() => {
     });
-    const childrenCacheRef = (0, import_element258.useRef)(
+    const childrenCacheRef = (0, import_element259.useRef)(
       /* @__PURE__ */ new Map()
     );
     const activeLayout = temporaryLayout ?? layout;
-    const [container, setContainer] = (0, import_element258.useState)(
+    const [container, setContainer] = (0, import_element259.useState)(
       null
     );
-    const [containerWidth, setContainerWidth] = (0, import_element258.useState)(0);
-    const [gapPx, setGapPx] = (0, import_element258.useState)(FALLBACK_GAP_PX2);
-    const resizeObserverRef = (0, import_compose47.useResizeObserver)(
+    const [containerWidth, setContainerWidth] = (0, import_element259.useState)(0);
+    const [gapPx, setGapPx] = (0, import_element259.useState)(FALLBACK_GAP_PX2);
+    const resizeObserverRef = (0, import_compose48.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
       }
     );
-    const mergedRootRef = (0, import_compose47.useMergeRefs)([
+    const mergedRootRef = (0, import_compose48.useMergeRefs)([
       setContainer,
       resizeObserverRef,
       ref
     ]);
-    (0, import_element258.useLayoutEffect)(() => {
+    (0, import_element259.useLayoutEffect)(() => {
       if (!container) {
         return;
       }
@@ -72189,7 +72219,7 @@ var DashboardLanes = (0, import_element258.forwardRef)(
         setGapPx(parsed);
       }
     }, [container]);
-    const effectiveColumns = (0, import_element258.useMemo)(() => {
+    const effectiveColumns = (0, import_element259.useMemo)(() => {
       if (!minColumnWidth) {
         return columns ?? DEFAULT_COLUMNS2;
       }
@@ -72221,23 +72251,23 @@ var DashboardLanes = (0, import_element258.forwardRef)(
       gapPx,
       null
     );
-    const layoutMap = (0, import_element258.useMemo)(() => {
+    const layoutMap = (0, import_element259.useMemo)(() => {
       const map = /* @__PURE__ */ new Map();
       activeLayout.forEach((item) => map.set(item.key, item));
       return map;
     }, [activeLayout]);
-    const layoutKeys = (0, import_element258.useMemo)(
+    const layoutKeys = (0, import_element259.useMemo)(
       () => new Set(layout.map((item) => item.key)),
       [layout]
     );
-    const sortedItems = (0, import_element258.useMemo)(
+    const sortedItems = (0, import_element259.useMemo)(
       () => activeLayout.map((item, index2) => ({ item, index: index2 })).sort(
         (a2, b2) => (a2.item.order ?? a2.index) - (b2.item.order ?? b2.index)
       ).map(({ item }) => item.key),
       [activeLayout]
     );
     const items = sortedItems;
-    const renderedSpanByKey = (0, import_element258.useMemo)(() => {
+    const renderedSpanByKey = (0, import_element259.useMemo)(() => {
       const map = /* @__PURE__ */ new Map();
       for (const [key2, item] of layoutMap) {
         const span = typeof item.width === "number" ? Math.max(
@@ -72252,7 +72282,7 @@ var DashboardLanes = (0, import_element258.forwardRef)(
       }
       return map;
     }, [layoutMap, effectiveColumns, widthBoundsByKey]);
-    const placementItems = (0, import_element258.useMemo)(() => {
+    const placementItems = (0, import_element259.useMemo)(() => {
       return items.map((key2) => ({
         key: key2,
         span: renderedSpanByKey.get(key2) ?? 1,
@@ -72266,13 +72296,13 @@ var DashboardLanes = (0, import_element258.forwardRef)(
       flowTolerance,
       rowUnit
     });
-    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element258.useMemo)(() => {
+    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element259.useMemo)(() => {
       const childMap = /* @__PURE__ */ new Map();
       const actionableMap = /* @__PURE__ */ new Map();
       const rest = [];
       const byKey = /* @__PURE__ */ new Map();
-      import_element258.Children.forEach(children, (child) => {
-        if (!(0, import_element258.isValidElement)(child)) {
+      import_element259.Children.forEach(children, (child) => {
+        if (!(0, import_element259.isValidElement)(child)) {
           rest.push(child);
           return;
         }
@@ -72282,7 +72312,7 @@ var DashboardLanes = (0, import_element258.forwardRef)(
           return;
         }
         const { actionableArea } = child.props;
-        const stripped = actionableArea !== void 0 ? (0, import_element258.cloneElement)(
+        const stripped = actionableArea !== void 0 ? (0, import_element259.cloneElement)(
           child,
           { actionableArea: void 0 }
         ) : child;
@@ -72298,7 +72328,7 @@ var DashboardLanes = (0, import_element258.forwardRef)(
       });
       return [childMap, actionableMap, rest, byKey];
     }, [children, layoutKeys]);
-    (0, import_element258.useLayoutEffect)(() => {
+    (0, import_element259.useLayoutEffect)(() => {
       for (const [key2, child] of renderedByKey) {
         childrenCacheRef.current.set(key2, child);
       }
@@ -72309,11 +72339,11 @@ var DashboardLanes = (0, import_element258.forwardRef)(
         coordinateGetter: sortableKeyboardCoordinates
       })
     );
-    const handleDragStart = (0, import_compose47.useEvent)((event) => {
+    const handleDragStart = (0, import_compose48.useEvent)((event) => {
       setActiveId(String(event.active.id));
       lastReorderCursorRef.current = null;
     });
-    const handleDragCancel = (0, import_compose47.useEvent)(() => {
+    const handleDragCancel = (0, import_compose48.useEvent)(() => {
       setActiveId(null);
       latestLayoutRef.current = void 0;
       lastReorderCursorRef.current = null;
@@ -72322,7 +72352,7 @@ var DashboardLanes = (0, import_element258.forwardRef)(
       setResizeSnapPreview(null);
       setTemporaryLayout(void 0);
     });
-    const handleDragMove = (0, import_compose47.useEvent)((event) => {
+    const handleDragMove = (0, import_compose48.useEvent)((event) => {
       const { active, over } = event;
       if (!over || active.id === over.id) {
         return;
@@ -72381,7 +72411,7 @@ var DashboardLanes = (0, import_element258.forwardRef)(
       setTemporaryLayout(updatedLayout);
       onPreviewLayout?.(updatedLayout);
     });
-    const persistTemporaryLayout = (0, import_compose47.useEvent)(() => {
+    const persistTemporaryLayout = (0, import_compose48.useEvent)(() => {
       const latest = latestLayoutRef.current;
       latestLayoutRef.current = void 0;
       resizeBaselineRef.current = null;
@@ -72394,7 +72424,7 @@ var DashboardLanes = (0, import_element258.forwardRef)(
       onChangeLayout(latest);
       setTemporaryLayout(void 0);
     });
-    const handleResize = (0, import_compose47.useEvent)((id, delta) => {
+    const handleResize = (0, import_compose48.useEvent)((id, delta) => {
       if (!editMode) {
         return;
       }
@@ -72444,11 +72474,11 @@ var DashboardLanes = (0, import_element258.forwardRef)(
     const DragPreview = renderDragPreview;
     const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime343.jsx)("div", { className: lanes_default["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime343.jsx)("div", { className: lanes_default["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
     const Overlay = renderGridOverlay ?? GridOverlay;
-    const gridOverlay = (0, import_element258.useMemo)(
+    const gridOverlay = (0, import_element259.useMemo)(
       () => /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(Overlay, { columns: effectiveColumns, isActive: editMode }),
       [Overlay, editMode, effectiveColumns]
     );
-    const layoutFingerprint = (0, import_element258.useMemo)(() => {
+    const layoutFingerprint = (0, import_element259.useMemo)(() => {
       const layoutSig = getLayoutFingerprint(activeLayout);
       const placementSig = getPlacementFingerprint(itemStyles);
       return `${layoutSig}\0${placementSig}`;
@@ -72468,7 +72498,7 @@ var DashboardLanes = (0, import_element258.forwardRef)(
       childrenCacheRef
     });
     const layoutAnimating = editMode;
-    (0, import_element258.useLayoutEffect)(() => {
+    (0, import_element259.useLayoutEffect)(() => {
       captureLayoutSnapshotRef.current = captureLayoutSnapshot;
     }, [captureLayoutSnapshot]);
     return /* @__PURE__ */ (0, import_jsx_runtime343.jsxs)(
@@ -72567,22 +72597,22 @@ var DashboardLanes = (0, import_element258.forwardRef)(
 );
 
 // packages/widget-dashboard/build-module/hooks/use-dashboard-container-column-count.mjs
-var import_compose48 = __toESM(require_compose(), 1);
-var import_element259 = __toESM(require_element(), 1);
+var import_compose49 = __toESM(require_compose(), 1);
+var import_element260 = __toESM(require_element(), 1);
 function useDashboardContainerColumnCount(forwardedRef, maxColumns) {
-  const [container, setContainer] = (0, import_element259.useState)(
+  const [container, setContainer] = (0, import_element260.useState)(
     null
   );
-  const [containerWidth, setContainerWidth] = (0, import_element259.useState)(0);
-  const resizeObserverRef = (0, import_compose48.useResizeObserver)(([{ contentRect }]) => {
+  const [containerWidth, setContainerWidth] = (0, import_element260.useState)(0);
+  const resizeObserverRef = (0, import_compose49.useResizeObserver)(([{ contentRect }]) => {
     setContainerWidth(contentRect.width);
   });
-  const containerRef = (0, import_compose48.useMergeRefs)([
+  const containerRef = (0, import_compose49.useMergeRefs)([
     setContainer,
     resizeObserverRef,
     forwardedRef ?? null
   ]);
-  (0, import_element259.useLayoutEffect)(() => {
+  (0, import_element260.useLayoutEffect)(() => {
     if (!container) {
       return;
     }
@@ -72591,7 +72621,7 @@ function useDashboardContainerColumnCount(forwardedRef, maxColumns) {
       setContainerWidth(width);
     }
   }, [container]);
-  const columnCount = (0, import_element259.useMemo)(
+  const columnCount = (0, import_element260.useMemo)(
     () => resolveDashboardColumnCount(containerWidth, maxColumns),
     [containerWidth, maxColumns]
   );
@@ -72743,10 +72773,10 @@ function WidgetActions({
 }
 
 // packages/widget-dashboard/build-module/components/widget-attributes/widget-attributes.mjs
-var import_element262 = __toESM(require_element(), 1);
+var import_element263 = __toESM(require_element(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-attributes/attributes-dropdown.mjs
-var import_element260 = __toESM(require_element(), 1);
+var import_element261 = __toESM(require_element(), 1);
 var import_i18n84 = __toESM(require_i18n(), 1);
 var import_jsx_runtime345 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE106 = "data-wp-hash";
@@ -72839,7 +72869,7 @@ function AttributesDropdown({
   onChange,
   onOpenChange
 }) {
-  const form = (0, import_element260.useMemo)(
+  const form = (0, import_element261.useMemo)(
     () => ({
       layout: { type: "regular", labelPosition: "top" },
       fields: fields2.map((field) => field.id)
@@ -72886,17 +72916,17 @@ function AttributesDropdown({
 }
 
 // packages/widget-dashboard/build-module/components/widget-attributes/use-inline-fit.mjs
-var import_compose49 = __toESM(require_compose(), 1);
-var import_element261 = __toESM(require_element(), 1);
+var import_compose50 = __toESM(require_compose(), 1);
+var import_element262 = __toESM(require_element(), 1);
 function useInlineFit(options = {}) {
   const { locked = false } = options;
   const availableSize = useWidgetHeaderAvailableSize();
-  const [naturalSize, setNaturalSize] = (0, import_element261.useState)(0);
-  const measureRef = (0, import_compose49.useResizeObserver)(
+  const [naturalSize, setNaturalSize] = (0, import_element262.useState)(0);
+  const measureRef = (0, import_compose50.useResizeObserver)(
     ([entry]) => setNaturalSize(entry.contentRect.width)
   );
   const computed = availableSize !== null && naturalSize > 0 && naturalSize > availableSize;
-  const [held, setHeld] = (0, import_element261.useState)(computed);
+  const [held, setHeld] = (0, import_element262.useState)(computed);
   if (!locked && held !== computed) {
     setHeld(computed);
   }
@@ -72998,26 +73028,26 @@ function WidgetAttributes({
     (attribute) => attribute.relevance !== "high"
   );
   const settingsReserveRef = useReserveHeaderSpace("settings");
-  const [dropdownOpen, setDropdownOpen] = (0, import_element262.useState)(false);
-  const [inlineHasFocus, setInlineHasFocus] = (0, import_element262.useState)(false);
-  const [dropdownTriggerHasFocus, setDropdownTriggerHasFocus] = (0, import_element262.useState)(false);
+  const [dropdownOpen, setDropdownOpen] = (0, import_element263.useState)(false);
+  const [inlineHasFocus, setInlineHasFocus] = (0, import_element263.useState)(false);
+  const [dropdownTriggerHasFocus, setDropdownTriggerHasFocus] = (0, import_element263.useState)(false);
   const { measureRef, collapsed } = useInlineFit({
     locked: dropdownOpen || inlineHasFocus || dropdownTriggerHasFocus
   });
-  (0, import_element262.useEffect)(() => {
+  (0, import_element263.useEffect)(() => {
     if (collapsed) {
       setInlineHasFocus(false);
     } else {
       setDropdownTriggerHasFocus(false);
     }
   }, [collapsed]);
-  const fields2 = (0, import_element262.useMemo)(
+  const fields2 = (0, import_element263.useMemo)(
     () => (widgetType.attributes ?? []).filter(
       (attribute) => attribute.relevance === "high"
     ),
     [widgetType.attributes]
   );
-  const form = (0, import_element262.useMemo)(
+  const form = (0, import_element263.useMemo)(
     () => ({
       layout: { type: "row", alignment: "center" },
       fields: fields2.map((field) => ({
@@ -73027,7 +73057,7 @@ function WidgetAttributes({
     }),
     [fields2]
   );
-  const handleChange = (0, import_element262.useCallback)(
+  const handleChange = (0, import_element263.useCallback)(
     (edits) => {
       onLayoutChange(
         layout.map(
@@ -73305,7 +73335,7 @@ function WidgetToolbar({
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widget-resize-handle.mjs
-var import_element263 = __toESM(require_element(), 1);
+var import_element264 = __toESM(require_element(), 1);
 var import_jsx_runtime349 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE109 = "data-wp-hash";
 function getRuntime109() {
@@ -73391,7 +73421,7 @@ if (typeof process === "undefined" || true) {
   registerStyle109("415a4244a3", '.a70c7d5347a2f54b__handle{--widget-resize-handle-visual-inset:var(--wpds-dimension-padding-xs,4px);--widget-resize-handle-hover-scale:1.18;background:transparent;bottom:0;box-sizing:border-box;inset-inline-end:0;padding:0;position:absolute;z-index:1}.a70c7d5347a2f54b__handle:focus-visible{border-radius:var(--wpds-border-radius-sm,2px);outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa1d4aafe4d24e03__resizing{opacity:.72}._000e7ddc64fb1ac6__handle-corner{cursor:nwse-resize;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px)}._000e7ddc64fb1ac6__handle-corner:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-block-start:none;border-end-end-radius:var(--wpds-border-radius-md,4px);border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:none;bottom:var(--widget-resize-handle-visual-inset);box-sizing:border-box;content:"";height:var(--wpds-dimension-size-4xs,8px);inset-inline-end:var(--widget-resize-handle-visual-inset);position:absolute;transform:scale(1);transform-origin:100% 100%;width:var(--wpds-dimension-size-4xs,8px)}[dir=rtl] ._000e7ddc64fb1ac6__handle-corner:after{transform-origin:0 100%}._000e7ddc64fb1ac6__handle-corner.aa1d4aafe4d24e03__resizing:after,._000e7ddc64fb1ac6__handle-corner:focus-visible:after,._000e7ddc64fb1ac6__handle-corner:hover:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}.f227b7c826e4b495__handle-horizontal{align-items:center;border:none;cursor:ew-resize;display:flex;height:var(--wpds-dimension-size-lg,40px);justify-content:center;padding-inline-end:var(--widget-resize-handle-visual-inset);width:var(--wpds-dimension-size-sm,24px)}@media not (prefers-reduced-motion){._000e7ddc64fb1ac6__handle-corner:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-block-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-inline-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}.f227b7c826e4b495__handle-horizontal:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),background-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}}.f227b7c826e4b495__handle-horizontal:after{background-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));content:"";height:var(--wpds-dimension-size-3xs,12px);transform:scale(1);transform-origin:50% 100%;width:var(--wpds-border-width-sm,2px)}.f227b7c826e4b495__handle-horizontal.aa1d4aafe4d24e03__resizing:after,.f227b7c826e4b495__handle-horizontal:focus-visible:after,.f227b7c826e4b495__handle-horizontal:hover:after{background-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}@media (forced-colors:active){._000e7ddc64fb1ac6__handle-corner.aa1d4aafe4d24e03__resizing:after,._000e7ddc64fb1ac6__handle-corner:after,._000e7ddc64fb1ac6__handle-corner:focus-visible:after,._000e7ddc64fb1ac6__handle-corner:hover:after{border-block-end-color:Highlight;border-inline-end-color:Highlight}.f227b7c826e4b495__handle-horizontal.aa1d4aafe4d24e03__resizing:after,.f227b7c826e4b495__handle-horizontal:after,.f227b7c826e4b495__handle-horizontal:focus-visible:after,.f227b7c826e4b495__handle-horizontal:hover:after{background-color:Highlight}}');
 }
 var widget_resize_handle_default = { "handle": "a70c7d5347a2f54b__handle", "resizing": "aa1d4aafe4d24e03__resizing", "handle-corner": "_000e7ddc64fb1ac6__handle-corner", "handle-horizontal": "f227b7c826e4b495__handle-horizontal" };
-var WidgetResizeHandle = (0, import_element263.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
+var WidgetResizeHandle = (0, import_element264.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
   if (!verticalResizable) {
     return /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(
       "div",
@@ -73564,7 +73594,7 @@ function applyMasonryChange(widgets, masonryLayout) {
     }
   );
 }
-var Widgets = (0, import_element264.forwardRef)(
+var Widgets = (0, import_element265.forwardRef)(
   function Widgets2({ className }, ref) {
     const {
       layout,
@@ -73579,7 +73609,7 @@ var Widgets = (0, import_element264.forwardRef)(
       gridSettings.columns
     );
     const isMasonry = gridSettings.model === "masonry";
-    const permissionsFor = (0, import_element264.useCallback)(
+    const permissionsFor = (0, import_element265.useCallback)(
       (widget) => {
         const widgetType = widgetTypes.find(
           (type) => type.name === widget.type
@@ -73594,17 +73624,17 @@ var Widgets = (0, import_element264.forwardRef)(
       },
       [widgetTypes, canPerform]
     );
-    const gridLayout = (0, import_element264.useMemo)(
+    const gridLayout = (0, import_element265.useMemo)(
       () => isMasonry ? toMasonryLayout(layout, permissionsFor) : toGridLayout(layout, permissionsFor),
       [layout, isMasonry, permissionsFor]
     );
-    const handleGridChange = (0, import_element264.useCallback)(
+    const handleGridChange = (0, import_element265.useCallback)(
       (newGridLayout) => {
         onLayoutChange(applyGridChange(layout, newGridLayout));
       },
       [layout, onLayoutChange]
     );
-    const handleMasonryChange = (0, import_element264.useCallback)(
+    const handleMasonryChange = (0, import_element265.useCallback)(
       (newMasonryLayout) => {
         onLayoutChange(
           applyMasonryChange(layout, newMasonryLayout)
@@ -73660,7 +73690,7 @@ var Widgets = (0, import_element264.forwardRef)(
         widget.uuid
       );
     });
-    const renderDragPreview = (0, import_element264.useCallback)(
+    const renderDragPreview = (0, import_element265.useCallback)(
       ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime350.jsx)("div", { className: widgets_default["drag-preview"], children: clone }),
       []
     );
@@ -73761,10 +73791,10 @@ import {
 import { registerFieldType } from "@wordpress/widget-primitives";
 
 // routes/dashboard/field-types/location-control/location-control.tsx
-var import_element266 = __toESM(require_element());
+var import_element267 = __toESM(require_element());
 
 // routes/dashboard/field-types/location-picker/location-picker.tsx
-var import_element265 = __toESM(require_element());
+var import_element266 = __toESM(require_element());
 var import_i18n86 = __toESM(require_i18n());
 
 // packages/style-runtime/src/index.ts
@@ -73867,11 +73897,11 @@ function LocationPicker({
   selectButton = true,
   onChange
 }) {
-  const locationInputId = (0, import_element265.useId)();
-  const [locationInput, setLocationInput] = (0, import_element265.useState)(seedInput);
-  const [locationOptions, setLocationOptions] = (0, import_element265.useState)([]);
-  const [isLocatingCity, setIsLocatingCity] = (0, import_element265.useState)(false);
-  (0, import_element265.useEffect)(() => {
+  const locationInputId = (0, import_element266.useId)();
+  const [locationInput, setLocationInput] = (0, import_element266.useState)(seedInput);
+  const [locationOptions, setLocationOptions] = (0, import_element266.useState)([]);
+  const [isLocatingCity, setIsLocatingCity] = (0, import_element266.useState)(false);
+  (0, import_element266.useEffect)(() => {
     if (!selectButton || seedInput) {
       setLocationInput(seedInput);
     }
@@ -73907,7 +73937,7 @@ function LocationPicker({
       setIsLocatingCity(false);
     }
   };
-  (0, import_element265.useEffect)(() => {
+  (0, import_element266.useEffect)(() => {
     const query = locationInput.trim();
     if (query.length < 2) {
       setLocationOptions([]);
@@ -74054,7 +74084,7 @@ function LocationControl({
   hideLabelFromVision
 }) {
   const value = field.getValue({ item: data });
-  const onLocationChange = (0, import_element266.useCallback)(
+  const onLocationChange = (0, import_element267.useCallback)(
     (location) => {
       onChange(
         field.setValue({
@@ -74134,7 +74164,7 @@ function useDashboardGridSettings() {
 }
 
 // routes/dashboard/widget-host/dashboard-widget-host-provider.tsx
-var import_element267 = __toESM(require_element());
+var import_element268 = __toESM(require_element());
 import { Link as Link3 } from "@wordpress/route";
 import { WidgetHostProvider } from "@wordpress/widget-primitives";
 
@@ -74204,13 +74234,13 @@ function toRouteTarget(path) {
     )
   };
 }
-var DashboardRouteLink = (0, import_element267.forwardRef)(function DashboardRouteLink2({ path, ...props }, ref) {
+var DashboardRouteLink = (0, import_element268.forwardRef)(function DashboardRouteLink2({ path, ...props }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(Link3, { ref, ...toRouteTarget(path), ...props });
 });
 function DashboardWidgetHostProvider({
   children
 }) {
-  const host = (0, import_element267.useMemo)(
+  const host = (0, import_element268.useMemo)(
     () => ({
       links: {
         match: matchDashboardHref,
@@ -74235,7 +74265,7 @@ function Dashboard() {
     []
   );
   const [widgetTypes, isResolving] = useWidgetTypes(widgetsModules);
-  const [editMode, setEditMode] = (0, import_element268.useState)(false);
+  const [editMode, setEditMode] = (0, import_element269.useState)(false);
   const isMobileViewport = (0, import_data9.useSelect)(
     (select) => select(import_viewport2.store).isViewportMatch("< small"),
     []

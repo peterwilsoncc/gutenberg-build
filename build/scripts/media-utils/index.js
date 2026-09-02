@@ -148,7 +148,7 @@ var wp;
             },
             [subscribe2, value, getSnapshot]
           );
-          useEffect52(
+          useEffect53(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe2(function() {
@@ -174,7 +174,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React147 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState58 = React147.useState, useEffect52 = React147.useEffect, useLayoutEffect7 = React147.useLayoutEffect, useDebugValue2 = React147.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React147 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState58 = React147.useState, useEffect53 = React147.useEffect, useLayoutEffect7 = React147.useLayoutEffect, useDebugValue2 = React147.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React147.useSyncExternalStore ? React147.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -202,7 +202,7 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React147 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef93 = React147.useRef, useEffect52 = React147.useEffect, useMemo70 = React147.useMemo, useDebugValue2 = React147.useDebugValue;
+        var React147 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef93 = React147.useRef, useEffect53 = React147.useEffect, useMemo70 = React147.useMemo, useDebugValue2 = React147.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
           var instRef = useRef93(null);
           if (null === instRef.current) {
@@ -245,7 +245,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector2, isEqual]
           );
           var value = useSyncExternalStore4(subscribe2, instRef[0], instRef[1]);
-          useEffect52(
+          useEffect53(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -1679,7 +1679,7 @@ var wp;
   var clsx_default = clsx;
 
   // packages/media-utils/build-module/components/media-upload-modal/index.mjs
-  var import_element147 = __toESM(require_element(), 1);
+  var import_element148 = __toESM(require_element(), 1);
   var import_i18n79 = __toESM(require_i18n(), 1);
   var import_core_data6 = __toESM(require_core_data(), 1);
   var import_data14 = __toESM(require_data(), 1);
@@ -44565,9 +44565,33 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // packages/dataviews/build-module/dataviews-picker/index.mjs
+  // packages/dataviews/build-module/hooks/use-page-clamp.mjs
   var import_element137 = __toESM(require_element(), 1);
   var import_compose23 = __toESM(require_compose(), 1);
+  function usePageClamp({
+    view,
+    onChangeView,
+    isLoading,
+    totalPages
+  }) {
+    const lastPage = typeof totalPages === "number" && Number.isFinite(totalPages) ? Math.max(totalPages, 1) : null;
+    const page = view.page;
+    const goToLastPage = (0, import_compose23.useEvent)(() => {
+      if (lastPage !== null) {
+        onChangeView({ ...view, page: lastPage });
+      }
+    });
+    (0, import_element137.useEffect)(() => {
+      if (isLoading || lastPage === null || !page || page <= lastPage) {
+        return;
+      }
+      goToLastPage();
+    }, [isLoading, lastPage, page, goToLastPage]);
+  }
+
+  // packages/dataviews/build-module/dataviews-picker/index.mjs
+  var import_element138 = __toESM(require_element(), 1);
+  var import_compose24 = __toESM(require_compose(), 1);
   var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
   var isItemClickable = () => false;
   var dataViewsPickerLayouts = VIEW_LAYOUTS.filter(
@@ -44583,7 +44607,7 @@ If there's a particular need for this, please submit a feature request at https:
     search = true,
     searchLabel = void 0
   }) {
-    const { view } = (0, import_element137.useContext)(dataviews_context_default);
+    const { view } = (0, import_element138.useContext)(dataviews_context_default);
     const isInfiniteScroll = view.infiniteScrollEnabled;
     return /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(import_jsx_runtime196.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(
@@ -44646,9 +44670,9 @@ If there's a particular need for this, please submit a feature request at https:
       selection,
       paginationInfo
     });
-    const containerRef = (0, import_element137.useRef)(null);
-    const [containerWidth, setContainerWidth] = (0, import_element137.useState)(0);
-    const resizeObserverRef = (0, import_compose23.useResizeObserver)(
+    const containerRef = (0, import_element138.useRef)(null);
+    const [containerWidth, setContainerWidth] = (0, import_element138.useState)(0);
+    const resizeObserverRef = (0, import_compose24.useResizeObserver)(
       (resizeObserverEntries) => {
         setContainerWidth(
           resizeObserverEntries[0].borderBoxSize[0].inlineSize
@@ -44656,22 +44680,22 @@ If there's a particular need for this, please submit a feature request at https:
       },
       { box: "border-box" }
     );
-    const [openedFilter, setOpenedFilter] = (0, import_element137.useState)(null);
+    const [openedFilter, setOpenedFilter] = (0, import_element138.useState)(null);
     function setSelectionWithChange(value) {
       const newValue = typeof value === "function" ? value(selection) : value;
       if (onChangeSelection) {
         onChangeSelection(newValue);
       }
     }
-    const _fields = (0, import_element137.useMemo)(() => normalizeFields(fields), [fields]);
+    const _fields = (0, import_element138.useMemo)(() => normalizeFields(fields), [fields]);
     const filters = use_filters_default(_fields, view);
-    const hasPrimaryOrLockedFilters = (0, import_element137.useMemo)(
+    const hasPrimaryOrLockedFilters = (0, import_element138.useMemo)(
       () => (filters || []).some(
         (filter) => filter.isPrimary || filter.isLocked
       ),
       [filters]
     );
-    const [isShowingFilter, setIsShowingFilter] = (0, import_element137.useState)(
+    const [isShowingFilter, setIsShowingFilter] = (0, import_element138.useState)(
       hasPrimaryOrLockedFilters
     );
     const { intersectionObserver } = useInfiniteScroll({
@@ -44682,12 +44706,18 @@ If there's a particular need for this, please submit a feature request at https:
       containerRef,
       setVisibleEntries
     });
-    (0, import_element137.useEffect)(() => {
+    usePageClamp({
+      view,
+      onChangeView,
+      isLoading,
+      totalPages: paginationInfo.totalPages
+    });
+    (0, import_element138.useEffect)(() => {
       if (hasPrimaryOrLockedFilters && !isShowingFilter) {
         setIsShowingFilter(true);
       }
     }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-    const defaultLayouts2 = (0, import_element137.useMemo)(
+    const defaultLayouts2 = (0, import_element138.useMemo)(
       () => Object.fromEntries(
         Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
           return dataViewsPickerLayouts.some(
@@ -44828,7 +44858,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/views/build-module/use-view.mjs
-  var import_element138 = __toESM(require_element(), 1);
+  var import_element139 = __toESM(require_element(), 1);
   var import_data7 = __toESM(require_data(), 1);
   var import_preferences = __toESM(require_preferences(), 1);
 
@@ -44964,7 +44994,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { set: set3 } = (0, import_data7.useDispatch)(import_preferences.store);
     const page = Number(queryParams?.page ?? 1);
     const search = queryParams?.search ?? "";
-    const view = (0, import_element138.useMemo)(
+    const view = (0, import_element139.useMemo)(
       () => resolveView({
         defaultView: defaultView2,
         defaultLayouts: defaultLayouts2,
@@ -44983,7 +45013,7 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     );
     const isModified = !!persistedView && Object.keys(persistedView).length > 0;
-    const updateView = (0, import_element138.useCallback)(
+    const updateView = (0, import_element139.useCallback)(
       (newView) => {
         const newQueryParams = {
           page: Number(newView?.page ?? 1),
@@ -45014,7 +45044,7 @@ If there's a particular need for this, please submit a feature request at https:
         preferenceKey
       ]
     );
-    const resetToDefault = (0, import_element138.useCallback)(() => {
+    const resetToDefault = (0, import_element139.useCallback)(() => {
       set3("core/views", preferenceKey, void 0);
     }, [preferenceKey, set3]);
     return {
@@ -45087,7 +45117,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n65 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/attached_to/view.mjs
-  var import_element139 = __toESM(require_element(), 1);
+  var import_element140 = __toESM(require_element(), 1);
   var import_i18n63 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/utils/get-rendered-content.mjs
@@ -45109,11 +45139,11 @@ If there's a particular need for this, please submit a feature request at https:
   function MediaAttachedToView({
     item
   }) {
-    const [attachedPostTitle, setAttachedPostTitle] = (0, import_element139.useState)(null);
+    const [attachedPostTitle, setAttachedPostTitle] = (0, import_element140.useState)(null);
     const parentId = item.post;
     const embeddedPostId = item._embedded?.["wp:attached-to"]?.[0]?.id;
     const embeddedPostTitle = item._embedded?.["wp:attached-to"]?.[0]?.title;
-    (0, import_element139.useEffect)(() => {
+    (0, import_element140.useEffect)(() => {
       if (!!parentId && parentId === embeddedPostId) {
         setAttachedPostTitle(
           getRenderedContent(embeddedPostTitle) || (0, import_i18n63.__)("(no title)")
@@ -45130,8 +45160,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data3 = __toESM(require_core_data(), 1);
   var import_components51 = __toESM(require_components(), 1);
   var import_i18n64 = __toESM(require_i18n(), 1);
-  var import_element140 = __toESM(require_element(), 1);
-  var import_compose24 = __toESM(require_compose(), 1);
+  var import_element141 = __toESM(require_element(), 1);
+  var import_compose25 = __toESM(require_compose(), 1);
   var import_data10 = __toESM(require_data(), 1);
   var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
   function MediaAttachedToEdit({
@@ -45146,12 +45176,12 @@ If there's a particular need for this, please submit a feature request at https:
         value: data.post.toString()
       }
     ] : [];
-    const [options, setOptions] = (0, import_element140.useState)(defaultPost);
-    const [searchResults, setSearchResults] = (0, import_element140.useState)(
+    const [options, setOptions] = (0, import_element141.useState)(defaultPost);
+    const [searchResults, setSearchResults] = (0, import_element141.useState)(
       []
     );
-    const [isLoading, setIsLoading] = (0, import_element140.useState)(false);
-    const [value, setValue] = (0, import_element140.useState)(
+    const [isLoading, setIsLoading] = (0, import_element141.useState)(false);
+    const [value, setValue] = (0, import_element141.useState)(
       data?.post?.toString() ?? null
     );
     const postTypes = (0, import_data10.useSelect)(
@@ -45187,7 +45217,7 @@ If there's a particular need for this, please submit a feature request at https:
       setOptions(suggestions.concat(includeCurrent ? defaultPost : []));
       setIsLoading(false);
     };
-    const debouncedValueChange = (0, import_compose24.useDebounce)((0, import_compose24.useEvent)(onValueChange), 300);
+    const debouncedValueChange = (0, import_compose25.useDebounce)((0, import_compose25.useEvent)(onValueChange), 300);
     const handleSelectOption = (selectedPostId) => {
       if (!selectedPostId) {
         handleDetach();
@@ -45256,7 +45286,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/author/view.mjs
   var import_i18n66 = __toESM(require_i18n(), 1);
-  var import_element141 = __toESM(require_element(), 1);
+  var import_element142 = __toESM(require_element(), 1);
   var import_components52 = __toESM(require_components(), 1);
   var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
   function AuthorView({
@@ -45265,11 +45295,11 @@ If there's a particular need for this, please submit a feature request at https:
     const author = item?._embedded?.author?.[0];
     const text = author?.name;
     const imageUrl = author?.avatar_urls?.[48];
-    const [loadingState, setLoadingState] = (0, import_element141.useState)("loading");
-    (0, import_element141.useEffect)(() => {
+    const [loadingState, setLoadingState] = (0, import_element142.useState)("loading");
+    (0, import_element142.useEffect)(() => {
       setLoadingState("loading");
     }, [imageUrl]);
-    const imgRef = (0, import_element141.useCallback)((img) => {
+    const imgRef = (0, import_element142.useCallback)((img) => {
       if (img?.complete) {
         setLoadingState("instant");
       }
@@ -45436,14 +45466,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url4 = __toESM(require_url(), 1);
 
   // packages/media-fields/build-module/filename/view.mjs
-  var import_element142 = __toESM(require_element(), 1);
+  var import_element143 = __toESM(require_element(), 1);
   var import_url3 = __toESM(require_url(), 1);
   var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
   var TRUNCATE_LENGTH = 15;
   function FileNameView({
     item
   }) {
-    const fileName = (0, import_element142.useMemo)(
+    const fileName = (0, import_element143.useMemo)(
       () => item?.source_url ? (0, import_url3.getFilename)(item.source_url) : null,
       [item?.source_url]
     );
@@ -45571,7 +45601,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data12 = __toESM(require_data(), 1);
   var import_core_data5 = __toESM(require_core_data(), 1);
   var import_components55 = __toESM(require_components(), 1);
-  var import_element143 = __toESM(require_element(), 1);
+  var import_element144 = __toESM(require_element(), 1);
   var import_url5 = __toESM(require_url(), 1);
 
   // packages/media-fields/build-module/utils/get-media-type-from-mime-type.mjs
@@ -45666,9 +45696,9 @@ If there's a particular need for this, please submit a feature request at https:
     onError
   }) {
     const imageUrl = getBestImageUrl(item, configSizes);
-    const imgRef = (0, import_element143.useRef)(null);
-    const [loadingState, setLoadingState] = (0, import_element143.useState)("loading");
-    (0, import_element143.useLayoutEffect)(() => {
+    const imgRef = (0, import_element144.useRef)(null);
+    const [loadingState, setLoadingState] = (0, import_element144.useState)("loading");
+    (0, import_element144.useLayoutEffect)(() => {
       if (imgRef.current?.complete) {
         setLoadingState("instant");
       } else {
@@ -45706,7 +45736,7 @@ If there's a particular need for this, please submit a feature request at https:
     item,
     config
   }) {
-    const [imageError, setImageError] = (0, import_element143.useState)(false);
+    const [imageError, setImageError] = (0, import_element144.useState)(false);
     const _featuredMedia = (0, import_data12.useSelect)(
       (select3) => {
         if (!item.featured_media) {
@@ -45776,7 +45806,7 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/media-utils/build-module/components/media-upload-modal/upload-status-popover.mjs
-  var import_element144 = __toESM(require_element(), 1);
+  var import_element145 = __toESM(require_element(), 1);
   var import_i18n78 = __toESM(require_i18n(), 1);
   var import_components56 = __toESM(require_components(), 1);
   var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
@@ -45785,10 +45815,10 @@ If there's a particular need for this, please submit a feature request at https:
     onDismissError,
     onOpenChange
   }) {
-    const [isOpen, setIsOpen] = (0, import_element144.useState)(false);
-    const [prevHadErrors, setPrevHadErrors] = (0, import_element144.useState)(false);
-    const triggerRef = (0, import_element144.useRef)(null);
-    const updateIsOpen = (0, import_element144.useCallback)(
+    const [isOpen, setIsOpen] = (0, import_element145.useState)(false);
+    const [prevHadErrors, setPrevHadErrors] = (0, import_element145.useState)(false);
+    const triggerRef = (0, import_element145.useRef)(null);
+    const updateIsOpen = (0, import_element145.useCallback)(
       (open) => {
         setIsOpen(open);
         onOpenChange?.(open);
@@ -45803,7 +45833,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const hasErrors = errorFiles.length > 0;
     const isUploading = activeFiles.length > 0;
-    (0, import_element144.useEffect)(() => {
+    (0, import_element145.useEffect)(() => {
       if (hasErrors && !prevHadErrors) {
         updateIsOpen(true);
       }
@@ -45903,38 +45933,38 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/use-invalidate-attachment-resolutions.mjs
-  var import_element145 = __toESM(require_element(), 1);
+  var import_element146 = __toESM(require_element(), 1);
   var import_data13 = __toESM(require_data(), 1);
   function useInvalidateAttachmentResolutions() {
     const registry = (0, import_data13.useRegistry)();
-    return (0, import_element145.useCallback)(
+    return (0, import_element146.useCallback)(
       () => invalidateAttachmentResolutions(registry),
       [registry]
     );
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/use-upload-status.mjs
-  var import_element146 = __toESM(require_element(), 1);
+  var import_element147 = __toESM(require_element(), 1);
   var import_blob2 = __toESM(require_blob(), 1);
   var idCounter = 0;
   var batchIdCounter = 0;
   function useUploadStatus({
     onBatchComplete
   } = {}) {
-    const [uploadingFiles, setUploadingFiles] = (0, import_element146.useState)(
+    const [uploadingFiles, setUploadingFiles] = (0, import_element147.useState)(
       []
     );
-    const clearCompleted = (0, import_element146.useCallback)(() => {
+    const clearCompleted = (0, import_element147.useCallback)(() => {
       setUploadingFiles(
         (prev) => prev.filter((item) => item.status !== "uploaded")
       );
     }, []);
-    const dismissError = (0, import_element146.useCallback)((fileId) => {
+    const dismissError = (0, import_element147.useCallback)((fileId) => {
       setUploadingFiles(
         (prev) => prev.filter((item) => item.id !== fileId)
       );
     }, []);
-    const registerBatch = (0, import_element146.useCallback)(
+    const registerBatch = (0, import_element147.useCallback)(
       (files) => {
         const batchId = String(++batchIdCounter);
         const batchSize = files.length;
@@ -46088,12 +46118,12 @@ If there's a particular need for this, please submit a feature request at https:
     search = true,
     searchLabel = (0, import_i18n79.__)("Search media")
   }) {
-    const [selection, setSelection] = (0, import_element147.useState)(
+    const [selection, setSelection] = (0, import_element148.useState)(
       () => getSelectionFromValue(value)
     );
     const { createSuccessNotice, removeAllNotices } = (0, import_data14.useDispatch)(import_notices.store);
     const invalidateAttachmentResolutions2 = useInvalidateAttachmentResolutions();
-    const [queryParams, setQueryParams] = (0, import_element147.useState)(
+    const [queryParams, setQueryParams] = (0, import_element148.useState)(
       () => defaultQueryParams
     );
     const { view, updateView, isModified, resetToDefault } = useView({
@@ -46104,7 +46134,7 @@ If there's a particular need for this, please submit a feature request at https:
       queryParams,
       onChangeQueryParams: setQueryParams
     });
-    const handleChangeView = (0, import_element147.useCallback)(
+    const handleChangeView = (0, import_element148.useCallback)(
       (nextView) => {
         const normalizedView = { ...nextView };
         if (normalizedView.startPosition === void 0) {
@@ -46114,7 +46144,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [updateView]
     );
-    const queryArgs = (0, import_element147.useMemo)(() => {
+    const queryArgs = (0, import_element148.useMemo)(() => {
       const filters = {};
       view.filters?.forEach((filter) => {
         if (filter.field === "media_type") {
@@ -46170,7 +46200,7 @@ If there's a particular need for this, please submit a feature request at https:
         ...filters
       };
     }, [view, allowedTypes]);
-    const handleBatchComplete = (0, import_element147.useCallback)(
+    const handleBatchComplete = (0, import_element148.useCallback)(
       (attachments) => {
         const uploadedIds = attachments.map((attachment) => String(attachment.id)).filter(Boolean);
         if (multiple) {
@@ -46195,8 +46225,8 @@ If there's a particular need for this, please submit a feature request at https:
       clearCompleted,
       allComplete
     } = useUploadStatus({ onBatchComplete: handleBatchComplete });
-    const isPopoverOpenRef = (0, import_element147.useRef)(false);
-    const handlePopoverOpenChange = (0, import_element147.useCallback)(
+    const isPopoverOpenRef = (0, import_element148.useRef)(false);
+    const handlePopoverOpenChange = (0, import_element148.useCallback)(
       (open) => {
         isPopoverOpenRef.current = open;
         if (!open) {
@@ -46211,7 +46241,7 @@ If there's a particular need for this, please submit a feature request at https:
       totalItems,
       totalPages
     } = useEntityRecordsWithPermissions("postType", "attachment", queryArgs);
-    const fields = (0, import_element147.useMemo)(
+    const fields = (0, import_element148.useMemo)(
       () => [
         // Media field definitions from @wordpress/media-fields
         // Cast is safe because RestAttachment has the same properties as Attachment
@@ -46243,7 +46273,7 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       []
     );
-    const actions = (0, import_element147.useMemo)(
+    const actions = (0, import_element148.useMemo)(
       () => [
         {
           id: "select",
@@ -46274,15 +46304,15 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       [multiple, onSelect, selection, removeAllNotices]
     );
-    const handleModalClose = (0, import_element147.useCallback)(() => {
+    const handleModalClose = (0, import_element148.useCallback)(() => {
       removeAllNotices("snackbar", NOTICES_CONTEXT);
       onClose?.();
     }, [removeAllNotices, onClose]);
-    const valueRef = (0, import_element147.useRef)(value);
-    (0, import_element147.useEffect)(() => {
+    const valueRef = (0, import_element148.useRef)(value);
+    (0, import_element148.useEffect)(() => {
       valueRef.current = value;
     }, [value]);
-    (0, import_element147.useEffect)(() => {
+    (0, import_element148.useEffect)(() => {
       if (isOpen) {
         setSelection(getSelectionFromValue(valueRef.current));
       } else {
@@ -46290,8 +46320,8 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }, [isOpen]);
     const handleUpload = onUpload || uploadMedia;
-    const prevAllCompleteRef = (0, import_element147.useRef)(false);
-    (0, import_element147.useEffect)(() => {
+    const prevAllCompleteRef = (0, import_element148.useRef)(false);
+    (0, import_element148.useEffect)(() => {
       if (allComplete && !prevAllCompleteRef.current) {
         const completeCount = uploadingFiles.filter(
           (file) => file.status === "uploaded"
@@ -46320,7 +46350,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       prevAllCompleteRef.current = allComplete;
     }, [allComplete, uploadingFiles, createSuccessNotice, clearCompleted]);
-    const handleFileSelect = (0, import_element147.useCallback)(
+    const handleFileSelect = (0, import_element148.useCallback)(
       (event) => {
         const files = event.target.files;
         if (files && files.length > 0) {
@@ -46336,14 +46366,14 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [allowedTypes, handleUpload, registerBatch]
     );
-    const paginationInfo = (0, import_element147.useMemo)(
+    const paginationInfo = (0, import_element148.useMemo)(
       () => ({
         totalItems,
         totalPages
       }),
       [totalItems, totalPages]
     );
-    const acceptTypes = (0, import_element147.useMemo)(() => {
+    const acceptTypes = (0, import_element148.useMemo)(() => {
       if (allowedTypes?.includes("*")) {
         return void 0;
       }
@@ -46477,7 +46507,7 @@ If there's a particular need for this, please submit a feature request at https:
               ]
             }
           ),
-          (0, import_element147.createPortal)(
+          (0, import_element148.createPortal)(
             /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
               import_notices.SnackbarNotices,
               {
