@@ -24980,7 +24980,7 @@ var import_core_data3 = __toESM(require_core_data());
 var import_data5 = __toESM(require_data());
 var import_editor = __toESM(require_editor());
 var import_html_entities = __toESM(require_html_entities());
-var import_i18n46 = __toESM(require_i18n());
+var import_i18n47 = __toESM(require_i18n());
 
 // packages/media-editor/build-module/components/media-editor-provider/index.mjs
 var import_element69 = __toESM(require_element(), 1);
@@ -26197,8 +26197,8 @@ function Combobox({
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
 var import_components14 = __toESM(require_components(), 1);
 var import_element85 = __toESM(require_element(), 1);
-var import_i18n15 = __toESM(require_i18n(), 1);
-var import_date4 = __toESM(require_date(), 1);
+var import_i18n16 = __toESM(require_i18n(), 1);
+var import_date5 = __toESM(require_date(), 1);
 import { speak as speak2 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
@@ -26340,13 +26340,38 @@ function getCalendarLocale(wpLocale) {
   return normalized.join("-");
 }
 
-// packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
+// packages/dataviews/build-module/components/dataform-controls/utils/get-timezone-description.mjs
 var import_date3 = __toESM(require_date(), 1);
+var import_i18n15 = __toESM(require_i18n(), 1);
+function getTimezoneDescription() {
+  const { timezone } = (0, import_date3.getSettings)();
+  const userTimezoneOffset = -1 * ((/* @__PURE__ */ new Date()).getTimezoneOffset() / 60);
+  if (Number(timezone.offset) === userTimezoneOffset) {
+    return void 0;
+  }
+  const offsetSymbol = Number(timezone.offset) >= 0 ? "+" : "";
+  const zoneAbbr = "" !== timezone.abbr && isNaN(Number(timezone.abbr)) ? timezone.abbr : `UTC${offsetSymbol}${timezone.offsetFormatted}`;
+  const prettyTimezoneString = timezone.string.replaceAll("_", " ");
+  let timezoneDetail = zoneAbbr;
+  if ("UTC" === timezone.string) {
+    timezoneDetail = (0, import_i18n15.__)("Coordinated Universal Time");
+  } else if (prettyTimezoneString.trim().length > 0) {
+    timezoneDetail = `(${zoneAbbr}) ${prettyTimezoneString}`;
+  }
+  return (0, import_i18n15.sprintf)(
+    /* translators: %s: timezone detail, e.g. "(CEST) Europe/Madrid" or "UTC+3". */
+    (0, import_i18n15.__)("Timezone: %s"),
+    timezoneDetail
+  );
+}
+
+// packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
+var import_date4 = __toESM(require_date(), 1);
 function parseDateTime(dateTimeString) {
   if (!dateTimeString) {
     return null;
   }
-  const parsed = (0, import_date3.getDate)(dateTimeString);
+  const parsed = (0, import_date4.getDate)(dateTimeString);
   return parsed && isValid(parsed) ? parsed : null;
 }
 
@@ -26356,7 +26381,7 @@ var formatDateTime = (value) => {
   if (!value) {
     return "";
   }
-  return (0, import_date4.dateI18n)("Y-m-d\\TH:i", (0, import_date4.getDate)(value));
+  return (0, import_date5.dateI18n)("Y-m-d\\TH:i", (0, import_date5.getDate)(value));
 };
 function CalendarDateTimeControl({
   data,
@@ -26372,8 +26397,8 @@ function CalendarDateTimeControl({
   const disabled2 = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
-  const { timezone } = (0, import_date4.getSettings)();
-  const timeZone = timezone.string || (0, import_date4.dateI18n)("P");
+  const { timezone } = (0, import_date5.getSettings)();
+  const timeZone = timezone.string || (0, import_date5.dateI18n)("P");
   const [calendarMonth, setCalendarMonth] = (0, import_element85.useState)(() => {
     const parsedDate = parseDateTime(value);
     return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timeZone);
@@ -26403,9 +26428,9 @@ function CalendarDateTimeControl({
   const onSelectDate = (0, import_element85.useCallback)(
     (newDate) => {
       if (newDate) {
-        const wpDate = (0, import_date4.dateI18n)("Y-m-d", newDate);
-        const wpTime = value ? (0, import_date4.dateI18n)("H:i", (0, import_date4.getDate)(value)) : "00:00";
-        const finalDateTime = (0, import_date4.getDate)(`${wpDate}T${wpTime}`);
+        const wpDate = (0, import_date5.dateI18n)("Y-m-d", newDate);
+        const wpTime = value ? (0, import_date5.dateI18n)("H:i", (0, import_date5.getDate)(value)) : "00:00";
+        const finalDateTime = (0, import_date5.getDate)(`${wpDate}T${wpTime}`);
         onChangeCallback(finalDateTime.toISOString());
       } else {
         onChangeCallback(void 0);
@@ -26429,7 +26454,7 @@ function CalendarDateTimeControl({
   const handleManualDateTimeChange = (0, import_element85.useCallback)(
     (newValue) => {
       if (newValue) {
-        const dateTime = (0, import_date4.getDate)(newValue);
+        const dateTime = (0, import_date5.getDate)(newValue);
         onChangeCallback(dateTime.toISOString());
         const parsedDate = parseDateTime(dateTime.toISOString());
         if (parsedDate) {
@@ -26442,13 +26467,13 @@ function CalendarDateTimeControl({
     [onChangeCallback, timeZone]
   );
   const { format: fieldFormat } = field;
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
-  const locale = getCalendarLocale((0, import_date4.getSettings)().l10n.locale);
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
+  const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n15.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n16.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n15.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n16.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
     import_components14.BaseControl,
@@ -26465,11 +26490,12 @@ function CalendarDateTimeControl({
             required: !!isValid2?.required,
             customValidity: getCustomValidity(isValid2, validity),
             type: "datetime-local",
-            label: (0, import_i18n15.__)("Date time"),
+            label: (0, import_i18n16.__)("Date time"),
             hideLabelFromVision: true,
             value: formatDateTime(value),
             onValueChange: handleManualDateTimeChange,
             disabled: disabled2,
+            description: getTimezoneDescription(),
             min: minConstraint ? formatDateTime(minConstraint) : void 0,
             max: maxConstraint ? formatDateTime(maxConstraint) : void 0
           }
@@ -26484,7 +26510,7 @@ function CalendarDateTimeControl({
             onMonthChange: setCalendarMonth,
             timeZone,
             locale,
-            dir: (0, import_i18n15.isRTL)() ? "rtl" : "ltr",
+            dir: (0, import_i18n16.isRTL)() ? "rtl" : "ltr",
             weekStartsOn,
             disabled: disabled2 || disabledMatchers
           }
@@ -26533,37 +26559,37 @@ function DateTime({
 // packages/dataviews/build-module/components/dataform-controls/date.mjs
 var import_components15 = __toESM(require_components(), 1);
 var import_element86 = __toESM(require_element(), 1);
-var import_i18n16 = __toESM(require_i18n(), 1);
-var import_date5 = __toESM(require_date(), 1);
+var import_i18n17 = __toESM(require_i18n(), 1);
+var import_date6 = __toESM(require_date(), 1);
 import { speak as speak3 } from "@wordpress/a11y";
 var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
 var DATE_PRESETS = [
   {
     id: "today",
-    label: (0, import_i18n16.__)("Today"),
-    getValue: () => (0, import_date5.getDate)(null)
+    label: (0, import_i18n17.__)("Today"),
+    getValue: () => (0, import_date6.getDate)(null)
   },
   {
     id: "yesterday",
-    label: (0, import_i18n16.__)("Yesterday"),
+    label: (0, import_i18n17.__)("Yesterday"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subDays(today, 1);
     }
   },
   {
     id: "past-week",
-    label: (0, import_i18n16.__)("Past week"),
+    label: (0, import_i18n17.__)("Past week"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subDays(today, 7);
     }
   },
   {
     id: "past-month",
-    label: (0, import_i18n16.__)("Past month"),
+    label: (0, import_i18n17.__)("Past month"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subMonths(today, 1);
     }
   }
@@ -26571,41 +26597,41 @@ var DATE_PRESETS = [
 var DATE_RANGE_PRESETS = [
   {
     id: "last-7-days",
-    label: (0, import_i18n16.__)("Last 7 days"),
+    label: (0, import_i18n17.__)("Last 7 days"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subDays(today, 7), today];
     }
   },
   {
     id: "last-30-days",
-    label: (0, import_i18n16.__)("Last 30 days"),
+    label: (0, import_i18n17.__)("Last 30 days"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subDays(today, 30), today];
     }
   },
   {
     id: "month-to-date",
-    label: (0, import_i18n16.__)("Month to date"),
+    label: (0, import_i18n17.__)("Month to date"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [startOfMonth(today), today];
     }
   },
   {
     id: "last-year",
-    label: (0, import_i18n16.__)("Last year"),
+    label: (0, import_i18n17.__)("Last year"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subYears(today, 1), today];
     }
   },
   {
     id: "year-to-date",
-    label: (0, import_i18n16.__)("Year to date"),
+    label: (0, import_i18n17.__)("Year to date"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [startOfYear(today), today];
     }
   }
@@ -26730,8 +26756,8 @@ function CalendarDateControl({
   const [selectedPresetId, setSelectedPresetId] = (0, import_element86.useState)(
     null
   );
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
-  const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
+  const locale = getCalendarLocale((0, import_date6.getSettings)().l10n.locale);
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
   const [calendarMonth, setCalendarMonth] = (0, import_element86.useState)(() => {
@@ -26789,9 +26815,9 @@ function CalendarDateControl({
   );
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n16.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n17.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n16.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n17.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
     ValidatedDateControl,
@@ -26844,7 +26870,7 @@ function CalendarDateControl({
                       size: "small",
                       disabled: !!selectedPresetId || disabled2,
                       accessibleWhenDisabled: true,
-                      children: (0, import_i18n16.__)("Custom")
+                      children: (0, import_i18n17.__)("Custom")
                     }
                   )
                 ]
@@ -26855,7 +26881,7 @@ function CalendarDateControl({
               {
                 ref: validityTargetRef,
                 type: "date",
-                label: (0, import_i18n16.__)("Date"),
+                label: (0, import_i18n17.__)("Date"),
                 hideLabelFromVision: true,
                 value,
                 onChange: handleManualDateChange,
@@ -26874,7 +26900,7 @@ function CalendarDateControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 locale,
-                dir: (0, import_i18n16.isRTL)() ? "rtl" : "ltr",
+                dir: (0, import_i18n17.isRTL)() ? "rtl" : "ltr",
                 weekStartsOn,
                 disabled: disabled2 || disabledMatchers,
                 disableNavigation: disabled2
@@ -26909,8 +26935,8 @@ function CalendarDateRangeControl({
   if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
     value = fieldValue;
   }
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
-  const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
+  const locale = getCalendarLocale((0, import_date6.getSettings)().l10n.locale);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
   const onChangeCallback = (0, import_element86.useCallback)(
     (newValue) => {
@@ -27014,9 +27040,9 @@ function CalendarDateRangeControl({
   );
   let displayLabel = label;
   if (field.isValid?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n16.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n17.__)("Required")})`;
   } else if (!field.isValid?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n16.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n17.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
     ValidatedDateControl,
@@ -27069,7 +27095,7 @@ function CalendarDateRangeControl({
                       size: "small",
                       accessibleWhenDisabled: true,
                       disabled: !!selectedPresetId || disabled2,
-                      children: (0, import_i18n16.__)("Custom")
+                      children: (0, import_i18n17.__)("Custom")
                     }
                   )
                 ]
@@ -27088,7 +27114,7 @@ function CalendarDateRangeControl({
                     {
                       ref: fromInputRef,
                       type: "date",
-                      label: (0, import_i18n16.__)("From"),
+                      label: (0, import_i18n17.__)("From"),
                       hideLabelFromVision: true,
                       value: value?.[0],
                       onChange: (newValue) => handleManualDateChange("from", newValue),
@@ -27103,7 +27129,7 @@ function CalendarDateRangeControl({
                     {
                       ref: toInputRef,
                       type: "date",
-                      label: (0, import_i18n16.__)("To"),
+                      label: (0, import_i18n17.__)("To"),
                       hideLabelFromVision: true,
                       value: value?.[1],
                       onChange: (newValue) => handleManualDateChange("to", newValue),
@@ -27125,7 +27151,7 @@ function CalendarDateRangeControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 locale,
-                dir: (0, import_i18n16.isRTL)() ? "rtl" : "ltr",
+                dir: (0, import_i18n17.isRTL)() ? "rtl" : "ltr",
                 weekStartsOn,
                 disabled: disabled2 || disabledMatchers
               }
@@ -27378,7 +27404,7 @@ function Url({
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
 var import_components17 = __toESM(require_components(), 1);
 var import_element89 = __toESM(require_element(), 1);
-var import_i18n17 = __toESM(require_i18n(), 1);
+var import_i18n18 = __toESM(require_i18n(), 1);
 var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
@@ -27405,12 +27431,12 @@ function BetweenControls({
   return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
     import_components17.BaseControl,
     {
-      help: (0, import_i18n17.__)("The max. value must be greater than the min. value."),
+      help: (0, import_i18n18.__)("The max. value must be greater than the min. value."),
       children: /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(import_components17.Flex, { direction: "row", gap: 4, children: [
         /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
           import_components17.__experimentalNumberControl,
           {
-            label: (0, import_i18n17.__)("Min."),
+            label: (0, import_i18n18.__)("Min."),
             value: min4,
             max: max4 ? Number(max4) - step : void 0,
             onChange: onChangeMin,
@@ -27421,7 +27447,7 @@ function BetweenControls({
         /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
           import_components17.__experimentalNumberControl,
           {
-            label: (0, import_i18n17.__)("Max."),
+            label: (0, import_i18n18.__)("Max."),
             value: max4,
             min: min4 ? Number(min4) + step : void 0,
             onChange: onChangeMax,
@@ -27596,7 +27622,7 @@ function Text3({
 // packages/dataviews/build-module/components/dataform-controls/time.mjs
 var import_components19 = __toESM(require_components(), 1);
 var import_element92 = __toESM(require_element(), 1);
-var import_i18n18 = __toESM(require_i18n(), 1);
+var import_i18n19 = __toESM(require_i18n(), 1);
 var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
 function getStep(timeFormat, values) {
   const tokens = (timeFormat ?? "").replace(/\\./g, "");
@@ -27638,13 +27664,13 @@ function BetweenControls2({
   return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
     import_components19.BaseControl,
     {
-      help: (0, import_i18n18.__)("The end time must be later than the start time."),
+      help: (0, import_i18n19.__)("The end time must be later than the start time."),
       children: /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
         /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
           ValidatedInputControl,
           {
             type: "time",
-            label: (0, import_i18n18.__)("From"),
+            label: (0, import_i18n19.__)("From"),
             value: from,
             onValueChange: onChangeFrom,
             hideLabelFromVision,
@@ -27658,7 +27684,7 @@ function BetweenControls2({
           ValidatedInputControl,
           {
             type: "time",
-            label: (0, import_i18n18.__)("To"),
+            label: (0, import_i18n19.__)("To"),
             value: to,
             onValueChange: onChangeTo,
             hideLabelFromVision,
@@ -28131,7 +28157,7 @@ var w = function(r3) {
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
 var import_components22 = __toESM(require_components(), 1);
 var import_element97 = __toESM(require_element(), 1);
-var import_i18n19 = __toESM(require_i18n(), 1);
+var import_i18n20 = __toESM(require_i18n(), 1);
 var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
 var ColorPickerDropdown = ({
   color,
@@ -28148,7 +28174,7 @@ var ColorPickerDropdown = ({
         import_components22.Button,
         {
           onClick: onToggle,
-          "aria-label": (0, import_i18n19.__)("Open color picker"),
+          "aria-label": (0, import_i18n20.__)("Open color picker"),
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
@@ -28219,7 +28245,7 @@ function Color({
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
 var import_components23 = __toESM(require_components(), 1);
 var import_element98 = __toESM(require_element(), 1);
-var import_i18n20 = __toESM(require_i18n(), 1);
+var import_i18n21 = __toESM(require_i18n(), 1);
 var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
@@ -28251,7 +28277,7 @@ function Password({
             icon: isVisible ? unseen_default : seen_default,
             onClick: toggleVisibility,
             size: "small",
-            label: isVisible ? (0, import_i18n20.__)("Hide password") : (0, import_i18n20.__)("Show password"),
+            label: isVisible ? (0, import_i18n21.__)("Hide password") : (0, import_i18n21.__)("Show password"),
             disabled: disabled2,
             accessibleWhenDisabled: true
           }
@@ -28376,7 +28402,7 @@ var setValueFromId = (id) => ({ value }) => {
 var set_value_from_id_default = setValueFromId;
 
 // packages/dataviews/build-module/field-types/email.mjs
-var import_i18n21 = __toESM(require_i18n(), 1);
+var import_i18n22 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
 function RenderFromElements({
@@ -28486,7 +28512,7 @@ var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{
 function isValidCustom(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-    return (0, import_i18n21.__)("Value must be a valid email address.");
+    return (0, import_i18n22.__)("Value must be a valid email address.");
   }
   return null;
 }
@@ -28523,7 +28549,7 @@ var email_default = {
 };
 
 // packages/dataviews/build-module/field-types/integer.mjs
-var import_i18n22 = __toESM(require_i18n(), 1);
+var import_i18n23 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/sort-number.mjs
 var sort_number_default = (a2, b2, direction) => {
@@ -28589,7 +28615,7 @@ function getValueFormatted2({
 function isValidCustom2(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-    return (0, import_i18n22.__)("Value must be an integer.");
+    return (0, import_i18n23.__)("Value must be an integer.");
   }
   return null;
 }
@@ -28636,7 +28662,7 @@ var integer_default = {
 };
 
 // packages/dataviews/build-module/field-types/number.mjs
-var import_i18n23 = __toESM(require_i18n(), 1);
+var import_i18n24 = __toESM(require_i18n(), 1);
 var format3 = {
   separatorThousand: ",",
   separatorDecimal: ".",
@@ -28672,7 +28698,7 @@ function isEmpty(value) {
 function isValidCustom3(item, field) {
   const value = field.getValue({ item });
   if (!isEmpty(value) && !Number.isFinite(value)) {
-    return (0, import_i18n23.__)("Value must be a number.");
+    return (0, import_i18n24.__)("Value must be a number.");
   }
   return null;
 }
@@ -28752,15 +28778,15 @@ var text_default = {
 };
 
 // packages/dataviews/build-module/field-types/datetime.mjs
-var import_date8 = __toESM(require_date(), 1);
+var import_date9 = __toESM(require_date(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-boundary.mjs
-var import_date7 = __toESM(require_date(), 1);
+var import_date8 = __toESM(require_date(), 1);
 function parseDateLike(value) {
   if (!isValid(new Date(value))) {
     return null;
   }
-  const parsed = (0, import_date7.getDate)(value);
+  const parsed = (0, import_date8.getDate)(value);
   return parsed && isValid(parsed) ? parsed.getTime() : null;
 }
 function validateBoundary(item, field, boundary, parse2) {
@@ -28795,8 +28821,8 @@ function isValidMaxTime(item, field) {
 
 // packages/dataviews/build-module/field-types/datetime.mjs
 var format4 = {
-  datetime: (0, import_date8.getSettings)().formats.datetime,
-  weekStartsOn: (0, import_date8.getSettings)().l10n.startOfWeek
+  datetime: (0, import_date9.getSettings)().formats.datetime,
+  weekStartsOn: (0, import_date9.getSettings)().l10n.startOfWeek
 };
 function getValueFormatted4({
   item,
@@ -28812,7 +28838,7 @@ function getValueFormatted4({
   } else {
     formatDatetime = field.format;
   }
-  return (0, import_date8.dateI18n)(formatDatetime.datetime, (0, import_date8.getDate)(value));
+  return (0, import_date9.dateI18n)(formatDatetime.datetime, (0, import_date9.getDate)(value));
 }
 var sort = (a2, b2, direction) => {
   const timeA = new Date(a2).getTime();
@@ -28857,10 +28883,10 @@ var datetime_default = {
 };
 
 // packages/dataviews/build-module/field-types/date.mjs
-var import_date9 = __toESM(require_date(), 1);
+var import_date10 = __toESM(require_date(), 1);
 var format5 = {
-  date: (0, import_date9.getSettings)().formats.date,
-  weekStartsOn: (0, import_date9.getSettings)().l10n.startOfWeek
+  date: (0, import_date10.getSettings)().formats.date,
+  weekStartsOn: (0, import_date10.getSettings)().l10n.startOfWeek
 };
 function getValueFormatted5({
   item,
@@ -28876,7 +28902,7 @@ function getValueFormatted5({
   } else {
     formatDate2 = field.format;
   }
-  return (0, import_date9.dateI18n)(formatDate2.date, (0, import_date9.getDate)(value));
+  return (0, import_date10.dateI18n)(formatDate2.date, (0, import_date10.getDate)(value));
 }
 var sort2 = (a2, b2, direction) => {
   const timeA = new Date(a2).getTime();
@@ -28923,9 +28949,9 @@ var date_default = {
 };
 
 // packages/dataviews/build-module/field-types/time.mjs
-var import_date10 = __toESM(require_date(), 1);
+var import_date11 = __toESM(require_date(), 1);
 var format6 = {
-  time: (0, import_date10.getSettings)().formats.time
+  time: (0, import_date11.getSettings)().formats.time
 };
 var ANCHOR_DATE = "2000-01-01";
 function toAnchoredDate(secondsSinceMidnight) {
@@ -28933,7 +28959,7 @@ function toAnchoredDate(secondsSinceMidnight) {
   const minutes = Math.floor(secondsSinceMidnight % 3600 / 60);
   const seconds = secondsSinceMidnight % 60;
   const time = [hours, minutes, seconds].map((part) => String(part).padStart(2, "0")).join(":");
-  return (0, import_date10.getDate)(`${ANCHOR_DATE}T${time}`);
+  return (0, import_date11.getDate)(`${ANCHOR_DATE}T${time}`);
 }
 function getValueFormatted6({
   item,
@@ -28949,7 +28975,7 @@ function getValueFormatted6({
   } else {
     formatTime = field.format;
   }
-  return (0, import_date10.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
+  return (0, import_date11.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
 }
 var sort3 = (a2, b2, direction) => {
   const timeA = parseTime2(a2);
@@ -28998,7 +29024,7 @@ var time_default = {
 };
 
 // packages/dataviews/build-module/field-types/boolean.mjs
-var import_i18n24 = __toESM(require_i18n(), 1);
+var import_i18n25 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
 function isValidRequiredForBool(item, field) {
@@ -29013,17 +29039,17 @@ function getValueFormatted7({
 }) {
   const value = field.getValue({ item });
   if (value === true) {
-    return (0, import_i18n24.__)("True");
+    return (0, import_i18n25.__)("True");
   }
   if (value === false) {
-    return (0, import_i18n24.__)("False");
+    return (0, import_i18n25.__)("False");
   }
   return "";
 }
 function isValidCustom4(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-    return (0, import_i18n24.__)("Value must be true, false, or undefined");
+    return (0, import_i18n25.__)("Value must be true, false, or undefined");
   }
   return null;
 }
@@ -29075,7 +29101,7 @@ var media_default = {
 };
 
 // packages/dataviews/build-module/field-types/array.mjs
-var import_i18n25 = __toESM(require_i18n(), 1);
+var import_i18n26 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
 function isValidRequiredForArray(item, field) {
@@ -29103,10 +29129,10 @@ function isValidCustom5(item, field) {
     return null;
   }
   if (!Array.isArray(value)) {
-    return (0, import_i18n25.__)("Value must be an array.");
+    return (0, import_i18n26.__)("Value must be an array.");
   }
   if (!value.every((v2) => typeof v2 === "string")) {
-    return (0, import_i18n25.__)("Every value must be a string.");
+    return (0, import_i18n26.__)("Every value must be a string.");
   }
   return null;
 }
@@ -29204,7 +29230,7 @@ var telephone_default = {
 };
 
 // packages/dataviews/build-module/field-types/color.mjs
-var import_i18n26 = __toESM(require_i18n(), 1);
+var import_i18n27 = __toESM(require_i18n(), 1);
 var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
@@ -29234,7 +29260,7 @@ function render3({ item, field }) {
 function isValidCustom6(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-    return (0, import_i18n26.__)("Value must be a valid color.");
+    return (0, import_i18n27.__)("Value must be a valid color.");
   }
   return null;
 }
@@ -29522,7 +29548,7 @@ var import_element100 = __toESM(require_element(), 1);
 var import_components24 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
-var import_i18n27 = __toESM(require_i18n(), 1);
+var import_i18n28 = __toESM(require_i18n(), 1);
 var DEFAULT_LAYOUT = {
   type: "regular",
   labelPosition: "top"
@@ -29553,14 +29579,14 @@ function normalizeLayout(layout) {
     if (typeof openAs === "object" && openAs.type === "modal") {
       normalizedOpenAs = {
         type: "modal",
-        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n27.__)("Apply"),
-        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n27.__)("Cancel")
+        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n28.__)("Apply"),
+        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n28.__)("Cancel")
       };
     } else if (openAs === "modal") {
       normalizedOpenAs = {
         type: "modal",
-        applyLabel: (0, import_i18n27.__)("Apply"),
-        cancelLabel: (0, import_i18n27.__)("Cancel")
+        applyLabel: (0, import_i18n28.__)("Apply"),
+        cancelLabel: (0, import_i18n28.__)("Cancel")
       };
     } else {
       normalizedOpenAs = { type: "dropdown" };
@@ -29760,7 +29786,7 @@ var import_compose14 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 var import_components26 = __toESM(require_components(), 1);
-var import_i18n28 = __toESM(require_i18n(), 1);
+var import_i18n29 = __toESM(require_i18n(), 1);
 var import_compose13 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
@@ -29858,13 +29884,13 @@ function SummaryButton({
     "dataforms-layouts-panel__field-control"
   );
   const errorId = `${controlId}-error`;
-  const ariaLabel = showError ? (0, import_i18n28.sprintf)(
+  const ariaLabel = showError ? (0, import_i18n29.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n28._x)("Edit %s (has errors)", "field"),
+    (0, import_i18n29._x)("Edit %s (has errors)", "field"),
     fieldLabel || ""
-  ) : (0, import_i18n28.sprintf)(
+  ) : (0, import_i18n29.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n28._x)("Edit %s", "field"),
+    (0, import_i18n29._x)("Edit %s", "field"),
     fieldLabel || ""
   );
   return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)("div", { className, children: [
@@ -29945,7 +29971,7 @@ function SummaryButton({
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es6 = __toESM(require_es6(), 1);
 var import_element101 = __toESM(require_element(), 1);
-var import_i18n29 = __toESM(require_i18n(), 1);
+var import_i18n30 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
     return true;
@@ -30064,7 +30090,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n29.__)("Could not validate elements.")
+              message: (0, import_i18n30.__)("Could not validate elements.")
             }
           },
           [...path, formField.id]
@@ -30083,7 +30109,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n29.__)(
+              message: (0, import_i18n30.__)(
                 "Value must be one of the elements."
               )
             }
@@ -30109,7 +30135,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n29.__)(
+      errorMessage = String(error2) || (0, import_i18n30.__)(
         "Unknown error when running elements validation asynchronously."
       );
     }
@@ -30168,7 +30194,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
         {
           custom: {
             type: "invalid",
-            message: (0, import_i18n29.__)("Validation could not be processed.")
+            message: (0, import_i18n30.__)("Validation could not be processed.")
           }
         },
         [...path, formField.id]
@@ -30183,7 +30209,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n29.__)(
+      errorMessage = String(error2) || (0, import_i18n30.__)(
         "Unknown error when running custom validation asynchronously."
       );
     }
@@ -30225,7 +30251,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       pattern: {
         type: "invalid",
-        message: (0, import_i18n29.__)("Value does not match the required pattern.")
+        message: (0, import_i18n30.__)("Value does not match the required pattern.")
       }
     };
   }
@@ -30233,7 +30259,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       min: {
         type: "invalid",
-        message: (0, import_i18n29.__)("Value is below the minimum.")
+        message: (0, import_i18n30.__)("Value is below the minimum.")
       }
     };
   }
@@ -30241,7 +30267,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       max: {
         type: "invalid",
-        message: (0, import_i18n29.__)("Value is above the maximum.")
+        message: (0, import_i18n30.__)("Value is above the maximum.")
       }
     };
   }
@@ -30249,7 +30275,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       minLength: {
         type: "invalid",
-        message: (0, import_i18n29.__)("Value is too short.")
+        message: (0, import_i18n30.__)("Value is too short.")
       }
     };
   }
@@ -30257,7 +30283,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       maxLength: {
         type: "invalid",
-        message: (0, import_i18n29.__)("Value is too long.")
+        message: (0, import_i18n30.__)("Value is too long.")
       }
     };
   }
@@ -30265,7 +30291,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       elements: {
         type: "invalid",
-        message: (0, import_i18n29.__)("Value must be one of the elements.")
+        message: (0, import_i18n30.__)("Value must be one of the elements.")
       }
     };
   }
@@ -30288,7 +30314,7 @@ function validateFormField(item, formField, promiseHandler) {
       if (error2 instanceof Error) {
         errorMessage = error2.message;
       } else {
-        errorMessage = String(error2) || (0, import_i18n29.__)("Unknown error when running custom validation.");
+        errorMessage = String(error2) || (0, import_i18n30.__)("Unknown error when running custom validation.");
       }
       return {
         custom: {
@@ -30315,14 +30341,14 @@ function validateFormField(item, formField, promiseHandler) {
     );
     fieldValidity.elements = {
       type: "validating",
-      message: (0, import_i18n29.__)("Validating\u2026")
+      message: (0, import_i18n30.__)("Validating\u2026")
     };
   }
   if (customError instanceof Promise) {
     handleCustomValidationAsync(customError, formField, promiseHandler);
     fieldValidity.custom = {
       type: "validating",
-      message: (0, import_i18n29.__)("Validating\u2026")
+      message: (0, import_i18n30.__)("Validating\u2026")
     };
   }
   if (Object.keys(fieldValidity).length > 0) {
@@ -30690,7 +30716,7 @@ var modal_default = PanelModal;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
 var import_components28 = __toESM(require_components(), 1);
-var import_i18n30 = __toESM(require_i18n(), 1);
+var import_i18n31 = __toESM(require_i18n(), 1);
 var import_element105 = __toESM(require_element(), 1);
 var import_compose15 = __toESM(require_compose(), 1);
 var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
@@ -30710,7 +30736,7 @@ function DropdownHeader({
         onClose && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
           import_components28.Button,
           {
-            label: (0, import_i18n30.__)("Close"),
+            label: (0, import_i18n31.__)("Close"),
             icon: close_small_default,
             onClick: onClose,
             size: "small"
@@ -30879,7 +30905,7 @@ var import_compose16 = __toESM(require_compose(), 1);
 import { speak as speak4 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
-var import_i18n31 = __toESM(require_i18n(), 1);
+var import_i18n32 = __toESM(require_i18n(), 1);
 function countInvalidFields(validity) {
   if (!validity) {
     return 0;
@@ -30906,9 +30932,9 @@ function getValidationMessage(validity) {
   if (invalidCount === 0) {
     return void 0;
   }
-  return (0, import_i18n31.sprintf)(
+  return (0, import_i18n32.sprintf)(
     /* translators: %d: Number of fields that need attention */
-    (0, import_i18n31._n)(
+    (0, import_i18n32._n)(
       "%d field needs attention",
       "%d fields need attention",
       invalidCount
@@ -31241,7 +31267,7 @@ function FormRowField({
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
 var import_element107 = __toESM(require_element(), 1);
-var import_i18n32 = __toESM(require_i18n(), 1);
+var import_i18n33 = __toESM(require_i18n(), 1);
 var import_compose17 = __toESM(require_compose(), 1);
 import { speak as speak5 } from "@wordpress/a11y";
 var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
@@ -31309,7 +31335,7 @@ function FormDetailsField({
   if (summaryField && summaryField.render) {
     summaryContent = /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(summaryField.render, { item: data, field: summaryField });
   } else {
-    summaryContent = field.label || (0, import_i18n32.__)("More details");
+    summaryContent = field.label || (0, import_i18n33.__)("More details");
   }
   return /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)(
     "details",
@@ -31514,7 +31540,7 @@ function DataForm({
 
 // packages/media-editor/build-module/components/media-form/index.mjs
 var import_components30 = __toESM(require_components(), 1);
-var import_i18n33 = __toESM(require_i18n(), 1);
+var import_i18n34 = __toESM(require_i18n(), 1);
 var import_jsx_runtime152 = __toESM(require_jsx_runtime(), 1);
 function MediaForm({
   form: formOverrides,
@@ -31552,7 +31578,7 @@ function MediaForm({
   };
   const form = formOverrides || defaultForm;
   return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(import_components30.__experimentalVStack, { spacing: 4, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("h2", {}), children: (0, import_i18n33.__)("Media details") }),
+    /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("h2", {}), children: (0, import_i18n34.__)("Media details") }),
     header,
     /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
       DataForm,
@@ -31657,7 +31683,7 @@ var store = (0, import_data.createReduxStore)(STORE_NAME, {
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
 var import_components37 = __toESM(require_components(), 1);
 var import_data4 = __toESM(require_data(), 1);
-var import_i18n45 = __toESM(require_i18n(), 1);
+var import_i18n46 = __toESM(require_i18n(), 1);
 var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
 var import_notices3 = __toESM(require_notices(), 1);
 
@@ -31667,17 +31693,17 @@ var import_compose18 = __toESM(require_compose(), 1);
 var import_data3 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
 var import_element127 = __toESM(require_element(), 1);
-var import_i18n44 = __toESM(require_i18n(), 1);
+var import_i18n45 = __toESM(require_i18n(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
 var import_notices2 = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
 var import_element120 = __toESM(require_element(), 1);
 var import_components32 = __toESM(require_components(), 1);
-var import_i18n38 = __toESM(require_i18n(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/constants.mjs
-var import_i18n34 = __toESM(require_i18n(), 1);
+var import_i18n35 = __toESM(require_i18n(), 1);
 var MIN_ZOOM = 1;
 var ABSOLUTE_MIN_ZOOM = 0.1;
 var MAX_ZOOM = 10;
@@ -31717,15 +31743,15 @@ var DEFAULT_STATE2 = {
 };
 var ORIGINAL_ASPECT_RATIO = -1;
 var DEFAULT_ASPECT_RATIOS = [
-  { label: (0, import_i18n34.__)("Free"), value: 0 },
-  { label: (0, import_i18n34.__)("Original"), value: ORIGINAL_ASPECT_RATIO },
-  { label: (0, import_i18n34.__)("Square (1:1)"), value: 1 },
-  { label: (0, import_i18n34.__)("Landscape (16:9)"), value: 16 / 9 },
-  { label: (0, import_i18n34.__)("Portrait (9:16)"), value: 9 / 16 },
-  { label: (0, import_i18n34.__)("Classic (4:3)"), value: 4 / 3 },
-  { label: (0, import_i18n34.__)("Classic portrait (3:4)"), value: 3 / 4 },
-  { label: (0, import_i18n34.__)("Photo (3:2)"), value: 3 / 2 },
-  { label: (0, import_i18n34.__)("Photo portrait (2:3)"), value: 2 / 3 }
+  { label: (0, import_i18n35.__)("Free"), value: 0 },
+  { label: (0, import_i18n35.__)("Original"), value: ORIGINAL_ASPECT_RATIO },
+  { label: (0, import_i18n35.__)("Square (1:1)"), value: 1 },
+  { label: (0, import_i18n35.__)("Landscape (16:9)"), value: 16 / 9 },
+  { label: (0, import_i18n35.__)("Portrait (9:16)"), value: 9 / 16 },
+  { label: (0, import_i18n35.__)("Classic (4:3)"), value: 4 / 3 },
+  { label: (0, import_i18n35.__)("Classic portrait (3:4)"), value: 3 / 4 },
+  { label: (0, import_i18n35.__)("Photo (3:2)"), value: 3 / 2 },
+  { label: (0, import_i18n35.__)("Photo portrait (2:3)"), value: 2 / 3 }
 ];
 
 // node_modules/gl-matrix/esm/common.js
@@ -33111,7 +33137,7 @@ function buildCropperSetters(dispatchCropperAction, getCropperState) {
 
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
 var import_element117 = __toESM(require_element(), 1);
-var import_i18n37 = __toESM(require_i18n(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/crop-rect.mjs
 function computeInscribedRect(aspectRatio, visualSize) {
@@ -34118,7 +34144,7 @@ function useTransformStyle(state, imageSize) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
 var import_element112 = __toESM(require_element(), 1);
-var import_i18n35 = __toESM(require_i18n(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
 import { speak as speak6 } from "@wordpress/a11y";
 
 // packages/media-editor/build-module/image-editor/core/source-region.mjs
@@ -34285,15 +34311,15 @@ function getFlipAnnouncement(state, previousState) {
   }
   const { horizontal, vertical } = state.flip;
   if (horizontal && vertical) {
-    return (0, import_i18n35.__)("Flipped horizontally and vertically");
+    return (0, import_i18n36.__)("Flipped horizontally and vertically");
   }
   if (horizontal) {
-    return (0, import_i18n35.__)("Flipped horizontally");
+    return (0, import_i18n36.__)("Flipped horizontally");
   }
   if (vertical) {
-    return (0, import_i18n35.__)("Flipped vertically");
+    return (0, import_i18n36.__)("Flipped vertically");
   }
-  return (0, import_i18n35.__)("Flip removed");
+  return (0, import_i18n36.__)("Flip removed");
 }
 function getRotationAnnouncement(state, previousState) {
   if (previousState && Math.round(previousState.rotation) === Math.round(state.rotation)) {
@@ -34309,18 +34335,18 @@ function getRotationAnnouncement(state, previousState) {
     visualRotation += 360;
   }
   if (visualRotation === 0) {
-    return previousState ? (0, import_i18n35.__)("Rotation 0 degrees") : void 0;
+    return previousState ? (0, import_i18n36.__)("Rotation 0 degrees") : void 0;
   }
   if (visualRotation > 0) {
-    return (0, import_i18n35.sprintf)(
+    return (0, import_i18n36.sprintf)(
       /* translators: %d: rotation angle in degrees. */
-      (0, import_i18n35.__)("Rotated %d degrees clockwise"),
+      (0, import_i18n36.__)("Rotated %d degrees clockwise"),
       visualRotation
     );
   }
-  return (0, import_i18n35.sprintf)(
+  return (0, import_i18n36.sprintf)(
     /* translators: %d: rotation angle in degrees. */
-    (0, import_i18n35.__)("Rotated %d degrees counterclockwise"),
+    (0, import_i18n36.__)("Rotated %d degrees counterclockwise"),
     Math.abs(visualRotation)
   );
 }
@@ -34342,9 +34368,9 @@ function getCropAnnouncement(state, previousState) {
       return void 0;
     }
   }
-  return (0, import_i18n35.sprintf)(
+  return (0, import_i18n36.sprintf)(
     /* translators: 1: crop width in pixels, 2: crop height in pixels. */
-    (0, import_i18n35.__)("Crop %1$d by %2$d pixels"),
+    (0, import_i18n36.__)("Crop %1$d by %2$d pixels"),
     Math.round(region.width),
     Math.round(region.height)
   );
@@ -34353,9 +34379,9 @@ function getZoomAnnouncement(state, previousState) {
   if (previousState && Math.round(previousState.zoom * 100) === Math.round(state.zoom * 100)) {
     return void 0;
   }
-  return (0, import_i18n35.sprintf)(
+  return (0, import_i18n36.sprintf)(
     /* translators: %d: zoom level as a percentage. */
-    (0, import_i18n35.__)("Zoom %d%%"),
+    (0, import_i18n36.__)("Zoom %d%%"),
     Math.round(state.zoom * 100)
   );
 }
@@ -34405,7 +34431,7 @@ function useAriaAnnouncer(state) {
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
 var import_element113 = __toESM(require_element(), 1);
-var import_i18n36 = __toESM(require_i18n(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/react/visually-hidden-style.mjs
 var VISUALLY_HIDDEN_STYLE = {
@@ -34436,21 +34462,21 @@ var ALL_POSITIONS = [
 function getHandleLabel(pos) {
   switch (pos) {
     case "n":
-      return (0, import_i18n36.__)("Resize from top edge");
+      return (0, import_i18n37.__)("Resize from top edge");
     case "s":
-      return (0, import_i18n36.__)("Resize from bottom edge");
+      return (0, import_i18n37.__)("Resize from bottom edge");
     case "e":
-      return (0, import_i18n36.__)("Resize from right edge");
+      return (0, import_i18n37.__)("Resize from right edge");
     case "w":
-      return (0, import_i18n36.__)("Resize from left edge");
+      return (0, import_i18n37.__)("Resize from left edge");
     case "nw":
-      return (0, import_i18n36.__)("Resize from top-left corner");
+      return (0, import_i18n37.__)("Resize from top-left corner");
     case "ne":
-      return (0, import_i18n36.__)("Resize from top-right corner");
+      return (0, import_i18n37.__)("Resize from top-right corner");
     case "sw":
-      return (0, import_i18n36.__)("Resize from bottom-left corner");
+      return (0, import_i18n37.__)("Resize from bottom-left corner");
     case "se":
-      return (0, import_i18n36.__)("Resize from bottom-right corner");
+      return (0, import_i18n37.__)("Resize from bottom-right corner");
   }
 }
 var KEYBOARD_SETTLE_DELAY = 500;
@@ -34767,7 +34793,7 @@ function RectangleStencil({
           {
             id: resizeHandleDescriptionId,
             style: VISUALLY_HIDDEN_STYLE,
-            children: (0, import_i18n36.__)(
+            children: (0, import_i18n37.__)(
               "Use arrow keys to resize the crop area. Hold Shift for larger steps."
             )
           }
@@ -35687,7 +35713,7 @@ function CropperInner({
           ),
           tabIndex: 0,
           role: "group",
-          "aria-label": (0, import_i18n37.__)("Crop area"),
+          "aria-label": (0, import_i18n38.__)("Crop area"),
           "aria-describedby": isCropAreaFocused ? cropAreaDescriptionId : void 0,
           onFocus: handleCropAreaFocus,
           onBlur: handleCropAreaBlur,
@@ -35698,7 +35724,7 @@ function CropperInner({
               {
                 id: cropAreaDescriptionId,
                 style: VISUALLY_HIDDEN_STYLE,
-                children: (0, import_i18n37.__)(
+                children: (0, import_i18n38.__)(
                   "When this area is focused, use arrow keys to move the image and plus or minus to zoom. Tab to resize handles and controls."
                 )
               }
@@ -36208,7 +36234,7 @@ function MediaEditorCanvas({
     return null;
   }
   if (status === "error") {
-    return /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("div", { className: "media-editor-canvas__error", role: "alert", children: /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("p", { children: (0, import_i18n38.__)("Failed to load image.") }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("div", { className: "media-editor-canvas__error", role: "alert", children: /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("p", { children: (0, import_i18n39.__)("Failed to load image.") }) }) });
   }
   return /* @__PURE__ */ (0, import_jsx_runtime160.jsxs)("div", { className: "media-editor-canvas", children: [
     status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("div", { className: "media-editor-canvas__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(import_components32.Spinner, {}) }),
@@ -36237,7 +36263,7 @@ function MediaEditorCanvas({
 }
 
 // packages/media-editor/build-module/components/media-editor-fine-rotation/index.mjs
-var import_i18n39 = __toESM(require_i18n(), 1);
+var import_i18n40 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/hooks/use-crop-gesture-handlers.mjs
 var import_element121 = __toESM(require_element(), 1);
@@ -36608,7 +36634,7 @@ function MediaEditorFineRotation({
       children: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
         RotationRuler,
         {
-          label: (0, import_i18n39.__)("Fine rotation"),
+          label: (0, import_i18n40.__)("Fine rotation"),
           min: -MAX_ROTATION_OFFSET,
           max: MAX_ROTATION_OFFSET,
           value: fineOffset,
@@ -36621,11 +36647,11 @@ function MediaEditorFineRotation({
 
 // packages/media-editor/build-module/components/media-editor-crop-panel/index.mjs
 var import_components34 = __toESM(require_components(), 1);
-var import_i18n41 = __toESM(require_i18n(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/components/media-editor-image-controls/index.mjs
 var import_components33 = __toESM(require_components(), 1);
-var import_i18n40 = __toESM(require_i18n(), 1);
+var import_i18n41 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/components/media-editor/use-crop-options.mjs
 var import_element124 = __toESM(require_element(), 1);
@@ -36682,7 +36708,7 @@ function MediaEditorImageControls({
       {
         size: "compact",
         icon: rotate_left_default,
-        label: (0, import_i18n40.__)("Rotate 90\xB0 counter-clockwise"),
+        label: (0, import_i18n41.__)("Rotate 90\xB0 counter-clockwise"),
         showTooltip: true,
         onClick: () => snapRotate90(-1)
       }
@@ -36692,7 +36718,7 @@ function MediaEditorImageControls({
       {
         size: "compact",
         icon: rotate_right_default,
-        label: (0, import_i18n40.__)("Rotate 90\xB0 clockwise"),
+        label: (0, import_i18n41.__)("Rotate 90\xB0 clockwise"),
         showTooltip: true,
         onClick: () => snapRotate90(1)
       }
@@ -36704,7 +36730,7 @@ function MediaEditorImageControls({
       {
         size: "compact",
         icon: flip_horizontal_default,
-        label: (0, import_i18n40.__)("Flip horizontal"),
+        label: (0, import_i18n41.__)("Flip horizontal"),
         showTooltip: true,
         isPressed: state.flip.horizontal,
         onClick: () => setFlip({
@@ -36718,7 +36744,7 @@ function MediaEditorImageControls({
       {
         size: "compact",
         icon: flip_vertical_default,
-        label: (0, import_i18n40.__)("Flip vertical"),
+        label: (0, import_i18n41.__)("Flip vertical"),
         showTooltip: true,
         isPressed: state.flip.vertical,
         onClick: () => setFlip({
@@ -36734,7 +36760,7 @@ function MediaEditorImageControls({
       {
         size: "compact",
         icon: plus_default,
-        label: (0, import_i18n40.__)("Zoom in"),
+        label: (0, import_i18n41.__)("Zoom in"),
         showTooltip: true,
         disabled: state.zoom >= MAX_ZOOM,
         accessibleWhenDisabled: true,
@@ -36746,7 +36772,7 @@ function MediaEditorImageControls({
       {
         size: "compact",
         icon: line_solid_default,
-        label: (0, import_i18n40.__)("Zoom out"),
+        label: (0, import_i18n41.__)("Zoom out"),
         showTooltip: true,
         disabled: state.zoom <= minZoom,
         accessibleWhenDisabled: true,
@@ -36758,10 +36784,10 @@ function MediaEditorImageControls({
     import_components33.DropdownMenu,
     {
       icon: aspect_ratio_default,
-      label: (0, import_i18n40.__)("Aspect ratio"),
+      label: (0, import_i18n41.__)("Aspect ratio"),
       popoverProps: { placement: "top" },
       toggleProps: { size: "compact" },
-      children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(import_components33.MenuGroup, { label: (0, import_i18n40.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
+      children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(import_components33.MenuGroup, { label: (0, import_i18n41.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
         const value = preset.value.toString();
         const isSelected = value === aspectRatioValue;
         return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
@@ -36789,14 +36815,14 @@ function MediaEditorImageControls({
           {
             className: "media-editor-image-controls__group",
             role: "group",
-            "aria-label": (0, import_i18n40.__)("Rotate"),
+            "aria-label": (0, import_i18n41.__)("Rotate"),
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
                 "span",
                 {
                   className: "media-editor-image-controls__label",
                   "aria-hidden": "true",
-                  children: (0, import_i18n40.__)("Rotate")
+                  children: (0, import_i18n41.__)("Rotate")
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime163.jsx)("div", { className: "media-editor-image-controls__buttons", children: rotateButtons })
@@ -36808,14 +36834,14 @@ function MediaEditorImageControls({
           {
             className: "media-editor-image-controls__group",
             role: "group",
-            "aria-label": (0, import_i18n40.__)("Flip"),
+            "aria-label": (0, import_i18n41.__)("Flip"),
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
                 "span",
                 {
                   className: "media-editor-image-controls__label",
                   "aria-hidden": "true",
-                  children: (0, import_i18n40.__)("Flip")
+                  children: (0, import_i18n41.__)("Flip")
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime163.jsx)("div", { className: "media-editor-image-controls__buttons", children: flipButtons })
@@ -36828,14 +36854,14 @@ function MediaEditorImageControls({
         {
           className: "media-editor-image-controls__group",
           role: "group",
-          "aria-label": (0, import_i18n40.__)("Zoom"),
+          "aria-label": (0, import_i18n41.__)("Zoom"),
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
               "span",
               {
                 className: "media-editor-image-controls__label",
                 "aria-hidden": "true",
-                children: (0, import_i18n40.__)("Zoom")
+                children: (0, import_i18n41.__)("Zoom")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime163.jsx)("div", { className: "media-editor-image-controls__buttons", children: zoomButtons })
@@ -36870,12 +36896,12 @@ function MediaEditorCropPanel({
         gap: "xl",
         ...{ [CROP_CONTROL_ATTR]: true },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime164.jsx)("h2", {}), children: (0, import_i18n41.__)("Crop options") }),
+          /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime164.jsx)("h2", {}), children: (0, import_i18n42.__)("Crop options") }),
           /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(MediaEditorImageControls, { withLabels: true }),
           /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
             import_components34.SelectControl,
             {
-              label: (0, import_i18n41.__)("Aspect ratio"),
+              label: (0, import_i18n42.__)("Aspect ratio"),
               value: aspectRatioValue,
               onChange: onAspectRatioChange,
               options: aspectRatioOptions.map((preset) => ({
@@ -36893,55 +36919,55 @@ function MediaEditorCropPanel({
 // packages/media-editor/build-module/components/media-editor-keyboard-shortcuts-modal/index.mjs
 var import_components35 = __toESM(require_components(), 1);
 var import_element125 = __toESM(require_element(), 1);
-var import_i18n42 = __toESM(require_i18n(), 1);
+var import_i18n43 = __toESM(require_i18n(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
 var import_jsx_runtime165 = __toESM(require_jsx_runtime(), 1);
 var SHORTCUTS = [
   {
-    description: (0, import_i18n42.__)("Undo"),
+    description: (0, import_i18n43.__)("Undo"),
     keyCombination: { modifier: "primary", character: "z" }
   },
   {
-    description: (0, import_i18n42.__)("Redo"),
+    description: (0, import_i18n43.__)("Redo"),
     keyCombination: { modifier: "primaryShift", character: "z" }
   },
   {
-    description: (0, import_i18n42.__)("Pan"),
+    description: (0, import_i18n43.__)("Pan"),
     keyCombination: {
       character: ["\u2191", "\u2193", "\u2190", "\u2192"],
-      ariaLabel: (0, import_i18n42.__)("Arrow keys")
+      ariaLabel: (0, import_i18n43.__)("Arrow keys")
     }
   },
   {
-    description: (0, import_i18n42.__)("Zoom in"),
+    description: (0, import_i18n43.__)("Zoom in"),
     keyCombination: { character: "+" }
   },
   {
-    description: (0, import_i18n42.__)("Zoom out"),
+    description: (0, import_i18n43.__)("Zoom out"),
     keyCombination: { character: "-" }
   },
   {
-    description: (0, import_i18n42.__)("Rotate 90\xB0 clockwise"),
+    description: (0, import_i18n43.__)("Rotate 90\xB0 clockwise"),
     keyCombination: { character: "R" }
   },
   {
-    description: (0, import_i18n42.__)("Rotate 90\xB0 counter-clockwise"),
+    description: (0, import_i18n43.__)("Rotate 90\xB0 counter-clockwise"),
     keyCombination: { modifier: "shift", character: "R" }
   },
   {
-    description: (0, import_i18n42.__)("Flip horizontal"),
+    description: (0, import_i18n43.__)("Flip horizontal"),
     keyCombination: { character: "H" }
   },
   {
-    description: (0, import_i18n42.__)("Flip vertical"),
+    description: (0, import_i18n43.__)("Flip vertical"),
     keyCombination: { character: "V" }
   },
   {
-    description: (0, import_i18n42.__)("Pan or resize crop (large step)"),
+    description: (0, import_i18n43.__)("Pan or resize crop (large step)"),
     keyCombination: {
       modifier: "shift",
       character: ["\u2191", "\u2193", "\u2190", "\u2192"],
-      ariaLabel: (0, import_i18n42.__)("Shift + Arrow keys")
+      ariaLabel: (0, import_i18n43.__)("Shift + Arrow keys")
     }
   }
 ];
@@ -36994,10 +37020,10 @@ function MediaEditorKeyboardShortcutsModal({
     import_components35.Modal,
     {
       className: "media-editor-keyboard-shortcuts-modal",
-      title: (0, import_i18n42.__)("Keyboard shortcuts"),
+      title: (0, import_i18n43.__)("Keyboard shortcuts"),
       onRequestClose: onClose,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime165.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n42.__)(
+        /* @__PURE__ */ (0, import_jsx_runtime165.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n43.__)(
           "These shortcuts work when the image editor has focus."
         ) }),
         /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
@@ -37033,7 +37059,7 @@ var import_api_fetch = __toESM(require_api_fetch(), 1);
 var import_data2 = __toESM(require_data(), 1);
 var import_core_data = __toESM(require_core_data(), 1);
 var import_element126 = __toESM(require_element(), 1);
-var import_i18n43 = __toESM(require_i18n(), 1);
+var import_i18n44 = __toESM(require_i18n(), 1);
 var import_notices = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor-modal/build-modifiers.mjs
@@ -37201,15 +37227,15 @@ function useSaveMediaEditor({
         });
       }
     } catch (error2) {
-      const message2 = error2 instanceof Error ? error2.message : error2?.message ?? (0, import_i18n43.__)("An unknown error occurred.");
+      const message2 = error2 instanceof Error ? error2.message : error2?.message ?? (0, import_i18n44.__)("An unknown error occurred.");
       createErrorNotice(
-        isImage ? (0, import_i18n43.sprintf)(
+        isImage ? (0, import_i18n44.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n43.__)("Could not save image. %s"),
+          (0, import_i18n44.__)("Could not save image. %s"),
           message2
-        ) : (0, import_i18n43.sprintf)(
+        ) : (0, import_i18n44.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n43.__)("Could not save media. %s"),
+          (0, import_i18n44.__)("Could not save media. %s"),
           message2
         ),
         {
@@ -37251,9 +37277,9 @@ function MediaEditorSidebar({
     navigable_region_default,
     {
       className: "media-editor__sidebar",
-      ariaLabel: (0, import_i18n44.__)("Media settings"),
+      ariaLabel: (0, import_i18n45.__)("Media settings"),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("h2", {}), children: (0, import_i18n44.__)("Media settings") }),
+        /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("h2", {}), children: (0, import_i18n45.__)("Media settings") }),
         /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(
           tabs_exports.Root,
           {
@@ -37306,7 +37332,7 @@ function HeaderActions({ showCloseButton = false }) {
           {
             size: "compact",
             icon: keyboard_default,
-            label: (0, import_i18n44.__)("Keyboard shortcuts"),
+            label: (0, import_i18n45.__)("Keyboard shortcuts"),
             onClick: () => setIsShortcutsModalOpen(true)
           }
         ),
@@ -37315,7 +37341,7 @@ function HeaderActions({ showCloseButton = false }) {
           {
             size: "compact",
             icon: drawer_right_default,
-            label: (0, import_i18n44.__)("Media settings"),
+            label: (0, import_i18n45.__)("Media settings"),
             isPressed: isPanelOpen,
             "aria-expanded": isWide ? isPanelOpen : void 0,
             onClick: onTogglePanel
@@ -37326,7 +37352,7 @@ function HeaderActions({ showCloseButton = false }) {
           {
             size: "compact",
             icon: close_default,
-            label: (0, import_i18n44.__)("Close"),
+            label: (0, import_i18n45.__)("Close"),
             onClick: onCancel,
             disabled: isSaving,
             accessibleWhenDisabled: true
@@ -37390,7 +37416,7 @@ function HistoryActions() {
             disabled: !isDirty,
             accessibleWhenDisabled: true,
             onClick: handleReset,
-            children: (0, import_i18n44.__)("Reset")
+            children: (0, import_i18n45.__)("Reset")
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
@@ -37398,7 +37424,7 @@ function HistoryActions() {
           {
             size: "compact",
             icon: undo_default,
-            label: (0, import_i18n44.__)("Undo"),
+            label: (0, import_i18n45.__)("Undo"),
             showTooltip: true,
             shortcut: import_keycodes2.displayShortcut.primary("z"),
             disabled: isUndoRedoDisabled || !hasUndo,
@@ -37411,7 +37437,7 @@ function HistoryActions() {
           {
             size: "compact",
             icon: redo_default,
-            label: (0, import_i18n44.__)("Redo"),
+            label: (0, import_i18n45.__)("Redo"),
             showTooltip: true,
             shortcut: (0, import_keycodes2.isAppleOS)() ? import_keycodes2.displayShortcut.primaryShift("z") : import_keycodes2.displayShortcut.primary("y"),
             disabled: isUndoRedoDisabled || !hasRedo,
@@ -37443,7 +37469,7 @@ function SaveActions({ size: size4 = "default" }) {
             onClick: onCancel,
             disabled: isSaving,
             accessibleWhenDisabled: true,
-            children: (0, import_i18n44.__)("Cancel")
+            children: (0, import_i18n45.__)("Cancel")
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
@@ -37456,7 +37482,7 @@ function SaveActions({ size: size4 = "default" }) {
             isBusy: isSaving,
             disabled: saveDisabled,
             accessibleWhenDisabled: true,
-            children: (0, import_i18n44.__)("Save")
+            children: (0, import_i18n45.__)("Save")
           }
         )
       ]
@@ -37653,7 +37679,7 @@ function MediaEditorContent({
     ...isImage ? [
       {
         id: CROP_PANEL,
-        title: (0, import_i18n44.__)("Crop"),
+        title: (0, import_i18n45.__)("Crop"),
         render: () => /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
           MediaEditorCropPanel,
           {
@@ -37666,7 +37692,7 @@ function MediaEditorContent({
     ] : [],
     {
       id: DETAILS_PANEL,
-      title: (0, import_i18n44.__)("Details"),
+      title: (0, import_i18n45.__)("Details"),
       render: () => /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(MediaForm, {})
     }
   ];
@@ -37694,7 +37720,7 @@ function MediaEditorContent({
                 navigable_region_default,
                 {
                   className: "media-editor__content",
-                  ariaLabel: isImage ? (0, import_i18n44.__)("Image editor") : (0, import_i18n44.__)("Media preview"),
+                  ariaLabel: isImage ? (0, import_i18n45.__)("Image editor") : (0, import_i18n45.__)("Media preview"),
                   children: [
                     /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
                       MediaEditorCanvas,
@@ -37728,14 +37754,14 @@ function MediaEditorContent({
           import_components36.__experimentalConfirmDialog,
           {
             isOpen: isDiscardDialogOpen,
-            confirmButtonText: (0, import_i18n44.__)("Discard"),
-            cancelButtonText: (0, import_i18n44.__)("Keep editing"),
+            confirmButtonText: (0, import_i18n45.__)("Discard"),
+            cancelButtonText: (0, import_i18n45.__)("Keep editing"),
             onCancel: () => setIsDiscardDialogOpen(false),
             onConfirm: () => {
               setIsDiscardDialogOpen(false);
               discardAndClose();
             },
-            children: (0, import_i18n44.__)(
+            children: (0, import_i18n45.__)(
               "Are you sure you want to discard your unsaved changes?"
             )
           }
@@ -37786,7 +37812,7 @@ function ModalFooter() {
     {
       className: "media-editor-modal__footer",
       role: "region",
-      "aria-label": (0, import_i18n45.__)("Editor actions"),
+      "aria-label": (0, import_i18n46.__)("Editor actions"),
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(media_editor_default.HistoryActions, {}),
         /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(media_editor_default.SaveActions, {})
@@ -37840,11 +37866,11 @@ function MediaEditorModal({
         }
         handleClose();
         if (previous && savedId !== previous.id && onUpdate) {
-          createSuccessNotice((0, import_i18n45.__)("Image edited."), {
+          createSuccessNotice((0, import_i18n46.__)("Image edited."), {
             type: "snackbar",
             actions: [
               {
-                label: (0, import_i18n45.__)("Undo"),
+                label: (0, import_i18n46.__)("Undo"),
                 onClick: () => {
                   onUpdate({
                     id: previous.id,
@@ -37870,7 +37896,7 @@ function MediaEditorModal({
             import_components37.Modal,
             {
               className: "media-editor-modal",
-              title: (0, import_i18n45.__)("Edit media"),
+              title: (0, import_i18n46.__)("Edit media"),
               size: "fill",
               isDismissible: false,
               shouldCloseOnClickOutside,
@@ -37927,7 +37953,7 @@ function isMediaEditorAdminPage() {
 }
 function getMediaTitle(media) {
   const title = typeof media?.title === "string" ? media.title : media?.title?.rendered || media?.title?.raw;
-  return title ? (0, import_html_entities.decodeEntities)(title) : (0, import_i18n46.__)("Edit media");
+  return title ? (0, import_html_entities.decodeEntities)(title) : (0, import_i18n47.__)("Edit media");
 }
 function MediaEditorRoute() {
   const { id } = useParams({ from: "/media-editor/$id" });
@@ -37999,7 +38025,7 @@ function MediaEditorRoute() {
                     {
                       items: isStandaloneAdminPage ? [{ label: title }] : [
                         {
-                          label: (0, import_i18n46.__)("Media"),
+                          label: (0, import_i18n47.__)("Media"),
                           to: MEDIA_LIST_PATH
                         },
                         { label: title }

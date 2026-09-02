@@ -22741,7 +22741,7 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/identity/stage.tsx
-var import_i18n32 = __toESM(require_i18n());
+var import_i18n33 = __toESM(require_i18n());
 var import_data2 = __toESM(require_data());
 var import_core_data2 = __toESM(require_core_data());
 
@@ -23819,8 +23819,8 @@ function Combobox({
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
 var import_components13 = __toESM(require_components(), 1);
 var import_element77 = __toESM(require_element(), 1);
-var import_i18n13 = __toESM(require_i18n(), 1);
-var import_date4 = __toESM(require_date(), 1);
+var import_i18n14 = __toESM(require_i18n(), 1);
+var import_date5 = __toESM(require_date(), 1);
 import { speak as speak2 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
@@ -23962,13 +23962,38 @@ function getCalendarLocale(wpLocale) {
   return normalized.join("-");
 }
 
-// packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
+// packages/dataviews/build-module/components/dataform-controls/utils/get-timezone-description.mjs
 var import_date3 = __toESM(require_date(), 1);
+var import_i18n13 = __toESM(require_i18n(), 1);
+function getTimezoneDescription() {
+  const { timezone } = (0, import_date3.getSettings)();
+  const userTimezoneOffset = -1 * ((/* @__PURE__ */ new Date()).getTimezoneOffset() / 60);
+  if (Number(timezone.offset) === userTimezoneOffset) {
+    return void 0;
+  }
+  const offsetSymbol = Number(timezone.offset) >= 0 ? "+" : "";
+  const zoneAbbr = "" !== timezone.abbr && isNaN(Number(timezone.abbr)) ? timezone.abbr : `UTC${offsetSymbol}${timezone.offsetFormatted}`;
+  const prettyTimezoneString = timezone.string.replaceAll("_", " ");
+  let timezoneDetail = zoneAbbr;
+  if ("UTC" === timezone.string) {
+    timezoneDetail = (0, import_i18n13.__)("Coordinated Universal Time");
+  } else if (prettyTimezoneString.trim().length > 0) {
+    timezoneDetail = `(${zoneAbbr}) ${prettyTimezoneString}`;
+  }
+  return (0, import_i18n13.sprintf)(
+    /* translators: %s: timezone detail, e.g. "(CEST) Europe/Madrid" or "UTC+3". */
+    (0, import_i18n13.__)("Timezone: %s"),
+    timezoneDetail
+  );
+}
+
+// packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
+var import_date4 = __toESM(require_date(), 1);
 function parseDateTime(dateTimeString) {
   if (!dateTimeString) {
     return null;
   }
-  const parsed = (0, import_date3.getDate)(dateTimeString);
+  const parsed = (0, import_date4.getDate)(dateTimeString);
   return parsed && isValid(parsed) ? parsed : null;
 }
 
@@ -23978,7 +24003,7 @@ var formatDateTime = (value) => {
   if (!value) {
     return "";
   }
-  return (0, import_date4.dateI18n)("Y-m-d\\TH:i", (0, import_date4.getDate)(value));
+  return (0, import_date5.dateI18n)("Y-m-d\\TH:i", (0, import_date5.getDate)(value));
 };
 function CalendarDateTimeControl({
   data,
@@ -23994,8 +24019,8 @@ function CalendarDateTimeControl({
   const disabled2 = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
-  const { timezone } = (0, import_date4.getSettings)();
-  const timeZone = timezone.string || (0, import_date4.dateI18n)("P");
+  const { timezone } = (0, import_date5.getSettings)();
+  const timeZone = timezone.string || (0, import_date5.dateI18n)("P");
   const [calendarMonth, setCalendarMonth] = (0, import_element77.useState)(() => {
     const parsedDate = parseDateTime(value);
     return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timeZone);
@@ -24025,9 +24050,9 @@ function CalendarDateTimeControl({
   const onSelectDate = (0, import_element77.useCallback)(
     (newDate) => {
       if (newDate) {
-        const wpDate = (0, import_date4.dateI18n)("Y-m-d", newDate);
-        const wpTime = value ? (0, import_date4.dateI18n)("H:i", (0, import_date4.getDate)(value)) : "00:00";
-        const finalDateTime = (0, import_date4.getDate)(`${wpDate}T${wpTime}`);
+        const wpDate = (0, import_date5.dateI18n)("Y-m-d", newDate);
+        const wpTime = value ? (0, import_date5.dateI18n)("H:i", (0, import_date5.getDate)(value)) : "00:00";
+        const finalDateTime = (0, import_date5.getDate)(`${wpDate}T${wpTime}`);
         onChangeCallback(finalDateTime.toISOString());
       } else {
         onChangeCallback(void 0);
@@ -24051,7 +24076,7 @@ function CalendarDateTimeControl({
   const handleManualDateTimeChange = (0, import_element77.useCallback)(
     (newValue) => {
       if (newValue) {
-        const dateTime = (0, import_date4.getDate)(newValue);
+        const dateTime = (0, import_date5.getDate)(newValue);
         onChangeCallback(dateTime.toISOString());
         const parsedDate = parseDateTime(dateTime.toISOString());
         if (parsedDate) {
@@ -24064,13 +24089,13 @@ function CalendarDateTimeControl({
     [onChangeCallback, timeZone]
   );
   const { format: fieldFormat } = field;
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
-  const locale = getCalendarLocale((0, import_date4.getSettings)().l10n.locale);
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
+  const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n13.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n14.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n13.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n14.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
     import_components13.BaseControl,
@@ -24087,11 +24112,12 @@ function CalendarDateTimeControl({
             required: !!isValid2?.required,
             customValidity: getCustomValidity(isValid2, validity),
             type: "datetime-local",
-            label: (0, import_i18n13.__)("Date time"),
+            label: (0, import_i18n14.__)("Date time"),
             hideLabelFromVision: true,
             value: formatDateTime(value),
             onValueChange: handleManualDateTimeChange,
             disabled: disabled2,
+            description: getTimezoneDescription(),
             min: minConstraint ? formatDateTime(minConstraint) : void 0,
             max: maxConstraint ? formatDateTime(maxConstraint) : void 0
           }
@@ -24106,7 +24132,7 @@ function CalendarDateTimeControl({
             onMonthChange: setCalendarMonth,
             timeZone,
             locale,
-            dir: (0, import_i18n13.isRTL)() ? "rtl" : "ltr",
+            dir: (0, import_i18n14.isRTL)() ? "rtl" : "ltr",
             weekStartsOn,
             disabled: disabled2 || disabledMatchers
           }
@@ -24155,37 +24181,37 @@ function DateTime({
 // packages/dataviews/build-module/components/dataform-controls/date.mjs
 var import_components14 = __toESM(require_components(), 1);
 var import_element78 = __toESM(require_element(), 1);
-var import_i18n14 = __toESM(require_i18n(), 1);
-var import_date5 = __toESM(require_date(), 1);
+var import_i18n15 = __toESM(require_i18n(), 1);
+var import_date6 = __toESM(require_date(), 1);
 import { speak as speak3 } from "@wordpress/a11y";
 var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
 var DATE_PRESETS = [
   {
     id: "today",
-    label: (0, import_i18n14.__)("Today"),
-    getValue: () => (0, import_date5.getDate)(null)
+    label: (0, import_i18n15.__)("Today"),
+    getValue: () => (0, import_date6.getDate)(null)
   },
   {
     id: "yesterday",
-    label: (0, import_i18n14.__)("Yesterday"),
+    label: (0, import_i18n15.__)("Yesterday"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subDays(today, 1);
     }
   },
   {
     id: "past-week",
-    label: (0, import_i18n14.__)("Past week"),
+    label: (0, import_i18n15.__)("Past week"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subDays(today, 7);
     }
   },
   {
     id: "past-month",
-    label: (0, import_i18n14.__)("Past month"),
+    label: (0, import_i18n15.__)("Past month"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subMonths(today, 1);
     }
   }
@@ -24193,41 +24219,41 @@ var DATE_PRESETS = [
 var DATE_RANGE_PRESETS = [
   {
     id: "last-7-days",
-    label: (0, import_i18n14.__)("Last 7 days"),
+    label: (0, import_i18n15.__)("Last 7 days"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subDays(today, 7), today];
     }
   },
   {
     id: "last-30-days",
-    label: (0, import_i18n14.__)("Last 30 days"),
+    label: (0, import_i18n15.__)("Last 30 days"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subDays(today, 30), today];
     }
   },
   {
     id: "month-to-date",
-    label: (0, import_i18n14.__)("Month to date"),
+    label: (0, import_i18n15.__)("Month to date"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [startOfMonth(today), today];
     }
   },
   {
     id: "last-year",
-    label: (0, import_i18n14.__)("Last year"),
+    label: (0, import_i18n15.__)("Last year"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subYears(today, 1), today];
     }
   },
   {
     id: "year-to-date",
-    label: (0, import_i18n14.__)("Year to date"),
+    label: (0, import_i18n15.__)("Year to date"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [startOfYear(today), today];
     }
   }
@@ -24352,8 +24378,8 @@ function CalendarDateControl({
   const [selectedPresetId, setSelectedPresetId] = (0, import_element78.useState)(
     null
   );
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
-  const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
+  const locale = getCalendarLocale((0, import_date6.getSettings)().l10n.locale);
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
   const [calendarMonth, setCalendarMonth] = (0, import_element78.useState)(() => {
@@ -24411,9 +24437,9 @@ function CalendarDateControl({
   );
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n14.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n15.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n14.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n15.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
     ValidatedDateControl,
@@ -24466,7 +24492,7 @@ function CalendarDateControl({
                       size: "small",
                       disabled: !!selectedPresetId || disabled2,
                       accessibleWhenDisabled: true,
-                      children: (0, import_i18n14.__)("Custom")
+                      children: (0, import_i18n15.__)("Custom")
                     }
                   )
                 ]
@@ -24477,7 +24503,7 @@ function CalendarDateControl({
               {
                 ref: validityTargetRef,
                 type: "date",
-                label: (0, import_i18n14.__)("Date"),
+                label: (0, import_i18n15.__)("Date"),
                 hideLabelFromVision: true,
                 value,
                 onChange: handleManualDateChange,
@@ -24496,7 +24522,7 @@ function CalendarDateControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 locale,
-                dir: (0, import_i18n14.isRTL)() ? "rtl" : "ltr",
+                dir: (0, import_i18n15.isRTL)() ? "rtl" : "ltr",
                 weekStartsOn,
                 disabled: disabled2 || disabledMatchers,
                 disableNavigation: disabled2
@@ -24531,8 +24557,8 @@ function CalendarDateRangeControl({
   if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
     value = fieldValue;
   }
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
-  const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
+  const locale = getCalendarLocale((0, import_date6.getSettings)().l10n.locale);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
   const onChangeCallback = (0, import_element78.useCallback)(
     (newValue) => {
@@ -24636,9 +24662,9 @@ function CalendarDateRangeControl({
   );
   let displayLabel = label;
   if (field.isValid?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n14.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n15.__)("Required")})`;
   } else if (!field.isValid?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n14.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n15.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
     ValidatedDateControl,
@@ -24691,7 +24717,7 @@ function CalendarDateRangeControl({
                       size: "small",
                       accessibleWhenDisabled: true,
                       disabled: !!selectedPresetId || disabled2,
-                      children: (0, import_i18n14.__)("Custom")
+                      children: (0, import_i18n15.__)("Custom")
                     }
                   )
                 ]
@@ -24710,7 +24736,7 @@ function CalendarDateRangeControl({
                     {
                       ref: fromInputRef,
                       type: "date",
-                      label: (0, import_i18n14.__)("From"),
+                      label: (0, import_i18n15.__)("From"),
                       hideLabelFromVision: true,
                       value: value?.[0],
                       onChange: (newValue) => handleManualDateChange("from", newValue),
@@ -24725,7 +24751,7 @@ function CalendarDateRangeControl({
                     {
                       ref: toInputRef,
                       type: "date",
-                      label: (0, import_i18n14.__)("To"),
+                      label: (0, import_i18n15.__)("To"),
                       hideLabelFromVision: true,
                       value: value?.[1],
                       onChange: (newValue) => handleManualDateChange("to", newValue),
@@ -24747,7 +24773,7 @@ function CalendarDateRangeControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 locale,
-                dir: (0, import_i18n14.isRTL)() ? "rtl" : "ltr",
+                dir: (0, import_i18n15.isRTL)() ? "rtl" : "ltr",
                 weekStartsOn,
                 disabled: disabled2 || disabledMatchers
               }
@@ -25000,7 +25026,7 @@ function Url({
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
 var import_components16 = __toESM(require_components(), 1);
 var import_element81 = __toESM(require_element(), 1);
-var import_i18n15 = __toESM(require_i18n(), 1);
+var import_i18n16 = __toESM(require_i18n(), 1);
 var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
@@ -25027,12 +25053,12 @@ function BetweenControls({
   return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
     import_components16.BaseControl,
     {
-      help: (0, import_i18n15.__)("The max. value must be greater than the min. value."),
+      help: (0, import_i18n16.__)("The max. value must be greater than the min. value."),
       children: /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(import_components16.Flex, { direction: "row", gap: 4, children: [
         /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
           import_components16.__experimentalNumberControl,
           {
-            label: (0, import_i18n15.__)("Min."),
+            label: (0, import_i18n16.__)("Min."),
             value: min3,
             max: max3 ? Number(max3) - step : void 0,
             onChange: onChangeMin,
@@ -25043,7 +25069,7 @@ function BetweenControls({
         /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
           import_components16.__experimentalNumberControl,
           {
-            label: (0, import_i18n15.__)("Max."),
+            label: (0, import_i18n16.__)("Max."),
             value: max3,
             min: min3 ? Number(min3) + step : void 0,
             onChange: onChangeMax,
@@ -25218,7 +25244,7 @@ function Text3({
 // packages/dataviews/build-module/components/dataform-controls/time.mjs
 var import_components18 = __toESM(require_components(), 1);
 var import_element84 = __toESM(require_element(), 1);
-var import_i18n16 = __toESM(require_i18n(), 1);
+var import_i18n17 = __toESM(require_i18n(), 1);
 var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
 function getStep(timeFormat, values) {
   const tokens = (timeFormat ?? "").replace(/\\./g, "");
@@ -25260,13 +25286,13 @@ function BetweenControls2({
   return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
     import_components18.BaseControl,
     {
-      help: (0, import_i18n16.__)("The end time must be later than the start time."),
+      help: (0, import_i18n17.__)("The end time must be later than the start time."),
       children: /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
         /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
           ValidatedInputControl,
           {
             type: "time",
-            label: (0, import_i18n16.__)("From"),
+            label: (0, import_i18n17.__)("From"),
             value: from,
             onValueChange: onChangeFrom,
             hideLabelFromVision,
@@ -25280,7 +25306,7 @@ function BetweenControls2({
           ValidatedInputControl,
           {
             type: "time",
-            label: (0, import_i18n16.__)("To"),
+            label: (0, import_i18n17.__)("To"),
             value: to2,
             onValueChange: onChangeTo,
             hideLabelFromVision,
@@ -25753,7 +25779,7 @@ var w = function(r3) {
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
 var import_components21 = __toESM(require_components(), 1);
 var import_element89 = __toESM(require_element(), 1);
-var import_i18n17 = __toESM(require_i18n(), 1);
+var import_i18n18 = __toESM(require_i18n(), 1);
 var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
 var ColorPickerDropdown = ({
   color,
@@ -25770,7 +25796,7 @@ var ColorPickerDropdown = ({
         import_components21.Button,
         {
           onClick: onToggle,
-          "aria-label": (0, import_i18n17.__)("Open color picker"),
+          "aria-label": (0, import_i18n18.__)("Open color picker"),
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
@@ -25841,7 +25867,7 @@ function Color({
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
 var import_components22 = __toESM(require_components(), 1);
 var import_element90 = __toESM(require_element(), 1);
-var import_i18n18 = __toESM(require_i18n(), 1);
+var import_i18n19 = __toESM(require_i18n(), 1);
 var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
@@ -25873,7 +25899,7 @@ function Password({
             icon: isVisible ? unseen_default : seen_default,
             onClick: toggleVisibility,
             size: "small",
-            label: isVisible ? (0, import_i18n18.__)("Hide password") : (0, import_i18n18.__)("Show password"),
+            label: isVisible ? (0, import_i18n19.__)("Hide password") : (0, import_i18n19.__)("Show password"),
             disabled: disabled2,
             accessibleWhenDisabled: true
           }
@@ -25998,7 +26024,7 @@ var setValueFromId = (id) => ({ value }) => {
 var set_value_from_id_default = setValueFromId;
 
 // packages/dataviews/build-module/field-types/email.mjs
-var import_i18n19 = __toESM(require_i18n(), 1);
+var import_i18n20 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
 function RenderFromElements({
@@ -26108,7 +26134,7 @@ var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{
 function isValidCustom(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-    return (0, import_i18n19.__)("Value must be a valid email address.");
+    return (0, import_i18n20.__)("Value must be a valid email address.");
   }
   return null;
 }
@@ -26145,7 +26171,7 @@ var email_default = {
 };
 
 // packages/dataviews/build-module/field-types/integer.mjs
-var import_i18n20 = __toESM(require_i18n(), 1);
+var import_i18n21 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/sort-number.mjs
 var sort_number_default = (a2, b2, direction) => {
@@ -26211,7 +26237,7 @@ function getValueFormatted2({
 function isValidCustom2(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-    return (0, import_i18n20.__)("Value must be an integer.");
+    return (0, import_i18n21.__)("Value must be an integer.");
   }
   return null;
 }
@@ -26258,7 +26284,7 @@ var integer_default = {
 };
 
 // packages/dataviews/build-module/field-types/number.mjs
-var import_i18n21 = __toESM(require_i18n(), 1);
+var import_i18n22 = __toESM(require_i18n(), 1);
 var format3 = {
   separatorThousand: ",",
   separatorDecimal: ".",
@@ -26294,7 +26320,7 @@ function isEmpty(value) {
 function isValidCustom3(item, field) {
   const value = field.getValue({ item });
   if (!isEmpty(value) && !Number.isFinite(value)) {
-    return (0, import_i18n21.__)("Value must be a number.");
+    return (0, import_i18n22.__)("Value must be a number.");
   }
   return null;
 }
@@ -26374,15 +26400,15 @@ var text_default = {
 };
 
 // packages/dataviews/build-module/field-types/datetime.mjs
-var import_date8 = __toESM(require_date(), 1);
+var import_date9 = __toESM(require_date(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-boundary.mjs
-var import_date7 = __toESM(require_date(), 1);
+var import_date8 = __toESM(require_date(), 1);
 function parseDateLike(value) {
   if (!isValid(new Date(value))) {
     return null;
   }
-  const parsed = (0, import_date7.getDate)(value);
+  const parsed = (0, import_date8.getDate)(value);
   return parsed && isValid(parsed) ? parsed.getTime() : null;
 }
 function validateBoundary(item, field, boundary, parse2) {
@@ -26417,8 +26443,8 @@ function isValidMaxTime(item, field) {
 
 // packages/dataviews/build-module/field-types/datetime.mjs
 var format4 = {
-  datetime: (0, import_date8.getSettings)().formats.datetime,
-  weekStartsOn: (0, import_date8.getSettings)().l10n.startOfWeek
+  datetime: (0, import_date9.getSettings)().formats.datetime,
+  weekStartsOn: (0, import_date9.getSettings)().l10n.startOfWeek
 };
 function getValueFormatted4({
   item,
@@ -26434,7 +26460,7 @@ function getValueFormatted4({
   } else {
     formatDatetime = field.format;
   }
-  return (0, import_date8.dateI18n)(formatDatetime.datetime, (0, import_date8.getDate)(value));
+  return (0, import_date9.dateI18n)(formatDatetime.datetime, (0, import_date9.getDate)(value));
 }
 var sort = (a2, b2, direction) => {
   const timeA = new Date(a2).getTime();
@@ -26479,10 +26505,10 @@ var datetime_default = {
 };
 
 // packages/dataviews/build-module/field-types/date.mjs
-var import_date9 = __toESM(require_date(), 1);
+var import_date10 = __toESM(require_date(), 1);
 var format5 = {
-  date: (0, import_date9.getSettings)().formats.date,
-  weekStartsOn: (0, import_date9.getSettings)().l10n.startOfWeek
+  date: (0, import_date10.getSettings)().formats.date,
+  weekStartsOn: (0, import_date10.getSettings)().l10n.startOfWeek
 };
 function getValueFormatted5({
   item,
@@ -26498,7 +26524,7 @@ function getValueFormatted5({
   } else {
     formatDate2 = field.format;
   }
-  return (0, import_date9.dateI18n)(formatDate2.date, (0, import_date9.getDate)(value));
+  return (0, import_date10.dateI18n)(formatDate2.date, (0, import_date10.getDate)(value));
 }
 var sort2 = (a2, b2, direction) => {
   const timeA = new Date(a2).getTime();
@@ -26545,9 +26571,9 @@ var date_default = {
 };
 
 // packages/dataviews/build-module/field-types/time.mjs
-var import_date10 = __toESM(require_date(), 1);
+var import_date11 = __toESM(require_date(), 1);
 var format6 = {
-  time: (0, import_date10.getSettings)().formats.time
+  time: (0, import_date11.getSettings)().formats.time
 };
 var ANCHOR_DATE = "2000-01-01";
 function toAnchoredDate(secondsSinceMidnight) {
@@ -26555,7 +26581,7 @@ function toAnchoredDate(secondsSinceMidnight) {
   const minutes = Math.floor(secondsSinceMidnight % 3600 / 60);
   const seconds = secondsSinceMidnight % 60;
   const time = [hours, minutes, seconds].map((part) => String(part).padStart(2, "0")).join(":");
-  return (0, import_date10.getDate)(`${ANCHOR_DATE}T${time}`);
+  return (0, import_date11.getDate)(`${ANCHOR_DATE}T${time}`);
 }
 function getValueFormatted6({
   item,
@@ -26571,7 +26597,7 @@ function getValueFormatted6({
   } else {
     formatTime = field.format;
   }
-  return (0, import_date10.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
+  return (0, import_date11.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
 }
 var sort3 = (a2, b2, direction) => {
   const timeA = parseTime2(a2);
@@ -26620,7 +26646,7 @@ var time_default = {
 };
 
 // packages/dataviews/build-module/field-types/boolean.mjs
-var import_i18n22 = __toESM(require_i18n(), 1);
+var import_i18n23 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
 function isValidRequiredForBool(item, field) {
@@ -26635,17 +26661,17 @@ function getValueFormatted7({
 }) {
   const value = field.getValue({ item });
   if (value === true) {
-    return (0, import_i18n22.__)("True");
+    return (0, import_i18n23.__)("True");
   }
   if (value === false) {
-    return (0, import_i18n22.__)("False");
+    return (0, import_i18n23.__)("False");
   }
   return "";
 }
 function isValidCustom4(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-    return (0, import_i18n22.__)("Value must be true, false, or undefined");
+    return (0, import_i18n23.__)("Value must be true, false, or undefined");
   }
   return null;
 }
@@ -26697,7 +26723,7 @@ var media_default = {
 };
 
 // packages/dataviews/build-module/field-types/array.mjs
-var import_i18n23 = __toESM(require_i18n(), 1);
+var import_i18n24 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
 function isValidRequiredForArray(item, field) {
@@ -26725,10 +26751,10 @@ function isValidCustom5(item, field) {
     return null;
   }
   if (!Array.isArray(value)) {
-    return (0, import_i18n23.__)("Value must be an array.");
+    return (0, import_i18n24.__)("Value must be an array.");
   }
   if (!value.every((v2) => typeof v2 === "string")) {
-    return (0, import_i18n23.__)("Every value must be a string.");
+    return (0, import_i18n24.__)("Every value must be a string.");
   }
   return null;
 }
@@ -26826,7 +26852,7 @@ var telephone_default = {
 };
 
 // packages/dataviews/build-module/field-types/color.mjs
-var import_i18n24 = __toESM(require_i18n(), 1);
+var import_i18n25 = __toESM(require_i18n(), 1);
 var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
@@ -26856,7 +26882,7 @@ function render3({ item, field }) {
 function isValidCustom6(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-    return (0, import_i18n24.__)("Value must be a valid color.");
+    return (0, import_i18n25.__)("Value must be a valid color.");
   }
   return null;
 }
@@ -27144,7 +27170,7 @@ var import_element92 = __toESM(require_element(), 1);
 var import_components23 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
-var import_i18n25 = __toESM(require_i18n(), 1);
+var import_i18n26 = __toESM(require_i18n(), 1);
 var DEFAULT_LAYOUT = {
   type: "regular",
   labelPosition: "top"
@@ -27175,14 +27201,14 @@ function normalizeLayout(layout) {
     if (typeof openAs === "object" && openAs.type === "modal") {
       normalizedOpenAs = {
         type: "modal",
-        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n25.__)("Apply"),
-        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n25.__)("Cancel")
+        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n26.__)("Apply"),
+        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n26.__)("Cancel")
       };
     } else if (openAs === "modal") {
       normalizedOpenAs = {
         type: "modal",
-        applyLabel: (0, import_i18n25.__)("Apply"),
-        cancelLabel: (0, import_i18n25.__)("Cancel")
+        applyLabel: (0, import_i18n26.__)("Apply"),
+        cancelLabel: (0, import_i18n26.__)("Cancel")
       };
     } else {
       normalizedOpenAs = { type: "dropdown" };
@@ -27382,7 +27408,7 @@ var import_compose13 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 var import_components25 = __toESM(require_components(), 1);
-var import_i18n26 = __toESM(require_i18n(), 1);
+var import_i18n27 = __toESM(require_i18n(), 1);
 var import_compose12 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
@@ -27480,13 +27506,13 @@ function SummaryButton({
     "dataforms-layouts-panel__field-control"
   );
   const errorId = `${controlId}-error`;
-  const ariaLabel = showError ? (0, import_i18n26.sprintf)(
+  const ariaLabel = showError ? (0, import_i18n27.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n26._x)("Edit %s (has errors)", "field"),
+    (0, import_i18n27._x)("Edit %s (has errors)", "field"),
     fieldLabel || ""
-  ) : (0, import_i18n26.sprintf)(
+  ) : (0, import_i18n27.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n26._x)("Edit %s", "field"),
+    (0, import_i18n27._x)("Edit %s", "field"),
     fieldLabel || ""
   );
   return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)("div", { className, children: [
@@ -27567,7 +27593,7 @@ function SummaryButton({
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es6 = __toESM(require_es6(), 1);
 var import_element93 = __toESM(require_element(), 1);
-var import_i18n27 = __toESM(require_i18n(), 1);
+var import_i18n28 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
     return true;
@@ -27686,7 +27712,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n27.__)("Could not validate elements.")
+              message: (0, import_i18n28.__)("Could not validate elements.")
             }
           },
           [...path, formField.id]
@@ -27705,7 +27731,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n27.__)(
+              message: (0, import_i18n28.__)(
                 "Value must be one of the elements."
               )
             }
@@ -27731,7 +27757,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n27.__)(
+      errorMessage = String(error2) || (0, import_i18n28.__)(
         "Unknown error when running elements validation asynchronously."
       );
     }
@@ -27790,7 +27816,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
         {
           custom: {
             type: "invalid",
-            message: (0, import_i18n27.__)("Validation could not be processed.")
+            message: (0, import_i18n28.__)("Validation could not be processed.")
           }
         },
         [...path, formField.id]
@@ -27805,7 +27831,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n27.__)(
+      errorMessage = String(error2) || (0, import_i18n28.__)(
         "Unknown error when running custom validation asynchronously."
       );
     }
@@ -27847,7 +27873,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       pattern: {
         type: "invalid",
-        message: (0, import_i18n27.__)("Value does not match the required pattern.")
+        message: (0, import_i18n28.__)("Value does not match the required pattern.")
       }
     };
   }
@@ -27855,7 +27881,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       min: {
         type: "invalid",
-        message: (0, import_i18n27.__)("Value is below the minimum.")
+        message: (0, import_i18n28.__)("Value is below the minimum.")
       }
     };
   }
@@ -27863,7 +27889,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       max: {
         type: "invalid",
-        message: (0, import_i18n27.__)("Value is above the maximum.")
+        message: (0, import_i18n28.__)("Value is above the maximum.")
       }
     };
   }
@@ -27871,7 +27897,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       minLength: {
         type: "invalid",
-        message: (0, import_i18n27.__)("Value is too short.")
+        message: (0, import_i18n28.__)("Value is too short.")
       }
     };
   }
@@ -27879,7 +27905,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       maxLength: {
         type: "invalid",
-        message: (0, import_i18n27.__)("Value is too long.")
+        message: (0, import_i18n28.__)("Value is too long.")
       }
     };
   }
@@ -27887,7 +27913,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       elements: {
         type: "invalid",
-        message: (0, import_i18n27.__)("Value must be one of the elements.")
+        message: (0, import_i18n28.__)("Value must be one of the elements.")
       }
     };
   }
@@ -27910,7 +27936,7 @@ function validateFormField(item, formField, promiseHandler) {
       if (error2 instanceof Error) {
         errorMessage = error2.message;
       } else {
-        errorMessage = String(error2) || (0, import_i18n27.__)("Unknown error when running custom validation.");
+        errorMessage = String(error2) || (0, import_i18n28.__)("Unknown error when running custom validation.");
       }
       return {
         custom: {
@@ -27937,14 +27963,14 @@ function validateFormField(item, formField, promiseHandler) {
     );
     fieldValidity.elements = {
       type: "validating",
-      message: (0, import_i18n27.__)("Validating\u2026")
+      message: (0, import_i18n28.__)("Validating\u2026")
     };
   }
   if (customError instanceof Promise) {
     handleCustomValidationAsync(customError, formField, promiseHandler);
     fieldValidity.custom = {
       type: "validating",
-      message: (0, import_i18n27.__)("Validating\u2026")
+      message: (0, import_i18n28.__)("Validating\u2026")
     };
   }
   if (Object.keys(fieldValidity).length > 0) {
@@ -28312,7 +28338,7 @@ var modal_default = PanelModal;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
 var import_components27 = __toESM(require_components(), 1);
-var import_i18n28 = __toESM(require_i18n(), 1);
+var import_i18n29 = __toESM(require_i18n(), 1);
 var import_element97 = __toESM(require_element(), 1);
 var import_compose14 = __toESM(require_compose(), 1);
 var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
@@ -28332,7 +28358,7 @@ function DropdownHeader({
         onClose && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
           import_components27.Button,
           {
-            label: (0, import_i18n28.__)("Close"),
+            label: (0, import_i18n29.__)("Close"),
             icon: close_small_default,
             onClick: onClose,
             size: "small"
@@ -28501,7 +28527,7 @@ var import_compose15 = __toESM(require_compose(), 1);
 import { speak as speak4 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
-var import_i18n29 = __toESM(require_i18n(), 1);
+var import_i18n30 = __toESM(require_i18n(), 1);
 function countInvalidFields(validity) {
   if (!validity) {
     return 0;
@@ -28528,9 +28554,9 @@ function getValidationMessage(validity) {
   if (invalidCount === 0) {
     return void 0;
   }
-  return (0, import_i18n29.sprintf)(
+  return (0, import_i18n30.sprintf)(
     /* translators: %d: Number of fields that need attention */
-    (0, import_i18n29._n)(
+    (0, import_i18n30._n)(
       "%d field needs attention",
       "%d fields need attention",
       invalidCount
@@ -28863,7 +28889,7 @@ function FormRowField({
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
 var import_element99 = __toESM(require_element(), 1);
-var import_i18n30 = __toESM(require_i18n(), 1);
+var import_i18n31 = __toESM(require_i18n(), 1);
 var import_compose16 = __toESM(require_compose(), 1);
 import { speak as speak5 } from "@wordpress/a11y";
 var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
@@ -28931,7 +28957,7 @@ function FormDetailsField({
   if (summaryField && summaryField.render) {
     summaryContent = /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(summaryField.render, { item: data, field: summaryField });
   } else {
-    summaryContent = field.label || (0, import_i18n30.__)("More details");
+    summaryContent = field.label || (0, import_i18n31.__)("More details");
   }
   return /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(
     "details",
@@ -29147,7 +29173,7 @@ var import_blob = __toESM(require_blob(), 1);
 var import_core_data = __toESM(require_core_data(), 1);
 var import_data = __toESM(require_data(), 1);
 var import_element103 = __toESM(require_element(), 1);
-var import_i18n31 = __toESM(require_i18n(), 1);
+var import_i18n32 = __toESM(require_i18n(), 1);
 var import_html_entities = __toESM(require_html_entities(), 1);
 var import_media_utils = __toESM(require_media_utils(), 1);
 var import_notices = __toESM(require_notices(), 1);
@@ -32235,7 +32261,7 @@ function MoveButtons({
       {
         __next40pxDefaultSize: true,
         icon: isHorizontal ? chevron_left_default : chevron_up_default,
-        label: isHorizontal ? (0, import_i18n31.__)("Move left") : (0, import_i18n31.__)("Move up"),
+        label: isHorizontal ? (0, import_i18n32.__)("Move left") : (0, import_i18n32.__)("Move up"),
         size: "small",
         disabled: isUploading || index2 === 0,
         accessibleWhenDisabled: true,
@@ -32251,7 +32277,7 @@ function MoveButtons({
       {
         __next40pxDefaultSize: true,
         icon: isHorizontal ? chevron_right_default : chevron_down_default,
-        label: isHorizontal ? (0, import_i18n31.__)("Move right") : (0, import_i18n31.__)("Move down"),
+        label: isHorizontal ? (0, import_i18n32.__)("Move right") : (0, import_i18n32.__)("Move down"),
         size: "small",
         disabled: isUploading || index2 === totalItems - 1,
         accessibleWhenDisabled: true,
@@ -32324,13 +32350,13 @@ function ExpandedMediaEditAttachments({
                       setTargetItemId(attachmentNumericId);
                       open();
                     },
-                    label: !isBlob ? (0, import_i18n31.sprintf)(
+                    label: !isBlob ? (0, import_i18n32.sprintf)(
                       /* translators: %s: The title of the media item. */
-                      (0, import_i18n31.__)("Replace %s"),
+                      (0, import_i18n32.__)("Replace %s"),
                       (0, import_html_entities.decodeEntities)(
                         attachment.title.rendered
                       )
-                    ) : (0, import_i18n31.__)("Replace"),
+                    ) : (0, import_i18n32.__)("Replace"),
                     showTooltip: true,
                     onFilesDrop,
                     attachment,
@@ -32376,7 +32402,7 @@ function ExpandedMediaEditAttachments({
                         {
                           __next40pxDefaultSize: true,
                           icon: close_small_default,
-                          label: (0, import_i18n31.__)("Remove"),
+                          label: (0, import_i18n32.__)("Remove"),
                           size: "small",
                           disabled: isUploading,
                           accessibleWhenDisabled: true,
@@ -32448,7 +32474,7 @@ function CompactMediaEditAttachments({
                       );
                       open();
                     },
-                    label: (0, import_i18n31.__)("Replace"),
+                    label: (0, import_i18n32.__)("Replace"),
                     showTooltip: true,
                     onFilesDrop,
                     attachment,
@@ -32493,7 +32519,7 @@ function CompactMediaEditAttachments({
                         {
                           __next40pxDefaultSize: true,
                           icon: close_small_default,
-                          label: (0, import_i18n31.__)("Remove"),
+                          label: (0, import_i18n32.__)("Remove"),
                           size: "small",
                           disabled: isUploading,
                           accessibleWhenDisabled: true,
@@ -32690,7 +32716,7 @@ function MediaEdit({
       receiveEntityRecords
     ]
   );
-  const addButtonLabel = field.placeholder || (multiple ? (0, import_i18n31.__)("Choose files") : (0, import_i18n31.__)("Choose file"));
+  const addButtonLabel = field.placeholder || (multiple ? (0, import_i18n32.__)("Choose files") : (0, import_i18n32.__)("Choose file"));
   const allItems = (0, import_element103.useMemo)(() => {
     if (!blobs.length) {
       return orderedAttachments;
@@ -32726,7 +32752,7 @@ function MediaEdit({
       setCustomValidity(customValidityResult);
       if (customValidityResult?.type === "invalid") {
         input.setCustomValidity(
-          customValidityResult.message || (0, import_i18n31.__)("Invalid")
+          customValidityResult.message || (0, import_i18n32.__)("Invalid")
         );
       } else {
         input.setCustomValidity("");
@@ -32972,8 +32998,8 @@ var fields = [
   {
     id: "title",
     type: "text",
-    label: (0, import_i18n32.__)("Site Title"),
-    description: (0, import_i18n32.__)(
+    label: (0, import_i18n33.__)("Site Title"),
+    description: (0, import_i18n33.__)(
       "Displays in your site's layout via the Site Title block."
     ),
     getValue: ({ item }) => (0, import_html_entities2.decodeEntities)(item.title ?? "")
@@ -32981,8 +33007,8 @@ var fields = [
   {
     id: "description",
     type: "text",
-    label: (0, import_i18n32.__)("Site Tagline"),
-    description: (0, import_i18n32.__)(
+    label: (0, import_i18n33.__)("Site Tagline"),
+    description: (0, import_i18n33.__)(
       "In a few words, explain what this site is about. Displays in your site's layout via the Site Tagline block."
     ),
     getValue: ({ item }) => (0, import_html_entities2.decodeEntities)(item.description ?? "")
@@ -32990,11 +33016,11 @@ var fields = [
   {
     id: "site_logo",
     type: "media",
-    label: (0, import_i18n32.__)("Site Logo"),
-    description: (0, import_i18n32.__)(
+    label: (0, import_i18n33.__)("Site Logo"),
+    description: (0, import_i18n33.__)(
       "Displays in your site's layout via the Site Logo block."
     ),
-    placeholder: (0, import_i18n32.__)("Choose logo"),
+    placeholder: (0, import_i18n33.__)("Choose logo"),
     Edit: MediaEditWithEditorAssets,
     setValue: ({ value }) => ({
       site_logo: value ?? 0
@@ -33003,11 +33029,11 @@ var fields = [
   {
     id: "site_icon",
     type: "media",
-    label: (0, import_i18n32.__)("Site Icon"),
-    description: (0, import_i18n32.__)(
+    label: (0, import_i18n33.__)("Site Icon"),
+    description: (0, import_i18n33.__)(
       "Shown in browser tabs, bookmarks, and mobile apps. It should be square and at least 512 by 512 pixels."
     ),
-    placeholder: (0, import_i18n32.__)("Choose icon"),
+    placeholder: (0, import_i18n33.__)("Choose icon"),
     Edit: MediaEditWithEditorAssets,
     setValue: ({ value }) => ({
       site_icon: value ?? 0
@@ -33035,7 +33061,7 @@ function Identity() {
   const onChange = (edits) => {
     editEntityRecord("root", "site", void 0, edits);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(page_default, { title: (0, import_i18n32._x)("Identity", "site identity"), headingLevel: 2, children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { className: style_module_default.form, children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(page_default, { title: (0, import_i18n33._x)("Identity", "site identity"), headingLevel: 2, children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { className: style_module_default.form, children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
     DataForm,
     {
       data,

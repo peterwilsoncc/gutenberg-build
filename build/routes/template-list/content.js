@@ -40570,8 +40570,8 @@ function Combobox3({
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
 var import_components40 = __toESM(require_components(), 1);
 var import_element122 = __toESM(require_element(), 1);
-var import_i18n43 = __toESM(require_i18n(), 1);
-var import_date4 = __toESM(require_date(), 1);
+var import_i18n44 = __toESM(require_i18n(), 1);
+var import_date5 = __toESM(require_date(), 1);
 import { speak as speak2 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
@@ -40713,13 +40713,38 @@ function getCalendarLocale(wpLocale) {
   return normalized.join("-");
 }
 
-// packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
+// packages/dataviews/build-module/components/dataform-controls/utils/get-timezone-description.mjs
 var import_date3 = __toESM(require_date(), 1);
+var import_i18n43 = __toESM(require_i18n(), 1);
+function getTimezoneDescription() {
+  const { timezone } = (0, import_date3.getSettings)();
+  const userTimezoneOffset = -1 * ((/* @__PURE__ */ new Date()).getTimezoneOffset() / 60);
+  if (Number(timezone.offset) === userTimezoneOffset) {
+    return void 0;
+  }
+  const offsetSymbol = Number(timezone.offset) >= 0 ? "+" : "";
+  const zoneAbbr = "" !== timezone.abbr && isNaN(Number(timezone.abbr)) ? timezone.abbr : `UTC${offsetSymbol}${timezone.offsetFormatted}`;
+  const prettyTimezoneString = timezone.string.replaceAll("_", " ");
+  let timezoneDetail = zoneAbbr;
+  if ("UTC" === timezone.string) {
+    timezoneDetail = (0, import_i18n43.__)("Coordinated Universal Time");
+  } else if (prettyTimezoneString.trim().length > 0) {
+    timezoneDetail = `(${zoneAbbr}) ${prettyTimezoneString}`;
+  }
+  return (0, import_i18n43.sprintf)(
+    /* translators: %s: timezone detail, e.g. "(CEST) Europe/Madrid" or "UTC+3". */
+    (0, import_i18n43.__)("Timezone: %s"),
+    timezoneDetail
+  );
+}
+
+// packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
+var import_date4 = __toESM(require_date(), 1);
 function parseDateTime(dateTimeString) {
   if (!dateTimeString) {
     return null;
   }
-  const parsed = (0, import_date3.getDate)(dateTimeString);
+  const parsed = (0, import_date4.getDate)(dateTimeString);
   return parsed && isValid(parsed) ? parsed : null;
 }
 
@@ -40729,7 +40754,7 @@ var formatDateTime = (value) => {
   if (!value) {
     return "";
   }
-  return (0, import_date4.dateI18n)("Y-m-d\\TH:i", (0, import_date4.getDate)(value));
+  return (0, import_date5.dateI18n)("Y-m-d\\TH:i", (0, import_date5.getDate)(value));
 };
 function CalendarDateTimeControl({
   data,
@@ -40745,8 +40770,8 @@ function CalendarDateTimeControl({
   const disabled2 = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
-  const { timezone } = (0, import_date4.getSettings)();
-  const timeZone = timezone.string || (0, import_date4.dateI18n)("P");
+  const { timezone } = (0, import_date5.getSettings)();
+  const timeZone = timezone.string || (0, import_date5.dateI18n)("P");
   const [calendarMonth, setCalendarMonth] = (0, import_element122.useState)(() => {
     const parsedDate = parseDateTime(value);
     return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timeZone);
@@ -40776,9 +40801,9 @@ function CalendarDateTimeControl({
   const onSelectDate = (0, import_element122.useCallback)(
     (newDate) => {
       if (newDate) {
-        const wpDate = (0, import_date4.dateI18n)("Y-m-d", newDate);
-        const wpTime = value ? (0, import_date4.dateI18n)("H:i", (0, import_date4.getDate)(value)) : "00:00";
-        const finalDateTime = (0, import_date4.getDate)(`${wpDate}T${wpTime}`);
+        const wpDate = (0, import_date5.dateI18n)("Y-m-d", newDate);
+        const wpTime = value ? (0, import_date5.dateI18n)("H:i", (0, import_date5.getDate)(value)) : "00:00";
+        const finalDateTime = (0, import_date5.getDate)(`${wpDate}T${wpTime}`);
         onChangeCallback(finalDateTime.toISOString());
       } else {
         onChangeCallback(void 0);
@@ -40802,7 +40827,7 @@ function CalendarDateTimeControl({
   const handleManualDateTimeChange = (0, import_element122.useCallback)(
     (newValue) => {
       if (newValue) {
-        const dateTime = (0, import_date4.getDate)(newValue);
+        const dateTime = (0, import_date5.getDate)(newValue);
         onChangeCallback(dateTime.toISOString());
         const parsedDate = parseDateTime(dateTime.toISOString());
         if (parsedDate) {
@@ -40815,13 +40840,13 @@ function CalendarDateTimeControl({
     [onChangeCallback, timeZone]
   );
   const { format: fieldFormat } = field;
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
-  const locale = getCalendarLocale((0, import_date4.getSettings)().l10n.locale);
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
+  const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n43.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n44.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n43.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n44.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
     import_components40.BaseControl,
@@ -40838,11 +40863,12 @@ function CalendarDateTimeControl({
             required: !!isValid2?.required,
             customValidity: getCustomValidity(isValid2, validity),
             type: "datetime-local",
-            label: (0, import_i18n43.__)("Date time"),
+            label: (0, import_i18n44.__)("Date time"),
             hideLabelFromVision: true,
             value: formatDateTime(value),
             onValueChange: handleManualDateTimeChange,
             disabled: disabled2,
+            description: getTimezoneDescription(),
             min: minConstraint ? formatDateTime(minConstraint) : void 0,
             max: maxConstraint ? formatDateTime(maxConstraint) : void 0
           }
@@ -40857,7 +40883,7 @@ function CalendarDateTimeControl({
             onMonthChange: setCalendarMonth,
             timeZone,
             locale,
-            dir: (0, import_i18n43.isRTL)() ? "rtl" : "ltr",
+            dir: (0, import_i18n44.isRTL)() ? "rtl" : "ltr",
             weekStartsOn,
             disabled: disabled2 || disabledMatchers
           }
@@ -40906,37 +40932,37 @@ function DateTime({
 // packages/dataviews/build-module/components/dataform-controls/date.mjs
 var import_components41 = __toESM(require_components(), 1);
 var import_element123 = __toESM(require_element(), 1);
-var import_i18n44 = __toESM(require_i18n(), 1);
-var import_date5 = __toESM(require_date(), 1);
+var import_i18n45 = __toESM(require_i18n(), 1);
+var import_date6 = __toESM(require_date(), 1);
 import { speak as speak3 } from "@wordpress/a11y";
 var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
 var DATE_PRESETS = [
   {
     id: "today",
-    label: (0, import_i18n44.__)("Today"),
-    getValue: () => (0, import_date5.getDate)(null)
+    label: (0, import_i18n45.__)("Today"),
+    getValue: () => (0, import_date6.getDate)(null)
   },
   {
     id: "yesterday",
-    label: (0, import_i18n44.__)("Yesterday"),
+    label: (0, import_i18n45.__)("Yesterday"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subDays(today, 1);
     }
   },
   {
     id: "past-week",
-    label: (0, import_i18n44.__)("Past week"),
+    label: (0, import_i18n45.__)("Past week"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subDays(today, 7);
     }
   },
   {
     id: "past-month",
-    label: (0, import_i18n44.__)("Past month"),
+    label: (0, import_i18n45.__)("Past month"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subMonths(today, 1);
     }
   }
@@ -40944,41 +40970,41 @@ var DATE_PRESETS = [
 var DATE_RANGE_PRESETS = [
   {
     id: "last-7-days",
-    label: (0, import_i18n44.__)("Last 7 days"),
+    label: (0, import_i18n45.__)("Last 7 days"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subDays(today, 7), today];
     }
   },
   {
     id: "last-30-days",
-    label: (0, import_i18n44.__)("Last 30 days"),
+    label: (0, import_i18n45.__)("Last 30 days"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subDays(today, 30), today];
     }
   },
   {
     id: "month-to-date",
-    label: (0, import_i18n44.__)("Month to date"),
+    label: (0, import_i18n45.__)("Month to date"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [startOfMonth(today), today];
     }
   },
   {
     id: "last-year",
-    label: (0, import_i18n44.__)("Last year"),
+    label: (0, import_i18n45.__)("Last year"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subYears(today, 1), today];
     }
   },
   {
     id: "year-to-date",
-    label: (0, import_i18n44.__)("Year to date"),
+    label: (0, import_i18n45.__)("Year to date"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [startOfYear(today), today];
     }
   }
@@ -41103,8 +41129,8 @@ function CalendarDateControl({
   const [selectedPresetId, setSelectedPresetId] = (0, import_element123.useState)(
     null
   );
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
-  const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
+  const locale = getCalendarLocale((0, import_date6.getSettings)().l10n.locale);
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
   const [calendarMonth, setCalendarMonth] = (0, import_element123.useState)(() => {
@@ -41162,9 +41188,9 @@ function CalendarDateControl({
   );
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n44.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n45.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n44.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n45.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(
     ValidatedDateControl,
@@ -41217,7 +41243,7 @@ function CalendarDateControl({
                       size: "small",
                       disabled: !!selectedPresetId || disabled2,
                       accessibleWhenDisabled: true,
-                      children: (0, import_i18n44.__)("Custom")
+                      children: (0, import_i18n45.__)("Custom")
                     }
                   )
                 ]
@@ -41228,7 +41254,7 @@ function CalendarDateControl({
               {
                 ref: validityTargetRef,
                 type: "date",
-                label: (0, import_i18n44.__)("Date"),
+                label: (0, import_i18n45.__)("Date"),
                 hideLabelFromVision: true,
                 value,
                 onChange: handleManualDateChange,
@@ -41247,7 +41273,7 @@ function CalendarDateControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 locale,
-                dir: (0, import_i18n44.isRTL)() ? "rtl" : "ltr",
+                dir: (0, import_i18n45.isRTL)() ? "rtl" : "ltr",
                 weekStartsOn,
                 disabled: disabled2 || disabledMatchers,
                 disableNavigation: disabled2
@@ -41282,8 +41308,8 @@ function CalendarDateRangeControl({
   if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
     value = fieldValue;
   }
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
-  const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
+  const locale = getCalendarLocale((0, import_date6.getSettings)().l10n.locale);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
   const onChangeCallback = (0, import_element123.useCallback)(
     (newValue) => {
@@ -41387,9 +41413,9 @@ function CalendarDateRangeControl({
   );
   let displayLabel = label;
   if (field.isValid?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n44.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n45.__)("Required")})`;
   } else if (!field.isValid?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n44.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n45.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(
     ValidatedDateControl,
@@ -41442,7 +41468,7 @@ function CalendarDateRangeControl({
                       size: "small",
                       accessibleWhenDisabled: true,
                       disabled: !!selectedPresetId || disabled2,
-                      children: (0, import_i18n44.__)("Custom")
+                      children: (0, import_i18n45.__)("Custom")
                     }
                   )
                 ]
@@ -41461,7 +41487,7 @@ function CalendarDateRangeControl({
                     {
                       ref: fromInputRef,
                       type: "date",
-                      label: (0, import_i18n44.__)("From"),
+                      label: (0, import_i18n45.__)("From"),
                       hideLabelFromVision: true,
                       value: value?.[0],
                       onChange: (newValue) => handleManualDateChange("from", newValue),
@@ -41476,7 +41502,7 @@ function CalendarDateRangeControl({
                     {
                       ref: toInputRef,
                       type: "date",
-                      label: (0, import_i18n44.__)("To"),
+                      label: (0, import_i18n45.__)("To"),
                       hideLabelFromVision: true,
                       value: value?.[1],
                       onChange: (newValue) => handleManualDateChange("to", newValue),
@@ -41498,7 +41524,7 @@ function CalendarDateRangeControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 locale,
-                dir: (0, import_i18n44.isRTL)() ? "rtl" : "ltr",
+                dir: (0, import_i18n45.isRTL)() ? "rtl" : "ltr",
                 weekStartsOn,
                 disabled: disabled2 || disabledMatchers
               }
@@ -41751,7 +41777,7 @@ function Url({
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
 var import_components43 = __toESM(require_components(), 1);
 var import_element126 = __toESM(require_element(), 1);
-var import_i18n45 = __toESM(require_i18n(), 1);
+var import_i18n46 = __toESM(require_i18n(), 1);
 var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
@@ -41778,12 +41804,12 @@ function BetweenControls({
   return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
     import_components43.BaseControl,
     {
-      help: (0, import_i18n45.__)("The max. value must be greater than the min. value."),
+      help: (0, import_i18n46.__)("The max. value must be greater than the min. value."),
       children: /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(import_components43.Flex, { direction: "row", gap: 4, children: [
         /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
           import_components43.__experimentalNumberControl,
           {
-            label: (0, import_i18n45.__)("Min."),
+            label: (0, import_i18n46.__)("Min."),
             value: min3,
             max: max3 ? Number(max3) - step : void 0,
             onChange: onChangeMin,
@@ -41794,7 +41820,7 @@ function BetweenControls({
         /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
           import_components43.__experimentalNumberControl,
           {
-            label: (0, import_i18n45.__)("Max."),
+            label: (0, import_i18n46.__)("Max."),
             value: max3,
             min: min3 ? Number(min3) + step : void 0,
             onChange: onChangeMax,
@@ -41969,7 +41995,7 @@ function Text3({
 // packages/dataviews/build-module/components/dataform-controls/time.mjs
 var import_components45 = __toESM(require_components(), 1);
 var import_element129 = __toESM(require_element(), 1);
-var import_i18n46 = __toESM(require_i18n(), 1);
+var import_i18n47 = __toESM(require_i18n(), 1);
 var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
 function getStep(timeFormat, values) {
   const tokens = (timeFormat ?? "").replace(/\\./g, "");
@@ -42011,13 +42037,13 @@ function BetweenControls2({
   return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
     import_components45.BaseControl,
     {
-      help: (0, import_i18n46.__)("The end time must be later than the start time."),
+      help: (0, import_i18n47.__)("The end time must be later than the start time."),
       children: /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
         /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
           ValidatedInputControl,
           {
             type: "time",
-            label: (0, import_i18n46.__)("From"),
+            label: (0, import_i18n47.__)("From"),
             value: from,
             onValueChange: onChangeFrom,
             hideLabelFromVision,
@@ -42031,7 +42057,7 @@ function BetweenControls2({
           ValidatedInputControl,
           {
             type: "time",
-            label: (0, import_i18n46.__)("To"),
+            label: (0, import_i18n47.__)("To"),
             value: to,
             onValueChange: onChangeTo,
             hideLabelFromVision,
@@ -42504,7 +42530,7 @@ var w = function(r3) {
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
 var import_components48 = __toESM(require_components(), 1);
 var import_element134 = __toESM(require_element(), 1);
-var import_i18n47 = __toESM(require_i18n(), 1);
+var import_i18n48 = __toESM(require_i18n(), 1);
 var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
 var ColorPickerDropdown = ({
   color,
@@ -42521,7 +42547,7 @@ var ColorPickerDropdown = ({
         import_components48.Button,
         {
           onClick: onToggle,
-          "aria-label": (0, import_i18n47.__)("Open color picker"),
+          "aria-label": (0, import_i18n48.__)("Open color picker"),
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
@@ -42592,7 +42618,7 @@ function Color({
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
 var import_components49 = __toESM(require_components(), 1);
 var import_element135 = __toESM(require_element(), 1);
-var import_i18n48 = __toESM(require_i18n(), 1);
+var import_i18n49 = __toESM(require_i18n(), 1);
 var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
@@ -42624,7 +42650,7 @@ function Password({
             icon: isVisible2 ? unseen_default : seen_default,
             onClick: toggleVisibility,
             size: "small",
-            label: isVisible2 ? (0, import_i18n48.__)("Hide password") : (0, import_i18n48.__)("Show password"),
+            label: isVisible2 ? (0, import_i18n49.__)("Hide password") : (0, import_i18n49.__)("Show password"),
             disabled: disabled2,
             accessibleWhenDisabled: true
           }
@@ -42749,7 +42775,7 @@ var setValueFromId = (id) => ({ value }) => {
 var set_value_from_id_default = setValueFromId;
 
 // packages/dataviews/build-module/field-types/email.mjs
-var import_i18n49 = __toESM(require_i18n(), 1);
+var import_i18n50 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
 function RenderFromElements({
@@ -42859,7 +42885,7 @@ var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{
 function isValidCustom(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-    return (0, import_i18n49.__)("Value must be a valid email address.");
+    return (0, import_i18n50.__)("Value must be a valid email address.");
   }
   return null;
 }
@@ -42896,7 +42922,7 @@ var email_default = {
 };
 
 // packages/dataviews/build-module/field-types/integer.mjs
-var import_i18n50 = __toESM(require_i18n(), 1);
+var import_i18n51 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/sort-number.mjs
 var sort_number_default = (a2, b2, direction) => {
@@ -42962,7 +42988,7 @@ function getValueFormatted2({
 function isValidCustom2(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-    return (0, import_i18n50.__)("Value must be an integer.");
+    return (0, import_i18n51.__)("Value must be an integer.");
   }
   return null;
 }
@@ -43009,7 +43035,7 @@ var integer_default = {
 };
 
 // packages/dataviews/build-module/field-types/number.mjs
-var import_i18n51 = __toESM(require_i18n(), 1);
+var import_i18n52 = __toESM(require_i18n(), 1);
 var format3 = {
   separatorThousand: ",",
   separatorDecimal: ".",
@@ -43045,7 +43071,7 @@ function isEmpty(value) {
 function isValidCustom3(item, field) {
   const value = field.getValue({ item });
   if (!isEmpty(value) && !Number.isFinite(value)) {
-    return (0, import_i18n51.__)("Value must be a number.");
+    return (0, import_i18n52.__)("Value must be a number.");
   }
   return null;
 }
@@ -43125,15 +43151,15 @@ var text_default = {
 };
 
 // packages/dataviews/build-module/field-types/datetime.mjs
-var import_date8 = __toESM(require_date(), 1);
+var import_date9 = __toESM(require_date(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-boundary.mjs
-var import_date7 = __toESM(require_date(), 1);
+var import_date8 = __toESM(require_date(), 1);
 function parseDateLike(value) {
   if (!isValid(new Date(value))) {
     return null;
   }
-  const parsed = (0, import_date7.getDate)(value);
+  const parsed = (0, import_date8.getDate)(value);
   return parsed && isValid(parsed) ? parsed.getTime() : null;
 }
 function validateBoundary(item, field, boundary, parse2) {
@@ -43168,8 +43194,8 @@ function isValidMaxTime(item, field) {
 
 // packages/dataviews/build-module/field-types/datetime.mjs
 var format4 = {
-  datetime: (0, import_date8.getSettings)().formats.datetime,
-  weekStartsOn: (0, import_date8.getSettings)().l10n.startOfWeek
+  datetime: (0, import_date9.getSettings)().formats.datetime,
+  weekStartsOn: (0, import_date9.getSettings)().l10n.startOfWeek
 };
 function getValueFormatted4({
   item,
@@ -43185,7 +43211,7 @@ function getValueFormatted4({
   } else {
     formatDatetime = field.format;
   }
-  return (0, import_date8.dateI18n)(formatDatetime.datetime, (0, import_date8.getDate)(value));
+  return (0, import_date9.dateI18n)(formatDatetime.datetime, (0, import_date9.getDate)(value));
 }
 var sort = (a2, b2, direction) => {
   const timeA = new Date(a2).getTime();
@@ -43230,10 +43256,10 @@ var datetime_default = {
 };
 
 // packages/dataviews/build-module/field-types/date.mjs
-var import_date9 = __toESM(require_date(), 1);
+var import_date10 = __toESM(require_date(), 1);
 var format5 = {
-  date: (0, import_date9.getSettings)().formats.date,
-  weekStartsOn: (0, import_date9.getSettings)().l10n.startOfWeek
+  date: (0, import_date10.getSettings)().formats.date,
+  weekStartsOn: (0, import_date10.getSettings)().l10n.startOfWeek
 };
 function getValueFormatted5({
   item,
@@ -43249,7 +43275,7 @@ function getValueFormatted5({
   } else {
     formatDate2 = field.format;
   }
-  return (0, import_date9.dateI18n)(formatDate2.date, (0, import_date9.getDate)(value));
+  return (0, import_date10.dateI18n)(formatDate2.date, (0, import_date10.getDate)(value));
 }
 var sort2 = (a2, b2, direction) => {
   const timeA = new Date(a2).getTime();
@@ -43296,9 +43322,9 @@ var date_default = {
 };
 
 // packages/dataviews/build-module/field-types/time.mjs
-var import_date10 = __toESM(require_date(), 1);
+var import_date11 = __toESM(require_date(), 1);
 var format6 = {
-  time: (0, import_date10.getSettings)().formats.time
+  time: (0, import_date11.getSettings)().formats.time
 };
 var ANCHOR_DATE = "2000-01-01";
 function toAnchoredDate(secondsSinceMidnight) {
@@ -43306,7 +43332,7 @@ function toAnchoredDate(secondsSinceMidnight) {
   const minutes = Math.floor(secondsSinceMidnight % 3600 / 60);
   const seconds = secondsSinceMidnight % 60;
   const time = [hours, minutes, seconds].map((part) => String(part).padStart(2, "0")).join(":");
-  return (0, import_date10.getDate)(`${ANCHOR_DATE}T${time}`);
+  return (0, import_date11.getDate)(`${ANCHOR_DATE}T${time}`);
 }
 function getValueFormatted6({
   item,
@@ -43322,7 +43348,7 @@ function getValueFormatted6({
   } else {
     formatTime = field.format;
   }
-  return (0, import_date10.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
+  return (0, import_date11.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
 }
 var sort3 = (a2, b2, direction) => {
   const timeA = parseTime2(a2);
@@ -43371,7 +43397,7 @@ var time_default = {
 };
 
 // packages/dataviews/build-module/field-types/boolean.mjs
-var import_i18n52 = __toESM(require_i18n(), 1);
+var import_i18n53 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
 function isValidRequiredForBool(item, field) {
@@ -43386,17 +43412,17 @@ function getValueFormatted7({
 }) {
   const value = field.getValue({ item });
   if (value === true) {
-    return (0, import_i18n52.__)("True");
+    return (0, import_i18n53.__)("True");
   }
   if (value === false) {
-    return (0, import_i18n52.__)("False");
+    return (0, import_i18n53.__)("False");
   }
   return "";
 }
 function isValidCustom4(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-    return (0, import_i18n52.__)("Value must be true, false, or undefined");
+    return (0, import_i18n53.__)("Value must be true, false, or undefined");
   }
   return null;
 }
@@ -43448,7 +43474,7 @@ var media_default2 = {
 };
 
 // packages/dataviews/build-module/field-types/array.mjs
-var import_i18n53 = __toESM(require_i18n(), 1);
+var import_i18n54 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
 function isValidRequiredForArray(item, field) {
@@ -43476,10 +43502,10 @@ function isValidCustom5(item, field) {
     return null;
   }
   if (!Array.isArray(value)) {
-    return (0, import_i18n53.__)("Value must be an array.");
+    return (0, import_i18n54.__)("Value must be an array.");
   }
   if (!value.every((v2) => typeof v2 === "string")) {
-    return (0, import_i18n53.__)("Every value must be a string.");
+    return (0, import_i18n54.__)("Every value must be a string.");
   }
   return null;
 }
@@ -43577,7 +43603,7 @@ var telephone_default = {
 };
 
 // packages/dataviews/build-module/field-types/color.mjs
-var import_i18n54 = __toESM(require_i18n(), 1);
+var import_i18n55 = __toESM(require_i18n(), 1);
 var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
@@ -43607,7 +43633,7 @@ function render3({ item, field }) {
 function isValidCustom6(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-    return (0, import_i18n54.__)("Value must be a valid color.");
+    return (0, import_i18n55.__)("Value must be a valid color.");
   }
   return null;
 }
@@ -44546,7 +44572,7 @@ NavigableRegion.displayName = "NavigableRegion";
 var navigable_region_default = NavigableRegion;
 
 // packages/admin-ui/build-module/navigation/index.mjs
-var import_i18n55 = __toESM(require_i18n(), 1);
+var import_i18n56 = __toESM(require_i18n(), 1);
 var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE38 = "data-wp-hash";
 function getRuntime38() {
@@ -44635,7 +44661,7 @@ var style_default32 = { "list": "bfb5a2dd8cceebd3__list", "li": "a4759b4cb2c8bd9
 var Navigation = ({
   items,
   currentHref,
-  ariaLabel = (0, import_i18n55.__)("Sections"),
+  ariaLabel = (0, import_i18n56.__)("Sections"),
   linkComponent,
   className
 }) => {
@@ -45025,7 +45051,7 @@ var import_components55 = __toESM(require_components());
 var import_data12 = __toESM(require_data());
 var import_element146 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
-var import_i18n63 = __toESM(require_i18n());
+var import_i18n64 = __toESM(require_i18n());
 
 // routes/lock-unlock/index.ts
 var import_private_apis3 = __toESM(require_private_apis());
@@ -45075,7 +45101,7 @@ function getActiveViewOverridesForTab(activeView) {
 }
 
 // routes/template-list/fields/preview.tsx
-var import_i18n56 = __toESM(require_i18n());
+var import_i18n57 = __toESM(require_i18n());
 var import_jsx_runtime210 = __toESM(require_jsx_runtime());
 import { Preview } from "@wordpress/lazy-editor";
 function PreviewField({ item }) {
@@ -45090,7 +45116,7 @@ function PreviewField({ item }) {
   );
 }
 var previewField = {
-  label: (0, import_i18n56.__)("Preview"),
+  label: (0, import_i18n57.__)("Preview"),
   id: "preview",
   render: PreviewField,
   enableSorting: false
@@ -45098,7 +45124,7 @@ var previewField = {
 
 // routes/template-list/fields/author.tsx
 var import_components51 = __toESM(require_components());
-var import_i18n57 = __toESM(require_i18n());
+var import_i18n58 = __toESM(require_i18n());
 var import_element140 = __toESM(require_element());
 var import_core_data2 = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
@@ -45130,7 +45156,7 @@ function useAddedBy(type, id) {
       };
     }
     return {
-      text: (0, import_i18n57.__)("Unknown"),
+      text: (0, import_i18n58.__)("Unknown"),
       icon: "admin-users"
     };
   }, [author, authorText]);
@@ -45163,17 +45189,17 @@ function AuthorField({ item }) {
   ] });
 }
 var authorField = {
-  label: (0, import_i18n57.__)("Author"),
+  label: (0, import_i18n58.__)("Author"),
   id: "author",
   getValue: ({ item }) => item.author_text ?? item.author,
   render: AuthorField
 };
 
 // routes/template-list/fields/description.tsx
-var import_i18n58 = __toESM(require_i18n());
+var import_i18n59 = __toESM(require_i18n());
 var import_html_entities = __toESM(require_html_entities());
 var descriptionField = {
-  label: (0, import_i18n58.__)("Description"),
+  label: (0, import_i18n59.__)("Description"),
   id: "description",
   render: ({ item }) => {
     return item.description && (0, import_html_entities.decodeEntities)(item.description);
@@ -45220,14 +45246,14 @@ var import_element145 = __toESM(require_element());
 var import_data11 = __toESM(require_data());
 var import_core_data6 = __toESM(require_core_data());
 var import_compose25 = __toESM(require_compose());
-var import_i18n62 = __toESM(require_i18n());
+var import_i18n63 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_dom29 = __toESM(require_dom());
 import { useNavigate, useInvalidate } from "@wordpress/route";
 
 // routes/template-list/add-new-template/add-custom-template-modal-content.tsx
 var import_element143 = __toESM(require_element());
-var import_i18n60 = __toESM(require_i18n());
+var import_i18n61 = __toESM(require_i18n());
 var import_components52 = __toESM(require_components());
 var import_core_data5 = __toESM(require_core_data());
 var import_html_entities3 = __toESM(require_html_entities());
@@ -45240,7 +45266,7 @@ var import_data10 = __toESM(require_data());
 var import_core_data4 = __toESM(require_core_data());
 var import_html_entities2 = __toESM(require_html_entities());
 var import_element142 = __toESM(require_element());
-var import_i18n59 = __toESM(require_i18n());
+var import_i18n60 = __toESM(require_i18n());
 var import_url3 = __toESM(require_url());
 var TEMPLATE_POST_TYPE = "wp_template";
 var EMPTY_OBJECT2 = {};
@@ -45338,24 +45364,24 @@ function usePostTypeArchiveMenuItems() {
     ).map((postType) => {
       let title;
       if (needsUniqueIdentifier(postType)) {
-        title = (0, import_i18n59.sprintf)(
+        title = (0, import_i18n60.sprintf)(
           // translators: %1s: Name of the post type e.g: "Post"; %2s: Slug of the post type e.g: "book".
-          (0, import_i18n59.__)("Archive: %1$s (%2$s)"),
+          (0, import_i18n60.__)("Archive: %1$s (%2$s)"),
           postType.labels.singular_name,
           postType.slug
         );
       } else {
-        title = (0, import_i18n59.sprintf)(
+        title = (0, import_i18n60.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n59.__)("Archive: %s"),
+          (0, import_i18n60.__)("Archive: %s"),
           postType.labels.singular_name
         );
       }
       return {
         slug: "archive-" + postType.slug,
-        description: (0, import_i18n59.sprintf)(
+        description: (0, import_i18n60.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n59.__)(
+          (0, import_i18n60.__)(
             "Displays an archive with the latest posts of type: %s."
           ),
           postType.labels.singular_name
@@ -45409,20 +45435,20 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
         ({ slug: _slug }) => _slug === generalTemplateSlug
       );
       const _needsUniqueIdentifier = needsUniqueIdentifier(postType);
-      let menuItemTitle = labels.template_name || (0, import_i18n59.sprintf)(
+      let menuItemTitle = labels.template_name || (0, import_i18n60.sprintf)(
         // translators: %s: Name of the post type e.g: "Post".
-        (0, import_i18n59.__)("Single item: %s"),
+        (0, import_i18n60.__)("Single item: %s"),
         labels.singular_name
       );
       if (_needsUniqueIdentifier) {
-        menuItemTitle = labels.template_name ? (0, import_i18n59.sprintf)(
+        menuItemTitle = labels.template_name ? (0, import_i18n60.sprintf)(
           // translators: 1: Name of the template e.g: "Single Item: Post". 2: Slug of the post type e.g: "book".
-          (0, import_i18n59._x)("%1$s (%2$s)", "post type menu label"),
+          (0, import_i18n60._x)("%1$s (%2$s)", "post type menu label"),
           labels.template_name,
           slug
-        ) : (0, import_i18n59.sprintf)(
+        ) : (0, import_i18n60.sprintf)(
           // translators: 1: Name of the post type e.g: "Post". 2: Slug of the post type e.g: "book".
-          (0, import_i18n59._x)(
+          (0, import_i18n60._x)(
             "Single item: %1$s (%2$s)",
             "post type menu label"
           ),
@@ -45436,9 +45462,9 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
       } : {
         slug: generalTemplateSlug,
         title: menuItemTitle,
-        description: (0, import_i18n59.sprintf)(
+        description: (0, import_i18n60.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n59.__)("Displays a single item: %s."),
+          (0, import_i18n60.__)("Displays a single item: %s."),
           labels.singular_name
         ),
         // `icon` is the `menu_icon` property of a post type. We
@@ -45554,14 +45580,14 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
       );
       let menuItemTitle = labels.template_name || labels.singular_name;
       if (_needsUniqueIdentifier) {
-        menuItemTitle = labels.template_name ? (0, import_i18n59.sprintf)(
+        menuItemTitle = labels.template_name ? (0, import_i18n60.sprintf)(
           // translators: 1: Name of the template e.g: "Products by Category". 2: Slug of the taxonomy e.g: "product_cat".
-          (0, import_i18n59._x)("%1$s (%2$s)", "taxonomy template menu label"),
+          (0, import_i18n60._x)("%1$s (%2$s)", "taxonomy template menu label"),
           labels.template_name,
           slug
-        ) : (0, import_i18n59.sprintf)(
+        ) : (0, import_i18n60.sprintf)(
           // translators: 1: Name of the taxonomy e.g: "Category". 2: Slug of the taxonomy e.g: "product_cat".
-          (0, import_i18n59._x)("%1$s (%2$s)", "taxonomy menu label"),
+          (0, import_i18n60._x)("%1$s (%2$s)", "taxonomy menu label"),
           labels.singular_name,
           slug
         );
@@ -45572,9 +45598,9 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
       } : {
         slug: generalTemplateSlug,
         title: menuItemTitle,
-        description: (0, import_i18n59.sprintf)(
+        description: (0, import_i18n60.sprintf)(
           // translators: %s: Name of the taxonomy e.g: "Product Categories".
-          (0, import_i18n59.__)("Displays taxonomy: %s."),
+          (0, import_i18n60.__)("Displays taxonomy: %s."),
           labels.singular_name
         ),
         icon: block_meta_default,
@@ -45655,7 +45681,7 @@ function useAuthorMenuItem(onClickMenuItem) {
   );
   if (!authorMenuItem) {
     authorMenuItem = {
-      description: (0, import_i18n59.__)(
+      description: (0, import_i18n60.__)(
         "Displays latest posts written by a single author."
       ),
       slug: "author",
@@ -45686,9 +45712,9 @@ function useAuthorMenuItem(onClickMenuItem) {
               suggestion.slug
             );
             return {
-              title: (0, import_i18n59.sprintf)(
+              title: (0, import_i18n60.sprintf)(
                 // translators: %s: Name of the author e.g: "Admin".
-                (0, import_i18n59.__)("Author: %s"),
+                (0, import_i18n60.__)("Author: %s"),
                 suggestion.name
               ),
               slug: templateSlug,
@@ -45697,10 +45723,10 @@ function useAuthorMenuItem(onClickMenuItem) {
           }
         },
         labels: {
-          singular_name: (0, import_i18n59.__)("Author"),
-          search_items: (0, import_i18n59.__)("Search Authors"),
-          not_found: (0, import_i18n59.__)("No authors found."),
-          all_items: (0, import_i18n59.__)("All Authors")
+          singular_name: (0, import_i18n60.__)("Author"),
+          search_items: (0, import_i18n60.__)("Search Authors"),
+          not_found: (0, import_i18n60.__)("No authors found."),
+          all_items: (0, import_i18n60.__)("All Authors")
         },
         hasGeneralTemplate,
         template
@@ -45870,7 +45896,7 @@ function SuggestionList({
         orientation: "vertical",
         role: "listbox",
         className: "template-list-custom-template-modal__suggestions_list",
-        "aria-label": (0, import_i18n60.__)("Suggestions list"),
+        "aria-label": (0, import_i18n61.__)("Suggestions list"),
         children: suggestions.map((suggestion) => /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
           SuggestionListItem,
           {
@@ -45916,7 +45942,7 @@ function AddCustomTemplateModalContent({
       alignment: "left",
       children: [
         !showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(import_jsx_runtime212.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components52.__experimentalText, { as: "p", children: (0, import_i18n60.__)(
+          /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components52.__experimentalText, { as: "p", children: (0, import_i18n61.__)(
             "Select whether to create a single template for all items or a specific one."
           ) }),
           /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
@@ -45961,7 +45987,7 @@ function AddCustomTemplateModalContent({
                           as: "span",
                           lineHeight: 1.53846153846,
                           // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-                          children: (0, import_i18n60.__)("For all items")
+                          children: (0, import_i18n61.__)("For all items")
                         }
                       )
                     ]
@@ -45991,7 +46017,7 @@ function AddCustomTemplateModalContent({
                           as: "span",
                           lineHeight: 1.53846153846,
                           // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-                          children: (0, import_i18n60.__)("For a specific item")
+                          children: (0, import_i18n61.__)("For a specific item")
                         }
                       )
                     ]
@@ -46006,12 +46032,12 @@ function AddCustomTemplateModalContent({
               __next40pxDefaultSize: true,
               variant: "tertiary",
               onClick: onBack,
-              children: (0, import_i18n60.__)("Back")
+              children: (0, import_i18n61.__)("Back")
             }
           ) })
         ] }),
         showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(import_jsx_runtime212.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components52.__experimentalText, { as: "p", children: (0, import_i18n60.__)(
+          /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components52.__experimentalText, { as: "p", children: (0, import_i18n61.__)(
             "This template will be used only for the specific item chosen."
           ) }),
           /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
@@ -46033,7 +46059,7 @@ function AddCustomTemplateModalContent({
                   setShowSearchEntities(false);
                 }
               },
-              children: (0, import_i18n60.__)("Back")
+              children: (0, import_i18n61.__)("Back")
             }
           ) })
         ] })
@@ -46045,7 +46071,7 @@ var add_custom_template_modal_content_default = AddCustomTemplateModalContent;
 
 // routes/template-list/add-new-template/add-custom-generic-template-modal-content.tsx
 var import_element144 = __toESM(require_element());
-var import_i18n61 = __toESM(require_i18n());
+var import_i18n62 = __toESM(require_i18n());
 var import_components53 = __toESM(require_components());
 var import_jsx_runtime213 = __toESM(require_jsx_runtime());
 function AddCustomGenericTemplateModalContent({
@@ -46053,7 +46079,7 @@ function AddCustomGenericTemplateModalContent({
   onBack
 }) {
   const [title, setTitle] = (0, import_element144.useState)("");
-  const defaultTitle = (0, import_i18n61.__)("Custom Template");
+  const defaultTitle = (0, import_i18n62.__)("Custom Template");
   const [isBusy, setIsBusy] = (0, import_element144.useState)(false);
   const inputRef = (0, import_element144.useRef)(null);
   (0, import_element144.useEffect)(() => {
@@ -46083,13 +46109,13 @@ function AddCustomGenericTemplateModalContent({
     /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
       import_components53.TextControl,
       {
-        label: (0, import_i18n61.__)("Name"),
+        label: (0, import_i18n62.__)("Name"),
         value: title,
         onChange: setTitle,
         placeholder: defaultTitle,
         disabled: isBusy,
         ref: inputRef,
-        help: (0, import_i18n61.__)(
+        help: (0, import_i18n62.__)(
           // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
           'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.'
         )
@@ -46107,7 +46133,7 @@ function AddCustomGenericTemplateModalContent({
               __next40pxDefaultSize: true,
               variant: "tertiary",
               onClick: onBack,
-              children: (0, import_i18n61.__)("Back")
+              children: (0, import_i18n62.__)("Back")
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
@@ -46118,7 +46144,7 @@ function AddCustomGenericTemplateModalContent({
               type: "submit",
               isBusy,
               "aria-disabled": isBusy,
-              children: (0, import_i18n61.__)("Create")
+              children: (0, import_i18n62.__)("Create")
             }
           )
         ]
@@ -46241,9 +46267,9 @@ function NewTemplateModal({ onClose }) {
   }, []);
   const TEMPLATE_SHORT_DESCRIPTIONS = {
     "front-page": homeUrl ?? "",
-    date: (0, import_i18n62.sprintf)(
+    date: (0, import_i18n63.sprintf)(
       // translators: %s: The homepage url.
-      (0, import_i18n62.__)("E.g. %s"),
+      (0, import_i18n63.__)("E.g. %s"),
       homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
     )
   };
@@ -46283,17 +46309,17 @@ function NewTemplateModal({ onClose }) {
       });
       invalidate();
       createSuccessNotice(
-        (0, import_i18n62.sprintf)(
+        (0, import_i18n63.sprintf)(
           // translators: %s: Title of the created post or template, e.g: "Hello world".
-          (0, import_i18n62.__)('"%s" successfully created.'),
-          (0, import_html_entities4.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n62.__)("(no title)")
+          (0, import_i18n63.__)('"%s" successfully created.'),
+          (0, import_html_entities4.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n63.__)("(no title)")
         ),
         {
           type: "snackbar"
         }
       );
     } catch (error2) {
-      const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n62.__)("An error occurred while creating the template.");
+      const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n63.__)("An error occurred while creating the template.");
       createErrorNotice(errorMessage, {
         type: "snackbar"
       });
@@ -46305,15 +46331,15 @@ function NewTemplateModal({ onClose }) {
     onClose();
     setModalContent(modalContentMap.templatesList);
   };
-  let modalTitle = (0, import_i18n62.__)("Add template");
+  let modalTitle = (0, import_i18n63.__)("Add template");
   if (modalContent === modalContentMap.customTemplate && entityForSuggestions) {
-    modalTitle = (0, import_i18n62.sprintf)(
+    modalTitle = (0, import_i18n63.sprintf)(
       // translators: %s: Name of the post type e.g: "Post".
-      (0, import_i18n62.__)("Add template: %s"),
+      (0, import_i18n63.__)("Add template: %s"),
       entityForSuggestions.labels.singular_name
     );
   } else if (modalContent === modalContentMap.customGenericTemplate) {
-    modalTitle = (0, import_i18n62.__)("Create custom template");
+    modalTitle = (0, import_i18n63.__)("Create custom template");
   }
   return /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(
     import_components54.Modal,
@@ -46336,7 +46362,7 @@ function NewTemplateModal({ onClose }) {
             justify: "center",
             className: "template-list-add-new-template__template-list__contents",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(import_components54.Flex, { className: "template-list-add-new-template__template-list__prompt", children: (0, import_i18n62.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(import_components54.Flex, { className: "template-list-add-new-template__template-list__prompt", children: (0, import_i18n63.__)(
                 "Select what the new template should apply to:"
               ) }),
               missingTemplates.map((template) => {
@@ -46357,7 +46383,7 @@ function NewTemplateModal({ onClose }) {
               /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
                 TemplateListItem,
                 {
-                  title: (0, import_i18n62.__)("Custom template"),
+                  title: (0, import_i18n63.__)("Custom template"),
                   direction: "row",
                   className: "template-list-add-new-template__custom-template-button",
                   icon: pencil_default,
@@ -46368,7 +46394,7 @@ function NewTemplateModal({ onClose }) {
                     import_components54.__experimentalText,
                     {
                       lineHeight: 1.53846153846,
-                      children: (0, import_i18n62.__)(
+                      children: (0, import_i18n63.__)(
                         "A custom template can be manually applied to any post or page."
                       )
                     }
@@ -46624,7 +46650,7 @@ function TemplateList() {
     const baseTabs = [
       {
         slug: "all",
-        label: (0, import_i18n63.__)("All templates"),
+        label: (0, import_i18n64.__)("All templates"),
         icon: layout_default
       }
     ];
@@ -46661,7 +46687,7 @@ function TemplateList() {
   return /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(
     page_default2,
     {
-      title: (0, import_i18n63.__)("Templates"),
+      title: (0, import_i18n64.__)("Templates"),
       className: "template-page",
       actions: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(add_new_template_default, {}),
       hasPadding: false,

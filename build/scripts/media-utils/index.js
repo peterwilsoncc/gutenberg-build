@@ -1680,7 +1680,7 @@ var wp;
 
   // packages/media-utils/build-module/components/media-upload-modal/index.mjs
   var import_element147 = __toESM(require_element(), 1);
-  var import_i18n78 = __toESM(require_i18n(), 1);
+  var import_i18n79 = __toESM(require_i18n(), 1);
   var import_core_data6 = __toESM(require_core_data(), 1);
   var import_data14 = __toESM(require_data(), 1);
   var import_components57 = __toESM(require_components(), 1);
@@ -40900,9 +40900,9 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
   var import_components40 = __toESM(require_components(), 1);
   var import_element121 = __toESM(require_element(), 1);
-  var import_i18n49 = __toESM(require_i18n(), 1);
+  var import_i18n50 = __toESM(require_i18n(), 1);
   var import_a11y2 = __toESM(require_a11y(), 1);
-  var import_date4 = __toESM(require_date(), 1);
+  var import_date5 = __toESM(require_date(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
   var import_components39 = __toESM(require_components(), 1);
@@ -41043,13 +41043,38 @@ If there's a particular need for this, please submit a feature request at https:
     return normalized.join("-");
   }
 
-  // packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
+  // packages/dataviews/build-module/components/dataform-controls/utils/get-timezone-description.mjs
   var import_date3 = __toESM(require_date(), 1);
+  var import_i18n49 = __toESM(require_i18n(), 1);
+  function getTimezoneDescription() {
+    const { timezone } = (0, import_date3.getSettings)();
+    const userTimezoneOffset = -1 * ((/* @__PURE__ */ new Date()).getTimezoneOffset() / 60);
+    if (Number(timezone.offset) === userTimezoneOffset) {
+      return void 0;
+    }
+    const offsetSymbol = Number(timezone.offset) >= 0 ? "+" : "";
+    const zoneAbbr = "" !== timezone.abbr && isNaN(Number(timezone.abbr)) ? timezone.abbr : `UTC${offsetSymbol}${timezone.offsetFormatted}`;
+    const prettyTimezoneString = timezone.string.replaceAll("_", " ");
+    let timezoneDetail = zoneAbbr;
+    if ("UTC" === timezone.string) {
+      timezoneDetail = (0, import_i18n49.__)("Coordinated Universal Time");
+    } else if (prettyTimezoneString.trim().length > 0) {
+      timezoneDetail = `(${zoneAbbr}) ${prettyTimezoneString}`;
+    }
+    return (0, import_i18n49.sprintf)(
+      /* translators: %s: timezone detail, e.g. "(CEST) Europe/Madrid" or "UTC+3". */
+      (0, import_i18n49.__)("Timezone: %s"),
+      timezoneDetail
+    );
+  }
+
+  // packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
+  var import_date4 = __toESM(require_date(), 1);
   function parseDateTime(dateTimeString) {
     if (!dateTimeString) {
       return null;
     }
-    const parsed = (0, import_date3.getDate)(dateTimeString);
+    const parsed = (0, import_date4.getDate)(dateTimeString);
     return parsed && isValid(parsed) ? parsed : null;
   }
 
@@ -41059,7 +41084,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!value) {
       return "";
     }
-    return (0, import_date4.dateI18n)("Y-m-d\\TH:i", (0, import_date4.getDate)(value));
+    return (0, import_date5.dateI18n)("Y-m-d\\TH:i", (0, import_date5.getDate)(value));
   };
   function CalendarDateTimeControl({
     data,
@@ -41075,8 +41100,8 @@ If there's a particular need for this, please submit a feature request at https:
     const disabled2 = field.isDisabled({ item: data, field });
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
-    const { timezone } = (0, import_date4.getSettings)();
-    const timeZone = timezone.string || (0, import_date4.dateI18n)("P");
+    const { timezone } = (0, import_date5.getSettings)();
+    const timeZone = timezone.string || (0, import_date5.dateI18n)("P");
     const [calendarMonth, setCalendarMonth] = (0, import_element121.useState)(() => {
       const parsedDate = parseDateTime(value);
       return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timeZone);
@@ -41106,9 +41131,9 @@ If there's a particular need for this, please submit a feature request at https:
     const onSelectDate = (0, import_element121.useCallback)(
       (newDate) => {
         if (newDate) {
-          const wpDate = (0, import_date4.dateI18n)("Y-m-d", newDate);
-          const wpTime = value ? (0, import_date4.dateI18n)("H:i", (0, import_date4.getDate)(value)) : "00:00";
-          const finalDateTime = (0, import_date4.getDate)(`${wpDate}T${wpTime}`);
+          const wpDate = (0, import_date5.dateI18n)("Y-m-d", newDate);
+          const wpTime = value ? (0, import_date5.dateI18n)("H:i", (0, import_date5.getDate)(value)) : "00:00";
+          const finalDateTime = (0, import_date5.getDate)(`${wpDate}T${wpTime}`);
           onChangeCallback(finalDateTime.toISOString());
         } else {
           onChangeCallback(void 0);
@@ -41132,7 +41157,7 @@ If there's a particular need for this, please submit a feature request at https:
     const handleManualDateTimeChange = (0, import_element121.useCallback)(
       (newValue) => {
         if (newValue) {
-          const dateTime = (0, import_date4.getDate)(newValue);
+          const dateTime = (0, import_date5.getDate)(newValue);
           onChangeCallback(dateTime.toISOString());
           const parsedDate = parseDateTime(dateTime.toISOString());
           if (parsedDate) {
@@ -41145,13 +41170,13 @@ If there's a particular need for this, please submit a feature request at https:
       [onChangeCallback, timeZone]
     );
     const { format: fieldFormat } = field;
-    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
-    const locale = getCalendarLocale((0, import_date4.getSettings)().l10n.locale);
+    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
+    const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
     let displayLabel = label;
     if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
-      displayLabel = `${label} (${(0, import_i18n49.__)("Required")})`;
+      displayLabel = `${label} (${(0, import_i18n50.__)("Required")})`;
     } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
-      displayLabel = `${label} (${(0, import_i18n49.__)("Optional")})`;
+      displayLabel = `${label} (${(0, import_i18n50.__)("Optional")})`;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
       import_components40.BaseControl,
@@ -41168,11 +41193,12 @@ If there's a particular need for this, please submit a feature request at https:
               required: !!isValid2?.required,
               customValidity: getCustomValidity(isValid2, validity),
               type: "datetime-local",
-              label: (0, import_i18n49.__)("Date time"),
+              label: (0, import_i18n50.__)("Date time"),
               hideLabelFromVision: true,
               value: formatDateTime(value),
               onValueChange: handleManualDateTimeChange,
               disabled: disabled2,
+              description: getTimezoneDescription(),
               min: minConstraint ? formatDateTime(minConstraint) : void 0,
               max: maxConstraint ? formatDateTime(maxConstraint) : void 0
             }
@@ -41187,7 +41213,7 @@ If there's a particular need for this, please submit a feature request at https:
               onMonthChange: setCalendarMonth,
               timeZone,
               locale,
-              dir: (0, import_i18n49.isRTL)() ? "rtl" : "ltr",
+              dir: (0, import_i18n50.isRTL)() ? "rtl" : "ltr",
               weekStartsOn,
               disabled: disabled2 || disabledMatchers
             }
@@ -41237,36 +41263,36 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components41 = __toESM(require_components(), 1);
   var import_a11y3 = __toESM(require_a11y(), 1);
   var import_element122 = __toESM(require_element(), 1);
-  var import_i18n50 = __toESM(require_i18n(), 1);
-  var import_date5 = __toESM(require_date(), 1);
+  var import_i18n51 = __toESM(require_i18n(), 1);
+  var import_date6 = __toESM(require_date(), 1);
   var import_jsx_runtime174 = __toESM(require_jsx_runtime(), 1);
   var DATE_PRESETS = [
     {
       id: "today",
-      label: (0, import_i18n50.__)("Today"),
-      getValue: () => (0, import_date5.getDate)(null)
+      label: (0, import_i18n51.__)("Today"),
+      getValue: () => (0, import_date6.getDate)(null)
     },
     {
       id: "yesterday",
-      label: (0, import_i18n50.__)("Yesterday"),
+      label: (0, import_i18n51.__)("Yesterday"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return subDays(today, 1);
       }
     },
     {
       id: "past-week",
-      label: (0, import_i18n50.__)("Past week"),
+      label: (0, import_i18n51.__)("Past week"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return subDays(today, 7);
       }
     },
     {
       id: "past-month",
-      label: (0, import_i18n50.__)("Past month"),
+      label: (0, import_i18n51.__)("Past month"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return subMonths(today, 1);
       }
     }
@@ -41274,41 +41300,41 @@ If there's a particular need for this, please submit a feature request at https:
   var DATE_RANGE_PRESETS = [
     {
       id: "last-7-days",
-      label: (0, import_i18n50.__)("Last 7 days"),
+      label: (0, import_i18n51.__)("Last 7 days"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return [subDays(today, 7), today];
       }
     },
     {
       id: "last-30-days",
-      label: (0, import_i18n50.__)("Last 30 days"),
+      label: (0, import_i18n51.__)("Last 30 days"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return [subDays(today, 30), today];
       }
     },
     {
       id: "month-to-date",
-      label: (0, import_i18n50.__)("Month to date"),
+      label: (0, import_i18n51.__)("Month to date"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return [startOfMonth(today), today];
       }
     },
     {
       id: "last-year",
-      label: (0, import_i18n50.__)("Last year"),
+      label: (0, import_i18n51.__)("Last year"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return [subYears(today, 1), today];
       }
     },
     {
       id: "year-to-date",
-      label: (0, import_i18n50.__)("Year to date"),
+      label: (0, import_i18n51.__)("Year to date"),
       getValue: () => {
-        const today = (0, import_date5.getDate)(null);
+        const today = (0, import_date6.getDate)(null);
         return [startOfYear(today), today];
       }
     }
@@ -41433,8 +41459,8 @@ If there's a particular need for this, please submit a feature request at https:
     const [selectedPresetId, setSelectedPresetId] = (0, import_element122.useState)(
       null
     );
-    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
-    const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
+    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
+    const locale = getCalendarLocale((0, import_date6.getSettings)().l10n.locale);
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
     const [calendarMonth, setCalendarMonth] = (0, import_element122.useState)(() => {
@@ -41492,9 +41518,9 @@ If there's a particular need for this, please submit a feature request at https:
     );
     let displayLabel = label;
     if (isValid2?.required && !markWhenOptional) {
-      displayLabel = `${label} (${(0, import_i18n50.__)("Required")})`;
+      displayLabel = `${label} (${(0, import_i18n51.__)("Required")})`;
     } else if (!isValid2?.required && markWhenOptional) {
-      displayLabel = `${label} (${(0, import_i18n50.__)("Optional")})`;
+      displayLabel = `${label} (${(0, import_i18n51.__)("Optional")})`;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(
       ValidatedDateControl,
@@ -41547,7 +41573,7 @@ If there's a particular need for this, please submit a feature request at https:
                         size: "small",
                         disabled: !!selectedPresetId || disabled2,
                         accessibleWhenDisabled: true,
-                        children: (0, import_i18n50.__)("Custom")
+                        children: (0, import_i18n51.__)("Custom")
                       }
                     )
                   ]
@@ -41558,7 +41584,7 @@ If there's a particular need for this, please submit a feature request at https:
                 {
                   ref: validityTargetRef,
                   type: "date",
-                  label: (0, import_i18n50.__)("Date"),
+                  label: (0, import_i18n51.__)("Date"),
                   hideLabelFromVision: true,
                   value,
                   onChange: handleManualDateChange,
@@ -41577,7 +41603,7 @@ If there's a particular need for this, please submit a feature request at https:
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
                   locale,
-                  dir: (0, import_i18n50.isRTL)() ? "rtl" : "ltr",
+                  dir: (0, import_i18n51.isRTL)() ? "rtl" : "ltr",
                   weekStartsOn,
                   disabled: disabled2 || disabledMatchers,
                   disableNavigation: disabled2
@@ -41612,8 +41638,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
       value = fieldValue;
     }
-    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
-    const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
+    const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
+    const locale = getCalendarLocale((0, import_date6.getSettings)().l10n.locale);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
     const onChangeCallback = (0, import_element122.useCallback)(
       (newValue) => {
@@ -41717,9 +41743,9 @@ If there's a particular need for this, please submit a feature request at https:
     );
     let displayLabel = label;
     if (field.isValid?.required && !markWhenOptional) {
-      displayLabel = `${label} (${(0, import_i18n50.__)("Required")})`;
+      displayLabel = `${label} (${(0, import_i18n51.__)("Required")})`;
     } else if (!field.isValid?.required && markWhenOptional) {
-      displayLabel = `${label} (${(0, import_i18n50.__)("Optional")})`;
+      displayLabel = `${label} (${(0, import_i18n51.__)("Optional")})`;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(
       ValidatedDateControl,
@@ -41772,7 +41798,7 @@ If there's a particular need for this, please submit a feature request at https:
                         size: "small",
                         accessibleWhenDisabled: true,
                         disabled: !!selectedPresetId || disabled2,
-                        children: (0, import_i18n50.__)("Custom")
+                        children: (0, import_i18n51.__)("Custom")
                       }
                     )
                   ]
@@ -41791,7 +41817,7 @@ If there's a particular need for this, please submit a feature request at https:
                       {
                         ref: fromInputRef,
                         type: "date",
-                        label: (0, import_i18n50.__)("From"),
+                        label: (0, import_i18n51.__)("From"),
                         hideLabelFromVision: true,
                         value: value?.[0],
                         onChange: (newValue) => handleManualDateChange("from", newValue),
@@ -41806,7 +41832,7 @@ If there's a particular need for this, please submit a feature request at https:
                       {
                         ref: toInputRef,
                         type: "date",
-                        label: (0, import_i18n50.__)("To"),
+                        label: (0, import_i18n51.__)("To"),
                         hideLabelFromVision: true,
                         value: value?.[1],
                         onChange: (newValue) => handleManualDateChange("to", newValue),
@@ -41828,7 +41854,7 @@ If there's a particular need for this, please submit a feature request at https:
                   month: calendarMonth,
                   onMonthChange: setCalendarMonth,
                   locale,
-                  dir: (0, import_i18n50.isRTL)() ? "rtl" : "ltr",
+                  dir: (0, import_i18n51.isRTL)() ? "rtl" : "ltr",
                   weekStartsOn,
                   disabled: disabled2 || disabledMatchers
                 }
@@ -42081,7 +42107,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
   var import_components43 = __toESM(require_components(), 1);
   var import_element125 = __toESM(require_element(), 1);
-  var import_i18n51 = __toESM(require_i18n(), 1);
+  var import_i18n52 = __toESM(require_i18n(), 1);
   var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
   function toNumberOrEmpty(value) {
     if (value === "" || value === void 0) {
@@ -42108,12 +42134,12 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
       import_components43.BaseControl,
       {
-        help: (0, import_i18n51.__)("The max. value must be greater than the min. value."),
+        help: (0, import_i18n52.__)("The max. value must be greater than the min. value."),
         children: /* @__PURE__ */ (0, import_jsx_runtime181.jsxs)(import_components43.Flex, { direction: "row", gap: 4, children: [
           /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
             import_components43.__experimentalNumberControl,
             {
-              label: (0, import_i18n51.__)("Min."),
+              label: (0, import_i18n52.__)("Min."),
               value: min3,
               max: max3 ? Number(max3) - step : void 0,
               onChange: onChangeMin,
@@ -42124,7 +42150,7 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
             import_components43.__experimentalNumberControl,
             {
-              label: (0, import_i18n51.__)("Max."),
+              label: (0, import_i18n52.__)("Max."),
               value: max3,
               min: min3 ? Number(min3) + step : void 0,
               onChange: onChangeMax,
@@ -42299,7 +42325,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-controls/time.mjs
   var import_components45 = __toESM(require_components(), 1);
   var import_element128 = __toESM(require_element(), 1);
-  var import_i18n52 = __toESM(require_i18n(), 1);
+  var import_i18n53 = __toESM(require_i18n(), 1);
   var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
   function getStep(timeFormat, values) {
     const tokens = (timeFormat ?? "").replace(/\\./g, "");
@@ -42341,13 +42367,13 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
       import_components45.BaseControl,
       {
-        help: (0, import_i18n52.__)("The end time must be later than the start time."),
+        help: (0, import_i18n53.__)("The end time must be later than the start time."),
         children: /* @__PURE__ */ (0, import_jsx_runtime186.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
           /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
             ValidatedInputControl,
             {
               type: "time",
-              label: (0, import_i18n52.__)("From"),
+              label: (0, import_i18n53.__)("From"),
               value: from,
               onValueChange: onChangeFrom,
               hideLabelFromVision,
@@ -42361,7 +42387,7 @@ If there's a particular need for this, please submit a feature request at https:
             ValidatedInputControl,
             {
               type: "time",
-              label: (0, import_i18n52.__)("To"),
+              label: (0, import_i18n53.__)("To"),
               value: to,
               onValueChange: onChangeTo,
               hideLabelFromVision,
@@ -42834,7 +42860,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-controls/color.mjs
   var import_components48 = __toESM(require_components(), 1);
   var import_element133 = __toESM(require_element(), 1);
-  var import_i18n53 = __toESM(require_i18n(), 1);
+  var import_i18n54 = __toESM(require_i18n(), 1);
   var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
   var ColorPickerDropdown = ({
     color,
@@ -42851,7 +42877,7 @@ If there's a particular need for this, please submit a feature request at https:
           import_components48.Button,
           {
             onClick: onToggle,
-            "aria-label": (0, import_i18n53.__)("Open color picker"),
+            "aria-label": (0, import_i18n54.__)("Open color picker"),
             size: "small",
             disabled: disabled2,
             accessibleWhenDisabled: true,
@@ -42922,7 +42948,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-controls/password.mjs
   var import_components49 = __toESM(require_components(), 1);
   var import_element134 = __toESM(require_element(), 1);
-  var import_i18n54 = __toESM(require_i18n(), 1);
+  var import_i18n55 = __toESM(require_i18n(), 1);
   var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
   function Password({
     data,
@@ -42954,7 +42980,7 @@ If there's a particular need for this, please submit a feature request at https:
               icon: isVisible2 ? unseen_default : seen_default,
               onClick: toggleVisibility,
               size: "small",
-              label: isVisible2 ? (0, import_i18n54.__)("Hide password") : (0, import_i18n54.__)("Show password"),
+              label: isVisible2 ? (0, import_i18n55.__)("Hide password") : (0, import_i18n55.__)("Show password"),
               disabled: disabled2,
               accessibleWhenDisabled: true
             }
@@ -43079,7 +43105,7 @@ If there's a particular need for this, please submit a feature request at https:
   var set_value_from_id_default = setValueFromId;
 
   // packages/dataviews/build-module/field-types/email.mjs
-  var import_i18n55 = __toESM(require_i18n(), 1);
+  var import_i18n56 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
   function RenderFromElements({
@@ -43189,7 +43215,7 @@ If there's a particular need for this, please submit a feature request at https:
   function isValidCustom(item, field) {
     const value = field.getValue({ item });
     if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-      return (0, import_i18n55.__)("Value must be a valid email address.");
+      return (0, import_i18n56.__)("Value must be a valid email address.");
     }
     return null;
   }
@@ -43226,7 +43252,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/integer.mjs
-  var import_i18n56 = __toESM(require_i18n(), 1);
+  var import_i18n57 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/field-types/utils/sort-number.mjs
   var sort_number_default = (a2, b2, direction) => {
@@ -43292,7 +43318,7 @@ If there's a particular need for this, please submit a feature request at https:
   function isValidCustom2(item, field) {
     const value = field.getValue({ item });
     if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-      return (0, import_i18n56.__)("Value must be an integer.");
+      return (0, import_i18n57.__)("Value must be an integer.");
     }
     return null;
   }
@@ -43339,7 +43365,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/number.mjs
-  var import_i18n57 = __toESM(require_i18n(), 1);
+  var import_i18n58 = __toESM(require_i18n(), 1);
   var format3 = {
     separatorThousand: ",",
     separatorDecimal: ".",
@@ -43375,7 +43401,7 @@ If there's a particular need for this, please submit a feature request at https:
   function isValidCustom3(item, field) {
     const value = field.getValue({ item });
     if (!isEmpty(value) && !Number.isFinite(value)) {
-      return (0, import_i18n57.__)("Value must be a number.");
+      return (0, import_i18n58.__)("Value must be a number.");
     }
     return null;
   }
@@ -43455,15 +43481,15 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/datetime.mjs
-  var import_date8 = __toESM(require_date(), 1);
+  var import_date9 = __toESM(require_date(), 1);
 
   // packages/dataviews/build-module/field-types/utils/is-valid-boundary.mjs
-  var import_date7 = __toESM(require_date(), 1);
+  var import_date8 = __toESM(require_date(), 1);
   function parseDateLike(value) {
     if (!isValid(new Date(value))) {
       return null;
     }
-    const parsed = (0, import_date7.getDate)(value);
+    const parsed = (0, import_date8.getDate)(value);
     return parsed && isValid(parsed) ? parsed.getTime() : null;
   }
   function validateBoundary(item, field, boundary, parse2) {
@@ -43498,8 +43524,8 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/field-types/datetime.mjs
   var format4 = {
-    datetime: (0, import_date8.getSettings)().formats.datetime,
-    weekStartsOn: (0, import_date8.getSettings)().l10n.startOfWeek
+    datetime: (0, import_date9.getSettings)().formats.datetime,
+    weekStartsOn: (0, import_date9.getSettings)().l10n.startOfWeek
   };
   function getValueFormatted4({
     item,
@@ -43515,7 +43541,7 @@ If there's a particular need for this, please submit a feature request at https:
     } else {
       formatDatetime = field.format;
     }
-    return (0, import_date8.dateI18n)(formatDatetime.datetime, (0, import_date8.getDate)(value));
+    return (0, import_date9.dateI18n)(formatDatetime.datetime, (0, import_date9.getDate)(value));
   }
   var sort = (a2, b2, direction) => {
     const timeA = new Date(a2).getTime();
@@ -43560,10 +43586,10 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/date.mjs
-  var import_date9 = __toESM(require_date(), 1);
+  var import_date10 = __toESM(require_date(), 1);
   var format5 = {
-    date: (0, import_date9.getSettings)().formats.date,
-    weekStartsOn: (0, import_date9.getSettings)().l10n.startOfWeek
+    date: (0, import_date10.getSettings)().formats.date,
+    weekStartsOn: (0, import_date10.getSettings)().l10n.startOfWeek
   };
   function getValueFormatted5({
     item,
@@ -43579,7 +43605,7 @@ If there's a particular need for this, please submit a feature request at https:
     } else {
       formatDate2 = field.format;
     }
-    return (0, import_date9.dateI18n)(formatDate2.date, (0, import_date9.getDate)(value));
+    return (0, import_date10.dateI18n)(formatDate2.date, (0, import_date10.getDate)(value));
   }
   var sort2 = (a2, b2, direction) => {
     const timeA = new Date(a2).getTime();
@@ -43626,9 +43652,9 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/time.mjs
-  var import_date10 = __toESM(require_date(), 1);
+  var import_date11 = __toESM(require_date(), 1);
   var format6 = {
-    time: (0, import_date10.getSettings)().formats.time
+    time: (0, import_date11.getSettings)().formats.time
   };
   var ANCHOR_DATE = "2000-01-01";
   function toAnchoredDate(secondsSinceMidnight) {
@@ -43636,7 +43662,7 @@ If there's a particular need for this, please submit a feature request at https:
     const minutes = Math.floor(secondsSinceMidnight % 3600 / 60);
     const seconds = secondsSinceMidnight % 60;
     const time = [hours, minutes, seconds].map((part) => String(part).padStart(2, "0")).join(":");
-    return (0, import_date10.getDate)(`${ANCHOR_DATE}T${time}`);
+    return (0, import_date11.getDate)(`${ANCHOR_DATE}T${time}`);
   }
   function getValueFormatted6({
     item,
@@ -43652,7 +43678,7 @@ If there's a particular need for this, please submit a feature request at https:
     } else {
       formatTime = field.format;
     }
-    return (0, import_date10.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
+    return (0, import_date11.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
   }
   var sort3 = (a2, b2, direction) => {
     const timeA = parseTime2(a2);
@@ -43701,7 +43727,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/boolean.mjs
-  var import_i18n58 = __toESM(require_i18n(), 1);
+  var import_i18n59 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
   function isValidRequiredForBool(item, field) {
@@ -43716,17 +43742,17 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const value = field.getValue({ item });
     if (value === true) {
-      return (0, import_i18n58.__)("True");
+      return (0, import_i18n59.__)("True");
     }
     if (value === false) {
-      return (0, import_i18n58.__)("False");
+      return (0, import_i18n59.__)("False");
     }
     return "";
   }
   function isValidCustom4(item, field) {
     const value = field.getValue({ item });
     if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-      return (0, import_i18n58.__)("Value must be true, false, or undefined");
+      return (0, import_i18n59.__)("Value must be true, false, or undefined");
     }
     return null;
   }
@@ -43778,7 +43804,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/array.mjs
-  var import_i18n59 = __toESM(require_i18n(), 1);
+  var import_i18n60 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
   function isValidRequiredForArray(item, field) {
@@ -43806,10 +43832,10 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     if (!Array.isArray(value)) {
-      return (0, import_i18n59.__)("Value must be an array.");
+      return (0, import_i18n60.__)("Value must be an array.");
     }
     if (!value.every((v2) => typeof v2 === "string")) {
-      return (0, import_i18n59.__)("Every value must be a string.");
+      return (0, import_i18n60.__)("Every value must be a string.");
     }
     return null;
   }
@@ -43907,7 +43933,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/color.mjs
-  var import_i18n60 = __toESM(require_i18n(), 1);
+  var import_i18n61 = __toESM(require_i18n(), 1);
   var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
   function render3({ item, field }) {
     if (field.hasElements) {
@@ -43937,7 +43963,7 @@ If there's a particular need for this, please submit a feature request at https:
   function isValidCustom6(item, field) {
     const value = field.getValue({ item });
     if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-      return (0, import_i18n60.__)("Value must be a valid color.");
+      return (0, import_i18n61.__)("Value must be a valid color.");
     }
     return null;
   }
@@ -45015,13 +45041,13 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/media-fields/build-module/alt_text/index.mjs
-  var import_i18n61 = __toESM(require_i18n(), 1);
+  var import_i18n62 = __toESM(require_i18n(), 1);
   var import_components50 = __toESM(require_components(), 1);
   var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
   var altTextField = {
     id: "alt_text",
     type: "text",
-    label: (0, import_i18n61.__)("Alt text"),
+    label: (0, import_i18n62.__)("Alt text"),
     isVisible: (item) => item?.media_type === "image",
     render: ({ item }) => item?.alt_text || "-",
     Edit: ({ field, onChange, data }) => {
@@ -45037,16 +45063,16 @@ If there's a particular need for this, please submit a feature request at https:
               {
                 href: (
                   // translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations.
-                  (0, import_i18n61.__)(
+                  (0, import_i18n62.__)(
                     "https://www.w3.org/WAI/tutorials/images/decision-tree/"
                   )
                 ),
                 openInNewTab: true,
-                children: (0, import_i18n61.__)("Describe the purpose of the image.")
+                children: (0, import_i18n62.__)("Describe the purpose of the image.")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime197.jsx)("br", {}),
-            (0, import_i18n61.__)("Leave empty if decorative.")
+            (0, import_i18n62.__)("Leave empty if decorative.")
           ] }),
           rows: 2
         }
@@ -45058,11 +45084,11 @@ If there's a particular need for this, please submit a feature request at https:
   var alt_text_default = altTextField;
 
   // packages/media-fields/build-module/attached_to/index.mjs
-  var import_i18n64 = __toESM(require_i18n(), 1);
+  var import_i18n65 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/attached_to/view.mjs
   var import_element139 = __toESM(require_element(), 1);
-  var import_i18n62 = __toESM(require_i18n(), 1);
+  var import_i18n63 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/utils/get-rendered-content.mjs
   function getRenderedContent(content) {
@@ -45090,11 +45116,11 @@ If there's a particular need for this, please submit a feature request at https:
     (0, import_element139.useEffect)(() => {
       if (!!parentId && parentId === embeddedPostId) {
         setAttachedPostTitle(
-          getRenderedContent(embeddedPostTitle) || (0, import_i18n62.__)("(no title)")
+          getRenderedContent(embeddedPostTitle) || (0, import_i18n63.__)("(no title)")
         );
       }
       if (!parentId) {
-        setAttachedPostTitle((0, import_i18n62.__)("(Unattached)"));
+        setAttachedPostTitle((0, import_i18n63.__)("(Unattached)"));
       }
     }, [parentId, embeddedPostId, embeddedPostTitle]);
     return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(import_jsx_runtime198.Fragment, { children: attachedPostTitle });
@@ -45103,7 +45129,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-fields/build-module/attached_to/edit.mjs
   var import_core_data3 = __toESM(require_core_data(), 1);
   var import_components51 = __toESM(require_components(), 1);
-  var import_i18n63 = __toESM(require_i18n(), 1);
+  var import_i18n64 = __toESM(require_i18n(), 1);
   var import_element140 = __toESM(require_element(), 1);
   var import_compose24 = __toESM(require_compose(), 1);
   var import_data10 = __toESM(require_data(), 1);
@@ -45199,8 +45225,8 @@ If there's a particular need for this, please submit a feature request at https:
       {
         className: "dataviews-media-field__attached-to",
         isLoading,
-        label: (0, import_i18n63.__)("Attached to"),
-        help: (0, import_i18n63.__)("Attach this file to a single post or page."),
+        label: (0, import_i18n64.__)("Attached to"),
+        help: (0, import_i18n64.__)("Attach this file to a single post or page."),
         value,
         options,
         onFilterValueChange: (filterValue) => debouncedValueChange(filterValue),
@@ -45215,7 +45241,7 @@ If there's a particular need for this, please submit a feature request at https:
   var attachedToField = {
     id: "attached_to",
     type: "text",
-    label: (0, import_i18n64.__)("Attached to"),
+    label: (0, import_i18n65.__)("Attached to"),
     Edit: MediaAttachedToEdit,
     render: MediaAttachedToView,
     enableSorting: false,
@@ -45224,12 +45250,12 @@ If there's a particular need for this, please submit a feature request at https:
   var attached_to_default = attachedToField;
 
   // packages/media-fields/build-module/author/index.mjs
-  var import_i18n66 = __toESM(require_i18n(), 1);
+  var import_i18n67 = __toESM(require_i18n(), 1);
   var import_data11 = __toESM(require_data(), 1);
   var import_core_data4 = __toESM(require_core_data(), 1);
 
   // packages/media-fields/build-module/author/view.mjs
-  var import_i18n65 = __toESM(require_i18n(), 1);
+  var import_i18n66 = __toESM(require_i18n(), 1);
   var import_element141 = __toESM(require_element(), 1);
   var import_components52 = __toESM(require_components(), 1);
   var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
@@ -45266,7 +45292,7 @@ If there's a particular need for this, please submit a feature request at https:
             {
               ref: imgRef,
               onLoad: handleLoad,
-              alt: (0, import_i18n65.__)("Author avatar"),
+              alt: (0, import_i18n66.__)("Author avatar"),
               src: imageUrl
             }
           )
@@ -45279,7 +45305,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/author/index.mjs
   var authorField = {
-    label: (0, import_i18n66.__)("Author"),
+    label: (0, import_i18n67.__)("Author"),
     id: "author",
     type: "integer",
     getElements: async () => {
@@ -45312,7 +45338,7 @@ If there's a particular need for this, please submit a feature request at https:
   var author_default = authorField;
 
   // packages/media-fields/build-module/caption/index.mjs
-  var import_i18n67 = __toESM(require_i18n(), 1);
+  var import_i18n68 = __toESM(require_i18n(), 1);
   var import_components53 = __toESM(require_components(), 1);
 
   // packages/media-fields/build-module/utils/get-raw-content.mjs
@@ -45334,7 +45360,7 @@ If there's a particular need for this, please submit a feature request at https:
   var captionField = {
     id: "caption",
     type: "text",
-    label: (0, import_i18n67.__)("Caption"),
+    label: (0, import_i18n68.__)("Caption"),
     getValue: ({ item }) => getRawContent(item?.caption),
     render: ({ item }) => getRawContent(item?.caption) || "-",
     Edit: ({ field, onChange, data }) => {
@@ -45354,11 +45380,11 @@ If there's a particular need for this, please submit a feature request at https:
   var caption_default = captionField;
 
   // packages/media-fields/build-module/date_added/index.mjs
-  var import_i18n68 = __toESM(require_i18n(), 1);
+  var import_i18n69 = __toESM(require_i18n(), 1);
   var dateAddedField = {
     id: "date",
     type: "datetime",
-    label: (0, import_i18n68.__)("Date added"),
+    label: (0, import_i18n69.__)("Date added"),
     filterBy: {
       operators: ["before", "after"]
     },
@@ -45367,11 +45393,11 @@ If there's a particular need for this, please submit a feature request at https:
   var date_added_default = dateAddedField;
 
   // packages/media-fields/build-module/date_modified/index.mjs
-  var import_i18n69 = __toESM(require_i18n(), 1);
+  var import_i18n70 = __toESM(require_i18n(), 1);
   var dateModifiedField = {
     id: "modified",
     type: "datetime",
-    label: (0, import_i18n69.__)("Date modified"),
+    label: (0, import_i18n70.__)("Date modified"),
     filterBy: {
       operators: ["before", "after"]
     },
@@ -45380,13 +45406,13 @@ If there's a particular need for this, please submit a feature request at https:
   var date_modified_default = dateModifiedField;
 
   // packages/media-fields/build-module/description/index.mjs
-  var import_i18n70 = __toESM(require_i18n(), 1);
+  var import_i18n71 = __toESM(require_i18n(), 1);
   var import_components54 = __toESM(require_components(), 1);
   var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
   var descriptionField = {
     id: "description",
     type: "text",
-    label: (0, import_i18n70.__)("Description"),
+    label: (0, import_i18n71.__)("Description"),
     getValue: ({ item }) => getRawContent(item?.description),
     render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime202.jsx)("div", { children: getRawContent(item?.description) || "-" }),
     Edit: ({ field, onChange, data }) => {
@@ -45406,7 +45432,7 @@ If there's a particular need for this, please submit a feature request at https:
   var description_default = descriptionField;
 
   // packages/media-fields/build-module/filename/index.mjs
-  var import_i18n71 = __toESM(require_i18n(), 1);
+  var import_i18n72 = __toESM(require_i18n(), 1);
   var import_url4 = __toESM(require_url(), 1);
 
   // packages/media-fields/build-module/filename/view.mjs
@@ -45442,7 +45468,7 @@ If there's a particular need for this, please submit a feature request at https:
   var filenameField = {
     id: "filename",
     type: "text",
-    label: (0, import_i18n71.__)("File name"),
+    label: (0, import_i18n72.__)("File name"),
     getValue: ({ item }) => (0, import_url4.getFilename)(item?.source_url || ""),
     render: FileNameView,
     enableSorting: false,
@@ -45452,7 +45478,7 @@ If there's a particular need for this, please submit a feature request at https:
   var filename_default = filenameField;
 
   // packages/media-fields/build-module/filesize/index.mjs
-  var import_i18n72 = __toESM(require_i18n(), 1);
+  var import_i18n73 = __toESM(require_i18n(), 1);
   var KB_IN_BYTES = 1024;
   var MB_IN_BYTES = 1024 * KB_IN_BYTES;
   var GB_IN_BYTES = 1024 * MB_IN_BYTES;
@@ -45462,9 +45488,9 @@ If there's a particular need for this, please submit a feature request at https:
   var ZB_IN_BYTES = 1024 * EB_IN_BYTES;
   var YB_IN_BYTES = 1024 * ZB_IN_BYTES;
   function getBytesString(bytes, unitSymbol, decimals = 2) {
-    return (0, import_i18n72.sprintf)(
+    return (0, import_i18n73.sprintf)(
       // translators: 1: Actual bytes of a file. 2: The unit symbol (e.g. MB).
-      (0, import_i18n72._x)("%1$s %2$s", "file size"),
+      (0, import_i18n73._x)("%1$s %2$s", "file size"),
       bytes.toLocaleString(void 0, {
         minimumFractionDigits: 0,
         maximumFractionDigits: decimals
@@ -45474,27 +45500,27 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function formatFileSize(bytes, decimals = 2) {
     if (bytes === 0) {
-      return getBytesString(0, (0, import_i18n72._x)("B", "unit symbol"), decimals);
+      return getBytesString(0, (0, import_i18n73._x)("B", "unit symbol"), decimals);
     }
     const quant = {
       /* translators: Unit symbol for yottabyte. */
-      [(0, import_i18n72._x)("YB", "unit symbol")]: YB_IN_BYTES,
+      [(0, import_i18n73._x)("YB", "unit symbol")]: YB_IN_BYTES,
       /* translators: Unit symbol for zettabyte. */
-      [(0, import_i18n72._x)("ZB", "unit symbol")]: ZB_IN_BYTES,
+      [(0, import_i18n73._x)("ZB", "unit symbol")]: ZB_IN_BYTES,
       /* translators: Unit symbol for exabyte. */
-      [(0, import_i18n72._x)("EB", "unit symbol")]: EB_IN_BYTES,
+      [(0, import_i18n73._x)("EB", "unit symbol")]: EB_IN_BYTES,
       /* translators: Unit symbol for petabyte. */
-      [(0, import_i18n72._x)("PB", "unit symbol")]: PB_IN_BYTES,
+      [(0, import_i18n73._x)("PB", "unit symbol")]: PB_IN_BYTES,
       /* translators: Unit symbol for terabyte. */
-      [(0, import_i18n72._x)("TB", "unit symbol")]: TB_IN_BYTES,
+      [(0, import_i18n73._x)("TB", "unit symbol")]: TB_IN_BYTES,
       /* translators: Unit symbol for gigabyte. */
-      [(0, import_i18n72._x)("GB", "unit symbol")]: GB_IN_BYTES,
+      [(0, import_i18n73._x)("GB", "unit symbol")]: GB_IN_BYTES,
       /* translators: Unit symbol for megabyte. */
-      [(0, import_i18n72._x)("MB", "unit symbol")]: MB_IN_BYTES,
+      [(0, import_i18n73._x)("MB", "unit symbol")]: MB_IN_BYTES,
       /* translators: Unit symbol for kilobyte. */
-      [(0, import_i18n72._x)("KB", "unit symbol")]: KB_IN_BYTES,
+      [(0, import_i18n73._x)("KB", "unit symbol")]: KB_IN_BYTES,
       /* translators: Unit symbol for byte. */
-      [(0, import_i18n72._x)("B", "unit symbol")]: 1
+      [(0, import_i18n73._x)("B", "unit symbol")]: 1
     };
     for (const [unit, mag] of Object.entries(quant)) {
       if (bytes >= mag) {
@@ -45506,7 +45532,7 @@ If there's a particular need for this, please submit a feature request at https:
   var filesizeField = {
     id: "filesize",
     type: "text",
-    label: (0, import_i18n72.__)("File size"),
+    label: (0, import_i18n73.__)("File size"),
     getValue: ({ item }) => item?.media_details?.filesize ? formatFileSize(item?.media_details?.filesize) : "",
     isVisible: (item) => {
       return !!item?.media_details?.filesize;
@@ -45518,14 +45544,14 @@ If there's a particular need for this, please submit a feature request at https:
   var filesize_default = filesizeField;
 
   // packages/media-fields/build-module/media_dimensions/index.mjs
-  var import_i18n73 = __toESM(require_i18n(), 1);
+  var import_i18n74 = __toESM(require_i18n(), 1);
   var mediaDimensionsField = {
     id: "media_dimensions",
     type: "text",
-    label: (0, import_i18n73.__)("Dimensions"),
-    getValue: ({ item }) => item?.media_details?.width && item?.media_details?.height ? (0, import_i18n73.sprintf)(
+    label: (0, import_i18n74.__)("Dimensions"),
+    getValue: ({ item }) => item?.media_details?.width && item?.media_details?.height ? (0, import_i18n74.sprintf)(
       // translators: 1: Width. 2: Height.
-      (0, import_i18n73._x)("%1$s \xD7 %2$s", "image dimensions"),
+      (0, import_i18n74._x)("%1$s \xD7 %2$s", "image dimensions"),
       item?.media_details?.width?.toString(),
       item?.media_details?.height?.toString()
     ) : "",
@@ -45539,7 +45565,7 @@ If there's a particular need for this, please submit a feature request at https:
   var media_dimensions_default = mediaDimensionsField;
 
   // packages/media-fields/build-module/media_thumbnail/index.mjs
-  var import_i18n75 = __toESM(require_i18n(), 1);
+  var import_i18n76 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/media_thumbnail/view.mjs
   var import_data12 = __toESM(require_data(), 1);
@@ -45549,32 +45575,32 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url5 = __toESM(require_url(), 1);
 
   // packages/media-fields/build-module/utils/get-media-type-from-mime-type.mjs
-  var import_i18n74 = __toESM(require_i18n(), 1);
+  var import_i18n75 = __toESM(require_i18n(), 1);
   function getMediaTypeFromMimeType(mimeType) {
     if (mimeType.startsWith("image/")) {
       return {
         type: "image",
-        label: (0, import_i18n74.__)("Image"),
+        label: (0, import_i18n75.__)("Image"),
         icon: image_default
       };
     }
     if (mimeType.startsWith("video/")) {
       return {
         type: "video",
-        label: (0, import_i18n74.__)("Video"),
+        label: (0, import_i18n75.__)("Video"),
         icon: video_default
       };
     }
     if (mimeType.startsWith("audio/")) {
       return {
         type: "audio",
-        label: (0, import_i18n74.__)("Audio"),
+        label: (0, import_i18n75.__)("Audio"),
         icon: audio_default
       };
     }
     return {
       type: "application",
-      label: (0, import_i18n74.__)("Application"),
+      label: (0, import_i18n75.__)("Application"),
       icon: file_default
     };
   }
@@ -45716,7 +45742,7 @@ If there's a particular need for this, please submit a feature request at https:
   var mediaThumbnailField = {
     id: "media_thumbnail",
     type: "media",
-    label: (0, import_i18n75.__)("Thumbnail"),
+    label: (0, import_i18n76.__)("Thumbnail"),
     render: MediaThumbnailView,
     enableSorting: false,
     filterBy: false
@@ -45724,11 +45750,11 @@ If there's a particular need for this, please submit a feature request at https:
   var media_thumbnail_default = mediaThumbnailField;
 
   // packages/media-fields/build-module/mime_type/index.mjs
-  var import_i18n76 = __toESM(require_i18n(), 1);
+  var import_i18n77 = __toESM(require_i18n(), 1);
   var mimeTypeField = {
     id: "mime_type",
     type: "text",
-    label: (0, import_i18n76.__)("File type"),
+    label: (0, import_i18n77.__)("File type"),
     getValue: ({ item }) => item?.mime_type || "",
     render: ({ item }) => item?.mime_type || "-",
     // Disable sorting until REST API support for ordering my `mime_type` is added.
@@ -45751,7 +45777,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-utils/build-module/components/media-upload-modal/upload-status-popover.mjs
   var import_element144 = __toESM(require_element(), 1);
-  var import_i18n77 = __toESM(require_i18n(), 1);
+  var import_i18n78 = __toESM(require_i18n(), 1);
   var import_components56 = __toESM(require_components(), 1);
   var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
   function UploadStatusPopover({
@@ -45788,22 +45814,22 @@ If there's a particular need for this, please submit a feature request at https:
     }
     let buttonLabel, popoverHeading;
     if (isUploading) {
-      buttonLabel = (0, import_i18n77.sprintf)(
+      buttonLabel = (0, import_i18n78.sprintf)(
         // translators: %s: number of files being uploaded
-        (0, import_i18n77._n)("Uploading %s file", "Uploading %s files", activeFiles.length),
+        (0, import_i18n78._n)("Uploading %s file", "Uploading %s files", activeFiles.length),
         activeFiles.length.toLocaleString()
       );
-      popoverHeading = (0, import_i18n77.__)("Uploading");
+      popoverHeading = (0, import_i18n78.__)("Uploading");
     } else if (hasErrors) {
-      buttonLabel = (0, import_i18n77.sprintf)(
+      buttonLabel = (0, import_i18n78.sprintf)(
         // translators: %s: number of upload errors
-        (0, import_i18n77._n)("%s upload error", "%s upload errors", errorFiles.length),
+        (0, import_i18n78._n)("%s upload error", "%s upload errors", errorFiles.length),
         errorFiles.length.toLocaleString()
       );
-      popoverHeading = (0, import_i18n77.__)("Upload errors");
+      popoverHeading = (0, import_i18n78.__)("Upload errors");
     } else {
-      buttonLabel = (0, import_i18n77.__)("Upload complete");
-      popoverHeading = (0, import_i18n77.__)("Upload complete");
+      buttonLabel = (0, import_i18n78.__)("Upload complete");
+      popoverHeading = (0, import_i18n78.__)("Upload complete");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)("div", { className: "media-upload-modal__upload-status", children: [
       isUploading && /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_components56.Spinner, {}),
@@ -46055,12 +46081,12 @@ If there's a particular need for this, please submit a feature request at https:
     onSelect,
     onClose,
     onUpload,
-    title = (0, import_i18n78.__)("Select Media"),
+    title = (0, import_i18n79.__)("Select Media"),
     isOpen,
     isDismissible = true,
     modalClass,
     search = true,
-    searchLabel = (0, import_i18n78.__)("Search media")
+    searchLabel = (0, import_i18n79.__)("Search media")
   }) {
     const [selection, setSelection] = (0, import_element147.useState)(
       () => getSelectionFromValue(value)
@@ -46197,10 +46223,10 @@ If there's a particular need for this, please submit a feature request at https:
         {
           id: "title",
           type: "text",
-          label: (0, import_i18n78.__)("Title"),
+          label: (0, import_i18n79.__)("Title"),
           getValue: ({ item }) => {
             const titleValue = item.title.raw || item.title.rendered;
-            return titleValue || (0, import_i18n78.__)("(no title)");
+            return titleValue || (0, import_i18n79.__)("(no title)");
           }
         },
         alt_text_default,
@@ -46221,7 +46247,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => [
         {
           id: "select",
-          label: (0, import_i18n78.__)("Select"),
+          label: (0, import_i18n79.__)("Select"),
           isPrimary: true,
           supportsBulk: multiple,
           async callback() {
@@ -46272,9 +46298,9 @@ If there's a particular need for this, please submit a feature request at https:
         ).length;
         if (completeCount > 0) {
           createSuccessNotice(
-            (0, import_i18n78.sprintf)(
+            (0, import_i18n79.sprintf)(
               // translators: %s: number of files
-              (0, import_i18n78._n)(
+              (0, import_i18n79._n)(
                 "Uploaded %s file",
                 "Uploaded %s files",
                 completeCount
@@ -46347,7 +46373,7 @@ If there's a particular need for this, please submit a feature request at https:
                 onClick: openFileDialog,
                 icon: upload_default,
                 __next40pxDefaultSize: true,
-                children: (0, import_i18n78.__)("Upload media")
+                children: (0, import_i18n79.__)("Upload media")
               }
             )
           }
@@ -46377,7 +46403,7 @@ If there's a particular need for this, please submit a feature request at https:
                   });
                 }
               },
-              label: (0, import_i18n78.__)("Drop files to upload")
+              label: (0, import_i18n79.__)("Drop files to upload")
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
@@ -46395,7 +46421,7 @@ If there's a particular need for this, please submit a feature request at https:
               defaultLayouts,
               config: dataViewsConfig,
               getItemId: (item) => String(item.id),
-              itemListLabel: (0, import_i18n78.__)("Media items"),
+              itemListLabel: (0, import_i18n79.__)("Media items"),
               onReset: isModified ? resetToDefault : false,
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(

@@ -29916,7 +29916,7 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/guidelines/stage.tsx
-var import_i18n67 = __toESM(require_i18n());
+var import_i18n68 = __toESM(require_i18n());
 var import_element168 = __toESM(require_element());
 var import_components63 = __toESM(require_components());
 
@@ -42346,8 +42346,8 @@ function Combobox3({
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
 var import_components42 = __toESM(require_components(), 1);
 var import_element135 = __toESM(require_element(), 1);
-var import_i18n44 = __toESM(require_i18n(), 1);
-var import_date4 = __toESM(require_date(), 1);
+var import_i18n45 = __toESM(require_i18n(), 1);
+var import_date5 = __toESM(require_date(), 1);
 import { speak as speak2 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
@@ -42489,13 +42489,38 @@ function getCalendarLocale(wpLocale) {
   return normalized.join("-");
 }
 
-// packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
+// packages/dataviews/build-module/components/dataform-controls/utils/get-timezone-description.mjs
 var import_date3 = __toESM(require_date(), 1);
+var import_i18n44 = __toESM(require_i18n(), 1);
+function getTimezoneDescription() {
+  const { timezone } = (0, import_date3.getSettings)();
+  const userTimezoneOffset = -1 * ((/* @__PURE__ */ new Date()).getTimezoneOffset() / 60);
+  if (Number(timezone.offset) === userTimezoneOffset) {
+    return void 0;
+  }
+  const offsetSymbol = Number(timezone.offset) >= 0 ? "+" : "";
+  const zoneAbbr = "" !== timezone.abbr && isNaN(Number(timezone.abbr)) ? timezone.abbr : `UTC${offsetSymbol}${timezone.offsetFormatted}`;
+  const prettyTimezoneString = timezone.string.replaceAll("_", " ");
+  let timezoneDetail = zoneAbbr;
+  if ("UTC" === timezone.string) {
+    timezoneDetail = (0, import_i18n44.__)("Coordinated Universal Time");
+  } else if (prettyTimezoneString.trim().length > 0) {
+    timezoneDetail = `(${zoneAbbr}) ${prettyTimezoneString}`;
+  }
+  return (0, import_i18n44.sprintf)(
+    /* translators: %s: timezone detail, e.g. "(CEST) Europe/Madrid" or "UTC+3". */
+    (0, import_i18n44.__)("Timezone: %s"),
+    timezoneDetail
+  );
+}
+
+// packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
+var import_date4 = __toESM(require_date(), 1);
 function parseDateTime(dateTimeString) {
   if (!dateTimeString) {
     return null;
   }
-  const parsed = (0, import_date3.getDate)(dateTimeString);
+  const parsed = (0, import_date4.getDate)(dateTimeString);
   return parsed && isValid(parsed) ? parsed : null;
 }
 
@@ -42505,7 +42530,7 @@ var formatDateTime = (value) => {
   if (!value) {
     return "";
   }
-  return (0, import_date4.dateI18n)("Y-m-d\\TH:i", (0, import_date4.getDate)(value));
+  return (0, import_date5.dateI18n)("Y-m-d\\TH:i", (0, import_date5.getDate)(value));
 };
 function CalendarDateTimeControl({
   data,
@@ -42521,8 +42546,8 @@ function CalendarDateTimeControl({
   const disabled2 = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
-  const { timezone } = (0, import_date4.getSettings)();
-  const timeZone = timezone.string || (0, import_date4.dateI18n)("P");
+  const { timezone } = (0, import_date5.getSettings)();
+  const timeZone = timezone.string || (0, import_date5.dateI18n)("P");
   const [calendarMonth, setCalendarMonth] = (0, import_element135.useState)(() => {
     const parsedDate = parseDateTime(value);
     return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timeZone);
@@ -42552,9 +42577,9 @@ function CalendarDateTimeControl({
   const onSelectDate = (0, import_element135.useCallback)(
     (newDate) => {
       if (newDate) {
-        const wpDate = (0, import_date4.dateI18n)("Y-m-d", newDate);
-        const wpTime = value ? (0, import_date4.dateI18n)("H:i", (0, import_date4.getDate)(value)) : "00:00";
-        const finalDateTime = (0, import_date4.getDate)(`${wpDate}T${wpTime}`);
+        const wpDate = (0, import_date5.dateI18n)("Y-m-d", newDate);
+        const wpTime = value ? (0, import_date5.dateI18n)("H:i", (0, import_date5.getDate)(value)) : "00:00";
+        const finalDateTime = (0, import_date5.getDate)(`${wpDate}T${wpTime}`);
         onChangeCallback(finalDateTime.toISOString());
       } else {
         onChangeCallback(void 0);
@@ -42578,7 +42603,7 @@ function CalendarDateTimeControl({
   const handleManualDateTimeChange = (0, import_element135.useCallback)(
     (newValue) => {
       if (newValue) {
-        const dateTime = (0, import_date4.getDate)(newValue);
+        const dateTime = (0, import_date5.getDate)(newValue);
         onChangeCallback(dateTime.toISOString());
         const parsedDate = parseDateTime(dateTime.toISOString());
         if (parsedDate) {
@@ -42591,13 +42616,13 @@ function CalendarDateTimeControl({
     [onChangeCallback, timeZone]
   );
   const { format: fieldFormat } = field;
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
-  const locale = getCalendarLocale((0, import_date4.getSettings)().l10n.locale);
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
+  const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n44.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n45.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n44.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n45.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(
     import_components42.BaseControl,
@@ -42614,11 +42639,12 @@ function CalendarDateTimeControl({
             required: !!isValid2?.required,
             customValidity: getCustomValidity(isValid2, validity),
             type: "datetime-local",
-            label: (0, import_i18n44.__)("Date time"),
+            label: (0, import_i18n45.__)("Date time"),
             hideLabelFromVision: true,
             value: formatDateTime(value),
             onValueChange: handleManualDateTimeChange,
             disabled: disabled2,
+            description: getTimezoneDescription(),
             min: minConstraint ? formatDateTime(minConstraint) : void 0,
             max: maxConstraint ? formatDateTime(maxConstraint) : void 0
           }
@@ -42633,7 +42659,7 @@ function CalendarDateTimeControl({
             onMonthChange: setCalendarMonth,
             timeZone,
             locale,
-            dir: (0, import_i18n44.isRTL)() ? "rtl" : "ltr",
+            dir: (0, import_i18n45.isRTL)() ? "rtl" : "ltr",
             weekStartsOn,
             disabled: disabled2 || disabledMatchers
           }
@@ -42682,37 +42708,37 @@ function DateTime({
 // packages/dataviews/build-module/components/dataform-controls/date.mjs
 var import_components43 = __toESM(require_components(), 1);
 var import_element136 = __toESM(require_element(), 1);
-var import_i18n45 = __toESM(require_i18n(), 1);
-var import_date5 = __toESM(require_date(), 1);
+var import_i18n46 = __toESM(require_i18n(), 1);
+var import_date6 = __toESM(require_date(), 1);
 import { speak as speak3 } from "@wordpress/a11y";
 var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
 var DATE_PRESETS = [
   {
     id: "today",
-    label: (0, import_i18n45.__)("Today"),
-    getValue: () => (0, import_date5.getDate)(null)
+    label: (0, import_i18n46.__)("Today"),
+    getValue: () => (0, import_date6.getDate)(null)
   },
   {
     id: "yesterday",
-    label: (0, import_i18n45.__)("Yesterday"),
+    label: (0, import_i18n46.__)("Yesterday"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subDays(today, 1);
     }
   },
   {
     id: "past-week",
-    label: (0, import_i18n45.__)("Past week"),
+    label: (0, import_i18n46.__)("Past week"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subDays(today, 7);
     }
   },
   {
     id: "past-month",
-    label: (0, import_i18n45.__)("Past month"),
+    label: (0, import_i18n46.__)("Past month"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return subMonths(today, 1);
     }
   }
@@ -42720,41 +42746,41 @@ var DATE_PRESETS = [
 var DATE_RANGE_PRESETS = [
   {
     id: "last-7-days",
-    label: (0, import_i18n45.__)("Last 7 days"),
+    label: (0, import_i18n46.__)("Last 7 days"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subDays(today, 7), today];
     }
   },
   {
     id: "last-30-days",
-    label: (0, import_i18n45.__)("Last 30 days"),
+    label: (0, import_i18n46.__)("Last 30 days"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subDays(today, 30), today];
     }
   },
   {
     id: "month-to-date",
-    label: (0, import_i18n45.__)("Month to date"),
+    label: (0, import_i18n46.__)("Month to date"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [startOfMonth(today), today];
     }
   },
   {
     id: "last-year",
-    label: (0, import_i18n45.__)("Last year"),
+    label: (0, import_i18n46.__)("Last year"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [subYears(today, 1), today];
     }
   },
   {
     id: "year-to-date",
-    label: (0, import_i18n45.__)("Year to date"),
+    label: (0, import_i18n46.__)("Year to date"),
     getValue: () => {
-      const today = (0, import_date5.getDate)(null);
+      const today = (0, import_date6.getDate)(null);
       return [startOfYear(today), today];
     }
   }
@@ -42879,8 +42905,8 @@ function CalendarDateControl({
   const [selectedPresetId, setSelectedPresetId] = (0, import_element136.useState)(
     null
   );
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
-  const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
+  const locale = getCalendarLocale((0, import_date6.getSettings)().l10n.locale);
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
   const [calendarMonth, setCalendarMonth] = (0, import_element136.useState)(() => {
@@ -42938,9 +42964,9 @@ function CalendarDateControl({
   );
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n45.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n46.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n45.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n46.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
     ValidatedDateControl,
@@ -42993,7 +43019,7 @@ function CalendarDateControl({
                       size: "small",
                       disabled: !!selectedPresetId || disabled2,
                       accessibleWhenDisabled: true,
-                      children: (0, import_i18n45.__)("Custom")
+                      children: (0, import_i18n46.__)("Custom")
                     }
                   )
                 ]
@@ -43004,7 +43030,7 @@ function CalendarDateControl({
               {
                 ref: validityTargetRef,
                 type: "date",
-                label: (0, import_i18n45.__)("Date"),
+                label: (0, import_i18n46.__)("Date"),
                 hideLabelFromVision: true,
                 value,
                 onChange: handleManualDateChange,
@@ -43023,7 +43049,7 @@ function CalendarDateControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 locale,
-                dir: (0, import_i18n45.isRTL)() ? "rtl" : "ltr",
+                dir: (0, import_i18n46.isRTL)() ? "rtl" : "ltr",
                 weekStartsOn,
                 disabled: disabled2 || disabledMatchers,
                 disableNavigation: disabled2
@@ -43058,8 +43084,8 @@ function CalendarDateRangeControl({
   if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
     value = fieldValue;
   }
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
-  const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
+  const locale = getCalendarLocale((0, import_date6.getSettings)().l10n.locale);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
   const onChangeCallback = (0, import_element136.useCallback)(
     (newValue) => {
@@ -43163,9 +43189,9 @@ function CalendarDateRangeControl({
   );
   let displayLabel = label;
   if (field.isValid?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n45.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n46.__)("Required")})`;
   } else if (!field.isValid?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n45.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n46.__)("Optional")})`;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
     ValidatedDateControl,
@@ -43218,7 +43244,7 @@ function CalendarDateRangeControl({
                       size: "small",
                       accessibleWhenDisabled: true,
                       disabled: !!selectedPresetId || disabled2,
-                      children: (0, import_i18n45.__)("Custom")
+                      children: (0, import_i18n46.__)("Custom")
                     }
                   )
                 ]
@@ -43237,7 +43263,7 @@ function CalendarDateRangeControl({
                     {
                       ref: fromInputRef,
                       type: "date",
-                      label: (0, import_i18n45.__)("From"),
+                      label: (0, import_i18n46.__)("From"),
                       hideLabelFromVision: true,
                       value: value?.[0],
                       onChange: (newValue) => handleManualDateChange("from", newValue),
@@ -43252,7 +43278,7 @@ function CalendarDateRangeControl({
                     {
                       ref: toInputRef,
                       type: "date",
-                      label: (0, import_i18n45.__)("To"),
+                      label: (0, import_i18n46.__)("To"),
                       hideLabelFromVision: true,
                       value: value?.[1],
                       onChange: (newValue) => handleManualDateChange("to", newValue),
@@ -43274,7 +43300,7 @@ function CalendarDateRangeControl({
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 locale,
-                dir: (0, import_i18n45.isRTL)() ? "rtl" : "ltr",
+                dir: (0, import_i18n46.isRTL)() ? "rtl" : "ltr",
                 weekStartsOn,
                 disabled: disabled2 || disabledMatchers
               }
@@ -43527,7 +43553,7 @@ function Url({
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
 var import_components45 = __toESM(require_components(), 1);
 var import_element139 = __toESM(require_element(), 1);
-var import_i18n46 = __toESM(require_i18n(), 1);
+var import_i18n47 = __toESM(require_i18n(), 1);
 var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
@@ -43554,12 +43580,12 @@ function BetweenControls({
   return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
     import_components45.BaseControl,
     {
-      help: (0, import_i18n46.__)("The max. value must be greater than the min. value."),
+      help: (0, import_i18n47.__)("The max. value must be greater than the min. value."),
       children: /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(import_components45.Flex, { direction: "row", gap: 4, children: [
         /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
           import_components45.__experimentalNumberControl,
           {
-            label: (0, import_i18n46.__)("Min."),
+            label: (0, import_i18n47.__)("Min."),
             value: min3,
             max: max3 ? Number(max3) - step : void 0,
             onChange: onChangeMin,
@@ -43570,7 +43596,7 @@ function BetweenControls({
         /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
           import_components45.__experimentalNumberControl,
           {
-            label: (0, import_i18n46.__)("Max."),
+            label: (0, import_i18n47.__)("Max."),
             value: max3,
             min: min3 ? Number(min3) + step : void 0,
             onChange: onChangeMax,
@@ -43745,7 +43771,7 @@ function Text3({
 // packages/dataviews/build-module/components/dataform-controls/time.mjs
 var import_components47 = __toESM(require_components(), 1);
 var import_element142 = __toESM(require_element(), 1);
-var import_i18n47 = __toESM(require_i18n(), 1);
+var import_i18n48 = __toESM(require_i18n(), 1);
 var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
 function getStep(timeFormat, values) {
   const tokens = (timeFormat ?? "").replace(/\\./g, "");
@@ -43787,13 +43813,13 @@ function BetweenControls2({
   return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
     import_components47.BaseControl,
     {
-      help: (0, import_i18n47.__)("The end time must be later than the start time."),
+      help: (0, import_i18n48.__)("The end time must be later than the start time."),
       children: /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
         /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
           ValidatedInputControl,
           {
             type: "time",
-            label: (0, import_i18n47.__)("From"),
+            label: (0, import_i18n48.__)("From"),
             value: from,
             onValueChange: onChangeFrom,
             hideLabelFromVision,
@@ -43807,7 +43833,7 @@ function BetweenControls2({
           ValidatedInputControl,
           {
             type: "time",
-            label: (0, import_i18n47.__)("To"),
+            label: (0, import_i18n48.__)("To"),
             value: to,
             onValueChange: onChangeTo,
             hideLabelFromVision,
@@ -44280,7 +44306,7 @@ var w = function(r3) {
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
 var import_components50 = __toESM(require_components(), 1);
 var import_element147 = __toESM(require_element(), 1);
-var import_i18n48 = __toESM(require_i18n(), 1);
+var import_i18n49 = __toESM(require_i18n(), 1);
 var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
 var ColorPickerDropdown = ({
   color,
@@ -44297,7 +44323,7 @@ var ColorPickerDropdown = ({
         import_components50.Button,
         {
           onClick: onToggle,
-          "aria-label": (0, import_i18n48.__)("Open color picker"),
+          "aria-label": (0, import_i18n49.__)("Open color picker"),
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
@@ -44368,7 +44394,7 @@ function Color({
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
 var import_components51 = __toESM(require_components(), 1);
 var import_element148 = __toESM(require_element(), 1);
-var import_i18n49 = __toESM(require_i18n(), 1);
+var import_i18n50 = __toESM(require_i18n(), 1);
 var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
@@ -44400,7 +44426,7 @@ function Password({
             icon: isVisible2 ? unseen_default : seen_default,
             onClick: toggleVisibility,
             size: "small",
-            label: isVisible2 ? (0, import_i18n49.__)("Hide password") : (0, import_i18n49.__)("Show password"),
+            label: isVisible2 ? (0, import_i18n50.__)("Hide password") : (0, import_i18n50.__)("Show password"),
             disabled: disabled2,
             accessibleWhenDisabled: true
           }
@@ -44525,7 +44551,7 @@ var setValueFromId = (id) => ({ value }) => {
 var set_value_from_id_default = setValueFromId;
 
 // packages/dataviews/build-module/field-types/email.mjs
-var import_i18n50 = __toESM(require_i18n(), 1);
+var import_i18n51 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
 function RenderFromElements({
@@ -44635,7 +44661,7 @@ var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{
 function isValidCustom(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-    return (0, import_i18n50.__)("Value must be a valid email address.");
+    return (0, import_i18n51.__)("Value must be a valid email address.");
   }
   return null;
 }
@@ -44672,7 +44698,7 @@ var email_default = {
 };
 
 // packages/dataviews/build-module/field-types/integer.mjs
-var import_i18n51 = __toESM(require_i18n(), 1);
+var import_i18n52 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/sort-number.mjs
 var sort_number_default = (a2, b2, direction) => {
@@ -44738,7 +44764,7 @@ function getValueFormatted2({
 function isValidCustom2(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-    return (0, import_i18n51.__)("Value must be an integer.");
+    return (0, import_i18n52.__)("Value must be an integer.");
   }
   return null;
 }
@@ -44785,7 +44811,7 @@ var integer_default = {
 };
 
 // packages/dataviews/build-module/field-types/number.mjs
-var import_i18n52 = __toESM(require_i18n(), 1);
+var import_i18n53 = __toESM(require_i18n(), 1);
 var format3 = {
   separatorThousand: ",",
   separatorDecimal: ".",
@@ -44821,7 +44847,7 @@ function isEmpty(value) {
 function isValidCustom3(item, field) {
   const value = field.getValue({ item });
   if (!isEmpty(value) && !Number.isFinite(value)) {
-    return (0, import_i18n52.__)("Value must be a number.");
+    return (0, import_i18n53.__)("Value must be a number.");
   }
   return null;
 }
@@ -44901,15 +44927,15 @@ var text_default = {
 };
 
 // packages/dataviews/build-module/field-types/datetime.mjs
-var import_date8 = __toESM(require_date(), 1);
+var import_date9 = __toESM(require_date(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-boundary.mjs
-var import_date7 = __toESM(require_date(), 1);
+var import_date8 = __toESM(require_date(), 1);
 function parseDateLike(value) {
   if (!isValid(new Date(value))) {
     return null;
   }
-  const parsed = (0, import_date7.getDate)(value);
+  const parsed = (0, import_date8.getDate)(value);
   return parsed && isValid(parsed) ? parsed.getTime() : null;
 }
 function validateBoundary(item, field, boundary, parse2) {
@@ -44944,8 +44970,8 @@ function isValidMaxTime(item, field) {
 
 // packages/dataviews/build-module/field-types/datetime.mjs
 var format4 = {
-  datetime: (0, import_date8.getSettings)().formats.datetime,
-  weekStartsOn: (0, import_date8.getSettings)().l10n.startOfWeek
+  datetime: (0, import_date9.getSettings)().formats.datetime,
+  weekStartsOn: (0, import_date9.getSettings)().l10n.startOfWeek
 };
 function getValueFormatted4({
   item,
@@ -44961,7 +44987,7 @@ function getValueFormatted4({
   } else {
     formatDatetime = field.format;
   }
-  return (0, import_date8.dateI18n)(formatDatetime.datetime, (0, import_date8.getDate)(value));
+  return (0, import_date9.dateI18n)(formatDatetime.datetime, (0, import_date9.getDate)(value));
 }
 var sort = (a2, b2, direction) => {
   const timeA = new Date(a2).getTime();
@@ -45006,10 +45032,10 @@ var datetime_default = {
 };
 
 // packages/dataviews/build-module/field-types/date.mjs
-var import_date9 = __toESM(require_date(), 1);
+var import_date10 = __toESM(require_date(), 1);
 var format5 = {
-  date: (0, import_date9.getSettings)().formats.date,
-  weekStartsOn: (0, import_date9.getSettings)().l10n.startOfWeek
+  date: (0, import_date10.getSettings)().formats.date,
+  weekStartsOn: (0, import_date10.getSettings)().l10n.startOfWeek
 };
 function getValueFormatted5({
   item,
@@ -45025,7 +45051,7 @@ function getValueFormatted5({
   } else {
     formatDate2 = field.format;
   }
-  return (0, import_date9.dateI18n)(formatDate2.date, (0, import_date9.getDate)(value));
+  return (0, import_date10.dateI18n)(formatDate2.date, (0, import_date10.getDate)(value));
 }
 var sort2 = (a2, b2, direction) => {
   const timeA = new Date(a2).getTime();
@@ -45072,9 +45098,9 @@ var date_default = {
 };
 
 // packages/dataviews/build-module/field-types/time.mjs
-var import_date10 = __toESM(require_date(), 1);
+var import_date11 = __toESM(require_date(), 1);
 var format6 = {
-  time: (0, import_date10.getSettings)().formats.time
+  time: (0, import_date11.getSettings)().formats.time
 };
 var ANCHOR_DATE = "2000-01-01";
 function toAnchoredDate(secondsSinceMidnight) {
@@ -45082,7 +45108,7 @@ function toAnchoredDate(secondsSinceMidnight) {
   const minutes = Math.floor(secondsSinceMidnight % 3600 / 60);
   const seconds = secondsSinceMidnight % 60;
   const time = [hours, minutes, seconds].map((part) => String(part).padStart(2, "0")).join(":");
-  return (0, import_date10.getDate)(`${ANCHOR_DATE}T${time}`);
+  return (0, import_date11.getDate)(`${ANCHOR_DATE}T${time}`);
 }
 function getValueFormatted6({
   item,
@@ -45098,7 +45124,7 @@ function getValueFormatted6({
   } else {
     formatTime = field.format;
   }
-  return (0, import_date10.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
+  return (0, import_date11.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
 }
 var sort3 = (a2, b2, direction) => {
   const timeA = parseTime2(a2);
@@ -45147,7 +45173,7 @@ var time_default = {
 };
 
 // packages/dataviews/build-module/field-types/boolean.mjs
-var import_i18n53 = __toESM(require_i18n(), 1);
+var import_i18n54 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
 function isValidRequiredForBool(item, field) {
@@ -45162,17 +45188,17 @@ function getValueFormatted7({
 }) {
   const value = field.getValue({ item });
   if (value === true) {
-    return (0, import_i18n53.__)("True");
+    return (0, import_i18n54.__)("True");
   }
   if (value === false) {
-    return (0, import_i18n53.__)("False");
+    return (0, import_i18n54.__)("False");
   }
   return "";
 }
 function isValidCustom4(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-    return (0, import_i18n53.__)("Value must be true, false, or undefined");
+    return (0, import_i18n54.__)("Value must be true, false, or undefined");
   }
   return null;
 }
@@ -45224,7 +45250,7 @@ var media_default = {
 };
 
 // packages/dataviews/build-module/field-types/array.mjs
-var import_i18n54 = __toESM(require_i18n(), 1);
+var import_i18n55 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
 function isValidRequiredForArray(item, field) {
@@ -45252,10 +45278,10 @@ function isValidCustom5(item, field) {
     return null;
   }
   if (!Array.isArray(value)) {
-    return (0, import_i18n54.__)("Value must be an array.");
+    return (0, import_i18n55.__)("Value must be an array.");
   }
   if (!value.every((v2) => typeof v2 === "string")) {
-    return (0, import_i18n54.__)("Every value must be a string.");
+    return (0, import_i18n55.__)("Every value must be a string.");
   }
   return null;
 }
@@ -45353,7 +45379,7 @@ var telephone_default = {
 };
 
 // packages/dataviews/build-module/field-types/color.mjs
-var import_i18n55 = __toESM(require_i18n(), 1);
+var import_i18n56 = __toESM(require_i18n(), 1);
 var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
@@ -45383,7 +45409,7 @@ function render3({ item, field }) {
 function isValidCustom6(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-    return (0, import_i18n55.__)("Value must be a valid color.");
+    return (0, import_i18n56.__)("Value must be a valid color.");
   }
   return null;
 }
@@ -46229,7 +46255,7 @@ var import_element153 = __toESM(require_element(), 1);
 var import_components52 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
-var import_i18n56 = __toESM(require_i18n(), 1);
+var import_i18n57 = __toESM(require_i18n(), 1);
 var DEFAULT_LAYOUT = {
   type: "regular",
   labelPosition: "top"
@@ -46260,14 +46286,14 @@ function normalizeLayout(layout) {
     if (typeof openAs === "object" && openAs.type === "modal") {
       normalizedOpenAs = {
         type: "modal",
-        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n56.__)("Apply"),
-        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n56.__)("Cancel")
+        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n57.__)("Apply"),
+        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n57.__)("Cancel")
       };
     } else if (openAs === "modal") {
       normalizedOpenAs = {
         type: "modal",
-        applyLabel: (0, import_i18n56.__)("Apply"),
-        cancelLabel: (0, import_i18n56.__)("Cancel")
+        applyLabel: (0, import_i18n57.__)("Apply"),
+        cancelLabel: (0, import_i18n57.__)("Cancel")
       };
     } else {
       normalizedOpenAs = { type: "dropdown" };
@@ -46467,7 +46493,7 @@ var import_compose26 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 var import_components54 = __toESM(require_components(), 1);
-var import_i18n57 = __toESM(require_i18n(), 1);
+var import_i18n58 = __toESM(require_i18n(), 1);
 var import_compose25 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
@@ -46565,13 +46591,13 @@ function SummaryButton({
     "dataforms-layouts-panel__field-control"
   );
   const errorId = `${controlId}-error`;
-  const ariaLabel = showError ? (0, import_i18n57.sprintf)(
+  const ariaLabel = showError ? (0, import_i18n58.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n57._x)("Edit %s (has errors)", "field"),
+    (0, import_i18n58._x)("Edit %s (has errors)", "field"),
     fieldLabel || ""
-  ) : (0, import_i18n57.sprintf)(
+  ) : (0, import_i18n58.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n57._x)("Edit %s", "field"),
+    (0, import_i18n58._x)("Edit %s", "field"),
     fieldLabel || ""
   );
   return /* @__PURE__ */ (0, import_jsx_runtime211.jsxs)("div", { className, children: [
@@ -46652,7 +46678,7 @@ function SummaryButton({
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es62 = __toESM(require_es6(), 1);
 var import_element154 = __toESM(require_element(), 1);
-var import_i18n58 = __toESM(require_i18n(), 1);
+var import_i18n59 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
     return true;
@@ -46771,7 +46797,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n58.__)("Could not validate elements.")
+              message: (0, import_i18n59.__)("Could not validate elements.")
             }
           },
           [...path, formField.id]
@@ -46790,7 +46816,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n58.__)(
+              message: (0, import_i18n59.__)(
                 "Value must be one of the elements."
               )
             }
@@ -46816,7 +46842,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n58.__)(
+      errorMessage = String(error2) || (0, import_i18n59.__)(
         "Unknown error when running elements validation asynchronously."
       );
     }
@@ -46875,7 +46901,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
         {
           custom: {
             type: "invalid",
-            message: (0, import_i18n58.__)("Validation could not be processed.")
+            message: (0, import_i18n59.__)("Validation could not be processed.")
           }
         },
         [...path, formField.id]
@@ -46890,7 +46916,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n58.__)(
+      errorMessage = String(error2) || (0, import_i18n59.__)(
         "Unknown error when running custom validation asynchronously."
       );
     }
@@ -46932,7 +46958,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       pattern: {
         type: "invalid",
-        message: (0, import_i18n58.__)("Value does not match the required pattern.")
+        message: (0, import_i18n59.__)("Value does not match the required pattern.")
       }
     };
   }
@@ -46940,7 +46966,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       min: {
         type: "invalid",
-        message: (0, import_i18n58.__)("Value is below the minimum.")
+        message: (0, import_i18n59.__)("Value is below the minimum.")
       }
     };
   }
@@ -46948,7 +46974,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       max: {
         type: "invalid",
-        message: (0, import_i18n58.__)("Value is above the maximum.")
+        message: (0, import_i18n59.__)("Value is above the maximum.")
       }
     };
   }
@@ -46956,7 +46982,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       minLength: {
         type: "invalid",
-        message: (0, import_i18n58.__)("Value is too short.")
+        message: (0, import_i18n59.__)("Value is too short.")
       }
     };
   }
@@ -46964,7 +46990,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       maxLength: {
         type: "invalid",
-        message: (0, import_i18n58.__)("Value is too long.")
+        message: (0, import_i18n59.__)("Value is too long.")
       }
     };
   }
@@ -46972,7 +46998,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       elements: {
         type: "invalid",
-        message: (0, import_i18n58.__)("Value must be one of the elements.")
+        message: (0, import_i18n59.__)("Value must be one of the elements.")
       }
     };
   }
@@ -46995,7 +47021,7 @@ function validateFormField(item, formField, promiseHandler) {
       if (error2 instanceof Error) {
         errorMessage = error2.message;
       } else {
-        errorMessage = String(error2) || (0, import_i18n58.__)("Unknown error when running custom validation.");
+        errorMessage = String(error2) || (0, import_i18n59.__)("Unknown error when running custom validation.");
       }
       return {
         custom: {
@@ -47022,14 +47048,14 @@ function validateFormField(item, formField, promiseHandler) {
     );
     fieldValidity.elements = {
       type: "validating",
-      message: (0, import_i18n58.__)("Validating\u2026")
+      message: (0, import_i18n59.__)("Validating\u2026")
     };
   }
   if (customError instanceof Promise) {
     handleCustomValidationAsync(customError, formField, promiseHandler);
     fieldValidity.custom = {
       type: "validating",
-      message: (0, import_i18n58.__)("Validating\u2026")
+      message: (0, import_i18n59.__)("Validating\u2026")
     };
   }
   if (Object.keys(fieldValidity).length > 0) {
@@ -47397,7 +47423,7 @@ var modal_default = PanelModal;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
 var import_components56 = __toESM(require_components(), 1);
-var import_i18n59 = __toESM(require_i18n(), 1);
+var import_i18n60 = __toESM(require_i18n(), 1);
 var import_element158 = __toESM(require_element(), 1);
 var import_compose27 = __toESM(require_compose(), 1);
 var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
@@ -47417,7 +47443,7 @@ function DropdownHeader({
         onClose && /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
           import_components56.Button,
           {
-            label: (0, import_i18n59.__)("Close"),
+            label: (0, import_i18n60.__)("Close"),
             icon: close_small_default,
             onClick: onClose,
             size: "small"
@@ -47586,7 +47612,7 @@ var import_compose28 = __toESM(require_compose(), 1);
 import { speak as speak4 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
-var import_i18n60 = __toESM(require_i18n(), 1);
+var import_i18n61 = __toESM(require_i18n(), 1);
 function countInvalidFields(validity) {
   if (!validity) {
     return 0;
@@ -47613,9 +47639,9 @@ function getValidationMessage(validity) {
   if (invalidCount === 0) {
     return void 0;
   }
-  return (0, import_i18n60.sprintf)(
+  return (0, import_i18n61.sprintf)(
     /* translators: %d: Number of fields that need attention */
-    (0, import_i18n60._n)(
+    (0, import_i18n61._n)(
       "%d field needs attention",
       "%d fields need attention",
       invalidCount
@@ -47948,7 +47974,7 @@ function FormRowField({
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
 var import_element160 = __toESM(require_element(), 1);
-var import_i18n61 = __toESM(require_i18n(), 1);
+var import_i18n62 = __toESM(require_i18n(), 1);
 var import_compose29 = __toESM(require_compose(), 1);
 import { speak as speak5 } from "@wordpress/a11y";
 var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
@@ -48016,7 +48042,7 @@ function FormDetailsField({
   if (summaryField && summaryField.render) {
     summaryContent = /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(summaryField.render, { item: data, field: summaryField });
   } else {
-    summaryContent = field.label || (0, import_i18n61.__)("More details");
+    summaryContent = field.label || (0, import_i18n62.__)("More details");
   }
   return /* @__PURE__ */ (0, import_jsx_runtime218.jsxs)(
     "details",
@@ -48316,7 +48342,7 @@ function filterSortAndPaginate(data, view, fields2) {
 }
 
 // routes/guidelines/components/guideline-accordion-form.tsx
-var import_i18n62 = __toESM(require_i18n());
+var import_i18n63 = __toESM(require_i18n());
 var import_element164 = __toESM(require_element());
 var import_data7 = __toESM(require_data());
 var import_notices = __toESM(require_notices());
@@ -48511,9 +48537,9 @@ function GuidelineAccordionForm({
     () => [
       {
         id: "guidelines",
-        label: (0, import_i18n62.sprintf)(
+        label: (0, import_i18n63.sprintf)(
           /* translators: %s: Guideline section title. */
-          (0, import_i18n62.__)("%s guidelines"),
+          (0, import_i18n63.__)("%s guidelines"),
           scope.title
         ),
         type: "text",
@@ -48540,14 +48566,14 @@ function GuidelineAccordionForm({
       query
     ).then(() => {
       setError(null);
-      createSuccessNotice((0, import_i18n62.__)("Guidelines saved."), {
+      createSuccessNotice((0, import_i18n63.__)("Guidelines saved."), {
         type: "snackbar"
       });
     }).catch(
       (e2) => setError(
-        (0, import_i18n62.sprintf)(
+        (0, import_i18n63.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n62.__)("Error saving guidelines: %s"),
+          (0, import_i18n63.__)("Error saving guidelines: %s"),
           e2.message
         )
       )
@@ -48562,14 +48588,14 @@ function GuidelineAccordionForm({
     setLoading(true);
     deleteGuidelineRow(existingId).then(() => {
       setError(null);
-      createSuccessNotice((0, import_i18n62.__)("Guidelines cleared."), {
+      createSuccessNotice((0, import_i18n63.__)("Guidelines cleared."), {
         type: "snackbar"
       });
     }).catch(
       (e2) => setError(
-        (0, import_i18n62.sprintf)(
+        (0, import_i18n63.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n62.__)("Error clearing guidelines: %s"),
+          (0, import_i18n63.__)("Error clearing guidelines: %s"),
           e2.message
         )
       )
@@ -48601,7 +48627,7 @@ function GuidelineAccordionForm({
             isBusy: loading,
             onClick: handleClearClick,
             __next40pxDefaultSize: true,
-            children: (0, import_i18n62.__)("Clear")
+            children: (0, import_i18n63.__)("Clear")
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
@@ -48613,7 +48639,7 @@ function GuidelineAccordionForm({
             accessibleWhenDisabled: true,
             isBusy: loading,
             __next40pxDefaultSize: true,
-            children: (0, import_i18n62.__)("Save")
+            children: (0, import_i18n63.__)("Save")
           }
         )
       ] })
@@ -48622,20 +48648,20 @@ function GuidelineAccordionForm({
       import_components58.__experimentalConfirmDialog,
       {
         isOpen: showClearConfirmation,
-        title: (0, import_i18n62.sprintf)(
+        title: (0, import_i18n63.sprintf)(
           /* translators: %s: Guideline section title. */
-          (0, import_i18n62.__)("Clear %s guideline"),
+          (0, import_i18n63.__)("Clear %s guideline"),
           scope.title
         ),
         __experimentalHideHeader: false,
         onConfirm: handleClearConfirm,
         onCancel: () => setShowClearConfirmation(false),
-        confirmButtonText: (0, import_i18n62.__)("Clear"),
+        confirmButtonText: (0, import_i18n63.__)("Clear"),
         isBusy: loading,
         size: "small",
-        children: (0, import_i18n62.sprintf)(
+        children: (0, import_i18n63.sprintf)(
           /* translators: %s: Guideline section title. */
-          (0, import_i18n62.__)("You are about to clear the %s guideline."),
+          (0, import_i18n63.__)("You are about to clear the %s guideline."),
           scope.title
         )
       }
@@ -48645,14 +48671,14 @@ function GuidelineAccordionForm({
 
 // routes/guidelines/components/block-guidelines.tsx
 var import_components60 = __toESM(require_components());
-var import_i18n64 = __toESM(require_i18n());
+var import_i18n65 = __toESM(require_i18n());
 var import_element166 = __toESM(require_element());
 var import_data11 = __toESM(require_data());
 var import_notices3 = __toESM(require_notices());
 
 // routes/guidelines/components/block-guideline-modal.tsx
 var import_components59 = __toESM(require_components());
-var import_i18n63 = __toESM(require_i18n());
+var import_i18n64 = __toESM(require_i18n());
 var import_element165 = __toESM(require_element());
 var import_data9 = __toESM(require_data());
 var import_notices2 = __toESM(require_notices());
@@ -48722,7 +48748,7 @@ function BlockGuidelineModal({
     operation.then(() => {
       setError(null);
       createSuccessNotice(
-        value ? (0, import_i18n63.__)("Guideline saved.") : (0, import_i18n63.__)("Guideline removed."),
+        value ? (0, import_i18n64.__)("Guideline saved.") : (0, import_i18n64.__)("Guideline removed."),
         { type: "snackbar" }
       );
       if (!value && existingId) {
@@ -48732,22 +48758,22 @@ function BlockGuidelineModal({
     }).catch((e2) => setError(e2.message)).finally(() => setIsSaving(false));
   };
   const canSubmit = selectedBlock && guidelineText.trim().length > 0;
-  let submitButtonLabel = (0, import_i18n63.__)("Save");
+  let submitButtonLabel = (0, import_i18n64.__)("Save");
   if (isSaving) {
-    submitButtonLabel = (0, import_i18n63.__)("Saving\u2026");
+    submitButtonLabel = (0, import_i18n64.__)("Saving\u2026");
   }
   return /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(
     import_components59.Modal,
     {
       className: "block-guideline-modal",
-      title: isEditing ? (0, import_i18n63.__)("Edit guideline") : (0, import_i18n63.__)("Add guideline"),
+      title: isEditing ? (0, import_i18n64.__)("Edit guideline") : (0, import_i18n64.__)("Add guideline"),
       onRequestClose: closeModal,
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(import_components59.__experimentalVStack, { spacing: 4, children: [
           isEditing ? /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
             import_components59.TextControl,
             {
-              label: (0, import_i18n63.__)("Block"),
+              label: (0, import_i18n64.__)("Block"),
               value: selectedBlockLabel,
               onChange: () => {
               },
@@ -48756,28 +48782,28 @@ function BlockGuidelineModal({
           ) : /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
             import_components59.ComboboxControl,
             {
-              label: (0, import_i18n63.__)("Block"),
+              label: (0, import_i18n64.__)("Block"),
               options: availableBlockOptions,
               value: selectedBlock,
               onChange: (value) => setSelectedBlock(value ?? void 0),
-              placeholder: (0, import_i18n63.__)("Search for a block\u2026")
+              placeholder: (0, import_i18n64.__)("Search for a block\u2026")
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
             import_components59.TextareaControl,
             {
-              label: (0, import_i18n63.__)("Guideline text"),
+              label: (0, import_i18n64.__)("Guideline text"),
               value: guidelineText,
               onChange: setGuidelineText,
-              placeholder: (0, import_i18n63.__)(
+              placeholder: (0, import_i18n64.__)(
                 "Enter guidelines for how this block should be used\u2026"
               ),
               rows: 6
             }
           ),
-          error2 && /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(import_components59.Notice, { status: "error", onRemove: () => setError(null), children: (0, import_i18n63.sprintf)(
+          error2 && /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(import_components59.Notice, { status: "error", onRemove: () => setError(null), children: (0, import_i18n64.sprintf)(
             /* translators: %s: Error message. */
-            (0, import_i18n63.__)("Error: %s"),
+            (0, import_i18n64.__)("Error: %s"),
             error2
           ) }),
           /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(
@@ -48797,7 +48823,7 @@ function BlockGuidelineModal({
                     accessibleWhenDisabled: true,
                     type: "button",
                     __next40pxDefaultSize: true,
-                    children: (0, import_i18n63.__)("Remove")
+                    children: (0, import_i18n64.__)("Remove")
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
@@ -48820,19 +48846,19 @@ function BlockGuidelineModal({
           import_components59.__experimentalConfirmDialog,
           {
             isOpen: showRemoveConfirmation,
-            title: (0, import_i18n63.__)("Remove block guideline"),
+            title: (0, import_i18n64.__)("Remove block guideline"),
             __experimentalHideHeader: false,
             onConfirm: () => {
               handleSave("");
               setShowRemoveConfirmation(false);
             },
             onCancel: () => setShowRemoveConfirmation(false),
-            confirmButtonText: (0, import_i18n63.__)("Remove"),
+            confirmButtonText: (0, import_i18n64.__)("Remove"),
             isBusy: isSaving,
             size: "small",
-            children: (0, import_i18n63.sprintf)(
+            children: (0, import_i18n64.sprintf)(
               /* translators: %s: Block name. */
-              (0, import_i18n63.__)(
+              (0, import_i18n64.__)(
                 "You are about to remove the block guideline for the %s block."
               ),
               selectedBlockLabel
@@ -48871,7 +48897,7 @@ var initialView = {
 var fields = [
   {
     id: "icon",
-    label: (0, import_i18n64.__)("Icon"),
+    label: (0, import_i18n65.__)("Icon"),
     type: "media",
     // No `size` prop: block icons render at their native 24px, matching the
     // editor's `.block-editor-block-icon`. That keeps viewBox-less icons
@@ -48881,7 +48907,7 @@ var fields = [
   },
   {
     id: "label",
-    label: (0, import_i18n64.__)("Label"),
+    label: (0, import_i18n65.__)("Label"),
     type: "text",
     enableGlobalSearch: true,
     getValue: ({ item }) => item.label,
@@ -48926,14 +48952,14 @@ function BlockGuidelines({
     () => [
       {
         id: "edit",
-        label: (0, import_i18n64.__)("Edit"),
+        label: (0, import_i18n65.__)("Edit"),
         callback: (items) => {
           handleRowClick(items[0].id);
         }
       },
       {
         id: "remove",
-        label: (0, import_i18n64.__)("Remove"),
+        label: (0, import_i18n65.__)("Remove"),
         callback: (items) => {
           setItemToDelete(items[0]);
         }
@@ -48953,7 +48979,7 @@ function BlockGuidelines({
     setBusy(true);
     deleteGuidelineRow(row.id).then(() => {
       setError(null);
-      createSuccessNotice((0, import_i18n64.__)("Guideline removed."), {
+      createSuccessNotice((0, import_i18n65.__)("Guideline removed."), {
         type: "snackbar"
       });
       setShouldFocusAddButton(true);
@@ -48993,9 +49019,9 @@ function BlockGuidelines({
   };
   const shouldShowDataViewControls = rows.length > PER_PAGE;
   return /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(import_components60.__experimentalVStack, { spacing: 4, className: "block-guidelines", children: [
-    error2 && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(import_components60.Notice, { status: "error", onRemove: () => setError(null), children: (0, import_i18n64.sprintf)(
+    error2 && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(import_components60.Notice, { status: "error", onRemove: () => setError(null), children: (0, import_i18n65.sprintf)(
       /* translators: %s: Error message. */
-      (0, import_i18n64.__)("Error: %s"),
+      (0, import_i18n65.__)("Error: %s"),
       error2
     ) }),
     rows.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
@@ -49015,7 +49041,7 @@ function BlockGuidelines({
           list: true
         },
         children: /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(import_components60.__experimentalVStack, { spacing: 4, children: [
-          shouldShowDataViewControls && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(dataviews_default.Search, { label: (0, import_i18n64.__)("Search blocks") }),
+          shouldShowDataViewControls && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(dataviews_default.Search, { label: (0, import_i18n65.__)("Search blocks") }),
           /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(dataviews_default.Layout, {}),
           shouldShowDataViewControls && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(dataviews_default.Footer, {})
         ] })
@@ -49028,7 +49054,7 @@ function BlockGuidelines({
         variant: "primary",
         onClick: openModal,
         __next40pxDefaultSize: true,
-        children: (0, import_i18n64.__)("Add")
+        children: (0, import_i18n65.__)("Add")
       }
     ) }),
     isOpen && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
@@ -49046,16 +49072,16 @@ function BlockGuidelines({
       import_components60.__experimentalConfirmDialog,
       {
         isOpen: !!itemToDelete,
-        title: (0, import_i18n64.__)("Remove block guideline"),
+        title: (0, import_i18n65.__)("Remove block guideline"),
         __experimentalHideHeader: false,
         onConfirm: handleDelete,
         onCancel: () => setItemToDelete(null),
-        confirmButtonText: (0, import_i18n64.__)("Remove"),
+        confirmButtonText: (0, import_i18n65.__)("Remove"),
         isBusy: busy,
         size: "small",
-        children: (0, import_i18n64.sprintf)(
+        children: (0, import_i18n65.sprintf)(
           /* translators: %s: Block name. */
-          (0, import_i18n64.__)(
+          (0, import_i18n65.__)(
             "You are about to remove the block guideline for the %s block."
           ),
           itemToDelete?.label ?? ""
@@ -49067,7 +49093,7 @@ function BlockGuidelines({
 
 // routes/guidelines/components/guideline-actions-section.tsx
 var import_components62 = __toESM(require_components());
-var import_i18n66 = __toESM(require_i18n());
+var import_i18n67 = __toESM(require_i18n());
 var import_element167 = __toESM(require_element());
 
 // routes/guidelines/components/guideline-actions-section.scss
@@ -49081,7 +49107,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 // routes/guidelines/import-export.ts
 var import_blob = __toESM(require_blob());
 var import_data13 = __toESM(require_data());
-var import_i18n65 = __toESM(require_i18n());
+var import_i18n66 = __toESM(require_i18n());
 var import_notices4 = __toESM(require_notices());
 var BLOCK_NAME_RE = /^[a-z0-9-]+\/[a-z0-9-]+$/;
 function isValidImport(data) {
@@ -49124,7 +49150,7 @@ function exportGuidelines(scopes, bySlug, contentBlocks) {
     "application/json"
   );
   (0, import_data13.dispatch)(import_notices4.store).createSuccessNotice(
-    (0, import_i18n65.__)("Guidelines exported."),
+    (0, import_i18n66.__)("Guidelines exported."),
     {
       type: "snackbar"
     }
@@ -49134,7 +49160,7 @@ async function importGuidelines(file, scopes, bySlug, contentBlocks, query) {
   const parsed = JSON.parse(await file.text());
   if (!isValidImport(parsed)) {
     throw new Error(
-      (0, import_i18n65.__)(
+      (0, import_i18n66.__)(
         "Check that your file contains valid JSON markup and try again."
       )
     );
@@ -49180,7 +49206,7 @@ async function importGuidelines(file, scopes, bySlug, contentBlocks, query) {
     }
   }
   (0, import_data13.dispatch)(import_notices4.store).createSuccessNotice(
-    (0, import_i18n65.__)("Guidelines imported."),
+    (0, import_i18n66.__)("Guidelines imported."),
     {
       type: "snackbar"
     }
@@ -49246,7 +49272,7 @@ function ActionItem({
 // routes/guidelines/components/guideline-actions-section.tsx
 var import_jsx_runtime226 = __toESM(require_jsx_runtime());
 function getErrorMessage(err) {
-  return err instanceof Error ? err.message : (0, import_i18n66.__)("Unknown error");
+  return err instanceof Error ? err.message : (0, import_i18n67.__)("Unknown error");
 }
 function GuidelineActionsSection({
   scopes,
@@ -49287,9 +49313,9 @@ function GuidelineActionsSection({
       setError(null);
     } catch (err) {
       setError(
-        (0, import_i18n66.sprintf)(
+        (0, import_i18n67.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n66.__)("We ran into a problem importing your guidelines: %s"),
+          (0, import_i18n67.__)("We ran into a problem importing your guidelines: %s"),
           getErrorMessage(err)
         )
       );
@@ -49303,9 +49329,9 @@ function GuidelineActionsSection({
       setError(null);
     } catch (err) {
       setError(
-        (0, import_i18n66.sprintf)(
+        (0, import_i18n67.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n66.__)("We ran into a problem exporting your guidelines: %s"),
+          (0, import_i18n67.__)("We ran into a problem exporting your guidelines: %s"),
           getErrorMessage(err)
         )
       );
@@ -49314,25 +49340,25 @@ function GuidelineActionsSection({
   const ACTIONS = [
     {
       slug: "import",
-      title: (0, import_i18n66.__)("Import"),
-      description: (0, import_i18n66.__)("Upload a JSON file to import your guidelines."),
-      buttonLabel: (0, import_i18n66.__)("Upload"),
-      ariaLabel: (0, import_i18n66.__)("Upload guidelines"),
+      title: (0, import_i18n67.__)("Import"),
+      description: (0, import_i18n67.__)("Upload a JSON file to import your guidelines."),
+      buttonLabel: (0, import_i18n67.__)("Upload"),
+      ariaLabel: (0, import_i18n67.__)("Upload guidelines"),
       onClick: handleImportClick,
       isBusy: isImporting,
       disabled: isImporting || !!pendingImport
     },
     {
       slug: "export",
-      title: (0, import_i18n66.__)("Export"),
-      description: (0, import_i18n66.__)("Export your guidelines to a JSON file."),
-      buttonLabel: (0, import_i18n66.__)("Download"),
-      ariaLabel: (0, import_i18n66.__)("Download guidelines"),
+      title: (0, import_i18n67.__)("Export"),
+      description: (0, import_i18n67.__)("Export your guidelines to a JSON file."),
+      buttonLabel: (0, import_i18n67.__)("Download"),
+      ariaLabel: (0, import_i18n67.__)("Download guidelines"),
       onClick: handleExportClick
     }
   ];
   return /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(import_components62.__experimentalVStack, { spacing: 4, className: "guidelines__actions", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(import_components62.__experimentalHeading, { level: 2, size: 15, children: (0, import_i18n66.__)("Actions") }),
+    /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(import_components62.__experimentalHeading, { level: 2, size: 15, children: (0, import_i18n67.__)("Actions") }),
     /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
       "input",
       {
@@ -49365,12 +49391,12 @@ function GuidelineActionsSection({
       {
         isOpen: !!pendingImport,
         __experimentalHideHeader: false,
-        title: (0, import_i18n66.__)("Import guidelines"),
-        confirmButtonText: (0, import_i18n66.__)("Continue"),
+        title: (0, import_i18n67.__)("Import guidelines"),
+        confirmButtonText: (0, import_i18n67.__)("Continue"),
         onConfirm: handleModalContinue,
         onCancel: () => setPendingImport(null),
         size: "small",
-        children: (0, import_i18n66.__)(
+        children: (0, import_i18n67.__)(
           "Importing new guidelines will replace your current guidelines."
         )
       }
@@ -49391,8 +49417,8 @@ function GuidelinesPage() {
   return /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
     page_default,
     {
-      title: (0, import_i18n67.__)("Guidelines"),
-      subTitle: (0, import_i18n67.__)(
+      title: (0, import_i18n68.__)("Guidelines"),
+      subTitle: (0, import_i18n68.__)(
         "Set content standards that guide your team, inform plugins, and help AI tools generate content that matches your site's voice and requirements."
       ),
       children: !hasLoaded ? /* @__PURE__ */ (0, import_jsx_runtime227.jsx)("div", { className: "guidelines__loading", children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(import_components63.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(import_components63.__experimentalVStack, { className: "guidelines__content", children: [
