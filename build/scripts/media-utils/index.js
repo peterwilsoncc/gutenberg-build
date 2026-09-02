@@ -17329,14 +17329,13 @@ var wp;
   var style_default7 = { "positioner": "d61e2d85c0ee0699__positioner", "popup": "_34e81249f419a5a5__popup", "item-selection-indicator": "_42313b48c5459be3__item-selection-indicator", "is-root": "_087a537b24fee6a1__is-root _380b81b8f79fb10f__dropdown-motion", "is-submenu": "_6d3b567f6289bdc2__is-submenu _7f344b94e270e039__dropdown-motion--fade-only", "list": "_33f07ab17005471d__list", "group": "f11085533c0056b0__group", "radio-group": "e05914e1005d7c2e__radio-group", "item": "_5c913bce0d8bb0d6__item", "item-prefix": "_64924ecabf65a5d6__item-prefix", "group-label": "_4a0fd085d76fd23c__group-label", "separator": "bfc11368eadf3b39__separator", "item-content": "af879698ede76757__item-content", "radio-selection-icon": "_59aa9b3b3a651148__radio-selection-icon", "item-children": "_943a932d9f81c78c__item-children", "item-label": "_5ed41da4abcf8958__item-label", "item-description": "fa88c9f1a96a4c5a__item-description", "item-suffix": "_091406749ed93e6e__item-suffix", "item-shortcut": "_23630f40071a29ff__item-shortcut", "item-trailing": "_06be17a91bf434a0__item-trailing", "submenu-chevron": "b78aec79bf93eba0__submenu-chevron", "external-link-indicator": "_60da3b6f9718cf76__external-link-indicator" };
   var ItemDescription = (0, import_element27.forwardRef)(
     function MenuItemDescription({ className, id, ...props }, ref) {
-      const itemContentContext = useMenuItemContentContext();
       return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
         Text,
         {
           ref,
           variant: "body-sm",
           ...props,
-          id: id ?? itemContentContext?.descriptionId,
+          id,
           className: clsx_default(style_default7["item-description"], className)
         }
       );
@@ -17543,17 +17542,20 @@ var wp;
   var VALIDATION_ENABLED = true;
   function getItemContent(children) {
     const childArray = import_element29.Children.toArray(children);
-    const [label, description, ...unexpectedChildren] = childArray;
+    const [label, ...descriptions] = childArray;
     const hasLabel = (0, import_element29.isValidElement)(label) && label.type === ItemLabel;
-    const hasDescription = (0, import_element29.isValidElement)(description) && description.type === ItemDescription;
-    if (VALIDATION_ENABLED && (!hasLabel || description !== void 0 && !hasDescription || unexpectedChildren.length > 0)) {
+    const descriptionElements = descriptions.filter(
+      (description) => (0, import_element29.isValidElement)(description) && description.type === ItemDescription
+    );
+    if (VALIDATION_ENABLED && (!hasLabel || descriptionElements.length !== descriptions.length)) {
       throw new Error(
-        "Menu.ItemLabel must be the first direct child of every menu item, followed only by an optional Menu.ItemDescription."
+        "Menu.ItemLabel must be the first direct child of every menu item, followed only by Menu.ItemDescription components."
       );
     }
     return {
-      descriptionId: hasDescription ? description.props.id : void 0,
-      hasDescription,
+      descriptionIds: descriptionElements.map(
+        (description) => description.props.id
+      ),
       hasLabel,
       labelId: hasLabel ? label.props.id : void 0
     };
@@ -17568,13 +17570,25 @@ var wp;
   }) {
     const generatedLabelId = (0, import_element29.useId)();
     const generatedDescriptionId = (0, import_element29.useId)();
-    const { descriptionId, hasDescription, hasLabel, labelId } = getItemContent(children);
+    const { descriptionIds, hasLabel, labelId } = getItemContent(children);
     const resolvedLabelId = hasLabel ? labelId ?? generatedLabelId : void 0;
-    const resolvedDescriptionId = hasDescription ? descriptionId ?? generatedDescriptionId : void 0;
-    const itemDescribedBy = [
-      ariaDescribedBy,
-      hasDescription && resolvedDescriptionId
-    ].filter(Boolean).join(" ");
+    const resolvedDescriptionIds = descriptionIds.map(
+      (descriptionId, index2) => descriptionId ?? `${generatedDescriptionId}-${index2}`
+    );
+    const itemDescribedBy = Array.from(
+      /* @__PURE__ */ new Set([
+        ...ariaDescribedBy?.split(/\s+/).filter(Boolean) ?? [],
+        ...resolvedDescriptionIds
+      ])
+    ).join(" ");
+    let descriptionIndex = 0;
+    const contentChildren = import_element29.Children.map(children, (child) => {
+      if (!(0, import_element29.isValidElement)(child) || child.type !== ItemDescription) {
+        return child;
+      }
+      const descriptionId = resolvedDescriptionIds[descriptionIndex++];
+      return child.props.id === descriptionId ? child : (0, import_element29.cloneElement)(child, { id: descriptionId });
+    });
     const {
       descriptionId: shortcutDescriptionId,
       targetProps: shortcutAriaProps
@@ -17585,8 +17599,8 @@ var wp;
     });
     const labelledBy = ariaLabelledBy ?? (ariaLabel ? void 0 : resolvedLabelId);
     return {
+      contentChildren,
       contentContextValue: {
-        descriptionId: resolvedDescriptionId,
         labelId: resolvedLabelId,
         labelTrailing
       },
@@ -17644,7 +17658,12 @@ var wp;
     "aria-labelledby": ariaLabelledBy,
     ...props
   }, ref) {
-    const { contentContextValue, itemAriaProps, shortcutDescriptionId } = useItemContent(children, {
+    const {
+      contentChildren,
+      contentContextValue,
+      itemAriaProps,
+      shortcutDescriptionId
+    } = useItemContent(children, {
       "aria-describedby": ariaDescribedBy,
       "aria-keyshortcuts": ariaKeyShortcuts,
       "aria-label": ariaLabel,
@@ -17669,7 +17688,7 @@ var wp;
             shortcut,
             shortcutDescriptionId,
             suffix,
-            children
+            children: contentChildren
           }
         ) })
       }
@@ -17779,7 +17798,12 @@ var wp;
       "aria-labelledby": ariaLabelledBy,
       ...props
     }, ref) {
-      const { contentContextValue, itemAriaProps, shortcutDescriptionId } = useItemContent(children, {
+      const {
+        contentChildren,
+        contentContextValue,
+        itemAriaProps,
+        shortcutDescriptionId
+      } = useItemContent(children, {
         "aria-describedby": ariaDescribedBy,
         "aria-keyshortcuts": ariaKeyShortcuts,
         "aria-label": ariaLabel,
@@ -17813,7 +17837,7 @@ var wp;
                 shortcut,
                 shortcutDescriptionId,
                 suffix,
-                children
+                children: contentChildren
               }
             ) })
           ]
@@ -18141,7 +18165,12 @@ var wp;
         )
       }
     ) : null;
-    const { contentContextValue, itemAriaProps, shortcutDescriptionId } = useItemContent(children, {
+    const {
+      contentChildren,
+      contentContextValue,
+      itemAriaProps,
+      shortcutDescriptionId
+    } = useItemContent(children, {
       "aria-describedby": ariaDescribedBy,
       "aria-keyshortcuts": ariaKeyShortcuts,
       "aria-label": ariaLabel,
@@ -18170,7 +18199,7 @@ var wp;
             shortcut,
             shortcutDescriptionId,
             suffix,
-            children
+            children: contentChildren
           }
         ) })
       }
@@ -18641,7 +18670,12 @@ var wp;
       "aria-labelledby": ariaLabelledBy,
       ...props
     }, ref) {
-      const { contentContextValue, itemAriaProps, shortcutDescriptionId } = useItemContent(children, {
+      const {
+        contentChildren,
+        contentContextValue,
+        itemAriaProps,
+        shortcutDescriptionId
+      } = useItemContent(children, {
         "aria-describedby": ariaDescribedBy,
         "aria-keyshortcuts": ariaKeyShortcuts,
         "aria-label": ariaLabel,
@@ -18682,7 +18716,7 @@ var wp;
                 shortcut,
                 shortcutDescriptionId,
                 suffix,
-                children
+                children: contentChildren
               }
             ) })
           ]
@@ -19077,7 +19111,12 @@ var wp;
       "aria-labelledby": ariaLabelledBy,
       ...props
     }, ref) {
-      const { contentContextValue, itemAriaProps, shortcutDescriptionId } = useItemContent(children, {
+      const {
+        contentChildren,
+        contentContextValue,
+        itemAriaProps,
+        shortcutDescriptionId
+      } = useItemContent(children, {
         "aria-describedby": ariaDescribedBy,
         "aria-keyshortcuts": ariaKeyShortcuts,
         "aria-label": ariaLabel,
@@ -19111,7 +19150,7 @@ var wp;
                   "aria-hidden": "true"
                 }
               ),
-              children
+              children: contentChildren
             }
           ) })
         }
