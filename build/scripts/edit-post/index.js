@@ -153,7 +153,7 @@ var wp;
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-          useLayoutEffect3(
+          useLayoutEffect4(
             function() {
               inst.value = value;
               inst.getSnapshot = getSnapshot;
@@ -161,7 +161,7 @@ var wp;
             },
             [subscribe, value, getSnapshot]
           );
-          useEffect18(
+          useEffect17(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe(function() {
@@ -187,7 +187,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React48 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState16 = React48.useState, useEffect18 = React48.useEffect, useLayoutEffect3 = React48.useLayoutEffect, useDebugValue2 = React48.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React48 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState16 = React48.useState, useEffect17 = React48.useEffect, useLayoutEffect4 = React48.useLayoutEffect, useDebugValue2 = React48.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React48.useSyncExternalStore ? React48.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -215,7 +215,7 @@ var wp;
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React48 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef22 = React48.useRef, useEffect18 = React48.useEffect, useMemo17 = React48.useMemo, useDebugValue2 = React48.useDebugValue;
+        var React48 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef22 = React48.useRef, useEffect17 = React48.useEffect, useMemo17 = React48.useMemo, useDebugValue2 = React48.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
           var instRef = useRef22(null);
           if (null === instRef.current) {
@@ -258,7 +258,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector, isEqual]
           );
           var value = useSyncExternalStore3(subscribe, instRef[0], instRef[1]);
-          useEffect18(
+          useEffect17(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -6214,7 +6214,7 @@ var wp;
       handleClose = null,
       mouseOnly = false,
       restMs = 0,
-      move = true,
+      move: move2 = true,
       triggerElementRef = EMPTY_REF,
       externalTree,
       isActiveTrigger = true,
@@ -6413,13 +6413,13 @@ var wp;
         instance.restTimeoutPending = false;
       }
       const staleOpenGuard = guardStaleOpen ? addEventListener(trigger, "mouseout", onMouseOut) : void 0;
-      if (move) {
+      if (move2) {
         return mergeCleanups(addEventListener(trigger, "mousemove", onMouseEnter, {
           once: true
         }), addEventListener(trigger, "mouseenter", onMouseEnter), addEventListener(trigger, "mouseleave", onMouseLeave), staleOpenGuard);
       }
       return mergeCleanups(addEventListener(trigger, "mouseenter", onMouseEnter), addEventListener(trigger, "mouseleave", onMouseLeave), staleOpenGuard);
-    }, [cleanupMouseMoveHandler, clearPointerEvents, dataRef, delayRef, store2, enabled, handleCloseRef, instance, isActiveTrigger, isOverInactiveTrigger, isClickLikeOpenEvent2, mouseOnly, move, restMsRef, triggerElementRef, tree, enabledRef, getHandleCloseContext, isClosingRef, checkShouldOpen, guardStaleOpen]);
+    }, [cleanupMouseMoveHandler, clearPointerEvents, dataRef, delayRef, store2, enabled, handleCloseRef, instance, isActiveTrigger, isOverInactiveTrigger, isClickLikeOpenEvent2, mouseOnly, move2, restMsRef, triggerElementRef, tree, enabledRef, getHandleCloseContext, isClosingRef, checkShouldOpen, guardStaleOpen]);
     return React27.useMemo(() => {
       if (!enabled) {
         return void 0;
@@ -10645,19 +10645,26 @@ var wp;
   var import_block_editor = __toESM(require_block_editor(), 1);
   var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
   var { useNativeUndo } = unlock2(import_block_editor.privateApis);
+  function move(parent, node) {
+    if (parent.moveBefore && parent.isConnected && node.isConnected) {
+      parent.moveBefore(node, null);
+    } else {
+      parent.appendChild(node);
+    }
+  }
   function MetaBoxesArea({ location }) {
     const container = (0, import_element23.useRef)(null);
     const formRef = (0, import_element23.useRef)(null);
-    (0, import_element23.useEffect)(() => {
+    (0, import_element23.useLayoutEffect)(() => {
       formRef.current = document.querySelector(
         ".metabox-location-" + location
       );
       if (formRef.current) {
-        container.current.appendChild(formRef.current);
+        move(container.current, formRef.current);
       }
       return () => {
         if (formRef.current) {
-          document.querySelector("#metaboxes").appendChild(formRef.current);
+          move(document.querySelector("#metaboxes"), formRef.current);
         }
       };
     }, [location]);
