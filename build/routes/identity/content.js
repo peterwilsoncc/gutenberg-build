@@ -21406,7 +21406,8 @@ __export(field_exports, {
   Details: () => Details,
   Item: () => Item,
   Label: () => Label,
-  Root: () => Root6
+  Root: () => Root6,
+  VisualLabel: () => VisualLabel
 });
 
 // packages/ui/build-module/form/primitives/field/root.mjs
@@ -21843,9 +21844,8 @@ var Control = (0, import_element55.forwardRef)(
   }
 );
 
-// packages/ui/build-module/form/primitives/textarea/textarea.mjs
+// packages/ui/build-module/form/primitives/field/visual-label.mjs
 var import_element56 = __toESM(require_element(), 1);
-var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE29 = "data-wp-hash";
 function getRuntime29() {
   const globalScope = globalThis;
@@ -21927,59 +21927,30 @@ function registerStyle29(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle29("1540cbc709", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._1e441c22c9dc5d28__wrapper{--wp-ui-textarea-min-height:var(--wpds-dimension-size-lg,40px)}._414844876c32ecee__textarea{min-height:calc(var(--wp-ui-textarea-min-height) - 2px);resize:block}}@layer compositions{._1e441c22c9dc5d28__wrapper{--wp-ui-input-padding-block:9.9px;height:auto;line-height:1.4}}}");
+  registerStyle29("e08ffbfdae", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
 }
-var style_default24 = { "wrapper": "_1e441c22c9dc5d28__wrapper", "textarea": "_414844876c32ecee__textarea" };
-if (typeof process === "undefined" || true) {
-  registerStyle29("31951dd8b7", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
-}
-var global_css_defense_default10 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
-var wrappedRender = (render4, restProps) => {
-  return function textareaRender(props) {
-    return typeof render4 === "function" ? render4(mergeProps(props, restProps)) : (0, import_element56.cloneElement)(render4, mergeProps(props, restProps));
-  };
-};
-var Textarea = (0, import_element56.forwardRef)(
-  function Textarea2({
-    className,
-    defaultValue,
-    disabled: disabled2,
-    onValueChange,
-    render: render4,
-    rows = 4,
-    style,
-    value,
-    ...restProps
-  }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
-      Input3,
-      {
-        className: clsx_default(style_default24.wrapper, className),
-        style,
-        render: wrappedRender(
-          render4 || ((props) => /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("textarea", { ...props })),
-          {
-            className: clsx_default(
-              global_css_defense_default10.textarea,
-              style_default24.textarea
-            ),
-            ref,
-            rows,
-            ...restProps
-          }
-        ),
-        value,
-        defaultValue,
-        onValueChange,
-        disabled: disabled2
-      }
-    );
+var field_default4 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
+var VisualLabel = (0, import_element56.forwardRef)(
+  function VisualLabel2({ className, render: render4, variant, ...restProps }, ref) {
+    return useRender({
+      defaultTagName: "span",
+      render: render4,
+      ref,
+      props: mergeProps(restProps, {
+        className: clsx_default(
+          field_default4.label,
+          variant && field_default4[`is-${variant}`],
+          className
+        )
+      })
+    });
   }
 );
+VisualLabel.displayName = "Field.VisualLabel";
 
-// packages/ui/build-module/form/input-control/input-control.mjs
+// packages/ui/build-module/form/primitives/textarea/textarea.mjs
 var import_element57 = __toESM(require_element(), 1);
-var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE30 = "data-wp-hash";
 function getRuntime30() {
   const globalScope = globalThis;
@@ -22061,109 +22032,59 @@ function registerStyle30(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle30("0c752c3d08", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{@supports (-webkit-hyphens:none) and (not (-moz-appearance:none)){.a9211a7e6af24bed__root input[type=date]:not([data-filled]):not(:focus),.a9211a7e6af24bed__root input[type=datetime-local]:not([data-filled]):not(:focus),.a9211a7e6af24bed__root input[type=time]:not([data-filled]):not(:focus){--_gcd-input-color:transparent;--_gcd-input-color-disabled:transparent;color:transparent;&:disabled::-webkit-datetime-edit-text{color:transparent}}}}}");
+  registerStyle30("1540cbc709", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._1e441c22c9dc5d28__wrapper{--wp-ui-textarea-min-height:var(--wpds-dimension-size-lg,40px)}._414844876c32ecee__textarea{min-height:calc(var(--wp-ui-textarea-min-height) - 2px);resize:block}}@layer compositions{._1e441c22c9dc5d28__wrapper{--wp-ui-input-padding-block:9.9px;height:auto;line-height:1.4}}}");
 }
-var style_default25 = { "root": "a9211a7e6af24bed__root" };
-var InputControl = (0, import_element57.forwardRef)(
-  function InputControl2({
+var style_default24 = { "wrapper": "_1e441c22c9dc5d28__wrapper", "textarea": "_414844876c32ecee__textarea" };
+if (typeof process === "undefined" || true) {
+  registerStyle30("31951dd8b7", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
+}
+var global_css_defense_default10 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
+var wrappedRender = (render4, restProps) => {
+  return function textareaRender(props) {
+    return typeof render4 === "function" ? render4(mergeProps(props, restProps)) : (0, import_element57.cloneElement)(render4, mergeProps(props, restProps));
+  };
+};
+var Textarea = (0, import_element57.forwardRef)(
+  function Textarea2({
     className,
-    label,
-    description,
-    details,
-    hideLabelFromVision,
+    defaultValue,
+    disabled: disabled2,
+    onValueChange,
+    render: render4,
+    rows = 4,
+    style,
+    value,
     ...restProps
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(field_exports.Root, { className: clsx_default(style_default25.root, className), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(Input3, { ref, ...restProps }),
-      description && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(field_exports.Description, { children: description }),
-      details && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(field_exports.Details, { children: details })
-    ] });
-  }
-);
-
-// packages/ui/build-module/form/textarea-control/textarea-control.mjs
-var import_element58 = __toESM(require_element(), 1);
-var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
-var TextareaControl = (0, import_element58.forwardRef)(function TextareaControl2({
-  className,
-  label,
-  description,
-  details,
-  hideLabelFromVision,
-  ...restProps
-}, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(field_exports.Root, { className, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
-    /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(Textarea, { ref, ...restProps }),
-    description && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(field_exports.Description, { children: description }),
-    details && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(field_exports.Details, { children: details })
-  ] });
-});
-
-// packages/ui/build-module/form/with-validation/validated-input-control/validated-input-control.mjs
-var import_element59 = __toESM(require_element(), 1);
-var import_compose4 = __toESM(require_compose(), 1);
-var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
-var ValidatedInputControl = (0, import_element59.forwardRef)(function ValidatedInputControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
-  const validityTargetRef = (0, import_element59.useRef)(null);
-  const mergedRefs = (0, import_compose4.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-    ControlWithError,
-    {
-      required,
-      markWhenOptional,
-      customValidity,
-      getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(InputControl, { ref: mergedRefs, ...restProps })
-    }
-  );
-});
-
-// packages/ui/build-module/form/with-validation/validated-textarea-control/validated-textarea-control.mjs
-var import_element60 = __toESM(require_element(), 1);
-var import_compose5 = __toESM(require_compose(), 1);
-var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
-var ValidatedTextareaControl = (0, import_element60.forwardRef)(function ValidatedTextareaControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
-  const validityTargetRef = (0, import_element60.useRef)(null);
-  const mergedRefs = (0, import_compose5.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-    ControlWithError,
-    {
-      required,
-      markWhenOptional,
-      customValidity,
-      getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(TextareaControl, { ref: mergedRefs, ...restProps })
-    }
-  );
-});
-
-// packages/admin-ui/build-module/navigable-region/index.mjs
-var import_element61 = __toESM(require_element(), 1);
-var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
-var NavigableRegion = (0, import_element61.forwardRef)(
-  ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
-      Tag,
+    return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+      Input3,
       {
-        ref,
-        className: clsx_default("admin-ui-navigable-region", className),
-        "aria-label": ariaLabel,
-        role: "region",
-        tabIndex: "-1",
-        ...props,
-        children
+        className: clsx_default(style_default24.wrapper, className),
+        style,
+        render: wrappedRender(
+          render4 || ((props) => /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("textarea", { ...props })),
+          {
+            className: clsx_default(
+              global_css_defense_default10.textarea,
+              style_default24.textarea
+            ),
+            ref,
+            rows,
+            ...restProps
+          }
+        ),
+        value,
+        defaultValue,
+        onValueChange,
+        disabled: disabled2
       }
     );
   }
 );
-NavigableRegion.displayName = "NavigableRegion";
-var navigable_region_default = NavigableRegion;
 
-// packages/admin-ui/build-module/navigation/index.mjs
-var import_i18n9 = __toESM(require_i18n(), 1);
-var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/input-control/input-control.mjs
+var import_element58 = __toESM(require_element(), 1);
+var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE31 = "data-wp-hash";
 function getRuntime31() {
   const globalScope = globalThis;
@@ -22245,73 +22166,109 @@ function registerStyle31(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle31("72ef022400", ".bfb5a2dd8cceebd3__list{--focus-ring-size:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*2);list-style:none;margin:calc(var(--focus-ring-size)*-1);overflow-x:auto;padding:var(--focus-ring-size);scroll-padding:var(--focus-ring-size)}.a4759b4cb2c8bd92__li{flex-shrink:0}._07da506d3f2d9afe__item{align-items:center;color:var(--wpds-color-foreground-interactive-neutral-weak,#707070);display:flex;font-weight:var(--wpds-typography-font-weight-default,400);min-block-size:44px;min-inline-size:44px;text-decoration:none}._07da506d3f2d9afe__item:hover,._07da506d3f2d9afe__item[aria-current=page]{color:var(--wpds-color-foreground-interactive-neutral-weak-active,#1e1e1e)}._07da506d3f2d9afe__item[aria-current=page]{font-weight:var(--wpds-typography-font-weight-emphasis,600)}");
+  registerStyle31("0c752c3d08", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{@supports (-webkit-hyphens:none) and (not (-moz-appearance:none)){.a9211a7e6af24bed__root input[type=date]:not([data-filled]):not(:focus),.a9211a7e6af24bed__root input[type=datetime-local]:not([data-filled]):not(:focus),.a9211a7e6af24bed__root input[type=time]:not([data-filled]):not(:focus){--_gcd-input-color:transparent;--_gcd-input-color-disabled:transparent;color:transparent;&:disabled::-webkit-datetime-edit-text{color:transparent}}}}}");
 }
-var style_default26 = { "list": "bfb5a2dd8cceebd3__list", "li": "a4759b4cb2c8bd92__li", "item": "_07da506d3f2d9afe__item" };
-var Navigation = ({
-  items,
-  currentHref,
-  ariaLabel = (0, import_i18n9.__)("Sections"),
-  linkComponent,
-  className
-}) => {
-  if (!items.length) {
-    return null;
+var style_default25 = { "root": "a9211a7e6af24bed__root" };
+var InputControl = (0, import_element58.forwardRef)(
+  function InputControl2({
+    className,
+    label,
+    description,
+    details,
+    hideLabelFromVision,
+    ...restProps
+  }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(field_exports.Root, { className: clsx_default(style_default25.root, className), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(Input3, { ref, ...restProps }),
+      description && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(field_exports.Description, { children: description }),
+      details && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(field_exports.Details, { children: details })
+    ] });
   }
-  const LinkComponent = linkComponent ?? "a";
-  if (true) {
-    const invalidItem = items.find(
-      (item) => typeof item.href !== "string"
-    );
-    if (invalidItem) {
-      throw new Error(
-        `Navigation: item "${invalidItem.label}" is missing an \`href\` prop.`
-      );
-    }
-    const duplicate = items.find(
-      (item, index2) => items.findIndex((other) => other.href === item.href) !== index2
-    );
-    if (duplicate) {
-      throw new Error(
-        `Navigation: duplicate \`href\` "${duplicate.href}". Each item must have a unique \`href\` so a single item receives \`aria-current="page"\`.`
-      );
-    }
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("nav", { "aria-label": ariaLabel, className, children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
-    Stack,
+);
+
+// packages/ui/build-module/form/textarea-control/textarea-control.mjs
+var import_element59 = __toESM(require_element(), 1);
+var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
+var TextareaControl = (0, import_element59.forwardRef)(function TextareaControl2({
+  className,
+  label,
+  description,
+  details,
+  hideLabelFromVision,
+  ...restProps
+}, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(field_exports.Root, { className, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
+    /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(Textarea, { ref, ...restProps }),
+    description && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(field_exports.Description, { children: description }),
+    details && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(field_exports.Details, { children: details })
+  ] });
+});
+
+// packages/ui/build-module/form/with-validation/validated-input-control/validated-input-control.mjs
+var import_element60 = __toESM(require_element(), 1);
+var import_compose4 = __toESM(require_compose(), 1);
+var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
+var ValidatedInputControl = (0, import_element60.forwardRef)(function ValidatedInputControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
+  const validityTargetRef = (0, import_element60.useRef)(null);
+  const mergedRefs = (0, import_compose4.useMergeRefs)([forwardedRef, validityTargetRef]);
+  return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+    ControlWithError,
     {
-      render: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("ul", { role: "list" }),
-      direction: "row",
-      align: "center",
-      gap: "md",
-      className: style_default26.list,
-      children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("li", { className: style_default26.li, children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
-        Text,
-        {
-          variant: "body-md",
-          className: style_default26.item,
-          render: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
-            Link,
-            {
-              variant: "unstyled",
-              "aria-current": item.href === currentHref ? "page" : void 0,
-              render: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(LinkComponent, { href: item.href })
-            }
-          ),
-          children: item.label
-        }
-      ) }, item.href))
+      required,
+      markWhenOptional,
+      customValidity,
+      getValidityTarget: () => validityTargetRef.current,
+      children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(InputControl, { ref: mergedRefs, ...restProps })
     }
-  ) });
-};
-var navigation_default = Navigation;
+  );
+});
 
-// packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
-var import_components2 = __toESM(require_components(), 1);
-var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components2.createSlotFill)("SidebarToggle");
+// packages/ui/build-module/form/with-validation/validated-textarea-control/validated-textarea-control.mjs
+var import_element61 = __toESM(require_element(), 1);
+var import_compose5 = __toESM(require_compose(), 1);
+var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
+var ValidatedTextareaControl = (0, import_element61.forwardRef)(function ValidatedTextareaControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
+  const validityTargetRef = (0, import_element61.useRef)(null);
+  const mergedRefs = (0, import_compose5.useMergeRefs)([forwardedRef, validityTargetRef]);
+  return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+    ControlWithError,
+    {
+      required,
+      markWhenOptional,
+      customValidity,
+      getValidityTarget: () => validityTargetRef.current,
+      children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(TextareaControl, { ref: mergedRefs, ...restProps })
+    }
+  );
+});
 
-// packages/admin-ui/build-module/page/header.mjs
-var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+// packages/admin-ui/build-module/navigable-region/index.mjs
+var import_element62 = __toESM(require_element(), 1);
+var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
+var NavigableRegion = (0, import_element62.forwardRef)(
+  ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
+      Tag,
+      {
+        ref,
+        className: clsx_default("admin-ui-navigable-region", className),
+        "aria-label": ariaLabel,
+        role: "region",
+        tabIndex: "-1",
+        ...props,
+        children
+      }
+    );
+  }
+);
+NavigableRegion.displayName = "NavigableRegion";
+var navigable_region_default = NavigableRegion;
+
+// packages/admin-ui/build-module/navigation/index.mjs
+var import_i18n9 = __toESM(require_i18n(), 1);
+var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE32 = "data-wp-hash";
 function getRuntime32() {
   const globalScope = globalThis;
@@ -22393,7 +22350,155 @@ function registerStyle32(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle32("1f3750277d", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8bcd33103b451f30__header-lockup{min-width:0}._8113be94e7caf73c__header-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
+  registerStyle32("72ef022400", ".bfb5a2dd8cceebd3__list{--focus-ring-size:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*2);list-style:none;margin:calc(var(--focus-ring-size)*-1);overflow-x:auto;padding:var(--focus-ring-size);scroll-padding:var(--focus-ring-size)}.a4759b4cb2c8bd92__li{flex-shrink:0}._07da506d3f2d9afe__item{align-items:center;color:var(--wpds-color-foreground-interactive-neutral-weak,#707070);display:flex;font-weight:var(--wpds-typography-font-weight-default,400);min-block-size:44px;min-inline-size:44px;text-decoration:none}._07da506d3f2d9afe__item:hover,._07da506d3f2d9afe__item[aria-current=page]{color:var(--wpds-color-foreground-interactive-neutral-weak-active,#1e1e1e)}._07da506d3f2d9afe__item[aria-current=page]{font-weight:var(--wpds-typography-font-weight-emphasis,600)}");
+}
+var style_default26 = { "list": "bfb5a2dd8cceebd3__list", "li": "a4759b4cb2c8bd92__li", "item": "_07da506d3f2d9afe__item" };
+var Navigation = ({
+  items,
+  currentHref,
+  ariaLabel = (0, import_i18n9.__)("Sections"),
+  linkComponent,
+  className
+}) => {
+  if (!items.length) {
+    return null;
+  }
+  const LinkComponent = linkComponent ?? "a";
+  if (true) {
+    const invalidItem = items.find(
+      (item) => typeof item.href !== "string"
+    );
+    if (invalidItem) {
+      throw new Error(
+        `Navigation: item "${invalidItem.label}" is missing an \`href\` prop.`
+      );
+    }
+    const duplicate = items.find(
+      (item, index2) => items.findIndex((other) => other.href === item.href) !== index2
+    );
+    if (duplicate) {
+      throw new Error(
+        `Navigation: duplicate \`href\` "${duplicate.href}". Each item must have a unique \`href\` so a single item receives \`aria-current="page"\`.`
+      );
+    }
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("nav", { "aria-label": ariaLabel, className, children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
+    Stack,
+    {
+      render: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("ul", { role: "list" }),
+      direction: "row",
+      align: "center",
+      gap: "md",
+      className: style_default26.list,
+      children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("li", { className: style_default26.li, children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
+        Text,
+        {
+          variant: "body-md",
+          className: style_default26.item,
+          render: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
+            Link,
+            {
+              variant: "unstyled",
+              "aria-current": item.href === currentHref ? "page" : void 0,
+              render: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(LinkComponent, { href: item.href })
+            }
+          ),
+          children: item.label
+        }
+      ) }, item.href))
+    }
+  ) });
+};
+var navigation_default = Navigation;
+
+// packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
+var import_components2 = __toESM(require_components(), 1);
+var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components2.createSlotFill)("SidebarToggle");
+
+// packages/admin-ui/build-module/page/header.mjs
+var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE33 = "data-wp-hash";
+function getRuntime33() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument33(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash33(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE33}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE33) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle33(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime33();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash33(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE33, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument33(targetDocument) {
+  const runtime = getRuntime33();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle33(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle33(hash, css) {
+  const runtime = getRuntime33();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle33(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle33("1f3750277d", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8bcd33103b451f30__header-lockup{min-width:0}._8113be94e7caf73c__header-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
 }
 var style_default27 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-lockup": "_8bcd33103b451f30__header-lockup", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "has-navigation": "_4b0f17e503d11619__has-navigation", "header-navigation": "_673c99dcbfb58211__header-navigation", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
 function Header3({
@@ -22502,8 +22607,8 @@ function Header3({
 
 // packages/admin-ui/build-module/page/index.mjs
 var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE33 = "data-wp-hash";
-function getRuntime33() {
+var STYLE_HASH_ATTRIBUTE34 = "data-wp-hash";
+function getRuntime34() {
   const globalScope = globalThis;
   if (globalScope.__wpStyleRuntime) {
     return globalScope.__wpStyleRuntime;
@@ -22514,28 +22619,28 @@ function getRuntime33() {
     injectedStyles: /* @__PURE__ */ new WeakMap()
   };
   if (typeof document !== "undefined") {
-    registerDocument33(document);
+    registerDocument34(document);
   }
   return globalScope.__wpStyleRuntime;
 }
-function documentContainsStyleHash33(targetDocument, hash) {
+function documentContainsStyleHash34(targetDocument, hash) {
   if (!targetDocument.head) {
     return false;
   }
   for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE33}]`
+    `style[${STYLE_HASH_ATTRIBUTE34}]`
   )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE33) === hash) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE34) === hash) {
       return true;
     }
   }
   return false;
 }
-function injectStyle33(targetDocument, hash, css) {
+function injectStyle34(targetDocument, hash, css) {
   if (!targetDocument.head) {
     return;
   }
-  const runtime = getRuntime33();
+  const runtime = getRuntime34();
   let injectedStyles = runtime.injectedStyles.get(targetDocument);
   if (!injectedStyles) {
     injectedStyles = /* @__PURE__ */ new Set();
@@ -22544,24 +22649,24 @@ function injectStyle33(targetDocument, hash, css) {
   if (injectedStyles.has(hash)) {
     return;
   }
-  if (documentContainsStyleHash33(targetDocument, hash)) {
+  if (documentContainsStyleHash34(targetDocument, hash)) {
     injectedStyles.add(hash);
     return;
   }
   const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE33, hash);
+  style.setAttribute(STYLE_HASH_ATTRIBUTE34, hash);
   style.appendChild(targetDocument.createTextNode(css));
   targetDocument.head.appendChild(style);
   injectedStyles.add(hash);
 }
-function registerDocument33(targetDocument) {
-  const runtime = getRuntime33();
+function registerDocument34(targetDocument) {
+  const runtime = getRuntime34();
   runtime.documents.set(
     targetDocument,
     (runtime.documents.get(targetDocument) ?? 0) + 1
   );
   for (const [hash, css] of runtime.styles) {
-    injectStyle33(targetDocument, hash, css);
+    injectStyle34(targetDocument, hash, css);
   }
   return () => {
     const count = runtime.documents.get(targetDocument);
@@ -22575,15 +22680,15 @@ function registerDocument33(targetDocument) {
     runtime.documents.set(targetDocument, count - 1);
   };
 }
-function registerStyle33(hash, css) {
-  const runtime = getRuntime33();
+function registerStyle34(hash, css) {
+  const runtime = getRuntime34();
   runtime.styles.set(hash, css);
   for (const targetDocument of runtime.documents.keys()) {
-    injectStyle33(targetDocument, hash, css);
+    injectStyle34(targetDocument, hash, css);
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle33("1f3750277d", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8bcd33103b451f30__header-lockup{min-width:0}._8113be94e7caf73c__header-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
+  registerStyle34("1f3750277d", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8bcd33103b451f30__header-lockup{min-width:0}._8113be94e7caf73c__header-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
 }
 var style_default28 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-lockup": "_8bcd33103b451f30__header-lockup", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "has-navigation": "_4b0f17e503d11619__has-navigation", "header-navigation": "_673c99dcbfb58211__header-navigation", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
 function Page({
@@ -22670,16 +22775,16 @@ var sortLabels = {
 };
 
 // packages/dataviews/build-module/hooks/use-elements.mjs
-var import_element62 = __toESM(require_element(), 1);
+var import_element63 = __toESM(require_element(), 1);
 var EMPTY_ARRAY2 = [];
 function useElements({
   elements,
   getElements
 }) {
   const staticElements = Array.isArray(elements) && elements.length > 0 ? elements : EMPTY_ARRAY2;
-  const [records, setRecords] = (0, import_element62.useState)(staticElements);
-  const [isLoading, setIsLoading] = (0, import_element62.useState)(false);
-  (0, import_element62.useEffect)(() => {
+  const [records, setRecords] = (0, import_element63.useState)(staticElements);
+  const [isLoading, setIsLoading] = (0, import_element63.useState)(false);
+  (0, import_element63.useEffect)(() => {
     if (!getElements) {
       setRecords(staticElements);
       return;
@@ -22712,7 +22817,7 @@ function useElements({
 
 // packages/dataviews/build-module/utils/operators.mjs
 var import_i18n11 = __toESM(require_i18n(), 1);
-var import_element63 = __toESM(require_element(), 1);
+var import_element64 = __toESM(require_element(), 1);
 var import_date2 = __toESM(require_date(), 1);
 
 // packages/dataviews/build-module/field-types/utils/parse-time.mjs
@@ -22766,7 +22871,7 @@ function getRelativeDate(value, unit) {
 var isNoneOperatorDefinition = {
   /* translators: DataViews operator name */
   label: (0, import_i18n11.__)("Is none of"),
-  filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+  filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
     (0, import_i18n11.sprintf)(
       /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
       (0, import_i18n11.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
@@ -22796,7 +22901,7 @@ var OPERATORS = [
     name: OPERATOR_IS_ANY,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Includes"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
         (0, import_i18n11.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
@@ -22829,7 +22934,7 @@ var OPERATORS = [
     name: OPERATOR_IS_ALL,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Includes all"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
         (0, import_i18n11.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
@@ -22856,7 +22961,7 @@ var OPERATORS = [
     name: OPERATOR_BETWEEN,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Between (inc)"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
         (0, import_i18n11.__)(
@@ -22892,7 +22997,7 @@ var OPERATORS = [
     name: OPERATOR_IN_THE_PAST,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("In the past"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
         (0, import_i18n11.__)(
@@ -22920,7 +23025,7 @@ var OPERATORS = [
     name: OPERATOR_OVER,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Over"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
         (0, import_i18n11.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
@@ -22946,7 +23051,7 @@ var OPERATORS = [
     name: OPERATOR_IS,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Is"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
         (0, import_i18n11.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
@@ -22964,7 +23069,7 @@ var OPERATORS = [
     name: OPERATOR_IS_NOT,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Is not"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
         (0, import_i18n11.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
@@ -22982,7 +23087,7 @@ var OPERATORS = [
     name: OPERATOR_LESS_THAN,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Less than"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
         (0, import_i18n11.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
@@ -23004,7 +23109,7 @@ var OPERATORS = [
     name: OPERATOR_GREATER_THAN,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Greater than"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
         (0, import_i18n11.__)(
@@ -23028,7 +23133,7 @@ var OPERATORS = [
     name: OPERATOR_LESS_THAN_OR_EQUAL,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Less than or equal"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
         (0, import_i18n11.__)(
@@ -23052,7 +23157,7 @@ var OPERATORS = [
     name: OPERATOR_GREATER_THAN_OR_EQUAL,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Greater than or equal"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
         (0, import_i18n11.__)(
@@ -23076,7 +23181,7 @@ var OPERATORS = [
     name: OPERATOR_BEFORE,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Before"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
         (0, import_i18n11.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
@@ -23101,7 +23206,7 @@ var OPERATORS = [
     name: OPERATOR_AFTER,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("After"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
         (0, import_i18n11.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
@@ -23126,7 +23231,7 @@ var OPERATORS = [
     name: OPERATOR_BEFORE_INC,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Before (inc)"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
         (0, import_i18n11.__)(
@@ -23153,7 +23258,7 @@ var OPERATORS = [
     name: OPERATOR_AFTER_INC,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("After (inc)"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
         (0, import_i18n11.__)(
@@ -23180,7 +23285,7 @@ var OPERATORS = [
     name: OPERATOR_CONTAINS,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Contains"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
         (0, import_i18n11.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
@@ -23202,7 +23307,7 @@ var OPERATORS = [
     name: OPERATOR_NOT_CONTAINS,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Doesn't contain"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
         (0, import_i18n11.__)(
@@ -23226,7 +23331,7 @@ var OPERATORS = [
     name: OPERATOR_STARTS_WITH,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Starts with"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
         (0, import_i18n11.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
@@ -23248,7 +23353,7 @@ var OPERATORS = [
     name: OPERATOR_ON,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("On"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
         (0, import_i18n11.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
@@ -23273,7 +23378,7 @@ var OPERATORS = [
     name: OPERATOR_NOT_ON,
     /* translators: DataViews operator name */
     label: (0, import_i18n11.__)("Not on"),
-    filterText: (filter, activeElements) => (0, import_element63.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element64.createInterpolateElement)(
       (0, import_i18n11.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
         (0, import_i18n11.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
@@ -23299,10 +23404,10 @@ var getOperatorByName = (name) => OPERATORS.find((op) => op.name === name);
 var getAllOperatorNames = () => OPERATORS.map((op) => op.name);
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-var import_element72 = __toESM(require_element(), 1);
+var import_element73 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/validated-form-controls/checkbox-control.mjs
-var import_element64 = __toESM(require_element(), 1);
+var import_element65 = __toESM(require_element(), 1);
 var import_compose6 = __toESM(require_compose(), 1);
 var import_components3 = __toESM(require_components(), 1);
 var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
@@ -23312,7 +23417,7 @@ var UnforwardedValidatedCheckboxControl = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element64.useRef)(null);
+  const validityTargetRef = (0, import_element65.useRef)(null);
   const mergedRefs = (0, import_compose6.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
     ControlWithError,
@@ -23334,11 +23439,11 @@ var UnforwardedValidatedCheckboxControl = ({
     }
   );
 };
-var ValidatedCheckboxControl = (0, import_element64.forwardRef)(UnforwardedValidatedCheckboxControl);
+var ValidatedCheckboxControl = (0, import_element65.forwardRef)(UnforwardedValidatedCheckboxControl);
 ValidatedCheckboxControl.displayName = "ValidatedCheckboxControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/combobox-control.mjs
-var import_element65 = __toESM(require_element(), 1);
+var import_element66 = __toESM(require_element(), 1);
 var import_compose7 = __toESM(require_compose(), 1);
 var import_components4 = __toESM(require_components(), 1);
 var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
@@ -23348,9 +23453,9 @@ var UnforwardedValidatedComboboxControl = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element65.useRef)(null);
+  const validityTargetRef = (0, import_element66.useRef)(null);
   const mergedRefs = (0, import_compose7.useMergeRefs)([forwardedRef, validityTargetRef]);
-  (0, import_element65.useEffect)(() => {
+  (0, import_element66.useEffect)(() => {
     const input = validityTargetRef.current?.querySelector(
       'input[role="combobox"]'
     );
@@ -23376,11 +23481,11 @@ var UnforwardedValidatedComboboxControl = ({
     )
   );
 };
-var ValidatedComboboxControl = (0, import_element65.forwardRef)(UnforwardedValidatedComboboxControl);
+var ValidatedComboboxControl = (0, import_element66.forwardRef)(UnforwardedValidatedComboboxControl);
 ValidatedComboboxControl.displayName = "ValidatedComboboxControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/form-token-field.mjs
-var import_element66 = __toESM(require_element(), 1);
+var import_element67 = __toESM(require_element(), 1);
 var import_components5 = __toESM(require_components(), 1);
 var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedFormTokenField = ({
@@ -23389,7 +23494,7 @@ var UnforwardedValidatedFormTokenField = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element66.useRef)(null);
+  const validityTargetRef = (0, import_element67.useRef)(null);
   return /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(
     "div",
     {
@@ -23429,11 +23534,11 @@ var UnforwardedValidatedFormTokenField = ({
     }
   );
 };
-var ValidatedFormTokenField = (0, import_element66.forwardRef)(UnforwardedValidatedFormTokenField);
+var ValidatedFormTokenField = (0, import_element67.forwardRef)(UnforwardedValidatedFormTokenField);
 ValidatedFormTokenField.displayName = "ValidatedFormTokenField";
 
 // packages/dataviews/build-module/components/validated-form-controls/number-control.mjs
-var import_element67 = __toESM(require_element(), 1);
+var import_element68 = __toESM(require_element(), 1);
 var import_compose8 = __toESM(require_compose(), 1);
 var import_components6 = __toESM(require_components(), 1);
 var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
@@ -23443,7 +23548,7 @@ var UnforwardedValidatedNumberControl = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element67.useRef)(null);
+  const validityTargetRef = (0, import_element68.useRef)(null);
   const mergedRefs = (0, import_compose8.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
     ControlWithError,
@@ -23457,11 +23562,11 @@ var UnforwardedValidatedNumberControl = ({
     }
   );
 };
-var ValidatedNumberControl = (0, import_element67.forwardRef)(UnforwardedValidatedNumberControl);
+var ValidatedNumberControl = (0, import_element68.forwardRef)(UnforwardedValidatedNumberControl);
 ValidatedNumberControl.displayName = "ValidatedNumberControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/radio-control.mjs
-var import_element68 = __toESM(require_element(), 1);
+var import_element69 = __toESM(require_element(), 1);
 var import_compose9 = __toESM(require_compose(), 1);
 var import_components7 = __toESM(require_components(), 1);
 var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
@@ -23471,7 +23576,7 @@ var UnforwardedValidatedRadioControl = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element68.useRef)(null);
+  const validityTargetRef = (0, import_element69.useRef)(null);
   const mergedRefs = (0, import_compose9.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
     ControlWithError,
@@ -23488,11 +23593,11 @@ var UnforwardedValidatedRadioControl = ({
     }
   );
 };
-var ValidatedRadioControl = (0, import_element68.forwardRef)(UnforwardedValidatedRadioControl);
+var ValidatedRadioControl = (0, import_element69.forwardRef)(UnforwardedValidatedRadioControl);
 ValidatedRadioControl.displayName = "ValidatedRadioControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/select-control.mjs
-var import_element69 = __toESM(require_element(), 1);
+var import_element70 = __toESM(require_element(), 1);
 var import_compose10 = __toESM(require_compose(), 1);
 var import_components8 = __toESM(require_components(), 1);
 var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
@@ -23502,7 +23607,7 @@ var UnforwardedValidatedSelectControl = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element69.useRef)(null);
+  const validityTargetRef = (0, import_element70.useRef)(null);
   const mergedRefs = (0, import_compose10.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
     ControlWithError,
@@ -23524,11 +23629,11 @@ var UnforwardedValidatedSelectControl = ({
     }
   );
 };
-var ValidatedSelectControl = (0, import_element69.forwardRef)(UnforwardedValidatedSelectControl);
+var ValidatedSelectControl = (0, import_element70.forwardRef)(UnforwardedValidatedSelectControl);
 ValidatedSelectControl.displayName = "ValidatedSelectControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/toggle-control.mjs
-var import_element70 = __toESM(require_element(), 1);
+var import_element71 = __toESM(require_element(), 1);
 var import_compose11 = __toESM(require_compose(), 1);
 var import_components9 = __toESM(require_components(), 1);
 var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
@@ -23538,7 +23643,7 @@ var UnforwardedValidatedToggleControl = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element70.useRef)(null);
+  const validityTargetRef = (0, import_element71.useRef)(null);
   const mergedRefs = (0, import_compose11.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
     ControlWithError,
@@ -23559,11 +23664,11 @@ var UnforwardedValidatedToggleControl = ({
     }
   );
 };
-var ValidatedToggleControl = (0, import_element70.forwardRef)(UnforwardedValidatedToggleControl);
+var ValidatedToggleControl = (0, import_element71.forwardRef)(UnforwardedValidatedToggleControl);
 ValidatedToggleControl.displayName = "ValidatedToggleControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/toggle-group-control.mjs
-var import_element71 = __toESM(require_element(), 1);
+var import_element72 = __toESM(require_element(), 1);
 var import_components10 = __toESM(require_components(), 1);
 var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedToggleGroupControl = ({
@@ -23572,8 +23677,8 @@ var UnforwardedValidatedToggleGroupControl = ({
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element71.useRef)(null);
-  const nameAttr = (0, import_element71.useId)();
+  const validityTargetRef = (0, import_element72.useRef)(null);
+  const nameAttr = (0, import_element72.useId)();
   return /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)("div", { className: "dataviews-validated-control__wrapper-with-error-delegate", children: [
     /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
       ControlWithError,
@@ -23607,7 +23712,7 @@ var UnforwardedValidatedToggleGroupControl = ({
     )
   ] });
 };
-var ValidatedToggleGroupControl = (0, import_element71.forwardRef)(UnforwardedValidatedToggleGroupControl);
+var ValidatedToggleGroupControl = (0, import_element72.forwardRef)(UnforwardedValidatedToggleGroupControl);
 ValidatedToggleGroupControl.displayName = "ValidatedToggleGroupControl";
 
 // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.mjs
@@ -23648,7 +23753,7 @@ function Checkbox({
 }) {
   const { getValue, setValue, label, description, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element72.useCallback)(() => {
+  const onChangeControl = (0, import_element73.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
     );
@@ -23671,7 +23776,7 @@ function Checkbox({
 
 // packages/dataviews/build-module/components/dataform-controls/combobox.mjs
 var import_components11 = __toESM(require_components(), 1);
-var import_element73 = __toESM(require_element(), 1);
+var import_element74 = __toESM(require_element(), 1);
 var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
 function Combobox({
   data,
@@ -23682,7 +23787,7 @@ function Combobox({
 }) {
   const { label, description, placeholder, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data }) ?? "";
-  const onChangeControl = (0, import_element73.useCallback)(
+  const onChangeControl = (0, import_element74.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue ?? "" })),
     [data, onChange, setValue]
   );
@@ -23713,14 +23818,14 @@ function Combobox({
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
 var import_components13 = __toESM(require_components(), 1);
-var import_element76 = __toESM(require_element(), 1);
+var import_element77 = __toESM(require_element(), 1);
 var import_i18n13 = __toESM(require_i18n(), 1);
 var import_date4 = __toESM(require_date(), 1);
 import { speak as speak2 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
 var import_components12 = __toESM(require_components(), 1);
-var import_element74 = __toESM(require_element(), 1);
+var import_element75 = __toESM(require_element(), 1);
 var import_i18n12 = __toESM(require_i18n(), 1);
 var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
 var TIME_UNITS_OPTIONS = {
@@ -23750,7 +23855,7 @@ function RelativeDateControl({
   const disabled2 = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
-  const onChangeValue = (0, import_element74.useCallback)(
+  const onChangeValue = (0, import_element75.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -23759,7 +23864,7 @@ function RelativeDateControl({
     ),
     [onChange, setValue, data, unit]
   );
-  const onChangeUnit = (0, import_element74.useCallback)(
+  const onChangeUnit = (0, import_element75.useCallback)(
     (newUnit) => onChange(
       setValue({
         item: data,
@@ -23812,11 +23917,11 @@ function toCalendarDate(date, timeZone) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/utils/use-disabled-date-matchers.mjs
-var import_element75 = __toESM(require_element(), 1);
+var import_element76 = __toESM(require_element(), 1);
 function useDisabledDateMatchers(isValid2, parseDateFn) {
   const minConstraint = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
   const maxConstraint = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
-  const disabledMatchers = (0, import_element75.useMemo)(() => {
+  const disabledMatchers = (0, import_element76.useMemo)(() => {
     const matchers = [];
     if (minConstraint) {
       const minDate = parseDateFn(minConstraint);
@@ -23891,11 +23996,11 @@ function CalendarDateTimeControl({
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
   const { timezone } = (0, import_date4.getSettings)();
   const timeZone = timezone.string || (0, import_date4.dateI18n)("P");
-  const [calendarMonth, setCalendarMonth] = (0, import_element76.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element77.useState)(() => {
     const parsedDate = parseDateTime(value);
     return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timeZone);
   });
-  (0, import_element76.useEffect)(() => {
+  (0, import_element77.useEffect)(() => {
     const parsedDate = parseDateTime(value);
     if (parsedDate) {
       const targetMonth = toCalendarDate(parsedDate, timeZone);
@@ -23907,17 +24012,17 @@ function CalendarDateTimeControl({
       );
     }
   }, [timeZone, value]);
-  const inputControlRef = (0, import_element76.useRef)(null);
-  const validationTimeoutRef = (0, import_element76.useRef)(void 0);
+  const inputControlRef = (0, import_element77.useRef)(null);
+  const validationTimeoutRef = (0, import_element77.useRef)(void 0);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
-  const onChangeCallback = (0, import_element76.useCallback)(
+  const onChangeCallback = (0, import_element77.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  (0, import_element76.useEffect)(() => {
+  (0, import_element77.useEffect)(() => {
     return () => clearTimeout(validationTimeoutRef.current);
   }, []);
-  const onSelectDate = (0, import_element76.useCallback)(
+  const onSelectDate = (0, import_element77.useCallback)(
     (newDate) => {
       if (newDate) {
         const wpDate = (0, import_date4.dateI18n)("Y-m-d", newDate);
@@ -23943,7 +24048,7 @@ function CalendarDateTimeControl({
     },
     [onChangeCallback, value]
   );
-  const handleManualDateTimeChange = (0, import_element76.useCallback)(
+  const handleManualDateTimeChange = (0, import_element77.useCallback)(
     (newValue) => {
       if (newValue) {
         const dateTime = (0, import_date4.getDate)(newValue);
@@ -24049,7 +24154,7 @@ function DateTime({
 
 // packages/dataviews/build-module/components/dataform-controls/date.mjs
 var import_components14 = __toESM(require_components(), 1);
-var import_element77 = __toESM(require_element(), 1);
+var import_element78 = __toESM(require_element(), 1);
 var import_i18n14 = __toESM(require_i18n(), 1);
 var import_date5 = __toESM(require_date(), 1);
 import { speak as speak3 } from "@wordpress/a11y";
@@ -24149,8 +24254,8 @@ function ValidatedDateControl({
   children
 }) {
   const { isValid: isValid2 } = field;
-  const [customValidity, setCustomValidity] = (0, import_element77.useState)(void 0);
-  const validateRefs = (0, import_element77.useCallback)(() => {
+  const [customValidity, setCustomValidity] = (0, import_element78.useState)(void 0);
+  const validateRefs = (0, import_element78.useCallback)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     for (const ref of refs) {
       const input = ref.current;
@@ -24164,7 +24269,7 @@ function ValidatedDateControl({
     }
     setCustomValidity(void 0);
   }, [inputRefs]);
-  (0, import_element77.useEffect)(() => {
+  (0, import_element78.useEffect)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     const result = validity ? getCustomValidity(isValid2, validity) : void 0;
     for (const ref of refs) {
@@ -24176,7 +24281,7 @@ function ValidatedDateControl({
       }
     }
   }, [inputRefs, isValid2, validity]);
-  (0, import_element77.useEffect)(() => {
+  (0, import_element78.useEffect)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     const handleInvalid = (event) => {
       event.preventDefault();
@@ -24191,7 +24296,7 @@ function ValidatedDateControl({
       }
     };
   }, [inputRefs, setIsTouched]);
-  (0, import_element77.useEffect)(() => {
+  (0, import_element78.useEffect)(() => {
     if (!isTouched) {
       return;
     }
@@ -24202,7 +24307,7 @@ function ValidatedDateControl({
       validateRefs();
     }
   }, [isTouched, isValid2, validity, validateRefs]);
-  (0, import_element77.useEffect)(() => {
+  (0, import_element78.useEffect)(() => {
     if (isTouched && customValidity?.message) {
       speak3(customValidity.message);
     }
@@ -24244,18 +24349,18 @@ function CalendarDateControl({
     format: fieldFormat
   } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const [selectedPresetId, setSelectedPresetId] = (0, import_element77.useState)(
+  const [selectedPresetId, setSelectedPresetId] = (0, import_element78.useState)(
     null
   );
   const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
   const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
-  const [calendarMonth, setCalendarMonth] = (0, import_element77.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element78.useState)(() => {
     const parsedDate = parseDate2(value);
     return parsedDate || /* @__PURE__ */ new Date();
   });
-  (0, import_element77.useEffect)(() => {
+  (0, import_element78.useEffect)(() => {
     const parsedDate = parseDate2(value);
     if (parsedDate) {
       setCalendarMonth(
@@ -24263,14 +24368,14 @@ function CalendarDateControl({
       );
     }
   }, [value]);
-  const [isTouched, setIsTouched] = (0, import_element77.useState)(false);
-  const validityTargetRef = (0, import_element77.useRef)(null);
+  const [isTouched, setIsTouched] = (0, import_element78.useState)(false);
+  const validityTargetRef = (0, import_element78.useRef)(null);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
-  const onChangeCallback = (0, import_element77.useCallback)(
+  const onChangeCallback = (0, import_element78.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  const onSelectDate = (0, import_element77.useCallback)(
+  const onSelectDate = (0, import_element78.useCallback)(
     (newDate) => {
       const dateValue = newDate ? formatDate(newDate) : void 0;
       onChangeCallback(dateValue);
@@ -24279,7 +24384,7 @@ function CalendarDateControl({
     },
     [onChangeCallback]
   );
-  const handlePresetClick = (0, import_element77.useCallback)(
+  const handlePresetClick = (0, import_element78.useCallback)(
     (preset) => {
       const presetDate = preset.getValue();
       const dateValue = formatDate(presetDate);
@@ -24290,7 +24395,7 @@ function CalendarDateControl({
     },
     [onChangeCallback]
   );
-  const handleManualDateChange = (0, import_element77.useCallback)(
+  const handleManualDateChange = (0, import_element78.useCallback)(
     (newValue) => {
       onChangeCallback(newValue);
       if (newValue) {
@@ -24429,7 +24534,7 @@ function CalendarDateRangeControl({
   const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
   const locale = getCalendarLocale((0, import_date5.getSettings)().l10n.locale);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
-  const onChangeCallback = (0, import_element77.useCallback)(
+  const onChangeCallback = (0, import_element78.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -24440,10 +24545,10 @@ function CalendarDateRangeControl({
     },
     [data, onChange, setValue]
   );
-  const [selectedPresetId, setSelectedPresetId] = (0, import_element77.useState)(
+  const [selectedPresetId, setSelectedPresetId] = (0, import_element78.useState)(
     null
   );
-  const selectedRange = (0, import_element77.useMemo)(() => {
+  const selectedRange = (0, import_element78.useMemo)(() => {
     if (!value) {
       return null;
     }
@@ -24453,11 +24558,11 @@ function CalendarDateRangeControl({
       to: parseDate2(to2) || void 0
     };
   }, [value]);
-  const [calendarMonth, setCalendarMonth] = (0, import_element77.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element78.useState)(() => {
     return selectedRange?.from || /* @__PURE__ */ new Date();
   });
   const [fromValue, toValue] = value ?? [];
-  (0, import_element77.useEffect)(() => {
+  (0, import_element78.useEffect)(() => {
     setCalendarMonth((currentMonth) => {
       const from = parseDate2(fromValue);
       const to2 = parseDate2(toValue);
@@ -24475,10 +24580,10 @@ function CalendarDateRangeControl({
       return targetMonth && !isRangeVisible ? targetMonth : currentMonth;
     });
   }, [fromValue, toValue]);
-  const [isTouched, setIsTouched] = (0, import_element77.useState)(false);
-  const fromInputRef = (0, import_element77.useRef)(null);
-  const toInputRef = (0, import_element77.useRef)(null);
-  const updateDateRange = (0, import_element77.useCallback)(
+  const [isTouched, setIsTouched] = (0, import_element78.useState)(false);
+  const fromInputRef = (0, import_element78.useRef)(null);
+  const toInputRef = (0, import_element78.useRef)(null);
+  const updateDateRange = (0, import_element78.useCallback)(
     (fromDate, toDate2) => {
       if (!fromDate && !toDate2) {
         onChangeCallback(void 0);
@@ -24491,7 +24596,7 @@ function CalendarDateRangeControl({
     },
     [onChangeCallback]
   );
-  const onSelectCalendarRange = (0, import_element77.useCallback)(
+  const onSelectCalendarRange = (0, import_element78.useCallback)(
     (newRange) => {
       updateDateRange(newRange?.from, newRange?.to);
       setSelectedPresetId(null);
@@ -24499,7 +24604,7 @@ function CalendarDateRangeControl({
     },
     [updateDateRange]
   );
-  const handlePresetClick = (0, import_element77.useCallback)(
+  const handlePresetClick = (0, import_element78.useCallback)(
     (preset) => {
       const [startDate, endDate] = preset.getValue();
       setCalendarMonth(startDate);
@@ -24509,7 +24614,7 @@ function CalendarDateRangeControl({
     },
     [updateDateRange]
   );
-  const handleManualDateChange = (0, import_element77.useCallback)(
+  const handleManualDateChange = (0, import_element78.useCallback)(
     (fromOrTo, newValue) => {
       const [currentFrom, currentTo] = value || [
         void 0,
@@ -24703,7 +24808,7 @@ function DateControl({
 
 // packages/dataviews/build-module/components/dataform-controls/select.mjs
 var import_components15 = __toESM(require_components(), 1);
-var import_element78 = __toESM(require_element(), 1);
+var import_element79 = __toESM(require_element(), 1);
 var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 function Select2({
   data,
@@ -24717,7 +24822,7 @@ function Select2({
   const disabled2 = field.isDisabled({ item: data, field });
   const isMultiple = type === "array";
   const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
-  const onChangeControl = (0, import_element78.useCallback)(
+  const onChangeControl = (0, import_element79.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -24762,7 +24867,7 @@ function AdaptiveSelect(props) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.mjs
-var import_element79 = __toESM(require_element(), 1);
+var import_element80 = __toESM(require_element(), 1);
 var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
 function ValidatedText({
   data,
@@ -24778,7 +24883,7 @@ function ValidatedText({
   const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data });
   const disabled2 = field.isDisabled({ item: data, field });
-  const onValueChangeControl = (0, import_element79.useCallback)(
+  const onValueChangeControl = (0, import_element80.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -24894,7 +24999,7 @@ function Url({
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
 var import_components16 = __toESM(require_components(), 1);
-var import_element80 = __toESM(require_element(), 1);
+var import_element81 = __toESM(require_element(), 1);
 var import_i18n15 = __toESM(require_i18n(), 1);
 var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
 function toNumberOrEmpty(value) {
@@ -24911,11 +25016,11 @@ function BetweenControls({
   step
 }) {
   const [min3 = "", max3 = ""] = value;
-  const onChangeMin = (0, import_element80.useCallback)(
+  const onChangeMin = (0, import_element81.useCallback)(
     (newValue) => onChange([toNumberOrEmpty(newValue), max3]),
     [onChange, max3]
   );
-  const onChangeMax = (0, import_element80.useCallback)(
+  const onChangeMax = (0, import_element81.useCallback)(
     (newValue) => onChange([min3, toNumberOrEmpty(newValue)]),
     [onChange, min3]
   );
@@ -24964,7 +25069,7 @@ function ValidatedNumber({
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data }) ?? "";
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element80.useCallback)(
+  const onChangeControl = (0, import_element81.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -24978,7 +25083,7 @@ function ValidatedNumber({
     },
     [data, onChange, setValue]
   );
-  const onChangeBetweenControls = (0, import_element80.useCallback)(
+  const onChangeBetweenControls = (0, import_element81.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -25039,7 +25144,7 @@ function Number2(props) {
 
 // packages/dataviews/build-module/components/dataform-controls/radio.mjs
 var import_components17 = __toESM(require_components(), 1);
-var import_element81 = __toESM(require_element(), 1);
+var import_element82 = __toESM(require_element(), 1);
 var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
 function Radio({
   data,
@@ -25056,7 +25161,7 @@ function Radio({
     getElements: field.getElements
   });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element81.useCallback)(
+  const onChangeControl = (0, import_element82.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -25081,7 +25186,7 @@ function Radio({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/text.mjs
-var import_element82 = __toESM(require_element(), 1);
+var import_element83 = __toESM(require_element(), 1);
 var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
 function Text3({
   data,
@@ -25103,8 +25208,8 @@ function Text3({
         hideLabelFromVision,
         markWhenOptional,
         validity,
-        prefix: prefix2 ? (0, import_element82.createElement)(prefix2) : void 0,
-        suffix: suffix ? (0, import_element82.createElement)(suffix) : void 0
+        prefix: prefix2 ? (0, import_element83.createElement)(prefix2) : void 0,
+        suffix: suffix ? (0, import_element83.createElement)(suffix) : void 0
       }
     }
   );
@@ -25112,7 +25217,7 @@ function Text3({
 
 // packages/dataviews/build-module/components/dataform-controls/time.mjs
 var import_components18 = __toESM(require_components(), 1);
-var import_element83 = __toESM(require_element(), 1);
+var import_element84 = __toESM(require_element(), 1);
 var import_i18n16 = __toESM(require_i18n(), 1);
 var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
 function getStep(timeFormat, values) {
@@ -25144,11 +25249,11 @@ function BetweenControls2({
   max: max3
 }) {
   const [from = "", to2 = ""] = value;
-  const onChangeFrom = (0, import_element83.useCallback)(
+  const onChangeFrom = (0, import_element84.useCallback)(
     (newValue) => onChange([newValue ?? "", to2]),
     [onChange, to2]
   );
-  const onChangeTo = (0, import_element83.useCallback)(
+  const onChangeTo = (0, import_element84.useCallback)(
     (newValue) => onChange([from, newValue ?? ""]),
     [onChange, from]
   );
@@ -25204,7 +25309,7 @@ function Time({
   const timeFormat = field.format?.time;
   const min3 = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
   const max3 = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
-  const onChangeControl = (0, import_element83.useCallback)(
+  const onChangeControl = (0, import_element84.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -25213,7 +25318,7 @@ function Time({
     ),
     [data, onChange, setValue]
   );
-  const onChangeBetweenControls = (0, import_element83.useCallback)(
+  const onChangeBetweenControls = (0, import_element84.useCallback)(
     ([from, to2]) => onChange(
       setValue({
         item: data,
@@ -25268,7 +25373,7 @@ function Time({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
-var import_element84 = __toESM(require_element(), 1);
+var import_element85 = __toESM(require_element(), 1);
 var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
 function Toggle({
   field,
@@ -25280,7 +25385,7 @@ function Toggle({
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element84.useCallback)(() => {
+  const onChangeControl = (0, import_element85.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
     );
@@ -25302,7 +25407,7 @@ function Toggle({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
-var import_element85 = __toESM(require_element(), 1);
+var import_element86 = __toESM(require_element(), 1);
 var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
 function Textarea3({
   data,
@@ -25317,7 +25422,7 @@ function Textarea3({
   const disabled2 = field.isDisabled({ item: data, field });
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const value = field.getValue({ item: data });
-  const onValueChangeControl = (0, import_element85.useCallback)(
+  const onValueChangeControl = (0, import_element86.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -25344,7 +25449,7 @@ function Textarea3({
 
 // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
 var import_components19 = __toESM(require_components(), 1);
-var import_element86 = __toESM(require_element(), 1);
+var import_element87 = __toESM(require_element(), 1);
 var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
 function ToggleGroup({
   data,
@@ -25357,7 +25462,7 @@ function ToggleGroup({
   const { getValue, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element86.useCallback)(
+  const onChangeControl = (0, import_element87.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -25399,7 +25504,7 @@ function ToggleGroup({
 
 // packages/dataviews/build-module/components/dataform-controls/array.mjs
 var import_components20 = __toESM(require_components(), 1);
-var import_element87 = __toESM(require_element(), 1);
+var import_element88 = __toESM(require_element(), 1);
 var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
 function ArrayControl({
   data,
@@ -25416,7 +25521,7 @@ function ArrayControl({
     elements: field.elements,
     getElements: field.getElements
   });
-  const arrayValueAsElements = (0, import_element87.useMemo)(
+  const arrayValueAsElements = (0, import_element88.useMemo)(
     () => Array.isArray(value) ? value.map((token) => {
       const element = elements?.find(
         (suggestion) => suggestion.value === token
@@ -25425,7 +25530,7 @@ function ArrayControl({
     }) : [],
     [value, elements]
   );
-  const onChangeControl = (0, import_element87.useCallback)(
+  const onChangeControl = (0, import_element88.useCallback)(
     (tokens) => {
       const valueTokens = tokens.map((token) => {
         if (typeof token === "object" && "value" in token) {
@@ -25647,7 +25752,7 @@ var w = function(r3) {
 
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
 var import_components21 = __toESM(require_components(), 1);
-var import_element88 = __toESM(require_element(), 1);
+var import_element89 = __toESM(require_element(), 1);
 var import_i18n17 = __toESM(require_i18n(), 1);
 var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
 var ColorPickerDropdown = ({
@@ -25694,13 +25799,13 @@ function Color({
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = field.getValue({ item: data }) || "";
-  const handleColorChange = (0, import_element88.useCallback)(
+  const handleColorChange = (0, import_element89.useCallback)(
     (newColor) => {
       onChange(setValue({ item: data, value: newColor }));
     },
     [data, onChange, setValue]
   );
-  const handleInputChange = (0, import_element88.useCallback)(
+  const handleInputChange = (0, import_element89.useCallback)(
     (newValue) => {
       onChange(setValue({ item: data, value: newValue || "" }));
     },
@@ -25735,7 +25840,7 @@ function Color({
 
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
 var import_components22 = __toESM(require_components(), 1);
-var import_element89 = __toESM(require_element(), 1);
+var import_element90 = __toESM(require_element(), 1);
 var import_i18n18 = __toESM(require_i18n(), 1);
 var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
 function Password({
@@ -25746,9 +25851,9 @@ function Password({
   markWhenOptional,
   validity
 }) {
-  const [isVisible, setIsVisible] = (0, import_element89.useState)(false);
+  const [isVisible, setIsVisible] = (0, import_element90.useState)(false);
   const disabled2 = field.isDisabled({ item: data, field });
-  const toggleVisibility = (0, import_element89.useCallback)(() => {
+  const toggleVisibility = (0, import_element90.useCallback)(() => {
     setIsVisible((prev) => !prev);
   }, []);
   return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
@@ -27014,12 +27119,12 @@ function normalizeFields(fields2) {
 }
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_element100 = __toESM(require_element(), 1);
+var import_element101 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-context/index.mjs
-var import_element90 = __toESM(require_element(), 1);
+var import_element91 = __toESM(require_element(), 1);
 var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
-var DataFormContext = (0, import_element90.createContext)({
+var DataFormContext = (0, import_element91.createContext)({
   fields: []
 });
 DataFormContext.displayName = "DataFormContext";
@@ -27032,10 +27137,10 @@ function DataFormProvider({
 var dataform_context_default = DataFormContext;
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_element99 = __toESM(require_element(), 1);
+var import_element100 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-var import_element91 = __toESM(require_element(), 1);
+var import_element92 = __toESM(require_element(), 1);
 var import_components23 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
@@ -27177,9 +27282,9 @@ function FormRegularField({
   markWhenOptional,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element91.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element92.useContext)(dataform_context_default);
   const layout = field.layout;
-  const form2 = (0, import_element91.useMemo)(
+  const form2 = (0, import_element92.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : []
@@ -27272,7 +27377,7 @@ function FormRegularField({
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
 var import_deepmerge2 = __toESM(require_cjs(), 1);
 var import_components26 = __toESM(require_components(), 1);
-var import_element95 = __toESM(require_element(), 1);
+var import_element96 = __toESM(require_element(), 1);
 var import_compose13 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
@@ -27461,7 +27566,7 @@ function SummaryButton({
 // packages/dataviews/build-module/hooks/use-form-validity.mjs
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es6 = __toESM(require_es6(), 1);
-var import_element92 = __toESM(require_element(), 1);
+var import_element93 = __toESM(require_element(), 1);
 var import_i18n27 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
@@ -27884,11 +27989,11 @@ function getFormFieldValue(formField, item) {
   };
 }
 function useFormValidity(item, fields2, form2) {
-  const [formValidity, setFormValidity] = (0, import_element92.useState)();
-  const customCounterRef = (0, import_element92.useRef)({});
-  const elementsCounterRef = (0, import_element92.useRef)({});
-  const previousValuesRef = (0, import_element92.useRef)({});
-  const validate = (0, import_element92.useCallback)(() => {
+  const [formValidity, setFormValidity] = (0, import_element93.useState)();
+  const customCounterRef = (0, import_element93.useRef)({});
+  const elementsCounterRef = (0, import_element93.useRef)({});
+  const previousValuesRef = (0, import_element93.useRef)({});
+  const validate = (0, import_element93.useCallback)(() => {
     const promiseHandler = {
       customCounterRef,
       elementsCounterRef,
@@ -27946,7 +28051,7 @@ function useFormValidity(item, fields2, form2) {
       return validity;
     });
   }, [item, fields2, form2]);
-  (0, import_element92.useEffect)(() => {
+  (0, import_element93.useEffect)(() => {
     validate();
   }, [validate]);
   return {
@@ -27957,9 +28062,9 @@ function useFormValidity(item, fields2, form2) {
 var use_form_validity_default = useFormValidity;
 
 // packages/dataviews/build-module/hooks/use-reveal-validity.mjs
-var import_element93 = __toESM(require_element(), 1);
+var import_element94 = __toESM(require_element(), 1);
 function useRevealValidity(ref, shouldReveal) {
-  const revealValidity = (0, import_element93.useCallback)(() => {
+  const revealValidity = (0, import_element94.useCallback)(() => {
     const inputs = ref.current?.querySelectorAll("input, textarea, select");
     let revealedCount = 0;
     inputs?.forEach((input) => {
@@ -27972,7 +28077,7 @@ function useRevealValidity(ref, shouldReveal) {
     });
     return revealedCount;
   }, [ref]);
-  (0, import_element93.useEffect)(() => {
+  (0, import_element94.useEffect)(() => {
     if (shouldReveal) {
       revealValidity();
     }
@@ -27981,7 +28086,7 @@ function useRevealValidity(ref, shouldReveal) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
-var import_element94 = __toESM(require_element(), 1);
+var import_element95 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
 function extractSummaryIds(summary) {
@@ -28018,7 +28123,7 @@ var getFieldDefinition = (field, fields2) => {
   return fields2.find((_field) => _field.id === field.id);
 };
 function useFieldFromFormField(field) {
-  const { fields: fields2 } = (0, import_element94.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element95.useContext)(dataform_context_default);
   const layout = field.layout;
   const summaryFields = getSummaryFields(layout.summary, fields2);
   const fieldDefinition = getFieldDefinition(field, fields2);
@@ -28050,14 +28155,14 @@ function ModalContent({
 }) {
   const { openAs } = field.layout;
   const { applyLabel, cancelLabel } = openAs;
-  const { fields: fields2 } = (0, import_element95.useContext)(dataform_context_default);
-  const [changes, setChanges] = (0, import_element95.useState)({});
-  const modalData = (0, import_element95.useMemo)(() => {
+  const { fields: fields2 } = (0, import_element96.useContext)(dataform_context_default);
+  const [changes, setChanges] = (0, import_element96.useState)({});
+  const modalData = (0, import_element96.useMemo)(() => {
     return (0, import_deepmerge2.default)(data, changes, {
       arrayMerge: (target, source) => source
     });
   }, [data, changes]);
-  const form2 = (0, import_element95.useMemo)(
+  const form2 = (0, import_element96.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -28093,7 +28198,7 @@ function ModalContent({
     );
   };
   const focusOnMountRef = (0, import_compose13.useFocusOnMount)("firstInputElement");
-  const contentRef = (0, import_element95.useRef)(null);
+  const contentRef = (0, import_element96.useRef)(null);
   const mergedRef = (0, import_compose13.useMergeRefs)([focusOnMountRef, contentRef]);
   useRevealValidity(contentRef, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(
@@ -28165,8 +28270,8 @@ function PanelModal({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element95.useState)(false);
-  const [isOpen, setIsOpen] = (0, import_element95.useState)(false);
+  const [touched, setTouched] = (0, import_element96.useState)(false);
+  const [isOpen, setIsOpen] = (0, import_element96.useState)(false);
   const { fieldDefinition, fieldLabel, summaryFields } = use_field_from_form_field_default(field);
   if (!fieldDefinition) {
     return null;
@@ -28208,7 +28313,7 @@ var modal_default = PanelModal;
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
 var import_components27 = __toESM(require_components(), 1);
 var import_i18n28 = __toESM(require_i18n(), 1);
-var import_element96 = __toESM(require_element(), 1);
+var import_element97 = __toESM(require_element(), 1);
 var import_compose14 = __toESM(require_compose(), 1);
 var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
@@ -28241,7 +28346,7 @@ function DropdownContentWithValidation({
   touched,
   children
 }) {
-  const ref = (0, import_element96.useRef)(null);
+  const ref = (0, import_element97.useRef)(null);
   useRevealValidity(ref, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("div", { ref, children });
 }
@@ -28251,11 +28356,11 @@ function PanelDropdown({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element96.useState)(false);
-  const [popoverAnchor, setPopoverAnchor] = (0, import_element96.useState)(
+  const [touched, setTouched] = (0, import_element97.useState)(false);
+  const [popoverAnchor, setPopoverAnchor] = (0, import_element97.useState)(
     null
   );
-  const popoverProps = (0, import_element96.useMemo)(
+  const popoverProps = (0, import_element97.useMemo)(
     () => ({
       // Anchor the popover to the middle of the entire row so that it doesn't
       // move around when the label changes.
@@ -28269,7 +28374,7 @@ function PanelDropdown({
   const [dialogRef, dialogProps] = (0, import_compose14.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
-  const form2 = (0, import_element96.useMemo)(
+  const form2 = (0, import_element97.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -28279,7 +28384,7 @@ function PanelDropdown({
     }),
     [field]
   );
-  const formValidity = (0, import_element96.useMemo)(() => {
+  const formValidity = (0, import_element97.useMemo)(() => {
     if (validity === void 0) {
       return void 0;
     }
@@ -28391,7 +28496,7 @@ function FormPanelField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_element97 = __toESM(require_element(), 1);
+var import_element98 = __toESM(require_element(), 1);
 var import_compose15 = __toESM(require_compose(), 1);
 import { speak as speak4 } from "@wordpress/a11y";
 
@@ -28559,11 +28664,11 @@ function FormCardField({
   markWhenOptional,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element97.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element98.useContext)(dataform_context_default);
   const layout = field.layout;
-  const contentRef = (0, import_element97.useRef)(null);
-  const hasFocusedContentRef = (0, import_element97.useRef)(false);
-  const form2 = (0, import_element97.useMemo)(
+  const contentRef = (0, import_element98.useRef)(null);
+  const hasFocusedContentRef = (0, import_element98.useRef)(false);
+  const form2 = (0, import_element98.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
@@ -28571,12 +28676,12 @@ function FormCardField({
     [field]
   );
   const { isOpened, isCollapsible } = layout;
-  const [isOpen, setIsOpen] = (0, import_element97.useState)(isOpened);
-  const [touched, setTouched] = (0, import_element97.useState)(false);
-  (0, import_element97.useEffect)(() => {
+  const [isOpen, setIsOpen] = (0, import_element98.useState)(isOpened);
+  const [touched, setTouched] = (0, import_element98.useState)(false);
+  (0, import_element98.useEffect)(() => {
     setIsOpen(isOpened);
   }, [isOpened]);
-  const handleOpenChange = (0, import_element97.useCallback)((open) => {
+  const handleOpenChange = (0, import_element98.useCallback)((open) => {
     if (!open) {
       setTouched(true);
     }
@@ -28586,10 +28691,10 @@ function FormCardField({
     contentRef,
     (isCollapsible ? isOpen : true) && touched
   );
-  const handleContentFocus = (0, import_element97.useCallback)(() => {
+  const handleContentFocus = (0, import_element98.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element97.useCallback)(() => {
+  const handleFocusOutside = (0, import_element98.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -28757,7 +28862,7 @@ function FormRowField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
-var import_element98 = __toESM(require_element(), 1);
+var import_element99 = __toESM(require_element(), 1);
 var import_i18n30 = __toESM(require_i18n(), 1);
 var import_compose16 = __toESM(require_compose(), 1);
 import { speak as speak5 } from "@wordpress/a11y";
@@ -28768,20 +28873,20 @@ function FormDetailsField({
   onChange,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element98.useContext)(dataform_context_default);
-  const detailsRef = (0, import_element98.useRef)(null);
-  const contentRef = (0, import_element98.useRef)(null);
-  const hasFocusedContentRef = (0, import_element98.useRef)(false);
-  const [touched, setTouched] = (0, import_element98.useState)(false);
-  const [isOpen, setIsOpen] = (0, import_element98.useState)(false);
-  const form2 = (0, import_element98.useMemo)(
+  const { fields: fields2 } = (0, import_element99.useContext)(dataform_context_default);
+  const detailsRef = (0, import_element99.useRef)(null);
+  const contentRef = (0, import_element99.useRef)(null);
+  const hasFocusedContentRef = (0, import_element99.useRef)(false);
+  const [touched, setTouched] = (0, import_element99.useState)(false);
+  const [isOpen, setIsOpen] = (0, import_element99.useState)(false);
+  const form2 = (0, import_element99.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
     }),
     [field]
   );
-  (0, import_element98.useEffect)(() => {
+  (0, import_element99.useEffect)(() => {
     const details = detailsRef.current;
     if (!details) {
       return;
@@ -28799,10 +28904,10 @@ function FormDetailsField({
     };
   }, []);
   const revealValidity = useRevealValidity(contentRef, isOpen && touched);
-  const handleContentFocus = (0, import_element98.useCallback)(() => {
+  const handleContentFocus = (0, import_element99.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element98.useCallback)(() => {
+  const handleFocusOutside = (0, import_element99.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -28956,8 +29061,8 @@ function DataFormLayout({
   children,
   as
 }) {
-  const { fields: fieldDefinitions } = (0, import_element99.useContext)(dataform_context_default);
-  const markWhenOptional = (0, import_element99.useMemo)(() => {
+  const { fields: fieldDefinitions } = (0, import_element100.useContext)(dataform_context_default);
+  const markWhenOptional = (0, import_element100.useMemo)(() => {
     const requiredCount = fieldDefinitions.filter(
       (f2) => !!f2.isValid?.required
     ).length;
@@ -29010,8 +29115,8 @@ function DataForm({
   onChange,
   validity
 }) {
-  const normalizedForm = (0, import_element100.useMemo)(() => normalize_form_default(form2), [form2]);
-  const normalizedFields = (0, import_element100.useMemo)(
+  const normalizedForm = (0, import_element101.useMemo)(() => normalize_form_default(form2), [form2]);
+  const normalizedFields = (0, import_element101.useMemo)(
     () => normalizeFields(fields2),
     [fields2]
   );
@@ -29041,7 +29146,7 @@ var import_components29 = __toESM(require_components(), 1);
 var import_blob = __toESM(require_blob(), 1);
 var import_core_data = __toESM(require_core_data(), 1);
 var import_data = __toESM(require_data(), 1);
-var import_element102 = __toESM(require_element(), 1);
+var import_element103 = __toESM(require_element(), 1);
 var import_i18n31 = __toESM(require_i18n(), 1);
 var import_html_entities = __toESM(require_html_entities(), 1);
 var import_media_utils = __toESM(require_media_utils(), 1);
@@ -29205,7 +29310,7 @@ function eachSafely(values, each2) {
 }
 
 // node_modules/@react-spring/shared/dist/react-spring-shared.esm.js
-var import_react49 = __toESM(require_react());
+var import_react50 = __toESM(require_react());
 function noop4() {
 }
 var defineHidden = (obj, key, value) => Object.defineProperty(obj, key, {
@@ -29809,9 +29914,9 @@ var warnDirectCall = once(console.warn);
 function isAnimatedString(value) {
   return is.str(value) && (value[0] == "#" || /\d/.test(value) || !isSSR() && cssVariableRegex.test(value) || value in (colors$1 || {}));
 }
-var useIsomorphicLayoutEffect2 = isSSR() ? import_react49.useEffect : import_react49.useLayoutEffect;
+var useIsomorphicLayoutEffect2 = isSSR() ? import_react50.useEffect : import_react50.useLayoutEffect;
 var useIsMounted = () => {
-  const isMounted = (0, import_react49.useRef)(false);
+  const isMounted = (0, import_react50.useRef)(false);
   useIsomorphicLayoutEffect2(() => {
     isMounted.current = true;
     return () => {
@@ -29821,7 +29926,7 @@ var useIsMounted = () => {
   return isMounted;
 };
 function useForceUpdate() {
-  const update4 = (0, import_react49.useState)()[1];
+  const update4 = (0, import_react50.useState)()[1];
   const isMounted = useIsMounted();
   return () => {
     if (isMounted.current) {
@@ -29830,11 +29935,11 @@ function useForceUpdate() {
   };
 }
 function useMemoOne(getResult, inputs) {
-  const [initial2] = (0, import_react49.useState)(() => ({
+  const [initial2] = (0, import_react50.useState)(() => ({
     inputs,
     result: getResult()
   }));
-  const committed = (0, import_react49.useRef)();
+  const committed = (0, import_react50.useRef)();
   const prevCache = committed.current;
   let cache = prevCache;
   if (cache) {
@@ -29848,7 +29953,7 @@ function useMemoOne(getResult, inputs) {
   } else {
     cache = initial2;
   }
-  (0, import_react49.useEffect)(() => {
+  (0, import_react50.useEffect)(() => {
     committed.current = cache;
     if (prevCache == initial2) {
       initial2.inputs = initial2.result = void 0;
@@ -29867,16 +29972,16 @@ function areInputsEqual(next, prev) {
   }
   return true;
 }
-var useOnce = (effect) => (0, import_react49.useEffect)(effect, emptyDeps);
+var useOnce = (effect) => (0, import_react50.useEffect)(effect, emptyDeps);
 var emptyDeps = [];
 
 // node_modules/@react-spring/core/dist/react-spring-core.esm.js
 var React103 = __toESM(require_react());
-var import_react51 = __toESM(require_react());
+var import_react52 = __toESM(require_react());
 
 // node_modules/@react-spring/animated/dist/react-spring-animated.esm.js
 var React102 = __toESM(require_react());
-var import_react50 = __toESM(require_react());
+var import_react51 = __toESM(require_react());
 var $node = /* @__PURE__ */ Symbol.for("Animated:node");
 var isAnimated = (value) => !!value && value[$node] === value;
 var getAnimated = (owner) => owner && owner[$node];
@@ -30075,9 +30180,9 @@ function _extends2() {
 }
 var withAnimated = (Component, host2) => {
   const hasInstance = !is.fun(Component) || Component.prototype && Component.prototype.isReactComponent;
-  return (0, import_react50.forwardRef)((givenProps, givenRef) => {
-    const instanceRef = (0, import_react50.useRef)(null);
-    const ref = hasInstance && (0, import_react50.useCallback)((value) => {
+  return (0, import_react51.forwardRef)((givenProps, givenRef) => {
+    const instanceRef = (0, import_react51.useRef)(null);
+    const ref = hasInstance && (0, import_react51.useCallback)((value) => {
       instanceRef.current = updateRef(givenRef, value);
     }, [givenRef]);
     const [props, deps] = getAnimatedState(givenProps, host2);
@@ -30093,7 +30198,7 @@ var withAnimated = (Component, host2) => {
       }
     };
     const observer = new PropsObserver(callback, deps);
-    const observerRef = (0, import_react50.useRef)();
+    const observerRef = (0, import_react51.useRef)();
     useIsomorphicLayoutEffect2(() => {
       observerRef.current = observer;
       each(deps, (dep) => addFluidObserver(dep, observer));
@@ -30104,7 +30209,7 @@ var withAnimated = (Component, host2) => {
         }
       };
     });
-    (0, import_react50.useEffect)(callback, []);
+    (0, import_react51.useEffect)(callback, []);
     useOnce(() => () => {
       const observer2 = observerRef.current;
       each(observer2.deps, (dep) => removeFluidObserver(dep, observer2));
@@ -31618,7 +31723,7 @@ var SpringContext = (_ref) => {
   let {
     children
   } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$3);
-  const inherited = (0, import_react51.useContext)(ctx);
+  const inherited = (0, import_react52.useContext)(ctx);
   const pause = props.pause || !!inherited.pause, immediate = props.immediate || !!inherited.immediate;
   props = useMemoOne(() => ({
     pause,
@@ -31949,7 +32054,7 @@ var host = createHost(primitives, {
 var animated = host.animated;
 
 // packages/fields/build-module/components/media-edit/use-moving-animation.mjs
-var import_element101 = __toESM(require_element(), 1);
+var import_element102 = __toESM(require_element(), 1);
 function getAbsolutePosition(element) {
   return {
     top: element.offsetTop,
@@ -31957,12 +32062,12 @@ function getAbsolutePosition(element) {
   };
 }
 function useMovingAnimation(triggerAnimationOnChange) {
-  const ref = (0, import_element101.useRef)(null);
-  const previousRef = (0, import_element101.useRef)(void 0);
+  const ref = (0, import_element102.useRef)(null);
+  const previousRef = (0, import_element102.useRef)(void 0);
   if (ref.current) {
     previousRef.current = getAbsolutePosition(ref.current);
   }
-  (0, import_element101.useLayoutEffect)(() => {
+  (0, import_element102.useLayoutEffect)(() => {
     const previous = previousRef.current;
     if (!previous || !ref.current) {
       return;
@@ -32016,7 +32121,7 @@ function normalizeValue(value) {
   return value ? [value] : [];
 }
 function ConditionalMediaUpload({ render: render4, multiple, ...props }) {
-  const [isModalOpen, setIsModalOpen] = (0, import_element102.useState)(false);
+  const [isModalOpen, setIsModalOpen] = (0, import_element103.useState)(false);
   if (window.__experimentalDataViewsMediaModal) {
     return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_jsx_runtime131.Fragment, { children: [
       render4 && render4({ open: () => setIsModalOpen(true) }),
@@ -32436,10 +32541,10 @@ function MediaEdit({
   validity
 }) {
   const value = field.getValue({ item: data });
-  const [isTouched, setIsTouched] = (0, import_element102.useState)(false);
-  const validityTargetRef = (0, import_element102.useRef)(null);
-  const [customValidity, setCustomValidity] = (0, import_element102.useState)(void 0);
-  (0, import_element102.useEffect)(() => {
+  const [isTouched, setIsTouched] = (0, import_element103.useState)(false);
+  const validityTargetRef = (0, import_element103.useRef)(null);
+  const [customValidity, setCustomValidity] = (0, import_element103.useState)(void 0);
+  (0, import_element103.useEffect)(() => {
     const validityTarget = validityTargetRef.current;
     const handler = () => {
       setIsTouched(true);
@@ -32461,7 +32566,7 @@ function MediaEdit({
     },
     [value]
   );
-  const stableAttachmentsRef = (0, import_element102.useRef)(
+  const stableAttachmentsRef = (0, import_element103.useRef)(
     null
   );
   if (attachments !== null) {
@@ -32476,7 +32581,7 @@ function MediaEdit({
       stableAttachments = stableAttachmentsRef.current;
     }
   }
-  const orderedAttachments = (0, import_element102.useMemo)(() => {
+  const orderedAttachments = (0, import_element103.useMemo)(() => {
     if (!stableAttachments) {
       return null;
     }
@@ -32488,21 +32593,21 @@ function MediaEdit({
   }, [stableAttachments, value]);
   const { createErrorNotice } = (0, import_data.useDispatch)(import_notices.store);
   const { receiveEntityRecords } = (0, import_data.useDispatch)(import_core_data.store);
-  const [targetItemId, setTargetItemId] = (0, import_element102.useState)();
-  const openModalRef = (0, import_element102.useRef)(void 0);
-  const [pendingOpen, setPendingOpen] = (0, import_element102.useState)(false);
-  const [blobs, setBlobs] = (0, import_element102.useState)([]);
-  (0, import_element102.useEffect)(() => {
+  const [targetItemId, setTargetItemId] = (0, import_element103.useState)();
+  const openModalRef = (0, import_element103.useRef)(void 0);
+  const [pendingOpen, setPendingOpen] = (0, import_element103.useState)(false);
+  const [blobs, setBlobs] = (0, import_element103.useState)([]);
+  (0, import_element103.useEffect)(() => {
     if (pendingOpen) {
       setPendingOpen(false);
       openModalRef.current?.();
     }
   }, [pendingOpen]);
-  const onChangeControl = (0, import_element102.useCallback)(
+  const onChangeControl = (0, import_element103.useCallback)(
     (newValue) => onChange(field.setValue({ item: data, value: newValue })),
     [data, field, onChange]
   );
-  const removeItem = (0, import_element102.useCallback)(
+  const removeItem = (0, import_element103.useCallback)(
     (itemId) => {
       const currentIds = normalizeValue(value);
       const newIds = currentIds.filter((id) => id !== itemId);
@@ -32511,7 +32616,7 @@ function MediaEdit({
     },
     [value, onChangeControl]
   );
-  const moveItem = (0, import_element102.useCallback)(
+  const moveItem = (0, import_element103.useCallback)(
     (itemId, direction) => {
       if (!orderedAttachments) {
         return;
@@ -32527,7 +32632,7 @@ function MediaEdit({
     },
     [orderedAttachments, onChangeControl]
   );
-  const onFilesDrop = (0, import_element102.useCallback)(
+  const onFilesDrop = (0, import_element103.useCallback)(
     (files, _targetItemId) => {
       setTargetItemId(_targetItemId);
       (0, import_media_utils.uploadMedia)({
@@ -32586,7 +32691,7 @@ function MediaEdit({
     ]
   );
   const addButtonLabel = field.placeholder || (multiple ? (0, import_i18n31.__)("Choose files") : (0, import_i18n31.__)("Choose file"));
-  const allItems = (0, import_element102.useMemo)(() => {
+  const allItems = (0, import_element103.useMemo)(() => {
     if (!blobs.length) {
       return orderedAttachments;
     }
@@ -32608,7 +32713,7 @@ function MediaEdit({
     }
     return items;
   }, [orderedAttachments, targetItemId, blobs]);
-  (0, import_element102.useEffect)(() => {
+  (0, import_element103.useEffect)(() => {
     if (!isTouched) {
       return;
     }
@@ -32631,12 +32736,12 @@ function MediaEdit({
       setCustomValidity(void 0);
     }
   }, [isTouched, field.isValid, validity]);
-  (0, import_element102.useEffect)(() => {
+  (0, import_element103.useEffect)(() => {
     if (isTouched && customValidity?.message) {
       speak6(customValidity.message);
     }
   }, [isTouched, customValidity?.message]);
-  const onBlur = (0, import_element102.useCallback)(
+  const onBlur = (0, import_element103.useCallback)(
     (event) => {
       if (isTouched) {
         return;
@@ -32750,13 +32855,13 @@ function MediaEdit({
 }
 
 // routes/identity/stage.tsx
-var import_element103 = __toESM(require_element());
+var import_element104 = __toESM(require_element());
 var import_html_entities2 = __toESM(require_html_entities());
 import { loadEditorAssets } from "@wordpress/lazy-editor";
 
 // packages/style-runtime/src/index.ts
-var STYLE_HASH_ATTRIBUTE34 = "data-wp-hash";
-function getRuntime34() {
+var STYLE_HASH_ATTRIBUTE35 = "data-wp-hash";
+function getRuntime35() {
   const globalScope = globalThis;
   if (globalScope.__wpStyleRuntime) {
     return globalScope.__wpStyleRuntime;
@@ -32767,28 +32872,28 @@ function getRuntime34() {
     injectedStyles: /* @__PURE__ */ new WeakMap()
   };
   if (typeof document !== "undefined") {
-    registerDocument34(document);
+    registerDocument35(document);
   }
   return globalScope.__wpStyleRuntime;
 }
-function documentContainsStyleHash34(targetDocument, hash) {
+function documentContainsStyleHash35(targetDocument, hash) {
   if (!targetDocument.head) {
     return false;
   }
   for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE34}]`
+    `style[${STYLE_HASH_ATTRIBUTE35}]`
   )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE34) === hash) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE35) === hash) {
       return true;
     }
   }
   return false;
 }
-function injectStyle34(targetDocument, hash, css) {
+function injectStyle35(targetDocument, hash, css) {
   if (!targetDocument.head) {
     return;
   }
-  const runtime = getRuntime34();
+  const runtime = getRuntime35();
   let injectedStyles = runtime.injectedStyles.get(targetDocument);
   if (!injectedStyles) {
     injectedStyles = /* @__PURE__ */ new Set();
@@ -32797,24 +32902,24 @@ function injectStyle34(targetDocument, hash, css) {
   if (injectedStyles.has(hash)) {
     return;
   }
-  if (documentContainsStyleHash34(targetDocument, hash)) {
+  if (documentContainsStyleHash35(targetDocument, hash)) {
     injectedStyles.add(hash);
     return;
   }
   const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE34, hash);
+  style.setAttribute(STYLE_HASH_ATTRIBUTE35, hash);
   style.appendChild(targetDocument.createTextNode(css));
   targetDocument.head.appendChild(style);
   injectedStyles.add(hash);
 }
-function registerDocument34(targetDocument) {
-  const runtime = getRuntime34();
+function registerDocument35(targetDocument) {
+  const runtime = getRuntime35();
   runtime.documents.set(
     targetDocument,
     (runtime.documents.get(targetDocument) ?? 0) + 1
   );
   for (const [hash, css] of runtime.styles) {
-    injectStyle34(targetDocument, hash, css);
+    injectStyle35(targetDocument, hash, css);
   }
   return () => {
     const count = runtime.documents.get(targetDocument);
@@ -32828,27 +32933,27 @@ function registerDocument34(targetDocument) {
     runtime.documents.set(targetDocument, count - 1);
   };
 }
-function registerStyle34(hash, css) {
-  const runtime = getRuntime34();
+function registerStyle35(hash, css) {
+  const runtime = getRuntime35();
   runtime.styles.set(hash, css);
   for (const targetDocument of runtime.documents.keys()) {
-    injectStyle34(targetDocument, hash, css);
+    injectStyle35(targetDocument, hash, css);
   }
 }
 
 // routes/identity/style.module.scss
 if (typeof process === "undefined" || true) {
-  registerStyle34("95479f68d7", ".ec88ce3dd902eabd__form{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);flex-grow:1;min-height:0;overflow:auto;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}");
+  registerStyle35("95479f68d7", ".ec88ce3dd902eabd__form{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);flex-grow:1;min-height:0;overflow:auto;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}");
 }
 var style_module_default = { "form": "ec88ce3dd902eabd__form" };
 
 // routes/identity/stage.tsx
 var import_jsx_runtime132 = __toESM(require_jsx_runtime());
 function MediaEditWithEditorAssets(props) {
-  const [isReady, setIsReady] = (0, import_element103.useState)(
+  const [isReady, setIsReady] = (0, import_element104.useState)(
     () => !!window.wp?.media
   );
-  (0, import_element103.useEffect)(() => {
+  (0, import_element104.useEffect)(() => {
     if (!isReady) {
       loadEditorAssets().then(() => setIsReady(true));
     }
