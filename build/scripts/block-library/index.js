@@ -39811,6 +39811,42 @@ ${text}
     }
     return syncedAttributes;
   }
+  function getNewAttachmentSizeAttributes(sizeSlug, attachment) {
+    const sizes = attachment.media_details?.sizes;
+    if (!sizeSlug || sizeSlug === DEFAULT_MEDIA_SIZE_SLUG3 || !sizes) {
+      return void 0;
+    }
+    const sizeUrl = sizes[sizeSlug]?.source_url;
+    if (sizeUrl) {
+      return { url: sizeUrl };
+    }
+    const fullUrl = attachment.source_url ?? sizes.full?.source_url;
+    return fullUrl ? { url: fullUrl, sizeSlug: DEFAULT_MEDIA_SIZE_SLUG3 } : void 0;
+  }
+  function getNewAttachmentLinkAttributes(linkDestination, attachment) {
+    if (linkDestination === LINK_DESTINATION_MEDIA2) {
+      return attachment.source_url ? { href: attachment.source_url } : void 0;
+    }
+    if (linkDestination === LINK_DESTINATION_ATTACHMENT2) {
+      return attachment.link ? { href: attachment.link } : void 0;
+    }
+    return void 0;
+  }
+  function getNewAttachmentImageBlockAttributes(blockAttributes8, attachment) {
+    if (!attachment) {
+      return void 0;
+    }
+    return {
+      ...getNewAttachmentSizeAttributes(
+        blockAttributes8.sizeSlug,
+        attachment
+      ),
+      ...getNewAttachmentLinkAttributes(
+        blockAttributes8.linkDestination,
+        attachment
+      )
+    };
+  }
   var { openMediaEditorModalKey: openMediaEditorModalKey2 } = unlock(import_block_editor115.privateApis);
   function getAttachmentFallbackForEmptyBlockMetadata({ alt, caption }) {
     const attachment = {};
@@ -39836,7 +39872,7 @@ ${text}
     onClose,
     onUrlChange
   }) {
-    const { id, url, alt, caption } = attributes2;
+    const { id, url, alt, caption, sizeSlug, linkDestination } = attributes2;
     const registry = (0, import_data50.useRegistry)();
     const openMediaEditorModal = (0, import_data50.useSelect)(
       (select10) => select10(import_block_editor115.store).getSettings()[openMediaEditorModalKey2],
@@ -39846,7 +39882,9 @@ ${text}
       id,
       url,
       alt,
-      caption: caption?.toString()
+      caption: caption?.toString(),
+      sizeSlug,
+      linkDestination
     });
     const mediaEditorMetadataBaselineRef = (0, import_element72.useRef)();
     const mediaEditorMetadataSyncRequestRef = (0, import_element72.useRef)(0);
@@ -39855,9 +39893,11 @@ ${text}
         id,
         url,
         alt,
-        caption: caption?.toString()
+        caption: caption?.toString(),
+        sizeSlug,
+        linkDestination
       };
-    }, [alt, caption, id, url]);
+    }, [alt, caption, id, linkDestination, sizeSlug, url]);
     const getCachedAttachmentRecord = (0, import_element72.useCallback)(
       (attachmentId) => registry.select(import_core_data25.store).getEditedEntityRecord(
         "postType",
@@ -39903,7 +39943,8 @@ ${text}
         const syncRequest = ++mediaEditorMetadataSyncRequestRef.current;
         const nextAttributes = {};
         const currentBlockAttributes = blockAttributesRef.current;
-        if (newId !== currentBlockAttributes.id) {
+        const isNewAttachment = newId !== currentBlockAttributes.id;
+        if (isNewAttachment) {
           nextAttributes.id = newId;
           nextAttributes.url = newUrl ?? currentBlockAttributes.url;
           if (nextAttributes.url !== currentBlockAttributes.url) {
@@ -39915,19 +39956,37 @@ ${text}
             url: nextAttributes.url
           };
         }
-        if (originalAttachment) {
+        if (originalAttachment || isNewAttachment) {
           const resolvedAttachment = await resolveFreshAttachmentRecord(newId);
           if (syncRequest !== mediaEditorMetadataSyncRequestRef.current) {
             return;
           }
+          const attachmentRecord = resolvedAttachment ?? getCachedAttachmentRecord(newId);
           const latestBlockAttributes = blockAttributesRef.current;
-          const resolvedMetadataAttributes = getSyncedImageBlockAttributes(
-            latestBlockAttributes,
-            originalAttachment,
-            resolvedAttachment
-          );
-          if (Object.keys(resolvedMetadataAttributes).length) {
-            Object.assign(nextAttributes, resolvedMetadataAttributes);
+          if (originalAttachment) {
+            const resolvedMetadataAttributes = getSyncedImageBlockAttributes(
+              latestBlockAttributes,
+              originalAttachment,
+              attachmentRecord
+            );
+            if (Object.keys(resolvedMetadataAttributes).length) {
+              Object.assign(
+                nextAttributes,
+                resolvedMetadataAttributes
+              );
+            }
+          }
+          if (isNewAttachment) {
+            const derivedAttributes = getNewAttachmentImageBlockAttributes(
+              latestBlockAttributes,
+              attachmentRecord
+            );
+            if (derivedAttributes) {
+              Object.assign(nextAttributes, derivedAttributes);
+              if (derivedAttributes.url && derivedAttributes.url !== latestBlockAttributes.url) {
+                onUrlChange?.(derivedAttributes.url);
+              }
+            }
           }
         }
         if (Object.keys(nextAttributes).length) {
@@ -39938,7 +39997,12 @@ ${text}
           setAttributes(nextAttributes);
         }
       },
-      [onUrlChange, resolveFreshAttachmentRecord, setAttributes]
+      [
+        getCachedAttachmentRecord,
+        onUrlChange,
+        resolveFreshAttachmentRecord,
+        setAttributes
+      ]
     );
     const openImageMediaEditorModal = (0, import_element72.useCallback)(async () => {
       if (!id || !openMediaEditorModal) {
