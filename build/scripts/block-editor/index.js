@@ -57707,6 +57707,11 @@ var wp;
   var import_compose30 = __toESM(require_compose(), 1);
   var import_element121 = __toESM(require_element(), 1);
   var import_jsx_runtime251 = __toESM(require_jsx_runtime(), 1);
+  var PREVENT_SCROLL_ON_FOCUS = {
+    position: "absolute",
+    inset: 0,
+    pointerEvents: "none"
+  };
   function useTabNav() {
     const containerRef = (
       /** @type {typeof useRef<HTMLElement>} */
@@ -57766,7 +57771,8 @@ var wp;
       {
         ref: focusCaptureBeforeRef,
         tabIndex: "0",
-        onFocus: onFocusCapture
+        onFocus: onFocusCapture,
+        style: PREVENT_SCROLL_ON_FOCUS
       }
     );
     const after = /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
@@ -57774,7 +57780,8 @@ var wp;
       {
         ref: focusCaptureAfterRef,
         tabIndex: "0",
-        onFocus: onFocusCapture
+        onFocus: onFocusCapture,
+        style: PREVENT_SCROLL_ON_FOCUS
       }
     );
     const ref = (0, import_compose30.useRefEffect)((node) => {
@@ -57803,42 +57810,20 @@ var wp;
         }
         const next = isShift ? focusCaptureBeforeRef : focusCaptureAfterRef;
         noCaptureRef.current = true;
-        next.current.focus({ preventScroll: true });
+        next.current.focus();
       }
       function onFocusOut(event) {
         if (!node.contains(event.relatedTarget)) {
           setLastFocus2({ current: event.target });
         }
-        const { ownerDocument: ownerDocument22 } = node;
-        if (!event.relatedTarget && event.target.hasAttribute("data-block") && ownerDocument22.activeElement === ownerDocument22.body && getBlockCount2() === 0) {
+        const { ownerDocument: ownerDocument2 } = node;
+        if (!event.relatedTarget && event.target.hasAttribute("data-block") && ownerDocument2.activeElement === ownerDocument2.body && getBlockCount2() === 0) {
           node.focus();
         }
       }
-      function preventScrollOnTab(event) {
-        if (event.keyCode !== import_keycodes4.TAB) {
-          return;
-        }
-        if (event.target?.getAttribute("role") === "region") {
-          return;
-        }
-        if (containerRef.current === event.target) {
-          return;
-        }
-        const isShift = event.shiftKey;
-        const direction = isShift ? "findPrevious" : "findNext";
-        const target = import_dom41.focus.tabbable[direction](event.target);
-        if (target === focusCaptureBeforeRef.current || target === focusCaptureAfterRef.current) {
-          event.preventDefault();
-          target.focus({ preventScroll: true });
-        }
-      }
-      const { ownerDocument: ownerDocument2 } = node;
-      const { defaultView } = ownerDocument2;
-      defaultView.addEventListener("keydown", preventScrollOnTab);
       node.addEventListener("keydown", onKeyDown);
       node.addEventListener("focusout", onFocusOut);
       return () => {
-        defaultView.removeEventListener("keydown", preventScrollOnTab);
         node.removeEventListener("keydown", onKeyDown);
         node.removeEventListener("focusout", onFocusOut);
       };
