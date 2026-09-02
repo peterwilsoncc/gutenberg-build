@@ -35998,6 +35998,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
   var BorderLabel2 = (props) => {
     const {
+      id: id3,
       label,
       hideLabelFromVision
     } = props;
@@ -36005,9 +36006,11 @@ This message will only show in development mode. It won't appear in production. 
       return null;
     }
     return hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(component_default2, {
-      as: "label",
+      as: "span",
+      id: id3,
       children: label
     }) : /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(base_control_default.VisualLabel, {
+      id: id3,
       children: label
     });
   };
@@ -36035,8 +36038,12 @@ This message will only show in development mode. It won't appear in production. 
       toggleLinked,
       wrapperClassName,
       __experimentalIsRenderedInSidebar,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
       ...otherProps
     } = useBorderBoxControl(props);
+    const generatedLabelId = (0, import_compose36.useInstanceId)(BorderBoxControl, "border-box-control-label");
+    const labelId = label && !ariaLabel && !ariaLabelledBy ? generatedLabelId : void 0;
     const [popoverAnchor, setPopoverAnchor] = (0, import_element86.useState)(null);
     const popoverProps = (0, import_element86.useMemo)(() => popoverPlacement ? {
       placement: popoverPlacement,
@@ -36047,6 +36054,9 @@ This message will only show in development mode. It won't appear in production. 
     const mergedRef = (0, import_compose36.useMergeRefs)([setPopoverAnchor, forwardedRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(component_default, {
       className,
+      role: label || ariaLabel || ariaLabelledBy ? "group" : void 0,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy ?? labelId,
       ...otherProps,
       ref: mergedRef,
       children: [hasVisibleLabel ? (
@@ -36059,6 +36069,7 @@ This message will only show in development mode. It won't appear in production. 
           templateColumns: "1fr min-content",
           alignment: "center",
           children: [/* @__PURE__ */ (0, import_jsx_runtime154.jsx)(BorderLabel2, {
+            id: labelId,
             label,
             hideLabelFromVision
           }), /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(component_default10, {
@@ -36067,6 +36078,7 @@ This message will only show in development mode. It won't appear in production. 
           })]
         })
       ) : /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(BorderLabel2, {
+        id: labelId,
         label,
         hideLabelFromVision
       }), /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(component_default, {
