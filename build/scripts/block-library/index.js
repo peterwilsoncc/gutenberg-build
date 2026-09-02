@@ -33984,9 +33984,10 @@ ${url}
       )
     ] });
   }
-  function GalleryImagesPreview({ imageBlocks }) {
+  function GalleryImagesPreview({ imageBlocks, layout }) {
     const { children, ref, className } = (0, import_block_editor97.__experimentalUseBlockPreview)({
-      blocks: imageBlocks
+      blocks: imageBlocks,
+      layout
     });
     return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
       "div",
@@ -34018,6 +34019,10 @@ ${url}
     } = dynamic;
     const blockEditingMode = (0, import_block_editor97.useBlockEditingMode)();
     const [isConfirmingDetach, setIsConfirmingDetach] = (0, import_element60.useState)(false);
+    const previewLayout = (0, import_element60.useMemo)(
+      () => isGalleryFlexLayout(attributes2.layout) ? { ...attributes2.layout, type: "flex" } : attributes2.layout,
+      [attributes2.layout]
+    );
     const emptyInstructions = isResolvingDynamic ? (0, import_i18n84.__)("Loading images\u2026") : sourceDescriptor?.emptyMessage ?? (0, import_i18n84.__)("Dynamic images will appear here.");
     return /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(import_jsx_runtime300.Fragment, { children: [
       blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(import_jsx_runtime300.Fragment, { children: [
@@ -34044,7 +34049,8 @@ ${url}
         dynamicImageBlocks.length ? /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_block_editor97.BlockContextProvider, { value: galleryContext, children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
           GalleryImagesPreview,
           {
-            imageBlocks: dynamicImageBlocks
+            imageBlocks: dynamicImageBlocks,
+            layout: previewLayout
           }
         ) }) : /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
           import_components44.Placeholder,
@@ -40253,7 +40259,8 @@ ${text}
       setOffsetTop(imageElement?.offsetTop ?? 0);
     }, [imageElement]);
     const setRefs = (0, import_compose25.useMergeRefs)([setImageElement, setResizeObserved]);
-    const { allowResize = true } = context;
+    const { allowResize = true, imageCrop = false } = context;
+    const isCroppedGalleryImage = imageCrop && parentLayoutType === "flex";
     const { image, attachmentResolutionError } = (0, import_data51.useSelect)(
       (select10) => {
         const imageRecord = id && isSingleSelected ? select10(import_core_data26.store).getEntityRecord(
@@ -40977,10 +40984,12 @@ ${text}
               } else if (width !== void 0 && width !== null) {
                 style2.width = typeof width === "number" ? `${width}px` : width;
               }
-              if (height === "auto" || height === void 0 || height === null) {
+              if (height === "auto") {
                 style2.height = "auto";
-              } else {
+              } else if (height !== void 0 && height !== null) {
                 style2.height = typeof height === "number" ? `${height}px` : height;
+              } else if (!isCroppedGalleryImage) {
+                style2.height = "auto";
               }
               return style2;
             })(),
