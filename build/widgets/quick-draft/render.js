@@ -48704,6 +48704,9 @@ function DraftTitle({
   );
 }
 function DraftDate({ post }) {
+  if (!post.date) {
+    return null;
+  }
   const fullDate = (0, import_date13.dateI18n)((0, import_date13.getSettings)().formats.datetime, post.date);
   return /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
     Text,

@@ -13314,7 +13314,8 @@ function FontLibraryProvider({ children }) {
   const globalStyles = (0, import_core_data5.useEntityRecord)(
     "root",
     "globalStyles",
-    globalStylesId
+    globalStylesId ?? 0,
+    { enabled: globalStylesId !== void 0 }
   );
   const [isInstalling, setIsInstalling] = (0, import_element31.useState)(false);
   const { records: libraryPosts = [], isResolving: isResolvingLibrary } = (0, import_core_data5.useEntityRecords)(
@@ -13943,7 +13944,8 @@ function InstalledFonts() {
   const globalStyles = (0, import_core_data6.useEntityRecord)(
     "root",
     "globalStyles",
-    globalStylesId
+    globalStylesId ?? 0,
+    { enabled: globalStylesId !== void 0 }
   );
   const editedFontFamilies = globalStyles?.edits?.settings?.typography?.fontFamilies;
   const savedFontFamilies = globalStyles?.record?.settings?.typography?.fontFamilies;

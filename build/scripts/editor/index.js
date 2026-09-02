@@ -75327,7 +75327,8 @@ If there's a particular need for this, please submit a feature request at https:
     const globalStyles = (0, import_core_data40.useEntityRecord)(
       "root",
       "globalStyles",
-      globalStylesId
+      globalStylesId ?? 0,
+      { enabled: globalStylesId !== void 0 }
     );
     const [isInstalling, setIsInstalling] = (0, import_element235.useState)(false);
     const { records: libraryPosts = [], isResolving: isResolvingLibrary } = (0, import_core_data40.useEntityRecords)(
@@ -75956,7 +75957,8 @@ If there's a particular need for this, please submit a feature request at https:
     const globalStyles = (0, import_core_data41.useEntityRecord)(
       "root",
       "globalStyles",
-      globalStylesId
+      globalStylesId ?? 0,
+      { enabled: globalStylesId !== void 0 }
     );
     const editedFontFamilies = globalStyles?.edits?.settings?.typography?.fontFamilies;
     const savedFontFamilies = globalStyles?.record?.settings?.typography?.fontFamilies;
@@ -89306,15 +89308,8 @@ If there's a particular need for this, please submit a feature request at https:
         const _currentUser = getCurrentUser();
         const _isDirty = dirtyEntityRecords.length > 0;
         const globalStylesId = __experimentalGetCurrentGlobalStylesId();
-        const globalStyles = globalStylesId ? getEntityRecord(
-          "root",
-          "globalStyles",
-          globalStylesId
-        ) : void 0;
-        const _revisionsCount = (
-          // @ts-expect-error - _links is not typed in GlobalStylesRevision
-          globalStyles?._links?.["version-history"]?.[0]?.count ?? 0
-        );
+        const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
+        const _revisionsCount = globalStyles?._links?.["version-history"]?.[0]?.count ?? 0;
         const globalStylesRevisions = globalStylesId ? getRevisions(
           "root",
           "globalStyles",

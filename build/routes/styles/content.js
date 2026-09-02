@@ -23731,15 +23731,8 @@ function useGlobalStylesRevisions({
       const _currentUser = getCurrentUser();
       const _isDirty = dirtyEntityRecords.length > 0;
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
-      const globalStyles = globalStylesId ? getEntityRecord(
-        "root",
-        "globalStyles",
-        globalStylesId
-      ) : void 0;
-      const _revisionsCount = (
-        // @ts-expect-error - _links is not typed in GlobalStylesRevision
-        globalStyles?._links?.["version-history"]?.[0]?.count ?? 0
-      );
+      const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
+      const _revisionsCount = globalStyles?._links?.["version-history"]?.[0]?.count ?? 0;
       const globalStylesRevisions = globalStylesId ? getRevisions(
         "root",
         "globalStyles",
