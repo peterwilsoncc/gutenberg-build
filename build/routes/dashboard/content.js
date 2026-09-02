@@ -44510,9 +44510,31 @@ var import_notices = __toESM(require_notices());
 var import_viewport2 = __toESM(require_viewport());
 
 // packages/widget-dashboard/build-module/context/dashboard-context.mjs
-var import_es6 = __toESM(require_es6(), 1);
+var import_es62 = __toESM(require_es6(), 1);
 var import_compose16 = __toESM(require_compose(), 1);
 var import_element154 = __toESM(require_element(), 1);
+
+// packages/widget-dashboard/build-module/utils/canonicalize-layout.mjs
+function canonicalizeLayout(layout) {
+  const indexed = layout.map((widget, index2) => ({
+    widget,
+    order: widget.placement?.order ?? index2
+  }));
+  indexed.sort((a2, b2) => a2.order - b2.order);
+  let changed = false;
+  const canonical = indexed.map(({ widget }, index2) => {
+    if (widget !== layout[index2]) {
+      changed = true;
+    }
+    if (!widget.placement || !("order" in widget.placement)) {
+      return widget;
+    }
+    changed = true;
+    const { order: _stripped, ...placement } = widget.placement;
+    return { ...widget, placement };
+  });
+  return changed ? canonical : layout;
+}
 
 // packages/widget-dashboard/build-module/types.mjs
 var WIDGET_DASHBOARD_COLUMN_COUNT = 4;
@@ -44550,6 +44572,108 @@ var DEFAULT_GRID = {
   columns: WIDGET_DASHBOARD_COLUMN_COUNT,
   rowHeight: DEFAULT_ROW_HEIGHT
 };
+
+// packages/widget-dashboard/build-module/utils/enforce-layout-policy.mjs
+var import_es6 = __toESM(require_es6(), 1);
+var SIZE_FIELDS = ["width", "height"];
+var POSITION_FIELDS = ["lane"];
+function placementOf(widget) {
+  return widget.placement ?? {};
+}
+function placementFieldsEqual(a2, b2, fields2) {
+  const pa = placementOf(a2);
+  const pb = placementOf(b2);
+  return fields2.every((field) => pa[field] === pb[field]);
+}
+function restorePlacementFields(widget, prior, fields2) {
+  const restored = { ...placementOf(widget) };
+  const priorPlacement = placementOf(prior);
+  for (const field of fields2) {
+    if (field in priorPlacement) {
+      restored[field] = priorPlacement[field];
+    } else {
+      delete restored[field];
+    }
+  }
+  if (!Object.keys(restored).length && !prior.placement) {
+    const { placement: _dropped, ...rest } = widget;
+    return rest;
+  }
+  return { ...widget, placement: restored };
+}
+function enforceLayoutPolicy({
+  previous: rawPrevious,
+  next: rawNext,
+  canPerform,
+  widgetTypes
+}) {
+  const previous = canonicalizeLayout(rawPrevious);
+  const next = canonicalizeLayout(rawNext);
+  const typeOf = (widget) => widgetTypes.find((type) => type.name === widget.type);
+  const priorByUuid = new Map(
+    previous.map((widget) => [widget.uuid, widget])
+  );
+  const free = [];
+  const heldByUuid = /* @__PURE__ */ new Map();
+  for (const incoming of next) {
+    const prior = priorByUuid.get(incoming.uuid);
+    if (!prior) {
+      const widgetType2 = typeOf(incoming);
+      if (widgetType2 && !canPerform({ operation: "insert", widgetType: widgetType2 })) {
+        continue;
+      }
+      free.push(incoming);
+      continue;
+    }
+    const widgetType = typeOf(prior);
+    const allows = (operation) => canPerform({ operation, widget: prior, widgetType });
+    let staged = incoming;
+    if (!(0, import_es6.default)(prior.attributes, incoming.attributes) && !allows("edit")) {
+      staged = { ...staged };
+      if ("attributes" in prior) {
+        staged.attributes = prior.attributes;
+      } else {
+        delete staged.attributes;
+      }
+    }
+    if (!placementFieldsEqual(prior, staged, SIZE_FIELDS) && !allows("resize")) {
+      staged = restorePlacementFields(staged, prior, SIZE_FIELDS);
+    }
+    if (allows("move")) {
+      free.push(staged);
+      continue;
+    }
+    if (!placementFieldsEqual(prior, staged, POSITION_FIELDS)) {
+      staged = restorePlacementFields(staged, prior, POSITION_FIELDS);
+    }
+    heldByUuid.set(staged.uuid, staged);
+  }
+  const nextUuids = new Set(next.map((widget) => widget.uuid));
+  const result = [...free];
+  let absent = 0;
+  const place = (widget, index2) => result.splice(Math.min(index2 - absent, result.length), 0, widget);
+  previous.forEach((widget, index2) => {
+    if (!nextUuids.has(widget.uuid)) {
+      const removable = canPerform({
+        operation: "remove",
+        widget,
+        widgetType: typeOf(widget)
+      });
+      if (removable) {
+        absent += 1;
+        return;
+      }
+      place(widget, index2);
+      return;
+    }
+    const held = heldByUuid.get(widget.uuid);
+    if (held) {
+      place(held, index2);
+    }
+  });
+  const untouched = result.length === next.length && result.every((widget, index2) => widget === next[index2]);
+  return untouched ? next : result;
+}
 
 // packages/widget-dashboard/build-module/utils/normalize-grid-settings/normalize-grid-settings.mjs
 function normalizeGridSettings(settings, defaultRowHeight) {
@@ -44626,20 +44750,6 @@ var DEFAULT_RESOLVE_WIDGET_MODULE = (moduleId) => import(
   moduleId
 );
 var AUTO_SAVE_DELAY_MS = 5e3;
-function canonicalize(layout) {
-  const indexed = layout.map((widget, index2) => ({
-    widget,
-    order: widget.placement?.order ?? index2
-  }));
-  indexed.sort((a2, b2) => a2.order - b2.order);
-  return indexed.map(({ widget }) => {
-    if (!widget.placement) {
-      return widget;
-    }
-    const { order: _stripped, ...placement } = widget.placement;
-    return { ...widget, placement };
-  });
-}
 var ALLOW_EVERY_OPERATION = () => true;
 var Context = (0, import_element154.createContext)(null);
 function useDashboardInternalContext() {
@@ -44671,32 +44781,14 @@ function WidgetDashboardProvider({
   );
   const stageLayout = (0, import_element154.useCallback)(
     (next) => {
-      setStagingLayout((previous) => {
-        const staged = [...next];
-        let insertAt = 0;
-        previous.forEach((widget) => {
-          const position = staged.findIndex(
-            ({ uuid }) => uuid === widget.uuid
-          );
-          if (position !== -1) {
-            insertAt = position + 1;
-            return;
-          }
-          const removable = canPerform({
-            operation: "remove",
-            widget,
-            widgetType: widgetTypes.find(
-              (type) => type.name === widget.type
-            )
-          });
-          if (removable) {
-            return;
-          }
-          staged.splice(insertAt, 0, widget);
-          insertAt += 1;
-        });
-        return staged.length === next.length ? next : staged;
-      });
+      setStagingLayout(
+        (previous) => canPerform === ALLOW_EVERY_OPERATION ? next : enforceLayoutPolicy({
+          previous,
+          next,
+          canPerform,
+          widgetTypes
+        })
+      );
     },
     [canPerform, widgetTypes]
   );
@@ -44708,9 +44800,9 @@ function WidgetDashboardProvider({
     [committedGridSettings]
   );
   const hasLayoutChanges = (0, import_element154.useMemo)(
-    () => !(0, import_es6.default)(
-      canonicalize(committedLayout),
-      canonicalize(stagingLayout)
+    () => !(0, import_es62.default)(
+      canonicalizeLayout(committedLayout),
+      canonicalizeLayout(stagingLayout)
     ),
     [committedLayout, stagingLayout]
   );
@@ -44718,7 +44810,7 @@ function WidgetDashboardProvider({
   const commit = (0, import_element154.useCallback)(
     (options) => {
       if (hasLayoutChanges) {
-        onLayoutChange(canonicalize(stagingLayout));
+        onLayoutChange(canonicalizeLayout(stagingLayout));
       }
       if (options?.exitEditMode !== false) {
         onEditChange?.(false);
@@ -56565,7 +56657,7 @@ function SearchWidget(props) {
 }
 
 // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
-var import_es62 = __toESM(require_es6(), 1);
+var import_es63 = __toESM(require_es6(), 1);
 var import_compose27 = __toESM(require_compose(), 1);
 var import_element193 = __toESM(require_element(), 1);
 var import_components25 = __toESM(require_components(), 1);
@@ -56614,7 +56706,7 @@ function InputWidget({
       return;
     }
     const nextValue = field.getValue({ item: updatedData });
-    if ((0, import_es62.default)(nextValue, currentValue)) {
+    if ((0, import_es63.default)(nextValue, currentValue)) {
       return;
     }
     onChangeView({
@@ -62988,7 +63080,7 @@ function SummaryButton({
 
 // packages/dataviews/build-module/hooks/use-form-validity.mjs
 var import_deepmerge = __toESM(require_cjs(), 1);
-var import_es63 = __toESM(require_es6(), 1);
+var import_es64 = __toESM(require_es6(), 1);
 var import_element235 = __toESM(require_element(), 1);
 var import_i18n73 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
@@ -63433,7 +63525,7 @@ function useFormValidity(item, fields2, form) {
     const untouchedFields = [];
     formFieldsToValidate.forEach((formField) => {
       const value = getFormFieldValue(formField, item);
-      if (previousValuesRef.current.hasOwnProperty(formField.id) && (0, import_es63.default)(
+      if (previousValuesRef.current.hasOwnProperty(formField.id) && (0, import_es64.default)(
         previousValuesRef.current[formField.id],
         value
       )) {
@@ -63467,7 +63559,7 @@ function useFormValidity(item, fields2, form) {
       if (Object.keys(validity).length === 0) {
         validity = void 0;
       }
-      const areEqual = (0, import_es63.default)(existingFormValidity, validity);
+      const areEqual = (0, import_es64.default)(existingFormValidity, validity);
       if (areEqual) {
         return existingFormValidity;
       }
