@@ -41244,7 +41244,7 @@ if (typeof process === "undefined" || true) {
 }
 var global_css_defense_default9 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
 if (typeof process === "undefined" || true) {
-  registerStyle65("d7b0469ef4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7a7ac88e306348e7__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:var(--wpds-dimension-gap-sm,8px) 0 0;align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);margin-block:var(--wpds-dimension-gap-sm,8px) 0;margin-inline:0;@media not (prefers-reduced-motion){animation:_48722cc5dd090ce4__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._57a3bbbfbe38a5c6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._9e944dc198aac10b__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}.e482806667437c6a__indicator-icon{flex-shrink:0}._6e46434cc23019d2__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _48722cc5dd090ce4__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}');
+  registerStyle65("d11816833c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7a7ac88e306348e7__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);@media not (prefers-reduced-motion){animation:_48722cc5dd090ce4__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._57a3bbbfbe38a5c6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._9e944dc198aac10b__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}.e482806667437c6a__indicator-icon{flex-shrink:0}._6e46434cc23019d2__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _48722cc5dd090ce4__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}');
 }
 var style_default55 = { "indicator": "_7a7ac88e306348e7__indicator", "indicator-jump": "_48722cc5dd090ce4__indicator-jump", "is-invalid": "_57a3bbbfbe38a5c6__is-invalid", "is-valid": "_9e944dc198aac10b__is-valid", "indicator-icon": "e482806667437c6a__indicator-icon", "indicator-spinner": "_6e46434cc23019d2__indicator-spinner" };
 var ICON = {
@@ -41283,6 +41283,7 @@ function ValidityIndicator({
 
 // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
 var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
+var DEFAULT_RENDER3 = (props) => /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
 function appendRequiredIndicator(label, required, markWhenOptional) {
   let suffix;
   if (required && !markWhenOptional) {
@@ -41309,7 +41310,7 @@ var ControlWithError = (0, import_element122.forwardRef)(function ControlWithErr
   customValidity,
   getValidityTarget,
   children,
-  render: render4,
+  render: render4 = DEFAULT_RENDER3,
   ...restProps
 }, forwardedRef) {
   const [errorMessage, setErrorMessage] = (0, import_element122.useState)();
@@ -41467,7 +41468,6 @@ var ControlWithError = (0, import_element122.forwardRef)(function ControlWithErr
   }, [visibleMessage, messageId, getValidityTarget]);
   return useRender({
     render: render4,
-    defaultTagName: "div",
     ref: [forwardedRef, wrapperRef],
     props: mergeProps(restProps, {
       onBlur,
@@ -41585,8 +41585,8 @@ if (typeof process === "undefined" || true) {
   registerStyle66("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 }
 var resets_default15 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-var DEFAULT_RENDER3 = (props) => /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
-var Root12 = (0, import_element123.forwardRef)(function Root22({ className, render: render4 = DEFAULT_RENDER3, ...restProps }, ref) {
+var DEFAULT_RENDER4 = (props) => /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
+var Root12 = (0, import_element123.forwardRef)(function Root22({ className, render: render4 = DEFAULT_RENDER4, ...restProps }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
     index_parts_exports7.Root,
     {
@@ -59335,7 +59335,7 @@ function ValidatedDateControl({
       setIsTouched(true);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)("div", { onBlur, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(Stack, { direction: "column", gap: "sm", onBlur, children: [
     children,
     customValidity && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
       ValidityIndicator,

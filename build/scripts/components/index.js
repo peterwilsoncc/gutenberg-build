@@ -43719,7 +43719,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/draggable/index.mjs
   var import_compose53 = __toESM(require_compose(), 1);
-  var import_element132 = __toESM(require_element(), 1);
+  var import_element133 = __toESM(require_element(), 1);
 
   // node_modules/@base-ui/utils/useRefWithInit.mjs
   var React11 = __toESM(require_react(), 1);
@@ -44348,13 +44348,8 @@ This message will only show in development mode. It won't appear in production. 
     );
   });
 
-  // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
-  var import_i18n48 = __toESM(require_i18n(), 1);
-  var import_element131 = __toESM(require_element(), 1);
-
-  // packages/ui/build-module/spinner/spinner.mjs
+  // packages/ui/build-module/stack/stack.mjs
   var import_element130 = __toESM(require_element(), 1);
-  var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE33 = "data-wp-hash";
   function getRuntime33() {
     const globalScope = globalThis;
@@ -44436,48 +44431,41 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle32("bbbecfe373", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.ab4d64c07c0ba587__spinner{background-color:transparent;display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}.a7654e10245bb7d2__indicator,.dc51f80c84b35fe2__track{fill:transparent;stroke-width:1.5px}.dc51f80c84b35fe2__track{stroke:var(--wpds-color-background-track-neutral,#dbdbdb)}.a7654e10245bb7d2__indicator{stroke:var(--wpds-color-background-thumb-brand,var(--wp-admin-theme-color,#3858e9));stroke-linecap:round;animation:_02322d973909703c__spinner-spin 1.4s linear infinite both;transform-origin:50% 50%}@keyframes _02322d973909703c__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
+    registerStyle32("32aba35fe1", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._19ce0419607e1896__stack{display:flex}}}");
   }
-  var style_default = { "spinner": "ab4d64c07c0ba587__spinner", "track": "dc51f80c84b35fe2__track", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
-  var Spinner2 = (0, import_element130.forwardRef)(
-    function Spinner22({ className, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
-        "svg",
-        {
-          className: clsx_default(style_default.spinner, className),
-          viewBox: "0 0 100 100",
-          xmlns: "http://www.w3.org/2000/svg",
-          role: "presentation",
-          focusable: "false",
-          ...props,
-          ref,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
-              "circle",
-              {
-                className: style_default.track,
-                cx: "50",
-                cy: "50",
-                r: "50",
-                vectorEffect: "non-scaling-stroke"
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
-              "path",
-              {
-                className: style_default.indicator,
-                d: "m 50 0 a 50 50 0 0 1 50 50",
-                vectorEffect: "non-scaling-stroke"
-              }
-            )
-          ]
-        }
-      );
-    }
-  );
+  var style_default = { "stack": "_19ce0419607e1896__stack" };
+  var gapTokens = {
+    xs: "var(--wpds-dimension-gap-xs, 4px)",
+    sm: "var(--wpds-dimension-gap-sm, 8px)",
+    md: "var(--wpds-dimension-gap-md, 12px)",
+    lg: "var(--wpds-dimension-gap-lg, 16px)",
+    xl: "var(--wpds-dimension-gap-xl, 24px)",
+    "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
+    "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
+  };
+  var Stack = (0, import_element130.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render, ...props }, ref) {
+    const style2 = {
+      gap: gap && gapTokens[gap],
+      alignItems: align,
+      justifyContent: justify,
+      flexDirection: direction,
+      flexWrap: wrap
+    };
+    const element = useRender({
+      render,
+      ref,
+      props: mergeProps3(props, { style: style2, className: style_default.stack })
+    });
+    return element;
+  });
 
-  // packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
-  var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
+  // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
+  var import_i18n48 = __toESM(require_i18n(), 1);
+  var import_element132 = __toESM(require_element(), 1);
+
+  // packages/ui/build-module/spinner/spinner.mjs
+  var import_element131 = __toESM(require_element(), 1);
+  var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE34 = "data-wp-hash";
   function getRuntime34() {
     const globalScope = globalThis;
@@ -44559,13 +44547,136 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle33("31951dd8b7", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
+    registerStyle33("bbbecfe373", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.ab4d64c07c0ba587__spinner{background-color:transparent;display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}.a7654e10245bb7d2__indicator,.dc51f80c84b35fe2__track{fill:transparent;stroke-width:1.5px}.dc51f80c84b35fe2__track{stroke:var(--wpds-color-background-track-neutral,#dbdbdb)}.a7654e10245bb7d2__indicator{stroke:var(--wpds-color-background-thumb-brand,var(--wp-admin-theme-color,#3858e9));stroke-linecap:round;animation:_02322d973909703c__spinner-spin 1.4s linear infinite both;transform-origin:50% 50%}@keyframes _02322d973909703c__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
+  }
+  var style_default2 = { "spinner": "ab4d64c07c0ba587__spinner", "track": "dc51f80c84b35fe2__track", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
+  var Spinner2 = (0, import_element131.forwardRef)(
+    function Spinner22({ className, ...props }, ref) {
+      return /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
+        "svg",
+        {
+          className: clsx_default(style_default2.spinner, className),
+          viewBox: "0 0 100 100",
+          xmlns: "http://www.w3.org/2000/svg",
+          role: "presentation",
+          focusable: "false",
+          ...props,
+          ref,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
+              "circle",
+              {
+                className: style_default2.track,
+                cx: "50",
+                cy: "50",
+                r: "50",
+                vectorEffect: "non-scaling-stroke"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
+              "path",
+              {
+                className: style_default2.indicator,
+                d: "m 50 0 a 50 50 0 0 1 50 50",
+                vectorEffect: "non-scaling-stroke"
+              }
+            )
+          ]
+        }
+      );
+    }
+  );
+
+  // packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
+  var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE35 = "data-wp-hash";
+  function getRuntime35() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument35(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash35(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(
+      `style[${STYLE_HASH_ATTRIBUTE35}]`
+    )) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE35) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle35(targetDocument, hash2, css3) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime35();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash35(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE35, hash2);
+    style2.appendChild(targetDocument.createTextNode(css3));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument35(targetDocument) {
+    const runtime = getRuntime35();
+    runtime.documents.set(
+      targetDocument,
+      (runtime.documents.get(targetDocument) ?? 0) + 1
+    );
+    for (const [hash2, css3] of runtime.styles) {
+      injectStyle35(targetDocument, hash2, css3);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle34(hash2, css3) {
+    const runtime = getRuntime35();
+    runtime.styles.set(hash2, css3);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle35(targetDocument, hash2, css3);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle34("31951dd8b7", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
   }
   var global_css_defense_default = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
   if (typeof process === "undefined" || true) {
-    registerStyle33("d7b0469ef4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7a7ac88e306348e7__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:var(--wpds-dimension-gap-sm,8px) 0 0;align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);margin-block:var(--wpds-dimension-gap-sm,8px) 0;margin-inline:0;@media not (prefers-reduced-motion){animation:_48722cc5dd090ce4__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._57a3bbbfbe38a5c6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._9e944dc198aac10b__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}.e482806667437c6a__indicator-icon{flex-shrink:0}._6e46434cc23019d2__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _48722cc5dd090ce4__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}');
+    registerStyle34("d11816833c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7a7ac88e306348e7__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);@media not (prefers-reduced-motion){animation:_48722cc5dd090ce4__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._57a3bbbfbe38a5c6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._9e944dc198aac10b__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}.e482806667437c6a__indicator-icon{flex-shrink:0}._6e46434cc23019d2__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _48722cc5dd090ce4__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}');
   }
-  var style_default2 = { "indicator": "_7a7ac88e306348e7__indicator", "indicator-jump": "_48722cc5dd090ce4__indicator-jump", "is-invalid": "_57a3bbbfbe38a5c6__is-invalid", "is-valid": "_9e944dc198aac10b__is-valid", "indicator-icon": "e482806667437c6a__indicator-icon", "indicator-spinner": "_6e46434cc23019d2__indicator-spinner" };
+  var style_default3 = { "indicator": "_7a7ac88e306348e7__indicator", "indicator-jump": "_48722cc5dd090ce4__indicator-jump", "is-invalid": "_57a3bbbfbe38a5c6__is-invalid", "is-valid": "_9e944dc198aac10b__is-valid", "indicator-icon": "e482806667437c6a__indicator-icon", "indicator-spinner": "_6e46434cc23019d2__indicator-spinner" };
   var ICON = {
     valid: published_default,
     invalid: error_default
@@ -44581,14 +44692,14 @@ This message will only show in development mode. It won't appear in production. 
         id: id3,
         className: clsx_default(
           global_css_defense_default.p,
-          style_default2.indicator,
-          style_default2[`is-${type}`]
+          style_default3.indicator,
+          style_default3[`is-${type}`]
         ),
         children: [
-          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(Spinner2, { className: style_default2["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
+          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(Spinner2, { className: style_default3["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
             Icon2,
             {
-              className: style_default2["indicator-icon"],
+              className: style_default3["indicator-icon"],
               icon: ICON[type],
               size: 16,
               fill: "currentColor"
@@ -44602,6 +44713,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
   var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
+  var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
   function appendRequiredIndicator(label, required, markWhenOptional) {
     let suffix;
     if (required && !markWhenOptional) {
@@ -44622,21 +44734,21 @@ This message will only show in development mode. It won't appear in production. 
     ] });
   }
   var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
-  var ControlWithError = (0, import_element131.forwardRef)(function ControlWithError2({
+  var ControlWithError = (0, import_element132.forwardRef)(function ControlWithError2({
     required,
     markWhenOptional,
     customValidity,
     getValidityTarget,
     children,
-    render,
+    render = DEFAULT_RENDER,
     ...restProps
   }, forwardedRef) {
-    const [errorMessage, setErrorMessage] = (0, import_element131.useState)();
-    const [statusMessage, setStatusMessage] = (0, import_element131.useState)();
-    const [showMessage, setShowMessage] = (0, import_element131.useState)(false);
-    const [isTouched, setIsTouched] = (0, import_element131.useState)(false);
-    const wrapperRef = (0, import_element131.useRef)(null);
-    (0, import_element131.useEffect)(() => {
+    const [errorMessage, setErrorMessage] = (0, import_element132.useState)();
+    const [statusMessage, setStatusMessage] = (0, import_element132.useState)();
+    const [showMessage, setShowMessage] = (0, import_element132.useState)(false);
+    const [isTouched, setIsTouched] = (0, import_element132.useState)(false);
+    const wrapperRef = (0, import_element132.useRef)(null);
+    (0, import_element132.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const handler = () => {
         if (customValidity?.type !== "validating") {
@@ -44648,7 +44760,7 @@ This message will only show in development mode. It won't appear in production. 
       validityTarget?.addEventListener("invalid", handler);
       return () => validityTarget?.removeEventListener("invalid", handler);
     }, [customValidity?.type, getValidityTarget]);
-    (0, import_element131.useEffect)(() => {
+    (0, import_element132.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {
         event.preventDefault();
@@ -44682,7 +44794,7 @@ This message will only show in development mode. It won't appear in production. 
         );
       };
     }, [getValidityTarget]);
-    (0, import_element131.useEffect)(() => {
+    (0, import_element132.useEffect)(() => {
       const validityTarget = getValidityTarget();
       if (!customValidity?.type) {
         validityTarget?.setCustomValidity("");
@@ -44719,7 +44831,7 @@ This message will only show in development mode. It won't appear in production. 
         }
       }
     }, [customValidity, getValidityTarget]);
-    (0, import_element131.useEffect)(() => {
+    (0, import_element132.useEffect)(() => {
       if (!isTouched || showMessage) {
         return;
       }
@@ -44740,7 +44852,7 @@ This message will only show in development mode. It won't appear in production. 
         getValidityTarget()?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       }
     };
-    const messageId = (0, import_element131.useId)();
+    const messageId = (0, import_element132.useId)();
     const message = (() => {
       if (errorMessage) {
         return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
@@ -44765,7 +44877,7 @@ This message will only show in development mode. It won't appear in production. 
       return null;
     })();
     const visibleMessage = showMessage ? message : null;
-    (0, import_element131.useEffect)(() => {
+    (0, import_element132.useEffect)(() => {
       const target = getValidityTarget();
       if (!target) {
         return;
@@ -44786,12 +44898,11 @@ This message will only show in development mode. It won't appear in production. 
     }, [visibleMessage, messageId, getValidityTarget]);
     return useRender({
       render,
-      defaultTagName: "div",
       ref: [forwardedRef, wrapperRef],
       props: mergeProps3(restProps, {
         onBlur,
         children: /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(import_jsx_runtime208.Fragment, { children: [
-          (0, import_element131.cloneElement)(children, {
+          (0, import_element132.cloneElement)(children, {
             label: appendRequiredIndicator(
               children.props.label,
               required,
@@ -44807,8 +44918,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/draggable/index.mjs
   var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE35 = "data-wp-hash";
-  function getRuntime35() {
+  var STYLE_HASH_ATTRIBUTE36 = "data-wp-hash";
+  function getRuntime36() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -44819,26 +44930,26 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument35(document);
+      registerDocument36(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash35(targetDocument, hash2) {
+  function documentContainsStyleHash36(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE35}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE35) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE36}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE36) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle35(targetDocument, hash2, css3) {
+  function injectStyle36(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime35();
+    const runtime = getRuntime36();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -44847,21 +44958,21 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash35(targetDocument, hash2)) {
+    if (documentContainsStyleHash36(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE35, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE36, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument35(targetDocument) {
-    const runtime = getRuntime35();
+  function registerDocument36(targetDocument) {
+    const runtime = getRuntime36();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle35(targetDocument, hash2, css3);
+      injectStyle36(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -44875,15 +44986,15 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle34(hash2, css3) {
-    const runtime = getRuntime35();
+  function registerStyle35(hash2, css3) {
+    const runtime = getRuntime36();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle35(targetDocument, hash2, css3);
+      injectStyle36(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle34("e7e88c1781", "._3476c2e530687f96__invisible-drag-image{height:50px;left:-1000px;position:fixed;width:50px}._6f00e51ab7574306__clone{background:transparent;padding:0;pointer-events:none;position:fixed}._6f00e51ab7574306__clone:not(._664ecd37377558df__is-in-compat-slot){z-index:1000000000}body.is-dragging-components-draggable{cursor:move;cursor:grabbing!important}");
+    registerStyle35("e7e88c1781", "._3476c2e530687f96__invisible-drag-image{height:50px;left:-1000px;position:fixed;width:50px}._6f00e51ab7574306__clone{background:transparent;padding:0;pointer-events:none;position:fixed}._6f00e51ab7574306__clone:not(._664ecd37377558df__is-in-compat-slot){z-index:1000000000}body.is-dragging-components-draggable{cursor:move;cursor:grabbing!important}");
   }
   var style_module_default31 = { "invisible-drag-image": "_3476c2e530687f96__invisible-drag-image", "clone": "_6f00e51ab7574306__clone", "is-in-compat-slot": "_664ecd37377558df__is-in-compat-slot" };
   var dragImageClasses = [style_module_default31["invisible-drag-image"], "components-draggable__invisible-drag-image"].filter(Boolean);
@@ -44902,8 +45013,8 @@ This message will only show in development mode. It won't appear in production. 
     __experimentalTransferDataType: transferDataType = "text",
     __experimentalDragComponent: dragComponent
   }) {
-    const dragComponentRef = (0, import_element132.useRef)(null);
-    const cleanupRef = (0, import_element132.useRef)(() => {
+    const dragComponentRef = (0, import_element133.useRef)(null);
+    const cleanupRef = (0, import_element133.useRef)(() => {
     });
     function end(event) {
       event.preventDefault();
@@ -45002,7 +45113,7 @@ This message will only show in development mode. It won't appear in production. 
         ownerDocument.removeEventListener("dragover", throttledDragOver);
       };
     }
-    (0, import_element132.useEffect)(() => () => {
+    (0, import_element133.useEffect)(() => () => {
       cleanupRef.current();
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime209.jsxs)(import_jsx_runtime209.Fragment, {
@@ -45023,7 +45134,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/drop-zone/index.mjs
   var import_i18n49 = __toESM(require_i18n(), 1);
-  var import_element133 = __toESM(require_element(), 1);
+  var import_element134 = __toESM(require_element(), 1);
   var import_dom7 = __toESM(require_dom(), 1);
   var import_compose54 = __toESM(require_compose(), 1);
   var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
@@ -45037,9 +45148,9 @@ This message will only show in development mode. It won't appear in production. 
     isEligible = () => true,
     ...restProps
   }) {
-    const [isDraggingOverDocument, setIsDraggingOverDocument] = (0, import_element133.useState)();
-    const [isDraggingOverElement, setIsDraggingOverElement] = (0, import_element133.useState)();
-    const [isActive, setIsActive] = (0, import_element133.useState)();
+    const [isDraggingOverDocument, setIsDraggingOverDocument] = (0, import_element134.useState)();
+    const [isDraggingOverElement, setIsDraggingOverElement] = (0, import_element134.useState)();
+    const [isActive, setIsActive] = (0, import_element134.useState)();
     const ref = (0, import_compose54.__experimentalUseDropZone)({
       onDrop(event) {
         if (!event.dataTransfer) {
@@ -45124,7 +45235,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/external-link/index.mjs
   var import_i18n50 = __toESM(require_i18n(), 1);
-  var import_element134 = __toESM(require_element(), 1);
+  var import_element135 = __toESM(require_element(), 1);
   var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedExternalLink(props, ref) {
     const {
@@ -45170,13 +45281,13 @@ This message will only show in development mode. It won't appear in production. 
       })
     );
   }
-  var ExternalLink = (0, import_element134.forwardRef)(UnforwardedExternalLink);
+  var ExternalLink = (0, import_element135.forwardRef)(UnforwardedExternalLink);
   ExternalLink.displayName = "ExternalLink";
   var external_link_default = ExternalLink;
 
   // packages/components/build-module/focal-point-picker/index.mjs
   var import_i18n52 = __toESM(require_i18n(), 1);
-  var import_element135 = __toESM(require_element(), 1);
+  var import_element136 = __toESM(require_element(), 1);
   var import_compose55 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/focal-point-picker/controls.mjs
@@ -45507,8 +45618,8 @@ This message will only show in development mode. It won't appear in production. 
     },
     ...restProps
   }) {
-    const [point, setPoint] = (0, import_element135.useState)(valueProp);
-    const [showGridOverlay, setShowGridOverlay] = (0, import_element135.useState)(false);
+    const [point, setPoint] = (0, import_element136.useState)(valueProp);
+    const [showGridOverlay, setShowGridOverlay] = (0, import_element136.useState)(false);
     const {
       startDrag,
       endDrag,
@@ -45541,9 +45652,9 @@ This message will only show in development mode. It won't appear in production. 
       x: x2,
       y: y3
     } = isDragging2 ? point : valueProp;
-    const dragAreaRef = (0, import_element135.useRef)(null);
-    const [bounds, setBounds] = (0, import_element135.useState)(INITIAL_BOUNDS);
-    const refUpdateBounds = (0, import_element135.useRef)(() => {
+    const dragAreaRef = (0, import_element136.useRef)(null);
+    const [bounds, setBounds] = (0, import_element136.useState)(INITIAL_BOUNDS);
+    const refUpdateBounds = (0, import_element136.useRef)(() => {
       if (!dragAreaRef.current) {
         return;
       }
@@ -45558,7 +45669,7 @@ This message will only show in development mode. It won't appear in production. 
         ...INITIAL_BOUNDS
       });
     });
-    (0, import_element135.useEffect)(() => {
+    (0, import_element136.useEffect)(() => {
       const updateBounds = refUpdateBounds.current;
       if (!dragAreaRef.current) {
         return;
@@ -45708,7 +45819,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/font-size-picker/index.mjs
   var import_i18n56 = __toESM(require_i18n(), 1);
-  var import_element137 = __toESM(require_element(), 1);
+  var import_element138 = __toESM(require_element(), 1);
   var import_compose57 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/font-size-picker/styles.mjs
@@ -45762,7 +45873,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/font-size-picker/font-size-picker-select.mjs
   var import_i18n53 = __toESM(require_i18n(), 1);
-  var import_element136 = __toESM(require_element(), 1);
+  var import_element137 = __toESM(require_element(), 1);
 
   // packages/components/build-module/font-size-picker/utils.mjs
   function isSimpleCssValue(value) {
@@ -45802,7 +45913,7 @@ This message will only show in development mode. It won't appear in production. 
         hint
       };
     })];
-    const selectedOption = (0, import_element136.useMemo)(() => {
+    const selectedOption = (0, import_element137.useMemo)(() => {
       if (value === void 0) {
         return DEFAULT_OPTION;
       }
@@ -45933,7 +46044,7 @@ This message will only show in development mode. It won't appear in production. 
       return fontSizes.find((fontSize) => fontSize.size === value);
     })();
     const isCustomValue2 = !!value && !selectedFontSize;
-    const [userRequestedCustom, setUserRequestedCustom] = (0, import_element137.useState)(isCustomValue2);
+    const [userRequestedCustom, setUserRequestedCustom] = (0, import_element138.useState)(isCustomValue2);
     const resolvedValueForControls = valueMode === "slug" ? selectedFontSize?.size : value;
     let currentPickerType;
     if (!disableCustomFontSizes && userRequestedCustom) {
@@ -46055,12 +46166,12 @@ This message will only show in development mode. It won't appear in production. 
       })]
     });
   };
-  var FontSizePicker = (0, import_element137.forwardRef)(UnforwardedFontSizePicker);
+  var FontSizePicker = (0, import_element138.forwardRef)(UnforwardedFontSizePicker);
   FontSizePicker.displayName = "FontSizePicker";
   var font_size_picker_default = FontSizePicker;
 
   // packages/components/build-module/form-file-upload/index.mjs
-  var import_element138 = __toESM(require_element(), 1);
+  var import_element139 = __toESM(require_element(), 1);
   var import_jsx_runtime221 = __toESM(require_jsx_runtime(), 1);
   function FormFileUpload({
     accept,
@@ -46072,7 +46183,7 @@ This message will only show in development mode. It won't appear in production. 
     __next40pxDefaultSize: _next40pxDefaultSize,
     ...props
   }) {
-    const ref = (0, import_element138.useRef)(null);
+    const ref = (0, import_element139.useRef)(null);
     const openFileDialog = () => {
       ref.current?.click();
     };
@@ -46104,7 +46215,7 @@ This message will only show in development mode. It won't appear in production. 
   var form_file_upload_default = FormFileUpload;
 
   // packages/components/build-module/form-toggle/index.mjs
-  var import_element139 = __toESM(require_element(), 1);
+  var import_element140 = __toESM(require_element(), 1);
   var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
   var noop16 = () => {
   };
@@ -46144,12 +46255,12 @@ This message will only show in development mode. It won't appear in production. 
       })]
     });
   }
-  var FormToggle = (0, import_element139.forwardRef)(UnforwardedFormToggle);
+  var FormToggle = (0, import_element140.forwardRef)(UnforwardedFormToggle);
   FormToggle.displayName = "FormToggle";
   var form_toggle_default = FormToggle;
 
   // packages/components/build-module/form-token-field/index.mjs
-  var import_element140 = __toESM(require_element(), 1);
+  var import_element141 = __toESM(require_element(), 1);
   var import_i18n58 = __toESM(require_i18n(), 1);
   var import_compose59 = __toESM(require_compose(), 1);
   var import_a11y6 = __toESM(require_a11y(), 1);
@@ -46225,8 +46336,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/form-token-field/index.mjs
   var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE36 = "data-wp-hash";
-  function getRuntime36() {
+  var STYLE_HASH_ATTRIBUTE37 = "data-wp-hash";
+  function getRuntime37() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -46237,26 +46348,26 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument36(document);
+      registerDocument37(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash36(targetDocument, hash2) {
+  function documentContainsStyleHash37(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE36}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE36) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE37}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE37) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle36(targetDocument, hash2, css3) {
+  function injectStyle37(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime36();
+    const runtime = getRuntime37();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -46265,21 +46376,21 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash36(targetDocument, hash2)) {
+    if (documentContainsStyleHash37(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE36, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE37, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument36(targetDocument) {
-    const runtime = getRuntime36();
+  function registerDocument37(targetDocument) {
+    const runtime = getRuntime37();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle36(targetDocument, hash2, css3);
+      injectStyle37(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -46293,15 +46404,15 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle35(hash2, css3) {
-    const runtime = getRuntime36();
+  function registerStyle36(hash2, css3) {
+    const runtime = getRuntime37();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle36(targetDocument, hash2, css3);
+      injectStyle37(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle35("f9ae5dc19e", ".df878b202c3b3cb7__tokens-and-input{box-sizing:border-box;padding:7px}.df878b202c3b3cb7__tokens-and-input *,.df878b202c3b3cb7__tokens-and-input :after,.df878b202c3b3cb7__tokens-and-input :before{box-sizing:inherit}");
+    registerStyle36("f9ae5dc19e", ".df878b202c3b3cb7__tokens-and-input{box-sizing:border-box;padding:7px}.df878b202c3b3cb7__tokens-and-input *,.df878b202c3b3cb7__tokens-and-input :after,.df878b202c3b3cb7__tokens-and-input :before{box-sizing:inherit}");
   }
   var style_module_default32 = { "tokens-and-input": "df878b202c3b3cb7__tokens-and-input" };
   var identity3 = (value) => value;
@@ -46353,32 +46464,32 @@ This message will only show in development mode. It won't appear in production. 
       }
     }
     const instanceId = (0, import_compose59.useInstanceId)(FormTokenField);
-    const [incompleteTokenValue, setIncompleteTokenValue] = (0, import_element140.useState)("");
-    const [inputOffsetFromEnd, setInputOffsetFromEnd] = (0, import_element140.useState)(0);
-    const [isActive, setIsActive] = (0, import_element140.useState)(false);
-    const [isExpanded, setIsExpanded] = (0, import_element140.useState)(false);
-    const [selectedSuggestionIndex, setSelectedSuggestionIndex] = (0, import_element140.useState)(-1);
-    const [selectedSuggestionScroll, setSelectedSuggestionScroll] = (0, import_element140.useState)(false);
+    const [incompleteTokenValue, setIncompleteTokenValue] = (0, import_element141.useState)("");
+    const [inputOffsetFromEnd, setInputOffsetFromEnd] = (0, import_element141.useState)(0);
+    const [isActive, setIsActive] = (0, import_element141.useState)(false);
+    const [isExpanded, setIsExpanded] = (0, import_element141.useState)(false);
+    const [selectedSuggestionIndex, setSelectedSuggestionIndex] = (0, import_element141.useState)(-1);
+    const [selectedSuggestionScroll, setSelectedSuggestionScroll] = (0, import_element141.useState)(false);
     const prevSuggestions = (0, import_compose59.usePrevious)(suggestions);
     const prevValue = (0, import_compose59.usePrevious)(value);
-    const input = (0, import_element140.useRef)(null);
-    const tokensAndInput = (0, import_element140.useRef)(null);
+    const input = (0, import_element141.useRef)(null);
+    const tokensAndInput = (0, import_element141.useRef)(null);
     const debouncedSpeak = (0, import_compose59.useDebounce)(import_a11y6.speak, 500);
-    (0, import_element140.useEffect)(() => {
+    (0, import_element141.useEffect)(() => {
       if (isActive && !hasFocus2()) {
         focus4();
       }
     }, [isActive]);
-    (0, import_element140.useEffect)(() => {
+    (0, import_element141.useEffect)(() => {
       const suggestionsDidUpdate = !(0, import_is_shallow_equal2.isShallowEqual)(suggestions, prevSuggestions || []);
       if (suggestionsDidUpdate || value !== prevValue) {
         updateSuggestions(suggestionsDidUpdate);
       }
     }, [suggestions, prevSuggestions, value, prevValue]);
-    (0, import_element140.useEffect)(() => {
+    (0, import_element141.useEffect)(() => {
       updateSuggestions();
     }, [incompleteTokenValue]);
-    (0, import_element140.useEffect)(() => {
+    (0, import_element141.useEffect)(() => {
       updateSuggestions();
     }, [__experimentalAutoSelectFirstMatch]);
     if (disabled && isActive) {
@@ -46853,7 +46964,7 @@ This message will only show in development mode. It won't appear in production. 
   var form_token_field_default = FormTokenField;
 
   // packages/components/build-module/guide/index.mjs
-  var import_element141 = __toESM(require_element(), 1);
+  var import_element142 = __toESM(require_element(), 1);
   var import_deprecated19 = __toESM(require_deprecated(), 1);
   var import_i18n60 = __toESM(require_i18n(), 1);
 
@@ -46917,24 +47028,24 @@ This message will only show in development mode. It won't appear in production. 
     onFinish,
     pages = []
   }) {
-    const ref = (0, import_element141.useRef)(null);
-    const [currentPage, setCurrentPage] = (0, import_element141.useState)(0);
-    (0, import_element141.useEffect)(() => {
+    const ref = (0, import_element142.useRef)(null);
+    const [currentPage, setCurrentPage] = (0, import_element142.useState)(0);
+    (0, import_element142.useEffect)(() => {
       const frame2 = ref.current?.querySelector(".components-guide");
       if (frame2 instanceof HTMLElement) {
         frame2.focus();
       }
     }, [currentPage]);
-    (0, import_element141.useEffect)(() => {
-      if (import_element141.Children.count(children)) {
+    (0, import_element142.useEffect)(() => {
+      if (import_element142.Children.count(children)) {
         (0, import_deprecated19.default)("Passing children to <Guide>", {
           since: "5.5",
           alternative: "the `pages` prop"
         });
       }
     }, [children]);
-    if (import_element141.Children.count(children)) {
-      pages = import_element141.Children.map(children, (child) => ({
+    if (import_element142.Children.count(children)) {
+      pages = import_element142.Children.map(children, (child) => ({
         content: child
       })) ?? [];
     }
@@ -47005,11 +47116,11 @@ This message will only show in development mode. It won't appear in production. 
   var guide_default = Guide;
 
   // packages/components/build-module/guide/page.mjs
-  var import_element142 = __toESM(require_element(), 1);
+  var import_element143 = __toESM(require_element(), 1);
   var import_deprecated20 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
   function GuidePage(props) {
-    (0, import_element142.useEffect)(() => {
+    (0, import_element143.useEffect)(() => {
       (0, import_deprecated20.default)("<GuidePage>", {
         since: "5.5",
         alternative: "the `pages` prop in <Guide>"
@@ -47022,7 +47133,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/button/deprecated.mjs
   var import_deprecated21 = __toESM(require_deprecated(), 1);
-  var import_element143 = __toESM(require_element(), 1);
+  var import_element144 = __toESM(require_element(), 1);
   var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedIconButton({
     label,
@@ -47049,10 +47160,10 @@ This message will only show in development mode. It won't appear in production. 
       })
     );
   }
-  var deprecated_default = (0, import_element143.forwardRef)(UnforwardedIconButton);
+  var deprecated_default = (0, import_element144.forwardRef)(UnforwardedIconButton);
 
   // packages/components/build-module/keyboard-shortcuts/index.mjs
-  var import_element144 = __toESM(require_element(), 1);
+  var import_element145 = __toESM(require_element(), 1);
   var import_compose60 = __toESM(require_compose(), 1);
   var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
   function KeyboardShortcut({
@@ -47075,7 +47186,7 @@ This message will only show in development mode. It won't appear in production. 
     bindGlobal,
     eventName
   }) {
-    const target = (0, import_element144.useRef)(null);
+    const target = (0, import_element145.useRef)(null);
     const element = Object.entries(shortcuts ?? {}).map(([shortcut, callback]) => /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(KeyboardShortcut, {
       shortcut,
       callback,
@@ -47083,7 +47194,7 @@ This message will only show in development mode. It won't appear in production. 
       eventName,
       target
     }, shortcut));
-    if (!import_element144.Children.count(children)) {
+    if (!import_element145.Children.count(children)) {
       return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(import_jsx_runtime230.Fragment, {
         children: element
       });
@@ -47096,7 +47207,7 @@ This message will only show in development mode. It won't appear in production. 
   var keyboard_shortcuts_default = KeyboardShortcuts;
 
   // packages/components/build-module/menu-group/index.mjs
-  var import_element145 = __toESM(require_element(), 1);
+  var import_element146 = __toESM(require_element(), 1);
   var import_compose61 = __toESM(require_compose(), 1);
   var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
   function MenuGroup3(props) {
@@ -47107,7 +47218,7 @@ This message will only show in development mode. It won't appear in production. 
       hideSeparator
     } = props;
     const instanceId = (0, import_compose61.useInstanceId)(MenuGroup3);
-    if (!import_element145.Children.count(children)) {
+    if (!import_element146.Children.count(children)) {
       return null;
     }
     const labelId = `components-menu-group-label-${instanceId}`;
@@ -47131,7 +47242,7 @@ This message will only show in development mode. It won't appear in production. 
   var menu_group_default = MenuGroup3;
 
   // packages/components/build-module/menu-item/index.mjs
-  var import_element146 = __toESM(require_element(), 1);
+  var import_element147 = __toESM(require_element(), 1);
   var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedMenuItem(props, ref) {
     let {
@@ -47160,7 +47271,7 @@ This message will only show in development mode. It won't appear in production. 
       });
     }
     if (icon && typeof icon !== "string") {
-      icon = (0, import_element146.cloneElement)(icon, {
+      icon = (0, import_element147.cloneElement)(icon, {
         className: clsx_default("components-menu-items__item-icon", {
           "has-icon-right": iconPosition === "right"
         })
@@ -47186,7 +47297,7 @@ This message will only show in development mode. It won't appear in production. 
       }), suffix]
     });
   }
-  var MenuItem3 = (0, import_element146.forwardRef)(UnforwardedMenuItem);
+  var MenuItem3 = (0, import_element147.forwardRef)(UnforwardedMenuItem);
   MenuItem3.displayName = "MenuItem";
   var menu_item_default = MenuItem3;
 
@@ -47228,7 +47339,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/navigator/navigator/component.mjs
   var import_deprecated22 = __toESM(require_deprecated(), 1);
-  var import_element148 = __toESM(require_element(), 1);
+  var import_element149 = __toESM(require_element(), 1);
   var import_is_shallow_equal3 = __toESM(require_is_shallow_equal(), 1);
   var import_warning7 = __toESM(require_warning(), 1);
 
@@ -47585,7 +47696,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/navigator/context.mjs
-  var import_element147 = __toESM(require_element(), 1);
+  var import_element148 = __toESM(require_element(), 1);
   var initialContextValue = {
     location: {},
     goTo: () => {
@@ -47600,7 +47711,7 @@ This message will only show in development mode. It won't appear in production. 
     },
     params: {}
   };
-  var NavigatorContext = (0, import_element147.createContext)(initialContextValue);
+  var NavigatorContext = (0, import_element148.createContext)(initialContextValue);
   NavigatorContext.displayName = "NavigatorContext";
 
   // packages/components/build-module/navigator/styles.mjs
@@ -47837,7 +47948,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       className,
       ...otherProps
     } = useContextSystem(props, "Navigator");
-    const [routerState, dispatch] = (0, import_element148.useReducer)(routerReducer, initialPathProp, (path) => ({
+    const [routerState, dispatch] = (0, import_element149.useReducer)(routerReducer, initialPathProp, (path) => ({
       screens: [],
       currentLocation: {
         path,
@@ -47847,7 +47958,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       focusSelectors: /* @__PURE__ */ new Map(),
       initialPath: initialPathProp
     }));
-    const methods = (0, import_element148.useMemo)(() => ({
+    const methods = (0, import_element149.useMemo)(() => ({
       // Note: calling goBack calls `goToParent` internally, as it was established
       // that `goBack` should behave like `goToParent`, and `goToParent` should
       // be marked as deprecated.
@@ -47883,14 +47994,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       currentLocation,
       matchedPath
     } = routerState;
-    const navigatorContextValue = (0, import_element148.useMemo)(() => ({
+    const navigatorContextValue = (0, import_element149.useMemo)(() => ({
       location: currentLocation,
       params: matchedPath?.params ?? {},
       match: matchedPath?.id,
       ...methods
     }), [currentLocation, matchedPath, methods]);
     const cx2 = useCx();
-    const classes = (0, import_element148.useMemo)(() => cx2(navigatorWrapper, className), [className, cx2]);
+    const classes = (0, import_element149.useMemo)(() => cx2(navigatorWrapper, className), [className, cx2]);
     return /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(component_default, {
       ref: forwardedRef,
       className: classes,
@@ -47905,13 +48016,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/navigator/navigator-screen/component.mjs
   var import_dom8 = __toESM(require_dom(), 1);
-  var import_element150 = __toESM(require_element(), 1);
+  var import_element151 = __toESM(require_element(), 1);
   var import_compose63 = __toESM(require_compose(), 1);
   var import_escape_html = __toESM(require_escape_html(), 1);
   var import_warning8 = __toESM(require_warning(), 1);
 
   // packages/components/build-module/navigator/navigator-screen/use-screen-animate-presence.mjs
-  var import_element149 = __toESM(require_element(), 1);
+  var import_element150 = __toESM(require_element(), 1);
   var import_compose62 = __toESM(require_compose(), 1);
   var import_i18n61 = __toESM(require_i18n(), 1);
   var ANIMATION_TIMEOUT_MARGIN = 1.2;
@@ -47925,10 +48036,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }) {
     const isRTL18 = (0, import_i18n61.isRTL)();
     const prefersReducedMotion2 = (0, import_compose62.useReducedMotion)();
-    const [animationStatus, setAnimationStatus] = (0, import_element149.useState)("INITIAL");
+    const [animationStatus, setAnimationStatus] = (0, import_element150.useState)("INITIAL");
     const becameSelected = animationStatus !== "ANIMATING_IN" && animationStatus !== "IN" && isMatch;
     const becameUnselected = animationStatus !== "ANIMATING_OUT" && animationStatus !== "OUT" && !isMatch;
-    (0, import_element149.useLayoutEffect)(() => {
+    (0, import_element150.useLayoutEffect)(() => {
       if (becameSelected) {
         setAnimationStatus(skipAnimation || prefersReducedMotion2 ? "IN" : "ANIMATING_IN");
       } else if (becameUnselected) {
@@ -47944,7 +48055,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } else if (isAnimatingOut) {
       animationType = "out";
     }
-    const onScreenAnimationEnd = (0, import_element149.useCallback)((e3) => {
+    const onScreenAnimationEnd = (0, import_element150.useCallback)((e3) => {
       onAnimationEnd?.(e3);
       if (isExitAnimation(animationDirection, animationStatus, e3.animationName)) {
         setAnimationStatus("OUT");
@@ -47952,7 +48063,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         setAnimationStatus("IN");
       }
     }, [onAnimationEnd, animationStatus, animationDirection]);
-    (0, import_element149.useEffect)(() => {
+    (0, import_element150.useEffect)(() => {
       let animationTimeout;
       if (isAnimatingOut) {
         animationTimeout = window.setTimeout(() => {
@@ -47992,7 +48103,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!/^\//.test(props.path)) {
       true ? (0, import_warning8.default)("wp.components.Navigator.Screen: the `path` should follow a URL-like scheme; it should start with and be separated by the `/` character.") : void 0;
     }
-    const screenId = (0, import_element150.useId)();
+    const screenId = (0, import_element151.useId)();
     const {
       children,
       className,
@@ -48005,7 +48116,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       match: match3,
       addScreen: addScreen2,
       removeScreen: removeScreen2
-    } = (0, import_element150.useContext)(NavigatorContext);
+    } = (0, import_element151.useContext)(NavigatorContext);
     const {
       isInitial,
       isBack,
@@ -48013,9 +48124,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       skipFocus
     } = location;
     const isMatch = match3 === screenId;
-    const wrapperRef = (0, import_element150.useRef)(null);
+    const wrapperRef = (0, import_element151.useRef)(null);
     const skipAnimationAndFocusRestoration = !!isInitial && !isBack;
-    (0, import_element150.useEffect)(() => {
+    (0, import_element151.useEffect)(() => {
       const screen = {
         id: screenId,
         path: (0, import_escape_html.escapeAttribute)(path)
@@ -48034,12 +48145,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       skipAnimation: skipAnimationAndFocusRestoration
     });
     const cx2 = useCx();
-    const classes = (0, import_element150.useMemo)(() => cx2(navigatorScreen, animationStyles, className), [className, cx2, animationStyles]);
-    const locationRef = (0, import_element150.useRef)(location);
-    (0, import_element150.useEffect)(() => {
+    const classes = (0, import_element151.useMemo)(() => cx2(navigatorScreen, animationStyles, className), [className, cx2, animationStyles]);
+    const locationRef = (0, import_element151.useRef)(location);
+    (0, import_element151.useEffect)(() => {
       locationRef.current = location;
     }, [location]);
-    (0, import_element150.useEffect)(() => {
+    (0, import_element151.useEffect)(() => {
       const wrapperEl = wrapperRef.current;
       if (skipAnimationAndFocusRestoration || !isMatch || !wrapperEl || locationRef.current.hasRestoredFocus || skipFocus) {
         return;
@@ -48071,11 +48182,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var NavigatorScreen = contextConnect(UnconnectedNavigatorScreen, "Navigator.Screen");
 
   // packages/components/build-module/navigator/navigator-button/hook.mjs
-  var import_element152 = __toESM(require_element(), 1);
+  var import_element153 = __toESM(require_element(), 1);
   var import_escape_html2 = __toESM(require_escape_html(), 1);
 
   // packages/components/build-module/navigator/use-navigator.mjs
-  var import_element151 = __toESM(require_element(), 1);
+  var import_element152 = __toESM(require_element(), 1);
   function useNavigator() {
     const {
       location,
@@ -48083,7 +48194,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       goTo: goTo2,
       goBack,
       goToParent: goToParent2
-    } = (0, import_element151.useContext)(NavigatorContext);
+    } = (0, import_element152.useContext)(NavigatorContext);
     return {
       location,
       goTo: goTo2,
@@ -48107,7 +48218,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       goTo: goTo2
     } = useNavigator();
-    const handleClick = (0, import_element152.useCallback)((e3) => {
+    const handleClick = (0, import_element153.useCallback)((e3) => {
       e3.preventDefault();
       goTo2(escapedPath, {
         focusTargetSelector: cssSelectorForAttribute(attributeName, escapedPath)
@@ -48134,7 +48245,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var NavigatorButton = contextConnect(UnconnectedNavigatorButton, "Navigator.Button");
 
   // packages/components/build-module/navigator/navigator-back-button/hook.mjs
-  var import_element153 = __toESM(require_element(), 1);
+  var import_element154 = __toESM(require_element(), 1);
   function useNavigatorBackButton(props) {
     const {
       onClick,
@@ -48144,7 +48255,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       goBack
     } = useNavigator();
-    const handleClick = (0, import_element153.useCallback)((e3) => {
+    const handleClick = (0, import_element154.useCallback)((e3) => {
       e3.preventDefault();
       goBack();
       onClick?.(e3);
@@ -48298,14 +48409,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/notice/index.mjs
   var import_i18n62 = __toESM(require_i18n(), 1);
-  var import_element154 = __toESM(require_element(), 1);
+  var import_element155 = __toESM(require_element(), 1);
   var import_a11y7 = __toESM(require_a11y(), 1);
   var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
   var noop19 = () => {
   };
   function useSpokenMessage(message, politeness) {
-    const spokenMessage = typeof message === "string" ? message : (0, import_element154.renderToString)(message);
-    (0, import_element154.useEffect)(() => {
+    const spokenMessage = typeof message === "string" ? message : (0, import_element155.renderToString)(message);
+    (0, import_element155.useEffect)(() => {
       if (spokenMessage) {
         (0, import_a11y7.speak)(spokenMessage, politeness);
       }
@@ -48353,7 +48464,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     useSpokenMessage(spokenMessage, politeness);
     const classes = clsx_default(className, "components-notice", "is-" + status);
     if (__unstableHTML && typeof children === "string") {
-      children = /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(import_element154.RawHTML, {
+      children = /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(import_element155.RawHTML, {
         children
       });
     }
@@ -48410,7 +48521,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var notice_default = Notice;
 
   // packages/components/build-module/notice/list.mjs
-  var import_react110 = __toESM(require_react(), 1);
+  var import_react111 = __toESM(require_react(), 1);
   var import_jsx_runtime240 = __toESM(require_jsx_runtime(), 1);
   var noop20 = () => {
   };
@@ -48429,7 +48540,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           content,
           ...restNotice
         } = notice;
-        return /* @__PURE__ */ (0, import_react110.createElement)(notice_default, {
+        return /* @__PURE__ */ (0, import_react111.createElement)(notice_default, {
           ...restNotice,
           key: notice.id,
           onRemove: removeNotice(notice.id)
@@ -48440,7 +48551,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var list_default = NoticeList;
 
   // packages/components/build-module/panel/index.mjs
-  var import_element155 = __toESM(require_element(), 1);
+  var import_element156 = __toESM(require_element(), 1);
 
   // packages/components/build-module/panel/header.mjs
   var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
@@ -48473,13 +48584,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }), children]
     });
   }
-  var Panel = (0, import_element155.forwardRef)(UnforwardedPanel);
+  var Panel = (0, import_element156.forwardRef)(UnforwardedPanel);
   Panel.displayName = "Panel";
   var panel_default = Panel;
 
   // packages/components/build-module/panel/body.mjs
   var import_compose64 = __toESM(require_compose(), 1);
-  var import_element156 = __toESM(require_element(), 1);
+  var import_element157 = __toESM(require_element(), 1);
   var import_jsx_runtime243 = __toESM(require_jsx_runtime(), 1);
   var noop21 = () => {
   };
@@ -48499,7 +48610,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       initial: initialOpen === void 0 ? true : initialOpen,
       fallback: false
     });
-    const nodeRef = (0, import_element156.useRef)(null);
+    const nodeRef = (0, import_element157.useRef)(null);
     const scrollBehavior = (0, import_compose64.useReducedMotion)() ? "auto" : "smooth";
     const handleOnToggle = (event) => {
       event.preventDefault();
@@ -48507,7 +48618,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       setIsOpened(next2);
       onToggle(next2);
     };
-    const scrollAfterOpenRef = (0, import_element156.useRef)(void 0);
+    const scrollAfterOpenRef = (0, import_element157.useRef)(void 0);
     scrollAfterOpenRef.current = scrollAfterOpen;
     use_update_effect_default(() => {
       if (isOpened && scrollAfterOpenRef.current && nodeRef.current?.scrollIntoView) {
@@ -48535,7 +48646,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }) : isOpened && children]
     });
   }
-  var PanelBodyTitle = (0, import_element156.forwardRef)(({
+  var PanelBodyTitle = (0, import_element157.forwardRef)(({
     isOpened,
     icon,
     title,
@@ -48566,12 +48677,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   });
-  var PanelBody = (0, import_element156.forwardRef)(UnforwardedPanelBody);
+  var PanelBody = (0, import_element157.forwardRef)(UnforwardedPanelBody);
   PanelBody.displayName = "PanelBody";
   var body_default = PanelBody;
 
   // packages/components/build-module/panel/row.mjs
-  var import_element157 = __toESM(require_element(), 1);
+  var import_element158 = __toESM(require_element(), 1);
   var import_jsx_runtime244 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedPanelRow({
     className,
@@ -48583,14 +48694,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       children
     });
   }
-  var PanelRow = (0, import_element157.forwardRef)(UnforwardedPanelRow);
+  var PanelRow = (0, import_element158.forwardRef)(UnforwardedPanelRow);
   PanelRow.displayName = "PanelRow";
   var row_default = PanelRow;
 
   // packages/components/build-module/placeholder/index.mjs
   var import_compose65 = __toESM(require_compose(), 1);
   var import_primitives34 = __toESM(require_primitives(), 1);
-  var import_element158 = __toESM(require_element(), 1);
+  var import_element159 = __toESM(require_element(), 1);
   var import_a11y8 = __toESM(require_a11y(), 1);
   var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
   var PlaceholderIllustration = /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(import_primitives34.SVG, {
@@ -48632,7 +48743,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const fieldsetClasses = clsx_default("components-placeholder__fieldset", {
       "is-column-layout": isColumnLayout
     });
-    (0, import_element158.useEffect)(() => {
+    (0, import_element159.useEffect)(() => {
       if (instructions) {
         (0, import_a11y8.speak)(instructions);
       }
@@ -48661,10 +48772,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/progress-bar/index.mjs
   var import_i18n63 = __toESM(require_i18n(), 1);
-  var import_element159 = __toESM(require_element(), 1);
+  var import_element160 = __toESM(require_element(), 1);
   var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE37 = "data-wp-hash";
-  function getRuntime37() {
+  var STYLE_HASH_ATTRIBUTE38 = "data-wp-hash";
+  function getRuntime38() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -48675,26 +48786,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument37(document);
+      registerDocument38(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash37(targetDocument, hash2) {
+  function documentContainsStyleHash38(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE37}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE37) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE38}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE38) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle37(targetDocument, hash2, css3) {
+  function injectStyle38(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime37();
+    const runtime = getRuntime38();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -48703,21 +48814,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash37(targetDocument, hash2)) {
+    if (documentContainsStyleHash38(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE37, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE38, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument37(targetDocument) {
-    const runtime = getRuntime37();
+  function registerDocument38(targetDocument) {
+    const runtime = getRuntime38();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle37(targetDocument, hash2, css3);
+      injectStyle38(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -48731,15 +48842,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle36(hash2, css3) {
-    const runtime = getRuntime37();
+  function registerStyle37(hash2, css3) {
+    const runtime = getRuntime38();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle37(targetDocument, hash2, css3);
+      injectStyle38(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle36("5902509e23", "._1d8296bd910bb7bb__track{background-color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 90%);border-radius:9999px;height:1.5px;outline:2px solid transparent;outline-offset:2px;overflow:hidden;position:relative}:where(._1d8296bd910bb7bb__track){width:160px}.be702ee1b0a3c396__indicator{background-color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 10%);border-radius:9999px;display:inline-block;height:100%;outline:2px solid transparent;outline-offset:-2px;position:absolute;top:0;transition:width .4s ease-in-out;width:var(--indicator-width)}.be702ee1b0a3c396__indicator._125afa179e2803a2__is-indeterminate{--indicator-width:50%;animation:_7c6b2fa174e0d687__indeterminate-slide 1.5s ease-in-out infinite;transition:none}@keyframes _7c6b2fa174e0d687__indeterminate-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}._4c47edc54d8dcb46__progress-element{height:100%;inset-inline-start:0;opacity:0;position:absolute;top:0;width:100%}");
+    registerStyle37("5902509e23", "._1d8296bd910bb7bb__track{background-color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 90%);border-radius:9999px;height:1.5px;outline:2px solid transparent;outline-offset:2px;overflow:hidden;position:relative}:where(._1d8296bd910bb7bb__track){width:160px}.be702ee1b0a3c396__indicator{background-color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 10%);border-radius:9999px;display:inline-block;height:100%;outline:2px solid transparent;outline-offset:-2px;position:absolute;top:0;transition:width .4s ease-in-out;width:var(--indicator-width)}.be702ee1b0a3c396__indicator._125afa179e2803a2__is-indeterminate{--indicator-width:50%;animation:_7c6b2fa174e0d687__indeterminate-slide 1.5s ease-in-out infinite;transition:none}@keyframes _7c6b2fa174e0d687__indeterminate-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}._4c47edc54d8dcb46__progress-element{height:100%;inset-inline-start:0;opacity:0;position:absolute;top:0;width:100%}");
   }
   var style_module_default33 = { "track": "_1d8296bd910bb7bb__track", "indicator": "be702ee1b0a3c396__indicator", "is-indeterminate": "_125afa179e2803a2__is-indeterminate", "indeterminate-slide": "_7c6b2fa174e0d687__indeterminate-slide", "progress-element": "_4c47edc54d8dcb46__progress-element" };
   function UnforwardedProgressBar(props, ref) {
@@ -48768,7 +48879,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   }
-  var ProgressBar = (0, import_element159.forwardRef)(UnforwardedProgressBar);
+  var ProgressBar = (0, import_element160.forwardRef)(UnforwardedProgressBar);
   ProgressBar.displayName = "ProgressBar";
   var progress_bar_default = ProgressBar;
 
@@ -48812,7 +48923,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tree-select/index.mjs
-  var import_element160 = __toESM(require_element(), 1);
+  var import_element161 = __toESM(require_element(), 1);
   var import_html_entities = __toESM(require_html_entities(), 1);
   var import_jsx_runtime247 = __toESM(require_jsx_runtime(), 1);
   function getSelectOptions(tree, level = 0) {
@@ -48833,7 +48944,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       tree = [],
       ...restProps
     } = props;
-    const options2 = (0, import_element160.useMemo)(() => {
+    const options2 = (0, import_element161.useMemo)(() => {
       return [noOptionLabel && {
         value: "",
         label: noOptionLabel
@@ -48872,7 +48983,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/query-controls/category-select.mjs
-  var import_element161 = __toESM(require_element(), 1);
+  var import_element162 = __toESM(require_element(), 1);
   var import_jsx_runtime249 = __toESM(require_jsx_runtime(), 1);
   function CategorySelect({
     label,
@@ -48882,7 +48993,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     onChange: onChangeProp,
     ...props
   }) {
-    const termsTree = (0, import_element161.useMemo)(() => {
+    const termsTree = (0, import_element162.useMemo)(() => {
       return buildTermsTree(categoriesList);
     }, [categoriesList]);
     return /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(tree_select_default, {
@@ -48995,11 +49106,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var query_controls_default = QueryControls;
 
   // packages/components/build-module/radio-group/radio.mjs
-  var import_element163 = __toESM(require_element(), 1);
+  var import_element164 = __toESM(require_element(), 1);
 
   // packages/components/build-module/radio-group/context.mjs
-  var import_element162 = __toESM(require_element(), 1);
-  var RadioGroupContext = (0, import_element162.createContext)({
+  var import_element163 = __toESM(require_element(), 1);
+  var RadioGroupContext = (0, import_element163.createContext)({
     store: void 0,
     disabled: void 0
   });
@@ -49016,7 +49127,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       store,
       disabled
-    } = (0, import_element163.useContext)(RadioGroupContext);
+    } = (0, import_element164.useContext)(RadioGroupContext);
     const selectedValue = useStoreState(store, "value");
     const isChecked = selectedValue !== void 0 && selectedValue === value;
     return /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(Radio, {
@@ -49032,13 +49143,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       children: children || value
     });
   }
-  var Radio22 = (0, import_element163.forwardRef)(UnforwardedRadio);
+  var Radio22 = (0, import_element164.forwardRef)(UnforwardedRadio);
   Radio22.displayName = "Radio";
   var radio_default = Radio22;
 
   // packages/components/build-module/radio-group/index.mjs
   var import_deprecated24 = __toESM(require_deprecated(), 1);
-  var import_element164 = __toESM(require_element(), 1);
+  var import_element165 = __toESM(require_element(), 1);
   var import_i18n65 = __toESM(require_i18n(), 1);
   var import_jsx_runtime252 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedRadioGroup({
@@ -49058,7 +49169,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       },
       rtl: (0, import_i18n65.isRTL)()
     });
-    const contextValue = (0, import_element164.useMemo)(() => ({
+    const contextValue = (0, import_element165.useMemo)(() => ({
       store: radioStore,
       disabled
     }), [radioStore, disabled]);
@@ -49080,7 +49191,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   }
-  var RadioGroup22 = (0, import_element164.forwardRef)(UnforwardedRadioGroup);
+  var RadioGroup22 = (0, import_element165.forwardRef)(UnforwardedRadioGroup);
   RadioGroup22.displayName = "RadioGroup";
   var radio_group_default = RadioGroup22;
 
@@ -49169,7 +49280,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var radio_control_default = RadioControl;
 
   // packages/components/build-module/resizable-box/index.mjs
-  var import_element168 = __toESM(require_element(), 1);
+  var import_element169 = __toESM(require_element(), 1);
 
   // node_modules/re-resizable/lib/index.js
   var React16 = __toESM(require_react());
@@ -50010,14 +50121,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   );
 
   // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
-  var import_element167 = __toESM(require_element(), 1);
+  var import_element168 = __toESM(require_element(), 1);
 
   // packages/components/build-module/resizable-box/resize-tooltip/label.mjs
-  var import_element166 = __toESM(require_element(), 1);
+  var import_element167 = __toESM(require_element(), 1);
   var import_i18n66 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/resizable-box/resize-tooltip/utils.mjs
-  var import_element165 = __toESM(require_element(), 1);
+  var import_element166 = __toESM(require_element(), 1);
   var import_compose67 = __toESM(require_compose(), 1);
   var noop22 = () => {
   };
@@ -50034,16 +50145,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }) {
     const [resizeListener, sizes] = (0, import_compose67.useResizeObserver)();
     const isAxisControlled = !!axis;
-    const [moveX, setMoveX] = (0, import_element165.useState)(false);
-    const [moveY, setMoveY] = (0, import_element165.useState)(false);
+    const [moveX, setMoveX] = (0, import_element166.useState)(false);
+    const [moveY, setMoveY] = (0, import_element166.useState)(false);
     const {
       width,
       height
     } = sizes;
-    const heightRef = (0, import_element165.useRef)(height);
-    const widthRef = (0, import_element165.useRef)(width);
-    const moveTimeoutRef = (0, import_element165.useRef)(void 0);
-    const debounceUnsetMoveXY = (0, import_element165.useCallback)(() => {
+    const heightRef = (0, import_element166.useRef)(height);
+    const widthRef = (0, import_element166.useRef)(width);
+    const moveTimeoutRef = (0, import_element166.useRef)(void 0);
+    const debounceUnsetMoveXY = (0, import_element166.useCallback)(() => {
       const unsetMoveXY = () => {
         if (isAxisControlled) {
           return;
@@ -50056,7 +50167,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       moveTimeoutRef.current = window.setTimeout(unsetMoveXY, fadeTimeout);
     }, [fadeTimeout, isAxisControlled]);
-    (0, import_element165.useEffect)(() => {
+    (0, import_element166.useEffect)(() => {
       const isRendered = width !== null || height !== null;
       if (!isRendered) {
         return;
@@ -50137,147 +50248,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/resizable-box/resize-tooltip/label.mjs
   var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE38 = "data-wp-hash";
-  function getRuntime38() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument38(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash38(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE38}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE38) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle38(targetDocument, hash2, css3) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime38();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash38(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE38, hash2);
-    style2.appendChild(targetDocument.createTextNode(css3));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument38(targetDocument) {
-    const runtime = getRuntime38();
-    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-    for (const [hash2, css3] of runtime.styles) {
-      injectStyle38(targetDocument, hash2, css3);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle37(hash2, css3) {
-    const runtime = getRuntime38();
-    runtime.styles.set(hash2, css3);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle38(targetDocument, hash2, css3);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle37("6a3e579287", ".f1c3c2f08c84bcca__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}.dd094b49bf71dfd9__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.d768357cc581321f__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
-  }
-  var style_module_default34 = { "root": "f1c3c2f08c84bcca__root", "tooltip-wrapper": "dd094b49bf71dfd9__tooltip-wrapper", "tooltip": "d768357cc581321f__tooltip", "label-text": "a32e43dd68941abb__label-text" };
-  var CORNER_OFFSET = 4;
-  var CURSOR_OFFSET_TOP = CORNER_OFFSET * 2.5;
-  function Label3({
-    label,
-    position: position2 = POSITIONS.corner,
-    zIndex = 1e3,
-    ...props
-  }, ref) {
-    const showLabel = !!label;
-    const isBottom = position2 === POSITIONS.bottom;
-    const isCorner = position2 === POSITIONS.corner;
-    if (!showLabel) {
-      return null;
-    }
-    let style2 = {
-      opacity: showLabel ? 1 : void 0,
-      zIndex
-    };
-    let labelStyle = {};
-    if (isBottom) {
-      style2 = {
-        ...style2,
-        position: "absolute",
-        bottom: CURSOR_OFFSET_TOP * -1,
-        left: "50%",
-        transform: "translate(-50%, 0)"
-      };
-      labelStyle = {
-        transform: `translate(0, 100%)`
-      };
-    }
-    if (isCorner) {
-      style2 = {
-        ...style2,
-        position: "absolute",
-        top: CORNER_OFFSET,
-        right: (0, import_i18n66.isRTL)() ? void 0 : CORNER_OFFSET,
-        left: (0, import_i18n66.isRTL)() ? CORNER_OFFSET : void 0
-      };
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", {
-      "aria-hidden": "true",
-      className: clsx_default("components-resizable-tooltip__tooltip-wrapper", style_module_default34["tooltip-wrapper"]),
-      ref,
-      style: style2,
-      ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", {
-        className: clsx_default("components-resizable-tooltip__tooltip", style_module_default34.tooltip),
-        style: labelStyle,
-        children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(component_default8, {
-          as: "span",
-          className: style_module_default34["label-text"],
-          children: label
-        })
-      })
-    });
-  }
-  var ForwardedComponent3 = (0, import_element166.forwardRef)(Label3);
-  var label_default = ForwardedComponent3;
-
-  // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
-  var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE39 = "data-wp-hash";
   function getRuntime39() {
     const globalScope = globalThis;
@@ -50356,6 +50326,147 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   if (typeof process === "undefined" || true) {
     registerStyle38("6a3e579287", ".f1c3c2f08c84bcca__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}.dd094b49bf71dfd9__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.d768357cc581321f__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
   }
+  var style_module_default34 = { "root": "f1c3c2f08c84bcca__root", "tooltip-wrapper": "dd094b49bf71dfd9__tooltip-wrapper", "tooltip": "d768357cc581321f__tooltip", "label-text": "a32e43dd68941abb__label-text" };
+  var CORNER_OFFSET = 4;
+  var CURSOR_OFFSET_TOP = CORNER_OFFSET * 2.5;
+  function Label3({
+    label,
+    position: position2 = POSITIONS.corner,
+    zIndex = 1e3,
+    ...props
+  }, ref) {
+    const showLabel = !!label;
+    const isBottom = position2 === POSITIONS.bottom;
+    const isCorner = position2 === POSITIONS.corner;
+    if (!showLabel) {
+      return null;
+    }
+    let style2 = {
+      opacity: showLabel ? 1 : void 0,
+      zIndex
+    };
+    let labelStyle = {};
+    if (isBottom) {
+      style2 = {
+        ...style2,
+        position: "absolute",
+        bottom: CURSOR_OFFSET_TOP * -1,
+        left: "50%",
+        transform: "translate(-50%, 0)"
+      };
+      labelStyle = {
+        transform: `translate(0, 100%)`
+      };
+    }
+    if (isCorner) {
+      style2 = {
+        ...style2,
+        position: "absolute",
+        top: CORNER_OFFSET,
+        right: (0, import_i18n66.isRTL)() ? void 0 : CORNER_OFFSET,
+        left: (0, import_i18n66.isRTL)() ? CORNER_OFFSET : void 0
+      };
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", {
+      "aria-hidden": "true",
+      className: clsx_default("components-resizable-tooltip__tooltip-wrapper", style_module_default34["tooltip-wrapper"]),
+      ref,
+      style: style2,
+      ...props,
+      children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)("div", {
+        className: clsx_default("components-resizable-tooltip__tooltip", style_module_default34.tooltip),
+        style: labelStyle,
+        children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(component_default8, {
+          as: "span",
+          className: style_module_default34["label-text"],
+          children: label
+        })
+      })
+    });
+  }
+  var ForwardedComponent3 = (0, import_element167.forwardRef)(Label3);
+  var label_default = ForwardedComponent3;
+
+  // packages/components/build-module/resizable-box/resize-tooltip/index.mjs
+  var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE40 = "data-wp-hash";
+  function getRuntime40() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument40(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash40(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE40}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE40) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle40(targetDocument, hash2, css3) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime40();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash40(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE40, hash2);
+    style2.appendChild(targetDocument.createTextNode(css3));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument40(targetDocument) {
+    const runtime = getRuntime40();
+    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+    for (const [hash2, css3] of runtime.styles) {
+      injectStyle40(targetDocument, hash2, css3);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle39(hash2, css3) {
+    const runtime = getRuntime40();
+    runtime.styles.set(hash2, css3);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle40(targetDocument, hash2, css3);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle39("6a3e579287", ".f1c3c2f08c84bcca__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}.dd094b49bf71dfd9__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.d768357cc581321f__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text.a32e43dd68941abb__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
+  }
   var style_module_default35 = { "root": "f1c3c2f08c84bcca__root", "tooltip-wrapper": "dd094b49bf71dfd9__tooltip-wrapper", "tooltip": "d768357cc581321f__tooltip", "label-text": "a32e43dd68941abb__label-text" };
   var noop23 = () => {
   };
@@ -50401,7 +50512,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   }
-  var ForwardedComponent4 = (0, import_element167.forwardRef)(ResizeTooltip);
+  var ForwardedComponent4 = (0, import_element168.forwardRef)(ResizeTooltip);
   var resize_tooltip_default = ForwardedComponent4;
 
   // packages/components/build-module/resizable-box/index.mjs
@@ -50459,12 +50570,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   }
-  var ResizableBox = (0, import_element168.forwardRef)(UnforwardedResizableBox);
+  var ResizableBox = (0, import_element169.forwardRef)(UnforwardedResizableBox);
   ResizableBox.displayName = "ResizableBox";
   var resizable_box_default = ResizableBox;
 
   // packages/components/build-module/responsive-wrapper/index.mjs
-  var import_element169 = __toESM(require_element(), 1);
+  var import_element170 = __toESM(require_element(), 1);
   var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
   function ResponsiveWrapper({
     naturalWidth,
@@ -50472,7 +50583,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     children,
     isInline = false
   }) {
-    if (import_element169.Children.count(children) !== 1) {
+    if (import_element170.Children.count(children) !== 1) {
       return null;
     }
     const TagName58 = isInline ? "span" : "div";
@@ -50483,7 +50594,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(TagName58, {
       className: "components-responsive-wrapper",
       children: /* @__PURE__ */ (0, import_jsx_runtime257.jsx)("div", {
-        children: (0, import_element169.cloneElement)(children, {
+        children: (0, import_element170.cloneElement)(children, {
           className: clsx_default("components-responsive-wrapper__content", children.props.className),
           style: {
             ...children.props.style,
@@ -50496,7 +50607,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var responsive_wrapper_default = ResponsiveWrapper;
 
   // packages/components/build-module/sandbox/index.mjs
-  var import_element170 = __toESM(require_element(), 1);
+  var import_element171 = __toESM(require_element(), 1);
   var import_compose68 = __toESM(require_compose(), 1);
   var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
   var observeAndResizeJS = function() {
@@ -50627,7 +50738,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }, src))]
       })]
     });
-    return "<!DOCTYPE html>" + (0, import_element170.renderToString)(htmlDoc);
+    return "<!DOCTYPE html>" + (0, import_element171.renderToString)(htmlDoc);
   }
   function IsolatedSandBox({
     html = "",
@@ -50640,14 +50751,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     allowPopups = false,
     allowForms = false
   }) {
-    const ref = (0, import_element170.useRef)(null);
-    const [width, setWidth] = (0, import_element170.useState)(0);
-    const [height, setHeight] = (0, import_element170.useState)(0);
+    const ref = (0, import_element171.useRef)(null);
+    const [width, setWidth] = (0, import_element171.useState)(0);
+    const [height, setHeight] = (0, import_element171.useState)(0);
     const sandbox = clsx_default("allow-scripts", "allow-presentation", {
       "allow-popups": allowPopups,
       "allow-forms": allowForms
     });
-    const srcDoc = (0, import_element170.useMemo)(() => buildSandBoxDocument({
+    const srcDoc = (0, import_element171.useMemo)(() => buildSandBoxDocument({
       html,
       title,
       type,
@@ -50658,7 +50769,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       // changes after load, so leaving it out of the deps is fine.
       lang: document.documentElement.lang
     }), [html, title, type, styles3, scripts]);
-    (0, import_element170.useEffect)(() => {
+    (0, import_element171.useEffect)(() => {
       const iframe = ref.current;
       if (!iframe) {
         return;
@@ -50720,9 +50831,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     allowPopups = false,
     allowForms = false
   }) {
-    const ref = (0, import_element170.useRef)(null);
-    const [width, setWidth] = (0, import_element170.useState)(0);
-    const [height, setHeight] = (0, import_element170.useState)(0);
+    const ref = (0, import_element171.useRef)(null);
+    const [width, setWidth] = (0, import_element171.useState)(0);
+    const [height, setHeight] = (0, import_element171.useState)(0);
     const sandbox = clsx_default("allow-scripts", "allow-same-origin", "allow-presentation", {
       "allow-popups": allowPopups,
       "allow-forms": allowForms
@@ -50756,7 +50867,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }));
       contentDocument.close();
     }
-    (0, import_element170.useEffect)(() => {
+    (0, import_element171.useEffect)(() => {
       trySandBox();
       function tryNoForceSandBox() {
         trySandBox(false);
@@ -50788,10 +50899,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         defaultView?.removeEventListener("message", checkMessageForResize);
       };
     }, []);
-    (0, import_element170.useEffect)(() => {
+    (0, import_element171.useEffect)(() => {
       trySandBox();
     }, [title, styles3, scripts]);
-    (0, import_element170.useEffect)(() => {
+    (0, import_element171.useEffect)(() => {
       trySandBox(true);
     }, [html, type]);
     return /* @__PURE__ */ (0, import_jsx_runtime258.jsx)("iframe", {
@@ -50823,540 +50934,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/search-control/index.mjs
   var import_compose69 = __toESM(require_compose(), 1);
   var import_i18n67 = __toESM(require_i18n(), 1);
-  var import_element171 = __toESM(require_element(), 1);
+  var import_element172 = __toESM(require_element(), 1);
   var import_deprecated25 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE40 = "data-wp-hash";
-  function getRuntime40() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument40(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash40(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE40}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE40) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle40(targetDocument, hash2, css3) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime40();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash40(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE40, hash2);
-    style2.appendChild(targetDocument.createTextNode(css3));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument40(targetDocument) {
-    const runtime = getRuntime40();
-    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-    for (const [hash2, css3] of runtime.styles) {
-      injectStyle40(targetDocument, hash2, css3);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle39(hash2, css3) {
-    const runtime = getRuntime40();
-    runtime.styles.set(hash2, css3);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle40(targetDocument, hash2, css3);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle39("77f847972d", "._5e6152f7430df331__input input[type=search]::-webkit-search-cancel-button,._5e6152f7430df331__input input[type=search]::-webkit-search-decoration,._5e6152f7430df331__input input[type=search]::-webkit-search-results-button,._5e6152f7430df331__input input[type=search]::-webkit-search-results-decoration{-webkit-appearance:none}._9a856163f1b1aaae__icon:dir(ltr){transform:scaleX(-1)}");
-  }
-  var style_module_default36 = { "input": "_5e6152f7430df331__input", "icon": "_9a856163f1b1aaae__icon" };
-  function SuffixItem({
-    searchRef,
-    onChange,
-    onClose
-  }) {
-    if (onClose) {
-      (0, import_deprecated25.default)("`onClose` prop in wp.components.SearchControl", {
-        since: "6.8"
-      });
-    }
-    const onReset = () => {
-      onChange("");
-      searchRef.current?.focus();
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(InputControlSuffixWrapper, {
-      variant: "control",
-      children: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(button_default, {
-        size: "small",
-        icon: close_small_default,
-        label: onClose ? (0, import_i18n67.__)("Close search") : (0, import_i18n67.__)("Reset search"),
-        onClick: onClose ?? onReset
-      })
-    });
-  }
-  function UnforwardedSearchControl({
-    // Prevent passing legacy props to internal component.
-    __nextHasNoMarginBottom: _2,
-    __next40pxDefaultSize: _next40pxDefaultSize,
-    className,
-    onChange,
-    value,
-    label = (0, import_i18n67.__)("Search"),
-    placeholder = (0, import_i18n67.__)("Search"),
-    hideLabelFromVision = true,
-    onClose,
-    size: size4 = "default",
-    ...restProps
-  }, forwardedRef) {
-    const {
-      disabled,
-      ...filteredRestProps
-    } = restProps;
-    const searchRef = (0, import_element171.useRef)(null);
-    const instanceId = (0, import_compose69.useInstanceId)(SearchControl, "components-search-control");
-    const hasSuffix = !!onClose || !!value;
-    return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(input_control_default, {
-      id: instanceId,
-      hideLabelFromVision,
-      label,
-      ref: (0, import_compose69.useMergeRefs)([searchRef, forwardedRef]),
-      type: "search",
-      size: size4,
-      className: clsx_default(style_module_default36.input, "components-search-control", className),
-      onChange: (nextValue) => onChange(nextValue ?? ""),
-      autoComplete: "off",
-      placeholder,
-      value: value ?? "",
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(InputControlPrefixWrapper, {
-        variant: "icon",
-        children: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(icon_default3, {
-          className: style_module_default36.icon,
-          icon: search_default,
-          fill: "currentColor"
-        })
-      }),
-      suffix: hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(SuffixItem, {
-        searchRef,
-        onChange,
-        onClose
-      }),
-      ...filteredRestProps
-    });
-  }
-  var SearchControl = (0, import_element171.forwardRef)(UnforwardedSearchControl);
-  SearchControl.displayName = "SearchControl";
-  var search_control_default = SearchControl;
-
-  // packages/components/build-module/snackbar/index.mjs
-  var import_a11y9 = __toESM(require_a11y(), 1);
-  var import_element172 = __toESM(require_element(), 1);
-  var import_i18n68 = __toESM(require_i18n(), 1);
-  var import_warning9 = __toESM(require_warning(), 1);
-  var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
-  var NOTICE_TIMEOUT = 6e3;
-  function useSpokenMessage2(message, politeness) {
-    const spokenMessage = typeof message === "string" ? message : (0, import_element172.renderToString)(message);
-    (0, import_element172.useEffect)(() => {
-      if (spokenMessage) {
-        (0, import_a11y9.speak)(spokenMessage, politeness);
-      }
-    }, [spokenMessage, politeness]);
-  }
-  function UnforwardedSnackbar({
-    className,
-    children,
-    spokenMessage = children,
-    politeness = "polite",
-    actions = [],
-    onRemove,
-    icon = null,
-    explicitDismiss = false,
-    // onDismiss is a callback executed when the snackbar is dismissed.
-    // It is distinct from onRemove, which _looks_ like a callback but is
-    // actually the function to call to remove the snackbar from the UI.
-    onDismiss,
-    listRef
-  }, ref) {
-    const isPresent2 = useIsPresent();
-    function dismissMe(event) {
-      if (event && event.preventDefault) {
-        event.preventDefault();
-      }
-      listRef?.current?.focus();
-      onDismiss?.();
-      onRemove?.();
-    }
-    function onActionClick(event, onClick) {
-      event.stopPropagation();
-      onRemove?.();
-      if (onClick) {
-        onClick(event);
-      }
-    }
-    useSpokenMessage2(spokenMessage, politeness);
-    const callbacksRef = (0, import_element172.useRef)({
-      onDismiss,
-      onRemove
-    });
-    (0, import_element172.useLayoutEffect)(() => {
-      callbacksRef.current = {
-        onDismiss,
-        onRemove
-      };
-    });
-    (0, import_element172.useEffect)(() => {
-      if (explicitDismiss || !isPresent2) {
-        return;
-      }
-      const timeoutHandle = setTimeout(() => {
-        callbacksRef.current.onDismiss?.();
-        callbacksRef.current.onRemove?.();
-      }, NOTICE_TIMEOUT);
-      return () => clearTimeout(timeoutHandle);
-    }, [explicitDismiss, isPresent2]);
-    const classes = clsx_default(className, "components-snackbar", {
-      "components-snackbar-explicit-dismiss": !!explicitDismiss
-    });
-    if (actions && actions.length > 1) {
-      true ? (0, import_warning9.default)("Snackbar can only have one action. Use Notice if your message requires many actions.") : void 0;
-      actions = [actions[0]];
-    }
-    const snackbarContentClassnames = clsx_default("components-snackbar__content", {
-      "components-snackbar__content-with-icon": !!icon
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime260.jsx)("div", {
-      ref,
-      className: classes,
-      onClick: !explicitDismiss ? dismissMe : void 0,
-      tabIndex: 0,
-      role: !explicitDismiss ? "button" : void 0,
-      onKeyPress: !explicitDismiss ? dismissMe : void 0,
-      "aria-label": !explicitDismiss ? (0, import_i18n68.__)("Dismiss this notice") : void 0,
-      "data-testid": "snackbar",
-      children: /* @__PURE__ */ (0, import_jsx_runtime260.jsxs)("div", {
-        className: snackbarContentClassnames,
-        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime260.jsx)("div", {
-          className: "components-snackbar__icon",
-          children: icon
-        }), children, actions.map(({
-          label,
-          onClick,
-          url,
-          openInNewTab = false
-        }, index2) => url !== void 0 && openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(external_link_default, {
-          href: url,
-          onClick: (event) => onActionClick(event, onClick),
-          className: "components-snackbar__action",
-          children: label
-        }, index2) : /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(button_default, {
-          __next40pxDefaultSize: true,
-          href: url,
-          variant: "link",
-          onClick: (event) => onActionClick(event, onClick),
-          className: "components-snackbar__action",
-          children: label
-        }, index2)), explicitDismiss && /* @__PURE__ */ (0, import_jsx_runtime260.jsx)("span", {
-          role: "button",
-          "aria-label": (0, import_i18n68.__)("Dismiss this notice"),
-          tabIndex: 0,
-          className: "components-snackbar__dismiss-button",
-          onClick: dismissMe,
-          onKeyPress: dismissMe,
-          children: "\u2715"
-        })]
-      })
-    });
-  }
-  var Snackbar = (0, import_element172.forwardRef)(UnforwardedSnackbar);
-  Snackbar.displayName = "Snackbar";
-  var snackbar_default = Snackbar;
-
-  // packages/components/build-module/snackbar/list.mjs
-  var import_compose70 = __toESM(require_compose(), 1);
-  var import_element173 = __toESM(require_element(), 1);
-  var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
-  var SNACKBAR_VARIANTS = {
-    init: {
-      height: 0,
-      opacity: 0
-    },
-    open: {
-      height: "auto",
-      opacity: 1,
-      transition: {
-        height: {
-          type: "tween",
-          duration: 0.3,
-          ease: [0, 0, 0.2, 1]
-        },
-        opacity: {
-          type: "tween",
-          duration: 0.25,
-          delay: 0.05,
-          ease: [0, 0, 0.2, 1]
-        }
-      }
-    },
-    exit: {
-      opacity: 0,
-      transition: {
-        type: "tween",
-        duration: 0.1,
-        ease: [0, 0, 0.2, 1]
-      }
-    }
-  };
-  function SnackbarList({
-    notices,
-    className,
-    children,
-    onRemove
-  }) {
-    const listRef = (0, import_element173.useRef)(null);
-    const isReducedMotion = (0, import_compose70.useReducedMotion)();
-    className = clsx_default("components-snackbar-list", className);
-    const removeNotice = (notice) => () => onRemove?.(notice.id);
-    return /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)("div", {
-      className,
-      tabIndex: -1,
-      ref: listRef,
-      "data-testid": "snackbar-list",
-      children: [children, /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(AnimatePresence, {
-        children: notices.map((notice) => {
-          const {
-            content,
-            ...restNotice
-          } = notice;
-          return /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(motion.div, {
-            layout: isReducedMotion ? false : "position",
-            style: {
-              width: "100%"
-            },
-            initial: "init",
-            animate: "open",
-            exit: "exit",
-            variants: isReducedMotion ? void 0 : SNACKBAR_VARIANTS,
-            children: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)("div", {
-              className: "components-snackbar-list__notice-container",
-              children: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(snackbar_default, {
-                ...restNotice,
-                onRemove: removeNotice(notice),
-                listRef,
-                children: notice.content
-              })
-            })
-          }, notice.id);
-        })
-      })]
-    });
-  }
-  var list_default2 = SnackbarList;
-
-  // packages/components/build-module/tab-panel/index.mjs
-  var import_element174 = __toESM(require_element(), 1);
-  var import_compose71 = __toESM(require_compose(), 1);
-  var import_i18n69 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
-  var extractTabName = (id3) => {
-    if (typeof id3 === "undefined" || id3 === null) {
-      return;
-    }
-    return id3.match(/^tab-panel-[0-9]*-(.*)/)?.[1];
-  };
-  var UnforwardedTabPanel = ({
-    className,
-    children,
-    tabs,
-    selectOnMove = true,
-    initialTabName,
-    orientation = "horizontal",
-    activeClass = "is-active",
-    onSelect
-  }, ref) => {
-    const instanceId = (0, import_compose71.useInstanceId)(TabPanel22, "tab-panel");
-    const prependInstanceId = (0, import_element174.useCallback)((tabName) => {
-      if (typeof tabName === "undefined") {
-        return;
-      }
-      return `${instanceId}-${tabName}`;
-    }, [instanceId]);
-    const tabStore = useTabStore({
-      setSelectedId: (newTabValue) => {
-        if (typeof newTabValue === "undefined" || newTabValue === null) {
-          return;
-        }
-        const newTab = tabs.find((t4) => prependInstanceId(t4.name) === newTabValue);
-        if (newTab?.disabled || newTab === selectedTab) {
-          return;
-        }
-        const simplifiedTabName = extractTabName(newTabValue);
-        if (typeof simplifiedTabName === "undefined") {
-          return;
-        }
-        onSelect?.(simplifiedTabName);
-      },
-      orientation,
-      selectOnMove,
-      defaultSelectedId: prependInstanceId(initialTabName),
-      rtl: (0, import_i18n69.isRTL)()
-    });
-    const selectedTabName = extractTabName(useStoreState(tabStore, "selectedId"));
-    const setTabStoreSelectedId = (0, import_element174.useCallback)((tabName) => {
-      tabStore.setState("selectedId", prependInstanceId(tabName));
-    }, [prependInstanceId, tabStore]);
-    const selectedTab = tabs.find(({
-      name
-    }) => name === selectedTabName);
-    const previousSelectedTabName = (0, import_compose71.usePrevious)(selectedTabName);
-    (0, import_element174.useEffect)(() => {
-      if (previousSelectedTabName !== selectedTabName && selectedTabName === initialTabName && !!selectedTabName) {
-        onSelect?.(selectedTabName);
-      }
-    }, [selectedTabName, initialTabName, onSelect, previousSelectedTabName]);
-    (0, import_element174.useLayoutEffect)(() => {
-      if (selectedTab) {
-        return;
-      }
-      const initialTab = tabs.find((tab) => tab.name === initialTabName);
-      if (initialTabName && !initialTab) {
-        return;
-      }
-      if (initialTab && !initialTab.disabled) {
-        setTabStoreSelectedId(initialTab.name);
-      } else {
-        const firstEnabledTab = tabs.find((tab) => !tab.disabled);
-        if (firstEnabledTab) {
-          setTabStoreSelectedId(firstEnabledTab.name);
-        }
-      }
-    }, [tabs, selectedTab, initialTabName, instanceId, setTabStoreSelectedId]);
-    (0, import_element174.useEffect)(() => {
-      if (!selectedTab?.disabled) {
-        return;
-      }
-      const firstEnabledTab = tabs.find((tab) => !tab.disabled);
-      if (firstEnabledTab) {
-        setTabStoreSelectedId(firstEnabledTab.name);
-      }
-    }, [tabs, selectedTab?.disabled, setTabStoreSelectedId, instanceId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime262.jsxs)("div", {
-      className,
-      ref,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime262.jsx)(TabList, {
-        store: tabStore,
-        className: "components-tab-panel__tabs",
-        children: tabs.map((tab) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(Tab, {
-            id: prependInstanceId(tab.name),
-            className: clsx_default("components-tab-panel__tabs-item", tab.className, {
-              [activeClass]: tab.name === selectedTabName
-            }),
-            disabled: tab.disabled,
-            "aria-controls": `${prependInstanceId(tab.name)}-view`,
-            render: /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(button_default, {
-              __next40pxDefaultSize: true,
-              icon: tab.icon,
-              label: tab.icon && tab.title,
-              showTooltip: !!tab.icon
-            }),
-            children: !tab.icon && tab.title
-          }, tab.name);
-        })
-      }), selectedTab && /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(TabPanel, {
-        id: `${prependInstanceId(selectedTab.name)}-view`,
-        store: tabStore,
-        tabId: prependInstanceId(selectedTab.name),
-        className: "components-tab-panel__tab-content",
-        children: children(selectedTab)
-      })]
-    });
-  };
-  var TabPanel22 = (0, import_element174.forwardRef)(UnforwardedTabPanel);
-  TabPanel22.displayName = "TabPanel";
-  var tab_panel_default = TabPanel22;
-
-  // packages/components/build-module/text-control/index.mjs
-  var import_compose72 = __toESM(require_compose(), 1);
-  var import_element175 = __toESM(require_element(), 1);
-  var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
-  function UnforwardedTextControl(props, ref) {
-    const {
-      // Prevent passing legacy props to `input`.
-      __nextHasNoMarginBottom: _2,
-      __next40pxDefaultSize: __62,
-      label,
-      hideLabelFromVision,
-      value,
-      help,
-      id: idProp,
-      className,
-      onChange,
-      type = "text",
-      ...additionalProps
-    } = props;
-    const id3 = (0, import_compose72.useInstanceId)(TextControl, "inspector-text-control", idProp);
-    const onChangeValue = (event) => onChange(event.target.value);
-    return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(base_control_default, {
-      label,
-      hideLabelFromVision,
-      id: id3,
-      help,
-      className,
-      children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("input", {
-        className: "components-text-control__input",
-        type,
-        id: id3,
-        value,
-        onChange: onChangeValue,
-        "aria-describedby": !!help ? id3 + "__help" : void 0,
-        ref,
-        ...additionalProps
-      })
-    });
-  }
-  var TextControl = (0, import_element175.forwardRef)(UnforwardedTextControl);
-  TextControl.displayName = "TextControl";
-  var text_control_default = TextControl;
-
-  // packages/components/build-module/textarea-control/index.mjs
-  var import_compose73 = __toESM(require_compose(), 1);
-  var import_element176 = __toESM(require_element(), 1);
-  var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE41 = "data-wp-hash";
   function getRuntime41() {
     const globalScope = globalThis;
@@ -51433,520 +51013,461 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle40("22c276380b", ".aa08a6e706634925__textarea{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));display:block;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;resize:vertical;width:100%}@media (min-width:600px){.aa08a6e706634925__textarea{font-size:13px;line-height:normal}}.aa08a6e706634925__textarea:hover:not(:disabled,[aria-disabled=true],[type=checkbox]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}.aa08a6e706634925__textarea:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa08a6e706634925__textarea::placeholder{color:rgba(30,30,30,.62)}.aa08a6e706634925__textarea{line-height:20px;min-height:38px;padding:9px 11px}.aa08a6e706634925__textarea:disabled{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-400,var(--wpds-color-stroke-interactive-neutral,#8d8d8d));color:var(--wp-components-color-gray-600,var(--wpds-color-stroke-interactive-neutral,#8d8d8d))}.aa08a6e706634925__textarea::-webkit-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.aa08a6e706634925__textarea::-moz-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.aa08a6e706634925__textarea:-ms-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.is-dark-theme .aa08a6e706634925__textarea::-webkit-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.is-dark-theme .aa08a6e706634925__textarea::-moz-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.is-dark-theme .aa08a6e706634925__textarea:-ms-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}");
+    registerStyle40("77f847972d", "._5e6152f7430df331__input input[type=search]::-webkit-search-cancel-button,._5e6152f7430df331__input input[type=search]::-webkit-search-decoration,._5e6152f7430df331__input input[type=search]::-webkit-search-results-button,._5e6152f7430df331__input input[type=search]::-webkit-search-results-decoration{-webkit-appearance:none}._9a856163f1b1aaae__icon:dir(ltr){transform:scaleX(-1)}");
   }
-  var style_module_default37 = { "textarea": "aa08a6e706634925__textarea" };
-  function UnforwardedTextareaControl(props, ref) {
+  var style_module_default36 = { "input": "_5e6152f7430df331__input", "icon": "_9a856163f1b1aaae__icon" };
+  function SuffixItem({
+    searchRef,
+    onChange,
+    onClose
+  }) {
+    if (onClose) {
+      (0, import_deprecated25.default)("`onClose` prop in wp.components.SearchControl", {
+        since: "6.8"
+      });
+    }
+    const onReset = () => {
+      onChange("");
+      searchRef.current?.focus();
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(InputControlSuffixWrapper, {
+      variant: "control",
+      children: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(button_default, {
+        size: "small",
+        icon: close_small_default,
+        label: onClose ? (0, import_i18n67.__)("Close search") : (0, import_i18n67.__)("Reset search"),
+        onClick: onClose ?? onReset
+      })
+    });
+  }
+  function UnforwardedSearchControl({
+    // Prevent passing legacy props to internal component.
+    __nextHasNoMarginBottom: _2,
+    __next40pxDefaultSize: _next40pxDefaultSize,
+    className,
+    onChange,
+    value,
+    label = (0, import_i18n67.__)("Search"),
+    placeholder = (0, import_i18n67.__)("Search"),
+    hideLabelFromVision = true,
+    onClose,
+    size: size4 = "default",
+    ...restProps
+  }, forwardedRef) {
     const {
-      // Prevent passing this to `textarea`.
+      disabled,
+      ...filteredRestProps
+    } = restProps;
+    const searchRef = (0, import_element172.useRef)(null);
+    const instanceId = (0, import_compose69.useInstanceId)(SearchControl, "components-search-control");
+    const hasSuffix = !!onClose || !!value;
+    return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(input_control_default, {
+      id: instanceId,
+      hideLabelFromVision,
+      label,
+      ref: (0, import_compose69.useMergeRefs)([searchRef, forwardedRef]),
+      type: "search",
+      size: size4,
+      className: clsx_default(style_module_default36.input, "components-search-control", className),
+      onChange: (nextValue) => onChange(nextValue ?? ""),
+      autoComplete: "off",
+      placeholder,
+      value: value ?? "",
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(InputControlPrefixWrapper, {
+        variant: "icon",
+        children: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(icon_default3, {
+          className: style_module_default36.icon,
+          icon: search_default,
+          fill: "currentColor"
+        })
+      }),
+      suffix: hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(SuffixItem, {
+        searchRef,
+        onChange,
+        onClose
+      }),
+      ...filteredRestProps
+    });
+  }
+  var SearchControl = (0, import_element172.forwardRef)(UnforwardedSearchControl);
+  SearchControl.displayName = "SearchControl";
+  var search_control_default = SearchControl;
+
+  // packages/components/build-module/snackbar/index.mjs
+  var import_a11y9 = __toESM(require_a11y(), 1);
+  var import_element173 = __toESM(require_element(), 1);
+  var import_i18n68 = __toESM(require_i18n(), 1);
+  var import_warning9 = __toESM(require_warning(), 1);
+  var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
+  var NOTICE_TIMEOUT = 6e3;
+  function useSpokenMessage2(message, politeness) {
+    const spokenMessage = typeof message === "string" ? message : (0, import_element173.renderToString)(message);
+    (0, import_element173.useEffect)(() => {
+      if (spokenMessage) {
+        (0, import_a11y9.speak)(spokenMessage, politeness);
+      }
+    }, [spokenMessage, politeness]);
+  }
+  function UnforwardedSnackbar({
+    className,
+    children,
+    spokenMessage = children,
+    politeness = "polite",
+    actions = [],
+    onRemove,
+    icon = null,
+    explicitDismiss = false,
+    // onDismiss is a callback executed when the snackbar is dismissed.
+    // It is distinct from onRemove, which _looks_ like a callback but is
+    // actually the function to call to remove the snackbar from the UI.
+    onDismiss,
+    listRef
+  }, ref) {
+    const isPresent2 = useIsPresent();
+    function dismissMe(event) {
+      if (event && event.preventDefault) {
+        event.preventDefault();
+      }
+      listRef?.current?.focus();
+      onDismiss?.();
+      onRemove?.();
+    }
+    function onActionClick(event, onClick) {
+      event.stopPropagation();
+      onRemove?.();
+      if (onClick) {
+        onClick(event);
+      }
+    }
+    useSpokenMessage2(spokenMessage, politeness);
+    const callbacksRef = (0, import_element173.useRef)({
+      onDismiss,
+      onRemove
+    });
+    (0, import_element173.useLayoutEffect)(() => {
+      callbacksRef.current = {
+        onDismiss,
+        onRemove
+      };
+    });
+    (0, import_element173.useEffect)(() => {
+      if (explicitDismiss || !isPresent2) {
+        return;
+      }
+      const timeoutHandle = setTimeout(() => {
+        callbacksRef.current.onDismiss?.();
+        callbacksRef.current.onRemove?.();
+      }, NOTICE_TIMEOUT);
+      return () => clearTimeout(timeoutHandle);
+    }, [explicitDismiss, isPresent2]);
+    const classes = clsx_default(className, "components-snackbar", {
+      "components-snackbar-explicit-dismiss": !!explicitDismiss
+    });
+    if (actions && actions.length > 1) {
+      true ? (0, import_warning9.default)("Snackbar can only have one action. Use Notice if your message requires many actions.") : void 0;
+      actions = [actions[0]];
+    }
+    const snackbarContentClassnames = clsx_default("components-snackbar__content", {
+      "components-snackbar__content-with-icon": !!icon
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime260.jsx)("div", {
+      ref,
+      className: classes,
+      onClick: !explicitDismiss ? dismissMe : void 0,
+      tabIndex: 0,
+      role: !explicitDismiss ? "button" : void 0,
+      onKeyPress: !explicitDismiss ? dismissMe : void 0,
+      "aria-label": !explicitDismiss ? (0, import_i18n68.__)("Dismiss this notice") : void 0,
+      "data-testid": "snackbar",
+      children: /* @__PURE__ */ (0, import_jsx_runtime260.jsxs)("div", {
+        className: snackbarContentClassnames,
+        children: [icon && /* @__PURE__ */ (0, import_jsx_runtime260.jsx)("div", {
+          className: "components-snackbar__icon",
+          children: icon
+        }), children, actions.map(({
+          label,
+          onClick,
+          url,
+          openInNewTab = false
+        }, index2) => url !== void 0 && openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(external_link_default, {
+          href: url,
+          onClick: (event) => onActionClick(event, onClick),
+          className: "components-snackbar__action",
+          children: label
+        }, index2) : /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(button_default, {
+          __next40pxDefaultSize: true,
+          href: url,
+          variant: "link",
+          onClick: (event) => onActionClick(event, onClick),
+          className: "components-snackbar__action",
+          children: label
+        }, index2)), explicitDismiss && /* @__PURE__ */ (0, import_jsx_runtime260.jsx)("span", {
+          role: "button",
+          "aria-label": (0, import_i18n68.__)("Dismiss this notice"),
+          tabIndex: 0,
+          className: "components-snackbar__dismiss-button",
+          onClick: dismissMe,
+          onKeyPress: dismissMe,
+          children: "\u2715"
+        })]
+      })
+    });
+  }
+  var Snackbar = (0, import_element173.forwardRef)(UnforwardedSnackbar);
+  Snackbar.displayName = "Snackbar";
+  var snackbar_default = Snackbar;
+
+  // packages/components/build-module/snackbar/list.mjs
+  var import_compose70 = __toESM(require_compose(), 1);
+  var import_element174 = __toESM(require_element(), 1);
+  var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
+  var SNACKBAR_VARIANTS = {
+    init: {
+      height: 0,
+      opacity: 0
+    },
+    open: {
+      height: "auto",
+      opacity: 1,
+      transition: {
+        height: {
+          type: "tween",
+          duration: 0.3,
+          ease: [0, 0, 0.2, 1]
+        },
+        opacity: {
+          type: "tween",
+          duration: 0.25,
+          delay: 0.05,
+          ease: [0, 0, 0.2, 1]
+        }
+      }
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        type: "tween",
+        duration: 0.1,
+        ease: [0, 0, 0.2, 1]
+      }
+    }
+  };
+  function SnackbarList({
+    notices,
+    className,
+    children,
+    onRemove
+  }) {
+    const listRef = (0, import_element174.useRef)(null);
+    const isReducedMotion = (0, import_compose70.useReducedMotion)();
+    className = clsx_default("components-snackbar-list", className);
+    const removeNotice = (notice) => () => onRemove?.(notice.id);
+    return /* @__PURE__ */ (0, import_jsx_runtime261.jsxs)("div", {
+      className,
+      tabIndex: -1,
+      ref: listRef,
+      "data-testid": "snackbar-list",
+      children: [children, /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(AnimatePresence, {
+        children: notices.map((notice) => {
+          const {
+            content,
+            ...restNotice
+          } = notice;
+          return /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(motion.div, {
+            layout: isReducedMotion ? false : "position",
+            style: {
+              width: "100%"
+            },
+            initial: "init",
+            animate: "open",
+            exit: "exit",
+            variants: isReducedMotion ? void 0 : SNACKBAR_VARIANTS,
+            children: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)("div", {
+              className: "components-snackbar-list__notice-container",
+              children: /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(snackbar_default, {
+                ...restNotice,
+                onRemove: removeNotice(notice),
+                listRef,
+                children: notice.content
+              })
+            })
+          }, notice.id);
+        })
+      })]
+    });
+  }
+  var list_default2 = SnackbarList;
+
+  // packages/components/build-module/tab-panel/index.mjs
+  var import_element175 = __toESM(require_element(), 1);
+  var import_compose71 = __toESM(require_compose(), 1);
+  var import_i18n69 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
+  var extractTabName = (id3) => {
+    if (typeof id3 === "undefined" || id3 === null) {
+      return;
+    }
+    return id3.match(/^tab-panel-[0-9]*-(.*)/)?.[1];
+  };
+  var UnforwardedTabPanel = ({
+    className,
+    children,
+    tabs,
+    selectOnMove = true,
+    initialTabName,
+    orientation = "horizontal",
+    activeClass = "is-active",
+    onSelect
+  }, ref) => {
+    const instanceId = (0, import_compose71.useInstanceId)(TabPanel22, "tab-panel");
+    const prependInstanceId = (0, import_element175.useCallback)((tabName) => {
+      if (typeof tabName === "undefined") {
+        return;
+      }
+      return `${instanceId}-${tabName}`;
+    }, [instanceId]);
+    const tabStore = useTabStore({
+      setSelectedId: (newTabValue) => {
+        if (typeof newTabValue === "undefined" || newTabValue === null) {
+          return;
+        }
+        const newTab = tabs.find((t4) => prependInstanceId(t4.name) === newTabValue);
+        if (newTab?.disabled || newTab === selectedTab) {
+          return;
+        }
+        const simplifiedTabName = extractTabName(newTabValue);
+        if (typeof simplifiedTabName === "undefined") {
+          return;
+        }
+        onSelect?.(simplifiedTabName);
+      },
+      orientation,
+      selectOnMove,
+      defaultSelectedId: prependInstanceId(initialTabName),
+      rtl: (0, import_i18n69.isRTL)()
+    });
+    const selectedTabName = extractTabName(useStoreState(tabStore, "selectedId"));
+    const setTabStoreSelectedId = (0, import_element175.useCallback)((tabName) => {
+      tabStore.setState("selectedId", prependInstanceId(tabName));
+    }, [prependInstanceId, tabStore]);
+    const selectedTab = tabs.find(({
+      name
+    }) => name === selectedTabName);
+    const previousSelectedTabName = (0, import_compose71.usePrevious)(selectedTabName);
+    (0, import_element175.useEffect)(() => {
+      if (previousSelectedTabName !== selectedTabName && selectedTabName === initialTabName && !!selectedTabName) {
+        onSelect?.(selectedTabName);
+      }
+    }, [selectedTabName, initialTabName, onSelect, previousSelectedTabName]);
+    (0, import_element175.useLayoutEffect)(() => {
+      if (selectedTab) {
+        return;
+      }
+      const initialTab = tabs.find((tab) => tab.name === initialTabName);
+      if (initialTabName && !initialTab) {
+        return;
+      }
+      if (initialTab && !initialTab.disabled) {
+        setTabStoreSelectedId(initialTab.name);
+      } else {
+        const firstEnabledTab = tabs.find((tab) => !tab.disabled);
+        if (firstEnabledTab) {
+          setTabStoreSelectedId(firstEnabledTab.name);
+        }
+      }
+    }, [tabs, selectedTab, initialTabName, instanceId, setTabStoreSelectedId]);
+    (0, import_element175.useEffect)(() => {
+      if (!selectedTab?.disabled) {
+        return;
+      }
+      const firstEnabledTab = tabs.find((tab) => !tab.disabled);
+      if (firstEnabledTab) {
+        setTabStoreSelectedId(firstEnabledTab.name);
+      }
+    }, [tabs, selectedTab?.disabled, setTabStoreSelectedId, instanceId]);
+    return /* @__PURE__ */ (0, import_jsx_runtime262.jsxs)("div", {
+      className,
+      ref,
+      children: [/* @__PURE__ */ (0, import_jsx_runtime262.jsx)(TabList, {
+        store: tabStore,
+        className: "components-tab-panel__tabs",
+        children: tabs.map((tab) => {
+          return /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(Tab, {
+            id: prependInstanceId(tab.name),
+            className: clsx_default("components-tab-panel__tabs-item", tab.className, {
+              [activeClass]: tab.name === selectedTabName
+            }),
+            disabled: tab.disabled,
+            "aria-controls": `${prependInstanceId(tab.name)}-view`,
+            render: /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(button_default, {
+              __next40pxDefaultSize: true,
+              icon: tab.icon,
+              label: tab.icon && tab.title,
+              showTooltip: !!tab.icon
+            }),
+            children: !tab.icon && tab.title
+          }, tab.name);
+        })
+      }), selectedTab && /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(TabPanel, {
+        id: `${prependInstanceId(selectedTab.name)}-view`,
+        store: tabStore,
+        tabId: prependInstanceId(selectedTab.name),
+        className: "components-tab-panel__tab-content",
+        children: children(selectedTab)
+      })]
+    });
+  };
+  var TabPanel22 = (0, import_element175.forwardRef)(UnforwardedTabPanel);
+  TabPanel22.displayName = "TabPanel";
+  var tab_panel_default = TabPanel22;
+
+  // packages/components/build-module/text-control/index.mjs
+  var import_compose72 = __toESM(require_compose(), 1);
+  var import_element176 = __toESM(require_element(), 1);
+  var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
+  function UnforwardedTextControl(props, ref) {
+    const {
+      // Prevent passing legacy props to `input`.
       __nextHasNoMarginBottom: _2,
+      __next40pxDefaultSize: __62,
       label,
       hideLabelFromVision,
       value,
       help,
-      onChange,
-      rows = 4,
+      id: idProp,
       className,
+      onChange,
+      type = "text",
       ...additionalProps
     } = props;
-    const instanceId = (0, import_compose73.useInstanceId)(TextareaControl);
-    const id3 = `inspector-textarea-control-${instanceId}`;
+    const id3 = (0, import_compose72.useInstanceId)(TextControl, "inspector-text-control", idProp);
     const onChangeValue = (event) => onChange(event.target.value);
-    const classes = clsx_default("components-textarea-control", className);
-    return /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(base_control_default, {
       label,
       hideLabelFromVision,
       id: id3,
       help,
-      className: classes,
-      children: /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("textarea", {
-        className: clsx_default("components-textarea-control__input", style_module_default37.textarea),
+      className,
+      children: /* @__PURE__ */ (0, import_jsx_runtime263.jsx)("input", {
+        className: "components-text-control__input",
+        type,
         id: id3,
-        rows,
+        value,
         onChange: onChangeValue,
         "aria-describedby": !!help ? id3 + "__help" : void 0,
-        value,
         ref,
         ...additionalProps
       })
     });
   }
-  var TextareaControl = (0, import_element176.forwardRef)(UnforwardedTextareaControl);
-  TextareaControl.displayName = "TextareaControl";
-  var textarea_control_default = TextareaControl;
+  var TextControl = (0, import_element176.forwardRef)(UnforwardedTextControl);
+  TextControl.displayName = "TextControl";
+  var text_control_default = TextControl;
 
-  // packages/components/build-module/text-highlight/index.mjs
+  // packages/components/build-module/textarea-control/index.mjs
+  var import_compose73 = __toESM(require_compose(), 1);
   var import_element177 = __toESM(require_element(), 1);
-  var import_jsx_runtime265 = __toESM(require_jsx_runtime(), 1);
-  var TextHighlight = (props) => {
-    const {
-      text = "",
-      highlight = ""
-    } = props;
-    const trimmedHighlightText = highlight.trim();
-    if (!trimmedHighlightText) {
-      return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(import_jsx_runtime265.Fragment, {
-        children: text
-      });
-    }
-    const regex = new RegExp(`(${escapeRegExp(trimmedHighlightText)})`, "gi");
-    return (0, import_element177.createInterpolateElement)(text.replace(regex, "<mark>$&</mark>"), {
-      mark: /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("mark", {})
-    });
-  };
-  TextHighlight.displayName = "TextHighlight";
-  var text_highlight_default = TextHighlight;
-
-  // packages/components/build-module/tip/index.mjs
-  var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
-  function Tip(props) {
-    const {
-      children
-    } = props;
-    return /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)("div", {
-      className: "components-tip",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime266.jsx)(icon_default2, {
-        icon: tip_default
-      }), /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("p", {
-        children
-      })]
-    });
-  }
-  var tip_default2 = Tip;
-
-  // packages/components/build-module/toggle-control/index.mjs
-  var import_element178 = __toESM(require_element(), 1);
-  var import_compose74 = __toESM(require_compose(), 1);
-  var import_jsx_runtime267 = __toESM(require_jsx_runtime(), 1);
-  function UnforwardedToggleControl({
-    label,
-    checked,
-    help,
-    className,
-    onChange,
-    disabled,
-    // Prevent passing to internal component.
-    __nextHasNoMarginBottom: _2,
-    ...additionalProps
-  }, ref) {
-    function onChangeToggle(event) {
-      onChange(event.target.checked);
-    }
-    const instanceId = (0, import_compose74.useInstanceId)(ToggleControl);
-    const id3 = `inspector-toggle-control-${instanceId}`;
-    let describedBy, helpLabel;
-    if (help) {
-      if (typeof help === "function") {
-        if (checked !== void 0) {
-          helpLabel = help(checked);
-        }
-      } else {
-        helpLabel = help;
-      }
-      if (helpLabel) {
-        describedBy = id3 + "__help";
-      }
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(base_control_default, {
-      id: id3,
-      help: helpLabel && /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("span", {
-        className: "components-toggle-control__help",
-        children: helpLabel
-      }),
-      className: clsx_default("components-toggle-control", className),
-      children: /* @__PURE__ */ (0, import_jsx_runtime267.jsxs)(component_default9, {
-        justify: "flex-start",
-        spacing: 2,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime267.jsx)(form_toggle_default, {
-          id: id3,
-          checked,
-          onChange: onChangeToggle,
-          "aria-describedby": describedBy,
-          disabled,
-          ref,
-          ...additionalProps
-        }), /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(component_default5, {
-          as: "label",
-          htmlFor: id3,
-          className: clsx_default("components-toggle-control__label", {
-            "is-disabled": disabled
-          }),
-          children: label
-        })]
-      })
-    });
-  }
-  var ToggleControl = (0, import_element178.forwardRef)(UnforwardedToggleControl);
-  ToggleControl.displayName = "ToggleControl";
-  var toggle_control_default = ToggleControl;
-
-  // packages/components/build-module/toolbar/toolbar/index.mjs
-  var import_element185 = __toESM(require_element(), 1);
-  var import_deprecated26 = __toESM(require_deprecated(), 1);
-
-  // packages/components/build-module/toolbar/toolbar-group/index.mjs
-  var import_element183 = __toESM(require_element(), 1);
-
-  // packages/components/build-module/toolbar/toolbar-button/index.mjs
-  var import_element181 = __toESM(require_element(), 1);
-
-  // packages/components/build-module/toolbar/toolbar-item/index.mjs
-  var import_element180 = __toESM(require_element(), 1);
-  var import_warning10 = __toESM(require_warning(), 1);
-
-  // packages/components/build-module/toolbar/toolbar-context/index.mjs
-  var import_element179 = __toESM(require_element(), 1);
-  var ToolbarContext = (0, import_element179.createContext)(void 0);
-  ToolbarContext.displayName = "ToolbarContext";
-  var toolbar_context_default = ToolbarContext;
-
-  // packages/components/build-module/toolbar/toolbar-item/index.mjs
-  var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
-  function UnforwardedToolbarItem({
-    children,
-    as: Component7,
-    ...props
-  }, ref) {
-    const accessibleToolbarStore = (0, import_element180.useContext)(toolbar_context_default);
-    const isRenderProp = typeof children === "function";
-    if (!isRenderProp && !Component7) {
-      true ? (0, import_warning10.default)("`ToolbarItem` is a generic headless component. You must pass either a `children` prop as a function or an `as` prop as a component. See https://developer.wordpress.org/block-editor/components/toolbar-item/") : void 0;
-      return null;
-    }
-    const allProps = {
-      ...props,
-      ref,
-      "data-toolbar-item": true
-    };
-    if (!accessibleToolbarStore) {
-      if (Component7) {
-        return /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(Component7, {
-          ...allProps,
-          children
-        });
-      }
-      if (!isRenderProp) {
-        return null;
-      }
-      return children(allProps);
-    }
-    const render = isRenderProp ? children : Component7 && /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(Component7, {
-      children
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(ToolbarItem, {
-      accessibleWhenDisabled: true,
-      ...allProps,
-      store: accessibleToolbarStore,
-      render
-    });
-  }
-  var ToolbarItem22 = (0, import_element180.forwardRef)(UnforwardedToolbarItem);
-  ToolbarItem22.displayName = "ToolbarItem";
-  var toolbar_item_default = ToolbarItem22;
-
-  // packages/components/build-module/toolbar/toolbar-button/toolbar-button-container.mjs
-  var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
-  var ToolbarButtonContainer = ({
-    children,
-    className
-  }) => /* @__PURE__ */ (0, import_jsx_runtime269.jsx)("div", {
-    className,
-    children
-  });
-  var toolbar_button_container_default = ToolbarButtonContainer;
-
-  // packages/components/build-module/toolbar/toolbar-button/index.mjs
-  var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
-  function useDeprecatedProps6({
-    isDisabled,
-    ...otherProps
-  }) {
-    return {
-      disabled: isDisabled,
-      ...otherProps
-    };
-  }
-  function UnforwardedToolbarButton(props, ref) {
-    const {
-      children,
-      className,
-      containerClassName,
-      extraProps,
-      isActive,
-      title,
-      ...restProps
-    } = useDeprecatedProps6(props);
-    const accessibleToolbarState = (0, import_element181.useContext)(toolbar_context_default);
-    if (!accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(toolbar_button_container_default, {
-        className: containerClassName,
-        children: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(button_default, {
-          ref,
-          icon: restProps.icon,
-          size: "compact",
-          label: title,
-          shortcut: restProps.shortcut,
-          "data-subscript": restProps.subscript,
-          onClick: (event) => {
-            event.stopPropagation();
-            if (restProps.onClick) {
-              restProps.onClick(event);
-            }
-          },
-          className: clsx_default("components-toolbar__control", className),
-          isPressed: isActive,
-          accessibleWhenDisabled: true,
-          "data-toolbar-item": true,
-          ...extraProps,
-          ...restProps,
-          children
-        })
-      });
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(toolbar_item_default, {
-      className: clsx_default("components-toolbar-button", className),
-      ...extraProps,
-      ...restProps,
-      ref,
-      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(button_default, {
-        size: "compact",
-        label: title,
-        isPressed: isActive,
-        ...toolbarItemProps,
-        children
-      })
-    });
-  }
-  var ToolbarButton = (0, import_element181.forwardRef)(UnforwardedToolbarButton);
-  ToolbarButton.displayName = "ToolbarButton";
-  var toolbar_button_default = ToolbarButton;
-
-  // packages/components/build-module/toolbar/toolbar-group/toolbar-group-container.mjs
-  var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
-  var ToolbarGroupContainer = ({
-    className,
-    children,
-    ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime271.jsx)("div", {
-    className,
-    ...props,
-    children
-  });
-  var toolbar_group_container_default = ToolbarGroupContainer;
-
-  // packages/components/build-module/toolbar/toolbar-group/toolbar-group-collapsed.mjs
-  var import_element182 = __toESM(require_element(), 1);
-  var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
-  function ToolbarGroupCollapsed({
-    controls = [],
-    toggleProps,
-    ...props
-  }) {
-    const accessibleToolbarState = (0, import_element182.useContext)(toolbar_context_default);
-    const renderDropdownMenu = (internalToggleProps) => /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(dropdown_menu_default, {
-      controls,
-      toggleProps: {
-        ...internalToggleProps,
-        "data-toolbar-item": true
-      },
-      ...props
-    });
-    if (accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(toolbar_item_default, {
-        ...toggleProps,
-        children: renderDropdownMenu
-      });
-    }
-    return renderDropdownMenu(toggleProps);
-  }
-  var toolbar_group_collapsed_default = ToolbarGroupCollapsed;
-
-  // packages/components/build-module/toolbar/toolbar-group/index.mjs
-  var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
-  function isNestedArray(arr) {
-    return Array.isArray(arr) && Array.isArray(arr[0]);
-  }
-  function ToolbarGroup({
-    controls = [],
-    children,
-    className,
-    isCollapsed: isCollapsed2,
-    title,
-    ...props
-  }) {
-    const accessibleToolbarState = (0, import_element183.useContext)(toolbar_context_default);
-    if ((!controls || !controls.length) && !children) {
-      return null;
-    }
-    const finalClassName = clsx_default(
-      // Unfortunately, there's legacy code referencing to `.components-toolbar`
-      // So we can't get rid of it
-      accessibleToolbarState ? "components-toolbar-group" : "components-toolbar",
-      className
-    );
-    let controlSets;
-    if (isNestedArray(controls)) {
-      controlSets = controls;
-    } else {
-      controlSets = [controls];
-    }
-    if (isCollapsed2) {
-      return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(toolbar_group_collapsed_default, {
-        label: title,
-        controls: controlSets,
-        className: finalClassName,
-        children,
-        ...props
-      });
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(toolbar_group_container_default, {
-      className: finalClassName,
-      ...props,
-      children: [controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(toolbar_button_default, {
-        containerClassName: indexOfSet > 0 && indexOfControl === 0 ? "has-left-divider" : void 0,
-        ...control
-      }, [indexOfSet, indexOfControl].join()))), children]
-    });
-  }
-  var toolbar_group_default = ToolbarGroup;
-
-  // packages/components/build-module/toolbar/toolbar/toolbar-container.mjs
-  var import_element184 = __toESM(require_element(), 1);
-  var import_i18n70 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
-  function UnforwardedToolbarContainer({
-    label,
-    ...props
-  }, ref) {
-    const toolbarStore = useToolbarStore({
-      focusLoop: true,
-      rtl: (0, import_i18n70.isRTL)()
-    });
-    return (
-      // This will provide state for `ToolbarButton`'s
-      /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(toolbar_context_default.Provider, {
-        value: toolbarStore,
-        children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(Toolbar, {
-          ref,
-          "aria-label": label,
-          store: toolbarStore,
-          ...props
-        })
-      })
-    );
-  }
-  var ToolbarContainer2 = (0, import_element184.forwardRef)(UnforwardedToolbarContainer);
-  ToolbarContainer2.displayName = "ToolbarContainer";
-  var toolbar_container_default = ToolbarContainer2;
-
-  // packages/components/build-module/toolbar/toolbar/index.mjs
-  var import_jsx_runtime275 = __toESM(require_jsx_runtime(), 1);
-  function UnforwardedToolbar({
-    className,
-    label,
-    variant,
-    ...props
-  }, ref) {
-    const isVariantDefined = variant !== void 0;
-    const contextSystemValue = (0, import_element185.useMemo)(() => {
-      if (isVariantDefined) {
-        return {};
-      }
-      return {
-        DropdownMenu: {
-          variant: "toolbar"
-        },
-        Dropdown: {
-          variant: "toolbar"
-        },
-        Menu: {
-          variant: "toolbar"
-        }
-      };
-    }, [isVariantDefined]);
-    if (!label) {
-      (0, import_deprecated26.default)("Using Toolbar without label prop", {
-        since: "5.6",
-        alternative: "ToolbarGroup component",
-        link: "https://developer.wordpress.org/block-editor/components/toolbar/"
-      });
-      const {
-        title: _title,
-        ...restProps
-      } = props;
-      return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(toolbar_group_default, {
-        isCollapsed: false,
-        ...restProps,
-        className
-      });
-    }
-    const finalClassName = clsx_default("components-accessible-toolbar", className, variant && `is-${variant}`);
-    return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(ContextSystemProvider, {
-      value: contextSystemValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(toolbar_container_default, {
-        className: finalClassName,
-        label,
-        ref,
-        ...props
-      })
-    });
-  }
-  var Toolbar3 = (0, import_element185.forwardRef)(UnforwardedToolbar);
-  Toolbar3.displayName = "Toolbar";
-  var toolbar_default = Toolbar3;
-
-  // packages/components/build-module/toolbar/toolbar-dropdown-menu/index.mjs
-  var import_element186 = __toESM(require_element(), 1);
-  var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
-  function UnforwardedToolbarDropdownMenu(props, ref) {
-    const accessibleToolbarState = (0, import_element186.useContext)(toolbar_context_default);
-    if (!accessibleToolbarState) {
-      return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(dropdown_menu_default, {
-        ...props
-      });
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(toolbar_item_default, {
-      ref,
-      ...props.toggleProps,
-      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(dropdown_menu_default, {
-        ...props,
-        popoverProps: {
-          ...props.popoverProps
-        },
-        toggleProps: toolbarItemProps
-      })
-    });
-  }
-  var ToolbarDropdownMenu = (0, import_element186.forwardRef)(UnforwardedToolbarDropdownMenu);
-  ToolbarDropdownMenu.displayName = "ToolbarDropdownMenu";
-  var toolbar_dropdown_menu_default = ToolbarDropdownMenu;
-
-  // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
-  var import_a11y10 = __toESM(require_a11y(), 1);
-  var import_i18n71 = __toESM(require_i18n(), 1);
-
-  // packages/components/build-module/tools-panel/context.mjs
-  var import_element187 = __toESM(require_element(), 1);
-  var noop24 = () => void 0;
-  var ToolsPanelContext = (0, import_element187.createContext)({
-    menuItems: {
-      default: {},
-      optional: {}
-    },
-    hasMenuItems: false,
-    isResetting: false,
-    shouldRenderPlaceholderItems: false,
-    registerPanelItem: noop24,
-    deregisterPanelItem: noop24,
-    flagItemCustomization: noop24,
-    registerResetAllFilter: noop24,
-    deregisterResetAllFilter: noop24,
-    areAllOptionalControlsHidden: true
-  });
-  ToolsPanelContext.displayName = "ToolsPanelContext";
-  var useToolsPanelContext = () => (0, import_element187.useContext)(ToolsPanelContext);
-
-  // packages/components/build-module/tools-panel/tools-panel-header/hook.mjs
+  var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE42 = "data-wp-hash";
   function getRuntime42() {
     const globalScope = globalThis;
@@ -52023,35 +51544,520 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle41("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+    registerStyle41("22c276380b", ".aa08a6e706634925__textarea{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));display:block;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;resize:vertical;width:100%}@media (min-width:600px){.aa08a6e706634925__textarea{font-size:13px;line-height:normal}}.aa08a6e706634925__textarea:hover:not(:disabled,[aria-disabled=true],[type=checkbox]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}.aa08a6e706634925__textarea:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa08a6e706634925__textarea::placeholder{color:rgba(30,30,30,.62)}.aa08a6e706634925__textarea{line-height:20px;min-height:38px;padding:9px 11px}.aa08a6e706634925__textarea:disabled{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-400,var(--wpds-color-stroke-interactive-neutral,#8d8d8d));color:var(--wp-components-color-gray-600,var(--wpds-color-stroke-interactive-neutral,#8d8d8d))}.aa08a6e706634925__textarea::-webkit-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.aa08a6e706634925__textarea::-moz-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.aa08a6e706634925__textarea:-ms-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%)}.is-dark-theme .aa08a6e706634925__textarea::-webkit-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.is-dark-theme .aa08a6e706634925__textarea::-moz-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}.is-dark-theme .aa08a6e706634925__textarea:-ms-input-placeholder{color:color-mix(in srgb,var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff)),transparent 35%)}");
   }
-  var style_module_default38 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
-  function useToolsPanelHeader(props) {
+  var style_module_default37 = { "textarea": "aa08a6e706634925__textarea" };
+  function UnforwardedTextareaControl(props, ref) {
     const {
+      // Prevent passing this to `textarea`.
+      __nextHasNoMarginBottom: _2,
+      label,
+      hideLabelFromVision,
+      value,
+      help,
+      onChange,
+      rows = 4,
       className,
-      headingLevel = 2,
-      ...otherProps
-    } = useContextSystem(props, "ToolsPanelHeader");
+      ...additionalProps
+    } = props;
+    const instanceId = (0, import_compose73.useInstanceId)(TextareaControl);
+    const id3 = `inspector-textarea-control-${instanceId}`;
+    const onChangeValue = (event) => onChange(event.target.value);
+    const classes = clsx_default("components-textarea-control", className);
+    return /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(base_control_default, {
+      label,
+      hideLabelFromVision,
+      id: id3,
+      help,
+      className: classes,
+      children: /* @__PURE__ */ (0, import_jsx_runtime264.jsx)("textarea", {
+        className: clsx_default("components-textarea-control__input", style_module_default37.textarea),
+        id: id3,
+        rows,
+        onChange: onChangeValue,
+        "aria-describedby": !!help ? id3 + "__help" : void 0,
+        value,
+        ref,
+        ...additionalProps
+      })
+    });
+  }
+  var TextareaControl = (0, import_element177.forwardRef)(UnforwardedTextareaControl);
+  TextareaControl.displayName = "TextareaControl";
+  var textarea_control_default = TextareaControl;
+
+  // packages/components/build-module/text-highlight/index.mjs
+  var import_element178 = __toESM(require_element(), 1);
+  var import_jsx_runtime265 = __toESM(require_jsx_runtime(), 1);
+  var TextHighlight = (props) => {
     const {
-      menuItems,
-      hasMenuItems,
-      areAllOptionalControlsHidden
-    } = useToolsPanelContext();
+      text = "",
+      highlight = ""
+    } = props;
+    const trimmedHighlightText = highlight.trim();
+    if (!trimmedHighlightText) {
+      return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(import_jsx_runtime265.Fragment, {
+        children: text
+      });
+    }
+    const regex = new RegExp(`(${escapeRegExp(trimmedHighlightText)})`, "gi");
+    return (0, import_element178.createInterpolateElement)(text.replace(regex, "<mark>$&</mark>"), {
+      mark: /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("mark", {})
+    });
+  };
+  TextHighlight.displayName = "TextHighlight";
+  var text_highlight_default = TextHighlight;
+
+  // packages/components/build-module/tip/index.mjs
+  var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
+  function Tip(props) {
+    const {
+      children
+    } = props;
+    return /* @__PURE__ */ (0, import_jsx_runtime266.jsxs)("div", {
+      className: "components-tip",
+      children: [/* @__PURE__ */ (0, import_jsx_runtime266.jsx)(icon_default2, {
+        icon: tip_default
+      }), /* @__PURE__ */ (0, import_jsx_runtime266.jsx)("p", {
+        children
+      })]
+    });
+  }
+  var tip_default2 = Tip;
+
+  // packages/components/build-module/toggle-control/index.mjs
+  var import_element179 = __toESM(require_element(), 1);
+  var import_compose74 = __toESM(require_compose(), 1);
+  var import_jsx_runtime267 = __toESM(require_jsx_runtime(), 1);
+  function UnforwardedToggleControl({
+    label,
+    checked,
+    help,
+    className,
+    onChange,
+    disabled,
+    // Prevent passing to internal component.
+    __nextHasNoMarginBottom: _2,
+    ...additionalProps
+  }, ref) {
+    function onChangeToggle(event) {
+      onChange(event.target.checked);
+    }
+    const instanceId = (0, import_compose74.useInstanceId)(ToggleControl);
+    const id3 = `inspector-toggle-control-${instanceId}`;
+    let describedBy, helpLabel;
+    if (help) {
+      if (typeof help === "function") {
+        if (checked !== void 0) {
+          helpLabel = help(checked);
+        }
+      } else {
+        helpLabel = help;
+      }
+      if (helpLabel) {
+        describedBy = id3 + "__help";
+      }
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(base_control_default, {
+      id: id3,
+      help: helpLabel && /* @__PURE__ */ (0, import_jsx_runtime267.jsx)("span", {
+        className: "components-toggle-control__help",
+        children: helpLabel
+      }),
+      className: clsx_default("components-toggle-control", className),
+      children: /* @__PURE__ */ (0, import_jsx_runtime267.jsxs)(component_default9, {
+        justify: "flex-start",
+        spacing: 2,
+        children: [/* @__PURE__ */ (0, import_jsx_runtime267.jsx)(form_toggle_default, {
+          id: id3,
+          checked,
+          onChange: onChangeToggle,
+          "aria-describedby": describedBy,
+          disabled,
+          ref,
+          ...additionalProps
+        }), /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(component_default5, {
+          as: "label",
+          htmlFor: id3,
+          className: clsx_default("components-toggle-control__label", {
+            "is-disabled": disabled
+          }),
+          children: label
+        })]
+      })
+    });
+  }
+  var ToggleControl = (0, import_element179.forwardRef)(UnforwardedToggleControl);
+  ToggleControl.displayName = "ToggleControl";
+  var toggle_control_default = ToggleControl;
+
+  // packages/components/build-module/toolbar/toolbar/index.mjs
+  var import_element186 = __toESM(require_element(), 1);
+  var import_deprecated26 = __toESM(require_deprecated(), 1);
+
+  // packages/components/build-module/toolbar/toolbar-group/index.mjs
+  var import_element184 = __toESM(require_element(), 1);
+
+  // packages/components/build-module/toolbar/toolbar-button/index.mjs
+  var import_element182 = __toESM(require_element(), 1);
+
+  // packages/components/build-module/toolbar/toolbar-item/index.mjs
+  var import_element181 = __toESM(require_element(), 1);
+  var import_warning10 = __toESM(require_warning(), 1);
+
+  // packages/components/build-module/toolbar/toolbar-context/index.mjs
+  var import_element180 = __toESM(require_element(), 1);
+  var ToolbarContext = (0, import_element180.createContext)(void 0);
+  ToolbarContext.displayName = "ToolbarContext";
+  var toolbar_context_default = ToolbarContext;
+
+  // packages/components/build-module/toolbar/toolbar-item/index.mjs
+  var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
+  function UnforwardedToolbarItem({
+    children,
+    as: Component7,
+    ...props
+  }, ref) {
+    const accessibleToolbarStore = (0, import_element181.useContext)(toolbar_context_default);
+    const isRenderProp = typeof children === "function";
+    if (!isRenderProp && !Component7) {
+      true ? (0, import_warning10.default)("`ToolbarItem` is a generic headless component. You must pass either a `children` prop as a function or an `as` prop as a component. See https://developer.wordpress.org/block-editor/components/toolbar-item/") : void 0;
+      return null;
+    }
+    const allProps = {
+      ...props,
+      ref,
+      "data-toolbar-item": true
+    };
+    if (!accessibleToolbarStore) {
+      if (Component7) {
+        return /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(Component7, {
+          ...allProps,
+          children
+        });
+      }
+      if (!isRenderProp) {
+        return null;
+      }
+      return children(allProps);
+    }
+    const render = isRenderProp ? children : Component7 && /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(Component7, {
+      children
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(ToolbarItem, {
+      accessibleWhenDisabled: true,
+      ...allProps,
+      store: accessibleToolbarStore,
+      render
+    });
+  }
+  var ToolbarItem22 = (0, import_element181.forwardRef)(UnforwardedToolbarItem);
+  ToolbarItem22.displayName = "ToolbarItem";
+  var toolbar_item_default = ToolbarItem22;
+
+  // packages/components/build-module/toolbar/toolbar-button/toolbar-button-container.mjs
+  var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
+  var ToolbarButtonContainer = ({
+    children,
+    className
+  }) => /* @__PURE__ */ (0, import_jsx_runtime269.jsx)("div", {
+    className,
+    children
+  });
+  var toolbar_button_container_default = ToolbarButtonContainer;
+
+  // packages/components/build-module/toolbar/toolbar-button/index.mjs
+  var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
+  function useDeprecatedProps6({
+    isDisabled,
+    ...otherProps
+  }) {
     return {
-      ...otherProps,
-      areAllOptionalControlsHidden,
-      defaultControlsItemClassName: style_module_default38["default-controls-item"],
-      dropdownMenuClassName: style_module_default38["dropdown-menu"],
-      hasMenuItems,
-      headingClassName: style_module_default38["tools-panel-heading"],
-      headingLevel,
-      menuItems,
-      className: clsx_default(style_module_default38["tools-panel-header"], className)
+      disabled: isDisabled,
+      ...otherProps
     };
   }
+  function UnforwardedToolbarButton(props, ref) {
+    const {
+      children,
+      className,
+      containerClassName,
+      extraProps,
+      isActive,
+      title,
+      ...restProps
+    } = useDeprecatedProps6(props);
+    const accessibleToolbarState = (0, import_element182.useContext)(toolbar_context_default);
+    if (!accessibleToolbarState) {
+      return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(toolbar_button_container_default, {
+        className: containerClassName,
+        children: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(button_default, {
+          ref,
+          icon: restProps.icon,
+          size: "compact",
+          label: title,
+          shortcut: restProps.shortcut,
+          "data-subscript": restProps.subscript,
+          onClick: (event) => {
+            event.stopPropagation();
+            if (restProps.onClick) {
+              restProps.onClick(event);
+            }
+          },
+          className: clsx_default("components-toolbar__control", className),
+          isPressed: isActive,
+          accessibleWhenDisabled: true,
+          "data-toolbar-item": true,
+          ...extraProps,
+          ...restProps,
+          children
+        })
+      });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(toolbar_item_default, {
+      className: clsx_default("components-toolbar-button", className),
+      ...extraProps,
+      ...restProps,
+      ref,
+      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(button_default, {
+        size: "compact",
+        label: title,
+        isPressed: isActive,
+        ...toolbarItemProps,
+        children
+      })
+    });
+  }
+  var ToolbarButton = (0, import_element182.forwardRef)(UnforwardedToolbarButton);
+  ToolbarButton.displayName = "ToolbarButton";
+  var toolbar_button_default = ToolbarButton;
+
+  // packages/components/build-module/toolbar/toolbar-group/toolbar-group-container.mjs
+  var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
+  var ToolbarGroupContainer = ({
+    className,
+    children,
+    ...props
+  }) => /* @__PURE__ */ (0, import_jsx_runtime271.jsx)("div", {
+    className,
+    ...props,
+    children
+  });
+  var toolbar_group_container_default = ToolbarGroupContainer;
+
+  // packages/components/build-module/toolbar/toolbar-group/toolbar-group-collapsed.mjs
+  var import_element183 = __toESM(require_element(), 1);
+  var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
+  function ToolbarGroupCollapsed({
+    controls = [],
+    toggleProps,
+    ...props
+  }) {
+    const accessibleToolbarState = (0, import_element183.useContext)(toolbar_context_default);
+    const renderDropdownMenu = (internalToggleProps) => /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(dropdown_menu_default, {
+      controls,
+      toggleProps: {
+        ...internalToggleProps,
+        "data-toolbar-item": true
+      },
+      ...props
+    });
+    if (accessibleToolbarState) {
+      return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(toolbar_item_default, {
+        ...toggleProps,
+        children: renderDropdownMenu
+      });
+    }
+    return renderDropdownMenu(toggleProps);
+  }
+  var toolbar_group_collapsed_default = ToolbarGroupCollapsed;
+
+  // packages/components/build-module/toolbar/toolbar-group/index.mjs
+  var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
+  function isNestedArray(arr) {
+    return Array.isArray(arr) && Array.isArray(arr[0]);
+  }
+  function ToolbarGroup({
+    controls = [],
+    children,
+    className,
+    isCollapsed: isCollapsed2,
+    title,
+    ...props
+  }) {
+    const accessibleToolbarState = (0, import_element184.useContext)(toolbar_context_default);
+    if ((!controls || !controls.length) && !children) {
+      return null;
+    }
+    const finalClassName = clsx_default(
+      // Unfortunately, there's legacy code referencing to `.components-toolbar`
+      // So we can't get rid of it
+      accessibleToolbarState ? "components-toolbar-group" : "components-toolbar",
+      className
+    );
+    let controlSets;
+    if (isNestedArray(controls)) {
+      controlSets = controls;
+    } else {
+      controlSets = [controls];
+    }
+    if (isCollapsed2) {
+      return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(toolbar_group_collapsed_default, {
+        label: title,
+        controls: controlSets,
+        className: finalClassName,
+        children,
+        ...props
+      });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(toolbar_group_container_default, {
+      className: finalClassName,
+      ...props,
+      children: [controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(toolbar_button_default, {
+        containerClassName: indexOfSet > 0 && indexOfControl === 0 ? "has-left-divider" : void 0,
+        ...control
+      }, [indexOfSet, indexOfControl].join()))), children]
+    });
+  }
+  var toolbar_group_default = ToolbarGroup;
+
+  // packages/components/build-module/toolbar/toolbar/toolbar-container.mjs
+  var import_element185 = __toESM(require_element(), 1);
+  var import_i18n70 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
+  function UnforwardedToolbarContainer({
+    label,
+    ...props
+  }, ref) {
+    const toolbarStore = useToolbarStore({
+      focusLoop: true,
+      rtl: (0, import_i18n70.isRTL)()
+    });
+    return (
+      // This will provide state for `ToolbarButton`'s
+      /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(toolbar_context_default.Provider, {
+        value: toolbarStore,
+        children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(Toolbar, {
+          ref,
+          "aria-label": label,
+          store: toolbarStore,
+          ...props
+        })
+      })
+    );
+  }
+  var ToolbarContainer2 = (0, import_element185.forwardRef)(UnforwardedToolbarContainer);
+  ToolbarContainer2.displayName = "ToolbarContainer";
+  var toolbar_container_default = ToolbarContainer2;
+
+  // packages/components/build-module/toolbar/toolbar/index.mjs
+  var import_jsx_runtime275 = __toESM(require_jsx_runtime(), 1);
+  function UnforwardedToolbar({
+    className,
+    label,
+    variant,
+    ...props
+  }, ref) {
+    const isVariantDefined = variant !== void 0;
+    const contextSystemValue = (0, import_element186.useMemo)(() => {
+      if (isVariantDefined) {
+        return {};
+      }
+      return {
+        DropdownMenu: {
+          variant: "toolbar"
+        },
+        Dropdown: {
+          variant: "toolbar"
+        },
+        Menu: {
+          variant: "toolbar"
+        }
+      };
+    }, [isVariantDefined]);
+    if (!label) {
+      (0, import_deprecated26.default)("Using Toolbar without label prop", {
+        since: "5.6",
+        alternative: "ToolbarGroup component",
+        link: "https://developer.wordpress.org/block-editor/components/toolbar/"
+      });
+      const {
+        title: _title,
+        ...restProps
+      } = props;
+      return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(toolbar_group_default, {
+        isCollapsed: false,
+        ...restProps,
+        className
+      });
+    }
+    const finalClassName = clsx_default("components-accessible-toolbar", className, variant && `is-${variant}`);
+    return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(ContextSystemProvider, {
+      value: contextSystemValue,
+      children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(toolbar_container_default, {
+        className: finalClassName,
+        label,
+        ref,
+        ...props
+      })
+    });
+  }
+  var Toolbar3 = (0, import_element186.forwardRef)(UnforwardedToolbar);
+  Toolbar3.displayName = "Toolbar";
+  var toolbar_default = Toolbar3;
+
+  // packages/components/build-module/toolbar/toolbar-dropdown-menu/index.mjs
+  var import_element187 = __toESM(require_element(), 1);
+  var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
+  function UnforwardedToolbarDropdownMenu(props, ref) {
+    const accessibleToolbarState = (0, import_element187.useContext)(toolbar_context_default);
+    if (!accessibleToolbarState) {
+      return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(dropdown_menu_default, {
+        ...props
+      });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(toolbar_item_default, {
+      ref,
+      ...props.toggleProps,
+      children: (toolbarItemProps) => /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(dropdown_menu_default, {
+        ...props,
+        popoverProps: {
+          ...props.popoverProps
+        },
+        toggleProps: toolbarItemProps
+      })
+    });
+  }
+  var ToolbarDropdownMenu = (0, import_element187.forwardRef)(UnforwardedToolbarDropdownMenu);
+  ToolbarDropdownMenu.displayName = "ToolbarDropdownMenu";
+  var toolbar_dropdown_menu_default = ToolbarDropdownMenu;
 
   // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
-  var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
+  var import_a11y10 = __toESM(require_a11y(), 1);
+  var import_i18n71 = __toESM(require_i18n(), 1);
+
+  // packages/components/build-module/tools-panel/context.mjs
+  var import_element188 = __toESM(require_element(), 1);
+  var noop24 = () => void 0;
+  var ToolsPanelContext = (0, import_element188.createContext)({
+    menuItems: {
+      default: {},
+      optional: {}
+    },
+    hasMenuItems: false,
+    isResetting: false,
+    shouldRenderPlaceholderItems: false,
+    registerPanelItem: noop24,
+    deregisterPanelItem: noop24,
+    flagItemCustomization: noop24,
+    registerResetAllFilter: noop24,
+    deregisterResetAllFilter: noop24,
+    areAllOptionalControlsHidden: true
+  });
+  ToolsPanelContext.displayName = "ToolsPanelContext";
+  var useToolsPanelContext = () => (0, import_element188.useContext)(ToolsPanelContext);
+
+  // packages/components/build-module/tools-panel/tools-panel-header/hook.mjs
   var STYLE_HASH_ATTRIBUTE43 = "data-wp-hash";
   function getRuntime43() {
     const globalScope = globalThis;
@@ -52129,6 +52135,111 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
   if (typeof process === "undefined" || true) {
     registerStyle42("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+  }
+  var style_module_default38 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
+  function useToolsPanelHeader(props) {
+    const {
+      className,
+      headingLevel = 2,
+      ...otherProps
+    } = useContextSystem(props, "ToolsPanelHeader");
+    const {
+      menuItems,
+      hasMenuItems,
+      areAllOptionalControlsHidden
+    } = useToolsPanelContext();
+    return {
+      ...otherProps,
+      areAllOptionalControlsHidden,
+      defaultControlsItemClassName: style_module_default38["default-controls-item"],
+      dropdownMenuClassName: style_module_default38["dropdown-menu"],
+      hasMenuItems,
+      headingClassName: style_module_default38["tools-panel-heading"],
+      headingLevel,
+      menuItems,
+      className: clsx_default(style_module_default38["tools-panel-header"], className)
+    };
+  }
+
+  // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
+  var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE44 = "data-wp-hash";
+  function getRuntime44() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument44(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash44(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE44}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE44) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle44(targetDocument, hash2, css3) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime44();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash44(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE44, hash2);
+    style2.appendChild(targetDocument.createTextNode(css3));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument44(targetDocument) {
+    const runtime = getRuntime44();
+    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+    for (const [hash2, css3] of runtime.styles) {
+      injectStyle44(targetDocument, hash2, css3);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle43(hash2, css3) {
+    const runtime = getRuntime44();
+    runtime.styles.set(hash2, css3);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle44(targetDocument, hash2, css3);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle43("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
   var style_module_default39 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   var DefaultControlsGroup = ({
@@ -52300,9 +52411,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var component_default38 = ConnectedToolsPanelHeader;
 
   // packages/components/build-module/tools-panel/tools-panel/hook.mjs
-  var import_element188 = __toESM(require_element(), 1);
-  var STYLE_HASH_ATTRIBUTE44 = "data-wp-hash";
-  function getRuntime44() {
+  var import_element189 = __toESM(require_element(), 1);
+  var STYLE_HASH_ATTRIBUTE45 = "data-wp-hash";
+  function getRuntime45() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -52313,26 +52424,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument44(document);
+      registerDocument45(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash44(targetDocument, hash2) {
+  function documentContainsStyleHash45(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE44}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE44) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE45}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE45) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle44(targetDocument, hash2, css3) {
+  function injectStyle45(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime44();
+    const runtime = getRuntime45();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -52341,21 +52452,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash44(targetDocument, hash2)) {
+    if (documentContainsStyleHash45(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE44, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE45, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument44(targetDocument) {
-    const runtime = getRuntime44();
+  function registerDocument45(targetDocument) {
+    const runtime = getRuntime45();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle44(targetDocument, hash2, css3);
+      injectStyle45(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -52369,15 +52480,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle43(hash2, css3) {
-    const runtime = getRuntime44();
+  function registerStyle44(hash2, css3) {
+    const runtime = getRuntime45();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle44(targetDocument, hash2, css3);
+      injectStyle45(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle43("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+    registerStyle44("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
   var style_module_default40 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   function emptyState() {
@@ -52521,8 +52632,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       __experimentalLastVisibleItemClass,
       ...otherProps
     } = useContextSystem(props, "ToolsPanel");
-    const [isResetting, setIsResetting] = (0, import_element188.useState)(false);
-    (0, import_element188.useEffect)(() => {
+    const [isResetting, setIsResetting] = (0, import_element189.useState)(false);
+    (0, import_element189.useEffect)(() => {
       if (isResetting) {
         setIsResetting(false);
       }
@@ -52531,41 +52642,41 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       panelItems,
       menuItemOrder,
       menuItemValues
-    }, panelDispatch] = (0, import_element188.useReducer)(panelReducer, void 0, emptyState);
-    const [externalResetAllFilters, dispatchResetAllFilters] = (0, import_element188.useReducer)(resetAllFiltersReducer, []);
-    const registerPanelItem = (0, import_element188.useCallback)((item) => {
+    }, panelDispatch] = (0, import_element189.useReducer)(panelReducer, void 0, emptyState);
+    const [externalResetAllFilters, dispatchResetAllFilters] = (0, import_element189.useReducer)(resetAllFiltersReducer, []);
+    const registerPanelItem = (0, import_element189.useCallback)((item) => {
       panelDispatch({
         type: "REGISTER_PANEL",
         item
       });
     }, []);
-    const deregisterPanelItem = (0, import_element188.useCallback)((label, item) => {
+    const deregisterPanelItem = (0, import_element189.useCallback)((label, item) => {
       panelDispatch({
         type: "UNREGISTER_PANEL",
         label,
         item
       });
     }, []);
-    const registerResetAllFilter = (0, import_element188.useCallback)((filter2) => {
+    const registerResetAllFilter = (0, import_element189.useCallback)((filter2) => {
       dispatchResetAllFilters({
         type: "REGISTER",
         filter: filter2
       });
     }, []);
-    const deregisterResetAllFilter = (0, import_element188.useCallback)((filter2) => {
+    const deregisterResetAllFilter = (0, import_element189.useCallback)((filter2) => {
       dispatchResetAllFilters({
         type: "UNREGISTER",
         filter: filter2
       });
     }, []);
-    const flagItemCustomization = (0, import_element188.useCallback)((value, label) => {
+    const flagItemCustomization = (0, import_element189.useCallback)((value, label) => {
       panelDispatch({
         type: "UPDATE_VALUE",
         label,
         value
       });
     }, []);
-    const menuItems = (0, import_element188.useMemo)(() => {
+    const menuItems = (0, import_element189.useMemo)(() => {
       const result = {
         default: {},
         optional: {}
@@ -52580,11 +52691,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       });
       return result;
     }, [panelItems, menuItemOrder, menuItemValues]);
-    const areAllOptionalControlsHidden = (0, import_element188.useMemo)(() => {
+    const areAllOptionalControlsHidden = (0, import_element189.useMemo)(() => {
       return isMenuItemTypeEmpty(menuItems.default) && !isMenuItemTypeEmpty(menuItems.optional) && Object.values(menuItems.optional).every((isSelected2) => !isSelected2);
     }, [menuItems]);
     const classes = clsx_default(style_module_default40["tools-panel"], hasInnerWrapper && style_module_default40["tools-panel-with-inner-wrapper"], areAllOptionalControlsHidden && style_module_default40["tools-panel-hidden-inner-wrapper"], className);
-    const toggleItem = (0, import_element188.useCallback)((label) => {
+    const toggleItem = (0, import_element189.useCallback)((label) => {
       const currentItem = panelItems.find((item) => item.label === label);
       if (!currentItem) {
         return;
@@ -52598,11 +52709,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       currentItem.onShownChange?.(!menuItems.optional[label]);
     }, [menuItems, panelItems]);
-    const resetAllFilters = (0, import_element188.useMemo)(() => {
+    const resetAllFilters = (0, import_element189.useMemo)(() => {
       const itemFilters = panelItems.map((item) => item.resetAllFilter).filter((filter2) => !!filter2);
       return [...itemFilters, ...externalResetAllFilters];
     }, [panelItems, externalResetAllFilters]);
-    const resetAllItems = (0, import_element188.useCallback)(() => {
+    const resetAllItems = (0, import_element189.useCallback)(() => {
       if (typeof resetAll === "function") {
         setIsResetting(true);
         resetAll(resetAllFilters);
@@ -52619,7 +52730,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const firstDisplayedItem = getFirstVisibleItemLabel(panelItems);
     const lastDisplayedItem = getFirstVisibleItemLabel([...panelItems].reverse());
     const hasMenuItems = panelItems.length > 0;
-    const panelContext = (0, import_element188.useMemo)(() => ({
+    const panelContext = (0, import_element189.useMemo)(() => ({
       areAllOptionalControlsHidden,
       deregisterPanelItem,
       deregisterResetAllFilter,
@@ -52685,9 +52796,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tools-panel/tools-panel-item/hook.mjs
   var import_compose75 = __toESM(require_compose(), 1);
-  var import_element189 = __toESM(require_element(), 1);
-  var STYLE_HASH_ATTRIBUTE45 = "data-wp-hash";
-  function getRuntime45() {
+  var import_element190 = __toESM(require_element(), 1);
+  var STYLE_HASH_ATTRIBUTE46 = "data-wp-hash";
+  function getRuntime46() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -52698,26 +52809,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument45(document);
+      registerDocument46(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash45(targetDocument, hash2) {
+  function documentContainsStyleHash46(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE45}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE45) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE46}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE46) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle45(targetDocument, hash2, css3) {
+  function injectStyle46(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime45();
+    const runtime = getRuntime46();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -52726,21 +52837,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash45(targetDocument, hash2)) {
+    if (documentContainsStyleHash46(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE45, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE46, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument45(targetDocument) {
-    const runtime = getRuntime45();
+  function registerDocument46(targetDocument) {
+    const runtime = getRuntime46();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle45(targetDocument, hash2, css3);
+      injectStyle46(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -52754,15 +52865,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle44(hash2, css3) {
-    const runtime = getRuntime45();
+  function registerStyle45(hash2, css3) {
+    const runtime = getRuntime46();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle45(targetDocument, hash2, css3);
+      injectStyle46(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle44("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+    registerStyle45("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
   var style_module_default41 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   var noop25 = () => {
@@ -52794,15 +52905,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       __experimentalFirstVisibleItemClass,
       __experimentalLastVisibleItemClass
     } = useToolsPanelContext();
-    const hasValueCallback = (0, import_element189.useCallback)(hasValue, [panelId]);
+    const hasValueCallback = (0, import_element190.useCallback)(hasValue, [panelId]);
     const resetAllFilterCallback = (0, import_compose75.useEvent)(resetAllFilter);
-    const defaultShownRef = (0, import_element189.useRef)(defaultShown);
-    (0, import_element189.useLayoutEffect)(() => {
+    const defaultShownRef = (0, import_element190.useRef)(defaultShown);
+    (0, import_element190.useLayoutEffect)(() => {
       defaultShownRef.current = defaultShown;
     });
     const onShownChangeCallback = (0, import_compose75.useEvent)(onShownChange);
     const hasMatchingPanel = currentPanelId === panelId || currentPanelId === null;
-    (0, import_element189.useLayoutEffect)(() => {
+    (0, import_element190.useLayoutEffect)(() => {
       if (!hasMatchingPanel) {
         return;
       }
@@ -52823,15 +52934,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const menuGroup = isShownByDefault ? "default" : "optional";
     const isMenuItemChecked = menuItems?.[menuGroup]?.[label];
     const isRegistered = isMenuItemChecked !== void 0;
-    const wasMenuItemCheckedRef = (0, import_element189.useRef)(void 0);
+    const wasMenuItemCheckedRef = (0, import_element190.useRef)(void 0);
     const isValueSet = hasValue();
-    (0, import_element189.useLayoutEffect)(() => {
+    (0, import_element190.useLayoutEffect)(() => {
       if (!hasMatchingPanel || !isShownByDefault && !isValueSet) {
         return;
       }
       flagItemCustomization(isValueSet, label);
     }, [hasMatchingPanel, isValueSet, label, flagItemCustomization, isShownByDefault]);
-    (0, import_element189.useEffect)(() => {
+    (0, import_element190.useEffect)(() => {
       const wasMenuItemChecked = wasMenuItemCheckedRef.current;
       wasMenuItemCheckedRef.current = isMenuItemChecked;
       const wasRegistered = wasMenuItemChecked !== void 0;
@@ -52882,17 +52993,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tree-grid/index.mjs
   var import_dom9 = __toESM(require_dom(), 1);
-  var import_element196 = __toESM(require_element(), 1);
+  var import_element197 = __toESM(require_element(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
 
   // packages/components/build-module/tree-grid/roving-tab-index.mjs
-  var import_element191 = __toESM(require_element(), 1);
+  var import_element192 = __toESM(require_element(), 1);
 
   // packages/components/build-module/tree-grid/roving-tab-index-context.mjs
-  var import_element190 = __toESM(require_element(), 1);
-  var RovingTabIndexContext = (0, import_element190.createContext)(void 0);
+  var import_element191 = __toESM(require_element(), 1);
+  var RovingTabIndexContext = (0, import_element191.createContext)(void 0);
   RovingTabIndexContext.displayName = "RovingTabIndexContext";
-  var useRovingTabIndexContext = () => (0, import_element190.useContext)(RovingTabIndexContext);
+  var useRovingTabIndexContext = () => (0, import_element191.useContext)(RovingTabIndexContext);
   var RovingTabIndexProvider = RovingTabIndexContext.Provider;
 
   // packages/components/build-module/tree-grid/roving-tab-index.mjs
@@ -52900,8 +53011,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   function RovingTabIndex({
     children
   }) {
-    const [lastFocusedElement, setLastFocusedElement] = (0, import_element191.useState)();
-    const providerValue = (0, import_element191.useMemo)(() => ({
+    const [lastFocusedElement, setLastFocusedElement] = (0, import_element192.useState)();
+    const providerValue = (0, import_element192.useMemo)(() => ({
       lastFocusedElement,
       setLastFocusedElement
     }), [lastFocusedElement]);
@@ -52915,7 +53026,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
 
   // packages/components/build-module/tree-grid/row.mjs
-  var import_element192 = __toESM(require_element(), 1);
+  var import_element193 = __toESM(require_element(), 1);
   var import_jsx_runtime281 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedTreeGridRow({
     children,
@@ -52936,25 +53047,25 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       children
     });
   }
-  var TreeGridRow = (0, import_element192.forwardRef)(UnforwardedTreeGridRow);
+  var TreeGridRow = (0, import_element193.forwardRef)(UnforwardedTreeGridRow);
   TreeGridRow.displayName = "TreeGridRow";
   var row_default2 = TreeGridRow;
 
   // packages/components/build-module/tree-grid/cell.mjs
-  var import_element195 = __toESM(require_element(), 1);
+  var import_element196 = __toESM(require_element(), 1);
 
   // packages/components/build-module/tree-grid/item.mjs
-  var import_element194 = __toESM(require_element(), 1);
+  var import_element195 = __toESM(require_element(), 1);
 
   // packages/components/build-module/tree-grid/roving-tab-index-item.mjs
-  var import_element193 = __toESM(require_element(), 1);
+  var import_element194 = __toESM(require_element(), 1);
   var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
-  var RovingTabIndexItem = (0, import_element193.forwardRef)(function UnforwardedRovingTabIndexItem({
+  var RovingTabIndexItem = (0, import_element194.forwardRef)(function UnforwardedRovingTabIndexItem({
     children,
     as: Component7,
     ...props
   }, forwardedRef) {
-    const localRef = (0, import_element193.useRef)(null);
+    const localRef = (0, import_element194.useRef)(null);
     const ref = forwardedRef || localRef;
     const {
       lastFocusedElement,
@@ -53001,7 +53112,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       children
     });
   }
-  var TreeGridItem = (0, import_element194.forwardRef)(UnforwardedTreeGridItem);
+  var TreeGridItem = (0, import_element195.forwardRef)(UnforwardedTreeGridItem);
   TreeGridItem.displayName = "TreeGridItem";
   var item_default2 = TreeGridItem;
 
@@ -53026,7 +53137,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   }
-  var TreeGridCell = (0, import_element195.forwardRef)(UnforwardedTreeGridCell);
+  var TreeGridCell = (0, import_element196.forwardRef)(UnforwardedTreeGridCell);
   TreeGridCell.displayName = "TreeGridCell";
   var cell_default = TreeGridCell;
 
@@ -53050,7 +53161,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     applicationAriaLabel,
     ...props
   }, ref) {
-    const onKeyDown = (0, import_element196.useCallback)((event) => {
+    const onKeyDown = (0, import_element197.useCallback)((event) => {
       const {
         keyCode,
         metaKey,
@@ -53187,18 +53298,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   }
-  var TreeGrid = (0, import_element196.forwardRef)(UnforwardedTreeGrid);
+  var TreeGrid = (0, import_element197.forwardRef)(UnforwardedTreeGrid);
   TreeGrid.displayName = "TreeGrid";
   var tree_grid_default = TreeGrid;
 
   // packages/components/build-module/isolated-event-container/index.mjs
-  var import_element197 = __toESM(require_element(), 1);
+  var import_element198 = __toESM(require_element(), 1);
   var import_deprecated27 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
   function stopPropagation(event) {
     event.stopPropagation();
   }
-  var IsolatedEventContainer = (0, import_element197.forwardRef)((props, ref) => {
+  var IsolatedEventContainer = (0, import_element198.forwardRef)((props, ref) => {
     (0, import_deprecated27.default)("wp.components.IsolatedEventContainer", {
       since: "5.7"
     });
@@ -53211,10 +53322,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var isolated_event_container_default = IsolatedEventContainer;
 
   // packages/components/build-module/z-stack/component.mjs
-  var import_element198 = __toESM(require_element(), 1);
+  var import_element199 = __toESM(require_element(), 1);
   var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE46 = "data-wp-hash";
-  function getRuntime46() {
+  var STYLE_HASH_ATTRIBUTE47 = "data-wp-hash";
+  function getRuntime47() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -53225,26 +53336,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument46(document);
+      registerDocument47(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash46(targetDocument, hash2) {
+  function documentContainsStyleHash47(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE46}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE46) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE47}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE47) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle46(targetDocument, hash2, css3) {
+  function injectStyle47(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime46();
+    const runtime = getRuntime47();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -53253,21 +53364,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash46(targetDocument, hash2)) {
+    if (documentContainsStyleHash47(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE46, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE47, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument46(targetDocument) {
-    const runtime = getRuntime46();
+  function registerDocument47(targetDocument) {
+    const runtime = getRuntime47();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle46(targetDocument, hash2, css3);
+      injectStyle47(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -53281,15 +53392,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle45(hash2, css3) {
-    const runtime = getRuntime46();
+  function registerStyle46(hash2, css3) {
+    const runtime = getRuntime47();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle46(targetDocument, hash2, css3);
+      injectStyle47(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle45("a90faa8747", "._5b8fef2247903a5f__z-stack{display:inline-grid;grid-auto-flow:column;position:relative}._5b8fef2247903a5f__z-stack>._585cd0b86fd70a54__child{justify-self:start;position:relative}._93dbda3c809633d5__layered>._585cd0b86fd70a54__child{grid-column-start:1;grid-row-start:1}._585cd0b86fd70a54__child{z-index:var(--z-stack-z-index,auto)}._585cd0b86fd70a54__child:not(:first-of-type){margin-inline-start:var(--z-stack-offset,0)}");
+    registerStyle46("a90faa8747", "._5b8fef2247903a5f__z-stack{display:inline-grid;grid-auto-flow:column;position:relative}._5b8fef2247903a5f__z-stack>._585cd0b86fd70a54__child{justify-self:start;position:relative}._93dbda3c809633d5__layered>._585cd0b86fd70a54__child{grid-column-start:1;grid-row-start:1}._585cd0b86fd70a54__child{z-index:var(--z-stack-z-index,auto)}._585cd0b86fd70a54__child:not(:first-of-type){margin-inline-start:var(--z-stack-offset,0)}");
   }
   var style_module_default42 = { "z-stack": "_5b8fef2247903a5f__z-stack", "child": "_585cd0b86fd70a54__child", "layered": "_93dbda3c809633d5__layered" };
   function UnconnectedZStack(props, forwardedRef) {
@@ -53306,7 +53417,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const clonedChildren = validChildren.map((child, index2) => {
       const zIndex = isReversed ? childrenLastIndex - index2 : index2;
       const offsetAmount = isLayered ? offset4 * index2 : offset4;
-      const key = (0, import_element198.isValidElement)(child) ? child.key : index2;
+      const key = (0, import_element199.isValidElement)(child) ? child.key : index2;
       return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)("div", {
         className: style_module_default42.child,
         style: {
@@ -53327,7 +53438,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var component_default41 = ZStack;
 
   // packages/components/build-module/higher-order/navigate-regions/index.mjs
-  var import_element199 = __toESM(require_element(), 1);
+  var import_element200 = __toESM(require_element(), 1);
   var import_compose76 = __toESM(require_compose(), 1);
   var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
@@ -53351,8 +53462,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }]
   };
   function useNavigateRegions(shortcuts = defaultShortcuts) {
-    const ref = (0, import_element199.useRef)(null);
-    const [isFocusingRegions, setIsFocusingRegions] = (0, import_element199.useState)(false);
+    const ref = (0, import_element200.useRef)(null);
+    const [isFocusingRegions, setIsFocusingRegions] = (0, import_element200.useState)(false);
     function focusRegion(offset4) {
       const regions = Array.from(ref.current?.querySelectorAll('[role="region"][tabindex="-1"]') ?? []);
       if (!regions.length) {
@@ -53430,13 +53541,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/higher-order/with-fallback-styles/index.mjs
   var import_es63 = __toESM(require_es6(), 1);
-  var import_element200 = __toESM(require_element(), 1);
+  var import_element201 = __toESM(require_element(), 1);
   var import_compose78 = __toESM(require_compose(), 1);
   var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
   var with_fallback_styles_default = (mapNodeToProps) => (0, import_compose78.createHigherOrderComponent)((WrappedComponent) => {
     return function WithFallbackStyles(props) {
-      const [fallbackStyles, setFallbackStyles] = (0, import_element200.useState)(void 0);
-      const nodeRef = (0, import_element200.useRef)(null);
+      const [fallbackStyles, setFallbackStyles] = (0, import_element201.useState)(void 0);
+      const nodeRef = (0, import_element201.useRef)(null);
       (0, import_compose78.useIsomorphicLayoutEffect)(() => {
         const node2 = props.node ?? nodeRef.current;
         const grabStylesCompleted = !!fallbackStyles && Object.values(fallbackStyles).every(Boolean);
@@ -53459,7 +53570,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, "withFallbackStyles");
 
   // packages/components/build-module/higher-order/with-filters/index.mjs
-  var import_element201 = __toESM(require_element(), 1);
+  var import_element202 = __toESM(require_element(), 1);
   var import_hooks9 = __toESM(require_hooks(), 1);
   var import_compose79 = __toESM(require_compose(), 1);
   var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
@@ -53473,7 +53584,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           FilteredComponent = (0, import_hooks9.applyFilters)(hookName, OriginalComponent);
         }
       }
-      class FilteredComponentRenderer extends import_element201.Component {
+      class FilteredComponentRenderer extends import_element202.Component {
         constructor(props) {
           super(props);
           ensureFilteredComponent();
@@ -53515,12 +53626,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/higher-order/with-focus-return/index.mjs
-  var import_element202 = __toESM(require_element(), 1);
+  var import_element203 = __toESM(require_element(), 1);
   var import_compose80 = __toESM(require_compose(), 1);
   var import_deprecated28 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
   function isComponentLike(object) {
-    return object instanceof import_element202.Component || typeof object === "function";
+    return object instanceof import_element203.Component || typeof object === "function";
   }
   var with_focus_return_default = (0, import_compose80.createHigherOrderComponent)(
     // @ts-expect-error TODO: Reconcile with intended `createHigherOrderComponent` types
@@ -53558,13 +53669,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   };
 
   // packages/components/build-module/higher-order/with-notices/index.mjs
-  var import_element203 = __toESM(require_element(), 1);
+  var import_element204 = __toESM(require_element(), 1);
   var import_compose81 = __toESM(require_compose(), 1);
   var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
   var with_notices_default = (0, import_compose81.createHigherOrderComponent)((OriginalComponent) => {
     function Component7(props, ref) {
-      const [noticeList, setNoticeList] = (0, import_element203.useState)([]);
-      const noticeOperations = (0, import_element203.useMemo)(() => {
+      const [noticeList, setNoticeList] = (0, import_element204.useState)([]);
+      const noticeOperations = (0, import_element204.useMemo)(() => {
         const createNotice = (notice) => {
           const noticeToAdd = notice.id ? notice : {
             ...notice,
@@ -53611,7 +53722,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = OriginalComponent;
     if (typeof render === "function") {
       isForwardRef = true;
-      return (0, import_element203.forwardRef)(Component7);
+      return (0, import_element204.forwardRef)(Component7);
     }
     return Component7;
   }, "withNotices");
@@ -53629,16 +53740,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, "withSpokenMessages");
 
   // packages/components/build-module/menu/index.mjs
-  var import_element217 = __toESM(require_element(), 1);
+  var import_element218 = __toESM(require_element(), 1);
   var import_i18n72 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/menu/context.mjs
-  var import_element204 = __toESM(require_element(), 1);
-  var Context2 = (0, import_element204.createContext)(void 0);
+  var import_element205 = __toESM(require_element(), 1);
+  var Context2 = (0, import_element205.createContext)(void 0);
   Context2.displayName = "MenuContext";
 
   // packages/components/build-module/menu/item.mjs
-  var import_element206 = __toESM(require_element(), 1);
+  var import_element207 = __toESM(require_element(), 1);
 
   // packages/components/build-module/menu/styles.mjs
   function _EMOTION_STRINGIFIED_CSS_ERROR__21() {
@@ -53772,7 +53883,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   })("font-size:", font("helpText.fontSize"), ";line-height:16px;color:", LIGHTER_TEXT_COLOR, ";overflow-wrap:anywhere;[data-active-item]:not( [data-focus-visible] ) *:not( ", Menu22, " ) &,[aria-disabled='true'] *:not( ", Menu22, " ) &{color:inherit;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUEyVjhDIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAqIGFzIEFyaWFraXQgZnJvbSAnQGFyaWFraXQvcmVhY3QnO1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuaW1wb3J0IHsgQ09MT1JTLCBmb250LCBydGwsIENPTkZJRywgRFJPUERPV05fTU9USU9OX0NTUyB9IGZyb20gJy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vdXRpbHMvc3BhY2UnO1xuaW1wb3J0IEljb24gZnJvbSAnLi4vaWNvbic7XG5pbXBvcnQgeyBUcnVuY2F0ZSB9IGZyb20gJy4uL3RydW5jYXRlJztcbmltcG9ydCB0eXBlIHsgQ29udGV4dFByb3BzIH0gZnJvbSAnLi90eXBlcyc7XG5cbmNvbnN0IENPTlRFTlRfV1JBUFBFUl9QQURESU5HID0gc3BhY2UoIDEgKTtcbmNvbnN0IElURU1fUEFERElOR19CTE9DSyA9IHNwYWNlKCAxICk7XG5jb25zdCBJVEVNX1BBRERJTkdfSU5MSU5FID0gc3BhY2UoIDMgKTtcblxuLy8gVE9ETzpcbi8vIC0gYm9yZGVyIGNvbG9yIGFuZCBkaXZpZGVyIGNvbG9yIGFyZSBkaWZmZXJlbnQgZnJvbSBDT0xPUlMudGhlbWUgdmFyaWFibGVzXG4vLyAtIGxpZ2h0ZXIgdGV4dCBjb2xvciBpcyBub3QgZGVmaW5lZCBpbiBDT0xPUlMudGhlbWUsIHNob3VsZCBpdCBiZT9cbi8vIC0gbGlnaHRlciBiYWNrZ3JvdW5kIGNvbG9yIGlzIG5vdCBkZWZpbmVkIGluIENPTE9SUy50aGVtZSwgc2hvdWxkIGl0IGJlP1xuLy8gVE9ETzogc2hvdWxkIHVzZSB0aGUgYHN0cm9rZS1zdXJmYWNlLW5ldXRyYWxgIFdQRFMgdG9rZW4gd2hlbiByZWZhY3RvcmVkIHRvIFNDU1MgbW9kdWxlc1xuY29uc3QgREVGQVVMVF9CT1JERVJfQ09MT1IgPSBDT0xPUlMudGhlbWUuZ3JheVsgMzAwIF07XG4vLyBUT0RPOiBzaG91bGQgdXNlIHRoZSBgc3Ryb2tlLXN1cmZhY2UtbmV1dHJhbC13ZWFrYCBXUERTIHRva2VuIHdoZW4gcmVmYWN0b3JlZCB0byBTQ1NTIG1vZHVsZXNcbmNvbnN0IERJVklERVJfQ09MT1IgPSBDT0xPUlMudGhlbWUuZ3JheVsgMjAwIF07XG5jb25zdCBMSUdIVEVSX1RFWFRfQ09MT1IgPSBDT0xPUlMudGhlbWUuZ3JheVsgNzAwIF07XG5jb25zdCBMSUdIVF9CQUNLR1JPVU5EX0NPTE9SID0gQ09MT1JTLnRoZW1lLmdyYXlbIDEwMCBdO1xuY29uc3QgVE9PTEJBUl9WQVJJQU5UX0JPUkRFUl9DT0xPUiA9IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kO1xuY29uc3QgREVGQVVMVF9CT1hfU0hBRE9XID0gYDAgMCAwICR7IENPTkZJRy5ib3JkZXJXaWR0aCB9ICR7IERFRkFVTFRfQk9SREVSX0NPTE9SIH0sICR7IENPTkZJRy5lbGV2YXRpb25NZWRpdW0gfWA7XG5jb25zdCBUT09MQkFSX1ZBUklBTlRfQk9YX1NIQURPVyA9IGAwIDAgMCAkeyBDT05GSUcuYm9yZGVyV2lkdGggfSAkeyBUT09MQkFSX1ZBUklBTlRfQk9SREVSX0NPTE9SIH1gO1xuXG5jb25zdCBHUklEX1RFTVBMQVRFX0NPTFMgPSAnbWlubWF4KCAwLCBtYXgtY29udGVudCApIDFmcic7XG5cbmV4cG9ydCBjb25zdCBNZW51ID0gc3R5bGVkKCBBcmlha2l0Lk1lbnUgKWBcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHQvKiBTYW1lIGFzIHBvcG92ZXIgY29tcG9uZW50ICovXG5cdC8qIFRPRE86IGlzIHRoZXJlIGEgd2F5IHRvIHJlYWQgdGhlIHNhc3MgdmFyaWFibGU/ICovXG5cdHotaW5kZXg6IDEwMDAwMDA7XG5cblx0LyogT25seSB2aXNpYmxlIGluIFdpbmRvd3MgSGlnaCBDb250cmFzdCBtb2RlICovXG5cdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudCAhaW1wb3J0YW50O1xuYDtcblxuZXhwb3J0IGNvbnN0IE1lbnVTdXJmYWNlID0gc3R5bGVkLmRpdjwgUGljazwgQ29udGV4dFByb3BzLCAndmFyaWFudCcgPiA+YFxuXHRkaXNwbGF5OiBncmlkO1xuXHRncmlkLXRlbXBsYXRlLWNvbHVtbnM6ICR7IEdSSURfVEVNUExBVEVfQ09MUyB9O1xuXHRncmlkLXRlbXBsYXRlLXJvd3M6IGF1dG87XG5cblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0bWluLXdpZHRoOiAxNjBweDtcblx0bWF4LXdpZHRoOiAzMjBweDtcblx0bWF4LWhlaWdodDogdmFyKCAtLXBvcG92ZXItYXZhaWxhYmxlLWhlaWdodCApO1xuXG5cdHBhZGRpbmc6ICR7IENPTlRFTlRfV1JBUFBFUl9QQURESU5HIH07XG5cblx0b3ZlcnNjcm9sbC1iZWhhdmlvcjogY29udGFpbjtcblx0b3ZlcmZsb3c6IGF1dG87XG5cblx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnVpLmJhY2tncm91bmQgfTtcblx0Ym9yZGVyLXJhZGl1czogJHsgQ09ORklHLnJhZGl1c01lZGl1bSB9O1xuXHQkeyAoIHByb3BzICkgPT4gY3NzYFxuXHRcdGJveC1zaGFkb3c6ICR7IHByb3BzLnZhcmlhbnQgPT09ICd0b29sYmFyJ1xuXHRcdFx0PyBUT09MQkFSX1ZBUklBTlRfQk9YX1NIQURPV1xuXHRcdFx0OiBERUZBVUxUX0JPWF9TSEFET1cgfTtcblx0YCB9XG5gO1xuXG4vKipcbiAqIE91dGVyIHdyYXBwZXIgZm9yIG1lbnUgbW90aW9uLiBgTWVudS5Qb3BvdmVyYCB1c2VzIEFyaWFraXTigJlzIGByZW5kZXJgIHByb3Agc29cbiAqIHRoaXMgZWxlbWVudCB3cmFwcyB0aGUgaW5uZXIgc3VyZmFjZSB0aGF0IHJlY2VpdmVzIGFsbCBtZXJnZWQgbWVudSBwcm9wc1xuICogKHJlZiwgcm9sZSwgYGRhdGEtKmAsIGNoaWxkcmVuKS4gVHJhbnNpdGlvbnMgbWlycm9yIHRoZSBwcmUtcmVmYWN0b3IgYE1lbnVgXG4gKiBzdHlsZXMgZnJvbSBgdHJ1bmtgLCBkcml2ZW4gYnkgYGRhdGEtZW50ZXJgIC8gYGRhdGEtc2lkZWAgb24gdGhlIGlubmVyXG4gKiBzdXJmYWNlIHZpYSBgOmhhcyg+IOKApilgLlxuICovXG5leHBvcnQgY29uc3QgTWVudU1vdGlvblJvb3QgPSBzdHlsZWQuZGl2YFxuXHRAbWVkaWEgbm90ICggcHJlZmVycy1yZWR1Y2VkLW1vdGlvbiApIHtcblx0XHR0cmFuc2l0aW9uLXByb3BlcnR5OiB0cmFuc2Zvcm0sIG9wYWNpdHk7XG5cdFx0dHJhbnNpdGlvbi1kdXJhdGlvbjogJHsgRFJPUERPV05fTU9USU9OX0NTUy5TTElERV9EVVJBVElPTiB9LFxuXHRcdFx0JHsgRFJPUERPV05fTU9USU9OX0NTUy5GQURFX0RVUkFUSU9OIH07XG5cdFx0dHJhbnNpdGlvbi10aW1pbmctZnVuY3Rpb246ICR7IERST1BET1dOX01PVElPTl9DU1MuU0xJREVfRUFTSU5HIH0sXG5cdFx0XHQkeyBEUk9QRE9XTl9NT1RJT05fQ1NTLkZBREVfRUFTSU5HIH07XG5cdFx0d2lsbC1jaGFuZ2U6IHRyYW5zZm9ybSwgb3BhY2l0eTtcblxuXHRcdCY6bm90KCA6aGFzKCA+ICR7IE1lbnVTdXJmYWNlIH1bZGF0YS1zdWJtZW51XSApICkge1xuXHRcdFx0LyogUmVnYXJkbGVzcyBvZiB0aGUgc2lkZSwgZmFkZSBpbiBhbmQgb3V0LiAqL1xuXHRcdFx0b3BhY2l0eTogMDtcblx0XHRcdCY6aGFzKCA+ICR7IE1lbnVTdXJmYWNlIH1bZGF0YS1lbnRlcl0gKSB7XG5cdFx0XHRcdG9wYWNpdHk6IDE7XG5cdFx0XHR9XG5cblx0XHRcdC8qIFNsaWRlIGluIHRoZSBkaXJlY3Rpb24gdGhlIG1lbnUgaXMgb3BlbmluZy4gKi9cblx0XHRcdCY6aGFzKCA+ICR7IE1lbnVTdXJmYWNlIH1bZGF0YS1zaWRlPSdib3R0b20nXSApIHtcblx0XHRcdFx0dHJhbnNmb3JtOiB0cmFuc2xhdGVZKFxuXHRcdFx0XHRcdC0keyBEUk9QRE9XTl9NT1RJT05fQ1NTLlNMSURFX0RJU1RBTkNFIH1cblx0XHRcdFx0KTtcblx0XHRcdH1cblx0XHRcdCY6aGFzKCA+ICR7IE1lbnVTdXJmYWNlIH1bZGF0YS1zaWRlPSd0b3AnXSApIHtcblx0XHRcdFx0dHJhbnNmb3JtOiB0cmFuc2xhdGVZKFxuXHRcdFx0XHRcdCR7IERST1BET1dOX01PVElPTl9DU1MuU0xJREVfRElTVEFOQ0UgfVxuXHRcdFx0XHQpO1xuXHRcdFx0fVxuXHRcdFx0JjpoYXMoID4gJHsgTWVudVN1cmZhY2UgfVtkYXRhLXNpZGU9J2xlZnQnXSApIHtcblx0XHRcdFx0dHJhbnNmb3JtOiB0cmFuc2xhdGVYKFxuXHRcdFx0XHRcdCR7IERST1BET1dOX01PVElPTl9DU1MuU0xJREVfRElTVEFOQ0UgfVxuXHRcdFx0XHQpO1xuXHRcdFx0fVxuXHRcdFx0JjpoYXMoID4gJHsgTWVudVN1cmZhY2UgfVtkYXRhLXNpZGU9J3JpZ2h0J10gKSB7XG5cdFx0XHRcdHRyYW5zZm9ybTogdHJhbnNsYXRlWChcblx0XHRcdFx0XHQtJHsgRFJPUERPV05fTU9USU9OX0NTUy5TTElERV9ESVNUQU5DRSB9XG5cdFx0XHRcdCk7XG5cdFx0XHR9XG5cdFx0XHQmOmhhcyggPiAkeyBNZW51U3VyZmFjZSB9W2RhdGEtZW50ZXJdW2RhdGEtc2lkZT0nYm90dG9tJ10gKSxcblx0XHRcdCY6aGFzKCA+ICR7IE1lbnVTdXJmYWNlIH1bZGF0YS1lbnRlcl1bZGF0YS1zaWRlPSd0b3AnXSApIHtcblx0XHRcdFx0dHJhbnNmb3JtOiB0cmFuc2xhdGVZKCAwICk7XG5cdFx0XHR9XG5cdFx0XHQmOmhhcyggPiAkeyBNZW51U3VyZmFjZSB9W2RhdGEtZW50ZXJdW2RhdGEtc2lkZT0nbGVmdCddICksXG5cdFx0XHQmOmhhcyggPiAkeyBNZW51U3VyZmFjZSB9W2RhdGEtZW50ZXJdW2RhdGEtc2lkZT0ncmlnaHQnXSApIHtcblx0XHRcdFx0dHJhbnNmb3JtOiB0cmFuc2xhdGVYKCAwICk7XG5cdFx0XHR9XG5cdFx0fVxuXHR9XG5gO1xuXG5jb25zdCBiYXNlSXRlbSA9IGNzc2Bcblx0YWxsOiB1bnNldDtcblx0Y3Vyc29yOiBwb2ludGVyO1xuXG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblx0bWluLWhlaWdodDogJHsgc3BhY2UoIDggKSB9O1xuXHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXG5cdC8qIE9jY3VweSB0aGUgd2lkdGggb2YgYWxsIGdyaWQgY29sdW1ucyAoaWUuIGZ1bGwgd2lkdGgpICovXG5cdGdyaWQtY29sdW1uOiAxIC8gLTE7XG5cblx0ZGlzcGxheTogZ3JpZDtcblx0Z3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiAkeyBHUklEX1RFTVBMQVRFX0NPTFMgfTtcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblxuXHRAc3VwcG9ydHMgKCBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IHN1YmdyaWQgKSB7XG5cdFx0Lypcblx0XHQgKiBEZWZpbmUgYSBncmlkIGxheW91dCB3aGljaCBpbmhlcml0cyB0aGUgc2FtZSBjb2x1bW5zIGNvbmZpZ3VyYXRpb25cblx0XHQgKiBmcm9tIHRoZSBwYXJlbnQgbGF5b3V0IChpZS4gc3ViZ3JpZCkuIFRoaXMgYWxsb3dzIHRoZSBtZW51XG5cdFx0ICogdG8gc3luY2hyb25pemUgdGhlIGluZGVudGF0aW9uIG9mIGFsbCBpdHMgaXRlbXMuXG5cdFx0ICovXG5cdFx0Z3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiBzdWJncmlkO1xuXHR9XG5cblx0Zm9udC1zaXplOiAkeyBmb250KCAnZGVmYXVsdC5mb250U2l6ZScgKSB9O1xuXHRmb250LWZhbWlseTogaW5oZXJpdDtcblx0Zm9udC13ZWlnaHQ6IG5vcm1hbDtcblx0bGluZS1oZWlnaHQ6IDIwcHg7XG5cblx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXG5cdHBhZGRpbmctYmxvY2s6ICR7IElURU1fUEFERElOR19CTE9DSyB9O1xuXHRwYWRkaW5nLWlubGluZTogJHsgSVRFTV9QQURESU5HX0lOTElORSB9O1xuXG5cdC8qXG5cdCAqIE1ha2Ugc3VyZSB0aGF0LCB3aGVuIGFuIGl0ZW0gaXMgc2Nyb2xsZWQgaW50byB2aWV3IChlZy4gd2hpbGUgdXNpbmcgdGhlXG5cdCAqIGtleWJvYXJkIHRvIG1vdmUgZm9jdXMpLCB0aGUgd2hvbGUgaXRlbSBjb21lcyBpbnRvIHZpZXdcblx0ICovXG5cdHNjcm9sbC1tYXJnaW46ICR7IENPTlRFTlRfV1JBUFBFUl9QQURESU5HIH07XG5cblx0dXNlci1zZWxlY3Q6IG5vbmU7XG5cdG91dGxpbmU6IG5vbmU7XG5cblx0JlthcmlhLWRpc2FibGVkPSd0cnVlJ10ge1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudWkudGV4dERpc2FibGVkIH07XG5cdH1cblxuXHQvKiBBY3RpdmUgaXRlbSAoaW5jbHVkaW5nIGhvdmVyKSAqL1xuXHQmW2RhdGEtYWN0aXZlLWl0ZW1dOm5vdCggW2RhdGEtZm9jdXMtdmlzaWJsZV0gKTpub3QoXG5cdFx0XHRbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddXG5cdFx0KSB7XG5cdFx0YmFja2dyb3VuZC1jb2xvcjogJHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuYWNjZW50SW52ZXJ0ZWQgfTtcblx0fVxuXG5cdC8qIEtleWJvYXJkIGZvY3VzIChmb2N1cy12aXNpYmxlKSAqL1xuXHQmW2RhdGEtZm9jdXMtdmlzaWJsZV0ge1xuXHRcdGJveC1zaGFkb3c6IDAgMCAwIDEuNXB4ICR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblxuXHRcdC8qIE9ubHkgdmlzaWJsZSBpbiBXaW5kb3dzIEhpZ2ggQ29udHJhc3QgbW9kZSAqL1xuXHRcdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcblx0fVxuXG5cdC8qIEFjdGl2ZSAoaWUuIHByZXNzZWQsIG1vdXNlIGRvd24pICovXG5cdCY6YWN0aXZlLFxuXHQmW2RhdGEtYWN0aXZlXSB7XG5cdFx0LyogVE9ETzogc2hvdWxkIHRoZXJlIGJlIGEgdmlzdWFsIGFjdGl2ZSBzdGF0ZT8gKi9cblx0fVxuXG5cdC8qIFdoZW4gdGhlIGl0ZW0gaXMgdGhlIHRyaWdnZXIgb2YgYW4gb3BlbiBzdWJtZW51ICovXG5cdCR7IE1lbnUgfTpub3QoOmZvY3VzKSAmOm5vdCg6Zm9jdXMpW2FyaWEtZXhwYW5kZWQ9XCJ0cnVlXCJdIHtcblx0XHRiYWNrZ3JvdW5kLWNvbG9yOiAkeyBMSUdIVF9CQUNLR1JPVU5EX0NPTE9SIH07XG5cdFx0Y29sb3I6ICR7IENPTE9SUy50aGVtZS5mb3JlZ3JvdW5kIH07XG5cdH1cblxuXHRzdmcge1xuXHRcdGZpbGw6IGN1cnJlbnRDb2xvcjtcblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IEl0ZW0gPSBzdHlsZWQoIEFyaWFraXQuTWVudUl0ZW0gKWBcblx0JHsgYmFzZUl0ZW0gfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBDaGVja2JveEl0ZW0gPSBzdHlsZWQoIEFyaWFraXQuTWVudUl0ZW1DaGVja2JveCApYFxuXHQkeyBiYXNlSXRlbSB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IFJhZGlvSXRlbSA9IHN0eWxlZCggQXJpYWtpdC5NZW51SXRlbVJhZGlvIClgXG5cdCR7IGJhc2VJdGVtIH07XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbVByZWZpeFdyYXBwZXIgPSBzdHlsZWQuc3BhbmBcblx0LyogQWx3YXlzIG9jY3VweSB0aGUgZmlyc3QgY29sdW1uLCBldmVuIHdoZW4gYXV0by1jb2xsYXBzaW5nICovXG5cdGdyaWQtY29sdW1uOiAxO1xuXG5cdC8qXG5cdCAqIEV2ZW4gd2hlbiB0aGUgaXRlbSBpcyBub3QgY2hlY2tlZCwgb2NjdXB5IHRoZSBzYW1lIHNjcmVlbiBzcGFjZSB0byBhdm9pZFxuXHQgKiB0aGUgc3BhY2UgY29sbGFwc2lkZSB3aGVuIG5vIGl0ZW1zIGFyZSBjaGVja2VkLlxuXHQgKi9cblx0JHsgQ2hlY2tib3hJdGVtIH0gPiAmLFxuXHQkeyBSYWRpb0l0ZW0gfSA+ICYge1xuXHRcdC8qIFNhbWUgd2lkdGggYXMgdGhlIGNoZWNrIGljb25zICovXG5cdFx0bWluLXdpZHRoOiAkeyBzcGFjZSggNiApIH07XG5cdH1cblxuXHQkeyBDaGVja2JveEl0ZW0gfSA+ICYsXG5cdCR7IFJhZGlvSXRlbSB9ID4gJixcblx0Jjpub3QoIDplbXB0eSApIHtcblx0XHRtYXJnaW4taW5saW5lLWVuZDogJHsgc3BhY2UoIDIgKSB9O1xuXHR9XG5cblx0ZGlzcGxheTogZmxleDtcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0anVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG5cblx0Y29sb3I6ICR7IExJR0hURVJfVEVYVF9DT0xPUiB9O1xuXG5cdC8qXG5cdCogV2hlbiB0aGUgcGFyZW50IG1lbnUgaXRlbSBpcyBhY3RpdmUsIGV4Y2VwdCB3aGVuIGl0J3MgYSBub24tZm9jdXNlZC9ob3ZlcmVkXG5cdCogc3VibWVudSB0cmlnZ2VyIChpbiB0aGF0IGNhc2UsIGNvbG9yIHNob3VsZCBub3QgYmUgaW5oZXJpdGVkKVxuXHQqL1xuXHRbZGF0YS1hY3RpdmUtaXRlbV06bm90KCBbZGF0YS1mb2N1cy12aXNpYmxlXSApID4gJixcblx0LyogV2hlbiB0aGUgcGFyZW50IG1lbnUgaXRlbSBpcyBkaXNhYmxlZCAqL1xuXHRbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddID4gJiB7XG5cdFx0Y29sb3I6IGluaGVyaXQ7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQ29udGVudFdyYXBwZXIgPSBzdHlsZWQuZGl2YFxuXHQvKlxuXHQgKiBBbHdheXMgb2NjdXB5IHRoZSBzZWNvbmQgY29sdW1uLCBzaW5jZSB0aGUgZmlyc3QgY29sdW1uXG5cdCAqIGlzIHRha2VuIGJ5IHRoZSBwcmVmaXggd3JhcHBlciAod2hlbiBkaXNwbGF5ZWQpLlxuXHQgKi9cblx0Z3JpZC1jb2x1bW46IDI7XG5cblx0ZGlzcGxheTogZmxleDtcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0anVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xuXHRnYXA6ICR7IHNwYWNlKCAzICkgfTtcblxuXHRwb2ludGVyLWV2ZW50czogbm9uZTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtQ2hpbGRyZW5XcmFwcGVyID0gc3R5bGVkLmRpdmBcblx0ZmxleDogMTtcblxuXHRkaXNwbGF5OiBpbmxpbmUtZmxleDtcblx0ZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcblx0Z2FwOiAkeyBzcGFjZSggMSApIH07XG5gO1xuXG5leHBvcnQgY29uc3QgSXRlbVN1ZmZpeFdyYXBwZXIgPSBzdHlsZWQuc3BhbmBcblx0ZmxleDogMCAxIGZpdC1jb250ZW50O1xuXHRtaW4td2lkdGg6IDA7XG5cdHdpZHRoOiBmaXQtY29udGVudDtcblxuXHRkaXNwbGF5OiBmbGV4O1xuXHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcblx0Z2FwOiAkeyBzcGFjZSggMyApIH07XG5cblx0Y29sb3I6ICR7IExJR0hURVJfVEVYVF9DT0xPUiB9O1xuXG5cdC8qXG5cdCAqIFdoZW4gdGhlIHBhcmVudCBtZW51IGl0ZW0gaXMgYWN0aXZlLCBleGNlcHQgd2hlbiBpdCdzIGEgbm9uLWZvY3VzZWQvaG92ZXJlZFxuXHQgKiBzdWJtZW51IHRyaWdnZXIgKGluIHRoYXQgY2FzZSwgY29sb3Igc2hvdWxkIG5vdCBiZSBpbmhlcml0ZWQpXG5cdCAqL1xuXHRbZGF0YS1hY3RpdmUtaXRlbV06bm90KCBbZGF0YS1mb2N1cy12aXNpYmxlXSApICo6bm90KCR7IE1lbnUgfSkgJixcblx0LyogV2hlbiB0aGUgcGFyZW50IG1lbnUgaXRlbSBpcyBkaXNhYmxlZCAqL1xuXHRbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddICo6bm90KCR7IE1lbnUgfSkgJiB7XG5cdFx0Y29sb3I6IGluaGVyaXQ7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBHcm91cCA9IHN0eWxlZCggQXJpYWtpdC5NZW51R3JvdXAgKWBcblx0LyogSWdub3JlIHRoaXMgZWxlbWVudCB3aGVuIGNhbGN1bGF0aW5nIHRoZSBsYXlvdXQuIFVzZWZ1bCBmb3Igc3ViZ3JpZCAqL1xuXHRkaXNwbGF5OiBjb250ZW50cztcbmA7XG5cbmV4cG9ydCBjb25zdCBHcm91cExhYmVsID0gc3R5bGVkKCBBcmlha2l0Lk1lbnVHcm91cExhYmVsIClgXG5cdC8qIE9jY3VweSB0aGUgd2lkdGggb2YgYWxsIGdyaWQgY29sdW1ucyAoaWUuIGZ1bGwgd2lkdGgpICovXG5cdGdyaWQtY29sdW1uOiAxIC8gLTE7XG5cblx0cGFkZGluZy1ibG9jay1zdGFydDogJHsgc3BhY2UoIDMgKSB9O1xuXHRwYWRkaW5nLWJsb2NrLWVuZDogJHsgc3BhY2UoIDIgKSB9O1xuXHRwYWRkaW5nLWlubGluZTogJHsgSVRFTV9QQURESU5HX0lOTElORSB9O1xuYDtcblxuZXhwb3J0IGNvbnN0IFNlcGFyYXRvciA9IHN0eWxlZCggQXJpYWtpdC5NZW51U2VwYXJhdG9yICk8XG5cdFBpY2s8IENvbnRleHRQcm9wcywgJ3ZhcmlhbnQnID5cbj5gXG5cdC8qIE9jY3VweSB0aGUgd2lkdGggb2YgYWxsIGdyaWQgY29sdW1ucyAoaWUuIGZ1bGwgd2lkdGgpICovXG5cdGdyaWQtY29sdW1uOiAxIC8gLTE7XG5cblx0Ym9yZGVyOiBub25lO1xuXHRoZWlnaHQ6ICR7IENPTkZJRy5ib3JkZXJXaWR0aCB9O1xuXHRiYWNrZ3JvdW5kLWNvbG9yOiAkeyAoIHByb3BzICkgPT5cblx0XHRwcm9wcy52YXJpYW50ID09PSAndG9vbGJhcidcblx0XHRcdD8gVE9PTEJBUl9WQVJJQU5UX0JPUkRFUl9DT0xPUlxuXHRcdFx0OiBESVZJREVSX0NPTE9SIH07XG5cdC8qIEFsaWduIHdpdGggbWVudSBpdGVtcycgY29udGVudCAqL1xuXHRtYXJnaW4tYmxvY2s6ICR7IHNwYWNlKCAyICkgfTtcblx0bWFyZ2luLWlubGluZTogJHsgSVRFTV9QQURESU5HX0lOTElORSB9O1xuXG5cdC8qIE9ubHkgdmlzaWJsZSBpbiBXaW5kb3dzIEhpZ2ggQ29udHJhc3QgbW9kZSAqL1xuXHRvdXRsaW5lOiAycHggc29saWQgdHJhbnNwYXJlbnQ7XG5gO1xuXG5leHBvcnQgY29uc3QgU3VibWVudUNoZXZyb25JY29uID0gc3R5bGVkKCBJY29uIClgXG5cdHdpZHRoOiAkeyBzcGFjZSggMS41ICkgfTtcblx0JHsgcnRsKFxuXHRcdHtcblx0XHRcdHRyYW5zZm9ybTogYHNjYWxlWCgxKWAsXG5cdFx0fSxcblx0XHR7XG5cdFx0XHR0cmFuc2Zvcm06IGBzY2FsZVgoLTEpYCxcblx0XHR9XG5cdCkgfTtcbmA7XG5cbmV4cG9ydCBjb25zdCBJdGVtTGFiZWwgPSBzdHlsZWQoIFRydW5jYXRlIClgXG5cdGZvbnQtc2l6ZTogJHsgZm9udCggJ2RlZmF1bHQuZm9udFNpemUnICkgfTtcblx0bGluZS1oZWlnaHQ6IDIwcHg7XG5cdGNvbG9yOiBpbmhlcml0O1xuYDtcblxuZXhwb3J0IGNvbnN0IEl0ZW1IZWxwVGV4dCA9IHN0eWxlZCggVHJ1bmNhdGUgKWBcblx0Zm9udC1zaXplOiAkeyBmb250KCAnaGVscFRleHQuZm9udFNpemUnICkgfTtcblx0bGluZS1oZWlnaHQ6IDE2cHg7XG5cdGNvbG9yOiAkeyBMSUdIVEVSX1RFWFRfQ09MT1IgfTtcblx0b3ZlcmZsb3ctd3JhcDogYW55d2hlcmU7XG5cblx0W2RhdGEtYWN0aXZlLWl0ZW1dOm5vdCggW2RhdGEtZm9jdXMtdmlzaWJsZV0gKSAqOm5vdCggJHsgTWVudSB9ICkgJixcblx0W2FyaWEtZGlzYWJsZWQ9J3RydWUnXSAqOm5vdCggJHsgTWVudSB9ICkgJiB7XG5cdFx0Y29sb3I6IGluaGVyaXQ7XG5cdH1cbmA7XG4iXX0= */"));
 
   // packages/components/build-module/menu/use-menu-item-hide-on-click.mjs
-  var import_element205 = __toESM(require_element(), 1);
+  var import_element206 = __toESM(require_element(), 1);
   function focusDisclosureElement(disclosureElement) {
     disclosureElement.focus();
     if (disclosureElement.ownerDocument.activeElement === disclosureElement) {
@@ -53785,7 +53896,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     disclosureElement.ownerDocument.defaultView?.HTMLElement.prototype.focus.call(disclosureElement);
   }
   function useMenuItemHideOnClick(store, hideOnClick) {
-    return (0, import_element205.useCallback)((event) => {
+    return (0, import_element206.useCallback)((event) => {
       const shouldHide = typeof hideOnClick === "function" ? hideOnClick(event) : hideOnClick;
       if (!shouldHide) {
         return false;
@@ -53811,7 +53922,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/menu/item.mjs
   var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
-  var Item22 = (0, import_element206.forwardRef)(function Item3({
+  var Item22 = (0, import_element207.forwardRef)(function Item3({
     prefix: prefix2,
     suffix,
     children,
@@ -53820,7 +53931,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     store,
     ...props
   }, ref) {
-    const menuContext = (0, import_element206.useContext)(Context2);
+    const menuContext = (0, import_element207.useContext)(Context2);
     const computedStore = store ?? menuContext?.store;
     const computedHideOnClick = useMenuItemHideOnClick(computedStore, hideOnClick);
     if (!menuContext?.store || !computedStore) {
@@ -53846,16 +53957,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/checkbox-item.mjs
-  var import_element207 = __toESM(require_element(), 1);
+  var import_element208 = __toESM(require_element(), 1);
   var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
-  var CheckboxItem2 = (0, import_element207.forwardRef)(function CheckboxItem3({
+  var CheckboxItem2 = (0, import_element208.forwardRef)(function CheckboxItem3({
     suffix,
     children,
     disabled = false,
     hideOnClick = false,
     ...props
   }, ref) {
-    const menuContext = (0, import_element207.useContext)(Context2);
+    const menuContext = (0, import_element208.useContext)(Context2);
     const store = menuContext?.store;
     const computedHideOnClick = useMenuItemHideOnClick(store, hideOnClick);
     if (!store) {
@@ -53890,7 +54001,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/radio-item.mjs
-  var import_element208 = __toESM(require_element(), 1);
+  var import_element209 = __toESM(require_element(), 1);
   var import_primitives35 = __toESM(require_primitives(), 1);
   var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
   var radioCheck = /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(import_primitives35.SVG, {
@@ -53902,14 +54013,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       r: 3
     })
   });
-  var RadioItem2 = (0, import_element208.forwardRef)(function RadioItem3({
+  var RadioItem2 = (0, import_element209.forwardRef)(function RadioItem3({
     suffix,
     children,
     disabled = false,
     hideOnClick = false,
     ...props
   }, ref) {
-    const menuContext = (0, import_element208.useContext)(Context2);
+    const menuContext = (0, import_element209.useContext)(Context2);
     const store = menuContext?.store;
     const computedHideOnClick = useMenuItemHideOnClick(store, hideOnClick);
     if (!store) {
@@ -53944,10 +54055,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/group.mjs
-  var import_element209 = __toESM(require_element(), 1);
+  var import_element210 = __toESM(require_element(), 1);
   var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
-  var Group22 = (0, import_element209.forwardRef)(function Group32(props, ref) {
-    const menuContext = (0, import_element209.useContext)(Context2);
+  var Group22 = (0, import_element210.forwardRef)(function Group32(props, ref) {
+    const menuContext = (0, import_element210.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Group can only be rendered inside a Menu component");
     }
@@ -53959,10 +54070,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/group-label.mjs
-  var import_element210 = __toESM(require_element(), 1);
+  var import_element211 = __toESM(require_element(), 1);
   var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
-  var GroupLabel22 = (0, import_element210.forwardRef)(function Group4(props, ref) {
-    const menuContext = (0, import_element210.useContext)(Context2);
+  var GroupLabel22 = (0, import_element211.forwardRef)(function Group4(props, ref) {
+    const menuContext = (0, import_element211.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.GroupLabel can only be rendered inside a Menu component");
     }
@@ -53984,10 +54095,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/separator.mjs
-  var import_element211 = __toESM(require_element(), 1);
+  var import_element212 = __toESM(require_element(), 1);
   var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
-  var Separator22 = (0, import_element211.forwardRef)(function Separator32(props, ref) {
-    const menuContext = (0, import_element211.useContext)(Context2);
+  var Separator22 = (0, import_element212.forwardRef)(function Separator32(props, ref) {
+    const menuContext = (0, import_element212.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.Separator can only be rendered inside a Menu component");
     }
@@ -54000,10 +54111,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/item-label.mjs
-  var import_element212 = __toESM(require_element(), 1);
+  var import_element213 = __toESM(require_element(), 1);
   var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
-  var ItemLabel2 = (0, import_element212.forwardRef)(function ItemLabel3(props, ref) {
-    const menuContext = (0, import_element212.useContext)(Context2);
+  var ItemLabel2 = (0, import_element213.forwardRef)(function ItemLabel3(props, ref) {
+    const menuContext = (0, import_element213.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.ItemLabel can only be rendered inside a Menu component");
     }
@@ -54015,10 +54126,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/item-help-text.mjs
-  var import_element213 = __toESM(require_element(), 1);
+  var import_element214 = __toESM(require_element(), 1);
   var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
-  var ItemHelpText2 = (0, import_element213.forwardRef)(function ItemHelpText3(props, ref) {
-    const menuContext = (0, import_element213.useContext)(Context2);
+  var ItemHelpText2 = (0, import_element214.forwardRef)(function ItemHelpText3(props, ref) {
+    const menuContext = (0, import_element214.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.ItemHelpText can only be rendered inside a Menu component");
     }
@@ -54030,14 +54141,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/trigger-button.mjs
-  var import_element214 = __toESM(require_element(), 1);
+  var import_element215 = __toESM(require_element(), 1);
   var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
-  var TriggerButton = (0, import_element214.forwardRef)(function TriggerButton2({
+  var TriggerButton = (0, import_element215.forwardRef)(function TriggerButton2({
     children,
     disabled = false,
     ...props
   }, ref) {
-    const menuContext = (0, import_element214.useContext)(Context2);
+    const menuContext = (0, import_element215.useContext)(Context2);
     if (!menuContext?.store) {
       throw new Error("Menu.TriggerButton can only be rendered inside a Menu component");
     }
@@ -54054,13 +54165,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/submenu-trigger-item.mjs
-  var import_element215 = __toESM(require_element(), 1);
+  var import_element216 = __toESM(require_element(), 1);
   var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
-  var SubmenuTriggerItem = (0, import_element215.forwardRef)(function SubmenuTriggerItem2({
+  var SubmenuTriggerItem = (0, import_element216.forwardRef)(function SubmenuTriggerItem2({
     suffix,
     ...otherProps
   }, ref) {
-    const menuContext = (0, import_element215.useContext)(Context2);
+    const menuContext = (0, import_element216.useContext)(Context2);
     if (!menuContext?.store.parent) {
       throw new Error("Menu.SubmenuTriggerItem can only be rendered inside a nested Menu component");
     }
@@ -54088,22 +54199,22 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/menu/popover.mjs
-  var import_element216 = __toESM(require_element(), 1);
+  var import_element217 = __toESM(require_element(), 1);
   var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
-  var Popover4 = (0, import_element216.forwardRef)(function Popover22({
+  var Popover4 = (0, import_element217.forwardRef)(function Popover22({
     gutter,
     shift: shift4,
     modal = true,
     ...otherProps
   }, ref) {
-    const menuContext = (0, import_element216.useContext)(Context2);
+    const menuContext = (0, import_element217.useContext)(Context2);
     const appliedPlacementSide = useStoreState(menuContext?.store, "currentPlacement")?.split("-")[0];
-    const hideOnEscape = (0, import_element216.useCallback)((event) => {
+    const hideOnEscape = (0, import_element217.useCallback)((event) => {
       event.preventDefault();
       return true;
     }, []);
     const computedDirection = useStoreState(menuContext?.store, "rtl") ? "rtl" : "ltr";
-    const wrapperProps = (0, import_element216.useMemo)(() => ({
+    const wrapperProps = (0, import_element217.useMemo)(() => ({
       dir: computedDirection,
       style: {
         direction: computedDirection
@@ -54112,7 +54223,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (!menuContext?.store) {
       throw new Error("Menu.Popover can only be rendered inside a Menu component");
     }
-    const renderMenu = (0, import_element216.useCallback)((htmlProps) => /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(MenuMotionRoot, {
+    const renderMenu = (0, import_element217.useCallback)((htmlProps) => /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(MenuMotionRoot, {
       children: /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(MenuSurface, {
         ...htmlProps,
         variant: menuContext.variant
@@ -54147,7 +54258,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       // From internal components context
       variant
     } = useContextSystem(props, "Menu");
-    const parentContext = (0, import_element217.useContext)(Context2);
+    const parentContext = (0, import_element218.useContext)(Context2);
     const rtl2 = (0, import_i18n72.isRTL)();
     let computedPlacement = placement ?? (parentContext?.store ? "right-start" : "bottom-start");
     if (rtl2) {
@@ -54168,7 +54279,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       },
       rtl: rtl2
     });
-    const contextValue = (0, import_element217.useMemo)(() => ({
+    const contextValue = (0, import_element218.useMemo)(() => ({
       store: menuStore,
       variant
     }), [menuStore, variant]);
@@ -54280,17 +54391,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tabs/index.mjs
   var import_compose85 = __toESM(require_compose(), 1);
-  var import_element223 = __toESM(require_element(), 1);
+  var import_element224 = __toESM(require_element(), 1);
   var import_i18n73 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/tabs/context.mjs
-  var import_element218 = __toESM(require_element(), 1);
-  var TabsContext = (0, import_element218.createContext)(void 0);
+  var import_element219 = __toESM(require_element(), 1);
+  var TabsContext = (0, import_element219.createContext)(void 0);
   TabsContext.displayName = "TabsContext";
-  var useTabsContext = () => (0, import_element218.useContext)(TabsContext);
+  var useTabsContext = () => (0, import_element219.useContext)(TabsContext);
 
   // packages/components/build-module/tabs/tab.mjs
-  var import_element219 = __toESM(require_element(), 1);
+  var import_element220 = __toESM(require_element(), 1);
   var import_warning11 = __toESM(require_warning(), 1);
 
   // packages/components/build-module/tabs/styles.mjs
@@ -54337,7 +54448,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tabs/tab.mjs
   var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
-  var Tab3 = (0, import_element219.forwardRef)(function Tab23({
+  var Tab3 = (0, import_element220.forwardRef)(function Tab23({
     children,
     tabId,
     disabled,
@@ -54370,16 +54481,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tabs/tablist.mjs
   var import_warning12 = __toESM(require_warning(), 1);
-  var import_element221 = __toESM(require_element(), 1);
+  var import_element222 = __toESM(require_element(), 1);
   var import_compose84 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/tabs/use-track-overflow.mjs
-  var import_element220 = __toESM(require_element(), 1);
+  var import_element221 = __toESM(require_element(), 1);
   var import_compose83 = __toESM(require_compose(), 1);
   function useTrackOverflow(parent, children) {
-    const [first, setFirst] = (0, import_element220.useState)(false);
-    const [last, setLast] = (0, import_element220.useState)(false);
-    const [observer, setObserver] = (0, import_element220.useState)();
+    const [first, setFirst] = (0, import_element221.useState)(false);
+    const [last, setLast] = (0, import_element221.useState)(false);
+    const [observer, setObserver] = (0, import_element221.useState)();
     const callback = (0, import_compose83.useEvent)((entries) => {
       for (const entry of entries) {
         if (entry.target === children.first) {
@@ -54390,7 +54501,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       }
     });
-    (0, import_element220.useEffect)(() => {
+    (0, import_element221.useEffect)(() => {
       if (!parent || !window.IntersectionObserver) {
         return;
       }
@@ -54401,7 +54512,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       setObserver(newObserver);
       return () => newObserver.disconnect();
     }, [callback, parent]);
-    (0, import_element220.useEffect)(() => {
+    (0, import_element221.useEffect)(() => {
       if (!observer) {
         return;
       }
@@ -54432,7 +54543,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   function useScrollRectIntoView(parent, rect, {
     margin = DEFAULT_SCROLL_MARGIN
   } = {}) {
-    (0, import_element221.useLayoutEffect)(() => {
+    (0, import_element222.useLayoutEffect)(() => {
       if (!parent || !rect) {
         return;
       }
@@ -54461,7 +54572,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
     }, [margin, parent, rect]);
   }
-  var TabList3 = (0, import_element221.forwardRef)(function TabList22({
+  var TabList3 = (0, import_element222.forwardRef)(function TabList22({
     children,
     ...otherProps
   }, ref) {
@@ -54471,7 +54582,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const selectedId = useStoreState(store, "selectedId");
     const selectOnMove = useStoreState(store, "selectOnMove");
     const items = useStoreState(store, "items");
-    const [parent, setParent] = (0, import_element221.useState)();
+    const [parent, setParent] = (0, import_element222.useState)();
     const refs = (0, import_compose84.useMergeRefs)([ref, setParent]);
     const selectedItem = store?.item(selectedId);
     const renderedItems = useStoreState(store, "renderedItems");
@@ -54509,10 +54620,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/tabs/tabpanel.mjs
-  var import_element222 = __toESM(require_element(), 1);
+  var import_element223 = __toESM(require_element(), 1);
   var import_warning13 = __toESM(require_warning(), 1);
   var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
-  var TabPanel3 = (0, import_element222.forwardRef)(function TabPanel24({
+  var TabPanel3 = (0, import_element223.forwardRef)(function TabPanel24({
     children,
     tabId,
     focusable = true,
@@ -54575,7 +54686,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       activeId: externalToInternalTabId(activeTabId, instanceId),
       rtl: (0, import_i18n73.isRTL)()
     });
-    const contextValue = (0, import_element223.useMemo)(() => ({
+    const contextValue = (0, import_element224.useMemo)(() => ({
       store,
       instanceId
     }), [store, instanceId]);
@@ -54659,7 +54770,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var badge_default = Badge;
 
   // packages/components/build-module/validated-form-controls/components/input-control.mjs
-  var import_element224 = __toESM(require_element(), 1);
+  var import_element225 = __toESM(require_element(), 1);
   var import_compose86 = __toESM(require_compose(), 1);
   var import_deprecated29 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
@@ -54674,7 +54785,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       alternative: "ValidatedInputControl from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
     });
-    const validityTargetRef = (0, import_element224.useRef)(null);
+    const validityTargetRef = (0, import_element225.useRef)(null);
     const mergedRefs = (0, import_compose86.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(ControlWithError, {
       className: "components-validated-control",
@@ -54688,18 +54799,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   };
-  var ValidatedInputControl = (0, import_element224.forwardRef)(UnforwardedValidatedInputControl);
+  var ValidatedInputControl = (0, import_element225.forwardRef)(UnforwardedValidatedInputControl);
   ValidatedInputControl.displayName = "ValidatedInputControl";
 
   // packages/components/build-module/validated-form-controls/components/content-editable-control.mjs
-  var import_element226 = __toESM(require_element(), 1);
+  var import_element227 = __toESM(require_element(), 1);
 
   // packages/components/build-module/content-editable-control/index.mjs
   var import_compose87 = __toESM(require_compose(), 1);
-  var import_element225 = __toESM(require_element(), 1);
+  var import_element226 = __toESM(require_element(), 1);
   var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE47 = "data-wp-hash";
-  function getRuntime47() {
+  var STYLE_HASH_ATTRIBUTE48 = "data-wp-hash";
+  function getRuntime48() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -54710,26 +54821,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument47(document);
+      registerDocument48(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash47(targetDocument, hash2) {
+  function documentContainsStyleHash48(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE47}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE47) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE48}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE48) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle47(targetDocument, hash2, css3) {
+  function injectStyle48(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime47();
+    const runtime = getRuntime48();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -54738,21 +54849,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash47(targetDocument, hash2)) {
+    if (documentContainsStyleHash48(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE47, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE48, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument47(targetDocument) {
-    const runtime = getRuntime47();
+  function registerDocument48(targetDocument) {
+    const runtime = getRuntime48();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle47(targetDocument, hash2, css3);
+      injectStyle48(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -54766,15 +54877,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle46(hash2, css3) {
-    const runtime = getRuntime47();
+  function registerStyle47(hash2, css3) {
+    const runtime = getRuntime48();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle47(targetDocument, hash2, css3);
+      injectStyle48(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle46("3558237a49", "._0f130cee1a924516__editable{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;width:100%}@media (min-width:600px){._0f130cee1a924516__editable{font-size:13px;line-height:normal}}._0f130cee1a924516__editable:hover:not(:disabled,[aria-disabled=true],[type=checkbox]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}._0f130cee1a924516__editable:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._0f130cee1a924516__editable::placeholder{color:rgba(30,30,30,.62)}._0f130cee1a924516__editable[aria-placeholder]:empty:before{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%);content:attr(aria-placeholder)}._0f130cee1a924516__editable{min-height:40px;padding:12px}._0f130cee1a924516__editable[aria-disabled=true]{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb));color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));cursor:default}");
+    registerStyle47("3558237a49", "._0f130cee1a924516__editable{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;width:100%}@media (min-width:600px){._0f130cee1a924516__editable{font-size:13px;line-height:normal}}._0f130cee1a924516__editable:hover:not(:disabled,[aria-disabled=true],[type=checkbox]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}._0f130cee1a924516__editable:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._0f130cee1a924516__editable::placeholder{color:rgba(30,30,30,.62)}._0f130cee1a924516__editable[aria-placeholder]:empty:before{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%);content:attr(aria-placeholder)}._0f130cee1a924516__editable{min-height:40px;padding:12px}._0f130cee1a924516__editable[aria-disabled=true]{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb));color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));cursor:default}");
   }
   var style_module_default43 = { "editable": "_0f130cee1a924516__editable" };
   function UnforwardedContentEditableControl({
@@ -54797,7 +54908,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       help
     });
     const labelId = `${controlProps.id}__label`;
-    const editableRef = (0, import_element225.useRef)(null);
+    const editableRef = (0, import_element226.useRef)(null);
     const mergedRefs = (0, import_compose87.useMergeRefs)([editableRef, forwardedRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime313.jsxs)(base_control_default, {
       ...baseControlProps,
@@ -54824,7 +54935,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   }
-  var ContentEditableControl = (0, import_element225.forwardRef)(UnforwardedContentEditableControl);
+  var ContentEditableControl = (0, import_element226.forwardRef)(UnforwardedContentEditableControl);
   var content_editable_control_default = ContentEditableControl;
 
   // packages/components/build-module/validated-form-controls/components/content-editable-control.mjs
@@ -54837,7 +54948,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     className,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element226.useRef)(null);
+    const validityTargetRef = (0, import_element227.useRef)(null);
     return /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
       children: [/* @__PURE__ */ (0, import_jsx_runtime314.jsx)(ControlWithError, {
@@ -54867,11 +54978,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   };
-  var ValidatedContentEditableControl = (0, import_element226.forwardRef)(UnforwardedValidatedContentEditableControl);
+  var ValidatedContentEditableControl = (0, import_element227.forwardRef)(UnforwardedValidatedContentEditableControl);
   ValidatedContentEditableControl.displayName = "ValidatedContentEditableControl";
 
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
-  var import_element227 = __toESM(require_element(), 1);
+  var import_element228 = __toESM(require_element(), 1);
   var import_compose88 = __toESM(require_compose(), 1);
   var import_deprecated30 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
@@ -54886,7 +54997,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       alternative: "ValidatedTextareaControl from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
     });
-    const validityTargetRef = (0, import_element227.useRef)(null);
+    const validityTargetRef = (0, import_element228.useRef)(null);
     const mergedRefs = (0, import_compose88.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(ControlWithError, {
       className: "components-validated-control",
@@ -54900,7 +55011,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })
     });
   };
-  var ValidatedTextareaControl = (0, import_element227.forwardRef)(UnforwardedValidatedTextareaControl);
+  var ValidatedTextareaControl = (0, import_element228.forwardRef)(UnforwardedValidatedTextareaControl);
   ValidatedTextareaControl.displayName = "ValidatedTextareaControl";
 
   // packages/components/build-module/private-apis.mjs
