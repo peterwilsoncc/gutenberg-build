@@ -1,4 +1,5 @@
 (function() {
+"use strict";
 var wp;
 (wp ||= {}).formatLibrary = (() => {
   var __create = Object.create;
@@ -338,12 +339,18 @@ var wp;
     title,
     tagName: "strong",
     className: null,
-    edit({ isActive, value, onChange, onFocus, isVisible = true }) {
+    edit({
+      isActive,
+      value,
+      onChange,
+      onFocus,
+      isVisible = true
+    }) {
       function onToggle() {
         onChange((0, import_rich_text.toggleFormat)(value, { type: name, title }));
       }
       function onClick() {
-        onChange((0, import_rich_text.toggleFormat)(value, { type: name }));
+        onChange((0, import_rich_text.toggleFormat)(value, { type: name, title }));
         onFocus();
       }
       return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_jsx_runtime18.Fragment, { children: [
@@ -414,7 +421,12 @@ var wp;
       value = (0, import_rich_text2.applyFormat)(value, { type: name2 }, startIndex, endIndex);
       return value;
     },
-    edit({ value, onChange, onFocus, isActive }) {
+    edit({
+      value,
+      onChange,
+      onFocus,
+      isActive
+    }) {
       function onClick() {
         onChange((0, import_rich_text2.toggleFormat)(value, { type: name2, title: title2 }));
         onFocus();
@@ -7090,13 +7102,20 @@ var wp;
     },
     edit: Edit
   };
-  function InlineUI({ value, onChange, activeObjectAttributes, contentRef }) {
-    const { style, alt } = activeObjectAttributes;
+  function InlineUI({
+    value,
+    onChange,
+    activeObjectAttributes,
+    contentRef
+  }) {
+    const style = activeObjectAttributes?.style;
+    const alt = activeObjectAttributes?.alt;
     const width = style?.replace(/\D/g, "");
     const [editedWidth, setEditedWidth] = (0, import_element26.useState)(width);
     const [editedAlt, setEditedAlt] = (0, import_element26.useState)(alt);
     const hasChanged = editedWidth !== width || editedAlt !== alt;
     const popoverAnchor = (0, import_rich_text3.useAnchor)({
+      // eslint-disable-next-line react-hooks/refs
       editableContentElement: contentRef.current,
       settings: image
     });
@@ -7117,7 +7136,7 @@ var wp;
                 attributes: {
                   ...activeObjectAttributes,
                   style: editedWidth ? `width: ${editedWidth}px;` : "",
-                  alt: editedAlt
+                  alt: editedAlt ?? ""
                 }
               };
               onChange({
@@ -7142,7 +7161,7 @@ var wp;
                 import_components.TextareaControl,
                 {
                   label: (0, import_i18n7.__)("Alternative text"),
-                  value: editedAlt,
+                  value: editedAlt ?? "",
                   onChange: (newAlt) => {
                     setEditedAlt(newAlt);
                   },
@@ -7198,7 +7217,12 @@ var wp;
         {
           allowedTypes: ALLOWED_MEDIA_TYPES,
           value: getCurrentImageId(activeObjectAttributes),
-          onSelect: ({ id, url, alt, width: imgWidth }) => {
+          onSelect: ({
+            id,
+            url,
+            alt,
+            width: imgWidth
+          }) => {
             onChange(
               (0, import_rich_text3.insertObject)(value, {
                 type: name3,
@@ -7250,12 +7274,18 @@ var wp;
     title: title4,
     tagName: "em",
     className: null,
-    edit({ isActive, value, onChange, onFocus, isVisible = true }) {
+    edit({
+      isActive,
+      value,
+      onChange,
+      onFocus,
+      isVisible = true
+    }) {
       function onToggle() {
         onChange((0, import_rich_text4.toggleFormat)(value, { type: name4, title: title4 }));
       }
       function onClick() {
-        onChange((0, import_rich_text4.toggleFormat)(value, { type: name4 }));
+        onChange((0, import_rich_text4.toggleFormat)(value, { type: name4, title: title4 }));
         onFocus();
       }
       return /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)(import_jsx_runtime56.Fragment, { children: [
@@ -7321,14 +7351,14 @@ var wp;
     }
     if (/^\S+:/.test(trimmedHref)) {
       const protocol = (0, import_url.getProtocol)(trimmedHref);
-      if (!(0, import_url.isValidProtocol)(protocol)) {
+      if (!protocol || !(0, import_url.isValidProtocol)(protocol)) {
         return false;
       }
       if (protocol.startsWith("http") && !/^https?:\/\/[^\/\s]/i.test(trimmedHref)) {
         return false;
       }
       const authority = (0, import_url.getAuthority)(trimmedHref);
-      if (!(0, import_url.isValidAuthority)(authority)) {
+      if (!authority || !(0, import_url.isValidAuthority)(authority)) {
         return false;
       }
       const path = (0, import_url.getPath)(trimmedHref);
@@ -7416,9 +7446,8 @@ var wp;
       return EMPTY_BOUNDARIES;
     }
     const index = newFormats[initialIndex].indexOf(targetFormat);
-    const walkingArgs = [newFormats, initialIndex, targetFormat, index];
-    startIndex = walkToStart(...walkingArgs);
-    endIndex = walkToEnd(...walkingArgs);
+    startIndex = walkToStart(newFormats, initialIndex, targetFormat, index);
+    endIndex = walkToEnd(newFormats, initialIndex, targetFormat, index);
     startIndex = startIndex < 0 ? 0 : startIndex;
     return {
       start: startIndex,
@@ -7439,9 +7468,8 @@ var wp;
     index = index + inverseDirectionIncrement;
     return index;
   }
-  var partialRight = (fn, ...partialArgs) => (...args) => fn(...args, ...partialArgs);
-  var walkToStart = partialRight(walkToBoundary, "backwards");
-  var walkToEnd = partialRight(walkToBoundary, "forwards");
+  var walkToStart = (...args) => walkToBoundary(...args, "backwards");
+  var walkToEnd = (...args) => walkToBoundary(...args, "forwards");
 
   // packages/format-library/build-module/link/css-classes-setting.mjs
   var import_element27 = __toESM(require_element(), 1);
@@ -7449,8 +7477,12 @@ var wp;
   var import_i18n9 = __toESM(require_i18n(), 1);
   var import_components2 = __toESM(require_components(), 1);
   var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
-  var CSSClassesSettingComponent = ({ setting, value, onChange }) => {
-    const hasValue = value ? value?.cssClasses?.length > 0 : false;
+  var CSSClassesSettingComponent = ({
+    setting,
+    value,
+    onChange
+  }) => {
+    const hasValue = !!value?.cssClasses?.length;
     const [isSettingActive, setIsSettingActive] = (0, import_element27.useState)(hasValue);
     const instanceId = (0, import_compose3.useInstanceId)(CSSClassesSettingComponent);
     const controlledRegionId = `css-classes-setting-${instanceId}`;
@@ -7512,16 +7544,14 @@ var wp;
     {
       id: "cssClasses",
       title: (0, import_i18n10.__)("Additional CSS class(es)"),
-      render: (setting, value, onChange) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
-          css_classes_setting_default,
-          {
-            setting,
-            value,
-            onChange
-          }
-        );
-      }
+      render: (setting, value, onChange) => /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
+        css_classes_setting_default,
+        {
+          setting,
+          value,
+          onChange
+        }
+      )
     }
   ];
   function InlineLinkUI({
@@ -7582,7 +7612,7 @@ var wp;
         ...linkValue,
         ...nextValue
       };
-      const newUrl = (0, import_url2.prependHTTPS)(nextValue.url);
+      const newUrl = (0, import_url2.prependHTTPS)(nextValue?.url ?? "");
       const linkFormat = createLinkFormat({
         url: newUrl,
         type: nextValue.type,
@@ -7625,11 +7655,11 @@ var wp;
         const boundary = getFormatBoundary(value, {
           type: "core/link"
         });
-        const [valBefore, valAfter] = (0, import_rich_text5.split)(
-          value,
-          boundary.start,
-          boundary.start
-        );
+        const splitValue = (0, import_rich_text5.split)(value, boundary.start, boundary.start);
+        if (!splitValue) {
+          return;
+        }
+        const [valBefore, valAfter] = splitValue;
         const newValAfter = (0, import_rich_text5.replace)(valAfter, richTextText, newValue);
         newValue = (0, import_rich_text5.concat)(valBefore, newValAfter);
       }
@@ -7650,12 +7680,11 @@ var wp;
         (0, import_a11y.speak)((0, import_i18n10.__)("Link inserted."), "assertive");
       }
     }
+    const anchorSettings = { ...link, isActive };
     const popoverAnchor = (0, import_rich_text5.useAnchor)({
+      // eslint-disable-next-line react-hooks/refs
       editableContentElement: contentRef.current,
-      settings: {
-        ...link,
-        isActive
-      }
+      settings: anchorSettings
     });
     async function handleCreate(pageTitle) {
       const page = await createPageEntity({
@@ -7725,8 +7754,8 @@ var wp;
       const boundary = getFormatBoundary(value, {
         type: "core/link"
       });
-      textStart = boundary.start;
-      textEnd = boundary.end;
+      textStart = boundary.start ?? value.start;
+      textEnd = boundary.end ?? value.end;
     }
     return (0, import_rich_text5.slice)(value, textStart, textEnd);
   }
@@ -7758,7 +7787,9 @@ var wp;
         return;
       }
       function handleClick(event) {
-        const link2 = event.target.closest("[contenteditable] a");
+        const link2 = event.target.closest(
+          "[contenteditable] a"
+        );
         if (!link2 || // other formats (e.g. bold) may be nested within the link.
         !isActive) {
           return;
@@ -8023,18 +8054,21 @@ var wp;
     { name: "backgroundColor", title: (0, import_i18n14.__)("Background") }
   ];
   function parseCSS(css = "") {
-    return css.split(";").reduce((accumulator, rule) => {
-      if (rule) {
-        const [property, value] = rule.split(":");
-        if (property === "color") {
-          accumulator.color = value;
+    return css.split(";").reduce(
+      (accumulator, rule) => {
+        if (rule) {
+          const [property, value] = rule.split(":");
+          if (property === "color") {
+            accumulator.color = value;
+          }
+          if (property === "background-color" && value !== transparentValue) {
+            accumulator.backgroundColor = value;
+          }
         }
-        if (property === "background-color" && value !== transparentValue) {
-          accumulator.backgroundColor = value;
-        }
-      }
-      return accumulator;
-    }, {});
+        return accumulator;
+      },
+      {}
+    );
   }
   function parseClassName(className = "", colorSettings) {
     return className.split(" ").reduce((accumulator, name16) => {
@@ -8055,8 +8089,8 @@ var wp;
       return {};
     }
     return {
-      ...parseCSS(activeColorFormat.attributes.style),
-      ...parseClassName(activeColorFormat.attributes.class, colorSettings)
+      ...parseCSS(activeColorFormat.attributes?.style),
+      ...parseClassName(activeColorFormat.attributes?.class, colorSettings)
     };
   }
   function setColors(value, name16, colorSettings, colors) {
@@ -8077,8 +8111,14 @@ var wp;
     }
     if (color) {
       const colorObject = (0, import_block_editor9.getColorObjectByColorValue)(colorSettings, color);
-      if (colorObject) {
-        classNames.push((0, import_block_editor9.getColorClassName)("color", colorObject.slug));
+      if (colorObject && colorObject.slug) {
+        const colorClassName = (0, import_block_editor9.getColorClassName)(
+          "color",
+          colorObject.slug
+        );
+        if (colorClassName) {
+          classNames.push(colorClassName);
+        }
       } else {
         styles.push(["color", color].join(":"));
       }
@@ -8122,9 +8162,11 @@ var wp;
     contentRef,
     isActive
   }) {
+    const anchorSettings = { ...textColor, isActive };
     const popoverAnchor = (0, import_rich_text9.useAnchor)({
+      // eslint-disable-next-line react-hooks/refs
       editableContentElement: contentRef.current,
-      settings: { ...textColor, isActive }
+      settings: anchorSettings
     });
     return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
       import_components4.Popover,
@@ -8163,20 +8205,17 @@ var wp;
   var title8 = (0, import_i18n15.__)("Highlight");
   var EMPTY_ARRAY3 = [];
   function getComputedStyleProperty(element, property) {
-    if (!element) {
-      return;
-    }
     const { ownerDocument: ownerDocument2 } = element;
     const { defaultView } = ownerDocument2;
-    const style = defaultView.getComputedStyle(element);
-    const value = style.getPropertyValue(property);
+    const style = defaultView?.getComputedStyle(element);
+    const value = style?.getPropertyValue(property);
     if (property === "background-color" && value === transparentValue && element.parentElement) {
       return getComputedStyleProperty(element.parentElement, property);
     }
     return value;
   }
   function fillComputedColors(element, { color, backgroundColor }) {
-    if (!color && !backgroundColor) {
+    if (!element || !color && !backgroundColor) {
       return;
     }
     return {
@@ -8230,7 +8269,6 @@ var wp;
         {
           name: name8,
           onClose: () => setIsAddingColor(false),
-          activeAttributes,
           value,
           onChange,
           contentRef,
@@ -8446,8 +8484,14 @@ var wp;
       )
     ] });
   }
-  function InlineLanguageUI({ value, contentRef, onChange, onClose }) {
+  function InlineLanguageUI({
+    value,
+    contentRef,
+    onChange,
+    onClose
+  }) {
     const popoverAnchor = (0, import_rich_text15.useAnchor)({
+      // eslint-disable-next-line react-hooks/refs
       editableContentElement: contentRef.current,
       settings: language
     });
@@ -8545,8 +8589,9 @@ var wp;
       activeAttributes?.["data-latex"] || ""
     );
     const [error2, setError] = (0, import_element33.useState)(null);
-    const formRef = (0, import_element33.useRef)();
+    const formRef = (0, import_element33.useRef)(null);
     const popoverAnchor = (0, import_rich_text16.useAnchor)({
+      // eslint-disable-next-line react-hooks/refs
       editableContentElement: contentRef.current,
       settings: math
     });
@@ -8558,7 +8603,9 @@ var wp;
           mathML = latexToMathML(newLatex, { displayMode: false });
           setError(null);
         } catch (err) {
-          setError(err.message);
+          setError(
+            err instanceof Error ? err.message : (0, import_i18n21.__)("Could not parse the LaTeX math syntax.")
+          );
         }
       } else {
         setError(null);
@@ -8694,6 +8741,7 @@ var wp;
   var title15 = (0, import_i18n22.__)("Non breaking space");
   function PopoverAnchor({ contentRef }) {
     const popoverAnchor = (0, import_rich_text17.useAnchor)({
+      // eslint-disable-next-line react-hooks/refs
       editableContentElement: contentRef.current,
       settings: nonBreakingSpace
     });
