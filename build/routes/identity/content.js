@@ -11575,10 +11575,12 @@ var Link = (0, import_element17.forwardRef)(function Link2({
   variant = "default",
   tone = "brand",
   openInNewTab = false,
+  target,
   render: render4,
   className,
   ...props
 }, ref) {
+  const shouldShowNewTabIndicator = openInNewTab || target === "_blank";
   const element = useRender({
     render: render4,
     defaultTagName: "a",
@@ -11593,10 +11595,10 @@ var Link = (0, import_element17.forwardRef)(function Link2({
         variant === "unstyled" && style_default5["is-unstyled"],
         className
       ),
-      target: openInNewTab ? "_blank" : void 0,
+      target: target ?? (openInNewTab ? "_blank" : void 0),
       children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(import_jsx_runtime27.Fragment, { children: [
         children,
-        openInNewTab && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+        shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
           "span",
           {
             className: style_default5["link-icon"],

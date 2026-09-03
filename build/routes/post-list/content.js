@@ -17023,10 +17023,12 @@ var Link = (0, import_element22.forwardRef)(function Link2({
   variant = "default",
   tone = "brand",
   openInNewTab = false,
+  target,
   render: render4,
   className,
   ...props
 }, ref) {
+  const shouldShowNewTabIndicator = openInNewTab || target === "_blank";
   const element = useRender({
     render: render4,
     defaultTagName: "a",
@@ -17041,10 +17043,10 @@ var Link = (0, import_element22.forwardRef)(function Link2({
         variant === "unstyled" && style_default5["is-unstyled"],
         className
       ),
-      target: openInNewTab ? "_blank" : void 0,
+      target: target ?? (openInNewTab ? "_blank" : void 0),
       children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_jsx_runtime40.Fragment, { children: [
         children,
-        openInNewTab && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+        shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
           "span",
           {
             className: style_default5["link-icon"],
@@ -18327,6 +18329,7 @@ var LinkItem = (0, import_element33.forwardRef)(function MenuLinkItem3({
   children,
   className,
   openInNewTab = false,
+  target,
   prefix,
   shortcut,
   suffix,
@@ -18337,7 +18340,8 @@ var LinkItem = (0, import_element33.forwardRef)(function MenuLinkItem3({
   rel,
   ...props
 }, ref) {
-  const externalLinkIndicator = openInNewTab ? /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
+  const shouldShowNewTabIndicator = openInNewTab || target === "_blank";
+  const externalLinkIndicator = shouldShowNewTabIndicator ? /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
     "span",
     {
       className: style_default13["external-link-indicator"],
@@ -18368,7 +18372,7 @@ var LinkItem = (0, import_element33.forwardRef)(function MenuLinkItem3({
       ...props,
       ...itemAriaProps,
       rel,
-      target: openInNewTab ? "_blank" : void 0,
+      target: target ?? (openInNewTab ? "_blank" : void 0),
       className: clsx_default(
         global_css_defense_default3.a,
         resets_default5["box-sizing"],
