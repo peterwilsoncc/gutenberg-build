@@ -45013,7 +45013,8 @@ var wp;
   }
   var reorderPage = {
     id: "order-pages",
-    label: (0, import_i18n60.__)("Order"),
+    label: (0, import_i18n60.__)("Order\u2026"),
+    modalHeader: (0, import_i18n60.__)("Order"),
     isEligible({ status }) {
       return status !== "trash";
     },
@@ -45032,7 +45033,8 @@ var wp;
   var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
   var duplicatePost = {
     id: "duplicate-post",
-    label: (0, import_i18n61._x)("Duplicate", "action label"),
+    label: (0, import_i18n61._x)("Duplicate\u2026", "action label"),
+    modalHeader: (0, import_i18n61._x)("Duplicate", "action label"),
     isEligible({ status }) {
       return status !== "trash";
     },
@@ -45166,7 +45168,8 @@ var wp;
   var { PATTERN_TYPES: PATTERN_TYPES3 } = unlock3(import_patterns3.privateApis);
   var renamePost = {
     id: "rename-post",
-    label: (0, import_i18n62.__)("Rename"),
+    label: (0, import_i18n62.__)("Rename\u2026"),
+    modalHeader: (0, import_i18n62.__)("Rename"),
     modalFocusOnMount: "firstContentElement",
     isEligible(post2) {
       if (post2.status === "trash") {
@@ -45375,7 +45378,7 @@ var wp;
   };
   var resetPostAction = {
     id: "reset-post",
-    label: (0, import_i18n63.__)("Reset"),
+    label: (0, import_i18n63.__)("Reset\u2026"),
     isEligible: (item) => {
       return isTemplateOrTemplatePart(item) && item?.source === "custom" && (Boolean(item.type === "wp_template" && item?.plugin) || item?.has_theme_file);
     },
@@ -45479,7 +45482,7 @@ var wp;
   var { CreatePatternModalContents, useDuplicatePatternProps } = unlock3(import_patterns4.privateApis);
   var duplicatePattern = {
     id: "duplicate-pattern",
-    label: (0, import_i18n64._x)("Duplicate", "action label"),
+    label: (0, import_i18n64._x)("Duplicate\u2026", "action label"),
     isEligible: (item) => item.type !== "wp_template_part",
     modalHeader: (0, import_i18n64._x)("Duplicate pattern", "action label"),
     modalFocusOnMount: "firstContentElement",
@@ -45848,7 +45851,7 @@ var wp;
   var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
   var permanentlyDeletePost = {
     id: "permanently-delete",
-    label: (0, import_i18n67.__)("Permanently delete"),
+    label: (0, import_i18n67.__)("Permanently delete\u2026"),
     supportsBulk: true,
     icon: trash_default,
     isEligible(item) {
@@ -46113,7 +46116,7 @@ var wp;
   var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
   var trashPost = {
     id: "move-to-trash",
-    label: (0, import_i18n69._x)("Trash", "verb"),
+    label: (0, import_i18n69._x)("Trash\u2026", "verb"),
     isPrimary: true,
     icon: trash_default,
     isEligible(item) {
@@ -46349,7 +46352,7 @@ var wp;
   var { PATTERN_TYPES: PATTERN_TYPES4 } = unlock3(import_patterns5.privateApis);
   var deletePostAction = {
     id: "delete-post",
-    label: (0, import_i18n70.__)("Delete"),
+    label: (0, import_i18n70.__)("Delete\u2026"),
     isPrimary: true,
     icon: trash_default,
     isEligible(post2) {
@@ -46764,7 +46767,7 @@ var wp;
   var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
   var duplicateTemplatePart = {
     id: "duplicate-template-part",
-    label: (0, import_i18n72._x)("Duplicate", "action label"),
+    label: (0, import_i18n72._x)("Duplicate\u2026", "action label"),
     isEligible: (item) => item.type === "wp_template_part",
     modalHeader: (0, import_i18n72._x)("Duplicate template part", "action label"),
     modalFocusOnMount: "firstContentElement",
@@ -113960,7 +113963,8 @@ ${content}
     return (0, import_element378.useMemo)(
       () => ({
         id: "set-as-homepage",
-        label: (0, import_i18n324.__)("Set as homepage"),
+        label: (0, import_i18n324.__)("Set as homepage\u2026"),
+        modalHeader: (0, import_i18n324.__)("Set as homepage"),
         isEligible(post2) {
           if (post2.status !== "publish") {
             return false;
@@ -114086,7 +114090,8 @@ ${content}
     return (0, import_element379.useMemo)(
       () => ({
         id: "set-as-posts-page",
-        label: (0, import_i18n325.__)("Set as posts page"),
+        label: (0, import_i18n325.__)("Set as posts page\u2026"),
+        modalHeader: (0, import_i18n325.__)("Set as posts page"),
         isEligible(post2) {
           if (post2.status !== "publish") {
             return false;
