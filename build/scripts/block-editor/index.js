@@ -19868,6 +19868,9 @@ var wp;
         rules.push(`flex-wrap: ${flexWrap}`);
       }
       if (orientation === "horizontal") {
+        if (hasViewportOverride("orientation")) {
+          rules.push("flex-direction: row");
+        }
         if (shouldOutputFlexAlignment && verticalAlignment) {
           rules.push(`align-items: ${verticalAlignment}`);
         }
