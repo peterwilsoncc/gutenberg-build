@@ -2506,27 +2506,6 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/notices
-  var require_notices = __commonJS({
-    "package-external:@wordpress/notices"(exports, module) {
-      module.exports = window.wp.notices;
-    }
-  });
-
-  // package-external:@wordpress/private-apis
-  var require_private_apis = __commonJS({
-    "package-external:@wordpress/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
-    }
-  });
-
-  // package-external:@wordpress/keycodes
-  var require_keycodes = __commonJS({
-    "package-external:@wordpress/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
-    }
-  });
-
   // vendor-external:react-dom
   var require_react_dom = __commonJS({
     "vendor-external:react-dom"(exports, module) {
@@ -2610,10 +2589,31 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/private-apis
+  var require_private_apis = __commonJS({
+    "package-external:@wordpress/private-apis"(exports, module) {
+      module.exports = window.wp.privateApis;
+    }
+  });
+
   // package-external:@wordpress/a11y
   var require_a11y = __commonJS({
     "package-external:@wordpress/a11y"(exports, module) {
       module.exports = window.wp.a11y;
+    }
+  });
+
+  // package-external:@wordpress/notices
+  var require_notices = __commonJS({
+    "package-external:@wordpress/notices"(exports, module) {
+      module.exports = window.wp.notices;
+    }
+  });
+
+  // package-external:@wordpress/keycodes
+  var require_keycodes = __commonJS({
+    "package-external:@wordpress/keycodes"(exports, module) {
+      module.exports = window.wp.keycodes;
     }
   });
 
@@ -6267,7 +6267,7 @@ var wp;
     name: () => name7,
     settings: () => settings7
   });
-  var import_i18n11 = __toESM(require_i18n(), 1);
+  var import_i18n15 = __toESM(require_i18n(), 1);
   var import_blocks6 = __toESM(require_blocks(), 1);
 
   // packages/block-library/build-module/audio/deprecated.mjs
@@ -6340,2951 +6340,6 @@ var wp;
   // packages/block-library/build-module/audio/edit.mjs
   var import_blob2 = __toESM(require_blob(), 1);
   var import_components7 = __toESM(require_components(), 1);
-  var import_block_editor15 = __toESM(require_block_editor(), 1);
-  var import_i18n10 = __toESM(require_i18n(), 1);
-  var import_data8 = __toESM(require_data(), 1);
-  var import_notices = __toESM(require_notices(), 1);
-  var import_element7 = __toESM(require_element(), 1);
-
-  // node_modules/memize/dist/index.js
-  function memize(fn, options2) {
-    var size = 0;
-    var head;
-    var tail;
-    options2 = options2 || {};
-    function memoized() {
-      var node = head, len = arguments.length, args, i2;
-      searchCache: while (node) {
-        if (node.args.length !== arguments.length) {
-          node = node.next;
-          continue;
-        }
-        for (i2 = 0; i2 < len; i2++) {
-          if (node.args[i2] !== arguments[i2]) {
-            node = node.next;
-            continue searchCache;
-          }
-        }
-        if (node !== head) {
-          if (node === tail) {
-            tail = node.prev;
-          }
-          node.prev.next = node.next;
-          if (node.next) {
-            node.next.prev = node.prev;
-          }
-          node.next = head;
-          node.prev = null;
-          head.prev = node;
-          head = node;
-        }
-        return node.val;
-      }
-      args = new Array(len);
-      for (i2 = 0; i2 < len; i2++) {
-        args[i2] = arguments[i2];
-      }
-      node = {
-        args,
-        // Generate the result from original function
-        val: fn.apply(null, args)
-      };
-      if (head) {
-        head.prev = node;
-        node.next = head;
-      } else {
-        tail = node;
-      }
-      if (size === /** @type {MemizeOptions} */
-      options2.maxSize) {
-        tail = /** @type {MemizeCacheNode} */
-        tail.prev;
-        tail.next = null;
-      } else {
-        size++;
-      }
-      head = node;
-      return node.val;
-    }
-    memoized.clear = function() {
-      head = null;
-      tail = null;
-      size = 0;
-    };
-    return memoized;
-  }
-
-  // packages/block-library/build-module/embed/util.mjs
-  var import_element5 = __toESM(require_element(), 1);
-  var import_blocks3 = __toESM(require_blocks(), 1);
-  var import_url2 = __toESM(require_url(), 1);
-
-  // node_modules/tslib/tslib.es6.mjs
-  var __assign = function() {
-    __assign = Object.assign || function __assign2(t2) {
-      for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
-        s2 = arguments[i2];
-        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2)) t2[p2] = s2[p2];
-      }
-      return t2;
-    };
-    return __assign.apply(this, arguments);
-  };
-
-  // node_modules/lower-case/dist.es2015/index.js
-  function lowerCase(str) {
-    return str.toLowerCase();
-  }
-
-  // node_modules/no-case/dist.es2015/index.js
-  var DEFAULT_SPLIT_REGEXP = [/([a-z0-9])([A-Z])/g, /([A-Z])([A-Z][a-z])/g];
-  var DEFAULT_STRIP_REGEXP = /[^A-Z0-9]+/gi;
-  function noCase(input, options2) {
-    if (options2 === void 0) {
-      options2 = {};
-    }
-    var _a = options2.splitRegexp, splitRegexp = _a === void 0 ? DEFAULT_SPLIT_REGEXP : _a, _b = options2.stripRegexp, stripRegexp = _b === void 0 ? DEFAULT_STRIP_REGEXP : _b, _c = options2.transform, transform = _c === void 0 ? lowerCase : _c, _d = options2.delimiter, delimiter = _d === void 0 ? " " : _d;
-    var result = replace(replace(input, splitRegexp, "$1\0$2"), stripRegexp, "\0");
-    var start = 0;
-    var end = result.length;
-    while (result.charAt(start) === "\0")
-      start++;
-    while (result.charAt(end - 1) === "\0")
-      end--;
-    return result.slice(start, end).split("\0").map(transform).join(delimiter);
-  }
-  function replace(input, re, value) {
-    if (re instanceof RegExp)
-      return input.replace(re, value);
-    return re.reduce(function(input2, re2) {
-      return input2.replace(re2, value);
-    }, input);
-  }
-
-  // node_modules/upper-case-first/dist.es2015/index.js
-  function upperCaseFirst(input) {
-    return input.charAt(0).toUpperCase() + input.substr(1);
-  }
-
-  // node_modules/capital-case/dist.es2015/index.js
-  function capitalCaseTransform(input) {
-    return upperCaseFirst(input.toLowerCase());
-  }
-  function capitalCase(input, options2) {
-    if (options2 === void 0) {
-      options2 = {};
-    }
-    return noCase(input, __assign({ delimiter: " ", transform: capitalCaseTransform }, options2));
-  }
-
-  // node_modules/dot-case/dist.es2015/index.js
-  function dotCase(input, options2) {
-    if (options2 === void 0) {
-      options2 = {};
-    }
-    return noCase(input, __assign({ delimiter: "." }, options2));
-  }
-
-  // node_modules/param-case/dist.es2015/index.js
-  function paramCase(input, options2) {
-    if (options2 === void 0) {
-      options2 = {};
-    }
-    return dotCase(input, __assign({ delimiter: "-" }, options2));
-  }
-
-  // packages/kebab-case/build-module/index.mjs
-  function kebabCase(str) {
-    let input = str?.toString?.() ?? "";
-    input = input.replace(/['\u2019]/, "");
-    return paramCase(input, {
-      splitRegexp: [
-        /(?!(?:1ST|2ND|3RD|[4-9]TH)(?![a-z]))([a-z0-9])([A-Z])/g,
-        // fooBar => foo-bar, 3Bar => 3-bar
-        /(?!(?:1st|2nd|3rd|[4-9]th)(?![a-z]))([0-9])([a-z])/g,
-        // 3bar => 3-bar
-        /([A-Za-z])([0-9])/g,
-        // Foo3 => foo-3, foo3 => foo-3
-        /([A-Z])([A-Z][a-z])/g
-        // FOOBar => foo-bar
-      ]
-    });
-  }
-
-  // packages/block-library/build-module/embed/block.json
-  var block_default7 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
-    apiVersion: 3,
-    name: "core/embed",
-    title: "Embed",
-    category: "embed",
-    description: "Add a block that displays content pulled from other sites, like Twitter or YouTube.",
-    textdomain: "default",
-    attributes: {
-      url: {
-        type: "string",
-        role: "content"
-      },
-      caption: {
-        type: "rich-text",
-        source: "rich-text",
-        selector: "figcaption",
-        role: "content"
-      },
-      type: {
-        type: "string",
-        role: "content"
-      },
-      providerNameSlug: {
-        type: "string",
-        role: "content"
-      },
-      allowResponsive: {
-        type: "boolean",
-        default: true
-      },
-      responsive: {
-        type: "boolean",
-        default: false,
-        role: "content"
-      },
-      previewable: {
-        type: "boolean",
-        default: true,
-        role: "content"
-      }
-    },
-    supports: {
-      anchor: true,
-      align: true,
-      spacing: {
-        margin: true
-      },
-      interactivity: {
-        clientNavigation: true
-      }
-    },
-    editorStyle: "wp-block-embed-editor",
-    style: "wp-block-embed"
-  };
-
-  // packages/block-library/build-module/embed/constants.mjs
-  var ASPECT_RATIOS = [
-    // Common video resolutions.
-    { ratio: "2.33", className: "wp-embed-aspect-21-9" },
-    { ratio: "2.00", className: "wp-embed-aspect-18-9" },
-    { ratio: "1.78", className: "wp-embed-aspect-16-9" },
-    { ratio: "1.33", className: "wp-embed-aspect-4-3" },
-    // Vertical video and instagram square video support.
-    { ratio: "1.00", className: "wp-embed-aspect-1-1" },
-    { ratio: "0.56", className: "wp-embed-aspect-9-16" },
-    { ratio: "0.50", className: "wp-embed-aspect-1-2" }
-  ];
-  var WP_EMBED_TYPE = "wp-embed";
-
-  // packages/block-library/build-module/embed/util.mjs
-  var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
-  var { name: DEFAULT_EMBED_BLOCK } = block_default7;
-  var getEmbedInfoByProvider = (provider) => (0, import_blocks3.getBlockVariations)(DEFAULT_EMBED_BLOCK)?.find(
-    ({ name: name122 }) => name122 === provider
-  );
-  var matchesPatterns = (url, patterns = []) => patterns.some((pattern) => url.match(pattern));
-  var findMoreSuitableBlock = (url) => (0, import_blocks3.getBlockVariations)(DEFAULT_EMBED_BLOCK)?.find(
-    ({ patterns }) => matchesPatterns(url, patterns)
-  );
-  function rewriteXToTwitter(url) {
-    if (!url || (0, import_url2.getAuthority)(url) !== "x.com") {
-      return url;
-    }
-    const rewritten = new URL(url);
-    rewritten.host = "twitter.com";
-    return rewritten.toString();
-  }
-  var isFromWordPress = (html) => html && html.includes('class="wp-embedded-content"');
-  var getPhotoHtml = (photo) => {
-    const imageUrl = photo.url || photo.thumbnail_url;
-    const photoPreview = /* @__PURE__ */ (0, import_jsx_runtime177.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime177.jsx)("img", { src: imageUrl, alt: photo.title, width: "100%" }) });
-    return (0, import_element5.renderToString)(photoPreview);
-  };
-  var createUpgradedEmbedBlock = (props, attributesFromPreview = {}) => {
-    const { preview, attributes: attributes2 = {} } = props;
-    const { url, providerNameSlug, type, ...restAttributes } = attributes2;
-    if (!url || !(0, import_blocks3.getBlockType)(DEFAULT_EMBED_BLOCK)) {
-      return;
-    }
-    const matchedBlock = findMoreSuitableBlock(url);
-    const isCurrentBlockWP = providerNameSlug === "wordpress" || type === WP_EMBED_TYPE;
-    const shouldCreateNewBlock = !isCurrentBlockWP && matchedBlock && (matchedBlock.attributes.providerNameSlug !== providerNameSlug || !providerNameSlug);
-    if (shouldCreateNewBlock) {
-      return (0, import_blocks3.createBlock)(DEFAULT_EMBED_BLOCK, {
-        url,
-        ...restAttributes,
-        ...matchedBlock.attributes
-      });
-    }
-    const wpVariation = (0, import_blocks3.getBlockVariations)(DEFAULT_EMBED_BLOCK)?.find(
-      ({ name: name122 }) => name122 === "wordpress"
-    );
-    if (!wpVariation || !preview || !isFromWordPress(preview.html) || isCurrentBlockWP) {
-      return;
-    }
-    return (0, import_blocks3.createBlock)(DEFAULT_EMBED_BLOCK, {
-      url,
-      ...wpVariation.attributes,
-      // By now we have the preview, but when the new block first renders, it
-      // won't have had all the attributes set, and so won't get the correct
-      // type and it won't render correctly. So, we pass through the current attributes
-      // here so that the initial render works when we switch to the WordPress
-      // block. This only affects the WordPress block because it can't be
-      // rendered in the usual Sandbox (it has a sandbox of its own) and it
-      // relies on the preview to set the correct render type.
-      ...attributesFromPreview
-    });
-  };
-  var hasAspectRatioClass = (existingClassNames) => {
-    if (!existingClassNames) {
-      return false;
-    }
-    return ASPECT_RATIOS.some(
-      ({ className }) => existingClassNames.includes(className)
-    );
-  };
-  var removeAspectRatioClasses = (existingClassNames) => {
-    if (!existingClassNames) {
-      return existingClassNames;
-    }
-    const aspectRatioClassNames = ASPECT_RATIOS.reduce(
-      (accumulator, { className }) => {
-        accumulator.push(className);
-        return accumulator;
-      },
-      ["wp-has-aspect-ratio"]
-    );
-    let outputClassNames = existingClassNames;
-    for (const className of aspectRatioClassNames) {
-      outputClassNames = outputClassNames.replace(className, "");
-    }
-    return outputClassNames.trim();
-  };
-  function hasInlineResponsivePadding(html) {
-    const paddingPattern = /padding-(top|bottom)\s*:\s*[\d.]+%/i;
-    return paddingPattern.test(html);
-  }
-  function getClassNames(html, existingClassNames, allowResponsive = true) {
-    if (!allowResponsive) {
-      return removeAspectRatioClasses(existingClassNames);
-    }
-    if (hasInlineResponsivePadding(html)) {
-      return removeAspectRatioClasses(existingClassNames);
-    }
-    const previewDocument = document.implementation.createHTMLDocument("");
-    previewDocument.body.innerHTML = html;
-    const iframe = previewDocument.body.querySelector("iframe");
-    if (iframe && iframe.height && iframe.width) {
-      const aspectRatio = (iframe.width / iframe.height).toFixed(2);
-      for (let ratioIndex = 0; ratioIndex < ASPECT_RATIOS.length; ratioIndex++) {
-        const potentialRatio = ASPECT_RATIOS[ratioIndex];
-        if (aspectRatio >= potentialRatio.ratio) {
-          const ratioDiff = aspectRatio - potentialRatio.ratio;
-          if (ratioDiff > 0.1) {
-            return removeAspectRatioClasses(existingClassNames);
-          }
-          return clsx_default(
-            removeAspectRatioClasses(existingClassNames),
-            potentialRatio.className,
-            "wp-has-aspect-ratio"
-          );
-        }
-      }
-    }
-    return existingClassNames;
-  }
-  function fallback(url, onReplace) {
-    const link = /* @__PURE__ */ (0, import_jsx_runtime177.jsx)("a", { href: url, children: url });
-    onReplace(
-      (0, import_blocks3.createBlock)("core/paragraph", { content: (0, import_element5.renderToString)(link) })
-    );
-  }
-  var getAttributesFromPreview = memize(
-    (preview, title, currentClassNames, isResponsive, allowResponsive = true) => {
-      if (!preview) {
-        return {};
-      }
-      const attributes2 = {};
-      let { type = "rich" } = preview;
-      const { html, provider_name: providerName } = preview;
-      const providerNameSlug = kebabCase(
-        (providerName || title).toLowerCase()
-      );
-      if (isFromWordPress(html)) {
-        type = WP_EMBED_TYPE;
-      }
-      if (html || "photo" === type) {
-        attributes2.type = type;
-        attributes2.providerNameSlug = providerNameSlug;
-      }
-      if (hasAspectRatioClass(currentClassNames)) {
-        return attributes2;
-      }
-      attributes2.className = getClassNames(
-        html,
-        currentClassNames,
-        isResponsive && allowResponsive
-      );
-      return attributes2;
-    }
-  );
-  var getMergedAttributesWithPreview = (currentAttributes, preview, title, isResponsive) => {
-    const { allowResponsive, className } = currentAttributes;
-    return {
-      ...currentAttributes,
-      ...getAttributesFromPreview(
-        preview,
-        title,
-        className,
-        isResponsive,
-        allowResponsive
-      )
-    };
-  };
-
-  // packages/block-library/build-module/utils/caption.mjs
-  var import_element6 = __toESM(require_element(), 1);
-  var import_compose4 = __toESM(require_compose(), 1);
-  var import_i18n9 = __toESM(require_i18n(), 1);
-  var import_block_editor14 = __toESM(require_block_editor(), 1);
-  var import_components6 = __toESM(require_components(), 1);
-  var import_blocks4 = __toESM(require_blocks(), 1);
-  var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
-  function Caption({
-    attributeKey = "caption",
-    attributes: attributes2,
-    setAttributes,
-    isSelected,
-    insertBlocksAfter,
-    placeholder: placeholder2 = (0, import_i18n9.__)("Add caption"),
-    label = (0, import_i18n9.__)("Caption text"),
-    showToolbarButton = true,
-    excludeElementClassName,
-    className,
-    readOnly,
-    tagName = "figcaption",
-    addLabel = (0, import_i18n9.__)("Add caption"),
-    removeLabel = (0, import_i18n9.__)("Remove caption"),
-    icon: icon4 = caption_default,
-    ...props
-  }) {
-    const caption = attributes2[attributeKey];
-    const prevCaption = (0, import_compose4.usePrevious)(caption);
-    const isCaptionEmpty = import_block_editor14.RichText.isEmpty(caption);
-    const isPrevCaptionEmpty = import_block_editor14.RichText.isEmpty(prevCaption);
-    const [showCaption, setShowCaption] = (0, import_element6.useState)(!isCaptionEmpty);
-    (0, import_element6.useEffect)(() => {
-      if (!isCaptionEmpty && isPrevCaptionEmpty) {
-        setShowCaption(true);
-      }
-    }, [isCaptionEmpty, isPrevCaptionEmpty]);
-    (0, import_element6.useEffect)(() => {
-      if (!isSelected && isCaptionEmpty) {
-        setShowCaption(false);
-      }
-    }, [isSelected, isCaptionEmpty]);
-    const ref = (0, import_element6.useCallback)(
-      (node) => {
-        if (node && isCaptionEmpty) {
-          node.focus();
-        }
-      },
-      [isCaptionEmpty]
-    );
-    return /* @__PURE__ */ (0, import_jsx_runtime178.jsxs)(import_jsx_runtime178.Fragment, { children: [
-      showToolbarButton && /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_block_editor14.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
-        import_components6.ToolbarButton,
-        {
-          onClick: () => {
-            setShowCaption(!showCaption);
-            if (showCaption && caption) {
-              setAttributes({
-                [attributeKey]: void 0
-              });
-            }
-          },
-          icon: icon4,
-          isPressed: showCaption,
-          label: showCaption ? removeLabel : addLabel
-        }
-      ) }),
-      showCaption && (!import_block_editor14.RichText.isEmpty(caption) || isSelected) && /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
-        import_block_editor14.RichText,
-        {
-          identifier: attributeKey,
-          tagName,
-          className: clsx_default(
-            className,
-            excludeElementClassName ? "" : (0, import_block_editor14.__experimentalGetElementClassName)("caption")
-          ),
-          ref,
-          "aria-label": label,
-          placeholder: placeholder2,
-          value: caption,
-          onChange: (value) => setAttributes({ [attributeKey]: value }),
-          inlineToolbar: true,
-          __unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter(
-            (0, import_blocks4.createBlock)((0, import_blocks4.getDefaultBlockName)())
-          ) : void 0,
-          readOnly,
-          ...props
-        }
-      )
-    ] });
-  }
-
-  // packages/block-library/build-module/audio/edit.mjs
-  var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
-  var ALLOWED_MEDIA_TYPES = ["audio"];
-  function AudioEdit({
-    attributes: attributes2,
-    className,
-    setAttributes,
-    onReplace,
-    isSelected: isSingleSelected,
-    insertBlocksAfter
-  }) {
-    const { id, autoplay, loop, preload, src } = attributes2;
-    const [temporaryURL, setTemporaryURL] = (0, import_element7.useState)(attributes2.blob);
-    const blockEditingMode = (0, import_block_editor15.useBlockEditingMode)();
-    const hasNonContentControls = blockEditingMode === "default";
-    useUploadMediaFromBlobURL({
-      url: temporaryURL,
-      allowedTypes: ALLOWED_MEDIA_TYPES,
-      onChange: onSelectAudio,
-      onError: onUploadError
-    });
-    function toggleAttribute(attribute) {
-      return (newValue) => {
-        setAttributes({ [attribute]: newValue });
-      };
-    }
-    function onSelectURL(newSrc) {
-      if (newSrc !== src) {
-        const embedBlock = createUpgradedEmbedBlock({
-          attributes: { url: newSrc }
-        });
-        if (void 0 !== embedBlock && onReplace) {
-          onReplace(embedBlock);
-          return;
-        }
-        setAttributes({ src: newSrc, id: void 0, blob: void 0 });
-        setTemporaryURL();
-      }
-    }
-    const { createErrorNotice } = (0, import_data8.useDispatch)(import_notices.store);
-    function onUploadError(message) {
-      createErrorNotice(message, { type: "snackbar" });
-    }
-    function getAutoplayHelp(checked) {
-      return checked ? (0, import_i18n10.__)("Autoplay may cause usability issues for some users.") : null;
-    }
-    function onSelectAudio(media) {
-      if (!media || !media.url) {
-        setAttributes({
-          src: void 0,
-          id: void 0,
-          caption: void 0,
-          blob: void 0
-        });
-        setTemporaryURL();
-        return;
-      }
-      if ((0, import_blob2.isBlobURL)(media.url)) {
-        setTemporaryURL(media.url);
-        return;
-      }
-      setAttributes({
-        blob: void 0,
-        src: media.url,
-        id: media.id,
-        caption: media.caption
-      });
-      setTemporaryURL();
-    }
-    const classes = clsx_default(className, {
-      "is-transient": !!temporaryURL
-    });
-    const blockProps = (0, import_block_editor15.useBlockProps)({
-      className: classes
-    });
-    const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    if (!src && !temporaryURL) {
-      return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-        import_block_editor15.MediaPlaceholder,
-        {
-          icon: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(import_block_editor15.BlockIcon, { icon: audio_default }),
-          onSelect: onSelectAudio,
-          onSelectURL,
-          accept: "audio/*",
-          allowedTypes: ALLOWED_MEDIA_TYPES,
-          value: attributes2,
-          onError: onUploadError
-        }
-      ) });
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime179.jsxs)(import_jsx_runtime179.Fragment, { children: [
-      isSingleSelected && /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(import_block_editor15.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-        import_block_editor15.MediaReplaceFlow,
-        {
-          mediaId: id,
-          mediaURL: src,
-          allowedTypes: ALLOWED_MEDIA_TYPES,
-          accept: "audio/*",
-          onSelect: onSelectAudio,
-          onSelectURL,
-          onError: onUploadError,
-          onReset: () => onSelectAudio(void 0),
-          variant: "toolbar"
-        }
-      ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(import_block_editor15.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime179.jsxs)(
-        import_components7.__experimentalToolsPanel,
-        {
-          label: (0, import_i18n10.__)("Settings"),
-          resetAll: () => {
-            setAttributes({
-              autoplay: false,
-              loop: false,
-              preload: void 0
-            });
-          },
-          dropdownMenuProps,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-              import_components7.__experimentalToolsPanelItem,
-              {
-                label: (0, import_i18n10.__)("Autoplay"),
-                isShownByDefault: true,
-                hasValue: () => !!autoplay,
-                onDeselect: () => setAttributes({
-                  autoplay: false
-                }),
-                children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-                  import_components7.ToggleControl,
-                  {
-                    label: (0, import_i18n10.__)("Autoplay"),
-                    onChange: toggleAttribute("autoplay"),
-                    checked: !!autoplay,
-                    help: getAutoplayHelp
-                  }
-                )
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-              import_components7.__experimentalToolsPanelItem,
-              {
-                label: (0, import_i18n10.__)("Loop"),
-                isShownByDefault: true,
-                hasValue: () => !!loop,
-                onDeselect: () => setAttributes({
-                  loop: false
-                }),
-                children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-                  import_components7.ToggleControl,
-                  {
-                    label: (0, import_i18n10.__)("Loop"),
-                    onChange: toggleAttribute("loop"),
-                    checked: !!loop
-                  }
-                )
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-              import_components7.__experimentalToolsPanelItem,
-              {
-                label: (0, import_i18n10.__)("Preload"),
-                isShownByDefault: true,
-                hasValue: () => !!preload,
-                onDeselect: () => setAttributes({
-                  preload: void 0
-                }),
-                children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-                  import_components7.SelectControl,
-                  {
-                    label: (0, import_i18n10._x)(
-                      "Preload",
-                      "noun; Audio block parameter"
-                    ),
-                    value: preload || "",
-                    onChange: (value) => setAttributes({
-                      preload: value || void 0
-                    }),
-                    options: [
-                      { value: "", label: (0, import_i18n10.__)("Browser default") },
-                      { value: "auto", label: (0, import_i18n10.__)("Auto") },
-                      { value: "metadata", label: (0, import_i18n10.__)("Metadata") },
-                      {
-                        value: "none",
-                        label: (0, import_i18n10._x)("None", "Preload value")
-                      }
-                    ]
-                  }
-                )
-              }
-            )
-          ]
-        }
-      ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime179.jsxs)("figure", { ...blockProps, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-          "audio",
-          {
-            controls: "controls",
-            inert: !isSingleSelected ? "true" : void 0,
-            src: src ?? temporaryURL
-          }
-        ),
-        !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(import_components7.Spinner, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-          Caption,
-          {
-            attributes: attributes2,
-            setAttributes,
-            isSelected: isSingleSelected,
-            insertBlocksAfter,
-            label: (0, import_i18n10.__)("Audio caption text"),
-            showToolbarButton: isSingleSelected && hasNonContentControls
-          }
-        )
-      ] })
-    ] });
-  }
-  var edit_default = AudioEdit;
-
-  // packages/block-library/build-module/audio/block.json
-  var block_default8 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
-    apiVersion: 3,
-    name: "core/audio",
-    title: "Audio",
-    category: "media",
-    description: "Embed a simple audio player.",
-    keywords: ["music", "sound", "podcast", "recording"],
-    textdomain: "default",
-    attributes: {
-      blob: {
-        type: "string",
-        role: "local"
-      },
-      src: {
-        type: "string",
-        source: "attribute",
-        selector: "audio",
-        attribute: "src",
-        role: "content"
-      },
-      caption: {
-        type: "rich-text",
-        source: "rich-text",
-        selector: "figcaption",
-        role: "content"
-      },
-      id: {
-        type: "number",
-        role: "content"
-      },
-      autoplay: {
-        type: "boolean",
-        source: "attribute",
-        selector: "audio",
-        attribute: "autoplay"
-      },
-      loop: {
-        type: "boolean",
-        source: "attribute",
-        selector: "audio",
-        attribute: "loop"
-      },
-      preload: {
-        type: "string",
-        source: "attribute",
-        selector: "audio",
-        attribute: "preload"
-      }
-    },
-    supports: {
-      anchor: true,
-      align: true,
-      spacing: {
-        margin: true,
-        padding: true,
-        __experimentalDefaultControls: {
-          margin: false,
-          padding: false
-        }
-      },
-      interactivity: {
-        clientNavigation: true
-      }
-    },
-    editorStyle: "wp-block-audio-editor",
-    style: "wp-block-audio"
-  };
-
-  // packages/block-library/build-module/audio/save.mjs
-  var import_block_editor16 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
-  function save5({ attributes: attributes2 }) {
-    const { autoplay, caption, loop, preload, src } = attributes2;
-    return src && /* @__PURE__ */ (0, import_jsx_runtime180.jsxs)("figure", { ...import_block_editor16.useBlockProps.save(), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
-        "audio",
-        {
-          controls: "controls",
-          src,
-          autoPlay: autoplay,
-          loop,
-          preload
-        }
-      ),
-      !import_block_editor16.RichText.isEmpty(caption) && /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
-        import_block_editor16.RichText.Content,
-        {
-          tagName: "figcaption",
-          value: caption,
-          className: (0, import_block_editor16.__experimentalGetElementClassName)(
-            "caption"
-          )
-        }
-      )
-    ] });
-  }
-
-  // packages/block-library/build-module/audio/transforms.mjs
-  var import_blob3 = __toESM(require_blob(), 1);
-  var import_blocks5 = __toESM(require_blocks(), 1);
-  var transforms = {
-    from: [
-      {
-        type: "files",
-        isMatch(files) {
-          return files.length === 1 && files[0].type.indexOf("audio/") === 0;
-        },
-        transform(files) {
-          const file = files[0];
-          const block = (0, import_blocks5.createBlock)("core/audio", {
-            blob: (0, import_blob3.createBlobURL)(file)
-          });
-          return block;
-        }
-      },
-      {
-        type: "shortcode",
-        tag: "audio",
-        attributes: {
-          src: {
-            type: "string",
-            shortcode: ({
-              named: { src, mp3, m4a, ogg, wav, wma }
-            }) => {
-              return src || mp3 || m4a || ogg || wav || wma;
-            }
-          },
-          loop: {
-            type: "string",
-            shortcode: ({ named: { loop } }) => {
-              return loop;
-            }
-          },
-          autoplay: {
-            type: "string",
-            shortcode: ({ named: { autoplay } }) => {
-              return autoplay;
-            }
-          },
-          preload: {
-            type: "string",
-            shortcode: ({ named: { preload } }) => {
-              return preload;
-            }
-          }
-        }
-      }
-    ]
-  };
-  var transforms_default = transforms;
-
-  // packages/block-library/build-module/lock-unlock.mjs
-  var import_private_apis = __toESM(require_private_apis(), 1);
-  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-    "@wordpress/block-library"
-  );
-
-  // packages/block-library/build-module/audio/index.mjs
-  var { fieldsKey, formKey } = unlock(import_blocks6.privateApis);
-  var { name: name7 } = block_default8;
-  var settings7 = {
-    icon: audio_default,
-    example: {
-      attributes: {
-        src: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Armstrong_Small_Step.ogg"
-      },
-      viewportWidth: 350
-    },
-    transforms: transforms_default,
-    deprecated: deprecated_default2,
-    edit: edit_default,
-    save: save5
-  };
-  if (window.__experimentalContentOnlyInspectorFields) {
-    settings7[fieldsKey] = [
-      {
-        id: "audio",
-        label: (0, import_i18n11.__)("Audio"),
-        type: "media",
-        Edit: {
-          control: "media",
-          // TODO: replace with custom component
-          allowedTypes: ["audio"],
-          multiple: false
-        },
-        getValue: ({ item }) => ({
-          id: item.id,
-          url: item.src
-        }),
-        setValue: ({ value }) => ({
-          id: value.id,
-          src: value.url
-        })
-      },
-      {
-        id: "caption",
-        label: (0, import_i18n11.__)("Caption"),
-        type: "text",
-        Edit: "rich-text"
-        // TODO: replace with custom component
-      }
-    ];
-    settings7[formKey] = {
-      fields: ["audio", "caption"]
-    };
-  }
-  var init7 = () => initBlock({ name: name7, metadata: block_default8, settings: settings7 });
-
-  // packages/block-library/build-module/breadcrumbs/index.mjs
-  var breadcrumbs_exports = {};
-  __export(breadcrumbs_exports, {
-    init: () => init8,
-    metadata: () => block_default9,
-    name: () => name8,
-    settings: () => settings8
-  });
-
-  // packages/block-library/build-module/breadcrumbs/block.json
-  var block_default9 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
-    apiVersion: 3,
-    name: "core/breadcrumbs",
-    title: "Breadcrumbs",
-    category: "theme",
-    description: "Display a breadcrumb trail showing the path to the current page.",
-    textdomain: "default",
-    attributes: {
-      prefersTaxonomy: {
-        type: "boolean",
-        default: false
-      },
-      separator: {
-        type: "string",
-        default: "/"
-      },
-      showHomeItem: {
-        type: "boolean",
-        default: true
-      },
-      showCurrentItem: {
-        type: "boolean",
-        default: true
-      },
-      showOnHomePage: {
-        type: "boolean",
-        default: false
-      }
-    },
-    usesContext: ["postId", "postType", "templateSlug"],
-    supports: {
-      anchor: true,
-      html: false,
-      align: ["wide", "full"],
-      spacing: {
-        margin: true,
-        padding: true
-      },
-      color: {
-        gradients: true,
-        link: true,
-        __experimentalDefaultControls: {
-          background: true,
-          text: true
-        }
-      },
-      __experimentalBorder: {
-        radius: true,
-        color: true,
-        width: true,
-        style: true,
-        __experimentalDefaultControls: {
-          radius: false,
-          color: true,
-          width: true,
-          style: true
-        }
-      },
-      typography: {
-        fontSize: true,
-        lineHeight: true,
-        __experimentalFontFamily: true,
-        __experimentalFontWeight: true,
-        __experimentalFontStyle: true,
-        __experimentalTextTransform: true,
-        __experimentalTextDecoration: true,
-        __experimentalLetterSpacing: true,
-        __experimentalDefaultControls: {
-          fontSize: true
-        }
-      },
-      interactivity: {
-        clientNavigation: true
-      }
-    },
-    style: "wp-block-breadcrumbs"
-  };
-
-  // packages/block-library/build-module/breadcrumbs/edit.mjs
-  var import_i18n12 = __toESM(require_i18n(), 1);
-  var import_block_editor17 = __toESM(require_block_editor(), 1);
-  var import_components8 = __toESM(require_components(), 1);
-  var import_data9 = __toESM(require_data(), 1);
-  var import_core_data4 = __toESM(require_core_data(), 1);
-  var import_element8 = __toESM(require_element(), 1);
-  var import_server_side_render2 = __toESM(require_server_side_render(), 1);
-  var import_compose5 = __toESM(require_compose(), 1);
-  var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
-  var separatorDefaultValue = "/";
-  function BreadcrumbEdit({
-    attributes: attributes2,
-    setAttributes,
-    name: name122,
-    context: { postId, postType, templateSlug }
-  }) {
-    const {
-      separator,
-      showHomeItem,
-      showCurrentItem,
-      prefersTaxonomy,
-      showOnHomePage
-    } = attributes2;
-    const {
-      post,
-      isPostTypeHierarchical,
-      postTypeHasTaxonomies,
-      hasTermsAssigned,
-      isLoading
-    } = (0, import_data9.useSelect)(
-      (select10) => {
-        if (!postType) {
-          return {};
-        }
-        const _post = select10(import_core_data4.store).getEntityRecord(
-          "postType",
-          postType,
-          postId
-        );
-        const postTypeObject = select10(import_core_data4.store).getPostType(postType);
-        const _postTypeHasTaxonomies = postTypeObject && postTypeObject.taxonomies.length;
-        let taxonomies;
-        if (_postTypeHasTaxonomies) {
-          taxonomies = select10(import_core_data4.store).getTaxonomies({
-            type: postType,
-            per_page: -1
-          });
-        }
-        return {
-          post: _post,
-          isPostTypeHierarchical: postTypeObject?.hierarchical,
-          postTypeHasTaxonomies: _postTypeHasTaxonomies,
-          hasTermsAssigned: _post && (taxonomies || []).filter(
-            ({ visibility }) => visibility?.publicly_queryable
-          ).some((taxonomy) => {
-            return !!_post[taxonomy.rest_base]?.length;
-          }),
-          isLoading: postId && !_post || !postTypeObject || _postTypeHasTaxonomies && !taxonomies
-        };
-      },
-      [postType, postId]
-    );
-    const [invalidationKey, setInvalidationKey] = (0, import_element8.useState)(0);
-    (0, import_element8.useEffect)(() => {
-      setInvalidationKey((c2) => c2 + 1);
-    }, [post]);
-    const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    const { content, status, error: error2 } = (0, import_server_side_render2.useServerSideRender)({
-      attributes: attributes2,
-      skipBlockSupportAttributes: true,
-      block: name122,
-      urlQueryArgs: { post_id: postId, invalidationKey }
-    });
-    const prevContentRef = (0, import_element8.useRef)("");
-    (0, import_element8.useEffect)(() => {
-      if (status === "success") {
-        prevContentRef.current = content;
-      }
-    }, [content, status]);
-    const [showLoader, setShowLoader] = (0, import_element8.useState)(false);
-    (0, import_element8.useEffect)(() => {
-      if (status !== "loading") {
-        return;
-      }
-      const timeout = setTimeout(() => {
-        setShowLoader(true);
-      }, 400);
-      return () => {
-        clearTimeout(timeout);
-        setShowLoader(false);
-      };
-    }, [status]);
-    const disabledRef = (0, import_compose5.useDisabled)();
-    const blockProps = (0, import_block_editor17.useBlockProps)({ ref: disabledRef });
-    if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(import_components8.Spinner, {}) });
-    }
-    let _showTerms;
-    if (!isPostTypeHierarchical && !post?.parent) {
-      _showTerms = true;
-    } else if (!postTypeHasTaxonomies) {
-      _showTerms = false;
-    } else {
-      _showTerms = prefersTaxonomy;
-    }
-    let placeholder2 = null;
-    const showPlaceholder = !postId || !postType || // When `templateSlug` is set only show placeholder if the post type is not.
-    // This is needed because when we are showing the template in post editor we
-    // want to show the real breadcrumbs if we have the post type.
-    templateSlug && !postType || !_showTerms && !isPostTypeHierarchical || _showTerms && !hasTermsAssigned;
-    if (showPlaceholder) {
-      const placeholderItems = [];
-      if (showHomeItem) {
-        placeholderItems.push((0, import_i18n12.__)("Home"));
-      }
-      if (templateSlug && !postId) {
-        placeholderItems.push((0, import_i18n12.__)("Page"));
-      } else if (_showTerms) {
-        placeholderItems.push((0, import_i18n12.__)("Category"));
-      } else {
-        placeholderItems.push((0, import_i18n12.__)("Ancestor"), (0, import_i18n12.__)("Parent"));
-      }
-      placeholder2 = /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
-        "nav",
-        {
-          ...blockProps,
-          style: {
-            "--separator": `"${separator.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`,
-            ...blockProps.style
-          },
-          children: /* @__PURE__ */ (0, import_jsx_runtime181.jsxs)("ol", { children: [
-            placeholderItems.map((text, index) => /* @__PURE__ */ (0, import_jsx_runtime181.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)("a", { href: `#breadcrumbs-pseudo-link-${index}`, children: text }) }, index)),
-            showCurrentItem && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)("span", { "aria-current": "page", children: (0, import_i18n12.__)("Current") }) })
-          ] })
-        }
-      );
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime181.jsxs)(import_jsx_runtime181.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(import_block_editor17.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime181.jsxs)(
-        import_components8.__experimentalToolsPanel,
-        {
-          label: (0, import_i18n12.__)("Settings"),
-          resetAll: () => {
-            setAttributes({
-              separator: separatorDefaultValue,
-              showHomeItem: true,
-              showCurrentItem: true
-            });
-          },
-          dropdownMenuProps,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
-              import_components8.__experimentalToolsPanelItem,
-              {
-                label: (0, import_i18n12.__)("Show home breadcrumb"),
-                isShownByDefault: true,
-                hasValue: () => !showHomeItem,
-                onDeselect: () => setAttributes({
-                  showHomeItem: true
-                }),
-                children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
-                  import_components8.ToggleControl,
-                  {
-                    label: (0, import_i18n12.__)("Show home breadcrumb"),
-                    onChange: (value) => setAttributes({ showHomeItem: value }),
-                    checked: showHomeItem
-                  }
-                )
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
-              import_components8.__experimentalToolsPanelItem,
-              {
-                label: (0, import_i18n12.__)("Show current breadcrumb"),
-                isShownByDefault: true,
-                hasValue: () => !showCurrentItem,
-                onDeselect: () => setAttributes({
-                  showCurrentItem: true
-                }),
-                children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
-                  import_components8.ToggleControl,
-                  {
-                    label: (0, import_i18n12.__)("Show current breadcrumb"),
-                    onChange: (value) => setAttributes({ showCurrentItem: value }),
-                    checked: showCurrentItem
-                  }
-                )
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
-              import_components8.__experimentalToolsPanelItem,
-              {
-                label: (0, import_i18n12.__)("Separator"),
-                isShownByDefault: true,
-                hasValue: () => separator !== separatorDefaultValue,
-                onDeselect: () => setAttributes({
-                  separator: separatorDefaultValue
-                }),
-                children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
-                  import_components8.TextControl,
-                  {
-                    autoComplete: "off",
-                    label: (0, import_i18n12.__)("Separator"),
-                    value: separator,
-                    onChange: (value) => setAttributes({ separator: value }),
-                    onBlur: () => {
-                      if (!separator) {
-                        setAttributes({
-                          separator: separatorDefaultValue
-                        });
-                      }
-                    }
-                  }
-                )
-              }
-            )
-          ]
-        }
-      ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime181.jsxs)(import_block_editor17.InspectorControls, { group: "advanced", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
-          import_components8.CheckboxControl,
-          {
-            label: (0, import_i18n12.__)("Show on homepage"),
-            checked: showOnHomePage,
-            onChange: (value) => setAttributes({ showOnHomePage: value }),
-            help: (0, import_i18n12.__)(
-              "If this Breadcrumbs block appears in a template or template part that\u2019s shown on the homepage, enable this option to display the breadcrumb trail. Otherwise, this setting has no effect."
-            )
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
-          import_components8.CheckboxControl,
-          {
-            label: (0, import_i18n12.__)("Prefer taxonomy terms"),
-            checked: prefersTaxonomy,
-            onChange: (value) => setAttributes({ prefersTaxonomy: value }),
-            help: (0, import_i18n12.__)(
-              "The exact type of breadcrumbs shown will vary automatically depending on the page in which this block is displayed. In the specific case of a hierarchical post type with taxonomies, the breadcrumbs can either reflect its post hierarchy (default) or the hierarchy of its assigned taxonomy terms."
-            )
-          }
-        )
-      ] }),
-      status === "loading" && !showPlaceholder && (prevContentRef.current ? /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
-        html_renderer_default,
-        {
-          wrapperProps: {
-            ...blockProps,
-            style: {
-              ...blockProps.style,
-              opacity: showLoader ? 0.3 : 1
-            }
-          },
-          html: prevContentRef.current
-        }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime181.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(import_components8.Spinner, {}) })),
-      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)("p", { children: (0, import_i18n12.sprintf)(
-        /* translators: %s: error message returned when rendering the block. */
-        (0, import_i18n12.__)("Error: %s"),
-        error2
-      ) }) }),
-      showPlaceholder && placeholder2,
-      !showPlaceholder && status === "success" && /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(html_renderer_default, { wrapperProps: blockProps, html: content })
-    ] });
-  }
-
-  // packages/block-library/build-module/breadcrumbs/index.mjs
-  var { name: name8 } = block_default9;
-  var settings8 = {
-    icon: breadcrumbs_default,
-    example: {},
-    edit: BreadcrumbEdit
-  };
-  var init8 = () => initBlock({ name: name8, metadata: block_default9, settings: settings8 });
-
-  // packages/block-library/build-module/button/index.mjs
-  var button_exports = {};
-  __export(button_exports, {
-    init: () => init9,
-    metadata: () => block_default10,
-    name: () => name9,
-    settings: () => settings9
-  });
-  var import_i18n18 = __toESM(require_i18n(), 1);
-  var import_blocks8 = __toESM(require_blocks(), 1);
-
-  // packages/block-library/build-module/button/deprecated.mjs
-  var import_block_editor19 = __toESM(require_block_editor(), 1);
-  var import_compose6 = __toESM(require_compose(), 1);
-
-  // packages/block-library/build-module/utils/migrate-font-family.mjs
-  var import_block_editor18 = __toESM(require_block_editor(), 1);
-  var { cleanEmptyObject } = unlock(import_block_editor18.privateApis);
-  function migrate_font_family_default(attributes2) {
-    if (!attributes2?.style?.typography?.fontFamily) {
-      return attributes2;
-    }
-    const { fontFamily, ...typography } = attributes2.style.typography;
-    return {
-      ...attributes2,
-      style: cleanEmptyObject({
-        ...attributes2.style,
-        typography
-      }),
-      fontFamily: fontFamily.split("|").pop()
-    };
-  }
-
-  // packages/block-library/build-module/utils/migrate-text-align.mjs
-  function migrate_text_align_default(attributes2) {
-    const { textAlign, ...restAttributes } = attributes2;
-    if (!textAlign) {
-      return attributes2;
-    }
-    return {
-      ...restAttributes,
-      style: {
-        ...attributes2.style,
-        typography: {
-          ...attributes2.style?.typography,
-          textAlign
-        }
-      }
-    };
-  }
-
-  // packages/block-library/build-module/button/deprecated.mjs
-  var import_jsx_runtime182 = __toESM(require_jsx_runtime(), 1);
-  var migrateWidth = (attributes2) => {
-    const { width, ...otherAttributes } = attributes2;
-    if (!width) {
-      return otherAttributes;
-    }
-    return {
-      ...otherAttributes,
-      style: {
-        ...otherAttributes.style,
-        dimensions: {
-          ...otherAttributes.style?.dimensions,
-          width: `${width}%`
-        }
-      }
-    };
-  };
-  var migrateBorderRadius = (attributes2) => {
-    const { borderRadius, ...newAttributes } = attributes2;
-    const oldBorderRadius = [
-      borderRadius,
-      newAttributes.style?.border?.radius
-    ].find((possibleBorderRadius) => {
-      return typeof possibleBorderRadius === "number" && possibleBorderRadius !== 0;
-    });
-    if (!oldBorderRadius) {
-      return newAttributes;
-    }
-    return {
-      ...newAttributes,
-      style: {
-        ...newAttributes.style,
-        border: {
-          ...newAttributes.style?.border,
-          radius: `${oldBorderRadius}px`
-        }
-      }
-    };
-  };
-  function migrateAlign(attributes2) {
-    if (!attributes2.align) {
-      return attributes2;
-    }
-    const { align, ...otherAttributes } = attributes2;
-    return {
-      ...otherAttributes,
-      className: clsx_default(
-        otherAttributes.className,
-        `align${attributes2.align}`
-      )
-    };
-  }
-  var migrateCustomColorsAndGradients = (attributes2) => {
-    if (!attributes2.customTextColor && !attributes2.customBackgroundColor && !attributes2.customGradient) {
-      return attributes2;
-    }
-    const style2 = { color: {} };
-    if (attributes2.customTextColor) {
-      style2.color.text = attributes2.customTextColor;
-    }
-    if (attributes2.customBackgroundColor) {
-      style2.color.background = attributes2.customBackgroundColor;
-    }
-    if (attributes2.customGradient) {
-      style2.color.gradient = attributes2.customGradient;
-    }
-    const {
-      customTextColor,
-      customBackgroundColor,
-      customGradient,
-      ...restAttributes
-    } = attributes2;
-    return {
-      ...restAttributes,
-      style: style2
-    };
-  };
-  var oldColorsMigration = (attributes2) => {
-    const { color, textColor, ...restAttributes } = {
-      ...attributes2,
-      customTextColor: attributes2.textColor && "#" === attributes2.textColor[0] ? attributes2.textColor : void 0,
-      customBackgroundColor: attributes2.color && "#" === attributes2.color[0] ? attributes2.color : void 0
-    };
-    return migrateCustomColorsAndGradients(restAttributes);
-  };
-  var blockAttributes = {
-    url: {
-      type: "string",
-      source: "attribute",
-      selector: "a",
-      attribute: "href"
-    },
-    title: {
-      type: "string",
-      source: "attribute",
-      selector: "a",
-      attribute: "title"
-    },
-    text: {
-      type: "string",
-      source: "html",
-      selector: "a"
-    }
-  };
-  var v14 = {
-    attributes: {
-      tagName: {
-        type: "string",
-        enum: ["a", "button"],
-        default: "a"
-      },
-      type: {
-        type: "string",
-        default: "button"
-      },
-      url: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "href",
-        role: "content"
-      },
-      title: {
-        type: "string",
-        source: "attribute",
-        selector: "a,button",
-        attribute: "title",
-        role: "content"
-      },
-      text: {
-        type: "rich-text",
-        source: "rich-text",
-        selector: "a,button",
-        role: "content"
-      },
-      linkTarget: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "target",
-        role: "content"
-      },
-      rel: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "rel",
-        role: "content"
-      },
-      placeholder: {
-        type: "string"
-      },
-      backgroundColor: {
-        type: "string"
-      },
-      textColor: {
-        type: "string"
-      },
-      gradient: {
-        type: "string"
-      },
-      width: {
-        type: "number"
-      }
-    },
-    supports: {
-      anchor: true,
-      splitting: true,
-      align: false,
-      alignWide: false,
-      color: {
-        __experimentalSkipSerialization: true,
-        gradients: true,
-        __experimentalDefaultControls: {
-          background: true,
-          text: true
-        }
-      },
-      typography: {
-        __experimentalSkipSerialization: [
-          "fontSize",
-          "lineHeight",
-          "textAlign",
-          "fontFamily",
-          "fontWeight",
-          "fontStyle",
-          "textTransform",
-          "textDecoration",
-          "letterSpacing"
-        ],
-        fontSize: true,
-        lineHeight: true,
-        textAlign: true,
-        __experimentalFontFamily: true,
-        __experimentalFontWeight: true,
-        __experimentalFontStyle: true,
-        __experimentalTextTransform: true,
-        __experimentalTextDecoration: true,
-        __experimentalLetterSpacing: true,
-        __experimentalWritingMode: true,
-        __experimentalDefaultControls: {
-          fontSize: true
-        }
-      },
-      reusable: false,
-      shadow: {
-        __experimentalSkipSerialization: true
-      },
-      spacing: {
-        __experimentalSkipSerialization: true,
-        padding: ["horizontal", "vertical"],
-        __experimentalDefaultControls: {
-          padding: true
-        }
-      },
-      __experimentalBorder: {
-        color: true,
-        radius: true,
-        style: true,
-        width: true,
-        __experimentalSkipSerialization: true,
-        __experimentalDefaultControls: {
-          color: true,
-          radius: true,
-          style: true,
-          width: true
-        }
-      },
-      interactivity: {
-        clientNavigation: true
-      }
-    },
-    selectors: {
-      root: ".wp-block-button .wp-block-button__link",
-      typography: {
-        writingMode: ".wp-block-button"
-      }
-    },
-    save({ attributes: attributes2, className }) {
-      const {
-        tagName,
-        type,
-        fontSize,
-        linkTarget,
-        rel,
-        style: style2,
-        text,
-        title,
-        url,
-        width
-      } = attributes2;
-      const TagName2 = tagName || "a";
-      const isButtonTag = "button" === TagName2;
-      const buttonType = type || "button";
-      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
-      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
-      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
-      const shadowProps = (0, import_block_editor19.__experimentalGetShadowClassesAndStyles)(attributes2);
-      const typographyProps = (0, import_block_editor19.getTypographyClassesAndStyles)(attributes2);
-      const buttonClasses = clsx_default(
-        "wp-block-button__link",
-        colorProps.className,
-        borderProps.className,
-        typographyProps.className,
-        {
-          // For backwards compatibility add style that isn't
-          // provided via block support.
-          "no-border-radius": style2?.border?.radius === 0,
-          [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
-        },
-        (0, import_block_editor19.__experimentalGetElementClassName)("button")
-      );
-      const buttonStyle = {
-        ...borderProps.style,
-        ...colorProps.style,
-        ...spacingProps.style,
-        ...shadowProps.style,
-        ...typographyProps.style,
-        writingMode: void 0
-      };
-      const wrapperClasses = clsx_default(className, {
-        [`has-custom-width wp-block-button__width-${width}`]: width
-      });
-      return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-        import_block_editor19.RichText.Content,
-        {
-          tagName: TagName2,
-          type: isButtonTag ? buttonType : null,
-          className: buttonClasses,
-          href: isButtonTag ? null : url,
-          title,
-          style: buttonStyle,
-          value: text,
-          target: isButtonTag ? null : linkTarget,
-          rel: isButtonTag ? null : rel
-        }
-      ) });
-    },
-    isEligible(attributes2) {
-      return typeof attributes2.width === "number";
-    },
-    migrate: migrateWidth
-  };
-  var v13 = {
-    attributes: {
-      tagName: {
-        type: "string",
-        enum: ["a", "button"],
-        default: "a"
-      },
-      type: {
-        type: "string",
-        default: "button"
-      },
-      textAlign: {
-        type: "string"
-      },
-      url: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "href",
-        role: "content"
-      },
-      title: {
-        type: "string",
-        source: "attribute",
-        selector: "a,button",
-        attribute: "title",
-        role: "content"
-      },
-      text: {
-        type: "rich-text",
-        source: "rich-text",
-        selector: "a,button",
-        role: "content"
-      },
-      linkTarget: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "target",
-        role: "content"
-      },
-      rel: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "rel",
-        role: "content"
-      },
-      placeholder: {
-        type: "string"
-      },
-      backgroundColor: {
-        type: "string"
-      },
-      textColor: {
-        type: "string"
-      },
-      gradient: {
-        type: "string"
-      },
-      width: {
-        type: "number"
-      }
-    },
-    supports: {
-      anchor: true,
-      align: true,
-      alignWide: false,
-      color: {
-        __experimentalSkipSerialization: true,
-        gradients: true,
-        __experimentalDefaultControls: {
-          background: true,
-          text: true
-        }
-      },
-      typography: {
-        __experimentalSkipSerialization: [
-          "fontSize",
-          "lineHeight",
-          "fontFamily",
-          "fontWeight",
-          "fontStyle",
-          "textTransform",
-          "textDecoration",
-          "letterSpacing"
-        ],
-        fontSize: true,
-        lineHeight: true,
-        __experimentalFontFamily: true,
-        __experimentalFontWeight: true,
-        __experimentalFontStyle: true,
-        __experimentalTextTransform: true,
-        __experimentalTextDecoration: true,
-        __experimentalLetterSpacing: true,
-        __experimentalWritingMode: true,
-        __experimentalDefaultControls: {
-          fontSize: true
-        }
-      },
-      reusable: false,
-      shadow: {
-        __experimentalSkipSerialization: true
-      },
-      spacing: {
-        __experimentalSkipSerialization: true,
-        padding: ["horizontal", "vertical"],
-        __experimentalDefaultControls: {
-          padding: true
-        }
-      },
-      __experimentalBorder: {
-        color: true,
-        radius: true,
-        style: true,
-        width: true,
-        __experimentalSkipSerialization: true,
-        __experimentalDefaultControls: {
-          color: true,
-          radius: true,
-          style: true,
-          width: true
-        }
-      },
-      interactivity: {
-        clientNavigation: true
-      }
-    },
-    selectors: {
-      root: ".wp-block-button .wp-block-button__link",
-      typography: {
-        writingMode: ".wp-block-button"
-      }
-    },
-    save({ attributes: attributes2, className }) {
-      const {
-        tagName,
-        type,
-        textAlign,
-        fontSize,
-        linkTarget,
-        rel,
-        style: style2,
-        text,
-        title,
-        url,
-        width
-      } = attributes2;
-      const TagName2 = tagName || "a";
-      const isButtonTag = "button" === TagName2;
-      const buttonType = type || "button";
-      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
-      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
-      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
-      const shadowProps = (0, import_block_editor19.__experimentalGetShadowClassesAndStyles)(attributes2);
-      const typographyProps = (0, import_block_editor19.getTypographyClassesAndStyles)(attributes2);
-      const buttonClasses = clsx_default(
-        "wp-block-button__link",
-        colorProps.className,
-        borderProps.className,
-        typographyProps.className,
-        {
-          [`has-text-align-${textAlign}`]: textAlign,
-          // For backwards compatibility add style that isn't provided via
-          // block support.
-          "no-border-radius": style2?.border?.radius === 0,
-          [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
-        },
-        (0, import_block_editor19.__experimentalGetElementClassName)("button")
-      );
-      const buttonStyle = {
-        ...borderProps.style,
-        ...colorProps.style,
-        ...spacingProps.style,
-        ...shadowProps.style,
-        ...typographyProps.style,
-        writingMode: void 0
-      };
-      const wrapperClasses = clsx_default(className, {
-        [`has-custom-width wp-block-button__width-${width}`]: width
-      });
-      return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-        import_block_editor19.RichText.Content,
-        {
-          tagName: TagName2,
-          type: isButtonTag ? buttonType : null,
-          className: buttonClasses,
-          href: isButtonTag ? null : url,
-          title,
-          style: buttonStyle,
-          value: text,
-          target: isButtonTag ? null : linkTarget,
-          rel: isButtonTag ? null : rel
-        }
-      ) });
-    },
-    isEligible(attributes2) {
-      return !!attributes2.textAlign || typeof attributes2.width === "number";
-    },
-    migrate: (0, import_compose6.compose)(migrateWidth, migrate_text_align_default)
-  };
-  var v12 = {
-    attributes: {
-      tagName: {
-        type: "string",
-        enum: ["a", "button"],
-        default: "a"
-      },
-      type: {
-        type: "string",
-        default: "button"
-      },
-      textAlign: {
-        type: "string"
-      },
-      url: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "href"
-      },
-      title: {
-        type: "string",
-        source: "attribute",
-        selector: "a,button",
-        attribute: "title",
-        role: "content"
-      },
-      text: {
-        type: "rich-text",
-        source: "rich-text",
-        selector: "a,button",
-        role: "content"
-      },
-      linkTarget: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "target",
-        role: "content"
-      },
-      rel: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "rel",
-        role: "content"
-      },
-      placeholder: {
-        type: "string"
-      },
-      backgroundColor: {
-        type: "string"
-      },
-      textColor: {
-        type: "string"
-      },
-      gradient: {
-        type: "string"
-      },
-      width: {
-        type: "number"
-      }
-    },
-    supports: {
-      anchor: true,
-      align: true,
-      alignWide: false,
-      color: {
-        __experimentalSkipSerialization: true,
-        gradients: true,
-        __experimentalDefaultControls: {
-          background: true,
-          text: true
-        }
-      },
-      typography: {
-        fontSize: true,
-        lineHeight: true,
-        __experimentalFontFamily: true,
-        __experimentalFontWeight: true,
-        __experimentalFontStyle: true,
-        __experimentalTextTransform: true,
-        __experimentalTextDecoration: true,
-        __experimentalLetterSpacing: true,
-        __experimentalWritingMode: true,
-        __experimentalDefaultControls: {
-          fontSize: true
-        }
-      },
-      reusable: false,
-      shadow: {
-        __experimentalSkipSerialization: true
-      },
-      spacing: {
-        __experimentalSkipSerialization: true,
-        padding: ["horizontal", "vertical"],
-        __experimentalDefaultControls: {
-          padding: true
-        }
-      },
-      __experimentalBorder: {
-        color: true,
-        radius: true,
-        style: true,
-        width: true,
-        __experimentalSkipSerialization: true,
-        __experimentalDefaultControls: {
-          color: true,
-          radius: true,
-          style: true,
-          width: true
-        }
-      },
-      __experimentalSelector: ".wp-block-button__link",
-      interactivity: {
-        clientNavigation: true
-      }
-    },
-    save({ attributes: attributes2, className }) {
-      const {
-        tagName,
-        type,
-        textAlign,
-        fontSize,
-        linkTarget,
-        rel,
-        style: style2,
-        text,
-        title,
-        url,
-        width
-      } = attributes2;
-      const TagName2 = tagName || "a";
-      const isButtonTag = "button" === TagName2;
-      const buttonType = type || "button";
-      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
-      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
-      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
-      const shadowProps = (0, import_block_editor19.__experimentalGetShadowClassesAndStyles)(attributes2);
-      const buttonClasses = clsx_default(
-        "wp-block-button__link",
-        colorProps.className,
-        borderProps.className,
-        {
-          [`has-text-align-${textAlign}`]: textAlign,
-          // For backwards compatibility add style that isn't provided via
-          // block support.
-          "no-border-radius": style2?.border?.radius === 0
-        },
-        (0, import_block_editor19.__experimentalGetElementClassName)("button")
-      );
-      const buttonStyle = {
-        ...borderProps.style,
-        ...colorProps.style,
-        ...spacingProps.style,
-        ...shadowProps.style
-      };
-      const wrapperClasses = clsx_default(className, {
-        [`has-custom-width wp-block-button__width-${width}`]: width,
-        [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
-      });
-      return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-        import_block_editor19.RichText.Content,
-        {
-          tagName: TagName2,
-          type: isButtonTag ? buttonType : null,
-          className: buttonClasses,
-          href: isButtonTag ? null : url,
-          title,
-          style: buttonStyle,
-          value: text,
-          target: isButtonTag ? null : linkTarget,
-          rel: isButtonTag ? null : rel
-        }
-      ) });
-    },
-    isEligible(attributes2) {
-      return typeof attributes2.width === "number";
-    },
-    migrate: migrateWidth
-  };
-  var v11 = {
-    attributes: {
-      url: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "href"
-      },
-      title: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "title"
-      },
-      text: {
-        type: "string",
-        source: "html",
-        selector: "a"
-      },
-      linkTarget: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "target"
-      },
-      rel: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "rel"
-      },
-      placeholder: {
-        type: "string"
-      },
-      backgroundColor: {
-        type: "string"
-      },
-      textColor: {
-        type: "string"
-      },
-      gradient: {
-        type: "string"
-      },
-      width: {
-        type: "number"
-      }
-    },
-    supports: {
-      anchor: true,
-      align: true,
-      alignWide: false,
-      color: {
-        __experimentalSkipSerialization: true,
-        gradients: true,
-        __experimentalDefaultControls: {
-          background: true,
-          text: true
-        }
-      },
-      typography: {
-        fontSize: true,
-        __experimentalFontFamily: true,
-        __experimentalDefaultControls: {
-          fontSize: true
-        }
-      },
-      reusable: false,
-      spacing: {
-        __experimentalSkipSerialization: true,
-        padding: ["horizontal", "vertical"],
-        __experimentalDefaultControls: {
-          padding: true
-        }
-      },
-      __experimentalBorder: {
-        radius: true,
-        __experimentalSkipSerialization: true,
-        __experimentalDefaultControls: {
-          radius: true
-        }
-      },
-      __experimentalSelector: ".wp-block-button__link"
-    },
-    save({ attributes: attributes2, className }) {
-      const { fontSize, linkTarget, rel, style: style2, text, title, url, width } = attributes2;
-      if (!text) {
-        return null;
-      }
-      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
-      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
-      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
-      const buttonClasses = clsx_default(
-        "wp-block-button__link",
-        colorProps.className,
-        borderProps.className,
-        {
-          // For backwards compatibility add style that isn't provided via
-          // block support.
-          "no-border-radius": style2?.border?.radius === 0
-        }
-      );
-      const buttonStyle = {
-        ...borderProps.style,
-        ...colorProps.style,
-        ...spacingProps.style
-      };
-      const wrapperClasses = clsx_default(className, {
-        [`has-custom-width wp-block-button__width-${width}`]: width,
-        [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
-      });
-      return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-        import_block_editor19.RichText.Content,
-        {
-          tagName: "a",
-          className: buttonClasses,
-          href: url,
-          title,
-          style: buttonStyle,
-          value: text,
-          target: linkTarget,
-          rel
-        }
-      ) });
-    }
-  };
-  var v10 = {
-    attributes: {
-      url: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "href"
-      },
-      title: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "title"
-      },
-      text: {
-        type: "string",
-        source: "html",
-        selector: "a"
-      },
-      linkTarget: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "target"
-      },
-      rel: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "rel"
-      },
-      placeholder: {
-        type: "string"
-      },
-      backgroundColor: {
-        type: "string"
-      },
-      textColor: {
-        type: "string"
-      },
-      gradient: {
-        type: "string"
-      },
-      width: {
-        type: "number"
-      }
-    },
-    supports: {
-      anchor: true,
-      align: true,
-      alignWide: false,
-      color: {
-        __experimentalSkipSerialization: true,
-        gradients: true
-      },
-      typography: {
-        fontSize: true,
-        __experimentalFontFamily: true
-      },
-      reusable: false,
-      spacing: {
-        __experimentalSkipSerialization: true,
-        padding: ["horizontal", "vertical"],
-        __experimentalDefaultControls: {
-          padding: true
-        }
-      },
-      __experimentalBorder: {
-        radius: true,
-        __experimentalSkipSerialization: true
-      },
-      __experimentalSelector: ".wp-block-button__link"
-    },
-    save({ attributes: attributes2, className }) {
-      const { fontSize, linkTarget, rel, style: style2, text, title, url, width } = attributes2;
-      if (!text) {
-        return null;
-      }
-      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
-      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
-      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
-      const buttonClasses = clsx_default(
-        "wp-block-button__link",
-        colorProps.className,
-        borderProps.className,
-        {
-          // For backwards compatibility add style that isn't provided via
-          // block support.
-          "no-border-radius": style2?.border?.radius === 0
-        }
-      );
-      const buttonStyle = {
-        ...borderProps.style,
-        ...colorProps.style,
-        ...spacingProps.style
-      };
-      const wrapperClasses = clsx_default(className, {
-        [`has-custom-width wp-block-button__width-${width}`]: width,
-        [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
-      });
-      return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-        import_block_editor19.RichText.Content,
-        {
-          tagName: "a",
-          className: buttonClasses,
-          href: url,
-          title,
-          style: buttonStyle,
-          value: text,
-          target: linkTarget,
-          rel
-        }
-      ) });
-    },
-    migrate: (0, import_compose6.compose)(migrateWidth, migrate_font_family_default),
-    isEligible({ style: style2, width }) {
-      return style2?.typography?.fontFamily || typeof width === "number";
-    }
-  };
-  var deprecated = [
-    v14,
-    v13,
-    v12,
-    v11,
-    v10,
-    {
-      supports: {
-        anchor: true,
-        align: true,
-        alignWide: false,
-        color: {
-          __experimentalSkipSerialization: true,
-          gradients: true
-        },
-        typography: {
-          fontSize: true,
-          __experimentalFontFamily: true
-        },
-        reusable: false,
-        __experimentalSelector: ".wp-block-button__link"
-      },
-      attributes: {
-        ...blockAttributes,
-        linkTarget: {
-          type: "string",
-          source: "attribute",
-          selector: "a",
-          attribute: "target"
-        },
-        rel: {
-          type: "string",
-          source: "attribute",
-          selector: "a",
-          attribute: "rel"
-        },
-        placeholder: {
-          type: "string"
-        },
-        backgroundColor: {
-          type: "string"
-        },
-        textColor: {
-          type: "string"
-        },
-        gradient: {
-          type: "string"
-        },
-        width: {
-          type: "number"
-        }
-      },
-      isEligible({ style: style2 }) {
-        return typeof style2?.border?.radius === "number";
-      },
-      save({ attributes: attributes2, className }) {
-        const {
-          fontSize,
-          linkTarget,
-          rel,
-          style: style2,
-          text,
-          title,
-          url,
-          width
-        } = attributes2;
-        if (!text) {
-          return null;
-        }
-        const borderRadius = style2?.border?.radius;
-        const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
-        const buttonClasses = clsx_default(
-          "wp-block-button__link",
-          colorProps.className,
-          {
-            "no-border-radius": style2?.border?.radius === 0
-          }
-        );
-        const buttonStyle = {
-          borderRadius: borderRadius ? borderRadius : void 0,
-          ...colorProps.style
-        };
-        const wrapperClasses = clsx_default(className, {
-          [`has-custom-width wp-block-button__width-${width}`]: width,
-          [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
-        });
-        return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-          import_block_editor19.RichText.Content,
-          {
-            tagName: "a",
-            className: buttonClasses,
-            href: url,
-            title,
-            style: buttonStyle,
-            value: text,
-            target: linkTarget,
-            rel
-          }
-        ) });
-      },
-      migrate: (0, import_compose6.compose)(
-        migrateWidth,
-        migrate_font_family_default,
-        migrateBorderRadius
-      )
-    },
-    {
-      supports: {
-        anchor: true,
-        align: true,
-        alignWide: false,
-        color: {
-          __experimentalSkipSerialization: true
-        },
-        reusable: false,
-        __experimentalSelector: ".wp-block-button__link"
-      },
-      attributes: {
-        ...blockAttributes,
-        linkTarget: {
-          type: "string",
-          source: "attribute",
-          selector: "a",
-          attribute: "target"
-        },
-        rel: {
-          type: "string",
-          source: "attribute",
-          selector: "a",
-          attribute: "rel"
-        },
-        placeholder: {
-          type: "string"
-        },
-        borderRadius: {
-          type: "number"
-        },
-        backgroundColor: {
-          type: "string"
-        },
-        textColor: {
-          type: "string"
-        },
-        gradient: {
-          type: "string"
-        },
-        style: {
-          type: "object"
-        },
-        width: {
-          type: "number"
-        }
-      },
-      save({ attributes: attributes2, className }) {
-        const { borderRadius, linkTarget, rel, text, title, url, width } = attributes2;
-        const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
-        const buttonClasses = clsx_default(
-          "wp-block-button__link",
-          colorProps.className,
-          {
-            "no-border-radius": borderRadius === 0
-          }
-        );
-        const buttonStyle = {
-          borderRadius: borderRadius ? borderRadius + "px" : void 0,
-          ...colorProps.style
-        };
-        const wrapperClasses = clsx_default(className, {
-          [`has-custom-width wp-block-button__width-${width}`]: width
-        });
-        return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-          import_block_editor19.RichText.Content,
-          {
-            tagName: "a",
-            className: buttonClasses,
-            href: url,
-            title,
-            style: buttonStyle,
-            value: text,
-            target: linkTarget,
-            rel
-          }
-        ) });
-      },
-      migrate: (0, import_compose6.compose)(
-        migrateWidth,
-        migrate_font_family_default,
-        migrateBorderRadius
-      )
-    },
-    {
-      supports: {
-        anchor: true,
-        align: true,
-        alignWide: false,
-        color: {
-          __experimentalSkipSerialization: true
-        },
-        reusable: false,
-        __experimentalSelector: ".wp-block-button__link"
-      },
-      attributes: {
-        ...blockAttributes,
-        linkTarget: {
-          type: "string",
-          source: "attribute",
-          selector: "a",
-          attribute: "target"
-        },
-        rel: {
-          type: "string",
-          source: "attribute",
-          selector: "a",
-          attribute: "rel"
-        },
-        placeholder: {
-          type: "string"
-        },
-        borderRadius: {
-          type: "number"
-        },
-        backgroundColor: {
-          type: "string"
-        },
-        textColor: {
-          type: "string"
-        },
-        gradient: {
-          type: "string"
-        },
-        style: {
-          type: "object"
-        },
-        width: {
-          type: "number"
-        }
-      },
-      save({ attributes: attributes2, className }) {
-        const { borderRadius, linkTarget, rel, text, title, url, width } = attributes2;
-        const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
-        const buttonClasses = clsx_default(
-          "wp-block-button__link",
-          colorProps.className,
-          {
-            "no-border-radius": borderRadius === 0
-          }
-        );
-        const buttonStyle = {
-          borderRadius: borderRadius ? borderRadius + "px" : void 0,
-          ...colorProps.style
-        };
-        const wrapperClasses = clsx_default(className, {
-          [`has-custom-width wp-block-button__width-${width}`]: width
-        });
-        return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-          import_block_editor19.RichText.Content,
-          {
-            tagName: "a",
-            className: buttonClasses,
-            href: url,
-            title,
-            style: buttonStyle,
-            value: text,
-            target: linkTarget,
-            rel
-          }
-        ) });
-      },
-      migrate: (0, import_compose6.compose)(
-        migrateWidth,
-        migrate_font_family_default,
-        migrateBorderRadius
-      )
-    },
-    {
-      supports: {
-        align: true,
-        alignWide: false,
-        color: { gradients: true }
-      },
-      attributes: {
-        ...blockAttributes,
-        linkTarget: {
-          type: "string",
-          source: "attribute",
-          selector: "a",
-          attribute: "target"
-        },
-        rel: {
-          type: "string",
-          source: "attribute",
-          selector: "a",
-          attribute: "rel"
-        },
-        placeholder: {
-          type: "string"
-        },
-        borderRadius: {
-          type: "number"
-        },
-        backgroundColor: {
-          type: "string"
-        },
-        textColor: {
-          type: "string"
-        },
-        gradient: {
-          type: "string"
-        },
-        style: {
-          type: "object"
-        }
-      },
-      save({ attributes: attributes2 }) {
-        const { borderRadius, linkTarget, rel, text, title, url } = attributes2;
-        const buttonClasses = clsx_default("wp-block-button__link", {
-          "no-border-radius": borderRadius === 0
-        });
-        const buttonStyle = {
-          borderRadius: borderRadius ? borderRadius + "px" : void 0
-        };
-        return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-          import_block_editor19.RichText.Content,
-          {
-            tagName: "a",
-            className: buttonClasses,
-            href: url,
-            title,
-            style: buttonStyle,
-            value: text,
-            target: linkTarget,
-            rel
-          }
-        );
-      },
-      migrate: (0, import_compose6.compose)(migrateWidth, migrateBorderRadius)
-    },
-    {
-      supports: {
-        align: true,
-        alignWide: false
-      },
-      attributes: {
-        ...blockAttributes,
-        linkTarget: {
-          type: "string",
-          source: "attribute",
-          selector: "a",
-          attribute: "target"
-        },
-        rel: {
-          type: "string",
-          source: "attribute",
-          selector: "a",
-          attribute: "rel"
-        },
-        placeholder: {
-          type: "string"
-        },
-        borderRadius: {
-          type: "number"
-        },
-        backgroundColor: {
-          type: "string"
-        },
-        textColor: {
-          type: "string"
-        },
-        customBackgroundColor: {
-          type: "string"
-        },
-        customTextColor: {
-          type: "string"
-        },
-        customGradient: {
-          type: "string"
-        },
-        gradient: {
-          type: "string"
-        }
-      },
-      isEligible: (attributes2) => !!attributes2.customTextColor || !!attributes2.customBackgroundColor || !!attributes2.customGradient || !!attributes2.align,
-      migrate: (0, import_compose6.compose)(
-        migrateWidth,
-        migrateBorderRadius,
-        migrateCustomColorsAndGradients,
-        migrateAlign
-      ),
-      save({ attributes: attributes2 }) {
-        const {
-          backgroundColor,
-          borderRadius,
-          customBackgroundColor,
-          customTextColor,
-          customGradient,
-          linkTarget,
-          gradient,
-          rel,
-          text,
-          textColor,
-          title,
-          url
-        } = attributes2;
-        const textClass = (0, import_block_editor19.getColorClassName)("color", textColor);
-        const backgroundClass = !customGradient && (0, import_block_editor19.getColorClassName)("background-color", backgroundColor);
-        const gradientClass = (0, import_block_editor19.__experimentalGetGradientClass)(gradient);
-        const buttonClasses = clsx_default("wp-block-button__link", {
-          "has-text-color": textColor || customTextColor,
-          [textClass]: textClass,
-          "has-background": backgroundColor || customBackgroundColor || customGradient || gradient,
-          [backgroundClass]: backgroundClass,
-          "no-border-radius": borderRadius === 0,
-          [gradientClass]: gradientClass
-        });
-        const buttonStyle = {
-          background: customGradient ? customGradient : void 0,
-          backgroundColor: backgroundClass || customGradient || gradient ? void 0 : customBackgroundColor,
-          color: textClass ? void 0 : customTextColor,
-          borderRadius: borderRadius ? borderRadius + "px" : void 0
-        };
-        return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-          import_block_editor19.RichText.Content,
-          {
-            tagName: "a",
-            className: buttonClasses,
-            href: url,
-            title,
-            style: buttonStyle,
-            value: text,
-            target: linkTarget,
-            rel
-          }
-        ) });
-      }
-    },
-    {
-      attributes: {
-        ...blockAttributes,
-        align: {
-          type: "string",
-          default: "none"
-        },
-        backgroundColor: {
-          type: "string"
-        },
-        textColor: {
-          type: "string"
-        },
-        customBackgroundColor: {
-          type: "string"
-        },
-        customTextColor: {
-          type: "string"
-        },
-        linkTarget: {
-          type: "string",
-          source: "attribute",
-          selector: "a",
-          attribute: "target"
-        },
-        rel: {
-          type: "string",
-          source: "attribute",
-          selector: "a",
-          attribute: "rel"
-        },
-        placeholder: {
-          type: "string"
-        }
-      },
-      isEligible(attribute) {
-        return attribute.className && attribute.className.includes("is-style-squared");
-      },
-      migrate(attributes2) {
-        let newClassName = attributes2.className;
-        if (newClassName) {
-          newClassName = newClassName.replace(/is-style-squared[\s]?/, "").trim();
-        }
-        return migrateBorderRadius(
-          migrateCustomColorsAndGradients({
-            ...attributes2,
-            className: newClassName ? newClassName : void 0,
-            borderRadius: 0
-          })
-        );
-      },
-      save({ attributes: attributes2 }) {
-        const {
-          backgroundColor,
-          customBackgroundColor,
-          customTextColor,
-          linkTarget,
-          rel,
-          text,
-          textColor,
-          title,
-          url
-        } = attributes2;
-        const textClass = (0, import_block_editor19.getColorClassName)("color", textColor);
-        const backgroundClass = (0, import_block_editor19.getColorClassName)(
-          "background-color",
-          backgroundColor
-        );
-        const buttonClasses = clsx_default("wp-block-button__link", {
-          "has-text-color": textColor || customTextColor,
-          [textClass]: textClass,
-          "has-background": backgroundColor || customBackgroundColor,
-          [backgroundClass]: backgroundClass
-        });
-        const buttonStyle = {
-          backgroundColor: backgroundClass ? void 0 : customBackgroundColor,
-          color: textClass ? void 0 : customTextColor
-        };
-        return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-          import_block_editor19.RichText.Content,
-          {
-            tagName: "a",
-            className: buttonClasses,
-            href: url,
-            title,
-            style: buttonStyle,
-            value: text,
-            target: linkTarget,
-            rel
-          }
-        ) });
-      }
-    },
-    {
-      attributes: {
-        ...blockAttributes,
-        align: {
-          type: "string",
-          default: "none"
-        },
-        backgroundColor: {
-          type: "string"
-        },
-        textColor: {
-          type: "string"
-        },
-        customBackgroundColor: {
-          type: "string"
-        },
-        customTextColor: {
-          type: "string"
-        }
-      },
-      migrate: (0, import_compose6.compose)(migrateWidth, oldColorsMigration),
-      save({ attributes: attributes2 }) {
-        const {
-          url,
-          text,
-          title,
-          backgroundColor,
-          textColor,
-          customBackgroundColor,
-          customTextColor
-        } = attributes2;
-        const textClass = (0, import_block_editor19.getColorClassName)("color", textColor);
-        const backgroundClass = (0, import_block_editor19.getColorClassName)(
-          "background-color",
-          backgroundColor
-        );
-        const buttonClasses = clsx_default("wp-block-button__link", {
-          "has-text-color": textColor || customTextColor,
-          [textClass]: textClass,
-          "has-background": backgroundColor || customBackgroundColor,
-          [backgroundClass]: backgroundClass
-        });
-        const buttonStyle = {
-          backgroundColor: backgroundClass ? void 0 : customBackgroundColor,
-          color: textClass ? void 0 : customTextColor
-        };
-        return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-          import_block_editor19.RichText.Content,
-          {
-            tagName: "a",
-            className: buttonClasses,
-            href: url,
-            title,
-            style: buttonStyle,
-            value: text
-          }
-        ) });
-      }
-    },
-    {
-      attributes: {
-        ...blockAttributes,
-        color: {
-          type: "string"
-        },
-        textColor: {
-          type: "string"
-        },
-        align: {
-          type: "string",
-          default: "none"
-        }
-      },
-      save({ attributes: attributes2 }) {
-        const { url, text, title, align, color, textColor } = attributes2;
-        const buttonStyle = {
-          backgroundColor: color,
-          color: textColor
-        };
-        const linkClass = "wp-block-button__link";
-        return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { className: `align${align}`, children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-          import_block_editor19.RichText.Content,
-          {
-            tagName: "a",
-            className: linkClass,
-            href: url,
-            title,
-            style: buttonStyle,
-            value: text
-          }
-        ) });
-      },
-      migrate: (0, import_compose6.compose)(migrateWidth, oldColorsMigration)
-    },
-    {
-      attributes: {
-        ...blockAttributes,
-        color: {
-          type: "string"
-        },
-        textColor: {
-          type: "string"
-        },
-        align: {
-          type: "string",
-          default: "none"
-        }
-      },
-      save({ attributes: attributes2 }) {
-        const { url, text, title, align, color, textColor } = attributes2;
-        return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-          "div",
-          {
-            className: `align${align}`,
-            style: { backgroundColor: color },
-            children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
-              import_block_editor19.RichText.Content,
-              {
-                tagName: "a",
-                href: url,
-                title,
-                style: { color: textColor },
-                value: text
-              }
-            )
-          }
-        );
-      },
-      migrate: (0, import_compose6.compose)(migrateWidth, oldColorsMigration)
-    }
-  ];
-  var deprecated_default3 = deprecated;
-
-  // packages/block-library/build-module/button/edit.mjs
-  var import_i18n17 = __toESM(require_i18n(), 1);
-  var import_element36 = __toESM(require_element(), 1);
-  var import_components9 = __toESM(require_components(), 1);
-  var import_block_editor21 = __toESM(require_block_editor(), 1);
-  var import_keycodes = __toESM(require_keycodes(), 1);
-  var import_blocks7 = __toESM(require_blocks(), 1);
-  var import_compose10 = __toESM(require_compose(), 1);
-  var import_data11 = __toESM(require_data(), 1);
 
   // node_modules/@base-ui/utils/useControlled.mjs
   var React = __toESM(require_react(), 1);
@@ -9458,7 +6513,7 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
-  var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
   function CompositeList(props) {
     const {
       children,
@@ -9586,7 +6641,7 @@ var wp;
       subscribeMapChange,
       nextIndexRef
     }), [register, unregister, subscribeMapChange, nextIndexRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(CompositeListContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(CompositeListContext.Provider, {
       value: contextValue,
       children
     });
@@ -11664,7 +8719,7 @@ var wp;
 
   // node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
   var React27 = __toESM(require_react(), 1);
-  var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
   var DirectionProvider = function DirectionProvider2(props) {
     const {
       direction = "ltr"
@@ -11672,7 +8727,7 @@ var wp;
     const contextValue = React27.useMemo(() => ({
       direction
     }), [direction]);
-    return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(DirectionContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(DirectionContext.Provider, {
       value: contextValue,
       children: props.children
     });
@@ -11724,7 +8779,7 @@ var wp;
 
   // node_modules/@base-ui/react/internals/labelable-provider/LabelableProvider.mjs
   var React30 = __toESM(require_react(), 1);
-  var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
   var LabelableProvider = function LabelableProvider2(props) {
     const defaultId = useBaseUiId();
     const initialControlId = props.controlId === void 0 ? defaultId : props.controlId;
@@ -11775,7 +8830,7 @@ var wp;
       setMessageIds,
       getDescriptionProps
     }), [controlId, registerControlId, labelId, setLabelId, messageIds, setMessageIds, getDescriptionProps]);
-    return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(LabelableContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(LabelableContext.Provider, {
       value: contextValue,
       children: props.children
     });
@@ -11903,7 +8958,7 @@ var wp;
   }
 
   // node_modules/@base-ui/react/field/root/FieldRoot.mjs
-  var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
   var FieldRootInner = /* @__PURE__ */ React32.forwardRef(function FieldRootInner2(componentProps, forwardedRef) {
     const {
       errors,
@@ -12024,15 +9079,15 @@ var wp;
       props: elementProps,
       stateAttributesMapping: fieldValidityMapping
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(FieldRootContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(FieldRootContext.Provider, {
       value: contextValue,
       children: element
     });
   });
   if (true) FieldRootInner.displayName = "FieldRootInner";
   var FieldRoot = /* @__PURE__ */ React32.forwardRef(function FieldRoot2(componentProps, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(LabelableProvider, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(FieldRootInner, {
+    return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(LabelableProvider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(FieldRootInner, {
         ...componentProps,
         ref: forwardedRef
       })
@@ -12096,7 +9151,7 @@ var wp;
 
   // node_modules/@base-ui/react/field/error/FieldError.mjs
   var React34 = __toESM(require_react(), 1);
-  var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
   var stateAttributesMapping = {
     ...fieldValidityMapping,
     ...transitionStatusMapping
@@ -12160,8 +9215,8 @@ var wp;
     }
     let errorMessage = error2;
     if (Array.isArray(error2)) {
-      errorMessage = error2.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime187.jsx)("ul", {
-        children: error2.map((message) => /* @__PURE__ */ (0, import_jsx_runtime187.jsx)("li", {
+      errorMessage = error2.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime181.jsx)("ul", {
+        children: error2.map((message) => /* @__PURE__ */ (0, import_jsx_runtime181.jsx)("li", {
           children: message
         }, message))
       }) : error2[0];
@@ -12359,7 +9414,7 @@ var wp;
 
   // node_modules/@base-ui/react/field/validity/FieldValidity.mjs
   var React37 = __toESM(require_react(), 1);
-  var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime182 = __toESM(require_jsx_runtime(), 1);
   var FieldValidity = function FieldValidity2(props) {
     const {
       children
@@ -12380,7 +9435,7 @@ var wp;
         transitionStatus
       };
     }, [combinedFieldValidityData, transitionStatus]);
-    return /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(React37.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(React37.Fragment, {
       children: children(fieldValidityState)
     });
   };
@@ -12388,7 +9443,7 @@ var wp;
 
   // node_modules/@base-ui/react/field/item/FieldItem.mjs
   var React38 = __toESM(require_react(), 1);
-  var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
   var FieldItem = /* @__PURE__ */ React38.forwardRef(function FieldItem2(componentProps, forwardedRef) {
     const {
       render,
@@ -12415,8 +9470,8 @@ var wp;
       props: elementProps,
       stateAttributesMapping: fieldValidityMapping
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(LabelableProvider, {
-      children: /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(FieldItemContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(LabelableProvider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(FieldItemContext.Provider, {
         value: fieldItemContext,
         children: element
       })
@@ -12426,9 +9481,9 @@ var wp;
 
   // node_modules/@base-ui/react/input/Input.mjs
   var React39 = __toESM(require_react(), 1);
-  var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
   var Input = /* @__PURE__ */ React39.forwardRef(function Input2(props, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(index_parts_exports.Control, {
+    return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(index_parts_exports.Control, {
       ref: forwardedRef,
       ...props
     });
@@ -12639,7 +9694,7 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/composite/root/CompositeRoot.mjs
-  var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
   function CompositeRoot(componentProps) {
     const {
       render,
@@ -12699,9 +9754,9 @@ var wp;
       highlightItemOnHover,
       relayKeyboardEvent
     }), [highlightedIndex, onHighlightedIndexChange, highlightItemOnHover, relayKeyboardEvent]);
-    return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(CompositeRootContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(CompositeRootContext.Provider, {
       value: contextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(CompositeList, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(CompositeList, {
         elementsRef,
         onMapChange: (newMap) => {
           onMapChangeProp?.(newMap);
@@ -12732,7 +9787,7 @@ var wp;
 
   // node_modules/@base-ui/react/internals/PrehydrationScript.mjs
   var React42 = __toESM(require_react(), 1);
-  var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
   function PrehydrationScript(props) {
     const {
       script: script2
@@ -12744,7 +9799,7 @@ var wp;
     if (!isHydrating) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("script", {
+    return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)("script", {
       nonce,
       dangerouslySetInnerHTML: {
         __html: script2
@@ -12786,7 +9841,7 @@ var wp;
   };
 
   // node_modules/@base-ui/react/tabs/root/TabsRoot.mjs
-  var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
   var TabsRoot = /* @__PURE__ */ React44.forwardRef(function TabsRoot2(componentProps, forwardedRef) {
     const {
       className,
@@ -12969,9 +10024,9 @@ var wp;
       props: elementProps,
       stateAttributesMapping: tabsStateAttributesMapping
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(TabsRootContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(TabsRootContext.Provider, {
       value: tabsContextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(CompositeList, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(CompositeList, {
         elementsRef: tabPanelRefs,
         children: element
       })
@@ -13171,7 +10226,7 @@ var wp;
 
   // node_modules/@base-ui/react/tabs/indicator/TabsIndicator.mjs
   var React47 = __toESM(require_react(), 1);
-  var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
   var _PrehydrationScript;
   var stateAttributesMapping2 = {
     ...tabsStateAttributesMapping,
@@ -13280,8 +10335,8 @@ var wp;
     if (value == null) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime194.jsxs)(React47.Fragment, {
-      children: [element, renderBeforeHydration && (_PrehydrationScript || (_PrehydrationScript = /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(PrehydrationScript, {
+    return /* @__PURE__ */ (0, import_jsx_runtime188.jsxs)(React47.Fragment, {
+      children: [element, renderBeforeHydration && (_PrehydrationScript || (_PrehydrationScript = /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(PrehydrationScript, {
         script
       })))]
     });
@@ -13370,7 +10425,7 @@ var wp;
 
   // node_modules/@base-ui/react/tabs/list/TabsList.mjs
   var React49 = __toESM(require_react(), 1);
-  var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
   var TabsList = /* @__PURE__ */ React49.forwardRef(function TabsList2(componentProps, forwardedRef) {
     const {
       activateOnFocus = false,
@@ -13439,9 +10494,9 @@ var wp;
       registerTabResizeObserverElement,
       tabsListElement
     }), [activateOnFocus, registerIndicatorUpdateListener, registerTabResizeObserverElement, tabsListElement]);
-    return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(TabsListContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(TabsListContext.Provider, {
       value: tabsListContextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(CompositeRoot, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(CompositeRoot, {
         render,
         className,
         style: style2,
@@ -13467,7 +10522,7 @@ var wp;
   }
 
   // packages/ui/build-module/text/text.mjs
-  var import_element9 = __toESM(require_element(), 1);
+  var import_element5 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE = "data-wp-hash";
   function getRuntime() {
     const globalScope = globalThis;
@@ -13556,7 +10611,7 @@ var wp;
     registerStyle("31951dd8b7", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
   }
   var global_css_defense_default = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
-  var Text2 = (0, import_element9.forwardRef)(function Text22({ variant = "body-md", render, className, ...props }, ref) {
+  var Text2 = (0, import_element5.forwardRef)(function Text22({ variant = "body-md", render, className, ...props }, ref) {
     const element = useRender({
       render,
       defaultTagName: "span",
@@ -13575,16 +10630,16 @@ var wp;
   });
 
   // packages/ui/build-module/utils/direction-provider.mjs
-  var import_i18n13 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
+  var import_i18n9 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
   function DirectionProvider3({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(DirectionProvider, { direction: (0, import_i18n13.isRTL)() ? "rtl" : "ltr", children });
+    return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(DirectionProvider, { direction: (0, import_i18n9.isRTL)() ? "rtl" : "ltr", children });
   }
 
   // packages/ui/build-module/link/link.mjs
-  var import_element10 = __toESM(require_element(), 1);
-  var import_i18n14 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
+  var import_element6 = __toESM(require_element(), 1);
+  var import_i18n10 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE2 = "data-wp-hash";
   function getRuntime2() {
     const globalScope = globalThis;
@@ -13681,7 +10736,7 @@ var wp;
     registerStyle2("31951dd8b7", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}.c59a0ebebd71fa4a__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._46b5cb0c8e24e8c9__li{margin:var(--_gcd-li-margin,0)}");
   }
   var global_css_defense_default2 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
-  var Link = (0, import_element10.forwardRef)(function Link2({
+  var Link = (0, import_element6.forwardRef)(function Link2({
     children,
     variant = "default",
     tone = "brand",
@@ -13707,16 +10762,16 @@ var wp;
           className
         ),
         target: target ?? (openInNewTab ? "_blank" : void 0),
-        children: /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(import_jsx_runtime197.Fragment, { children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(import_jsx_runtime191.Fragment, { children: [
           children,
-          shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
+          shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
             "span",
             {
               className: style_default2["link-icon"],
               role: "img",
               "aria-label": (
                 /* translators: accessibility text appended to link text */
-                (0, import_i18n14.__)("(opens in a new tab)")
+                (0, import_i18n10.__)("(opens in a new tab)")
               )
             }
           )
@@ -13727,12 +10782,12 @@ var wp;
   });
 
   // packages/ui/build-module/icon/icon.mjs
-  var import_element11 = __toESM(require_element(), 1);
+  var import_element7 = __toESM(require_element(), 1);
   var import_primitives163 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
-  var Icon = (0, import_element11.forwardRef)(function Icon2({ icon: icon4, size = 24, style: style2, ...restProps }, ref) {
+  var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
+  var Icon = (0, import_element7.forwardRef)(function Icon2({ icon: icon4, size = 24, style: style2, ...restProps }, ref) {
     const mergedStyle = icon4.props.style || style2 ? { ...icon4.props.style, ...style2 } : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
       import_primitives163.SVG,
       {
         ref,
@@ -13746,7 +10801,7 @@ var wp;
   });
 
   // packages/ui/build-module/visually-hidden/visually-hidden.mjs
-  var import_element12 = __toESM(require_element(), 1);
+  var import_element8 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE3 = "data-wp-hash";
   function getRuntime3() {
     const globalScope = globalThis;
@@ -13831,7 +10886,7 @@ var wp;
     registerStyle3("fa606a57ae", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f37b9e2e191ebd66__visually-hidden{word-wrap:normal;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal}}}");
   }
   var style_default3 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
-  var VisuallyHidden = (0, import_element12.forwardRef)(
+  var VisuallyHidden = (0, import_element8.forwardRef)(
     function VisuallyHidden2({ render, ...restProps }, ref) {
       const element = useRender({
         render,
@@ -13850,7 +10905,7 @@ var wp;
   );
 
   // packages/ui/build-module/stack/stack.mjs
-  var import_element13 = __toESM(require_element(), 1);
+  var import_element9 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE4 = "data-wp-hash";
   function getRuntime4() {
     const globalScope = globalThis;
@@ -13944,7 +10999,7 @@ var wp;
     "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
     "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
   };
-  var Stack = (0, import_element13.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render, ...props }, ref) {
+  var Stack = (0, import_element9.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render, ...props }, ref) {
     const style2 = {
       gap: gap && gapTokens[gap],
       alignItems: align,
@@ -13961,13 +11016,13 @@ var wp;
   });
 
   // packages/ui/build-module/utils/use-schedule-validation.mjs
-  var import_element14 = __toESM(require_element(), 1);
+  var import_element10 = __toESM(require_element(), 1);
   function useScheduleValidation(validate) {
-    const validateRef = (0, import_element14.useRef)(validate);
+    const validateRef = (0, import_element10.useRef)(validate);
     validateRef.current = validate;
-    const timerRef = (0, import_element14.useRef)(null);
-    const unmountedRef = (0, import_element14.useRef)(false);
-    const scheduleValidation = (0, import_element14.useCallback)(() => {
+    const timerRef = (0, import_element10.useRef)(null);
+    const unmountedRef = (0, import_element10.useRef)(false);
+    const scheduleValidation = (0, import_element10.useCallback)(() => {
       if (unmountedRef.current) {
         return;
       }
@@ -13979,7 +11034,7 @@ var wp;
         timerRef.current = null;
       }, 0);
     }, []);
-    (0, import_element14.useEffect)(() => {
+    (0, import_element10.useEffect)(() => {
       unmountedRef.current = false;
       return () => {
         unmountedRef.current = true;
@@ -13992,11 +11047,11 @@ var wp;
   }
 
   // packages/ui/build-module/form/primitives/input/input.mjs
-  var import_element17 = __toESM(require_element(), 1);
+  var import_element13 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/form/primitives/input-layout/input-layout.mjs
-  var import_element15 = __toESM(require_element(), 1);
-  var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
+  var import_element11 = __toESM(require_element(), 1);
+  var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE5 = "data-wp-hash";
   function getRuntime5() {
     const globalScope = globalThis;
@@ -14089,7 +11144,7 @@ var wp;
     registerStyle5("785908ae51", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cb2baafdc08746bb__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:max(var(--wpds-typography-font-size-md,13px),16px);height:var(--wpds-dimension-size-lg,40px);line-height:1;@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}&._0c807a84cbb94e0c__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&._0c807a84cbb94e0c__is-size-compact,&.ed67cda122dc1e7b__is-size-small{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.ed67cda122dc1e7b__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._6fb7104732387680__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&._8097270636ca6100__is-borderless{border-color:transparent}&:has(._0d7afad74a057888__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._6fb7104732387680__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._8097270636ca6100__is-borderless){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}.c192b41a12b4387b__slot-wrapper{display:contents}._0d7afad74a057888__input-layout-slot{align-items:center;display:flex;&._0c952682762ca288__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}');
   }
   var style_default5 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
-  var InputLayout = (0, import_element15.forwardRef)(
+  var InputLayout = (0, import_element11.forwardRef)(
     function InputLayout2({
       className,
       children,
@@ -14100,7 +11155,7 @@ var wp;
       suffix,
       ...restProps
     }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(
         "div",
         {
           ref,
@@ -14115,7 +11170,7 @@ var wp;
           ),
           ...restProps,
           children: [
-            import_element15.Children.count(prefix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+            import_element11.Children.count(prefix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
               "div",
               {
                 className: style_default5["slot-wrapper"],
@@ -14124,7 +11179,7 @@ var wp;
               }
             ),
             children,
-            import_element15.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+            import_element11.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
               "div",
               {
                 className: style_default5["slot-wrapper"],
@@ -14139,8 +11194,8 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/input-layout/slot.mjs
-  var import_element16 = __toESM(require_element(), 1);
-  var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
+  var import_element12 = __toESM(require_element(), 1);
+  var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE6 = "data-wp-hash";
   function getRuntime6() {
     const globalScope = globalThis;
@@ -14225,8 +11280,8 @@ var wp;
     registerStyle6("785908ae51", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cb2baafdc08746bb__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:max(var(--wpds-typography-font-size-md,13px),16px);height:var(--wpds-dimension-size-lg,40px);line-height:1;@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}&._0c807a84cbb94e0c__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&._0c807a84cbb94e0c__is-size-compact,&.ed67cda122dc1e7b__is-size-small{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.ed67cda122dc1e7b__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._6fb7104732387680__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&._8097270636ca6100__is-borderless{border-color:transparent}&:has(._0d7afad74a057888__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._6fb7104732387680__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._8097270636ca6100__is-borderless){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}.c192b41a12b4387b__slot-wrapper{display:contents}._0d7afad74a057888__input-layout-slot{align-items:center;display:flex;&._0c952682762ca288__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}');
   }
   var style_default6 = { "input-layout": "cb2baafdc08746bb__input-layout", "is-size-compact": "_0c807a84cbb94e0c__is-size-compact", "is-size-small": "ed67cda122dc1e7b__is-size-small", "is-disabled": "_6fb7104732387680__is-disabled", "is-borderless": "_8097270636ca6100__is-borderless", "input-layout-slot": "_0d7afad74a057888__input-layout-slot", "slot-wrapper": "c192b41a12b4387b__slot-wrapper", "is-padding-minimal": "_0c952682762ca288__is-padding-minimal" };
-  var InputLayoutSlot = (0, import_element16.forwardRef)(function InputLayoutSlot2({ padding = "default", className, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+  var InputLayoutSlot = (0, import_element12.forwardRef)(function InputLayoutSlot2({ padding = "default", className, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
       "div",
       {
         ref,
@@ -14247,7 +11302,7 @@ var wp;
   });
 
   // packages/ui/build-module/form/primitives/input/input.mjs
-  var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE7 = "data-wp-hash";
   function getRuntime7() {
     const globalScope = globalThis;
@@ -14340,8 +11395,8 @@ var wp;
     registerStyle7("41fce05ee0", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._2ae7be2fc1bb17a3__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&:disabled,&[aria-disabled=true]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}}");
   }
   var style_default7 = { "input": "_2ae7be2fc1bb17a3__input" };
-  var Input3 = (0, import_element17.forwardRef)(function Input22({ className, size = "default", prefix, suffix, style: style2, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
+  var Input3 = (0, import_element13.forwardRef)(function Input22({ className, size = "default", prefix, suffix, style: style2, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
       InputLayout3,
       {
         className: clsx_default(
@@ -14353,7 +11408,7 @@ var wp;
         visuallyDisabled: restProps.disabled,
         prefix,
         suffix,
-        children: /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
           Input,
           {
             ref,
@@ -14366,12 +11421,12 @@ var wp;
   });
 
   // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
-  var import_i18n15 = __toESM(require_i18n(), 1);
-  var import_element19 = __toESM(require_element(), 1);
+  var import_i18n11 = __toESM(require_i18n(), 1);
+  var import_element15 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/spinner/spinner.mjs
-  var import_element18 = __toESM(require_element(), 1);
-  var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
+  var import_element14 = __toESM(require_element(), 1);
+  var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE8 = "data-wp-hash";
   function getRuntime8() {
     const globalScope = globalThis;
@@ -14456,9 +11511,9 @@ var wp;
     registerStyle8("bbbecfe373", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.ab4d64c07c0ba587__spinner{background-color:transparent;display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}.a7654e10245bb7d2__indicator,.dc51f80c84b35fe2__track{fill:transparent;stroke-width:1.5px}.dc51f80c84b35fe2__track{stroke:var(--wpds-color-background-track-neutral,#dbdbdb)}.a7654e10245bb7d2__indicator{stroke:var(--wpds-color-background-thumb-brand,var(--wp-admin-theme-color,#3858e9));stroke-linecap:round;animation:_02322d973909703c__spinner-spin 1.4s linear infinite both;transform-origin:50% 50%}@keyframes _02322d973909703c__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
   }
   var style_default8 = { "spinner": "ab4d64c07c0ba587__spinner", "track": "dc51f80c84b35fe2__track", "indicator": "a7654e10245bb7d2__indicator", "spinner-spin": "_02322d973909703c__spinner-spin" };
-  var Spinner4 = (0, import_element18.forwardRef)(
+  var Spinner2 = (0, import_element14.forwardRef)(
     function Spinner22({ className, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime202.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(
         "svg",
         {
           className: clsx_default(style_default8.spinner, className),
@@ -14469,7 +11524,7 @@ var wp;
           ...props,
           ref,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
               "circle",
               {
                 className: style_default8.track,
@@ -14479,7 +11534,7 @@ var wp;
                 vectorEffect: "non-scaling-stroke"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
               "path",
               {
                 className: style_default8.indicator,
@@ -14494,7 +11549,7 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
-  var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE9 = "data-wp-hash";
   function getRuntime9() {
     const globalScope = globalThis;
@@ -14592,7 +11647,7 @@ var wp;
     type,
     message
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime203.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime197.jsxs)(
       "p",
       {
         id,
@@ -14602,7 +11657,7 @@ var wp;
           style_default9[`is-${type}`]
         ),
         children: [
-          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(Spinner4, { className: style_default9["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
+          type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Spinner2, { className: style_default9["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
             Icon,
             {
               className: style_default9["indicator-icon"],
@@ -14618,14 +11673,14 @@ var wp;
   }
 
   // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
-  var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
-  var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
+  var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
+  var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
   function appendRequiredIndicator(label, required, markWhenOptional) {
     let suffix;
     if (required && !markWhenOptional) {
-      suffix = `(${(0, import_i18n15.__)("Required")})`;
+      suffix = `(${(0, import_i18n11.__)("Required")})`;
     } else if (!required && markWhenOptional) {
-      suffix = `(${(0, import_i18n15.__)("Optional")})`;
+      suffix = `(${(0, import_i18n11.__)("Optional")})`;
     }
     if (!suffix) {
       return label;
@@ -14633,14 +11688,14 @@ var wp;
     if (typeof label === "string") {
       return `${label} ${suffix}`;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(import_jsx_runtime204.Fragment, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(import_jsx_runtime198.Fragment, { children: [
       label,
       " ",
       suffix
     ] });
   }
   var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
-  var ControlWithError = (0, import_element19.forwardRef)(function ControlWithError2({
+  var ControlWithError = (0, import_element15.forwardRef)(function ControlWithError2({
     required,
     markWhenOptional,
     customValidity,
@@ -14649,12 +11704,12 @@ var wp;
     render = DEFAULT_RENDER,
     ...restProps
   }, forwardedRef) {
-    const [errorMessage, setErrorMessage] = (0, import_element19.useState)();
-    const [statusMessage, setStatusMessage] = (0, import_element19.useState)();
-    const [showMessage, setShowMessage] = (0, import_element19.useState)(false);
-    const [isTouched, setIsTouched] = (0, import_element19.useState)(false);
-    const wrapperRef = (0, import_element19.useRef)(null);
-    (0, import_element19.useEffect)(() => {
+    const [errorMessage, setErrorMessage] = (0, import_element15.useState)();
+    const [statusMessage, setStatusMessage] = (0, import_element15.useState)();
+    const [showMessage, setShowMessage] = (0, import_element15.useState)(false);
+    const [isTouched, setIsTouched] = (0, import_element15.useState)(false);
+    const wrapperRef = (0, import_element15.useRef)(null);
+    (0, import_element15.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const handler = () => {
         if (customValidity?.type !== "validating") {
@@ -14666,7 +11721,7 @@ var wp;
       validityTarget?.addEventListener("invalid", handler);
       return () => validityTarget?.removeEventListener("invalid", handler);
     }, [customValidity?.type, getValidityTarget]);
-    (0, import_element19.useEffect)(() => {
+    (0, import_element15.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {
         event.preventDefault();
@@ -14700,7 +11755,7 @@ var wp;
         );
       };
     }, [getValidityTarget]);
-    (0, import_element19.useEffect)(() => {
+    (0, import_element15.useEffect)(() => {
       const validityTarget = getValidityTarget();
       if (!customValidity?.type) {
         validityTarget?.setCustomValidity("");
@@ -14737,7 +11792,7 @@ var wp;
         }
       }
     }, [customValidity, getValidityTarget]);
-    (0, import_element19.useEffect)(() => {
+    (0, import_element15.useEffect)(() => {
       if (!isTouched || showMessage) {
         return;
       }
@@ -14758,10 +11813,10 @@ var wp;
         getValidityTarget()?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       }
     };
-    const messageId = (0, import_element19.useId)();
+    const messageId = (0, import_element15.useId)();
     const message = (() => {
       if (errorMessage) {
-        return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
           ValidityIndicator,
           {
             id: messageId,
@@ -14771,7 +11826,7 @@ var wp;
         );
       }
       if (statusMessage?.type) {
-        return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
           ValidityIndicator,
           {
             id: messageId,
@@ -14783,7 +11838,7 @@ var wp;
       return null;
     })();
     const visibleMessage = showMessage ? message : null;
-    (0, import_element19.useEffect)(() => {
+    (0, import_element15.useEffect)(() => {
       const target = getValidityTarget();
       if (!target) {
         return;
@@ -14807,8 +11862,8 @@ var wp;
       ref: [forwardedRef, wrapperRef],
       props: mergeProps(restProps, {
         onBlur,
-        children: /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(import_jsx_runtime204.Fragment, { children: [
-          (0, import_element19.cloneElement)(children, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(import_jsx_runtime198.Fragment, { children: [
+          (0, import_element15.cloneElement)(children, {
             label: appendRequiredIndicator(
               children.props.label,
               required,
@@ -14835,8 +11890,8 @@ var wp;
   });
 
   // packages/ui/build-module/form/primitives/field/root.mjs
-  var import_element20 = __toESM(require_element(), 1);
-  var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
+  var import_element16 = __toESM(require_element(), 1);
+  var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE10 = "data-wp-hash";
   function getRuntime10() {
     const globalScope = globalThis;
@@ -14921,9 +11976,9 @@ var wp;
     registerStyle10("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
   }
   var resets_default3 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-  var DEFAULT_RENDER2 = (props) => /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
-  var Root = (0, import_element20.forwardRef)(function Root2({ className, render = DEFAULT_RENDER2, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
+  var DEFAULT_RENDER2 = (props) => /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
+  var Root = (0, import_element16.forwardRef)(function Root2({ className, render = DEFAULT_RENDER2, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
       index_parts_exports.Root,
       {
         ref,
@@ -14935,15 +11990,15 @@ var wp;
   });
 
   // packages/ui/build-module/form/primitives/field/item.mjs
-  var import_element21 = __toESM(require_element(), 1);
-  var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
-  var Item = (0, import_element21.forwardRef)(function Item2(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(index_parts_exports.Item, { ref, ...props });
+  var import_element17 = __toESM(require_element(), 1);
+  var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
+  var Item = (0, import_element17.forwardRef)(function Item2(props, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(index_parts_exports.Item, { ref, ...props });
   });
 
   // packages/ui/build-module/form/primitives/field/label.mjs
-  var import_element22 = __toESM(require_element(), 1);
-  var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
+  var import_element18 = __toESM(require_element(), 1);
+  var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
   function getRuntime11() {
     const globalScope = globalThis;
@@ -15028,9 +12083,9 @@ var wp;
     registerStyle11("e08ffbfdae", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
   }
   var field_default = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
-  var Label = (0, import_element22.forwardRef)(
+  var Label = (0, import_element18.forwardRef)(
     function Label2({ className, hideFromVision, variant, ...restProps }, ref) {
-      const label = /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
+      const label = /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
         index_parts_exports.Label,
         {
           ref,
@@ -15043,15 +12098,15 @@ var wp;
         }
       );
       if (hideFromVision) {
-        return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(VisuallyHidden, { render: label });
+        return /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(VisuallyHidden, { render: label });
       }
       return label;
     }
   );
 
   // packages/ui/build-module/form/primitives/field/description.mjs
-  var import_element23 = __toESM(require_element(), 1);
-  var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
+  var import_element19 = __toESM(require_element(), 1);
+  var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
   function getRuntime12() {
     const globalScope = globalThis;
@@ -15140,8 +12195,8 @@ var wp;
     registerStyle12("e08ffbfdae", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
   }
   var field_default2 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
-  var Description = (0, import_element23.forwardRef)(function Description2({ className, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
+  var Description = (0, import_element19.forwardRef)(function Description2({ className, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
       index_parts_exports.Description,
       {
         ref,
@@ -15156,9 +12211,9 @@ var wp;
   });
 
   // packages/ui/build-module/form/primitives/field/details.mjs
-  var import_element24 = __toESM(require_element(), 1);
-  var import_i18n16 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
+  var import_element20 = __toESM(require_element(), 1);
+  var import_i18n12 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
   function getRuntime13() {
     const globalScope = globalThis;
@@ -15243,11 +12298,11 @@ var wp;
     registerStyle13("e08ffbfdae", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
   }
   var field_default3 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
-  var Details = (0, import_element24.forwardRef)(
+  var Details = (0, import_element20.forwardRef)(
     function Details2({ className, ...restProps }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime209.jsxs)(import_jsx_runtime209.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(index_parts_exports.Description, {}), children: (0, import_i18n16.__)("More details follow the field.") }),
-        /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime203.jsxs)(import_jsx_runtime203.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(index_parts_exports.Description, {}), children: (0, import_i18n12.__)("More details follow the field.") }),
+        /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
           "div",
           {
             ref,
@@ -15260,16 +12315,16 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/field/control.mjs
-  var import_element25 = __toESM(require_element(), 1);
-  var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
-  var Control = (0, import_element25.forwardRef)(
+  var import_element21 = __toESM(require_element(), 1);
+  var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
+  var Control = (0, import_element21.forwardRef)(
     function Control2(props, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(index_parts_exports.Control, { ref, ...props });
+      return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(index_parts_exports.Control, { ref, ...props });
     }
   );
 
   // packages/ui/build-module/form/primitives/field/visual-label.mjs
-  var import_element26 = __toESM(require_element(), 1);
+  var import_element22 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE14 = "data-wp-hash";
   function getRuntime14() {
     const globalScope = globalThis;
@@ -15354,7 +12409,7 @@ var wp;
     registerStyle14("e08ffbfdae", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._2d5ad850b2f90964__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._17c4214649230bea__is-plain{font-size:var(--wpds-typography-font-size-md,13px);text-transform:none}}._08a3750500e0233f__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
   }
   var field_default4 = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
-  var VisualLabel = (0, import_element26.forwardRef)(
+  var VisualLabel = (0, import_element22.forwardRef)(
     function VisualLabel2({ className, render, variant, ...restProps }, ref) {
       return useRender({
         defaultTagName: "span",
@@ -15373,8 +12428,8 @@ var wp;
   VisualLabel.displayName = "Field.VisualLabel";
 
   // packages/ui/build-module/form/primitives/textarea/textarea.mjs
-  var import_element27 = __toESM(require_element(), 1);
-  var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
+  var import_element23 = __toESM(require_element(), 1);
+  var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
   function getRuntime15() {
     const globalScope = globalThis;
@@ -15465,10 +12520,10 @@ var wp;
   var global_css_defense_default7 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a", "ol": "c59a0ebebd71fa4a__ol", "li": "_46b5cb0c8e24e8c9__li" };
   var wrappedRender = (render, restProps) => {
     return function textareaRender(props) {
-      return typeof render === "function" ? render(mergeProps(props, restProps)) : (0, import_element27.cloneElement)(render, mergeProps(props, restProps));
+      return typeof render === "function" ? render(mergeProps(props, restProps)) : (0, import_element23.cloneElement)(render, mergeProps(props, restProps));
     };
   };
-  var Textarea = (0, import_element27.forwardRef)(
+  var Textarea = (0, import_element23.forwardRef)(
     function Textarea2({
       className,
       defaultValue,
@@ -15480,13 +12535,13 @@ var wp;
       value,
       ...restProps
     }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
         Input3,
         {
           className: clsx_default(style_default10.wrapper, className),
           style: style2,
           render: wrappedRender(
-            render || ((props) => /* @__PURE__ */ (0, import_jsx_runtime211.jsx)("textarea", { ...props })),
+            render || ((props) => /* @__PURE__ */ (0, import_jsx_runtime205.jsx)("textarea", { ...props })),
             {
               className: clsx_default(
                 global_css_defense_default7.textarea,
@@ -15507,9 +12562,9 @@ var wp;
   );
 
   // packages/ui/build-module/form/textarea-control/textarea-control.mjs
-  var import_element28 = __toESM(require_element(), 1);
-  var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
-  var TextareaControl = (0, import_element28.forwardRef)(function TextareaControl2({
+  var import_element24 = __toESM(require_element(), 1);
+  var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
+  var TextareaControl = (0, import_element24.forwardRef)(function TextareaControl2({
     className,
     label,
     description,
@@ -15517,29 +12572,29 @@ var wp;
     hideLabelFromVision,
     ...restProps
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(field_exports.Root, { className, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Textarea, { ref, ...restProps }),
-      description && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(field_exports.Description, { children: description }),
-      details && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(field_exports.Details, { children: details })
+    return /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(field_exports.Root, { className, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Textarea, { ref, ...restProps }),
+      description && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(field_exports.Description, { children: description }),
+      details && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(field_exports.Details, { children: details })
     ] });
   });
 
   // packages/ui/build-module/form/with-validation/validated-textarea-control/validated-textarea-control.mjs
-  var import_element29 = __toESM(require_element(), 1);
-  var import_compose7 = __toESM(require_compose(), 1);
-  var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
-  var ValidatedTextareaControl = (0, import_element29.forwardRef)(function ValidatedTextareaControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
-    const validityTargetRef = (0, import_element29.useRef)(null);
-    const mergedRefs = (0, import_compose7.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+  var import_element25 = __toESM(require_element(), 1);
+  var import_compose4 = __toESM(require_compose(), 1);
+  var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
+  var ValidatedTextareaControl = (0, import_element25.forwardRef)(function ValidatedTextareaControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
+    const validityTargetRef = (0, import_element25.useRef)(null);
+    const mergedRefs = (0, import_compose4.useMergeRefs)([forwardedRef, validityTargetRef]);
+    return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
       ControlWithError,
       {
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(TextareaControl, { ref: mergedRefs, ...restProps })
+        children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(TextareaControl, { ref: mergedRefs, ...restProps })
       }
     );
   });
@@ -15554,9 +12609,9 @@ var wp;
   });
 
   // packages/ui/build-module/tabs/list.mjs
-  var import_element30 = __toESM(require_element(), 1);
-  var import_compose8 = __toESM(require_compose(), 1);
-  var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
+  var import_element26 = __toESM(require_element(), 1);
+  var import_compose5 = __toESM(require_compose(), 1);
+  var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
   function getRuntime16() {
     const globalScope = globalThis;
@@ -15642,7 +12697,7 @@ var wp;
   }
   var style_default11 = { "tablist": "_7313adbc8a112e90__tablist", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children", "tab-chevron": "_4a20e969d15e5ac1__tab-chevron" };
   var SCROLL_EPSILON = 1;
-  var List = (0, import_element30.forwardRef)(
+  var List = (0, import_element26.forwardRef)(
     function TabList({
       children,
       variant = "default",
@@ -15650,13 +12705,13 @@ var wp;
       activateOnFocus,
       ...otherProps
     }, forwardedRef) {
-      const [listEl, setListEl] = (0, import_element30.useState)(null);
-      const [overflow, setOverflow] = (0, import_element30.useState)({
+      const [listEl, setListEl] = (0, import_element26.useState)(null);
+      const [overflow, setOverflow] = (0, import_element26.useState)({
         first: false,
         last: false,
         isScrolling: false
       });
-      (0, import_element30.useEffect)(() => {
+      (0, import_element26.useEffect)(() => {
         if (!listEl) {
           return;
         }
@@ -15716,11 +12771,11 @@ var wp;
           mutationObserver.disconnect();
         };
       }, [listEl]);
-      const mergedListRef = (0, import_compose8.useMergeRefs)([
+      const mergedListRef = (0, import_compose5.useMergeRefs)([
         forwardedRef,
         (el) => setListEl(el)
       ]);
-      return /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(
         index_parts_exports2.List,
         {
           ref: mergedListRef,
@@ -15737,7 +12792,7 @@ var wp;
           tabIndex: otherProps.tabIndex ?? (overflow.isScrolling ? -1 : void 0),
           children: [
             children,
-            /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(index_parts_exports2.Indicator, { className: style_default11.indicator })
+            /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(index_parts_exports2.Indicator, { className: style_default11.indicator })
           ]
         }
       );
@@ -15745,16 +12800,16 @@ var wp;
   );
 
   // packages/ui/build-module/tabs/panel.mjs
-  var import_element32 = __toESM(require_element(), 1);
+  var import_element28 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/tabs/context.mjs
-  var import_element31 = __toESM(require_element(), 1);
-  var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
+  var import_element27 = __toESM(require_element(), 1);
+  var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
   var VALIDATION_ENABLED = true;
-  var TabsValidationContext = VALIDATION_ENABLED ? (0, import_element31.createContext)(null) : null;
+  var TabsValidationContext = VALIDATION_ENABLED ? (0, import_element27.createContext)(null) : null;
   function useRegisterTabDev() {
-    const context = (0, import_element31.useContext)(TabsValidationContext);
-    (0, import_element31.useEffect)(() => {
+    const context = (0, import_element27.useContext)(TabsValidationContext);
+    (0, import_element27.useEffect)(() => {
       if (context) {
         return context.registerTab();
       }
@@ -15765,8 +12820,8 @@ var wp;
   }
   var useRegisterTab = VALIDATION_ENABLED ? useRegisterTabDev : useRegisterTabProd;
   function useRegisterPanelDev() {
-    const context = (0, import_element31.useContext)(TabsValidationContext);
-    (0, import_element31.useEffect)(() => {
+    const context = (0, import_element27.useContext)(TabsValidationContext);
+    (0, import_element27.useEffect)(() => {
       if (context) {
         return context.registerPanel();
       }
@@ -15779,8 +12834,8 @@ var wp;
   function TabsValidationProviderDev({
     children
   }) {
-    const tabCountRef = (0, import_element31.useRef)(0);
-    const panelCountRef = (0, import_element31.useRef)(0);
+    const tabCountRef = (0, import_element27.useRef)(0);
+    const panelCountRef = (0, import_element27.useRef)(0);
     const scheduleValidation = useScheduleValidation(() => {
       const tabCount = tabCountRef.current;
       const panelCount = panelCountRef.current;
@@ -15790,7 +12845,7 @@ var wp;
         );
       }
     });
-    const registerTab = (0, import_element31.useCallback)(() => {
+    const registerTab = (0, import_element27.useCallback)(() => {
       tabCountRef.current += 1;
       scheduleValidation();
       return () => {
@@ -15798,7 +12853,7 @@ var wp;
         scheduleValidation();
       };
     }, [scheduleValidation]);
-    const registerPanel = (0, import_element31.useCallback)(() => {
+    const registerPanel = (0, import_element27.useCallback)(() => {
       panelCountRef.current += 1;
       scheduleValidation();
       return () => {
@@ -15806,24 +12861,24 @@ var wp;
         scheduleValidation();
       };
     }, [scheduleValidation]);
-    const contextValue = (0, import_element31.useMemo)(
+    const contextValue = (0, import_element27.useMemo)(
       () => ({
         registerTab,
         registerPanel
       }),
       [registerTab, registerPanel]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(TabsValidationContext.Provider, { value: contextValue, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(TabsValidationContext.Provider, { value: contextValue, children });
   }
   function TabsValidationProviderProd({
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(import_jsx_runtime215.Fragment, { children });
+    return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(import_jsx_runtime209.Fragment, { children });
   }
   var TabsValidationProvider = VALIDATION_ENABLED ? TabsValidationProviderDev : TabsValidationProviderProd;
 
   // packages/ui/build-module/tabs/panel.mjs
-  var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
   function getRuntime17() {
     const globalScope = globalThis;
@@ -15912,10 +12967,10 @@ var wp;
     registerStyle17("08122b3d53", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
   }
   var focus_module_default3 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
-  var Panel = (0, import_element32.forwardRef)(
+  var Panel = (0, import_element28.forwardRef)(
     function TabPanel({ className, ...otherProps }, forwardedRef) {
       useRegisterPanel();
-      return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
         index_parts_exports2.Panel,
         {
           ref: forwardedRef,
@@ -15931,17 +12986,17 @@ var wp;
   );
 
   // packages/ui/build-module/tabs/root.mjs
-  var import_element33 = __toESM(require_element(), 1);
-  var import_jsx_runtime217 = __toESM(require_jsx_runtime(), 1);
-  var Root3 = (0, import_element33.forwardRef)(
+  var import_element29 = __toESM(require_element(), 1);
+  var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
+  var Root3 = (0, import_element29.forwardRef)(
     function TabsRoot3({ ...otherProps }, forwardedRef) {
-      return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(TabsValidationProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(index_parts_exports2.Root, { ref: forwardedRef, ...otherProps }) }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(TabsValidationProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(index_parts_exports2.Root, { ref: forwardedRef, ...otherProps }) }) });
     }
   );
 
   // packages/ui/build-module/tabs/tab.mjs
-  var import_element34 = __toESM(require_element(), 1);
-  var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
+  var import_element30 = __toESM(require_element(), 1);
+  var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
   function getRuntime18() {
     const globalScope = globalThis;
@@ -16026,21 +13081,2967 @@ var wp;
     registerStyle18("54ae3f4680", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7313adbc8a112e90__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&._9f2ac729c68a735a__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._9f2ac729c68a735a__is-overflowing-first._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._59228b5227f38a99__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._1c37dcfaa1ad8cda__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height,border-radius,border-block;transition-timing-function:ease-out}outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;&[data-orientation=horizontal]{background-color:var(--wpds-color-stroke-interactive-neutral-strong,#6e6e6e);bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width);z-index:1}&[data-orientation=vertical]{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-radius:var(--wpds-border-radius-sm,2px);height:var(--active-tab-height);left:50%;top:0;translate:-50% var(--active-tab-top);width:100%;z-index:0}._7313adbc8a112e90__tablist[data-select-on-move=true]:has(:focus-visible)\n			&[data-orientation=vertical]{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));box-sizing:border-box}}.a5fd8814f195aa5e__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);cursor:default;@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:hover,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&:after{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}}._59228b5227f38a99__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px)}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-sm,8px) var(--wpds-dimension-padding-md,12px)}[data-orientation=vertical][data-select-on-move=false] &:after{content:"";inset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}._5dfc77e6edd345d4__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}._4a20e969d15e5ac1__tab-chevron{flex-shrink:0;margin-inline-end:calc(var(--wpds-dimension-gap-xs, 4px)*-1);opacity:0;[data-orientation=horizontal] &{display:none}[role=tab]:is([aria-selected=true],:focus-visible,:hover) &{opacity:1}@media not (prefers-reduced-motion){[data-select-on-move=true]\n				[role=tab]:is([aria-selected=true])\n				&{transition:opacity .15s linear .15s}}&:dir(rtl){rotate:180deg}}}}');
   }
   var style_default12 = { "tablist": "_7313adbc8a112e90__tablist", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children", "tab-chevron": "_4a20e969d15e5ac1__tab-chevron" };
-  var Tab = (0, import_element34.forwardRef)(function Tab2({ className, children, ...otherProps }, forwardedRef) {
+  var Tab = (0, import_element30.forwardRef)(function Tab2({ className, children, ...otherProps }, forwardedRef) {
     useRegisterTab();
-    return /* @__PURE__ */ (0, import_jsx_runtime218.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
       index_parts_exports2.Tab,
       {
         ref: forwardedRef,
         className: clsx_default(style_default12.tab, className),
         ...otherProps,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("span", { className: style_default12["tab-children"], children }),
-          /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(Icon, { icon: chevron_right_default, className: style_default12["tab-chevron"] })
+          /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("span", { className: style_default12["tab-children"], children }),
+          /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Icon, { icon: chevron_right_default, className: style_default12["tab-chevron"] })
         ]
       }
     );
   });
+
+  // packages/block-library/build-module/audio/edit.mjs
+  var import_block_editor15 = __toESM(require_block_editor(), 1);
+  var import_i18n14 = __toESM(require_i18n(), 1);
+  var import_data8 = __toESM(require_data(), 1);
+  var import_notices = __toESM(require_notices(), 1);
+  var import_element33 = __toESM(require_element(), 1);
+
+  // node_modules/memize/dist/index.js
+  function memize(fn, options2) {
+    var size = 0;
+    var head;
+    var tail;
+    options2 = options2 || {};
+    function memoized() {
+      var node = head, len = arguments.length, args, i2;
+      searchCache: while (node) {
+        if (node.args.length !== arguments.length) {
+          node = node.next;
+          continue;
+        }
+        for (i2 = 0; i2 < len; i2++) {
+          if (node.args[i2] !== arguments[i2]) {
+            node = node.next;
+            continue searchCache;
+          }
+        }
+        if (node !== head) {
+          if (node === tail) {
+            tail = node.prev;
+          }
+          node.prev.next = node.next;
+          if (node.next) {
+            node.next.prev = node.prev;
+          }
+          node.next = head;
+          node.prev = null;
+          head.prev = node;
+          head = node;
+        }
+        return node.val;
+      }
+      args = new Array(len);
+      for (i2 = 0; i2 < len; i2++) {
+        args[i2] = arguments[i2];
+      }
+      node = {
+        args,
+        // Generate the result from original function
+        val: fn.apply(null, args)
+      };
+      if (head) {
+        head.prev = node;
+        node.next = head;
+      } else {
+        tail = node;
+      }
+      if (size === /** @type {MemizeOptions} */
+      options2.maxSize) {
+        tail = /** @type {MemizeCacheNode} */
+        tail.prev;
+        tail.next = null;
+      } else {
+        size++;
+      }
+      head = node;
+      return node.val;
+    }
+    memoized.clear = function() {
+      head = null;
+      tail = null;
+      size = 0;
+    };
+    return memoized;
+  }
+
+  // packages/block-library/build-module/embed/util.mjs
+  var import_element31 = __toESM(require_element(), 1);
+  var import_blocks3 = __toESM(require_blocks(), 1);
+  var import_url2 = __toESM(require_url(), 1);
+
+  // node_modules/tslib/tslib.es6.mjs
+  var __assign = function() {
+    __assign = Object.assign || function __assign2(t2) {
+      for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
+        s2 = arguments[i2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2)) t2[p2] = s2[p2];
+      }
+      return t2;
+    };
+    return __assign.apply(this, arguments);
+  };
+
+  // node_modules/lower-case/dist.es2015/index.js
+  function lowerCase(str) {
+    return str.toLowerCase();
+  }
+
+  // node_modules/no-case/dist.es2015/index.js
+  var DEFAULT_SPLIT_REGEXP = [/([a-z0-9])([A-Z])/g, /([A-Z])([A-Z][a-z])/g];
+  var DEFAULT_STRIP_REGEXP = /[^A-Z0-9]+/gi;
+  function noCase(input, options2) {
+    if (options2 === void 0) {
+      options2 = {};
+    }
+    var _a = options2.splitRegexp, splitRegexp = _a === void 0 ? DEFAULT_SPLIT_REGEXP : _a, _b = options2.stripRegexp, stripRegexp = _b === void 0 ? DEFAULT_STRIP_REGEXP : _b, _c = options2.transform, transform = _c === void 0 ? lowerCase : _c, _d = options2.delimiter, delimiter = _d === void 0 ? " " : _d;
+    var result = replace(replace(input, splitRegexp, "$1\0$2"), stripRegexp, "\0");
+    var start = 0;
+    var end = result.length;
+    while (result.charAt(start) === "\0")
+      start++;
+    while (result.charAt(end - 1) === "\0")
+      end--;
+    return result.slice(start, end).split("\0").map(transform).join(delimiter);
+  }
+  function replace(input, re, value) {
+    if (re instanceof RegExp)
+      return input.replace(re, value);
+    return re.reduce(function(input2, re2) {
+      return input2.replace(re2, value);
+    }, input);
+  }
+
+  // node_modules/upper-case-first/dist.es2015/index.js
+  function upperCaseFirst(input) {
+    return input.charAt(0).toUpperCase() + input.substr(1);
+  }
+
+  // node_modules/capital-case/dist.es2015/index.js
+  function capitalCaseTransform(input) {
+    return upperCaseFirst(input.toLowerCase());
+  }
+  function capitalCase(input, options2) {
+    if (options2 === void 0) {
+      options2 = {};
+    }
+    return noCase(input, __assign({ delimiter: " ", transform: capitalCaseTransform }, options2));
+  }
+
+  // node_modules/dot-case/dist.es2015/index.js
+  function dotCase(input, options2) {
+    if (options2 === void 0) {
+      options2 = {};
+    }
+    return noCase(input, __assign({ delimiter: "." }, options2));
+  }
+
+  // node_modules/param-case/dist.es2015/index.js
+  function paramCase(input, options2) {
+    if (options2 === void 0) {
+      options2 = {};
+    }
+    return dotCase(input, __assign({ delimiter: "-" }, options2));
+  }
+
+  // packages/kebab-case/build-module/index.mjs
+  function kebabCase(str) {
+    let input = str?.toString?.() ?? "";
+    input = input.replace(/['\u2019]/, "");
+    return paramCase(input, {
+      splitRegexp: [
+        /(?!(?:1ST|2ND|3RD|[4-9]TH)(?![a-z]))([a-z0-9])([A-Z])/g,
+        // fooBar => foo-bar, 3Bar => 3-bar
+        /(?!(?:1st|2nd|3rd|[4-9]th)(?![a-z]))([0-9])([a-z])/g,
+        // 3bar => 3-bar
+        /([A-Za-z])([0-9])/g,
+        // Foo3 => foo-3, foo3 => foo-3
+        /([A-Z])([A-Z][a-z])/g
+        // FOOBar => foo-bar
+      ]
+    });
+  }
+
+  // packages/block-library/build-module/embed/block.json
+  var block_default7 = {
+    $schema: "https://schemas.wp.org/trunk/block.json",
+    apiVersion: 3,
+    name: "core/embed",
+    title: "Embed",
+    category: "embed",
+    description: "Add a block that displays content pulled from other sites, like Twitter or YouTube.",
+    textdomain: "default",
+    attributes: {
+      url: {
+        type: "string",
+        role: "content"
+      },
+      caption: {
+        type: "rich-text",
+        source: "rich-text",
+        selector: "figcaption",
+        role: "content"
+      },
+      type: {
+        type: "string",
+        role: "content"
+      },
+      providerNameSlug: {
+        type: "string",
+        role: "content"
+      },
+      allowResponsive: {
+        type: "boolean",
+        default: true
+      },
+      responsive: {
+        type: "boolean",
+        default: false,
+        role: "content"
+      },
+      previewable: {
+        type: "boolean",
+        default: true,
+        role: "content"
+      }
+    },
+    supports: {
+      anchor: true,
+      align: true,
+      spacing: {
+        margin: true
+      },
+      interactivity: {
+        clientNavigation: true
+      }
+    },
+    editorStyle: "wp-block-embed-editor",
+    style: "wp-block-embed"
+  };
+
+  // packages/block-library/build-module/embed/constants.mjs
+  var ASPECT_RATIOS = [
+    // Common video resolutions.
+    { ratio: "2.33", className: "wp-embed-aspect-21-9" },
+    { ratio: "2.00", className: "wp-embed-aspect-18-9" },
+    { ratio: "1.78", className: "wp-embed-aspect-16-9" },
+    { ratio: "1.33", className: "wp-embed-aspect-4-3" },
+    // Vertical video and instagram square video support.
+    { ratio: "1.00", className: "wp-embed-aspect-1-1" },
+    { ratio: "0.56", className: "wp-embed-aspect-9-16" },
+    { ratio: "0.50", className: "wp-embed-aspect-1-2" }
+  ];
+  var WP_EMBED_TYPE = "wp-embed";
+
+  // packages/block-library/build-module/embed/util.mjs
+  var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
+  var { name: DEFAULT_EMBED_BLOCK } = block_default7;
+  var getEmbedInfoByProvider = (provider) => (0, import_blocks3.getBlockVariations)(DEFAULT_EMBED_BLOCK)?.find(
+    ({ name: name122 }) => name122 === provider
+  );
+  var matchesPatterns = (url, patterns = []) => patterns.some((pattern) => url.match(pattern));
+  var findMoreSuitableBlock = (url) => (0, import_blocks3.getBlockVariations)(DEFAULT_EMBED_BLOCK)?.find(
+    ({ patterns }) => matchesPatterns(url, patterns)
+  );
+  function rewriteXToTwitter(url) {
+    if (!url || (0, import_url2.getAuthority)(url) !== "x.com") {
+      return url;
+    }
+    const rewritten = new URL(url);
+    rewritten.host = "twitter.com";
+    return rewritten.toString();
+  }
+  var isFromWordPress = (html) => html && html.includes('class="wp-embedded-content"');
+  var getPhotoHtml = (photo) => {
+    const imageUrl = photo.url || photo.thumbnail_url;
+    const photoPreview = /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("img", { src: imageUrl, alt: photo.title, width: "100%" }) });
+    return (0, import_element31.renderToString)(photoPreview);
+  };
+  var createUpgradedEmbedBlock = (props, attributesFromPreview = {}) => {
+    const { preview, attributes: attributes2 = {} } = props;
+    const { url, providerNameSlug, type, ...restAttributes } = attributes2;
+    if (!url || !(0, import_blocks3.getBlockType)(DEFAULT_EMBED_BLOCK)) {
+      return;
+    }
+    const matchedBlock = findMoreSuitableBlock(url);
+    const isCurrentBlockWP = providerNameSlug === "wordpress" || type === WP_EMBED_TYPE;
+    const shouldCreateNewBlock = !isCurrentBlockWP && matchedBlock && (matchedBlock.attributes.providerNameSlug !== providerNameSlug || !providerNameSlug);
+    if (shouldCreateNewBlock) {
+      return (0, import_blocks3.createBlock)(DEFAULT_EMBED_BLOCK, {
+        url,
+        ...restAttributes,
+        ...matchedBlock.attributes
+      });
+    }
+    const wpVariation = (0, import_blocks3.getBlockVariations)(DEFAULT_EMBED_BLOCK)?.find(
+      ({ name: name122 }) => name122 === "wordpress"
+    );
+    if (!wpVariation || !preview || !isFromWordPress(preview.html) || isCurrentBlockWP) {
+      return;
+    }
+    return (0, import_blocks3.createBlock)(DEFAULT_EMBED_BLOCK, {
+      url,
+      ...wpVariation.attributes,
+      // By now we have the preview, but when the new block first renders, it
+      // won't have had all the attributes set, and so won't get the correct
+      // type and it won't render correctly. So, we pass through the current attributes
+      // here so that the initial render works when we switch to the WordPress
+      // block. This only affects the WordPress block because it can't be
+      // rendered in the usual Sandbox (it has a sandbox of its own) and it
+      // relies on the preview to set the correct render type.
+      ...attributesFromPreview
+    });
+  };
+  var hasAspectRatioClass = (existingClassNames) => {
+    if (!existingClassNames) {
+      return false;
+    }
+    return ASPECT_RATIOS.some(
+      ({ className }) => existingClassNames.includes(className)
+    );
+  };
+  var removeAspectRatioClasses = (existingClassNames) => {
+    if (!existingClassNames) {
+      return existingClassNames;
+    }
+    const aspectRatioClassNames = ASPECT_RATIOS.reduce(
+      (accumulator, { className }) => {
+        accumulator.push(className);
+        return accumulator;
+      },
+      ["wp-has-aspect-ratio"]
+    );
+    let outputClassNames = existingClassNames;
+    for (const className of aspectRatioClassNames) {
+      outputClassNames = outputClassNames.replace(className, "");
+    }
+    return outputClassNames.trim();
+  };
+  function hasInlineResponsivePadding(html) {
+    const paddingPattern = /padding-(top|bottom)\s*:\s*[\d.]+%/i;
+    return paddingPattern.test(html);
+  }
+  function getClassNames(html, existingClassNames, allowResponsive = true) {
+    if (!allowResponsive) {
+      return removeAspectRatioClasses(existingClassNames);
+    }
+    if (hasInlineResponsivePadding(html)) {
+      return removeAspectRatioClasses(existingClassNames);
+    }
+    const previewDocument = document.implementation.createHTMLDocument("");
+    previewDocument.body.innerHTML = html;
+    const iframe = previewDocument.body.querySelector("iframe");
+    if (iframe && iframe.height && iframe.width) {
+      const aspectRatio = (iframe.width / iframe.height).toFixed(2);
+      for (let ratioIndex = 0; ratioIndex < ASPECT_RATIOS.length; ratioIndex++) {
+        const potentialRatio = ASPECT_RATIOS[ratioIndex];
+        if (aspectRatio >= potentialRatio.ratio) {
+          const ratioDiff = aspectRatio - potentialRatio.ratio;
+          if (ratioDiff > 0.1) {
+            return removeAspectRatioClasses(existingClassNames);
+          }
+          return clsx_default(
+            removeAspectRatioClasses(existingClassNames),
+            potentialRatio.className,
+            "wp-has-aspect-ratio"
+          );
+        }
+      }
+    }
+    return existingClassNames;
+  }
+  function fallback(url, onReplace) {
+    const link = /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("a", { href: url, children: url });
+    onReplace(
+      (0, import_blocks3.createBlock)("core/paragraph", { content: (0, import_element31.renderToString)(link) })
+    );
+  }
+  var getAttributesFromPreview = memize(
+    (preview, title, currentClassNames, isResponsive, allowResponsive = true) => {
+      if (!preview) {
+        return {};
+      }
+      const attributes2 = {};
+      let { type = "rich" } = preview;
+      const { html, provider_name: providerName } = preview;
+      const providerNameSlug = kebabCase(
+        (providerName || title).toLowerCase()
+      );
+      if (isFromWordPress(html)) {
+        type = WP_EMBED_TYPE;
+      }
+      if (html || "photo" === type) {
+        attributes2.type = type;
+        attributes2.providerNameSlug = providerNameSlug;
+      }
+      if (hasAspectRatioClass(currentClassNames)) {
+        return attributes2;
+      }
+      attributes2.className = getClassNames(
+        html,
+        currentClassNames,
+        isResponsive && allowResponsive
+      );
+      return attributes2;
+    }
+  );
+  var getMergedAttributesWithPreview = (currentAttributes, preview, title, isResponsive) => {
+    const { allowResponsive, className } = currentAttributes;
+    return {
+      ...currentAttributes,
+      ...getAttributesFromPreview(
+        preview,
+        title,
+        className,
+        isResponsive,
+        allowResponsive
+      )
+    };
+  };
+
+  // packages/block-library/build-module/utils/caption.mjs
+  var import_element32 = __toESM(require_element(), 1);
+  var import_compose6 = __toESM(require_compose(), 1);
+  var import_i18n13 = __toESM(require_i18n(), 1);
+  var import_block_editor14 = __toESM(require_block_editor(), 1);
+  var import_components6 = __toESM(require_components(), 1);
+  var import_blocks4 = __toESM(require_blocks(), 1);
+  var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
+  function Caption({
+    attributeKey = "caption",
+    attributes: attributes2,
+    setAttributes,
+    isSelected,
+    insertBlocksAfter,
+    placeholder: placeholder2 = (0, import_i18n13.__)("Add caption"),
+    label = (0, import_i18n13.__)("Caption text"),
+    showToolbarButton = true,
+    excludeElementClassName,
+    className,
+    readOnly,
+    tagName = "figcaption",
+    addLabel = (0, import_i18n13.__)("Add caption"),
+    removeLabel = (0, import_i18n13.__)("Remove caption"),
+    icon: icon4 = caption_default,
+    ...props
+  }) {
+    const caption = attributes2[attributeKey];
+    const prevCaption = (0, import_compose6.usePrevious)(caption);
+    const isCaptionEmpty = import_block_editor14.RichText.isEmpty(caption);
+    const isPrevCaptionEmpty = import_block_editor14.RichText.isEmpty(prevCaption);
+    const [showCaption, setShowCaption] = (0, import_element32.useState)(!isCaptionEmpty);
+    (0, import_element32.useEffect)(() => {
+      if (!isCaptionEmpty && isPrevCaptionEmpty) {
+        setShowCaption(true);
+      }
+    }, [isCaptionEmpty, isPrevCaptionEmpty]);
+    (0, import_element32.useEffect)(() => {
+      if (!isSelected && isCaptionEmpty) {
+        setShowCaption(false);
+      }
+    }, [isSelected, isCaptionEmpty]);
+    const ref = (0, import_element32.useCallback)(
+      (node) => {
+        if (node && isCaptionEmpty) {
+          node.focus();
+        }
+      },
+      [isCaptionEmpty]
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(import_jsx_runtime214.Fragment, { children: [
+      showToolbarButton && /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(import_block_editor14.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
+        import_components6.ToolbarButton,
+        {
+          onClick: () => {
+            setShowCaption(!showCaption);
+            if (showCaption && caption) {
+              setAttributes({
+                [attributeKey]: void 0
+              });
+            }
+          },
+          icon: icon4,
+          isPressed: showCaption,
+          label: showCaption ? removeLabel : addLabel
+        }
+      ) }),
+      showCaption && (!import_block_editor14.RichText.isEmpty(caption) || isSelected) && /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
+        import_block_editor14.RichText,
+        {
+          identifier: attributeKey,
+          tagName,
+          className: clsx_default(
+            className,
+            excludeElementClassName ? "" : (0, import_block_editor14.__experimentalGetElementClassName)("caption")
+          ),
+          ref,
+          "aria-label": label,
+          placeholder: placeholder2,
+          value: caption,
+          onChange: (value) => setAttributes({ [attributeKey]: value }),
+          inlineToolbar: true,
+          __unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter(
+            (0, import_blocks4.createBlock)((0, import_blocks4.getDefaultBlockName)())
+          ) : void 0,
+          readOnly,
+          ...props
+        }
+      )
+    ] });
+  }
+
+  // packages/block-library/build-module/audio/edit.mjs
+  var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
+  var ALLOWED_MEDIA_TYPES = ["audio"];
+  function AudioEdit({
+    attributes: attributes2,
+    className,
+    setAttributes,
+    onReplace,
+    isSelected: isSingleSelected,
+    insertBlocksAfter
+  }) {
+    const { id, autoplay, loop, preload, src } = attributes2;
+    const [temporaryURL, setTemporaryURL] = (0, import_element33.useState)(attributes2.blob);
+    const blockEditingMode = (0, import_block_editor15.useBlockEditingMode)();
+    const hasNonContentControls = blockEditingMode === "default";
+    useUploadMediaFromBlobURL({
+      url: temporaryURL,
+      allowedTypes: ALLOWED_MEDIA_TYPES,
+      onChange: onSelectAudio,
+      onError: onUploadError
+    });
+    function toggleAttribute(attribute) {
+      return (newValue) => {
+        setAttributes({ [attribute]: newValue });
+      };
+    }
+    function onSelectURL(newSrc) {
+      if (newSrc !== src) {
+        const embedBlock = createUpgradedEmbedBlock({
+          attributes: { url: newSrc }
+        });
+        if (void 0 !== embedBlock && onReplace) {
+          onReplace(embedBlock);
+          return;
+        }
+        setAttributes({ src: newSrc, id: void 0, blob: void 0 });
+        setTemporaryURL();
+      }
+    }
+    const { createErrorNotice } = (0, import_data8.useDispatch)(import_notices.store);
+    function onUploadError(message) {
+      createErrorNotice(message, { type: "snackbar" });
+    }
+    function onSelectAudio(media) {
+      if (!media || !media.url) {
+        setAttributes({
+          src: void 0,
+          id: void 0,
+          caption: void 0,
+          blob: void 0
+        });
+        setTemporaryURL();
+        return;
+      }
+      if ((0, import_blob2.isBlobURL)(media.url)) {
+        setTemporaryURL(media.url);
+        return;
+      }
+      setAttributes({
+        blob: void 0,
+        src: media.url,
+        id: media.id,
+        caption: media.caption
+      });
+      setTemporaryURL();
+    }
+    const classes = clsx_default(className, {
+      "is-transient": !!temporaryURL
+    });
+    const blockProps = (0, import_block_editor15.useBlockProps)({
+      className: classes
+    });
+    const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+    if (!src && !temporaryURL) {
+      return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+        import_block_editor15.MediaPlaceholder,
+        {
+          icon: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(import_block_editor15.BlockIcon, { icon: audio_default }),
+          onSelect: onSelectAudio,
+          onSelectURL,
+          accept: "audio/*",
+          allowedTypes: ALLOWED_MEDIA_TYPES,
+          value: attributes2,
+          onError: onUploadError
+        }
+      ) });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(import_jsx_runtime215.Fragment, { children: [
+      isSingleSelected && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(import_block_editor15.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+        import_block_editor15.MediaReplaceFlow,
+        {
+          mediaId: id,
+          mediaURL: src,
+          allowedTypes: ALLOWED_MEDIA_TYPES,
+          accept: "audio/*",
+          onSelect: onSelectAudio,
+          onSelectURL,
+          onError: onUploadError,
+          onReset: () => onSelectAudio(void 0),
+          variant: "toolbar"
+        }
+      ) }),
+      /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(import_block_editor15.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(
+        import_components7.__experimentalToolsPanel,
+        {
+          label: (0, import_i18n14.__)("Settings"),
+          resetAll: () => {
+            setAttributes({
+              autoplay: false,
+              loop: false,
+              preload: void 0
+            });
+          },
+          dropdownMenuProps,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(Text2, { className: "wp-block-audio__autoplay-help-text", children: (0, import_i18n14.__)(
+              "Most browsers block audio until a visitor interacts with the page, so autoplay often won\u2019t work, especially on mobile. Unexpected sound can also be disruptive for screen reader users."
+            ) }),
+            /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+              import_components7.__experimentalToolsPanelItem,
+              {
+                label: (0, import_i18n14.__)("Autoplay"),
+                isShownByDefault: true,
+                hasValue: () => !!autoplay,
+                onDeselect: () => setAttributes({
+                  autoplay: false
+                }),
+                children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+                  import_components7.ToggleControl,
+                  {
+                    label: (0, import_i18n14.__)("Autoplay"),
+                    onChange: toggleAttribute("autoplay"),
+                    checked: !!autoplay
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+              import_components7.__experimentalToolsPanelItem,
+              {
+                label: (0, import_i18n14.__)("Loop"),
+                isShownByDefault: true,
+                hasValue: () => !!loop,
+                onDeselect: () => setAttributes({
+                  loop: false
+                }),
+                children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+                  import_components7.ToggleControl,
+                  {
+                    label: (0, import_i18n14.__)("Loop"),
+                    onChange: toggleAttribute("loop"),
+                    checked: !!loop
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+              import_components7.__experimentalToolsPanelItem,
+              {
+                label: (0, import_i18n14.__)("Preload"),
+                isShownByDefault: true,
+                hasValue: () => !!preload,
+                onDeselect: () => setAttributes({
+                  preload: void 0
+                }),
+                children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+                  import_components7.SelectControl,
+                  {
+                    label: (0, import_i18n14._x)(
+                      "Preload",
+                      "noun; Audio block parameter"
+                    ),
+                    value: preload || "",
+                    onChange: (value) => setAttributes({
+                      preload: value || void 0
+                    }),
+                    options: [
+                      { value: "", label: (0, import_i18n14.__)("Browser default") },
+                      { value: "auto", label: (0, import_i18n14.__)("Auto") },
+                      { value: "metadata", label: (0, import_i18n14.__)("Metadata") },
+                      {
+                        value: "none",
+                        label: (0, import_i18n14._x)("None", "Preload value")
+                      }
+                    ]
+                  }
+                )
+              }
+            )
+          ]
+        }
+      ) }),
+      /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)("figure", { ...blockProps, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+          "audio",
+          {
+            controls: "controls",
+            inert: !isSingleSelected ? "true" : void 0,
+            src: src ?? temporaryURL
+          }
+        ),
+        !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(import_components7.Spinner, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+          Caption,
+          {
+            attributes: attributes2,
+            setAttributes,
+            isSelected: isSingleSelected,
+            insertBlocksAfter,
+            label: (0, import_i18n14.__)("Audio caption text"),
+            showToolbarButton: isSingleSelected && hasNonContentControls
+          }
+        )
+      ] })
+    ] });
+  }
+  var edit_default = AudioEdit;
+
+  // packages/block-library/build-module/audio/block.json
+  var block_default8 = {
+    $schema: "https://schemas.wp.org/trunk/block.json",
+    apiVersion: 3,
+    name: "core/audio",
+    title: "Audio",
+    category: "media",
+    description: "Embed a simple audio player.",
+    keywords: ["music", "sound", "podcast", "recording"],
+    textdomain: "default",
+    attributes: {
+      blob: {
+        type: "string",
+        role: "local"
+      },
+      src: {
+        type: "string",
+        source: "attribute",
+        selector: "audio",
+        attribute: "src",
+        role: "content"
+      },
+      caption: {
+        type: "rich-text",
+        source: "rich-text",
+        selector: "figcaption",
+        role: "content"
+      },
+      id: {
+        type: "number",
+        role: "content"
+      },
+      autoplay: {
+        type: "boolean",
+        source: "attribute",
+        selector: "audio",
+        attribute: "autoplay"
+      },
+      loop: {
+        type: "boolean",
+        source: "attribute",
+        selector: "audio",
+        attribute: "loop"
+      },
+      preload: {
+        type: "string",
+        source: "attribute",
+        selector: "audio",
+        attribute: "preload"
+      }
+    },
+    supports: {
+      anchor: true,
+      align: true,
+      spacing: {
+        margin: true,
+        padding: true,
+        __experimentalDefaultControls: {
+          margin: false,
+          padding: false
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      }
+    },
+    editorStyle: "wp-block-audio-editor",
+    style: "wp-block-audio"
+  };
+
+  // packages/block-library/build-module/audio/save.mjs
+  var import_block_editor16 = __toESM(require_block_editor(), 1);
+  var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
+  function save5({ attributes: attributes2 }) {
+    const { autoplay, caption, loop, preload, src } = attributes2;
+    return src && /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)("figure", { ...import_block_editor16.useBlockProps.save(), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+        "audio",
+        {
+          controls: "controls",
+          src,
+          autoPlay: autoplay,
+          loop,
+          preload
+        }
+      ),
+      !import_block_editor16.RichText.isEmpty(caption) && /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+        import_block_editor16.RichText.Content,
+        {
+          tagName: "figcaption",
+          value: caption,
+          className: (0, import_block_editor16.__experimentalGetElementClassName)(
+            "caption"
+          )
+        }
+      )
+    ] });
+  }
+
+  // packages/block-library/build-module/audio/transforms.mjs
+  var import_blob3 = __toESM(require_blob(), 1);
+  var import_blocks5 = __toESM(require_blocks(), 1);
+  var transforms = {
+    from: [
+      {
+        type: "files",
+        isMatch(files) {
+          return files.length === 1 && files[0].type.indexOf("audio/") === 0;
+        },
+        transform(files) {
+          const file = files[0];
+          const block = (0, import_blocks5.createBlock)("core/audio", {
+            blob: (0, import_blob3.createBlobURL)(file)
+          });
+          return block;
+        }
+      },
+      {
+        type: "shortcode",
+        tag: "audio",
+        attributes: {
+          src: {
+            type: "string",
+            shortcode: ({
+              named: { src, mp3, m4a, ogg, wav, wma }
+            }) => {
+              return src || mp3 || m4a || ogg || wav || wma;
+            }
+          },
+          loop: {
+            type: "string",
+            shortcode: ({ named: { loop } }) => {
+              return loop;
+            }
+          },
+          autoplay: {
+            type: "string",
+            shortcode: ({ named: { autoplay } }) => {
+              return autoplay;
+            }
+          },
+          preload: {
+            type: "string",
+            shortcode: ({ named: { preload } }) => {
+              return preload;
+            }
+          }
+        }
+      }
+    ]
+  };
+  var transforms_default = transforms;
+
+  // packages/block-library/build-module/lock-unlock.mjs
+  var import_private_apis = __toESM(require_private_apis(), 1);
+  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/block-library"
+  );
+
+  // packages/block-library/build-module/audio/index.mjs
+  var { fieldsKey, formKey } = unlock(import_blocks6.privateApis);
+  var { name: name7 } = block_default8;
+  var settings7 = {
+    icon: audio_default,
+    example: {
+      attributes: {
+        src: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Armstrong_Small_Step.ogg"
+      },
+      viewportWidth: 350
+    },
+    transforms: transforms_default,
+    deprecated: deprecated_default2,
+    edit: edit_default,
+    save: save5
+  };
+  if (window.__experimentalContentOnlyInspectorFields) {
+    settings7[fieldsKey] = [
+      {
+        id: "audio",
+        label: (0, import_i18n15.__)("Audio"),
+        type: "media",
+        Edit: {
+          control: "media",
+          // TODO: replace with custom component
+          allowedTypes: ["audio"],
+          multiple: false
+        },
+        getValue: ({ item }) => ({
+          id: item.id,
+          url: item.src
+        }),
+        setValue: ({ value }) => ({
+          id: value.id,
+          src: value.url
+        })
+      },
+      {
+        id: "caption",
+        label: (0, import_i18n15.__)("Caption"),
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
+      }
+    ];
+    settings7[formKey] = {
+      fields: ["audio", "caption"]
+    };
+  }
+  var init7 = () => initBlock({ name: name7, metadata: block_default8, settings: settings7 });
+
+  // packages/block-library/build-module/breadcrumbs/index.mjs
+  var breadcrumbs_exports = {};
+  __export(breadcrumbs_exports, {
+    init: () => init8,
+    metadata: () => block_default9,
+    name: () => name8,
+    settings: () => settings8
+  });
+
+  // packages/block-library/build-module/breadcrumbs/block.json
+  var block_default9 = {
+    $schema: "https://schemas.wp.org/trunk/block.json",
+    apiVersion: 3,
+    name: "core/breadcrumbs",
+    title: "Breadcrumbs",
+    category: "theme",
+    description: "Display a breadcrumb trail showing the path to the current page.",
+    textdomain: "default",
+    attributes: {
+      prefersTaxonomy: {
+        type: "boolean",
+        default: false
+      },
+      separator: {
+        type: "string",
+        default: "/"
+      },
+      showHomeItem: {
+        type: "boolean",
+        default: true
+      },
+      showCurrentItem: {
+        type: "boolean",
+        default: true
+      },
+      showOnHomePage: {
+        type: "boolean",
+        default: false
+      }
+    },
+    usesContext: ["postId", "postType", "templateSlug"],
+    supports: {
+      anchor: true,
+      html: false,
+      align: ["wide", "full"],
+      spacing: {
+        margin: true,
+        padding: true
+      },
+      color: {
+        gradients: true,
+        link: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true,
+        __experimentalDefaultControls: {
+          radius: false,
+          color: true,
+          width: true,
+          style: true
+        }
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      }
+    },
+    style: "wp-block-breadcrumbs"
+  };
+
+  // packages/block-library/build-module/breadcrumbs/edit.mjs
+  var import_i18n16 = __toESM(require_i18n(), 1);
+  var import_block_editor17 = __toESM(require_block_editor(), 1);
+  var import_components8 = __toESM(require_components(), 1);
+  var import_data9 = __toESM(require_data(), 1);
+  var import_core_data4 = __toESM(require_core_data(), 1);
+  var import_element34 = __toESM(require_element(), 1);
+  var import_server_side_render2 = __toESM(require_server_side_render(), 1);
+  var import_compose7 = __toESM(require_compose(), 1);
+  var import_jsx_runtime217 = __toESM(require_jsx_runtime(), 1);
+  var separatorDefaultValue = "/";
+  function BreadcrumbEdit({
+    attributes: attributes2,
+    setAttributes,
+    name: name122,
+    context: { postId, postType, templateSlug }
+  }) {
+    const {
+      separator,
+      showHomeItem,
+      showCurrentItem,
+      prefersTaxonomy,
+      showOnHomePage
+    } = attributes2;
+    const {
+      post,
+      isPostTypeHierarchical,
+      postTypeHasTaxonomies,
+      hasTermsAssigned,
+      isLoading
+    } = (0, import_data9.useSelect)(
+      (select10) => {
+        if (!postType) {
+          return {};
+        }
+        const _post = select10(import_core_data4.store).getEntityRecord(
+          "postType",
+          postType,
+          postId
+        );
+        const postTypeObject = select10(import_core_data4.store).getPostType(postType);
+        const _postTypeHasTaxonomies = postTypeObject && postTypeObject.taxonomies.length;
+        let taxonomies;
+        if (_postTypeHasTaxonomies) {
+          taxonomies = select10(import_core_data4.store).getTaxonomies({
+            type: postType,
+            per_page: -1
+          });
+        }
+        return {
+          post: _post,
+          isPostTypeHierarchical: postTypeObject?.hierarchical,
+          postTypeHasTaxonomies: _postTypeHasTaxonomies,
+          hasTermsAssigned: _post && (taxonomies || []).filter(
+            ({ visibility }) => visibility?.publicly_queryable
+          ).some((taxonomy) => {
+            return !!_post[taxonomy.rest_base]?.length;
+          }),
+          isLoading: postId && !_post || !postTypeObject || _postTypeHasTaxonomies && !taxonomies
+        };
+      },
+      [postType, postId]
+    );
+    const [invalidationKey, setInvalidationKey] = (0, import_element34.useState)(0);
+    (0, import_element34.useEffect)(() => {
+      setInvalidationKey((c2) => c2 + 1);
+    }, [post]);
+    const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+    const { content, status, error: error2 } = (0, import_server_side_render2.useServerSideRender)({
+      attributes: attributes2,
+      skipBlockSupportAttributes: true,
+      block: name122,
+      urlQueryArgs: { post_id: postId, invalidationKey }
+    });
+    const prevContentRef = (0, import_element34.useRef)("");
+    (0, import_element34.useEffect)(() => {
+      if (status === "success") {
+        prevContentRef.current = content;
+      }
+    }, [content, status]);
+    const [showLoader, setShowLoader] = (0, import_element34.useState)(false);
+    (0, import_element34.useEffect)(() => {
+      if (status !== "loading") {
+        return;
+      }
+      const timeout = setTimeout(() => {
+        setShowLoader(true);
+      }, 400);
+      return () => {
+        clearTimeout(timeout);
+        setShowLoader(false);
+      };
+    }, [status]);
+    const disabledRef = (0, import_compose7.useDisabled)();
+    const blockProps = (0, import_block_editor17.useBlockProps)({ ref: disabledRef });
+    if (isLoading) {
+      return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(import_components8.Spinner, {}) });
+    }
+    let _showTerms;
+    if (!isPostTypeHierarchical && !post?.parent) {
+      _showTerms = true;
+    } else if (!postTypeHasTaxonomies) {
+      _showTerms = false;
+    } else {
+      _showTerms = prefersTaxonomy;
+    }
+    let placeholder2 = null;
+    const showPlaceholder = !postId || !postType || // When `templateSlug` is set only show placeholder if the post type is not.
+    // This is needed because when we are showing the template in post editor we
+    // want to show the real breadcrumbs if we have the post type.
+    templateSlug && !postType || !_showTerms && !isPostTypeHierarchical || _showTerms && !hasTermsAssigned;
+    if (showPlaceholder) {
+      const placeholderItems = [];
+      if (showHomeItem) {
+        placeholderItems.push((0, import_i18n16.__)("Home"));
+      }
+      if (templateSlug && !postId) {
+        placeholderItems.push((0, import_i18n16.__)("Page"));
+      } else if (_showTerms) {
+        placeholderItems.push((0, import_i18n16.__)("Category"));
+      } else {
+        placeholderItems.push((0, import_i18n16.__)("Ancestor"), (0, import_i18n16.__)("Parent"));
+      }
+      placeholder2 = /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+        "nav",
+        {
+          ...blockProps,
+          style: {
+            "--separator": `"${separator.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`,
+            ...blockProps.style
+          },
+          children: /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)("ol", { children: [
+            placeholderItems.map((text, index) => /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("a", { href: `#breadcrumbs-pseudo-link-${index}`, children: text }) }, index)),
+            showCurrentItem && /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("span", { "aria-current": "page", children: (0, import_i18n16.__)("Current") }) })
+          ] })
+        }
+      );
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)(import_jsx_runtime217.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(import_block_editor17.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)(
+        import_components8.__experimentalToolsPanel,
+        {
+          label: (0, import_i18n16.__)("Settings"),
+          resetAll: () => {
+            setAttributes({
+              separator: separatorDefaultValue,
+              showHomeItem: true,
+              showCurrentItem: true
+            });
+          },
+          dropdownMenuProps,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+              import_components8.__experimentalToolsPanelItem,
+              {
+                label: (0, import_i18n16.__)("Show home breadcrumb"),
+                isShownByDefault: true,
+                hasValue: () => !showHomeItem,
+                onDeselect: () => setAttributes({
+                  showHomeItem: true
+                }),
+                children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+                  import_components8.ToggleControl,
+                  {
+                    label: (0, import_i18n16.__)("Show home breadcrumb"),
+                    onChange: (value) => setAttributes({ showHomeItem: value }),
+                    checked: showHomeItem
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+              import_components8.__experimentalToolsPanelItem,
+              {
+                label: (0, import_i18n16.__)("Show current breadcrumb"),
+                isShownByDefault: true,
+                hasValue: () => !showCurrentItem,
+                onDeselect: () => setAttributes({
+                  showCurrentItem: true
+                }),
+                children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+                  import_components8.ToggleControl,
+                  {
+                    label: (0, import_i18n16.__)("Show current breadcrumb"),
+                    onChange: (value) => setAttributes({ showCurrentItem: value }),
+                    checked: showCurrentItem
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+              import_components8.__experimentalToolsPanelItem,
+              {
+                label: (0, import_i18n16.__)("Separator"),
+                isShownByDefault: true,
+                hasValue: () => separator !== separatorDefaultValue,
+                onDeselect: () => setAttributes({
+                  separator: separatorDefaultValue
+                }),
+                children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+                  import_components8.TextControl,
+                  {
+                    autoComplete: "off",
+                    label: (0, import_i18n16.__)("Separator"),
+                    value: separator,
+                    onChange: (value) => setAttributes({ separator: value }),
+                    onBlur: () => {
+                      if (!separator) {
+                        setAttributes({
+                          separator: separatorDefaultValue
+                        });
+                      }
+                    }
+                  }
+                )
+              }
+            )
+          ]
+        }
+      ) }),
+      /* @__PURE__ */ (0, import_jsx_runtime217.jsxs)(import_block_editor17.InspectorControls, { group: "advanced", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+          import_components8.CheckboxControl,
+          {
+            label: (0, import_i18n16.__)("Show on homepage"),
+            checked: showOnHomePage,
+            onChange: (value) => setAttributes({ showOnHomePage: value }),
+            help: (0, import_i18n16.__)(
+              "If this Breadcrumbs block appears in a template or template part that\u2019s shown on the homepage, enable this option to display the breadcrumb trail. Otherwise, this setting has no effect."
+            )
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+          import_components8.CheckboxControl,
+          {
+            label: (0, import_i18n16.__)("Prefer taxonomy terms"),
+            checked: prefersTaxonomy,
+            onChange: (value) => setAttributes({ prefersTaxonomy: value }),
+            help: (0, import_i18n16.__)(
+              "The exact type of breadcrumbs shown will vary automatically depending on the page in which this block is displayed. In the specific case of a hierarchical post type with taxonomies, the breadcrumbs can either reflect its post hierarchy (default) or the hierarchy of its assigned taxonomy terms."
+            )
+          }
+        )
+      ] }),
+      status === "loading" && !showPlaceholder && (prevContentRef.current ? /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+        html_renderer_default,
+        {
+          wrapperProps: {
+            ...blockProps,
+            style: {
+              ...blockProps.style,
+              opacity: showLoader ? 0.3 : 1
+            }
+          },
+          html: prevContentRef.current
+        }
+      ) : /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(import_components8.Spinner, {}) })),
+      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("p", { children: (0, import_i18n16.sprintf)(
+        /* translators: %s: error message returned when rendering the block. */
+        (0, import_i18n16.__)("Error: %s"),
+        error2
+      ) }) }),
+      showPlaceholder && placeholder2,
+      !showPlaceholder && status === "success" && /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(html_renderer_default, { wrapperProps: blockProps, html: content })
+    ] });
+  }
+
+  // packages/block-library/build-module/breadcrumbs/index.mjs
+  var { name: name8 } = block_default9;
+  var settings8 = {
+    icon: breadcrumbs_default,
+    example: {},
+    edit: BreadcrumbEdit
+  };
+  var init8 = () => initBlock({ name: name8, metadata: block_default9, settings: settings8 });
+
+  // packages/block-library/build-module/button/index.mjs
+  var button_exports = {};
+  __export(button_exports, {
+    init: () => init9,
+    metadata: () => block_default10,
+    name: () => name9,
+    settings: () => settings9
+  });
+  var import_i18n18 = __toESM(require_i18n(), 1);
+  var import_blocks8 = __toESM(require_blocks(), 1);
+
+  // packages/block-library/build-module/button/deprecated.mjs
+  var import_block_editor19 = __toESM(require_block_editor(), 1);
+  var import_compose8 = __toESM(require_compose(), 1);
+
+  // packages/block-library/build-module/utils/migrate-font-family.mjs
+  var import_block_editor18 = __toESM(require_block_editor(), 1);
+  var { cleanEmptyObject } = unlock(import_block_editor18.privateApis);
+  function migrate_font_family_default(attributes2) {
+    if (!attributes2?.style?.typography?.fontFamily) {
+      return attributes2;
+    }
+    const { fontFamily, ...typography } = attributes2.style.typography;
+    return {
+      ...attributes2,
+      style: cleanEmptyObject({
+        ...attributes2.style,
+        typography
+      }),
+      fontFamily: fontFamily.split("|").pop()
+    };
+  }
+
+  // packages/block-library/build-module/utils/migrate-text-align.mjs
+  function migrate_text_align_default(attributes2) {
+    const { textAlign, ...restAttributes } = attributes2;
+    if (!textAlign) {
+      return attributes2;
+    }
+    return {
+      ...restAttributes,
+      style: {
+        ...attributes2.style,
+        typography: {
+          ...attributes2.style?.typography,
+          textAlign
+        }
+      }
+    };
+  }
+
+  // packages/block-library/build-module/button/deprecated.mjs
+  var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
+  var migrateWidth = (attributes2) => {
+    const { width, ...otherAttributes } = attributes2;
+    if (!width) {
+      return otherAttributes;
+    }
+    return {
+      ...otherAttributes,
+      style: {
+        ...otherAttributes.style,
+        dimensions: {
+          ...otherAttributes.style?.dimensions,
+          width: `${width}%`
+        }
+      }
+    };
+  };
+  var migrateBorderRadius = (attributes2) => {
+    const { borderRadius, ...newAttributes } = attributes2;
+    const oldBorderRadius = [
+      borderRadius,
+      newAttributes.style?.border?.radius
+    ].find((possibleBorderRadius) => {
+      return typeof possibleBorderRadius === "number" && possibleBorderRadius !== 0;
+    });
+    if (!oldBorderRadius) {
+      return newAttributes;
+    }
+    return {
+      ...newAttributes,
+      style: {
+        ...newAttributes.style,
+        border: {
+          ...newAttributes.style?.border,
+          radius: `${oldBorderRadius}px`
+        }
+      }
+    };
+  };
+  function migrateAlign(attributes2) {
+    if (!attributes2.align) {
+      return attributes2;
+    }
+    const { align, ...otherAttributes } = attributes2;
+    return {
+      ...otherAttributes,
+      className: clsx_default(
+        otherAttributes.className,
+        `align${attributes2.align}`
+      )
+    };
+  }
+  var migrateCustomColorsAndGradients = (attributes2) => {
+    if (!attributes2.customTextColor && !attributes2.customBackgroundColor && !attributes2.customGradient) {
+      return attributes2;
+    }
+    const style2 = { color: {} };
+    if (attributes2.customTextColor) {
+      style2.color.text = attributes2.customTextColor;
+    }
+    if (attributes2.customBackgroundColor) {
+      style2.color.background = attributes2.customBackgroundColor;
+    }
+    if (attributes2.customGradient) {
+      style2.color.gradient = attributes2.customGradient;
+    }
+    const {
+      customTextColor,
+      customBackgroundColor,
+      customGradient,
+      ...restAttributes
+    } = attributes2;
+    return {
+      ...restAttributes,
+      style: style2
+    };
+  };
+  var oldColorsMigration = (attributes2) => {
+    const { color, textColor, ...restAttributes } = {
+      ...attributes2,
+      customTextColor: attributes2.textColor && "#" === attributes2.textColor[0] ? attributes2.textColor : void 0,
+      customBackgroundColor: attributes2.color && "#" === attributes2.color[0] ? attributes2.color : void 0
+    };
+    return migrateCustomColorsAndGradients(restAttributes);
+  };
+  var blockAttributes = {
+    url: {
+      type: "string",
+      source: "attribute",
+      selector: "a",
+      attribute: "href"
+    },
+    title: {
+      type: "string",
+      source: "attribute",
+      selector: "a",
+      attribute: "title"
+    },
+    text: {
+      type: "string",
+      source: "html",
+      selector: "a"
+    }
+  };
+  var v14 = {
+    attributes: {
+      tagName: {
+        type: "string",
+        enum: ["a", "button"],
+        default: "a"
+      },
+      type: {
+        type: "string",
+        default: "button"
+      },
+      url: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "href",
+        role: "content"
+      },
+      title: {
+        type: "string",
+        source: "attribute",
+        selector: "a,button",
+        attribute: "title",
+        role: "content"
+      },
+      text: {
+        type: "rich-text",
+        source: "rich-text",
+        selector: "a,button",
+        role: "content"
+      },
+      linkTarget: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "target",
+        role: "content"
+      },
+      rel: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "rel",
+        role: "content"
+      },
+      placeholder: {
+        type: "string"
+      },
+      backgroundColor: {
+        type: "string"
+      },
+      textColor: {
+        type: "string"
+      },
+      gradient: {
+        type: "string"
+      },
+      width: {
+        type: "number"
+      }
+    },
+    supports: {
+      anchor: true,
+      splitting: true,
+      align: false,
+      alignWide: false,
+      color: {
+        __experimentalSkipSerialization: true,
+        gradients: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      typography: {
+        __experimentalSkipSerialization: [
+          "fontSize",
+          "lineHeight",
+          "textAlign",
+          "fontFamily",
+          "fontWeight",
+          "fontStyle",
+          "textTransform",
+          "textDecoration",
+          "letterSpacing"
+        ],
+        fontSize: true,
+        lineHeight: true,
+        textAlign: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalWritingMode: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      reusable: false,
+      shadow: {
+        __experimentalSkipSerialization: true
+      },
+      spacing: {
+        __experimentalSkipSerialization: true,
+        padding: ["horizontal", "vertical"],
+        __experimentalDefaultControls: {
+          padding: true
+        }
+      },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true,
+        __experimentalSkipSerialization: true,
+        __experimentalDefaultControls: {
+          color: true,
+          radius: true,
+          style: true,
+          width: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      }
+    },
+    selectors: {
+      root: ".wp-block-button .wp-block-button__link",
+      typography: {
+        writingMode: ".wp-block-button"
+      }
+    },
+    save({ attributes: attributes2, className }) {
+      const {
+        tagName,
+        type,
+        fontSize,
+        linkTarget,
+        rel,
+        style: style2,
+        text,
+        title,
+        url,
+        width
+      } = attributes2;
+      const TagName2 = tagName || "a";
+      const isButtonTag = "button" === TagName2;
+      const buttonType = type || "button";
+      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
+      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
+      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
+      const shadowProps = (0, import_block_editor19.__experimentalGetShadowClassesAndStyles)(attributes2);
+      const typographyProps = (0, import_block_editor19.getTypographyClassesAndStyles)(attributes2);
+      const buttonClasses = clsx_default(
+        "wp-block-button__link",
+        colorProps.className,
+        borderProps.className,
+        typographyProps.className,
+        {
+          // For backwards compatibility add style that isn't
+          // provided via block support.
+          "no-border-radius": style2?.border?.radius === 0,
+          [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
+        },
+        (0, import_block_editor19.__experimentalGetElementClassName)("button")
+      );
+      const buttonStyle = {
+        ...borderProps.style,
+        ...colorProps.style,
+        ...spacingProps.style,
+        ...shadowProps.style,
+        ...typographyProps.style,
+        writingMode: void 0
+      };
+      const wrapperClasses = clsx_default(className, {
+        [`has-custom-width wp-block-button__width-${width}`]: width
+      });
+      return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+        import_block_editor19.RichText.Content,
+        {
+          tagName: TagName2,
+          type: isButtonTag ? buttonType : null,
+          className: buttonClasses,
+          href: isButtonTag ? null : url,
+          title,
+          style: buttonStyle,
+          value: text,
+          target: isButtonTag ? null : linkTarget,
+          rel: isButtonTag ? null : rel
+        }
+      ) });
+    },
+    isEligible(attributes2) {
+      return typeof attributes2.width === "number";
+    },
+    migrate: migrateWidth
+  };
+  var v13 = {
+    attributes: {
+      tagName: {
+        type: "string",
+        enum: ["a", "button"],
+        default: "a"
+      },
+      type: {
+        type: "string",
+        default: "button"
+      },
+      textAlign: {
+        type: "string"
+      },
+      url: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "href",
+        role: "content"
+      },
+      title: {
+        type: "string",
+        source: "attribute",
+        selector: "a,button",
+        attribute: "title",
+        role: "content"
+      },
+      text: {
+        type: "rich-text",
+        source: "rich-text",
+        selector: "a,button",
+        role: "content"
+      },
+      linkTarget: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "target",
+        role: "content"
+      },
+      rel: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "rel",
+        role: "content"
+      },
+      placeholder: {
+        type: "string"
+      },
+      backgroundColor: {
+        type: "string"
+      },
+      textColor: {
+        type: "string"
+      },
+      gradient: {
+        type: "string"
+      },
+      width: {
+        type: "number"
+      }
+    },
+    supports: {
+      anchor: true,
+      align: true,
+      alignWide: false,
+      color: {
+        __experimentalSkipSerialization: true,
+        gradients: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      typography: {
+        __experimentalSkipSerialization: [
+          "fontSize",
+          "lineHeight",
+          "fontFamily",
+          "fontWeight",
+          "fontStyle",
+          "textTransform",
+          "textDecoration",
+          "letterSpacing"
+        ],
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalWritingMode: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      reusable: false,
+      shadow: {
+        __experimentalSkipSerialization: true
+      },
+      spacing: {
+        __experimentalSkipSerialization: true,
+        padding: ["horizontal", "vertical"],
+        __experimentalDefaultControls: {
+          padding: true
+        }
+      },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true,
+        __experimentalSkipSerialization: true,
+        __experimentalDefaultControls: {
+          color: true,
+          radius: true,
+          style: true,
+          width: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      }
+    },
+    selectors: {
+      root: ".wp-block-button .wp-block-button__link",
+      typography: {
+        writingMode: ".wp-block-button"
+      }
+    },
+    save({ attributes: attributes2, className }) {
+      const {
+        tagName,
+        type,
+        textAlign,
+        fontSize,
+        linkTarget,
+        rel,
+        style: style2,
+        text,
+        title,
+        url,
+        width
+      } = attributes2;
+      const TagName2 = tagName || "a";
+      const isButtonTag = "button" === TagName2;
+      const buttonType = type || "button";
+      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
+      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
+      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
+      const shadowProps = (0, import_block_editor19.__experimentalGetShadowClassesAndStyles)(attributes2);
+      const typographyProps = (0, import_block_editor19.getTypographyClassesAndStyles)(attributes2);
+      const buttonClasses = clsx_default(
+        "wp-block-button__link",
+        colorProps.className,
+        borderProps.className,
+        typographyProps.className,
+        {
+          [`has-text-align-${textAlign}`]: textAlign,
+          // For backwards compatibility add style that isn't provided via
+          // block support.
+          "no-border-radius": style2?.border?.radius === 0,
+          [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
+        },
+        (0, import_block_editor19.__experimentalGetElementClassName)("button")
+      );
+      const buttonStyle = {
+        ...borderProps.style,
+        ...colorProps.style,
+        ...spacingProps.style,
+        ...shadowProps.style,
+        ...typographyProps.style,
+        writingMode: void 0
+      };
+      const wrapperClasses = clsx_default(className, {
+        [`has-custom-width wp-block-button__width-${width}`]: width
+      });
+      return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+        import_block_editor19.RichText.Content,
+        {
+          tagName: TagName2,
+          type: isButtonTag ? buttonType : null,
+          className: buttonClasses,
+          href: isButtonTag ? null : url,
+          title,
+          style: buttonStyle,
+          value: text,
+          target: isButtonTag ? null : linkTarget,
+          rel: isButtonTag ? null : rel
+        }
+      ) });
+    },
+    isEligible(attributes2) {
+      return !!attributes2.textAlign || typeof attributes2.width === "number";
+    },
+    migrate: (0, import_compose8.compose)(migrateWidth, migrate_text_align_default)
+  };
+  var v12 = {
+    attributes: {
+      tagName: {
+        type: "string",
+        enum: ["a", "button"],
+        default: "a"
+      },
+      type: {
+        type: "string",
+        default: "button"
+      },
+      textAlign: {
+        type: "string"
+      },
+      url: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "href"
+      },
+      title: {
+        type: "string",
+        source: "attribute",
+        selector: "a,button",
+        attribute: "title",
+        role: "content"
+      },
+      text: {
+        type: "rich-text",
+        source: "rich-text",
+        selector: "a,button",
+        role: "content"
+      },
+      linkTarget: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "target",
+        role: "content"
+      },
+      rel: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "rel",
+        role: "content"
+      },
+      placeholder: {
+        type: "string"
+      },
+      backgroundColor: {
+        type: "string"
+      },
+      textColor: {
+        type: "string"
+      },
+      gradient: {
+        type: "string"
+      },
+      width: {
+        type: "number"
+      }
+    },
+    supports: {
+      anchor: true,
+      align: true,
+      alignWide: false,
+      color: {
+        __experimentalSkipSerialization: true,
+        gradients: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalWritingMode: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      reusable: false,
+      shadow: {
+        __experimentalSkipSerialization: true
+      },
+      spacing: {
+        __experimentalSkipSerialization: true,
+        padding: ["horizontal", "vertical"],
+        __experimentalDefaultControls: {
+          padding: true
+        }
+      },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true,
+        __experimentalSkipSerialization: true,
+        __experimentalDefaultControls: {
+          color: true,
+          radius: true,
+          style: true,
+          width: true
+        }
+      },
+      __experimentalSelector: ".wp-block-button__link",
+      interactivity: {
+        clientNavigation: true
+      }
+    },
+    save({ attributes: attributes2, className }) {
+      const {
+        tagName,
+        type,
+        textAlign,
+        fontSize,
+        linkTarget,
+        rel,
+        style: style2,
+        text,
+        title,
+        url,
+        width
+      } = attributes2;
+      const TagName2 = tagName || "a";
+      const isButtonTag = "button" === TagName2;
+      const buttonType = type || "button";
+      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
+      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
+      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
+      const shadowProps = (0, import_block_editor19.__experimentalGetShadowClassesAndStyles)(attributes2);
+      const buttonClasses = clsx_default(
+        "wp-block-button__link",
+        colorProps.className,
+        borderProps.className,
+        {
+          [`has-text-align-${textAlign}`]: textAlign,
+          // For backwards compatibility add style that isn't provided via
+          // block support.
+          "no-border-radius": style2?.border?.radius === 0
+        },
+        (0, import_block_editor19.__experimentalGetElementClassName)("button")
+      );
+      const buttonStyle = {
+        ...borderProps.style,
+        ...colorProps.style,
+        ...spacingProps.style,
+        ...shadowProps.style
+      };
+      const wrapperClasses = clsx_default(className, {
+        [`has-custom-width wp-block-button__width-${width}`]: width,
+        [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
+      });
+      return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+        import_block_editor19.RichText.Content,
+        {
+          tagName: TagName2,
+          type: isButtonTag ? buttonType : null,
+          className: buttonClasses,
+          href: isButtonTag ? null : url,
+          title,
+          style: buttonStyle,
+          value: text,
+          target: isButtonTag ? null : linkTarget,
+          rel: isButtonTag ? null : rel
+        }
+      ) });
+    },
+    isEligible(attributes2) {
+      return typeof attributes2.width === "number";
+    },
+    migrate: migrateWidth
+  };
+  var v11 = {
+    attributes: {
+      url: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "href"
+      },
+      title: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "title"
+      },
+      text: {
+        type: "string",
+        source: "html",
+        selector: "a"
+      },
+      linkTarget: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "target"
+      },
+      rel: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "rel"
+      },
+      placeholder: {
+        type: "string"
+      },
+      backgroundColor: {
+        type: "string"
+      },
+      textColor: {
+        type: "string"
+      },
+      gradient: {
+        type: "string"
+      },
+      width: {
+        type: "number"
+      }
+    },
+    supports: {
+      anchor: true,
+      align: true,
+      alignWide: false,
+      color: {
+        __experimentalSkipSerialization: true,
+        gradients: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      typography: {
+        fontSize: true,
+        __experimentalFontFamily: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      reusable: false,
+      spacing: {
+        __experimentalSkipSerialization: true,
+        padding: ["horizontal", "vertical"],
+        __experimentalDefaultControls: {
+          padding: true
+        }
+      },
+      __experimentalBorder: {
+        radius: true,
+        __experimentalSkipSerialization: true,
+        __experimentalDefaultControls: {
+          radius: true
+        }
+      },
+      __experimentalSelector: ".wp-block-button__link"
+    },
+    save({ attributes: attributes2, className }) {
+      const { fontSize, linkTarget, rel, style: style2, text, title, url, width } = attributes2;
+      if (!text) {
+        return null;
+      }
+      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
+      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
+      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
+      const buttonClasses = clsx_default(
+        "wp-block-button__link",
+        colorProps.className,
+        borderProps.className,
+        {
+          // For backwards compatibility add style that isn't provided via
+          // block support.
+          "no-border-radius": style2?.border?.radius === 0
+        }
+      );
+      const buttonStyle = {
+        ...borderProps.style,
+        ...colorProps.style,
+        ...spacingProps.style
+      };
+      const wrapperClasses = clsx_default(className, {
+        [`has-custom-width wp-block-button__width-${width}`]: width,
+        [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
+      });
+      return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+        import_block_editor19.RichText.Content,
+        {
+          tagName: "a",
+          className: buttonClasses,
+          href: url,
+          title,
+          style: buttonStyle,
+          value: text,
+          target: linkTarget,
+          rel
+        }
+      ) });
+    }
+  };
+  var v10 = {
+    attributes: {
+      url: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "href"
+      },
+      title: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "title"
+      },
+      text: {
+        type: "string",
+        source: "html",
+        selector: "a"
+      },
+      linkTarget: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "target"
+      },
+      rel: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "rel"
+      },
+      placeholder: {
+        type: "string"
+      },
+      backgroundColor: {
+        type: "string"
+      },
+      textColor: {
+        type: "string"
+      },
+      gradient: {
+        type: "string"
+      },
+      width: {
+        type: "number"
+      }
+    },
+    supports: {
+      anchor: true,
+      align: true,
+      alignWide: false,
+      color: {
+        __experimentalSkipSerialization: true,
+        gradients: true
+      },
+      typography: {
+        fontSize: true,
+        __experimentalFontFamily: true
+      },
+      reusable: false,
+      spacing: {
+        __experimentalSkipSerialization: true,
+        padding: ["horizontal", "vertical"],
+        __experimentalDefaultControls: {
+          padding: true
+        }
+      },
+      __experimentalBorder: {
+        radius: true,
+        __experimentalSkipSerialization: true
+      },
+      __experimentalSelector: ".wp-block-button__link"
+    },
+    save({ attributes: attributes2, className }) {
+      const { fontSize, linkTarget, rel, style: style2, text, title, url, width } = attributes2;
+      if (!text) {
+        return null;
+      }
+      const borderProps = (0, import_block_editor19.__experimentalGetBorderClassesAndStyles)(attributes2);
+      const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
+      const spacingProps = (0, import_block_editor19.__experimentalGetSpacingClassesAndStyles)(attributes2);
+      const buttonClasses = clsx_default(
+        "wp-block-button__link",
+        colorProps.className,
+        borderProps.className,
+        {
+          // For backwards compatibility add style that isn't provided via
+          // block support.
+          "no-border-radius": style2?.border?.radius === 0
+        }
+      );
+      const buttonStyle = {
+        ...borderProps.style,
+        ...colorProps.style,
+        ...spacingProps.style
+      };
+      const wrapperClasses = clsx_default(className, {
+        [`has-custom-width wp-block-button__width-${width}`]: width,
+        [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
+      });
+      return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+        import_block_editor19.RichText.Content,
+        {
+          tagName: "a",
+          className: buttonClasses,
+          href: url,
+          title,
+          style: buttonStyle,
+          value: text,
+          target: linkTarget,
+          rel
+        }
+      ) });
+    },
+    migrate: (0, import_compose8.compose)(migrateWidth, migrate_font_family_default),
+    isEligible({ style: style2, width }) {
+      return style2?.typography?.fontFamily || typeof width === "number";
+    }
+  };
+  var deprecated = [
+    v14,
+    v13,
+    v12,
+    v11,
+    v10,
+    {
+      supports: {
+        anchor: true,
+        align: true,
+        alignWide: false,
+        color: {
+          __experimentalSkipSerialization: true,
+          gradients: true
+        },
+        typography: {
+          fontSize: true,
+          __experimentalFontFamily: true
+        },
+        reusable: false,
+        __experimentalSelector: ".wp-block-button__link"
+      },
+      attributes: {
+        ...blockAttributes,
+        linkTarget: {
+          type: "string",
+          source: "attribute",
+          selector: "a",
+          attribute: "target"
+        },
+        rel: {
+          type: "string",
+          source: "attribute",
+          selector: "a",
+          attribute: "rel"
+        },
+        placeholder: {
+          type: "string"
+        },
+        backgroundColor: {
+          type: "string"
+        },
+        textColor: {
+          type: "string"
+        },
+        gradient: {
+          type: "string"
+        },
+        width: {
+          type: "number"
+        }
+      },
+      isEligible({ style: style2 }) {
+        return typeof style2?.border?.radius === "number";
+      },
+      save({ attributes: attributes2, className }) {
+        const {
+          fontSize,
+          linkTarget,
+          rel,
+          style: style2,
+          text,
+          title,
+          url,
+          width
+        } = attributes2;
+        if (!text) {
+          return null;
+        }
+        const borderRadius = style2?.border?.radius;
+        const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
+        const buttonClasses = clsx_default(
+          "wp-block-button__link",
+          colorProps.className,
+          {
+            "no-border-radius": style2?.border?.radius === 0
+          }
+        );
+        const buttonStyle = {
+          borderRadius: borderRadius ? borderRadius : void 0,
+          ...colorProps.style
+        };
+        const wrapperClasses = clsx_default(className, {
+          [`has-custom-width wp-block-button__width-${width}`]: width,
+          [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
+        });
+        return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+          import_block_editor19.RichText.Content,
+          {
+            tagName: "a",
+            className: buttonClasses,
+            href: url,
+            title,
+            style: buttonStyle,
+            value: text,
+            target: linkTarget,
+            rel
+          }
+        ) });
+      },
+      migrate: (0, import_compose8.compose)(
+        migrateWidth,
+        migrate_font_family_default,
+        migrateBorderRadius
+      )
+    },
+    {
+      supports: {
+        anchor: true,
+        align: true,
+        alignWide: false,
+        color: {
+          __experimentalSkipSerialization: true
+        },
+        reusable: false,
+        __experimentalSelector: ".wp-block-button__link"
+      },
+      attributes: {
+        ...blockAttributes,
+        linkTarget: {
+          type: "string",
+          source: "attribute",
+          selector: "a",
+          attribute: "target"
+        },
+        rel: {
+          type: "string",
+          source: "attribute",
+          selector: "a",
+          attribute: "rel"
+        },
+        placeholder: {
+          type: "string"
+        },
+        borderRadius: {
+          type: "number"
+        },
+        backgroundColor: {
+          type: "string"
+        },
+        textColor: {
+          type: "string"
+        },
+        gradient: {
+          type: "string"
+        },
+        style: {
+          type: "object"
+        },
+        width: {
+          type: "number"
+        }
+      },
+      save({ attributes: attributes2, className }) {
+        const { borderRadius, linkTarget, rel, text, title, url, width } = attributes2;
+        const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
+        const buttonClasses = clsx_default(
+          "wp-block-button__link",
+          colorProps.className,
+          {
+            "no-border-radius": borderRadius === 0
+          }
+        );
+        const buttonStyle = {
+          borderRadius: borderRadius ? borderRadius + "px" : void 0,
+          ...colorProps.style
+        };
+        const wrapperClasses = clsx_default(className, {
+          [`has-custom-width wp-block-button__width-${width}`]: width
+        });
+        return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+          import_block_editor19.RichText.Content,
+          {
+            tagName: "a",
+            className: buttonClasses,
+            href: url,
+            title,
+            style: buttonStyle,
+            value: text,
+            target: linkTarget,
+            rel
+          }
+        ) });
+      },
+      migrate: (0, import_compose8.compose)(
+        migrateWidth,
+        migrate_font_family_default,
+        migrateBorderRadius
+      )
+    },
+    {
+      supports: {
+        anchor: true,
+        align: true,
+        alignWide: false,
+        color: {
+          __experimentalSkipSerialization: true
+        },
+        reusable: false,
+        __experimentalSelector: ".wp-block-button__link"
+      },
+      attributes: {
+        ...blockAttributes,
+        linkTarget: {
+          type: "string",
+          source: "attribute",
+          selector: "a",
+          attribute: "target"
+        },
+        rel: {
+          type: "string",
+          source: "attribute",
+          selector: "a",
+          attribute: "rel"
+        },
+        placeholder: {
+          type: "string"
+        },
+        borderRadius: {
+          type: "number"
+        },
+        backgroundColor: {
+          type: "string"
+        },
+        textColor: {
+          type: "string"
+        },
+        gradient: {
+          type: "string"
+        },
+        style: {
+          type: "object"
+        },
+        width: {
+          type: "number"
+        }
+      },
+      save({ attributes: attributes2, className }) {
+        const { borderRadius, linkTarget, rel, text, title, url, width } = attributes2;
+        const colorProps = (0, import_block_editor19.__experimentalGetColorClassesAndStyles)(attributes2);
+        const buttonClasses = clsx_default(
+          "wp-block-button__link",
+          colorProps.className,
+          {
+            "no-border-radius": borderRadius === 0
+          }
+        );
+        const buttonStyle = {
+          borderRadius: borderRadius ? borderRadius + "px" : void 0,
+          ...colorProps.style
+        };
+        const wrapperClasses = clsx_default(className, {
+          [`has-custom-width wp-block-button__width-${width}`]: width
+        });
+        return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("div", { ...import_block_editor19.useBlockProps.save({ className: wrapperClasses }), children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+          import_block_editor19.RichText.Content,
+          {
+            tagName: "a",
+            className: buttonClasses,
+            href: url,
+            title,
+            style: buttonStyle,
+            value: text,
+            target: linkTarget,
+            rel
+          }
+        ) });
+      },
+      migrate: (0, import_compose8.compose)(
+        migrateWidth,
+        migrate_font_family_default,
+        migrateBorderRadius
+      )
+    },
+    {
+      supports: {
+        align: true,
+        alignWide: false,
+        color: { gradients: true }
+      },
+      attributes: {
+        ...blockAttributes,
+        linkTarget: {
+          type: "string",
+          source: "attribute",
+          selector: "a",
+          attribute: "target"
+        },
+        rel: {
+          type: "string",
+          source: "attribute",
+          selector: "a",
+          attribute: "rel"
+        },
+        placeholder: {
+          type: "string"
+        },
+        borderRadius: {
+          type: "number"
+        },
+        backgroundColor: {
+          type: "string"
+        },
+        textColor: {
+          type: "string"
+        },
+        gradient: {
+          type: "string"
+        },
+        style: {
+          type: "object"
+        }
+      },
+      save({ attributes: attributes2 }) {
+        const { borderRadius, linkTarget, rel, text, title, url } = attributes2;
+        const buttonClasses = clsx_default("wp-block-button__link", {
+          "no-border-radius": borderRadius === 0
+        });
+        const buttonStyle = {
+          borderRadius: borderRadius ? borderRadius + "px" : void 0
+        };
+        return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+          import_block_editor19.RichText.Content,
+          {
+            tagName: "a",
+            className: buttonClasses,
+            href: url,
+            title,
+            style: buttonStyle,
+            value: text,
+            target: linkTarget,
+            rel
+          }
+        );
+      },
+      migrate: (0, import_compose8.compose)(migrateWidth, migrateBorderRadius)
+    },
+    {
+      supports: {
+        align: true,
+        alignWide: false
+      },
+      attributes: {
+        ...blockAttributes,
+        linkTarget: {
+          type: "string",
+          source: "attribute",
+          selector: "a",
+          attribute: "target"
+        },
+        rel: {
+          type: "string",
+          source: "attribute",
+          selector: "a",
+          attribute: "rel"
+        },
+        placeholder: {
+          type: "string"
+        },
+        borderRadius: {
+          type: "number"
+        },
+        backgroundColor: {
+          type: "string"
+        },
+        textColor: {
+          type: "string"
+        },
+        customBackgroundColor: {
+          type: "string"
+        },
+        customTextColor: {
+          type: "string"
+        },
+        customGradient: {
+          type: "string"
+        },
+        gradient: {
+          type: "string"
+        }
+      },
+      isEligible: (attributes2) => !!attributes2.customTextColor || !!attributes2.customBackgroundColor || !!attributes2.customGradient || !!attributes2.align,
+      migrate: (0, import_compose8.compose)(
+        migrateWidth,
+        migrateBorderRadius,
+        migrateCustomColorsAndGradients,
+        migrateAlign
+      ),
+      save({ attributes: attributes2 }) {
+        const {
+          backgroundColor,
+          borderRadius,
+          customBackgroundColor,
+          customTextColor,
+          customGradient,
+          linkTarget,
+          gradient,
+          rel,
+          text,
+          textColor,
+          title,
+          url
+        } = attributes2;
+        const textClass = (0, import_block_editor19.getColorClassName)("color", textColor);
+        const backgroundClass = !customGradient && (0, import_block_editor19.getColorClassName)("background-color", backgroundColor);
+        const gradientClass = (0, import_block_editor19.__experimentalGetGradientClass)(gradient);
+        const buttonClasses = clsx_default("wp-block-button__link", {
+          "has-text-color": textColor || customTextColor,
+          [textClass]: textClass,
+          "has-background": backgroundColor || customBackgroundColor || customGradient || gradient,
+          [backgroundClass]: backgroundClass,
+          "no-border-radius": borderRadius === 0,
+          [gradientClass]: gradientClass
+        });
+        const buttonStyle = {
+          background: customGradient ? customGradient : void 0,
+          backgroundColor: backgroundClass || customGradient || gradient ? void 0 : customBackgroundColor,
+          color: textClass ? void 0 : customTextColor,
+          borderRadius: borderRadius ? borderRadius + "px" : void 0
+        };
+        return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+          import_block_editor19.RichText.Content,
+          {
+            tagName: "a",
+            className: buttonClasses,
+            href: url,
+            title,
+            style: buttonStyle,
+            value: text,
+            target: linkTarget,
+            rel
+          }
+        ) });
+      }
+    },
+    {
+      attributes: {
+        ...blockAttributes,
+        align: {
+          type: "string",
+          default: "none"
+        },
+        backgroundColor: {
+          type: "string"
+        },
+        textColor: {
+          type: "string"
+        },
+        customBackgroundColor: {
+          type: "string"
+        },
+        customTextColor: {
+          type: "string"
+        },
+        linkTarget: {
+          type: "string",
+          source: "attribute",
+          selector: "a",
+          attribute: "target"
+        },
+        rel: {
+          type: "string",
+          source: "attribute",
+          selector: "a",
+          attribute: "rel"
+        },
+        placeholder: {
+          type: "string"
+        }
+      },
+      isEligible(attribute) {
+        return attribute.className && attribute.className.includes("is-style-squared");
+      },
+      migrate(attributes2) {
+        let newClassName = attributes2.className;
+        if (newClassName) {
+          newClassName = newClassName.replace(/is-style-squared[\s]?/, "").trim();
+        }
+        return migrateBorderRadius(
+          migrateCustomColorsAndGradients({
+            ...attributes2,
+            className: newClassName ? newClassName : void 0,
+            borderRadius: 0
+          })
+        );
+      },
+      save({ attributes: attributes2 }) {
+        const {
+          backgroundColor,
+          customBackgroundColor,
+          customTextColor,
+          linkTarget,
+          rel,
+          text,
+          textColor,
+          title,
+          url
+        } = attributes2;
+        const textClass = (0, import_block_editor19.getColorClassName)("color", textColor);
+        const backgroundClass = (0, import_block_editor19.getColorClassName)(
+          "background-color",
+          backgroundColor
+        );
+        const buttonClasses = clsx_default("wp-block-button__link", {
+          "has-text-color": textColor || customTextColor,
+          [textClass]: textClass,
+          "has-background": backgroundColor || customBackgroundColor,
+          [backgroundClass]: backgroundClass
+        });
+        const buttonStyle = {
+          backgroundColor: backgroundClass ? void 0 : customBackgroundColor,
+          color: textClass ? void 0 : customTextColor
+        };
+        return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+          import_block_editor19.RichText.Content,
+          {
+            tagName: "a",
+            className: buttonClasses,
+            href: url,
+            title,
+            style: buttonStyle,
+            value: text,
+            target: linkTarget,
+            rel
+          }
+        ) });
+      }
+    },
+    {
+      attributes: {
+        ...blockAttributes,
+        align: {
+          type: "string",
+          default: "none"
+        },
+        backgroundColor: {
+          type: "string"
+        },
+        textColor: {
+          type: "string"
+        },
+        customBackgroundColor: {
+          type: "string"
+        },
+        customTextColor: {
+          type: "string"
+        }
+      },
+      migrate: (0, import_compose8.compose)(migrateWidth, oldColorsMigration),
+      save({ attributes: attributes2 }) {
+        const {
+          url,
+          text,
+          title,
+          backgroundColor,
+          textColor,
+          customBackgroundColor,
+          customTextColor
+        } = attributes2;
+        const textClass = (0, import_block_editor19.getColorClassName)("color", textColor);
+        const backgroundClass = (0, import_block_editor19.getColorClassName)(
+          "background-color",
+          backgroundColor
+        );
+        const buttonClasses = clsx_default("wp-block-button__link", {
+          "has-text-color": textColor || customTextColor,
+          [textClass]: textClass,
+          "has-background": backgroundColor || customBackgroundColor,
+          [backgroundClass]: backgroundClass
+        });
+        const buttonStyle = {
+          backgroundColor: backgroundClass ? void 0 : customBackgroundColor,
+          color: textClass ? void 0 : customTextColor
+        };
+        return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+          import_block_editor19.RichText.Content,
+          {
+            tagName: "a",
+            className: buttonClasses,
+            href: url,
+            title,
+            style: buttonStyle,
+            value: text
+          }
+        ) });
+      }
+    },
+    {
+      attributes: {
+        ...blockAttributes,
+        color: {
+          type: "string"
+        },
+        textColor: {
+          type: "string"
+        },
+        align: {
+          type: "string",
+          default: "none"
+        }
+      },
+      save({ attributes: attributes2 }) {
+        const { url, text, title, align, color, textColor } = attributes2;
+        const buttonStyle = {
+          backgroundColor: color,
+          color: textColor
+        };
+        const linkClass = "wp-block-button__link";
+        return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("div", { className: `align${align}`, children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+          import_block_editor19.RichText.Content,
+          {
+            tagName: "a",
+            className: linkClass,
+            href: url,
+            title,
+            style: buttonStyle,
+            value: text
+          }
+        ) });
+      },
+      migrate: (0, import_compose8.compose)(migrateWidth, oldColorsMigration)
+    },
+    {
+      attributes: {
+        ...blockAttributes,
+        color: {
+          type: "string"
+        },
+        textColor: {
+          type: "string"
+        },
+        align: {
+          type: "string",
+          default: "none"
+        }
+      },
+      save({ attributes: attributes2 }) {
+        const { url, text, title, align, color, textColor } = attributes2;
+        return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+          "div",
+          {
+            className: `align${align}`,
+            style: { backgroundColor: color },
+            children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+              import_block_editor19.RichText.Content,
+              {
+                tagName: "a",
+                href: url,
+                title,
+                style: { color: textColor },
+                value: text
+              }
+            )
+          }
+        );
+      },
+      migrate: (0, import_compose8.compose)(migrateWidth, oldColorsMigration)
+    }
+  ];
+  var deprecated_default3 = deprecated;
+
+  // packages/block-library/build-module/button/edit.mjs
+  var import_i18n17 = __toESM(require_i18n(), 1);
+  var import_element36 = __toESM(require_element(), 1);
+  var import_components9 = __toESM(require_components(), 1);
+  var import_block_editor21 = __toESM(require_block_editor(), 1);
+  var import_keycodes = __toESM(require_keycodes(), 1);
+  var import_blocks7 = __toESM(require_blocks(), 1);
+  var import_compose10 = __toESM(require_compose(), 1);
+  var import_data11 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/button/constants.mjs
   var NEW_TAB_REL = "noopener";
