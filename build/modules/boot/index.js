@@ -12163,7 +12163,7 @@ function BootBackButton({ length }) {
     {
       size: "compact",
       onClick: handleBack,
-      label: (0, import_i18n11.__)("Go back"),
+      label: (0, import_i18n11.__)("Back"),
       icon: (0, import_i18n11.isRTL)() ? chevron_right_default : chevron_left_default
     }
   );

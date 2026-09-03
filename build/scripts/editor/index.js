@@ -93932,7 +93932,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!!goBack) {
       commands.push({
         name: "core/switch-to-previous-entity",
-        label: (0, import_i18n207.__)("Go back"),
+        label: (0, import_i18n207.__)("Back"),
         category: "view",
         callback: ({ close }) => {
           goBack();
@@ -95851,7 +95851,7 @@ If there's a particular need for this, please submit a feature request at https:
         type: "snackbar",
         actions: [
           {
-            label: (0, import_i18n218.__)("Go back"),
+            label: (0, import_i18n218.__)("Back"),
             onClick: () => dispatch8.setRenderingMode(
               select9.getEditorSettings().defaultRenderingMode
             )
@@ -100612,7 +100612,7 @@ ${content}
                 type: "snackbar",
                 actions: [
                   {
-                    label: (0, import_i18n237.__)("Go back"),
+                    label: (0, import_i18n237.__)("Back"),
                     onClick: () => getEditorSettings2().onNavigateToPreviousEntityRecord()
                   }
                 ]
@@ -101209,7 +101209,7 @@ ${content}
     }
     const notificationAction = hasGoBack ? [
       {
-        label: (0, import_i18n241.__)("Go back"),
+        label: (0, import_i18n241.__)("Back"),
         onClick: () => getEditorSettings2().onNavigateToPreviousEntityRecord()
       }
     ] : void 0;
@@ -115960,7 +115960,7 @@ ${content}
     }
     const notificationAction = hasGoBack ? [
       {
-        label: (0, import_i18n344.__)("Go back"),
+        label: (0, import_i18n344.__)("Back"),
         onClick: () => getEditorSettings2().onNavigateToPreviousEntityRecord()
       }
     ] : void 0;
@@ -116120,7 +116120,7 @@ ${content}
     }
     const notificationAction = hasGoBack ? [
       {
-        label: (0, import_i18n345.__)("Go back"),
+        label: (0, import_i18n345.__)("Back"),
         onClick: () => getEditorSettings2().onNavigateToPreviousEntityRecord()
       }
     ] : void 0;
