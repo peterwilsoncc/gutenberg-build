@@ -8577,7 +8577,10 @@ var wp;
     label: (0, import_i18n5.__)("Slug"),
     Edit: slug_edit_default,
     render: slug_view_default,
-    filterBy: false
+    filterBy: false,
+    // The REST API only exposes `permalink_template` for viewable public
+    // post types, so posts without a permalink hide the field.
+    isVisible: (item) => !!item.link && !!item.permalink_template
   };
   var slug_default = slugField;
 
@@ -95757,7 +95760,10 @@ If there's a particular need for this, please submit a feature request at https:
         !isDesignPostType && date_default,
         !isDesignPostType && scheduled_date_default,
         last_edited_default,
-        !isDesignPostType && slug_default,
+        // There is no post type support flag for permalinks, and
+        // `viewable` alone is not the full condition (the type must
+        // also be public), so the field also checks each post.
+        !isDesignPostType && postTypeConfig.viewable && slug_default,
         !isDesignPostType && postTypeConfig.supports?.excerpt && excerpt_default,
         isPattern && postTypeConfig.supports?.excerpt && pattern_description_default,
         postTypeConfig.supports?.["page-attributes"] && parent_default,
