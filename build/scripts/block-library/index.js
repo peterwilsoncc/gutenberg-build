@@ -68163,7 +68163,7 @@ ${text}
               import_components127.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!querySearch,
-                label: (0, import_i18n210.__)("Keyword"),
+                label: (0, import_i18n210.__)("Search terms"),
                 onDeselect: () => {
                   setQuery({ search: "" });
                   setQuerySearch("");
@@ -68171,7 +68171,10 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(
                   import_components127.TextControl,
                   {
-                    label: (0, import_i18n210.__)("Keyword"),
+                    label: (0, import_i18n210.__)("Search terms"),
+                    help: (0, import_i18n210.__)(
+                      "Filter the query by keywords that appear in the content, title, or excerpt."
+                    ),
                     value: querySearch,
                     onChange: (newQuerySearch) => {
                       debouncedQuerySearch(newQuerySearch);
