@@ -29627,13 +29627,20 @@ var wp;
       setShowMessage(true);
     }, [isTouched, customValidity?.type, showMessage]);
     const onBlur = (event) => {
-      if (isTouched) {
+      if (event.relatedTarget && event.currentTarget.contains(event.relatedTarget)) {
         return;
       }
-      if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget)) {
+      if (!isTouched) {
         setIsTouched(true);
         getValidityTarget()?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       }
+      const validityTarget = getValidityTarget();
+      const isValidating = customValidity?.type === "validating";
+      window.queueMicrotask(() => {
+        if (!isValidating) {
+          setErrorMessage(validityTarget?.validationMessage);
+        }
+      });
     };
     const messageId = (0, import_element72.useId)();
     const message2 = (() => {
