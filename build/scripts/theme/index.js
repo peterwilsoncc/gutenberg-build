@@ -3345,21 +3345,16 @@ var wp;
     }
   });
 
+  // packages/theme/node_modules/colorjs.io/src/equals.js
+  function equals(color1, color2) {
+    color1 = getColor(color1);
+    color2 = getColor(color2);
+    return color1.space === color2.space && color1.alpha === color2.alpha && color1.coords.every((c, i) => c === color2.coords[i]);
+  }
+
   // packages/theme/node_modules/colorjs.io/src/luminance.js
   function getLuminance(color) {
     return get(color, [xyz_d65_default, "y"]);
-  }
-
-  // packages/theme/node_modules/colorjs.io/src/contrast/WCAG21.js
-  function contrastWCAG21(color1, color2) {
-    color1 = getColor(color1);
-    color2 = getColor(color2);
-    let Y1 = Math.max(getLuminance(color1), 0);
-    let Y2 = Math.max(getLuminance(color2), 0);
-    if (Y2 > Y1) {
-      [Y1, Y2] = [Y2, Y1];
-    }
-    return (Y1 + 0.05) / (Y2 + 0.05);
   }
 
   // packages/theme/node_modules/colorjs.io/src/spaces/hsl.js
@@ -3662,14 +3657,36 @@ var wp;
 
   // packages/theme/build-module/color-ramps/lib/color-utils.mjs
   var ALLOWED_SEED_COLOR_SPACES = [srgb_default];
+  var objectLuminanceCache = /* @__PURE__ */ new WeakMap();
   function getColorString(color) {
     ColorSpace.register(srgb_default);
     const rgbRounded = serialize(to(color, srgb_default));
     return serialize(rgbRounded, { format: "hex" });
   }
   function getContrast(colorA, colorB) {
-    ColorSpace.register(srgb_default);
-    return contrastWCAG21(colorA, colorB);
+    return getContrastFromLuminances(
+      getRelativeLuminance(colorA),
+      getRelativeLuminance(colorB)
+    );
+  }
+  function getRelativeLuminance(color) {
+    if (typeof color === "string") {
+      ColorSpace.register(srgb_default);
+      return Math.max(getLuminance(color), 0);
+    }
+    const cachedLuminance = objectLuminanceCache.get(color);
+    if (cachedLuminance && equals(cachedLuminance.color, color)) {
+      return cachedLuminance.luminance;
+    }
+    const luminance = Math.max(getLuminance(color), 0);
+    objectLuminanceCache.set(color, {
+      color: clone(color),
+      luminance
+    });
+    return luminance;
+  }
+  function getContrastFromLuminances(first, second) {
+    return first > second ? (first + 0.05) / (second + 0.05) : (second + 0.05) / (first + 0.05);
   }
   function assertValidSeedColor(seed) {
     ALLOWED_SEED_COLOR_SPACES.forEach(
