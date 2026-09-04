@@ -46284,6 +46284,7 @@ ${text}
         onSelect: onSelectMedia,
         onToggleFeaturedImage: toggleUseFeaturedImage,
         useFeaturedImage,
+        name: mediaUrl ? (0, import_i18n118.__)("Replace") : (0, import_i18n118.__)("Add media"),
         onReset: () => onSelectMedia(void 0)
       }
     ) });
@@ -46345,6 +46346,16 @@ ${text}
     } = props;
     const isTemporaryMedia2 = !mediaId && (0, import_blob14.isBlobURL)(mediaUrl);
     const { toggleSelection } = (0, import_data63.useDispatch)(import_block_editor139.store);
+    const toolbarEditButton = /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
+      ToolbarEditButton,
+      {
+        onSelectMedia,
+        mediaUrl: useFeaturedImage && featuredImageURL ? featuredImageURL : mediaUrl,
+        mediaId,
+        toggleUseFeaturedImage,
+        useFeaturedImage
+      }
+    );
     if (mediaUrl || featuredImageURL || useFeaturedImage) {
       const onResizeStart = () => {
         toggleSelection(false);
@@ -46402,16 +46413,7 @@ ${text}
           isStackedOnMobile,
           ref,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
-              ToolbarEditButton,
-              {
-                onSelectMedia,
-                mediaUrl: useFeaturedImage && featuredImageURL ? featuredImageURL : mediaUrl,
-                mediaId,
-                toggleUseFeaturedImage,
-                useFeaturedImage
-              }
-            ),
+            toolbarEditButton,
             (mediaTypeRenderers[mediaType] || noop3)(),
             isTemporaryMedia2 && /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(import_components66.Spinner, {}),
             !useFeaturedImage && /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(PlaceholderContainer, { ...props }),
@@ -46427,7 +46429,10 @@ ${text}
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(PlaceholderContainer, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)(import_jsx_runtime339.Fragment, { children: [
+      toolbarEditButton,
+      /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(PlaceholderContainer, { ...props })
+    ] });
   }
   var media_container_default = (0, import_element82.forwardRef)(MediaContainer);
 

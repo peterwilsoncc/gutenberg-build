@@ -83142,12 +83142,15 @@ var wp;
       }, 1e3);
     };
     const selectMedia = (media, closeMenu) => {
+      const hasMedia = !!(mediaURL || mediaId || mediaIds?.length);
       if (useFeaturedImage && onToggleFeaturedImage) {
         onToggleFeaturedImage();
       }
       closeMenu();
       onSelect(media);
-      (0, import_a11y19.speak)((0, import_i18n169.__)("The media file has been replaced"));
+      (0, import_a11y19.speak)(
+        hasMedia ? (0, import_i18n169.__)("The media file has been replaced") : (0, import_i18n169.__)("The media file has been added")
+      );
       removeNotice(errorNoticeID);
     };
     const uploadFiles = (event, closeMenu) => {
