@@ -7059,7 +7059,7 @@ mark.wp-note {
 .editor-editor-interface.is-distraction-free .editor-header > .edit-post-header__settings > .edit-post-header__post-preview-button {
   visibility: hidden;
 }
-.editor-editor-interface.is-distraction-free .editor-header > .editor-header__toolbar .editor-document-tools__document-overview-toggle, .editor-editor-interface.is-distraction-free .editor-header > .editor-header__settings > .editor-preview-dropdown, .editor-editor-interface.is-distraction-free .editor-header > .editor-header__settings > .interface-pinned-items, .editor-editor-interface.is-distraction-free .editor-header > .editor-header__settings > .editor-zoom-out-toggle {
+.editor-editor-interface.is-distraction-free .editor-header > .editor-header__toolbar .editor-document-tools__document-overview-toggle, .editor-editor-interface.is-distraction-free .editor-header > .editor-header__settings > .editor-preview-dropdown__toggle, .editor-editor-interface.is-distraction-free .editor-header > .editor-header__settings > .interface-pinned-items, .editor-editor-interface.is-distraction-free .editor-header > .editor-header__settings > .editor-zoom-out-toggle {
   display: none;
 }
 .editor-editor-interface.is-distraction-free .interface-interface-skeleton__header:focus-within {
@@ -7237,7 +7237,7 @@ mark.wp-note {
 
 .editor-more-menu__popup {
   max-height: var(--available-height);
-  --wp-ui-menu-max-width: var(--wpds-dimension-surface-width-sm, 320px);
+  max-width: var(--wpds-dimension-surface-width-sm, 320px);
 }
 
 .editor-post-parent__panel,
@@ -8266,12 +8266,16 @@ textarea.editor-post-text-editor::placeholder {
   justify-content: center;
 }
 
-.editor-preview-dropdown .editor-preview-dropdown__toggle.has-icon.has-text {
+.editor-preview-dropdown__popup {
+  max-width: var(--wpds-dimension-surface-width-xs, 240px);
+}
+
+.editor-preview-dropdown__toggle.has-icon.has-text {
   padding-left: 4px;
   padding-right: 6px;
 }
 
-.editor-preview-dropdown.is-responsive-editing .editor-preview-dropdown__toggle {
+.editor-preview-dropdown__toggle.is-responsive-editing {
   color: var(--wp-block-synced-color);
 }
 

@@ -103013,7 +103013,22 @@ ${content}
     if (!previewProps) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_components199.MenuItem, { icon: external_default, ...previewProps, children: (0, import_i18n258.__)("Preview in new tab") });
+    const { disabled: disabled2, href, onClick, target } = previewProps;
+    const label = /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n258._x)("Preview", "imperative verb") });
+    if (disabled2) {
+      return /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(menu_exports.Item, { disabled: true, children: label });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
+      menu_exports.LinkItem,
+      {
+        href,
+        onClick,
+        openInNewTab: true,
+        closeOnClick: true,
+        target,
+        children: label
+      }
+    );
   }
   function PostPreviewButton({
     className,
@@ -108550,7 +108565,7 @@ ${content}
     return /* @__PURE__ */ (0, import_jsx_runtime564.jsxs)(import_jsx_runtime564.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime564.jsx)(menu_exports.Separator, {}),
       /* @__PURE__ */ (0, import_jsx_runtime564.jsxs)(menu_exports.Group, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime564.jsx)(menu_exports.GroupLabel, { children: label }),
+        label && /* @__PURE__ */ (0, import_jsx_runtime564.jsx)(menu_exports.GroupLabel, { children: label }),
         toMenuItems(children)
       ] })
     ] });
@@ -108908,7 +108923,7 @@ ${content}
   // packages/editor/build-module/components/preview-dropdown/index.mjs
   var import_jsx_runtime571 = __toESM(require_jsx_runtime(), 1);
   var { getViewportBreakpoints: getViewportBreakpoints5 } = unlock(privateApis);
-  function PreviewDropdown({ forceIsAutosaveable, disabled: disabled2 }) {
+  function PreviewMenu({ forceIsAutosaveable, disabled: disabled2 }) {
     const {
       deviceType,
       homeUrl,
@@ -108967,8 +108982,7 @@ ${content}
       setDeviceType2(newDeviceType);
       resetZoomLevel();
     };
-    const handleResponsiveEditingChange = () => {
-      const newIsResponsiveEditing = !isResponsiveEditing;
+    const handleResponsiveEditingChange = (newIsResponsiveEditing) => {
       setResponsiveEditing(newIsResponsiveEditing);
       setStyleStateViewport(
         newIsResponsiveEditing ? VIEWPORT_STATE_BY_DEVICE_TYPE[deviceType] ?? "default" : "default"
@@ -108976,24 +108990,6 @@ ${content}
       if (newIsResponsiveEditing && hasBlockSelection && !activeComplementaryArea) {
         enableComplementaryArea2("core", sidebars.block);
       }
-    };
-    const isMobile = (0, import_compose80.useViewportMatch)("medium", "<");
-    if (isMobile) {
-      return null;
-    }
-    const popoverProps = {
-      placement: "bottom-end"
-    };
-    const toggleProps = {
-      className: "editor-preview-dropdown__toggle",
-      iconPosition: "right",
-      size: "compact",
-      showTooltip: !showIconLabels,
-      disabled: disabled2,
-      accessibleWhenDisabled: disabled2
-    };
-    const menuProps = {
-      "aria-label": (0, import_i18n303.__)("View options")
     };
     const deviceIcons = {
       desktop: desktop_default,
@@ -109004,14 +109000,12 @@ ${content}
       {
         value: "Desktop",
         label: (0, import_i18n303.__)("Desktop"),
-        icon: desktop_default,
         info: isResponsiveEditing ? (0, import_i18n303.__)("Style all viewports.") : (0, import_i18n303.__)("Preview desktop viewport.")
       },
       ...hasTabletViewport ? [
         {
           value: "Tablet",
           label: (0, import_i18n303.__)("Tablet"),
-          icon: tablet_default,
           info: isResponsiveEditing ? (0, import_i18n303.__)("Style tablet only.") : (0, import_i18n303.__)("Preview tablet viewport.")
         }
       ] : [],
@@ -109019,96 +109013,126 @@ ${content}
         {
           value: "Mobile",
           label: (0, import_i18n303.__)("Mobile"),
-          icon: mobile_default,
           info: isResponsiveEditing ? (0, import_i18n303.__)("Style mobile only.") : (0, import_i18n303.__)("Preview mobile viewport.")
         }
       ] : []
     ];
-    return /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
-      import_components238.DropdownMenu,
-      {
-        className: clsx_default(
-          "editor-preview-dropdown",
-          `editor-preview-dropdown--${deviceType.toLowerCase()}`,
-          { "is-responsive-editing": isResponsiveEditing }
-        ),
-        popoverProps,
-        toggleProps,
-        menuProps,
-        icon: deviceIcons[deviceType.toLowerCase()],
-        label: (0, import_i18n303.__)("View"),
-        disableOpenOnArrowDown: disabled2,
-        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime571.jsxs)(import_jsx_runtime571.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(import_components238.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
-            import_components238.MenuItemsChoice,
+    return /* @__PURE__ */ (0, import_jsx_runtime571.jsxs)(menu_exports.Root, { modal: false, disabled: disabled2, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
+        menu_exports.Trigger,
+        {
+          render: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
+            import_components238.Button,
             {
-              choices,
-              value: deviceType,
-              onSelect: handleDevicePreviewChange
-            }
-          ) }),
-          isResponsiveEditingEnabled && /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(import_components238.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
-            import_components238.MenuItem,
-            {
-              icon: isResponsiveEditing ? check_default : void 0,
-              isSelected: isResponsiveEditing,
-              role: "menuitemcheckbox",
-              onClick: handleResponsiveEditingChange,
-              info: (0, import_i18n303.__)(
-                "Style changes apply only to the selected viewport."
-              ),
-              children: (0, import_i18n303.__)("Responsive styles")
-            }
-          ) }),
-          isTemplate2 && /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(import_components238.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime571.jsxs)(
-            import_components238.MenuItem,
-            {
-              href: homeUrl,
-              target: "_blank",
-              icon: external_default,
-              onClick: onClose,
-              children: [
-                (0, import_i18n303.__)("View site"),
-                /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(VisuallyHidden, {
-                  render: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)("span", {}),
-                  /* translators: accessibility text */
-                  children: (0, import_i18n303.__)("(opens in a new tab)")
-                })
-              ]
-            }
-          ) }),
-          !isTemplate2 && !!templateId2 && /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(import_components238.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
-            import_components238.MenuItem,
-            {
-              icon: !isTemplateHidden ? check_default : void 0,
-              isSelected: !isTemplateHidden,
-              role: "menuitemcheckbox",
-              onClick: () => {
-                const newRenderingMode = isTemplateHidden ? "template-locked" : "post-only";
-                setRenderingMode2(newRenderingMode);
-                setDefaultRenderingMode2(newRenderingMode);
-                resetZoomLevel();
-              },
-              children: (0, import_i18n303.__)("Show template")
-            }
-          ) }),
-          isViewable && /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(import_components238.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
-            PostPreviewMenuItem,
-            {
-              forceIsAutosaveable,
-              onPreview: onClose
-            }
-          ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
-            action_item_default.Slot,
-            {
-              name: "core/plugin-preview-menu",
-              fillProps: { onClick: onClose }
+              className: clsx_default("editor-preview-dropdown__toggle", {
+                "is-responsive-editing": isResponsiveEditing
+              }),
+              size: "compact",
+              icon: deviceIcons[deviceType.toLowerCase()],
+              label: (0, import_i18n303.__)("View"),
+              showTooltip: !showIconLabels,
+              disabled: disabled2,
+              accessibleWhenDisabled: disabled2
             }
           )
-        ] })
-      }
-    );
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime571.jsxs)(
+        menu_exports.Popup,
+        {
+          className: "editor-preview-dropdown__popup",
+          positioner: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.Positioner, { align: "end" }),
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
+              menu_exports.RadioGroup,
+              {
+                value: deviceType,
+                onValueChange: (value) => handleDevicePreviewChange(value),
+                children: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.Group, { children: choices.map((choice) => /* @__PURE__ */ (0, import_jsx_runtime571.jsxs)(
+                  menu_exports.RadioItem,
+                  {
+                    value: choice.value,
+                    children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.ItemLabel, { children: choice.label }),
+                      /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.ItemDescription, { children: choice.info })
+                    ]
+                  },
+                  choice.value
+                )) })
+              }
+            ),
+            isResponsiveEditingEnabled && /* @__PURE__ */ (0, import_jsx_runtime571.jsxs)(import_jsx_runtime571.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.Separator, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.Group, { children: /* @__PURE__ */ (0, import_jsx_runtime571.jsxs)(
+                menu_exports.CheckboxItem,
+                {
+                  checked: isResponsiveEditing,
+                  onCheckedChange: handleResponsiveEditingChange,
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n303.__)("Responsive styles") }),
+                    /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.ItemDescription, { children: (0, import_i18n303.__)(
+                      "Style changes apply only to the selected viewport."
+                    ) })
+                  ]
+                }
+              ) })
+            ] }),
+            isTemplate2 && /* @__PURE__ */ (0, import_jsx_runtime571.jsxs)(import_jsx_runtime571.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.Separator, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.Group, { children: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
+                menu_exports.LinkItem,
+                {
+                  href: homeUrl,
+                  openInNewTab: true,
+                  closeOnClick: true,
+                  children: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n303.__)("View site") })
+                }
+              ) })
+            ] }),
+            !isTemplate2 && !!templateId2 && /* @__PURE__ */ (0, import_jsx_runtime571.jsxs)(import_jsx_runtime571.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.Separator, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.Group, { children: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
+                menu_exports.CheckboxItem,
+                {
+                  checked: !isTemplateHidden,
+                  onCheckedChange: (checked) => {
+                    const newRenderingMode = checked ? "template-locked" : "post-only";
+                    setRenderingMode2(newRenderingMode);
+                    setDefaultRenderingMode2(newRenderingMode);
+                    resetZoomLevel();
+                  },
+                  children: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n303.__)("Show template") })
+                }
+              ) })
+            ] }),
+            isViewable && /* @__PURE__ */ (0, import_jsx_runtime571.jsxs)(import_jsx_runtime571.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.Separator, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(menu_exports.Group, { children: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
+                PostPreviewMenuItem,
+                {
+                  forceIsAutosaveable
+                }
+              ) })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
+              action_item_default.Slot,
+              {
+                name: "core/plugin-preview-menu",
+                fillProps: { as: more_menu_item_default },
+                children: (items) => /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(MoreMenuGroup, { children: items })
+              }
+            )
+          ]
+        }
+      )
+    ] });
+  }
+  function PreviewDropdown(props) {
+    const isMobile = (0, import_compose80.useViewportMatch)("medium", "<");
+    if (isMobile) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(PreviewMenu, { ...props });
   }
 
   // packages/editor/build-module/components/zoom-out-toggle/index.mjs
