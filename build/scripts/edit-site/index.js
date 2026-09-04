@@ -50229,7 +50229,9 @@ If there's a particular need for this, please submit a feature request at https:
         return !filterValue.some(
           (fv) => fieldValue.includes(fv)
         );
-      } else if (typeof fieldValue === "string") {
+      }
+      const fieldValueType = typeof fieldValue;
+      if (fieldValueType === "string" || fieldValueType === "number") {
         return !filterValue.includes(fieldValue);
       }
       return false;
@@ -50259,7 +50261,9 @@ If there's a particular need for this, please submit a feature request at https:
           return filterValue.some(
             (fv) => fieldValue.includes(fv)
           );
-        } else if (typeof fieldValue === "string") {
+        }
+        const fieldValueType = typeof fieldValue;
+        if (fieldValueType === "string" || fieldValueType === "number") {
           return filterValue.includes(fieldValue);
         }
         return false;

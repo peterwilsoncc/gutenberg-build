@@ -25269,7 +25269,9 @@ var isNoneOperatorDefinition = {
       return !filterValue.some(
         (fv) => fieldValue.includes(fv)
       );
-    } else if (typeof fieldValue === "string") {
+    }
+    const fieldValueType = typeof fieldValue;
+    if (fieldValueType === "string" || fieldValueType === "number") {
       return !filterValue.includes(fieldValue);
     }
     return false;
@@ -25299,7 +25301,9 @@ var OPERATORS = [
         return filterValue.some(
           (fv) => fieldValue.includes(fv)
         );
-      } else if (typeof fieldValue === "string") {
+      }
+      const fieldValueType = typeof fieldValue;
+      if (fieldValueType === "string" || fieldValueType === "number") {
         return filterValue.includes(fieldValue);
       }
       return false;
