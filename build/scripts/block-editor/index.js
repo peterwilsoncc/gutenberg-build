@@ -101790,6 +101790,8 @@ var wp;
         chooseItemLabel = (0, import_i18n242.__)("Image");
       } else if (allowedType === "video") {
         chooseItemLabel = (0, import_i18n242.__)("Video");
+      } else if (allowedType === "audio") {
+        chooseItemLabel = (0, import_i18n242.__)("Audio");
       } else if (allowedType === "application") {
         chooseItemLabel = (0, import_i18n242.__)("File");
       } else {
