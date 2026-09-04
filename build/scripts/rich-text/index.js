@@ -2072,18 +2072,46 @@ var wp;
   // packages/rich-text/build-module/subscribe-owned-listener.mjs
   var import_compose3 = __toESM(require_compose(), 1);
   var { subscribeDelegatedListener: subscribeDelegatedListener3 } = unlock(import_compose3.privateApis);
+  var registries = /* @__PURE__ */ new WeakMap();
   function subscribeOwnedListener(element, eventType, callback, capture = false) {
-    return subscribeDelegatedListener3(
-      element.ownerDocument,
-      eventType,
-      (event) => {
-        if (!element.contains(event.target) && !ownsSelection(element)) {
-          return;
-        }
-        callback(event);
-      },
-      capture
-    );
+    const { ownerDocument } = element;
+    let byEvent = registries.get(ownerDocument);
+    if (!byEvent) {
+      byEvent = /* @__PURE__ */ new Map();
+      registries.set(ownerDocument, byEvent);
+    }
+    const key = capture ? `${eventType}:capture` : eventType;
+    let elements = byEvent.get(key);
+    if (!elements) {
+      elements = /* @__PURE__ */ new WeakMap();
+      byEvent.set(key, elements);
+      subscribeDelegatedListener3(
+        ownerDocument,
+        eventType,
+        (event) => {
+          const { defaultView, activeElement } = ownerDocument;
+          const anchorNode = defaultView?.getSelection()?.anchorNode;
+          for (let node = anchorNode ?? activeElement; node; node = node.parentNode) {
+            const callbacks = elements.get(node);
+            if (callbacks && ownsSelection(node)) {
+              for (const cb of callbacks) {
+                cb(event);
+              }
+            }
+          }
+        },
+        capture
+      );
+    }
+    let set = elements.get(element);
+    if (!set) {
+      set = /* @__PURE__ */ new Set();
+      elements.set(element, set);
+    }
+    set.add(callback);
+    return () => {
+      set.delete(callback);
+    };
   }
 
   // packages/rich-text/build-module/hook/event-listeners/format-boundaries.mjs
@@ -2375,8 +2403,8 @@ var wp;
       "focusin",
       onFocus
     );
-    const unsubscribeSelectionChange = subscribeDelegatedListener4(
-      ownerDocument,
+    const unsubscribeSelectionChange = subscribeOwnedListener(
+      element,
       "selectionchange",
       handleSelectionChange
     );
@@ -2387,8 +2415,8 @@ var wp;
       "cut",
       "paste"
     ].map(
-      (eventType) => subscribeDelegatedListener4(
-        ownerDocument,
+      (eventType) => subscribeOwnedListener(
+        element,
         eventType,
         handleSelectionChange,
         true
