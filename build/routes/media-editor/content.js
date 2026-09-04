@@ -22115,10 +22115,10 @@ var Stack = (0, import_element44.forwardRef)(function Stack2({ direction, gap, a
 });
 
 // packages/ui/build-module/utils/use-schedule-validation.mjs
+var import_compose4 = __toESM(require_compose(), 1);
 var import_element45 = __toESM(require_element(), 1);
 function useScheduleValidation(validate) {
-  const validateRef = (0, import_element45.useRef)(validate);
-  validateRef.current = validate;
+  const validateEvent = (0, import_compose4.useEvent)(validate);
   const timerRef = (0, import_element45.useRef)(null);
   const unmountedRef = (0, import_element45.useRef)(false);
   const scheduleValidation = (0, import_element45.useCallback)(() => {
@@ -22129,10 +22129,10 @@ function useScheduleValidation(validate) {
       clearTimeout(timerRef.current);
     }
     timerRef.current = setTimeout(() => {
-      validateRef.current();
+      validateEvent();
       timerRef.current = null;
     }, 0);
-  }, []);
+  }, [validateEvent]);
   (0, import_element45.useEffect)(() => {
     unmountedRef.current = false;
     return () => {
@@ -23786,11 +23786,11 @@ var TextareaControl = (0, import_element60.forwardRef)(function TextareaControl2
 
 // packages/ui/build-module/form/with-validation/validated-input-control/validated-input-control.mjs
 var import_element61 = __toESM(require_element(), 1);
-var import_compose4 = __toESM(require_compose(), 1);
+var import_compose5 = __toESM(require_compose(), 1);
 var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
 var ValidatedInputControl = (0, import_element61.forwardRef)(function ValidatedInputControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
   const validityTargetRef = (0, import_element61.useRef)(null);
-  const mergedRefs = (0, import_compose4.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose5.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
     ControlWithError,
     {
@@ -23805,11 +23805,11 @@ var ValidatedInputControl = (0, import_element61.forwardRef)(function ValidatedI
 
 // packages/ui/build-module/form/with-validation/validated-textarea-control/validated-textarea-control.mjs
 var import_element62 = __toESM(require_element(), 1);
-var import_compose5 = __toESM(require_compose(), 1);
+var import_compose6 = __toESM(require_compose(), 1);
 var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
 var ValidatedTextareaControl = (0, import_element62.forwardRef)(function ValidatedTextareaControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
   const validityTargetRef = (0, import_element62.useRef)(null);
-  const mergedRefs = (0, import_compose5.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose6.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
     ControlWithError,
     {
@@ -23833,7 +23833,7 @@ __export(tabs_exports, {
 
 // packages/ui/build-module/tabs/list.mjs
 var import_element63 = __toESM(require_element(), 1);
-var import_compose6 = __toESM(require_compose(), 1);
+var import_compose7 = __toESM(require_compose(), 1);
 var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE32 = "data-wp-hash";
 function getRuntime32() {
@@ -23994,7 +23994,7 @@ var List = (0, import_element63.forwardRef)(
         mutationObserver.disconnect();
       };
     }, [listEl]);
-    const mergedListRef = (0, import_compose6.useMergeRefs)([
+    const mergedListRef = (0, import_compose7.useMergeRefs)([
       forwardedRef,
       (el) => setListEl(el)
     ]);
@@ -25788,7 +25788,7 @@ var import_element81 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/validated-form-controls/checkbox-control.mjs
 var import_element73 = __toESM(require_element(), 1);
-var import_compose7 = __toESM(require_compose(), 1);
+var import_compose8 = __toESM(require_compose(), 1);
 var import_components4 = __toESM(require_components(), 1);
 var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedCheckboxControl = ({
@@ -25798,7 +25798,7 @@ var UnforwardedValidatedCheckboxControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element73.useRef)(null);
-  const mergedRefs = (0, import_compose7.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose8.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
     ControlWithError,
     {
@@ -25824,7 +25824,7 @@ ValidatedCheckboxControl.displayName = "ValidatedCheckboxControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/combobox-control.mjs
 var import_element74 = __toESM(require_element(), 1);
-var import_compose8 = __toESM(require_compose(), 1);
+var import_compose9 = __toESM(require_compose(), 1);
 var import_components5 = __toESM(require_components(), 1);
 var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedComboboxControl = ({
@@ -25834,7 +25834,7 @@ var UnforwardedValidatedComboboxControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element74.useRef)(null);
-  const mergedRefs = (0, import_compose8.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose9.useMergeRefs)([forwardedRef, validityTargetRef]);
   (0, import_element74.useEffect)(() => {
     const input = validityTargetRef.current?.querySelector(
       'input[role="combobox"]'
@@ -25919,7 +25919,7 @@ ValidatedFormTokenField.displayName = "ValidatedFormTokenField";
 
 // packages/dataviews/build-module/components/validated-form-controls/number-control.mjs
 var import_element76 = __toESM(require_element(), 1);
-var import_compose9 = __toESM(require_compose(), 1);
+var import_compose10 = __toESM(require_compose(), 1);
 var import_components7 = __toESM(require_components(), 1);
 var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedNumberControl = ({
@@ -25929,7 +25929,7 @@ var UnforwardedValidatedNumberControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element76.useRef)(null);
-  const mergedRefs = (0, import_compose9.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose10.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
     ControlWithError,
     {
@@ -25947,7 +25947,7 @@ ValidatedNumberControl.displayName = "ValidatedNumberControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/radio-control.mjs
 var import_element77 = __toESM(require_element(), 1);
-var import_compose10 = __toESM(require_compose(), 1);
+var import_compose11 = __toESM(require_compose(), 1);
 var import_components8 = __toESM(require_components(), 1);
 var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedRadioControl = ({
@@ -25957,7 +25957,7 @@ var UnforwardedValidatedRadioControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element77.useRef)(null);
-  const mergedRefs = (0, import_compose10.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose11.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
     ControlWithError,
     {
@@ -25978,7 +25978,7 @@ ValidatedRadioControl.displayName = "ValidatedRadioControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/select-control.mjs
 var import_element78 = __toESM(require_element(), 1);
-var import_compose11 = __toESM(require_compose(), 1);
+var import_compose12 = __toESM(require_compose(), 1);
 var import_components9 = __toESM(require_components(), 1);
 var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedSelectControl = ({
@@ -25988,7 +25988,7 @@ var UnforwardedValidatedSelectControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element78.useRef)(null);
-  const mergedRefs = (0, import_compose11.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose12.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
     ControlWithError,
     {
@@ -26014,7 +26014,7 @@ ValidatedSelectControl.displayName = "ValidatedSelectControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/toggle-control.mjs
 var import_element79 = __toESM(require_element(), 1);
-var import_compose12 = __toESM(require_compose(), 1);
+var import_compose13 = __toESM(require_compose(), 1);
 var import_components10 = __toESM(require_components(), 1);
 var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedToggleControl = ({
@@ -26024,7 +26024,7 @@ var UnforwardedValidatedToggleControl = ({
   ...restProps
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element79.useRef)(null);
-  const mergedRefs = (0, import_compose12.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const mergedRefs = (0, import_compose13.useMergeRefs)([forwardedRef, validityTargetRef]);
   return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
     ControlWithError,
     {
@@ -29784,12 +29784,12 @@ function FormRegularField({
 var import_deepmerge2 = __toESM(require_cjs(), 1);
 var import_components27 = __toESM(require_components(), 1);
 var import_element104 = __toESM(require_element(), 1);
-var import_compose14 = __toESM(require_compose(), 1);
+var import_compose15 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 var import_components26 = __toESM(require_components(), 1);
 var import_i18n29 = __toESM(require_i18n(), 1);
-var import_compose13 = __toESM(require_compose(), 1);
+var import_compose14 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
 function getLabelClassName(labelPosition, showError) {
@@ -29881,7 +29881,7 @@ function SummaryButton({
       "dataforms-layouts-panel__field-trigger--edit-always": editVisibility === "always"
     }
   );
-  const controlId = (0, import_compose13.useInstanceId)(
+  const controlId = (0, import_compose14.useInstanceId)(
     SummaryButton,
     "dataforms-layouts-panel__field-control"
   );
@@ -30603,9 +30603,9 @@ function ModalContent({
       })
     );
   };
-  const focusOnMountRef = (0, import_compose14.useFocusOnMount)("firstInputElement");
+  const focusOnMountRef = (0, import_compose15.useFocusOnMount)("firstInputElement");
   const contentRef = (0, import_element104.useRef)(null);
-  const mergedRef = (0, import_compose14.useMergeRefs)([focusOnMountRef, contentRef]);
+  const mergedRef = (0, import_compose15.useMergeRefs)([focusOnMountRef, contentRef]);
   useRevealValidity(contentRef, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(
     import_components27.Modal,
@@ -30720,7 +30720,7 @@ var modal_default = PanelModal;
 var import_components28 = __toESM(require_components(), 1);
 var import_i18n31 = __toESM(require_i18n(), 1);
 var import_element105 = __toESM(require_element(), 1);
-var import_compose15 = __toESM(require_compose(), 1);
+var import_compose16 = __toESM(require_compose(), 1);
 var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
   title,
@@ -30777,7 +30777,7 @@ function PanelDropdown({
     }),
     [popoverAnchor]
   );
-  const [dialogRef, dialogProps] = (0, import_compose15.__experimentalUseDialog)({
+  const [dialogRef, dialogProps] = (0, import_compose16.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
   const form = (0, import_element105.useMemo)(
@@ -30903,7 +30903,7 @@ function FormPanelField({
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
 var import_element106 = __toESM(require_element(), 1);
-var import_compose16 = __toESM(require_compose(), 1);
+var import_compose17 = __toESM(require_compose(), 1);
 import { speak as speak4 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
@@ -31114,7 +31114,7 @@ function FormCardField({
       speak4(message2, "polite");
     }
   }, [isCollapsible, isOpen2, revealValidity, validity]);
-  const focusOutsideProps = (0, import_compose16.__experimentalUseFocusOutside)(handleFocusOutside);
+  const focusOutsideProps = (0, import_compose17.__experimentalUseFocusOutside)(handleFocusOutside);
   let label = field.label;
   let withHeader;
   if (field.children) {
@@ -31270,7 +31270,7 @@ function FormRowField({
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
 var import_element107 = __toESM(require_element(), 1);
 var import_i18n33 = __toESM(require_i18n(), 1);
-var import_compose17 = __toESM(require_compose(), 1);
+var import_compose18 = __toESM(require_compose(), 1);
 import { speak as speak5 } from "@wordpress/a11y";
 var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
 function FormDetailsField({
@@ -31327,7 +31327,7 @@ function FormDetailsField({
       speak5(message2, "polite");
     }
   }, [revealValidity, validity]);
-  const focusOutsideProps = (0, import_compose17.__experimentalUseFocusOutside)(handleFocusOutside);
+  const focusOutsideProps = (0, import_compose18.__experimentalUseFocusOutside)(handleFocusOutside);
   if (!field.children) {
     return null;
   }
@@ -31691,7 +31691,7 @@ var import_notices3 = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
 var import_components36 = __toESM(require_components(), 1);
-var import_compose18 = __toESM(require_compose(), 1);
+var import_compose19 = __toESM(require_compose(), 1);
 var import_data3 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
 var import_element127 = __toESM(require_element(), 1);
@@ -37503,7 +37503,7 @@ function MediaEditorContent({
   shouldCloseOnEsc = false
 }) {
   const cropper = useMediaEditor();
-  const isWide = (0, import_compose18.useViewportMatch)("small");
+  const isWide = (0, import_compose19.useViewportMatch)("small");
   const [activePanel, setActivePanel] = (0, import_element127.useState)(
     isWide ? DETAILS_PANEL : null
   );

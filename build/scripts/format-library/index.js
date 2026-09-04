@@ -5040,10 +5040,10 @@ var wp;
   });
 
   // packages/ui/build-module/utils/use-schedule-validation.mjs
+  var import_compose = __toESM(require_compose(), 1);
   var import_element6 = __toESM(require_element(), 1);
   function useScheduleValidation(validate) {
-    const validateRef = (0, import_element6.useRef)(validate);
-    validateRef.current = validate;
+    const validateEvent = (0, import_compose.useEvent)(validate);
     const timerRef = (0, import_element6.useRef)(null);
     const unmountedRef = (0, import_element6.useRef)(false);
     const scheduleValidation = (0, import_element6.useCallback)(() => {
@@ -5054,10 +5054,10 @@ var wp;
         clearTimeout(timerRef.current);
       }
       timerRef.current = setTimeout(() => {
-        validateRef.current();
+        validateEvent();
         timerRef.current = null;
       }, 0);
-    }, []);
+    }, [validateEvent]);
     (0, import_element6.useEffect)(() => {
       unmountedRef.current = false;
       return () => {
@@ -6558,11 +6558,11 @@ var wp;
 
   // packages/ui/build-module/form/with-validation/validated-input-control/validated-input-control.mjs
   var import_element20 = __toESM(require_element(), 1);
-  var import_compose = __toESM(require_compose(), 1);
+  var import_compose2 = __toESM(require_compose(), 1);
   var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
   var ValidatedInputControl = (0, import_element20.forwardRef)(function ValidatedInputControl2({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
     const validityTargetRef = (0, import_element20.useRef)(null);
-    const mergedRefs = (0, import_compose.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose2.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
       ControlWithError,
       {
@@ -6586,7 +6586,7 @@ var wp;
 
   // packages/ui/build-module/tabs/list.mjs
   var import_element21 = __toESM(require_element(), 1);
-  var import_compose2 = __toESM(require_compose(), 1);
+  var import_compose3 = __toESM(require_compose(), 1);
   var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
   function getRuntime15() {
@@ -6747,7 +6747,7 @@ var wp;
           mutationObserver.disconnect();
         };
       }, [listEl]);
-      const mergedListRef = (0, import_compose2.useMergeRefs)([
+      const mergedListRef = (0, import_compose3.useMergeRefs)([
         forwardedRef,
         (el) => setListEl(el)
       ]);
@@ -7475,7 +7475,7 @@ var wp;
 
   // packages/format-library/build-module/link/css-classes-setting.mjs
   var import_element27 = __toESM(require_element(), 1);
-  var import_compose3 = __toESM(require_compose(), 1);
+  var import_compose4 = __toESM(require_compose(), 1);
   var import_i18n9 = __toESM(require_i18n(), 1);
   var import_components2 = __toESM(require_components(), 1);
   var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
@@ -7486,7 +7486,7 @@ var wp;
   }) => {
     const hasValue = !!value?.cssClasses?.length;
     const [isSettingActive, setIsSettingActive] = (0, import_element27.useState)(hasValue);
-    const instanceId = (0, import_compose3.useInstanceId)(CSSClassesSettingComponent);
+    const instanceId = (0, import_compose4.useInstanceId)(CSSClassesSettingComponent);
     const controlledRegionId = `css-classes-setting-${instanceId}`;
     const handleSettingChange = (newValue) => {
       const sanitizedValue = typeof newValue === "string" ? newValue.replace(/,/g, " ").replace(/\s+/g, " ").trim() : newValue;
