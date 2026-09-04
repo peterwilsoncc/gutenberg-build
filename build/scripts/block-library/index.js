@@ -43367,36 +43367,32 @@ ${text}
     );
   }
 
-  // packages/block-library/build-module/list-item/hooks/use-space.mjs
+  // packages/block-library/build-module/list-item/hooks/use-tab.mjs
   var import_compose32 = __toESM(require_compose(), 1);
   var import_rich_text6 = __toESM(require_rich_text(), 1);
   var import_keycodes4 = __toESM(require_keycodes(), 1);
   var import_block_editor120 = __toESM(require_block_editor(), 1);
   var import_data56 = __toESM(require_data(), 1);
+  var import_dom14 = __toESM(require_dom(), 1);
   var { subscribeOwnedListener: subscribeOwnedListener2 } = unlock(import_rich_text6.privateApis);
-  function useSpace() {
+  function useTab() {
     const registry = (0, import_data56.useRegistry)();
     return (0, import_compose32.useRefEffect)(
       (element) => {
         function onKeyDown(event) {
           const { keyCode, shiftKey, altKey, metaKey, ctrlKey } = event;
-          if (event.defaultPrevented || keyCode !== import_keycodes4.SPACE && keyCode !== import_keycodes4.TAB || // Only override when no modifiers are pressed.
+          if (event.defaultPrevented || keyCode !== import_keycodes4.SPACE && keyCode !== import_keycodes4.TAB || // Shift selects outdent; other modifiers pass through.
           altKey || metaKey || ctrlKey) {
             return;
           }
           const { getSelectionStart, getSelectionEnd } = registry.select(import_block_editor120.store);
-          const selectionStart = getSelectionStart();
-          const selectionEnd = getSelectionEnd();
-          if (selectionStart.offset === 0 && selectionEnd.offset === 0) {
-            if (shiftKey) {
-              if (keyCode === import_keycodes4.TAB) {
-                if (outdentListItems(registry)) {
-                  event.preventDefault();
-                }
-              }
-            } else if (indentListItems(registry)) {
-              event.preventDefault();
-            }
+          const isAtStart = getSelectionStart().offset === 0 && getSelectionEnd().offset === 0;
+          if (!isAtStart && !(keyCode === import_keycodes4.TAB && (0, import_dom14.isEntirelySelected)(element))) {
+            return;
+          }
+          const move = shiftKey ? outdentListItems : indentListItems;
+          if (move(registry)) {
+            event.preventDefault();
           }
         }
         return subscribeOwnedListener2(
@@ -43652,7 +43648,7 @@ ${text}
       __unstableDisableDropZone: true
     });
     const useEnterRef = useEnter2(clientId);
-    const useSpaceRef = useSpace();
+    const useTabRef = useTab();
     const useMultiSelectTabRef = useMultiSelectTab(clientId);
     const onMerge = useMerge(clientId, mergeBlocks);
     return /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)(import_jsx_runtime323.Fragment, { children: [
@@ -43662,7 +43658,7 @@ ${text}
           {
             ref: (0, import_compose34.useMergeRefs)([
               useEnterRef,
-              useSpaceRef,
+              useTabRef,
               useMultiSelectTabRef
             ]),
             identifier: "content",
@@ -46050,7 +46046,7 @@ ${text}
   var import_blocks53 = __toESM(require_blocks(), 1);
   var import_data62 = __toESM(require_data(), 1);
   var import_block_editor131 = __toESM(require_block_editor(), 1);
-  var import_dom14 = __toESM(require_dom(), 1);
+  var import_dom15 = __toESM(require_dom(), 1);
   var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
   function MissingEdit({ attributes: attributes2, clientId }) {
     const { originalName, originalUndelimitedContent } = attributes2;
@@ -46121,7 +46117,7 @@ ${text}
     }
     return /* @__PURE__ */ (0, import_jsx_runtime330.jsxs)("div", { ...(0, import_block_editor131.useBlockProps)({ className: "has-warning" }), children: [
       /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_block_editor131.Warning, { actions, children: messageHTML }),
-      /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_element81.RawHTML, { children: (0, import_dom14.safeHTML)(originalUndelimitedContent) })
+      /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_element81.RawHTML, { children: (0, import_dom15.safeHTML)(originalUndelimitedContent) })
     ] });
   }
 
@@ -49025,7 +49021,7 @@ ${text}
   // packages/block-library/build-module/navigation-link/shared/controls.mjs
   var import_components89 = __toESM(require_components(), 1);
   var import_i18n139 = __toESM(require_i18n(), 1);
-  var import_dom17 = __toESM(require_dom(), 1);
+  var import_dom18 = __toESM(require_dom(), 1);
   var import_block_editor148 = __toESM(require_block_editor(), 1);
   var import_data84 = __toESM(require_data(), 1);
   var import_core_data50 = __toESM(require_core_data(), 1);
@@ -49034,7 +49030,7 @@ ${text}
   var import_element100 = __toESM(require_element(), 1);
   var import_data79 = __toESM(require_data(), 1);
   var import_block_editor143 = __toESM(require_block_editor(), 1);
-  var import_dom15 = __toESM(require_dom(), 1);
+  var import_dom16 = __toESM(require_dom(), 1);
   var import_escape_html2 = __toESM(require_escape_html(), 1);
 
   // packages/block-library/build-module/navigation-link/shared/update-attributes.mjs
@@ -49177,7 +49173,7 @@ ${text}
           type: updatedLink.type,
           id: updatedLink.id
         };
-        const currentText = attributes2.label ? (0, import_dom15.__unstableStripHTML)(attributes2.label) : "";
+        const currentText = attributes2.label ? (0, import_dom16.__unstableStripHTML)(attributes2.label) : "";
         const updatedText = updatedLink.title ?? "";
         const hasTextUpdate = allowTextUpdate && updatedLink.title !== void 0 && updatedText !== currentText;
         const textUpdateAttributes = hasTextUpdate ? { label: (0, import_escape_html2.escapeHTML)(updatedText) } : {};
@@ -49220,7 +49216,7 @@ ${text}
   }
 
   // packages/block-library/build-module/navigation-link/link-ui/index.mjs
-  var import_dom16 = __toESM(require_dom(), 1);
+  var import_dom17 = __toESM(require_dom(), 1);
   var import_components88 = __toESM(require_components(), 1);
   var import_i18n137 = __toESM(require_i18n(), 1);
   var import_block_editor145 = __toESM(require_block_editor(), 1);
@@ -49534,7 +49530,7 @@ ${text}
       () => ({
         url,
         opensInNewTab,
-        title: label && (0, import_dom16.__unstableStripHTML)(label),
+        title: label && (0, import_dom17.__unstableStripHTML)(label),
         entityTitle: entityRecord?.title?.rendered || entityRecord?.name,
         kind,
         type,
@@ -49573,7 +49569,7 @@ ${text}
         if (shouldFocusPane?.current) {
           shouldFocusPane.current.focus();
         } else {
-          const tabbableElements = import_dom16.focus.tabbable.find(
+          const tabbableElements = import_dom17.focus.tabbable.find(
             linkControlWrapperRef.current
           );
           const nextFocusTarget = tabbableElements[0] || linkControlWrapperRef.current;
@@ -50050,7 +50046,7 @@ ${text}
                 import_components89.TextControl,
                 {
                   label: (0, import_i18n139.__)("Text"),
-                  value: label ? (0, import_dom17.__unstableStripHTML)(label) : "",
+                  value: label ? (0, import_dom18.__unstableStripHTML)(label) : "",
                   onChange: (labelValue) => {
                     setAttributes({ label: labelValue });
                   },
@@ -54556,7 +54552,7 @@ ${text}
   var import_block_editor167 = __toESM(require_block_editor(), 1);
   var import_data97 = __toESM(require_data(), 1);
   var import_core_data57 = __toESM(require_core_data(), 1);
-  var import_dom18 = __toESM(require_dom(), 1);
+  var import_dom19 = __toESM(require_dom(), 1);
 
   // packages/block-library/build-module/navigation-link/icons.mjs
   var import_components98 = __toESM(require_components(), 1);
@@ -54622,7 +54618,7 @@ ${text}
                 className: "wp-block-navigation-item__content wp-block-navigation-submenu__toggle",
                 "aria-expanded": "false",
                 dangerouslySetInnerHTML: {
-                  __html: (0, import_dom18.safeHTML)(label)
+                  __html: (0, import_dom19.safeHTML)(label)
                 }
               }
             ),
@@ -54635,7 +54631,7 @@ ${text}
               }),
               href: link,
               dangerouslySetInnerHTML: {
-                __html: (0, import_dom18.safeHTML)(title)
+                __html: (0, import_dom19.safeHTML)(title)
               }
             }
           ),
@@ -58285,7 +58281,7 @@ ${text}
   var import_data102 = __toESM(require_data(), 1);
   var import_notices15 = __toESM(require_notices(), 1);
   var import_i18n161 = __toESM(require_i18n(), 1);
-  var import_dom19 = __toESM(require_dom(), 1);
+  var import_dom20 = __toESM(require_dom(), 1);
   var import_jsx_runtime388 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES7 = ["audio"];
   var TRACK_IMAGE_ALLOWED_MEDIA_TYPES = ["image"];
@@ -58404,7 +58400,7 @@ ${text}
           import_components101.TextControl,
           {
             label: (0, import_i18n161.__)("Title"),
-            value: title ? (0, import_dom19.__unstableStripHTML)(title) : "",
+            value: title ? (0, import_dom20.__unstableStripHTML)(title) : "",
             onChange: (titleValue) => {
               setAttributes({ title: titleValue });
             }
@@ -58414,7 +58410,7 @@ ${text}
           import_components101.TextControl,
           {
             label: (0, import_i18n161.__)("Artist"),
-            value: artist ? (0, import_dom19.__unstableStripHTML)(artist) : "",
+            value: artist ? (0, import_dom20.__unstableStripHTML)(artist) : "",
             onChange: (artistValue) => {
               setAttributes({ artist: artistValue });
             }
@@ -58424,7 +58420,7 @@ ${text}
           import_components101.TextControl,
           {
             label: (0, import_i18n161.__)("Album"),
-            value: album ? (0, import_dom19.__unstableStripHTML)(album) : "",
+            value: album ? (0, import_dom20.__unstableStripHTML)(album) : "",
             onChange: (albumValue) => {
               setAttributes({ album: albumValue });
             }
@@ -71209,7 +71205,7 @@ ${text}
   var import_components141 = __toESM(require_components(), 1);
   var import_compose57 = __toESM(require_compose(), 1);
   var import_i18n222 = __toESM(require_i18n(), 1);
-  var import_dom20 = __toESM(require_dom(), 1);
+  var import_dom21 = __toESM(require_dom(), 1);
   var import_a11y4 = __toESM(require_a11y(), 1);
   var import_primitives168 = __toESM(require_primitives(), 1);
 
@@ -71416,7 +71412,7 @@ ${text}
             type: "button",
             className: buttonClasses,
             style: buttonStyles,
-            "aria-label": buttonText ? (0, import_dom20.__unstableStripHTML)(buttonText) : (0, import_i18n222.__)("Search"),
+            "aria-label": buttonText ? (0, import_dom21.__unstableStripHTML)(buttonText) : (0, import_i18n222.__)("Search"),
             ref: buttonRef,
             children: /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(icon_default, { icon: searchBlockIcon })
           }
@@ -78023,7 +78019,7 @@ ${text}
   // packages/block-library/build-module/table-of-contents/hooks.mjs
   var import_es6 = __toESM(require_es6(), 1);
   var import_data146 = __toESM(require_data(), 1);
-  var import_dom21 = __toESM(require_dom(), 1);
+  var import_dom22 = __toESM(require_dom(), 1);
   var import_element150 = __toESM(require_element(), 1);
   var import_url23 = __toESM(require_url(), 1);
   var import_block_editor255 = __toESM(require_block_editor(), 1);
@@ -78082,7 +78078,7 @@ ${text}
           const canBeLinked = typeof headingPageLink === "string" && typeof headingAttributes.anchor === "string" && headingAttributes.anchor !== "";
           latestHeadings.push({
             // Convert line breaks to spaces, and get rid of HTML tags in the headings.
-            content: (0, import_dom21.__unstableStripHTML)(
+            content: (0, import_dom22.__unstableStripHTML)(
               headingAttributes.content.replace(
                 /(<br *\/?>)+/g,
                 " "
