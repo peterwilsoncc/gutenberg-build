@@ -8664,18 +8664,30 @@ var wp;
   var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
   var { Badge: WCBadge } = unlock3(import_components3.privateApis);
   function PageTitleView({ item }) {
-    const { frontPageId, postsPageId } = (0, import_data7.useSelect)((select9) => {
-      const { getEntityRecord } = select9(import_core_data6.store);
-      const siteSettings = getEntityRecord(
-        "root",
-        "site"
-      );
-      return {
-        frontPageId: siteSettings?.page_on_front,
-        postsPageId: siteSettings?.page_for_posts
-      };
-    }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(BaseTitleView, { item, className: "fields-field__page-title", children: [frontPageId, postsPageId].includes(item.id) && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(WCBadge, { children: item.id === frontPageId ? (0, import_i18n8.__)("Homepage") : (0, import_i18n8.__)("Posts Page") }) });
+    const { frontPageId, postsPageId, privacyPolicyPageId } = (0, import_data7.useSelect)(
+      (select9) => {
+        const { getEntityRecord } = select9(import_core_data6.store);
+        const siteSettings = getEntityRecord(
+          "root",
+          "site"
+        );
+        return {
+          frontPageId: siteSettings?.page_on_front,
+          postsPageId: siteSettings?.page_for_posts,
+          privacyPolicyPageId: siteSettings?.page_for_privacy_policy
+        };
+      },
+      []
+    );
+    let badge;
+    if (item.id === frontPageId) {
+      badge = (0, import_i18n8.__)("Homepage");
+    } else if (item.id === postsPageId) {
+      badge = (0, import_i18n8.__)("Posts Page");
+    } else if (item.id === privacyPolicyPageId) {
+      badge = (0, import_i18n8.__)("Privacy Policy Page");
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(BaseTitleView, { item, className: "fields-field__page-title", children: badge && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(WCBadge, { children: badge }) });
   }
 
   // packages/fields/build-module/fields/page-title/index.mjs
@@ -97198,22 +97210,27 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data94 = __toESM(require_data(), 1);
   var import_core_data65 = __toESM(require_core_data(), 1);
   function usePageTypeBadge(postId2) {
-    const { isFrontPage, isPostsPage } = (0, import_data94.useSelect)((select9) => {
-      const { canUser, getEditedEntityRecord } = select9(import_core_data65.store);
-      const siteSettings = canUser("read", {
-        kind: "root",
-        name: "site"
-      }) ? getEditedEntityRecord("root", "site") : void 0;
-      const _postId = parseInt(postId2, 10);
-      return {
-        isFrontPage: siteSettings?.page_on_front === _postId,
-        isPostsPage: siteSettings?.page_for_posts === _postId
-      };
-    });
+    const { isFrontPage, isPostsPage, isPrivacyPolicyPage } = (0, import_data94.useSelect)(
+      (select9) => {
+        const { canUser, getEditedEntityRecord } = select9(import_core_data65.store);
+        const siteSettings = canUser("read", {
+          kind: "root",
+          name: "site"
+        }) ? getEditedEntityRecord("root", "site") : void 0;
+        const _postId = parseInt(postId2, 10);
+        return {
+          isFrontPage: siteSettings?.page_on_front === _postId,
+          isPostsPage: siteSettings?.page_for_posts === _postId,
+          isPrivacyPolicyPage: siteSettings?.page_for_privacy_policy === _postId
+        };
+      }
+    );
     if (isFrontPage) {
       return (0, import_i18n220.__)("Homepage");
     } else if (isPostsPage) {
       return (0, import_i18n220.__)("Posts Page");
+    } else if (isPrivacyPolicyPage) {
+      return (0, import_i18n220.__)("Privacy Policy Page");
     }
     return false;
   }
