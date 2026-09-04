@@ -85519,7 +85519,7 @@ ${text}
             const object = value.replacements[value.start];
             id = object?.attributes?.["data-fn"];
           } else {
-            id = v4_default();
+            id = `fn-${v4_default()}`;
             const newValue = (0, import_rich_text9.insertObject)(
               value,
               {
