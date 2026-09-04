@@ -798,7 +798,7 @@ var Link = (0, import_element2.forwardRef)(function Link2({
   className,
   ...props
 }, ref) {
-  const shouldShowNewTabIndicator = openInNewTab || target === "_blank";
+  const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
   const element = useRender({
     render,
     defaultTagName: "a",

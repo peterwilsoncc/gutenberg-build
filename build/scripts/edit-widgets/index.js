@@ -11034,7 +11034,7 @@ var wp;
     className,
     ...props
   }, ref) {
-    const shouldShowNewTabIndicator = openInNewTab || target === "_blank";
+    const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
     const element = useRender({
       render,
       defaultTagName: "a",
