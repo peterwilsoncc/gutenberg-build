@@ -593,8 +593,9 @@
 }
 
 .dataviews-filters__search-widget-listitem:hover .dataviews-filters__search-widget-listitem-multi-selection, .dataviews-filters__search-widget-listitem[data-active-item] .dataviews-filters__search-widget-listitem-multi-selection, .dataviews-filters__search-widget-listitem:focus .dataviews-filters__search-widget-listitem-multi-selection {
+  /* stylelint-disable-next-line plugin-wpds/no-token-fallback-values -- Preserve custom background theming with older @wordpress/theme runtimes that do not set this token. */
+  background-color: var(--wpds-color-background-interactive-neutral, var(--wpds-color-background-surface-neutral-strong, #fff));
   border-color: var(--wpds-color-stroke-interactive-brand-active, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 85%, black));
-  background: var(--wpds-color-background-surface-neutral-strong, #fff);
 }
 
 .dataviews-filters__search-widget-listitem:hover .dataviews-filters__search-widget-listitem-multi-selection.is-selected, .dataviews-filters__search-widget-listitem[data-active-item] .dataviews-filters__search-widget-listitem-multi-selection.is-selected, .dataviews-filters__search-widget-listitem:focus .dataviews-filters__search-widget-listitem-multi-selection.is-selected {
@@ -799,7 +800,8 @@
 
 .dataviews-filters__search-widget-listitem .dataviews-filters__search-widget-listitem-multi-selection {
   position: relative;
-  background: var(--wpds-color-background-interactive-neutral-weak, rgba(0, 0, 0, 0));
+  /* stylelint-disable-next-line plugin-wpds/no-token-fallback-values -- Preserve custom background theming with older @wordpress/theme runtimes that do not set this token. */
+  background: var(--wpds-color-background-interactive-neutral, var(--wpds-color-background-surface-neutral-strong, #fff));
   color: var(--wpds-color-foreground-content-neutral, #1e1e1e);
   margin: 0;
   padding: 0;

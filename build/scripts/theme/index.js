@@ -3597,7 +3597,12 @@ var wp;
       "background-interactive-neutral-strong-disabled"
     ],
     "bg-surface4": ["background-interactive-neutral-weak-active"],
-    "bg-surface3": ["background-surface-neutral-strong"],
+    "bg-surface3": [
+      "background-interactive-neutral",
+      "background-interactive-neutral-active",
+      "background-interactive-neutral-disabled",
+      "background-surface-neutral-strong"
+    ],
     "bg-fgSurface4": [
       "foreground-content-neutral",
       "foreground-interactive-neutral",
@@ -4560,6 +4565,26 @@ var wp;
   // packages/theme/build-module/semantic-color-contrast-pairs.mjs
   var MINIMUM_TEXT_CONTRAST = 4.5;
   var SEMANTIC_COLOR_CONTRAST_PAIRS = [
+    {
+      background: "background.interactive.neutral",
+      foreground: "foreground.interactive.neutral"
+    },
+    {
+      background: "background.interactive.neutral",
+      foreground: "foreground.interactive.neutral-weak"
+    },
+    {
+      background: "background.interactive.neutral-active",
+      foreground: "foreground.interactive.neutral"
+    },
+    {
+      background: "background.interactive.neutral-active",
+      foreground: "foreground.interactive.neutral-weak"
+    },
+    {
+      background: "background.interactive.neutral-weak-active",
+      foreground: "foreground.interactive.neutral-active"
+    },
     {
       background: "background.surface.neutral",
       foreground: "foreground.content.neutral"
