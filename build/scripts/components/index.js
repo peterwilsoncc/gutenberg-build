@@ -30884,6 +30884,7 @@ This message will only show in development mode. It won't appear in production. 
     value: valueProp,
     id: idProp,
     setSelectedElement,
+    disabled,
     ...otherProps
   }, forwardedRef) {
     const generatedId = (0, import_compose20.useInstanceId)(ToggleGroupControlAsRadioGroup, "toggle-group-control-as-radio-group");
@@ -30916,8 +30917,9 @@ This message will only show in development mode. It won't appear in production. 
       value: selectedValue,
       // @ts-expect-error - This is wrong and we should fix it.
       setValue,
-      setSelectedElement
-    }), [baseId, isAdaptiveWidth, radio, selectedValue, setSelectedElement, setValue]);
+      setSelectedElement,
+      disabled: Boolean(disabled)
+    }), [baseId, isAdaptiveWidth, radio, selectedValue, setSelectedElement, setValue, disabled]);
     return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(context_default2.Provider, {
       value: groupContextValue,
       children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(RadioGroup, {
@@ -30927,6 +30929,7 @@ This message will only show in development mode. It won't appear in production. 
         ...otherProps,
         id: baseId,
         ref: forwardedRef,
+        disabled: disabled || void 0,
         children
       })
     });
@@ -30946,6 +30949,7 @@ This message will only show in development mode. It won't appear in production. 
     value: valueProp,
     id: idProp,
     setSelectedElement,
+    disabled,
     ...otherProps
   }, forwardedRef) {
     const generatedId = (0, import_compose21.useInstanceId)(ToggleGroupControlAsButtonGroup, "toggle-group-control-as-button-group");
@@ -30965,8 +30969,9 @@ This message will only show in development mode. It won't appear in production. 
       setValue: setSelectedValue,
       isBlock: !isAdaptiveWidth,
       isDeselectable: true,
-      setSelectedElement
-    }), [baseId, selectedValue, setSelectedValue, isAdaptiveWidth, setSelectedElement]);
+      setSelectedElement,
+      disabled: Boolean(disabled)
+    }), [baseId, selectedValue, setSelectedValue, isAdaptiveWidth, setSelectedElement, disabled]);
     return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(context_default2.Provider, {
       value: groupContextValue,
       children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(component_default, {
@@ -30975,6 +30980,7 @@ This message will only show in development mode. It won't appear in production. 
         ref: forwardedRef,
         role: "group",
         id: baseId,
+        "aria-disabled": disabled || void 0,
         children
       })
     });
@@ -31189,7 +31195,7 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle11("a4244dfbf1", '.f3fd102dd2f0e90e__toggle-group-control{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:1px solid transparent;border-radius:var(--wpds-border-radius-sm,2px);display:inline-flex;height:40px;min-width:0;position:relative}@media not (prefers-reduced-motion){.f3fd102dd2f0e90e__toggle-group-control[data-indicator-animated]:before{transition-duration:.2s;transition-property:transform,border-radius;transition-timing-function:ease-out}}.f3fd102dd2f0e90e__toggle-group-control:before{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border:1px solid var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));border-radius:var(--wpds-border-radius-sm,2px);content:"";height:calc(var(--selected-height, 0)*1px + 2px);left:-2px;opacity:min(1,max(0,var(--selected-width,0),var(--selected-height,0)));outline:2px solid transparent;outline-offset:-3px;pointer-events:none;position:absolute;top:-1px;transform:translateX(calc(var(--selected-left, 0)*1px));width:calc(var(--selected-width, 0)*1px + 2px)}._1344586004ce6119__has-border{border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb))}.aa98fad5b5d333be__has-enclosing-borders:hover{border-color:var(--wp-components-color-gray-400,var(--wpds-color-stroke-interactive-neutral,#8d8d8d))}.aa98fad5b5d333be__has-enclosing-borders:focus-within{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));z-index:1}._4068eff8d72c19b3__is-block{display:flex;width:100%}');
+    registerStyle11("86a73788d7", '.f3fd102dd2f0e90e__toggle-group-control{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:1px solid transparent;border-radius:var(--wpds-border-radius-sm,2px);display:inline-flex;height:40px;min-width:0;position:relative}@media not (prefers-reduced-motion){.f3fd102dd2f0e90e__toggle-group-control[data-indicator-animated]:before{transition-duration:.2s;transition-property:transform,border-radius;transition-timing-function:ease-out}}.f3fd102dd2f0e90e__toggle-group-control:before{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border:1px solid var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));border-radius:var(--wpds-border-radius-sm,2px);content:"";height:calc(var(--selected-height, 0)*1px + 2px);left:-2px;opacity:min(1,max(0,var(--selected-width,0),var(--selected-height,0)));outline:2px solid transparent;outline-offset:-3px;pointer-events:none;position:absolute;top:-1px;transform:translateX(calc(var(--selected-left, 0)*1px));width:calc(var(--selected-width, 0)*1px + 2px)}.f3fd102dd2f0e90e__toggle-group-control[aria-disabled=true]:before{opacity:calc(min(1, max(0, var(--selected-width, 0), var(--selected-height, 0))) * .4)}._1344586004ce6119__has-border{border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb))}.aa98fad5b5d333be__has-enclosing-borders:hover:not([aria-disabled=true]){border-color:var(--wp-components-color-gray-400,var(--wpds-color-stroke-interactive-neutral,#8d8d8d))}.aa98fad5b5d333be__has-enclosing-borders:focus-within{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));z-index:1}._4068eff8d72c19b3__is-block{display:flex;width:100%}');
   }
   var style_module_default11 = { "toggle-group-control": "f3fd102dd2f0e90e__toggle-group-control", "has-border": "_1344586004ce6119__has-border", "has-enclosing-borders": "aa98fad5b5d333be__has-enclosing-borders", "is-block": "_4068eff8d72c19b3__is-block" };
   function UnconnectedToggleGroupControl(props, forwardedRef) {
@@ -31202,6 +31208,7 @@ This message will only show in development mode. It won't appear in production. 
       isAdaptiveWidth = false,
       isBlock = false,
       isDeselectable = false,
+      disabled = false,
       id: id3,
       label,
       hideLabelFromVision = false,
@@ -31248,6 +31255,7 @@ This message will only show in development mode. It won't appear in production. 
         onChange,
         ref: refs,
         value,
+        disabled,
         children
       })
     });
@@ -31377,6 +31385,7 @@ This message will only show in development mode. It won't appear in production. 
       disabled,
       ...otherButtonProps
     } = buttonProps;
+    const isOptionDisabled = Boolean(toggleGroupControlContext.disabled || disabled);
     const isPressed = toggleGroupControlContext.value === value;
     const labelClasses = clsx_default(style_module_default12.label, isBlock && style_module_default12["label-block"]);
     const itemClasses = clsx_default(style_module_default12.button, {
@@ -31411,7 +31420,7 @@ This message will only show in development mode. It won't appear in production. 
         text: otherButtonProps["aria-label"],
         children: isDeselectable ? /* @__PURE__ */ (0, import_jsx_runtime118.jsx)("button", {
           ...commonProps,
-          disabled,
+          disabled: isOptionDisabled,
           "aria-pressed": isPressed,
           type: "button",
           onClick: buttonOnClick,
