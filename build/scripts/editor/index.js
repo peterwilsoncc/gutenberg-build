@@ -108374,6 +108374,7 @@ ${content}
     "aria-checked": ariaChecked,
     "aria-label": ariaLabel,
     children,
+    disabled: disabled2,
     href,
     icon,
     info,
@@ -108400,6 +108401,7 @@ ${content}
           "aria-label": itemAriaLabel,
           checked,
           closeOnClick: true,
+          disabled: disabled2,
           onClick,
           prefix: prefix2,
           shortcut: itemShortcut,
@@ -108411,16 +108413,17 @@ ${content}
         }
       );
     }
-    if (href !== void 0) {
+    if (href !== void 0 && !disabled2) {
       return /* @__PURE__ */ (0, import_jsx_runtime562.jsxs)(
         menu_exports.LinkItem,
         {
           ref,
           "aria-label": itemAriaLabel,
+          closeOnClick: true,
           href,
           prefix: prefix2,
           shortcut: itemShortcut,
-          openInNewTab: target === "_blank",
+          target,
           onClick,
           ...props,
           children: [
@@ -108436,6 +108439,7 @@ ${content}
       {
         ref,
         "aria-label": itemAriaLabel,
+        disabled: disabled2,
         prefix: prefix2,
         shortcut: itemShortcut,
         onClick,
