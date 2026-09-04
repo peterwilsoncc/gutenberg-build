@@ -3114,7 +3114,6 @@ body.lockscroll {
   height: 48px !important;
   background: transparent;
   border: none;
-  box-shadow: none;
   cursor: var(--wpds-cursor-control, pointer);
   padding: 3px var(--wpds-dimension-padding-lg, 16px);
   margin-left: 0;
@@ -3129,7 +3128,6 @@ body.lockscroll {
 }
 .components-tab-panel__tabs-item:focus:not(:disabled) {
   position: relative;
-  box-shadow: none;
   outline: none;
 }
 .components-tab-panel__tabs-item::after {
@@ -3158,17 +3156,12 @@ body.lockscroll {
   position: absolute;
   inset: var(--wpds-dimension-padding-md, 12px);
   pointer-events: none;
-  box-shadow: 0 0 0 0 transparent;
   border-radius: var(--wpds-border-radius-sm, 2px);
 }
-@media not (prefers-reduced-motion) {
-  .components-tab-panel__tabs-item::before {
-    transition: box-shadow 0.1s linear;
-  }
-}
 .components-tab-panel__tabs-item:focus-visible::before {
-  box-shadow: 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
-  outline: 2px solid transparent;
+  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--focus-color, var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9)));
+  outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
+  outline-offset: 0;
 }
 .components-tab-panel__tabs[aria-orientation=vertical] .components-tab-panel__tabs-item {
   border-radius: var(--wpds-border-radius-sm, 2px);
@@ -3181,12 +3174,11 @@ body.lockscroll {
 }
 
 .components-tab-panel__tab-content:focus {
-  box-shadow: none;
   outline: none;
 }
 .components-tab-panel__tab-content:focus-visible {
-  box-shadow: 0 0 0 var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
-  outline: 2px solid transparent;
+  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--focus-color, var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9)));
+  outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
   outline-offset: 0;
 }
 
