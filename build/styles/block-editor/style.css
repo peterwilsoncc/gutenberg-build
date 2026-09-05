@@ -296,11 +296,6 @@ iframe[name=editor-canvas] {
 .block-editor-block-icon.has-colors svg {
   fill: currentColor;
 }
-@media (forced-colors: active) {
-  .block-editor-block-icon.has-colors svg {
-    fill: CanvasText;
-  }
-}
 .block-editor-block-icon svg {
   min-width: 20px;
   min-height: 20px;
@@ -2761,11 +2756,6 @@ iframe[name=editor-canvas] {
 }
 .block-editor-list-view-leaf .block-editor-list-view-block-select-button svg {
   fill: currentColor;
-}
-@media (forced-colors: active) {
-  .block-editor-list-view-leaf .block-editor-list-view-block-select-button svg {
-    fill: CanvasText;
-  }
 }
 .is-dragging-components-draggable .block-editor-list-view-leaf:not(.is-selected) .block-editor-list-view-block-select-button:hover {
   color: inherit;

@@ -122,11 +122,6 @@
 .block-editor-block-icon.has-colors svg {
   fill: currentColor;
 }
-@media (forced-colors: active) {
-  .block-editor-block-icon.has-colors svg {
-    fill: CanvasText;
-  }
-}
 .block-editor-block-icon svg {
   min-width: 20px;
   min-height: 20px;

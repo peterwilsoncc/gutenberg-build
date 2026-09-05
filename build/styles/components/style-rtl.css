@@ -532,11 +532,6 @@ p + .components-button.is-tertiary {
   outline: none;
   flex-shrink: 0;
 }
-@media (forced-colors: active) {
-  .components-button svg {
-    fill: CanvasText;
-  }
-}
 
 @keyframes components-button__busy-animation {
   0% {
@@ -2405,13 +2400,6 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
 .components-placeholder__label .block-editor-block-icon {
   margin-left: 4px;
   fill: currentColor;
-}
-@media (forced-colors: active) {
-  .components-placeholder__label > svg,
-  .components-placeholder__label .dashicon,
-  .components-placeholder__label .block-editor-block-icon {
-    fill: CanvasText;
-  }
 }
 .components-placeholder__label:empty {
   display: none;
