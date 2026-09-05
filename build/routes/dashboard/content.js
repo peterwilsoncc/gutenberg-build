@@ -74156,44 +74156,45 @@ function LocationPicker({
               }
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(
-                autocomplete_exports.Input,
-                {
-                  id: locationInputId,
-                  className: location_picker_default["location-input"],
-                  render: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(
-                    InputControl,
-                    {
-                      autoComplete: "off",
-                      label: (0, import_i18n86.__)("City"),
-                      hideLabelFromVision,
-                      size: "compact",
-                      description: showDescription ? (0, import_i18n86.__)(
-                        "Select a city to view upcoming events."
-                      ) : void 0,
-                      onValueChange: () => {
-                      },
-                      suffix: /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(InputLayout3.Slot, { padding: "minimal", children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(autocomplete_exports.Clear, {}),
-                        /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(
-                          IconButton,
-                          {
-                            icon: map_marker_default,
-                            label: (0, import_i18n86.__)(
-                              "Use current location"
-                            ),
-                            onClick: fillCityFromGeolocation,
-                            disabled: isLocatingCity,
-                            size: "small",
-                            variant: "minimal"
-                          }
-                        )
-                      ] })
-                    }
-                  ),
-                  placeholder: (0, import_i18n86.__)("Select city\u2026")
-                }
-              ),
+              /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(field_exports.Root, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: (0, import_i18n86.__)("City") }),
+                /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(autocomplete_exports.InputGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(
+                  autocomplete_exports.Input,
+                  {
+                    id: locationInputId,
+                    className: location_picker_default["location-input"],
+                    render: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(
+                      Input3,
+                      {
+                        autoComplete: "off",
+                        size: "compact",
+                        onValueChange: () => {
+                        },
+                        suffix: /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(InputLayout3.Slot, { padding: "minimal", children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(autocomplete_exports.Clear, {}),
+                          /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(
+                            IconButton,
+                            {
+                              icon: map_marker_default,
+                              label: (0, import_i18n86.__)(
+                                "Use current location"
+                              ),
+                              onClick: fillCityFromGeolocation,
+                              disabled: isLocatingCity,
+                              size: "small",
+                              variant: "minimal"
+                            }
+                          )
+                        ] })
+                      }
+                    ),
+                    placeholder: (0, import_i18n86.__)("Select city\u2026")
+                  }
+                ) }),
+                showDescription && /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(field_exports.Description, { children: (0, import_i18n86.__)(
+                  "Select a city to view upcoming events."
+                ) })
+              ] }),
               locationOptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(autocomplete_exports.Popup, { children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(autocomplete_exports.List, { children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(autocomplete_exports.ListBody, { children: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(autocomplete_exports.Collection, { children: (item) => /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(
                 autocomplete_exports.Item,
                 {
