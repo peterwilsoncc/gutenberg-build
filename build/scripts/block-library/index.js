@@ -62892,7 +62892,9 @@ ${text}
       query: {
         perPage,
         offset = 0,
-        postType,
+        // Match `build_query_vars_from_query_block()`, which queries posts when
+        // `query` has no post type.
+        postType = "post",
         order,
         orderBy,
         author,
@@ -66441,7 +66443,9 @@ ${text}
       orderBy,
       author: authorIds,
       pages,
-      postType,
+      // Match `build_query_vars_from_query_block()`, which queries posts when
+      // `query` has no post type.
+      postType = "post",
       perPage,
       offset,
       sticky,
@@ -66529,7 +66533,7 @@ ${text}
     );
     const showExcludeCurrentControl = shouldExcludeCurrentPost && isControlAllowed(allowedControls, "excludeCurrent");
     const postTypeSingularName = (0, import_data122.useSelect)(
-      (select10) => select10(import_core_data77.store).getPostType(postType)?.labels.singular_name,
+      (select10) => select10(import_core_data77.store).getPostType(postType)?.labels?.singular_name,
       [postType]
     );
     const showFiltersPanel = showTaxControl || showAuthorControl || showSearchControl || showParentControl || showFormatControl || showExcludeCurrentControl;
