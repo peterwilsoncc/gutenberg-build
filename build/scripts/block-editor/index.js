@@ -58795,6 +58795,9 @@ var wp;
               return;
             }
             const clientId = getSelectedBlockClientId2();
+            if (!clientId) {
+              return;
+            }
             const blockName = getBlockName2(clientId);
             const selectionStart = getSelectionStart2();
             const selectionEnd = getSelectionEnd2();
