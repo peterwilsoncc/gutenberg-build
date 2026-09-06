@@ -35254,7 +35254,7 @@ var wp;
             primary: themeColors.primary,
             ...CONTENT_COLOR
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(import_theme.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(Layout, { ...props }) })
+          children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(import_theme.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(import_editor4.ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(Layout, { ...props }) }) })
         }
       )
     ] }) });
