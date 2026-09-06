@@ -73928,6 +73928,7 @@ var wp;
     onDragEnd,
     draggable,
     isExpanded,
+    isSelected,
     ariaDescribedBy,
     visibilityLabel,
     isDisabled = false
@@ -74004,7 +74005,14 @@ var wp;
           "aria-expanded": isExpanded,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(ListViewExpander, { onClick: onToggleExpanded }),
-            /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(block_icon_default, { icon, showColors: true, context: "list-view" }),
+            /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
+              block_icon_default,
+              {
+                icon,
+                showColors: !isSelected,
+                context: "list-view"
+              }
+            ),
             /* @__PURE__ */ (0, import_jsx_runtime357.jsxs)(
               Stack,
               {
@@ -74703,6 +74711,7 @@ var wp;
                     tabIndex: getListViewBlockTabIndex(tabIndex),
                     onFocus,
                     isExpanded: canEditBlock2 ? isExpanded : void 0,
+                    isSelected,
                     selectedClientIds,
                     ariaDescribedBy: descriptionId,
                     visibilityLabel: blockVisibilityDescription,
