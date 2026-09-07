@@ -94989,7 +94989,7 @@ var wp;
             },
             spacing: "4",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(import_components217.__experimentalText, { children: (0, import_i18n216.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(Text, { children: (0, import_i18n216.__)(
                 "Select which blocks can be added inside this container."
               ) }),
               /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
