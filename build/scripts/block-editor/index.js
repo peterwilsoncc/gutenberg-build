@@ -99561,6 +99561,11 @@ var wp;
   var import_element330 = __toESM(require_element(), 1);
   var import_components241 = __toESM(require_components(), 1);
 
+  // packages/dataviews/build-module/components/dataform-layouts/can-render-field.mjs
+  function canRenderField(field) {
+    return !!field && (field.readOnly === true || !!field.Edit);
+  }
+
   // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
   var import_i18n235 = __toESM(require_i18n(), 1);
   var DEFAULT_LAYOUT = {
@@ -99727,7 +99732,7 @@ var wp;
     const fieldDefinition = fields.find(
       (fieldDef) => fieldDef.id === field.id
     );
-    if (!fieldDefinition || !fieldDefinition.Edit) {
+    if (!canRenderField(fieldDefinition)) {
       return null;
     }
     if (labelPosition === "side") {
@@ -99754,7 +99759,7 @@ var wp;
                 item: data,
                 field: fieldDefinition
               }
-            ) : /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
+            ) : fieldDefinition.Edit && /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
               fieldDefinition.Edit,
               {
                 data,
@@ -99779,7 +99784,7 @@ var wp;
           field: fieldDefinition
         }
       )
-    ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
+    ] }) }) : fieldDefinition.Edit && /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
       fieldDefinition.Edit,
       {
         data,
@@ -101135,7 +101140,7 @@ var wp;
       const fieldDefinition = fields.find(
         (fieldDef) => fieldDef.id === field.id
       );
-      if (!fieldDefinition || !fieldDefinition.Edit) {
+      if (!canRenderField(fieldDefinition)) {
         return null;
       }
       label = fieldDefinition.label;

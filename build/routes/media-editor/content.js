@@ -29554,6 +29554,11 @@ var import_element108 = __toESM(require_element(), 1);
 var import_element100 = __toESM(require_element(), 1);
 var import_components24 = __toESM(require_components(), 1);
 
+// packages/dataviews/build-module/components/dataform-layouts/can-render-field.mjs
+function canRenderField(field) {
+  return !!field && (field.readOnly === true || !!field.Edit);
+}
+
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
 var import_i18n28 = __toESM(require_i18n(), 1);
 var DEFAULT_LAYOUT = {
@@ -29720,7 +29725,7 @@ function FormRegularField({
   const fieldDefinition = fields.find(
     (fieldDef) => fieldDef.id === field.id
   );
-  if (!fieldDefinition || !fieldDefinition.Edit) {
+  if (!canRenderField(fieldDefinition)) {
     return null;
   }
   if (labelPosition === "side") {
@@ -29747,7 +29752,7 @@ function FormRegularField({
               item: data,
               field: fieldDefinition
             }
-          ) : /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+          ) : fieldDefinition.Edit && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
             fieldDefinition.Edit,
             {
               data,
@@ -29772,7 +29777,7 @@ function FormRegularField({
         field: fieldDefinition
       }
     )
-  ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+  ] }) }) : fieldDefinition.Edit && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
     fieldDefinition.Edit,
     {
       data,
@@ -31128,7 +31133,7 @@ function FormCardField({
     const fieldDefinition = fields.find(
       (fieldDef) => fieldDef.id === field.id
     );
-    if (!fieldDefinition || !fieldDefinition.Edit) {
+    if (!canRenderField(fieldDefinition)) {
       return null;
     }
     label = fieldDefinition.label;

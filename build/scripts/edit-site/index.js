@@ -56051,6 +56051,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element178 = __toESM(require_element(), 1);
   var import_components67 = __toESM(require_components(), 1);
 
+  // packages/dataviews/build-module/components/dataform-layouts/can-render-field.mjs
+  function canRenderField(field) {
+    return !!field && (field.readOnly === true || !!field.Edit);
+  }
+
   // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
   var import_i18n79 = __toESM(require_i18n(), 1);
   var DEFAULT_LAYOUT = {
@@ -56217,7 +56222,7 @@ If there's a particular need for this, please submit a feature request at https:
     const fieldDefinition = fields2.find(
       (fieldDef) => fieldDef.id === field.id
     );
-    if (!fieldDefinition || !fieldDefinition.Edit) {
+    if (!canRenderField(fieldDefinition)) {
       return null;
     }
     if (labelPosition === "side") {
@@ -56244,7 +56249,7 @@ If there's a particular need for this, please submit a feature request at https:
                 item: data,
                 field: fieldDefinition
               }
-            ) : /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
+            ) : fieldDefinition.Edit && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
               fieldDefinition.Edit,
               {
                 data,
@@ -56269,7 +56274,7 @@ If there's a particular need for this, please submit a feature request at https:
           field: fieldDefinition
         }
       )
-    ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
+    ] }) }) : fieldDefinition.Edit && /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
       fieldDefinition.Edit,
       {
         data,
@@ -57625,7 +57630,7 @@ If there's a particular need for this, please submit a feature request at https:
       const fieldDefinition = fields2.find(
         (fieldDef) => fieldDef.id === field.id
       );
-      if (!fieldDefinition || !fieldDefinition.Edit) {
+      if (!canRenderField(fieldDefinition)) {
         return null;
       }
       label = fieldDefinition.label;
