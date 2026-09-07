@@ -491,6 +491,14 @@ var wp;
   function registerMiddleware(middleware) {
     middlewares.unshift(middleware);
   }
+  function unregisterMiddleware(middleware) {
+    const index = middlewares.indexOf(middleware);
+    if (index === -1) {
+      return false;
+    }
+    middlewares.splice(index, 1);
+    return true;
+  }
   function enablePreloadMultiUse() {
     for (const middleware of middlewares) {
       middleware[ENABLE_MULTI_USE]?.();
@@ -574,6 +582,7 @@ var wp;
     });
   };
   apiFetch.use = registerMiddleware;
+  apiFetch.unregister = unregisterMiddleware;
   apiFetch.setFetchHandler = setFetchHandler;
   apiFetch.privateApis = {};
   lock(apiFetch.privateApis, {
@@ -584,6 +593,7 @@ var wp;
   apiFetch.createPreloadingMiddleware = preloading_default;
   apiFetch.createRootURLMiddleware = root_url_default;
   apiFetch.fetchAllMiddleware = fetch_all_middleware_default;
+  apiFetch.httpV1Middleware = http_v1_default;
   apiFetch.mediaUploadMiddleware = media_upload_default;
   apiFetch.createThemePreviewMiddleware = theme_preview_default;
   var index_default = apiFetch;
