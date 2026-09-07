@@ -8231,8 +8231,10 @@ var wp;
           "author",
           "slug",
           "meta",
-          "title.raw",
-          "excerpt.raw",
+          "title",
+          "excerpt",
+          // Not the whole field: `content.rendered` would blow up the
+          // payload of a page of revisions.
           "content.raw",
           revisionKey
         ])
@@ -96404,8 +96406,8 @@ If there's a particular need for this, please submit a feature request at https:
           "modified",
           "author",
           "meta",
-          "title.raw",
-          "excerpt.raw",
+          "title",
+          "excerpt",
           "content.raw",
           revisionKey
         ])

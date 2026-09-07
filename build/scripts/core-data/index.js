@@ -7605,7 +7605,15 @@ var wp;
             [name]: id
           }
         },
-        ...revisionId !== void 0 && { revisionId }
+        ...revisionId !== void 0 && kind && {
+          revision: {
+            ...parent?.revision,
+            [kind]: {
+              ...parent?.revision?.[kind],
+              [name]: revisionId
+            }
+          }
+        }
       }),
       [parent, kind, name, id, revisionId]
     );
@@ -8254,36 +8262,34 @@ var wp;
   // packages/core-data/build-module/hooks/use-entity-prop.mjs
   var import_element7 = __toESM(require_element(), 1);
   var import_data15 = __toESM(require_data(), 1);
+  var REVISION_QUERY = {
+    context: "edit",
+    _fields: "id,date,author,meta,title,excerpt,content.raw"
+  };
   function useEntityProp(kind, name, prop, _id) {
     const providerId = useEntityId(kind, name);
     const id = _id ?? providerId;
     const context = (0, import_element7.useContext)(EntityContext);
-    const revisionId = context?.revisionId;
+    const revisionId = String(id) === String(providerId) ? context?.revision?.[kind]?.[name] : void 0;
     const { value, fullValue } = (0, import_data15.useSelect)(
       (select5) => {
         if (revisionId) {
-          const revisions = select5(STORE_NAME).getRevisions(
+          const revision = select5(STORE_NAME).getRevision(
             kind,
             name,
             id,
-            {
-              per_page: -1,
-              context: "edit",
-              _fields: "id,date,author,meta,title.raw,excerpt.raw,content.raw"
-            }
+            revisionId,
+            REVISION_QUERY
           );
-          const entityConfig = select5(STORE_NAME).getEntityConfig(
-            kind,
-            name
-          );
-          const revKey = entityConfig?.revisionKey || DEFAULT_ENTITY_KEY;
-          const revision = revisions?.find(
-            (r2) => r2[revKey] === revisionId
-          );
-          return revision ? {
-            value: revision[prop]?.raw ?? revision[prop],
-            fullValue: revision[prop]
-          } : {};
+          const propValue = revision?.[prop];
+          if (propValue === void 0) {
+            return {};
+          }
+          const isRawAttribute = propValue !== null && typeof propValue === "object" && "raw" in propValue;
+          return {
+            value: isRawAttribute ? propValue.raw : propValue,
+            fullValue: propValue
+          };
         }
         const { getEntityRecord: getEntityRecord3, getEditedEntityRecord: getEditedEntityRecord3 } = select5(STORE_NAME);
         const record = getEntityRecord3(kind, name, id);
