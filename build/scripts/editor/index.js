@@ -105171,7 +105171,7 @@ ${content}
           /* @__PURE__ */ (0, import_jsx_runtime531.jsxs)("div", { className: "editor-post-publish-panel__content", children: [
             isPrePublish && /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(prepublish_default, { children: PrePublishExtension && /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(PrePublishExtension, {}) }),
             isPostPublish && /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(PostPublishPanelPostpublish, { focusOnMount: true, children: PostPublishExtension && /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(PostPublishExtension, {}) }),
-            isSaving && /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components212.Spinner, {})
+            isSaving && /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components212.Spinner, { "data-testid": "post-publish-panel-spinner" })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime531.jsx)("div", { className: "editor-post-publish-panel__footer", children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(
             import_components212.CheckboxControl,
