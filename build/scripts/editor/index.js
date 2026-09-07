@@ -46986,6 +46986,7 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime235.jsx)("br", {}),
             (0, import_i18n73.__)("Leave empty if decorative.")
           ] }),
+          disabled: field.isDisabled({ item: data, field }),
           rows: 2
         }
       );
@@ -47282,6 +47283,7 @@ var wp;
           label: field.label,
           value: getRawContent(data.caption) || "",
           onChange: (value) => onChange({ caption: value }),
+          disabled: field.isDisabled({ item: data, field }),
           rows: 2
         }
       );
@@ -47321,6 +47323,7 @@ var wp;
           label: field.label,
           value: getRawContent(data.description) || "",
           onChange: (value) => onChange({ description: value }),
+          disabled: field.isDisabled({ item: data, field }),
           rows: 5
         }
       );

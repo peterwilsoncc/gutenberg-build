@@ -45220,6 +45220,7 @@ If there's a particular need for this, please submit a feature request at https:
             /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("br", {}),
             (0, import_i18n62.__)("Leave empty if decorative.")
           ] }),
+          disabled: field.isDisabled({ item: data, field }),
           rows: 2
         }
       );
@@ -45516,6 +45517,7 @@ If there's a particular need for this, please submit a feature request at https:
           label: field.label,
           value: getRawContent(data.caption) || "",
           onChange: (value) => onChange({ caption: value }),
+          disabled: field.isDisabled({ item: data, field }),
           rows: 2
         }
       );
@@ -45568,6 +45570,7 @@ If there's a particular need for this, please submit a feature request at https:
           label: field.label,
           value: getRawContent(data.description) || "",
           onChange: (value) => onChange({ description: value }),
+          disabled: field.isDisabled({ item: data, field }),
           rows: 5
         }
       );
