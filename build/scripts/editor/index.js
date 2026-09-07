@@ -6753,7 +6753,7 @@ var wp;
     return prefix2;
   }
   function getEditedPostSlug(state2) {
-    return getEditedPostAttribute(state2, "slug") || (0, import_url.cleanForSlug)(getEditedPostAttribute(state2, "title")) || getCurrentPostId(state2);
+    return getEditedPostAttribute(state2, "slug") || getEditedPostAttribute(state2, "generated_slug") || (0, import_url.cleanForSlug)(getEditedPostAttribute(state2, "title")) || getCurrentPostId(state2);
   }
   function getPermalinkParts(state2) {
     const permalinkTemplate = getEditedPostAttribute(
@@ -8446,7 +8446,7 @@ var wp;
     if (typeof item !== "object") {
       return "";
     }
-    return item.slug || (0, import_url2.cleanForSlug)(getItemTitle(item)) || item.id.toString();
+    return item.slug || item.generated_slug || (0, import_url2.cleanForSlug)(getItemTitle(item)) || item.id.toString();
   };
 
   // packages/fields/build-module/fields/slug/slug-edit.mjs
