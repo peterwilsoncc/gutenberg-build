@@ -72153,7 +72153,7 @@ var wp;
     } else {
       description = (0, import_i18n107.__)("These blocks are editable using overrides.");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(import_components108.__experimentalText, { children: description });
+    return /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(Text, { children: description });
   }
   function PatternOverridesDropdown({
     icon,
