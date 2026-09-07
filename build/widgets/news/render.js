@@ -38865,9 +38865,7 @@ var isNoneOperatorDefinition = {
       return !filterValue.some(
         (fv) => fieldValue.includes(fv)
       );
-    }
-    const fieldValueType = typeof fieldValue;
-    if (fieldValueType === "string" || fieldValueType === "number") {
+    } else if (typeof fieldValue === "string" || typeof fieldValue === "number") {
       return !filterValue.includes(fieldValue);
     }
     return false;
@@ -38897,9 +38895,7 @@ var OPERATORS = [
         return filterValue.some(
           (fv) => fieldValue.includes(fv)
         );
-      }
-      const fieldValueType = typeof fieldValue;
-      if (fieldValueType === "string" || fieldValueType === "number") {
+      } else if (typeof fieldValue === "string" || typeof fieldValue === "number") {
         return filterValue.includes(fieldValue);
       }
       return false;
@@ -38927,9 +38923,13 @@ var OPERATORS = [
       if (!filterValue?.length) {
         return true;
       }
-      return filterValue.every((value) => {
-        return field.getValue({ item })?.includes(value);
-      });
+      const fieldValue = field.getValue({ item });
+      if (!Array.isArray(fieldValue)) {
+        return false;
+      }
+      return filterValue.every(
+        (value) => fieldValue.includes(value)
+      );
     },
     selection: "multi"
   },
@@ -43238,7 +43238,6 @@ var email_default = {
     // Multiple selection
     OPERATOR_IS_ANY,
     OPERATOR_IS_NONE,
-    OPERATOR_IS_ALL,
     OPERATOR_IS_NOT_ALL
   ],
   format: {},
@@ -43352,7 +43351,6 @@ var integer_default = {
     // Multiple-selection
     OPERATOR_IS_ANY,
     OPERATOR_IS_NONE,
-    OPERATOR_IS_ALL,
     OPERATOR_IS_NOT_ALL
   ],
   format: format2,
@@ -43435,7 +43433,6 @@ var number_default = {
     // Multiple-selection
     OPERATOR_IS_ANY,
     OPERATOR_IS_NONE,
-    OPERATOR_IS_ALL,
     OPERATOR_IS_NOT_ALL
   ],
   format: format3,
@@ -43468,7 +43465,6 @@ var text_default = {
     // Multiple selection
     OPERATOR_IS_ANY,
     OPERATOR_IS_NONE,
-    OPERATOR_IS_ALL,
     OPERATOR_IS_NOT_ALL
   ],
   format: {},
@@ -43920,7 +43916,6 @@ var telephone_default = {
     // Multiple selection
     OPERATOR_IS_ANY,
     OPERATOR_IS_NONE,
-    OPERATOR_IS_ALL,
     OPERATOR_IS_NOT_ALL
   ],
   format: {},
@@ -44032,7 +44027,6 @@ var url_default = {
     // Multiple selection
     OPERATOR_IS_ANY,
     OPERATOR_IS_NONE,
-    OPERATOR_IS_ALL,
     OPERATOR_IS_NOT_ALL
   ],
   format: {},

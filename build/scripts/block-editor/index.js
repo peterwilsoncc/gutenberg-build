@@ -95441,9 +95441,7 @@ var wp;
         return !filterValue.some(
           (fv) => fieldValue.includes(fv)
         );
-      }
-      const fieldValueType = typeof fieldValue;
-      if (fieldValueType === "string" || fieldValueType === "number") {
+      } else if (typeof fieldValue === "string" || typeof fieldValue === "number") {
         return !filterValue.includes(fieldValue);
       }
       return false;
@@ -95473,9 +95471,7 @@ var wp;
           return filterValue.some(
             (fv) => fieldValue.includes(fv)
           );
-        }
-        const fieldValueType = typeof fieldValue;
-        if (fieldValueType === "string" || fieldValueType === "number") {
+        } else if (typeof fieldValue === "string" || typeof fieldValue === "number") {
           return filterValue.includes(fieldValue);
         }
         return false;
@@ -95503,9 +95499,13 @@ var wp;
         if (!filterValue?.length) {
           return true;
         }
-        return filterValue.every((value) => {
-          return field.getValue({ item })?.includes(value);
-        });
+        const fieldValue = field.getValue({ item });
+        if (!Array.isArray(fieldValue)) {
+          return false;
+        }
+        return filterValue.every(
+          (value) => fieldValue.includes(value)
+        );
       },
       selection: "multi"
     },
@@ -98553,7 +98553,6 @@ var wp;
       // Multiple selection
       OPERATOR_IS_ANY,
       OPERATOR_IS_NONE,
-      OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
     format: {},
@@ -98667,7 +98666,6 @@ var wp;
       // Multiple-selection
       OPERATOR_IS_ANY,
       OPERATOR_IS_NONE,
-      OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
     format: format2,
@@ -98750,7 +98748,6 @@ var wp;
       // Multiple-selection
       OPERATOR_IS_ANY,
       OPERATOR_IS_NONE,
-      OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
     format: format3,
@@ -98783,7 +98780,6 @@ var wp;
       // Multiple selection
       OPERATOR_IS_ANY,
       OPERATOR_IS_NONE,
-      OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
     format: {},
@@ -99235,7 +99231,6 @@ var wp;
       // Multiple selection
       OPERATOR_IS_ANY,
       OPERATOR_IS_NONE,
-      OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
     format: {},
@@ -99347,7 +99342,6 @@ var wp;
       // Multiple selection
       OPERATOR_IS_ANY,
       OPERATOR_IS_NONE,
-      OPERATOR_IS_ALL,
       OPERATOR_IS_NOT_ALL
     ],
     format: {},
