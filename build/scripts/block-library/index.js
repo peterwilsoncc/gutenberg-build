@@ -72939,26 +72939,20 @@ ${text}
     useDeprecatedTextAlign(props);
     const { attributes: attributes2, setAttributes, insertBlocksAfter } = props;
     const { level, levelOptions } = attributes2;
-    const { canUserEdit, tagline } = (0, import_data136.useSelect)((select10) => {
-      const { canUser, getEntityRecord, getEditedEntityRecord } = select10(import_core_data84.store);
-      const canEdit = canUser("update", {
+    const canUserEdit = (0, import_data136.useSelect)(
+      (select10) => select10(import_core_data84.store).canUser("update", {
         kind: "root",
         name: "site"
-      });
-      const settings117 = canEdit ? getEditedEntityRecord("root", "site") : {};
-      const readOnlySettings = getEntityRecord("root", "__unstableBase");
-      return {
-        canUserEdit: canEdit,
-        tagline: canEdit ? settings117?.description : readOnlySettings?.description
-      };
-    }, []);
+      }),
+      []
+    );
+    const [tagline, setTagline] = (0, import_core_data84.useEntityProp)(
+      "root",
+      canUserEdit ? "site" : "__unstableBase",
+      "description",
+      void 0
+    );
     const TagName2 = level === 0 ? "p" : `h${level}`;
-    const { editEntityRecord } = (0, import_data136.useDispatch)(import_core_data84.store);
-    function setTagline(newTagline) {
-      editEntityRecord("root", "site", void 0, {
-        description: newTagline
-      });
-    }
     const blockProps = (0, import_block_editor234.useBlockProps)({
       className: !canUserEdit && !tagline && "wp-block-site-tagline__placeholder"
     });
@@ -73211,27 +73205,21 @@ ${text}
     useDeprecatedTextAlign(props);
     const { attributes: attributes2, setAttributes } = props;
     const { level, levelOptions, isLink, linkTarget } = attributes2;
-    const { canUserEdit, title } = (0, import_data137.useSelect)((select10) => {
-      const { canUser, getEntityRecord, getEditedEntityRecord } = select10(import_core_data85.store);
-      const canEdit = canUser("update", {
+    const canUserEdit = (0, import_data137.useSelect)(
+      (select10) => select10(import_core_data85.store).canUser("update", {
         kind: "root",
         name: "site"
-      });
-      const settings117 = canEdit ? getEditedEntityRecord("root", "site") : {};
-      const readOnlySettings = getEntityRecord("root", "__unstableBase");
-      return {
-        canUserEdit: canEdit,
-        title: canEdit ? settings117?.title : readOnlySettings?.name
-      };
-    }, []);
-    const { editEntityRecord } = (0, import_data137.useDispatch)(import_core_data85.store);
+      }),
+      []
+    );
+    const [title, setSiteTitle] = (0, import_core_data85.useEntityProp)(
+      "root",
+      canUserEdit ? "site" : "__unstableBase",
+      canUserEdit ? "title" : "name",
+      void 0
+    );
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockEditingMode = (0, import_block_editor235.useBlockEditingMode)();
-    function setTitle(newTitle) {
-      editEntityRecord("root", "site", void 0, {
-        title: newTitle.trim()
-      });
-    }
     const TagName2 = level === 0 ? "p" : `h${level}`;
     const blockProps = (0, import_block_editor235.useBlockProps)({
       className: !canUserEdit && !title && "wp-block-site-title__placeholder"
@@ -73244,7 +73232,7 @@ ${text}
         "aria-label": (0, import_i18n229.__)("Site title text"),
         placeholder: (0, import_i18n229.__)("Write site title\u2026"),
         value: title,
-        onChange: setTitle,
+        onChange: (newTitle) => setSiteTitle(newTitle.trim()),
         allowedFormats: [],
         disableLineBreaks: true
       }
