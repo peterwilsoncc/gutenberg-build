@@ -106045,7 +106045,6 @@ ${content}
   var import_html_entities28 = __toESM(require_html_entities(), 1);
   var import_data177 = __toESM(require_data(), 1);
   var import_block_editor59 = __toESM(require_block_editor(), 1);
-  var import_keycodes15 = __toESM(require_keycodes(), 1);
   var import_blocks27 = __toESM(require_blocks(), 1);
   var import_rich_text4 = __toESM(require_rich_text(), 1);
   var import_compose72 = __toESM(require_compose(), 1);
@@ -106170,12 +106169,18 @@ ${content}
     function onEnterPress() {
       insertDefaultBlock2(void 0, void 0, 0);
     }
-    function onKeyDown(event) {
-      if (event.keyCode === import_keycodes15.ENTER) {
-        event.preventDefault();
-        onEnterPress();
+    const enterRef = (0, import_compose72.useRefEffect)((element) => {
+      function onBeforeInput(event) {
+        if (event.inputType === "insertParagraph" || event.inputType === "insertLineBreak") {
+          event.preventDefault();
+          onEnterPress();
+        }
       }
-    }
+      element.addEventListener("beforeinput", onBeforeInput);
+      return () => {
+        element.removeEventListener("beforeinput", onBeforeInput);
+      };
+    }, []);
     function onPaste(event) {
       const clipboardData = event.clipboardData;
       let plainText = "";
@@ -106219,7 +106224,7 @@ ${content}
       /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(
         "h1",
         {
-          ref: (0, import_compose72.useMergeRefs)([richTextRef, focusRef]),
+          ref: (0, import_compose72.useMergeRefs)([richTextRef, focusRef, enterRef]),
           contentEditable: !isEditingContentOnlySection && !isPreview,
           className,
           "aria-label": decodedPlaceholder,
@@ -106227,7 +106232,6 @@ ${content}
           "aria-multiline": "true",
           onFocus: onSelect,
           onBlur: onUnselect,
-          onKeyDown,
           onPaste,
           style
         }
@@ -108691,7 +108695,7 @@ ${content}
   var import_keyboard_shortcuts7 = __toESM(require_keyboard_shortcuts(), 1);
 
   // packages/editor/build-module/utils/keyboard-shortcut.mjs
-  var import_keycodes16 = __toESM(require_keycodes(), 1);
+  var import_keycodes15 = __toESM(require_keycodes(), 1);
   function getKeyboardShortcut({ character, modifier } = {}) {
     if (!character) {
       return null;
@@ -108704,9 +108708,9 @@ ${content}
       };
     }
     return {
-      ariaKeyShortcut: import_keycodes16.ariaKeyShortcut[modifier](character),
-      displayShortcut: import_keycodes16.displayShortcut[modifier](character),
-      label: import_keycodes16.shortcutAriaLabel[modifier](character)
+      ariaKeyShortcut: import_keycodes15.ariaKeyShortcut[modifier](character),
+      displayShortcut: import_keycodes15.displayShortcut[modifier](character),
+      label: import_keycodes15.shortcutAriaLabel[modifier](character)
     };
   }
 
@@ -109378,7 +109382,7 @@ ${content}
   var import_block_editor72 = __toESM(require_block_editor(), 1);
   var import_preferences20 = __toESM(require_preferences(), 1);
   var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_keycodes17 = __toESM(require_keycodes(), 1);
+  var import_keycodes16 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime572 = __toESM(require_jsx_runtime(), 1);
   var ZoomOutToggle = ({ disabled: disabled2 }) => {
     const { isZoomOut, showIconLabels, isDistractionFree } = (0, import_data207.useSelect)(
@@ -109408,7 +109412,7 @@ ${content}
         keyCombination: {
           // `primaryShift+0` (`ctrl+shift+0`) is the shortcut for switching
           // to input mode in Windows, so apply a different key combination.
-          modifier: (0, import_keycodes17.isAppleOS)() ? "primaryShift" : "secondary",
+          modifier: (0, import_keycodes16.isAppleOS)() ? "primaryShift" : "secondary",
           character: "0"
         }
       });
@@ -111739,7 +111743,7 @@ ${content}
   var import_compose84 = __toESM(require_compose(), 1);
   var import_element365 = __toESM(require_element(), 1);
   var import_preferences23 = __toESM(require_preferences(), 1);
-  var import_keycodes18 = __toESM(require_keycodes(), 1);
+  var import_keycodes17 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime580 = __toESM(require_jsx_runtime(), 1);
   var { PrivateInserterLibrary } = unlock(import_block_editor77.privateApis);
   function InserterSidebar() {
@@ -111785,7 +111789,7 @@ ${content}
     }, [inserterSidebarToggleRef2, setIsInserterOpened2]);
     const closeOnEscape = (0, import_element365.useCallback)(
       (event) => {
-        if (event.keyCode === import_keycodes18.ESCAPE && !event.defaultPrevented) {
+        if (event.keyCode === import_keycodes17.ESCAPE && !event.defaultPrevented) {
           event.preventDefault();
           closeInserterSidebar();
         }
@@ -111823,7 +111827,7 @@ ${content}
   var import_element366 = __toESM(require_element(), 1);
   var import_i18n312 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts9 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_keycodes19 = __toESM(require_keycodes(), 1);
+  var import_keycodes18 = __toESM(require_keycodes(), 1);
 
   // packages/editor/build-module/components/list-view-sidebar/list-view-outline.mjs
   var import_components243 = __toESM(require_components(), 1);
@@ -111861,7 +111865,7 @@ ${content}
     }, [getListViewToggleRef2, setIsListViewOpened2]);
     const closeOnEscape = (0, import_element366.useCallback)(
       (event) => {
-        if (event.keyCode === import_keycodes19.ESCAPE && !event.defaultPrevented) {
+        if (event.keyCode === import_keycodes18.ESCAPE && !event.defaultPrevented) {
           event.preventDefault();
           closeListView();
         }
@@ -116193,7 +116197,7 @@ ${content}
   var import_element394 = __toESM(require_element(), 1);
   var import_i18n344 = __toESM(require_i18n(), 1);
   var import_html_entities34 = __toESM(require_html_entities(), 1);
-  var import_keycodes20 = __toESM(require_keycodes(), 1);
+  var import_keycodes19 = __toESM(require_keycodes(), 1);
   var import_notices35 = __toESM(require_notices(), 1);
   var import_preferences28 = __toESM(require_preferences(), 1);
   var import_jsx_runtime617 = __toESM(require_jsx_runtime(), 1);
@@ -116276,7 +116280,7 @@ ${content}
                   "aria-label": tooltipText,
                   onClick: () => setIsSwapModalOpen(true),
                   onKeyDown: (event) => {
-                    if (event.keyCode === import_keycodes20.ENTER || event.keyCode === import_keycodes20.SPACE) {
+                    if (event.keyCode === import_keycodes19.ENTER || event.keyCode === import_keycodes19.SPACE) {
                       event.preventDefault();
                       setIsSwapModalOpen(true);
                     }
@@ -116882,7 +116886,7 @@ ${content}
   var import_components272 = __toESM(require_components(), 1);
   var import_i18n351 = __toESM(require_i18n(), 1);
   var import_compose97 = __toESM(require_compose(), 1);
-  var import_keycodes22 = __toESM(require_keycodes(), 1);
+  var import_keycodes21 = __toESM(require_keycodes(), 1);
   var import_dom34 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-mention-completer.mjs
@@ -116928,7 +116932,7 @@ ${content}
   var import_components271 = __toESM(require_components(), 1);
   var import_compose96 = __toESM(require_compose(), 1);
   var import_element399 = __toESM(require_element(), 1);
-  var import_keycodes21 = __toESM(require_keycodes(), 1);
+  var import_keycodes20 = __toESM(require_keycodes(), 1);
   var import_rich_text8 = __toESM(require_rich_text(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/rich-text-control/utils.mjs
@@ -117088,7 +117092,7 @@ ${content}
         if (disabled2) {
           return;
         }
-        const onKeyDown = (0, import_keycodes21.withIgnoreIMEEvents)((event) => {
+        const onKeyDown = (0, import_keycodes20.withIgnoreIMEEvents)((event) => {
           if (event.key !== "Enter" || event.defaultPrevented || event.metaKey || event.ctrlKey) {
             return;
           }
@@ -117282,7 +117286,7 @@ ${content}
           submit();
         },
         onKeyDown: (event) => {
-          if (import_keycodes22.isKeyboardEvent.primary(event, "Enter")) {
+          if (import_keycodes21.isKeyboardEvent.primary(event, "Enter")) {
             event.preventDefault();
             submit();
             return;
@@ -117333,7 +117337,7 @@ ${content}
                     variant: "primary",
                     type: "submit",
                     disabled: isDisabled,
-                    shortcut: import_keycodes22.displayShortcut.primary("Enter"),
+                    shortcut: import_keycodes21.displayShortcut.primary("Enter"),
                     children: /* @__PURE__ */ (0, import_jsx_runtime629.jsx)(import_components272.__experimentalTruncate, { children: labels?.submit ?? (0, import_i18n351.__)("Add note") })
                   }
                 )

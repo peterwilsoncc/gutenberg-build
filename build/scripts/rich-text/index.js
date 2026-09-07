@@ -2244,18 +2244,6 @@ var wp;
   ]);
   var EMPTY_ACTIVE_FORMATS2 = [];
   var PLACEHOLDER_ATTR_NAME = "data-rich-text-placeholder";
-  function fixPlaceholderSelection(defaultView) {
-    const selection = defaultView.getSelection();
-    const { anchorNode, anchorOffset } = selection;
-    if (anchorNode.nodeType !== anchorNode.ELEMENT_NODE) {
-      return;
-    }
-    const targetNode = anchorNode.childNodes[anchorOffset];
-    if (!targetNode || targetNode.nodeType !== targetNode.ELEMENT_NODE || !targetNode.hasAttribute(PLACEHOLDER_ATTR_NAME)) {
-      return;
-    }
-    selection.collapseToStart();
-  }
   var input_and_selection_default = (props) => (element) => {
     const { ownerDocument } = element;
     const { defaultView } = ownerDocument;
@@ -2302,6 +2290,9 @@ var wp;
       }
       const { start, end, text } = createRecord();
       const oldRecord = record.current;
+      if (text.length === 0) {
+        applyRecord({ ...oldRecord, start, end });
+      }
       selectionSnapshot = {
         anchorNode: selection.anchorNode,
         anchorOffset: selection.anchorOffset,
@@ -2315,9 +2306,6 @@ var wp;
         return;
       }
       if (start === oldRecord.start && end === oldRecord.end) {
-        if (oldRecord.text.length === 0 && start === 0) {
-          fixPlaceholderSelection(defaultView);
-        }
         return;
       }
       const newValue = {
@@ -2364,6 +2352,7 @@ var wp;
             selection.collapse(element, 0);
           }
         }
+        window.queueMicrotask(handleSelectionChange);
         return;
       }
       if (!isSelected) {

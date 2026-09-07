@@ -43156,13 +43156,12 @@ ${text}
   var import_components62 = __toESM(require_components(), 1);
   var import_compose34 = __toESM(require_compose(), 1);
   var import_data59 = __toESM(require_data(), 1);
-  var import_keycodes6 = __toESM(require_keycodes(), 1);
+  var import_keycodes5 = __toESM(require_keycodes(), 1);
 
   // packages/block-library/build-module/list-item/hooks/use-enter.mjs
   var import_blocks47 = __toESM(require_blocks(), 1);
   var import_compose31 = __toESM(require_compose(), 1);
   var import_rich_text5 = __toESM(require_rich_text(), 1);
-  var import_keycodes3 = __toESM(require_keycodes(), 1);
   var import_data55 = __toESM(require_data(), 1);
   var import_block_editor119 = __toESM(require_block_editor(), 1);
 
@@ -43305,8 +43304,8 @@ ${text}
     const registry = (0, import_data55.useRegistry)();
     return (0, import_compose31.useRefEffect)(
       (element) => {
-        function onKeyDown(event) {
-          if (event.defaultPrevented || event.keyCode !== import_keycodes3.ENTER) {
+        function onBeforeInput(event) {
+          if (event.defaultPrevented || event.inputType !== "insertParagraph") {
             return;
           }
           const select10 = registry.select(import_block_editor119.store);
@@ -43358,8 +43357,8 @@ ${text}
         }
         return subscribeOwnedListener(
           element,
-          "keydown",
-          onKeyDown,
+          "beforeinput",
+          onBeforeInput,
           true
         );
       },
@@ -43370,7 +43369,7 @@ ${text}
   // packages/block-library/build-module/list-item/hooks/use-tab.mjs
   var import_compose32 = __toESM(require_compose(), 1);
   var import_rich_text6 = __toESM(require_rich_text(), 1);
-  var import_keycodes4 = __toESM(require_keycodes(), 1);
+  var import_keycodes3 = __toESM(require_keycodes(), 1);
   var import_block_editor120 = __toESM(require_block_editor(), 1);
   var import_data56 = __toESM(require_data(), 1);
   var import_dom14 = __toESM(require_dom(), 1);
@@ -43381,13 +43380,13 @@ ${text}
       (element) => {
         function onKeyDown(event) {
           const { keyCode, shiftKey, altKey, metaKey, ctrlKey } = event;
-          if (event.defaultPrevented || keyCode !== import_keycodes4.SPACE && keyCode !== import_keycodes4.TAB || // Shift selects outdent; other modifiers pass through.
+          if (event.defaultPrevented || keyCode !== import_keycodes3.SPACE && keyCode !== import_keycodes3.TAB || // Shift selects outdent; other modifiers pass through.
           altKey || metaKey || ctrlKey) {
             return;
           }
           const { getSelectionStart, getSelectionEnd } = registry.select(import_block_editor120.store);
           const isAtStart = getSelectionStart().offset === 0 && getSelectionEnd().offset === 0;
-          if (!isAtStart && !(keyCode === import_keycodes4.TAB && (0, import_dom14.isEntirelySelected)(element))) {
+          if (!isAtStart && !(keyCode === import_keycodes3.TAB && (0, import_dom14.isEntirelySelected)(element))) {
             return;
           }
           const move = shiftKey ? outdentListItems : indentListItems;
@@ -43408,7 +43407,7 @@ ${text}
 
   // packages/block-library/build-module/list-item/hooks/use-multi-select-tab.mjs
   var import_compose33 = __toESM(require_compose(), 1);
-  var import_keycodes5 = __toESM(require_keycodes(), 1);
+  var import_keycodes4 = __toESM(require_keycodes(), 1);
   var import_block_editor121 = __toESM(require_block_editor(), 1);
   var import_data57 = __toESM(require_data(), 1);
   function useMultiSelectTab(clientId) {
@@ -43437,7 +43436,7 @@ ${text}
         }
         function onKeyDown(event) {
           const { keyCode, shiftKey, altKey, metaKey, ctrlKey } = event;
-          if (keyCode !== import_keycodes5.TAB || event.defaultPrevented || altKey || metaKey || ctrlKey) {
+          if (keyCode !== import_keycodes4.TAB || event.defaultPrevented || altKey || metaKey || ctrlKey) {
             return;
           }
           if (!event.target.contains(element)) {
@@ -43616,7 +43615,7 @@ ${text}
         {
           icon: (0, import_i18n104.isRTL)() ? format_outdent_rtl_default : format_outdent_default,
           title: (0, import_i18n104.__)("Outdent"),
-          shortcut: import_keycodes6.displayShortcut.shift("Tab"),
+          shortcut: import_keycodes5.displayShortcut.shift("Tab"),
           description: (0, import_i18n104.__)("Outdent list item"),
           disabled: !canOutdent,
           onClick: () => outdentListItems(registry)
@@ -52362,7 +52361,7 @@ ${text}
   var import_blocks64 = __toESM(require_blocks(), 1);
   var import_data91 = __toESM(require_data(), 1);
   var import_components93 = __toESM(require_components(), 1);
-  var import_keycodes7 = __toESM(require_keycodes(), 1);
+  var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_i18n146 = __toESM(require_i18n(), 1);
   var import_block_editor157 = __toESM(require_block_editor(), 1);
   var import_url17 = __toESM(require_url(), 1);
@@ -52539,7 +52538,7 @@ ${text}
       customBackgroundColor
     } = getColors(context, !isTopLevelLink);
     function onKeyDown(event) {
-      if (import_keycodes7.isKeyboardEvent.primary(event, "k")) {
+      if (import_keycodes6.isKeyboardEvent.primary(event, "k")) {
         event.preventDefault();
         event.stopPropagation();
         setIsLinkOpen(true);
@@ -52598,7 +52597,7 @@ ${text}
             name: "link",
             icon: link_default,
             title: (0, import_i18n146.__)("Link"),
-            shortcut: import_keycodes7.displayShortcut.primary("k"),
+            shortcut: import_keycodes6.displayShortcut.primary("k"),
             onClick: () => {
               setIsLinkOpen(true);
             }
@@ -53101,7 +53100,7 @@ ${text}
   // packages/block-library/build-module/navigation-submenu/edit.mjs
   var import_data92 = __toESM(require_data(), 1);
   var import_components95 = __toESM(require_components(), 1);
-  var import_keycodes8 = __toESM(require_keycodes(), 1);
+  var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_i18n148 = __toESM(require_i18n(), 1);
   var import_block_editor160 = __toESM(require_block_editor(), 1);
   var import_url18 = __toESM(require_url(), 1);
@@ -53239,7 +53238,7 @@ ${text}
       customBackgroundColor
     } = getColors(context, parentCount > 0);
     function onKeyDown(event) {
-      if (import_keycodes8.isKeyboardEvent.primary(event, "k")) {
+      if (import_keycodes7.isKeyboardEvent.primary(event, "k")) {
         event.preventDefault();
         event.stopPropagation();
         setIsLinkOpen(true);
@@ -53301,7 +53300,7 @@ ${text}
             name: "link",
             icon: link_default,
             title: (0, import_i18n148.__)("Link"),
-            shortcut: import_keycodes8.displayShortcut.primary("k"),
+            shortcut: import_keycodes7.displayShortcut.primary("k"),
             onClick: () => {
               setIsLinkOpen(true);
             }
@@ -55084,7 +55083,6 @@ ${text}
   var import_element112 = __toESM(require_element(), 1);
   var import_compose44 = __toESM(require_compose(), 1);
   var import_rich_text7 = __toESM(require_rich_text(), 1);
-  var import_keycodes9 = __toESM(require_keycodes(), 1);
   var import_data98 = __toESM(require_data(), 1);
   var import_block_editor169 = __toESM(require_block_editor(), 1);
   var import_blocks74 = __toESM(require_blocks(), 1);
@@ -55103,11 +55101,11 @@ ${text}
     const propsRef = (0, import_element112.useRef)(props);
     propsRef.current = props;
     return (0, import_compose44.useRefEffect)((element) => {
-      function onKeyDown(event) {
+      function onBeforeInput(event) {
         if (event.defaultPrevented) {
           return;
         }
-        if (event.keyCode !== import_keycodes9.ENTER) {
+        if (event.inputType !== "insertParagraph") {
           return;
         }
         const { content, clientId } = propsRef.current;
@@ -55165,7 +55163,12 @@ ${text}
           selectionChange(middle.clientId);
         });
       }
-      return subscribeOwnedListener3(element, "keydown", onKeyDown, true);
+      return subscribeOwnedListener3(
+        element,
+        "beforeinput",
+        onBeforeInput,
+        true
+      );
     }, []);
   }
 
@@ -60679,7 +60682,7 @@ ${text}
   var import_block_editor186 = __toESM(require_block_editor(), 1);
   var import_components105 = __toESM(require_components(), 1);
   var import_i18n171 = __toESM(require_i18n(), 1);
-  var import_keycodes10 = __toESM(require_keycodes(), 1);
+  var import_keycodes8 = __toESM(require_keycodes(), 1);
   var import_data108 = __toESM(require_data(), 1);
   var import_blocks86 = __toESM(require_blocks(), 1);
   var import_jsx_runtime398 = __toESM(require_jsx_runtime(), 1);
@@ -60773,7 +60776,7 @@ ${text}
           ),
           renderToggle: ({ isOpen, onToggle }) => {
             const openOnArrowDown = (event) => {
-              if (!isOpen && event.keyCode === import_keycodes10.DOWN) {
+              if (!isOpen && event.keyCode === import_keycodes8.DOWN) {
                 event.preventDefault();
                 onToggle();
               }
@@ -73485,7 +73488,7 @@ ${text}
   var import_blocks110 = __toESM(require_blocks(), 1);
 
   // packages/block-library/build-module/social-link/edit.mjs
-  var import_keycodes11 = __toESM(require_keycodes(), 1);
+  var import_keycodes9 = __toESM(require_keycodes(), 1);
   var import_data138 = __toESM(require_data(), 1);
   var import_block_editor236 = __toESM(require_block_editor(), 1);
   var import_element145 = __toESM(require_element(), 1);
@@ -73799,7 +73802,7 @@ ${text}
                 hideLabelFromVision: true,
                 disableSuggestions: true,
                 onKeyDown: (event) => {
-                  if (!!url || event.defaultPrevented || ![import_keycodes11.BACKSPACE, import_keycodes11.DELETE].includes(
+                  if (!!url || event.defaultPrevented || ![import_keycodes9.BACKSPACE, import_keycodes9.DELETE].includes(
                     event.keyCode
                   )) {
                     return;
@@ -73871,7 +73874,7 @@ ${text}
       ref: (0, import_compose61.useMergeRefs)([setPopoverAnchor, ref]),
       onClick: () => setPopover(true),
       onKeyDown: (event) => {
-        if (event.keyCode === import_keycodes11.ENTER) {
+        if (event.keyCode === import_keycodes9.ENTER) {
           event.preventDefault();
           setPopover(true);
         }

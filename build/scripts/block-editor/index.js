@@ -58773,6 +58773,12 @@ var wp;
     } = (0, import_data50.useDispatch)(store);
     return (0, import_compose39.useRefEffect)((node) => {
       function onBeforeInput(event) {
+        if (event.inputType === "insertParagraph" && !event.defaultPrevented && !hasMultiSelection2()) {
+          onKeyDown(event);
+          if (event.defaultPrevented) {
+            return;
+          }
+        }
         if (node.contentEditable !== "true") {
           return;
         }
@@ -58790,8 +58796,9 @@ var wp;
           return;
         }
         if (!hasMultiSelection2()) {
-          if (event.keyCode === import_keycodes8.ENTER) {
-            if (event.shiftKey) {
+          if (event.keyCode === import_keycodes8.ENTER || event.inputType === "insertParagraph") {
+            if (event.shiftKey || // Editables are handled on beforeinput.
+            event.type === "keydown" && event.target.ownerDocument.activeElement.isContentEditable) {
               return;
             }
             const clientId = getSelectedBlockClientId2();
@@ -84981,9 +84988,8 @@ var wp;
       } else if (onSplitAtEnd && start2 === end && end === text.length) {
         event.preventDefault();
         onSplitAtEnd();
-      } else if (onReplace && onSplit) {
-        event.__deprecatedOnSplit = true;
-      } else if (!supportsSplitting && !disableLineBreaks && !event.defaultPrevented) {
+      } else if (!supportsSplitting && // The deprecated onSplit is flagged on the beforeinput event.
+      !(onReplace && onSplit) && !disableLineBreaks && !event.defaultPrevented) {
         event.preventDefault();
         if (
           // For some blocks it's desirable to split at the end of the
@@ -85002,23 +85008,29 @@ var wp;
         }
       }
     }
-    function onDefaultKeyDown(event) {
-      if (event.defaultPrevented) {
+    function onBeforeInput(event) {
+      if (event.inputType !== "insertParagraph") {
+        return;
+      }
+      const { onReplace, onSplit } = props.current;
+      if (onReplace && onSplit) {
+        event.__deprecatedOnSplit = true;
+      }
+    }
+    function onDefaultBeforeInput(event) {
+      if (event.defaultPrevented || event.inputType !== "insertParagraph" && event.inputType !== "insertLineBreak") {
         return;
       }
       if (event.target !== element && !ownsSelection3(element)) {
         return;
       }
-      if (event.keyCode !== import_keycodes25.ENTER) {
-        return;
-      }
       event.preventDefault();
     }
     const { defaultView } = element.ownerDocument;
-    const unsubscribeDefaultKeyDown = subscribeDelegatedListener4(
+    const unsubscribeDefaultBeforeInput = subscribeDelegatedListener4(
       defaultView,
-      "keydown",
-      onDefaultKeyDown
+      "beforeinput",
+      onDefaultBeforeInput
     );
     const unsubscribeKeyDown = subscribeOwnedListener8(
       element,
@@ -85026,9 +85038,16 @@ var wp;
       onKeyDown,
       true
     );
+    const unsubscribeBeforeInput = subscribeOwnedListener8(
+      element,
+      "beforeinput",
+      onBeforeInput,
+      true
+    );
     return () => {
-      unsubscribeDefaultKeyDown();
+      unsubscribeDefaultBeforeInput();
       unsubscribeKeyDown();
+      unsubscribeBeforeInput();
     };
   };
 
