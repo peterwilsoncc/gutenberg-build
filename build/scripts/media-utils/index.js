@@ -46170,6 +46170,7 @@ If there's a particular need for this, please submit a feature request at https:
   var LAYOUT_PICKER_TABLE2 = "pickerTable";
   var NOTICES_CONTEXT = "media-modal";
   var NOTICE_ID_UPLOAD_PROGRESS = "media-modal-upload-progress";
+  var ATTACHED_TO_FIELD = "attached_to";
   var defaultQueryParams = {
     page: 1,
     search: ""
@@ -46238,8 +46239,15 @@ If there's a particular need for this, please submit a feature request at https:
     isDismissible = true,
     modalClass,
     search = true,
-    searchLabel = (0, import_i18n79.__)("Search media")
+    searchLabel = (0, import_i18n79.__)("Search media"),
+    postId,
+    postType
   }) {
+    const attachedToPostId = Number.isInteger(postId) ? postId : void 0;
+    const uploadedToLabel = (0, import_data14.useSelect)(
+      (select3) => attachedToPostId && postType ? select3(import_core_data6.store).getPostType(postType)?.labels?.uploaded_to_this_item : void 0,
+      [attachedToPostId, postType]
+    );
     const [selection, setSelection] = (0, import_element149.useState)(
       () => getSelectionFromValue(value)
     );
@@ -46248,7 +46256,12 @@ If there's a particular need for this, please submit a feature request at https:
     const [queryParams, setQueryParams] = (0, import_element149.useState)(
       () => defaultQueryParams
     );
-    const { view, updateView, isModified, resetToDefault } = useView({
+    const {
+      view: persistedView,
+      updateView,
+      isModified,
+      resetToDefault
+    } = useView({
       kind: "postType",
       name: "attachment",
       slug: "media-modal",
@@ -46256,16 +46269,40 @@ If there's a particular need for this, please submit a feature request at https:
       queryParams,
       onChangeQueryParams: setQueryParams
     });
+    const [attachedToFilter, setAttachedToFilter] = (0, import_element149.useState)();
+    const view = (0, import_element149.useMemo)(() => {
+      const filters = (persistedView.filters ?? []).filter(
+        ({ field }) => field !== ATTACHED_TO_FIELD
+      );
+      return {
+        ...persistedView,
+        filters: attachedToFilter ? [...filters, attachedToFilter] : filters
+      };
+    }, [persistedView, attachedToFilter]);
     const handleChangeView = (0, import_element149.useCallback)(
       (nextView) => {
         const normalizedView = { ...nextView };
         if (normalizedView.startPosition === void 0) {
           delete normalizedView.startPosition;
         }
-        updateView(normalizedView);
+        setAttachedToFilter(
+          normalizedView.filters?.find(
+            ({ field }) => field === ATTACHED_TO_FIELD
+          )
+        );
+        updateView({
+          ...normalizedView,
+          filters: normalizedView.filters?.filter(
+            ({ field }) => field !== ATTACHED_TO_FIELD
+          )
+        });
       },
       [updateView]
     );
+    const handleReset = (0, import_element149.useCallback)(() => {
+      setAttachedToFilter(void 0);
+      resetToDefault();
+    }, [resetToDefault]);
     const queryArgs = (0, import_element149.useMemo)(() => {
       const filters = {};
       view.filters?.forEach((filter) => {
@@ -46288,6 +46325,17 @@ If there's a particular need for this, please submit a feature request at https:
         }
         if (filter.field === "mime_type") {
           filters.mime_type = filter.value;
+        }
+        if (filter.field === ATTACHED_TO_FIELD && filter.operator === "isAny") {
+          const parents = (Array.isArray(filter.value) ? filter.value : []).map((optionValue) => {
+            if (optionValue === "unattached") {
+              return 0;
+            }
+            return optionValue === "current" ? attachedToPostId : void 0;
+          }).filter((parent) => parent !== void 0);
+          if (parents.length) {
+            filters.parent = parents;
+          }
         }
       });
       if (!filters.media_type && !filters.mime_type && allowedTypes && !allowedTypes.includes("*")) {
@@ -46321,7 +46369,7 @@ If there's a particular need for this, please submit a feature request at https:
         _embed: "author,wp:attached-to",
         ...filters
       };
-    }, [view, allowedTypes]);
+    }, [view, allowedTypes, attachedToPostId]);
     const handleBatchComplete = (0, import_element149.useCallback)(
       (attachments) => {
         const uploadedIds = attachments.map((attachment) => String(attachment.id)).filter(Boolean);
@@ -46391,9 +46439,28 @@ If there's a particular need for this, please submit a feature request at https:
         filesize_default,
         media_dimensions_default,
         mime_type_default,
-        attached_to_default
+        {
+          ...attached_to_default,
+          // The shared field definition is not filterable, because the
+          // "Uploaded to this post" option only makes sense with the modal's
+          // post context. Values name options, and `queryArgs` above
+          // translates them to `parent`.
+          elements: [
+            ...attachedToPostId ? [
+              {
+                value: "current",
+                label: uploadedToLabel ?? (0, import_i18n79.__)("Uploaded to this item")
+              }
+            ] : [],
+            {
+              value: "unattached",
+              label: (0, import_i18n79._x)("Unattached", "media items")
+            }
+          ],
+          filterBy: { operators: ["isAny"] }
+        }
       ],
-      []
+      [attachedToPostId, uploadedToLabel]
     );
     const actions = (0, import_element149.useMemo)(
       () => [
@@ -46574,7 +46641,7 @@ If there's a particular need for this, please submit a feature request at https:
               config: dataViewsConfig,
               getItemId: (item) => String(item.id),
               itemListLabel: (0, import_i18n79.__)("Media items"),
-              onReset: isModified ? resetToDefault : false,
+              onReset: isModified || attachedToFilter ? handleReset : false,
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(
                   Stack,
