@@ -72046,7 +72046,7 @@ var wp;
           onSwitch: onClose
         }
       ),
-      isUsingBindings && /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(import_components106.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(import_components106.__experimentalText, { className: "block-editor-block-switcher__binding-indicator", children: connectedBlockDescription }) })
+      isUsingBindings && /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(import_components106.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime342.jsx)(Text, { className: "block-editor-block-switcher__binding-indicator", children: connectedBlockDescription }) })
     ] });
   }
   var BlockSwitcher = ({ children, clientIds, label, text }) => {
