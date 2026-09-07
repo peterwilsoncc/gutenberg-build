@@ -93817,11 +93817,11 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime480.jsxs)(import_components210.__experimentalVStack, { className: "block-editor-inspector-popover-header", spacing: 4, children: [
       /* @__PURE__ */ (0, import_jsx_runtime480.jsxs)(import_components210.__experimentalHStack, { alignment: "center", children: [
         /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
-          import_components210.__experimentalHeading,
+          Text,
           {
+            variant: "heading-md",
+            render: /* @__PURE__ */ (0, import_jsx_runtime480.jsx)("h2", {}),
             className: "block-editor-inspector-popover-header__heading",
-            level: 2,
-            size: 13,
             children: title
           }
         ),
@@ -93850,7 +93850,7 @@ var wp;
           }
         )
       ] }),
-      help && /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(import_components210.__experimentalText, { children: help })
+      help && /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(Text, { children: help })
     ] });
   }
 
