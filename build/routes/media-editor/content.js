@@ -33967,6 +33967,9 @@ var InteractionController = class {
     this.drag = null;
     this.touch = null;
     this.lastTap = null;
+    this.wheelGestureActive = false;
+    this.isDragging = false;
+    this.isZooming = false;
   }
 };
 
@@ -34081,11 +34084,36 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       controllerRef.current = null;
     };
   }, [startPlacementGesture, stopPlacementGesture]);
+  const isDisabled = options?.disabled ?? false;
+  (0, import_element110.useEffect)(() => {
+    if (!isDisabled) {
+      return;
+    }
+    controllerRef.current?.destroy();
+    setIsDragging(false);
+    setIsZooming(false);
+    setIsKeyboardPanning(false);
+    const wasGestureOpen = isGestureActive || isKeyboardGestureActiveRef.current;
+    if (isKeyboardGestureActiveRef.current) {
+      isKeyboardGestureActiveRef.current = false;
+      clearTimeout(keyboardInteractionTimerRef.current);
+    }
+    stopPlacementGesture();
+    if (wasGestureOpen) {
+      optionsRef.current?.onGestureEnd?.();
+    }
+  }, [isDisabled, isGestureActive, stopPlacementGesture]);
   const onPointerDown = (0, import_element110.useCallback)((e2) => {
+    if (optionsRef.current?.disabled) {
+      return;
+    }
     const el = e2.currentTarget;
     controllerRef.current?.handlePointerDown(e2.nativeEvent, el);
   }, []);
   const onTouchStart = (0, import_element110.useCallback)((e2) => {
+    if (optionsRef.current?.disabled) {
+      return;
+    }
     const el = e2.currentTarget;
     const rect = el.getBoundingClientRect();
     controllerRef.current?.handleTouchStart(
@@ -34096,6 +34124,9 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
   }, []);
   const onKeyDown = (0, import_element110.useCallback)(
     (e2) => {
+      if (optionsRef.current?.disabled) {
+        return;
+      }
       if (isHandledKeyboardPan(e2.nativeEvent)) {
         setIsKeyboardPanning(true);
         signalKeyboardGesture();
@@ -34107,6 +34138,9 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
     [signalKeyboardGesture]
   );
   const onWheelNative = (0, import_element110.useCallback)((e2) => {
+    if (optionsRef.current?.disabled) {
+      return;
+    }
     controllerRef.current?.handleWheel(e2);
   }, []);
   return {
@@ -34535,11 +34569,6 @@ function RectangleStencil({
       activePointerResizeRef.current?.cancel(false);
     };
   }, []);
-  (0, import_element113.useEffect)(() => {
-    if (isResizeDisabled) {
-      activePointerResizeRef.current?.cancel();
-    }
-  }, [isResizeDisabled]);
   const latestHandlersRef = (0, import_element113.useRef)(null);
   const normalizedRatio = (0, import_element113.useMemo)(() => {
     if (!hasLockedRatio || imageSize.width === 0) {
@@ -34688,6 +34717,17 @@ function RectangleStencil({
     onResizeEnd,
     snapCropRect
   };
+  (0, import_element113.useEffect)(() => {
+    if (!isResizeDisabled) {
+      return;
+    }
+    activePointerResizeRef.current?.cancel();
+    if (keyboardResizeActiveRef.current) {
+      clearTimeout(keyboardSettleTimerRef.current);
+      keyboardResizeActiveRef.current = false;
+      latestHandlersRef.current?.onResizeEnd?.();
+    }
+  }, [isResizeDisabled]);
   const handleKeyDown = (0, import_element113.useCallback)(
     (handle, event) => {
       const key = event.key;
@@ -34835,6 +34875,7 @@ function RectangleStencil({
               }
             },
             onKeyDown: (event) => handleKeyDown(pos, event),
+            disabled: isResizeDisabled,
             "aria-label": getHandleLabel(pos),
             "aria-describedby": resizeHandleDescriptionId
           },
@@ -35178,6 +35219,7 @@ function CropperInner({
   aspectRatio,
   freeformCrop = false,
   focusOnMount = false,
+  disabled: disabled2 = false,
   onImageLoaded,
   onStateChange,
   onGestureStart,
@@ -35452,7 +35494,8 @@ function CropperInner({
     minZoom: effectiveMinZoom,
     maxZoom,
     onGestureStart,
-    onGestureEnd
+    onGestureEnd,
+    disabled: disabled2
   });
   const canvasHandlers = {
     ...handlers,
@@ -35485,7 +35528,7 @@ function CropperInner({
       }
     },
     onPointerDown: (event) => {
-      if (isResizingRef.current || isTouchPinchingRef.current || event.pointerType === "touch" && event.isPrimary === false) {
+      if (disabled2 || isResizingRef.current || isTouchPinchingRef.current || event.pointerType === "touch" && event.isPrimary === false) {
         event.preventDefault();
         return;
       }
@@ -35783,7 +35826,7 @@ function CropperInner({
                       onEscape: handleEscape,
                       aspectRatio,
                       freeformCrop,
-                      isResizeDisabled: isTouchPinching,
+                      isResizeDisabled: isTouchPinching || disabled2,
                       stencilTransition: settleStencilTransition,
                       cropBounds,
                       minCropSize,
@@ -36189,7 +36232,8 @@ var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCanvas({
   isPlacementActive = false,
   onGestureStart,
-  onGestureEnd
+  onGestureEnd,
+  disabled: disabled2 = false
 }) {
   const { media } = useMediaEditorContext();
   const controller = useMediaEditor();
@@ -36267,7 +36311,8 @@ function MediaEditorCanvas({
             showGrid: "interactive",
             isPlacementActive,
             onGestureStart: handleGestureStart,
-            onGestureEnd: handleGestureEnd
+            onGestureEnd: handleGestureEnd,
+            disabled: disabled2
           }
         )
       }
@@ -36393,6 +36438,11 @@ function useRulerDrag(options) {
     }
   }, []);
   (0, import_element122.useEffect)(() => endDrag, [endDrag]);
+  (0, import_element122.useEffect)(() => {
+    if (disabled2) {
+      endDrag();
+    }
+  }, [disabled2, endDrag]);
   const onPointerDown = (0, import_element122.useCallback)(
     (event) => {
       if (disabled2 || event.button !== 0) {
@@ -36417,7 +36467,7 @@ function useRulerDrag(options) {
   const onPointerMove = (0, import_element122.useCallback)(
     (event) => {
       const state = latestRef.current;
-      if (!state.dragging) {
+      if (disabled2 || !state.dragging) {
         return;
       }
       const requestedStep = event.shiftKey ? step / 2 : step;
@@ -36440,7 +36490,7 @@ function useRulerDrag(options) {
         onChange(next);
       }
     },
-    [onChange, min4, max4, step, pixelsPerStep]
+    [disabled2, onChange, min4, max4, step, pixelsPerStep]
   );
   return {
     onPointerDown,
@@ -36544,6 +36594,7 @@ function RotationRuler(props) {
     {
       className: clsx_default("rotation-ruler", className),
       role: "presentation",
+      "data-testid": "rotation-ruler",
       "data-disabled": disabled2 || void 0,
       ...dragHandlers,
       children: [
@@ -36619,7 +36670,8 @@ function RotationRuler(props) {
 // packages/media-editor/build-module/components/media-editor-fine-rotation/index.mjs
 var import_jsx_runtime162 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorFineRotation({
-  onPlacementControlInteraction
+  onPlacementControlInteraction,
+  disabled: disabled2 = false
 }) {
   const { state, setRotation } = useMediaEditor();
   const rotationGestureHandlers = useCropGestureHandlers({
@@ -36651,7 +36703,8 @@ function MediaEditorFineRotation({
           min: -MAX_ROTATION_OFFSET,
           max: MAX_ROTATION_OFFSET,
           value: fineOffset,
-          onChange: handleRotationSlider
+          onChange: handleRotationSlider,
+          disabled: disabled2
         }
       )
     }
@@ -36704,7 +36757,8 @@ function MediaEditorImageControls({
   withLabels = false,
   showAspectRatioControl = false,
   aspectRatioPresets,
-  zoomFactor = DEFAULT_ZOOM_FACTOR
+  zoomFactor = DEFAULT_ZOOM_FACTOR,
+  disabled: disabled2 = false
 }) {
   const { state, setFlip, snapRotate90, setZoom } = useMediaEditor();
   const { aspectRatioValue, setAspectRatioValue, aspectRatioOptions } = useCropOptions({ aspectRatioPresets });
@@ -36723,6 +36777,8 @@ function MediaEditorImageControls({
         icon: rotate_left_default,
         label: (0, import_i18n41.__)("Rotate 90\xB0 counter-clockwise"),
         showTooltip: true,
+        disabled: disabled2,
+        accessibleWhenDisabled: true,
         onClick: () => snapRotate90(-1)
       }
     ),
@@ -36733,6 +36789,8 @@ function MediaEditorImageControls({
         icon: rotate_right_default,
         label: (0, import_i18n41.__)("Rotate 90\xB0 clockwise"),
         showTooltip: true,
+        disabled: disabled2,
+        accessibleWhenDisabled: true,
         onClick: () => snapRotate90(1)
       }
     )
@@ -36746,6 +36804,8 @@ function MediaEditorImageControls({
         label: (0, import_i18n41.__)("Flip horizontal"),
         showTooltip: true,
         isPressed: state.flip.horizontal,
+        disabled: disabled2,
+        accessibleWhenDisabled: true,
         onClick: () => setFlip({
           horizontal: !state.flip.horizontal,
           vertical: state.flip.vertical
@@ -36760,6 +36820,8 @@ function MediaEditorImageControls({
         label: (0, import_i18n41.__)("Flip vertical"),
         showTooltip: true,
         isPressed: state.flip.vertical,
+        disabled: disabled2,
+        accessibleWhenDisabled: true,
         onClick: () => setFlip({
           horizontal: state.flip.horizontal,
           vertical: !state.flip.vertical
@@ -36775,7 +36837,7 @@ function MediaEditorImageControls({
         icon: plus_default,
         label: (0, import_i18n41.__)("Zoom in"),
         showTooltip: true,
-        disabled: state.zoom >= MAX_ZOOM,
+        disabled: disabled2 || state.zoom >= MAX_ZOOM,
         accessibleWhenDisabled: true,
         onClick: () => zoomByFactor(zoomFactor)
       }
@@ -36787,7 +36849,7 @@ function MediaEditorImageControls({
         icon: line_solid_default,
         label: (0, import_i18n41.__)("Zoom out"),
         showTooltip: true,
-        disabled: state.zoom <= minZoom,
+        disabled: disabled2 || state.zoom <= minZoom,
         accessibleWhenDisabled: true,
         onClick: () => zoomByFactor(1 / zoomFactor)
       }
@@ -36799,7 +36861,7 @@ function MediaEditorImageControls({
       icon: aspect_ratio_default,
       label: (0, import_i18n41.__)("Aspect ratio"),
       popoverProps: { placement: "top" },
-      toggleProps: { size: "compact" },
+      toggleProps: { size: "compact", disabled: disabled2 },
       children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(import_components33.MenuGroup, { label: (0, import_i18n41.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
         const value = preset.value.toString();
         const isSelected = value === aspectRatioValue;
@@ -36809,7 +36871,11 @@ function MediaEditorImageControls({
             role: "menuitemradio",
             isSelected,
             icon: isSelected ? check_default : void 0,
+            disabled: disabled2,
             onClick: () => {
+              if (disabled2) {
+                return;
+              }
               setAspectRatioValue(value);
               onClose();
             },
@@ -36896,7 +36962,8 @@ var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCropPanel({
   aspectRatioValue,
   onAspectRatioChange,
-  aspectRatioOptions
+  aspectRatioOptions,
+  disabled: disabled2 = false
 }) {
   return (
     // Tag the whole panel as a crop-control region so the modal's
@@ -36910,13 +36977,14 @@ function MediaEditorCropPanel({
         ...{ [CROP_CONTROL_ATTR]: true },
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime164.jsx)("h2", {}), children: (0, import_i18n42.__)("Crop options") }),
-          /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(MediaEditorImageControls, { withLabels: true }),
+          /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(MediaEditorImageControls, { withLabels: true, disabled: disabled2 }),
           /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
             import_components34.SelectControl,
             {
               label: (0, import_i18n42.__)("Aspect ratio"),
               value: aspectRatioValue,
               onChange: onAspectRatioChange,
+              disabled: disabled2,
               options: aspectRatioOptions.map((preset) => ({
                 label: preset.label,
                 value: preset.value.toString()
@@ -37284,7 +37352,8 @@ var CROP_PANEL = "crop";
 function MediaEditorSidebar({
   tabs,
   activeTab,
-  onSelectTab
+  onSelectTab,
+  disabled: disabled2 = false
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(
     navigable_region_default,
@@ -37300,7 +37369,15 @@ function MediaEditorSidebar({
             value: activeTab,
             onValueChange: onSelectTab,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("div", { className: "media-editor__tablist", children: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(tabs_exports.List, { variant: "minimal", children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(tabs_exports.Tab, { value: tab.id, children: tab.title }, tab.id)) }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("div", { className: "media-editor__tablist", children: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(tabs_exports.List, { variant: "minimal", children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
+                tabs_exports.Tab,
+                {
+                  value: tab.id,
+                  disabled: disabled2,
+                  children: tab.title
+                },
+                tab.id
+              )) }) }),
               tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
                 tabs_exports.Panel,
                 {
@@ -37409,6 +37486,9 @@ function HistoryActions() {
     redoCrop();
   };
   const handleReset = () => {
+    if (isUndoRedoDisabled) {
+      return;
+    }
     beginGesture();
     reset();
     onReset();
@@ -37426,7 +37506,7 @@ function HistoryActions() {
           {
             size: "compact",
             variant: "tertiary",
-            disabled: !isDirty,
+            disabled: isUndoRedoDisabled || !isDirty,
             accessibleWhenDisabled: true,
             onClick: handleReset,
             children: (0, import_i18n45.__)("Reset")
@@ -37625,6 +37705,9 @@ function MediaEditorContent({
     onSaved
   });
   const handleChange = (updates) => {
+    if (isSaving) {
+      return;
+    }
     editEntityRecord("postType", "attachment", id, updates);
   };
   const discardAndClose = () => {
@@ -37650,7 +37733,7 @@ function MediaEditorContent({
       const isMetadataField = (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) && !target.closest(`[${CROP_CONTROL_ATTR}]`);
       if (!isMetadataField) {
         event.preventDefault();
-        if (isCropInteractionActive) {
+        if (isCropInteractionActive || isSaving) {
           return;
         }
         if (isRedoShortcut) {
@@ -37685,7 +37768,8 @@ function MediaEditorContent({
     MediaEditorImageControls,
     {
       showAspectRatioControl: true,
-      aspectRatioPresets
+      aspectRatioPresets,
+      disabled: isSaving
     }
   ) : null;
   const tabs = [
@@ -37698,7 +37782,8 @@ function MediaEditorContent({
           {
             aspectRatioValue,
             onAspectRatioChange: setAspectRatioValue,
-            aspectRatioOptions
+            aspectRatioOptions,
+            disabled: isSaving
           }
         )
       }
@@ -37712,7 +37797,8 @@ function MediaEditorContent({
   const ruler = isImage ? /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
     MediaEditorFineRotation,
     {
-      onPlacementControlInteraction: signalPlacementControlInteraction
+      onPlacementControlInteraction: signalPlacementControlInteraction,
+      disabled: isSaving
     }
   ) : null;
   const children = /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(
@@ -37720,7 +37806,16 @@ function MediaEditorContent({
     {
       value: media ?? void 0,
       onChange: handleChange,
-      settings: { fields },
+      settings: {
+        // Disable the fields while saving, so the guard in
+        // `handleChange` is not silently swallowing typing.
+        // `readOnly` would swap the field's layout mid-save;
+        // disabled keeps it in place and greys it out.
+        fields: isSaving ? fields.map((field) => ({
+          ...field,
+          isDisabled: true
+        })) : fields
+      },
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(import_components36.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(
           "div",
@@ -37740,7 +37835,8 @@ function MediaEditorContent({
                       {
                         isPlacementActive,
                         onGestureStart: handleCanvasGestureStart,
-                        onGestureEnd: handleCanvasGestureEnd
+                        onGestureEnd: handleCanvasGestureEnd,
+                        disabled: isSaving
                       }
                     ) : /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(MediaPreview, {}) }),
                     isImage && /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)("div", { className: "media-editor__canvas-toolbar", children: [
@@ -37757,7 +37853,8 @@ function MediaEditorContent({
                   activeTab: tabs.some(
                     (tab) => tab.id === activePanel
                   ) ? activePanel : DETAILS_PANEL,
-                  onSelectTab: selectPanel
+                  onSelectTab: selectPanel,
+                  disabled: isSaving
                 }
               )
             ]
@@ -37788,7 +37885,10 @@ function MediaEditorContent({
     isSaving,
     hasMedia: !!media,
     hasChanges,
-    isUndoRedoDisabled: isCropInteractionActive,
+    // Saving freezes the whole edit surface: `save()` reads the
+    // modifiers once and then awaits, so anything changed after that
+    // would be silently dropped when the save resolves.
+    isUndoRedoDisabled: isCropInteractionActive || isSaving,
     aspectRatioPresets,
     isWide,
     activePanel,

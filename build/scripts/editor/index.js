@@ -68342,6 +68342,9 @@ If there's a particular need for this, please submit a feature request at https:
       this.drag = null;
       this.touch = null;
       this.lastTap = null;
+      this.wheelGestureActive = false;
+      this.isDragging = false;
+      this.isZooming = false;
     }
   };
 
@@ -68456,11 +68459,36 @@ If there's a particular need for this, please submit a feature request at https:
         controllerRef.current = null;
       };
     }, [startPlacementGesture, stopPlacementGesture]);
+    const isDisabled = options?.disabled ?? false;
+    (0, import_element208.useEffect)(() => {
+      if (!isDisabled) {
+        return;
+      }
+      controllerRef.current?.destroy();
+      setIsDragging(false);
+      setIsZooming(false);
+      setIsKeyboardPanning(false);
+      const wasGestureOpen = isGestureActive || isKeyboardGestureActiveRef.current;
+      if (isKeyboardGestureActiveRef.current) {
+        isKeyboardGestureActiveRef.current = false;
+        clearTimeout(keyboardInteractionTimerRef.current);
+      }
+      stopPlacementGesture();
+      if (wasGestureOpen) {
+        optionsRef.current?.onGestureEnd?.();
+      }
+    }, [isDisabled, isGestureActive, stopPlacementGesture]);
     const onPointerDown = (0, import_element208.useCallback)((e3) => {
+      if (optionsRef.current?.disabled) {
+        return;
+      }
       const el = e3.currentTarget;
       controllerRef.current?.handlePointerDown(e3.nativeEvent, el);
     }, []);
     const onTouchStart = (0, import_element208.useCallback)((e3) => {
+      if (optionsRef.current?.disabled) {
+        return;
+      }
       const el = e3.currentTarget;
       const rect = el.getBoundingClientRect();
       controllerRef.current?.handleTouchStart(
@@ -68471,6 +68499,9 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const onKeyDown = (0, import_element208.useCallback)(
       (e3) => {
+        if (optionsRef.current?.disabled) {
+          return;
+        }
         if (isHandledKeyboardPan(e3.nativeEvent)) {
           setIsKeyboardPanning(true);
           signalKeyboardGesture();
@@ -68482,6 +68513,9 @@ If there's a particular need for this, please submit a feature request at https:
       [signalKeyboardGesture]
     );
     const onWheelNative = (0, import_element208.useCallback)((e3) => {
+      if (optionsRef.current?.disabled) {
+        return;
+      }
       controllerRef.current?.handleWheel(e3);
     }, []);
     return {
@@ -68910,11 +68944,6 @@ If there's a particular need for this, please submit a feature request at https:
         activePointerResizeRef.current?.cancel(false);
       };
     }, []);
-    (0, import_element211.useEffect)(() => {
-      if (isResizeDisabled) {
-        activePointerResizeRef.current?.cancel();
-      }
-    }, [isResizeDisabled]);
     const latestHandlersRef = (0, import_element211.useRef)(null);
     const normalizedRatio = (0, import_element211.useMemo)(() => {
       if (!hasLockedRatio || imageSize.width === 0) {
@@ -69063,6 +69092,17 @@ If there's a particular need for this, please submit a feature request at https:
       onResizeEnd,
       snapCropRect
     };
+    (0, import_element211.useEffect)(() => {
+      if (!isResizeDisabled) {
+        return;
+      }
+      activePointerResizeRef.current?.cancel();
+      if (keyboardResizeActiveRef.current) {
+        clearTimeout(keyboardSettleTimerRef.current);
+        keyboardResizeActiveRef.current = false;
+        latestHandlersRef.current?.onResizeEnd?.();
+      }
+    }, [isResizeDisabled]);
     const handleKeyDown = (0, import_element211.useCallback)(
       (handle, event) => {
         const key = event.key;
@@ -69210,6 +69250,7 @@ If there's a particular need for this, please submit a feature request at https:
                 }
               },
               onKeyDown: (event) => handleKeyDown(pos, event),
+              disabled: isResizeDisabled,
               "aria-label": getHandleLabel(pos),
               "aria-describedby": resizeHandleDescriptionId
             },
@@ -69553,6 +69594,7 @@ If there's a particular need for this, please submit a feature request at https:
     aspectRatio,
     freeformCrop = false,
     focusOnMount = false,
+    disabled: disabled2 = false,
     onImageLoaded,
     onStateChange,
     onGestureStart,
@@ -69827,7 +69869,8 @@ If there's a particular need for this, please submit a feature request at https:
       minZoom: effectiveMinZoom,
       maxZoom,
       onGestureStart,
-      onGestureEnd
+      onGestureEnd,
+      disabled: disabled2
     });
     const canvasHandlers = {
       ...handlers,
@@ -69860,7 +69903,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       },
       onPointerDown: (event) => {
-        if (isResizingRef.current || isTouchPinchingRef.current || event.pointerType === "touch" && event.isPrimary === false) {
+        if (disabled2 || isResizingRef.current || isTouchPinchingRef.current || event.pointerType === "touch" && event.isPrimary === false) {
           event.preventDefault();
           return;
         }
@@ -70158,7 +70201,7 @@ If there's a particular need for this, please submit a feature request at https:
                         onEscape: handleEscape,
                         aspectRatio,
                         freeformCrop,
-                        isResizeDisabled: isTouchPinching,
+                        isResizeDisabled: isTouchPinching || disabled2,
                         stencilTransition: settleStencilTransition,
                         cropBounds,
                         minCropSize,
@@ -70564,7 +70607,8 @@ If there's a particular need for this, please submit a feature request at https:
   function MediaEditorCanvas({
     isPlacementActive = false,
     onGestureStart,
-    onGestureEnd
+    onGestureEnd,
+    disabled: disabled2 = false
   }) {
     const { media } = useMediaEditorContext();
     const controller = useMediaEditor();
@@ -70642,7 +70686,8 @@ If there's a particular need for this, please submit a feature request at https:
               showGrid: "interactive",
               isPlacementActive,
               onGestureStart: handleGestureStart,
-              onGestureEnd: handleGestureEnd
+              onGestureEnd: handleGestureEnd,
+              disabled: disabled2
             }
           )
         }
@@ -70768,6 +70813,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }, []);
     (0, import_element220.useEffect)(() => endDrag, [endDrag]);
+    (0, import_element220.useEffect)(() => {
+      if (disabled2) {
+        endDrag();
+      }
+    }, [disabled2, endDrag]);
     const onPointerDown = (0, import_element220.useCallback)(
       (event) => {
         if (disabled2 || event.button !== 0) {
@@ -70792,7 +70842,7 @@ If there's a particular need for this, please submit a feature request at https:
     const onPointerMove = (0, import_element220.useCallback)(
       (event) => {
         const state2 = latestRef.current;
-        if (!state2.dragging) {
+        if (disabled2 || !state2.dragging) {
           return;
         }
         const requestedStep = event.shiftKey ? step / 2 : step;
@@ -70815,7 +70865,7 @@ If there's a particular need for this, please submit a feature request at https:
           onChange(next);
         }
       },
-      [onChange, min4, max4, step, pixelsPerStep]
+      [disabled2, onChange, min4, max4, step, pixelsPerStep]
     );
     return {
       onPointerDown,
@@ -70919,6 +70969,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         className: clsx_default("rotation-ruler", className),
         role: "presentation",
+        "data-testid": "rotation-ruler",
         "data-disabled": disabled2 || void 0,
         ...dragHandlers,
         children: [
@@ -70994,7 +71045,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-editor/build-module/components/media-editor-fine-rotation/index.mjs
   var import_jsx_runtime351 = __toESM(require_jsx_runtime(), 1);
   function MediaEditorFineRotation({
-    onPlacementControlInteraction
+    onPlacementControlInteraction,
+    disabled: disabled2 = false
   }) {
     const { state: state2, setRotation } = useMediaEditor();
     const rotationGestureHandlers = useCropGestureHandlers({
@@ -71026,7 +71078,8 @@ If there's a particular need for this, please submit a feature request at https:
             min: -MAX_ROTATION_OFFSET,
             max: MAX_ROTATION_OFFSET,
             value: fineOffset,
-            onChange: handleRotationSlider
+            onChange: handleRotationSlider,
+            disabled: disabled2
           }
         )
       }
@@ -71079,7 +71132,8 @@ If there's a particular need for this, please submit a feature request at https:
     withLabels = false,
     showAspectRatioControl = false,
     aspectRatioPresets,
-    zoomFactor = DEFAULT_ZOOM_FACTOR
+    zoomFactor = DEFAULT_ZOOM_FACTOR,
+    disabled: disabled2 = false
   }) {
     const { state: state2, setFlip, snapRotate90, setZoom } = useMediaEditor();
     const { aspectRatioValue, setAspectRatioValue, aspectRatioOptions } = useCropOptions({ aspectRatioPresets });
@@ -71098,6 +71152,8 @@ If there's a particular need for this, please submit a feature request at https:
           icon: rotate_left_default,
           label: (0, import_i18n147.__)("Rotate 90\xB0 counter-clockwise"),
           showTooltip: true,
+          disabled: disabled2,
+          accessibleWhenDisabled: true,
           onClick: () => snapRotate90(-1)
         }
       ),
@@ -71108,6 +71164,8 @@ If there's a particular need for this, please submit a feature request at https:
           icon: rotate_right_default,
           label: (0, import_i18n147.__)("Rotate 90\xB0 clockwise"),
           showTooltip: true,
+          disabled: disabled2,
+          accessibleWhenDisabled: true,
           onClick: () => snapRotate90(1)
         }
       )
@@ -71121,6 +71179,8 @@ If there's a particular need for this, please submit a feature request at https:
           label: (0, import_i18n147.__)("Flip horizontal"),
           showTooltip: true,
           isPressed: state2.flip.horizontal,
+          disabled: disabled2,
+          accessibleWhenDisabled: true,
           onClick: () => setFlip({
             horizontal: !state2.flip.horizontal,
             vertical: state2.flip.vertical
@@ -71135,6 +71195,8 @@ If there's a particular need for this, please submit a feature request at https:
           label: (0, import_i18n147.__)("Flip vertical"),
           showTooltip: true,
           isPressed: state2.flip.vertical,
+          disabled: disabled2,
+          accessibleWhenDisabled: true,
           onClick: () => setFlip({
             horizontal: state2.flip.horizontal,
             vertical: !state2.flip.vertical
@@ -71150,7 +71212,7 @@ If there's a particular need for this, please submit a feature request at https:
           icon: plus_default,
           label: (0, import_i18n147.__)("Zoom in"),
           showTooltip: true,
-          disabled: state2.zoom >= MAX_ZOOM,
+          disabled: disabled2 || state2.zoom >= MAX_ZOOM,
           accessibleWhenDisabled: true,
           onClick: () => zoomByFactor(zoomFactor)
         }
@@ -71162,7 +71224,7 @@ If there's a particular need for this, please submit a feature request at https:
           icon: line_solid_default,
           label: (0, import_i18n147.__)("Zoom out"),
           showTooltip: true,
-          disabled: state2.zoom <= minZoom,
+          disabled: disabled2 || state2.zoom <= minZoom,
           accessibleWhenDisabled: true,
           onClick: () => zoomByFactor(1 / zoomFactor)
         }
@@ -71174,7 +71236,7 @@ If there's a particular need for this, please submit a feature request at https:
         icon: aspect_ratio_default,
         label: (0, import_i18n147.__)("Aspect ratio"),
         popoverProps: { placement: "top" },
-        toggleProps: { size: "compact" },
+        toggleProps: { size: "compact", disabled: disabled2 },
         children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime352.jsx)(import_components85.MenuGroup, { label: (0, import_i18n147.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
           const value = preset.value.toString();
           const isSelected2 = value === aspectRatioValue;
@@ -71184,7 +71246,11 @@ If there's a particular need for this, please submit a feature request at https:
               role: "menuitemradio",
               isSelected: isSelected2,
               icon: isSelected2 ? check_default : void 0,
+              disabled: disabled2,
               onClick: () => {
+                if (disabled2) {
+                  return;
+                }
                 setAspectRatioValue(value);
                 onClose();
               },
@@ -71271,7 +71337,8 @@ If there's a particular need for this, please submit a feature request at https:
   function MediaEditorCropPanel({
     aspectRatioValue,
     onAspectRatioChange,
-    aspectRatioOptions
+    aspectRatioOptions,
+    disabled: disabled2 = false
   }) {
     return (
       // Tag the whole panel as a crop-control region so the modal's
@@ -71285,13 +71352,14 @@ If there's a particular need for this, please submit a feature request at https:
           ...{ [CROP_CONTROL_ATTR]: true },
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime353.jsx)("h2", {}), children: (0, import_i18n148.__)("Crop options") }),
-            /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(MediaEditorImageControls, { withLabels: true }),
+            /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(MediaEditorImageControls, { withLabels: true, disabled: disabled2 }),
             /* @__PURE__ */ (0, import_jsx_runtime353.jsx)(
               import_components86.SelectControl,
               {
                 label: (0, import_i18n148.__)("Aspect ratio"),
                 value: aspectRatioValue,
                 onChange: onAspectRatioChange,
+                disabled: disabled2,
                 options: aspectRatioOptions.map((preset) => ({
                   label: preset.label,
                   value: preset.value.toString()
@@ -71659,7 +71727,8 @@ If there's a particular need for this, please submit a feature request at https:
   function MediaEditorSidebar({
     tabs,
     activeTab,
-    onSelectTab
+    onSelectTab,
+    disabled: disabled2 = false
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime355.jsxs)(
       navigable_region_default,
@@ -71675,7 +71744,15 @@ If there's a particular need for this, please submit a feature request at https:
               value: activeTab,
               onValueChange: onSelectTab,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime355.jsx)("div", { className: "media-editor__tablist", children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(tabs_exports.List, { variant: "minimal", children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(tabs_exports.Tab, { value: tab.id, children: tab.title }, tab.id)) }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime355.jsx)("div", { className: "media-editor__tablist", children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(tabs_exports.List, { variant: "minimal", children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+                  tabs_exports.Tab,
+                  {
+                    value: tab.id,
+                    disabled: disabled2,
+                    children: tab.title
+                  },
+                  tab.id
+                )) }) }),
                 tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
                   tabs_exports.Panel,
                   {
@@ -71784,6 +71861,9 @@ If there's a particular need for this, please submit a feature request at https:
       redoCrop();
     };
     const handleReset = () => {
+      if (isUndoRedoDisabled) {
+        return;
+      }
       beginGesture();
       reset();
       onReset();
@@ -71801,7 +71881,7 @@ If there's a particular need for this, please submit a feature request at https:
             {
               size: "compact",
               variant: "tertiary",
-              disabled: !isDirty,
+              disabled: isUndoRedoDisabled || !isDirty,
               accessibleWhenDisabled: true,
               onClick: handleReset,
               children: (0, import_i18n151.__)("Reset")
@@ -72000,6 +72080,9 @@ If there's a particular need for this, please submit a feature request at https:
       onSaved
     });
     const handleChange = (updates) => {
+      if (isSaving) {
+        return;
+      }
       editEntityRecord("postType", "attachment", id, updates);
     };
     const discardAndClose = () => {
@@ -72025,7 +72108,7 @@ If there's a particular need for this, please submit a feature request at https:
         const isMetadataField = (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) && !target.closest(`[${CROP_CONTROL_ATTR}]`);
         if (!isMetadataField) {
           event.preventDefault();
-          if (isCropInteractionActive) {
+          if (isCropInteractionActive || isSaving) {
             return;
           }
           if (isRedoShortcut) {
@@ -72060,7 +72143,8 @@ If there's a particular need for this, please submit a feature request at https:
       MediaEditorImageControls,
       {
         showAspectRatioControl: true,
-        aspectRatioPresets
+        aspectRatioPresets,
+        disabled: isSaving
       }
     ) : null;
     const tabs = [
@@ -72073,7 +72157,8 @@ If there's a particular need for this, please submit a feature request at https:
             {
               aspectRatioValue,
               onAspectRatioChange: setAspectRatioValue,
-              aspectRatioOptions
+              aspectRatioOptions,
+              disabled: isSaving
             }
           )
         }
@@ -72087,7 +72172,8 @@ If there's a particular need for this, please submit a feature request at https:
     const ruler = isImage ? /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
       MediaEditorFineRotation,
       {
-        onPlacementControlInteraction: signalPlacementControlInteraction
+        onPlacementControlInteraction: signalPlacementControlInteraction,
+        disabled: isSaving
       }
     ) : null;
     const children = /* @__PURE__ */ (0, import_jsx_runtime355.jsxs)(
@@ -72095,7 +72181,16 @@ If there's a particular need for this, please submit a feature request at https:
       {
         value: media ?? void 0,
         onChange: handleChange,
-        settings: { fields: fields2 },
+        settings: {
+          // Disable the fields while saving, so the guard in
+          // `handleChange` is not silently swallowing typing.
+          // `readOnly` would swap the field's layout mid-save;
+          // disabled keeps it in place and greys it out.
+          fields: isSaving ? fields2.map((field) => ({
+            ...field,
+            isDisabled: true
+          })) : fields2
+        },
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime355.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime355.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(import_components88.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime355.jsxs)(
             "div",
@@ -72115,7 +72210,8 @@ If there's a particular need for this, please submit a feature request at https:
                         {
                           isPlacementActive,
                           onGestureStart: handleCanvasGestureStart,
-                          onGestureEnd: handleCanvasGestureEnd
+                          onGestureEnd: handleCanvasGestureEnd,
+                          disabled: isSaving
                         }
                       ) : /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(MediaPreview2, {}) }),
                       isImage && /* @__PURE__ */ (0, import_jsx_runtime355.jsxs)("div", { className: "media-editor__canvas-toolbar", children: [
@@ -72132,7 +72228,8 @@ If there's a particular need for this, please submit a feature request at https:
                     activeTab: tabs.some(
                       (tab) => tab.id === activePanel
                     ) ? activePanel : DETAILS_PANEL,
-                    onSelectTab: selectPanel
+                    onSelectTab: selectPanel,
+                    disabled: isSaving
                   }
                 )
               ]
@@ -72163,7 +72260,10 @@ If there's a particular need for this, please submit a feature request at https:
       isSaving,
       hasMedia: !!media,
       hasChanges,
-      isUndoRedoDisabled: isCropInteractionActive,
+      // Saving freezes the whole edit surface: `save()` reads the
+      // modifiers once and then awaits, so anything changed after that
+      // would be silently dropped when the save resolves.
+      isUndoRedoDisabled: isCropInteractionActive || isSaving,
       aspectRatioPresets,
       isWide,
       activePanel,
