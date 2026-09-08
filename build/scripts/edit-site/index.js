@@ -71064,7 +71064,6 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data51 = __toESM(require_data(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime349 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge } = unlock5(import_components123.privateApis);
   var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
   // packages/global-styles-ui/build-module/pagination/index.mjs

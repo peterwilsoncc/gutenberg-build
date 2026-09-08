@@ -89552,7 +89552,6 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data57 = __toESM(require_data(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime418 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge2 } = unlock6(import_components136.privateApis);
   var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
   function ChangesSummary({ revision, previousRevision }) {
     const changes = getGlobalStylesChanges(
@@ -89696,10 +89695,10 @@ If there's a particular need for this, please submit a feature request at https:
                   )
                 ] }) }),
                 isSelected2 && (areStylesEqual ? /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
-                  WCBadge2,
+                  Badge,
                   {
                     className: "global-styles-ui-screen-revisions__active-badge",
-                    intent: "info",
+                    intent: "informational",
                     children: (0, import_i18n196.__)("Active")
                   }
                 ) : /* @__PURE__ */ (0, import_jsx_runtime418.jsx)(
@@ -114583,7 +114582,7 @@ ${content}
 
   // packages/editor/build-module/components/post-card-panel/index.mjs
   var import_jsx_runtime598 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge3 } = unlock(import_components252.privateApis);
+  var { Badge: WCBadge2 } = unlock(import_components252.privateApis);
   var { getTemplateInfo: getTemplateInfo4 } = unlock(import_core_data132.privateApis);
   function PostCardPanel({
     postType: postType2,
@@ -114680,7 +114679,7 @@ ${content}
                 as: "h2",
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime598.jsx)("span", { className: "editor-post-card-panel__title-name", children: title }),
-                  pageTypeBadge && postIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(WCBadge3, { children: pageTypeBadge })
+                  pageTypeBadge && postIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(WCBadge2, { children: pageTypeBadge })
                 ]
               }
             ),

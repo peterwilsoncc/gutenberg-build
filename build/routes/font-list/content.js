@@ -25542,7 +25542,6 @@ var import_core_data11 = __toESM(require_core_data(), 1);
 var import_data11 = __toESM(require_data(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
 var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
-var { Badge: WCBadge } = unlock3(import_components51.privateApis);
 var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
 // packages/global-styles-ui/build-module/pagination/index.mjs
