@@ -4392,7 +4392,7 @@ return array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'core/navigation-link',
-		'title' => 'Custom Link',
+		'title' => 'Navigation Link',
 		'category' => 'design',
 		'parent' => array(
 			'core/navigation'
