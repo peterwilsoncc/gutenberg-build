@@ -47280,6 +47280,13 @@ function getHideableFields(view, fields2) {
   );
 }
 
+// packages/dataviews/build-module/components/dataviews-layouts/utils/get-table-columns.mjs
+function getTableColumns(view, fields2) {
+  return (view.fields ?? []).filter(
+    (fieldId) => fields2.some((field) => field.id === fieldId)
+  );
+}
+
 // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
 var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
 function WithMenuSeparators({ children }) {
@@ -47299,8 +47306,6 @@ var _HeaderMenu = (0, import_element171.forwardRef)(function HeaderMenu({
   canInsertLeft = true,
   canInsertRight = true
 }, ref) {
-  const visibleFieldIds = view.fields ?? [];
-  const index2 = visibleFieldIds?.indexOf(fieldId);
   const isSorted = view.sort?.field === fieldId;
   let isHidable = false;
   let isSortable = false;
@@ -47319,6 +47324,8 @@ var _HeaderMenu = (0, import_element171.forwardRef)(function HeaderMenu({
   if (!isSortable && !canMove && !isHidable && !canAddFilter) {
     return header;
   }
+  const visibleFieldIds = getTableColumns(view, fields2);
+  const index2 = visibleFieldIds.indexOf(fieldId);
   const hiddenFields = getHideableFields(view, fields2).filter(
     (f2) => !visibleFieldIds.includes(f2.id)
   );
@@ -48082,7 +48089,7 @@ function TableRow({
     showDescription = true,
     infiniteScrollEnabled
   } = view;
-  const columns = view.fields ?? [];
+  const columns = getTableColumns(view, fields2);
   const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
   return /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(
     "tr",
@@ -48259,7 +48266,7 @@ function ViewTable({
   );
   const { showTitle = true, showMedia = true, showDescription = true } = view;
   const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
-  const columns = view.fields ?? [];
+  const columns = getTableColumns(view, fields2);
   const headerMenuRef = (column, index2) => (node) => {
     if (node) {
       headerMenuRefs.current.set(column, {
@@ -50877,7 +50884,7 @@ function TableRow2({
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-  const columns = view.fields ?? [];
+  const columns = getTableColumns(view, fields2);
   const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
   return /* @__PURE__ */ (0, import_jsx_runtime257.jsxs)(
     import_components19.Composite.Item,
@@ -51033,7 +51040,7 @@ function ViewPickerTable({
   );
   const { showTitle = true, showMedia = true, showDescription = true } = view;
   const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
-  const columns = view.fields ?? [];
+  const columns = getTableColumns(view, fields2);
   const headerMenuRef = (column, index2) => (node) => {
     if (node) {
       headerMenuRefs.current.set(column, {
