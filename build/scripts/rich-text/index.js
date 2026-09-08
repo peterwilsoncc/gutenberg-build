@@ -2507,9 +2507,15 @@ var wp;
         "pointerup",
         onPointerUp
       );
+      const unsubscribePointerCancel = subscribeDelegatedListener6(
+        defaultView,
+        "pointercancel",
+        onPointerUp
+      );
       return () => {
         unsubscribePointerDown();
         unsubscribePointerUp();
+        unsubscribePointerCancel();
       };
     };
   }
