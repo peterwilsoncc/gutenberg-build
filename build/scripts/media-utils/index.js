@@ -1675,7 +1675,7 @@ var wp;
   var import_i18n79 = __toESM(require_i18n(), 1);
   var import_core_data6 = __toESM(require_core_data(), 1);
   var import_data14 = __toESM(require_data(), 1);
-  var import_components57 = __toESM(require_components(), 1);
+  var import_components54 = __toESM(require_components(), 1);
 
   // packages/icons/build-module/library/arrow-down.mjs
   var import_primitives = __toESM(require_primitives(), 1);
@@ -45199,42 +45199,33 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/alt_text/index.mjs
   var import_i18n62 = __toESM(require_i18n(), 1);
-  var import_components50 = __toESM(require_components(), 1);
   var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
   var altTextField = {
     id: "alt_text",
     type: "text",
     label: (0, import_i18n62.__)("Alt text"),
+    description: /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(import_jsx_runtime198.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
+        Link,
+        {
+          href: (
+            // translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations.
+            (0, import_i18n62.__)(
+              "https://www.w3.org/WAI/tutorials/images/decision-tree/"
+            )
+          ),
+          openInNewTab: true,
+          children: (0, import_i18n62.__)("Describe the purpose of the image.")
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("br", {}),
+      (0, import_i18n62.__)("Leave empty if decorative.")
+    ] }),
     isVisible: (item) => item?.media_type === "image",
     render: ({ item }) => item?.alt_text || "-",
-    Edit: ({ field, onChange, data }) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
-        import_components50.TextareaControl,
-        {
-          label: field.label,
-          value: data.alt_text || "",
-          onChange: (value) => onChange({ alt_text: value }),
-          help: /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(import_jsx_runtime198.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
-              Link,
-              {
-                href: (
-                  // translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations.
-                  (0, import_i18n62.__)(
-                    "https://www.w3.org/WAI/tutorials/images/decision-tree/"
-                  )
-                ),
-                openInNewTab: true,
-                children: (0, import_i18n62.__)("Describe the purpose of the image.")
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("br", {}),
-            (0, import_i18n62.__)("Leave empty if decorative.")
-          ] }),
-          disabled: field.isDisabled({ item: data, field }),
-          rows: 2
-        }
-      );
+    Edit: {
+      control: "textarea",
+      rows: 2
     },
     enableSorting: false,
     filterBy: false
@@ -45286,7 +45277,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/attached_to/edit.mjs
   var import_core_data3 = __toESM(require_core_data(), 1);
-  var import_components51 = __toESM(require_components(), 1);
+  var import_components50 = __toESM(require_components(), 1);
   var import_i18n64 = __toESM(require_i18n(), 1);
   var import_element142 = __toESM(require_element(), 1);
   var import_compose25 = __toESM(require_compose(), 1);
@@ -45379,7 +45370,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
-      import_components51.ComboboxControl,
+      import_components50.ComboboxControl,
       {
         className: "dataviews-media-field__attached-to",
         isLoading,
@@ -45415,7 +45406,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-fields/build-module/author/view.mjs
   var import_i18n66 = __toESM(require_i18n(), 1);
   var import_element143 = __toESM(require_element(), 1);
-  var import_components52 = __toESM(require_components(), 1);
+  var import_components51 = __toESM(require_components(), 1);
   var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
   function AuthorView({
     item
@@ -45437,7 +45428,7 @@ If there's a particular need for this, please submit a feature request at https:
         setLoadingState("loaded");
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(import_components52.__experimentalHStack, { alignment: "left", spacing: 0, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(import_components51.__experimentalHStack, { alignment: "left", spacing: 0, children: [
       !!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
         "div",
         {
@@ -45456,7 +45447,7 @@ If there's a particular need for this, please submit a feature request at https:
           )
         }
       ),
-      !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime201.jsx)("div", { className: "media-author-field__icon", children: /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(import_components52.Icon, { icon: comment_author_avatar_default }) }),
+      !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime201.jsx)("div", { className: "media-author-field__icon", children: /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(import_components51.Icon, { icon: comment_author_avatar_default }) }),
       /* @__PURE__ */ (0, import_jsx_runtime201.jsx)("span", { className: "media-author-field__name", children: text })
     ] });
   }
@@ -45483,11 +45474,6 @@ If there's a particular need for this, please submit a feature request at https:
       }));
     },
     render: AuthorView,
-    sort: (a2, b2, direction) => {
-      const nameA = a2._embedded?.author?.[0]?.name || "";
-      const nameB = b2._embedded?.author?.[0]?.name || "";
-      return direction === "asc" ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
-    },
     filterBy: {
       operators: ["isAny", "isNone"]
     },
@@ -45497,7 +45483,6 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/caption/index.mjs
   var import_i18n68 = __toESM(require_i18n(), 1);
-  var import_components53 = __toESM(require_components(), 1);
 
   // packages/media-fields/build-module/utils/get-raw-content.mjs
   function getRawContent(content) {
@@ -45514,24 +45499,15 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-fields/build-module/caption/index.mjs
-  var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
   var captionField = {
     id: "caption",
     type: "text",
     label: (0, import_i18n68.__)("Caption"),
     getValue: ({ item }) => getRawContent(item?.caption),
     render: ({ item }) => getRawContent(item?.caption) || "-",
-    Edit: ({ field, onChange, data }) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
-        import_components53.TextareaControl,
-        {
-          label: field.label,
-          value: getRawContent(data.caption) || "",
-          onChange: (value) => onChange({ caption: value }),
-          disabled: field.isDisabled({ item: data, field }),
-          rows: 2
-        }
-      );
+    Edit: {
+      control: "textarea",
+      rows: 2
     },
     enableSorting: false,
     filterBy: false
@@ -45566,25 +45542,16 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/description/index.mjs
   var import_i18n71 = __toESM(require_i18n(), 1);
-  var import_components54 = __toESM(require_components(), 1);
-  var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
   var descriptionField = {
     id: "description",
     type: "text",
     label: (0, import_i18n71.__)("Description"),
     getValue: ({ item }) => getRawContent(item?.description),
-    render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime203.jsx)("div", { children: getRawContent(item?.description) || "-" }),
-    Edit: ({ field, onChange, data }) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
-        import_components54.TextareaControl,
-        {
-          label: field.label,
-          value: getRawContent(data.description) || "",
-          onChange: (value) => onChange({ description: value }),
-          disabled: field.isDisabled({ item: data, field }),
-          rows: 5
-        }
-      );
+    render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime202.jsx)("div", { children: getRawContent(item?.description) || "-" }),
+    Edit: {
+      control: "textarea",
+      rows: 5
     },
     enableSorting: false,
     filterBy: false
@@ -45598,7 +45565,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-fields/build-module/filename/view.mjs
   var import_element144 = __toESM(require_element(), 1);
   var import_url3 = __toESM(require_url(), 1);
-  var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
   var TRUNCATE_LENGTH = 15;
   function FileNameView({
     item
@@ -45611,16 +45578,16 @@ If there's a particular need for this, please submit a feature request at https:
       return "";
     }
     if (fileName.length <= TRUNCATE_LENGTH) {
-      return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)("span", { className: "dataviews-media-field__filename", children: fileName });
+      return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)("span", { className: "dataviews-media-field__filename", children: fileName });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(tooltip_exports.Root, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime203.jsxs)(tooltip_exports.Root, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
         tooltip_exports.Trigger,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime204.jsx)("span", { className: "dataviews-media-field__filename", children: fileName })
+          render: /* @__PURE__ */ (0, import_jsx_runtime203.jsx)("span", { className: "dataviews-media-field__filename", children: fileName })
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(tooltip_exports.Popup, { children: fileName })
+      /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(tooltip_exports.Popup, { children: fileName })
     ] });
   }
 
@@ -45730,7 +45697,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-fields/build-module/media_thumbnail/view.mjs
   var import_data12 = __toESM(require_data(), 1);
   var import_core_data5 = __toESM(require_core_data(), 1);
-  var import_components55 = __toESM(require_components(), 1);
+  var import_components52 = __toESM(require_components(), 1);
   var import_element145 = __toESM(require_element(), 1);
   var import_url5 = __toESM(require_url(), 1);
 
@@ -45766,7 +45733,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-fields/build-module/media_thumbnail/view.mjs
-  var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
   function getBestImageUrl(featuredMedia, configSizes) {
     const sizes = featuredMedia?.media_details?.sizes;
     if (!sizes) {
@@ -45799,23 +45766,23 @@ If there's a particular need for this, please submit a feature request at https:
     item,
     filename
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)(
-      import_components55.__experimentalVStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(
+      import_components52.__experimentalVStack,
       {
         justify: "center",
         alignment: "center",
         className: "dataviews-media-field__media-thumbnail__stack",
         spacing: 0,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
-            import_components55.Icon,
+          /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
+            import_components52.Icon,
             {
               className: "dataviews-media-field__media-thumbnail--icon",
               icon: getMediaTypeFromMimeType(item.mime_type).icon,
               size: 24
             }
           ),
-          !!filename && /* @__PURE__ */ (0, import_jsx_runtime205.jsx)("div", { className: "dataviews-media-field__media-thumbnail__filename", children: /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_components55.__experimentalTruncate, { className: "dataviews-media-field__media-thumbnail__filename__truncate", children: filename }) })
+          !!filename && /* @__PURE__ */ (0, import_jsx_runtime204.jsx)("div", { className: "dataviews-media-field__media-thumbnail__filename", children: /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(import_components52.__experimentalTruncate, { className: "dataviews-media-field__media-thumbnail__filename__truncate", children: filename }) })
         ]
       }
     ) });
@@ -45840,14 +45807,14 @@ If there's a particular need for this, please submit a feature request at https:
         setLoadingState("loaded");
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
       "div",
       {
         className: clsx_default("dataviews-media-field__media-thumbnail", {
           "is-loading": loadingState === "loading",
           "is-loaded": loadingState === "loaded"
         }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
           "img",
           {
             ref: imgRef,
@@ -45886,9 +45853,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const filename = (0, import_url5.getFilename)(featuredMedia.source_url || "");
     if (imageError || getMediaTypeFromMimeType(featuredMedia.mime_type).type !== "image") {
-      return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(FallbackView, { item: featuredMedia, filename: filename || "" });
+      return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(FallbackView, { item: featuredMedia, filename: filename || "" });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
       ImageView,
       {
         item: featuredMedia,
@@ -45938,8 +45905,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-utils/build-module/components/media-upload-modal/upload-status-popover.mjs
   var import_element146 = __toESM(require_element(), 1);
   var import_i18n78 = __toESM(require_i18n(), 1);
-  var import_components56 = __toESM(require_components(), 1);
-  var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
+  var import_components53 = __toESM(require_components(), 1);
+  var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
   function UploadStatusPopover({
     uploadingFiles,
     onDismissError,
@@ -45991,10 +45958,10 @@ If there's a particular need for this, please submit a feature request at https:
       buttonLabel = (0, import_i18n78.__)("Upload complete");
       popoverHeading = (0, import_i18n78.__)("Upload complete");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)("div", { className: "media-upload-modal__upload-status", children: [
-      isUploading && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(import_components56.Spinner, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
-        import_components56.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)("div", { className: "media-upload-modal__upload-status", children: [
+      isUploading && /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_components53.Spinner, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
+        import_components53.Button,
         {
           className: "media-upload-modal__upload-status__trigger",
           size: "compact",
@@ -46006,8 +45973,8 @@ If there's a particular need for this, please submit a feature request at https:
           children: buttonLabel
         }
       ),
-      isOpen && /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
-        import_components56.Popover,
+      isOpen && /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)(
+        import_components53.Popover,
         {
           className: "media-upload-modal__upload-status__popover",
           placement: "top-start",
@@ -46023,15 +45990,15 @@ If there's a particular need for this, please submit a feature request at https:
             updateIsOpen(false);
           },
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime206.jsx)("div", { className: "media-upload-modal__upload-status__header", children: /* @__PURE__ */ (0, import_jsx_runtime206.jsx)("h3", { children: popoverHeading }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime206.jsx)("ul", { className: "media-upload-modal__upload-status__list", children: uploadingFiles.map((file) => /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime205.jsx)("div", { className: "media-upload-modal__upload-status__header", children: /* @__PURE__ */ (0, import_jsx_runtime205.jsx)("h3", { children: popoverHeading }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime205.jsx)("ul", { className: "media-upload-modal__upload-status__list", children: uploadingFiles.map((file) => /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)(
               "li",
               {
                 className: "media-upload-modal__upload-status__item",
                 children: [
-                  file.status === "uploading" && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(import_components56.Spinner, {}),
-                  file.status === "uploaded" && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(import_components56.Icon, { icon: check_default, size: 16 }),
-                  (file.status === "uploading" || file.status === "uploaded") && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
+                  file.status === "uploading" && /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_components53.Spinner, {}),
+                  file.status === "uploaded" && /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_components53.Icon, { icon: check_default, size: 16 }),
+                  (file.status === "uploading" || file.status === "uploaded") && /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(
                     "span",
                     {
                       className: "media-upload-modal__upload-status__filename",
@@ -46039,8 +46006,8 @@ If there's a particular need for this, please submit a feature request at https:
                       children: file.name
                     }
                   ),
-                  file.status === "error" && /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
-                    import_components56.Notice,
+                  file.status === "error" && /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)(
+                    import_components53.Notice,
                     {
                       status: "error",
                       isDismissible: !!onDismissError,
@@ -46172,7 +46139,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/index.mjs
-  var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
   var { useEntityRecordsWithPermissions } = unlock3(import_core_data6.privateApis);
   var LAYOUT_PICKER_GRID2 = "pickerGrid";
   var LAYOUT_PICKER_TABLE2 = "pickerTable";
@@ -46579,8 +46546,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isOpen) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(
-      import_components57.Modal,
+    return /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
+      import_components54.Modal,
       {
         title,
         onRequestClose: handleModalClose,
@@ -46588,14 +46555,14 @@ If there's a particular need for this, please submit a feature request at https:
         className: modalClass,
         overlayClassName: "media-upload-modal",
         size: "fill",
-        headerActions: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
-          import_components57.FormFileUpload,
+        headerActions: /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
+          import_components54.FormFileUpload,
           {
             accept: acceptTypes,
             multiple: true,
             onChange: handleFileSelect,
-            render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
-              import_components57.Button,
+            render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
+              import_components54.Button,
               {
                 onClick: openFileDialog,
                 icon: upload_default,
@@ -46606,8 +46573,8 @@ If there's a particular need for this, please submit a feature request at https:
           }
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
-            import_components57.DropZone,
+          /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
+            import_components54.DropZone,
             {
               onFilesDrop: (files) => {
                 let filteredFiles = files;
@@ -46633,7 +46600,7 @@ If there's a particular need for this, please submit a feature request at https:
               label: (0, import_i18n79.__)("Drop files to upload")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
             dataviews_picker_default,
             {
               data: mediaRecords || [],
@@ -46651,7 +46618,7 @@ If there's a particular need for this, please submit a feature request at https:
               itemListLabel: (0, import_i18n79.__)("Media items"),
               onReset: isModified || attachedToFilter ? handleReset : false,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(
+                /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
                   Stack,
                   {
                     direction: "row",
@@ -46660,7 +46627,7 @@ If there's a particular need for this, please submit a feature request at https:
                     className: "dataviews__view-actions",
                     gap: "xs",
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(
+                      /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
                         Stack,
                         {
                           direction: "row",
@@ -46668,28 +46635,28 @@ If there's a particular need for this, please submit a feature request at https:
                           justify: "start",
                           className: "dataviews__search",
                           children: [
-                            search && /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(dataviews_picker_default.Search, { label: searchLabel }),
-                            /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(dataviews_picker_default.FiltersToggle, {})
+                            search && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(dataviews_picker_default.Search, { label: searchLabel }),
+                            /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(dataviews_picker_default.FiltersToggle, {})
                           ]
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(dataviews_picker_default.LayoutSwitcher, {}),
-                        /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(dataviews_picker_default.ViewConfig, {})
+                      /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(dataviews_picker_default.LayoutSwitcher, {}),
+                        /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(dataviews_picker_default.ViewConfig, {})
                       ] })
                     ]
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(dataviews_picker_default.FiltersToggled, { className: "dataviews-filters__container" }),
-                /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(dataviews_picker_default.Layout, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(
+                /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(dataviews_picker_default.FiltersToggled, { className: "dataviews-filters__container" }),
+                /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(dataviews_picker_default.Layout, {}),
+                /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
                   "div",
                   {
                     className: clsx_default("media-upload-modal__footer", {
                       "is-uploading": uploadingFiles.length > 0
                     }),
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
+                      /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
                         UploadStatusPopover,
                         {
                           uploadingFiles,
@@ -46697,7 +46664,7 @@ If there's a particular need for this, please submit a feature request at https:
                           onOpenChange: handlePopoverOpenChange
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(dataviews_picker_default.Footer, {})
+                      /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(dataviews_picker_default.Footer, {})
                     ]
                   }
                 )
@@ -46705,7 +46672,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ),
           (0, import_element149.createPortal)(
-            /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
               import_notices.SnackbarNotices,
               {
                 className: "media-upload-modal__snackbar",

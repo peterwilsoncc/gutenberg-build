@@ -76105,23 +76105,13 @@ If there's a particular need for this, please submit a feature request at https:
       [records]
     );
     const { notesCount, isLoading: isLoadingNotesCount } = useNotesCount(postIds);
-    const data = (0, import_element250.useMemo)(() => {
-      let processedRecords = records;
-      if (view?.sort?.field === "author") {
-        processedRecords = filterSortAndPaginate(
-          records,
-          { sort: { ...view.sort } },
-          fields2
-        ).data;
-      }
-      if (processedRecords) {
-        return processedRecords.map((record) => ({
-          ...record,
-          notesCount: notesCount[record.id] ?? 0
-        }));
-      }
-      return processedRecords;
-    }, [records, fields2, view?.sort, notesCount]);
+    const data = (0, import_element250.useMemo)(
+      () => records?.map((record) => ({
+        ...record,
+        notesCount: notesCount[record.id] ?? 0
+      })),
+      [records, notesCount]
+    );
     const ids = data?.map((record) => getItemId(record)) ?? [];
     const prevIds = (0, import_compose46.usePrevious)(ids) ?? [];
     const deletedIds = prevIds.filter((id) => !ids.includes(id));
