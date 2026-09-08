@@ -584,6 +584,7 @@ var wp;
   apiFetch.use = registerMiddleware;
   apiFetch.unregister = unregisterMiddleware;
   apiFetch.setFetchHandler = setFetchHandler;
+  apiFetch.defaultFetchHandler = defaultFetchHandler;
   apiFetch.privateApis = {};
   lock(apiFetch.privateApis, {
     enablePreloadMultiUse,
