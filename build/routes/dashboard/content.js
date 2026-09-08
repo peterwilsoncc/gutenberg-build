@@ -62929,7 +62929,8 @@ function normalizeLayout(layout) {
       labelPosition: layout?.labelPosition ?? "side",
       openAs: normalizedOpenAs,
       summary: normalizedSummary,
-      editVisibility: layout?.editVisibility ?? "on-hover"
+      editVisibility: layout?.editVisibility ?? "on-hover",
+      showPlaceholderIfEmpty: layout?.showPlaceholderIfEmpty ?? false
     };
   } else if (layout?.type === "card") {
     if (layout.withHeader === false) {
@@ -63189,6 +63190,16 @@ var get_first_validation_error_default = getFirstValidationError;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
+function SummaryValue({
+  item,
+  field,
+  showPlaceholderIfEmpty
+}) {
+  if (showPlaceholderIfEmpty && field.placeholder && [void 0, null, ""].includes(field.getValue({ item }))) {
+    return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)("span", { className: "dataforms-layouts-panel__field-placeholder", children: field.placeholder });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(field.render, { item, field });
+}
 function SummaryButton({
   data,
   field,
@@ -63200,7 +63211,7 @@ function SummaryButton({
   isOpen,
   onClick
 }) {
-  const { labelPosition, editVisibility } = field.layout;
+  const { labelPosition, editVisibility, showPlaceholderIfEmpty } = field.layout;
   const errorMessage = get_first_validation_error_default(validity);
   const showError = touched && !!errorMessage;
   const labelClassName = get_label_classname_default(labelPosition, showError);
@@ -63264,10 +63275,11 @@ function SummaryButton({
               {
                 style: { width: "100%" },
                 children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-                  summaryField.render,
+                  SummaryValue,
                   {
                     item: data,
-                    field: summaryField
+                    field: summaryField,
+                    showPlaceholderIfEmpty
                   }
                 )
               },
@@ -63275,10 +63287,11 @@ function SummaryButton({
             ))
           }
         ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-          summaryField.render,
+          SummaryValue,
           {
             item: data,
-            field: summaryField
+            field: summaryField,
+            showPlaceholderIfEmpty
           },
           summaryField.id
         ))
