@@ -509,9 +509,9 @@ var wp;
       middleware[CLEAR]?.();
     }
   }
-  var defaultFetchHandler = (nextOptions) => {
-    const { url, path, data, parse = true, ...remainingOptions } = nextOptions;
-    let { body, headers } = nextOptions;
+  var defaultFetchHandler = (options) => {
+    const { url, path, data, parse = true, ...remainingOptions } = options;
+    let { body, headers } = options;
     headers = { ...DEFAULT_HEADERS, ...headers };
     if (data) {
       body = JSON.stringify(data);
