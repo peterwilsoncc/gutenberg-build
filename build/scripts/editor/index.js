@@ -114582,7 +114582,6 @@ ${content}
 
   // packages/editor/build-module/components/post-card-panel/index.mjs
   var import_jsx_runtime598 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge2 } = unlock(import_components252.privateApis);
   var { getTemplateInfo: getTemplateInfo4 } = unlock(import_core_data132.privateApis);
   function PostCardPanel({
     postType: postType2,
@@ -114679,7 +114678,7 @@ ${content}
                 as: "h2",
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime598.jsx)("span", { className: "editor-post-card-panel__title-name", children: title }),
-                  pageTypeBadge && postIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(WCBadge2, { children: pageTypeBadge })
+                  pageTypeBadge && postIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(Badge, { children: pageTypeBadge })
                 ]
               }
             ),
