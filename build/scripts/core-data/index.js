@@ -517,6 +517,56 @@ var wp;
   }
   var get_normalized_comma_separable_default = getNormalizedCommaSeparable;
 
+  // packages/core-data/build-module/utils/set-nested-value.mjs
+  function setNestedValue(object, path, value) {
+    if (!object || typeof object !== "object") {
+      return object;
+    }
+    const normalizedPath = Array.isArray(path) ? path : path.split(".");
+    normalizedPath.reduce((acc, key, idx) => {
+      if (acc[key] === void 0) {
+        if (Number.isInteger(normalizedPath[idx + 1])) {
+          acc[key] = [];
+        } else {
+          acc[key] = {};
+        }
+      }
+      if (idx === normalizedPath.length - 1) {
+        acc[key] = value;
+      }
+      return acc[key];
+    }, object);
+    return object;
+  }
+
+  // packages/core-data/build-module/utils/get-filtered-item.mjs
+  var filteredItemCache = /* @__PURE__ */ new WeakMap();
+  function getFilteredItem(item, _fields) {
+    const fields = get_normalized_comma_separable_default(_fields) ?? [];
+    const fieldsKey = fields.join(",");
+    let itemCache = filteredItemCache.get(item);
+    if (itemCache) {
+      const filtered = itemCache.get(fieldsKey);
+      if (filtered !== void 0) {
+        return filtered;
+      }
+    } else if (item !== null && typeof item === "object") {
+      itemCache = /* @__PURE__ */ new Map();
+      filteredItemCache.set(item, itemCache);
+    }
+    const filteredItem = {};
+    for (let f = 0; f < fields.length; f++) {
+      const field = fields[f].split(".");
+      let value = item;
+      field.forEach((fieldName) => {
+        value = value?.[fieldName];
+      });
+      setNestedValue(filteredItem, field, value);
+    }
+    itemCache?.set(fieldsKey, filteredItem);
+    return filteredItem;
+  }
+
   // packages/core-data/build-module/utils/if-matching-action.mjs
   var ifMatchingAction = (isMatch) => (reducer) => (state, action) => {
     if (state === void 0 || isMatch(action)) {
@@ -555,28 +605,6 @@ var wp;
     };
   }
   var with_weak_map_cache_default = withWeakMapCache;
-
-  // packages/core-data/build-module/utils/set-nested-value.mjs
-  function setNestedValue(object, path, value) {
-    if (!object || typeof object !== "object") {
-      return object;
-    }
-    const normalizedPath = Array.isArray(path) ? path : path.split(".");
-    normalizedPath.reduce((acc, key, idx) => {
-      if (acc[key] === void 0) {
-        if (Number.isInteger(normalizedPath[idx + 1])) {
-          acc[key] = [];
-        } else {
-          acc[key] = {};
-        }
-      }
-      if (idx === normalizedPath.length - 1) {
-        acc[key] = value;
-      }
-      return acc[key];
-    }, object);
-    return object;
-  }
 
   // packages/core-data/build-module/utils/get-nested-value.mjs
   function getNestedValue(object, path, defaultValue) {
@@ -4653,45 +4681,25 @@ var wp;
       (config) => config.kind === kind && config.name === name
     );
   }
-  var getEntityRecord = (0, import_data9.createSelector)(
-    ((state, kind, name, recordId, query) => {
-      logEntityDeprecation(kind, name, "getEntityRecord");
-      const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
-      if (!queriedState) {
+  var getEntityRecord = ((state, kind, name, recordId, query) => {
+    logEntityDeprecation(kind, name, "getEntityRecord");
+    const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
+    if (!queriedState) {
+      return void 0;
+    }
+    const context = query?.context ?? "default";
+    if (!query || !query._fields) {
+      if (!queriedState.itemIsComplete[context]?.[recordId]) {
         return void 0;
       }
-      const context = query?.context ?? "default";
-      if (!query || !query._fields) {
-        if (!queriedState.itemIsComplete[context]?.[recordId]) {
-          return void 0;
-        }
-        return queriedState.items[context][recordId];
-      }
-      const item = queriedState.items[context]?.[recordId];
-      if (!item) {
-        return item;
-      }
-      const filteredItem = {};
-      const fields = get_normalized_comma_separable_default(query._fields) ?? [];
-      for (let f = 0; f < fields.length; f++) {
-        const field = fields[f].split(".");
-        let value = item;
-        field.forEach((fieldName) => {
-          value = value?.[fieldName];
-        });
-        setNestedValue(filteredItem, field, value);
-      }
-      return filteredItem;
-    }),
-    (state, kind, name, recordId, query) => {
-      const context = query?.context ?? "default";
-      const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
-      return [
-        queriedState?.items[context]?.[recordId],
-        queriedState?.itemIsComplete[context]?.[recordId]
-      ];
+      return queriedState.items[context][recordId];
     }
-  );
+    const item = queriedState.items[context]?.[recordId];
+    if (!item) {
+      return item;
+    }
+    return getFilteredItem(item, query._fields);
+  });
   getEntityRecord.__unstableNormalizeArgs = (args) => {
     const newArgs = [...args];
     const recordKey = newArgs?.[2];
@@ -5113,45 +5121,25 @@ var wp;
     }
     return true;
   }
-  var getRevision = (0, import_data9.createSelector)(
-    (state, kind, name, recordKey, revisionKey, query) => {
-      logEntityDeprecation(kind, name, "getRevision");
-      const queriedState = state.entities.records?.[kind]?.[name]?.revisions?.[recordKey];
-      if (!queriedState) {
+  var getRevision = (state, kind, name, recordKey, revisionKey, query) => {
+    logEntityDeprecation(kind, name, "getRevision");
+    const queriedState = state.entities.records?.[kind]?.[name]?.revisions?.[recordKey];
+    if (!queriedState) {
+      return void 0;
+    }
+    const context = query?.context ?? "default";
+    if (!query || !query._fields) {
+      if (!queriedState.itemIsComplete[context]?.[revisionKey]) {
         return void 0;
       }
-      const context = query?.context ?? "default";
-      if (!query || !query._fields) {
-        if (!queriedState.itemIsComplete[context]?.[revisionKey]) {
-          return void 0;
-        }
-        return queriedState.items[context][revisionKey];
-      }
-      const item = queriedState.items[context]?.[revisionKey];
-      if (!item) {
-        return item;
-      }
-      const filteredItem = {};
-      const fields = get_normalized_comma_separable_default(query._fields) ?? [];
-      for (let f = 0; f < fields.length; f++) {
-        const field = fields[f].split(".");
-        let value = item;
-        field.forEach((fieldName) => {
-          value = value?.[fieldName];
-        });
-        setNestedValue(filteredItem, field, value);
-      }
-      return filteredItem;
-    },
-    (state, kind, name, recordKey, revisionKey, query) => {
-      const context = query?.context ?? "default";
-      const queriedState = state.entities.records?.[kind]?.[name]?.revisions?.[recordKey];
-      return [
-        queriedState?.items?.[context]?.[revisionKey],
-        queriedState?.itemIsComplete?.[context]?.[revisionKey]
-      ];
+      return queriedState.items[context][revisionKey];
     }
-  );
+    const item = queriedState.items[context]?.[revisionKey];
+    if (!item) {
+      return item;
+    }
+    return getFilteredItem(item, query._fields);
+  };
 
   // packages/core-data/build-module/actions.mjs
   var actions_exports = {};
