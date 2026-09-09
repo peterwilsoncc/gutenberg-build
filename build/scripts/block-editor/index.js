@@ -70808,6 +70808,9 @@ var wp;
     );
     const determineIsAccessibleToolbar = (0, import_element194.useCallback)(() => {
       const tabbables = import_dom61.focus.tabbable.find(toolbarRef.current);
+      if (tabbables.length === 0) {
+        return;
+      }
       const onlyToolbarItem = hasOnlyToolbarItem(tabbables);
       if (!onlyToolbarItem) {
         (0, import_deprecated13.default)("Using custom components as toolbar controls", {
