@@ -451,14 +451,14 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React167 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef156 = React167.useRef, useEffect136 = React167.useEffect, useMemo180 = React167.useMemo, useDebugValue2 = React167.useDebugValue;
+        var React167 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef156 = React167.useRef, useEffect136 = React167.useEffect, useMemo181 = React167.useMemo, useDebugValue2 = React167.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe5, getSnapshot2, getServerSnapshot2, selector2, isEqual2) {
           var instRef = useRef156(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo180(
+          instRef = useMemo181(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -92440,6 +92440,12 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return new import_rich_text2.RichTextData(result);
   }
+  function diffRevisionHTML(currentHTML, previousHTML) {
+    return applyRichTextDiff(
+      import_rich_text2.RichTextData.fromHTMLString(currentHTML || ""),
+      import_rich_text2.RichTextData.fromHTMLString(previousHTML || "")
+    );
+  }
   function applyDiffToBlock(currentBlock, previousBlock, diffStatus) {
     const blockType = (0, import_blocks13.getBlockType)(currentBlock.name);
     if (!blockType) {
@@ -106017,7 +106023,7 @@ ${content}
 
   // packages/editor/build-module/components/post-title/index.mjs
   var import_i18n280 = __toESM(require_i18n(), 1);
-  var import_element335 = __toESM(require_element(), 1);
+  var import_element336 = __toESM(require_element(), 1);
   var import_html_entities28 = __toESM(require_html_entities(), 1);
   var import_data178 = __toESM(require_data(), 1);
   var import_block_editor59 = __toESM(require_block_editor(), 1);
@@ -106063,13 +106069,24 @@ ${content}
 
   // packages/editor/build-module/components/post-title/use-post-title.mjs
   var import_data177 = __toESM(require_data(), 1);
+  var import_element335 = __toESM(require_element(), 1);
   var import_core_data106 = __toESM(require_core_data(), 1);
   function usePostTitle() {
-    const { postType: postType2, postId: postId2 } = (0, import_data177.useSelect)((select9) => {
-      const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select9(store);
+    const { postType: postType2, postId: postId2, previousTitle } = (0, import_data177.useSelect)((select9) => {
+      const {
+        getCurrentPostType: getCurrentPostType2,
+        getCurrentPostId: getCurrentPostId2,
+        isRevisionsMode: isRevisionsMode2,
+        isShowingRevisionDiff: isShowingRevisionDiff2,
+        getPreviousRevision: getPreviousRevision2
+      } = unlock(select9(store));
+      const isDiffing = isRevisionsMode2() && isShowingRevisionDiff2();
       return {
         postType: getCurrentPostType2(),
-        postId: getCurrentPostId2()
+        postId: getCurrentPostId2(),
+        // The oldest revision has nothing to compare against, so its whole
+        // title reads as added.
+        previousTitle: isDiffing ? getPreviousRevision2()?.title?.raw ?? "" : void 0
       };
     }, []);
     const [title, setTitle] = (0, import_core_data106.useEntityProp)(
@@ -106078,13 +106095,17 @@ ${content}
       "title",
       postId2
     );
-    return { title, setTitle };
+    const value = (0, import_element335.useMemo)(
+      () => previousTitle === void 0 ? title : diffRevisionHTML(title, previousTitle),
+      [title, previousTitle]
+    );
+    return { title: value, setTitle };
   }
 
   // packages/editor/build-module/components/post-title/index.mjs
   var import_jsx_runtime540 = __toESM(require_jsx_runtime(), 1);
   var { useRichText } = unlock(import_rich_text4.privateApis);
-  var PostTitle = (0, import_element335.forwardRef)((_, forwardedRef) => {
+  var PostTitle = (0, import_element336.forwardRef)((_, forwardedRef) => {
     const { placeholder, isEditingContentOnlySection, isPreview } = (0, import_data178.useSelect)(
       (select9) => {
         const { getSettings: getSettings12, getEditedContentOnlySection } = unlock(
@@ -106099,10 +106120,10 @@ ${content}
       },
       []
     );
-    const [isSelected2, setIsSelected] = (0, import_element335.useState)(false);
+    const [isSelected2, setIsSelected] = (0, import_element336.useState)(false);
     const { ref: focusRef } = usePostTitleFocus(forwardedRef);
     const { title, setTitle: onUpdate } = usePostTitle();
-    const [selection, setSelection] = (0, import_element335.useState)({});
+    const [selection, setSelection] = (0, import_element336.useState)({});
     const { clearSelectedBlock: clearSelectedBlock2, insertBlocks: insertBlocks2, insertDefaultBlock: insertDefaultBlock2 } = (0, import_data178.useDispatch)(import_block_editor59.store);
     const decodedPlaceholder = (0, import_html_entities28.decodeEntities)(placeholder) || (0, import_i18n280.__)("Add title");
     const {
@@ -106214,7 +106235,7 @@ ${content}
       )
     );
   });
-  var post_title_default = (0, import_element335.forwardRef)((_, forwardedRef) => /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(post_type_support_check_default, { supportKeys: "title", children: /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(PostTitle, { ref: forwardedRef }) }));
+  var post_title_default = (0, import_element336.forwardRef)((_, forwardedRef) => /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(post_type_support_check_default, { supportKeys: "title", children: /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(PostTitle, { ref: forwardedRef }) }));
 
   // packages/editor/build-module/components/post-title/post-title-raw.mjs
   var import_components215 = __toESM(require_components(), 1);
@@ -106222,7 +106243,7 @@ ${content}
   var import_html_entities29 = __toESM(require_html_entities(), 1);
   var import_data179 = __toESM(require_data(), 1);
   var import_block_editor60 = __toESM(require_block_editor(), 1);
-  var import_element336 = __toESM(require_element(), 1);
+  var import_element337 = __toESM(require_element(), 1);
   var import_jsx_runtime541 = __toESM(require_jsx_runtime(), 1);
   function PostTitleRaw(_, forwardedRef) {
     const { placeholder } = (0, import_data179.useSelect)((select9) => {
@@ -106232,7 +106253,7 @@ ${content}
         placeholder: titlePlaceholder
       };
     }, []);
-    const [isSelected2, setIsSelected] = (0, import_element336.useState)(false);
+    const [isSelected2, setIsSelected] = (0, import_element337.useState)(false);
     const { title, setTitle: onUpdate } = usePostTitle();
     const { ref: focusRef } = usePostTitleFocus(forwardedRef);
     function onChange(value) {
@@ -106267,13 +106288,13 @@ ${content}
       }
     );
   }
-  var post_title_raw_default = (0, import_element336.forwardRef)(PostTitleRaw);
+  var post_title_raw_default = (0, import_element337.forwardRef)(PostTitleRaw);
 
   // packages/editor/build-module/components/post-trash/index.mjs
   var import_i18n282 = __toESM(require_i18n(), 1);
   var import_components216 = __toESM(require_components(), 1);
   var import_data181 = __toESM(require_data(), 1);
-  var import_element337 = __toESM(require_element(), 1);
+  var import_element338 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/components/post-trash/check.mjs
   var import_data180 = __toESM(require_data(), 1);
@@ -106314,7 +106335,7 @@ ${content}
       };
     }, []);
     const { trashPost: trashPost3 } = (0, import_data181.useDispatch)(store);
-    const [showConfirmDialog, setShowConfirmDialog] = (0, import_element337.useState)(false);
+    const [showConfirmDialog, setShowConfirmDialog] = (0, import_element338.useState)(false);
     if (isNew || !postId2) {
       return null;
     }
@@ -106359,7 +106380,7 @@ ${content}
   // packages/editor/build-module/components/post-url/index.mjs
   var import_data182 = __toESM(require_data(), 1);
   var import_url21 = __toESM(require_url(), 1);
-  var import_element338 = __toESM(require_element(), 1);
+  var import_element339 = __toESM(require_element(), 1);
   var import_block_editor61 = __toESM(require_block_editor(), 1);
   var import_i18n283 = __toESM(require_i18n(), 1);
   var import_components217 = __toESM(require_components(), 1);
@@ -106397,7 +106418,7 @@ ${content}
     }, []);
     const { editPost: editPost2 } = (0, import_data182.useDispatch)(store);
     const { createNotice } = (0, import_data182.useDispatch)(import_notices28.store);
-    const [forceEmptyField, setForceEmptyField] = (0, import_element338.useState)(false);
+    const [forceEmptyField, setForceEmptyField] = (0, import_element339.useState)(false);
     const copyButtonRef = (0, import_compose73.useCopyToClipboard)(permalink, () => {
       createNotice("info", (0, import_i18n283.__)("Copied Permalink to clipboard."), {
         isDismissible: true,
@@ -106414,7 +106435,7 @@ ${content}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime543.jsxs)(import_components217.__experimentalVStack, { spacing: 3, children: [
-        isEditable && /* @__PURE__ */ (0, import_jsx_runtime543.jsx)("p", { className: "editor-post-url__intro", children: (0, import_element338.createInterpolateElement)(
+        isEditable && /* @__PURE__ */ (0, import_jsx_runtime543.jsx)("p", { className: "editor-post-url__intro", children: (0, import_element339.createInterpolateElement)(
           (0, import_i18n283.__)(
             "<span>Customize the last part of the Permalink.</span> <a>Learn more.</a>"
           ),
@@ -106549,7 +106570,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-url/panel.mjs
-  var import_element339 = __toESM(require_element(), 1);
+  var import_element340 = __toESM(require_element(), 1);
   var import_data185 = __toESM(require_data(), 1);
   var import_components218 = __toESM(require_components(), 1);
   var import_i18n284 = __toESM(require_i18n(), 1);
@@ -106569,8 +106590,8 @@ ${content}
         isFrontPage: siteSettings?.page_on_front === _id
       };
     }, []);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element339.useState)(null);
-    const popoverProps = (0, import_element339.useMemo)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element340.useState)(null);
+    const popoverProps = (0, import_element340.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -106657,7 +106678,7 @@ ${content}
   var import_i18n288 = __toESM(require_i18n(), 1);
   var import_components219 = __toESM(require_components(), 1);
   var import_data191 = __toESM(require_data(), 1);
-  var import_element341 = __toESM(require_element(), 1);
+  var import_element342 = __toESM(require_element(), 1);
   var import_block_editor63 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/table-of-contents/panel.mjs
@@ -106683,7 +106704,7 @@ ${content}
   var import_data188 = __toESM(require_data(), 1);
   var import_i18n286 = __toESM(require_i18n(), 1);
   var import_wordcount3 = __toESM(require_wordcount(), 1);
-  var import_element340 = __toESM(require_element(), 1);
+  var import_element341 = __toESM(require_element(), 1);
   var import_jsx_runtime546 = __toESM(require_jsx_runtime(), 1);
   var AVERAGE_READING_RATE2 = 189;
   function TimeToRead() {
@@ -106695,9 +106716,9 @@ ${content}
     const minutesToRead = Math.round(
       (0, import_wordcount3.count)(content, wordCountType) / AVERAGE_READING_RATE2
     );
-    const minutesToReadString = minutesToRead === 0 ? (0, import_element340.createInterpolateElement)((0, import_i18n286.__)("<span>< 1</span> minute"), {
+    const minutesToReadString = minutesToRead === 0 ? (0, import_element341.createInterpolateElement)((0, import_i18n286.__)("<span>< 1</span> minute"), {
       span: /* @__PURE__ */ (0, import_jsx_runtime546.jsx)("span", {})
-    }) : (0, import_element340.createInterpolateElement)(
+    }) : (0, import_element341.createInterpolateElement)(
       (0, import_i18n286.sprintf)(
         /* translators: %s: the number of minutes to read the post. */
         (0, import_i18n286._n)(
@@ -106837,16 +106858,16 @@ ${content}
       }
     );
   }
-  var table_of_contents_default = (0, import_element341.forwardRef)(TableOfContents);
+  var table_of_contents_default = (0, import_element342.forwardRef)(TableOfContents);
 
   // packages/editor/build-module/components/unsaved-changes-warning/index.mjs
   var import_i18n289 = __toESM(require_i18n(), 1);
-  var import_element342 = __toESM(require_element(), 1);
+  var import_element343 = __toESM(require_element(), 1);
   var import_data192 = __toESM(require_data(), 1);
   var import_core_data111 = __toESM(require_core_data(), 1);
   function UnsavedChangesWarning() {
     const { __experimentalGetDirtyEntityRecords } = (0, import_data192.useSelect)(import_core_data111.store);
-    (0, import_element342.useEffect)(() => {
+    (0, import_element343.useEffect)(() => {
       const warnIfUnsavedChanges = (event) => {
         const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
         if (dirtyEntityRecords.length > 0) {
@@ -106866,12 +106887,12 @@ ${content}
 
   // packages/editor/build-module/components/deprecated.mjs
   var import_deprecated16 = __toESM(require_deprecated(), 1);
-  var import_element343 = __toESM(require_element(), 1);
+  var import_element344 = __toESM(require_element(), 1);
   var import_block_editor64 = __toESM(require_block_editor(), 1);
   var import_server_side_render = __toESM(require_server_side_render(), 1);
   var import_jsx_runtime549 = __toESM(require_jsx_runtime(), 1);
   function deprecateComponent(name2, Wrapped, staticsToHoist = []) {
-    const Component3 = (0, import_element343.forwardRef)((props, ref) => {
+    const Component3 = (0, import_element344.forwardRef)((props, ref) => {
       (0, import_deprecated16.default)("wp.editor." + name2, {
         since: "5.3",
         alternative: "wp.blockEditor." + name2,
@@ -107084,7 +107105,7 @@ ${content}
   );
 
   // packages/editor/build-module/hooks/media-upload.mjs
-  var import_element344 = __toESM(require_element(), 1);
+  var import_element345 = __toESM(require_element(), 1);
   var import_hooks54 = __toESM(require_hooks(), 1);
   var import_deprecated17 = __toESM(require_deprecated(), 1);
   var import_data193 = __toESM(require_data(), 1);
@@ -107114,7 +107135,7 @@ ${content}
       }
     );
   }
-  var MediaUploadModalWrapper = class extends import_element344.Component {
+  var MediaUploadModalWrapper = class extends import_element345.Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -107253,7 +107274,7 @@ ${content}
   // packages/editor/build-module/hooks/navigation-link-view-button.mjs
   var import_hooks56 = __toESM(require_hooks(), 1);
   var import_compose75 = __toESM(require_compose(), 1);
-  var import_element345 = __toESM(require_element(), 1);
+  var import_element346 = __toESM(require_element(), 1);
   var import_i18n290 = __toESM(require_i18n(), 1);
   var import_block_editor66 = __toESM(require_block_editor(), 1);
   var import_components221 = __toESM(require_components(), 1);
@@ -107267,7 +107288,7 @@ ${content}
       (select9) => select9(import_block_editor66.store).getSettings().onNavigateToEntityRecord,
       []
     );
-    const onViewPage = (0, import_element345.useCallback)(() => {
+    const onViewPage = (0, import_element346.useCallback)(() => {
       if (kind === "post-type" && type === "page" && id && onNavigateToEntityRecord) {
         onNavigateToEntityRecord({
           postId: id,
@@ -107307,7 +107328,7 @@ ${content}
   // packages/editor/build-module/hooks/template-part-navigation-edit-button.mjs
   var import_hooks57 = __toESM(require_hooks(), 1);
   var import_compose76 = __toESM(require_compose(), 1);
-  var import_element346 = __toESM(require_element(), 1);
+  var import_element347 = __toESM(require_element(), 1);
   var import_i18n291 = __toESM(require_i18n(), 1);
   var import_block_editor67 = __toESM(require_block_editor(), 1);
   var import_components222 = __toESM(require_components(), 1);
@@ -107348,7 +107369,7 @@ ${content}
       },
       [clientId]
     );
-    const onEditNavigation = (0, import_element346.useCallback)(() => {
+    const onEditNavigation = (0, import_element347.useCallback)(() => {
       if (firstNavigationBlockId) {
         registry.batch(() => {
           selectBlock2(firstNavigationBlockId);
@@ -107407,7 +107428,7 @@ ${content}
   var import_components224 = __toESM(require_components(), 1);
   var import_i18n294 = __toESM(require_i18n(), 1);
   var import_blocks30 = __toESM(require_blocks(), 1);
-  var import_element349 = __toESM(require_element(), 1);
+  var import_element350 = __toESM(require_element(), 1);
   var import_data197 = __toESM(require_data(), 1);
   var import_notices29 = __toESM(require_notices(), 1);
   var import_core_data114 = __toESM(require_core_data(), 1);
@@ -107437,10 +107458,10 @@ ${content}
   var import_components223 = __toESM(require_components(), 1);
   var import_i18n293 = __toESM(require_i18n(), 1);
   var import_blocks29 = __toESM(require_blocks(), 1);
-  var import_element348 = __toESM(require_element(), 1);
+  var import_element349 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/hooks/push-changes-to-global-styles/use-review-rows.mjs
-  var import_element347 = __toESM(require_element(), 1);
+  var import_element348 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/hooks/push-changes-to-global-styles/style-labels.mjs
   var import_i18n292 = __toESM(require_i18n(), 1);
@@ -107618,7 +107639,7 @@ ${content}
     return formatStyleValue(value);
   }
   function useReviewRows(rows, merged, name2) {
-    return (0, import_element347.useMemo)(() => {
+    return (0, import_element348.useMemo)(() => {
       const resolve = (value) => getValueFromVariable(merged, name2, value);
       return rows.map((row) => {
         const currentValue = getStyle(
@@ -107660,10 +107681,10 @@ ${content}
   }) {
     const { merged } = useGlobalStyles();
     const reviewRows = useReviewRows(rows, merged, name2);
-    const [selection, setSelection] = (0, import_element348.useState)(
+    const [selection, setSelection] = (0, import_element349.useState)(
       () => reviewRows.map((row) => row.id)
     );
-    const [view, setView] = (0, import_element348.useState)(() => ({
+    const [view, setView] = (0, import_element349.useState)(() => ({
       type: "pickerTable",
       titleField: "label",
       fields: ["current", "new"],
@@ -107671,7 +107692,7 @@ ${content}
       perPage: reviewRows.length,
       layout: { enableMoving: false }
     }));
-    const fields2 = (0, import_element348.useMemo)(
+    const fields2 = (0, import_element349.useMemo)(
       () => [
         {
           id: "label",
@@ -107703,7 +107724,7 @@ ${content}
       ],
       []
     );
-    const actions2 = (0, import_element348.useMemo)(
+    const actions2 = (0, import_element349.useMemo)(
       () => [
         {
           id: "apply",
@@ -108012,7 +108033,7 @@ ${content}
       [name2]
     );
     const blockUserConfig = userConfig?.styles?.blocks?.[name2];
-    return (0, import_element349.useMemo)(
+    return (0, import_element350.useMemo)(
       () => getChangesToPush(supports, attributes, blockUserConfig),
       [supports, attributes, blockUserConfig]
     );
@@ -108058,10 +108079,10 @@ ${content}
   }) {
     const { user: userConfig, setUser: setUserConfig } = useGlobalStyles();
     const rows = useChangesToPush(name2, attributes, userConfig);
-    const [isModalOpen, setIsModalOpen] = (0, import_element349.useState)(false);
+    const [isModalOpen, setIsModalOpen] = (0, import_element350.useState)(false);
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data197.useDispatch)(import_block_editor68.store);
     const { createSuccessNotice } = (0, import_data197.useDispatch)(import_notices29.store);
-    const pushChanges = (0, import_element349.useCallback)(
+    const pushChanges = (0, import_element350.useCallback)(
       (rowsToPush) => {
         const update4 = getStylesUpdate({
           rowsToPush,
@@ -108178,7 +108199,7 @@ ${content}
 
   // packages/editor/build-module/components/collab-sidebar/format.mjs
   var import_i18n295 = __toESM(require_i18n(), 1);
-  var import_element350 = __toESM(require_element(), 1);
+  var import_element351 = __toESM(require_element(), 1);
   var import_data198 = __toESM(require_data(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/constants.mjs
@@ -108202,7 +108223,7 @@ ${content}
     const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data198.useSelect)(store));
     const { selectNote: selectNote2 } = unlock((0, import_data198.useDispatch)(store));
     const noteId = activeAttributes?.["data-id"];
-    (0, import_element350.useEffect)(() => {
+    (0, import_element351.useEffect)(() => {
       if (!isActive || !noteId) {
         return;
       }
@@ -108261,7 +108282,7 @@ ${content}
   var import_preferences25 = __toESM(require_preferences(), 1);
   var import_block_editor87 = __toESM(require_block_editor(), 1);
   var import_compose94 = __toESM(require_compose(), 1);
-  var import_element378 = __toESM(require_element(), 1);
+  var import_element379 = __toESM(require_element(), 1);
   var import_html_entities30 = __toESM(require_html_entities(), 1);
   var import_notices32 = __toESM(require_notices(), 1);
   var import_theme = __toESM(require_theme(), 1);
@@ -108271,11 +108292,11 @@ ${content}
   var import_data210 = __toESM(require_data(), 1);
   var import_compose83 = __toESM(require_compose(), 1);
   var import_preferences22 = __toESM(require_preferences(), 1);
-  var import_element364 = __toESM(require_element(), 1);
+  var import_element365 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/components/collapsible-block-toolbar/index.mjs
   var import_block_editor69 = __toESM(require_block_editor(), 1);
-  var import_element351 = __toESM(require_element(), 1);
+  var import_element352 = __toESM(require_element(), 1);
   var import_components226 = __toESM(require_components(), 1);
   var import_i18n296 = __toESM(require_i18n(), 1);
   var import_data199 = __toESM(require_data(), 1);
@@ -108289,7 +108310,7 @@ ${content}
     }, []);
     const hasBlockToolbar = useHasBlockToolbar();
     const hasBlockSelection = !!blockSelectionStart;
-    (0, import_element351.useEffect)(() => {
+    (0, import_element352.useEffect)(() => {
       if (blockSelectionStart) {
         onToggle(false);
       }
@@ -108329,7 +108350,7 @@ ${content}
   var import_i18n297 = __toESM(require_i18n(), 1);
   var import_block_editor70 = __toESM(require_block_editor(), 1);
   var import_components227 = __toESM(require_components(), 1);
-  var import_element352 = __toESM(require_element(), 1);
+  var import_element353 = __toESM(require_element(), 1);
   var import_keyboard_shortcuts6 = __toESM(require_keyboard_shortcuts(), 1);
   var import_preferences15 = __toESM(require_preferences(), 1);
   var import_jsx_runtime558 = __toESM(require_jsx_runtime(), 1);
@@ -108372,11 +108393,11 @@ ${content}
     };
     const isWideViewport = (0, import_compose78.useViewportMatch)("wide");
     const toolbarAriaLabel = (0, import_i18n297.__)("Document tools");
-    const toggleListView = (0, import_element352.useCallback)(
+    const toggleListView = (0, import_element353.useCallback)(
       () => setIsListViewOpened2(!isListViewOpen),
       [setIsListViewOpened2, isListViewOpen]
     );
-    const toggleInserter = (0, import_element352.useCallback)(
+    const toggleInserter = (0, import_element353.useCallback)(
       () => setIsInserterOpened2(!isInserterOpened2),
       [isInserterOpened2, setIsInserterOpened2]
     );
@@ -108554,7 +108575,7 @@ ${content}
 
   // packages/editor/build-module/components/more-menu/more-menu-item.mjs
   var import_components229 = __toESM(require_components(), 1);
-  var import_element353 = __toESM(require_element(), 1);
+  var import_element354 = __toESM(require_element(), 1);
   var import_primitives98 = __toESM(require_primitives(), 1);
   var import_jsx_runtime561 = __toESM(require_jsx_runtime(), 1);
   function adaptShortcut(shortcut) {
@@ -108593,7 +108614,7 @@ ${content}
     const description = info ? /* @__PURE__ */ (0, import_jsx_runtime561.jsx)(menu_exports.ItemDescription, { children: info }) : null;
     let prefix2;
     if (icon) {
-      prefix2 = (0, import_element353.isValidElement)(icon) && (icon.type === "svg" || icon.type === import_primitives98.SVG) ? /* @__PURE__ */ (0, import_jsx_runtime561.jsx)(
+      prefix2 = (0, import_element354.isValidElement)(icon) && (icon.type === "svg" || icon.type === import_primitives98.SVG) ? /* @__PURE__ */ (0, import_jsx_runtime561.jsx)(
         menu_exports.PrefixIcon,
         {
           icon,
@@ -108663,7 +108684,7 @@ ${content}
       }
     );
   }
-  var more_menu_item_default = (0, import_element353.forwardRef)(UnforwardedMoreMenuItem);
+  var more_menu_item_default = (0, import_element354.forwardRef)(UnforwardedMoreMenuItem);
 
   // packages/editor/build-module/components/mode-switcher/index.mjs
   var import_i18n299 = __toESM(require_i18n(), 1);
@@ -108771,7 +108792,7 @@ ${content}
   var mode_switcher_default = ModeSwitcher;
 
   // packages/editor/build-module/components/more-menu/more-menu-group.mjs
-  var import_element354 = __toESM(require_element(), 1);
+  var import_element355 = __toESM(require_element(), 1);
   var import_jsx_runtime563 = __toESM(require_jsx_runtime(), 1);
   function MoreMenuGroup({
     label,
@@ -108786,8 +108807,8 @@ ${content}
     ] });
   }
   function toMenuItems(fills) {
-    return import_element354.Children.map(fills, (fill) => {
-      if (!(0, import_element354.isValidElement)(fill) || fill.type === more_menu_item_default) {
+    return import_element355.Children.map(fills, (fill) => {
+      if (!(0, import_element355.isValidElement)(fill) || fill.type === more_menu_item_default) {
         return fill;
       }
       const label = /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(menu_exports.ItemLabel, { children: null });
@@ -109353,7 +109374,7 @@ ${content}
   // packages/editor/build-module/components/zoom-out-toggle/index.mjs
   var import_components235 = __toESM(require_components(), 1);
   var import_i18n304 = __toESM(require_i18n(), 1);
-  var import_element355 = __toESM(require_element(), 1);
+  var import_element356 = __toESM(require_element(), 1);
   var import_data208 = __toESM(require_data(), 1);
   var import_block_editor72 = __toESM(require_block_editor(), 1);
   var import_preferences20 = __toESM(require_preferences(), 1);
@@ -109380,7 +109401,7 @@ ${content}
     const { registerShortcut, unregisterShortcut } = (0, import_data208.useDispatch)(
       import_keyboard_shortcuts8.store
     );
-    (0, import_element355.useEffect)(() => {
+    (0, import_element356.useEffect)(() => {
       registerShortcut({
         name: "core/editor/zoom",
         category: "global",
@@ -109435,7 +109456,7 @@ ${content}
 
   // packages/editor/build-module/components/collaborators-presence/index.mjs
   var import_components238 = __toESM(require_components(), 1);
-  var import_element363 = __toESM(require_element(), 1);
+  var import_element364 = __toESM(require_element(), 1);
   var import_core_data121 = __toESM(require_core_data(), 1);
   var import_i18n310 = __toESM(require_i18n(), 1);
 
@@ -109463,21 +109484,21 @@ ${content}
 
   // packages/editor/build-module/components/collaborators-presence/avatar/component.mjs
   var import_components236 = __toESM(require_components(), 1);
-  var import_element357 = __toESM(require_element(), 1);
+  var import_element358 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/components/collaborators-presence/avatar/use-image-loading-status.mjs
-  var import_element356 = __toESM(require_element(), 1);
+  var import_element357 = __toESM(require_element(), 1);
   function useImageLoadingStatus(src) {
-    const [prevSrc, setPrevSrc] = (0, import_element356.useState)(src);
-    const [status, setStatus] = (0, import_element356.useState)(
+    const [prevSrc, setPrevSrc] = (0, import_element357.useState)(src);
+    const [status, setStatus] = (0, import_element357.useState)(
       src ? "loading" : "idle"
     );
     if (prevSrc !== src) {
       setPrevSrc(src);
       setStatus(src ? "loading" : "idle");
     }
-    const handleLoad = (0, import_element356.useCallback)(() => setStatus("loaded"), []);
-    const handleError = (0, import_element356.useCallback)(() => setStatus("error"), []);
+    const handleLoad = (0, import_element357.useCallback)(() => setStatus("loaded"), []);
+    const handleError = (0, import_element357.useCallback)(() => setStatus("error"), []);
     return { status, handleLoad, handleError };
   }
 
@@ -109507,7 +109528,7 @@ ${content}
     const imageLoaded = imageStatus === "loaded";
     const showBadge = variant === "badge" && !!name2;
     const initials = name2 ? name2.split(/\s+/).slice(0, 2).map((word) => word[0]).join("").toUpperCase() : void 0;
-    const nameColor = (0, import_element357.useMemo)(
+    const nameColor = (0, import_element358.useMemo)(
       () => borderColor && w(borderColor).isReadable(GRAY_900, {
         level: "AA",
         size: "normal"
@@ -109566,7 +109587,7 @@ ${content}
   var component_default = Avatar;
 
   // packages/editor/build-module/components/collaborators-presence/avatar-group/component.mjs
-  var import_element358 = __toESM(require_element(), 1);
+  var import_element359 = __toESM(require_element(), 1);
   var import_i18n305 = __toESM(require_i18n(), 1);
   var import_jsx_runtime573 = __toESM(require_jsx_runtime(), 1);
   function AvatarGroup({
@@ -109575,7 +109596,7 @@ ${content}
     children,
     ...props
   }) {
-    const childArray = import_element358.Children.toArray(children);
+    const childArray = import_element359.Children.toArray(children);
     const visible = childArray.slice(0, max4);
     const overflowCount = childArray.length - max4;
     return /* @__PURE__ */ (0, import_jsx_runtime573.jsxs)(
@@ -110110,7 +110131,7 @@ ${content}
 
   // packages/editor/build-module/components/collaborators-overlay/overlay.mjs
   var import_compose82 = __toESM(require_compose(), 1);
-  var import_element362 = __toESM(require_element(), 1);
+  var import_element363 = __toESM(require_element(), 1);
   var import_i18n309 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/collaborator-styles.mjs
@@ -110384,14 +110405,14 @@ ${content}
   // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
   var import_core_data119 = __toESM(require_core_data(), 1);
   var import_block_editor74 = __toESM(require_block_editor(), 1);
-  var import_element360 = __toESM(require_element(), 1);
+  var import_element361 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/use-debounced-recompute.mjs
-  var import_element359 = __toESM(require_element(), 1);
+  var import_element360 = __toESM(require_element(), 1);
   function useDebouncedRecompute(delayMs) {
-    const [recomputeToken, setRecomputeToken] = (0, import_element359.useState)(0);
-    const timeoutRef = (0, import_element359.useRef)(null);
-    const rerenderAfterDelay = (0, import_element359.useCallback)(() => {
+    const [recomputeToken, setRecomputeToken] = (0, import_element360.useState)(0);
+    const timeoutRef = (0, import_element360.useRef)(null);
+    const rerenderAfterDelay = (0, import_element360.useCallback)(() => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
@@ -110407,16 +110428,16 @@ ${content}
     return [recomputeToken, rerenderAfterDelay];
   }
   function useRequestAnimationFrameRecompute() {
-    const [recomputeToken, setRecomputeToken] = (0, import_element359.useState)(0);
-    const requestAnimationFrameRef = (0, import_element359.useRef)(null);
-    (0, import_element359.useEffect)(() => {
+    const [recomputeToken, setRecomputeToken] = (0, import_element360.useState)(0);
+    const requestAnimationFrameRef = (0, import_element360.useRef)(null);
+    (0, import_element360.useEffect)(() => {
       return () => {
         if (requestAnimationFrameRef.current !== null) {
           cancelAnimationFrame(requestAnimationFrameRef.current);
         }
       };
     }, []);
-    const rerenderOnNextFrame = (0, import_element359.useCallback)(() => {
+    const rerenderOnNextFrame = (0, import_element360.useCallback)(() => {
       if (requestAnimationFrameRef.current !== null) {
         cancelAnimationFrame(requestAnimationFrameRef.current);
       }
@@ -110884,7 +110905,7 @@ ${content}
   var { isElementVisible: isElementVisible3 } = unlock(import_block_editor74.privateApis);
   var { SelectionType: SelectionType3 } = unlock(import_core_data119.privateApis);
   function useBlockHighlighting(overlayElement, blockEditorDocument, postId2, postType2, delayMs) {
-    const highlightedBlockIds = (0, import_element360.useRef)(/* @__PURE__ */ new Set());
+    const highlightedBlockIds = (0, import_element361.useRef)(/* @__PURE__ */ new Set());
     const userStates = useActiveCollaborators(
       postId2 ?? null,
       postType2 ?? null
@@ -110893,12 +110914,12 @@ ${content}
       postId2 ?? null,
       postType2 ?? null
     );
-    const [highlights, setHighlights] = (0, import_element360.useState)(
+    const [highlights, setHighlights] = (0, import_element361.useState)(
       []
     );
     const [recomputeToken, rerenderHighlightsAfterDelay] = useDebouncedRecompute(delayMs);
     const [resizeToken, rerenderHighlightsOnResize] = useRequestAnimationFrameRecompute();
-    (0, import_element360.useEffect)(() => {
+    (0, import_element361.useEffect)(() => {
       if (!blockEditorDocument) {
         setHighlights([]);
         return;
@@ -111145,7 +111166,7 @@ ${content}
   // packages/editor/build-module/components/collaborators-overlay/use-render-cursors.mjs
   var import_core_data120 = __toESM(require_core_data(), 1);
   var import_data209 = __toESM(require_data(), 1);
-  var import_element361 = __toESM(require_element(), 1);
+  var import_element362 = __toESM(require_element(), 1);
   var import_preferences21 = __toESM(require_preferences(), 1);
   var { useActiveCollaborators: useActiveCollaborators2, useResolvedSelection: useResolvedSelection2 } = unlock(import_core_data120.privateApis);
   var { SelectionType: SelectionType4 } = unlock(import_core_data120.privateApis);
@@ -111162,12 +111183,12 @@ ${content}
       (select9) => select9(import_preferences21.store).get("core", "showCollaborationCursor"),
       []
     );
-    const [cursorPositions, setCursorPositions] = (0, import_element361.useState)(
+    const [cursorPositions, setCursorPositions] = (0, import_element362.useState)(
       []
     );
     const [recomputeToken, rerenderCursorsAfterDelay] = useDebouncedRecompute(delayMs);
     const [resizeToken, rerenderCursorsOnResize] = useRequestAnimationFrameRecompute();
-    (0, import_element361.useEffect)(() => {
+    (0, import_element362.useEffect)(() => {
       if (!overlayElement || !blockEditorDocument) {
         setCursorPositions([]);
         return;
@@ -111306,7 +111327,7 @@ ${content}
     postType: postType2,
     cursorRegistry
   }) {
-    const [overlayElement, setOverlayElement] = (0, import_element362.useState)(null);
+    const [overlayElement, setOverlayElement] = (0, import_element363.useState)(null);
     const { cursors, rerenderCursorsAfterDelay, rerenderCursorsOnResize } = useRenderCursors(
       overlayElement,
       blockEditorDocument ?? null,
@@ -111325,12 +111346,12 @@ ${content}
       postType2 ?? null,
       RERENDER_DELAY_MS
     );
-    const onResize = (0, import_element362.useCallback)(() => {
+    const onResize = (0, import_element363.useCallback)(() => {
       rerenderCursorsOnResize();
       rerenderHighlightsOnResize();
     }, [rerenderCursorsOnResize, rerenderHighlightsOnResize]);
     const resizeObserverRef = (0, import_compose82.useResizeObserver)(onResize);
-    (0, import_element362.useEffect)(() => {
+    (0, import_element363.useEffect)(() => {
       const cleanupCursors = rerenderCursorsAfterDelay();
       const cleanupHighlights = rerenderHighlightsAfterDelay();
       return () => {
@@ -111338,7 +111359,7 @@ ${content}
         cleanupHighlights();
       };
     }, [rerenderCursorsAfterDelay, rerenderHighlightsAfterDelay]);
-    (0, import_element362.useEffect)(() => {
+    (0, import_element363.useEffect)(() => {
       if (cursors.length === 0) {
         return;
       }
@@ -111351,8 +111372,8 @@ ${content}
       setOverlayElement,
       resizeObserverRef
     ]);
-    const cursorRefsMap = (0, import_element362.useRef)(/* @__PURE__ */ new Map());
-    (0, import_element362.useEffect)(() => {
+    const cursorRefsMap = (0, import_element363.useRef)(/* @__PURE__ */ new Map());
+    (0, import_element363.useEffect)(() => {
       if (!cursorRegistry) {
         return;
       }
@@ -111372,7 +111393,7 @@ ${content}
       }
       return () => cursorRegistry.removeAll();
     }, [cursors, highlights, cursorRegistry]);
-    const setCursorRef = (0, import_element362.useCallback)(
+    const setCursorRef = (0, import_element363.useCallback)(
       (clientId) => (el) => {
         if (el) {
           cursorRefsMap.current.set(clientId, el);
@@ -111496,7 +111517,7 @@ ${content}
     const otherActiveCollaborators = activeCollaborators.filter(
       (c6) => !c6.isMe
     );
-    const collaboratorsForList = (0, import_element363.useMemo)(() => {
+    const collaboratorsForList = (0, import_element364.useMemo)(() => {
       return [...activeCollaborators].sort((a3, b3) => {
         if (a3.isMe && !b3.isMe) {
           return -1;
@@ -111507,9 +111528,9 @@ ${content}
         return 0;
       });
     }, [activeCollaborators]);
-    const [cursorRegistry] = (0, import_element363.useState)(createCursorRegistry);
-    const [isPopoverVisible, setIsPopoverVisible] = (0, import_element363.useState)(false);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element363.useState)(
+    const [cursorRegistry] = (0, import_element364.useState)(createCursorRegistry);
+    const [isPopoverVisible, setIsPopoverVisible] = (0, import_element364.useState)(false);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element364.useState)(
       null
     );
     if (otherActiveCollaborators.length === 0) {
@@ -111635,7 +111656,7 @@ ${content}
       };
     }, []);
     const canBeZoomedOut = ["post", "page", "wp_template"].includes(postType2) && hasSectionRootClientId;
-    const [isBlockToolsCollapsed, setIsBlockToolsCollapsed] = (0, import_element364.useState)(true);
+    const [isBlockToolsCollapsed, setIsBlockToolsCollapsed] = (0, import_element365.useState)(true);
     const hasCenter = !isTooNarrowForDocumentBar && (!hasFixedToolbar || hasFixedToolbar && (!hasBlockSelection || isBlockToolsCollapsed));
     return /* @__PURE__ */ (0, import_jsx_runtime578.jsx)(
       HeaderSkeleton,
@@ -111717,7 +111738,7 @@ ${content}
   var import_data211 = __toESM(require_data(), 1);
   var import_block_editor77 = __toESM(require_block_editor(), 1);
   var import_compose84 = __toESM(require_compose(), 1);
-  var import_element365 = __toESM(require_element(), 1);
+  var import_element366 = __toESM(require_element(), 1);
   var import_preferences23 = __toESM(require_preferences(), 1);
   var import_keycodes17 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime579 = __toESM(require_jsx_runtime(), 1);
@@ -111758,12 +111779,12 @@ ${content}
     const { setIsInserterOpened: setIsInserterOpened2 } = (0, import_data211.useDispatch)(store);
     const { disableComplementaryArea: disableComplementaryArea2 } = (0, import_data211.useDispatch)(store3);
     const isMobileViewport = (0, import_compose84.useViewportMatch)("medium", "<");
-    const libraryRef = (0, import_element365.useRef)();
-    const closeInserterSidebar = (0, import_element365.useCallback)(() => {
+    const libraryRef = (0, import_element366.useRef)();
+    const closeInserterSidebar = (0, import_element366.useCallback)(() => {
       setIsInserterOpened2(false);
       inserterSidebarToggleRef2.current?.focus();
     }, [inserterSidebarToggleRef2, setIsInserterOpened2]);
-    const closeOnEscape = (0, import_element365.useCallback)(
+    const closeOnEscape = (0, import_element366.useCallback)(
       (event) => {
         if (event.keyCode === import_keycodes17.ESCAPE && !event.defaultPrevented) {
           event.preventDefault();
@@ -111800,7 +111821,7 @@ ${content}
   var import_compose85 = __toESM(require_compose(), 1);
   var import_data212 = __toESM(require_data(), 1);
   var import_dom32 = __toESM(require_dom(), 1);
-  var import_element366 = __toESM(require_element(), 1);
+  var import_element367 = __toESM(require_element(), 1);
   var import_i18n312 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts9 = __toESM(require_keyboard_shortcuts(), 1);
   var import_keycodes18 = __toESM(require_keycodes(), 1);
@@ -111835,11 +111856,11 @@ ${content}
   function ListViewSidebar() {
     const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data212.useDispatch)(store);
     const { getListViewToggleRef: getListViewToggleRef2 } = unlock((0, import_data212.useSelect)(store));
-    const closeListView = (0, import_element366.useCallback)(() => {
+    const closeListView = (0, import_element367.useCallback)(() => {
       setIsListViewOpened2(false);
       getListViewToggleRef2().current?.focus();
     }, [getListViewToggleRef2, setIsListViewOpened2]);
-    const closeOnEscape = (0, import_element366.useCallback)(
+    const closeOnEscape = (0, import_element367.useCallback)(
       (event) => {
         if (event.keyCode === import_keycodes18.ESCAPE && !event.defaultPrevented) {
           event.preventDefault();
@@ -111848,11 +111869,11 @@ ${content}
       },
       [closeListView]
     );
-    const [dropZoneElement, setDropZoneElement] = (0, import_element366.useState)(null);
-    const [tab, setTab] = (0, import_element366.useState)("list-view");
-    const sidebarRef = (0, import_element366.useRef)();
-    const tabsRef = (0, import_element366.useRef)();
-    const listViewRef = (0, import_element366.useRef)();
+    const [dropZoneElement, setDropZoneElement] = (0, import_element367.useState)(null);
+    const [tab, setTab] = (0, import_element367.useState)("list-view");
+    const sidebarRef = (0, import_element367.useRef)();
+    const tabsRef = (0, import_element367.useRef)();
+    const listViewRef = (0, import_element367.useRef)();
     const listViewContainerRef = (0, import_compose85.useMergeRefs)([
       listViewRef,
       setDropZoneElement
@@ -111919,7 +111940,7 @@ ${content}
   var import_core_data122 = __toESM(require_core_data(), 1);
   var import_i18n313 = __toESM(require_i18n(), 1);
   var import_date22 = __toESM(require_date(), 1);
-  var import_element367 = __toESM(require_element(), 1);
+  var import_element368 = __toESM(require_element(), 1);
   var import_compose86 = __toESM(require_compose(), 1);
   var import_jsx_runtime582 = __toESM(require_jsx_runtime(), 1);
   function ConnectedRevisionsSlider() {
@@ -111970,13 +111991,13 @@ ${content}
     setRevisionPage: setRevisionPage2
   }) {
     const setFocusOnMountRef = (0, import_compose86.useFocusOnMount)(true);
-    const initialActiveElementRef = (0, import_element367.useRef)();
-    const loadingRef = (0, import_element367.useCallback)((node) => {
+    const initialActiveElementRef = (0, import_element368.useRef)();
+    const loadingRef = (0, import_element368.useCallback)((node) => {
       if (node && initialActiveElementRef.current === void 0) {
         initialActiveElementRef.current = node.ownerDocument.activeElement;
       }
     }, []);
-    const focusOnMountRef = (0, import_element367.useCallback)(
+    const focusOnMountRef = (0, import_element368.useCallback)(
       (node) => {
         if (!node) {
           setFocusOnMountRef(null);
@@ -111993,7 +112014,7 @@ ${content}
     );
     const isLoading = !rawRevisions;
     const totalPages = Math.ceil(totalRevisions / perPage) || 1;
-    const revisions = (0, import_element367.useMemo)(
+    const revisions = (0, import_element368.useMemo)(
       () => rawRevisions && [...rawRevisions].reverse(),
       [rawRevisions]
     );
@@ -112188,14 +112209,14 @@ ${content}
   var import_components244 = __toESM(require_components(), 1);
   var import_block_editor86 = __toESM(require_block_editor(), 1);
   var import_data223 = __toESM(require_data(), 1);
-  var import_element373 = __toESM(require_element(), 1);
+  var import_element374 = __toESM(require_element(), 1);
   var import_hooks62 = __toESM(require_hooks(), 1);
   var import_blocks34 = __toESM(require_blocks(), 1);
   var import_i18n318 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/visual-editor/index.mjs
   var import_block_editor84 = __toESM(require_block_editor(), 1);
-  var import_element371 = __toESM(require_element(), 1);
+  var import_element372 = __toESM(require_element(), 1);
   var import_data221 = __toESM(require_data(), 1);
   var import_blocks33 = __toESM(require_blocks(), 1);
   var import_core_data125 = __toESM(require_core_data(), 1);
@@ -112204,7 +112225,7 @@ ${content}
   // packages/editor/build-module/components/visual-editor/edit-template-blocks-notification.mjs
   var import_data215 = __toESM(require_data(), 1);
   var import_core_data123 = __toESM(require_core_data(), 1);
-  var import_element368 = __toESM(require_element(), 1);
+  var import_element369 = __toESM(require_element(), 1);
   var import_i18n315 = __toESM(require_i18n(), 1);
   var import_components242 = __toESM(require_components(), 1);
   var import_jsx_runtime584 = __toESM(require_jsx_runtime(), 1);
@@ -112223,8 +112244,8 @@ ${content}
       }),
       []
     );
-    const [isDialogOpen, setIsDialogOpen] = (0, import_element368.useState)(false);
-    (0, import_element368.useEffect)(() => {
+    const [isDialogOpen, setIsDialogOpen] = (0, import_element369.useState)(false);
+    (0, import_element369.useEffect)(() => {
       const handleDblClick = (event) => {
         if (!canEditTemplate) {
           return;
@@ -112459,15 +112480,15 @@ ${content}
   var import_block_editor83 = __toESM(require_block_editor(), 1);
   var import_components243 = __toESM(require_components(), 1);
   var import_hooks61 = __toESM(require_hooks(), 1);
-  var import_element370 = __toESM(require_element(), 1);
+  var import_element371 = __toESM(require_element(), 1);
   var import_i18n316 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/sync-connection-error-modal/use-retry-countdown.mjs
-  var import_element369 = __toESM(require_element(), 1);
+  var import_element370 = __toESM(require_element(), 1);
   function useRetryCountdown(connectionStatus) {
-    const [secondsRemaining, setSecondsRemaining] = (0, import_element369.useState)();
-    const hasRetriedRef = (0, import_element369.useRef)(false);
-    (0, import_element369.useEffect)(() => {
+    const [secondsRemaining, setSecondsRemaining] = (0, import_element370.useState)();
+    const hasRetriedRef = (0, import_element370.useRef)(false);
+    (0, import_element370.useEffect)(() => {
       if (!connectionStatus) {
         return;
       }
@@ -112524,9 +112545,9 @@ ${content}
   var { retrySyncConnection } = unlock(import_core_data124.privateApis);
   var INITIAL_DISCONNECTED_DEBOUNCE_MS = 2e4;
   function SyncConnectionErrorModal() {
-    const [hasInitialized, setHasInitialized] = (0, import_element370.useState)(false);
-    const [showModal, setShowModal] = (0, import_element370.useState)(false);
-    const [isManualRetryAvailable, setIsManualRetryAvailable] = (0, import_element370.useState)(false);
+    const [hasInitialized, setHasInitialized] = (0, import_element371.useState)(false);
+    const [showModal, setShowModal] = (0, import_element371.useState)(false);
+    const [isManualRetryAvailable, setIsManualRetryAvailable] = (0, import_element371.useState)(false);
     const { connectionStatus, isCollaborationEnabled, postType: postType2 } = (0, import_data220.useSelect)(
       (selectFn) => {
         const { getSyncConnectionStatus, getPostType } = unlock(
@@ -112547,13 +112568,13 @@ ${content}
       const blocks = (0, import_data220.select)(import_block_editor83.store).getBlocks();
       return (0, import_blocks32.serialize)(blocks);
     });
-    (0, import_element370.useEffect)(() => {
+    (0, import_element371.useEffect)(() => {
       const timeout = setTimeout(() => {
         setHasInitialized(true);
       }, INITIAL_DISCONNECTED_DEBOUNCE_MS);
       return () => clearTimeout(timeout);
     }, []);
-    (0, import_element370.useEffect)(() => {
+    (0, import_element371.useEffect)(() => {
       if ("connecting" === connectionStatus?.status) {
         return;
       }
@@ -112562,7 +112583,7 @@ ${content}
       );
     }, [connectionStatus]);
     const canRetry = connectionStatus && "disconnected" === connectionStatus.status && (connectionStatus.canManuallyRetry || connectionStatus.willAutoRetryInMs);
-    (0, import_element370.useEffect)(() => {
+    (0, import_element371.useEffect)(() => {
       if ("connected" === connectionStatus?.status) {
         setShowModal(false);
         return;
@@ -112802,16 +112823,16 @@ ${content}
         isZoomedOut: _isZoomOut()
       };
     }, []);
-    const localRef = (0, import_element371.useRef)();
+    const localRef = (0, import_element372.useRef)();
     const [globalLayoutSettings] = (0, import_block_editor84.useSettings)("layout");
-    const [containerSize, setContainerSize] = (0, import_element371.useState)();
+    const [containerSize, setContainerSize] = (0, import_element372.useState)();
     const containerRef = (0, import_compose92.useResizeObserver)((entries) => {
       const { width, height } = entries[0].contentRect;
       setContainerSize(
         (size4) => size4?.width === width && size4?.height === height ? size4 : { width, height }
       );
     });
-    const fallbackLayout = (0, import_element371.useMemo)(() => {
+    const fallbackLayout = (0, import_element372.useMemo)(() => {
       if (renderingMode2 !== "post-only" || isDesignPostType) {
         return { type: "default" };
       }
@@ -112825,7 +112846,7 @@ ${content}
       globalLayoutSettings,
       isDesignPostType
     ]);
-    const newestPostContentAttributes = (0, import_element371.useMemo)(() => {
+    const newestPostContentAttributes = (0, import_element372.useMemo)(() => {
       if (!editedPostTemplate?.content && !editedPostTemplate?.blocks && postContentAttributes) {
         return postContentAttributes;
       }
@@ -112839,7 +112860,7 @@ ${content}
       editedPostTemplate?.blocks,
       postContentAttributes
     ]);
-    const hasPostContentAtRootLevel = (0, import_element371.useMemo)(() => {
+    const hasPostContentAtRootLevel = (0, import_element372.useMemo)(() => {
       if (!editedPostTemplate?.content && !editedPostTemplate?.blocks) {
         return false;
       }
@@ -112866,7 +112887,7 @@ ${content}
       "core/post-content",
       ".block-editor-block-list__layout.is-root-container"
     );
-    const postContentLayout = (0, import_element371.useMemo)(() => {
+    const postContentLayout = (0, import_element372.useMemo)(() => {
       return layout && (layout?.type === "constrained" || layout?.inherit || layout?.contentSize || layout?.wideSize) ? { ...globalLayoutSettings, ...layout, type: "constrained" } : { ...globalLayoutSettings, ...layout, type: "default" };
     }, [
       layout?.type,
@@ -112877,8 +112898,8 @@ ${content}
     ]);
     const blockListLayout = postContentAttributes ? postContentLayout : fallbackLayout;
     const postEditorLayout = blockListLayout?.type === "default" && !hasPostContentAtRootLevel ? fallbackLayout : blockListLayout;
-    const titleRef = (0, import_element371.useRef)();
-    (0, import_element371.useEffect)(() => {
+    const titleRef = (0, import_element372.useRef)();
+    (0, import_element372.useEffect)(() => {
       if (!autoFocus || !isCleanNewPost2()) {
         return;
       }
@@ -112906,7 +112927,7 @@ ${content}
     const canvasHeight = shouldConstrainCanvasHeight ? getCanvasHeight(canvasWidth2, containerSize) : "100%";
     const centerContentCSS = `display:flex;align-items:center;justify-content:center;`;
     const iframeBodyMinHeightCSS = hasCanvasWidth && !isResizablePostType ? "min-height:100vh;" : "";
-    const iframeStyles = (0, import_element371.useMemo)(() => {
+    const iframeStyles = (0, import_element372.useMemo)(() => {
       return [
         ...styles ?? [],
         {
@@ -113080,7 +113101,7 @@ ${content}
   var visual_editor_default = VisualEditor;
 
   // packages/editor/build-module/components/post-revisions-preview/diff-markers.mjs
-  var import_element372 = __toESM(require_element(), 1);
+  var import_element373 = __toESM(require_element(), 1);
   var import_compose93 = __toESM(require_compose(), 1);
   var import_data222 = __toESM(require_data(), 1);
   var import_block_editor85 = __toESM(require_block_editor(), 1);
@@ -113122,17 +113143,17 @@ ${content}
     };
   }
   function DiffMarkerButton({ clientId, status, subscribe: subscribe5 }) {
-    const blockRef = (0, import_element372.useRef)();
+    const blockRef = (0, import_element373.useRef)();
     useBlockElementRef(clientId, blockRef);
-    const [position, setPosition] = (0, import_element372.useState)(
+    const [position, setPosition] = (0, import_element373.useState)(
       () => calculatePosition(blockRef.current)
     );
-    (0, import_element372.useEffect)(() => {
+    (0, import_element373.useEffect)(() => {
       return subscribe5(() => {
         setPosition(calculatePosition(blockRef.current));
       });
     }, [subscribe5]);
-    (0, import_element372.useEffect)(() => {
+    (0, import_element373.useEffect)(() => {
       setPosition(calculatePosition(blockRef.current));
     }, [status]);
     if (!position) {
@@ -113160,14 +113181,14 @@ ${content}
     ] });
   }
   function useDiffMarkers() {
-    const [isMounted, setIsMounted] = (0, import_element372.useState)(false);
-    const subscribersRef = (0, import_element372.useRef)(/* @__PURE__ */ new Set());
+    const [isMounted, setIsMounted] = (0, import_element373.useState)(false);
+    const subscribersRef = (0, import_element373.useRef)(/* @__PURE__ */ new Set());
     const blocks = (0, import_data222.useSelect)(
       (select9) => select9(import_block_editor85.store).getBlocks(),
       []
     );
-    const diffBlocks = (0, import_element372.useMemo)(() => collectDiffBlocks(blocks), [blocks]);
-    const subscribe5 = (0, import_element372.useCallback)((callback) => {
+    const diffBlocks = (0, import_element373.useMemo)(() => collectDiffBlocks(blocks), [blocks]);
+    const subscribe5 = (0, import_element373.useCallback)((callback) => {
       subscribersRef.current.add(callback);
       return () => subscribersRef.current.delete(callback);
     }, []);
@@ -113288,7 +113309,7 @@ ${content}
     }
   }
   function BlockDiffLabelProvider({ status, name: name2, attributes, children }) {
-    const context = (0, import_element373.useContext)(PrivateBlockContext);
+    const context = (0, import_element374.useContext)(PrivateBlockContext);
     const blockTitle = (0, import_data223.useSelect)(
       (select9) => {
         const { getActiveBlockVariation, getBlockType: getBlockType7 } = select9(import_blocks34.store);
@@ -113360,7 +113381,7 @@ ${content}
     ] });
   }
   function RevisionsCanvas() {
-    (0, import_element373.useEffect)(() => {
+    (0, import_element374.useEffect)(() => {
       registerDiffFormatTypes();
       return () => {
         unregisterDiffFormatTypes();
@@ -113385,7 +113406,7 @@ ${content}
   var import_components245 = __toESM(require_components(), 1);
   var import_core_data126 = __toESM(require_core_data(), 1);
   var import_data224 = __toESM(require_data(), 1);
-  var import_element374 = __toESM(require_element(), 1);
+  var import_element375 = __toESM(require_element(), 1);
   var import_i18n319 = __toESM(require_i18n(), 1);
   var import_jsx_runtime589 = __toESM(require_jsx_runtime(), 1);
   var MAX_DIFF_EDIT_LENGTH = 1e3;
@@ -113505,7 +113526,7 @@ ${content}
     showDiff,
     isPreviousRevisionLoading
   }) {
-    const rows = (0, import_element374.useMemo)(() => {
+    const rows = (0, import_element375.useMemo)(() => {
       if (!revision || isPreviousRevisionLoading) {
         return [];
       }
@@ -113568,7 +113589,7 @@ ${content}
 
   // packages/editor/build-module/components/collaborators-presence/use-collaborator-notifications.mjs
   var import_data225 = __toESM(require_data(), 1);
-  var import_element375 = __toESM(require_element(), 1);
+  var import_element376 = __toESM(require_element(), 1);
   var import_i18n320 = __toESM(require_i18n(), 1);
   var import_notices31 = __toESM(require_notices(), 1);
   var import_core_data127 = __toESM(require_core_data(), 1);
@@ -113633,7 +113654,7 @@ ${content}
     useOnCollaboratorJoin(
       joinPostId,
       joinPostType,
-      (0, import_element375.useCallback)(
+      (0, import_element376.useCallback)(
         (collaborator, me) => {
           if (!shouldShowJoinNotifications) {
             return;
@@ -113663,7 +113684,7 @@ ${content}
     useOnCollaboratorLeave(
       leavePostId,
       leavePostType,
-      (0, import_element375.useCallback)(
+      (0, import_element376.useCallback)(
         (collaborator) => {
           if (!shouldShowLeaveNotifications) {
             return;
@@ -113690,7 +113711,7 @@ ${content}
     useOnPostSave(
       postSavePostId,
       postSavePostType,
-      (0, import_element375.useCallback)(
+      (0, import_element376.useCallback)(
         (saveEvent, saver, prevEvent) => {
           if (!shouldShowPostSaveNotifications || !postStatus) {
             return;
@@ -113718,7 +113739,7 @@ ${content}
   var import_data226 = __toESM(require_data(), 1);
   var import_components246 = __toESM(require_components(), 1);
   var import_i18n321 = __toESM(require_i18n(), 1);
-  var import_element376 = __toESM(require_element(), 1);
+  var import_element377 = __toESM(require_element(), 1);
   var import_core_data128 = __toESM(require_core_data(), 1);
   var import_jsx_runtime590 = __toESM(require_jsx_runtime(), 1);
   var { Fill: Fill11, Slot: Slot13 } = (0, import_components246.createSlotFill)("ActionsPanel");
@@ -113751,7 +113772,7 @@ ${content}
         hasOtherEntitiesChanges: _hasOtherEntitiesChanges
       };
     }, []);
-    const openEntitiesSavedStates = (0, import_element376.useCallback)(
+    const openEntitiesSavedStates = (0, import_element377.useCallback)(
       () => setEntitiesSavedStatesCallback(true),
       []
     );
@@ -113810,7 +113831,7 @@ ${content}
   var import_data227 = __toESM(require_data(), 1);
   var import_i18n322 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts10 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_element377 = __toESM(require_element(), 1);
+  var import_element378 = __toESM(require_element(), 1);
   var import_jsx_runtime591 = __toESM(require_jsx_runtime(), 1);
   function TextEditor({ autoFocus = false }) {
     const { switchEditorMode: switchEditorMode2 } = (0, import_data227.useDispatch)(store);
@@ -113822,8 +113843,8 @@ ${content}
         isRichEditingEnabled: getEditorSettings2().richEditingEnabled
       };
     }, []);
-    const titleRef = (0, import_element377.useRef)();
-    (0, import_element377.useEffect)(() => {
+    const titleRef = (0, import_element378.useRef)();
+    (0, import_element378.useEffect)(() => {
       if (autoFocus) {
         return;
       }
@@ -113944,7 +113965,7 @@ ${content}
     const { setShowRevisionDiff: setShowRevisionDiff2 } = unlock((0, import_data228.useDispatch)(store));
     const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data228.useDispatch)(store);
     const registry = (0, import_data228.useRegistry)();
-    (0, import_element378.useLayoutEffect)(() => {
+    (0, import_element379.useLayoutEffect)(() => {
       const isMediumOrBigger = window.matchMedia("(min-width: 782px)").matches;
       const { get } = registry.select(import_preferences25.store);
       setIsListViewOpened2(
@@ -113956,8 +113977,8 @@ ${content}
     const secondarySidebarLabel = isListViewOpened2 ? (0, import_i18n323.__)("Document Overview") : (0, import_i18n323.__)("Block Library");
     const shouldShowStylesCanvas = showStylebook2 || stylesPath2?.startsWith("/revisions");
     const shouldShowBlockEditor = !shouldShowStylesCanvas;
-    const [entitiesSavedStatesCallback, setEntitiesSavedStatesCallback] = (0, import_element378.useState)(false);
-    const closeEntitiesSavedStates = (0, import_element378.useCallback)(
+    const [entitiesSavedStatesCallback, setEntitiesSavedStatesCallback] = (0, import_element379.useState)(false);
+    const closeEntitiesSavedStates = (0, import_element379.useCallback)(
       (arg) => {
         if (typeof entitiesSavedStatesCallback === "function") {
           entitiesSavedStatesCallback(arg);
@@ -114085,25 +114106,25 @@ ${content}
   var import_components251 = __toESM(require_components(), 1);
   var import_core_data133 = __toESM(require_core_data(), 1);
   var import_data234 = __toESM(require_data(), 1);
-  var import_element383 = __toESM(require_element(), 1);
+  var import_element384 = __toESM(require_element(), 1);
   var import_i18n327 = __toESM(require_i18n(), 1);
   var import_dom33 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/post-actions/index.mjs
   var import_data233 = __toESM(require_data(), 1);
-  var import_element382 = __toESM(require_element(), 1);
+  var import_element383 = __toESM(require_element(), 1);
   var import_i18n326 = __toESM(require_i18n(), 1);
   var import_components250 = __toESM(require_components(), 1);
   var import_core_data132 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-actions/actions.mjs
   var import_data232 = __toESM(require_data(), 1);
-  var import_element381 = __toESM(require_element(), 1);
+  var import_element382 = __toESM(require_element(), 1);
   var import_core_data131 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-actions/set-as-homepage.mjs
   var import_i18n324 = __toESM(require_i18n(), 1);
-  var import_element379 = __toESM(require_element(), 1);
+  var import_element380 = __toESM(require_element(), 1);
   var import_components248 = __toESM(require_components(), 1);
   var import_data230 = __toESM(require_data(), 1);
   var import_core_data129 = __toESM(require_core_data(), 1);
@@ -114225,7 +114246,7 @@ ${content}
         pageForPosts: siteSettings?.page_for_posts
       };
     });
-    return (0, import_element379.useMemo)(
+    return (0, import_element380.useMemo)(
       () => ({
         id: "set-as-homepage",
         label: (0, import_i18n324.__)("Set as homepage\u2026"),
@@ -114254,7 +114275,7 @@ ${content}
 
   // packages/editor/build-module/components/post-actions/set-as-posts-page.mjs
   var import_i18n325 = __toESM(require_i18n(), 1);
-  var import_element380 = __toESM(require_element(), 1);
+  var import_element381 = __toESM(require_element(), 1);
   var import_components249 = __toESM(require_components(), 1);
   var import_data231 = __toESM(require_data(), 1);
   var import_core_data130 = __toESM(require_core_data(), 1);
@@ -114352,7 +114373,7 @@ ${content}
         pageForPosts: siteSettings?.page_for_posts
       };
     });
-    return (0, import_element380.useMemo)(
+    return (0, import_element381.useMemo)(
       () => ({
         id: "set-as-posts-page",
         label: (0, import_i18n325.__)("Set as posts page\u2026"),
@@ -114425,10 +114446,10 @@ ${content}
     const setAsHomepageAction = useSetAsHomepageAction();
     const setAsPostsPageAction = useSetAsPostsPageAction();
     const { registerPostTypeSchema: registerPostTypeSchema2 } = unlock((0, import_data232.useDispatch)(store));
-    (0, import_element381.useEffect)(() => {
+    (0, import_element382.useEffect)(() => {
       registerPostTypeSchema2(postType2);
     }, [registerPostTypeSchema2, postType2]);
-    return (0, import_element381.useMemo)(() => {
+    return (0, import_element382.useMemo)(() => {
       let actions2 = [...defaultActions];
       if (shouldShowHomepageActions) {
         actions2.push(setAsHomepageAction, setAsPostsPageAction);
@@ -114504,7 +114525,7 @@ ${content}
   var import_jsx_runtime597 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu4 } = unlock(import_components250.privateApis);
   function PostActions({ postType: postType2, postId: postId2, onActionPerformed }) {
-    const [activeModalAction, setActiveModalAction] = (0, import_element382.useState)(null);
+    const [activeModalAction, setActiveModalAction] = (0, import_element383.useState)(null);
     const { item, permissions } = (0, import_data233.useSelect)(
       (select9) => {
         const { getEditedEntityRecord, getEntityRecordPermissions } = unlock(select9(import_core_data132.store));
@@ -114519,14 +114540,14 @@ ${content}
       },
       [postId2, postType2]
     );
-    const itemWithPermissions = (0, import_element382.useMemo)(() => {
+    const itemWithPermissions = (0, import_element383.useMemo)(() => {
       return {
         ...item,
         permissions
       };
     }, [item, permissions]);
     const allActions = usePostActions({ postType: postType2, onActionPerformed });
-    const actions2 = (0, import_element382.useMemo)(() => {
+    const actions2 = (0, import_element383.useMemo)(() => {
       return allActions.filter((action) => {
         return !action.isEligible || action.isEligible(itemWithPermissions);
       });
@@ -114621,7 +114642,7 @@ ${content}
     onActionPerformed,
     onClose
   }) {
-    const postIds = (0, import_element383.useMemo)(
+    const postIds = (0, import_element384.useMemo)(
       () => Array.isArray(postId2) ? postId2 : [postId2],
       [postId2]
     );
@@ -114746,7 +114767,7 @@ ${content}
   var import_data235 = __toESM(require_data(), 1);
   var import_i18n328 = __toESM(require_i18n(), 1);
   var import_wordcount5 = __toESM(require_wordcount(), 1);
-  var import_element384 = __toESM(require_element(), 1);
+  var import_element385 = __toESM(require_element(), 1);
   var import_core_data134 = __toESM(require_core_data(), 1);
   var import_jsx_runtime599 = __toESM(require_jsx_runtime(), 1);
   var AVERAGE_READING_RATE3 = 189;
@@ -114771,7 +114792,7 @@ ${content}
   }
   function PostContentInformationUI({ postContent }) {
     const wordCountType = (0, import_i18n328._x)("words", "Word count type. Do not translate!");
-    const wordsCounted = (0, import_element384.useMemo)(
+    const wordsCounted = (0, import_element385.useMemo)(
       () => postContent ? (0, import_wordcount5.count)(postContent, wordCountType) : 0,
       [postContent, wordCountType]
     );
@@ -114801,7 +114822,7 @@ ${content}
   var import_components253 = __toESM(require_components(), 1);
   var import_i18n329 = __toESM(require_i18n(), 1);
   var import_data236 = __toESM(require_data(), 1);
-  var import_element385 = __toESM(require_element(), 1);
+  var import_element386 = __toESM(require_element(), 1);
   var import_block_editor88 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime600 = __toESM(require_jsx_runtime(), 1);
   function PostFormat2() {
@@ -114815,8 +114836,8 @@ ${content}
     const activeFormat = POST_FORMATS2.find(
       (format7) => format7.id === postFormat
     );
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element385.useState)(null);
-    const popoverProps = (0, import_element385.useMemo)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element386.useState)(null);
+    const popoverProps = (0, import_element386.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -114916,7 +114937,7 @@ ${content}
   var import_core_data136 = __toESM(require_core_data(), 1);
   var import_html_entities32 = __toESM(require_html_entities(), 1);
   var import_components256 = __toESM(require_components(), 1);
-  var import_element386 = __toESM(require_element(), 1);
+  var import_element387 = __toESM(require_element(), 1);
   var import_block_editor89 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime604 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_OBJECT4 = {};
@@ -114944,8 +114965,8 @@ ${content}
       },
       []
     );
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element386.useState)(null);
-    const popoverProps = (0, import_element386.useMemo)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element387.useState)(null);
+    const popoverProps = (0, import_element387.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -115017,7 +115038,7 @@ ${content}
   var import_data240 = __toESM(require_data(), 1);
   var import_core_data137 = __toESM(require_core_data(), 1);
   var import_components257 = __toESM(require_components(), 1);
-  var import_element387 = __toESM(require_element(), 1);
+  var import_element388 = __toESM(require_element(), 1);
   var import_block_editor90 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime605 = __toESM(require_jsx_runtime(), 1);
   function PostsPerPage() {
@@ -115035,8 +115056,8 @@ ${content}
         postsPerPage: siteSettings?.posts_per_page || 1
       };
     }, []);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element387.useState)(null);
-    const popoverProps = (0, import_element387.useMemo)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element388.useState)(null);
+    const popoverProps = (0, import_element388.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -115106,7 +115127,7 @@ ${content}
   var import_data241 = __toESM(require_data(), 1);
   var import_core_data138 = __toESM(require_core_data(), 1);
   var import_components258 = __toESM(require_components(), 1);
-  var import_element388 = __toESM(require_element(), 1);
+  var import_element389 = __toESM(require_element(), 1);
   var import_block_editor91 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime606 = __toESM(require_jsx_runtime(), 1);
   var COMMENT_OPTIONS2 = [
@@ -115142,8 +115163,8 @@ ${content}
       },
       []
     );
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element388.useState)(null);
-    const popoverProps = (0, import_element388.useMemo)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element389.useState)(null);
+    const popoverProps = (0, import_element389.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -115274,10 +115295,10 @@ ${content}
   var import_i18n338 = __toESM(require_i18n(), 1);
   var import_data247 = __toESM(require_data(), 1);
   var import_core_data140 = __toESM(require_core_data(), 1);
-  var import_element390 = __toESM(require_element(), 1);
+  var import_element391 = __toESM(require_element(), 1);
 
   // packages/views/build-module/use-view.mjs
-  var import_element389 = __toESM(require_element(), 1);
+  var import_element390 = __toESM(require_element(), 1);
   var import_data243 = __toESM(require_data(), 1);
   var import_preferences26 = __toESM(require_preferences(), 1);
 
@@ -115417,7 +115438,7 @@ ${content}
         pageAttributesEnabled: isEditorPanelEnabled2("page-attributes")
       };
     }, []);
-    const visibleForm = (0, import_element390.useMemo)(() => {
+    const visibleForm = (0, import_element391.useMemo)(() => {
       if (!form.fields?.length) {
         return form;
       }
@@ -115551,7 +115572,7 @@ ${content}
       },
       [postType2]
     );
-    const data = (0, import_element390.useMemo)(() => {
+    const data = (0, import_element391.useMemo)(() => {
       if (!record) {
         return record;
       }
@@ -115563,7 +115584,7 @@ ${content}
     }, [record, entityRecords, availableTemplates]);
     const { editEntityRecord } = (0, import_data247.useDispatch)(import_core_data140.store);
     const registry = (0, import_data247.useRegistry)();
-    const fieldNamespaces = (0, import_element390.useMemo)(() => {
+    const fieldNamespaces = (0, import_element391.useMemo)(() => {
       const map = {};
       for (const [namespace, entity] of Object.entries(
         ENTITIES[postType2] ?? {}
@@ -115575,7 +115596,7 @@ ${content}
       return map;
     }, [postType2]);
     const _fields = post_fields_default({ postType: postType2 });
-    const fields2 = (0, import_element390.useMemo)(
+    const fields2 = (0, import_element391.useMemo)(
       () => _fields?.map((field) => {
         const namespace = fieldNamespaces[field.id];
         if (namespace) {
@@ -115674,7 +115695,7 @@ ${content}
   var import_data248 = __toESM(require_data(), 1);
   var import_core_data141 = __toESM(require_core_data(), 1);
   var import_date24 = __toESM(require_date(), 1);
-  var import_element391 = __toESM(require_element(), 1);
+  var import_element392 = __toESM(require_element(), 1);
   var import_i18n339 = __toESM(require_i18n(), 1);
   var import_jsx_runtime610 = __toESM(require_jsx_runtime(), 1);
   var PAGE_SIZE2 = 10;
@@ -115706,7 +115727,7 @@ ${content}
   }
   function PostRevisionsTimeline() {
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data248.useDispatch)(store));
-    const [view, setView] = (0, import_element391.useState)(baseView);
+    const [view, setView] = (0, import_element392.useState)(baseView);
     const { revisions, revisionKey, currentRevisionId } = (0, import_data248.useSelect)(
       (select9) => {
         const { getCurrentPostType: getCurrentPostType2 } = select9(store);
@@ -115730,7 +115751,7 @@ ${content}
       []
     );
     const isLoading = !revisions;
-    const fields2 = (0, import_element391.useMemo)(
+    const fields2 = (0, import_element392.useMemo)(
       () => [
         {
           id: "date",
@@ -115785,11 +115806,11 @@ ${content}
       ],
       [revisionKey, currentRevisionId]
     );
-    const { data: shownRevisions, paginationInfo } = (0, import_element391.useMemo)(
+    const { data: shownRevisions, paginationInfo } = (0, import_element392.useMemo)(
       () => filterSortAndPaginate(revisions || EMPTY_ARRAY17, view, fields2),
       [revisions, view, fields2]
     );
-    (0, import_element391.useEffect)(() => {
+    (0, import_element392.useEffect)(() => {
       if (!currentRevisionId || !revisions) {
         return;
       }
@@ -115802,11 +115823,11 @@ ${content}
       const page = Math.floor(index2 / view.perPage) + 1;
       setView((v3) => v3.page === page ? v3 : { ...v3, page });
     }, [currentRevisionId, revisions, revisionKey, view.perPage]);
-    const selection = (0, import_element391.useMemo)(
+    const selection = (0, import_element392.useMemo)(
       () => currentRevisionId ? [String(currentRevisionId)] : EMPTY_ARRAY17,
       [currentRevisionId]
     );
-    const onChangeSelection = (0, import_element391.useCallback)(
+    const onChangeSelection = (0, import_element392.useCallback)(
       (newSelection) => {
         if (newSelection.length === 0) {
           return;
@@ -115816,7 +115837,7 @@ ${content}
       },
       [setCurrentRevisionId2]
     );
-    const getItemId2 = (0, import_element391.useCallback)(
+    const getItemId2 = (0, import_element392.useCallback)(
       (item) => String(item[revisionKey]),
       [revisionKey]
     );
@@ -115843,7 +115864,7 @@ ${content}
 
   // packages/editor/build-module/components/revision-fields-diff/index.mjs
   var import_data249 = __toESM(require_data(), 1);
-  var import_element392 = __toESM(require_element(), 1);
+  var import_element393 = __toESM(require_element(), 1);
   var import_i18n340 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/revision-diff-panel/index.mjs
@@ -115908,7 +115929,7 @@ ${content}
         previousRevision: getPreviousRevision2()
       };
     }, []);
-    const entries = (0, import_element392.useMemo)(() => {
+    const entries = (0, import_element393.useMemo)(() => {
       if (!revision) {
         return null;
       }
@@ -115986,7 +116007,7 @@ ${content}
 
   // packages/editor/build-module/components/post-transform-panel/hooks.mjs
   var import_data251 = __toESM(require_data(), 1);
-  var import_element393 = __toESM(require_element(), 1);
+  var import_element394 = __toESM(require_element(), 1);
   var import_core_data142 = __toESM(require_core_data(), 1);
   var import_blocks35 = __toESM(require_blocks(), 1);
   var import_patterns11 = __toESM(require_patterns(), 1);
@@ -116043,7 +116064,7 @@ ${content}
         currentThemeStylesheet: select9(import_core_data142.store).getCurrentTheme().stylesheet
       };
     }, []);
-    return (0, import_element393.useMemo)(() => {
+    return (0, import_element394.useMemo)(() => {
       const mergedPatterns = [
         ...blockPatterns || [],
         ...restBlockPatterns || []
@@ -116169,7 +116190,7 @@ ${content}
   var import_core_data144 = __toESM(require_core_data(), 1);
   var import_block_editor93 = __toESM(require_block_editor(), 1);
   var import_components263 = __toESM(require_components(), 1);
-  var import_element394 = __toESM(require_element(), 1);
+  var import_element395 = __toESM(require_element(), 1);
   var import_i18n344 = __toESM(require_i18n(), 1);
   var import_html_entities34 = __toESM(require_html_entities(), 1);
   var import_keycodes19 = __toESM(require_keycodes(), 1);
@@ -116181,8 +116202,8 @@ ${content}
       (select9) => select9(store).getCurrentTemplateId(),
       []
     );
-    const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element394.useState)(false);
-    const [isSwapModalOpen, setIsSwapModalOpen] = (0, import_element394.useState)(false);
+    const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element395.useState)(false);
+    const [isSwapModalOpen, setIsSwapModalOpen] = (0, import_element395.useState)(false);
     const availableTemplates = useAvailableTemplates();
     const hasSwapTargets = !!availableTemplates?.length;
     const {
@@ -116333,7 +116354,7 @@ ${content}
   var import_core_data145 = __toESM(require_core_data(), 1);
   var import_block_editor94 = __toESM(require_block_editor(), 1);
   var import_components264 = __toESM(require_components(), 1);
-  var import_element395 = __toESM(require_element(), 1);
+  var import_element396 = __toESM(require_element(), 1);
   var import_i18n345 = __toESM(require_i18n(), 1);
   var import_html_entities35 = __toESM(require_html_entities(), 1);
   var import_notices36 = __toESM(require_notices(), 1);
@@ -116344,7 +116365,7 @@ ${content}
       (select9) => select9(store).getCurrentTemplateId(),
       []
     );
-    const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element395.useState)(false);
+    const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element396.useState)(false);
     const {
       onNavigateToEntityRecord,
       canCreateTemplate,
@@ -116515,7 +116536,7 @@ ${content}
 
   // packages/editor/build-module/components/template-part-content-panel/index.mjs
   var import_data257 = __toESM(require_data(), 1);
-  var import_element396 = __toESM(require_element(), 1);
+  var import_element397 = __toESM(require_element(), 1);
   var import_blocks37 = __toESM(require_blocks(), 1);
   var import_block_editor96 = __toESM(require_block_editor(), 1);
   var import_components266 = __toESM(require_components(), 1);
@@ -116527,7 +116548,7 @@ ${content}
       const { getBlockTypes: getBlockTypes6 } = select9(import_blocks37.store);
       return getBlockTypes6();
     }, []);
-    const themeBlockNames = (0, import_element396.useMemo)(() => {
+    const themeBlockNames = (0, import_element397.useMemo)(() => {
       return blockTypes.filter((blockType) => {
         return blockType.category === "theme";
       }).map(({ name: name2 }) => name2);
@@ -116583,7 +116604,7 @@ ${content}
 
   // packages/editor/build-module/components/provider/use-auto-switch-editor-sidebars.mjs
   var import_data259 = __toESM(require_data(), 1);
-  var import_element397 = __toESM(require_element(), 1);
+  var import_element398 = __toESM(require_element(), 1);
   var import_block_editor98 = __toESM(require_block_editor(), 1);
   var import_preferences30 = __toESM(require_preferences(), 1);
   function useAutoSwitchEditorSidebars() {
@@ -116595,7 +116616,7 @@ ${content}
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data259.useSelect)(store3);
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data259.useDispatch)(store3);
     const { get: getPreference } = (0, import_data259.useSelect)(import_preferences30.store);
-    (0, import_element397.useEffect)(() => {
+    (0, import_element398.useEffect)(() => {
       const activeGeneralSidebar = getActiveComplementaryArea2("core");
       const isEditorSidebarOpened = [
         "edit-post/document",
@@ -116705,20 +116726,20 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_i18n359 = __toESM(require_i18n(), 1);
   var import_data269 = __toESM(require_data(), 1);
-  var import_element408 = __toESM(require_element(), 1);
+  var import_element409 = __toESM(require_element(), 1);
   var import_compose100 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts13 = __toESM(require_keyboard_shortcuts(), 1);
   var import_block_editor108 = __toESM(require_block_editor(), 1);
   var import_preferences31 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/notes.mjs
-  var import_element405 = __toESM(require_element(), 1);
+  var import_element406 = __toESM(require_element(), 1);
   var import_i18n356 = __toESM(require_i18n(), 1);
   var import_data266 = __toESM(require_data(), 1);
   var import_block_editor104 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
-  var import_element403 = __toESM(require_element(), 1);
+  var import_element404 = __toESM(require_element(), 1);
   var import_components270 = __toESM(require_components(), 1);
   var import_compose99 = __toESM(require_compose(), 1);
   var import_i18n354 = __toESM(require_i18n(), 1);
@@ -116728,7 +116749,7 @@ ${content}
 
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_i18n352 = __toESM(require_i18n(), 1);
-  var import_element401 = __toESM(require_element(), 1);
+  var import_element402 = __toESM(require_element(), 1);
   var import_compose98 = __toESM(require_compose(), 1);
   var import_data263 = __toESM(require_data(), 1);
   var import_block_editor101 = __toESM(require_block_editor(), 1);
@@ -116857,7 +116878,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/collab-sidebar/note-form.mjs
-  var import_element400 = __toESM(require_element(), 1);
+  var import_element401 = __toESM(require_element(), 1);
   var import_components268 = __toESM(require_components(), 1);
   var import_i18n351 = __toESM(require_i18n(), 1);
   var import_compose97 = __toESM(require_compose(), 1);
@@ -116865,7 +116886,7 @@ ${content}
   var import_dom34 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-mention-completer.mjs
-  var import_element398 = __toESM(require_element(), 1);
+  var import_element399 = __toESM(require_element(), 1);
   var import_data262 = __toESM(require_data(), 1);
   var import_core_data147 = __toESM(require_core_data(), 1);
   var import_jsx_runtime625 = __toESM(require_jsx_runtime(), 1);
@@ -116884,7 +116905,7 @@ ${content}
         },
         [filterValue]
       );
-      const options = (0, import_element398.useMemo)(
+      const options = (0, import_element399.useMemo)(
         () => users ? users.map((user) => ({
           key: `note-mention-${user.slug}`,
           value: user,
@@ -116906,7 +116927,7 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/rich-text-control/index.mjs
   var import_components267 = __toESM(require_components(), 1);
   var import_compose96 = __toESM(require_compose(), 1);
-  var import_element399 = __toESM(require_element(), 1);
+  var import_element400 = __toESM(require_element(), 1);
   var import_keycodes20 = __toESM(require_keycodes(), 1);
   var import_rich_text8 = __toESM(require_rich_text(), 1);
 
@@ -117002,14 +117023,14 @@ ${content}
     focusOnMount,
     completers = EMPTY_COMPLETERS
   }) {
-    const [selection, setSelection] = (0, import_element399.useState)({
+    const [selection, setSelection] = (0, import_element400.useState)({
       start: void 0,
       end: void 0
     });
-    const [isSelected2, setIsSelected] = (0, import_element399.useState)(false);
-    const anchorRef = (0, import_element399.useRef)(void 0);
-    const inputEvents = (0, import_element399.useRef)(/* @__PURE__ */ new Set());
-    const keyboardShortcuts = (0, import_element399.useRef)(
+    const [isSelected2, setIsSelected] = (0, import_element400.useState)(false);
+    const anchorRef = (0, import_element400.useRef)(void 0);
+    const inputEvents = (0, import_element400.useRef)(/* @__PURE__ */ new Set());
+    const keyboardShortcuts = (0, import_element400.useRef)(
       /* @__PURE__ */ new Set()
     );
     const focusOutside = (0, import_compose96.__experimentalUseFocusOutside)(() => setIsSelected(false));
@@ -117035,7 +117056,7 @@ ${content}
       __unstableDisableFormats: disableFormats,
       allowedFormats: adjustedAllowedFormats,
       withoutInteractiveFormatting,
-      __unstableFormatTypeHandlerContext: (0, import_element399.useMemo)(
+      __unstableFormatTypeHandlerContext: (0, import_element400.useMemo)(
         () => ({
           richTextIdentifier: id,
           blockClientId: clientId
@@ -117046,16 +117067,16 @@ ${content}
     function onFocus() {
       anchorRef.current?.focus();
     }
-    const eventListenersPropsRef = (0, import_element399.useRef)({
+    const eventListenersPropsRef = (0, import_element400.useRef)({
       keyboardShortcuts,
       inputEvents
     });
-    const inputRulePropsRef = (0, import_element399.useRef)({
+    const inputRulePropsRef = (0, import_element400.useRef)({
       formatTypes,
       getValue: getValue3,
       onChange: onRichTextChange
     });
-    (0, import_element399.useInsertionEffect)(() => {
+    (0, import_element400.useInsertionEffect)(() => {
       inputRulePropsRef.current = {
         formatTypes,
         getValue: getValue3,
@@ -117228,10 +117249,10 @@ ${content}
   ];
   var NOTE_COMPLETERS = [note_mention_completer_default];
   function NoteForm({ onSubmit, onCancel, note, labels }) {
-    const [inputComment, setInputComment] = (0, import_element400.useState)(
+    const [inputComment, setInputComment] = (0, import_element401.useState)(
       note?.content?.raw ?? ""
     );
-    const [isSubmitting, setIsSubmitting] = (0, import_element400.useState)(false);
+    const [isSubmitting, setIsSubmitting] = (0, import_element401.useState)(false);
     const inputId = (0, import_compose97.useInstanceId)(NoteForm, "comment-input");
     const trimmedPlainText = sanitizeNoteContent((0, import_dom34.__unstableStripHTML)(inputComment));
     const isDisabled = isSubmitting || inputComment === note?.content?.raw || !trimmedPlainText.length;
@@ -117365,7 +117386,7 @@ ${content}
     const { toggleBlockSpotlight } = unlock((0, import_data263.useDispatch)(import_block_editor101.store));
     const { selectNote: selectNote2 } = unlock((0, import_data263.useDispatch)(store));
     const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data263.useSelect)(store));
-    const isSubmittingRef = (0, import_element401.useRef)(false);
+    const isSubmittingRef = (0, import_element402.useRef)(false);
     const focusOutside = (0, import_compose98.__experimentalUseFocusOutside)((event) => {
       if (event.relatedTarget?.closest(
         ".editor-collab-sidebar-panel__add-note"
@@ -117432,7 +117453,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/collab-sidebar/note.mjs
-  var import_element402 = __toESM(require_element(), 1);
+  var import_element403 = __toESM(require_element(), 1);
   var import_components269 = __toESM(require_components(), 1);
   var import_i18n353 = __toESM(require_i18n(), 1);
   var import_jsx_runtime631 = __toESM(require_jsx_runtime(), 1);
@@ -117472,18 +117493,18 @@ ${content}
     onDeleteNote,
     onResolve
   }) {
-    const [actionState, setActionState] = (0, import_element402.useState)(null);
-    const actionButtonRef = (0, import_element402.useRef)(null);
-    const commentRef = (0, import_element402.useRef)(null);
+    const [actionState, setActionState] = (0, import_element403.useState)(null);
+    const actionButtonRef = (0, import_element403.useRef)(null);
+    const commentRef = (0, import_element403.useRef)(null);
     const rawContent = note?.content?.raw;
-    const [prevContent, setPrevContent] = (0, import_element402.useState)(rawContent);
-    const [isExpanded, setIsExpanded] = (0, import_element402.useState)(false);
-    const [isOverflowing, setIsOverflowing] = (0, import_element402.useState)(false);
+    const [prevContent, setPrevContent] = (0, import_element403.useState)(rawContent);
+    const [isExpanded, setIsExpanded] = (0, import_element403.useState)(false);
+    const [isOverflowing, setIsOverflowing] = (0, import_element403.useState)(false);
     if (prevContent !== rawContent) {
       setPrevContent(rawContent);
       setIsExpanded(false);
     }
-    (0, import_element402.useLayoutEffect)(() => {
+    (0, import_element403.useLayoutEffect)(() => {
       const commentElement = commentRef.current;
       if (commentElement) {
         setIsOverflowing(
@@ -117655,18 +117676,18 @@ ${content}
       toggleBlockHighlight,
       50
     );
-    const floatingRef = (0, import_element403.useRef)(null);
-    const isKeyboardTabbingRef = (0, import_element403.useRef)(false);
+    const floatingRef = (0, import_element404.useRef)(null);
+    const isKeyboardTabbingRef = (0, import_element404.useRef)(false);
     const registerThread = floating?.registerThread;
     const unregisterThread = floating?.unregisterThread;
-    (0, import_element403.useEffect)(() => {
+    (0, import_element404.useEffect)(() => {
       const floatingEl = floatingRef.current;
       if (floatingEl && registerThread) {
         registerThread(note.id, relatedBlockElement, floatingEl);
       }
       return () => unregisterThread?.(note.id);
     }, [relatedBlockElement, note.id, registerThread, unregisterThread]);
-    (0, import_element403.useEffect)(() => {
+    (0, import_element404.useEffect)(() => {
       if (!isSelected2 || note.id === "new") {
         return;
       }
@@ -117911,7 +117932,7 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/hooks.mjs
   var import_a11y17 = __toESM(require_a11y(), 1);
   var import_i18n355 = __toESM(require_i18n(), 1);
-  var import_element404 = __toESM(require_element(), 1);
+  var import_element405 = __toESM(require_element(), 1);
   var import_core_data148 = __toESM(require_core_data(), 1);
   var import_data265 = __toESM(require_data(), 1);
   var import_block_editor103 = __toESM(require_block_editor(), 1);
@@ -118028,7 +118049,7 @@ ${content}
         clientIds: getClientIdsWithDescendants2()
       };
     }, []);
-    const { notes, unresolvedNotes } = (0, import_element404.useMemo)(() => {
+    const { notes, unresolvedNotes } = (0, import_element405.useMemo)(() => {
       if (!threads || threads.length === 0) {
         return { notes: [], unresolvedNotes: [] };
       }
@@ -118332,7 +118353,7 @@ ${content}
   }
   function useEnableFloatingSidebar(enabled = false) {
     const registry = (0, import_data265.useRegistry)();
-    (0, import_element404.useEffect)(() => {
+    (0, import_element405.useEffect)(() => {
       if (!enabled) {
         return;
       }
@@ -118357,10 +118378,10 @@ ${content}
     isFloating,
     sidebarRef
   }) {
-    const [notePositions, setNotePositions] = (0, import_element404.useState)({});
-    const [store4] = (0, import_element404.useState)(createBoardStore);
-    const heights = (0, import_element404.useSyncExternalStore)(store4.subscribe, store4.getSnapshot);
-    (0, import_element404.useEffect)(() => {
+    const [notePositions, setNotePositions] = (0, import_element405.useState)({});
+    const [store4] = (0, import_element405.useState)(createBoardStore);
+    const heights = (0, import_element405.useSyncExternalStore)(store4.subscribe, store4.getSnapshot);
+    (0, import_element405.useEffect)(() => {
       if (!isFloating || !sidebarRef?.current) {
         return;
       }
@@ -118449,7 +118470,7 @@ ${content}
       };
     }, []);
     const relatedBlockElement = useBlockElement3(selectedBlockClientId);
-    const threads = (0, import_element405.useMemo)(() => {
+    const threads = (0, import_element406.useMemo)(() => {
       if (!isFloating || selectedNote2 !== "new") {
         return notes;
       }
@@ -118503,22 +118524,22 @@ ${content}
         relatedBlockElement?.focus();
       }
     };
-    const targetNoteId = (0, import_element405.useMemo)(() => {
+    const targetNoteId = (0, import_element406.useMemo)(() => {
       const blockNoteIds = getNoteIdsFromMetadata({ noteId });
       const blockThreads = notes.filter(
         (t4) => blockNoteIds.includes(t4.id)
       );
       return pickPrimaryNote(blockThreads)?.id;
     }, [noteId, notes]);
-    const prevBlockIdRef = (0, import_element405.useRef)(selectedBlockClientId);
-    (0, import_element405.useEffect)(() => {
+    const prevBlockIdRef = (0, import_element406.useRef)(selectedBlockClientId);
+    (0, import_element406.useEffect)(() => {
       if (prevBlockIdRef.current === selectedBlockClientId) {
         return;
       }
       prevBlockIdRef.current = selectedBlockClientId;
       selectNote2(targetNoteId);
     }, [selectedBlockClientId, targetNoteId, selectNote2]);
-    (0, import_element405.useEffect)(() => {
+    (0, import_element406.useEffect)(() => {
       if (noteFocused && selectedNote2) {
         focusNoteThread(
           selectedNote2,
@@ -118598,7 +118619,7 @@ ${content}
               sidebarRef
             }
           ),
-          threads.map((thread, index2) => /* @__PURE__ */ (0, import_jsx_runtime633.jsxs)(import_element405.Fragment, { children: [
+          threads.map((thread, index2) => /* @__PURE__ */ (0, import_jsx_runtime633.jsxs)(import_element406.Fragment, { children: [
             index2 === firstResolvedIndex && /* @__PURE__ */ (0, import_jsx_runtime633.jsx)(
               Stack,
               {
@@ -118698,7 +118719,7 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/note-indicator-toolbar.mjs
   var import_components272 = __toESM(require_components(), 1);
   var import_i18n358 = __toESM(require_i18n(), 1);
-  var import_element406 = __toESM(require_element(), 1);
+  var import_element407 = __toESM(require_element(), 1);
   var import_block_editor106 = __toESM(require_block_editor(), 1);
   var import_data268 = __toESM(require_data(), 1);
   var import_jsx_runtime635 = __toESM(require_jsx_runtime(), 1);
@@ -118739,7 +118760,7 @@ ${content}
     ] });
   }
   function NoteAvatarIndicator({ onClick, note }) {
-    const threadParticipants = (0, import_element406.useMemo)(() => {
+    const threadParticipants = (0, import_element407.useMemo)(() => {
       if (!note) {
         return [];
       }
@@ -118775,7 +118796,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/collab-sidebar/note-highlight-styles.mjs
-  var import_element407 = __toESM(require_element(), 1);
+  var import_element408 = __toESM(require_element(), 1);
   var import_block_editor107 = __toESM(require_block_editor(), 1);
   var REST_ALPHA = "40";
   var ACTIVE_ALPHA = "80";
@@ -118801,7 +118822,7 @@ ${content}
     return rules.join("");
   }
   function NoteHighlightStyles({ threads, selectedId }) {
-    const css = (0, import_element407.useMemo)(
+    const css = (0, import_element408.useMemo)(
       () => buildHighlightCss(threads, selectedId),
       [threads, selectedId]
     );
@@ -118819,7 +118840,7 @@ ${content}
     );
     const { selectNote: selectNote2 } = unlock((0, import_data269.useDispatch)(store));
     const isLargeViewport = (0, import_compose100.useViewportMatch)("medium");
-    const sidebarRef = (0, import_element408.useRef)(null);
+    const sidebarRef = (0, import_element409.useRef)(null);
     const { clientId, noteId, isClassicBlock } = (0, import_data269.useSelect)((select9) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select9(import_block_editor108.store);
       const _clientId = getSelectedBlockClientId2();
@@ -118985,7 +119006,7 @@ ${content}
   var import_components275 = __toESM(require_components(), 1);
   var import_i18n362 = __toESM(require_i18n(), 1);
   var import_data272 = __toESM(require_data(), 1);
-  var import_element409 = __toESM(require_element(), 1);
+  var import_element410 = __toESM(require_element(), 1);
   var import_preferences34 = __toESM(require_preferences(), 1);
   var import_compose101 = __toESM(require_compose(), 1);
   var import_core_data150 = __toESM(require_core_data(), 1);
@@ -119233,12 +119254,12 @@ ${content}
     const isRevisionsOpened = stylesPath2.startsWith("/revisions") && !showStylebook2;
     const isRevisionsStyleBookOpened = stylesPath2.startsWith("/revisions") && showStylebook2;
     const previousActiveArea = (0, import_compose101.usePrevious)(activeComplementaryArea);
-    (0, import_element409.useEffect)(() => {
+    (0, import_element410.useEffect)(() => {
       if (activeComplementaryArea === "edit-site/global-styles" && previousActiveArea !== "edit-site/global-styles") {
         resetStylesNavigation2();
       }
     }, [activeComplementaryArea, previousActiveArea, resetStylesNavigation2]);
-    (0, import_element409.useEffect)(() => {
+    (0, import_element410.useEffect)(() => {
       if (shouldResetNavigation) {
         resetStylesNavigation2();
       }
@@ -119446,7 +119467,7 @@ ${content}
   var import_i18n365 = __toESM(require_i18n(), 1);
   var import_compose102 = __toESM(require_compose(), 1);
   var import_data276 = __toESM(require_data(), 1);
-  var import_element411 = __toESM(require_element(), 1);
+  var import_element412 = __toESM(require_element(), 1);
   var import_preferences37 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.mjs
@@ -119473,7 +119494,7 @@ ${content}
   var import_data275 = __toESM(require_data(), 1);
   var import_preferences36 = __toESM(require_preferences(), 1);
   var import_blocks39 = __toESM(require_blocks(), 1);
-  var import_element410 = __toESM(require_element(), 1);
+  var import_element411 = __toESM(require_element(), 1);
   var import_components277 = __toESM(require_components(), 1);
   var import_i18n364 = __toESM(require_i18n(), 1);
   var import_block_editor110 = __toESM(require_block_editor(), 1);
@@ -119495,7 +119516,7 @@ ${content}
         hiddenBlockTypes: select9(import_preferences36.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY19
       };
     }, []);
-    const allowedBlockTypes = (0, import_element410.useMemo)(() => {
+    const allowedBlockTypes = (0, import_element411.useMemo)(() => {
       if (_allowedBlockTypes === true) {
         return blockTypes;
       }
@@ -119603,7 +119624,7 @@ ${content}
     );
     const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data276.useDispatch)(store);
     const { set: setPreference } = (0, import_data276.useDispatch)(import_preferences37.store);
-    const sections = (0, import_element411.useMemo)(
+    const sections = (0, import_element412.useMemo)(
       () => [
         {
           name: "general",
@@ -120475,7 +120496,7 @@ ${content}
 
   // packages/editor/build-module/components/upload-progress-snackbar/index.mjs
   var import_data278 = __toESM(require_data(), 1);
-  var import_element412 = __toESM(require_element(), 1);
+  var import_element413 = __toESM(require_element(), 1);
   var import_i18n369 = __toESM(require_i18n(), 1);
   var import_a11y18 = __toESM(require_a11y(), 1);
   var import_upload_media3 = __toESM(require_upload_media(), 1);
@@ -120514,7 +120535,7 @@ ${content}
       };
     }, []);
     const tracker = useTracker();
-    const csmOriginals = (0, import_element412.useMemo)(
+    const csmOriginals = (0, import_element413.useMemo)(
       () => items.filter((item) => !item.parentId),
       [items]
     );
@@ -120522,20 +120543,20 @@ ${content}
     const trackedRemaining = tracker ? tracker.total - tracker.completed : 0;
     const remaining = csmRemaining + trackedRemaining;
     const sessionTotal = csmRemaining + (tracker ? tracker.total : 0);
-    const peakRef = (0, import_element412.useRef)(0);
+    const peakRef = (0, import_element413.useRef)(0);
     const { createNotice, removeNotice } = (0, import_data278.useDispatch)(import_notices39.store);
-    const dismissedRef = (0, import_element412.useRef)(false);
-    const wasUploadingRef = (0, import_element412.useRef)(false);
-    const failuresAtStartRef = (0, import_element412.useRef)(0);
-    const completionTimeoutRef = (0, import_element412.useRef)(null);
-    (0, import_element412.useEffect)(() => {
+    const dismissedRef = (0, import_element413.useRef)(false);
+    const wasUploadingRef = (0, import_element413.useRef)(false);
+    const failuresAtStartRef = (0, import_element413.useRef)(0);
+    const completionTimeoutRef = (0, import_element413.useRef)(null);
+    (0, import_element413.useEffect)(() => {
       return () => {
         if (completionTimeoutRef.current) {
           clearTimeout(completionTimeoutRef.current);
         }
       };
     }, []);
-    (0, import_element412.useEffect)(() => {
+    (0, import_element413.useEffect)(() => {
       const isUploading = remaining > 0;
       const failures = csmFailureCount + getFailureCount();
       if (isUploading && !wasUploadingRef.current) {
