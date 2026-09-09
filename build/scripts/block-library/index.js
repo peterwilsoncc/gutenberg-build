@@ -32544,15 +32544,18 @@ ${url}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)(import_jsx_runtime288.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components42.PanelBody, { title: (0, import_i18n74.__)("Source"), children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("div", { className: "wp-block-gallery__source-settings", children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
-        import_components42.Button,
-        {
-          __next40pxDefaultSize: true,
-          variant: "secondary",
-          onClick: requestEnableDynamicMode,
-          children: (0, import_i18n74.__)("Use images attached to the post")
-        }
-      ) }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components42.PanelBody, { title: (0, import_i18n74.__)("Source"), children: /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)("div", { className: "wp-block-gallery__source-settings", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("p", { className: "wp-block-gallery__source-description", children: (0, import_i18n74.__)("Images added to the gallery.") }),
+        /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+          import_components42.Button,
+          {
+            __next40pxDefaultSize: true,
+            variant: "secondary",
+            onClick: requestEnableDynamicMode,
+            children: (0, import_i18n74.__)("Use attached images")
+          }
+        )
+      ] }) }),
       isConfirming && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
         import_components42.__experimentalConfirmDialog,
         {
