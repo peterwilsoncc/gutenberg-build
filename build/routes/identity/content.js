@@ -148,14 +148,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React104 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore3 = shim.useSyncExternalStore, useRef55 = React104.useRef, useEffect34 = React104.useEffect, useMemo42 = React104.useMemo, useDebugValue2 = React104.useDebugValue;
+      var React104 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore3 = shim.useSyncExternalStore, useRef55 = React104.useRef, useEffect34 = React104.useEffect, useMemo43 = React104.useMemo, useDebugValue2 = React104.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual2) {
         var instRef = useRef55(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo42(
+        instRef = useMemo43(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -430,6 +430,13 @@ var require_cjs = __commonJS({
     };
     var deepmerge_1 = deepmerge;
     module.exports = deepmerge_1;
+  }
+});
+
+// package-external:@wordpress/preferences
+var require_preferences = __commonJS({
+  "package-external:@wordpress/preferences"(exports, module) {
+    module.exports = window.wp.preferences;
   }
 });
 
@@ -17955,7 +17962,7 @@ function useMulti(props, dateLib) {
     return selected?.some((d2) => isSameDay2(d2, date)) ?? false;
   };
   const { min: min3, max: max3 } = props;
-  const select = (triggerDate, modifiers, e2) => {
+  const select2 = (triggerDate, modifiers, e2) => {
     let newDates = [...selected ?? []];
     if (isSelected(triggerDate)) {
       if (selected?.length === min3) {
@@ -17980,7 +17987,7 @@ function useMulti(props, dateLib) {
   };
   return {
     selected,
-    select,
+    select: select2,
     isSelected
   };
 }
@@ -18118,7 +18125,7 @@ function useRange(props, dateLib) {
   const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
   const selected = !onSelect ? internallySelected : initiallySelected;
   const isSelected = (date) => selected && rangeIncludesDate(selected, date, false, dateLib);
-  const select = (triggerDate, modifiers, e2) => {
+  const select2 = (triggerDate, modifiers, e2) => {
     const { min: min3, max: max3 } = props;
     let newRange;
     if (triggerDate) {
@@ -18150,7 +18157,7 @@ function useRange(props, dateLib) {
   };
   return {
     selected,
-    select,
+    select: select2,
     isSelected
   };
 }
@@ -18164,7 +18171,7 @@ function useSingle(props, dateLib) {
   const isSelected = (compareDate) => {
     return selected ? isSameDay2(selected, compareDate) : false;
   };
-  const select = (triggerDate, modifiers, e2) => {
+  const select2 = (triggerDate, modifiers, e2) => {
     let newDate = triggerDate;
     if (!required && selected && selected && isSameDay2(triggerDate, selected)) {
       newDate = void 0;
@@ -18181,7 +18188,7 @@ function useSingle(props, dateLib) {
   };
   return {
     selected,
-    select,
+    select: select2,
     isSelected
   };
 }
@@ -18361,7 +18368,7 @@ function DayPicker(initialProps) {
   const calendar = useCalendar(props, dateLib);
   const { days, months, navStart, navEnd, previousMonth, nextMonth, goToMonth } = calendar;
   const getModifiers = createGetModifiers(days, props, navStart, navEnd, dateLib);
-  const { isSelected, select, selected: selectedValue } = useSelection(props, dateLib) ?? {};
+  const { isSelected, select: select2, selected: selectedValue } = useSelection(props, dateLib) ?? {};
   const { blur, focused, isFocusTarget, moveFocus, setFocused } = useFocus2(props, calendar, getModifiers, isSelected ?? (() => false), dateLib);
   const { labelDayButton: labelDayButton2, labelGridcell: labelGridcell2, labelGrid: labelGrid2, labelMonthDropdown: labelMonthDropdown2, labelNav: labelNav2, labelPrevious: labelPrevious2, labelNext: labelNext2, labelWeekday: labelWeekday2, labelWeekNumber: labelWeekNumber2, labelWeekNumberHeader: labelWeekNumberHeader2, labelYearDropdown: labelYearDropdown2 } = labels;
   const weekdays = (0, import_react36.useMemo)(() => getWeekdays(dateLib, props.ISOWeek, props.broadcastCalendar, props.today), [dateLib, props.ISOWeek, props.broadcastCalendar, props.today]);
@@ -18385,9 +18392,9 @@ function DayPicker(initialProps) {
     if (m2.disabled) {
       return;
     }
-    select?.(day.date, m2, e2);
+    select2?.(day.date, m2, e2);
     onDayClick?.(day.date, m2, e2);
-  }, [select, onDayClick, setFocused]);
+  }, [select2, onDayClick, setFocused]);
   const handleDayFocus = (0, import_react36.useCallback)((day, m2) => (e2) => {
     setFocused(day);
     onDayFocus?.(day.date, m2, e2);
@@ -18463,7 +18470,7 @@ function DayPicker(initialProps) {
   const contextValue = {
     dayPickerProps: props,
     selected: selectedValue,
-    select,
+    select: select2,
     isSelected,
     months,
     nextMonth,
@@ -22769,8 +22776,8 @@ var page_default = Page;
 
 // routes/identity/stage.tsx
 var import_i18n33 = __toESM(require_i18n());
-var import_data2 = __toESM(require_data());
-var import_core_data2 = __toESM(require_core_data());
+var import_data5 = __toESM(require_data());
+var import_core_data3 = __toESM(require_core_data());
 
 // packages/dataviews/build-module/constants.mjs
 var import_i18n10 = __toESM(require_i18n(), 1);
@@ -27284,9 +27291,9 @@ function normalizeLayout(layout) {
   }
   return normalizedLayout;
 }
-function normalizeForm(form2) {
-  const normalizedFormLayout = normalizeLayout(form2?.layout);
-  const normalizedFields = (form2.fields ?? []).map(
+function normalizeForm(form) {
+  const normalizedFormLayout = normalizeLayout(form?.layout);
+  const normalizedFields = (form.fields ?? []).map(
     (field) => {
       if (typeof field === "string") {
         return {
@@ -27341,7 +27348,7 @@ function FormRegularField({
 }) {
   const { fields: fields2 } = (0, import_element92.useContext)(dataform_context_default);
   const layout = field.layout;
-  const form2 = (0, import_element92.useMemo)(
+  const form = (0, import_element92.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : []
@@ -27355,7 +27362,7 @@ function FormRegularField({
         DataFormLayout,
         {
           data,
-          form: form2,
+          form,
           onChange,
           validity: validity?.children
         }
@@ -27652,8 +27659,8 @@ function isFormValid(formValidity) {
     );
   });
 }
-function getFormFieldsToValidate(form2, fields2) {
-  const normalizedForm = normalize_form_default(form2);
+function getFormFieldsToValidate(form, fields2) {
+  const normalizedForm = normalize_form_default(form);
   if (normalizedForm.fields.length === 0) {
     return [];
   }
@@ -28057,7 +28064,7 @@ function getFormFieldValue(formField, item) {
     children: childrenValues
   };
 }
-function useFormValidity(item, fields2, form2) {
+function useFormValidity(item, fields2, form) {
   const [formValidity, setFormValidity] = (0, import_element93.useState)();
   const customCounterRef = (0, import_element93.useRef)({});
   const elementsCounterRef = (0, import_element93.useRef)({});
@@ -28070,7 +28077,7 @@ function useFormValidity(item, fields2, form2) {
       path: [],
       item
     };
-    const formFieldsToValidate = getFormFieldsToValidate(form2, fields2);
+    const formFieldsToValidate = getFormFieldsToValidate(form, fields2);
     if (formFieldsToValidate.length === 0) {
       setFormValidity(void 0);
       return;
@@ -28119,7 +28126,7 @@ function useFormValidity(item, fields2, form2) {
       }
       return validity;
     });
-  }, [item, fields2, form2]);
+  }, [item, fields2, form]);
   (0, import_element93.useEffect)(() => {
     validate();
   }, [validate]);
@@ -28231,7 +28238,7 @@ function ModalContent({
       arrayMerge: (target, source) => source
     });
   }, [data, changes]);
-  const form2 = (0, import_element96.useMemo)(
+  const form = (0, import_element96.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -28254,7 +28261,7 @@ function ModalContent({
       maxLength: f2.isValid.maxLength?.constraint
     }
   }));
-  const { validity } = use_form_validity_default(modalData, fieldsAsFieldType, form2);
+  const { validity } = use_form_validity_default(modalData, fieldsAsFieldType, form);
   const onApply = () => {
     onChange(changes);
     onClose();
@@ -28283,7 +28290,7 @@ function ModalContent({
           DataFormLayout,
           {
             data: modalData,
-            form: form2,
+            form,
             onChange: handleOnChange,
             validity,
             children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
@@ -28292,7 +28299,7 @@ function ModalContent({
                 data: modalData,
                 field: childField,
                 onChange: handleOnChange,
-                hideLabelFromVision: form2.fields.length < 2,
+                hideLabelFromVision: form.fields.length < 2,
                 markWhenOptional,
                 validity: childFieldValidity
               },
@@ -28443,7 +28450,7 @@ function PanelDropdown({
   const [dialogRef, dialogProps] = (0, import_compose14.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
-  const form2 = (0, import_element97.useMemo)(
+  const form = (0, import_element97.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -28508,7 +28515,7 @@ function PanelDropdown({
               DataFormLayout,
               {
                 data,
-                form: form2,
+                form,
                 onChange,
                 validity: formValidity,
                 children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
@@ -28517,7 +28524,7 @@ function PanelDropdown({
                     data,
                     field: childField,
                     onChange,
-                    hideLabelFromVision: (form2?.fields ?? []).length < 2,
+                    hideLabelFromVision: (form?.fields ?? []).length < 2,
                     markWhenOptional,
                     validity: childFieldValidity
                   },
@@ -28688,7 +28695,7 @@ function HeaderContent({
 function BodyContent({
   data,
   field,
-  form: form2,
+  form,
   onChange,
   hideLabelFromVision,
   markWhenOptional,
@@ -28702,7 +28709,7 @@ function BodyContent({
         DataFormLayout,
         {
           data,
-          form: form2,
+          form,
           onChange,
           validity: validity?.children
         }
@@ -28737,7 +28744,7 @@ function FormCardField({
   const layout = field.layout;
   const contentRef = (0, import_element98.useRef)(null);
   const hasFocusedContentRef = (0, import_element98.useRef)(false);
-  const form2 = (0, import_element98.useMemo)(
+  const form = (0, import_element98.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
@@ -28797,7 +28804,7 @@ function FormCardField({
     {
       data,
       field,
-      form: form2,
+      form,
       onChange,
       hideLabelFromVision,
       markWhenOptional,
@@ -28877,7 +28884,7 @@ function FormRowField({
 }) {
   const layout = field.layout;
   if (!!field.children) {
-    const form2 = {
+    const form = {
       layout: DEFAULT_LAYOUT,
       fields: field.children
     };
@@ -28887,7 +28894,7 @@ function FormRowField({
         DataFormLayout,
         {
           data,
-          form: form2,
+          form,
           onChange,
           validity: validity?.children,
           as: EMPTY_WRAPPER,
@@ -28948,7 +28955,7 @@ function FormDetailsField({
   const hasFocusedContentRef = (0, import_element99.useRef)(false);
   const [touched, setTouched] = (0, import_element99.useState)(false);
   const [isOpen, setIsOpen] = (0, import_element99.useState)(false);
-  const form2 = (0, import_element99.useMemo)(
+  const form = (0, import_element99.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
@@ -29032,7 +29039,7 @@ function FormDetailsField({
               DataFormLayout,
               {
                 data,
-                form: form2,
+                form,
                 onChange,
                 validity: validity?.children
               }
@@ -29124,7 +29131,7 @@ var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
 var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "lg", children });
 function DataFormLayout({
   data,
-  form: form2,
+  form,
   onChange,
   validity,
   children,
@@ -29143,8 +29150,8 @@ function DataFormLayout({
       (fieldDefinition) => fieldDefinition.id === field.id
     );
   }
-  const Wrapper = as ?? getFormFieldLayout(form2.layout.type)?.wrapper ?? DEFAULT_WRAPPER;
-  return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(Wrapper, { layout: form2.layout, children: form2.fields.map((formField) => {
+  const Wrapper = as ?? getFormFieldLayout(form.layout.type)?.wrapper ?? DEFAULT_WRAPPER;
+  return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
     const FieldLayout = getFormFieldLayout(formField.layout.type)?.component;
     if (!FieldLayout) {
       return null;
@@ -29179,17 +29186,17 @@ function DataFormLayout({
 var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
 function DataForm({
   data,
-  form: form2,
+  form,
   fields: fields2,
   onChange,
   validity
 }) {
-  const normalizedForm = (0, import_element101.useMemo)(() => normalize_form_default(form2), [form2]);
+  const normalizedForm = (0, import_element101.useMemo)(() => normalize_form_default(form), [form]);
   const normalizedFields = (0, import_element101.useMemo)(
     () => normalizeFields(fields2),
     [fields2]
   );
-  if (!form2.fields) {
+  if (!form.fields) {
     return null;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
@@ -29203,9 +29210,51 @@ function DataForm({
   ) });
 }
 
-// packages/fields/build-module/lock-unlock.mjs
+// packages/views/build-module/use-view.mjs
+var import_element102 = __toESM(require_element(), 1);
+var import_data = __toESM(require_data(), 1);
+var import_preferences = __toESM(require_preferences(), 1);
+
+// packages/views/build-module/load-view.mjs
+var import_data2 = __toESM(require_data(), 1);
+var import_preferences2 = __toESM(require_preferences(), 1);
+
+// packages/views/build-module/use-view-config.mjs
+var import_data3 = __toESM(require_data(), 1);
+var import_core_data = __toESM(require_core_data(), 1);
+
+// packages/views/build-module/lock-unlock.mjs
 var import_private_apis2 = __toESM(require_private_apis(), 1);
 var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/views"
+);
+
+// packages/views/build-module/use-view-config.mjs
+function useViewConfig({
+  kind,
+  name,
+  fields: fields2
+}) {
+  const fieldList = Array.isArray(fields2) ? fields2 : fields2?.split(",");
+  const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
+  return (0, import_data3.useSelect)(
+    (select2) => {
+      return unlock2(select2(import_core_data.store)).getViewConfig(
+        kind,
+        name,
+        fieldsKey ? {
+          fields: fieldsKey
+        } : void 0
+      );
+    },
+    [kind, name, fieldsKey]
+  );
+}
+
+// packages/fields/build-module/lock-unlock.mjs
+var import_private_apis3 = __toESM(require_private_apis(), 1);
+var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/fields"
 );
@@ -29213,9 +29262,9 @@ var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptIn
 // packages/fields/build-module/components/media-edit/index.mjs
 var import_components29 = __toESM(require_components(), 1);
 var import_blob = __toESM(require_blob(), 1);
-var import_core_data = __toESM(require_core_data(), 1);
-var import_data = __toESM(require_data(), 1);
-var import_element103 = __toESM(require_element(), 1);
+var import_core_data2 = __toESM(require_core_data(), 1);
+var import_data4 = __toESM(require_data(), 1);
+var import_element104 = __toESM(require_element(), 1);
 var import_i18n32 = __toESM(require_i18n(), 1);
 var import_html_entities = __toESM(require_html_entities(), 1);
 var import_media_utils = __toESM(require_media_utils(), 1);
@@ -32123,7 +32172,7 @@ var host = createHost(primitives, {
 var animated = host.animated;
 
 // packages/fields/build-module/components/media-edit/use-moving-animation.mjs
-var import_element102 = __toESM(require_element(), 1);
+var import_element103 = __toESM(require_element(), 1);
 function getAbsolutePosition(element) {
   return {
     top: element.offsetTop,
@@ -32131,12 +32180,12 @@ function getAbsolutePosition(element) {
   };
 }
 function useMovingAnimation(triggerAnimationOnChange) {
-  const ref = (0, import_element102.useRef)(null);
-  const previousRef = (0, import_element102.useRef)(void 0);
+  const ref = (0, import_element103.useRef)(null);
+  const previousRef = (0, import_element103.useRef)(void 0);
   if (ref.current) {
     previousRef.current = getAbsolutePosition(ref.current);
   }
-  (0, import_element102.useLayoutEffect)(() => {
+  (0, import_element103.useLayoutEffect)(() => {
     const previous = previousRef.current;
     if (!previous || !ref.current) {
       return;
@@ -32174,7 +32223,7 @@ function useMovingAnimation(triggerAnimationOnChange) {
 
 // packages/fields/build-module/components/media-edit/index.mjs
 var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
-var { MediaUploadModal } = unlock2(import_media_utils.privateApis);
+var { MediaUploadModal } = unlock3(import_media_utils.privateApis);
 function AnimatedMediaItem({
   children,
   index: index2,
@@ -32190,7 +32239,7 @@ function normalizeValue(value) {
   return value ? [value] : [];
 }
 function ConditionalMediaUpload({ render: render4, multiple, ...props }) {
-  const [isModalOpen, setIsModalOpen] = (0, import_element103.useState)(false);
+  const [isModalOpen, setIsModalOpen] = (0, import_element104.useState)(false);
   if (window.__experimentalDataViewsMediaModal) {
     return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_jsx_runtime131.Fragment, { children: [
       render4 && render4({ open: () => setIsModalOpen(true) }),
@@ -32610,10 +32659,10 @@ function MediaEdit({
   validity
 }) {
   const value = field.getValue({ item: data });
-  const [isTouched, setIsTouched] = (0, import_element103.useState)(false);
-  const validityTargetRef = (0, import_element103.useRef)(null);
-  const [customValidity, setCustomValidity] = (0, import_element103.useState)(void 0);
-  (0, import_element103.useEffect)(() => {
+  const [isTouched, setIsTouched] = (0, import_element104.useState)(false);
+  const validityTargetRef = (0, import_element104.useRef)(null);
+  const [customValidity, setCustomValidity] = (0, import_element104.useState)(void 0);
+  (0, import_element104.useEffect)(() => {
     const validityTarget = validityTargetRef.current;
     const handler = () => {
       setIsTouched(true);
@@ -32621,21 +32670,21 @@ function MediaEdit({
     validityTarget?.addEventListener("invalid", handler);
     return () => validityTarget?.removeEventListener("invalid", handler);
   }, []);
-  const attachments = (0, import_data.useSelect)(
-    (select) => {
+  const attachments = (0, import_data4.useSelect)(
+    (select2) => {
       if (!value) {
         return null;
       }
       const normalizedValue = normalizeValue(value);
       const sortedIds = normalizedValue.toSorted((a2, b2) => a2 - b2);
-      const { getEntityRecords } = select(import_core_data.store);
+      const { getEntityRecords } = select2(import_core_data2.store);
       return getEntityRecords("postType", "attachment", {
         include: sortedIds
       });
     },
     [value]
   );
-  const stableAttachmentsRef = (0, import_element103.useRef)(
+  const stableAttachmentsRef = (0, import_element104.useRef)(
     null
   );
   if (attachments !== null) {
@@ -32650,7 +32699,7 @@ function MediaEdit({
       stableAttachments = stableAttachmentsRef.current;
     }
   }
-  const orderedAttachments = (0, import_element103.useMemo)(() => {
+  const orderedAttachments = (0, import_element104.useMemo)(() => {
     if (!stableAttachments) {
       return null;
     }
@@ -32660,23 +32709,23 @@ function MediaEdit({
     );
     return normalizedValue.map((id) => attachmentMap.get(id)).filter((a2) => a2 !== void 0);
   }, [stableAttachments, value]);
-  const { createErrorNotice } = (0, import_data.useDispatch)(import_notices.store);
-  const { receiveEntityRecords } = (0, import_data.useDispatch)(import_core_data.store);
-  const [targetItemId, setTargetItemId] = (0, import_element103.useState)();
-  const openModalRef = (0, import_element103.useRef)(void 0);
-  const [pendingOpen, setPendingOpen] = (0, import_element103.useState)(false);
-  const [blobs, setBlobs] = (0, import_element103.useState)([]);
-  (0, import_element103.useEffect)(() => {
+  const { createErrorNotice } = (0, import_data4.useDispatch)(import_notices.store);
+  const { receiveEntityRecords } = (0, import_data4.useDispatch)(import_core_data2.store);
+  const [targetItemId, setTargetItemId] = (0, import_element104.useState)();
+  const openModalRef = (0, import_element104.useRef)(void 0);
+  const [pendingOpen, setPendingOpen] = (0, import_element104.useState)(false);
+  const [blobs, setBlobs] = (0, import_element104.useState)([]);
+  (0, import_element104.useEffect)(() => {
     if (pendingOpen) {
       setPendingOpen(false);
       openModalRef.current?.();
     }
   }, [pendingOpen]);
-  const onChangeControl = (0, import_element103.useCallback)(
+  const onChangeControl = (0, import_element104.useCallback)(
     (newValue) => onChange(field.setValue({ item: data, value: newValue })),
     [data, field, onChange]
   );
-  const removeItem = (0, import_element103.useCallback)(
+  const removeItem = (0, import_element104.useCallback)(
     (itemId) => {
       const currentIds = normalizeValue(value);
       const newIds = currentIds.filter((id) => id !== itemId);
@@ -32685,7 +32734,7 @@ function MediaEdit({
     },
     [value, onChangeControl]
   );
-  const moveItem = (0, import_element103.useCallback)(
+  const moveItem = (0, import_element104.useCallback)(
     (itemId, direction) => {
       if (!orderedAttachments) {
         return;
@@ -32701,7 +32750,7 @@ function MediaEdit({
     },
     [orderedAttachments, onChangeControl]
   );
-  const onFilesDrop = (0, import_element103.useCallback)(
+  const onFilesDrop = (0, import_element104.useCallback)(
     (files, _targetItemId) => {
       setTargetItemId(_targetItemId);
       (0, import_media_utils.uploadMedia)({
@@ -32760,7 +32809,7 @@ function MediaEdit({
     ]
   );
   const addButtonLabel = field.placeholder || (multiple ? (0, import_i18n32.__)("Choose files") : (0, import_i18n32.__)("Choose file"));
-  const allItems = (0, import_element103.useMemo)(() => {
+  const allItems = (0, import_element104.useMemo)(() => {
     if (!blobs.length) {
       return orderedAttachments;
     }
@@ -32782,7 +32831,7 @@ function MediaEdit({
     }
     return items;
   }, [orderedAttachments, targetItemId, blobs]);
-  (0, import_element103.useEffect)(() => {
+  (0, import_element104.useEffect)(() => {
     if (!isTouched) {
       return;
     }
@@ -32805,12 +32854,12 @@ function MediaEdit({
       setCustomValidity(void 0);
     }
   }, [isTouched, field.isValid, validity]);
-  (0, import_element103.useEffect)(() => {
+  (0, import_element104.useEffect)(() => {
     if (isTouched && customValidity?.message) {
       speak6(customValidity.message);
     }
   }, [isTouched, customValidity?.message]);
-  const onBlur = (0, import_element103.useCallback)(
+  const onBlur = (0, import_element104.useCallback)(
     (event) => {
       if (isTouched) {
         return;
@@ -32924,7 +32973,7 @@ function MediaEdit({
 }
 
 // routes/identity/stage.tsx
-var import_element104 = __toESM(require_element());
+var import_element105 = __toESM(require_element());
 var import_html_entities2 = __toESM(require_html_entities());
 import { loadEditorAssets } from "@wordpress/lazy-editor";
 
@@ -33019,10 +33068,10 @@ var style_module_default = { "form": "ec88ce3dd902eabd__form" };
 // routes/identity/stage.tsx
 var import_jsx_runtime132 = __toESM(require_jsx_runtime());
 function MediaEditWithEditorAssets(props) {
-  const [isReady, setIsReady] = (0, import_element104.useState)(
+  const [isReady, setIsReady] = (0, import_element105.useState)(
     () => !!window.wp?.media
   );
-  (0, import_element104.useEffect)(() => {
+  (0, import_element105.useEffect)(() => {
     if (!isReady) {
       loadEditorAssets().then(() => setIsReady(true));
     }
@@ -33083,16 +33132,10 @@ var fields = [
     })
   }
 ];
-var form = {
-  layout: {
-    type: "regular",
-    labelPosition: "top"
-  },
-  fields: ["title", "description", "site_logo", "site_icon"]
-};
+var VIEW_CONFIG_FIELDS = ["form"];
 function Identity() {
-  const data = (0, import_data2.useSelect)(
-    (select) => select(import_core_data2.store).getEditedEntityRecord(
+  const data = (0, import_data5.useSelect)(
+    (select2) => select2(import_core_data3.store).getEditedEntityRecord(
       "root",
       "site",
       // The site entity is a singleton and has no record key.
@@ -33100,10 +33143,18 @@ function Identity() {
     ),
     []
   );
-  const { editEntityRecord } = (0, import_data2.useDispatch)(import_core_data2.store);
+  const { editEntityRecord } = (0, import_data5.useDispatch)(import_core_data3.store);
+  const { form } = useViewConfig({
+    kind: "root",
+    name: "site",
+    fields: VIEW_CONFIG_FIELDS
+  });
   const onChange = (edits) => {
     editEntityRecord("root", "site", void 0, edits);
   };
+  if (!form) {
+    return null;
+  }
   return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(page_default, { title: (0, import_i18n33._x)("Identity", "site identity"), headingLevel: 2, children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { className: style_module_default.form, children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
     DataForm,
     {
