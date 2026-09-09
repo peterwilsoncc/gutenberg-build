@@ -91197,7 +91197,6 @@ If there's a particular need for this, please submit a feature request at https:
         template: postType2 === "wp_navigation" ? [["core/navigation", {}, []]] : settings.template,
         __experimentalSetIsInserterOpened: setIsInserterOpened2,
         [sectionRootClientIdKey]: sectionRootClientId,
-        editorTool: renderingMode2 === "post-only" && postType2 !== "wp_template" ? "edit" : void 0,
         // When editing template parts, patterns, or navigation directly,
         // we're in an isolated editing context (focused on that entity alone).
         [isIsolatedEditorKey]: [

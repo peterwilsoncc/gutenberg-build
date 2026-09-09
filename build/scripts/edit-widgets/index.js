@@ -14982,8 +14982,7 @@ ${content}
         templateLock: "all",
         __experimentalSetIsInserterOpened: setIsInserterOpened2,
         pageOnFront,
-        pageForPosts,
-        editorTool: "edit"
+        pageForPosts
       };
     }, [
       hasUploadPermissions,

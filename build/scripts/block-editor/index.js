@@ -311,13 +311,6 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/preferences
-  var require_preferences = __commonJS({
-    "package-external:@wordpress/preferences"(exports, module) {
-      module.exports = window.wp.preferences;
-    }
-  });
-
   // node_modules/remove-accents/index.js
   var require_remove_accents = __commonJS({
     "node_modules/remove-accents/index.js"(exports, module) {
@@ -6737,6 +6730,13 @@ var wp;
   var require_token_list = __commonJS({
     "package-external:@wordpress/token-list"(exports, module) {
       module.exports = window.wp.tokenList;
+    }
+  });
+
+  // package-external:@wordpress/preferences
+  var require_preferences = __commonJS({
+    "package-external:@wordpress/preferences"(exports, module) {
+      module.exports = window.wp.preferences;
     }
   });
 
@@ -16707,7 +16707,6 @@ var wp;
   var import_notices = __toESM(require_notices(), 1);
   var import_rich_text3 = __toESM(require_rich_text(), 1);
   var import_deprecated4 = __toESM(require_deprecated(), 1);
-  var import_preferences = __toESM(require_preferences(), 1);
 
   // packages/block-editor/build-module/utils/selection.mjs
   var import_rich_text2 = __toESM(require_rich_text(), 1);
@@ -17723,14 +17722,18 @@ var wp;
       dispatch({ type: "MARK_AUTOMATIC_CHANGE_FINAL" });
     });
   };
-  var __unstableSetEditorMode = (mode2) => ({ registry }) => {
-    registry.dispatch(import_preferences.store).set("core", "editorTool", mode2);
-    if (mode2 === "navigation") {
-      (0, import_a11y3.speak)((0, import_i18n5.__)("You are currently in Write mode."));
-    } else if (mode2 === "edit") {
-      (0, import_a11y3.speak)((0, import_i18n5.__)("You are currently in Design mode."));
-    }
-  };
+  function __unstableSetEditorMode() {
+    (0, import_deprecated4.default)(
+      'wp.data.dispatch( "core/block-editor" ).__unstableSetEditorMode',
+      {
+        since: "7.2",
+        hint: "The Write/Design editor tool has been removed."
+      }
+    );
+    return {
+      type: "DO_NOTHING"
+    };
+  }
   function setBlockMovingClientId() {
     (0, import_deprecated4.default)(
       'wp.data.dispatch( "core/block-editor" ).setBlockMovingClientId',
@@ -71362,7 +71365,7 @@ var wp;
   var import_i18n108 = __toESM(require_i18n(), 1);
   var import_data121 = __toESM(require_data(), 1);
   var import_blocks77 = __toESM(require_blocks(), 1);
-  var import_preferences2 = __toESM(require_preferences(), 1);
+  var import_preferences = __toESM(require_preferences(), 1);
 
   // packages/block-editor/build-module/components/block-switcher/index.mjs
   var import_i18n105 = __toESM(require_i18n(), 1);
@@ -72296,7 +72299,7 @@ var wp;
       (select3) => {
         return {
           icon: getBlockIcon({ select: select3, clientIds }),
-          showIconLabels: select3(import_preferences2.store).get(
+          showIconLabels: select3(import_preferences.store).get(
             "core",
             "showIconLabels"
           ),
@@ -81540,7 +81543,7 @@ var wp;
   var import_keycodes20 = __toESM(require_keycodes(), 1);
   var import_is_shallow_equal4 = __toESM(require_is_shallow_equal(), 1);
   var import_data152 = __toESM(require_data(), 1);
-  var import_preferences4 = __toESM(require_preferences(), 1);
+  var import_preferences3 = __toESM(require_preferences(), 1);
   var import_deprecated22 = __toESM(require_deprecated(), 1);
   var import_url6 = __toESM(require_url(), 1);
 
@@ -82120,7 +82123,7 @@ var wp;
   var import_dom69 = __toESM(require_dom(), 1);
   var import_data151 = __toESM(require_data(), 1);
   var import_notices10 = __toESM(require_notices(), 1);
-  var import_preferences3 = __toESM(require_preferences(), 1);
+  var import_preferences2 = __toESM(require_preferences(), 1);
 
   // packages/block-editor/build-module/components/link-control/viewer-slot.mjs
   var import_components162 = __toESM(require_components(), 1);
@@ -82206,7 +82209,7 @@ var wp;
     onRemove
   }) {
     const showIconLabels = (0, import_data151.useSelect)(
-      (select3) => select3(import_preferences3.store).get("core", "showIconLabels"),
+      (select3) => select3(import_preferences2.store).get("core", "showIconLabels"),
       []
     );
     const showRichPreviews = hasRichPreviews ? value?.url : null;
@@ -82551,12 +82554,12 @@ var wp;
     const [settingsOpen, setSettingsOpen] = (0, import_element250.useState)(false);
     const [customValidity, setCustomValidity] = (0, import_element250.useState)(void 0);
     const { advancedSettingsPreference } = (0, import_data152.useSelect)((select3) => {
-      const prefsStore = select3(import_preferences4.store);
+      const prefsStore = select3(import_preferences3.store);
       return {
         advancedSettingsPreference: prefsStore.get(PREFERENCE_SCOPE, PREFERENCE_KEY) ?? false
       };
     }, []);
-    const { set: setPreference } = (0, import_data152.useDispatch)(import_preferences4.store);
+    const { set: setPreference } = (0, import_data152.useDispatch)(import_preferences3.store);
     const setSettingsOpenWithPreference = (prefVal) => {
       if (setPreference) {
         setPreference(PREFERENCE_SCOPE, PREFERENCE_KEY, prefVal);
@@ -87067,7 +87070,7 @@ var wp;
   // packages/block-editor/build-module/components/inspector-controls-tabs/index.mjs
   var import_components204 = __toESM(require_components(), 1);
   var import_element289 = __toESM(require_element(), 1);
-  var import_preferences5 = __toESM(require_preferences(), 1);
+  var import_preferences4 = __toESM(require_preferences(), 1);
   var import_data177 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/utils.mjs
@@ -92557,7 +92560,7 @@ var wp;
   }) {
     const listViewRef = (0, import_element289.useRef)(null);
     const showIconLabels = (0, import_data177.useSelect)((select3) => {
-      return select3(import_preferences5.store).get("core", "showIconLabels");
+      return select3(import_preferences4.store).get("core", "showIconLabels");
     }, []);
     const { requestedTab } = (0, import_data177.useSelect)((select3) => ({
       requestedTab: unlock(

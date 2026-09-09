@@ -76588,7 +76588,6 @@ If there's a particular need for this, please submit a feature request at https:
       allowRightClickOverrides: true,
       distractionFree: false,
       editorMode: "visual",
-      editorTool: "edit",
       fixedToolbar: false,
       focusMode: false,
       inactivePanels: [],
