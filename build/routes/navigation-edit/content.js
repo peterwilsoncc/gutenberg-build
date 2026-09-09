@@ -1650,7 +1650,7 @@ var import_core_data2 = __toESM(require_core_data());
 import { useEditorAssets } from "@wordpress/lazy-editor";
 
 // routes/navigation-edit/editor/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='ab713497c1']")) {
+if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='ab713497c1']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "ab713497c1");
   style.appendChild(document.createTextNode(".navigation-edit-editor__hidden-blocks{display:none}"));

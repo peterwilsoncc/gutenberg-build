@@ -10271,7 +10271,7 @@ function ActivatePanel({
 }
 
 // routes/styles/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='f4ae13b25a']")) {
+if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='f4ae13b25a']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "f4ae13b25a");
   style.appendChild(document.createTextNode(".routes-styles__page .global-styles-ui-screen-root{box-shadow:none}.routes-styles__page .global-styles-ui-screen-root>div>hr{display:none}.routes-styles__page .global-styles-ui-sidebar__navigator-provider .components-tools-panel{border-top:none}.routes-styles__page .global-styles-ui-sidebar__navigator-provider{overflow-y:auto;padding-inline:0}.routes-styles__content{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);flex-grow:1;min-height:0}"));

@@ -29153,7 +29153,7 @@ var import_i18n32 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 
 // routes/experiments-home/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='97a1d43e1a']")) {
+if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='97a1d43e1a']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "97a1d43e1a");
   style.appendChild(document.createTextNode(".experiments-page__container{box-sizing:border-box;margin-inline:auto;max-width:680px;padding:24px;width:100%}"));

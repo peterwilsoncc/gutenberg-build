@@ -30076,7 +30076,7 @@ var import_element170 = __toESM(require_element());
 var import_components63 = __toESM(require_components());
 
 // routes/guidelines/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='67839b70f7']")) {
+if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='67839b70f7']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "67839b70f7");
   style.appendChild(document.createTextNode(".guidelines__content{border-radius:8px;margin-top:0;padding:24px}.guidelines__list{display:flex;flex-direction:column;gap:16px;list-style:none;margin:0;padding:0}.guidelines__list-item{margin:0 auto;width:min(680px,100%)}.guidelines__loading{align-items:center;display:flex;justify-content:center;margin-top:16px}.guidelines__revision-history{display:flex;flex-direction:column;gap:16px;padding:24px}.guidelines__revision-history .dataviews-wrapper{margin-inline:-24px}.guidelines__revision-history-back{align-self:flex-start;color:#1e1e1e;font-weight:var(--wpds-typography-font-weight-emphasis,600);margin-left:-16px}.guidelines__error-description{margin:8px 0 0}.guidelines__revision-description{padding-left:8px}.guidelines__restore-modal-actions{margin-top:24px}"));
@@ -48892,7 +48892,7 @@ var import_data9 = __toESM(require_data());
 var import_notices2 = __toESM(require_notices());
 
 // routes/guidelines/components/block-guideline-modal.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='7c0ecac6c9']")) {
+if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='7c0ecac6c9']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "7c0ecac6c9");
   style.appendChild(document.createTextNode(".block-guideline-modal{width:min(100%,660px)}.block-guideline-modal__actions{margin-top:8px}"));
@@ -49079,7 +49079,7 @@ function BlockGuidelineModal({
 }
 
 // routes/guidelines/components/block-guidelines.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='a83ff1e5d0']")) {
+if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='a83ff1e5d0']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "a83ff1e5d0");
   style.appendChild(document.createTextNode(".block-guidelines .block-guidelines__icon{align-items:center;display:flex;height:100%;justify-content:center;width:100%}.block-guidelines .block-guidelines__icon svg{fill:currentColor;max-height:24px;max-width:24px;min-height:20px;min-width:20px}.block-guidelines .dataviews-view-list__field-wrapper{display:flex;justify-content:center}.block-guidelines .dataviews-wrapper{margin-inline:-24px}.block-guidelines .dataviews-search{margin-inline:24px}"));
@@ -49294,7 +49294,7 @@ var import_i18n67 = __toESM(require_i18n());
 var import_element169 = __toESM(require_element());
 
 // routes/guidelines/components/guideline-actions-section.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='6d10be742e']")) {
+if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='6d10be742e']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "6d10be742e");
   style.appendChild(document.createTextNode('.guidelines__actions{margin:16px auto 0;width:min(680px,100%)}.guidelines__actions-card{overflow:hidden;padding:0}.guidelines__actions-list{list-style:none;margin:0;padding:0}.guidelines__action-list-item{margin-bottom:0;position:relative}.guidelines__action-list-item:not(:first-child):before{background-color:#f0f0f0;content:"";height:1px;position:absolute;top:0;inset-inline:24px}.guidelines__action-row{align-items:center;box-sizing:border-box;padding:16px 24px;width:100%}.guidelines__actions-card .guidelines__action-button{font-size:13px;font-weight:400;justify-content:center;min-width:100px}.guidelines__action-title{color:#1e1e1e}.guidelines__action-description{color:#757575}'));

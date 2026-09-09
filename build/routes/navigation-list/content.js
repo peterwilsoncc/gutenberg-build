@@ -45236,7 +45236,7 @@ var AddNavigationModal = ({
 };
 
 // routes/navigation-list/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='da39a3ee5e']")) {
+if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='da39a3ee5e']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "da39a3ee5e");
   style.appendChild(document.createTextNode(""));
