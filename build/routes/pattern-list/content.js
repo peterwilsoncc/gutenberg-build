@@ -45150,8 +45150,8 @@ var import_components52 = __toESM(require_components());
 var import_data12 = __toESM(require_data());
 var import_element145 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
-var import_patterns4 = __toESM(require_patterns());
-var import_i18n62 = __toESM(require_i18n());
+var import_patterns3 = __toESM(require_patterns());
+var import_i18n61 = __toESM(require_i18n());
 
 // routes/lock-unlock/index.ts
 var import_private_apis3 = __toESM(require_private_apis());
@@ -45223,54 +45223,12 @@ var previewField = {
   enableSorting: false
 };
 
-// routes/pattern-list/fields/sync-status.tsx
-var import_i18n59 = __toESM(require_i18n());
-var import_patterns = __toESM(require_patterns());
-var import_jsx_runtime197 = __toESM(require_jsx_runtime());
-var { PATTERN_SYNC_TYPES } = unlock3(import_patterns.privateApis);
-var OPERATOR_IS2 = "is";
-var SYNC_FILTERS = [
-  {
-    value: PATTERN_SYNC_TYPES.full,
-    label: (0, import_i18n59._x)("Synced", "pattern (singular)"),
-    description: (0, import_i18n59.__)("Patterns that are kept in sync across the site.")
-  },
-  {
-    value: PATTERN_SYNC_TYPES.unsynced,
-    label: (0, import_i18n59._x)("Not synced", "pattern (singular)"),
-    description: (0, import_i18n59.__)(
-      "Patterns that can be changed freely without affecting the site."
-    )
-  }
-];
-var patternStatusField = {
-  label: (0, import_i18n59.__)("Sync status"),
-  id: "sync-status",
-  render: ({ item }) => {
-    const syncStatus = item.syncStatus;
-    return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
-      "span",
-      {
-        className: `routes-pattern-list__field-sync-status-${syncStatus}`,
-        children: SYNC_FILTERS.find(({ value }) => value === syncStatus)?.label
-      }
-    );
-  },
-  elements: SYNC_FILTERS,
-  filterBy: {
-    operators: [OPERATOR_IS2],
-    isPrimary: true
-  },
-  enableSorting: false
-};
-
 // routes/pattern-list/fields/category.tsx
-var import_i18n60 = __toESM(require_i18n());
+var import_i18n59 = __toESM(require_i18n());
 var import_data9 = __toESM(require_data());
 var import_core_data2 = __toESM(require_core_data());
 var import_element142 = __toESM(require_element());
-var import_jsx_runtime198 = __toESM(require_jsx_runtime());
-var OPERATOR_IS3 = "is";
+var import_jsx_runtime197 = __toESM(require_jsx_runtime());
 function CategoryField({ item }) {
   const blockPatternCategories = (0, import_data9.useSelect)(
     (select2) => select2(import_core_data2.store).getBlockPatternCategories(),
@@ -45288,9 +45246,9 @@ function CategoryField({ item }) {
     }).filter(Boolean);
   }, [item.categories, blockPatternCategories]);
   if (categoryLabels.length === 0) {
-    return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("span", { className: "pattern-category-field__empty", children: "\u2014" });
+    return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)("span", { className: "pattern-category-field__empty", children: "\u2014" });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("span", { className: "pattern-category-field", children: categoryLabels.join(", ") });
+  return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)("span", { className: "pattern-category-field", children: categoryLabels.join(", ") });
 }
 function usePatternCategories() {
   const userPatternCategories = (0, import_data9.useSelect)(
@@ -45326,27 +45284,28 @@ function usePatternCategories() {
 }
 function usePatternCategoryField() {
   const categories = usePatternCategories();
-  return {
-    label: (0, import_i18n60.__)("Category"),
-    id: "category",
-    render: CategoryField,
-    elements: categories,
-    getValue: ({ item }) => {
-      return item.categories;
-    },
-    filterBy: {
-      operators: [OPERATOR_IS3],
-      isPrimary: true
-    },
-    enableSorting: false
-  };
+  return (0, import_element142.useMemo)(
+    () => ({
+      label: (0, import_i18n59.__)("Category"),
+      id: "category",
+      render: CategoryField,
+      elements: categories,
+      getValue: ({ item }) => item.categories,
+      filterBy: {
+        operators: ["is"],
+        isPrimary: true
+      },
+      enableSorting: false
+    }),
+    [categories]
+  );
 }
 
 // routes/pattern-list/use-patterns.ts
 var import_data10 = __toESM(require_data());
 var import_core_data3 = __toESM(require_core_data());
 var import_element143 = __toESM(require_element());
-var import_patterns2 = __toESM(require_patterns());
+var import_patterns = __toESM(require_patterns());
 var import_block_editor = __toESM(require_block_editor());
 
 // routes/pattern-list/utils.ts
@@ -45355,10 +45314,10 @@ var filterOutDuplicatesByName = (currentItem, index2, items) => index2 === items
 // routes/pattern-list/use-patterns.ts
 var {
   PATTERN_TYPES,
-  PATTERN_SYNC_TYPES: PATTERN_SYNC_TYPES2,
+  PATTERN_SYNC_TYPES,
   EXCLUDED_PATTERN_SOURCES,
   PATTERN_DEFAULT_CATEGORY
-} = unlock3(import_patterns2.privateApis);
+} = unlock3(import_patterns.privateApis);
 var { extractWords, getNormalizedSearchTerms, normalizeString: normalizeString2 } = unlock3(
   import_block_editor.privateApis
 );
@@ -45372,7 +45331,7 @@ function normalizeThemePattern(pattern) {
     // Normalize categories to always be an array of slugs
     categories: pattern.categories || [],
     // Theme patterns are always unsynced
-    syncStatus: PATTERN_SYNC_TYPES2.unsynced,
+    syncStatus: PATTERN_SYNC_TYPES.unsynced,
     description: pattern.description || ""
   };
 }
@@ -45390,6 +45349,9 @@ function normalizeUserPattern(pattern, userPatternCategories) {
   }
   const numericId = pattern.id;
   return {
+    // Keep the raw record properties so the canonical `wp_block` fields
+    // (sync status, description, last edited...) work on the normalized item.
+    ...pattern,
     id: pattern.name || pattern.id.toString(),
     _recordId: numericId,
     // Keep numeric ID for permissions lookup
@@ -45398,7 +45360,7 @@ function normalizeUserPattern(pattern, userPatternCategories) {
     // Normalize categories to always be an array of slugs
     categories,
     // Normalize sync status
-    syncStatus: pattern.wp_pattern_sync_status || PATTERN_SYNC_TYPES2.full,
+    syncStatus: pattern.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full,
     title: typeof pattern.title === "string" ? pattern.title : pattern.title.raw,
     content: typeof pattern.content === "string" ? pattern.content : pattern.content.raw,
     description: pattern.excerpt?.raw || "",
@@ -45646,26 +45608,26 @@ var use_patterns_default = usePatterns;
 // routes/pattern-list/import-pattern-button.tsx
 var import_components51 = __toESM(require_components());
 var import_element144 = __toESM(require_element());
-var import_i18n61 = __toESM(require_i18n());
+var import_i18n60 = __toESM(require_i18n());
 var import_data11 = __toESM(require_data());
 var import_notices = __toESM(require_notices());
-var import_patterns3 = __toESM(require_patterns());
-var import_jsx_runtime199 = __toESM(require_jsx_runtime());
+var import_patterns2 = __toESM(require_patterns());
+var import_jsx_runtime198 = __toESM(require_jsx_runtime());
 function ImportPatternButton() {
   const inputRef = (0, import_element144.useRef)(null);
-  const { createPatternFromFile } = unlock3((0, import_data11.useDispatch)(import_patterns3.store));
+  const { createPatternFromFile } = unlock3((0, import_data11.useDispatch)(import_patterns2.store));
   const { createSuccessNotice, createErrorNotice } = (0, import_data11.useDispatch)(import_notices.store);
-  return /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(import_jsx_runtime199.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(import_jsx_runtime198.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
       import_components51.Button,
       {
         variant: "secondary",
         size: "compact",
         onClick: () => inputRef.current?.click(),
-        children: (0, import_i18n61.__)("Import pattern from JSON")
+        children: (0, import_i18n60.__)("Import pattern from JSON")
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
       "input",
       {
         type: "file",
@@ -45680,9 +45642,9 @@ function ImportPatternButton() {
           try {
             const pattern = await createPatternFromFile(file);
             createSuccessNotice(
-              (0, import_i18n61.sprintf)(
+              (0, import_i18n60.sprintf)(
                 // translators: %s: The imported pattern's title.
-                (0, import_i18n61.__)('Imported "%s" from JSON.'),
+                (0, import_i18n60.__)('Imported "%s" from JSON.'),
                 pattern.title.raw
               ),
               {
@@ -45705,18 +45667,18 @@ function ImportPatternButton() {
 }
 
 // routes/pattern-list/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='a3942f3f8d']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='bad5b75007']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "a3942f3f8d");
-  style.appendChild(document.createTextNode(":root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.patterns-menu-items__convert-modal{z-index:1000001}.patterns-menu-items__convert-modal [role=dialog]>[role=document]{width:350px}.patterns-menu-items__convert-modal .patterns-menu-items__convert-modal-categories{position:relative}.patterns-menu-items__convert-modal .components-form-token-field__suggestions-list:not(:empty){background-color:#fff;border:1px solid var(--wp-admin-theme-color);border-bottom-left-radius:2px;border-bottom-right-radius:2px;box-shadow:0 0 .5px .5px var(--wp-admin-theme-color);box-sizing:border-box;left:-1px;max-height:96px;min-width:auto;position:absolute;width:calc(100% + 2px);z-index:1}.patterns-create-modal__name-input input[type=text]{margin:0}.patterns-rename-pattern-category-modal__validation-message{color:#cc1818}.pattern-overrides-control__allow-overrides-button{justify-content:center;width:100%}.routes-pattern-list__tabs-wrapper{border-bottom:1px solid #f0f0f0;padding:0 24px}.dataviews-view-grid__badge-fields .dataviews-view-grid__field-value:has(.routes-pattern-list__field-sync-status-fully){background:rgba(var(--wp-block-synced-color--rgb),.04);color:var(--wp-block-synced-color)}"));
+  style.setAttribute("data-wp-hash", "bad5b75007");
+  style.appendChild(document.createTextNode(":root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.patterns-menu-items__convert-modal{z-index:1000001}.patterns-menu-items__convert-modal [role=dialog]>[role=document]{width:350px}.patterns-menu-items__convert-modal .patterns-menu-items__convert-modal-categories{position:relative}.patterns-menu-items__convert-modal .components-form-token-field__suggestions-list:not(:empty){background-color:#fff;border:1px solid var(--wp-admin-theme-color);border-bottom-left-radius:2px;border-bottom-right-radius:2px;box-shadow:0 0 .5px .5px var(--wp-admin-theme-color);box-sizing:border-box;left:-1px;max-height:96px;min-width:auto;position:absolute;width:calc(100% + 2px);z-index:1}.patterns-create-modal__name-input input[type=text]{margin:0}.patterns-rename-pattern-category-modal__validation-message{color:#cc1818}.pattern-overrides-control__allow-overrides-button{justify-content:center;width:100%}.routes-pattern-list__tabs-wrapper{border-bottom:1px solid #f0f0f0;padding:0 24px}.dataviews-view-grid__badge-fields .dataviews-view-grid__field-value:has(.fields-field__pattern-sync-status-fully){background:rgba(var(--wp-block-synced-color--rgb),.04);color:var(--wp-block-synced-color)}"));
   document.head.appendChild(style);
 }
 
 // routes/pattern-list/stage.tsx
-var import_jsx_runtime200 = __toESM(require_jsx_runtime());
-var { usePostActions, patternTitleField } = unlock3(import_editor.privateApis);
+var import_jsx_runtime199 = __toESM(require_jsx_runtime());
+var { usePostActions, usePostFields } = unlock3(import_editor.privateApis);
 var { Tabs } = unlock3(import_components52.privateApis);
-var { PATTERN_TYPES: PATTERN_TYPES2, CreatePatternModal } = unlock3(import_patterns4.privateApis);
+var { PATTERN_TYPES: PATTERN_TYPES2, CreatePatternModal } = unlock3(import_patterns3.privateApis);
 function PatternList() {
   const invalidate = useInvalidate();
   const { type = "all" } = useParams({
@@ -45791,18 +45753,21 @@ function PatternList() {
     }
   );
   const patternsWithPermissions = useAugmentPatternsWithPermissions(patterns2);
+  const postTypeFields = usePostFields({
+    postType: "wp_block"
+  });
   const patternCategoryField = usePatternCategoryField();
   const fields = (0, import_element145.useMemo)(() => {
-    const patternFields = [
+    return [
       previewField,
-      patternTitleField,
+      ...(postTypeFields || []).filter(
+        // Registered patterns are never synced, so the sync status
+        // is not relevant to the "Registered" tab.
+        (field) => type !== "registered" || field.id !== "sync-status"
+      ),
       patternCategoryField
     ];
-    if (type === "my-patterns" || type === "all") {
-      patternFields.push(patternStatusField);
-    }
-    return patternFields;
-  }, [type, patternCategoryField]);
+  }, [type, postTypeFields, patternCategoryField]);
   const { data: posts, paginationInfo } = (0, import_element145.useMemo)(() => {
     const viewWithoutFilters = { ...view };
     delete viewWithoutFilters.search;
@@ -45871,18 +45836,18 @@ function PatternList() {
   if (view.type === "list") {
     selection.splice(1);
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(
     page_default,
     {
-      title: (0, import_i18n62.__)("Patterns"),
+      title: (0, import_i18n61.__)("Patterns"),
       headingLevel: 2,
-      subTitle: (0, import_i18n62.__)(
+      subTitle: (0, import_i18n61.__)(
         "Reusable design elements for your site. Create once, use everywhere."
       ),
       className: "pattern-page",
-      actions: labels?.add_new_item && canCreateRecord && /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)(import_jsx_runtime200.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(ImportPatternButton, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+      actions: labels?.add_new_item && canCreateRecord && /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(import_jsx_runtime199.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(ImportPatternButton, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
           import_components52.Button,
           {
             variant: "primary",
@@ -45894,13 +45859,13 @@ function PatternList() {
       ] }),
       hasPadding: false,
       children: [
-        DEFAULT_VIEWS.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime200.jsx)("div", { className: "routes-pattern-list__tabs-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+        DEFAULT_VIEWS.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)("div", { className: "routes-pattern-list__tabs-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
           Tabs,
           {
             onSelect: handleTabChange,
             selectedTabId: type ?? "all",
-            children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(Tabs.TabList, { children: DEFAULT_VIEWS.map(
-              (filter) => /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(Tabs.TabList, { children: DEFAULT_VIEWS.map(
+              (filter) => /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
                 Tabs.Tab,
                 {
                   tabId: filter.slug,
@@ -45911,7 +45876,7 @@ function PatternList() {
             ) })
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
           dataviews_default,
           {
             data: posts,
@@ -45940,7 +45905,7 @@ function PatternList() {
             renderItemLink: ({
               item,
               ...props
-            }) => /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+            }) => /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
               Link3,
               {
                 to: `/types/wp_block/edit/${encodeURIComponent(
@@ -45954,7 +45919,7 @@ function PatternList() {
             )
           }
         ),
-        showPatternModal && /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+        showPatternModal && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
           CreatePatternModal,
           {
             onClose: () => setShowPatternModal(false),
