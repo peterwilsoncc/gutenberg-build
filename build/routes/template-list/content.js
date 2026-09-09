@@ -176,14 +176,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React147 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef92 = React147.useRef, useEffect52 = React147.useEffect, useMemo72 = React147.useMemo, useDebugValue2 = React147.useDebugValue;
+      var React147 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef92 = React147.useRef, useEffect52 = React147.useEffect, useMemo71 = React147.useMemo, useDebugValue2 = React147.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef92(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo72(
+        instRef = useMemo71(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -1171,6 +1171,28 @@ var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnl
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/views"
 );
+
+// packages/views/build-module/use-view-config.mjs
+function useViewConfig({
+  kind,
+  name,
+  fields
+}) {
+  const fieldList = Array.isArray(fields) ? fields : fields?.split(",");
+  const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
+  return (0, import_data3.useSelect)(
+    (select2) => {
+      return unlock(select2(import_core_data.store)).getViewConfig(
+        kind,
+        name,
+        fieldsKey ? {
+          fields: fieldsKey
+        } : void 0
+      );
+    },
+    [kind, name, fieldsKey]
+  );
+}
 
 // node_modules/clsx/dist/clsx.mjs
 function r(e2) {
@@ -45236,10 +45258,10 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default2 = Page;
 
 // routes/template-list/stage.tsx
-var import_core_data6 = __toESM(require_core_data());
+var import_core_data5 = __toESM(require_core_data());
 var import_components54 = __toESM(require_components());
 var import_data11 = __toESM(require_data());
-var import_element147 = __toESM(require_element());
+var import_element146 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
 var import_i18n62 = __toESM(require_i18n());
 
@@ -45249,47 +45271,6 @@ var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptIn
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/routes"
 );
-
-// routes/template-list/view-utils.ts
-var DEFAULT_VIEW = {
-  type: "grid",
-  perPage: 20,
-  sort: {
-    field: "title",
-    direction: "asc"
-  },
-  fields: ["author"],
-  titleField: "title",
-  descriptionField: "description",
-  mediaField: "preview",
-  filters: []
-};
-var DEFAULT_LAYOUTS2 = {
-  table: {
-    showMedia: false
-  },
-  grid: {
-    showMedia: true
-  },
-  list: {
-    showMedia: false
-  }
-};
-function getActiveViewOverridesForTab(activeView) {
-  if (activeView === "all") {
-    return {};
-  }
-  return {
-    filters: [
-      {
-        field: "author",
-        operator: "is",
-        value: activeView,
-        isLocked: true
-      }
-    ]
-  };
-}
 
 // routes/template-list/fields/preview.tsx
 var import_i18n57 = __toESM(require_i18n());
@@ -45313,43 +45294,12 @@ var previewField = {
   enableSorting: false
 };
 
-// routes/template-list/use-templates.ts
-var import_element142 = __toESM(require_element());
-var import_core_data2 = __toESM(require_core_data());
-var { useEntityRecordsWithPermissions } = unlock3(import_core_data2.privateApis);
-function useTemplates(activeView = "all") {
-  const { records, isResolving } = useEntityRecordsWithPermissions(
-    "postType",
-    "wp_template",
-    {
-      per_page: -1
-    }
-  );
-  const filteredRecords = (0, import_element142.useMemo)(() => {
-    if (!records) {
-      return [];
-    }
-    if (activeView === "all") {
-      return records;
-    }
-    return records.filter(
-      (record) => record.author_text === activeView
-    );
-  }, [records, activeView]);
-  return {
-    records: filteredRecords,
-    isLoading: isResolving,
-    allRecords: records || []
-    // For building author tabs
-  };
-}
-
 // routes/template-list/add-new-template/index.tsx
 var import_components53 = __toESM(require_components());
 var import_html_entities3 = __toESM(require_html_entities());
-var import_element146 = __toESM(require_element());
+var import_element145 = __toESM(require_element());
 var import_data10 = __toESM(require_data());
-var import_core_data5 = __toESM(require_core_data());
+var import_core_data4 = __toESM(require_core_data());
 var import_compose26 = __toESM(require_compose());
 var import_i18n61 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
@@ -45357,10 +45307,10 @@ var import_dom29 = __toESM(require_dom());
 import { useNavigate, useInvalidate } from "@wordpress/route";
 
 // routes/template-list/add-new-template/add-custom-template-modal-content.tsx
-var import_element144 = __toESM(require_element());
+var import_element143 = __toESM(require_element());
 var import_i18n59 = __toESM(require_i18n());
 var import_components51 = __toESM(require_components());
-var import_core_data4 = __toESM(require_core_data());
+var import_core_data3 = __toESM(require_core_data());
 var import_html_entities2 = __toESM(require_html_entities());
 var import_compose25 = __toESM(require_compose());
 var import_dom28 = __toESM(require_dom());
@@ -45368,9 +45318,9 @@ var import_url4 = __toESM(require_url());
 
 // routes/template-list/add-new-template/utils.ts
 var import_data9 = __toESM(require_data());
-var import_core_data3 = __toESM(require_core_data());
+var import_core_data2 = __toESM(require_core_data());
 var import_html_entities = __toESM(require_html_entities());
-var import_element143 = __toESM(require_element());
+var import_element142 = __toESM(require_element());
 var import_i18n58 = __toESM(require_i18n());
 var import_url3 = __toESM(require_url());
 var TEMPLATE_POST_TYPE = "wp_template";
@@ -45393,7 +45343,7 @@ function mapToIHasNameAndId(entities, path) {
 }
 var useExistingTemplates = () => {
   return (0, import_data9.useSelect)(
-    (select2) => select2(import_core_data3.store).getEntityRecords(
+    (select2) => select2(import_core_data2.store).getEntityRecords(
       "postType",
       TEMPLATE_POST_TYPE,
       {
@@ -45405,16 +45355,16 @@ var useExistingTemplates = () => {
 };
 var useDefaultTemplateTypes = () => {
   return (0, import_data9.useSelect)(
-    (select2) => select2(import_core_data3.store).getCurrentTheme()?.default_template_types || [],
+    (select2) => select2(import_core_data2.store).getCurrentTheme()?.default_template_types || [],
     []
   );
 };
 var usePublicPostTypes = () => {
   const postTypes = (0, import_data9.useSelect)(
-    (select2) => select2(import_core_data3.store).getPostTypes({ per_page: -1 }),
+    (select2) => select2(import_core_data2.store).getPostTypes({ per_page: -1 }),
     []
   );
-  return (0, import_element143.useMemo)(() => {
+  return (0, import_element142.useMemo)(() => {
     const excludedPostTypes = ["attachment"];
     return postTypes?.filter(
       ({ viewable, slug }) => viewable && !excludedPostTypes.includes(slug)
@@ -45428,10 +45378,10 @@ var usePublicPostTypes = () => {
 };
 var usePublicTaxonomies = () => {
   const taxonomies = (0, import_data9.useSelect)(
-    (select2) => select2(import_core_data3.store).getTaxonomies({ per_page: -1 }),
+    (select2) => select2(import_core_data2.store).getTaxonomies({ per_page: -1 }),
     []
   );
-  return (0, import_element143.useMemo)(() => {
+  return (0, import_element142.useMemo)(() => {
     return taxonomies?.filter(
       ({ visibility }) => visibility?.publicly_queryable
     );
@@ -45439,14 +45389,14 @@ var usePublicTaxonomies = () => {
 };
 function usePostTypeArchiveMenuItems() {
   const publicPostTypes = usePublicPostTypes();
-  const postTypesWithArchives = (0, import_element143.useMemo)(
+  const postTypesWithArchives = (0, import_element142.useMemo)(
     () => publicPostTypes?.filter(
       (postType) => postType.has_archive
     ),
     [publicPostTypes]
   );
   const existingTemplates = useExistingTemplates();
-  const postTypeLabels = (0, import_element143.useMemo)(
+  const postTypeLabels = (0, import_element142.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { labels }) => {
       const singularName = labels.singular_name.toLowerCase();
       accumulator[singularName] = (accumulator[singularName] || 0) + 1;
@@ -45454,14 +45404,14 @@ function usePostTypeArchiveMenuItems() {
     }, {}),
     [publicPostTypes]
   );
-  const needsUniqueIdentifier = (0, import_element143.useCallback)(
+  const needsUniqueIdentifier = (0, import_element142.useCallback)(
     ({ labels, slug }) => {
       const singularName = labels.singular_name.toLowerCase();
       return postTypeLabels[singularName] > 1 && singularName !== slug;
     },
     [postTypeLabels]
   );
-  return (0, import_element143.useMemo)(
+  return (0, import_element142.useMemo)(
     () => postTypesWithArchives?.filter(
       (postType) => !(existingTemplates || []).some(
         (existingTemplate) => existingTemplate.slug === "archive-" + postType.slug
@@ -45505,7 +45455,7 @@ function usePostTypeArchiveMenuItems() {
 var usePostTypeMenuItems = (onClickMenuItem) => {
   const publicPostTypes = usePublicPostTypes();
   const defaultTemplateTypes = useDefaultTemplateTypes();
-  const templateLabels = (0, import_element143.useMemo)(
+  const templateLabels = (0, import_element142.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { labels }) => {
       const templateName = (labels.template_name || labels.singular_name).toLowerCase();
       accumulator[templateName] = (accumulator[templateName] || 0) + 1;
@@ -45513,14 +45463,14 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
     }, {}),
     [publicPostTypes]
   );
-  const needsUniqueIdentifier = (0, import_element143.useCallback)(
+  const needsUniqueIdentifier = (0, import_element142.useCallback)(
     ({ labels, slug }) => {
       const templateName = (labels.template_name || labels.singular_name).toLowerCase();
       return templateLabels[templateName] > 1 && templateName !== slug;
     },
     [templateLabels]
   );
-  const templatePrefixes = (0, import_element143.useMemo)(
+  const templatePrefixes = (0, import_element142.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { slug }) => {
       let suffix = slug;
       if (slug !== "page") {
@@ -45617,7 +45567,7 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
     },
     []
   );
-  const postTypesMenuItems = (0, import_element143.useMemo)(
+  const postTypesMenuItems = (0, import_element142.useMemo)(
     () => menuItems.reduce(
       (accumulator, postType) => {
         const { slug } = postType;
@@ -45638,7 +45588,7 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
   const publicTaxonomies = usePublicTaxonomies();
   const existingTemplates = useExistingTemplates();
   const defaultTemplateTypes = useDefaultTemplateTypes();
-  const templatePrefixes = (0, import_element143.useMemo)(
+  const templatePrefixes = (0, import_element142.useMemo)(
     () => publicTaxonomies?.reduce((accumulator, { slug }) => {
       let suffix = slug;
       if (!["category", "post_tag"].includes(slug)) {
@@ -45750,7 +45700,7 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
     },
     []
   );
-  const taxonomiesMenuItems = (0, import_element143.useMemo)(
+  const taxonomiesMenuItems = (0, import_element142.useMemo)(
     () => menuItems.reduce(
       (accumulator, taxonomy) => {
         const { slug } = taxonomy;
@@ -45847,7 +45797,7 @@ var useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters =
     (select2) => {
       return Object.keys(templatePrefixes || {}).reduce(
         (accumulator, slug) => {
-          const records = select2(import_core_data3.store).getEntityRecords(
+          const records = select2(import_core_data2.store).getEntityRecords(
             entityName,
             slug,
             {
@@ -45865,7 +45815,7 @@ var useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters =
     },
     [templatePrefixes, entityName, additionalQueryParameters]
   );
-  const entitiesInfo = (0, import_element143.useMemo)(() => {
+  const entitiesInfo = (0, import_element142.useMemo)(() => {
     return Object.keys(templatePrefixes || {}).reduce(
       (accumulator, slug) => {
         accumulator[slug] = {
@@ -45937,7 +45887,7 @@ function SuggestionListItem({
 }
 function useSearchSuggestions(entityForSuggestions, search) {
   const { config } = entityForSuggestions;
-  const query = (0, import_element144.useMemo)(
+  const query = (0, import_element143.useMemo)(
     () => ({
       order: "asc",
       context: "view",
@@ -45947,13 +45897,13 @@ function useSearchSuggestions(entityForSuggestions, search) {
     }),
     [search, config]
   );
-  const { records: searchResults, hasResolved: searchHasResolved } = (0, import_core_data4.useEntityRecords)(
+  const { records: searchResults, hasResolved: searchHasResolved } = (0, import_core_data3.useEntityRecords)(
     entityForSuggestions.type,
     entityForSuggestions.slug,
     query
   );
-  const [suggestions, setSuggestions] = (0, import_element144.useState)(EMPTY_ARRAY8);
-  (0, import_element144.useEffect)(() => {
+  const [suggestions, setSuggestions] = (0, import_element143.useState)(EMPTY_ARRAY8);
+  (0, import_element143.useEffect)(() => {
     if (!searchHasResolved) {
       return;
     }
@@ -45981,7 +45931,7 @@ function SuggestionList({
     debouncedSearch
   );
   const { labels } = entityForSuggestions;
-  const [showSearchControl, setShowSearchControl] = (0, import_element144.useState)(false);
+  const [showSearchControl, setShowSearchControl] = (0, import_element143.useState)(false);
   if (!showSearchControl && suggestions?.length > 9) {
     setShowSearchControl(true);
   }
@@ -46030,8 +45980,8 @@ function AddCustomTemplateModalContent({
   onBack,
   containerRef
 }) {
-  const [showSearchEntities, setShowSearchEntities] = (0, import_element144.useState)(false);
-  (0, import_element144.useEffect)(() => {
+  const [showSearchEntities, setShowSearchEntities] = (0, import_element143.useState)(false);
+  (0, import_element143.useEffect)(() => {
     if (containerRef.current) {
       const [firstFocusable] = import_dom28.focus.focusable.find(
         containerRef.current
@@ -46175,7 +46125,7 @@ function AddCustomTemplateModalContent({
 var add_custom_template_modal_content_default = AddCustomTemplateModalContent;
 
 // routes/template-list/add-new-template/add-custom-generic-template-modal-content.tsx
-var import_element145 = __toESM(require_element());
+var import_element144 = __toESM(require_element());
 var import_i18n60 = __toESM(require_i18n());
 var import_components52 = __toESM(require_components());
 var import_jsx_runtime213 = __toESM(require_jsx_runtime());
@@ -46183,11 +46133,11 @@ function AddCustomGenericTemplateModalContent({
   createTemplate,
   onBack
 }) {
-  const [title, setTitle] = (0, import_element145.useState)("");
+  const [title, setTitle] = (0, import_element144.useState)("");
   const defaultTitle = (0, import_i18n60.__)("Custom Template");
-  const [isBusy, setIsBusy] = (0, import_element145.useState)(false);
-  const inputRef = (0, import_element145.useRef)(null);
-  (0, import_element145.useEffect)(() => {
+  const [isBusy, setIsBusy] = (0, import_element144.useState)(false);
+  const inputRef = (0, import_element144.useRef)(null);
+  (0, import_element144.useEffect)(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -46351,21 +46301,21 @@ var modalContentMap = {
   customGenericTemplate: 3
 };
 function NewTemplateModal({ onClose }) {
-  const [modalContent, setModalContent] = (0, import_element146.useState)(modalContentMap.templatesList);
-  const [entityForSuggestions, setEntityForSuggestions] = (0, import_element146.useState)();
-  const [isSubmitting, setIsSubmitting] = (0, import_element146.useState)(false);
+  const [modalContent, setModalContent] = (0, import_element145.useState)(modalContentMap.templatesList);
+  const [entityForSuggestions, setEntityForSuggestions] = (0, import_element145.useState)();
+  const [isSubmitting, setIsSubmitting] = (0, import_element145.useState)(false);
   const missingTemplates = useMissingTemplates(
     setEntityForSuggestions,
     () => setModalContent(modalContentMap.customTemplate)
   );
   const navigate = useNavigate();
   const invalidate = useInvalidate();
-  const { saveEntityRecord } = (0, import_data10.useDispatch)(import_core_data5.store);
+  const { saveEntityRecord } = (0, import_data10.useDispatch)(import_core_data4.store);
   const { createErrorNotice, createSuccessNotice } = (0, import_data10.useDispatch)(import_notices.store);
-  const containerRef = (0, import_element146.useRef)(null);
+  const containerRef = (0, import_element145.useRef)(null);
   const isMobile = (0, import_compose26.useViewportMatch)("medium", "<");
   const homeUrl = (0, import_data10.useSelect)((select2) => {
-    return select2(import_core_data5.store).getEntityRecord(
+    return select2(import_core_data4.store).getEntityRecord(
       "root",
       "__unstableBase"
     )?.home;
@@ -46378,7 +46328,7 @@ function NewTemplateModal({ onClose }) {
       homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
     )
   };
-  (0, import_element146.useEffect)(() => {
+  (0, import_element145.useEffect)(() => {
     if (containerRef.current && modalContent === modalContentMap.templatesList) {
       const [firstFocusable] = import_dom29.focus.focusable.find(
         containerRef.current
@@ -46530,9 +46480,9 @@ function NewTemplateModal({ onClose }) {
   );
 }
 function NewTemplate() {
-  const [showModal, setShowModal] = (0, import_element146.useState)(false);
+  const [showModal, setShowModal] = (0, import_element145.useState)(false);
   const { postType } = (0, import_data10.useSelect)((select2) => {
-    const { getPostType } = select2(import_core_data5.store);
+    const { getPostType } = select2(import_core_data4.store);
     return {
       postType: getPostType(TEMPLATE_POST_TYPE2)
     };
@@ -46597,7 +46547,7 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
   ];
   return missingTemplates;
 }
-var add_new_template_default = (0, import_element146.memo)(NewTemplate);
+var add_new_template_default = (0, import_element145.memo)(NewTemplate);
 
 // routes/template-list/style.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='39a4fa58ba']")) {
@@ -46618,27 +46568,58 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 // routes/template-list/stage.tsx
 var import_jsx_runtime215 = __toESM(require_jsx_runtime());
 var { usePostActions, usePostFields } = unlock3(import_editor.privateApis);
+var { useEntityRecordsWithPermissions } = unlock3(import_core_data5.privateApis);
 var { Tabs } = unlock3(import_components54.privateApis);
+var TEMPLATE_POST_TYPE3 = "wp_template";
+var EMPTY_ARRAY9 = [];
 function getItemId(item) {
   return item.id.toString();
 }
 function TemplateList() {
-  const invalidate = useInvalidate2();
   const { activeView = "all" } = useParams({
     from: "/templates/list/$activeView"
   });
+  const {
+    default_view: defaultView,
+    default_layouts: defaultLayouts,
+    view_list: viewList
+  } = useViewConfig({
+    kind: "postType",
+    name: TEMPLATE_POST_TYPE3
+  });
+  const activeViewOverrides = (0, import_element146.useMemo)(
+    () => viewList?.find((v2) => v2.slug === activeView)?.view ?? {},
+    [viewList, activeView]
+  );
+  if (!defaultView) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+    TemplateListView,
+    {
+      activeView,
+      defaultView,
+      defaultLayouts,
+      viewList,
+      activeViewOverrides
+    }
+  );
+}
+function TemplateListView({
+  activeView,
+  defaultView,
+  defaultLayouts,
+  viewList,
+  activeViewOverrides
+}) {
+  const invalidate = useInvalidate2();
   const navigate = useNavigate2();
   const searchParams = useSearch({ from: "/templates/list/$activeView" });
   const postTypeObject = (0, import_data11.useSelect)(
-    (select2) => select2(import_core_data6.store).getPostType("wp_template"),
+    (select2) => select2(import_core_data5.store).getPostType(TEMPLATE_POST_TYPE3),
     []
   );
-  const defaultView = DEFAULT_VIEW;
-  const activeViewOverrides = (0, import_element147.useMemo)(
-    () => getActiveViewOverridesForTab(activeView),
-    [activeView]
-  );
-  const handleQueryParamsChange = (0, import_element147.useCallback)(
+  const handleQueryParamsChange = (0, import_element146.useCallback)(
     (params) => {
       navigate({
         search: {
@@ -46651,9 +46632,10 @@ function TemplateList() {
   );
   const { view, isModified, updateView, resetToDefault } = useView({
     kind: "postType",
-    name: "wp_template",
+    name: TEMPLATE_POST_TYPE3,
     slug: "default-new",
     defaultView,
+    defaultLayouts,
     activeViewOverrides,
     queryParams: searchParams,
     onChangeQueryParams: handleQueryParamsChange
@@ -46668,16 +46650,19 @@ function TemplateList() {
       invalidate();
     }
   };
-  const { records, isLoading, allRecords } = useTemplates(activeView);
-  const postFields = usePostFields({ postType: "wp_template" });
-  const fields = (0, import_element147.useMemo)(
+  const { records: templates, isResolving: isLoading } = useEntityRecordsWithPermissions("postType", TEMPLATE_POST_TYPE3, {
+    per_page: -1
+  });
+  const records = templates ?? EMPTY_ARRAY9;
+  const postFields = usePostFields({ postType: TEMPLATE_POST_TYPE3 });
+  const fields = (0, import_element146.useMemo)(
     () => [previewField, ...postFields],
     [postFields]
   );
-  const { data: posts, paginationInfo } = (0, import_element147.useMemo)(() => {
+  const { data: posts, paginationInfo } = (0, import_element146.useMemo)(() => {
     return filterSortAndPaginate(records, view, fields);
   }, [records, view, fields]);
-  const cleanupDeletedPostIdsFromUrl = (0, import_element147.useCallback)(
+  const cleanupDeletedPostIdsFromUrl = (0, import_element146.useCallback)(
     (deletedItems) => {
       const deletedIds = deletedItems.map(
         (item) => item.id.toString()
@@ -46699,7 +46684,7 @@ function TemplateList() {
     },
     [invalidate, searchParams, navigate]
   );
-  const onActionPerformed = (0, import_element147.useCallback)(
+  const onActionPerformed = (0, import_element146.useCallback)(
     (actionId, items) => {
       if (actionId === "move-to-trash" || actionId === "permanently-delete") {
         cleanupDeletedPostIdsFromUrl(items);
@@ -46708,11 +46693,11 @@ function TemplateList() {
     [cleanupDeletedPostIdsFromUrl]
   );
   const postTypeActions = usePostActions({
-    postType: "wp_template",
+    postType: TEMPLATE_POST_TYPE3,
     context: "list",
     onActionPerformed
   });
-  const actions = (0, import_element147.useMemo)(() => {
+  const actions = (0, import_element146.useMemo)(() => {
     return postTypeActions?.flatMap((action) => {
       if (action.id === "view-post-revisions") {
         return [];
@@ -46720,27 +46705,7 @@ function TemplateList() {
       return [action];
     });
   }, [postTypeActions]);
-  const tabs = (0, import_element147.useMemo)(() => {
-    const baseTabs = [
-      {
-        slug: "all",
-        label: (0, import_i18n62.__)("All templates"),
-        icon: layout_default
-      }
-    ];
-    const authorMap = /* @__PURE__ */ new Map();
-    allRecords.forEach((record) => {
-      if (record.author_text && !authorMap.has(record.author_text)) {
-        authorMap.set(record.author_text, {
-          slug: record.author_text,
-          label: record.author_text
-        });
-      }
-    });
-    const authorTabs = Array.from(authorMap.values());
-    return [...baseTabs, ...authorTabs];
-  }, [allRecords]);
-  const handleTabChange = (0, import_element147.useCallback)(
+  const handleTabChange = (0, import_element146.useCallback)(
     (viewSlug) => {
       navigate({
         to: `/templates/list/${viewSlug}`
@@ -46766,12 +46731,19 @@ function TemplateList() {
       actions: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(add_new_template_default, {}),
       hasPadding: false,
       children: [
-        tabs.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)("div", { className: "routes-template-list__tabs-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+        viewList && viewList.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)("div", { className: "routes-template-list__tabs-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
           Tabs,
           {
             onSelect: handleTabChange,
-            selectedTabId: activeView ?? "all",
-            children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(Tabs.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(Tabs.Tab, { tabId: tab.slug, children: tab.label }, tab.slug)) })
+            selectedTabId: activeView,
+            children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(Tabs.TabList, { children: viewList.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+              Tabs.Tab,
+              {
+                tabId: entry.slug,
+                children: entry.title
+              },
+              entry.slug
+            )) })
           }
         ) }),
         /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
@@ -46784,7 +46756,7 @@ function TemplateList() {
             actions,
             isLoading,
             paginationInfo,
-            defaultLayouts: DEFAULT_LAYOUTS2,
+            defaultLayouts,
             getItemId,
             selection,
             onReset: isModified ? onReset : false,
