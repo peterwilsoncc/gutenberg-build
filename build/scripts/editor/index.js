@@ -106484,7 +106484,7 @@ ${content}
                     icon: copy_small_default,
                     ref: copyButtonRef,
                     size: "small",
-                    label: "Copy"
+                    label: (0, import_i18n283.__)("Copy")
                   }
                 ) }),
                 label: (0, import_i18n283.__)("Slug"),
