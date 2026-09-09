@@ -45079,6 +45079,13 @@ If there's a particular need for this, please submit a feature request at https:
     );
     return { ...view, filters: [...locked, ...rest] };
   }
+  function getApplicablePersistedView(persistedView, defaultLayouts2) {
+    if (!persistedView || persistedView.type === void 0 || !defaultLayouts2 || defaultLayouts2[persistedView.type]) {
+      return persistedView;
+    }
+    const { type, ...rest } = persistedView;
+    return Object.keys(rest).length > 0 ? rest : void 0;
+  }
   function resolveBaseView(layers, effectiveType) {
     const { defaultView: defaultView2, defaultLayouts: defaultLayouts2, activeViewOverrides } = layers;
     const layoutDefaults = defaultLayouts2?.[effectiveType];
@@ -45091,7 +45098,11 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function resolveView(args) {
-    const { defaultView: defaultView2, activeViewOverrides, persistedView, page, search } = args;
+    const { defaultView: defaultView2, defaultLayouts: defaultLayouts2, activeViewOverrides, page, search } = args;
+    const persistedView = getApplicablePersistedView(
+      args.persistedView,
+      defaultLayouts2
+    );
     const effectiveType = persistedView?.type ?? activeViewOverrides?.type ?? defaultView2?.type;
     const baseView = resolveBaseView(args, effectiveType);
     const view = {
@@ -45105,7 +45116,11 @@ If there's a particular need for this, please submit a feature request at https:
     return view;
   }
   function getUserModifications(newView, layers) {
-    const { activeViewOverrides, persistedView } = layers;
+    const { defaultLayouts: defaultLayouts2, activeViewOverrides } = layers;
+    const persistedView = getApplicablePersistedView(
+      layers.persistedView,
+      defaultLayouts2
+    );
     const baseView = resolveBaseView(layers, newView.type);
     const modifications = diffLayer(
       withoutQueryParams(newView),
@@ -45164,7 +45179,11 @@ If there's a particular need for this, please submit a feature request at https:
         search
       ]
     );
-    const isModified = !!persistedView && Object.keys(persistedView).length > 0;
+    const applicablePersistedView = getApplicablePersistedView(
+      persistedView,
+      defaultLayouts2
+    );
+    const isModified = !!applicablePersistedView && Object.keys(applicablePersistedView).length > 0;
     const updateView = (0, import_element140.useCallback)(
       (newView) => {
         const newQueryParams = {

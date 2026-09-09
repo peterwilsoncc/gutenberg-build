@@ -108,6 +108,13 @@ function applyLockedFilters(view, overrides) {
   );
   return { ...view, filters: [...locked, ...rest] };
 }
+function getApplicablePersistedView(persistedView, defaultLayouts) {
+  if (!persistedView || persistedView.type === void 0 || !defaultLayouts || defaultLayouts[persistedView.type]) {
+    return persistedView;
+  }
+  const { type, ...rest } = persistedView;
+  return Object.keys(rest).length > 0 ? rest : void 0;
+}
 function resolveBaseView(layers, effectiveType) {
   const { defaultView, defaultLayouts, activeViewOverrides } = layers;
   const layoutDefaults = defaultLayouts?.[effectiveType];
@@ -120,7 +127,11 @@ function resolveBaseView(layers, effectiveType) {
   );
 }
 function resolveView(args) {
-  const { defaultView, activeViewOverrides, persistedView, page, search } = args;
+  const { defaultView, defaultLayouts, activeViewOverrides, page, search } = args;
+  const persistedView = getApplicablePersistedView(
+    args.persistedView,
+    defaultLayouts
+  );
   const effectiveType = persistedView?.type ?? activeViewOverrides?.type ?? defaultView?.type;
   const baseView = resolveBaseView(args, effectiveType);
   const view = {

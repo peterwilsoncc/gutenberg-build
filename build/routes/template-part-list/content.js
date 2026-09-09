@@ -1016,6 +1016,13 @@ function applyLockedFilters(view, overrides) {
   );
   return { ...view, filters: [...locked, ...rest] };
 }
+function getApplicablePersistedView(persistedView, defaultLayouts) {
+  if (!persistedView || persistedView.type === void 0 || !defaultLayouts || defaultLayouts[persistedView.type]) {
+    return persistedView;
+  }
+  const { type, ...rest } = persistedView;
+  return Object.keys(rest).length > 0 ? rest : void 0;
+}
 function resolveBaseView(layers, effectiveType) {
   const { defaultView, defaultLayouts, activeViewOverrides } = layers;
   const layoutDefaults = defaultLayouts?.[effectiveType];
@@ -1028,7 +1035,11 @@ function resolveBaseView(layers, effectiveType) {
   );
 }
 function resolveView(args) {
-  const { defaultView, activeViewOverrides, persistedView, page, search } = args;
+  const { defaultView, defaultLayouts, activeViewOverrides, page, search } = args;
+  const persistedView = getApplicablePersistedView(
+    args.persistedView,
+    defaultLayouts
+  );
   const effectiveType = persistedView?.type ?? activeViewOverrides?.type ?? defaultView?.type;
   const baseView = resolveBaseView(args, effectiveType);
   const view = {
@@ -1042,7 +1053,11 @@ function resolveView(args) {
   return view;
 }
 function getUserModifications(newView, layers) {
-  const { activeViewOverrides, persistedView } = layers;
+  const { defaultLayouts, activeViewOverrides } = layers;
+  const persistedView = getApplicablePersistedView(
+    layers.persistedView,
+    defaultLayouts
+  );
   const baseView = resolveBaseView(layers, newView.type);
   const modifications = diffLayer(
     withoutQueryParams(newView),
@@ -1101,7 +1116,11 @@ function useView(config) {
       search
     ]
   );
-  const isModified = !!persistedView && Object.keys(persistedView).length > 0;
+  const applicablePersistedView = getApplicablePersistedView(
+    persistedView,
+    defaultLayouts
+  );
+  const isModified = !!applicablePersistedView && Object.keys(applicablePersistedView).length > 0;
   const updateView = (0, import_element.useCallback)(
     (newView) => {
       const newQueryParams = {
@@ -1158,6 +1177,28 @@ var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnl
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/views"
 );
+
+// packages/views/build-module/use-view-config.mjs
+function useViewConfig({
+  kind,
+  name,
+  fields
+}) {
+  const fieldList = Array.isArray(fields) ? fields : fields?.split(",");
+  const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
+  return (0, import_data3.useSelect)(
+    (select2) => {
+      return unlock(select2(import_core_data.store)).getViewConfig(
+        kind,
+        name,
+        fieldsKey ? {
+          fields: fieldsKey
+        } : void 0
+      );
+    },
+    [kind, name, fieldsKey]
+  );
+}
 
 // node_modules/clsx/dist/clsx.mjs
 function r(e2) {
@@ -45163,9 +45204,9 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/template-part-list/stage.tsx
-var import_core_data4 = __toESM(require_core_data());
+var import_core_data5 = __toESM(require_core_data());
 var import_components52 = __toESM(require_components());
-var import_data11 = __toESM(require_data());
+var import_data12 = __toESM(require_data());
 var import_element143 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
 
@@ -45431,56 +45472,13 @@ var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptIn
 );
 
 // routes/template-part-list/view-utils.ts
-var NAVIGATION_OVERLAY_TEMPLATE_PART_AREA = "navigation-overlay";
-var DEFAULT_VIEW = {
-  type: "grid",
-  sort: {
-    field: "date",
-    direction: "desc"
-  },
-  fields: [],
-  titleField: "title",
-  mediaField: "preview"
-};
-var DEFAULT_VIEWS = [
-  {
-    slug: "all",
-    label: "All Template Parts"
-  },
-  {
-    slug: "header",
-    label: "Headers"
-  },
-  {
-    slug: "footer",
-    label: "Footers"
-  },
-  {
-    slug: "sidebar",
-    label: "Sidebars"
-  },
-  {
-    slug: NAVIGATION_OVERLAY_TEMPLATE_PART_AREA,
-    label: "Overlays"
-  },
-  {
-    slug: "uncategorized",
-    label: "General"
-  }
-];
-function getActiveViewOverridesForTab(area) {
-  if (area === "all") {
-    return {};
-  }
-  return {
-    filters: [
-      {
-        field: "area",
-        operator: "is",
-        value: area
-      }
-    ]
-  };
+var import_data11 = __toESM(require_data());
+var import_core_data4 = __toESM(require_core_data());
+function getAreaFromViewOverrides(viewOverrides) {
+  const areaFilter = viewOverrides.filters?.find(
+    (filter) => filter.field === "area" && filter.isLocked
+  );
+  return typeof areaFilter?.value === "string" ? areaFilter.value : void 0;
 }
 function viewToQuery(view) {
   const result = { per_page: -1 };
@@ -45525,37 +45523,70 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 
 // routes/template-part-list/stage.tsx
 var import_jsx_runtime203 = __toESM(require_jsx_runtime());
-var { useEntityRecordsWithPermissions } = unlock3(import_core_data4.privateApis);
+var { useEntityRecordsWithPermissions } = unlock3(import_core_data5.privateApis);
 var { usePostActions, usePostFields } = unlock3(import_editor.privateApis);
 var { Tabs } = unlock3(import_components52.privateApis);
+var TEMPLATE_PART_POST_TYPE = "wp_template_part";
 function getItemId(item) {
   return item.id.toString();
 }
 function TemplatePartList() {
-  const invalidate = useInvalidate();
-  const { area = "all" } = useParams({
+  const { area } = useParams({
     from: "/template-parts/list/$area"
   });
+  const {
+    default_view: defaultView,
+    default_layouts: defaultLayouts,
+    view_list: viewList
+  } = useViewConfig({
+    kind: "postType",
+    name: TEMPLATE_PART_POST_TYPE
+  });
+  const activeViewOverrides = (0, import_element143.useMemo)(
+    () => viewList?.find((v2) => v2.slug === area)?.view ?? {},
+    [viewList, area]
+  );
+  if (!defaultView) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
+    TemplatePartListView,
+    {
+      activeView: area,
+      defaultView,
+      defaultLayouts,
+      viewList,
+      activeViewOverrides
+    }
+  );
+}
+function TemplatePartListView({
+  activeView,
+  defaultView,
+  defaultLayouts,
+  viewList,
+  activeViewOverrides
+}) {
+  const invalidate = useInvalidate();
   const navigate = useNavigate();
   const searchParams = useSearch({ from: "/template-parts/list/$area" });
-  const postTypeObject = (0, import_data11.useSelect)(
-    (select2) => select2(import_core_data4.store).getPostType("wp_template_part"),
+  const postTypeObject = (0, import_data12.useSelect)(
+    (select2) => select2(import_core_data5.store).getPostType(TEMPLATE_PART_POST_TYPE),
     []
   );
+  const area = (0, import_element143.useMemo)(
+    () => getAreaFromViewOverrides(activeViewOverrides),
+    [activeViewOverrides]
+  );
   const labels = postTypeObject?.labels;
-  const canCreateRecord = (0, import_data11.useSelect)(
-    (select2) => select2(import_core_data4.store).canUser("create", {
+  const canCreateRecord = (0, import_data12.useSelect)(
+    (select2) => select2(import_core_data5.store).canUser("create", {
       kind: "postType",
-      name: "wp_template_part"
+      name: TEMPLATE_PART_POST_TYPE
     }),
     []
   );
   const [showTemplatePartModal, setShowTemplatePartModal] = (0, import_element143.useState)(false);
-  const defaultView = DEFAULT_VIEW;
-  const activeViewOverrides = (0, import_element143.useMemo)(
-    () => getActiveViewOverridesForTab(area),
-    [area]
-  );
   const handleQueryParamsChange = (0, import_element143.useCallback)(
     (params) => {
       navigate({
@@ -45569,9 +45600,10 @@ function TemplatePartList() {
   );
   const { view, isModified, updateView, resetToDefault } = useView({
     kind: "postType",
-    name: "wp_template_part",
+    name: TEMPLATE_PART_POST_TYPE,
     slug: "default-new",
     defaultView,
+    defaultLayouts,
     activeViewOverrides,
     queryParams: searchParams,
     onChangeQueryParams: handleQueryParamsChange
@@ -45589,16 +45621,16 @@ function TemplatePartList() {
   const postTypeQuery = (0, import_element143.useMemo)(() => viewToQuery(view), [view]);
   const { records, isResolving } = useEntityRecordsWithPermissions(
     "postType",
-    "wp_template_part",
+    TEMPLATE_PART_POST_TYPE,
     postTypeQuery
   );
   const allFields = usePostFields({
-    postType: "wp_template_part"
+    postType: TEMPLATE_PART_POST_TYPE
   });
   const fields = (0, import_element143.useMemo)(() => {
     return [previewField].concat(
       allFields.filter((field) => {
-        if (field.id === "area" && area !== "all") {
+        if (field.id === "area" && area) {
           return false;
         }
         if (field.id === "status") {
@@ -45639,7 +45671,7 @@ function TemplatePartList() {
     [invalidate, searchParams, navigate]
   );
   const postTypeActions = usePostActions({
-    postType: "wp_template_part",
+    postType: TEMPLATE_PART_POST_TYPE,
     context: "list",
     onActionPerformed: (actionId, items) => {
       if (actionId === "move-to-trash" || actionId === "permanently-delete") {
@@ -45660,9 +45692,9 @@ function TemplatePartList() {
     ];
   }, [postTypeActions]);
   const handleTabChange = (0, import_element143.useCallback)(
-    (areaSlug) => {
+    (viewSlug) => {
       navigate({
-        to: `/template-parts/list/${areaSlug}`
+        to: `/template-parts/list/${viewSlug}`
       });
     },
     [navigate]
@@ -45695,21 +45727,19 @@ function TemplatePartList() {
       ),
       hasPadding: false,
       children: [
-        DEFAULT_VIEWS.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime203.jsx)("div", { className: "routes-template-part-list__tabs-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
+        viewList && viewList.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime203.jsx)("div", { className: "routes-template-part-list__tabs-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
           Tabs,
           {
             onSelect: handleTabChange,
-            selectedTabId: area ?? "all",
-            children: /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(Tabs.TabList, { children: DEFAULT_VIEWS.map(
-              (filter) => /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
-                Tabs.Tab,
-                {
-                  tabId: filter.slug,
-                  children: filter.label
-                },
-                filter.slug
-              )
-            ) })
+            selectedTabId: activeView,
+            children: /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(Tabs.TabList, { children: viewList.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
+              Tabs.Tab,
+              {
+                tabId: entry.slug,
+                children: entry.title
+              },
+              entry.slug
+            )) })
           }
         ) }),
         /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
@@ -45722,6 +45752,7 @@ function TemplatePartList() {
             actions,
             isLoading: isResolving,
             paginationInfo,
+            defaultLayouts,
             getItemId,
             selection,
             onReset: isModified ? onReset : false,
@@ -45765,7 +45796,7 @@ function TemplatePartList() {
               });
             },
             onError: () => setShowTemplatePartModal(false),
-            defaultArea: area !== "all" ? area : "uncategorized"
+            defaultArea: area ?? "uncategorized"
           }
         )
       ]
