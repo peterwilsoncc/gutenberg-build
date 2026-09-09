@@ -112854,7 +112854,7 @@ ${content}
         return getPostContentAttributes(editedPostTemplate?.blocks);
       }
       const parseableContent = typeof editedPostTemplate?.content === "string" ? editedPostTemplate?.content : "";
-      return getPostContentAttributes((0, import_blocks33.parse)(parseableContent)) || {};
+      return getPostContentAttributes((0, import_blocks33.parse)(parseableContent));
     }, [
       editedPostTemplate?.content,
       editedPostTemplate?.blocks,
@@ -112896,7 +112896,7 @@ ${content}
       layout?.wideSize,
       globalLayoutSettings
     ]);
-    const blockListLayout = postContentAttributes ? postContentLayout : fallbackLayout;
+    const blockListLayout = newestPostContentAttributes ? postContentLayout : fallbackLayout;
     const postEditorLayout = blockListLayout?.type === "default" && !hasPostContentAtRootLevel ? fallbackLayout : blockListLayout;
     const titleRef = (0, import_element372.useRef)();
     (0, import_element372.useEffect)(() => {
