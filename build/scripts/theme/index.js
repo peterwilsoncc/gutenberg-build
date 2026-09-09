@@ -3520,11 +3520,11 @@ var wp;
       "background-interactive-neutral-weak-disabled"
     ],
     "primary-bgFill1": ["background-interactive-brand-strong"],
+    "primary-bgFill2": ["background-interactive-brand-strong-active"],
     "primary-fgFill": [
       "foreground-interactive-brand-strong",
       "foreground-interactive-brand-strong-active"
     ],
-    "primary-bgFill2": ["background-interactive-brand-strong-active"],
     "primary-surface4": ["background-interactive-brand-weak-active"],
     "primary-fgSurface4": ["foreground-interactive-brand-active"],
     "primary-fgSurface3": ["foreground-interactive-brand"],
@@ -3557,11 +3557,11 @@ var wp;
     "warning-stroke3": ["stroke-surface-warning-strong"],
     "warning-stroke1": ["stroke-surface-warning"],
     "error-bgFill1": ["background-interactive-error-strong"],
+    "error-bgFill2": ["background-interactive-error-strong-active"],
     "error-fgFill": [
       "foreground-interactive-error-strong",
       "foreground-interactive-error-strong-active"
     ],
-    "error-bgFill2": ["background-interactive-error-strong-active"],
     "error-surface2": [
       "background-interactive-error-active",
       "background-surface-error-weak"
@@ -3759,9 +3759,14 @@ var wp;
     });
     Object.entries(config).forEach(([stepName, stepConfig]) => {
       const step = stepName;
-      const reference = stepConfig.contrast.reference;
-      dependencies.get(step).push(reference);
-      dependents.get(reference).push(step);
+      const references = [
+        stepConfig.contrast.reference,
+        ...stepConfig.contrast.additionalReferences ?? []
+      ];
+      for (const reference of references) {
+        dependencies.get(step).push(reference);
+        dependents.get(reference).push(step);
+      }
       if (stepConfig.sameAsIfPossible) {
         dependencies.get(step).push(stepConfig.sameAsIfPossible);
         dependents.get(stepConfig.sameAsIfPossible).push(step);
@@ -3810,6 +3815,7 @@ var wp;
         return;
       }
       visit(stepConfig.contrast.reference);
+      stepConfig.contrast.additionalReferences?.forEach(visit);
       if (stepConfig.sameAsIfPossible) {
         visit(stepConfig.sameAsIfPossible);
       }
@@ -3818,9 +3824,18 @@ var wp;
     visit(stepName);
     return Array.from(result);
   }
-  function computeBetterFgColorDirection(seed, preferLighter) {
-    const contrastAgainstBlack = getContrast(seed, BLACK);
-    const contrastAgainstWhite = getContrast(seed, WHITE);
+  function computeBetterFgColorDirection(references, preferLighter) {
+    const referenceColors = Array.isArray(references) ? references : [references];
+    const contrastAgainstBlack = Math.min(
+      ...referenceColors.map(
+        (reference) => getContrast(reference, BLACK)
+      )
+    );
+    const contrastAgainstWhite = Math.min(
+      ...referenceColors.map(
+        (reference) => getContrast(reference, WHITE)
+      )
+    );
     return contrastAgainstBlack > contrastAgainstWhite + (preferLighter ? WHITE_TEXT_CONTRAST_MARGIN : 0) ? { better: "darker", worse: "lighter" } : { better: "lighter", worse: "darker" };
   }
   function adjustContrastTarget(target) {
@@ -4078,7 +4093,7 @@ var wp;
     const calculatedColors = /* @__PURE__ */ new Map();
     calculatedColors.set("seed", seed);
     for (const stepName of sortedSteps) {
-      let computeDirection2 = function(color, followDirection) {
+      let computeDirection2 = function(colors, followDirection) {
         if (followDirection === "main") {
           return mainDir;
         }
@@ -4087,7 +4102,7 @@ var wp;
         }
         if (followDirection === "best") {
           return computeBetterFgColorDirection(
-            color,
+            colors,
             contrast.preferLighter
           ).better;
         }
@@ -4100,12 +4115,19 @@ var wp;
         taperChromaOptions,
         sameAsIfPossible
       } = config[stepName];
-      const referenceColor = calculatedColors.get(contrast.reference);
-      if (!referenceColor) {
-        throw new Error(
-          `Reference color for step ${stepName} not found: ${contrast.reference}`
-        );
-      }
+      const referenceNames = [
+        contrast.reference,
+        ...contrast.additionalReferences ?? []
+      ];
+      const referenceColors = referenceNames.map((referenceName) => {
+        const referenceColor2 = calculatedColors.get(referenceName);
+        if (!referenceColor2) {
+          throw new Error(
+            `Reference color for step ${stepName} not found: ${referenceName}`
+          );
+        }
+        return referenceColor2;
+      });
       if (sameAsIfPossible) {
         const candidateColor = calculatedColors.get(sameAsIfPossible);
         if (!candidateColor) {
@@ -4113,20 +4135,23 @@ var wp;
             `Same-as color for step ${stepName} not found: ${sameAsIfPossible}`
           );
         }
-        const candidateContrast = getContrast(
-          referenceColor,
-          candidateColor
-        );
         const adjustedTarget2 = adjustContrastTarget(contrast.target);
-        if (candidateContrast >= adjustedTarget2) {
+        const candidateMeetsTarget = referenceColors.every(
+          (referenceColor2) => getContrast(referenceColor2, candidateColor) >= adjustedTarget2
+        );
+        if (candidateMeetsTarget) {
           calculatedColors.set(stepName, candidateColor);
           rampResults[stepName] = getColorString(candidateColor);
           continue;
         }
       }
       const computedDir = computeDirection2(
-        referenceColor,
+        referenceColors,
         contrast.followDirection
+      );
+      const endpoint = computedDir === "lighter" ? WHITE : BLACK;
+      const referenceColor = referenceColors.reduce(
+        (tightest, current) => getContrast(current, endpoint) < getContrast(tightest, endpoint) ? current : tightest
       );
       const adjustedTarget = adjustContrastTarget(contrast.target);
       let lightnessConstraint;
@@ -4449,9 +4474,10 @@ var wp;
     fgFill: {
       contrast: {
         reference: "bgFill1",
+        additionalReferences: ["bgFill2"],
         followDirection: "best",
-        target: 4.5,
-        preferLighter: true
+        // Preserve the 4.5:1 WCAG floor after 8-bit sRGB serialization.
+        target: 4.55
       },
       lightness: lightnessConstraintForegroundHighContrast,
       taperChromaOptions: FG_TAPER_CHROMA
