@@ -43752,7 +43752,7 @@ This message will only show in development mode. It won't appear in production. 
       children: /* @__PURE__ */ (0, import_jsx_runtime203.jsx)("div", {
         // @ts-expect-error `inert` is not declared in React 18's HTML attribute types.
         inert: isDisabled ? "true" : void 0,
-        className: isDisabled ? clsx_default(style_module_default30.disabled, className, "components-disabled") : void 0,
+        className: clsx_default(className, isDisabled && [style_module_default30.disabled, "components-disabled"]) || void 0,
         ...props,
         children
       })
