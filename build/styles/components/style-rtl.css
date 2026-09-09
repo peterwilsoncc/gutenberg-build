@@ -1372,37 +1372,37 @@ input.components-combobox-control__input[type=text]:focus {
   border-width: 0;
   transform: translateX(-16px);
 }
-.components-form-toggle.is-disabled .components-form-toggle__track, .components-disabled .components-form-toggle .components-form-toggle__track {
+.components-form-toggle.is-disabled .components-form-toggle__track, [inert] .components-form-toggle .components-form-toggle__track {
   background-color: var(--wp-components-color-gray-100, var(--wpds-color-background-surface-neutral, #fcfcfc));
   border-color: var(--wpds-color-stroke-interactive-neutral-disabled, #dbdbdb);
 }
 @media (forced-colors: active) {
-  .components-form-toggle.is-disabled .components-form-toggle__track, .components-disabled .components-form-toggle .components-form-toggle__track {
+  .components-form-toggle.is-disabled .components-form-toggle__track, [inert] .components-form-toggle .components-form-toggle__track {
     border-color: GrayText;
   }
 }
-.components-form-toggle.is-disabled .components-form-toggle__thumb, .components-disabled .components-form-toggle .components-form-toggle__thumb {
+.components-form-toggle.is-disabled .components-form-toggle__thumb, [inert] .components-form-toggle .components-form-toggle__thumb {
   background-color: var(--wp-components-color-gray-400, var(--wpds-color-stroke-interactive-neutral, #8d8d8d));
   box-shadow: none;
 }
 @media (forced-colors: active) {
-  .components-form-toggle.is-disabled .components-form-toggle__thumb, .components-disabled .components-form-toggle .components-form-toggle__thumb {
+  .components-form-toggle.is-disabled .components-form-toggle__thumb, [inert] .components-form-toggle .components-form-toggle__thumb {
     border-color: GrayText;
   }
 }
-.components-form-toggle.is-disabled.is-checked .components-form-toggle__track, .components-disabled .components-form-toggle.is-checked .components-form-toggle__track {
+.components-form-toggle.is-disabled.is-checked .components-form-toggle__track, [inert] .components-form-toggle.is-checked .components-form-toggle__track {
   background-color: var(--wp-components-color-gray-400, var(--wpds-color-stroke-interactive-neutral, #8d8d8d));
   border-color: var(--wp-components-color-gray-400, var(--wpds-color-stroke-interactive-neutral, #8d8d8d));
 }
 @media (forced-colors: active) {
-  .components-form-toggle.is-disabled.is-checked .components-form-toggle__track, .components-disabled .components-form-toggle.is-checked .components-form-toggle__track {
+  .components-form-toggle.is-disabled.is-checked .components-form-toggle__track, [inert] .components-form-toggle.is-checked .components-form-toggle__track {
     border-color: GrayText;
   }
-  .components-form-toggle.is-disabled.is-checked .components-form-toggle__track::after, .components-disabled .components-form-toggle.is-checked .components-form-toggle__track::after {
+  .components-form-toggle.is-disabled.is-checked .components-form-toggle__track::after, [inert] .components-form-toggle.is-checked .components-form-toggle__track::after {
     border-top-color: GrayText;
   }
 }
-.components-form-toggle.is-disabled.is-checked .components-form-toggle__thumb, .components-disabled .components-form-toggle.is-checked .components-form-toggle__thumb {
+.components-form-toggle.is-disabled.is-checked .components-form-toggle__thumb, [inert] .components-form-toggle.is-checked .components-form-toggle__thumb {
   background-color: #fff;
 }
 

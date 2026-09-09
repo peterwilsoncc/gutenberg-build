@@ -60574,8 +60574,7 @@ var wp;
       ref,
       className: clsx_default(
         props.className,
-        "block-editor-block-preview__live-content",
-        "components-disabled"
+        "block-editor-block-preview__live-content"
       ),
       children: blocks2?.length ? children : null
     };
