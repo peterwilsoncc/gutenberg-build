@@ -97180,6 +97180,9 @@ If there's a particular need for this, please submit a feature request at https:
     name: "users",
     className: "editor-autocompleters__user",
     triggerPrefix: "@",
+    allowContext(before) {
+      return /\B$/.test(before);
+    },
     useItems(filterValue) {
       const users = (0, import_data93.useSelect)(
         (select9) => {
