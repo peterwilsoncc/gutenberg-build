@@ -19314,6 +19314,7 @@ function usePreviewRange({
   value,
   hoveredDate,
   excludeDisabled,
+  resetOnSelect,
   min: min3,
   max: max3,
   disabled: disabled2
@@ -19321,6 +19322,12 @@ function usePreviewRange({
   return (0, import_element30.useMemo)(() => {
     if (!hoveredDate || !value?.from) {
       return;
+    }
+    if (resetOnSelect && value.to) {
+      return {
+        from: hoveredDate,
+        to: hoveredDate
+      };
     }
     let previewHighlight;
     let potentialNewRange;
@@ -19377,7 +19384,15 @@ function usePreviewRange({
       };
     }
     return previewHighlight;
-  }, [value, hoveredDate, excludeDisabled, min3, max3, disabled2]);
+  }, [
+    value,
+    hoveredDate,
+    excludeDisabled,
+    resetOnSelect,
+    min3,
+    max3,
+    disabled2
+  ]);
 }
 var RangeCalendar = (0, import_element30.forwardRef)(
   function RangeCalendar2({
@@ -19386,6 +19401,7 @@ var RangeCalendar = (0, import_element30.forwardRef)(
     onValueChange,
     numberOfMonths = 1,
     excludeDisabled,
+    resetOnSelect = true,
     min: min3,
     max: max3,
     disabled: disabled2,
@@ -19431,6 +19447,7 @@ var RangeCalendar = (0, import_element30.forwardRef)(
       value: selected,
       hoveredDate,
       excludeDisabled,
+      resetOnSelect,
       min: min3,
       max: max3,
       disabled: disabled2
@@ -19463,6 +19480,7 @@ var RangeCalendar = (0, import_element30.forwardRef)(
         numberOfMonths: clampNumberOfMonths(numberOfMonths),
         disabled: disabled2,
         excludeDisabled,
+        resetOnSelect,
         min: min3,
         max: max3,
         labels,
