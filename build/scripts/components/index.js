@@ -46750,7 +46750,7 @@ This message will only show in development mode. It won't appear in production. 
     }
     function handleUpArrowKey() {
       setSelectedSuggestionIndex((index2) => {
-        return (index2 === 0 ? getMatchingSuggestions(incompleteTokenValue, suggestions, value, maxSuggestions, saveTransform).length : index2) - 1;
+        return (index2 <= 0 ? getMatchingSuggestions(incompleteTokenValue, suggestions, value, maxSuggestions, saveTransform).length : index2) - 1;
       });
       setSelectedSuggestionScroll(true);
       return true;
