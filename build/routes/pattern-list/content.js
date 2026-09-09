@@ -1166,6 +1166,28 @@ var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnl
   "@wordpress/views"
 );
 
+// packages/views/build-module/use-view-config.mjs
+function useViewConfig({
+  kind,
+  name,
+  fields
+}) {
+  const fieldList = Array.isArray(fields) ? fields : fields?.split(",");
+  const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
+  return (0, import_data3.useSelect)(
+    (select2) => {
+      return unlock(select2(import_core_data.store)).getViewConfig(
+        kind,
+        name,
+        fieldsKey ? {
+          fields: fieldsKey
+        } : void 0
+      );
+    },
+    [kind, name, fieldsKey]
+  );
+}
+
 // node_modules/clsx/dist/clsx.mjs
 function r(e2) {
   var t2, f2, n2 = "";
@@ -45162,23 +45184,6 @@ var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptIn
 
 // routes/pattern-list/view-utils.ts
 var import_i18n57 = __toESM(require_i18n());
-var LAYOUT_GRID2 = "grid";
-var LAYOUT_TABLE2 = "table";
-var DEFAULT_VIEW = {
-  type: LAYOUT_GRID2,
-  perPage: 20,
-  sort: {
-    field: "title",
-    direction: "asc"
-  },
-  filters: [],
-  fields: ["sync-status"],
-  layout: {
-    badgeFields: ["sync-status"]
-  },
-  titleField: "title",
-  mediaField: "preview"
-};
 var DEFAULT_VIEWS = [
   {
     slug: "all",
@@ -45193,14 +45198,6 @@ var DEFAULT_VIEWS = [
     label: (0, import_i18n57.__)("Registered")
   }
 ];
-var DEFAULT_LAYOUTS2 = {
-  [LAYOUT_TABLE2]: true,
-  [LAYOUT_GRID2]: {
-    layout: {
-      badgeFields: ["sync-status"]
-    }
-  }
-};
 
 // routes/pattern-list/fields/preview.tsx
 var import_i18n58 = __toESM(require_i18n());
@@ -45679,22 +45676,44 @@ var import_jsx_runtime199 = __toESM(require_jsx_runtime());
 var { usePostActions, usePostFields } = unlock3(import_editor.privateApis);
 var { Tabs } = unlock3(import_components52.privateApis);
 var { PATTERN_TYPES: PATTERN_TYPES2, CreatePatternModal } = unlock3(import_patterns3.privateApis);
+var PATTERN_POST_TYPE = "wp_block";
 function PatternList() {
-  const invalidate = useInvalidate();
   const { type = "all" } = useParams({
     from: "/patterns/list/$type"
   });
+  const { default_view: defaultView, default_layouts: defaultLayouts } = useViewConfig({
+    kind: "postType",
+    name: PATTERN_POST_TYPE
+  });
+  if (!defaultView) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+    PatternListView,
+    {
+      type,
+      defaultView,
+      defaultLayouts
+    }
+  );
+}
+function PatternListView({
+  type,
+  defaultView,
+  defaultLayouts
+}) {
+  const invalidate = useInvalidate();
   const navigate = useNavigate();
   const searchParams = useSearch({ from: "/patterns/list/$type" });
   const postTypeObject = (0, import_data12.useSelect)(
-    (select2) => select2(import_core_data4.store).getPostType("wp_block"),
+    (select2) => select2(import_core_data4.store).getPostType(PATTERN_POST_TYPE),
     []
   );
   const labels = postTypeObject?.labels;
   const canCreateRecord = (0, import_data12.useSelect)(
     (select2) => select2(import_core_data4.store).canUser("create", {
       kind: "postType",
-      name: "wp_block"
+      name: PATTERN_POST_TYPE
     }),
     []
   );
@@ -45712,9 +45731,10 @@ function PatternList() {
   );
   const { view, isModified, updateView, resetToDefault } = useView({
     kind: "postType",
-    name: "wp_block",
+    name: PATTERN_POST_TYPE,
     slug: "default-new",
-    defaultView: DEFAULT_VIEW,
+    defaultView,
+    defaultLayouts,
     queryParams: searchParams,
     onChangeQueryParams: handleQueryParamsChange
   });
@@ -45800,7 +45820,7 @@ function PatternList() {
     [invalidate, searchParams, navigate]
   );
   const postTypeActions = usePostActions({
-    postType: "wp_block",
+    postType: PATTERN_POST_TYPE,
     context: "list",
     onActionPerformed: (actionId, items) => {
       if (actionId === "move-to-trash" || actionId === "permanently-delete") {
@@ -45889,7 +45909,7 @@ function PatternList() {
               totalItems,
               totalPages
             },
-            defaultLayouts: DEFAULT_LAYOUTS2,
+            defaultLayouts,
             selection,
             onReset: isModified ? onReset : false,
             onChangeSelection: (items) => {
