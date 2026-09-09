@@ -3688,7 +3688,7 @@ var wp;
   function getContrastFromLuminances(first, second) {
     return first > second ? (first + 0.05) / (second + 0.05) : (second + 0.05) / (first + 0.05);
   }
-  function assertValidSeedColor(seed) {
+  function parseSeedColor(seed) {
     ALLOWED_SEED_COLOR_SPACES.forEach(
       (space) => ColorSpace.register(space)
     );
@@ -3711,9 +3711,9 @@ var wp;
         `Unsupported seed color "${seed}": expected a fully opaque color.`
       );
     }
+    return parsedColor;
   }
   function clampToGamut(c) {
-    ColorSpace.register(srgb_default);
     return to(toGamut(c, { space: srgb_default, method: "css" }), oklch_default);
   }
 
@@ -3888,7 +3888,7 @@ var wp;
   }
 
   // packages/theme/build-module/color-ramps/lib/taper-chroma.mjs
-  function taperChroma(seed, lTarget, options = {}) {
+  function createChromaTaper(seed, options = {}) {
     const gamut = options.gamut ?? srgb_default;
     const alpha = options.alpha ?? 0.65;
     const carry = options.carry ?? 0.5;
@@ -3905,30 +3905,32 @@ var wp;
       if (typeof options.hueFallback === "number") {
         hSeed = normalizeHue(options.hueFallback);
       } else {
-        return {
+        return (lTarget) => ({
           space: oklch_default,
           coords: [clamp01(lTarget), 0, 0],
           alpha: 1
-        };
+        });
       }
     }
     const lSeed = clamp01(get(seed, [oklch_default, "l"]));
     const cmaxSeed = getMaxChromaAtLH(lSeed, hSeed, gamut);
-    const cmaxTarget = getMaxChromaAtLH(clamp01(lTarget), hSeed, gamut);
-    let seedRelative = 0;
     const denom = cmaxSeed > 0 ? cmaxSeed : 1e-6;
-    seedRelative = clamp01(cSeed / denom);
-    const cIntendedBase = alpha * cmaxTarget;
-    const cWithCarry = cIntendedBase * Math.pow(seedRelative, clamp01(carry));
-    const t = continuousTaper(lSeed, lTarget, {
-      radiusLight,
-      radiusDark,
-      kLight,
-      kDark
-    });
-    const cPlanned = cWithCarry * t;
-    const lOut = clamp01(lTarget);
-    return { l: lOut, c: cPlanned };
+    const seedRelative = clamp01(cSeed / denom);
+    const seedCarry = Math.pow(seedRelative, clamp01(carry));
+    return (lTarget) => {
+      const cmaxTarget = getMaxChromaAtLH(clamp01(lTarget), hSeed, gamut);
+      const cIntendedBase = alpha * cmaxTarget;
+      const cWithCarry = cIntendedBase * seedCarry;
+      const t = continuousTaper(lSeed, lTarget, {
+        radiusLight,
+        radiusDark,
+        kLight,
+        kDark
+      });
+      const cPlanned = cWithCarry * t;
+      const lOut = clamp01(lTarget);
+      return { l: lOut, c: cPlanned };
+    };
   }
   function clamp01(x) {
     if (x < 0) {
@@ -3987,11 +3989,14 @@ var wp;
         achieved: 1
       };
     }
+    const seedChroma = get(seed, [oklch_default, "c"]);
+    const seedHue = get(seed, [oklch_default, "h"]);
+    const taperChromaAtLightness = taperChromaOptions ? createChromaTaper(seed, taperChromaOptions) : void 0;
     function getColorForL(l) {
       let newL = l;
-      let newC = get(seed, [oklch_default, "c"]);
-      if (taperChromaOptions) {
-        const tapered = taperChroma(seed, newL, taperChromaOptions);
+      let newC = seedChroma;
+      if (taperChromaAtLightness) {
+        const tapered = taperChromaAtLightness(newL);
         if ("l" in tapered && "c" in tapered) {
           newL = tapered.l;
           newC = tapered.c;
@@ -4001,7 +4006,7 @@ var wp;
       }
       return clampToGamut({
         space: oklch_default,
-        coords: [newL, newC, get(seed, [oklch_default, "h"])],
+        coords: [newL, newC, seedHue],
         alpha: seed.alpha
       });
     }
@@ -4175,10 +4180,10 @@ var wp;
     pinLightness,
     rescaleToFitContrastTargets = true
   } = {}) {
-    assertValidSeedColor(seedArg);
+    const parsedSeed = parseSeedColor(seedArg);
     let seed;
     try {
-      seed = clampToGamut(seedArg);
+      seed = clampToGamut(parsedSeed);
     } catch (error) {
       throw new Error(
         `Invalid seed color "${seedArg}": ${error instanceof Error ? error.message : "Unknown error"}`
