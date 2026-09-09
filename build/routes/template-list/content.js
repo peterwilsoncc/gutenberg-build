@@ -110,7 +110,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState55({
+        cachedValue = useState54({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -148,7 +148,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React147 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState55 = React147.useState, useEffect52 = React147.useEffect, useLayoutEffect6 = React147.useLayoutEffect, useDebugValue2 = React147.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React147 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState54 = React147.useState, useEffect52 = React147.useEffect, useLayoutEffect6 = React147.useLayoutEffect, useDebugValue2 = React147.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React147.useSyncExternalStore ? React147.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -176,14 +176,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React147 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef92 = React147.useRef, useEffect52 = React147.useEffect, useMemo73 = React147.useMemo, useDebugValue2 = React147.useDebugValue;
+      var React147 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore4 = shim.useSyncExternalStore, useRef92 = React147.useRef, useEffect52 = React147.useEffect, useMemo72 = React147.useMemo, useDebugValue2 = React147.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef92(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo73(
+        instRef = useMemo72(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -29509,7 +29509,7 @@ function ColumnPrimary({
   titleField,
   mediaField,
   mediaAspectRatio,
-  descriptionField: descriptionField2,
+  descriptionField,
   onClickItem,
   renderItemLink,
   isItemClickable
@@ -29566,11 +29566,11 @@ function ColumnPrimary({
               ]
             }
           ),
-          descriptionField2 && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
-            descriptionField2.render,
+          descriptionField && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+            descriptionField.render,
             {
               item,
-              field: descriptionField2
+              field: descriptionField
             }
           )
         ]
@@ -29833,7 +29833,7 @@ function PropertiesSection({
   }
   const titleField = fields.find((f2) => f2.id === view.titleField);
   const previewField2 = fields.find((f2) => f2.id === view.mediaField);
-  const descriptionField2 = fields.find(
+  const descriptionField = fields.find(
     (f2) => f2.id === view.descriptionField
   );
   const lockedFields = [
@@ -29846,7 +29846,7 @@ function PropertiesSection({
       isVisibleFlag: "showMedia"
     },
     {
-      field: descriptionField2,
+      field: descriptionField,
       isVisibleFlag: "showDescription"
     }
   ].filter(({ field }) => isDefined(field));
@@ -29968,7 +29968,7 @@ function TableRow({
   titleField,
   mediaField,
   mediaAspectRatio,
-  descriptionField: descriptionField2,
+  descriptionField,
   selection,
   getItemId: getItemId2,
   isItemClickable,
@@ -29990,7 +29990,7 @@ function TableRow({
     infiniteScrollEnabled
   } = view;
   const columns = getTableColumns(view, fields);
-  const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField2 && showDescription;
+  const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
   return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
     "tr",
     {
@@ -30029,7 +30029,7 @@ function TableRow({
             titleField: showTitle ? titleField : void 0,
             mediaField: showMedia ? mediaField : void 0,
             mediaAspectRatio,
-            descriptionField: showDescription ? descriptionField2 : void 0,
+            descriptionField: showDescription ? descriptionField : void 0,
             isItemClickable,
             onClickItem,
             renderItemLink
@@ -30161,11 +30161,11 @@ function ViewTable({
   const hasData = !!data?.length;
   const titleField = fields.find((field) => field.id === view.titleField);
   const mediaField = fields.find((field) => field.id === view.mediaField);
-  const descriptionField2 = fields.find(
+  const descriptionField = fields.find(
     (field) => field.id === view.descriptionField
   );
   const { showTitle = true, showMedia = true, showDescription = true } = view;
-  const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField2 && showDescription;
+  const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
   const columns = getTableColumns(view, fields);
   const headerMenuRef = (column, index2) => (node) => {
     if (node) {
@@ -30369,7 +30369,7 @@ function ViewTable({
                     titleField,
                     mediaField,
                     mediaAspectRatio,
-                    descriptionField: descriptionField2,
+                    descriptionField,
                     selection,
                     getItemId: getItemId2,
                     onChangeSelection,
@@ -30398,7 +30398,7 @@ function ViewTable({
                 titleField,
                 mediaField,
                 mediaAspectRatio,
-                descriptionField: descriptionField2,
+                descriptionField,
                 selection,
                 getItemId: getItemId2,
                 onChangeSelection,
@@ -30540,7 +30540,7 @@ var GridItem = (0, import_element85.forwardRef)(
     actions,
     mediaField,
     titleField,
-    descriptionField: descriptionField2,
+    descriptionField,
     regularFields,
     badgeFields,
     hasBulkActions,
@@ -30665,11 +30665,11 @@ var GridItem = (0, import_element85.forwardRef)(
             }
           ) }),
           /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)(Stack, { direction: "column", gap: "xs", children: [
-            showDescription && descriptionField2?.render && /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
-              descriptionField2.render,
+            showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+              descriptionField.render,
               {
                 item,
-                field: descriptionField2
+                field: descriptionField
               }
             ),
             !!badgeFields?.length && /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
@@ -30785,7 +30785,7 @@ function CompositeGrid({
   const mediaField = fields.find(
     (field) => field.id === view?.mediaField
   );
-  const descriptionField2 = fields.find(
+  const descriptionField = fields.find(
     (field) => field.id === view?.descriptionField
   );
   const otherFields = view.fields ?? [];
@@ -30893,7 +30893,7 @@ function CompositeGrid({
                       },
                       mediaField,
                       titleField,
-                      descriptionField: descriptionField2,
+                      descriptionField,
                       regularFields,
                       badgeFields,
                       hasBulkActions,
@@ -30986,7 +30986,7 @@ function CompositeGrid({
                         },
                         mediaField,
                         titleField,
-                        descriptionField: descriptionField2,
+                        descriptionField,
                         regularFields,
                         badgeFields,
                         hasBulkActions,
@@ -31190,7 +31190,7 @@ function ListItem({
   item,
   titleField,
   mediaField,
-  descriptionField: descriptionField2,
+  descriptionField,
   selectionProps,
   otherFields,
   onDropdownTriggerKeyDown,
@@ -31246,7 +31246,7 @@ function ListItem({
     }
   ) }) : null;
   const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(titleField.render, { item, field: titleField }) : null;
-  const renderDescription = showDescription && descriptionField2?.render;
+  const renderDescription = showDescription && descriptionField?.render;
   const hasOnlyMediaAndTitle = !!renderedMediaField && !renderDescription && !otherFields.length;
   const usedActions = eligibleActions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(
     Stack,
@@ -31385,10 +31385,10 @@ function ListItem({
                           usedActions
                         ] }),
                         renderDescription && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("div", { className: "dataviews-view-list__field", children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
-                          descriptionField2.render,
+                          descriptionField.render,
                           {
                             item,
-                            field: descriptionField2
+                            field: descriptionField
                           }
                         ) }),
                         /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
@@ -31458,7 +31458,7 @@ function ViewList(props) {
   );
   const titleField = fields.find((field) => field.id === view.titleField);
   const mediaField = fields.find((field) => field.id === view.mediaField);
-  const descriptionField2 = fields.find(
+  const descriptionField = fields.find(
     (field) => field.id === view.descriptionField
   );
   const otherFields = (view?.fields ?? []).map((fieldId) => fields.find((f2) => fieldId === f2.id)).filter(isDefined2);
@@ -31609,7 +31609,7 @@ function ViewList(props) {
                   ),
                   mediaField,
                   titleField,
-                  descriptionField: descriptionField2,
+                  descriptionField,
                   otherFields,
                   onDropdownTriggerKeyDown
                 },
@@ -31643,7 +31643,7 @@ function ViewList(props) {
               ),
               mediaField,
               titleField,
-              descriptionField: descriptionField2,
+              descriptionField,
               otherFields,
               onDropdownTriggerKeyDown,
               posinset: view.infiniteScrollEnabled ? index2 + 1 : void 0
@@ -31720,7 +31720,7 @@ function ActivityItem(props) {
     item,
     titleField,
     mediaField,
-    descriptionField: descriptionField2,
+    descriptionField,
     otherFields,
     posinset,
     onClickItem,
@@ -31819,11 +31819,11 @@ function ActivityItem(props) {
                   children: renderedTitleField
                 }
               ),
-              showDescription && descriptionField2 && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("div", { className: "dataviews-view-activity__item-description", children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
-                descriptionField2.render,
+              showDescription && descriptionField && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("div", { className: "dataviews-view-activity__item-description", children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+                descriptionField.render,
                 {
                   item,
-                  field: descriptionField2
+                  field: descriptionField
                 }
               ) }),
               /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("div", { className: "dataviews-view-activity__item-fields", children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
@@ -31888,7 +31888,7 @@ function ActivityItems(props) {
   const { data, fields, getItemId: getItemId2, view } = props;
   const titleField = fields.find((field) => field.id === view.titleField);
   const mediaField = fields.find((field) => field.id === view.mediaField);
-  const descriptionField2 = fields.find(
+  const descriptionField = fields.find(
     (field) => field.id === view.descriptionField
   );
   const otherFields = (view?.fields ?? []).map((fieldId) => fields.find((f2) => fieldId === f2.id)).filter(isDefined3);
@@ -31901,7 +31901,7 @@ function ActivityItems(props) {
         item,
         mediaField,
         titleField,
-        descriptionField: descriptionField2,
+        descriptionField,
         otherFields,
         posinset: view.infiniteScrollEnabled ? index2 + 1 : void 0
       }
@@ -32123,7 +32123,7 @@ function GridItem3({
   item,
   mediaField,
   titleField,
-  descriptionField: descriptionField2,
+  descriptionField,
   regularFields,
   badgeFields,
   config,
@@ -32183,11 +32183,11 @@ function GridItem3({
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)(Stack, { direction: "column", gap: "xs", children: [
-          showDescription && descriptionField2?.render && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
-            descriptionField2.render,
+          showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
+            descriptionField.render,
             {
               item,
-              field: descriptionField2
+              field: descriptionField
             }
           ),
           !!badgeFields?.length && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
@@ -32321,7 +32321,7 @@ function ViewPickerGrid({
   const mediaField = fields.find(
     (field) => field.id === view?.mediaField
   );
-  const descriptionField2 = fields.find(
+  const descriptionField = fields.find(
     (field) => field.id === view?.descriptionField
   );
   const otherFields = view.fields ?? [];
@@ -32422,7 +32422,7 @@ function ViewPickerGrid({
                           item,
                           mediaField,
                           titleField,
-                          descriptionField: descriptionField2,
+                          descriptionField,
                           regularFields,
                           badgeFields,
                           config: {
@@ -32506,7 +32506,7 @@ function ViewPickerGrid({
                   item,
                   mediaField,
                   titleField,
-                  descriptionField: descriptionField2,
+                  descriptionField,
                   regularFields,
                   badgeFields,
                   config: {
@@ -32566,7 +32566,7 @@ function TableRow2({
   view,
   titleField,
   mediaField,
-  descriptionField: descriptionField2,
+  descriptionField,
   selection,
   getItemId: getItemId2,
   onChangeSelection,
@@ -32591,7 +32591,7 @@ function TableRow2({
     setIsHovered(false);
   };
   const columns = getTableColumns(view, fields);
-  const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField2 && showDescription;
+  const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
   return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
     import_components16.Composite.Item,
     {
@@ -32655,7 +32655,7 @@ function TableRow2({
                 item,
                 titleField: showTitle ? titleField : void 0,
                 mediaField: showMedia ? mediaField : void 0,
-                descriptionField: showDescription ? descriptionField2 : void 0,
+                descriptionField: showDescription ? descriptionField : void 0,
                 isItemClickable: () => false
               }
             )
@@ -32741,11 +32741,11 @@ function ViewPickerTable({
   const hasData = !!data?.length;
   const titleField = fields.find((field) => field.id === view.titleField);
   const mediaField = fields.find((field) => field.id === view.mediaField);
-  const descriptionField2 = fields.find(
+  const descriptionField = fields.find(
     (field) => field.id === view.descriptionField
   );
   const { showTitle = true, showMedia = true, showDescription = true } = view;
-  const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField2 && showDescription;
+  const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
   const columns = getTableColumns(view, fields);
   const headerMenuRef = (column, index2) => (node) => {
     if (node) {
@@ -32881,7 +32881,7 @@ function ViewPickerTable({
                         view,
                         titleField,
                         mediaField,
-                        descriptionField: descriptionField2,
+                        descriptionField,
                         selection,
                         getItemId: getItemId2,
                         onChangeSelection,
@@ -32915,7 +32915,7 @@ function ViewPickerTable({
                     view,
                     titleField,
                     mediaField,
-                    descriptionField: descriptionField2,
+                    descriptionField,
                     selection,
                     getItemId: getItemId2,
                     onChangeSelection,
@@ -32967,7 +32967,7 @@ function PickerActivityItem({
   item,
   titleField,
   mediaField,
-  descriptionField: descriptionField2,
+  descriptionField,
   otherFields,
   posinset,
   setsize
@@ -32996,7 +32996,7 @@ function PickerActivityItem({
     }
   ) });
   const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(titleField.render, { item, field: titleField }) : null;
-  const renderedDescriptionField = showDescription && descriptionField2?.render ? /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(descriptionField2.render, { item, field: descriptionField2 }) : null;
+  const renderedDescriptionField = showDescription && descriptionField?.render ? /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(descriptionField.render, { item, field: descriptionField }) : null;
   const verticalGap = (0, import_element93.useMemo)(() => {
     switch (density) {
       case "comfortable":
@@ -33131,7 +33131,7 @@ function ViewPickerActivity({
   const mediaField = fields.find(
     (field) => field.id === view?.mediaField
   );
-  const descriptionField2 = fields.find(
+  const descriptionField = fields.find(
     (field) => field.id === view?.descriptionField
   );
   const otherFields = (view?.fields ?? []).map((fieldId) => fields.find((f2) => fieldId === f2.id)).filter(isDefined4);
@@ -33161,7 +33161,7 @@ function ViewPickerActivity({
       item,
       titleField,
       mediaField,
-      descriptionField: descriptionField2,
+      descriptionField,
       otherFields,
       posinset: item.position,
       setsize
@@ -36005,11 +36005,11 @@ function useStoreProps(store, props, key, setKey) {
 function useStore2(createStore2, props) {
   const [store, setStore] = React146.useState(() => createStore2(props));
   useSafeLayoutEffect(() => init(store), [store]);
-  const useState55 = React146.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+  const useState54 = React146.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
   return [React146.useMemo(() => ({
     ...store,
-    useState: useState55
-  }), [store, useState55]), useEvent(() => {
+    useState: useState54
+  }), [store, useState54]), useEvent(() => {
     setStore((store2) => createStore2({
       ...props,
       ...store2.getState()
@@ -45236,12 +45236,12 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default2 = Page;
 
 // routes/template-list/stage.tsx
-var import_core_data7 = __toESM(require_core_data());
-var import_components55 = __toESM(require_components());
-var import_data12 = __toESM(require_data());
-var import_element148 = __toESM(require_element());
+var import_core_data6 = __toESM(require_core_data());
+var import_components54 = __toESM(require_components());
+var import_data11 = __toESM(require_data());
+var import_element147 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
-var import_i18n64 = __toESM(require_i18n());
+var import_i18n62 = __toESM(require_i18n());
 
 // routes/lock-unlock/index.ts
 var import_private_apis3 = __toESM(require_private_apis());
@@ -45283,8 +45283,9 @@ function getActiveViewOverridesForTab(activeView) {
     filters: [
       {
         field: "author",
-        operator: "isAny",
-        value: [activeView]
+        operator: "is",
+        value: activeView,
+        isLocked: true
       }
     ]
   };
@@ -45312,96 +45313,10 @@ var previewField = {
   enableSorting: false
 };
 
-// routes/template-list/fields/author.tsx
-var import_components51 = __toESM(require_components());
-var import_i18n58 = __toESM(require_i18n());
+// routes/template-list/use-templates.ts
 var import_element142 = __toESM(require_element());
 var import_core_data2 = __toESM(require_core_data());
-var import_data9 = __toESM(require_data());
-var import_jsx_runtime212 = __toESM(require_jsx_runtime());
-function useAddedBy(type, id) {
-  const { author, authorText } = (0, import_data9.useSelect)(
-    (select2) => {
-      const { getUser, getEditedEntityRecord } = select2(import_core_data2.store);
-      const _record = getEditedEntityRecord("postType", type, id) || void 0;
-      return {
-        author: _record?.author ? getUser(_record.author) : null,
-        authorText: _record?.author_text
-      };
-    },
-    [type, id]
-  );
-  return (0, import_element142.useMemo)(() => {
-    if (authorText) {
-      return {
-        text: authorText,
-        icon: "admin-plugins"
-      };
-    }
-    if (author) {
-      return {
-        text: author.name,
-        icon: "admin-users",
-        imageUrl: author.avatar_urls?.[48]
-      };
-    }
-    return {
-      text: (0, import_i18n58.__)("Unknown"),
-      icon: "admin-users"
-    };
-  }, [author, authorText]);
-}
-function AuthorField({ item }) {
-  const [isImageLoaded, setIsImageLoaded] = (0, import_element142.useState)(false);
-  const { text, icon, imageUrl } = useAddedBy(item.type, item.id);
-  return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(import_components51.__experimentalHStack, { alignment: "left", spacing: 0, children: [
-    imageUrl && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
-      "div",
-      {
-        className: clsx_default(
-          "routes-template-list-author-field__avatar",
-          {
-            "is-loaded": isImageLoaded
-          }
-        ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
-          "img",
-          {
-            onLoad: () => setIsImageLoaded(true),
-            alt: "",
-            src: imageUrl
-          }
-        )
-      }
-    ),
-    !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("div", { className: "routes-template-list-author-field__icon", children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components51.Icon, { icon }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("span", { className: "routes-template-list-author-field__name", children: text })
-  ] });
-}
-var authorField = {
-  label: (0, import_i18n58.__)("Author"),
-  id: "author",
-  getValue: ({ item }) => item.author_text ?? item.author,
-  render: AuthorField
-};
-
-// routes/template-list/fields/description.tsx
-var import_i18n59 = __toESM(require_i18n());
-var import_html_entities = __toESM(require_html_entities());
-var descriptionField = {
-  label: (0, import_i18n59.__)("Description"),
-  id: "description",
-  render: ({ item }) => {
-    return item.description && (0, import_html_entities.decodeEntities)(item.description);
-  },
-  enableSorting: false,
-  enableGlobalSearch: true
-};
-
-// routes/template-list/use-templates.ts
-var import_element143 = __toESM(require_element());
-var import_core_data3 = __toESM(require_core_data());
-var { useEntityRecordsWithPermissions } = unlock3(import_core_data3.privateApis);
+var { useEntityRecordsWithPermissions } = unlock3(import_core_data2.privateApis);
 function useTemplates(activeView = "all") {
   const { records, isResolving } = useEntityRecordsWithPermissions(
     "postType",
@@ -45410,7 +45325,7 @@ function useTemplates(activeView = "all") {
       per_page: -1
     }
   );
-  const filteredRecords = (0, import_element143.useMemo)(() => {
+  const filteredRecords = (0, import_element142.useMemo)(() => {
     if (!records) {
       return [];
     }
@@ -45430,33 +45345,33 @@ function useTemplates(activeView = "all") {
 }
 
 // routes/template-list/add-new-template/index.tsx
-var import_components54 = __toESM(require_components());
-var import_html_entities4 = __toESM(require_html_entities());
-var import_element147 = __toESM(require_element());
-var import_data11 = __toESM(require_data());
-var import_core_data6 = __toESM(require_core_data());
+var import_components53 = __toESM(require_components());
+var import_html_entities3 = __toESM(require_html_entities());
+var import_element146 = __toESM(require_element());
+var import_data10 = __toESM(require_data());
+var import_core_data5 = __toESM(require_core_data());
 var import_compose26 = __toESM(require_compose());
-var import_i18n63 = __toESM(require_i18n());
+var import_i18n61 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_dom29 = __toESM(require_dom());
 import { useNavigate, useInvalidate } from "@wordpress/route";
 
 // routes/template-list/add-new-template/add-custom-template-modal-content.tsx
-var import_element145 = __toESM(require_element());
-var import_i18n61 = __toESM(require_i18n());
-var import_components52 = __toESM(require_components());
-var import_core_data5 = __toESM(require_core_data());
-var import_html_entities3 = __toESM(require_html_entities());
+var import_element144 = __toESM(require_element());
+var import_i18n59 = __toESM(require_i18n());
+var import_components51 = __toESM(require_components());
+var import_core_data4 = __toESM(require_core_data());
+var import_html_entities2 = __toESM(require_html_entities());
 var import_compose25 = __toESM(require_compose());
 var import_dom28 = __toESM(require_dom());
 var import_url4 = __toESM(require_url());
 
 // routes/template-list/add-new-template/utils.ts
-var import_data10 = __toESM(require_data());
-var import_core_data4 = __toESM(require_core_data());
-var import_html_entities2 = __toESM(require_html_entities());
-var import_element144 = __toESM(require_element());
-var import_i18n60 = __toESM(require_i18n());
+var import_data9 = __toESM(require_data());
+var import_core_data3 = __toESM(require_core_data());
+var import_html_entities = __toESM(require_html_entities());
+var import_element143 = __toESM(require_element());
+var import_i18n58 = __toESM(require_i18n());
 var import_url3 = __toESM(require_url());
 var TEMPLATE_POST_TYPE = "wp_template";
 var EMPTY_OBJECT2 = {};
@@ -45473,12 +45388,12 @@ function prefixSlug(prefix, slug) {
 function mapToIHasNameAndId(entities, path) {
   return (entities || []).map((entity) => ({
     ...entity,
-    name: (0, import_html_entities2.decodeEntities)(getValueFromObjectPath(entity, path))
+    name: (0, import_html_entities.decodeEntities)(getValueFromObjectPath(entity, path))
   }));
 }
 var useExistingTemplates = () => {
-  return (0, import_data10.useSelect)(
-    (select2) => select2(import_core_data4.store).getEntityRecords(
+  return (0, import_data9.useSelect)(
+    (select2) => select2(import_core_data3.store).getEntityRecords(
       "postType",
       TEMPLATE_POST_TYPE,
       {
@@ -45489,17 +45404,17 @@ var useExistingTemplates = () => {
   );
 };
 var useDefaultTemplateTypes = () => {
-  return (0, import_data10.useSelect)(
-    (select2) => select2(import_core_data4.store).getCurrentTheme()?.default_template_types || [],
+  return (0, import_data9.useSelect)(
+    (select2) => select2(import_core_data3.store).getCurrentTheme()?.default_template_types || [],
     []
   );
 };
 var usePublicPostTypes = () => {
-  const postTypes = (0, import_data10.useSelect)(
-    (select2) => select2(import_core_data4.store).getPostTypes({ per_page: -1 }),
+  const postTypes = (0, import_data9.useSelect)(
+    (select2) => select2(import_core_data3.store).getPostTypes({ per_page: -1 }),
     []
   );
-  return (0, import_element144.useMemo)(() => {
+  return (0, import_element143.useMemo)(() => {
     const excludedPostTypes = ["attachment"];
     return postTypes?.filter(
       ({ viewable, slug }) => viewable && !excludedPostTypes.includes(slug)
@@ -45512,11 +45427,11 @@ var usePublicPostTypes = () => {
   }, [postTypes]);
 };
 var usePublicTaxonomies = () => {
-  const taxonomies = (0, import_data10.useSelect)(
-    (select2) => select2(import_core_data4.store).getTaxonomies({ per_page: -1 }),
+  const taxonomies = (0, import_data9.useSelect)(
+    (select2) => select2(import_core_data3.store).getTaxonomies({ per_page: -1 }),
     []
   );
-  return (0, import_element144.useMemo)(() => {
+  return (0, import_element143.useMemo)(() => {
     return taxonomies?.filter(
       ({ visibility }) => visibility?.publicly_queryable
     );
@@ -45524,14 +45439,14 @@ var usePublicTaxonomies = () => {
 };
 function usePostTypeArchiveMenuItems() {
   const publicPostTypes = usePublicPostTypes();
-  const postTypesWithArchives = (0, import_element144.useMemo)(
+  const postTypesWithArchives = (0, import_element143.useMemo)(
     () => publicPostTypes?.filter(
       (postType) => postType.has_archive
     ),
     [publicPostTypes]
   );
   const existingTemplates = useExistingTemplates();
-  const postTypeLabels = (0, import_element144.useMemo)(
+  const postTypeLabels = (0, import_element143.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { labels }) => {
       const singularName = labels.singular_name.toLowerCase();
       accumulator[singularName] = (accumulator[singularName] || 0) + 1;
@@ -45539,14 +45454,14 @@ function usePostTypeArchiveMenuItems() {
     }, {}),
     [publicPostTypes]
   );
-  const needsUniqueIdentifier = (0, import_element144.useCallback)(
+  const needsUniqueIdentifier = (0, import_element143.useCallback)(
     ({ labels, slug }) => {
       const singularName = labels.singular_name.toLowerCase();
       return postTypeLabels[singularName] > 1 && singularName !== slug;
     },
     [postTypeLabels]
   );
-  return (0, import_element144.useMemo)(
+  return (0, import_element143.useMemo)(
     () => postTypesWithArchives?.filter(
       (postType) => !(existingTemplates || []).some(
         (existingTemplate) => existingTemplate.slug === "archive-" + postType.slug
@@ -45554,24 +45469,24 @@ function usePostTypeArchiveMenuItems() {
     ).map((postType) => {
       let title;
       if (needsUniqueIdentifier(postType)) {
-        title = (0, import_i18n60.sprintf)(
+        title = (0, import_i18n58.sprintf)(
           // translators: %1s: Name of the post type e.g: "Post"; %2s: Slug of the post type e.g: "book".
-          (0, import_i18n60.__)("Archive: %1$s (%2$s)"),
+          (0, import_i18n58.__)("Archive: %1$s (%2$s)"),
           postType.labels.singular_name,
           postType.slug
         );
       } else {
-        title = (0, import_i18n60.sprintf)(
+        title = (0, import_i18n58.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n60.__)("Archive: %s"),
+          (0, import_i18n58.__)("Archive: %s"),
           postType.labels.singular_name
         );
       }
       return {
         slug: "archive-" + postType.slug,
-        description: (0, import_i18n60.sprintf)(
+        description: (0, import_i18n58.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n60.__)(
+          (0, import_i18n58.__)(
             "Displays an archive with the latest posts of type: %s."
           ),
           postType.labels.singular_name
@@ -45590,7 +45505,7 @@ function usePostTypeArchiveMenuItems() {
 var usePostTypeMenuItems = (onClickMenuItem) => {
   const publicPostTypes = usePublicPostTypes();
   const defaultTemplateTypes = useDefaultTemplateTypes();
-  const templateLabels = (0, import_element144.useMemo)(
+  const templateLabels = (0, import_element143.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { labels }) => {
       const templateName = (labels.template_name || labels.singular_name).toLowerCase();
       accumulator[templateName] = (accumulator[templateName] || 0) + 1;
@@ -45598,14 +45513,14 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
     }, {}),
     [publicPostTypes]
   );
-  const needsUniqueIdentifier = (0, import_element144.useCallback)(
+  const needsUniqueIdentifier = (0, import_element143.useCallback)(
     ({ labels, slug }) => {
       const templateName = (labels.template_name || labels.singular_name).toLowerCase();
       return templateLabels[templateName] > 1 && templateName !== slug;
     },
     [templateLabels]
   );
-  const templatePrefixes = (0, import_element144.useMemo)(
+  const templatePrefixes = (0, import_element143.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { slug }) => {
       let suffix = slug;
       if (slug !== "page") {
@@ -45625,20 +45540,20 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
         ({ slug: _slug }) => _slug === generalTemplateSlug
       );
       const _needsUniqueIdentifier = needsUniqueIdentifier(postType);
-      let menuItemTitle = labels.template_name || (0, import_i18n60.sprintf)(
+      let menuItemTitle = labels.template_name || (0, import_i18n58.sprintf)(
         // translators: %s: Name of the post type e.g: "Post".
-        (0, import_i18n60.__)("Single item: %s"),
+        (0, import_i18n58.__)("Single item: %s"),
         labels.singular_name
       );
       if (_needsUniqueIdentifier) {
-        menuItemTitle = labels.template_name ? (0, import_i18n60.sprintf)(
+        menuItemTitle = labels.template_name ? (0, import_i18n58.sprintf)(
           // translators: 1: Name of the template e.g: "Single Item: Post". 2: Slug of the post type e.g: "book".
-          (0, import_i18n60._x)("%1$s (%2$s)", "post type menu label"),
+          (0, import_i18n58._x)("%1$s (%2$s)", "post type menu label"),
           labels.template_name,
           slug
-        ) : (0, import_i18n60.sprintf)(
+        ) : (0, import_i18n58.sprintf)(
           // translators: 1: Name of the post type e.g: "Post". 2: Slug of the post type e.g: "book".
-          (0, import_i18n60._x)(
+          (0, import_i18n58._x)(
             "Single item: %1$s (%2$s)",
             "post type menu label"
           ),
@@ -45652,9 +45567,9 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
       } : {
         slug: generalTemplateSlug,
         title: menuItemTitle,
-        description: (0, import_i18n60.sprintf)(
+        description: (0, import_i18n58.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n60.__)("Displays a single item: %s."),
+          (0, import_i18n58.__)("Displays a single item: %s."),
           labels.singular_name
         ),
         // `icon` is the `menu_icon` property of a post type. We
@@ -45702,7 +45617,7 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
     },
     []
   );
-  const postTypesMenuItems = (0, import_element144.useMemo)(
+  const postTypesMenuItems = (0, import_element143.useMemo)(
     () => menuItems.reduce(
       (accumulator, postType) => {
         const { slug } = postType;
@@ -45723,7 +45638,7 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
   const publicTaxonomies = usePublicTaxonomies();
   const existingTemplates = useExistingTemplates();
   const defaultTemplateTypes = useDefaultTemplateTypes();
-  const templatePrefixes = (0, import_element144.useMemo)(
+  const templatePrefixes = (0, import_element143.useMemo)(
     () => publicTaxonomies?.reduce((accumulator, { slug }) => {
       let suffix = slug;
       if (!["category", "post_tag"].includes(slug)) {
@@ -45770,14 +45685,14 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
       );
       let menuItemTitle = labels.template_name || labels.singular_name;
       if (_needsUniqueIdentifier) {
-        menuItemTitle = labels.template_name ? (0, import_i18n60.sprintf)(
+        menuItemTitle = labels.template_name ? (0, import_i18n58.sprintf)(
           // translators: 1: Name of the template e.g: "Products by Category". 2: Slug of the taxonomy e.g: "product_cat".
-          (0, import_i18n60._x)("%1$s (%2$s)", "taxonomy template menu label"),
+          (0, import_i18n58._x)("%1$s (%2$s)", "taxonomy template menu label"),
           labels.template_name,
           slug
-        ) : (0, import_i18n60.sprintf)(
+        ) : (0, import_i18n58.sprintf)(
           // translators: 1: Name of the taxonomy e.g: "Category". 2: Slug of the taxonomy e.g: "product_cat".
-          (0, import_i18n60._x)("%1$s (%2$s)", "taxonomy menu label"),
+          (0, import_i18n58._x)("%1$s (%2$s)", "taxonomy menu label"),
           labels.singular_name,
           slug
         );
@@ -45788,9 +45703,9 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
       } : {
         slug: generalTemplateSlug,
         title: menuItemTitle,
-        description: (0, import_i18n60.sprintf)(
+        description: (0, import_i18n58.sprintf)(
           // translators: %s: Name of the taxonomy e.g: "Product Categories".
-          (0, import_i18n60.__)("Displays taxonomy: %s."),
+          (0, import_i18n58.__)("Displays taxonomy: %s."),
           labels.singular_name
         ),
         icon: block_meta_default,
@@ -45835,7 +45750,7 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
     },
     []
   );
-  const taxonomiesMenuItems = (0, import_element144.useMemo)(
+  const taxonomiesMenuItems = (0, import_element143.useMemo)(
     () => menuItems.reduce(
       (accumulator, taxonomy) => {
         const { slug } = taxonomy;
@@ -45871,7 +45786,7 @@ function useAuthorMenuItem(onClickMenuItem) {
   );
   if (!authorMenuItem) {
     authorMenuItem = {
-      description: (0, import_i18n60.__)(
+      description: (0, import_i18n58.__)(
         "Displays latest posts written by a single author."
       ),
       slug: "author",
@@ -45902,9 +45817,9 @@ function useAuthorMenuItem(onClickMenuItem) {
               suggestion.slug
             );
             return {
-              title: (0, import_i18n60.sprintf)(
+              title: (0, import_i18n58.sprintf)(
                 // translators: %s: Name of the author e.g: "Admin".
-                (0, import_i18n60.__)("Author: %s"),
+                (0, import_i18n58.__)("Author: %s"),
                 suggestion.name
               ),
               slug: templateSlug,
@@ -45913,10 +45828,10 @@ function useAuthorMenuItem(onClickMenuItem) {
           }
         },
         labels: {
-          singular_name: (0, import_i18n60.__)("Author"),
-          search_items: (0, import_i18n60.__)("Search Authors"),
-          not_found: (0, import_i18n60.__)("No authors found."),
-          all_items: (0, import_i18n60.__)("All Authors")
+          singular_name: (0, import_i18n58.__)("Author"),
+          search_items: (0, import_i18n58.__)("Search Authors"),
+          not_found: (0, import_i18n58.__)("No authors found."),
+          all_items: (0, import_i18n58.__)("All Authors")
         },
         hasGeneralTemplate,
         template
@@ -45928,11 +45843,11 @@ function useAuthorMenuItem(onClickMenuItem) {
   }
 }
 var useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters = EMPTY_OBJECT2) => {
-  const entitiesHasRecords = (0, import_data10.useSelect)(
+  const entitiesHasRecords = (0, import_data9.useSelect)(
     (select2) => {
       return Object.keys(templatePrefixes || {}).reduce(
         (accumulator, slug) => {
-          const records = select2(import_core_data4.store).getEntityRecords(
+          const records = select2(import_core_data3.store).getEntityRecords(
             entityName,
             slug,
             {
@@ -45950,7 +45865,7 @@ var useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters =
     },
     [templatePrefixes, entityName, additionalQueryParameters]
   );
-  const entitiesInfo = (0, import_element144.useMemo)(() => {
+  const entitiesInfo = (0, import_element143.useMemo)(() => {
     return Object.keys(templatePrefixes || {}).reduce(
       (accumulator, slug) => {
         accumulator[slug] = {
@@ -45965,7 +45880,7 @@ var useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters =
 };
 
 // routes/template-list/add-new-template/add-custom-template-modal-content.tsx
-var import_jsx_runtime213 = __toESM(require_jsx_runtime());
+var import_jsx_runtime212 = __toESM(require_jsx_runtime());
 var EMPTY_ARRAY8 = [];
 function SuggestionListItem({
   suggestion,
@@ -45974,11 +45889,11 @@ function SuggestionListItem({
   entityForSuggestions
 }) {
   const baseCssClass = "template-list-custom-template-modal__suggestions_list__list-item";
-  return /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(
-    import_components52.Composite.Item,
+  return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
+    import_components51.Composite.Item,
     {
-      render: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-        import_components52.Button,
+      render: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+        import_components51.Button,
         {
           __next40pxDefaultSize: true,
           role: "option",
@@ -45991,24 +45906,24 @@ function SuggestionListItem({
         }
       ),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-          import_components52.__experimentalText,
+        /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+          import_components51.__experimentalText,
           {
             size: "body",
             lineHeight: 1.53846153846,
             weight: "var(--wpds-typography-font-weight-emphasis)",
             className: `${baseCssClass}__title`,
-            children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-              import_components52.TextHighlight,
+            children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+              import_components51.TextHighlight,
               {
-                text: (0, import_html_entities3.decodeEntities)(suggestion.name),
+                text: (0, import_html_entities2.decodeEntities)(suggestion.name),
                 highlight: search
               }
             )
           }
         ),
-        suggestion.link && /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-          import_components52.__experimentalText,
+        suggestion.link && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+          import_components51.__experimentalText,
           {
             size: "body",
             lineHeight: 1.53846153846,
@@ -46022,7 +45937,7 @@ function SuggestionListItem({
 }
 function useSearchSuggestions(entityForSuggestions, search) {
   const { config } = entityForSuggestions;
-  const query = (0, import_element145.useMemo)(
+  const query = (0, import_element144.useMemo)(
     () => ({
       order: "asc",
       context: "view",
@@ -46032,13 +45947,13 @@ function useSearchSuggestions(entityForSuggestions, search) {
     }),
     [search, config]
   );
-  const { records: searchResults, hasResolved: searchHasResolved } = (0, import_core_data5.useEntityRecords)(
+  const { records: searchResults, hasResolved: searchHasResolved } = (0, import_core_data4.useEntityRecords)(
     entityForSuggestions.type,
     entityForSuggestions.slug,
     query
   );
-  const [suggestions, setSuggestions] = (0, import_element145.useState)(EMPTY_ARRAY8);
-  (0, import_element145.useEffect)(() => {
+  const [suggestions, setSuggestions] = (0, import_element144.useState)(EMPTY_ARRAY8);
+  (0, import_element144.useEffect)(() => {
     if (!searchHasResolved) {
       return;
     }
@@ -46066,13 +45981,13 @@ function SuggestionList({
     debouncedSearch
   );
   const { labels } = entityForSuggestions;
-  const [showSearchControl, setShowSearchControl] = (0, import_element145.useState)(false);
+  const [showSearchControl, setShowSearchControl] = (0, import_element144.useState)(false);
   if (!showSearchControl && suggestions?.length > 9) {
     setShowSearchControl(true);
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(import_jsx_runtime213.Fragment, { children: [
-    showSearchControl && /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-      import_components52.SearchControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(import_jsx_runtime212.Fragment, { children: [
+    showSearchControl && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+      import_components51.SearchControl,
       {
         onChange: setSearch,
         value: search,
@@ -46080,14 +45995,14 @@ function SuggestionList({
         placeholder: labels.search_items
       }
     ),
-    !!suggestions?.length && /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-      import_components52.Composite,
+    !!suggestions?.length && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+      import_components51.Composite,
       {
         orientation: "vertical",
         role: "listbox",
         className: "template-list-custom-template-modal__suggestions_list",
-        "aria-label": (0, import_i18n61.__)("Suggestions list"),
-        children: suggestions.map((suggestion) => /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+        "aria-label": (0, import_i18n59.__)("Suggestions list"),
+        children: suggestions.map((suggestion) => /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
           SuggestionListItem,
           {
             suggestion,
@@ -46099,8 +46014,8 @@ function SuggestionList({
         ))
       }
     ),
-    debouncedSearch && !suggestions?.length && /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-      import_components52.__experimentalText,
+    debouncedSearch && !suggestions?.length && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+      import_components51.__experimentalText,
       {
         as: "p",
         className: "template-list-custom-template-modal__no-results",
@@ -46115,8 +46030,8 @@ function AddCustomTemplateModalContent({
   onBack,
   containerRef
 }) {
-  const [showSearchEntities, setShowSearchEntities] = (0, import_element145.useState)(false);
-  (0, import_element145.useEffect)(() => {
+  const [showSearchEntities, setShowSearchEntities] = (0, import_element144.useState)(false);
+  (0, import_element144.useEffect)(() => {
     if (containerRef.current) {
       const [firstFocusable] = import_dom28.focus.focusable.find(
         containerRef.current
@@ -46124,29 +46039,29 @@ function AddCustomTemplateModalContent({
       firstFocusable?.focus();
     }
   }, [showSearchEntities, containerRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(
-    import_components52.__experimentalVStack,
+  return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
+    import_components51.__experimentalVStack,
     {
       spacing: 4,
       className: "template-list-custom-template-modal__contents-wrapper",
       alignment: "left",
       children: [
-        !showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(import_jsx_runtime213.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components52.__experimentalText, { as: "p", children: (0, import_i18n61.__)(
+        !showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(import_jsx_runtime212.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components51.__experimentalText, { as: "p", children: (0, import_i18n59.__)(
             "Select whether to create a single template for all items or a specific one."
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(
-            import_components52.Flex,
+          /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
+            import_components51.Flex,
             {
               className: "template-list-custom-template-modal__contents",
               gap: "4",
               align: "initial",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(
-                  import_components52.FlexItem,
+                /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
+                  import_components51.FlexItem,
                   {
                     isBlock: true,
-                    as: import_components52.Button,
+                    as: import_components51.Button,
                     onClick: () => {
                       const {
                         slug,
@@ -46162,8 +46077,8 @@ function AddCustomTemplateModalContent({
                       });
                     },
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-                        import_components52.__experimentalText,
+                      /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+                        import_components51.__experimentalText,
                         {
                           as: "span",
                           weight: "var(--wpds-typography-font-weight-emphasis)",
@@ -46171,29 +46086,29 @@ function AddCustomTemplateModalContent({
                           children: entityForSuggestions.labels.all_items
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-                        import_components52.__experimentalText,
+                      /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+                        import_components51.__experimentalText,
                         {
                           as: "span",
                           lineHeight: 1.53846153846,
                           // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-                          children: (0, import_i18n61.__)("For all items")
+                          children: (0, import_i18n59.__)("For all items")
                         }
                       )
                     ]
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(
-                  import_components52.FlexItem,
+                /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
+                  import_components51.FlexItem,
                   {
                     isBlock: true,
-                    as: import_components52.Button,
+                    as: import_components51.Button,
                     onClick: () => {
                       setShowSearchEntities(true);
                     },
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-                        import_components52.__experimentalText,
+                      /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+                        import_components51.__experimentalText,
                         {
                           as: "span",
                           weight: "var(--wpds-typography-font-weight-emphasis)",
@@ -46201,13 +46116,13 @@ function AddCustomTemplateModalContent({
                           children: entityForSuggestions.labels.singular_name
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-                        import_components52.__experimentalText,
+                      /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+                        import_components51.__experimentalText,
                         {
                           as: "span",
                           lineHeight: 1.53846153846,
                           // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-                          children: (0, import_i18n61.__)("For a specific item")
+                          children: (0, import_i18n59.__)("For a specific item")
                         }
                       )
                     ]
@@ -46216,29 +46131,29 @@ function AddCustomTemplateModalContent({
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components52.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-            import_components52.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components51.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+            import_components51.Button,
             {
               __next40pxDefaultSize: true,
               variant: "tertiary",
               onClick: onBack,
-              children: (0, import_i18n61.__)("Back")
+              children: (0, import_i18n59.__)("Back")
             }
           ) })
         ] }),
-        showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(import_jsx_runtime213.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components52.__experimentalText, { as: "p", children: (0, import_i18n61.__)(
+        showSearchEntities && /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(import_jsx_runtime212.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components51.__experimentalText, { as: "p", children: (0, import_i18n59.__)(
             "This template will be used only for the specific item chosen."
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
             SuggestionList,
             {
               entityForSuggestions,
               onSelect
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components52.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-            import_components52.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components51.Flex, { justify: "right", children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+            import_components51.Button,
             {
               __next40pxDefaultSize: true,
               variant: "tertiary",
@@ -46249,7 +46164,7 @@ function AddCustomTemplateModalContent({
                   setShowSearchEntities(false);
                 }
               },
-              children: (0, import_i18n61.__)("Back")
+              children: (0, import_i18n59.__)("Back")
             }
           ) })
         ] })
@@ -46260,19 +46175,19 @@ function AddCustomTemplateModalContent({
 var add_custom_template_modal_content_default = AddCustomTemplateModalContent;
 
 // routes/template-list/add-new-template/add-custom-generic-template-modal-content.tsx
-var import_element146 = __toESM(require_element());
-var import_i18n62 = __toESM(require_i18n());
-var import_components53 = __toESM(require_components());
-var import_jsx_runtime214 = __toESM(require_jsx_runtime());
+var import_element145 = __toESM(require_element());
+var import_i18n60 = __toESM(require_i18n());
+var import_components52 = __toESM(require_components());
+var import_jsx_runtime213 = __toESM(require_jsx_runtime());
 function AddCustomGenericTemplateModalContent({
   createTemplate,
   onBack
 }) {
-  const [title, setTitle] = (0, import_element146.useState)("");
-  const defaultTitle = (0, import_i18n62.__)("Custom Template");
-  const [isBusy, setIsBusy] = (0, import_element146.useState)(false);
-  const inputRef = (0, import_element146.useRef)(null);
-  (0, import_element146.useEffect)(() => {
+  const [title, setTitle] = (0, import_element145.useState)("");
+  const defaultTitle = (0, import_i18n60.__)("Custom Template");
+  const [isBusy, setIsBusy] = (0, import_element145.useState)(false);
+  const inputRef = (0, import_element145.useRef)(null);
+  (0, import_element145.useEffect)(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -46295,46 +46210,46 @@ function AddCustomGenericTemplateModalContent({
       setIsBusy(false);
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("form", { onSubmit: onCreateTemplate, children: /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(import_components53.__experimentalVStack, { spacing: 6, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
-      import_components53.TextControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("form", { onSubmit: onCreateTemplate, children: /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(import_components52.__experimentalVStack, { spacing: 6, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+      import_components52.TextControl,
       {
-        label: (0, import_i18n62.__)("Name"),
+        label: (0, import_i18n60.__)("Name"),
         value: title,
         onChange: setTitle,
         placeholder: defaultTitle,
         disabled: isBusy,
         ref: inputRef,
-        help: (0, import_i18n62.__)(
+        help: (0, import_i18n60.__)(
           // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
           'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.'
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(
-      import_components53.__experimentalHStack,
+    /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(
+      import_components52.__experimentalHStack,
       {
         className: "template-list-custom-generic-template__modal-actions",
         justify: "right",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
-            import_components53.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+            import_components52.Button,
             {
               __next40pxDefaultSize: true,
               variant: "tertiary",
               onClick: onBack,
-              children: (0, import_i18n62.__)("Back")
+              children: (0, import_i18n60.__)("Back")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
-            import_components53.Button,
+          /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+            import_components52.Button,
             {
               __next40pxDefaultSize: true,
               variant: "primary",
               type: "submit",
               isBusy,
               "aria-disabled": isBusy,
-              children: (0, import_i18n62.__)("Create")
+              children: (0, import_i18n60.__)("Create")
             }
           )
         ]
@@ -46345,7 +46260,7 @@ function AddCustomGenericTemplateModalContent({
 var add_custom_generic_template_modal_content_default = AddCustomGenericTemplateModalContent;
 
 // routes/template-list/add-new-template/index.tsx
-var import_jsx_runtime215 = __toESM(require_jsx_runtime());
+var import_jsx_runtime214 = __toESM(require_jsx_runtime());
 var TEMPLATE_POST_TYPE2 = "wp_template";
 var DEFAULT_TEMPLATE_SLUGS = [
   "front-page",
@@ -46386,16 +46301,16 @@ function TemplateListItem({
   onClick,
   children
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
-    import_components54.Button,
+  return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
+    import_components53.Button,
     {
       __next40pxDefaultSize: true,
       className,
       onClick,
       label: description,
       showTooltip: !!description,
-      children: /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(
-        import_components54.Flex,
+      children: /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(
+        import_components53.Flex,
         {
           as: "span",
           align: "center",
@@ -46403,16 +46318,16 @@ function TemplateListItem({
           style: { width: "100%" },
           direction,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime215.jsx)("div", { className: "template-list-add-new-template__template-icon", children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(import_components54.Icon, { icon }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(
-              import_components54.__experimentalVStack,
+            /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("div", { className: "template-list-add-new-template__template-icon", children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(import_components53.Icon, { icon }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(
+              import_components53.__experimentalVStack,
               {
                 className: "template-list-add-new-template__template-name",
                 alignment: "center",
                 spacing: 0,
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
-                    import_components54.__experimentalText,
+                  /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
+                    import_components53.__experimentalText,
                     {
                       align: "center",
                       weight: "var(--wpds-typography-font-weight-emphasis)",
@@ -46436,34 +46351,34 @@ var modalContentMap = {
   customGenericTemplate: 3
 };
 function NewTemplateModal({ onClose }) {
-  const [modalContent, setModalContent] = (0, import_element147.useState)(modalContentMap.templatesList);
-  const [entityForSuggestions, setEntityForSuggestions] = (0, import_element147.useState)();
-  const [isSubmitting, setIsSubmitting] = (0, import_element147.useState)(false);
+  const [modalContent, setModalContent] = (0, import_element146.useState)(modalContentMap.templatesList);
+  const [entityForSuggestions, setEntityForSuggestions] = (0, import_element146.useState)();
+  const [isSubmitting, setIsSubmitting] = (0, import_element146.useState)(false);
   const missingTemplates = useMissingTemplates(
     setEntityForSuggestions,
     () => setModalContent(modalContentMap.customTemplate)
   );
   const navigate = useNavigate();
   const invalidate = useInvalidate();
-  const { saveEntityRecord } = (0, import_data11.useDispatch)(import_core_data6.store);
-  const { createErrorNotice, createSuccessNotice } = (0, import_data11.useDispatch)(import_notices.store);
-  const containerRef = (0, import_element147.useRef)(null);
+  const { saveEntityRecord } = (0, import_data10.useDispatch)(import_core_data5.store);
+  const { createErrorNotice, createSuccessNotice } = (0, import_data10.useDispatch)(import_notices.store);
+  const containerRef = (0, import_element146.useRef)(null);
   const isMobile = (0, import_compose26.useViewportMatch)("medium", "<");
-  const homeUrl = (0, import_data11.useSelect)((select2) => {
-    return select2(import_core_data6.store).getEntityRecord(
+  const homeUrl = (0, import_data10.useSelect)((select2) => {
+    return select2(import_core_data5.store).getEntityRecord(
       "root",
       "__unstableBase"
     )?.home;
   }, []);
   const TEMPLATE_SHORT_DESCRIPTIONS = {
     "front-page": homeUrl ?? "",
-    date: (0, import_i18n63.sprintf)(
+    date: (0, import_i18n61.sprintf)(
       // translators: %s: The homepage url.
-      (0, import_i18n63.__)("E.g. %s"),
+      (0, import_i18n61.__)("E.g. %s"),
       homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
     )
   };
-  (0, import_element147.useEffect)(() => {
+  (0, import_element146.useEffect)(() => {
     if (containerRef.current && modalContent === modalContentMap.templatesList) {
       const [firstFocusable] = import_dom29.focus.focusable.find(
         containerRef.current
@@ -46499,17 +46414,17 @@ function NewTemplateModal({ onClose }) {
       });
       invalidate();
       createSuccessNotice(
-        (0, import_i18n63.sprintf)(
+        (0, import_i18n61.sprintf)(
           // translators: %s: Title of the created post or template, e.g: "Hello world".
-          (0, import_i18n63.__)('"%s" successfully created.'),
-          (0, import_html_entities4.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n63.__)("(no title)")
+          (0, import_i18n61.__)('"%s" successfully created.'),
+          (0, import_html_entities3.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n61.__)("(no title)")
         ),
         {
           type: "snackbar"
         }
       );
     } catch (error2) {
-      const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n63.__)("An error occurred while creating the template.");
+      const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n61.__)("An error occurred while creating the template.");
       createErrorNotice(errorMessage, {
         type: "snackbar"
       });
@@ -46521,18 +46436,18 @@ function NewTemplateModal({ onClose }) {
     onClose();
     setModalContent(modalContentMap.templatesList);
   };
-  let modalTitle = (0, import_i18n63.__)("Add template");
+  let modalTitle = (0, import_i18n61.__)("Add template");
   if (modalContent === modalContentMap.customTemplate && entityForSuggestions) {
-    modalTitle = (0, import_i18n63.sprintf)(
+    modalTitle = (0, import_i18n61.sprintf)(
       // translators: %s: Name of the post type e.g: "Post".
-      (0, import_i18n63.__)("Add template: %s"),
+      (0, import_i18n61.__)("Add template: %s"),
       entityForSuggestions.labels.singular_name
     );
   } else if (modalContent === modalContentMap.customGenericTemplate) {
-    modalTitle = (0, import_i18n63.__)("Create custom template");
+    modalTitle = (0, import_i18n61.__)("Create custom template");
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(
-    import_components54.Modal,
+  return /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(
+    import_components53.Modal,
     {
       title: modalTitle,
       className: clsx_default("template-list-add-new-template__modal", {
@@ -46543,8 +46458,8 @@ function NewTemplateModal({ onClose }) {
       overlayClassName: modalContent === modalContentMap.customGenericTemplate ? "template-list-custom-generic-template__modal" : void 0,
       ref: containerRef,
       children: [
-        modalContent === modalContentMap.templatesList && /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(
-          import_components54.__experimentalGrid,
+        modalContent === modalContentMap.templatesList && /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(
+          import_components53.__experimentalGrid,
           {
             columns: isMobile ? 2 : 3,
             gap: 4,
@@ -46552,12 +46467,12 @@ function NewTemplateModal({ onClose }) {
             justify: "center",
             className: "template-list-add-new-template__template-list__contents",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(import_components54.Flex, { className: "template-list-add-new-template__template-list__prompt", children: (0, import_i18n63.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(import_components53.Flex, { className: "template-list-add-new-template__template-list__prompt", children: (0, import_i18n61.__)(
                 "Select what the new template should apply to:"
               ) }),
               missingTemplates.map((template) => {
                 const { title, slug, onClick } = template;
-                return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+                return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
                   TemplateListItem,
                   {
                     title,
@@ -46570,21 +46485,21 @@ function NewTemplateModal({ onClose }) {
                   slug
                 );
               }),
-              /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
                 TemplateListItem,
                 {
-                  title: (0, import_i18n63.__)("Custom template"),
+                  title: (0, import_i18n61.__)("Custom template"),
                   direction: "row",
                   className: "template-list-add-new-template__custom-template-button",
                   icon: pencil_default,
                   onClick: () => setModalContent(
                     modalContentMap.customGenericTemplate
                   ),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
-                    import_components54.__experimentalText,
+                  children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
+                    import_components53.__experimentalText,
                     {
                       lineHeight: 1.53846153846,
-                      children: (0, import_i18n63.__)(
+                      children: (0, import_i18n61.__)(
                         "A custom template can be manually applied to any post or page."
                       )
                     }
@@ -46594,7 +46509,7 @@ function NewTemplateModal({ onClose }) {
             ]
           }
         ),
-        modalContent === modalContentMap.customTemplate && entityForSuggestions && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+        modalContent === modalContentMap.customTemplate && entityForSuggestions && /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
           add_custom_template_modal_content_default,
           {
             onSelect: createTemplate,
@@ -46603,7 +46518,7 @@ function NewTemplateModal({ onClose }) {
             containerRef
           }
         ),
-        modalContent === modalContentMap.customGenericTemplate && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+        modalContent === modalContentMap.customGenericTemplate && /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
           add_custom_generic_template_modal_content_default,
           {
             createTemplate,
@@ -46615,9 +46530,9 @@ function NewTemplateModal({ onClose }) {
   );
 }
 function NewTemplate() {
-  const [showModal, setShowModal] = (0, import_element147.useState)(false);
-  const { postType } = (0, import_data11.useSelect)((select2) => {
-    const { getPostType } = select2(import_core_data6.store);
+  const [showModal, setShowModal] = (0, import_element146.useState)(false);
+  const { postType } = (0, import_data10.useSelect)((select2) => {
+    const { getPostType } = select2(import_core_data5.store);
     return {
       postType: getPostType(TEMPLATE_POST_TYPE2)
     };
@@ -46625,9 +46540,9 @@ function NewTemplate() {
   if (!postType) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(import_jsx_runtime215.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
-      import_components54.Button,
+  return /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(import_jsx_runtime214.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
+      import_components53.Button,
       {
         variant: "primary",
         onClick: () => setShowModal(true),
@@ -46636,7 +46551,7 @@ function NewTemplate() {
         children: postType.labels.add_new_item
       }
     ),
-    showModal && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(NewTemplateModal, { onClose: () => setShowModal(false) })
+    showModal && /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(NewTemplateModal, { onClose: () => setShowModal(false) })
   ] });
 }
 function useMissingTemplates(setEntityForSuggestions, onClick) {
@@ -46682,13 +46597,13 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
   ];
   return missingTemplates;
 }
-var add_new_template_default = (0, import_element147.memo)(NewTemplate);
+var add_new_template_default = (0, import_element146.memo)(NewTemplate);
 
 // routes/template-list/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='b644a2f697']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='39a4fa58ba']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "b644a2f697");
-  style.appendChild(document.createTextNode(':root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.fields-create-template-part-modal{z-index:1000001}.fields-create-template-part-modal__area-fieldset{border:0;margin:0;padding:0}.fields-create-template-part-modal__area-radio-group{border:1px solid #949494;border-radius:2px}.fields-create-template-part-modal__area-radio-wrapper{align-items:center;color:#1e1e1e;display:grid;gap:4px 8px;grid-template-columns:min-content 1fr min-content;padding:12px;position:relative}.fields-create-template-part-modal__area-radio-wrapper+.fields-create-template-part-modal__area-radio-wrapper{border-top:1px solid #949494}.fields-create-template-part-modal__area-radio-wrapper input[type=radio]{opacity:0;position:absolute}.fields-create-template-part-modal__area-radio-wrapper:has(input[type=radio]:checked){z-index:1}.fields-create-template-part-modal__area-radio-wrapper:has(input[type=radio]:not(:checked)):hover{color:var(--wp-admin-theme-color)}.fields-create-template-part-modal__area-radio-wrapper>:not(.fields-create-template-part-modal__area-radio-label){pointer-events:none}.fields-create-template-part-modal__area-radio-label:before{content:"";inset:0;position:absolute}input[type=radio]:not(:checked)~.fields-create-template-part-modal__area-radio-label:before{cursor:var(--wpds-cursor-control,pointer)}input[type=radio]:focus-visible~.fields-create-template-part-modal__area-radio-label:before{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);outline:4px solid transparent}.fields-create-template-part-modal__area-radio-checkmark,.fields-create-template-part-modal__area-radio-icon{fill:currentColor}input[type=radio]:not(:checked)~.fields-create-template-part-modal__area-radio-checkmark{opacity:0}.fields-create-template-part-modal__area-radio-description{text-wrap:pretty;color:#757575;font-size:12px;grid-column:2/3;line-height:normal;margin:0}input[type=radio]:not(:checked):hover~.fields-create-template-part-modal__area-radio-description{color:inherit}fieldset.fields__media-edit{border:0;margin:0;padding:0;width:100%}fieldset.fields__media-edit .components-base-control__label{color:#1e1e1e}fieldset.fields__media-edit .fields__media-edit-description{font-size:12px;line-height:1.5}fieldset.fields__media-edit{container-type:inline-size}fieldset.fields__media-edit .fields__media-edit-compact-group{border:1px dashed #949494;border-radius:4px;overflow:hidden}fieldset.fields__media-edit .fields__media-edit-compact-group.is-single{border-radius:2px}fieldset.fields__media-edit .fields__media-edit-compact-group .fields__media-edit-picker-button{border:0;border-radius:0}fieldset.fields__media-edit .fields__media-edit-compact-group .fields__media-edit-picker-button:focus-visible{box-shadow:inset 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color)}fieldset.fields__media-edit .fields__media-edit-compact-group .fields__media-edit-compact:not(:last-child){border-bottom:1px solid #f0f0f0}fieldset.fields__media-edit .fields__media-edit-compact .components-drop-zone .components-drop-zone__content-inner{align-items:center;display:flex;gap:8px}fieldset.fields__media-edit .fields__media-edit-compact .components-drop-zone .components-drop-zone__content-inner .components-drop-zone__content-icon{margin:0}fieldset.fields__media-edit .fields__media-edit-compact{min-width:0;position:relative}fieldset.fields__media-edit .fields__media-edit-compact:focus-within .fields__media-edit-compact-movers,fieldset.fields__media-edit .fields__media-edit-compact:hover .fields__media-edit-compact-movers{opacity:1}fieldset.fields__media-edit .fields__media-edit-compact .fields__media-edit-compact-movers{background:#fff;border-radius:2px;opacity:0;pointer-events:none;position:absolute;right:8px;top:50%;transform:translateY(-50%);z-index:1}fieldset.fields__media-edit .fields__media-edit-compact .fields__media-edit-compact-movers *{pointer-events:auto}fieldset.fields__media-edit .fields__media-edit-picker-button:has(.fields__media-edit-placeholder):not(.fields__media-edit-expanded *) .components-drop-zone .components-drop-zone__content-inner{align-items:center;display:flex;gap:8px}fieldset.fields__media-edit .fields__media-edit-picker-button:has(.fields__media-edit-placeholder):not(.fields__media-edit-expanded *) .components-drop-zone .components-drop-zone__content-inner .components-drop-zone__content-icon{margin:0}fieldset.fields__media-edit .fields__media-edit-picker-button{align-items:center;border:1px dashed #949494;border-radius:2px;cursor:var(--wpds-cursor-control,pointer);display:flex;gap:8px;min-height:40px;min-width:0;padding:4px 8px;position:relative}fieldset.fields__media-edit .fields__media-edit-picker-button:not(.has-attachment){border-color:var(--wp-admin-theme-color);color:var(--wp-admin-theme-color)}fieldset.fields__media-edit .fields__media-edit-picker-button:not(.has-attachment):hover{background-color:color-mix(in srgb,var(--wp-admin-theme-color,#3858e9) 4%,transparent);border-color:var(--wp-admin-theme-color-darker-20);color:var(--wp-admin-theme-color-darker-20)}fieldset.fields__media-edit .fields__media-edit-picker-button:hover{color:var(--wp-admin-theme-color)}fieldset.fields__media-edit .fields__media-edit-picker-button:focus-visible{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);outline:none}fieldset.fields__media-edit .fields__media-edit-picker-button[aria-disabled=true]{cursor:default;opacity:.6}fieldset.fields__media-edit .fields__media-edit-picker-button .fields__media-edit-picker-button-spinner{left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);z-index:1}fieldset.fields__media-edit .fields__media-edit-filename,fieldset.fields__media-edit .fields__media-edit-placeholder{flex:1;min-width:0;width:100%}fieldset.fields__media-edit .fields__media-edit-placeholder{text-align:center}fieldset.fields__media-edit .fields__media-edit-thumbnail{aspect-ratio:1/1;border-radius:2px;flex-shrink:0;width:24px}fieldset.fields__media-edit .fields__media-edit-expanded{display:grid;gap:8px}fieldset.fields__media-edit .fields__media-edit-expanded.is-empty .components-drop-zone .components-drop-zone__content-inner{align-items:center;display:flex;gap:8px}fieldset.fields__media-edit .fields__media-edit-expanded.is-empty .components-drop-zone .components-drop-zone__content-inner .components-drop-zone__content-icon{margin:0}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-preview{align-items:center;aspect-ratio:var(--fields-media-edit-expanded-multiple-aspect-ratio,3/2);border-radius:2px;display:flex;justify-content:center;overflow:hidden;padding:4px;position:relative;width:100%}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-preview .fields__media-edit-expanded-preview-stack{height:100%;width:100%}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-overlay{bottom:0;left:0;opacity:0;pointer-events:none;position:absolute;right:0;top:0}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-overlay *{pointer-events:auto}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-actions{background:#fff;border-radius:2px;position:absolute;right:4px;top:4px}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-item{border-radius:4px;min-width:0;position:relative}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-item:focus-within .fields__media-edit-expanded-overlay,fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-item:hover .fields__media-edit-expanded-overlay{opacity:1}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-item:not(.has-preview-image) .fields__media-edit-expanded-preview-stack{padding:8px}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-thumbnail{height:100%;object-fit:cover;object-position:50% 50%;width:100%}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-filename{flex:none;text-align:center}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-picker-button-spinner svg{margin:0}fieldset.fields__media-edit .fields__media-edit-expanded.is-single{grid-template-columns:1fr}fieldset.fields__media-edit .fields__media-edit-expanded.is-single .fields__media-edit-expanded-preview{aspect-ratio:2/1}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-picker-button{border-radius:4px}fieldset.fields__media-edit .fields__media-edit-expanded.is-empty .fields__media-edit-picker-button{border-radius:2px}fieldset.fields__media-edit .fields__media-edit-expanded.is-multiple:not(.is-empty){grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}@container (max-width: 500px){fieldset.fields__media-edit .fields__media-edit-expanded.is-multiple:not(.is-empty){grid-template-columns:repeat(auto-fill,minmax(105px,1fr))}}fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields__media-edit-picker-button{padding:0}fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields__media-edit-placeholder{align-items:center;aspect-ratio:var(--fields-media-edit-expanded-multiple-aspect-ratio,3/2);display:flex;justify-content:center}.fields-controls__author-avatar{align-items:center;display:flex;flex-shrink:0;height:24px;justify-content:left;overflow:hidden;width:24px}.fields-controls__author-avatar img{border-radius:100%;height:16px;object-fit:cover;opacity:0;width:16px}@media not (prefers-reduced-motion){.fields-controls__author-avatar img{transition:opacity .1s linear}}.fields-controls__author-avatar.is-loaded img{opacity:1}.fields-controls__author-icon{display:flex;flex-shrink:0;height:24px;width:24px}.fields-controls__author-icon svg{fill:currentColor;margin-left:-4px}.fields-controls__author-name{overflow:hidden;text-overflow:ellipsis}.fields-controls__slug{border:0;margin:0;padding:0}.fields-controls__slug .fields-controls__slug-input input.components-input-control__input{padding-inline-start:0!important}.fields-controls__slug .fields-controls__slug-help-link{word-break:break-word}.fields-controls__slug .fields-controls__slug-help{display:flex;flex-direction:column}.fields-controls__slug .fields-controls__slug-help .fields-controls__slug-help-slug{font-weight:var(--wpds-typography-font-weight-emphasis,600)}.fields-controls__featured-image-image,.fields-controls__featured-image-placeholder{border-radius:4px;display:block;height:100%;width:100%}.fields-controls__featured-image-placeholder{background:#f0f0f0;box-shadow:none}.fields-controls__parent,.fields-controls__password{border:0;margin:0;padding:0}.fields-controls__status-icon{height:24px;width:24px}.fields-controls__status-icon svg{fill:currentColor;margin-left:-4px}.fields-field__title>span:first-child{display:block;flex-grow:0;overflow:hidden;text-decoration:none;text-overflow:ellipsis;white-space:nowrap}.fields-field__pattern-title span:first-child{flex:1}.routes-template-list__tabs-wrapper{border-bottom:1px solid #f0f0f0;padding:0 24px}.routes-template-list-author-field__avatar{border-radius:50%;height:24px;margin-right:8px;opacity:0;overflow:hidden;transition:opacity .1s ease-in;width:24px}.routes-template-list-author-field__avatar.is-loaded{opacity:1}.routes-template-list-author-field__avatar img{height:100%;object-fit:cover;width:100%}.routes-template-list-author-field__icon{align-items:center;color:#757575;display:flex;height:24px;justify-content:center;margin-right:8px;width:24px}.routes-template-list-author-field__name{color:#1e1e1e}'));
+  style.setAttribute("data-wp-hash", "39a4fa58ba");
+  style.appendChild(document.createTextNode(':root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.fields-create-template-part-modal{z-index:1000001}.fields-create-template-part-modal__area-fieldset{border:0;margin:0;padding:0}.fields-create-template-part-modal__area-radio-group{border:1px solid #949494;border-radius:2px}.fields-create-template-part-modal__area-radio-wrapper{align-items:center;color:#1e1e1e;display:grid;gap:4px 8px;grid-template-columns:min-content 1fr min-content;padding:12px;position:relative}.fields-create-template-part-modal__area-radio-wrapper+.fields-create-template-part-modal__area-radio-wrapper{border-top:1px solid #949494}.fields-create-template-part-modal__area-radio-wrapper input[type=radio]{opacity:0;position:absolute}.fields-create-template-part-modal__area-radio-wrapper:has(input[type=radio]:checked){z-index:1}.fields-create-template-part-modal__area-radio-wrapper:has(input[type=radio]:not(:checked)):hover{color:var(--wp-admin-theme-color)}.fields-create-template-part-modal__area-radio-wrapper>:not(.fields-create-template-part-modal__area-radio-label){pointer-events:none}.fields-create-template-part-modal__area-radio-label:before{content:"";inset:0;position:absolute}input[type=radio]:not(:checked)~.fields-create-template-part-modal__area-radio-label:before{cursor:var(--wpds-cursor-control,pointer)}input[type=radio]:focus-visible~.fields-create-template-part-modal__area-radio-label:before{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);outline:4px solid transparent}.fields-create-template-part-modal__area-radio-checkmark,.fields-create-template-part-modal__area-radio-icon{fill:currentColor}input[type=radio]:not(:checked)~.fields-create-template-part-modal__area-radio-checkmark{opacity:0}.fields-create-template-part-modal__area-radio-description{text-wrap:pretty;color:#757575;font-size:12px;grid-column:2/3;line-height:normal;margin:0}input[type=radio]:not(:checked):hover~.fields-create-template-part-modal__area-radio-description{color:inherit}fieldset.fields__media-edit{border:0;margin:0;padding:0;width:100%}fieldset.fields__media-edit .components-base-control__label{color:#1e1e1e}fieldset.fields__media-edit .fields__media-edit-description{font-size:12px;line-height:1.5}fieldset.fields__media-edit{container-type:inline-size}fieldset.fields__media-edit .fields__media-edit-compact-group{border:1px dashed #949494;border-radius:4px;overflow:hidden}fieldset.fields__media-edit .fields__media-edit-compact-group.is-single{border-radius:2px}fieldset.fields__media-edit .fields__media-edit-compact-group .fields__media-edit-picker-button{border:0;border-radius:0}fieldset.fields__media-edit .fields__media-edit-compact-group .fields__media-edit-picker-button:focus-visible{box-shadow:inset 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color)}fieldset.fields__media-edit .fields__media-edit-compact-group .fields__media-edit-compact:not(:last-child){border-bottom:1px solid #f0f0f0}fieldset.fields__media-edit .fields__media-edit-compact .components-drop-zone .components-drop-zone__content-inner{align-items:center;display:flex;gap:8px}fieldset.fields__media-edit .fields__media-edit-compact .components-drop-zone .components-drop-zone__content-inner .components-drop-zone__content-icon{margin:0}fieldset.fields__media-edit .fields__media-edit-compact{min-width:0;position:relative}fieldset.fields__media-edit .fields__media-edit-compact:focus-within .fields__media-edit-compact-movers,fieldset.fields__media-edit .fields__media-edit-compact:hover .fields__media-edit-compact-movers{opacity:1}fieldset.fields__media-edit .fields__media-edit-compact .fields__media-edit-compact-movers{background:#fff;border-radius:2px;opacity:0;pointer-events:none;position:absolute;right:8px;top:50%;transform:translateY(-50%);z-index:1}fieldset.fields__media-edit .fields__media-edit-compact .fields__media-edit-compact-movers *{pointer-events:auto}fieldset.fields__media-edit .fields__media-edit-picker-button:has(.fields__media-edit-placeholder):not(.fields__media-edit-expanded *) .components-drop-zone .components-drop-zone__content-inner{align-items:center;display:flex;gap:8px}fieldset.fields__media-edit .fields__media-edit-picker-button:has(.fields__media-edit-placeholder):not(.fields__media-edit-expanded *) .components-drop-zone .components-drop-zone__content-inner .components-drop-zone__content-icon{margin:0}fieldset.fields__media-edit .fields__media-edit-picker-button{align-items:center;border:1px dashed #949494;border-radius:2px;cursor:var(--wpds-cursor-control,pointer);display:flex;gap:8px;min-height:40px;min-width:0;padding:4px 8px;position:relative}fieldset.fields__media-edit .fields__media-edit-picker-button:not(.has-attachment){border-color:var(--wp-admin-theme-color);color:var(--wp-admin-theme-color)}fieldset.fields__media-edit .fields__media-edit-picker-button:not(.has-attachment):hover{background-color:color-mix(in srgb,var(--wp-admin-theme-color,#3858e9) 4%,transparent);border-color:var(--wp-admin-theme-color-darker-20);color:var(--wp-admin-theme-color-darker-20)}fieldset.fields__media-edit .fields__media-edit-picker-button:hover{color:var(--wp-admin-theme-color)}fieldset.fields__media-edit .fields__media-edit-picker-button:focus-visible{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);outline:none}fieldset.fields__media-edit .fields__media-edit-picker-button[aria-disabled=true]{cursor:default;opacity:.6}fieldset.fields__media-edit .fields__media-edit-picker-button .fields__media-edit-picker-button-spinner{left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);z-index:1}fieldset.fields__media-edit .fields__media-edit-filename,fieldset.fields__media-edit .fields__media-edit-placeholder{flex:1;min-width:0;width:100%}fieldset.fields__media-edit .fields__media-edit-placeholder{text-align:center}fieldset.fields__media-edit .fields__media-edit-thumbnail{aspect-ratio:1/1;border-radius:2px;flex-shrink:0;width:24px}fieldset.fields__media-edit .fields__media-edit-expanded{display:grid;gap:8px}fieldset.fields__media-edit .fields__media-edit-expanded.is-empty .components-drop-zone .components-drop-zone__content-inner{align-items:center;display:flex;gap:8px}fieldset.fields__media-edit .fields__media-edit-expanded.is-empty .components-drop-zone .components-drop-zone__content-inner .components-drop-zone__content-icon{margin:0}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-preview{align-items:center;aspect-ratio:var(--fields-media-edit-expanded-multiple-aspect-ratio,3/2);border-radius:2px;display:flex;justify-content:center;overflow:hidden;padding:4px;position:relative;width:100%}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-preview .fields__media-edit-expanded-preview-stack{height:100%;width:100%}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-overlay{bottom:0;left:0;opacity:0;pointer-events:none;position:absolute;right:0;top:0}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-overlay *{pointer-events:auto}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-actions{background:#fff;border-radius:2px;position:absolute;right:4px;top:4px}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-item{border-radius:4px;min-width:0;position:relative}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-item:focus-within .fields__media-edit-expanded-overlay,fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-item:hover .fields__media-edit-expanded-overlay{opacity:1}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-item:not(.has-preview-image) .fields__media-edit-expanded-preview-stack{padding:8px}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-thumbnail{height:100%;object-fit:cover;object-position:50% 50%;width:100%}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-filename{flex:none;text-align:center}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-picker-button-spinner svg{margin:0}fieldset.fields__media-edit .fields__media-edit-expanded.is-single{grid-template-columns:1fr}fieldset.fields__media-edit .fields__media-edit-expanded.is-single .fields__media-edit-expanded-preview{aspect-ratio:2/1}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-picker-button{border-radius:4px}fieldset.fields__media-edit .fields__media-edit-expanded.is-empty .fields__media-edit-picker-button{border-radius:2px}fieldset.fields__media-edit .fields__media-edit-expanded.is-multiple:not(.is-empty){grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}@container (max-width: 500px){fieldset.fields__media-edit .fields__media-edit-expanded.is-multiple:not(.is-empty){grid-template-columns:repeat(auto-fill,minmax(105px,1fr))}}fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields__media-edit-picker-button{padding:0}fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields__media-edit-placeholder{align-items:center;aspect-ratio:var(--fields-media-edit-expanded-multiple-aspect-ratio,3/2);display:flex;justify-content:center}.fields-controls__author-avatar{align-items:center;display:flex;flex-shrink:0;height:24px;justify-content:left;overflow:hidden;width:24px}.fields-controls__author-avatar img{border-radius:100%;height:16px;object-fit:cover;opacity:0;width:16px}@media not (prefers-reduced-motion){.fields-controls__author-avatar img{transition:opacity .1s linear}}.fields-controls__author-avatar.is-loaded img{opacity:1}.fields-controls__author-icon{display:flex;flex-shrink:0;height:24px;width:24px}.fields-controls__author-icon svg{fill:currentColor;margin-left:-4px}.fields-controls__author-name{overflow:hidden;text-overflow:ellipsis}.fields-controls__slug{border:0;margin:0;padding:0}.fields-controls__slug .fields-controls__slug-input input.components-input-control__input{padding-inline-start:0!important}.fields-controls__slug .fields-controls__slug-help-link{word-break:break-word}.fields-controls__slug .fields-controls__slug-help{display:flex;flex-direction:column}.fields-controls__slug .fields-controls__slug-help .fields-controls__slug-help-slug{font-weight:var(--wpds-typography-font-weight-emphasis,600)}.fields-controls__featured-image-image,.fields-controls__featured-image-placeholder{border-radius:4px;display:block;height:100%;width:100%}.fields-controls__featured-image-placeholder{background:#f0f0f0;box-shadow:none}.fields-controls__parent,.fields-controls__password{border:0;margin:0;padding:0}.fields-controls__status-icon{height:24px;width:24px}.fields-controls__status-icon svg{fill:currentColor;margin-left:-4px}.fields-field__title>span:first-child{display:block;flex-grow:0;overflow:hidden;text-decoration:none;text-overflow:ellipsis;white-space:nowrap}.fields-field__pattern-title span:first-child{flex:1}.routes-template-list__tabs-wrapper{border-bottom:1px solid #f0f0f0;padding:0 24px}'));
   document.head.appendChild(style);
 }
 
@@ -46701,9 +46616,9 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 }
 
 // routes/template-list/stage.tsx
-var import_jsx_runtime216 = __toESM(require_jsx_runtime());
-var { usePostActions, templateTitleField } = unlock3(import_editor.privateApis);
-var { Tabs } = unlock3(import_components55.privateApis);
+var import_jsx_runtime215 = __toESM(require_jsx_runtime());
+var { usePostActions, usePostFields } = unlock3(import_editor.privateApis);
+var { Tabs } = unlock3(import_components54.privateApis);
 function getItemId(item) {
   return item.id.toString();
 }
@@ -46714,16 +46629,16 @@ function TemplateList() {
   });
   const navigate = useNavigate2();
   const searchParams = useSearch({ from: "/templates/list/$activeView" });
-  const postTypeObject = (0, import_data12.useSelect)(
-    (select2) => select2(import_core_data7.store).getPostType("wp_template"),
+  const postTypeObject = (0, import_data11.useSelect)(
+    (select2) => select2(import_core_data6.store).getPostType("wp_template"),
     []
   );
   const defaultView = DEFAULT_VIEW;
-  const activeViewOverrides = (0, import_element148.useMemo)(
+  const activeViewOverrides = (0, import_element147.useMemo)(
     () => getActiveViewOverridesForTab(activeView),
     [activeView]
   );
-  const handleQueryParamsChange = (0, import_element148.useCallback)(
+  const handleQueryParamsChange = (0, import_element147.useCallback)(
     (params) => {
       navigate({
         search: {
@@ -46754,46 +46669,15 @@ function TemplateList() {
     }
   };
   const { records, isLoading, allRecords } = useTemplates(activeView);
-  const users = (0, import_data12.useSelect)(
-    (select2) => {
-      const { getUser } = select2(import_core_data7.store);
-      return records.reduce((acc, record) => {
-        if (record.author_text) {
-          if (!acc[record.author_text]) {
-            acc[record.author_text] = record.author_text;
-          }
-        } else if (record.author) {
-          if (!acc[record.author]) {
-            acc[record.author] = getUser(record.author);
-          }
-        }
-        return acc;
-      }, {});
-    },
-    [records]
+  const postFields = usePostFields({ postType: "wp_template" });
+  const fields = (0, import_element147.useMemo)(
+    () => [previewField, ...postFields],
+    [postFields]
   );
-  const fields = (0, import_element148.useMemo)(() => {
-    const elements = [];
-    for (const author in users) {
-      elements.push({
-        value: users[author]?.id ?? author,
-        label: users[author]?.name ?? author
-      });
-    }
-    return [
-      previewField,
-      templateTitleField,
-      descriptionField,
-      {
-        ...authorField,
-        elements
-      }
-    ];
-  }, [users]);
-  const { data: posts, paginationInfo } = (0, import_element148.useMemo)(() => {
+  const { data: posts, paginationInfo } = (0, import_element147.useMemo)(() => {
     return filterSortAndPaginate(records, view, fields);
   }, [records, view, fields]);
-  const cleanupDeletedPostIdsFromUrl = (0, import_element148.useCallback)(
+  const cleanupDeletedPostIdsFromUrl = (0, import_element147.useCallback)(
     (deletedItems) => {
       const deletedIds = deletedItems.map(
         (item) => item.id.toString()
@@ -46815,7 +46699,7 @@ function TemplateList() {
     },
     [invalidate, searchParams, navigate]
   );
-  const onActionPerformed = (0, import_element148.useCallback)(
+  const onActionPerformed = (0, import_element147.useCallback)(
     (actionId, items) => {
       if (actionId === "move-to-trash" || actionId === "permanently-delete") {
         cleanupDeletedPostIdsFromUrl(items);
@@ -46828,7 +46712,7 @@ function TemplateList() {
     context: "list",
     onActionPerformed
   });
-  const actions = (0, import_element148.useMemo)(() => {
+  const actions = (0, import_element147.useMemo)(() => {
     return postTypeActions?.flatMap((action) => {
       if (action.id === "view-post-revisions") {
         return [];
@@ -46836,11 +46720,11 @@ function TemplateList() {
       return [action];
     });
   }, [postTypeActions]);
-  const tabs = (0, import_element148.useMemo)(() => {
+  const tabs = (0, import_element147.useMemo)(() => {
     const baseTabs = [
       {
         slug: "all",
-        label: (0, import_i18n64.__)("All templates"),
+        label: (0, import_i18n62.__)("All templates"),
         icon: layout_default
       }
     ];
@@ -46856,7 +46740,7 @@ function TemplateList() {
     const authorTabs = Array.from(authorMap.values());
     return [...baseTabs, ...authorTabs];
   }, [allRecords]);
-  const handleTabChange = (0, import_element148.useCallback)(
+  const handleTabChange = (0, import_element147.useCallback)(
     (viewSlug) => {
       navigate({
         to: `/templates/list/${viewSlug}`
@@ -46874,23 +46758,23 @@ function TemplateList() {
   if (view.type === "list") {
     selection.splice(1);
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(
     page_default2,
     {
-      title: (0, import_i18n64.__)("Templates"),
+      title: (0, import_i18n62.__)("Templates"),
       className: "template-page",
-      actions: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(add_new_template_default, {}),
+      actions: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(add_new_template_default, {}),
       hasPadding: false,
       children: [
-        tabs.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("div", { className: "routes-template-list__tabs-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+        tabs.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)("div", { className: "routes-template-list__tabs-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
           Tabs,
           {
             onSelect: handleTabChange,
             selectedTabId: activeView ?? "all",
-            children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(Tabs.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(Tabs.Tab, { tabId: tab.slug, children: tab.label }, tab.slug)) })
+            children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(Tabs.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(Tabs.Tab, { tabId: tab.slug, children: tab.label }, tab.slug)) })
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
           dataviews_default,
           {
             data: posts,
