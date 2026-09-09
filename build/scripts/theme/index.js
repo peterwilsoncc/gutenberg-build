@@ -3913,12 +3913,8 @@ var wp;
       }
     }
     const lSeed = clamp01(get(seed, [oklch_default, "l"]));
-    const cmaxSeed = getCachedMaxChromaAtLH(lSeed, hSeed, gamut);
-    const cmaxTarget = getCachedMaxChromaAtLH(
-      clamp01(lTarget),
-      hSeed,
-      gamut
-    );
+    const cmaxSeed = getMaxChromaAtLH(lSeed, hSeed, gamut);
+    const cmaxTarget = getMaxChromaAtLH(clamp01(lTarget), hSeed, gamut);
     let seedRelative = 0;
     const denom = cmaxSeed > 0 ? cmaxSeed : 1e-6;
     seedRelative = clamp01(cSeed / denom);
@@ -3966,32 +3962,10 @@ var wp;
     return 1 - (1 - opts.kDark) * w;
   }
   var MAX_CHROMA = 0.45;
-  var maxChromaCache = /* @__PURE__ */ new Map();
-  function quantize(x, step) {
-    const k = Math.round(x / step);
-    return k * step;
-  }
-  function getCachedMaxChromaAtLH(l, h, gamutSpace) {
-    const lQuantized = quantize(l, 0.05);
-    const hQuantized = quantize(normalizeHue(h), 10);
-    const key = `${gamutSpace.id}|L:${lQuantized}|H:${hQuantized}`;
-    const hit = maxChromaCache.get(key);
-    if (typeof hit === "number") {
-      return hit;
-    }
-    const computed = maxInGamutChromaAtLH(
-      lQuantized,
-      hQuantized,
-      gamutSpace,
-      MAX_CHROMA
-    );
-    maxChromaCache.set(key, computed);
-    return computed;
-  }
-  function maxInGamutChromaAtLH(l, h, gamutSpace, cap) {
+  function getMaxChromaAtLH(l, h, gamutSpace) {
     const probe = {
       space: oklch_default,
-      coords: [l, cap, h],
+      coords: [clamp01(l), MAX_CHROMA, normalizeHue(h)],
       alpha: 1
     };
     const clamped = toGamutCSS(probe, { space: gamutSpace });
