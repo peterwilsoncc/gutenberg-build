@@ -2096,7 +2096,7 @@ var wp;
             inst: { value, getSnapshot: getSnapshot2 }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-          useLayoutEffect19(
+          useLayoutEffect20(
             function() {
               inst.value = value;
               inst.getSnapshot = getSnapshot2;
@@ -2130,7 +2130,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React157 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState129 = React157.useState, useEffect106 = React157.useEffect, useLayoutEffect19 = React157.useLayoutEffect, useDebugValue2 = React157.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React157 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState129 = React157.useState, useEffect106 = React157.useEffect, useLayoutEffect20 = React157.useLayoutEffect, useDebugValue2 = React157.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React157.useSyncExternalStore ? React157.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -59276,6 +59276,9 @@ var wp;
           (node) => {
             node.tabIndex = 0;
             node.dataset.hasMultiSelection = hasMultiSelection2;
+            if (!node.hasAttribute("contenteditable")) {
+              node.contentEditable = false;
+            }
             if (!hasMultiSelection2) {
               return () => {
                 delete node.dataset.hasMultiSelection;
@@ -85241,6 +85244,7 @@ var wp;
   var import_jsx_runtime425 = __toESM(require_jsx_runtime(), 1);
   var { subscribeOwnedListener: subscribeOwnedListener9 } = unlock(import_rich_text16.privateApis);
   function useEnterRef(props) {
+    const registry = (0, import_data157.useRegistry)();
     const { getSelectionStart: getSelectionStart2, getSelectionEnd: getSelectionEnd2 } = (0, import_data157.useSelect)(store);
     const { selectionChange: selectionChange2 } = (0, import_data157.useDispatch)(store);
     return (0, import_compose102.useRefEffect)((element) => {
@@ -85263,8 +85267,15 @@ var wp;
         );
         const newValues = values.slice();
         newValues.splice(index2, 1, ...array);
-        onChange(newValues);
-        selectionChange2(clientId, `${identifier}-${index2 + 1}`, 0, 0);
+        registry.batch(() => {
+          onChange(newValues);
+          selectionChange2(
+            clientId,
+            `${identifier}-${index2 + 1}`,
+            0,
+            0
+          );
+        });
       }
       return subscribeOwnedListener9(element, "keydown", onKeyDown, true);
     }, []);
@@ -85678,6 +85689,26 @@ var wp;
         [identifier, clientId]
       )
     });
+    (0, import_element262.useLayoutEffect)(() => {
+      const element = anchorRef.current;
+      if (!isSelected || !element) {
+        return;
+      }
+      const { ownerDocument: ownerDocument2 } = element;
+      const focusedDocument = [
+        ownerDocument2,
+        ownerDocument2.defaultView.frameElement?.ownerDocument
+      ].find((doc) => doc?.hasFocus());
+      if (!focusedDocument) {
+        return;
+      }
+      const { activeElement: activeElement2, body } = focusedDocument;
+      const canvas = element.parentElement?.closest("[contenteditable]");
+      const target = canvas?.isContentEditable ? canvas : element;
+      if (activeElement2 === body || canvas?.contains(activeElement2)) {
+        target.focus();
+      }
+    }, [selectionStart, selectionEnd, isSelected]);
     const autocompleteProps = useBlockEditorAutocompleteProps({
       onReplace,
       completers: autocompleters,

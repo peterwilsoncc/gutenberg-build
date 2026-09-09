@@ -1755,21 +1755,6 @@ var wp;
   var import_data9 = __toESM(require_data(), 1);
   var import_deprecated = __toESM(require_deprecated(), 1);
 
-  // packages/rich-text/build-module/owns-selection.mjs
-  function ownsSelection(element) {
-    const { ownerDocument } = element;
-    const { activeElement } = ownerDocument;
-    if (activeElement === element) {
-      return true;
-    }
-    if (!activeElement || activeElement.contentEditable !== "true" || element.contentEditable !== "true" || !activeElement.contains(element)) {
-      return false;
-    }
-    const selection = ownerDocument.defaultView.getSelection();
-    const { anchorNode, focusNode } = selection;
-    return !!anchorNode && !!focusNode && element.contains(anchorNode) && element.contains(focusNode);
-  }
-
   // packages/rich-text/build-module/hook/use-default-style.mjs
   var import_element = __toESM(require_element(), 1);
   var whiteSpace = "pre-wrap";
@@ -1982,6 +1967,23 @@ var wp;
 
   // packages/rich-text/build-module/hook/event-listeners/copy-handler.mjs
   var import_compose = __toESM(require_compose(), 1);
+
+  // packages/rich-text/build-module/owns-selection.mjs
+  function ownsSelection(element) {
+    const { ownerDocument } = element;
+    const { activeElement } = ownerDocument;
+    if (activeElement === element) {
+      return true;
+    }
+    if (!activeElement || activeElement.contentEditable !== "true" || element.contentEditable !== "true" || !activeElement.contains(element)) {
+      return false;
+    }
+    const selection = ownerDocument.defaultView.getSelection();
+    const { anchorNode, focusNode } = selection;
+    return !!anchorNode && !!focusNode && element.contains(anchorNode) && element.contains(focusNode);
+  }
+
+  // packages/rich-text/build-module/hook/event-listeners/copy-handler.mjs
   var { subscribeDelegatedListener } = unlock(import_compose.privateApis);
   var copy_handler_default = (props) => (element) => {
     function onCopy(event) {
@@ -2248,6 +2250,13 @@ var wp;
     const { ownerDocument } = element;
     const { defaultView } = ownerDocument;
     let isComposing = false;
+    let isPointerDown = false;
+    function onPointerDown() {
+      isPointerDown = true;
+    }
+    function onPointerUp() {
+      isPointerDown = false;
+    }
     function onInput(event) {
       if (isComposing) {
         return;
@@ -2364,7 +2373,7 @@ var wp;
           activeFormats: EMPTY_ACTIVE_FORMATS2
         };
         selectionSnapshot = void 0;
-      } else {
+      } else if (!isPointerDown) {
         applyRecord(record.current);
       }
       onSelectionChange(record.current.start, record.current.end);
@@ -2392,6 +2401,21 @@ var wp;
       "focusin",
       onFocus
     );
+    const unsubscribePointerDown = subscribeDelegatedListener4(
+      element,
+      "pointerdown",
+      onPointerDown
+    );
+    const unsubscribePointerUp = subscribeDelegatedListener4(
+      defaultView,
+      "pointerup",
+      onPointerUp
+    );
+    const unsubscribePointerCancel = subscribeDelegatedListener4(
+      defaultView,
+      "pointercancel",
+      onPointerUp
+    );
     const unsubscribeSelectionChange = subscribeOwnedListener(
       element,
       "selectionchange",
@@ -2416,6 +2440,9 @@ var wp;
       unsubscribeCompositionStart();
       unsubscribeCompositionEnd();
       unsubscribeFocus();
+      unsubscribePointerDown();
+      unsubscribePointerUp();
+      unsubscribePointerCancel();
       unsubscribeSelectionChange();
       unsubscribeEnsureSelectionSync.forEach(
         (unsubscribe) => unsubscribe()
@@ -2674,6 +2701,10 @@ var wp;
   }
 
   // packages/rich-text/build-module/hook/index.mjs
+  function hasFocus(element) {
+    const { activeElement } = element.ownerDocument;
+    return activeElement === element || activeElement?.contentEditable === "true" && activeElement.contains(element);
+  }
   function useRichTextBase({
     value = "",
     selectionStart,
@@ -2740,18 +2771,20 @@ var wp;
       recordRef.current.start = selectionStart;
       recordRef.current.end = selectionEnd;
     }
-    const hadSelectionUpdateRef = (0, import_element5.useRef)(false);
     if (!recordRef.current) {
-      hadSelectionUpdateRef.current = isSelected;
       setRecordFromProps();
     } else if (selectionStart !== recordRef.current.start || selectionEnd !== recordRef.current.end) {
-      hadSelectionUpdateRef.current = isSelected;
       recordRef.current = {
         ...recordRef.current,
         start: selectionStart,
         end: selectionEnd,
         activeFormats: void 0
       };
+    }
+    const sentSelectionRef = (0, import_element5.useRef)([]);
+    function sendSelection(start, end) {
+      sentSelectionRef.current = [start, end];
+      onSelectionChange(start, end);
     }
     function handleChange(newRecord) {
       recordRef.current = newRecord;
@@ -2772,7 +2805,7 @@ var wp;
       }
       const { start, end, formats, text } = recordRef.current;
       registry.batch(() => {
-        onSelectionChange(start, end);
+        sendSelection(start, end);
         onChange(_valueRef.current, {
           __unstableFormats: formats,
           __unstableText: text
@@ -2780,31 +2813,23 @@ var wp;
       });
       forceRender();
     }
-    function applyFromProps() {
-      const previousValue = _valueRef.current;
-      setRecordFromProps();
-      const contentLengthChanged = previousValue && typeof previousValue === "string" && typeof value === "string" && previousValue.length !== value.length;
-      const hasFocus = ref.current?.contains(ref.current.ownerDocument.activeElement) || ownsSelection(ref.current);
-      const skipSelection = contentLengthChanged && !hasFocus;
-      applyRecord(recordRef.current, { domOnly: skipSelection });
-    }
-    const didMountRef = (0, import_element5.useRef)(false);
     (0, import_element5.useLayoutEffect)(() => {
-      if (didMountRef.current && value !== _valueRef.current) {
-        applyFromProps();
-        forceRender();
-      }
-    }, [value]);
-    (0, import_element5.useLayoutEffect)(() => {
-      if (!hadSelectionUpdateRef.current) {
+      if (value === _valueRef.current) {
         return;
       }
-      if (ref.current.ownerDocument.activeElement !== ref.current && !ownsSelection(ref.current)) {
-        ref.current.focus();
+      setRecordFromProps();
+      applyRecord(recordRef.current, {
+        domOnly: !hasFocus(ref.current)
+      });
+      forceRender();
+    }, [value]);
+    (0, import_element5.useLayoutEffect)(() => {
+      const [sentStart, sentEnd] = sentSelectionRef.current;
+      sentSelectionRef.current = [];
+      if (isSelected && (selectionStart !== sentStart || selectionEnd !== sentEnd) && hasFocus(ref.current)) {
+        applyRecord(recordRef.current);
       }
-      applyRecord(recordRef.current);
-      hadSelectionUpdateRef.current = false;
-    }, [hadSelectionUpdateRef.current]);
+    }, [selectionStart, selectionEnd, isSelected]);
     const mergedRefs = (0, import_compose8.useMergeRefs)([
       ref,
       useDefaultStyle(),
@@ -2815,13 +2840,18 @@ var wp;
         applyRecord,
         createRecord,
         isSelected,
-        onSelectionChange,
+        onSelectionChange: sendSelection,
         forceRender
       }),
-      (0, import_compose8.useRefEffect)(() => {
-        applyFromProps();
-        didMountRef.current = true;
-      }, [placeholder, ...__unstableDependencies])
+      (0, import_compose8.useRefEffect)(
+        (element) => {
+          setRecordFromProps();
+          applyRecord(recordRef.current, {
+            domOnly: !hasFocus(element)
+          });
+        },
+        [placeholder, ...__unstableDependencies]
+      )
     ]);
     return {
       value: recordRef.current,
