@@ -121,17 +121,11 @@ var wp;
     const img = element.ownerDocument.querySelector(
       'img[usemap="#' + map.name + '"]'
     );
-    return !!img && isVisible(img);
+    return !!img && !img.closest("[inert]") && isVisible(img);
   }
   function find(context, { sequential = false } = {}) {
     const elements = context.querySelectorAll(buildSelector(sequential));
     return Array.from(elements).filter((element) => {
-      if (!isVisible(element)) {
-        return false;
-      }
-      if (element.closest("[inert]")) {
-        return false;
-      }
       const { nodeName } = element;
       if ("AREA" === nodeName) {
         return isValidFocusableArea(
@@ -139,7 +133,10 @@ var wp;
           element
         );
       }
-      return true;
+      if (element.closest("[inert]")) {
+        return false;
+      }
+      return isVisible(element);
     });
   }
 
