@@ -507,7 +507,7 @@
 .wp-block-column {
   flex-grow: 1;
   min-width: 0;
-  word-break: break-word;
+  word-break: normal;
   overflow-wrap: break-word;
   /**
   * Individual Column Alignment
@@ -4052,7 +4052,8 @@ p.has-text-align-left[style*="writing-mode:vertical-lr"] {
 }
 
 .wp-block-post-title {
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: anywhere;
   box-sizing: border-box;
 }
 .wp-block-post-title :where(a) {
@@ -5213,7 +5214,8 @@ pre.wp-block-verse {
   overflow: auto;
   white-space: pre-wrap;
   min-width: 1em;
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 :where(pre.wp-block-verse) {

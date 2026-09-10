@@ -2307,7 +2307,8 @@ iframe[name=editor-canvas] {
   justify-content: center;
   cursor: var(--wpds-cursor-control, pointer);
   background: transparent;
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 @media not (prefers-reduced-motion) {
   .components-button.block-editor-block-types-list__item {
