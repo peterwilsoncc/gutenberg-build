@@ -7962,6 +7962,7 @@ var wp;
   // packages/editor/build-module/components/upload-progress-snackbar/tracker.mjs
   var import_element2 = __toESM(require_element(), 1);
   var state = null;
+  var cumulativeFailures = 0;
   var listeners = /* @__PURE__ */ new Set();
   function notify() {
     listeners.forEach((listener) => listener());
@@ -7981,9 +7982,16 @@ var wp;
     notify();
   }
   function advance(count) {
+    finish(count, 0);
+  }
+  function advanceFailed(count = 1) {
+    finish(count, count);
+  }
+  function finish(count, failed) {
     if (!state || count <= 0) {
       return;
     }
+    cumulativeFailures += failed;
     const completed = Math.min(state.total, state.completed + count);
     const pending = state.pending.slice(count);
     if (completed >= state.total) {
@@ -7992,6 +8000,9 @@ var wp;
       state = { total: state.total, completed, pending };
     }
     notify();
+  }
+  function getFailureCount() {
+    return cumulativeFailures;
   }
   function getState() {
     return state;
@@ -8089,7 +8100,7 @@ var wp;
       onError: ({ message: message2 }) => {
         if (!isTransportOnly) {
           clearSaveLock();
-          advance(1);
+          advanceFailed(1);
         }
         onError(message2);
       },
@@ -102014,10 +102025,14 @@ If there's a particular need for this, please submit a feature request at https:
   );
   var UPLOAD_DONE = /* @__PURE__ */ (0, import_jsx_runtime566.jsx)("span", { className: "editor-upload-progress-snackbar__check", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(import_components289.Icon, { icon: check_default }) });
   function UploadProgressSnackbar() {
-    const items = (0, import_data274.useSelect)(
-      (select9) => select9(import_upload_media3.store).getItems(),
-      []
-    );
+    const { items, csmFailureCount } = (0, import_data274.useSelect)((select9) => {
+      const { getItems } = select9(import_upload_media3.store);
+      const { getFailureCount: getFailureCount2 } = unlock(select9(import_upload_media3.store));
+      return {
+        items: getItems(),
+        csmFailureCount: getFailureCount2()
+      };
+    }, []);
     const tracker = useTracker();
     const csmOriginals = (0, import_element346.useMemo)(
       () => items.filter((item) => !item.parentId),
@@ -102031,6 +102046,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { createNotice, removeNotice } = (0, import_data274.useDispatch)(import_notices38.store);
     const dismissedRef = (0, import_element346.useRef)(false);
     const wasUploadingRef = (0, import_element346.useRef)(false);
+    const failuresAtStartRef = (0, import_element346.useRef)(0);
     const completionTimeoutRef = (0, import_element346.useRef)(null);
     (0, import_element346.useEffect)(() => {
       return () => {
@@ -102041,8 +102057,10 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     (0, import_element346.useEffect)(() => {
       const isUploading = remaining > 0;
+      const failures = csmFailureCount + getFailureCount();
       if (isUploading && !wasUploadingRef.current) {
         dismissedRef.current = false;
+        failuresAtStartRef.current = failures;
         (0, import_a11y13.speak)((0, import_i18n354.__)("Media upload started"), "polite");
         if (completionTimeoutRef.current) {
           clearTimeout(completionTimeoutRef.current);
@@ -102050,26 +102068,49 @@ If there's a particular need for this, please submit a feature request at https:
           peakRef.current = 0;
         }
       } else if (!isUploading && wasUploadingRef.current) {
-        (0, import_a11y13.speak)((0, import_i18n354.__)("Media upload complete"), "polite");
-        if (!dismissedRef.current) {
-          createNotice("info", (0, import_i18n354.__)("Upload complete"), {
-            id: NOTICE_ID,
-            type: "snackbar",
-            isDismissible: false,
-            explicitDismiss: false,
-            speak: false,
-            icon: UPLOAD_DONE,
-            onDismiss: () => {
-              dismissedRef.current = true;
-            }
-          });
-          completionTimeoutRef.current = setTimeout(() => {
-            removeNotice(NOTICE_ID);
-            completionTimeoutRef.current = null;
-            peakRef.current = 0;
-          }, COMPLETION_DISPLAY_MS);
-        } else {
+        const total2 = peakRef.current;
+        const failed = Math.min(
+          total2,
+          failures - failuresAtStartRef.current
+        );
+        const uploaded = total2 - failed;
+        if (uploaded === 0) {
+          (0, import_a11y13.speak)((0, import_i18n354.__)("Media upload failed"), "polite");
+          removeNotice(NOTICE_ID);
           peakRef.current = 0;
+        } else {
+          const isFullSuccess = failed === 0;
+          const content2 = isFullSuccess ? (0, import_i18n354.__)("Upload complete") : (0, import_i18n354.sprintf)(
+            /* translators: 1: number of files uploaded, 2: number of files in the batch. */
+            (0, import_i18n354.__)("Uploaded %1$d of %2$d"),
+            uploaded,
+            total2
+          );
+          (0, import_a11y13.speak)(
+            isFullSuccess ? (0, import_i18n354.__)("Media upload complete") : content2,
+            "polite"
+          );
+          if (!dismissedRef.current) {
+            createNotice("info", content2, {
+              id: NOTICE_ID,
+              type: "snackbar",
+              isDismissible: false,
+              explicitDismiss: false,
+              speak: false,
+              // No checkmark on a partial batch — some of it failed.
+              icon: isFullSuccess ? UPLOAD_DONE : void 0,
+              onDismiss: () => {
+                dismissedRef.current = true;
+              }
+            });
+            completionTimeoutRef.current = setTimeout(() => {
+              removeNotice(NOTICE_ID);
+              completionTimeoutRef.current = null;
+              peakRef.current = 0;
+            }, COMPLETION_DISPLAY_MS);
+          } else {
+            peakRef.current = 0;
+          }
         }
       }
       wasUploadingRef.current = isUploading;
@@ -102110,6 +102151,7 @@ If there's a particular need for this, please submit a feature request at https:
       remaining,
       sessionTotal,
       csmOriginals,
+      csmFailureCount,
       tracker,
       createNotice,
       removeNotice
