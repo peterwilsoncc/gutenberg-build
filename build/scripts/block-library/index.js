@@ -29319,6 +29319,13 @@ ${url}
   function defaultColumnsNumber(imageCount) {
     return imageCount ? Math.min(3, imageCount) : 3;
   }
+  function isObject(value) {
+    return !!value && typeof value === "object" && !Array.isArray(value);
+  }
+  function isGalleryFlexLayout(layout) {
+    const layoutType = isObject(layout) ? layout.type : void 0;
+    return typeof layoutType !== "string" || layoutType === "" || layoutType === "flex";
+  }
   var pickRelevantMediaFiles = (image, sizeSlug = "large") => {
     const imageProps = Object.fromEntries(
       Object.entries(image ?? {}).filter(
@@ -30529,9 +30536,10 @@ ${url}
       )
     ] });
   }
-  function GalleryImagesPreview({ imageBlocks }) {
+  function GalleryImagesPreview({ imageBlocks, layout }) {
     const { children, ref, className } = (0, import_block_editor97.__experimentalUseBlockPreview)({
-      blocks: imageBlocks
+      blocks: imageBlocks,
+      layout
     });
     return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
       "div",
@@ -30563,6 +30571,10 @@ ${url}
     } = dynamic;
     const blockEditingMode = (0, import_block_editor97.useBlockEditingMode)();
     const [isConfirmingDetach, setIsConfirmingDetach] = (0, import_element44.useState)(false);
+    const previewLayout = (0, import_element44.useMemo)(
+      () => isGalleryFlexLayout(attributes.layout) ? { ...attributes.layout, type: "flex" } : attributes.layout,
+      [attributes.layout]
+    );
     const emptyInstructions = isResolvingDynamic ? (0, import_i18n79.__)("Loading images\u2026") : sourceDescriptor?.emptyMessage ?? (0, import_i18n79.__)("Dynamic images will appear here.");
     return /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(import_jsx_runtime274.Fragment, { children: [
       blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(import_jsx_runtime274.Fragment, { children: [
@@ -30589,7 +30601,8 @@ ${url}
         dynamicImageBlocks.length ? /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(import_block_editor97.BlockContextProvider, { value: galleryContext, children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
           GalleryImagesPreview,
           {
-            imageBlocks: dynamicImageBlocks
+            imageBlocks: dynamicImageBlocks,
+            layout: previewLayout
           }
         ) }) : /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
           import_components45.Placeholder,
@@ -36627,7 +36640,8 @@ ${text}
       setOffsetTop(imageElement?.offsetTop ?? 0);
     }, [imageElement]);
     const setRefs = (0, import_compose24.useMergeRefs)([setImageElement, setResizeObserved]);
-    const { allowResize = true } = context;
+    const { allowResize = true, imageCrop = false } = context;
+    const isCroppedGalleryImage = imageCrop && parentLayoutType === "flex";
     const { image, attachmentResolutionError } = (0, import_data51.useSelect)(
       (select10) => {
         const imageRecord = id && isSingleSelected ? select10(import_core_data26.store).getEntityRecord(
@@ -37351,10 +37365,12 @@ ${text}
               } else if (width !== void 0 && width !== null) {
                 style2.width = typeof width === "number" ? `${width}px` : width;
               }
-              if (height === "auto" || height === void 0 || height === null) {
+              if (height === "auto") {
                 style2.height = "auto";
-              } else {
+              } else if (height !== void 0 && height !== null) {
                 style2.height = typeof height === "number" ? `${height}px` : height;
+              } else if (!isCroppedGalleryImage) {
+                style2.height = "auto";
               }
               return style2;
             })(),
@@ -68105,7 +68121,7 @@ ${text}
   }
 
   // packages/block-library/build-module/block/deprecated.mjs
-  var isObject = (obj) => typeof obj === "object" && !Array.isArray(obj) && obj !== null;
+  var isObject2 = (obj) => typeof obj === "object" && !Array.isArray(obj) && obj !== null;
   var v219 = {
     attributes: {
       ref: {
@@ -68128,7 +68144,7 @@ ${text}
     // the likelihood, it doesn't solve it completely.
     isEligible({ content }) {
       return !!content && Object.keys(content).every(
-        (contentKey) => content[contentKey].values && isObject(content[contentKey].values)
+        (contentKey) => content[contentKey].values && isObject2(content[contentKey].values)
       );
     },
     /*
