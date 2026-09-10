@@ -7597,7 +7597,8 @@ mark.wp-note {
   display: block;
   color: #757575;
   font-size: 12px;
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: anywhere;
 }
 
 .editor-post-publish-panel__header-publish-button,
@@ -7660,7 +7661,8 @@ mark.wp-note {
 .post-publish-panel__postpublish .components-panel__body {
   border-bottom: 1px solid #e0e0e0;
   border-top: none;
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: anywhere;
 }
 
 .post-publish-panel__postpublish-buttons {
