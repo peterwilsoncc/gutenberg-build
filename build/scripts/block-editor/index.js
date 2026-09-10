@@ -83509,10 +83509,13 @@ var wp;
   var import_jsx_runtime451 = __toESM(require_jsx_runtime(), 1);
   var { getViewportBreakpoints: getViewportBreakpoints5 } = unlock(privateApis);
   var PSEUDO_STATE_LABELS = {
-    ":hover": (0, import_i18n212.__)("Hover"),
-    ":focus": (0, import_i18n212.__)("Focus"),
-    ":focus-visible": (0, import_i18n212.__)("Focus-visible"),
-    ":active": (0, import_i18n212.__)("Active")
+    ":hover": (0, import_i18n212._x)("Hover", "Name for the CSS pseudo-class selector"),
+    ":focus": (0, import_i18n212._x)("Focus", "Name for the CSS pseudo-class selector"),
+    ":focus-visible": (0, import_i18n212._x)(
+      "Focus-visible",
+      "Name for the CSS pseudo-class selector"
+    ),
+    ":active": (0, import_i18n212._x)("Active", "Name for the CSS pseudo-class selector")
   };
   var RESPONSIVE_STATE_LABELS = {
     "@tablet": (0, import_i18n212.__)("Tablet"),
