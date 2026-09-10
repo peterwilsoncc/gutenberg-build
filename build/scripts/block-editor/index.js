@@ -19407,6 +19407,9 @@ var wp;
     }
     return alignmentInfo;
   }
+  function normalizeLegacyLayout(layout) {
+    return layout?.inherit || layout?.contentSize || layout?.wideSize ? { ...layout, type: "constrained" } : layout;
+  }
 
   // packages/block-editor/build-module/components/spacing-sizes-control/utils.mjs
   var import_i18n11 = __toESM(require_i18n(), 1);
@@ -66576,7 +66579,11 @@ var wp;
     );
     const defaultLayoutBlockSupport = (0, import_blocks49.getBlockSupport)(name, "layout") || (0, import_blocks49.getBlockSupport)(name, "__experimentalLayout") || EMPTY_OBJECT2;
     const { allowSizingOnChildren = false } = defaultLayoutBlockSupport;
-    const usedLayout = layout || defaultLayoutBlockSupport.default || EMPTY_OBJECT2;
+    const normalizedLayout = (0, import_element169.useMemo)(
+      () => normalizeLegacyLayout(layout),
+      [layout]
+    );
+    const usedLayout = normalizedLayout || defaultLayoutBlockSupport.default || EMPTY_OBJECT2;
     const memoedLayout = (0, import_element169.useMemo)(
       () => ({
         // Default layout will know about any content/wide size defined by the theme.
