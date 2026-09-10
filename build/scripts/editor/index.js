@@ -42029,6 +42029,13 @@ var wp;
     validity
   }) {
     const value = field.getValue({ item: data });
+    const canUpload = (0, import_data8.useSelect)(
+      (select9) => select9(import_core_data7.store).canUser("create", {
+        kind: "postType",
+        name: "attachment"
+      }) ?? true,
+      []
+    );
     const [isTouched, setIsTouched] = (0, import_element102.useState)(false);
     const validityTargetRef = (0, import_element102.useRef)(null);
     const [customValidity, setCustomValidity] = (0, import_element102.useState)(void 0);
@@ -42240,6 +42247,15 @@ var wp;
       },
       [isTouched]
     );
+    if (!canUpload) {
+      return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)("fieldset", { className: "fields__media-edit", "data-field-id": field.id, children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(import_components4.__experimentalText, { children: (0, import_i18n25.sprintf)(
+        /* translators: %s: The field label. */
+        (0, import_i18n25.__)(
+          "%s: To edit this field, you need permission to upload media."
+        ),
+        field.label
+      ) }) });
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(Stack, { direction: "column", gap: "sm", onBlur, children: [
       /* @__PURE__ */ (0, import_jsx_runtime207.jsx)("fieldset", { className: "fields__media-edit", "data-field-id": field.id, children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
         ConditionalMediaUpload,

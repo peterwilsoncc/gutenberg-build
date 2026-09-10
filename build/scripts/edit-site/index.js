@@ -58721,6 +58721,13 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const value = field.getValue({ item: data });
+    const canUpload = (0, import_data39.useSelect)(
+      (select4) => select4(import_core_data22.store).canUser("create", {
+        kind: "postType",
+        name: "attachment"
+      }) ?? true,
+      []
+    );
     const [isTouched, setIsTouched] = (0, import_element189.useState)(false);
     const validityTargetRef = (0, import_element189.useRef)(null);
     const [customValidity, setCustomValidity] = (0, import_element189.useState)(void 0);
@@ -58932,6 +58939,15 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [isTouched]
     );
+    if (!canUpload) {
+      return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("fieldset", { className: "fields__media-edit", "data-field-id": field.id, children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_components73.__experimentalText, { children: (0, import_i18n85.sprintf)(
+        /* translators: %s: The field label. */
+        (0, import_i18n85.__)(
+          "%s: To edit this field, you need permission to upload media."
+        ),
+        field.label
+      ) }) });
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)(Stack, { direction: "column", gap: "sm", onBlur, children: [
       /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("fieldset", { className: "fields__media-edit", "data-field-id": field.id, children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
         ConditionalMediaUpload,
