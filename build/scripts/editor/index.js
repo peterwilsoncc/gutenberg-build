@@ -107667,7 +107667,7 @@ ${content}
           MediaUploadModalWithPostContext,
           {
             allowedTypes,
-            multiple,
+            multiple: !!multiple,
             value,
             onSelect: (media) => {
               onSelect(media);
