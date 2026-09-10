@@ -1638,7 +1638,7 @@ var wp;
         };
         try {
           new Event("test");
-        } catch (e2) {
+        } catch (e3) {
           createEvent = function createEvent2(name) {
             var evt = document.createEvent("Event");
             evt.initEvent(name, true, false);
@@ -1931,12 +1931,12 @@ var wp;
         }
         return t3;
       };
-      var __rest = exports && exports.__rest || function(s2, e2) {
+      var __rest = exports && exports.__rest || function(s2, e3) {
         var t3 = {};
-        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0)
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e3.indexOf(p2) < 0)
           t3[p2] = s2[p2];
         if (s2 != null && typeof Object.getOwnPropertySymbols === "function") {
-          for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) if (e2.indexOf(p2[i2]) < 0)
+          for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) if (e3.indexOf(p2[i2]) < 0)
             t3[p2[i2]] = s2[p2[i2]];
         }
         return t3;
@@ -1958,9 +1958,9 @@ var wp;
               lineHeight: null
             };
             _this.textarea = null;
-            _this.onResize = function(e2) {
+            _this.onResize = function(e3) {
               if (_this.props.onResize) {
-                _this.props.onResize(e2);
+                _this.props.onResize(e3);
               }
             };
             _this.updateLineHeight = function() {
@@ -1970,10 +1970,10 @@ var wp;
                 });
               }
             };
-            _this.onChange = function(e2) {
+            _this.onChange = function(e3) {
               var onChange = _this.props.onChange;
-              _this.currentValue = e2.currentTarget.value;
-              onChange && onChange(e2);
+              _this.currentValue = e3.currentTarget.value;
+              onChange && onChange(e3);
             };
             return _this;
           }
@@ -3505,8 +3505,8 @@ var wp;
             let result;
             try {
               result = callback(child, index2);
-            } catch (e2) {
-              throw child.addToError(e2);
+            } catch (e3) {
+              throw child.addToError(e3);
             }
             if (result === false) {
               for (let opened of stack) {
@@ -5360,19 +5360,19 @@ var wp;
         let parser = new Parser2(input);
         try {
           parser.parse();
-        } catch (e2) {
+        } catch (e3) {
           if (true) {
-            if (e2.name === "CssSyntaxError" && opts && opts.from) {
+            if (e3.name === "CssSyntaxError" && opts && opts.from) {
               if (/\.scss$/i.test(opts.from)) {
-                e2.message += "\nYou tried to parse SCSS with the standard CSS parser; try again with the postcss-scss parser";
+                e3.message += "\nYou tried to parse SCSS with the standard CSS parser; try again with the postcss-scss parser";
               } else if (/\.sass/i.test(opts.from)) {
-                e2.message += "\nYou tried to parse Sass with the standard CSS parser; try again with the postcss-sass parser";
+                e3.message += "\nYou tried to parse Sass with the standard CSS parser; try again with the postcss-sass parser";
               } else if (/\.less$/i.test(opts.from)) {
-                e2.message += "\nYou tried to parse Less with the standard CSS parser; try again with the postcss-less parser";
+                e3.message += "\nYou tried to parse Less with the standard CSS parser; try again with the postcss-less parser";
               }
             }
           }
-          throw e2;
+          throw e3;
         }
         return parser.root;
       }
@@ -5746,9 +5746,9 @@ var wp;
                 if (isPromise(promise)) {
                   try {
                     await promise;
-                  } catch (e2) {
+                  } catch (e3) {
                     let node = stack[stack.length - 1].node;
-                    throw this.handleError(e2, node);
+                    throw this.handleError(e3, node);
                   }
                 }
               }
@@ -5765,8 +5765,8 @@ var wp;
                   } else {
                     await visitor(root, this.helpers);
                   }
-                } catch (e2) {
-                  throw this.handleError(e2);
+                } catch (e3) {
+                  throw this.handleError(e3);
                 }
               }
             }
@@ -5871,8 +5871,8 @@ var wp;
             let promise;
             try {
               promise = visitor(node, this.helpers);
-            } catch (e2) {
-              throw this.handleError(e2, node.proxyOf);
+            } catch (e3) {
+              throw this.handleError(e3, node.proxyOf);
             }
             if (node.type !== "root" && node.type !== "document" && !node.parent) {
               return true;
@@ -5899,8 +5899,8 @@ var wp;
             this.result.lastPlugin = plugin;
             try {
               return visitor(node.toProxy(), this.helpers);
-            } catch (e2) {
-              throw this.handleError(e2, node);
+            } catch (e3) {
+              throw this.handleError(e3, node);
             }
           }
           if (visit.iterator !== 0) {
@@ -7271,17 +7271,17 @@ var wp;
   });
 
   // node_modules/clsx/dist/clsx.mjs
-  function r(e2) {
+  function r(e3) {
     var t3, f2, n2 = "";
-    if ("string" == typeof e2 || "number" == typeof e2) n2 += e2;
-    else if ("object" == typeof e2) if (Array.isArray(e2)) {
-      var o3 = e2.length;
-      for (t3 = 0; t3 < o3; t3++) e2[t3] && (f2 = r(e2[t3])) && (n2 && (n2 += " "), n2 += f2);
-    } else for (f2 in e2) e2[f2] && (n2 && (n2 += " "), n2 += f2);
+    if ("string" == typeof e3 || "number" == typeof e3) n2 += e3;
+    else if ("object" == typeof e3) if (Array.isArray(e3)) {
+      var o3 = e3.length;
+      for (t3 = 0; t3 < o3; t3++) e3[t3] && (f2 = r(e3[t3])) && (n2 && (n2 += " "), n2 += f2);
+    } else for (f2 in e3) e3[f2] && (n2 && (n2 += " "), n2 += f2);
     return n2;
   }
   function clsx() {
-    for (var e2, t3, f2 = 0, n2 = "", o3 = arguments.length; f2 < o3; f2++) (e2 = arguments[f2]) && (t3 = r(e2)) && (n2 && (n2 += " "), n2 += t3);
+    for (var e3, t3, f2 = 0, n2 = "", o3 = arguments.length; f2 < o3; f2++) (e3 = arguments[f2]) && (t3 = r(e3)) && (n2 && (n2 += " "), n2 += t3);
     return n2;
   }
   var clsx_default = clsx;
@@ -7319,180 +7319,180 @@ var wp;
 
   // node_modules/colord/index.mjs
   var r2 = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) };
-  var t = function(r3) {
-    return "string" == typeof r3 ? r3.length > 0 : "number" == typeof r3;
+  var t = function(r4) {
+    return "string" == typeof r4 ? r4.length > 0 : "number" == typeof r4;
   };
-  var n = function(r3, t3, n2) {
-    return void 0 === t3 && (t3 = 0), void 0 === n2 && (n2 = Math.pow(10, t3)), Math.round(n2 * r3) / n2 + 0;
+  var n = function(r4, t3, n2) {
+    return void 0 === t3 && (t3 = 0), void 0 === n2 && (n2 = Math.pow(10, t3)), Math.round(n2 * r4) / n2 + 0;
   };
-  var e = function(r3, t3, n2) {
-    return void 0 === t3 && (t3 = 0), void 0 === n2 && (n2 = 1), r3 > n2 ? n2 : r3 > t3 ? r3 : t3;
+  var e = function(r4, t3, n2) {
+    return void 0 === t3 && (t3 = 0), void 0 === n2 && (n2 = 1), r4 > n2 ? n2 : r4 > t3 ? r4 : t3;
   };
-  var u = function(r3) {
-    return (r3 = isFinite(r3) ? r3 % 360 : 0) > 0 ? r3 : r3 + 360;
+  var u = function(r4) {
+    return (r4 = isFinite(r4) ? r4 % 360 : 0) > 0 ? r4 : r4 + 360;
   };
-  var a = function(r3) {
-    return { r: e(r3.r, 0, 255), g: e(r3.g, 0, 255), b: e(r3.b, 0, 255), a: e(r3.a) };
+  var a = function(r4) {
+    return { r: e(r4.r, 0, 255), g: e(r4.g, 0, 255), b: e(r4.b, 0, 255), a: e(r4.a) };
   };
-  var o = function(r3) {
-    return { r: n(r3.r), g: n(r3.g), b: n(r3.b), a: n(r3.a, 3) };
+  var o = function(r4) {
+    return { r: n(r4.r), g: n(r4.g), b: n(r4.b), a: n(r4.a, 3) };
   };
   var i = /^#([0-9a-f]{3,8})$/i;
-  var s = function(r3) {
-    var t3 = r3.toString(16);
+  var s = function(r4) {
+    var t3 = r4.toString(16);
     return t3.length < 2 ? "0" + t3 : t3;
   };
-  var h = function(r3) {
-    var t3 = r3.r, n2 = r3.g, e2 = r3.b, u2 = r3.a, a2 = Math.max(t3, n2, e2), o3 = a2 - Math.min(t3, n2, e2), i2 = o3 ? a2 === t3 ? (n2 - e2) / o3 : a2 === n2 ? 2 + (e2 - t3) / o3 : 4 + (t3 - n2) / o3 : 0;
+  var d = function(r4) {
+    var t3 = r4.r, n2 = r4.g, e3 = r4.b, u2 = r4.a, a2 = Math.max(t3, n2, e3), o3 = a2 - Math.min(t3, n2, e3), i2 = o3 ? a2 === t3 ? (n2 - e3) / o3 : a2 === n2 ? 2 + (e3 - t3) / o3 : 4 + (t3 - n2) / o3 : 0;
     return { h: 60 * (i2 < 0 ? i2 + 6 : i2), s: a2 ? o3 / a2 * 100 : 0, v: a2 / 255 * 100, a: u2 };
   };
-  var b = function(r3) {
-    var t3 = r3.h, n2 = r3.s, e2 = r3.v, u2 = r3.a;
-    t3 = t3 / 360 * 6, n2 /= 100, e2 /= 100;
-    var a2 = Math.floor(t3), o3 = e2 * (1 - n2), i2 = e2 * (1 - (t3 - a2) * n2), s2 = e2 * (1 - (1 - t3 + a2) * n2), h2 = a2 % 6;
-    return { r: 255 * [e2, i2, o3, o3, s2, e2][h2], g: 255 * [s2, e2, e2, i2, o3, o3][h2], b: 255 * [o3, o3, s2, e2, e2, i2][h2], a: u2 };
+  var h = function(r4) {
+    var t3 = r4.h, n2 = r4.s, e3 = r4.v, u2 = r4.a;
+    t3 = t3 / 360 * 6, n2 /= 100, e3 /= 100;
+    var a2 = Math.floor(t3), o3 = e3 * (1 - n2), i2 = e3 * (1 - (t3 - a2) * n2), s2 = e3 * (1 - (1 - t3 + a2) * n2), d2 = a2 % 6;
+    return { r: 255 * [e3, i2, o3, o3, s2, e3][d2], g: 255 * [s2, e3, e3, i2, o3, o3][d2], b: 255 * [o3, o3, s2, e3, e3, i2][d2], a: u2 };
   };
-  var g = function(r3) {
-    return { h: u(r3.h), s: e(r3.s, 0, 100), l: e(r3.l, 0, 100), a: e(r3.a) };
+  var b = function(r4) {
+    return { h: u(r4.h), s: e(r4.s, 0, 100), l: e(r4.l, 0, 100), a: e(r4.a) };
   };
-  var d = function(r3) {
-    return { h: n(r3.h), s: n(r3.s), l: n(r3.l), a: n(r3.a, 3) };
+  var g = function(r4) {
+    return { h: n(r4.h), s: n(r4.s), l: n(r4.l), a: n(r4.a, 3) };
   };
-  var f = function(r3) {
-    return b((n2 = (t3 = r3).s, { h: t3.h, s: (n2 *= ((e2 = t3.l) < 50 ? e2 : 100 - e2) / 100) > 0 ? 2 * n2 / (e2 + n2) * 100 : 0, v: e2 + n2, a: t3.a }));
-    var t3, n2, e2;
+  var f = function(r4) {
+    return h((n2 = (t3 = r4).s, { h: t3.h, s: (n2 *= ((e3 = t3.l) < 50 ? e3 : 100 - e3) / 100) > 0 ? 2 * n2 / (e3 + n2) * 100 : 0, v: e3 + n2, a: t3.a }));
+    var t3, n2, e3;
   };
-  var c = function(r3) {
-    return { h: (t3 = h(r3)).h, s: (u2 = (200 - (n2 = t3.s)) * (e2 = t3.v) / 100) > 0 && u2 < 200 ? n2 * e2 / 100 / (u2 <= 100 ? u2 : 200 - u2) * 100 : 0, l: u2 / 2, a: t3.a };
-    var t3, n2, e2, u2;
+  var c = function(r4) {
+    return { h: (t3 = d(r4)).h, s: (u2 = (200 - (n2 = t3.s)) * (e3 = t3.v) / 100) > 0 && u2 < 200 ? n2 * e3 / 100 / (u2 <= 100 ? u2 : 200 - u2) * 100 : 0, l: u2 / 2, a: t3.a };
+    var t3, n2, e3, u2;
   };
-  var l = /^hsla?\(\s*([+-]?\d*\.?\d+)(deg|rad|grad|turn)?\s*,\s*([+-]?\d*\.?\d+)%\s*,\s*([+-]?\d*\.?\d+)%\s*(?:,\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var p = /^hsla?\(\s*([+-]?\d*\.?\d+)(deg|rad|grad|turn)?\s+([+-]?\d*\.?\d+)%\s+([+-]?\d*\.?\d+)%\s*(?:\/\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var v = /^rgba?\(\s*([+-]?\d*\.?\d+)(%)?\s*,\s*([+-]?\d*\.?\d+)(%)?\s*,\s*([+-]?\d*\.?\d+)(%)?\s*(?:,\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var m = /^rgba?\(\s*([+-]?\d*\.?\d+)(%)?\s+([+-]?\d*\.?\d+)(%)?\s+([+-]?\d*\.?\d+)(%)?\s*(?:\/\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var y = { string: [[function(r3) {
-    var t3 = i.exec(r3);
-    return t3 ? (r3 = t3[1]).length <= 4 ? { r: parseInt(r3[0] + r3[0], 16), g: parseInt(r3[1] + r3[1], 16), b: parseInt(r3[2] + r3[2], 16), a: 4 === r3.length ? n(parseInt(r3[3] + r3[3], 16) / 255, 2) : 1 } : 6 === r3.length || 8 === r3.length ? { r: parseInt(r3.substr(0, 2), 16), g: parseInt(r3.substr(2, 2), 16), b: parseInt(r3.substr(4, 2), 16), a: 8 === r3.length ? n(parseInt(r3.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
-  }, "hex"], [function(r3) {
-    var t3 = v.exec(r3) || m.exec(r3);
+  var l = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var p = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var v = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var m = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var y = { string: [[function(r4) {
+    var t3 = i.exec(r4);
+    return t3 ? (r4 = t3[1]).length <= 4 ? { r: parseInt(r4[0] + r4[0], 16), g: parseInt(r4[1] + r4[1], 16), b: parseInt(r4[2] + r4[2], 16), a: 4 === r4.length ? n(parseInt(r4[3] + r4[3], 16) / 255, 2) : 1 } : 6 === r4.length || 8 === r4.length ? { r: parseInt(r4.substr(0, 2), 16), g: parseInt(r4.substr(2, 2), 16), b: parseInt(r4.substr(4, 2), 16), a: 8 === r4.length ? n(parseInt(r4.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
+  }, "hex"], [function(r4) {
+    var t3 = v.exec(r4) || m.exec(r4);
     return t3 ? t3[2] !== t3[4] || t3[4] !== t3[6] ? null : a({ r: Number(t3[1]) / (t3[2] ? 100 / 255 : 1), g: Number(t3[3]) / (t3[4] ? 100 / 255 : 1), b: Number(t3[5]) / (t3[6] ? 100 / 255 : 1), a: void 0 === t3[7] ? 1 : Number(t3[7]) / (t3[8] ? 100 : 1) }) : null;
   }, "rgb"], [function(t3) {
     var n2 = l.exec(t3) || p.exec(t3);
     if (!n2) return null;
-    var e2, u2, a2 = g({ h: (e2 = n2[1], u2 = n2[2], void 0 === u2 && (u2 = "deg"), Number(e2) * (r2[u2] || 1)), s: Number(n2[3]), l: Number(n2[4]), a: void 0 === n2[5] ? 1 : Number(n2[5]) / (n2[6] ? 100 : 1) });
+    var e3, u2, a2 = b({ h: (e3 = n2[1], u2 = n2[2], void 0 === u2 && (u2 = "deg"), Number(e3) * (r2[u2] || 1)), s: Number(n2[3]), l: Number(n2[4]), a: void 0 === n2[5] ? 1 : Number(n2[5]) / (n2[6] ? 100 : 1) });
     return f(a2);
-  }, "hsl"]], object: [[function(r3) {
-    var n2 = r3.r, e2 = r3.g, u2 = r3.b, o3 = r3.a, i2 = void 0 === o3 ? 1 : o3;
-    return t(n2) && t(e2) && t(u2) ? a({ r: Number(n2), g: Number(e2), b: Number(u2), a: Number(i2) }) : null;
-  }, "rgb"], [function(r3) {
-    var n2 = r3.h, e2 = r3.s, u2 = r3.l, a2 = r3.a, o3 = void 0 === a2 ? 1 : a2;
-    if (!t(n2) || !t(e2) || !t(u2)) return null;
-    var i2 = g({ h: Number(n2), s: Number(e2), l: Number(u2), a: Number(o3) });
+  }, "hsl"]], object: [[function(r4) {
+    var n2 = r4.r, e3 = r4.g, u2 = r4.b, o3 = r4.a, i2 = void 0 === o3 ? 1 : o3;
+    return t(n2) && t(e3) && t(u2) ? a({ r: Number(n2), g: Number(e3), b: Number(u2), a: Number(i2) }) : null;
+  }, "rgb"], [function(r4) {
+    var n2 = r4.h, e3 = r4.s, u2 = r4.l, a2 = r4.a, o3 = void 0 === a2 ? 1 : a2;
+    if (!t(n2) || !t(e3) || !t(u2)) return null;
+    var i2 = b({ h: Number(n2), s: Number(e3), l: Number(u2), a: Number(o3) });
     return f(i2);
-  }, "hsl"], [function(r3) {
-    var n2 = r3.h, a2 = r3.s, o3 = r3.v, i2 = r3.a, s2 = void 0 === i2 ? 1 : i2;
+  }, "hsl"], [function(r4) {
+    var n2 = r4.h, a2 = r4.s, o3 = r4.v, i2 = r4.a, s2 = void 0 === i2 ? 1 : i2;
     if (!t(n2) || !t(a2) || !t(o3)) return null;
-    var h2 = (function(r4) {
-      return { h: u(r4.h), s: e(r4.s, 0, 100), v: e(r4.v, 0, 100), a: e(r4.a) };
+    var d2 = (function(r5) {
+      return { h: u(r5.h), s: e(r5.s, 0, 100), v: e(r5.v, 0, 100), a: e(r5.a) };
     })({ h: Number(n2), s: Number(a2), v: Number(o3), a: Number(s2) });
-    return b(h2);
+    return h(d2);
   }, "hsv"]] };
-  var N = function(r3, t3) {
+  var N = function(r4, t3) {
     for (var n2 = 0; n2 < t3.length; n2++) {
-      var e2 = t3[n2][0](r3);
-      if (e2) return [e2, t3[n2][1]];
+      var e3 = t3[n2][0](r4);
+      if (e3) return [e3, t3[n2][1]];
     }
     return [null, void 0];
   };
-  var x = function(r3) {
-    return "string" == typeof r3 ? N(r3.trim(), y.string) : "object" == typeof r3 && null !== r3 ? N(r3, y.object) : [null, void 0];
+  var x = function(r4) {
+    return "string" == typeof r4 ? N(r4.trim(), y.string) : "object" == typeof r4 && null !== r4 ? N(r4, y.object) : [null, void 0];
   };
-  var M = function(r3, t3) {
-    var n2 = c(r3);
+  var M = function(r4, t3) {
+    var n2 = c(r4);
     return { h: n2.h, s: e(n2.s + 100 * t3, 0, 100), l: n2.l, a: n2.a };
   };
-  var H = function(r3) {
-    return (299 * r3.r + 587 * r3.g + 114 * r3.b) / 1e3 / 255;
+  var H = function(r4) {
+    return (299 * r4.r + 587 * r4.g + 114 * r4.b) / 1e3 / 255;
   };
-  var $ = function(r3, t3) {
-    var n2 = c(r3);
+  var $ = function(r4, t3) {
+    var n2 = c(r4);
     return { h: n2.h, s: n2.s, l: e(n2.l + 100 * t3, 0, 100), a: n2.a };
   };
   var j = (function() {
-    function r3(r4) {
-      this.parsed = x(r4)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
+    function r4(r5) {
+      this.parsed = x(r5)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
     }
-    return r3.prototype.isValid = function() {
+    return r4.prototype.isValid = function() {
       return null !== this.parsed;
-    }, r3.prototype.brightness = function() {
+    }, r4.prototype.brightness = function() {
       return n(H(this.rgba), 2);
-    }, r3.prototype.isDark = function() {
+    }, r4.prototype.isDark = function() {
       return H(this.rgba) < 0.5;
-    }, r3.prototype.isLight = function() {
+    }, r4.prototype.isLight = function() {
       return H(this.rgba) >= 0.5;
-    }, r3.prototype.toHex = function() {
-      return r4 = o(this.rgba), t3 = r4.r, e2 = r4.g, u2 = r4.b, i2 = (a2 = r4.a) < 1 ? s(n(255 * a2)) : "", "#" + s(t3) + s(e2) + s(u2) + i2;
-      var r4, t3, e2, u2, a2, i2;
-    }, r3.prototype.toRgb = function() {
+    }, r4.prototype.toHex = function() {
+      return r5 = o(this.rgba), t3 = r5.r, e3 = r5.g, u2 = r5.b, i2 = (a2 = r5.a) < 1 ? s(n(255 * a2)) : "", "#" + s(t3) + s(e3) + s(u2) + i2;
+      var r5, t3, e3, u2, a2, i2;
+    }, r4.prototype.toRgb = function() {
       return o(this.rgba);
-    }, r3.prototype.toRgbString = function() {
-      return r4 = o(this.rgba), t3 = r4.r, n2 = r4.g, e2 = r4.b, (u2 = r4.a) < 1 ? "rgba(" + t3 + ", " + n2 + ", " + e2 + ", " + u2 + ")" : "rgb(" + t3 + ", " + n2 + ", " + e2 + ")";
-      var r4, t3, n2, e2, u2;
-    }, r3.prototype.toHsl = function() {
-      return d(c(this.rgba));
-    }, r3.prototype.toHslString = function() {
-      return r4 = d(c(this.rgba)), t3 = r4.h, n2 = r4.s, e2 = r4.l, (u2 = r4.a) < 1 ? "hsla(" + t3 + ", " + n2 + "%, " + e2 + "%, " + u2 + ")" : "hsl(" + t3 + ", " + n2 + "%, " + e2 + "%)";
-      var r4, t3, n2, e2, u2;
-    }, r3.prototype.toHsv = function() {
-      return r4 = h(this.rgba), { h: n(r4.h), s: n(r4.s), v: n(r4.v), a: n(r4.a, 3) };
-      var r4;
-    }, r3.prototype.invert = function() {
-      return w({ r: 255 - (r4 = this.rgba).r, g: 255 - r4.g, b: 255 - r4.b, a: r4.a });
-      var r4;
-    }, r3.prototype.saturate = function(r4) {
-      return void 0 === r4 && (r4 = 0.1), w(M(this.rgba, r4));
-    }, r3.prototype.desaturate = function(r4) {
-      return void 0 === r4 && (r4 = 0.1), w(M(this.rgba, -r4));
-    }, r3.prototype.grayscale = function() {
+    }, r4.prototype.toRgbString = function() {
+      return r5 = o(this.rgba), t3 = r5.r, n2 = r5.g, e3 = r5.b, (u2 = r5.a) < 1 ? "rgba(" + t3 + ", " + n2 + ", " + e3 + ", " + u2 + ")" : "rgb(" + t3 + ", " + n2 + ", " + e3 + ")";
+      var r5, t3, n2, e3, u2;
+    }, r4.prototype.toHsl = function() {
+      return g(c(this.rgba));
+    }, r4.prototype.toHslString = function() {
+      return r5 = g(c(this.rgba)), t3 = r5.h, n2 = r5.s, e3 = r5.l, (u2 = r5.a) < 1 ? "hsla(" + t3 + ", " + n2 + "%, " + e3 + "%, " + u2 + ")" : "hsl(" + t3 + ", " + n2 + "%, " + e3 + "%)";
+      var r5, t3, n2, e3, u2;
+    }, r4.prototype.toHsv = function() {
+      return r5 = d(this.rgba), { h: n(r5.h), s: n(r5.s), v: n(r5.v), a: n(r5.a, 3) };
+      var r5;
+    }, r4.prototype.invert = function() {
+      return w({ r: 255 - (r5 = this.rgba).r, g: 255 - r5.g, b: 255 - r5.b, a: r5.a });
+      var r5;
+    }, r4.prototype.saturate = function(r5) {
+      return void 0 === r5 && (r5 = 0.1), w(M(this.rgba, r5));
+    }, r4.prototype.desaturate = function(r5) {
+      return void 0 === r5 && (r5 = 0.1), w(M(this.rgba, -r5));
+    }, r4.prototype.grayscale = function() {
       return w(M(this.rgba, -1));
-    }, r3.prototype.lighten = function(r4) {
-      return void 0 === r4 && (r4 = 0.1), w($(this.rgba, r4));
-    }, r3.prototype.darken = function(r4) {
-      return void 0 === r4 && (r4 = 0.1), w($(this.rgba, -r4));
-    }, r3.prototype.rotate = function(r4) {
-      return void 0 === r4 && (r4 = 15), this.hue(this.hue() + r4);
-    }, r3.prototype.alpha = function(r4) {
-      return "number" == typeof r4 ? w({ r: (t3 = this.rgba).r, g: t3.g, b: t3.b, a: r4 }) : n(this.rgba.a, 3);
+    }, r4.prototype.lighten = function(r5) {
+      return void 0 === r5 && (r5 = 0.1), w($(this.rgba, r5));
+    }, r4.prototype.darken = function(r5) {
+      return void 0 === r5 && (r5 = 0.1), w($(this.rgba, -r5));
+    }, r4.prototype.rotate = function(r5) {
+      return void 0 === r5 && (r5 = 15), this.hue(this.hue() + r5);
+    }, r4.prototype.alpha = function(r5) {
+      return "number" == typeof r5 ? w({ r: (t3 = this.rgba).r, g: t3.g, b: t3.b, a: r5 }) : n(this.rgba.a, 3);
       var t3;
-    }, r3.prototype.hue = function(r4) {
+    }, r4.prototype.hue = function(r5) {
       var t3 = c(this.rgba);
-      return "number" == typeof r4 ? w({ h: r4, s: t3.s, l: t3.l, a: t3.a }) : n(t3.h);
-    }, r3.prototype.isEqual = function(r4) {
-      return this.toHex() === w(r4).toHex();
-    }, r3;
+      return "number" == typeof r5 ? w({ h: r5, s: t3.s, l: t3.l, a: t3.a }) : n(t3.h);
+    }, r4.prototype.isEqual = function(r5) {
+      return this.toHex() === w(r5).toHex();
+    }, r4;
   })();
-  var w = function(r3) {
-    return r3 instanceof j ? r3 : new j(r3);
+  var w = function(r4) {
+    return r4 instanceof j ? r4 : new j(r4);
   };
   var S = [];
-  var k = function(r3) {
-    r3.forEach(function(r4) {
-      S.indexOf(r4) < 0 && (r4(j, y), S.push(r4));
+  var k = function(r4) {
+    r4.forEach(function(r5) {
+      S.indexOf(r5) < 0 && (r5(j, y), S.push(r5));
     });
   };
 
   // node_modules/colord/plugins/names.mjs
-  function names_default(e2, f2) {
-    var a2 = { white: "#ffffff", bisque: "#ffe4c4", blue: "#0000ff", cadetblue: "#5f9ea0", chartreuse: "#7fff00", chocolate: "#d2691e", coral: "#ff7f50", antiquewhite: "#faebd7", aqua: "#00ffff", azure: "#f0ffff", whitesmoke: "#f5f5f5", papayawhip: "#ffefd5", plum: "#dda0dd", blanchedalmond: "#ffebcd", black: "#000000", gold: "#ffd700", goldenrod: "#daa520", gainsboro: "#dcdcdc", cornsilk: "#fff8dc", cornflowerblue: "#6495ed", burlywood: "#deb887", aquamarine: "#7fffd4", beige: "#f5f5dc", crimson: "#dc143c", cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkkhaki: "#bdb76b", darkgray: "#a9a9a9", darkgreen: "#006400", darkgrey: "#a9a9a9", peachpuff: "#ffdab9", darkmagenta: "#8b008b", darkred: "#8b0000", darkorchid: "#9932cc", darkorange: "#ff8c00", darkslateblue: "#483d8b", gray: "#808080", darkslategray: "#2f4f4f", darkslategrey: "#2f4f4f", deeppink: "#ff1493", deepskyblue: "#00bfff", wheat: "#f5deb3", firebrick: "#b22222", floralwhite: "#fffaf0", ghostwhite: "#f8f8ff", darkviolet: "#9400d3", magenta: "#ff00ff", green: "#008000", dodgerblue: "#1e90ff", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", blueviolet: "#8a2be2", forestgreen: "#228b22", lawngreen: "#7cfc00", indianred: "#cd5c5c", indigo: "#4b0082", fuchsia: "#ff00ff", brown: "#a52a2a", maroon: "#800000", mediumblue: "#0000cd", lightcoral: "#f08080", darkturquoise: "#00ced1", lightcyan: "#e0ffff", ivory: "#fffff0", lightyellow: "#ffffe0", lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", linen: "#faf0e6", mediumaquamarine: "#66cdaa", lemonchiffon: "#fffacd", lime: "#00ff00", khaki: "#f0e68c", mediumseagreen: "#3cb371", limegreen: "#32cd32", mediumspringgreen: "#00fa9a", lightskyblue: "#87cefa", lightblue: "#add8e6", midnightblue: "#191970", lightpink: "#ffb6c1", mistyrose: "#ffe4e1", moccasin: "#ffe4b5", mintcream: "#f5fffa", lightslategray: "#778899", lightslategrey: "#778899", navajowhite: "#ffdead", navy: "#000080", mediumvioletred: "#c71585", powderblue: "#b0e0e6", palegoldenrod: "#eee8aa", oldlace: "#fdf5e6", paleturquoise: "#afeeee", mediumturquoise: "#48d1cc", mediumorchid: "#ba55d3", rebeccapurple: "#663399", lightsteelblue: "#b0c4de", mediumslateblue: "#7b68ee", thistle: "#d8bfd8", tan: "#d2b48c", orchid: "#da70d6", mediumpurple: "#9370db", purple: "#800080", pink: "#ffc0cb", skyblue: "#87ceeb", springgreen: "#00ff7f", palegreen: "#98fb98", red: "#ff0000", yellow: "#ffff00", slateblue: "#6a5acd", lavenderblush: "#fff0f5", peru: "#cd853f", palevioletred: "#db7093", violet: "#ee82ee", teal: "#008080", slategray: "#708090", slategrey: "#708090", aliceblue: "#f0f8ff", darkseagreen: "#8fbc8f", darkolivegreen: "#556b2f", greenyellow: "#adff2f", seagreen: "#2e8b57", seashell: "#fff5ee", tomato: "#ff6347", silver: "#c0c0c0", sienna: "#a0522d", lavender: "#e6e6fa", lightgreen: "#90ee90", orange: "#ffa500", orangered: "#ff4500", steelblue: "#4682b4", royalblue: "#4169e1", turquoise: "#40e0d0", yellowgreen: "#9acd32", salmon: "#fa8072", saddlebrown: "#8b4513", sandybrown: "#f4a460", rosybrown: "#bc8f8f", darksalmon: "#e9967a", lightgoldenrodyellow: "#fafad2", snow: "#fffafa", lightgrey: "#d3d3d3", lightgray: "#d3d3d3", dimgray: "#696969", dimgrey: "#696969", olivedrab: "#6b8e23", olive: "#808000" }, r3 = {};
-    for (var d2 in a2) r3[a2[d2]] = d2;
+  var e2 = function(e3, f2) {
+    var a2 = { white: "#ffffff", bisque: "#ffe4c4", blue: "#0000ff", cadetblue: "#5f9ea0", chartreuse: "#7fff00", chocolate: "#d2691e", coral: "#ff7f50", antiquewhite: "#faebd7", aqua: "#00ffff", azure: "#f0ffff", whitesmoke: "#f5f5f5", papayawhip: "#ffefd5", plum: "#dda0dd", blanchedalmond: "#ffebcd", black: "#000000", gold: "#ffd700", goldenrod: "#daa520", gainsboro: "#dcdcdc", cornsilk: "#fff8dc", cornflowerblue: "#6495ed", burlywood: "#deb887", aquamarine: "#7fffd4", beige: "#f5f5dc", crimson: "#dc143c", cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkkhaki: "#bdb76b", darkgray: "#a9a9a9", darkgreen: "#006400", darkgrey: "#a9a9a9", peachpuff: "#ffdab9", darkmagenta: "#8b008b", darkred: "#8b0000", darkorchid: "#9932cc", darkorange: "#ff8c00", darkslateblue: "#483d8b", gray: "#808080", darkslategray: "#2f4f4f", darkslategrey: "#2f4f4f", deeppink: "#ff1493", deepskyblue: "#00bfff", wheat: "#f5deb3", firebrick: "#b22222", floralwhite: "#fffaf0", ghostwhite: "#f8f8ff", darkviolet: "#9400d3", magenta: "#ff00ff", green: "#008000", dodgerblue: "#1e90ff", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", blueviolet: "#8a2be2", forestgreen: "#228b22", lawngreen: "#7cfc00", indianred: "#cd5c5c", indigo: "#4b0082", fuchsia: "#ff00ff", brown: "#a52a2a", maroon: "#800000", mediumblue: "#0000cd", lightcoral: "#f08080", darkturquoise: "#00ced1", lightcyan: "#e0ffff", ivory: "#fffff0", lightyellow: "#ffffe0", lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", linen: "#faf0e6", mediumaquamarine: "#66cdaa", lemonchiffon: "#fffacd", lime: "#00ff00", khaki: "#f0e68c", mediumseagreen: "#3cb371", limegreen: "#32cd32", mediumspringgreen: "#00fa9a", lightskyblue: "#87cefa", lightblue: "#add8e6", midnightblue: "#191970", lightpink: "#ffb6c1", mistyrose: "#ffe4e1", moccasin: "#ffe4b5", mintcream: "#f5fffa", lightslategray: "#778899", lightslategrey: "#778899", navajowhite: "#ffdead", navy: "#000080", mediumvioletred: "#c71585", powderblue: "#b0e0e6", palegoldenrod: "#eee8aa", oldlace: "#fdf5e6", paleturquoise: "#afeeee", mediumturquoise: "#48d1cc", mediumorchid: "#ba55d3", rebeccapurple: "#663399", lightsteelblue: "#b0c4de", mediumslateblue: "#7b68ee", thistle: "#d8bfd8", tan: "#d2b48c", orchid: "#da70d6", mediumpurple: "#9370db", purple: "#800080", pink: "#ffc0cb", skyblue: "#87ceeb", springgreen: "#00ff7f", palegreen: "#98fb98", red: "#ff0000", yellow: "#ffff00", slateblue: "#6a5acd", lavenderblush: "#fff0f5", peru: "#cd853f", palevioletred: "#db7093", violet: "#ee82ee", teal: "#008080", slategray: "#708090", slategrey: "#708090", aliceblue: "#f0f8ff", darkseagreen: "#8fbc8f", darkolivegreen: "#556b2f", greenyellow: "#adff2f", seagreen: "#2e8b57", seashell: "#fff5ee", tomato: "#ff6347", silver: "#c0c0c0", sienna: "#a0522d", lavender: "#e6e6fa", lightgreen: "#90ee90", orange: "#ffa500", orangered: "#ff4500", steelblue: "#4682b4", royalblue: "#4169e1", turquoise: "#40e0d0", yellowgreen: "#9acd32", salmon: "#fa8072", saddlebrown: "#8b4513", sandybrown: "#f4a460", rosybrown: "#bc8f8f", darksalmon: "#e9967a", lightgoldenrodyellow: "#fafad2", snow: "#fffafa", lightgrey: "#d3d3d3", lightgray: "#d3d3d3", dimgray: "#696969", dimgrey: "#696969", olivedrab: "#6b8e23", olive: "#808000" }, r4 = {};
+    for (var d2 in a2) r4[a2[d2]] = d2;
     var l2 = {};
-    e2.prototype.toName = function(f3) {
+    e3.prototype.toName = function(f3) {
       if (!(this.rgba.a || this.rgba.r || this.rgba.g || this.rgba.b)) return "transparent";
-      var d3, i2, n2 = r3[this.toHex()];
+      var d3, i2, n2 = r4[this.toHex()];
       if (n2) return n2;
       if (null == f3 ? void 0 : f3.closest) {
         var o3 = this.toRgb(), t3 = 1 / 0, b2 = "black";
-        if (!l2.length) for (var c6 in a2) l2[c6] = new e2(a2[c6]).toRgb();
+        if (!l2.length) for (var c6 in a2) l2[c6] = new e3(a2[c6]).toRgb();
         for (var g2 in a2) {
           var u2 = (d3 = o3, i2 = l2[g2], Math.pow(d3.r - i2.r, 2) + Math.pow(d3.g - i2.g, 2) + Math.pow(d3.b - i2.b, 2));
           u2 < t3 && (t3 = u2, b2 = g2);
@@ -7501,10 +7501,10 @@ var wp;
       }
     };
     f2.string.push([function(f3) {
-      var r4 = f3.toLowerCase(), d3 = "transparent" === r4 ? "#0000" : a2[r4];
-      return d3 ? new e2(d3).toRgb() : null;
+      var r5 = f3.toLowerCase(), d3 = "transparent" === r5 ? "#0000" : a2[r5];
+      return d3 ? new e3(d3).toRgb() : null;
     }, "name"]);
-  }
+  };
 
   // node_modules/colord/plugins/a11y.mjs
   var o2 = function(o3) {
@@ -7514,19 +7514,19 @@ var wp;
   var t2 = function(t3) {
     return 0.2126 * o2(t3.r) + 0.7152 * o2(t3.g) + 0.0722 * o2(t3.b);
   };
-  function a11y_default(o3) {
+  var r3 = function(o3) {
     o3.prototype.luminance = function() {
-      return o4 = t2(this.rgba), void 0 === (r3 = 2) && (r3 = 0), void 0 === n2 && (n2 = Math.pow(10, r3)), Math.round(n2 * o4) / n2 + 0;
-      var o4, r3, n2;
-    }, o3.prototype.contrast = function(r3) {
-      void 0 === r3 && (r3 = "#FFF");
-      var n2, a2, i2, e2, v2, u2, d2, c6 = r3 instanceof o3 ? r3 : new o3(r3);
-      return e2 = this.rgba, v2 = c6.toRgb(), u2 = t2(e2), d2 = t2(v2), n2 = u2 > d2 ? (u2 + 0.05) / (d2 + 0.05) : (d2 + 0.05) / (u2 + 0.05), void 0 === (a2 = 2) && (a2 = 0), void 0 === i2 && (i2 = Math.pow(10, a2)), Math.floor(i2 * n2) / i2 + 0;
+      return o4 = t2(this.rgba), void 0 === (r4 = 2) && (r4 = 0), void 0 === n2 && (n2 = Math.pow(10, r4)), Math.round(n2 * o4) / n2 + 0;
+      var o4, r4, n2;
+    }, o3.prototype.contrast = function(r4) {
+      void 0 === r4 && (r4 = "#FFF");
+      var n2, a2, i2, e3, v2, u2, d2, c6 = r4 instanceof o3 ? r4 : new o3(r4);
+      return e3 = this.rgba, v2 = c6.toRgb(), u2 = t2(e3), d2 = t2(v2), n2 = u2 > d2 ? (u2 + 0.05) / (d2 + 0.05) : (d2 + 0.05) / (u2 + 0.05), void 0 === (a2 = 2) && (a2 = 0), void 0 === i2 && (i2 = Math.pow(10, a2)), Math.floor(i2 * n2) / i2 + 0;
     }, o3.prototype.isReadable = function(o4, t3) {
-      return void 0 === o4 && (o4 = "#FFF"), void 0 === t3 && (t3 = {}), this.contrast(o4) >= (e2 = void 0 === (i2 = (r3 = t3).size) ? "normal" : i2, "AAA" === (a2 = void 0 === (n2 = r3.level) ? "AA" : n2) && "normal" === e2 ? 7 : "AA" === a2 && "large" === e2 ? 3 : 4.5);
-      var r3, n2, a2, i2, e2;
+      return void 0 === o4 && (o4 = "#FFF"), void 0 === t3 && (t3 = {}), this.contrast(o4) >= (e3 = void 0 === (i2 = (r4 = t3).size) ? "normal" : i2, "AAA" === (a2 = void 0 === (n2 = r4.level) ? "AA" : n2) && "normal" === e3 ? 7 : "AA" === a2 && "large" === e3 ? 3 : 4.5);
+      var r4, n2, a2, i2, e3;
     };
-  }
+  };
 
   // node_modules/tslib/tslib.es6.mjs
   var extendStatics = function(d2, b2) {
@@ -7622,7 +7622,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/colors/utils.mjs
-  k([names_default, a11y_default]);
+  k([e2, r3]);
   var getColorObjectByAttributeValues = (colors2, definedColor, customColor) => {
     if (definedColor) {
       const colorObj = colors2?.find(
@@ -22542,8 +22542,8 @@ var wp;
     values.forEach((value) => {
       try {
         each2(value);
-      } catch (e2) {
-        raf.catch(e2);
+      } catch (e3) {
+        raf.catch(e3);
       }
     });
   }
@@ -22908,10 +22908,10 @@ var wp;
   function hslToRgb(h2, s2, l2) {
     const q = l2 < 0.5 ? l2 * (1 + s2) : l2 + s2 - l2 * s2;
     const p2 = 2 * l2 - q;
-    const r3 = hue2rgb(p2, q, h2 + 1 / 3);
+    const r4 = hue2rgb(p2, q, h2 + 1 / 3);
     const g2 = hue2rgb(p2, q, h2);
     const b2 = hue2rgb(p2, q, h2 - 1 / 3);
-    return Math.round(r3 * 255) << 24 | Math.round(g2 * 255) << 16 | Math.round(b2 * 255) << 8;
+    return Math.round(r4 * 255) << 24 | Math.round(g2 * 255) << 16 | Math.round(b2 * 255) << 8;
   }
   function parse255(str) {
     const int = parseInt(str, 10);
@@ -22939,11 +22939,11 @@ var wp;
     let int32Color = normalizeColor(input);
     if (int32Color === null) return input;
     int32Color = int32Color || 0;
-    let r3 = (int32Color & 4278190080) >>> 24;
+    let r4 = (int32Color & 4278190080) >>> 24;
     let g2 = (int32Color & 16711680) >>> 16;
     let b2 = (int32Color & 65280) >>> 8;
     let a2 = (int32Color & 255) / 255;
-    return `rgba(${r3}, ${g2}, ${b2}, ${a2})`;
+    return `rgba(${r4}, ${g2}, ${b2}, ${a2})`;
   }
   var createInterpolator = (range2, output, extrapolate) => {
     if (is.fun(range2)) {
@@ -24151,10 +24151,10 @@ var wp;
             finished = p2 == 1;
           } else if (config2.decay) {
             const decay = config2.decay === true ? 0.998 : config2.decay;
-            const e2 = Math.exp(-(1 - decay) * elapsed);
-            position = from + v0 / (1 - decay) * (1 - e2);
+            const e3 = Math.exp(-(1 - decay) * elapsed);
+            position = from + v0 / (1 - decay) * (1 - e3);
             finished = Math.abs(node2.lastPosition - position) <= precision;
-            velocity = v0 * e2;
+            velocity = v0 * e3;
           } else {
             velocity = node2.lastVelocity == null ? v0 : node2.lastVelocity;
             const restVelocity = config2.restVelocity || precision / 10;
@@ -25949,12 +25949,12 @@ var wp;
           let hasStarted = false;
           let lastClientX = originClientX;
           let lastClientY = originClientY;
-          function dragOver(e2) {
-            if (e2.clientX === lastClientX && e2.clientY === lastClientY) {
+          function dragOver(e3) {
+            if (e3.clientX === lastClientX && e3.clientY === lastClientY) {
               return;
             }
-            lastClientX = e2.clientX;
-            lastClientY = e2.clientY;
+            lastClientX = e3.clientX;
+            lastClientY = e3.clientY;
             over();
           }
           function over() {
@@ -28163,8 +28163,8 @@ var wp;
 
   // node_modules/@base-ui/react/merge-props/mergeProps.mjs
   var EMPTY_PROPS = {};
-  function mergeProps(a2, b2, c6, d2, e2) {
-    if (!c6 && !d2 && !e2 && !a2) {
+  function mergeProps(a2, b2, c6, d2, e3) {
+    if (!c6 && !d2 && !e3 && !a2) {
       return createInitialMergedProps(b2);
     }
     let merged = createInitialMergedProps(a2);
@@ -28177,8 +28177,8 @@ var wp;
     if (d2) {
       merged = mergeInto(merged, d2);
     }
-    if (e2) {
-      merged = mergeInto(merged, e2);
+    if (e3) {
+      merged = mergeInto(merged, e3);
     }
     return merged;
   }
@@ -49282,14 +49282,14 @@ var wp;
   function Nav(props) {
     const { onPreviousClick, onNextClick, previousMonth, nextMonth, ...navProps } = props;
     const { components, classNames: classNames2, styles, labels: { labelPrevious: labelPrevious2, labelNext: labelNext2 } } = useDayPicker();
-    const handleNextClick = (0, import_react21.useCallback)((e2) => {
+    const handleNextClick = (0, import_react21.useCallback)((e3) => {
       if (nextMonth) {
-        onNextClick?.(e2);
+        onNextClick?.(e3);
       }
     }, [nextMonth, onNextClick]);
-    const handlePreviousClick = (0, import_react21.useCallback)((e2) => {
+    const handlePreviousClick = (0, import_react21.useCallback)((e3) => {
       if (previousMonth) {
-        onPreviousClick?.(e2);
+        onPreviousClick?.(e3);
       }
     }, [previousMonth, onPreviousClick]);
     return import_react21.default.createElement(
@@ -50505,7 +50505,7 @@ var wp;
       return selected?.some((d2) => isSameDay2(d2, date)) ?? false;
     };
     const { min: min3, max: max3 } = props;
-    const select3 = (triggerDate, modifiers, e2) => {
+    const select3 = (triggerDate, modifiers, e3) => {
       let newDates = [...selected ?? []];
       if (isSelected(triggerDate)) {
         if (selected?.length === min3) {
@@ -50525,7 +50525,7 @@ var wp;
       if (!onSelect) {
         setSelected(newDates);
       }
-      onSelect?.(newDates, triggerDate, modifiers, e2);
+      onSelect?.(newDates, triggerDate, modifiers, e3);
       return newDates;
     };
     return {
@@ -50668,7 +50668,7 @@ var wp;
     const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
     const selected = !onSelect ? internallySelected : initiallySelected;
     const isSelected = (date) => selected && rangeIncludesDate(selected, date, false, dateLib);
-    const select3 = (triggerDate, modifiers, e2) => {
+    const select3 = (triggerDate, modifiers, e3) => {
       const { min: min3, max: max3 } = props;
       let newRange;
       if (triggerDate) {
@@ -50695,7 +50695,7 @@ var wp;
       if (!onSelect) {
         setSelected(newRange);
       }
-      onSelect?.(newRange, triggerDate, modifiers, e2);
+      onSelect?.(newRange, triggerDate, modifiers, e3);
       return newRange;
     };
     return {
@@ -50714,7 +50714,7 @@ var wp;
     const isSelected = (compareDate) => {
       return selected ? isSameDay2(selected, compareDate) : false;
     };
-    const select3 = (triggerDate, modifiers, e2) => {
+    const select3 = (triggerDate, modifiers, e3) => {
       let newDate = triggerDate;
       if (!required && selected && selected && isSameDay2(triggerDate, selected)) {
         newDate = void 0;
@@ -50723,9 +50723,9 @@ var wp;
         setSelected(newDate);
       }
       if (required) {
-        onSelect?.(newDate, triggerDate, modifiers, e2);
+        onSelect?.(newDate, triggerDate, modifiers, e3);
       } else {
-        onSelect?.(newDate, triggerDate, modifiers, e2);
+        onSelect?.(newDate, triggerDate, modifiers, e3);
       }
       return newDate;
     };
@@ -50928,62 +50928,62 @@ var wp;
       goToMonth(nextMonth);
       onNextClick?.(nextMonth);
     }, [goToMonth, nextMonth, onNextClick]);
-    const handleDayClick = (0, import_react38.useCallback)((day, m2) => (e2) => {
-      e2.preventDefault();
-      e2.stopPropagation();
+    const handleDayClick = (0, import_react38.useCallback)((day, m2) => (e3) => {
+      e3.preventDefault();
+      e3.stopPropagation();
       setFocused(day);
       if (m2.disabled) {
         return;
       }
-      select3?.(day.date, m2, e2);
-      onDayClick?.(day.date, m2, e2);
+      select3?.(day.date, m2, e3);
+      onDayClick?.(day.date, m2, e3);
     }, [select3, onDayClick, setFocused]);
-    const handleDayFocus = (0, import_react38.useCallback)((day, m2) => (e2) => {
+    const handleDayFocus = (0, import_react38.useCallback)((day, m2) => (e3) => {
       setFocused(day);
-      onDayFocus?.(day.date, m2, e2);
+      onDayFocus?.(day.date, m2, e3);
     }, [onDayFocus, setFocused]);
-    const handleDayBlur = (0, import_react38.useCallback)((day, m2) => (e2) => {
+    const handleDayBlur = (0, import_react38.useCallback)((day, m2) => (e3) => {
       blur();
-      onDayBlur?.(day.date, m2, e2);
+      onDayBlur?.(day.date, m2, e3);
     }, [blur, onDayBlur]);
-    const handleDayKeyDown = (0, import_react38.useCallback)((day, modifiers) => (e2) => {
+    const handleDayKeyDown = (0, import_react38.useCallback)((day, modifiers) => (e3) => {
       const keyMap = {
         ArrowLeft: [
-          e2.shiftKey ? "month" : "day",
+          e3.shiftKey ? "month" : "day",
           props.dir === "rtl" ? "after" : "before"
         ],
         ArrowRight: [
-          e2.shiftKey ? "month" : "day",
+          e3.shiftKey ? "month" : "day",
           props.dir === "rtl" ? "before" : "after"
         ],
-        ArrowDown: [e2.shiftKey ? "year" : "week", "after"],
-        ArrowUp: [e2.shiftKey ? "year" : "week", "before"],
-        PageUp: [e2.shiftKey ? "year" : "month", "before"],
-        PageDown: [e2.shiftKey ? "year" : "month", "after"],
+        ArrowDown: [e3.shiftKey ? "year" : "week", "after"],
+        ArrowUp: [e3.shiftKey ? "year" : "week", "before"],
+        PageUp: [e3.shiftKey ? "year" : "month", "before"],
+        PageDown: [e3.shiftKey ? "year" : "month", "after"],
         Home: ["startOfWeek", "before"],
         End: ["endOfWeek", "after"]
       };
-      if (keyMap[e2.key]) {
-        e2.preventDefault();
-        e2.stopPropagation();
-        const [moveBy, moveDir] = keyMap[e2.key];
+      if (keyMap[e3.key]) {
+        e3.preventDefault();
+        e3.stopPropagation();
+        const [moveBy, moveDir] = keyMap[e3.key];
         moveFocus(moveBy, moveDir);
       }
-      onDayKeyDown?.(day.date, modifiers, e2);
+      onDayKeyDown?.(day.date, modifiers, e3);
     }, [moveFocus, onDayKeyDown, props.dir]);
-    const handleDayMouseEnter = (0, import_react38.useCallback)((day, modifiers) => (e2) => {
-      onDayMouseEnter?.(day.date, modifiers, e2);
+    const handleDayMouseEnter = (0, import_react38.useCallback)((day, modifiers) => (e3) => {
+      onDayMouseEnter?.(day.date, modifiers, e3);
     }, [onDayMouseEnter]);
-    const handleDayMouseLeave = (0, import_react38.useCallback)((day, modifiers) => (e2) => {
-      onDayMouseLeave?.(day.date, modifiers, e2);
+    const handleDayMouseLeave = (0, import_react38.useCallback)((day, modifiers) => (e3) => {
+      onDayMouseLeave?.(day.date, modifiers, e3);
     }, [onDayMouseLeave]);
-    const handleMonthChange = (0, import_react38.useCallback)((date, monthOffset) => (e2) => {
-      const selectedMonth = Number(e2.target.value);
+    const handleMonthChange = (0, import_react38.useCallback)((date, monthOffset) => (e3) => {
+      const selectedMonth = Number(e3.target.value);
       const month = dateLib.setMonth(dateLib.startOfMonth(date), selectedMonth);
       goToMonth(dateLib.addMonths(month, -monthOffset));
     }, [dateLib, goToMonth]);
-    const handleYearChange = (0, import_react38.useCallback)((date, monthOffset) => (e2) => {
-      const selectedYear = Number(e2.target.value);
+    const handleYearChange = (0, import_react38.useCallback)((date, monthOffset) => (e3) => {
+      const selectedYear = Number(e3.target.value);
       const month = dateLib.setYear(dateLib.startOfMonth(date), selectedYear);
       goToMonth(dateLib.addMonths(month, -monthOffset));
     }, [dateLib, goToMonth]);
@@ -51868,12 +51868,12 @@ var wp;
         [localizationProps.labels, customLabels]
       );
       const onChange = (0, import_element65.useCallback)(
-        (selected2, triggerDate, modifiers, e2) => {
+        (selected2, triggerDate, modifiers, e3) => {
           onValueChange?.(
             selected2 ?? null,
             triggerDate,
             modifiers,
-            e2
+            e3
           );
         },
         [onValueChange]
@@ -52030,12 +52030,12 @@ var wp;
         [localizationProps.labels, customLabels]
       );
       const onChange = (0, import_element66.useCallback)(
-        (selected2, triggerDate, modifiers2, e2) => {
+        (selected2, triggerDate, modifiers2, e3) => {
           onValueChange?.(
             selected2 ?? null,
             triggerDate,
             modifiers2,
-            e2
+            e3
           );
         },
         [onValueChange]
@@ -60259,7 +60259,7 @@ var wp;
 
   // packages/block-editor/build-module/components/editor-styles/index.mjs
   var import_jsx_runtime252 = __toESM(require_jsx_runtime(), 1);
-  k([names_default, a11y_default]);
+  k([e2, r3]);
   function useDarkThemeBodyClassName(styles, scope) {
     return (0, import_element126.useCallback)(
       (node) => {
@@ -70180,8 +70180,8 @@ var wp;
         children: /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(
           "form",
           {
-            onSubmit: (e2) => {
-              e2.preventDefault();
+            onSubmit: (e3) => {
+              e3.preventDefault();
               if (!isNameValid) {
                 return;
               }
@@ -77931,7 +77931,7 @@ var wp;
   var import_components137 = __toESM(require_components(), 1);
   var import_a11y18 = __toESM(require_a11y(), 1);
   var import_jsx_runtime378 = __toESM(require_jsx_runtime(), 1);
-  k([names_default, a11y_default]);
+  k([e2, r3]);
   function getContrastWarning({
     backgroundColor,
     fallbackBackgroundColor,
@@ -79676,8 +79676,8 @@ var wp;
           });
           _this.resizeObserver.observe(_this.containerRef);
         };
-        _this.preventZoomSafari = function(e2) {
-          return e2.preventDefault();
+        _this.preventZoomSafari = function(e3) {
+          return e3.preventDefault();
         };
         _this.cleanEvents = function() {
           if (!_this.currentDoc) return;
@@ -79790,26 +79790,26 @@ var wp;
             };
           }
         };
-        _this.onMouseDown = function(e2) {
+        _this.onMouseDown = function(e3) {
           if (!_this.currentDoc) return;
-          e2.preventDefault();
+          e3.preventDefault();
           _this.currentDoc.addEventListener("mousemove", _this.onMouseMove);
           _this.currentDoc.addEventListener("mouseup", _this.onDragStopped);
           _this.saveContainerPosition();
-          _this.onDragStart(Cropper2.getMousePoint(e2));
+          _this.onDragStart(Cropper2.getMousePoint(e3));
         };
-        _this.onMouseMove = function(e2) {
-          return _this.onDrag(Cropper2.getMousePoint(e2));
+        _this.onMouseMove = function(e3) {
+          return _this.onDrag(Cropper2.getMousePoint(e3));
         };
-        _this.onScroll = function(e2) {
+        _this.onScroll = function(e3) {
           if (!_this.currentDoc) return;
-          e2.preventDefault();
+          e3.preventDefault();
           _this.saveContainerPosition();
         };
-        _this.onTouchStart = function(e2) {
+        _this.onTouchStart = function(e3) {
           if (!_this.currentDoc) return;
           _this.isTouching = true;
-          if (_this.props.onTouchRequest && !_this.props.onTouchRequest(e2)) {
+          if (_this.props.onTouchRequest && !_this.props.onTouchRequest(e3)) {
             return;
           }
           _this.currentDoc.addEventListener("touchmove", _this.onTouchMove, {
@@ -79817,44 +79817,44 @@ var wp;
           });
           _this.currentDoc.addEventListener("touchend", _this.onDragStopped);
           _this.saveContainerPosition();
-          if (e2.touches.length === 2) {
-            _this.onPinchStart(e2);
-          } else if (e2.touches.length === 1) {
-            _this.onDragStart(Cropper2.getTouchPoint(e2.touches[0]));
+          if (e3.touches.length === 2) {
+            _this.onPinchStart(e3);
+          } else if (e3.touches.length === 1) {
+            _this.onDragStart(Cropper2.getTouchPoint(e3.touches[0]));
           }
         };
-        _this.onTouchMove = function(e2) {
-          e2.preventDefault();
-          if (e2.touches.length === 2) {
-            _this.onPinchMove(e2);
-          } else if (e2.touches.length === 1) {
-            _this.onDrag(Cropper2.getTouchPoint(e2.touches[0]));
+        _this.onTouchMove = function(e3) {
+          e3.preventDefault();
+          if (e3.touches.length === 2) {
+            _this.onPinchMove(e3);
+          } else if (e3.touches.length === 1) {
+            _this.onDrag(Cropper2.getTouchPoint(e3.touches[0]));
           }
         };
-        _this.onGestureStart = function(e2) {
+        _this.onGestureStart = function(e3) {
           if (!_this.currentDoc) return;
-          e2.preventDefault();
+          e3.preventDefault();
           _this.currentDoc.addEventListener("gesturechange", _this.onGestureChange);
           _this.currentDoc.addEventListener("gestureend", _this.onGestureEnd);
           _this.gestureZoomStart = _this.props.zoom;
           _this.gestureRotationStart = _this.props.rotation;
         };
-        _this.onGestureChange = function(e2) {
-          e2.preventDefault();
+        _this.onGestureChange = function(e3) {
+          e3.preventDefault();
           if (_this.isTouching) {
             return;
           }
-          var point = Cropper2.getMousePoint(e2);
-          var newZoom = _this.gestureZoomStart - 1 + e2.scale;
+          var point = Cropper2.getMousePoint(e3);
+          var newZoom = _this.gestureZoomStart - 1 + e3.scale;
           _this.setNewZoom(newZoom, point, {
             shouldUpdatePosition: true
           });
           if (_this.props.onRotationChange) {
-            var newRotation = _this.gestureRotationStart + e2.rotation;
+            var newRotation = _this.gestureRotationStart + e3.rotation;
             _this.props.onRotationChange(newRotation);
           }
         };
-        _this.onGestureEnd = function(e2) {
+        _this.onGestureEnd = function(e3) {
           _this.cleanEvents();
         };
         _this.onDragStart = function(_a) {
@@ -79891,14 +79891,14 @@ var wp;
           _this.emitCropData();
           (_b = (_a = _this.props).onInteractionEnd) === null || _b === void 0 ? void 0 : _b.call(_a);
         };
-        _this.onWheel = function(e2) {
+        _this.onWheel = function(e3) {
           if (!_this.currentWindow) return;
-          if (_this.props.onWheelRequest && !_this.props.onWheelRequest(e2)) {
+          if (_this.props.onWheelRequest && !_this.props.onWheelRequest(e3)) {
             return;
           }
-          e2.preventDefault();
-          var point = Cropper2.getMousePoint(e2);
-          var pixelY = (0, import_normalize_wheel.default)(e2).pixelY;
+          e3.preventDefault();
+          var point = Cropper2.getMousePoint(e3);
+          var pixelY = (0, import_normalize_wheel.default)(e3).pixelY;
           var newZoom = _this.props.zoom - pixelY * _this.props.zoomSpeed / 200;
           _this.setNewZoom(newZoom, point, {
             shouldUpdatePosition: true
@@ -80167,18 +80167,18 @@ var wp;
         }
         return this.props.objectFit;
       };
-      Cropper2.prototype.onPinchStart = function(e2) {
-        var pointA = Cropper2.getTouchPoint(e2.touches[0]);
-        var pointB = Cropper2.getTouchPoint(e2.touches[1]);
+      Cropper2.prototype.onPinchStart = function(e3) {
+        var pointA = Cropper2.getTouchPoint(e3.touches[0]);
+        var pointB = Cropper2.getTouchPoint(e3.touches[1]);
         this.lastPinchDistance = getDistanceBetweenPoints(pointA, pointB);
         this.lastPinchRotation = getRotationBetweenPoints(pointA, pointB);
         this.onDragStart(getCenter(pointA, pointB));
       };
-      Cropper2.prototype.onPinchMove = function(e2) {
+      Cropper2.prototype.onPinchMove = function(e3) {
         var _this = this;
         if (!this.currentDoc || !this.currentWindow) return;
-        var pointA = Cropper2.getTouchPoint(e2.touches[0]);
-        var pointB = Cropper2.getTouchPoint(e2.touches[1]);
+        var pointA = Cropper2.getTouchPoint(e3.touches[0]);
+        var pointB = Cropper2.getTouchPoint(e3.touches[1]);
         var center = getCenter(pointA, pointB);
         this.onDrag(center);
         if (this.rafPinchTimeout) this.currentWindow.cancelAnimationFrame(this.rafPinchTimeout);
@@ -80269,10 +80269,10 @@ var wp;
         zoomWithScroll: true,
         keyboardStep: KEYBOARD_STEP
       };
-      Cropper2.getMousePoint = function(e2) {
+      Cropper2.getMousePoint = function(e3) {
         return {
-          x: Number(e2.clientX),
-          y: Number(e2.clientY)
+          x: Number(e3.clientX),
+          y: Number(e3.clientY)
         };
       };
       Cropper2.getTouchPoint = function(touch) {
@@ -95365,8 +95365,8 @@ var wp;
           import_components218.__experimentalVStack,
           {
             as: "form",
-            onSubmit: (e2) => {
-              e2.preventDefault();
+            onSubmit: (e3) => {
+              e3.preventDefault();
               handleSubmit();
             },
             spacing: "4",
@@ -99284,7 +99284,7 @@ var wp;
   var { getDuotoneFilter: getDuotoneFilter2, getDuotoneStylesheet: getDuotoneStylesheet2, getDuotoneUnsetStylesheet: getDuotoneUnsetStylesheet2 } = unlock(privateApis);
   var EMPTY_ARRAY18 = [];
   var isSafari = window?.navigator.userAgent && window.navigator.userAgent.includes("Safari") && !window.navigator.userAgent.includes("Chrome") && !window.navigator.userAgent.includes("Chromium");
-  k([names_default]);
+  k([e2]);
   function useMultiOriginPresets({ presetSetting, defaultSetting }) {
     const [enableDefault, userPresets, themePresets, defaultPresets] = useSettings(
       defaultSetting,
@@ -101232,7 +101232,7 @@ var wp;
           };
         }
         const bottomMostRow = Math.max(
-          ...occupiedRects.map((r3) => r3.rowEnd)
+          ...occupiedRects.map((r4) => r4.rowEnd)
         );
         if (!gridLayout.rowCount || gridLayout.rowCount < bottomMostRow) {
           updates[gridClientId] = {
@@ -101328,7 +101328,7 @@ var wp;
           rowSpan: blockRowSpan
         });
         if (!occupiedRects.some(
-          (r3) => r3.intersectsRect(candidateRect)
+          (r4) => r4.intersectsRect(candidateRect)
         )) {
           return [column, row];
         }
@@ -103071,8 +103071,8 @@ var wp;
               tabIndex: -1,
               onChange: () => {
               },
-              onFocus: (e2) => {
-                e2.target.previousElementSibling?.querySelector(
+              onFocus: (e3) => {
+                e3.target.previousElementSibling?.querySelector(
                   'input[type="text"]'
                 )?.focus();
               }
@@ -103251,8 +103251,8 @@ var wp;
           name: nameAttr,
           onChange: () => {
           },
-          onFocus: (e2) => {
-            e2.target.previousElementSibling?.querySelector(
+          onFocus: (e3) => {
+            e3.target.previousElementSibling?.querySelector(
               '[data-active-item="true"]'
             )?.focus();
           }

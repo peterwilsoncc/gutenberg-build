@@ -451,7 +451,7 @@ var wp;
               var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
               try {
                 defineProperty(targetComponent, key, descriptor);
-              } catch (e3) {
+              } catch (e4) {
               }
             }
           }
@@ -2157,17 +2157,17 @@ var wp;
   var import_primitives36 = __toESM(require_primitives(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
-  function r(e3) {
+  function r(e4) {
     var t4, f3, n3 = "";
-    if ("string" == typeof e3 || "number" == typeof e3) n3 += e3;
-    else if ("object" == typeof e3) if (Array.isArray(e3)) {
-      var o4 = e3.length;
-      for (t4 = 0; t4 < o4; t4++) e3[t4] && (f3 = r(e3[t4])) && (n3 && (n3 += " "), n3 += f3);
-    } else for (f3 in e3) e3[f3] && (n3 && (n3 += " "), n3 += f3);
+    if ("string" == typeof e4 || "number" == typeof e4) n3 += e4;
+    else if ("object" == typeof e4) if (Array.isArray(e4)) {
+      var o4 = e4.length;
+      for (t4 = 0; t4 < o4; t4++) e4[t4] && (f3 = r(e4[t4])) && (n3 && (n3 += " "), n3 += f3);
+    } else for (f3 in e4) e4[f3] && (n3 && (n3 += " "), n3 += f3);
     return n3;
   }
   function clsx() {
-    for (var e3, t4, f3 = 0, n3 = "", o4 = arguments.length; f3 < o4; f3++) (e3 = arguments[f3]) && (t4 = r(e3)) && (n3 && (n3 += " "), n3 += t4);
+    for (var e4, t4, f3 = 0, n3 = "", o4 = arguments.length; f3 < o4; f3++) (e4 = arguments[f3]) && (t4 = r(e4)) && (n3 && (n3 += " "), n3 += t4);
     return n3;
   }
   var clsx_default = clsx;
@@ -14474,7 +14474,7 @@ If there's a particular need for this, please submit a feature request at https:
   function updateSVGDimensions(instance, renderState) {
     try {
       renderState.dimensions = typeof instance.getBBox === "function" ? instance.getBBox() : instance.getBoundingClientRect();
-    } catch (e3) {
+    } catch (e4) {
       renderState.dimensions = {
         x: 0,
         y: 0,
@@ -14781,7 +14781,7 @@ If there's a particular need for this, please submit a feature request at https:
   var supportsLinearEasing = /* @__PURE__ */ memoSupports(() => {
     try {
       document.createElement("div").animate({ opacity: 0 }, { easing: "linear(0, 1)" });
-    } catch (e3) {
+    } catch (e4) {
       return false;
     }
     return true;
@@ -15516,27 +15516,27 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/framer-motion/dist/es/value/types/color/hex.mjs
   function parseHex(v3) {
-    let r4 = "";
+    let r5 = "";
     let g3 = "";
     let b3 = "";
     let a3 = "";
     if (v3.length > 5) {
-      r4 = v3.substring(1, 3);
+      r5 = v3.substring(1, 3);
       g3 = v3.substring(3, 5);
       b3 = v3.substring(5, 7);
       a3 = v3.substring(7, 9);
     } else {
-      r4 = v3.substring(1, 2);
+      r5 = v3.substring(1, 2);
       g3 = v3.substring(2, 3);
       b3 = v3.substring(3, 4);
       a3 = v3.substring(4, 5);
-      r4 += r4;
+      r5 += r5;
       g3 += g3;
       b3 += b3;
       a3 += a3;
     }
     return {
-      red: parseInt(r4, 16),
+      red: parseInt(r5, 16),
       green: parseInt(g3, 16),
       blue: parseInt(b3, 16),
       alpha: a3 ? parseInt(a3, 16) / 255 : 1
@@ -16416,11 +16416,11 @@ If there's a particular need for this, please submit a feature request at https:
         const exponentialDecay = undampedFreq2 * dampingRatio;
         const delta = exponentialDecay * duration;
         const d3 = delta * velocity + velocity;
-        const e3 = Math.pow(dampingRatio, 2) * Math.pow(undampedFreq2, 2) * duration;
+        const e4 = Math.pow(dampingRatio, 2) * Math.pow(undampedFreq2, 2) * duration;
         const f3 = Math.exp(-delta);
         const g3 = calcAngularFreq(Math.pow(undampedFreq2, 2), dampingRatio);
         const factor = -envelope(undampedFreq2) + safeMin > 0 ? -1 : 1;
-        return factor * ((d3 - e3) * f3) / g3;
+        return factor * ((d3 - e4) * f3) / g3;
       };
     } else {
       envelope = (undampedFreq2) => {
@@ -20262,7 +20262,7 @@ If there's a particular need for this, please submit a feature request at https:
       let isFocusVisible = false;
       try {
         isFocusVisible = this.node.current.matches(":focus-visible");
-      } catch (e3) {
+      } catch (e4) {
         isFocusVisible = true;
       }
       if (!isFocusVisible || !this.node.animationState)
@@ -21119,7 +21119,7 @@ If there's a particular need for this, please submit a feature request at https:
         var sheet2 = sheetForTag(tag);
         try {
           sheet2.insertRule(rule, sheet2.cssRules.length);
-        } catch (e3) {
+        } catch (e4) {
         }
       } else {
         tag.appendChild(document.createTextNode(rule));
@@ -21856,9 +21856,9 @@ If there's a particular need for this, please submit a feature request at https:
   // node_modules/@babel/runtime/helpers/esm/extends.js
   function _extends() {
     return _extends = Object.assign ? Object.assign.bind() : function(n3) {
-      for (var e3 = 1; e3 < arguments.length; e3++) {
-        var t4 = arguments[e3];
-        for (var r4 in t4) ({}).hasOwnProperty.call(t4, r4) && (n3[r4] = t4[r4]);
+      for (var e4 = 1; e4 < arguments.length; e4++) {
+        var t4 = arguments[e4];
+        for (var r5 in t4) ({}).hasOwnProperty.call(t4, r5) && (n3[r5] = t4[r5]);
       }
       return n3;
     }, _extends.apply(null, arguments);
@@ -22516,183 +22516,183 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/colord/index.mjs
   var r2 = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) };
-  var t = function(r4) {
-    return "string" == typeof r4 ? r4.length > 0 : "number" == typeof r4;
+  var t = function(r5) {
+    return "string" == typeof r5 ? r5.length > 0 : "number" == typeof r5;
   };
-  var n = function(r4, t4, n3) {
-    return void 0 === t4 && (t4 = 0), void 0 === n3 && (n3 = Math.pow(10, t4)), Math.round(n3 * r4) / n3 + 0;
+  var n = function(r5, t4, n3) {
+    return void 0 === t4 && (t4 = 0), void 0 === n3 && (n3 = Math.pow(10, t4)), Math.round(n3 * r5) / n3 + 0;
   };
-  var e = function(r4, t4, n3) {
-    return void 0 === t4 && (t4 = 0), void 0 === n3 && (n3 = 1), r4 > n3 ? n3 : r4 > t4 ? r4 : t4;
+  var e = function(r5, t4, n3) {
+    return void 0 === t4 && (t4 = 0), void 0 === n3 && (n3 = 1), r5 > n3 ? n3 : r5 > t4 ? r5 : t4;
   };
-  var u = function(r4) {
-    return (r4 = isFinite(r4) ? r4 % 360 : 0) > 0 ? r4 : r4 + 360;
+  var u = function(r5) {
+    return (r5 = isFinite(r5) ? r5 % 360 : 0) > 0 ? r5 : r5 + 360;
   };
-  var a = function(r4) {
-    return { r: e(r4.r, 0, 255), g: e(r4.g, 0, 255), b: e(r4.b, 0, 255), a: e(r4.a) };
+  var a = function(r5) {
+    return { r: e(r5.r, 0, 255), g: e(r5.g, 0, 255), b: e(r5.b, 0, 255), a: e(r5.a) };
   };
-  var o = function(r4) {
-    return { r: n(r4.r), g: n(r4.g), b: n(r4.b), a: n(r4.a, 3) };
+  var o = function(r5) {
+    return { r: n(r5.r), g: n(r5.g), b: n(r5.b), a: n(r5.a, 3) };
   };
   var i = /^#([0-9a-f]{3,8})$/i;
-  var s = function(r4) {
-    var t4 = r4.toString(16);
+  var s = function(r5) {
+    var t4 = r5.toString(16);
     return t4.length < 2 ? "0" + t4 : t4;
   };
-  var h = function(r4) {
-    var t4 = r4.r, n3 = r4.g, e3 = r4.b, u3 = r4.a, a3 = Math.max(t4, n3, e3), o4 = a3 - Math.min(t4, n3, e3), i3 = o4 ? a3 === t4 ? (n3 - e3) / o4 : a3 === n3 ? 2 + (e3 - t4) / o4 : 4 + (t4 - n3) / o4 : 0;
+  var d = function(r5) {
+    var t4 = r5.r, n3 = r5.g, e4 = r5.b, u3 = r5.a, a3 = Math.max(t4, n3, e4), o4 = a3 - Math.min(t4, n3, e4), i3 = o4 ? a3 === t4 ? (n3 - e4) / o4 : a3 === n3 ? 2 + (e4 - t4) / o4 : 4 + (t4 - n3) / o4 : 0;
     return { h: 60 * (i3 < 0 ? i3 + 6 : i3), s: a3 ? o4 / a3 * 100 : 0, v: a3 / 255 * 100, a: u3 };
   };
-  var b = function(r4) {
-    var t4 = r4.h, n3 = r4.s, e3 = r4.v, u3 = r4.a;
-    t4 = t4 / 360 * 6, n3 /= 100, e3 /= 100;
-    var a3 = Math.floor(t4), o4 = e3 * (1 - n3), i3 = e3 * (1 - (t4 - a3) * n3), s3 = e3 * (1 - (1 - t4 + a3) * n3), h3 = a3 % 6;
-    return { r: 255 * [e3, i3, o4, o4, s3, e3][h3], g: 255 * [s3, e3, e3, i3, o4, o4][h3], b: 255 * [o4, o4, s3, e3, e3, i3][h3], a: u3 };
+  var h = function(r5) {
+    var t4 = r5.h, n3 = r5.s, e4 = r5.v, u3 = r5.a;
+    t4 = t4 / 360 * 6, n3 /= 100, e4 /= 100;
+    var a3 = Math.floor(t4), o4 = e4 * (1 - n3), i3 = e4 * (1 - (t4 - a3) * n3), s3 = e4 * (1 - (1 - t4 + a3) * n3), d3 = a3 % 6;
+    return { r: 255 * [e4, i3, o4, o4, s3, e4][d3], g: 255 * [s3, e4, e4, i3, o4, o4][d3], b: 255 * [o4, o4, s3, e4, e4, i3][d3], a: u3 };
   };
-  var g = function(r4) {
-    return { h: u(r4.h), s: e(r4.s, 0, 100), l: e(r4.l, 0, 100), a: e(r4.a) };
+  var b = function(r5) {
+    return { h: u(r5.h), s: e(r5.s, 0, 100), l: e(r5.l, 0, 100), a: e(r5.a) };
   };
-  var d = function(r4) {
-    return { h: n(r4.h), s: n(r4.s), l: n(r4.l), a: n(r4.a, 3) };
+  var g = function(r5) {
+    return { h: n(r5.h), s: n(r5.s), l: n(r5.l), a: n(r5.a, 3) };
   };
-  var f = function(r4) {
-    return b((n3 = (t4 = r4).s, { h: t4.h, s: (n3 *= ((e3 = t4.l) < 50 ? e3 : 100 - e3) / 100) > 0 ? 2 * n3 / (e3 + n3) * 100 : 0, v: e3 + n3, a: t4.a }));
-    var t4, n3, e3;
+  var f = function(r5) {
+    return h((n3 = (t4 = r5).s, { h: t4.h, s: (n3 *= ((e4 = t4.l) < 50 ? e4 : 100 - e4) / 100) > 0 ? 2 * n3 / (e4 + n3) * 100 : 0, v: e4 + n3, a: t4.a }));
+    var t4, n3, e4;
   };
-  var c = function(r4) {
-    return { h: (t4 = h(r4)).h, s: (u3 = (200 - (n3 = t4.s)) * (e3 = t4.v) / 100) > 0 && u3 < 200 ? n3 * e3 / 100 / (u3 <= 100 ? u3 : 200 - u3) * 100 : 0, l: u3 / 2, a: t4.a };
-    var t4, n3, e3, u3;
+  var c = function(r5) {
+    return { h: (t4 = d(r5)).h, s: (u3 = (200 - (n3 = t4.s)) * (e4 = t4.v) / 100) > 0 && u3 < 200 ? n3 * e4 / 100 / (u3 <= 100 ? u3 : 200 - u3) * 100 : 0, l: u3 / 2, a: t4.a };
+    var t4, n3, e4, u3;
   };
-  var l = /^hsla?\(\s*([+-]?\d*\.?\d+)(deg|rad|grad|turn)?\s*,\s*([+-]?\d*\.?\d+)%\s*,\s*([+-]?\d*\.?\d+)%\s*(?:,\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var p = /^hsla?\(\s*([+-]?\d*\.?\d+)(deg|rad|grad|turn)?\s+([+-]?\d*\.?\d+)%\s+([+-]?\d*\.?\d+)%\s*(?:\/\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var v = /^rgba?\(\s*([+-]?\d*\.?\d+)(%)?\s*,\s*([+-]?\d*\.?\d+)(%)?\s*,\s*([+-]?\d*\.?\d+)(%)?\s*(?:,\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var m = /^rgba?\(\s*([+-]?\d*\.?\d+)(%)?\s+([+-]?\d*\.?\d+)(%)?\s+([+-]?\d*\.?\d+)(%)?\s*(?:\/\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var y = { string: [[function(r4) {
-    var t4 = i.exec(r4);
-    return t4 ? (r4 = t4[1]).length <= 4 ? { r: parseInt(r4[0] + r4[0], 16), g: parseInt(r4[1] + r4[1], 16), b: parseInt(r4[2] + r4[2], 16), a: 4 === r4.length ? n(parseInt(r4[3] + r4[3], 16) / 255, 2) : 1 } : 6 === r4.length || 8 === r4.length ? { r: parseInt(r4.substr(0, 2), 16), g: parseInt(r4.substr(2, 2), 16), b: parseInt(r4.substr(4, 2), 16), a: 8 === r4.length ? n(parseInt(r4.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
-  }, "hex"], [function(r4) {
-    var t4 = v.exec(r4) || m.exec(r4);
+  var l = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var p = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var v = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var m = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var y = { string: [[function(r5) {
+    var t4 = i.exec(r5);
+    return t4 ? (r5 = t4[1]).length <= 4 ? { r: parseInt(r5[0] + r5[0], 16), g: parseInt(r5[1] + r5[1], 16), b: parseInt(r5[2] + r5[2], 16), a: 4 === r5.length ? n(parseInt(r5[3] + r5[3], 16) / 255, 2) : 1 } : 6 === r5.length || 8 === r5.length ? { r: parseInt(r5.substr(0, 2), 16), g: parseInt(r5.substr(2, 2), 16), b: parseInt(r5.substr(4, 2), 16), a: 8 === r5.length ? n(parseInt(r5.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
+  }, "hex"], [function(r5) {
+    var t4 = v.exec(r5) || m.exec(r5);
     return t4 ? t4[2] !== t4[4] || t4[4] !== t4[6] ? null : a({ r: Number(t4[1]) / (t4[2] ? 100 / 255 : 1), g: Number(t4[3]) / (t4[4] ? 100 / 255 : 1), b: Number(t4[5]) / (t4[6] ? 100 / 255 : 1), a: void 0 === t4[7] ? 1 : Number(t4[7]) / (t4[8] ? 100 : 1) }) : null;
   }, "rgb"], [function(t4) {
     var n3 = l.exec(t4) || p.exec(t4);
     if (!n3) return null;
-    var e3, u3, a3 = g({ h: (e3 = n3[1], u3 = n3[2], void 0 === u3 && (u3 = "deg"), Number(e3) * (r2[u3] || 1)), s: Number(n3[3]), l: Number(n3[4]), a: void 0 === n3[5] ? 1 : Number(n3[5]) / (n3[6] ? 100 : 1) });
+    var e4, u3, a3 = b({ h: (e4 = n3[1], u3 = n3[2], void 0 === u3 && (u3 = "deg"), Number(e4) * (r2[u3] || 1)), s: Number(n3[3]), l: Number(n3[4]), a: void 0 === n3[5] ? 1 : Number(n3[5]) / (n3[6] ? 100 : 1) });
     return f(a3);
-  }, "hsl"]], object: [[function(r4) {
-    var n3 = r4.r, e3 = r4.g, u3 = r4.b, o4 = r4.a, i3 = void 0 === o4 ? 1 : o4;
-    return t(n3) && t(e3) && t(u3) ? a({ r: Number(n3), g: Number(e3), b: Number(u3), a: Number(i3) }) : null;
-  }, "rgb"], [function(r4) {
-    var n3 = r4.h, e3 = r4.s, u3 = r4.l, a3 = r4.a, o4 = void 0 === a3 ? 1 : a3;
-    if (!t(n3) || !t(e3) || !t(u3)) return null;
-    var i3 = g({ h: Number(n3), s: Number(e3), l: Number(u3), a: Number(o4) });
+  }, "hsl"]], object: [[function(r5) {
+    var n3 = r5.r, e4 = r5.g, u3 = r5.b, o4 = r5.a, i3 = void 0 === o4 ? 1 : o4;
+    return t(n3) && t(e4) && t(u3) ? a({ r: Number(n3), g: Number(e4), b: Number(u3), a: Number(i3) }) : null;
+  }, "rgb"], [function(r5) {
+    var n3 = r5.h, e4 = r5.s, u3 = r5.l, a3 = r5.a, o4 = void 0 === a3 ? 1 : a3;
+    if (!t(n3) || !t(e4) || !t(u3)) return null;
+    var i3 = b({ h: Number(n3), s: Number(e4), l: Number(u3), a: Number(o4) });
     return f(i3);
-  }, "hsl"], [function(r4) {
-    var n3 = r4.h, a3 = r4.s, o4 = r4.v, i3 = r4.a, s3 = void 0 === i3 ? 1 : i3;
+  }, "hsl"], [function(r5) {
+    var n3 = r5.h, a3 = r5.s, o4 = r5.v, i3 = r5.a, s3 = void 0 === i3 ? 1 : i3;
     if (!t(n3) || !t(a3) || !t(o4)) return null;
-    var h3 = (function(r5) {
-      return { h: u(r5.h), s: e(r5.s, 0, 100), v: e(r5.v, 0, 100), a: e(r5.a) };
+    var d3 = (function(r6) {
+      return { h: u(r6.h), s: e(r6.s, 0, 100), v: e(r6.v, 0, 100), a: e(r6.a) };
     })({ h: Number(n3), s: Number(a3), v: Number(o4), a: Number(s3) });
-    return b(h3);
+    return h(d3);
   }, "hsv"]] };
-  var N = function(r4, t4) {
+  var N = function(r5, t4) {
     for (var n3 = 0; n3 < t4.length; n3++) {
-      var e3 = t4[n3][0](r4);
-      if (e3) return [e3, t4[n3][1]];
+      var e4 = t4[n3][0](r5);
+      if (e4) return [e4, t4[n3][1]];
     }
     return [null, void 0];
   };
-  var x = function(r4) {
-    return "string" == typeof r4 ? N(r4.trim(), y.string) : "object" == typeof r4 && null !== r4 ? N(r4, y.object) : [null, void 0];
+  var x = function(r5) {
+    return "string" == typeof r5 ? N(r5.trim(), y.string) : "object" == typeof r5 && null !== r5 ? N(r5, y.object) : [null, void 0];
   };
-  var I = function(r4) {
-    return x(r4)[1];
+  var I = function(r5) {
+    return x(r5)[1];
   };
-  var M = function(r4, t4) {
-    var n3 = c(r4);
+  var M = function(r5, t4) {
+    var n3 = c(r5);
     return { h: n3.h, s: e(n3.s + 100 * t4, 0, 100), l: n3.l, a: n3.a };
   };
-  var H = function(r4) {
-    return (299 * r4.r + 587 * r4.g + 114 * r4.b) / 1e3 / 255;
+  var H = function(r5) {
+    return (299 * r5.r + 587 * r5.g + 114 * r5.b) / 1e3 / 255;
   };
-  var $ = function(r4, t4) {
-    var n3 = c(r4);
+  var $ = function(r5, t4) {
+    var n3 = c(r5);
     return { h: n3.h, s: n3.s, l: e(n3.l + 100 * t4, 0, 100), a: n3.a };
   };
   var j = (function() {
-    function r4(r5) {
-      this.parsed = x(r5)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
+    function r5(r6) {
+      this.parsed = x(r6)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
     }
-    return r4.prototype.isValid = function() {
+    return r5.prototype.isValid = function() {
       return null !== this.parsed;
-    }, r4.prototype.brightness = function() {
+    }, r5.prototype.brightness = function() {
       return n(H(this.rgba), 2);
-    }, r4.prototype.isDark = function() {
+    }, r5.prototype.isDark = function() {
       return H(this.rgba) < 0.5;
-    }, r4.prototype.isLight = function() {
+    }, r5.prototype.isLight = function() {
       return H(this.rgba) >= 0.5;
-    }, r4.prototype.toHex = function() {
-      return r5 = o(this.rgba), t4 = r5.r, e3 = r5.g, u3 = r5.b, i3 = (a3 = r5.a) < 1 ? s(n(255 * a3)) : "", "#" + s(t4) + s(e3) + s(u3) + i3;
-      var r5, t4, e3, u3, a3, i3;
-    }, r4.prototype.toRgb = function() {
+    }, r5.prototype.toHex = function() {
+      return r6 = o(this.rgba), t4 = r6.r, e4 = r6.g, u3 = r6.b, i3 = (a3 = r6.a) < 1 ? s(n(255 * a3)) : "", "#" + s(t4) + s(e4) + s(u3) + i3;
+      var r6, t4, e4, u3, a3, i3;
+    }, r5.prototype.toRgb = function() {
       return o(this.rgba);
-    }, r4.prototype.toRgbString = function() {
-      return r5 = o(this.rgba), t4 = r5.r, n3 = r5.g, e3 = r5.b, (u3 = r5.a) < 1 ? "rgba(" + t4 + ", " + n3 + ", " + e3 + ", " + u3 + ")" : "rgb(" + t4 + ", " + n3 + ", " + e3 + ")";
-      var r5, t4, n3, e3, u3;
-    }, r4.prototype.toHsl = function() {
-      return d(c(this.rgba));
-    }, r4.prototype.toHslString = function() {
-      return r5 = d(c(this.rgba)), t4 = r5.h, n3 = r5.s, e3 = r5.l, (u3 = r5.a) < 1 ? "hsla(" + t4 + ", " + n3 + "%, " + e3 + "%, " + u3 + ")" : "hsl(" + t4 + ", " + n3 + "%, " + e3 + "%)";
-      var r5, t4, n3, e3, u3;
-    }, r4.prototype.toHsv = function() {
-      return r5 = h(this.rgba), { h: n(r5.h), s: n(r5.s), v: n(r5.v), a: n(r5.a, 3) };
-      var r5;
-    }, r4.prototype.invert = function() {
-      return w({ r: 255 - (r5 = this.rgba).r, g: 255 - r5.g, b: 255 - r5.b, a: r5.a });
-      var r5;
-    }, r4.prototype.saturate = function(r5) {
-      return void 0 === r5 && (r5 = 0.1), w(M(this.rgba, r5));
-    }, r4.prototype.desaturate = function(r5) {
-      return void 0 === r5 && (r5 = 0.1), w(M(this.rgba, -r5));
-    }, r4.prototype.grayscale = function() {
+    }, r5.prototype.toRgbString = function() {
+      return r6 = o(this.rgba), t4 = r6.r, n3 = r6.g, e4 = r6.b, (u3 = r6.a) < 1 ? "rgba(" + t4 + ", " + n3 + ", " + e4 + ", " + u3 + ")" : "rgb(" + t4 + ", " + n3 + ", " + e4 + ")";
+      var r6, t4, n3, e4, u3;
+    }, r5.prototype.toHsl = function() {
+      return g(c(this.rgba));
+    }, r5.prototype.toHslString = function() {
+      return r6 = g(c(this.rgba)), t4 = r6.h, n3 = r6.s, e4 = r6.l, (u3 = r6.a) < 1 ? "hsla(" + t4 + ", " + n3 + "%, " + e4 + "%, " + u3 + ")" : "hsl(" + t4 + ", " + n3 + "%, " + e4 + "%)";
+      var r6, t4, n3, e4, u3;
+    }, r5.prototype.toHsv = function() {
+      return r6 = d(this.rgba), { h: n(r6.h), s: n(r6.s), v: n(r6.v), a: n(r6.a, 3) };
+      var r6;
+    }, r5.prototype.invert = function() {
+      return w({ r: 255 - (r6 = this.rgba).r, g: 255 - r6.g, b: 255 - r6.b, a: r6.a });
+      var r6;
+    }, r5.prototype.saturate = function(r6) {
+      return void 0 === r6 && (r6 = 0.1), w(M(this.rgba, r6));
+    }, r5.prototype.desaturate = function(r6) {
+      return void 0 === r6 && (r6 = 0.1), w(M(this.rgba, -r6));
+    }, r5.prototype.grayscale = function() {
       return w(M(this.rgba, -1));
-    }, r4.prototype.lighten = function(r5) {
-      return void 0 === r5 && (r5 = 0.1), w($(this.rgba, r5));
-    }, r4.prototype.darken = function(r5) {
-      return void 0 === r5 && (r5 = 0.1), w($(this.rgba, -r5));
-    }, r4.prototype.rotate = function(r5) {
-      return void 0 === r5 && (r5 = 15), this.hue(this.hue() + r5);
-    }, r4.prototype.alpha = function(r5) {
-      return "number" == typeof r5 ? w({ r: (t4 = this.rgba).r, g: t4.g, b: t4.b, a: r5 }) : n(this.rgba.a, 3);
+    }, r5.prototype.lighten = function(r6) {
+      return void 0 === r6 && (r6 = 0.1), w($(this.rgba, r6));
+    }, r5.prototype.darken = function(r6) {
+      return void 0 === r6 && (r6 = 0.1), w($(this.rgba, -r6));
+    }, r5.prototype.rotate = function(r6) {
+      return void 0 === r6 && (r6 = 15), this.hue(this.hue() + r6);
+    }, r5.prototype.alpha = function(r6) {
+      return "number" == typeof r6 ? w({ r: (t4 = this.rgba).r, g: t4.g, b: t4.b, a: r6 }) : n(this.rgba.a, 3);
       var t4;
-    }, r4.prototype.hue = function(r5) {
+    }, r5.prototype.hue = function(r6) {
       var t4 = c(this.rgba);
-      return "number" == typeof r5 ? w({ h: r5, s: t4.s, l: t4.l, a: t4.a }) : n(t4.h);
-    }, r4.prototype.isEqual = function(r5) {
-      return this.toHex() === w(r5).toHex();
-    }, r4;
+      return "number" == typeof r6 ? w({ h: r6, s: t4.s, l: t4.l, a: t4.a }) : n(t4.h);
+    }, r5.prototype.isEqual = function(r6) {
+      return this.toHex() === w(r6).toHex();
+    }, r5;
   })();
-  var w = function(r4) {
-    return r4 instanceof j ? r4 : new j(r4);
+  var w = function(r5) {
+    return r5 instanceof j ? r5 : new j(r5);
   };
   var S = [];
-  var k = function(r4) {
-    r4.forEach(function(r5) {
-      S.indexOf(r5) < 0 && (r5(j, y), S.push(r5));
+  var k = function(r5) {
+    r5.forEach(function(r6) {
+      S.indexOf(r6) < 0 && (r6(j, y), S.push(r6));
     });
   };
 
   // node_modules/colord/plugins/names.mjs
-  function names_default(e3, f3) {
-    var a3 = { white: "#ffffff", bisque: "#ffe4c4", blue: "#0000ff", cadetblue: "#5f9ea0", chartreuse: "#7fff00", chocolate: "#d2691e", coral: "#ff7f50", antiquewhite: "#faebd7", aqua: "#00ffff", azure: "#f0ffff", whitesmoke: "#f5f5f5", papayawhip: "#ffefd5", plum: "#dda0dd", blanchedalmond: "#ffebcd", black: "#000000", gold: "#ffd700", goldenrod: "#daa520", gainsboro: "#dcdcdc", cornsilk: "#fff8dc", cornflowerblue: "#6495ed", burlywood: "#deb887", aquamarine: "#7fffd4", beige: "#f5f5dc", crimson: "#dc143c", cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkkhaki: "#bdb76b", darkgray: "#a9a9a9", darkgreen: "#006400", darkgrey: "#a9a9a9", peachpuff: "#ffdab9", darkmagenta: "#8b008b", darkred: "#8b0000", darkorchid: "#9932cc", darkorange: "#ff8c00", darkslateblue: "#483d8b", gray: "#808080", darkslategray: "#2f4f4f", darkslategrey: "#2f4f4f", deeppink: "#ff1493", deepskyblue: "#00bfff", wheat: "#f5deb3", firebrick: "#b22222", floralwhite: "#fffaf0", ghostwhite: "#f8f8ff", darkviolet: "#9400d3", magenta: "#ff00ff", green: "#008000", dodgerblue: "#1e90ff", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", blueviolet: "#8a2be2", forestgreen: "#228b22", lawngreen: "#7cfc00", indianred: "#cd5c5c", indigo: "#4b0082", fuchsia: "#ff00ff", brown: "#a52a2a", maroon: "#800000", mediumblue: "#0000cd", lightcoral: "#f08080", darkturquoise: "#00ced1", lightcyan: "#e0ffff", ivory: "#fffff0", lightyellow: "#ffffe0", lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", linen: "#faf0e6", mediumaquamarine: "#66cdaa", lemonchiffon: "#fffacd", lime: "#00ff00", khaki: "#f0e68c", mediumseagreen: "#3cb371", limegreen: "#32cd32", mediumspringgreen: "#00fa9a", lightskyblue: "#87cefa", lightblue: "#add8e6", midnightblue: "#191970", lightpink: "#ffb6c1", mistyrose: "#ffe4e1", moccasin: "#ffe4b5", mintcream: "#f5fffa", lightslategray: "#778899", lightslategrey: "#778899", navajowhite: "#ffdead", navy: "#000080", mediumvioletred: "#c71585", powderblue: "#b0e0e6", palegoldenrod: "#eee8aa", oldlace: "#fdf5e6", paleturquoise: "#afeeee", mediumturquoise: "#48d1cc", mediumorchid: "#ba55d3", rebeccapurple: "#663399", lightsteelblue: "#b0c4de", mediumslateblue: "#7b68ee", thistle: "#d8bfd8", tan: "#d2b48c", orchid: "#da70d6", mediumpurple: "#9370db", purple: "#800080", pink: "#ffc0cb", skyblue: "#87ceeb", springgreen: "#00ff7f", palegreen: "#98fb98", red: "#ff0000", yellow: "#ffff00", slateblue: "#6a5acd", lavenderblush: "#fff0f5", peru: "#cd853f", palevioletred: "#db7093", violet: "#ee82ee", teal: "#008080", slategray: "#708090", slategrey: "#708090", aliceblue: "#f0f8ff", darkseagreen: "#8fbc8f", darkolivegreen: "#556b2f", greenyellow: "#adff2f", seagreen: "#2e8b57", seashell: "#fff5ee", tomato: "#ff6347", silver: "#c0c0c0", sienna: "#a0522d", lavender: "#e6e6fa", lightgreen: "#90ee90", orange: "#ffa500", orangered: "#ff4500", steelblue: "#4682b4", royalblue: "#4169e1", turquoise: "#40e0d0", yellowgreen: "#9acd32", salmon: "#fa8072", saddlebrown: "#8b4513", sandybrown: "#f4a460", rosybrown: "#bc8f8f", darksalmon: "#e9967a", lightgoldenrodyellow: "#fafad2", snow: "#fffafa", lightgrey: "#d3d3d3", lightgray: "#d3d3d3", dimgray: "#696969", dimgrey: "#696969", olivedrab: "#6b8e23", olive: "#808000" }, r4 = {};
-    for (var d3 in a3) r4[a3[d3]] = d3;
+  var e2 = function(e4, f3) {
+    var a3 = { white: "#ffffff", bisque: "#ffe4c4", blue: "#0000ff", cadetblue: "#5f9ea0", chartreuse: "#7fff00", chocolate: "#d2691e", coral: "#ff7f50", antiquewhite: "#faebd7", aqua: "#00ffff", azure: "#f0ffff", whitesmoke: "#f5f5f5", papayawhip: "#ffefd5", plum: "#dda0dd", blanchedalmond: "#ffebcd", black: "#000000", gold: "#ffd700", goldenrod: "#daa520", gainsboro: "#dcdcdc", cornsilk: "#fff8dc", cornflowerblue: "#6495ed", burlywood: "#deb887", aquamarine: "#7fffd4", beige: "#f5f5dc", crimson: "#dc143c", cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkkhaki: "#bdb76b", darkgray: "#a9a9a9", darkgreen: "#006400", darkgrey: "#a9a9a9", peachpuff: "#ffdab9", darkmagenta: "#8b008b", darkred: "#8b0000", darkorchid: "#9932cc", darkorange: "#ff8c00", darkslateblue: "#483d8b", gray: "#808080", darkslategray: "#2f4f4f", darkslategrey: "#2f4f4f", deeppink: "#ff1493", deepskyblue: "#00bfff", wheat: "#f5deb3", firebrick: "#b22222", floralwhite: "#fffaf0", ghostwhite: "#f8f8ff", darkviolet: "#9400d3", magenta: "#ff00ff", green: "#008000", dodgerblue: "#1e90ff", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", blueviolet: "#8a2be2", forestgreen: "#228b22", lawngreen: "#7cfc00", indianred: "#cd5c5c", indigo: "#4b0082", fuchsia: "#ff00ff", brown: "#a52a2a", maroon: "#800000", mediumblue: "#0000cd", lightcoral: "#f08080", darkturquoise: "#00ced1", lightcyan: "#e0ffff", ivory: "#fffff0", lightyellow: "#ffffe0", lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", linen: "#faf0e6", mediumaquamarine: "#66cdaa", lemonchiffon: "#fffacd", lime: "#00ff00", khaki: "#f0e68c", mediumseagreen: "#3cb371", limegreen: "#32cd32", mediumspringgreen: "#00fa9a", lightskyblue: "#87cefa", lightblue: "#add8e6", midnightblue: "#191970", lightpink: "#ffb6c1", mistyrose: "#ffe4e1", moccasin: "#ffe4b5", mintcream: "#f5fffa", lightslategray: "#778899", lightslategrey: "#778899", navajowhite: "#ffdead", navy: "#000080", mediumvioletred: "#c71585", powderblue: "#b0e0e6", palegoldenrod: "#eee8aa", oldlace: "#fdf5e6", paleturquoise: "#afeeee", mediumturquoise: "#48d1cc", mediumorchid: "#ba55d3", rebeccapurple: "#663399", lightsteelblue: "#b0c4de", mediumslateblue: "#7b68ee", thistle: "#d8bfd8", tan: "#d2b48c", orchid: "#da70d6", mediumpurple: "#9370db", purple: "#800080", pink: "#ffc0cb", skyblue: "#87ceeb", springgreen: "#00ff7f", palegreen: "#98fb98", red: "#ff0000", yellow: "#ffff00", slateblue: "#6a5acd", lavenderblush: "#fff0f5", peru: "#cd853f", palevioletred: "#db7093", violet: "#ee82ee", teal: "#008080", slategray: "#708090", slategrey: "#708090", aliceblue: "#f0f8ff", darkseagreen: "#8fbc8f", darkolivegreen: "#556b2f", greenyellow: "#adff2f", seagreen: "#2e8b57", seashell: "#fff5ee", tomato: "#ff6347", silver: "#c0c0c0", sienna: "#a0522d", lavender: "#e6e6fa", lightgreen: "#90ee90", orange: "#ffa500", orangered: "#ff4500", steelblue: "#4682b4", royalblue: "#4169e1", turquoise: "#40e0d0", yellowgreen: "#9acd32", salmon: "#fa8072", saddlebrown: "#8b4513", sandybrown: "#f4a460", rosybrown: "#bc8f8f", darksalmon: "#e9967a", lightgoldenrodyellow: "#fafad2", snow: "#fffafa", lightgrey: "#d3d3d3", lightgray: "#d3d3d3", dimgray: "#696969", dimgrey: "#696969", olivedrab: "#6b8e23", olive: "#808000" }, r5 = {};
+    for (var d3 in a3) r5[a3[d3]] = d3;
     var l3 = {};
-    e3.prototype.toName = function(f4) {
+    e4.prototype.toName = function(f4) {
       if (!(this.rgba.a || this.rgba.r || this.rgba.g || this.rgba.b)) return "transparent";
-      var d4, i3, n3 = r4[this.toHex()];
+      var d4, i3, n3 = r5[this.toHex()];
       if (n3) return n3;
       if (null == f4 ? void 0 : f4.closest) {
         var o4 = this.toRgb(), t4 = 1 / 0, b3 = "black";
-        if (!l3.length) for (var c3 in a3) l3[c3] = new e3(a3[c3]).toRgb();
+        if (!l3.length) for (var c3 in a3) l3[c3] = new e4(a3[c3]).toRgb();
         for (var g3 in a3) {
           var u3 = (d4 = o4, i3 = l3[g3], Math.pow(d4.r - i3.r, 2) + Math.pow(d4.g - i3.g, 2) + Math.pow(d4.b - i3.b, 2));
           u3 < t4 && (t4 = u3, b3 = g3);
@@ -22701,14 +22701,14 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
     f3.string.push([function(f4) {
-      var r5 = f4.toLowerCase(), d4 = "transparent" === r5 ? "#0000" : a3[r5];
-      return d4 ? new e3(d4).toRgb() : null;
+      var r6 = f4.toLowerCase(), d4 = "transparent" === r6 ? "#0000" : a3[r6];
+      return d4 ? new e4(d4).toRgb() : null;
     }, "name"]);
-  }
+  };
 
   // packages/components/build-module/utils/colors.mjs
   var colorComputationNode;
-  k([names_default]);
+  k([e2]);
   function getColorComputationNode() {
     if (typeof document === "undefined") {
       return;
@@ -25833,26 +25833,26 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return obj;
   }
-  function ownKeys(e3, r4) {
-    var t4 = Object.keys(e3);
+  function ownKeys(e4, r5) {
+    var t4 = Object.keys(e4);
     if (Object.getOwnPropertySymbols) {
-      var o4 = Object.getOwnPropertySymbols(e3);
-      r4 && (o4 = o4.filter(function(r5) {
-        return Object.getOwnPropertyDescriptor(e3, r5).enumerable;
+      var o4 = Object.getOwnPropertySymbols(e4);
+      r5 && (o4 = o4.filter(function(r6) {
+        return Object.getOwnPropertyDescriptor(e4, r6).enumerable;
       })), t4.push.apply(t4, o4);
     }
     return t4;
   }
-  function _objectSpread2(e3) {
-    for (var r4 = 1; r4 < arguments.length; r4++) {
-      var t4 = null != arguments[r4] ? arguments[r4] : {};
-      r4 % 2 ? ownKeys(Object(t4), true).forEach(function(r5) {
-        _defineProperty(e3, r5, t4[r5]);
-      }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e3, Object.getOwnPropertyDescriptors(t4)) : ownKeys(Object(t4)).forEach(function(r5) {
-        Object.defineProperty(e3, r5, Object.getOwnPropertyDescriptor(t4, r5));
+  function _objectSpread2(e4) {
+    for (var r5 = 1; r5 < arguments.length; r5++) {
+      var t4 = null != arguments[r5] ? arguments[r5] : {};
+      r5 % 2 ? ownKeys(Object(t4), true).forEach(function(r6) {
+        _defineProperty(e4, r6, t4[r6]);
+      }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e4, Object.getOwnPropertyDescriptors(t4)) : ownKeys(Object(t4)).forEach(function(r6) {
+        Object.defineProperty(e4, r6, Object.getOwnPropertyDescriptor(t4, r6));
       });
     }
-    return e3;
+    return e4;
   }
   var EVENT_TYPE_MAP = {
     pointer: {
@@ -25917,9 +25917,9 @@ If there's a particular need for this, please submit a feature request at https:
     return "mouse";
   }
   function getCurrentTargetTouchList(event) {
-    return Array.from(event.touches).filter((e3) => {
+    return Array.from(event.touches).filter((e4) => {
       var _event$currentTarget, _event$currentTarget$;
-      return e3.target === event.currentTarget || ((_event$currentTarget = event.currentTarget) === null || _event$currentTarget === void 0 || (_event$currentTarget$ = _event$currentTarget.contains) === null || _event$currentTarget$ === void 0 ? void 0 : _event$currentTarget$.call(_event$currentTarget, e3.target));
+      return e4.target === event.currentTarget || ((_event$currentTarget = event.currentTarget) === null || _event$currentTarget === void 0 || (_event$currentTarget$ = _event$currentTarget.contains) === null || _event$currentTarget$ === void 0 ? void 0 : _event$currentTarget$.call(_event$currentTarget, e4.target));
     });
   }
   function getTouchList(event) {
@@ -26260,11 +26260,11 @@ If there's a particular need for this, please submit a feature request at https:
       if (true) {
         const originalTransform = transform || identity2;
         return (v3) => {
-          const r4 = originalTransform(v3);
-          if (!isFinite(r4[0]) || !isFinite(r4[1])) {
-            console.warn(`[@use-gesture]: config.transform() must produce a valid result, but it was: [${r4[0]},${[1]}]`);
+          const r5 = originalTransform(v3);
+          if (!isFinite(r5[0]) || !isFinite(r5[1])) {
+            console.warn(`[@use-gesture]: config.transform() must produce a valid result, but it was: [${r5[0]},${[1]}]`);
           }
-          return r4;
+          return r5;
         };
       }
       return transform || identity2;
@@ -26616,7 +26616,7 @@ This message will only show in development mode. It won't appear in production. 
   function supportsGestureEvents() {
     try {
       return "constructor" in GestureEvent;
-    } catch (e3) {
+    } catch (e4) {
       return false;
     }
   }
@@ -26876,8 +26876,8 @@ This message will only show in development mode. It won't appear in production. 
       switch (typeof resolver) {
         case "function":
           if (true) {
-            const r4 = resolver.call(result, config[key], key, config);
-            if (!Number.isNaN(r4)) result[key] = r4;
+            const r5 = resolver.call(result, config[key], key, config);
+            if (!Number.isNaN(r5)) result[key] = r5;
           } else {
             result[key] = resolver.call(result, config[key], key, config);
           }
@@ -31658,19 +31658,19 @@ This message will only show in development mode. It won't appear in production. 
   var t2 = function(t4) {
     return 0.2126 * o2(t4.r) + 0.7152 * o2(t4.g) + 0.0722 * o2(t4.b);
   };
-  function a11y_default(o4) {
+  var r3 = function(o4) {
     o4.prototype.luminance = function() {
-      return o5 = t2(this.rgba), void 0 === (r4 = 2) && (r4 = 0), void 0 === n3 && (n3 = Math.pow(10, r4)), Math.round(n3 * o5) / n3 + 0;
-      var o5, r4, n3;
-    }, o4.prototype.contrast = function(r4) {
-      void 0 === r4 && (r4 = "#FFF");
-      var n3, a3, i3, e3, v3, u3, d3, c3 = r4 instanceof o4 ? r4 : new o4(r4);
-      return e3 = this.rgba, v3 = c3.toRgb(), u3 = t2(e3), d3 = t2(v3), n3 = u3 > d3 ? (u3 + 0.05) / (d3 + 0.05) : (d3 + 0.05) / (u3 + 0.05), void 0 === (a3 = 2) && (a3 = 0), void 0 === i3 && (i3 = Math.pow(10, a3)), Math.floor(i3 * n3) / i3 + 0;
+      return o5 = t2(this.rgba), void 0 === (r5 = 2) && (r5 = 0), void 0 === n3 && (n3 = Math.pow(10, r5)), Math.round(n3 * o5) / n3 + 0;
+      var o5, r5, n3;
+    }, o4.prototype.contrast = function(r5) {
+      void 0 === r5 && (r5 = "#FFF");
+      var n3, a3, i3, e4, v3, u3, d3, c3 = r5 instanceof o4 ? r5 : new o4(r5);
+      return e4 = this.rgba, v3 = c3.toRgb(), u3 = t2(e4), d3 = t2(v3), n3 = u3 > d3 ? (u3 + 0.05) / (d3 + 0.05) : (d3 + 0.05) / (u3 + 0.05), void 0 === (a3 = 2) && (a3 = 0), void 0 === i3 && (i3 = Math.pow(10, a3)), Math.floor(i3 * n3) / i3 + 0;
     }, o4.prototype.isReadable = function(o5, t4) {
-      return void 0 === o5 && (o5 = "#FFF"), void 0 === t4 && (t4 = {}), this.contrast(o5) >= (e3 = void 0 === (i3 = (r4 = t4).size) ? "normal" : i3, "AAA" === (a3 = void 0 === (n3 = r4.level) ? "AA" : n3) && "normal" === e3 ? 7 : "AA" === a3 && "large" === e3 ? 3 : 4.5);
-      var r4, n3, a3, i3, e3;
+      return void 0 === o5 && (o5 = "#FFF"), void 0 === t4 && (t4 = {}), this.contrast(o5) >= (e4 = void 0 === (i3 = (r5 = t4).size) ? "normal" : i3, "AAA" === (a3 = void 0 === (n3 = r5.level) ? "AA" : n3) && "normal" === e4 ? 7 : "AA" === a3 && "large" === e4 ? 3 : 4.5);
+      var r5, n3, a3, i3, e4;
     };
-  }
+  };
 
   // packages/components/build-module/color-palette/index.mjs
   var import_compose34 = __toESM(require_compose(), 1);
@@ -32871,7 +32871,7 @@ This message will only show in development mode. It won't appear in production. 
     enableAlpha
   }) => {
     const {
-      r: r4,
+      r: r5,
       g: g3,
       b: b3,
       a: a3
@@ -32882,7 +32882,7 @@ This message will only show in development mode. It won't appear in production. 
         max: 255,
         label: "Red",
         abbreviation: "R",
-        value: r4,
+        value: r5,
         onChange: (nextR) => onChange(w({
           r: nextR,
           g: g3,
@@ -32896,7 +32896,7 @@ This message will only show in development mode. It won't appear in production. 
         abbreviation: "G",
         value: g3,
         onChange: (nextG) => onChange(w({
-          r: r4,
+          r: r5,
           g: nextG,
           b: b3,
           a: a3
@@ -32908,7 +32908,7 @@ This message will only show in development mode. It won't appear in production. 
         abbreviation: "B",
         value: b3,
         onChange: (nextB) => onChange(w({
-          r: r4,
+          r: r5,
           g: g3,
           b: nextB,
           a: a3
@@ -32920,7 +32920,7 @@ This message will only show in development mode. It won't appear in production. 
         abbreviation: "A",
         value: Math.trunc(a3 * 100),
         onChange: (nextA) => onChange(w({
-          r: r4,
+          r: r5,
           g: g3,
           b: b3,
           a: nextA / 100
@@ -33076,143 +33076,143 @@ This message will only show in development mode. It won't appear in production. 
   // node_modules/react-colorful/dist/index.mjs
   var import_react97 = __toESM(require_react(), 1);
   function l2() {
-    return (l2 = Object.assign || function(e3) {
-      for (var r4 = 1; r4 < arguments.length; r4++) {
-        var n3 = arguments[r4];
-        for (var t4 in n3) Object.prototype.hasOwnProperty.call(n3, t4) && (e3[t4] = n3[t4]);
+    return (l2 = Object.assign || function(e4) {
+      for (var r5 = 1; r5 < arguments.length; r5++) {
+        var n3 = arguments[r5];
+        for (var t4 in n3) Object.prototype.hasOwnProperty.call(n3, t4) && (e4[t4] = n3[t4]);
       }
-      return e3;
+      return e4;
     }).apply(this, arguments);
   }
-  function c2(e3, r4) {
-    if (null == e3) return {};
-    var n3, t4, o4 = {}, a3 = Object.keys(e3);
-    for (t4 = 0; t4 < a3.length; t4++) r4.indexOf(n3 = a3[t4]) >= 0 || (o4[n3] = e3[n3]);
+  function c2(e4, r5) {
+    if (null == e4) return {};
+    var n3, t4, o4 = {}, a3 = Object.keys(e4);
+    for (t4 = 0; t4 < a3.length; t4++) r5.indexOf(n3 = a3[t4]) >= 0 || (o4[n3] = e4[n3]);
     return o4;
   }
-  function i2(e3) {
-    var n3 = (0, import_react97.useRef)(e3), t4 = (0, import_react97.useRef)(function(e4) {
-      n3.current && n3.current(e4);
+  function i2(e4) {
+    var n3 = (0, import_react97.useRef)(e4), t4 = (0, import_react97.useRef)(function(e5) {
+      n3.current && n3.current(e5);
     });
-    return n3.current = e3, t4.current;
+    return n3.current = e4, t4.current;
   }
-  var s2 = function(e3, r4, n3) {
-    return void 0 === r4 && (r4 = 0), void 0 === n3 && (n3 = 1), e3 > n3 ? n3 : e3 < r4 ? r4 : e3;
+  var s2 = function(e4, r5, n3) {
+    return void 0 === r5 && (r5 = 0), void 0 === n3 && (n3 = 1), e4 > n3 ? n3 : e4 < r5 ? r5 : e4;
   };
-  var f2 = function(e3) {
-    return "touches" in e3;
+  var f2 = function(e4) {
+    return "touches" in e4;
   };
-  var d2 = function(e3) {
-    return e3 && e3.ownerDocument.defaultView || self;
+  var d2 = function(e4) {
+    return e4 && e4.ownerDocument.defaultView || self;
   };
-  var v2 = function(e3, r4, n3) {
-    var t4 = e3.getBoundingClientRect(), o4 = f2(r4) ? (function(e4, r5) {
-      for (var n4 = 0; n4 < e4.length; n4++) if (e4[n4].identifier === r5) return e4[n4];
-      return e4[0];
-    })(r4.touches, n3) : r4;
-    return { left: s2((o4.pageX - (t4.left + d2(e3).pageXOffset)) / t4.width), top: s2((o4.pageY - (t4.top + d2(e3).pageYOffset)) / t4.height) };
+  var v2 = function(e4, r5, n3) {
+    var t4 = e4.getBoundingClientRect(), o4 = f2(r5) ? (function(e5, r6) {
+      for (var n4 = 0; n4 < e5.length; n4++) if (e5[n4].identifier === r6) return e5[n4];
+      return e5[0];
+    })(r5.touches, n3) : r5;
+    return { left: s2((o4.pageX - (t4.left + d2(e4).pageXOffset)) / t4.width), top: s2((o4.pageY - (t4.top + d2(e4).pageYOffset)) / t4.height) };
   };
-  var h2 = function(e3) {
-    !f2(e3) && e3.preventDefault();
+  var h2 = function(e4) {
+    !f2(e4) && e4.preventDefault();
   };
   var g2 = import_react97.default.memo(function(o4) {
     var a3 = o4.onMove, u3 = o4.onKey, s3 = o4.onEnd, g3 = c2(o4, ["onMove", "onKey", "onEnd"]), m3 = (0, import_react97.useRef)(null), p3 = i2(a3), b3 = i2(u3), _2 = i2(s3), E = (0, import_react97.useRef)(null), C = (0, import_react97.useRef)(false), x2 = (0, import_react97.useMemo)(function() {
-      var e3 = function(e4) {
-        h2(e4), (f2(e4) ? e4.touches.length > 0 : e4.buttons > 0) && m3.current ? p3(v2(m3.current, e4, E.current)) : (n3(false), _2());
-      }, r4 = function() {
+      var e4 = function(e5) {
+        h2(e5), (f2(e5) ? e5.touches.length > 0 : e5.buttons > 0) && m3.current ? p3(v2(m3.current, e5, E.current)) : (n3(false), _2());
+      }, r5 = function() {
         n3(false), _2();
       };
       function n3(n4) {
         var t4 = C.current, o5 = d2(m3.current), a4 = n4 ? o5.addEventListener : o5.removeEventListener;
-        a4(t4 ? "touchmove" : "mousemove", e3), a4(t4 ? "touchend" : "mouseup", r4);
+        a4(t4 ? "touchmove" : "mousemove", e4), a4(t4 ? "touchend" : "mouseup", r5);
       }
-      return [function(e4) {
-        var r5 = e4.nativeEvent, t4 = m3.current;
-        if (t4 && (h2(r5), !(function(e5, r6) {
-          return r6 && !f2(e5);
-        })(r5, C.current) && t4)) {
-          if (f2(r5)) {
+      return [function(e5) {
+        var r6 = e5.nativeEvent, t4 = m3.current;
+        if (t4 && (h2(r6), !(function(e6, r7) {
+          return r7 && !f2(e6);
+        })(r6, C.current) && t4)) {
+          if (f2(r6)) {
             C.current = true;
-            var o5 = r5.changedTouches || [];
+            var o5 = r6.changedTouches || [];
             o5.length && (E.current = o5[0].identifier);
           }
-          t4.focus(), p3(v2(t4, r5, E.current)), n3(true);
+          t4.focus(), p3(v2(t4, r6, E.current)), n3(true);
         }
-      }, function(e4) {
-        var r5 = e4.which || e4.keyCode;
-        r5 < 37 || r5 > 40 || (e4.preventDefault(), b3({ left: 39 === r5 ? 0.05 : 37 === r5 ? -0.05 : 0, top: 40 === r5 ? 0.05 : 38 === r5 ? -0.05 : 0 }));
-      }, function(e4) {
-        var r5 = e4.which || e4.keyCode;
-        r5 >= 37 && r5 <= 40 && _2();
+      }, function(e5) {
+        var r6 = e5.which || e5.keyCode;
+        r6 < 37 || r6 > 40 || (e5.preventDefault(), b3({ left: 39 === r6 ? 0.05 : 37 === r6 ? -0.05 : 0, top: 40 === r6 ? 0.05 : 38 === r6 ? -0.05 : 0 }));
+      }, function(e5) {
+        var r6 = e5.which || e5.keyCode;
+        r6 >= 37 && r6 <= 40 && _2();
       }, n3];
     }, [b3, p3, _2]), H2 = x2[0], M2 = x2[1], N2 = x2[2], w2 = x2[3];
     return (0, import_react97.useEffect)(function() {
       return w2;
     }, [w2]), import_react97.default.createElement("div", l2({}, g3, { onTouchStart: H2, onMouseDown: H2, className: "react-colorful__interactive", ref: m3, onKeyDown: M2, onKeyUp: N2, tabIndex: 0, role: "slider" }));
   });
-  var m2 = function(e3) {
-    return e3.filter(Boolean).join(" ");
+  var m2 = function(e4) {
+    return e4.filter(Boolean).join(" ");
   };
-  var p2 = function(r4) {
-    var n3 = r4.color, t4 = r4.left, o4 = r4.top, a3 = void 0 === o4 ? 0.5 : o4, u3 = m2(["react-colorful__pointer", r4.className]);
+  var p2 = function(r5) {
+    var n3 = r5.color, t4 = r5.left, o4 = r5.top, a3 = void 0 === o4 ? 0.5 : o4, u3 = m2(["react-colorful__pointer", r5.className]);
     return import_react97.default.createElement("div", { className: u3, style: { top: 100 * a3 + "%", left: 100 * t4 + "%" } }, import_react97.default.createElement("div", { className: "react-colorful__pointer-fill", style: { backgroundColor: n3 } }));
   };
-  var b2 = function(e3, r4, n3) {
-    return void 0 === r4 && (r4 = 0), void 0 === n3 && (n3 = Math.pow(10, r4)), Math.round(n3 * e3) / n3;
+  var b2 = function(e4, r5, n3) {
+    return void 0 === r5 && (r5 = 0), void 0 === n3 && (n3 = Math.pow(10, r5)), Math.round(n3 * e4) / n3;
   };
   var _ = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) };
-  var y2 = function(e3) {
-    var r4 = e3.s, n3 = e3.v, t4 = e3.a, o4 = (200 - r4) * n3 / 100;
-    return { h: b2(e3.h), s: b2(o4 > 0 && o4 < 200 ? r4 * n3 / 100 / (o4 <= 100 ? o4 : 200 - o4) * 100 : 0), l: b2(o4 / 2), a: b2(t4, 2) };
+  var y2 = function(e4) {
+    var r5 = e4.s, n3 = e4.v, t4 = e4.a, o4 = (200 - r5) * n3 / 100;
+    return { h: b2(e4.h), s: b2(o4 > 0 && o4 < 200 ? r5 * n3 / 100 / (o4 <= 100 ? o4 : 200 - o4) * 100 : 0), l: b2(o4 / 2), a: b2(t4, 2) };
   };
-  var k2 = function(e3) {
-    var r4 = y2(e3);
-    return "hsl(" + r4.h + ", " + r4.s + "%, " + r4.l + "%)";
+  var k2 = function(e4) {
+    var r5 = y2(e4);
+    return "hsl(" + r5.h + ", " + r5.s + "%, " + r5.l + "%)";
   };
-  var q = function(e3) {
-    var r4 = y2(e3);
-    return "hsla(" + r4.h + ", " + r4.s + "%, " + r4.l + "%, " + r4.a + ")";
+  var q = function(e4) {
+    var r5 = y2(e4);
+    return "hsla(" + r5.h + ", " + r5.s + "%, " + r5.l + "%, " + r5.a + ")";
   };
-  var A = function(e3) {
-    return { h: b2(e3.h), s: b2(e3.s), v: b2(e3.v), a: b2(e3.a, 2) };
+  var A = function(e4) {
+    return { h: b2(e4.h), s: b2(e4.s), v: b2(e4.v), a: b2(e4.a, 2) };
   };
-  var R = import_react97.default.memo(function(r4) {
-    var n3 = r4.hue, t4 = r4.onChange, o4 = r4.onChangeEnd, a3 = m2(["react-colorful__hue", r4.className]);
-    return import_react97.default.createElement("div", { className: a3 }, import_react97.default.createElement(g2, { onMove: function(e3) {
-      t4({ h: 360 * e3.left });
-    }, onKey: function(e3) {
-      t4({ h: s2(n3 + 360 * e3.left, 0, 360) });
+  var R = import_react97.default.memo(function(r5) {
+    var n3 = r5.hue, t4 = r5.onChange, o4 = r5.onChangeEnd, a3 = m2(["react-colorful__hue", r5.className]);
+    return import_react97.default.createElement("div", { className: a3 }, import_react97.default.createElement(g2, { onMove: function(e4) {
+      t4({ h: 360 * e4.left });
+    }, onKey: function(e4) {
+      t4({ h: s2(n3 + 360 * e4.left, 0, 360) });
     }, onEnd: o4, "aria-label": "Hue", "aria-valuenow": b2(n3), "aria-valuemax": "360", "aria-valuemin": "0" }, import_react97.default.createElement(p2, { className: "react-colorful__hue-pointer", left: n3 / 360, color: k2({ h: n3, s: 100, v: 100, a: 1 }) })));
   });
-  var S2 = import_react97.default.memo(function(r4) {
-    var n3 = r4.hsva, t4 = r4.onChange, o4 = r4.onChangeEnd, a3 = { backgroundColor: k2({ h: n3.h, s: 100, v: 100, a: 1 }) };
-    return import_react97.default.createElement("div", { className: "react-colorful__saturation", style: a3 }, import_react97.default.createElement(g2, { onMove: function(e3) {
-      t4({ s: 100 * e3.left, v: 100 - 100 * e3.top });
-    }, onKey: function(e3) {
-      t4({ s: s2(n3.s + 100 * e3.left, 0, 100), v: s2(n3.v - 100 * e3.top, 0, 100) });
+  var S2 = import_react97.default.memo(function(r5) {
+    var n3 = r5.hsva, t4 = r5.onChange, o4 = r5.onChangeEnd, a3 = { backgroundColor: k2({ h: n3.h, s: 100, v: 100, a: 1 }) };
+    return import_react97.default.createElement("div", { className: "react-colorful__saturation", style: a3 }, import_react97.default.createElement(g2, { onMove: function(e4) {
+      t4({ s: 100 * e4.left, v: 100 - 100 * e4.top });
+    }, onKey: function(e4) {
+      t4({ s: s2(n3.s + 100 * e4.left, 0, 100), v: s2(n3.v - 100 * e4.top, 0, 100) });
     }, onEnd: o4, "aria-label": "Color", "aria-valuetext": "Saturation " + b2(n3.s) + "%, Brightness " + b2(n3.v) + "%" }, import_react97.default.createElement(p2, { className: "react-colorful__saturation-pointer", top: 1 - n3.v / 100, left: n3.s / 100, color: k2(n3) })));
   });
-  var T = function(e3, r4) {
-    if (e3 === r4) return true;
-    for (var n3 in e3) if (e3[n3] !== r4[n3]) return false;
+  var T = function(e4, r5) {
+    if (e4 === r5) return true;
+    for (var n3 in e4) if (e4[n3] !== r5[n3]) return false;
     return true;
   };
-  function X(e3, n3, u3, l3) {
+  function X(e4, n3, u3, l3) {
     var c3 = i2(u3), s3 = i2(l3), f3 = (0, import_react97.useState)(function() {
-      return e3.toHsva(n3);
+      return e4.toHsva(n3);
     }), d3 = f3[0], v3 = f3[1], h3 = (0, import_react97.useRef)({ color: n3, hsva: d3 }), g3 = (0, import_react97.useRef)(false);
     (0, import_react97.useEffect)(function() {
-      if (!e3.equal(n3, h3.current.color)) {
-        var r4 = e3.toHsva(n3);
-        h3.current = { hsva: r4, color: n3 }, v3(r4), g3.current = false;
+      if (!e4.equal(n3, h3.current.color)) {
+        var r5 = e4.toHsva(n3);
+        h3.current = { hsva: r5, color: n3 }, v3(r5), g3.current = false;
       }
-    }, [n3, e3]), (0, import_react97.useEffect)(function() {
-      var r4;
-      T(d3, h3.current.hsva) || e3.equal(r4 = e3.fromHsva(d3), h3.current.color) || (h3.current = { hsva: d3, color: r4 }, c3(r4), g3.current = true);
-    }, [d3, e3, c3]);
-    var m3 = (0, import_react97.useCallback)(function(e4) {
-      v3(function(r4) {
-        return Object.assign({}, r4, e4);
+    }, [n3, e4]), (0, import_react97.useEffect)(function() {
+      var r5;
+      T(d3, h3.current.hsva) || e4.equal(r5 = e4.fromHsva(d3), h3.current.color) || (h3.current = { hsva: d3, color: r5 }, c3(r5), g3.current = true);
+    }, [d3, e4, c3]);
+    var m3 = (0, import_react97.useCallback)(function(e5) {
+      v3(function(r5) {
+        return Object.assign({}, r5, e5);
       });
     }, []), p3 = (0, import_react97.useCallback)(function() {
       g3.current && (g3.current = false, s3(h3.current.color));
@@ -33225,11 +33225,11 @@ This message will only show in development mode. It won't appear in production. 
     return Y || ("undefined" != typeof __webpack_nonce__ ? __webpack_nonce__ : void 0);
   };
   var $2 = /* @__PURE__ */ new WeakMap();
-  var G = function(e3) {
+  var G = function(e4) {
     U(function() {
-      var r4 = e3.current;
-      if ("undefined" != typeof document && r4) {
-        var n3 = r4.getRootNode ? r4.getRootNode() : r4.ownerDocument, t4 = n3 && ("head" in n3 || "host" in n3) ? n3 : r4.ownerDocument;
+      var r5 = e4.current;
+      if ("undefined" != typeof document && r5) {
+        var n3 = r5.getRootNode ? r5.getRootNode() : r5.ownerDocument, t4 = n3 && ("head" in n3 || "host" in n3) ? n3 : r5.ownerDocument;
         if (!$2.has(t4)) {
           var o4 = "head" in t4 ? t4.head : t4, a3 = (o4.ownerDocument || document).createElement("style");
           a3.innerHTML = `.react-colorful{position:relative;display:flex;flex-direction:column;width:200px;height:200px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:default}.react-colorful__saturation{position:relative;flex-grow:1;border-color:transparent;border-bottom:12px solid #000;border-radius:8px 8px 0 0;background-image:linear-gradient(0deg,#000,transparent),linear-gradient(90deg,#fff,hsla(0,0%,100%,0))}.react-colorful__alpha-gradient,.react-colorful__pointer-fill{content:"";position:absolute;left:0;top:0;right:0;bottom:0;pointer-events:none;border-radius:inherit}.react-colorful__alpha-gradient,.react-colorful__saturation{box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}.react-colorful__alpha,.react-colorful__hue{position:relative;height:24px}.react-colorful__hue{background:linear-gradient(90deg,red 0,#ff0 17%,#0f0 33%,#0ff 50%,#00f 67%,#f0f 83%,red)}.react-colorful__last-control{border-radius:0 0 8px 8px}.react-colorful__interactive{position:absolute;left:0;top:0;right:0;bottom:0;border-radius:inherit;outline:none;touch-action:none}.react-colorful__pointer{position:absolute;z-index:1;box-sizing:border-box;width:28px;height:28px;transform:translate(-50%,-50%);background-color:#fff;border:2px solid #fff;border-radius:50%;box-shadow:0 2px 4px rgba(0,0,0,.2)}.react-colorful__interactive:focus .react-colorful__pointer{transform:translate(-50%,-50%) scale(1.1)}.react-colorful__alpha,.react-colorful__alpha-pointer{background-color:#fff;background-image:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill-opacity=".05"><path d="M8 0h8v8H8zM0 8h8v8H0z"/></svg>')}.react-colorful__saturation-pointer{z-index:3}.react-colorful__hue-pointer{z-index:2}`;
@@ -33245,12 +33245,12 @@ This message will only show in development mode. It won't appear in production. 
     var v3 = X(o4, u3, i3, s3), h3 = v3[0], g3 = v3[1], p3 = v3[2], b3 = m2(["react-colorful", t4]);
     return import_react97.default.createElement("div", l2({}, f3, { ref: d3, className: b3 }), import_react97.default.createElement(S2, { hsva: h3, onChange: g3, onChangeEnd: p3 }), import_react97.default.createElement(R, { hue: h3.h, onChange: g3, onChangeEnd: p3, className: "react-colorful__last-control" }));
   };
-  var ee = function(r4) {
-    var n3 = r4.className, t4 = r4.hsva, o4 = r4.onChange, a3 = r4.onChangeEnd, u3 = { backgroundImage: "linear-gradient(90deg, " + q(Object.assign({}, t4, { a: 0 })) + ", " + q(Object.assign({}, t4, { a: 1 })) + ")" }, l3 = m2(["react-colorful__alpha", n3]), c3 = b2(100 * t4.a);
-    return import_react97.default.createElement("div", { className: l3 }, import_react97.default.createElement("div", { className: "react-colorful__alpha-gradient", style: u3 }), import_react97.default.createElement(g2, { onMove: function(e3) {
-      o4({ a: e3.left });
-    }, onKey: function(e3) {
-      o4({ a: s2(t4.a + e3.left) });
+  var ee = function(r5) {
+    var n3 = r5.className, t4 = r5.hsva, o4 = r5.onChange, a3 = r5.onChangeEnd, u3 = { backgroundImage: "linear-gradient(90deg, " + q(Object.assign({}, t4, { a: 0 })) + ", " + q(Object.assign({}, t4, { a: 1 })) + ")" }, l3 = m2(["react-colorful__alpha", n3]), c3 = b2(100 * t4.a);
+    return import_react97.default.createElement("div", { className: l3 }, import_react97.default.createElement("div", { className: "react-colorful__alpha-gradient", style: u3 }), import_react97.default.createElement(g2, { onMove: function(e4) {
+      o4({ a: e4.left });
+    }, onKey: function(e4) {
+      o4({ a: s2(t4.a + e4.left) });
     }, onEnd: a3, "aria-label": "Alpha", "aria-valuetext": c3 + "%", "aria-valuenow": c3, "aria-valuemin": "0", "aria-valuemax": "100" }, import_react97.default.createElement(p2, { className: "react-colorful__alpha-pointer", left: t4.a, color: q(t4) })));
   };
   var re = function(n3) {
@@ -33259,20 +33259,20 @@ This message will only show in development mode. It won't appear in production. 
     var v3 = X(o4, u3, i3, s3), h3 = v3[0], g3 = v3[1], p3 = v3[2], b3 = m2(["react-colorful", t4]);
     return import_react97.default.createElement("div", l2({}, f3, { ref: d3, className: b3 }), import_react97.default.createElement(S2, { hsva: h3, onChange: g3, onChangeEnd: p3 }), import_react97.default.createElement(R, { hue: h3.h, onChange: g3, onChangeEnd: p3 }), import_react97.default.createElement(ee, { hsva: h3, onChange: g3, onChangeEnd: p3, className: "react-colorful__last-control" }));
   };
-  var de = { defaultColor: { h: 0, s: 0, v: 0, a: 1 }, toHsva: function(e3) {
-    return e3;
+  var de = { defaultColor: { h: 0, s: 0, v: 0, a: 1 }, toHsva: function(e4) {
+    return e4;
   }, fromHsva: A, equal: T };
-  var ve = function(r4) {
-    return import_react97.default.createElement(re, l2({}, r4, { colorModel: de }));
+  var ve = function(r5) {
+    return import_react97.default.createElement(re, l2({}, r5, { colorModel: de }));
   };
-  var me = { defaultColor: { h: 0, s: 0, v: 0 }, toHsva: function(e3) {
-    return { h: e3.h, s: e3.s, v: e3.v, a: 1 };
-  }, fromHsva: function(e3) {
-    var r4 = A(e3);
-    return { h: r4.h, s: r4.s, v: r4.v };
+  var me = { defaultColor: { h: 0, s: 0, v: 0 }, toHsva: function(e4) {
+    return { h: e4.h, s: e4.s, v: e4.v, a: 1 };
+  }, fromHsva: function(e4) {
+    var r5 = A(e4);
+    return { h: r5.h, s: r5.s, v: r5.v };
   }, equal: T };
-  var pe = function(r4) {
-    return import_react97.default.createElement(J, l2({}, r4, { colorModel: me }));
+  var pe = function(r5) {
+    return import_react97.default.createElement(J, l2({}, r5, { colorModel: me }));
   };
 
   // packages/components/build-module/color-picker/picker.mjs
@@ -33387,7 +33387,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/color-picker/component.mjs
   var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
-  k([names_default]);
+  k([e2]);
   function mergeHSLA(nextHSLA, prevHSLA) {
     if (nextHSLA.s === 0) {
       if (nextHSLA.l === 0 || nextHSLA.l === 100) {
@@ -34061,7 +34061,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/color-palette/utils.mjs
   var import_i18n19 = __toESM(require_i18n(), 1);
-  k([names_default, a11y_default]);
+  k([e2, r3]);
   var isSimpleCSSColor = (value) => {
     const valueIsCssVariable = /var\(/.test(value ?? "");
     const valueIsColorMix = /color-mix\(/.test(value ?? "");
@@ -34197,7 +34197,7 @@ This message will only show in development mode. It won't appear in production. 
     registerStyle14("a7b05d56c7", ".cf6db1948d5273a8__color-heading{text-transform:uppercase}.cf6db1948d5273a8__color-heading.cf6db1948d5273a8__color-heading.cf6db1948d5273a8__color-heading{font-size:11px;line-height:24px;margin-bottom:0}");
   }
   var style_module_default14 = { "color-heading": "cf6db1948d5273a8__color-heading" };
-  k([names_default, a11y_default]);
+  k([e2, r3]);
   function SinglePalette({
     className,
     clearColor,
@@ -39073,7 +39073,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/custom-gradient-picker/utils.mjs
-  k([names_default]);
+  k([e2]);
   function getLinearGradientRepresentation(gradientAST) {
     return serializeGradient({
       type: "linear-gradient",
@@ -39126,7 +39126,7 @@ This message will only show in development mode. It won't appear in production. 
         color: color2
       }) => {
         const {
-          r: r4,
+          r: r5,
           g: g3,
           b: b3,
           a: a3
@@ -39137,7 +39137,7 @@ This message will only show in development mode. It won't appear in production. 
             value: position2?.toString()
           },
           type: a3 < 1 ? "rgba" : "rgb",
-          value: a3 < 1 ? [`${r4}`, `${g3}`, `${b3}`, `${a3}`] : [`${r4}`, `${g3}`, `${b3}`]
+          value: a3 < 1 ? [`${r5}`, `${g3}`, `${b3}`, `${a3}`] : [`${r5}`, `${g3}`, `${b3}`]
         };
       })
     };
@@ -39641,7 +39641,7 @@ This message will only show in development mode. It won't appear in production. 
   var color_list_picker_default = ColorListPicker;
 
   // packages/components/build-module/duotone-picker/utils.mjs
-  k([names_default]);
+  k([e2]);
   function getDefaultColors(palette) {
     if (!palette || palette.length < 2) {
       return ["#000", "#fff"];
@@ -40217,7 +40217,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/palette-edit/index.mjs
   var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
-  k([names_default]);
+  k([e2]);
   var DEFAULT_COLOR = "#000";
   function getUsableDuotoneColors(colorPalette = []) {
     return colorPalette.flatMap((paletteColor) => {
@@ -40800,13 +40800,13 @@ This message will only show in development mode. It won't appear in production. 
         });
       }
     };
-    const onFocusHandler = (e3) => {
+    const onFocusHandler = (e4) => {
       setHasFocus(true);
-      onFocus?.(e3);
+      onFocus?.(e4);
     };
-    const onBlurHandler = (e3) => {
+    const onBlurHandler = (e4) => {
       setHasFocus(false);
-      onBlur?.(e3);
+      onBlur?.(e4);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)("input", {
       ref,
@@ -40842,8 +40842,8 @@ This message will only show in development mode. It won't appear in production. 
   var import_compose46 = __toESM(require_compose(), 1);
   var import_i18n38 = __toESM(require_i18n(), 1);
   var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
-  var handleMouseDown = (e3) => {
-    e3.preventDefault();
+  var handleMouseDown = (e4) => {
+    e4.preventDefault();
   };
   function SuggestionsList({
     selectedIndex,
@@ -41544,8 +41544,8 @@ This message will only show in development mode. It won't appear in production. 
       }
       let handleAnimationEnd;
       const startAnimation = () => new Promise((animationResolve) => {
-        handleAnimationEnd = (e3) => {
-          if (e3.animationName === EXIT_ANIMATION_NAME) {
+        handleAnimationEnd = (e4) => {
+          if (e4.animationName === EXIT_ANIMATION_NAME) {
             animationResolve();
           }
         };
@@ -41701,8 +41701,8 @@ This message will only show in development mode. It won't appear in production. 
         closeModal().then(() => onRequestClose(event));
       }
     }
-    const onContentContainerScroll = (0, import_element119.useCallback)((e3) => {
-      const scrollY = e3?.currentTarget?.scrollTop ?? -1;
+    const onContentContainerScroll = (0, import_element119.useCallback)((e4) => {
+      const scrollY = e4?.currentTarget?.scrollTop ?? -1;
       if (!hasScrolledContent && scrollY > 0) {
         setHasScrolledContent(true);
       } else if (hasScrolledContent && scrollY <= 0) {
@@ -42156,9 +42156,9 @@ This message will only show in development mode. It won't appear in production. 
       isLegacy = false,
       ...restProps
     } = props;
-    const onSelectPopoverKeyDown = (0, import_element121.useCallback)((e3) => {
+    const onSelectPopoverKeyDown = (0, import_element121.useCallback)((e4) => {
       if (isLegacy) {
-        e3.stopPropagation();
+        e4.stopPropagation();
       }
     }, [isLegacy]);
     const contextValue = (0, import_element121.useMemo)(() => ({
@@ -44043,8 +44043,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // node_modules/@base-ui/react/merge-props/mergeProps.mjs
   var EMPTY_PROPS = {};
-  function mergeProps3(a3, b3, c3, d3, e3) {
-    if (!c3 && !d3 && !e3 && !a3) {
+  function mergeProps3(a3, b3, c3, d3, e4) {
+    if (!c3 && !d3 && !e4 && !a3) {
       return createInitialMergedProps(b3);
     }
     let merged = createInitialMergedProps(a3);
@@ -44057,8 +44057,8 @@ This message will only show in development mode. It won't appear in production. 
     if (d3) {
       merged = mergeInto(merged, d3);
     }
-    if (e3) {
-      merged = mergeInto(merged, e3);
+    if (e4) {
+      merged = mergeInto(merged, e4);
     }
     return merged;
   }
@@ -45218,19 +45218,19 @@ This message will only show in development mode. It won't appear in production. 
       }
       let cursorLeft = event.clientX;
       let cursorTop = event.clientY;
-      function over(e3) {
-        if (cursorLeft === e3.clientX && cursorTop === e3.clientY) {
+      function over(e4) {
+        if (cursorLeft === e4.clientX && cursorTop === e4.clientY) {
           return;
         }
-        const nextX = x2 + e3.clientX - cursorLeft;
-        const nextY = y3 + e3.clientY - cursorTop;
+        const nextX = x2 + e4.clientX - cursorLeft;
+        const nextY = y3 + e4.clientY - cursorTop;
         cloneWrapper.style.transform = `translate( ${nextX}px, ${nextY}px )`;
-        cursorLeft = e3.clientX;
-        cursorTop = e3.clientY;
+        cursorLeft = e4.clientX;
+        cursorTop = e4.clientY;
         x2 = nextX;
         y3 = nextY;
         if (onDragOver) {
-          onDragOver(e3);
+          onDragOver(e4);
         }
       }
       const throttledDragOver = (0, import_compose53.throttle)(over, 16);
@@ -48192,11 +48192,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } else if (isAnimatingOut) {
       animationType = "out";
     }
-    const onScreenAnimationEnd = (0, import_element151.useCallback)((e3) => {
-      onAnimationEnd?.(e3);
-      if (isExitAnimation(animationDirection, animationStatus, e3.animationName)) {
+    const onScreenAnimationEnd = (0, import_element151.useCallback)((e4) => {
+      onAnimationEnd?.(e4);
+      if (isExitAnimation(animationDirection, animationStatus, e4.animationName)) {
         setAnimationStatus("OUT");
-      } else if (isEnterAnimation(animationDirection, animationStatus, e3.animationName)) {
+      } else if (isEnterAnimation(animationDirection, animationStatus, e4.animationName)) {
         setAnimationStatus("IN");
       }
     }, [onAnimationEnd, animationStatus, animationDirection]);
@@ -48355,12 +48355,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       goTo: goTo2
     } = useNavigator();
-    const handleClick = (0, import_element154.useCallback)((e3) => {
-      e3.preventDefault();
+    const handleClick = (0, import_element154.useCallback)((e4) => {
+      e4.preventDefault();
       goTo2(escapedPath, {
         focusTargetSelector: cssSelectorForAttribute(attributeName, escapedPath)
       });
-      onClick?.(e3);
+      onClick?.(e4);
     }, [goTo2, onClick, attributeName, escapedPath]);
     return {
       as,
@@ -48392,10 +48392,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       goBack
     } = useNavigator();
-    const handleClick = (0, import_element155.useCallback)((e3) => {
-      e3.preventDefault();
+    const handleClick = (0, import_element155.useCallback)((e4) => {
+      e4.preventDefault();
       goBack();
-      onClick?.(e3);
+      onClick?.(e4);
     }, [goBack, onClick]);
     return {
       as,
@@ -49520,11 +49520,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       __extends(Resizer2, _super);
       function Resizer2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.onMouseDown = function(e3) {
-          _this.props.onResizeStart(e3, _this.props.direction);
+        _this.onMouseDown = function(e4) {
+          _this.props.onResizeStart(e4, _this.props.direction);
         };
-        _this.onTouchStart = function(e3) {
-          _this.props.onResizeStart(e3, _this.props.direction);
+        _this.onTouchStart = function(e4) {
+          _this.props.onResizeStart(e4, _this.props.direction);
         };
         return _this;
       }
@@ -50093,7 +50093,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           try {
             event.preventDefault();
             event.stopPropagation();
-          } catch (e3) {
+          } catch (e4) {
           }
         }
         var _a = this.props, maxWidth = _a.maxWidth, maxHeight = _a.maxHeight, minWidth = _a.minWidth, minHeight = _a.minHeight;
@@ -55175,8 +55175,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         tabIndex: -1,
         onChange: () => {
         },
-        onFocus: (e3) => {
-          e3.target.previousElementSibling?.querySelector('[role="textbox"]')?.focus();
+        onFocus: (e4) => {
+          e4.target.previousElementSibling?.querySelector('[role="textbox"]')?.focus();
         }
       })]
     });

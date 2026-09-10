@@ -4170,165 +4170,165 @@ var wp;
 
   // node_modules/colord/index.mjs
   var r = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) };
-  var t = function(r4) {
-    return "string" == typeof r4 ? r4.length > 0 : "number" == typeof r4;
+  var t = function(r5) {
+    return "string" == typeof r5 ? r5.length > 0 : "number" == typeof r5;
   };
-  var n = function(r4, t4, n3) {
-    return void 0 === t4 && (t4 = 0), void 0 === n3 && (n3 = Math.pow(10, t4)), Math.round(n3 * r4) / n3 + 0;
+  var n = function(r5, t4, n3) {
+    return void 0 === t4 && (t4 = 0), void 0 === n3 && (n3 = Math.pow(10, t4)), Math.round(n3 * r5) / n3 + 0;
   };
-  var e = function(r4, t4, n3) {
-    return void 0 === t4 && (t4 = 0), void 0 === n3 && (n3 = 1), r4 > n3 ? n3 : r4 > t4 ? r4 : t4;
+  var e = function(r5, t4, n3) {
+    return void 0 === t4 && (t4 = 0), void 0 === n3 && (n3 = 1), r5 > n3 ? n3 : r5 > t4 ? r5 : t4;
   };
-  var u = function(r4) {
-    return (r4 = isFinite(r4) ? r4 % 360 : 0) > 0 ? r4 : r4 + 360;
+  var u = function(r5) {
+    return (r5 = isFinite(r5) ? r5 % 360 : 0) > 0 ? r5 : r5 + 360;
   };
-  var a = function(r4) {
-    return { r: e(r4.r, 0, 255), g: e(r4.g, 0, 255), b: e(r4.b, 0, 255), a: e(r4.a) };
+  var a = function(r5) {
+    return { r: e(r5.r, 0, 255), g: e(r5.g, 0, 255), b: e(r5.b, 0, 255), a: e(r5.a) };
   };
-  var o = function(r4) {
-    return { r: n(r4.r), g: n(r4.g), b: n(r4.b), a: n(r4.a, 3) };
+  var o = function(r5) {
+    return { r: n(r5.r), g: n(r5.g), b: n(r5.b), a: n(r5.a, 3) };
   };
   var i = /^#([0-9a-f]{3,8})$/i;
-  var s = function(r4) {
-    var t4 = r4.toString(16);
+  var s = function(r5) {
+    var t4 = r5.toString(16);
     return t4.length < 2 ? "0" + t4 : t4;
   };
-  var h = function(r4) {
-    var t4 = r4.r, n3 = r4.g, e3 = r4.b, u3 = r4.a, a3 = Math.max(t4, n3, e3), o4 = a3 - Math.min(t4, n3, e3), i3 = o4 ? a3 === t4 ? (n3 - e3) / o4 : a3 === n3 ? 2 + (e3 - t4) / o4 : 4 + (t4 - n3) / o4 : 0;
+  var d = function(r5) {
+    var t4 = r5.r, n3 = r5.g, e3 = r5.b, u3 = r5.a, a3 = Math.max(t4, n3, e3), o4 = a3 - Math.min(t4, n3, e3), i3 = o4 ? a3 === t4 ? (n3 - e3) / o4 : a3 === n3 ? 2 + (e3 - t4) / o4 : 4 + (t4 - n3) / o4 : 0;
     return { h: 60 * (i3 < 0 ? i3 + 6 : i3), s: a3 ? o4 / a3 * 100 : 0, v: a3 / 255 * 100, a: u3 };
   };
-  var b = function(r4) {
-    var t4 = r4.h, n3 = r4.s, e3 = r4.v, u3 = r4.a;
+  var h = function(r5) {
+    var t4 = r5.h, n3 = r5.s, e3 = r5.v, u3 = r5.a;
     t4 = t4 / 360 * 6, n3 /= 100, e3 /= 100;
-    var a3 = Math.floor(t4), o4 = e3 * (1 - n3), i3 = e3 * (1 - (t4 - a3) * n3), s3 = e3 * (1 - (1 - t4 + a3) * n3), h3 = a3 % 6;
-    return { r: 255 * [e3, i3, o4, o4, s3, e3][h3], g: 255 * [s3, e3, e3, i3, o4, o4][h3], b: 255 * [o4, o4, s3, e3, e3, i3][h3], a: u3 };
+    var a3 = Math.floor(t4), o4 = e3 * (1 - n3), i3 = e3 * (1 - (t4 - a3) * n3), s3 = e3 * (1 - (1 - t4 + a3) * n3), d3 = a3 % 6;
+    return { r: 255 * [e3, i3, o4, o4, s3, e3][d3], g: 255 * [s3, e3, e3, i3, o4, o4][d3], b: 255 * [o4, o4, s3, e3, e3, i3][d3], a: u3 };
   };
-  var g = function(r4) {
-    return { h: u(r4.h), s: e(r4.s, 0, 100), l: e(r4.l, 0, 100), a: e(r4.a) };
+  var b = function(r5) {
+    return { h: u(r5.h), s: e(r5.s, 0, 100), l: e(r5.l, 0, 100), a: e(r5.a) };
   };
-  var d = function(r4) {
-    return { h: n(r4.h), s: n(r4.s), l: n(r4.l), a: n(r4.a, 3) };
+  var g = function(r5) {
+    return { h: n(r5.h), s: n(r5.s), l: n(r5.l), a: n(r5.a, 3) };
   };
-  var f = function(r4) {
-    return b((n3 = (t4 = r4).s, { h: t4.h, s: (n3 *= ((e3 = t4.l) < 50 ? e3 : 100 - e3) / 100) > 0 ? 2 * n3 / (e3 + n3) * 100 : 0, v: e3 + n3, a: t4.a }));
+  var f = function(r5) {
+    return h((n3 = (t4 = r5).s, { h: t4.h, s: (n3 *= ((e3 = t4.l) < 50 ? e3 : 100 - e3) / 100) > 0 ? 2 * n3 / (e3 + n3) * 100 : 0, v: e3 + n3, a: t4.a }));
     var t4, n3, e3;
   };
-  var c = function(r4) {
-    return { h: (t4 = h(r4)).h, s: (u3 = (200 - (n3 = t4.s)) * (e3 = t4.v) / 100) > 0 && u3 < 200 ? n3 * e3 / 100 / (u3 <= 100 ? u3 : 200 - u3) * 100 : 0, l: u3 / 2, a: t4.a };
+  var c = function(r5) {
+    return { h: (t4 = d(r5)).h, s: (u3 = (200 - (n3 = t4.s)) * (e3 = t4.v) / 100) > 0 && u3 < 200 ? n3 * e3 / 100 / (u3 <= 100 ? u3 : 200 - u3) * 100 : 0, l: u3 / 2, a: t4.a };
     var t4, n3, e3, u3;
   };
-  var l = /^hsla?\(\s*([+-]?\d*\.?\d+)(deg|rad|grad|turn)?\s*,\s*([+-]?\d*\.?\d+)%\s*,\s*([+-]?\d*\.?\d+)%\s*(?:,\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var p2 = /^hsla?\(\s*([+-]?\d*\.?\d+)(deg|rad|grad|turn)?\s+([+-]?\d*\.?\d+)%\s+([+-]?\d*\.?\d+)%\s*(?:\/\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var v = /^rgba?\(\s*([+-]?\d*\.?\d+)(%)?\s*,\s*([+-]?\d*\.?\d+)(%)?\s*,\s*([+-]?\d*\.?\d+)(%)?\s*(?:,\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var m = /^rgba?\(\s*([+-]?\d*\.?\d+)(%)?\s+([+-]?\d*\.?\d+)(%)?\s+([+-]?\d*\.?\d+)(%)?\s*(?:\/\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var y = { string: [[function(r4) {
-    var t4 = i.exec(r4);
-    return t4 ? (r4 = t4[1]).length <= 4 ? { r: parseInt(r4[0] + r4[0], 16), g: parseInt(r4[1] + r4[1], 16), b: parseInt(r4[2] + r4[2], 16), a: 4 === r4.length ? n(parseInt(r4[3] + r4[3], 16) / 255, 2) : 1 } : 6 === r4.length || 8 === r4.length ? { r: parseInt(r4.substr(0, 2), 16), g: parseInt(r4.substr(2, 2), 16), b: parseInt(r4.substr(4, 2), 16), a: 8 === r4.length ? n(parseInt(r4.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
-  }, "hex"], [function(r4) {
-    var t4 = v.exec(r4) || m.exec(r4);
+  var l = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var p2 = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var v = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var m = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var y = { string: [[function(r5) {
+    var t4 = i.exec(r5);
+    return t4 ? (r5 = t4[1]).length <= 4 ? { r: parseInt(r5[0] + r5[0], 16), g: parseInt(r5[1] + r5[1], 16), b: parseInt(r5[2] + r5[2], 16), a: 4 === r5.length ? n(parseInt(r5[3] + r5[3], 16) / 255, 2) : 1 } : 6 === r5.length || 8 === r5.length ? { r: parseInt(r5.substr(0, 2), 16), g: parseInt(r5.substr(2, 2), 16), b: parseInt(r5.substr(4, 2), 16), a: 8 === r5.length ? n(parseInt(r5.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
+  }, "hex"], [function(r5) {
+    var t4 = v.exec(r5) || m.exec(r5);
     return t4 ? t4[2] !== t4[4] || t4[4] !== t4[6] ? null : a({ r: Number(t4[1]) / (t4[2] ? 100 / 255 : 1), g: Number(t4[3]) / (t4[4] ? 100 / 255 : 1), b: Number(t4[5]) / (t4[6] ? 100 / 255 : 1), a: void 0 === t4[7] ? 1 : Number(t4[7]) / (t4[8] ? 100 : 1) }) : null;
   }, "rgb"], [function(t4) {
     var n3 = l.exec(t4) || p2.exec(t4);
     if (!n3) return null;
-    var e3, u3, a3 = g({ h: (e3 = n3[1], u3 = n3[2], void 0 === u3 && (u3 = "deg"), Number(e3) * (r[u3] || 1)), s: Number(n3[3]), l: Number(n3[4]), a: void 0 === n3[5] ? 1 : Number(n3[5]) / (n3[6] ? 100 : 1) });
+    var e3, u3, a3 = b({ h: (e3 = n3[1], u3 = n3[2], void 0 === u3 && (u3 = "deg"), Number(e3) * (r[u3] || 1)), s: Number(n3[3]), l: Number(n3[4]), a: void 0 === n3[5] ? 1 : Number(n3[5]) / (n3[6] ? 100 : 1) });
     return f(a3);
-  }, "hsl"]], object: [[function(r4) {
-    var n3 = r4.r, e3 = r4.g, u3 = r4.b, o4 = r4.a, i3 = void 0 === o4 ? 1 : o4;
+  }, "hsl"]], object: [[function(r5) {
+    var n3 = r5.r, e3 = r5.g, u3 = r5.b, o4 = r5.a, i3 = void 0 === o4 ? 1 : o4;
     return t(n3) && t(e3) && t(u3) ? a({ r: Number(n3), g: Number(e3), b: Number(u3), a: Number(i3) }) : null;
-  }, "rgb"], [function(r4) {
-    var n3 = r4.h, e3 = r4.s, u3 = r4.l, a3 = r4.a, o4 = void 0 === a3 ? 1 : a3;
+  }, "rgb"], [function(r5) {
+    var n3 = r5.h, e3 = r5.s, u3 = r5.l, a3 = r5.a, o4 = void 0 === a3 ? 1 : a3;
     if (!t(n3) || !t(e3) || !t(u3)) return null;
-    var i3 = g({ h: Number(n3), s: Number(e3), l: Number(u3), a: Number(o4) });
+    var i3 = b({ h: Number(n3), s: Number(e3), l: Number(u3), a: Number(o4) });
     return f(i3);
-  }, "hsl"], [function(r4) {
-    var n3 = r4.h, a3 = r4.s, o4 = r4.v, i3 = r4.a, s3 = void 0 === i3 ? 1 : i3;
+  }, "hsl"], [function(r5) {
+    var n3 = r5.h, a3 = r5.s, o4 = r5.v, i3 = r5.a, s3 = void 0 === i3 ? 1 : i3;
     if (!t(n3) || !t(a3) || !t(o4)) return null;
-    var h3 = (function(r5) {
-      return { h: u(r5.h), s: e(r5.s, 0, 100), v: e(r5.v, 0, 100), a: e(r5.a) };
+    var d3 = (function(r6) {
+      return { h: u(r6.h), s: e(r6.s, 0, 100), v: e(r6.v, 0, 100), a: e(r6.a) };
     })({ h: Number(n3), s: Number(a3), v: Number(o4), a: Number(s3) });
-    return b(h3);
+    return h(d3);
   }, "hsv"]] };
-  var N = function(r4, t4) {
+  var N = function(r5, t4) {
     for (var n3 = 0; n3 < t4.length; n3++) {
-      var e3 = t4[n3][0](r4);
+      var e3 = t4[n3][0](r5);
       if (e3) return [e3, t4[n3][1]];
     }
     return [null, void 0];
   };
-  var x = function(r4) {
-    return "string" == typeof r4 ? N(r4.trim(), y.string) : "object" == typeof r4 && null !== r4 ? N(r4, y.object) : [null, void 0];
+  var x = function(r5) {
+    return "string" == typeof r5 ? N(r5.trim(), y.string) : "object" == typeof r5 && null !== r5 ? N(r5, y.object) : [null, void 0];
   };
-  var M = function(r4, t4) {
-    var n3 = c(r4);
+  var M = function(r5, t4) {
+    var n3 = c(r5);
     return { h: n3.h, s: e(n3.s + 100 * t4, 0, 100), l: n3.l, a: n3.a };
   };
-  var H = function(r4) {
-    return (299 * r4.r + 587 * r4.g + 114 * r4.b) / 1e3 / 255;
+  var H = function(r5) {
+    return (299 * r5.r + 587 * r5.g + 114 * r5.b) / 1e3 / 255;
   };
-  var $ = function(r4, t4) {
-    var n3 = c(r4);
+  var $ = function(r5, t4) {
+    var n3 = c(r5);
     return { h: n3.h, s: n3.s, l: e(n3.l + 100 * t4, 0, 100), a: n3.a };
   };
   var j = (function() {
-    function r4(r5) {
-      this.parsed = x(r5)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
+    function r5(r6) {
+      this.parsed = x(r6)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
     }
-    return r4.prototype.isValid = function() {
+    return r5.prototype.isValid = function() {
       return null !== this.parsed;
-    }, r4.prototype.brightness = function() {
+    }, r5.prototype.brightness = function() {
       return n(H(this.rgba), 2);
-    }, r4.prototype.isDark = function() {
+    }, r5.prototype.isDark = function() {
       return H(this.rgba) < 0.5;
-    }, r4.prototype.isLight = function() {
+    }, r5.prototype.isLight = function() {
       return H(this.rgba) >= 0.5;
-    }, r4.prototype.toHex = function() {
-      return r5 = o(this.rgba), t4 = r5.r, e3 = r5.g, u3 = r5.b, i3 = (a3 = r5.a) < 1 ? s(n(255 * a3)) : "", "#" + s(t4) + s(e3) + s(u3) + i3;
-      var r5, t4, e3, u3, a3, i3;
-    }, r4.prototype.toRgb = function() {
+    }, r5.prototype.toHex = function() {
+      return r6 = o(this.rgba), t4 = r6.r, e3 = r6.g, u3 = r6.b, i3 = (a3 = r6.a) < 1 ? s(n(255 * a3)) : "", "#" + s(t4) + s(e3) + s(u3) + i3;
+      var r6, t4, e3, u3, a3, i3;
+    }, r5.prototype.toRgb = function() {
       return o(this.rgba);
-    }, r4.prototype.toRgbString = function() {
-      return r5 = o(this.rgba), t4 = r5.r, n3 = r5.g, e3 = r5.b, (u3 = r5.a) < 1 ? "rgba(" + t4 + ", " + n3 + ", " + e3 + ", " + u3 + ")" : "rgb(" + t4 + ", " + n3 + ", " + e3 + ")";
-      var r5, t4, n3, e3, u3;
-    }, r4.prototype.toHsl = function() {
-      return d(c(this.rgba));
-    }, r4.prototype.toHslString = function() {
-      return r5 = d(c(this.rgba)), t4 = r5.h, n3 = r5.s, e3 = r5.l, (u3 = r5.a) < 1 ? "hsla(" + t4 + ", " + n3 + "%, " + e3 + "%, " + u3 + ")" : "hsl(" + t4 + ", " + n3 + "%, " + e3 + "%)";
-      var r5, t4, n3, e3, u3;
-    }, r4.prototype.toHsv = function() {
-      return r5 = h(this.rgba), { h: n(r5.h), s: n(r5.s), v: n(r5.v), a: n(r5.a, 3) };
-      var r5;
-    }, r4.prototype.invert = function() {
-      return w({ r: 255 - (r5 = this.rgba).r, g: 255 - r5.g, b: 255 - r5.b, a: r5.a });
-      var r5;
-    }, r4.prototype.saturate = function(r5) {
-      return void 0 === r5 && (r5 = 0.1), w(M(this.rgba, r5));
-    }, r4.prototype.desaturate = function(r5) {
-      return void 0 === r5 && (r5 = 0.1), w(M(this.rgba, -r5));
-    }, r4.prototype.grayscale = function() {
+    }, r5.prototype.toRgbString = function() {
+      return r6 = o(this.rgba), t4 = r6.r, n3 = r6.g, e3 = r6.b, (u3 = r6.a) < 1 ? "rgba(" + t4 + ", " + n3 + ", " + e3 + ", " + u3 + ")" : "rgb(" + t4 + ", " + n3 + ", " + e3 + ")";
+      var r6, t4, n3, e3, u3;
+    }, r5.prototype.toHsl = function() {
+      return g(c(this.rgba));
+    }, r5.prototype.toHslString = function() {
+      return r6 = g(c(this.rgba)), t4 = r6.h, n3 = r6.s, e3 = r6.l, (u3 = r6.a) < 1 ? "hsla(" + t4 + ", " + n3 + "%, " + e3 + "%, " + u3 + ")" : "hsl(" + t4 + ", " + n3 + "%, " + e3 + "%)";
+      var r6, t4, n3, e3, u3;
+    }, r5.prototype.toHsv = function() {
+      return r6 = d(this.rgba), { h: n(r6.h), s: n(r6.s), v: n(r6.v), a: n(r6.a, 3) };
+      var r6;
+    }, r5.prototype.invert = function() {
+      return w({ r: 255 - (r6 = this.rgba).r, g: 255 - r6.g, b: 255 - r6.b, a: r6.a });
+      var r6;
+    }, r5.prototype.saturate = function(r6) {
+      return void 0 === r6 && (r6 = 0.1), w(M(this.rgba, r6));
+    }, r5.prototype.desaturate = function(r6) {
+      return void 0 === r6 && (r6 = 0.1), w(M(this.rgba, -r6));
+    }, r5.prototype.grayscale = function() {
       return w(M(this.rgba, -1));
-    }, r4.prototype.lighten = function(r5) {
-      return void 0 === r5 && (r5 = 0.1), w($(this.rgba, r5));
-    }, r4.prototype.darken = function(r5) {
-      return void 0 === r5 && (r5 = 0.1), w($(this.rgba, -r5));
-    }, r4.prototype.rotate = function(r5) {
-      return void 0 === r5 && (r5 = 15), this.hue(this.hue() + r5);
-    }, r4.prototype.alpha = function(r5) {
-      return "number" == typeof r5 ? w({ r: (t4 = this.rgba).r, g: t4.g, b: t4.b, a: r5 }) : n(this.rgba.a, 3);
+    }, r5.prototype.lighten = function(r6) {
+      return void 0 === r6 && (r6 = 0.1), w($(this.rgba, r6));
+    }, r5.prototype.darken = function(r6) {
+      return void 0 === r6 && (r6 = 0.1), w($(this.rgba, -r6));
+    }, r5.prototype.rotate = function(r6) {
+      return void 0 === r6 && (r6 = 15), this.hue(this.hue() + r6);
+    }, r5.prototype.alpha = function(r6) {
+      return "number" == typeof r6 ? w({ r: (t4 = this.rgba).r, g: t4.g, b: t4.b, a: r6 }) : n(this.rgba.a, 3);
       var t4;
-    }, r4.prototype.hue = function(r5) {
+    }, r5.prototype.hue = function(r6) {
       var t4 = c(this.rgba);
-      return "number" == typeof r5 ? w({ h: r5, s: t4.s, l: t4.l, a: t4.a }) : n(t4.h);
-    }, r4.prototype.isEqual = function(r5) {
-      return this.toHex() === w(r5).toHex();
-    }, r4;
+      return "number" == typeof r6 ? w({ h: r6, s: t4.s, l: t4.l, a: t4.a }) : n(t4.h);
+    }, r5.prototype.isEqual = function(r6) {
+      return this.toHex() === w(r6).toHex();
+    }, r5;
   })();
-  var w = function(r4) {
-    return r4 instanceof j ? r4 : new j(r4);
+  var w = function(r5) {
+    return r5 instanceof j ? r5 : new j(r5);
   };
   var S = [];
-  var k = function(r4) {
-    r4.forEach(function(r5) {
-      S.indexOf(r5) < 0 && (r5(j, y), S.push(r5));
+  var k = function(r5) {
+    r5.forEach(function(r6) {
+      S.indexOf(r6) < 0 && (r6(j, y), S.push(r6));
     });
   };
 
@@ -8360,7 +8360,7 @@ var wp;
         return null;
       }
       const currentIndex = revisions.findIndex(
-        (r4) => r4[revisionKey] === currentRevisionId
+        (r5) => r5[revisionKey] === currentRevisionId
       );
       if (currentIndex >= 0 && currentIndex < revisions.length - 1) {
         return revisions[currentIndex + 1];
@@ -40388,10 +40388,10 @@ var wp;
   function hslToRgb(h3, s3, l3) {
     const q = l3 < 0.5 ? l3 * (1 + s3) : l3 + s3 - l3 * s3;
     const p4 = 2 * l3 - q;
-    const r4 = hue2rgb(p4, q, h3 + 1 / 3);
+    const r5 = hue2rgb(p4, q, h3 + 1 / 3);
     const g3 = hue2rgb(p4, q, h3);
     const b3 = hue2rgb(p4, q, h3 - 1 / 3);
-    return Math.round(r4 * 255) << 24 | Math.round(g3 * 255) << 16 | Math.round(b3 * 255) << 8;
+    return Math.round(r5 * 255) << 24 | Math.round(g3 * 255) << 16 | Math.round(b3 * 255) << 8;
   }
   function parse255(str3) {
     const int = parseInt(str3, 10);
@@ -40419,11 +40419,11 @@ var wp;
     let int32Color = normalizeColor(input);
     if (int32Color === null) return input;
     int32Color = int32Color || 0;
-    let r4 = (int32Color & 4278190080) >>> 24;
+    let r5 = (int32Color & 4278190080) >>> 24;
     let g3 = (int32Color & 16711680) >>> 16;
     let b3 = (int32Color & 65280) >>> 8;
     let a3 = (int32Color & 255) / 255;
-    return `rgba(${r4}, ${g3}, ${b3}, ${a3})`;
+    return `rgba(${r5}, ${g3}, ${b3}, ${a3})`;
   }
   var createInterpolator = (range, output, extrapolate) => {
     if (is.fun(range)) {
@@ -45721,8 +45721,8 @@ var wp;
   "stream" in Blob.prototype || Object.defineProperty(Blob.prototype, "stream", { value() {
     return new Response(this).body;
   } }), "setBigUint64" in DataView.prototype || Object.defineProperty(DataView.prototype, "setBigUint64", { value(e3, n3, t4) {
-    const i3 = Number(0xffffffffn & n3), r4 = Number(n3 >> 32n);
-    this.setUint32(e3 + (t4 ? 0 : 4), i3, t4), this.setUint32(e3 + (t4 ? 4 : 0), r4, t4);
+    const i3 = Number(0xffffffffn & n3), r5 = Number(n3 >> 32n);
+    this.setUint32(e3 + (t4 ? 0 : 4), i3, t4), this.setUint32(e3 + (t4 ? 4 : 0), r5, t4);
   } });
   var e2 = (e3) => new DataView(new ArrayBuffer(e3));
   var n2 = (e3) => new Uint8Array(e3.buffer || e3);
@@ -45763,16 +45763,16 @@ var wp;
   function a2(e3) {
     return "string" == typeof e3 ? t2(e3) : e3 instanceof Uint8Array ? e3 : n2(e3);
   }
-  function s2(e3, i3, r4) {
+  function s2(e3, i3, r5) {
     let [f3, o4] = (function(e4) {
       return e4 ? e4 instanceof Uint8Array ? [e4, 1] : ArrayBuffer.isView(e4) || e4 instanceof ArrayBuffer ? [n2(e4), 1] : [t2(e4), 0] : [void 0, 0];
     })(i3);
     if (e3 instanceof File) return { o: d2(f3 || t2(e3.name)), u: BigInt(e3.size), l: o4 };
     if (e3 instanceof Response) {
-      const n3 = e3.headers.get("content-disposition"), i4 = n3 && n3.match(/;\s*filename\*?=["']?(.*?)["']?$/i), a3 = i4 && i4[1] || e3.url && new URL(e3.url).pathname.split("/").findLast(Boolean), s3 = a3 && decodeURIComponent(a3), u3 = r4 || +e3.headers.get("content-length");
+      const n3 = e3.headers.get("content-disposition"), i4 = n3 && n3.match(/;\s*filename\*?=["']?(.*?)["']?$/i), a3 = i4 && i4[1] || e3.url && new URL(e3.url).pathname.split("/").findLast(Boolean), s3 = a3 && decodeURIComponent(a3), u3 = r5 || +e3.headers.get("content-length");
       return { o: d2(f3 || t2(s3)), u: BigInt(u3), l: o4 };
     }
-    return f3 = d2(f3, void 0 !== e3 || void 0 !== r4), "string" == typeof e3 ? { o: f3, u: BigInt(t2(e3).length), l: o4 } : e3 instanceof Blob ? { o: f3, u: BigInt(e3.size), l: o4 } : e3 instanceof ArrayBuffer || ArrayBuffer.isView(e3) ? { o: f3, u: BigInt(e3.byteLength), l: o4 } : { o: f3, u: u2(e3, r4), l: o4 };
+    return f3 = d2(f3, void 0 !== e3 || void 0 !== r5), "string" == typeof e3 ? { o: f3, u: BigInt(t2(e3).length), l: o4 } : e3 instanceof Blob ? { o: f3, u: BigInt(e3.size), l: o4 } : e3 instanceof ArrayBuffer || ArrayBuffer.isView(e3) ? { o: f3, u: BigInt(e3.byteLength), l: o4 } : { o: f3, u: u2(e3, r5), l: o4 };
   }
   function u2(e3, n3) {
     return n3 > -1 ? BigInt(n3) : e3 ? void 0 : 0n;
@@ -45795,8 +45795,8 @@ var wp;
     return (-1 ^ n3) >>> 0;
   }
   function w2(e3, n3, t4 = 0) {
-    const i3 = e3.getSeconds() >> 1 | e3.getMinutes() << 5 | e3.getHours() << 11, r4 = e3.getDate() | e3.getMonth() + 1 << 5 | e3.getFullYear() - 1980 << 9;
-    n3.setUint16(t4, i3, 1), n3.setUint16(t4 + 2, r4, 1);
+    const i3 = e3.getSeconds() >> 1 | e3.getMinutes() << 5 | e3.getHours() << 11, r5 = e3.getDate() | e3.getMonth() + 1 << 5 | e3.getFullYear() - 1980 << 9;
+    n3.setUint16(t4, i3, 1), n3.setUint16(t4 + 2, r5, 1);
   }
   function B({ o: e3, l: n3 }, t4) {
     return 8 * (!n3 || (t4 ?? (function(e4) {
@@ -45810,8 +45810,8 @@ var wp;
   }
   var b2 = new TextDecoder("utf8", { fatal: 1 });
   function p3(t4, i3 = 0) {
-    const r4 = e2(30);
-    return r4.setUint32(0, 1347093252), r4.setUint32(4, 754976768 | i3), w2(t4.t, r4, 10), r4.setUint16(26, t4.o.length, 1), n2(r4);
+    const r5 = e2(30);
+    return r5.setUint32(0, 1347093252), r5.setUint32(4, 754976768 | i3), w2(t4.t, r5, 10), r5.setUint16(26, t4.o.length, 1), n2(r5);
   }
   async function* g2(e3) {
     let { i: n3 } = e3;
@@ -45826,28 +45826,28 @@ var wp;
       }
     }
   }
-  function I(t4, r4) {
-    const f3 = e2(16 + (r4 ? 8 : 0));
-    return f3.setUint32(0, 1347094280), f3.setUint32(4, t4.isFile ? t4.m : 0, 1), r4 ? (f3.setBigUint64(8, t4.u, 1), f3.setBigUint64(16, t4.u, 1)) : (f3.setUint32(8, i2(t4.u), 1), f3.setUint32(12, i2(t4.u), 1)), n2(f3);
+  function I(t4, r5) {
+    const f3 = e2(16 + (r5 ? 8 : 0));
+    return f3.setUint32(0, 1347094280), f3.setUint32(4, t4.isFile ? t4.m : 0, 1), r5 ? (f3.setBigUint64(8, t4.u, 1), f3.setBigUint64(16, t4.u, 1)) : (f3.setUint32(8, i2(t4.u), 1), f3.setUint32(12, i2(t4.u), 1)), n2(f3);
   }
-  function v2(t4, r4, f3 = 0, o4 = 0) {
+  function v2(t4, r5, f3 = 0, o4 = 0) {
     const a3 = e2(46);
-    return a3.setUint32(0, 1347092738), a3.setUint32(4, 755182848), a3.setUint16(8, 2048 | f3), w2(t4.t, a3, 12), a3.setUint32(16, t4.isFile ? t4.m : 0, 1), a3.setUint32(20, i2(t4.u), 1), a3.setUint32(24, i2(t4.u), 1), a3.setUint16(28, t4.o.length, 1), a3.setUint16(30, o4, 1), a3.setUint16(40, t4.isFile ? 33204 : 16893, 1), a3.setUint32(42, i2(r4), 1), n2(a3);
+    return a3.setUint32(0, 1347092738), a3.setUint32(4, 755182848), a3.setUint16(8, 2048 | f3), w2(t4.t, a3, 12), a3.setUint32(16, t4.isFile ? t4.m : 0, 1), a3.setUint32(20, i2(t4.u), 1), a3.setUint32(24, i2(t4.u), 1), a3.setUint16(28, t4.o.length, 1), a3.setUint16(30, o4, 1), a3.setUint16(40, t4.isFile ? 33204 : 16893, 1), a3.setUint32(42, i2(r5), 1), n2(a3);
   }
-  function h2(t4, i3, r4) {
-    const f3 = e2(r4);
-    return f3.setUint16(0, 1, 1), f3.setUint16(2, r4 - 4, 1), 16 & r4 && (f3.setBigUint64(4, t4.u, 1), f3.setBigUint64(12, t4.u, 1)), f3.setBigUint64(r4 - 8, i3, 1), n2(f3);
+  function h2(t4, i3, r5) {
+    const f3 = e2(r5);
+    return f3.setUint16(0, 1, 1), f3.setUint16(2, r5 - 4, 1), 16 & r5 && (f3.setBigUint64(4, t4.u, 1), f3.setBigUint64(12, t4.u, 1)), f3.setBigUint64(r5 - 8, i3, 1), n2(f3);
   }
   function D(e3) {
     return e3 instanceof File || e3 instanceof Response ? [[e3], [e3]] : [[e3.input, e3.name, e3.size], [e3.input, e3.lastModified]];
   }
   var S2 = (e3) => (function(e4) {
     let n3 = BigInt(22), t4 = 0n, i3 = 0;
-    for (const r4 of e4) {
-      if (!r4.o) throw new Error("Every file must have a non-empty name.");
-      if (void 0 === r4.u) throw new Error(`Missing size for file "${new TextDecoder().decode(r4.o)}".`);
-      const e5 = r4.u >= 0xffffffffn, f3 = t4 >= 0xffffffffn;
-      t4 += BigInt(46 + r4.o.length + (e5 && 8)) + r4.u, n3 += BigInt(r4.o.length + 46 + (12 * f3 | 28 * e5)), i3 || (i3 = e5);
+    for (const r5 of e4) {
+      if (!r5.o) throw new Error("Every file must have a non-empty name.");
+      if (void 0 === r5.u) throw new Error(`Missing size for file "${new TextDecoder().decode(r5.o)}".`);
+      const e5 = r5.u >= 0xffffffffn, f3 = t4 >= 0xffffffffn;
+      t4 += BigInt(46 + r5.o.length + (e5 && 8)) + r5.u, n3 += BigInt(r5.o.length + 46 + (12 * f3 | 28 * e5)), i3 || (i3 = e5);
     }
     return (i3 || t4 >= 0xffffffffn) && (n3 += BigInt(76)), n3 + t4;
   })((function* (e4) {
@@ -63310,7 +63310,7 @@ If there's a particular need for this, please submit a feature request at https:
         const visibleMax = Math.max(...visibleEntries);
         const buffer = 20;
         const recordPositions = allRecords.map(
-          (r4) => r4.position
+          (r5) => r5.position
         );
         const minRecordPos = Math.min(...recordPositions);
         const maxRecordPos = Math.max(...recordPositions);
@@ -66564,9 +66564,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function random(out, scale3) {
     scale3 = scale3 === void 0 ? 1 : scale3;
-    var r4 = RANDOM() * 2 * Math.PI;
-    out[0] = Math.cos(r4) * scale3;
-    out[1] = Math.sin(r4) * scale3;
+    var r5 = RANDOM() * 2 * Math.PI;
+    out[0] = Math.cos(r5) * scale3;
+    out[1] = Math.sin(r5) * scale3;
     return out;
   }
   function transformMat2(out, a3, m2) {
@@ -77145,7 +77145,7 @@ If there's a particular need for this, please submit a feature request at https:
   var unbrotli_default = (function() {
     var define2, module, exports;
     return (/* @__PURE__ */ (function() {
-      function r4(e3, n3, t4) {
+      function r5(e3, n3, t4) {
         function o4(i22, f3) {
           if (!n3[i22]) {
             if (!e3[i22]) {
@@ -77164,7 +77164,7 @@ If there's a particular need for this, please submit a feature request at https:
               },
               p4,
               p4.exports,
-              r4,
+              r5,
               e3,
               n3,
               t4
@@ -77176,7 +77176,7 @@ If there's a particular need for this, please submit a feature request at https:
           o4(t4[i3]);
         return o4;
       }
-      return r4;
+      return r5;
     })())(
       {
         1: [
@@ -80811,7 +80811,7 @@ If there's a particular need for this, please submit a feature request at https:
   var inflate_default = (function() {
     var define2, module, exports;
     return (/* @__PURE__ */ (function() {
-      function r4(e3, n3, t4) {
+      function r5(e3, n3, t4) {
         function o4(i22, f3) {
           if (!n3[i22]) {
             if (!e3[i22]) {
@@ -80830,7 +80830,7 @@ If there's a particular need for this, please submit a feature request at https:
               },
               p4,
               p4.exports,
-              r4,
+              r5,
               e3,
               n3,
               t4
@@ -80842,7 +80842,7 @@ If there's a particular need for this, please submit a feature request at https:
           o4(t4[i3]);
         return o4;
       }
-      return r4;
+      return r5;
     })())(
       {
         1: [
@@ -84713,14 +84713,14 @@ If there's a particular need for this, please submit a feature request at https:
       return this.encodingRecords[tableID].table;
     }
     getSupportedEncodings() {
-      return this.encodingRecords.map((r4) => ({
-        platformID: r4.platformID,
-        encodingId: r4.encodingID
+      return this.encodingRecords.map((r5) => ({
+        platformID: r5.platformID,
+        encodingId: r5.encodingID
       }));
     }
     getSupportedCharCodes(platformID, encodingID) {
       const recordID = this.encodingRecords.findIndex(
-        (r4) => r4.platformID === platformID && r4.encodingID === encodingID
+        (r5) => r5.platformID === platformID && r5.encodingID === encodingID
       );
       if (recordID === -1) return false;
       const subtable = this.getSubTable(recordID);
@@ -86330,11 +86330,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }
     getSupportedScripts() {
-      return this.scriptList.scriptRecords.map((r4) => r4.scriptTag);
+      return this.scriptList.scriptRecords.map((r5) => r5.scriptTag);
     }
     getScriptTable(scriptTag) {
       let record = this.scriptList.scriptRecords.find(
-        (r4) => r4.scriptTag === scriptTag
+        (r5) => r5.scriptTag === scriptTag
       );
       this.parser.currentPosition = this.scriptList.start + record.scriptOffset;
       let table = new ScriptTable(this.parser);
@@ -109964,19 +109964,19 @@ ${content}
   var t3 = function(t4) {
     return 0.2126 * o3(t4.r) + 0.7152 * o3(t4.g) + 0.0722 * o3(t4.b);
   };
-  function a11y_default(o4) {
+  var r4 = function(o4) {
     o4.prototype.luminance = function() {
-      return o5 = t3(this.rgba), void 0 === (r4 = 2) && (r4 = 0), void 0 === n3 && (n3 = Math.pow(10, r4)), Math.round(n3 * o5) / n3 + 0;
-      var o5, r4, n3;
-    }, o4.prototype.contrast = function(r4) {
-      void 0 === r4 && (r4 = "#FFF");
-      var n3, a3, i3, e3, v3, u3, d3, c6 = r4 instanceof o4 ? r4 : new o4(r4);
+      return o5 = t3(this.rgba), void 0 === (r5 = 2) && (r5 = 0), void 0 === n3 && (n3 = Math.pow(10, r5)), Math.round(n3 * o5) / n3 + 0;
+      var o5, r5, n3;
+    }, o4.prototype.contrast = function(r5) {
+      void 0 === r5 && (r5 = "#FFF");
+      var n3, a3, i3, e3, v3, u3, d3, c6 = r5 instanceof o4 ? r5 : new o4(r5);
       return e3 = this.rgba, v3 = c6.toRgb(), u3 = t3(e3), d3 = t3(v3), n3 = u3 > d3 ? (u3 + 0.05) / (d3 + 0.05) : (d3 + 0.05) / (u3 + 0.05), void 0 === (a3 = 2) && (a3 = 0), void 0 === i3 && (i3 = Math.pow(10, a3)), Math.floor(i3 * n3) / i3 + 0;
     }, o4.prototype.isReadable = function(o5, t4) {
-      return void 0 === o5 && (o5 = "#FFF"), void 0 === t4 && (t4 = {}), this.contrast(o5) >= (e3 = void 0 === (i3 = (r4 = t4).size) ? "normal" : i3, "AAA" === (a3 = void 0 === (n3 = r4.level) ? "AA" : n3) && "normal" === e3 ? 7 : "AA" === a3 && "large" === e3 ? 3 : 4.5);
-      var r4, n3, a3, i3, e3;
+      return void 0 === o5 && (o5 = "#FFF"), void 0 === t4 && (t4 = {}), this.contrast(o5) >= (e3 = void 0 === (i3 = (r5 = t4).size) ? "normal" : i3, "AAA" === (a3 = void 0 === (n3 = r5.level) ? "AA" : n3) && "normal" === e3 ? 7 : "AA" === a3 && "large" === e3 ? 3 : 4.5);
+      var r5, n3, a3, i3, e3;
     };
-  }
+  };
 
   // packages/editor/build-module/components/collaborators-presence/avatar/component.mjs
   var import_components237 = __toESM(require_components(), 1);
@@ -110000,7 +110000,7 @@ ${content}
 
   // packages/editor/build-module/components/collaborators-presence/avatar/component.mjs
   var import_jsx_runtime575 = __toESM(require_jsx_runtime(), 1);
-  k([a11y_default]);
+  k([r4]);
   var GRAY_900 = "#1e1e1e";
   var WHITE = "#fff";
   function Avatar({
@@ -111043,7 +111043,7 @@ ${content}
       const x2 = rect.left - overlayRect.left;
       const y3 = rect.top - overlayRect.top;
       const isDuplicate = rects.some(
-        (r4) => r4.x === x2 && r4.y === y3 && r4.width === rect.width && r4.height === rect.height
+        (r5) => r5.x === x2 && r5.y === y3 && r5.width === rect.width && r5.height === rect.height
       );
       if (isDuplicate) {
         continue;
@@ -111083,7 +111083,7 @@ ${content}
     const result = [];
     for (let i3 = startIndex + 1; i3 < endIndex; i3++) {
       const block = allBlocks[i3];
-      if (!result.some((r4) => r4.contains(block))) {
+      if (!result.some((r5) => r5.contains(block))) {
         result.push(block);
       }
     }
@@ -111267,12 +111267,12 @@ ${content}
     return computeMultiBlockOverlayRects(start2, end, overlayContext);
   }
   function blockBoundingRect(blockEl, overlayRect) {
-    const r4 = blockEl.getBoundingClientRect();
+    const r5 = blockEl.getBoundingClientRect();
     return {
-      x: r4.left - overlayRect.left,
-      y: r4.top - overlayRect.top,
-      width: r4.width,
-      height: r4.height
+      x: r5.left - overlayRect.left,
+      y: r5.top - overlayRect.top,
+      width: r5.width,
+      height: r5.height
     };
   }
   function computeMultiBlockOverlayRects(start2, end, overlayContext) {
@@ -111738,23 +111738,23 @@ ${content}
           } catch {
             return;
           }
-          const promote = (r4) => {
-            if (!r4.localClientId) {
-              return r4;
+          const promote = (r5) => {
+            if (!r5.localClientId) {
+              return r5;
             }
             const el = blockEditorDocument.querySelector(
-              `[data-block="${r4.localClientId}"]`
+              `[data-block="${r5.localClientId}"]`
             );
             if (!el) {
-              return r4;
+              return r5;
             }
             const container = blockContainerOf(el);
             const containerId = container.getAttribute("data-block");
-            if (!containerId || containerId === r4.localClientId) {
-              return r4;
+            if (!containerId || containerId === r5.localClientId) {
+              return r5;
             }
             return {
-              ...r4,
+              ...r5,
               localClientId: containerId,
               richTextOffset: null,
               attributeKey: null
@@ -112515,7 +112515,7 @@ ${content}
       [rawRevisions]
     );
     const selectedIndex = revisions?.findIndex(
-      (r4) => r4[revisionKey] === currentRevisionId
+      (r5) => r5[revisionKey] === currentRevisionId
     );
     const handleSliderChange = (index2) => {
       const revision = revisions?.[index2];
@@ -116311,7 +116311,7 @@ ${content}
         return;
       }
       const index2 = revisions.findIndex(
-        (r4) => String(r4[revisionKey]) === String(currentRevisionId)
+        (r5) => String(r5[revisionKey]) === String(currentRevisionId)
       );
       if (index2 < 0) {
         return;

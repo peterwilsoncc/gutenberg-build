@@ -3255,17 +3255,17 @@ var wp;
   var import_i18n271 = __toESM(require_i18n(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
-  function r(e3) {
+  function r(e4) {
     var t2, f2, n2 = "";
-    if ("string" == typeof e3 || "number" == typeof e3) n2 += e3;
-    else if ("object" == typeof e3) if (Array.isArray(e3)) {
-      var o2 = e3.length;
-      for (t2 = 0; t2 < o2; t2++) e3[t2] && (f2 = r(e3[t2])) && (n2 && (n2 += " "), n2 += f2);
-    } else for (f2 in e3) e3[f2] && (n2 && (n2 += " "), n2 += f2);
+    if ("string" == typeof e4 || "number" == typeof e4) n2 += e4;
+    else if ("object" == typeof e4) if (Array.isArray(e4)) {
+      var o2 = e4.length;
+      for (t2 = 0; t2 < o2; t2++) e4[t2] && (f2 = r(e4[t2])) && (n2 && (n2 += " "), n2 += f2);
+    } else for (f2 in e4) e4[f2] && (n2 && (n2 += " "), n2 += f2);
     return n2;
   }
   function clsx() {
-    for (var e3, t2, f2 = 0, n2 = "", o2 = arguments.length; f2 < o2; f2++) (e3 = arguments[f2]) && (t2 = r(e3)) && (n2 && (n2 += " "), n2 += t2);
+    for (var e4, t2, f2 = 0, n2 = "", o2 = arguments.length; f2 < o2; f2++) (e4 = arguments[f2]) && (t2 = r(e4)) && (n2 && (n2 += " "), n2 += t2);
     return n2;
   }
   var clsx_default = clsx;
@@ -6878,8 +6878,8 @@ var wp;
 
   // node_modules/@base-ui/react/merge-props/mergeProps.mjs
   var EMPTY_PROPS = {};
-  function mergeProps(a2, b2, c2, d2, e3) {
-    if (!c2 && !d2 && !e3 && !a2) {
+  function mergeProps(a2, b2, c2, d2, e4) {
+    if (!c2 && !d2 && !e4 && !a2) {
       return createInitialMergedProps(b2);
     }
     let merged = createInitialMergedProps(a2);
@@ -6892,8 +6892,8 @@ var wp;
     if (d2) {
       merged = mergeInto(merged, d2);
     }
-    if (e3) {
-      merged = mergeInto(merged, e3);
+    if (e4) {
+      merged = mergeInto(merged, e4);
     }
     return merged;
   }
@@ -25696,34 +25696,34 @@ var wp;
     var t2 = r3.toString(16);
     return t2.length < 2 ? "0" + t2 : t2;
   };
-  var h = function(r3) {
-    var t2 = r3.r, n2 = r3.g, e3 = r3.b, u2 = r3.a, a2 = Math.max(t2, n2, e3), o2 = a2 - Math.min(t2, n2, e3), i2 = o2 ? a2 === t2 ? (n2 - e3) / o2 : a2 === n2 ? 2 + (e3 - t2) / o2 : 4 + (t2 - n2) / o2 : 0;
+  var d = function(r3) {
+    var t2 = r3.r, n2 = r3.g, e4 = r3.b, u2 = r3.a, a2 = Math.max(t2, n2, e4), o2 = a2 - Math.min(t2, n2, e4), i2 = o2 ? a2 === t2 ? (n2 - e4) / o2 : a2 === n2 ? 2 + (e4 - t2) / o2 : 4 + (t2 - n2) / o2 : 0;
     return { h: 60 * (i2 < 0 ? i2 + 6 : i2), s: a2 ? o2 / a2 * 100 : 0, v: a2 / 255 * 100, a: u2 };
   };
-  var b = function(r3) {
-    var t2 = r3.h, n2 = r3.s, e3 = r3.v, u2 = r3.a;
-    t2 = t2 / 360 * 6, n2 /= 100, e3 /= 100;
-    var a2 = Math.floor(t2), o2 = e3 * (1 - n2), i2 = e3 * (1 - (t2 - a2) * n2), s2 = e3 * (1 - (1 - t2 + a2) * n2), h2 = a2 % 6;
-    return { r: 255 * [e3, i2, o2, o2, s2, e3][h2], g: 255 * [s2, e3, e3, i2, o2, o2][h2], b: 255 * [o2, o2, s2, e3, e3, i2][h2], a: u2 };
+  var h = function(r3) {
+    var t2 = r3.h, n2 = r3.s, e4 = r3.v, u2 = r3.a;
+    t2 = t2 / 360 * 6, n2 /= 100, e4 /= 100;
+    var a2 = Math.floor(t2), o2 = e4 * (1 - n2), i2 = e4 * (1 - (t2 - a2) * n2), s2 = e4 * (1 - (1 - t2 + a2) * n2), d2 = a2 % 6;
+    return { r: 255 * [e4, i2, o2, o2, s2, e4][d2], g: 255 * [s2, e4, e4, i2, o2, o2][d2], b: 255 * [o2, o2, s2, e4, e4, i2][d2], a: u2 };
   };
-  var g = function(r3) {
+  var b = function(r3) {
     return { h: u(r3.h), s: e(r3.s, 0, 100), l: e(r3.l, 0, 100), a: e(r3.a) };
   };
-  var d = function(r3) {
+  var g = function(r3) {
     return { h: n(r3.h), s: n(r3.s), l: n(r3.l), a: n(r3.a, 3) };
   };
   var f = function(r3) {
-    return b((n2 = (t2 = r3).s, { h: t2.h, s: (n2 *= ((e3 = t2.l) < 50 ? e3 : 100 - e3) / 100) > 0 ? 2 * n2 / (e3 + n2) * 100 : 0, v: e3 + n2, a: t2.a }));
-    var t2, n2, e3;
+    return h((n2 = (t2 = r3).s, { h: t2.h, s: (n2 *= ((e4 = t2.l) < 50 ? e4 : 100 - e4) / 100) > 0 ? 2 * n2 / (e4 + n2) * 100 : 0, v: e4 + n2, a: t2.a }));
+    var t2, n2, e4;
   };
   var c = function(r3) {
-    return { h: (t2 = h(r3)).h, s: (u2 = (200 - (n2 = t2.s)) * (e3 = t2.v) / 100) > 0 && u2 < 200 ? n2 * e3 / 100 / (u2 <= 100 ? u2 : 200 - u2) * 100 : 0, l: u2 / 2, a: t2.a };
-    var t2, n2, e3, u2;
+    return { h: (t2 = d(r3)).h, s: (u2 = (200 - (n2 = t2.s)) * (e4 = t2.v) / 100) > 0 && u2 < 200 ? n2 * e4 / 100 / (u2 <= 100 ? u2 : 200 - u2) * 100 : 0, l: u2 / 2, a: t2.a };
+    var t2, n2, e4, u2;
   };
-  var l = /^hsla?\(\s*([+-]?\d*\.?\d+)(deg|rad|grad|turn)?\s*,\s*([+-]?\d*\.?\d+)%\s*,\s*([+-]?\d*\.?\d+)%\s*(?:,\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var p = /^hsla?\(\s*([+-]?\d*\.?\d+)(deg|rad|grad|turn)?\s+([+-]?\d*\.?\d+)%\s+([+-]?\d*\.?\d+)%\s*(?:\/\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var v = /^rgba?\(\s*([+-]?\d*\.?\d+)(%)?\s*,\s*([+-]?\d*\.?\d+)(%)?\s*,\s*([+-]?\d*\.?\d+)(%)?\s*(?:,\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
-  var m = /^rgba?\(\s*([+-]?\d*\.?\d+)(%)?\s+([+-]?\d*\.?\d+)(%)?\s+([+-]?\d*\.?\d+)(%)?\s*(?:\/\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
+  var l = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var p = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var v = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var m = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
   var y = { string: [[function(r3) {
     var t2 = i.exec(r3);
     return t2 ? (r3 = t2[1]).length <= 4 ? { r: parseInt(r3[0] + r3[0], 16), g: parseInt(r3[1] + r3[1], 16), b: parseInt(r3[2] + r3[2], 16), a: 4 === r3.length ? n(parseInt(r3[3] + r3[3], 16) / 255, 2) : 1 } : 6 === r3.length || 8 === r3.length ? { r: parseInt(r3.substr(0, 2), 16), g: parseInt(r3.substr(2, 2), 16), b: parseInt(r3.substr(4, 2), 16), a: 8 === r3.length ? n(parseInt(r3.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
@@ -25733,28 +25733,28 @@ var wp;
   }, "rgb"], [function(t2) {
     var n2 = l.exec(t2) || p.exec(t2);
     if (!n2) return null;
-    var e3, u2, a2 = g({ h: (e3 = n2[1], u2 = n2[2], void 0 === u2 && (u2 = "deg"), Number(e3) * (r2[u2] || 1)), s: Number(n2[3]), l: Number(n2[4]), a: void 0 === n2[5] ? 1 : Number(n2[5]) / (n2[6] ? 100 : 1) });
+    var e4, u2, a2 = b({ h: (e4 = n2[1], u2 = n2[2], void 0 === u2 && (u2 = "deg"), Number(e4) * (r2[u2] || 1)), s: Number(n2[3]), l: Number(n2[4]), a: void 0 === n2[5] ? 1 : Number(n2[5]) / (n2[6] ? 100 : 1) });
     return f(a2);
   }, "hsl"]], object: [[function(r3) {
-    var n2 = r3.r, e3 = r3.g, u2 = r3.b, o2 = r3.a, i2 = void 0 === o2 ? 1 : o2;
-    return t(n2) && t(e3) && t(u2) ? a({ r: Number(n2), g: Number(e3), b: Number(u2), a: Number(i2) }) : null;
+    var n2 = r3.r, e4 = r3.g, u2 = r3.b, o2 = r3.a, i2 = void 0 === o2 ? 1 : o2;
+    return t(n2) && t(e4) && t(u2) ? a({ r: Number(n2), g: Number(e4), b: Number(u2), a: Number(i2) }) : null;
   }, "rgb"], [function(r3) {
-    var n2 = r3.h, e3 = r3.s, u2 = r3.l, a2 = r3.a, o2 = void 0 === a2 ? 1 : a2;
-    if (!t(n2) || !t(e3) || !t(u2)) return null;
-    var i2 = g({ h: Number(n2), s: Number(e3), l: Number(u2), a: Number(o2) });
+    var n2 = r3.h, e4 = r3.s, u2 = r3.l, a2 = r3.a, o2 = void 0 === a2 ? 1 : a2;
+    if (!t(n2) || !t(e4) || !t(u2)) return null;
+    var i2 = b({ h: Number(n2), s: Number(e4), l: Number(u2), a: Number(o2) });
     return f(i2);
   }, "hsl"], [function(r3) {
     var n2 = r3.h, a2 = r3.s, o2 = r3.v, i2 = r3.a, s2 = void 0 === i2 ? 1 : i2;
     if (!t(n2) || !t(a2) || !t(o2)) return null;
-    var h2 = (function(r4) {
+    var d2 = (function(r4) {
       return { h: u(r4.h), s: e(r4.s, 0, 100), v: e(r4.v, 0, 100), a: e(r4.a) };
     })({ h: Number(n2), s: Number(a2), v: Number(o2), a: Number(s2) });
-    return b(h2);
+    return h(d2);
   }, "hsv"]] };
   var N = function(r3, t2) {
     for (var n2 = 0; n2 < t2.length; n2++) {
-      var e3 = t2[n2][0](r3);
-      if (e3) return [e3, t2[n2][1]];
+      var e4 = t2[n2][0](r3);
+      if (e4) return [e4, t2[n2][1]];
     }
     return [null, void 0];
   };
@@ -25785,20 +25785,20 @@ var wp;
     }, r3.prototype.isLight = function() {
       return H(this.rgba) >= 0.5;
     }, r3.prototype.toHex = function() {
-      return r4 = o(this.rgba), t2 = r4.r, e3 = r4.g, u2 = r4.b, i2 = (a2 = r4.a) < 1 ? s(n(255 * a2)) : "", "#" + s(t2) + s(e3) + s(u2) + i2;
-      var r4, t2, e3, u2, a2, i2;
+      return r4 = o(this.rgba), t2 = r4.r, e4 = r4.g, u2 = r4.b, i2 = (a2 = r4.a) < 1 ? s(n(255 * a2)) : "", "#" + s(t2) + s(e4) + s(u2) + i2;
+      var r4, t2, e4, u2, a2, i2;
     }, r3.prototype.toRgb = function() {
       return o(this.rgba);
     }, r3.prototype.toRgbString = function() {
-      return r4 = o(this.rgba), t2 = r4.r, n2 = r4.g, e3 = r4.b, (u2 = r4.a) < 1 ? "rgba(" + t2 + ", " + n2 + ", " + e3 + ", " + u2 + ")" : "rgb(" + t2 + ", " + n2 + ", " + e3 + ")";
-      var r4, t2, n2, e3, u2;
+      return r4 = o(this.rgba), t2 = r4.r, n2 = r4.g, e4 = r4.b, (u2 = r4.a) < 1 ? "rgba(" + t2 + ", " + n2 + ", " + e4 + ", " + u2 + ")" : "rgb(" + t2 + ", " + n2 + ", " + e4 + ")";
+      var r4, t2, n2, e4, u2;
     }, r3.prototype.toHsl = function() {
-      return d(c(this.rgba));
+      return g(c(this.rgba));
     }, r3.prototype.toHslString = function() {
-      return r4 = d(c(this.rgba)), t2 = r4.h, n2 = r4.s, e3 = r4.l, (u2 = r4.a) < 1 ? "hsla(" + t2 + ", " + n2 + "%, " + e3 + "%, " + u2 + ")" : "hsl(" + t2 + ", " + n2 + "%, " + e3 + "%)";
-      var r4, t2, n2, e3, u2;
+      return r4 = g(c(this.rgba)), t2 = r4.h, n2 = r4.s, e4 = r4.l, (u2 = r4.a) < 1 ? "hsla(" + t2 + ", " + n2 + "%, " + e4 + "%, " + u2 + ")" : "hsl(" + t2 + ", " + n2 + "%, " + e4 + "%)";
+      var r4, t2, n2, e4, u2;
     }, r3.prototype.toHsv = function() {
-      return r4 = h(this.rgba), { h: n(r4.h), s: n(r4.s), v: n(r4.v), a: n(r4.a, 3) };
+      return r4 = d(this.rgba), { h: n(r4.h), s: n(r4.s), v: n(r4.v), a: n(r4.a, 3) };
       var r4;
     }, r3.prototype.invert = function() {
       return w({ r: 255 - (r4 = this.rgba).r, g: 255 - r4.g, b: 255 - r4.b, a: r4.a });
@@ -25836,17 +25836,17 @@ var wp;
   };
 
   // node_modules/colord/plugins/names.mjs
-  function names_default(e3, f2) {
+  var e2 = function(e4, f2) {
     var a2 = { white: "#ffffff", bisque: "#ffe4c4", blue: "#0000ff", cadetblue: "#5f9ea0", chartreuse: "#7fff00", chocolate: "#d2691e", coral: "#ff7f50", antiquewhite: "#faebd7", aqua: "#00ffff", azure: "#f0ffff", whitesmoke: "#f5f5f5", papayawhip: "#ffefd5", plum: "#dda0dd", blanchedalmond: "#ffebcd", black: "#000000", gold: "#ffd700", goldenrod: "#daa520", gainsboro: "#dcdcdc", cornsilk: "#fff8dc", cornflowerblue: "#6495ed", burlywood: "#deb887", aquamarine: "#7fffd4", beige: "#f5f5dc", crimson: "#dc143c", cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkkhaki: "#bdb76b", darkgray: "#a9a9a9", darkgreen: "#006400", darkgrey: "#a9a9a9", peachpuff: "#ffdab9", darkmagenta: "#8b008b", darkred: "#8b0000", darkorchid: "#9932cc", darkorange: "#ff8c00", darkslateblue: "#483d8b", gray: "#808080", darkslategray: "#2f4f4f", darkslategrey: "#2f4f4f", deeppink: "#ff1493", deepskyblue: "#00bfff", wheat: "#f5deb3", firebrick: "#b22222", floralwhite: "#fffaf0", ghostwhite: "#f8f8ff", darkviolet: "#9400d3", magenta: "#ff00ff", green: "#008000", dodgerblue: "#1e90ff", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", blueviolet: "#8a2be2", forestgreen: "#228b22", lawngreen: "#7cfc00", indianred: "#cd5c5c", indigo: "#4b0082", fuchsia: "#ff00ff", brown: "#a52a2a", maroon: "#800000", mediumblue: "#0000cd", lightcoral: "#f08080", darkturquoise: "#00ced1", lightcyan: "#e0ffff", ivory: "#fffff0", lightyellow: "#ffffe0", lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", linen: "#faf0e6", mediumaquamarine: "#66cdaa", lemonchiffon: "#fffacd", lime: "#00ff00", khaki: "#f0e68c", mediumseagreen: "#3cb371", limegreen: "#32cd32", mediumspringgreen: "#00fa9a", lightskyblue: "#87cefa", lightblue: "#add8e6", midnightblue: "#191970", lightpink: "#ffb6c1", mistyrose: "#ffe4e1", moccasin: "#ffe4b5", mintcream: "#f5fffa", lightslategray: "#778899", lightslategrey: "#778899", navajowhite: "#ffdead", navy: "#000080", mediumvioletred: "#c71585", powderblue: "#b0e0e6", palegoldenrod: "#eee8aa", oldlace: "#fdf5e6", paleturquoise: "#afeeee", mediumturquoise: "#48d1cc", mediumorchid: "#ba55d3", rebeccapurple: "#663399", lightsteelblue: "#b0c4de", mediumslateblue: "#7b68ee", thistle: "#d8bfd8", tan: "#d2b48c", orchid: "#da70d6", mediumpurple: "#9370db", purple: "#800080", pink: "#ffc0cb", skyblue: "#87ceeb", springgreen: "#00ff7f", palegreen: "#98fb98", red: "#ff0000", yellow: "#ffff00", slateblue: "#6a5acd", lavenderblush: "#fff0f5", peru: "#cd853f", palevioletred: "#db7093", violet: "#ee82ee", teal: "#008080", slategray: "#708090", slategrey: "#708090", aliceblue: "#f0f8ff", darkseagreen: "#8fbc8f", darkolivegreen: "#556b2f", greenyellow: "#adff2f", seagreen: "#2e8b57", seashell: "#fff5ee", tomato: "#ff6347", silver: "#c0c0c0", sienna: "#a0522d", lavender: "#e6e6fa", lightgreen: "#90ee90", orange: "#ffa500", orangered: "#ff4500", steelblue: "#4682b4", royalblue: "#4169e1", turquoise: "#40e0d0", yellowgreen: "#9acd32", salmon: "#fa8072", saddlebrown: "#8b4513", sandybrown: "#f4a460", rosybrown: "#bc8f8f", darksalmon: "#e9967a", lightgoldenrodyellow: "#fafad2", snow: "#fffafa", lightgrey: "#d3d3d3", lightgray: "#d3d3d3", dimgray: "#696969", dimgrey: "#696969", olivedrab: "#6b8e23", olive: "#808000" }, r3 = {};
     for (var d2 in a2) r3[a2[d2]] = d2;
     var l2 = {};
-    e3.prototype.toName = function(f3) {
+    e4.prototype.toName = function(f3) {
       if (!(this.rgba.a || this.rgba.r || this.rgba.g || this.rgba.b)) return "transparent";
       var d3, i2, n2 = r3[this.toHex()];
       if (n2) return n2;
       if (null == f3 ? void 0 : f3.closest) {
         var o2 = this.toRgb(), t2 = 1 / 0, b2 = "black";
-        if (!l2.length) for (var c2 in a2) l2[c2] = new e3(a2[c2]).toRgb();
+        if (!l2.length) for (var c2 in a2) l2[c2] = new e4(a2[c2]).toRgb();
         for (var g2 in a2) {
           var u2 = (d3 = o2, i2 = l2[g2], Math.pow(d3.r - i2.r, 2) + Math.pow(d3.g - i2.g, 2) + Math.pow(d3.b - i2.b, 2));
           u2 < t2 && (t2 = u2, b2 = g2);
@@ -25856,9 +25856,9 @@ var wp;
     };
     f2.string.push([function(f3) {
       var r4 = f3.toLowerCase(), d3 = "transparent" === r4 ? "#0000" : a2[r4];
-      return d3 ? new e3(d3).toRgb() : null;
+      return d3 ? new e4(d3).toRgb() : null;
     }, "name"]);
-  }
+  };
 
   // node_modules/fast-average-color/dist/index.esm.js
   function toHex(num) {
@@ -26221,8 +26221,8 @@ var wp;
           this.ctx.drawImage(resource, size.srcLeft, size.srcTop, size.srcWidth, size.srcHeight, 0, 0, size.destWidth, size.destHeight);
           var bitmapData = this.ctx.getImageData(0, 0, size.destWidth, size.destHeight).data;
           value = this.getColorFromArray4(bitmapData, options2);
-        } catch (e3) {
-          outputError("security error (CORS) for resource ".concat(getSrc(resource), ".\nDetails: https://developer.mozilla.org/en/docs/Web/HTML/CORS_enabled_image"), options2.silent, e3);
+        } catch (e4) {
+          outputError("security error (CORS) for resource ".concat(getSrc(resource), ".\nDetails: https://developer.mozilla.org/en/docs/Web/HTML/CORS_enabled_image"), options2.silent, e4);
         }
         return this.prepareResult(value);
       };
@@ -26314,7 +26314,7 @@ var wp;
 
   // packages/block-library/build-module/cover/edit/color-utils.mjs
   var import_hooks19 = __toESM(require_hooks(), 1);
-  k([names_default]);
+  k([e2]);
   var DEFAULT_BACKGROUND_COLOR = "#FFF";
   var DEFAULT_OVERLAY_COLOR = "#000";
   function compositeSourceOver(source, dest) {
@@ -48996,8 +48996,8 @@ ${text}
       {
         className,
         icon: (0, import_i18n131.isRTL)() ? chevron_right_small_default : chevron_left_small_default,
-        onClick: (e3) => {
-          e3.preventDefault();
+        onClick: (e4) => {
+          e4.preventDefault();
           onBack();
         },
         size: "small",
@@ -49447,8 +49447,8 @@ ${text}
           __next40pxDefaultSize: true,
           ref: addPageButtonRef,
           icon: plus_default,
-          onClick: (e3) => {
-            e3.preventDefault();
+          onClick: (e4) => {
+            e4.preventDefault();
             setAddingPage(true);
           },
           "aria-haspopup": blockInserterAriaRole,
@@ -49461,8 +49461,8 @@ ${text}
           __next40pxDefaultSize: true,
           ref: addBlockButtonRef,
           icon: plus_default,
-          onClick: (e3) => {
-            e3.preventDefault();
+          onClick: (e4) => {
+            e4.preventDefault();
             setAddingBlock(true);
           },
           "aria-haspopup": blockInserterAriaRole,
@@ -55356,242 +55356,242 @@ ${text}
   var import_i18n156 = __toESM(require_i18n(), 1);
 
   // node_modules/@arraypress/waveform-player/dist/waveform-player.esm.js
-  function $2(e3) {
+  function $2(e4) {
     let t2 = -1 / 0;
-    for (let i2 = 0; i2 < e3.length; i2++) e3[i2] > t2 && (t2 = e3[i2]);
+    for (let i2 = 0; i2 < e4.length; i2++) e4[i2] > t2 && (t2 = e4[i2]);
     return t2;
   }
-  function S2(e3) {
-    return String(e3 ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  function S2(e4) {
+    return String(e4 ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
-  function q(e3) {
-    return S2(typeof e3 == "number" ? `${e3}px` : e3);
+  function q(e4) {
+    return S2(typeof e4 == "number" ? `${e4}px` : e4);
   }
-  function st(e3) {
-    if (typeof e3 != "string" || e3 === "") return false;
+  function st(e4) {
+    if (typeof e4 != "string" || e4 === "") return false;
     try {
-      let t2 = new URL(e3, "http://localhost/");
+      let t2 = new URL(e4, "http://localhost/");
       return t2.protocol === "http:" || t2.protocol === "https:";
     } catch {
       return false;
     }
   }
-  function m2(e3, t2 = 0, i2 = 1) {
-    return Math.max(t2, Math.min(e3, i2));
+  function m2(e4, t2 = 0, i2 = 1) {
+    return Math.max(t2, Math.min(e4, i2));
   }
-  function _(e3, t2 = null, i2 = {}) {
-    let { min: s2 = -1 / 0, max: r3 = 1 / 0, integer: a2 = false } = i2, o2 = typeof e3 == "number" ? e3 : typeof e3 == "string" && e3.trim() !== "" ? Number(e3) : NaN;
+  function _(e4, t2 = null, i2 = {}) {
+    let { min: s2 = -1 / 0, max: r3 = 1 / 0, integer: a2 = false } = i2, o2 = typeof e4 == "number" ? e4 : typeof e4 == "string" && e4.trim() !== "" ? Number(e4) : NaN;
     if (!Number.isFinite(o2)) return t2;
     let n2 = m2(o2, s2, r3);
     return a2 ? Math.round(n2) : n2;
   }
-  function H2(e3, t2 = null) {
-    if (Array.isArray(e3)) return e3;
-    if (typeof e3 == "string" && e3.trim().startsWith("[")) try {
-      let i2 = JSON.parse(e3);
+  function H2(e4, t2 = null) {
+    if (Array.isArray(e4)) return e4;
+    if (typeof e4 == "string" && e4.trim().startsWith("[")) try {
+      let i2 = JSON.parse(e4);
       if (Array.isArray(i2)) return i2;
     } catch {
     }
     return t2;
   }
-  function D(e3, t2 = {}) {
-    let { min: i2 = -1 / 0, max: s2 = 1 / 0, fallback: r3 = null } = t2, a2 = H2(e3);
-    if (!a2 && typeof e3 == "string" && e3.trim() !== "" && (a2 = e3.split(/[,\s]+/)), !a2) return r3;
+  function D(e4, t2 = {}) {
+    let { min: i2 = -1 / 0, max: s2 = 1 / 0, fallback: r3 = null } = t2, a2 = H2(e4);
+    if (!a2 && typeof e4 == "string" && e4.trim() !== "" && (a2 = e4.split(/[,\s]+/)), !a2) return r3;
     let o2 = a2.map((n2) => _(n2)).filter((n2) => n2 !== null && n2 >= i2 && n2 <= s2);
     return o2.length ? o2 : r3;
   }
-  function rt(e3, t2, i2 = null) {
-    return t2.includes(e3) ? e3 : i2;
+  function rt(e4, t2, i2 = null) {
+    return t2.includes(e4) ? e4 : i2;
   }
-  function at(e3) {
-    if (typeof e3 == "string") {
-      let t2 = e3.trim().toLowerCase();
+  function at(e4) {
+    if (typeof e4 == "string") {
+      let t2 = e4.trim().toLowerCase();
       return t2 !== "" && t2 !== "false" && t2 !== "0";
     }
-    return !!e3;
+    return !!e4;
   }
-  function vt(e3) {
-    return e3 === void 0 ? void 0 : e3 === "true";
+  function vt(e4) {
+    return e4 === void 0 ? void 0 : e4 === "true";
   }
-  function it(e3) {
-    if (typeof e3 == "string" && e3.trim().startsWith("[")) try {
-      return JSON.parse(e3);
+  function it(e4) {
+    if (typeof e4 == "string" && e4.trim().startsWith("[")) try {
+      return JSON.parse(e4);
     } catch {
     }
-    return e3;
+    return e4;
   }
-  function O(e3) {
+  function O(e4) {
     let t2 = {}, i2 = (o2, n2 = o2) => {
-      let l2 = vt(e3.dataset[n2]);
+      let l2 = vt(e4.dataset[n2]);
       l2 !== void 0 && (t2[o2] = l2);
     }, s2 = (o2, n2 = o2, l2 = false) => {
-      let h2 = e3.dataset[n2];
+      let h2 = e4.dataset[n2];
       h2 && (t2[o2] = l2 ? parseFloat(h2) : parseInt(h2, 10));
     }, r3 = (o2, n2 = o2) => {
-      let l2 = e3.dataset[n2];
+      let l2 = e4.dataset[n2];
       l2 && (t2[o2] = /^\d+(\.\d+)?$/.test(l2.trim()) ? parseFloat(l2) : l2);
     }, a2 = (o2, n2 = o2) => {
-      let l2 = e3.dataset[n2];
+      let l2 = e4.dataset[n2];
       if (!l2) return;
       let h2 = H2(l2);
       h2 ? t2[o2] = h2 : console.warn(`[WaveformPlayer] Invalid ${n2} attribute, expected a JSON array:`, l2);
     };
-    if (e3.dataset.src && (t2.url = e3.dataset.src), e3.dataset.url && (t2.url = e3.dataset.url), s2("height"), s2("samples"), e3.dataset.preload && (t2.preload = e3.dataset.preload), e3.dataset.crossOrigin && (t2.crossOrigin = e3.dataset.crossOrigin), e3.dataset.audioMode && (t2.audioMode = e3.dataset.audioMode), e3.dataset.style && (t2.waveformStyle = e3.dataset.style), e3.dataset.waveformStyle && (t2.waveformStyle = e3.dataset.waveformStyle), e3.dataset.waveformGradient && (t2.waveformGradient = e3.dataset.waveformGradient), s2("barWidth"), s2("barSpacing"), s2("barRadius"), e3.dataset.buttonAlign && (t2.buttonAlign = e3.dataset.buttonAlign), e3.dataset.layout && (t2.layout = e3.dataset.layout), e3.dataset.buttonStyle && (t2.buttonStyle = e3.dataset.buttonStyle), r3("buttonSize"), r3("buttonRadius"), e3.dataset.colorPreset && (t2.colorPreset = e3.dataset.colorPreset), e3.dataset.waveformColor && (t2.waveformColor = it(e3.dataset.waveformColor)), e3.dataset.progressColor && (t2.progressColor = it(e3.dataset.progressColor)), e3.dataset.color && (t2.waveformColor = e3.dataset.color), e3.dataset.theme && (t2.colorPreset = e3.dataset.theme), i2("autoplay"), i2("showControls"), i2("showInfo"), i2("showTime"), i2("showHoverTime"), i2("seekHandle"), i2("showBPM", "showBpm"), s2("bpm"), i2("singlePlay"), i2("playOnSeek"), e3.dataset.title && (t2.title = e3.dataset.title), e3.dataset.artist && (t2.artist = e3.dataset.artist), e3.dataset.album && (t2.album = e3.dataset.album), e3.dataset.artwork && (t2.artwork = e3.dataset.artwork), e3.dataset.artworkPosition && (t2.artworkPosition = e3.dataset.artworkPosition), e3.dataset.waveform && (t2.waveform = e3.dataset.waveform), a2("markers"), s2("playbackRate", "playbackRate", true), i2("showPlaybackSpeed"), e3.dataset.playbackRates) {
-      let o2 = D(e3.dataset.playbackRates);
-      o2 ? t2.playbackRates = o2 : console.warn("[WaveformPlayer] Invalid playbackRates attribute:", e3.dataset.playbackRates);
+    if (e4.dataset.src && (t2.url = e4.dataset.src), e4.dataset.url && (t2.url = e4.dataset.url), s2("height"), s2("samples"), e4.dataset.preload && (t2.preload = e4.dataset.preload), e4.dataset.crossOrigin && (t2.crossOrigin = e4.dataset.crossOrigin), e4.dataset.audioMode && (t2.audioMode = e4.dataset.audioMode), e4.dataset.style && (t2.waveformStyle = e4.dataset.style), e4.dataset.waveformStyle && (t2.waveformStyle = e4.dataset.waveformStyle), e4.dataset.waveformGradient && (t2.waveformGradient = e4.dataset.waveformGradient), s2("barWidth"), s2("barSpacing"), s2("barRadius"), e4.dataset.buttonAlign && (t2.buttonAlign = e4.dataset.buttonAlign), e4.dataset.layout && (t2.layout = e4.dataset.layout), e4.dataset.buttonStyle && (t2.buttonStyle = e4.dataset.buttonStyle), r3("buttonSize"), r3("buttonRadius"), e4.dataset.colorPreset && (t2.colorPreset = e4.dataset.colorPreset), e4.dataset.waveformColor && (t2.waveformColor = it(e4.dataset.waveformColor)), e4.dataset.progressColor && (t2.progressColor = it(e4.dataset.progressColor)), e4.dataset.color && (t2.waveformColor = e4.dataset.color), e4.dataset.theme && (t2.colorPreset = e4.dataset.theme), i2("autoplay"), i2("showControls"), i2("showInfo"), i2("showTime"), i2("showHoverTime"), i2("seekHandle"), i2("showBPM", "showBpm"), s2("bpm"), i2("singlePlay"), i2("playOnSeek"), e4.dataset.title && (t2.title = e4.dataset.title), e4.dataset.artist && (t2.artist = e4.dataset.artist), e4.dataset.album && (t2.album = e4.dataset.album), e4.dataset.artwork && (t2.artwork = e4.dataset.artwork), e4.dataset.artworkPosition && (t2.artworkPosition = e4.dataset.artworkPosition), e4.dataset.waveform && (t2.waveform = e4.dataset.waveform), a2("markers"), s2("playbackRate", "playbackRate", true), i2("showPlaybackSpeed"), e4.dataset.playbackRates) {
+      let o2 = D(e4.dataset.playbackRates);
+      o2 ? t2.playbackRates = o2 : console.warn("[WaveformPlayer] Invalid playbackRates attribute:", e4.dataset.playbackRates);
     }
-    return i2("enableMediaSession"), i2("showMarkers"), i2("accessibleSeek"), e3.dataset.seekLabel && (t2.seekLabel = e3.dataset.seekLabel), e3.dataset.seekValueText && (t2.seekValueText = e3.dataset.seekValueText), e3.dataset.errorText && (t2.errorText = e3.dataset.errorText), e3.dataset.playPauseLabel && (t2.playPauseLabel = e3.dataset.playPauseLabel), e3.dataset.speedLabel && (t2.speedLabel = e3.dataset.speedLabel), e3.dataset.artworkAlt && (t2.artworkAlt = e3.dataset.artworkAlt), e3.dataset.unknownTrackText && (t2.unknownTrackText = e3.dataset.unknownTrackText), t2;
+    return i2("enableMediaSession"), i2("showMarkers"), i2("accessibleSeek"), e4.dataset.seekLabel && (t2.seekLabel = e4.dataset.seekLabel), e4.dataset.seekValueText && (t2.seekValueText = e4.dataset.seekValueText), e4.dataset.errorText && (t2.errorText = e4.dataset.errorText), e4.dataset.playPauseLabel && (t2.playPauseLabel = e4.dataset.playPauseLabel), e4.dataset.speedLabel && (t2.speedLabel = e4.dataset.speedLabel), e4.dataset.artworkAlt && (t2.artworkAlt = e4.dataset.artworkAlt), e4.dataset.unknownTrackText && (t2.unknownTrackText = e4.dataset.unknownTrackText), t2;
   }
-  function ot(e3, ...t2) {
+  function ot(e4, ...t2) {
     let i2 = 0;
-    return e3.replace(/%(?:(\d+)\$)?s/g, (s2, r3) => {
+    return e4.replace(/%(?:(\d+)\$)?s/g, (s2, r3) => {
       let a2 = r3 ? Number(r3) - 1 : i2++;
       return t2[a2] ?? s2;
     });
   }
-  function E(e3) {
-    let t2 = Number(e3);
+  function E(e4) {
+    let t2 = Number(e4);
     if (!t2 || !Number.isFinite(t2) || t2 < 0) return "0:00";
     let i2 = Math.floor(t2 / 3600), s2 = Math.floor(t2 % 3600 / 60), r3 = Math.floor(t2 % 60);
     return i2 > 0 ? `${i2}:${s2.toString().padStart(2, "0")}:${r3.toString().padStart(2, "0")}` : `${s2}:${r3.toString().padStart(2, "0")}`;
   }
   var St = 0;
-  function nt(e3) {
-    let t2 = e3 || "audio", i2 = 5381;
+  function nt(e4) {
+    let t2 = e4 || "audio", i2 = 5381;
     for (let s2 = 0; s2 < t2.length; s2++) i2 = (i2 << 5) + i2 + t2.charCodeAt(s2) | 0;
     return `wp_${(i2 >>> 0).toString(36)}_${(St++).toString(36)}`;
   }
-  function I(e3) {
-    if (!e3) return "Audio";
-    let t2 = e3.split("/");
+  function I(e4) {
+    if (!e4) return "Audio";
+    let t2 = e4.split("/");
     return t2[t2.length - 1].split(".")[0].replace(/[-_]/g, " ").replace(/\b\w/g, (r3) => r3.toUpperCase());
   }
-  function U(e3) {
-    if (typeof e3 != "string") return null;
-    let t2 = e3.match(/rgba?\(\s*([\d.]+)\s*[,\s]\s*([\d.]+)\s*[,\s]\s*([\d.]+)\s*(?:[,/]\s*([\d.]+)(%?))?/i);
+  function U(e4) {
+    if (typeof e4 != "string") return null;
+    let t2 = e4.match(/rgba?\(\s*([\d.]+)\s*[,\s]\s*([\d.]+)\s*[,\s]\s*([\d.]+)\s*(?:[,/]\s*([\d.]+)(%?))?/i);
     if (!t2) return null;
     let i2 = Number(t2[1]), s2 = Number(t2[2]), r3 = Number(t2[3]);
     if (!Number.isFinite(i2) || !Number.isFinite(s2) || !Number.isFinite(r3)) return null;
     let a2 = t2[4] === void 0 ? 1 : Number(t2[4]);
     return Number.isFinite(a2) ? (t2[5] === "%" && (a2 /= 100), { r: i2, g: s2, b: r3, a: m2(a2, 0, 1) }) : null;
   }
-  function lt(e3) {
-    let t2 = U(e3);
+  function lt(e4) {
+    let t2 = U(e4);
     return !t2 || t2.a <= 0 ? null : (t2.r * 299 + t2.g * 587 + t2.b * 114) / 1e3;
   }
-  function j2(...e3) {
+  function j2(...e4) {
     let t2 = {};
-    for (let i2 of e3) for (let s2 in i2) i2[s2] !== null && i2[s2] !== void 0 && (t2[s2] = i2[s2]);
+    for (let i2 of e4) for (let s2 in i2) i2[s2] !== null && i2[s2] !== void 0 && (t2[s2] = i2[s2]);
     return t2;
   }
-  function ht(e3, t2) {
+  function ht(e4, t2) {
     let i2;
     return function(...r3) {
       let a2 = () => {
-        clearTimeout(i2), e3(...r3);
+        clearTimeout(i2), e4(...r3);
       };
       clearTimeout(i2), i2 = setTimeout(a2, t2);
     };
   }
-  function B(e3, t2) {
-    if (e3.length === t2) return e3;
-    if (e3.length === 0 || t2 === 0) return [];
+  function B(e4, t2) {
+    if (e4.length === t2) return e4;
+    if (e4.length === 0 || t2 === 0) return [];
     let i2 = [];
-    if (t2 > e3.length) {
-      let s2 = (e3.length - 1) / (t2 - 1);
+    if (t2 > e4.length) {
+      let s2 = (e4.length - 1) / (t2 - 1);
       for (let r3 = 0; r3 < t2; r3++) {
         let a2 = r3 * s2, o2 = Math.floor(a2), n2 = Math.ceil(a2), l2 = a2 - o2;
-        if (n2 >= e3.length) i2.push(e3[e3.length - 1]);
-        else if (o2 === n2) i2.push(e3[o2]);
+        if (n2 >= e4.length) i2.push(e4[e4.length - 1]);
+        else if (o2 === n2) i2.push(e4[o2]);
         else {
-          let h2 = e3[o2] * (1 - l2) + e3[n2] * l2;
+          let h2 = e4[o2] * (1 - l2) + e4[n2] * l2;
           i2.push(h2);
         }
       }
     } else {
-      let s2 = e3.length / t2;
+      let s2 = e4.length / t2;
       for (let r3 = 0; r3 < t2; r3++) {
         let a2 = Math.floor(r3 * s2), o2 = Math.floor((r3 + 1) * s2), n2 = 0, l2 = 0;
-        for (let h2 = a2; h2 <= o2 && h2 < e3.length; h2++) e3[h2] > n2 && (n2 = e3[h2]), l2++;
+        for (let h2 = a2; h2 <= o2 && h2 < e4.length; h2++) e4[h2] > n2 && (n2 = e4[h2]), l2++;
         if (l2 === 0) {
-          let h2 = Math.min(Math.round(r3 * s2), e3.length - 1);
-          n2 = e3[h2];
+          let h2 = Math.min(Math.round(r3 * s2), e4.length - 1);
+          n2 = e4[h2];
         }
         i2.push(n2);
       }
     }
     return i2;
   }
-  function P(e3, t2, i2, s2) {
+  function P(e4, t2, i2, s2) {
     if (!Array.isArray(t2)) return t2;
     if (t2.length < 2) return t2[0];
     let r3 = i2.width, a2 = i2.height, o2 = s2 && s2.waveformGradient, [n2, l2, h2, c2] = o2 === "horizontal" ? [0, 0, r3, 0] : o2 === "diagonal" ? [0, 0, r3, a2] : [0, 0, 0, a2];
     try {
-      let d2 = e3.createLinearGradient(n2, l2, h2, c2);
+      let d2 = e4.createLinearGradient(n2, l2, h2, c2);
       return t2.forEach((b2, y2) => d2.addColorStop(y2 / (t2.length - 1), b2)), d2;
     } catch {
       return t2[0];
     }
   }
-  function x2(e3, t2, i2, s2, r3, a2) {
-    if ((Array.isArray(a2) ? a2.some((n2) => n2 > 0) : a2 > 0) && typeof e3.roundRect == "function") {
+  function x2(e4, t2, i2, s2, r3, a2) {
+    if ((Array.isArray(a2) ? a2.some((n2) => n2 > 0) : a2 > 0) && typeof e4.roundRect == "function") {
       let n2 = Math.min(s2 / 2, Math.abs(r3) / 2), l2 = (h2) => m2(h2, 0, n2);
-      e3.beginPath(), e3.roundRect(t2, i2, s2, r3, Array.isArray(a2) ? a2.map(l2) : l2(a2)), e3.fill();
-    } else e3.fillRect(t2, i2, s2, r3);
+      e4.beginPath(), e4.roundRect(t2, i2, s2, r3, Array.isArray(a2) ? a2.map(l2) : l2(a2)), e4.fill();
+    } else e4.fillRect(t2, i2, s2, r3);
   }
-  function pt(e3, t2) {
-    return (e3.barRadius || 0) * t2;
+  function pt(e4, t2) {
+    return (e4.barRadius || 0) * t2;
   }
-  function Et(e3, t2) {
-    let i2 = pt(e3, t2);
+  function Et(e4, t2) {
+    let i2 = pt(e4, t2);
     return [i2, i2, 0, 0];
   }
-  function ct(e3, t2, i2, s2, r3) {
+  function ct(e4, t2, i2, s2, r3) {
     let a2 = r3 / 2;
-    e3.beginPath(), e3.moveTo(t2, s2 - a2), e3.lineTo(i2 - a2, s2 - a2), e3.arc(i2 - a2, s2, a2, -Math.PI / 2, Math.PI / 2), e3.lineTo(t2, s2 + a2), e3.arc(t2, s2, a2, Math.PI / 2, -Math.PI / 2), e3.closePath();
+    e4.beginPath(), e4.moveTo(t2, s2 - a2), e4.lineTo(i2 - a2, s2 - a2), e4.arc(i2 - a2, s2, a2, -Math.PI / 2, Math.PI / 2), e4.lineTo(t2, s2 + a2), e4.arc(t2, s2, a2, Math.PI / 2, -Math.PI / 2), e4.closePath();
   }
-  function V(e3, t2, i2, s2, r3) {
-    let a2 = window.devicePixelRatio || 1, o2 = r3.barWidth * a2, n2 = r3.barSpacing * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = B(i2, l2), c2 = t2.height, d2 = s2 * t2.width, b2 = Et(r3, a2), y2 = P(e3, r3.color, t2, r3), w2 = P(e3, r3.progressColor, t2, r3);
-    e3.clearRect(0, 0, t2.width, t2.height), e3.fillStyle = y2;
+  function V(e4, t2, i2, s2, r3) {
+    let a2 = window.devicePixelRatio || 1, o2 = r3.barWidth * a2, n2 = r3.barSpacing * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = B(i2, l2), c2 = t2.height, d2 = s2 * t2.width, b2 = Et(r3, a2), y2 = P(e4, r3.color, t2, r3), w2 = P(e4, r3.progressColor, t2, r3);
+    e4.clearRect(0, 0, t2.width, t2.height), e4.fillStyle = y2;
     for (let f2 = 0; f2 < h2.length; f2++) {
       let p2 = f2 * (o2 + n2);
       if (p2 + o2 > t2.width) break;
       let g2 = h2[f2] * c2 * 0.9, u2 = c2 - g2;
-      x2(e3, p2, u2, o2, g2, b2);
+      x2(e4, p2, u2, o2, g2, b2);
     }
-    e3.save(), e3.beginPath(), e3.rect(0, 0, d2, c2), e3.clip(), e3.fillStyle = w2;
+    e4.save(), e4.beginPath(), e4.rect(0, 0, d2, c2), e4.clip(), e4.fillStyle = w2;
     for (let f2 = 0; f2 < h2.length; f2++) {
       let p2 = f2 * (o2 + n2);
       if (p2 > d2) break;
       let g2 = h2[f2] * c2 * 0.9, u2 = c2 - g2;
-      x2(e3, p2, u2, o2, g2, b2);
+      x2(e4, p2, u2, o2, g2, b2);
     }
-    e3.restore();
+    e4.restore();
   }
-  function Pt(e3, t2, i2, s2, r3) {
-    let a2 = window.devicePixelRatio || 1, o2 = r3.barWidth * a2, n2 = r3.barSpacing * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = B(i2, l2), c2 = t2.height, d2 = c2 / 2, b2 = s2 * t2.width, y2 = pt(r3, a2), w2 = [y2, y2, 0, 0], f2 = [0, 0, y2, y2], p2 = P(e3, r3.color, t2, r3), g2 = P(e3, r3.progressColor, t2, r3);
-    e3.clearRect(0, 0, t2.width, t2.height), e3.fillStyle = p2;
+  function Pt(e4, t2, i2, s2, r3) {
+    let a2 = window.devicePixelRatio || 1, o2 = r3.barWidth * a2, n2 = r3.barSpacing * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = B(i2, l2), c2 = t2.height, d2 = c2 / 2, b2 = s2 * t2.width, y2 = pt(r3, a2), w2 = [y2, y2, 0, 0], f2 = [0, 0, y2, y2], p2 = P(e4, r3.color, t2, r3), g2 = P(e4, r3.progressColor, t2, r3);
+    e4.clearRect(0, 0, t2.width, t2.height), e4.fillStyle = p2;
     for (let u2 = 0; u2 < h2.length; u2++) {
       let k2 = u2 * (o2 + n2);
       if (k2 + o2 > t2.width) break;
       let v20 = h2[u2] * c2 * 0.45;
-      x2(e3, k2, d2 - v20, o2, v20, w2), x2(e3, k2, d2, o2, v20, f2);
+      x2(e4, k2, d2 - v20, o2, v20, w2), x2(e4, k2, d2, o2, v20, f2);
     }
-    e3.save(), e3.beginPath(), e3.rect(0, 0, b2, c2), e3.clip(), e3.fillStyle = g2;
+    e4.save(), e4.beginPath(), e4.rect(0, 0, b2, c2), e4.clip(), e4.fillStyle = g2;
     for (let u2 = 0; u2 < h2.length; u2++) {
       let k2 = u2 * (o2 + n2);
       if (k2 > b2) break;
       let v20 = h2[u2] * c2 * 0.45;
-      x2(e3, k2, d2 - v20, o2, v20, w2), x2(e3, k2, d2, o2, v20, f2);
+      x2(e4, k2, d2 - v20, o2, v20, w2), x2(e4, k2, d2, o2, v20, f2);
     }
-    e3.restore();
+    e4.restore();
   }
-  function Tt(e3, t2, i2, s2, r3) {
+  function Tt(e4, t2, i2, s2, r3) {
     let a2 = t2.width, o2 = t2.height, n2 = o2 / 2, l2 = o2 * 0.35;
-    e3.clearRect(0, 0, a2, o2);
+    e4.clearRect(0, 0, a2, o2);
     let h2 = (c2, d2, b2 = 1, y2 = false) => {
-      let w2 = P(e3, c2, t2, r3), f2 = Array.isArray(c2) ? c2[c2.length - 1] : c2;
-      y2 && (e3.shadowBlur = 12, e3.shadowColor = f2), e3.strokeStyle = w2, e3.lineWidth = d2, e3.lineCap = "round", e3.lineJoin = "round", e3.beginPath(), e3.moveTo(0, n2);
+      let w2 = P(e4, c2, t2, r3), f2 = Array.isArray(c2) ? c2[c2.length - 1] : c2;
+      y2 && (e4.shadowBlur = 12, e4.shadowColor = f2), e4.strokeStyle = w2, e4.lineWidth = d2, e4.lineCap = "round", e4.lineJoin = "round", e4.beginPath(), e4.moveTo(0, n2);
       let p2 = [], g2 = Math.floor(i2.length * b2);
       for (let u2 = 0; u2 < g2; u2++) {
         let k2 = u2 / (i2.length - 1) * a2, v20 = i2[u2], A = Math.sin(u2 * 0.1) * v20, L = n2 + A * l2;
@@ -55599,55 +55599,55 @@ ${text}
       }
       for (let u2 = 0; u2 < p2.length - 1; u2++) {
         let k2 = p2[u2].x + (p2[u2 + 1].x - p2[u2].x) * 0.5, v20 = p2[u2].y, A = p2[u2 + 1].x - (p2[u2 + 1].x - p2[u2].x) * 0.5, L = p2[u2 + 1].y;
-        e3.bezierCurveTo(k2, v20, A, L, p2[u2 + 1].x, p2[u2 + 1].y);
+        e4.bezierCurveTo(k2, v20, A, L, p2[u2 + 1].x, p2[u2 + 1].y);
       }
-      e3.stroke(), y2 && (e3.shadowBlur = 0);
+      e4.stroke(), y2 && (e4.shadowBlur = 0);
     };
-    e3.strokeStyle = "rgba(255, 255, 255, 0.03)", e3.lineWidth = 0.5, e3.beginPath(), e3.moveTo(0, n2), e3.lineTo(a2, n2), e3.stroke();
+    e4.strokeStyle = "rgba(255, 255, 255, 0.03)", e4.lineWidth = 0.5, e4.beginPath(), e4.moveTo(0, n2), e4.lineTo(a2, n2), e4.stroke();
     for (let c2 = 0; c2 <= 10; c2++) {
       let d2 = a2 / 10 * c2;
-      e3.beginPath(), e3.moveTo(d2, 0), e3.lineTo(d2, o2), e3.stroke();
+      e4.beginPath(), e4.moveTo(d2, 0), e4.lineTo(d2, o2), e4.stroke();
     }
     h2(r3.color, 2, 1, false), s2 > 0 && h2(r3.progressColor, 3, s2, true);
   }
-  function ut(e3, t2, i2, s2, r3) {
-    let a2 = window.devicePixelRatio || 1, o2 = (r3.barWidth || 3) * a2, n2 = (r3.barSpacing || 1) * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = B(i2, l2), c2 = t2.height, d2 = 4 * a2, b2 = 2 * a2, y2 = s2 * t2.width, w2 = c2 / 2, f2 = P(e3, r3.color, t2, r3), p2 = P(e3, r3.progressColor, t2, r3);
-    e3.clearRect(0, 0, t2.width, t2.height);
+  function ut(e4, t2, i2, s2, r3) {
+    let a2 = window.devicePixelRatio || 1, o2 = (r3.barWidth || 3) * a2, n2 = (r3.barSpacing || 1) * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = B(i2, l2), c2 = t2.height, d2 = 4 * a2, b2 = 2 * a2, y2 = s2 * t2.width, w2 = c2 / 2, f2 = P(e4, r3.color, t2, r3), p2 = P(e4, r3.progressColor, t2, r3);
+    e4.clearRect(0, 0, t2.width, t2.height);
     for (let g2 = 0; g2 < h2.length; g2++) {
       let u2 = g2 * (o2 + n2);
       if (u2 + o2 > t2.width) break;
       let k2 = h2[g2] * c2 * 0.9, v20 = Math.floor(k2 / (d2 + b2));
-      e3.fillStyle = u2 < y2 ? p2 : f2;
+      e4.fillStyle = u2 < y2 ? p2 : f2;
       for (let A = 0; A < v20; A++) {
         let L = A * (d2 + b2);
-        e3.fillRect(u2, w2 - L - d2, o2, d2), A > 0 && e3.fillRect(u2, w2 + L, o2, d2);
+        e4.fillRect(u2, w2 - L - d2, o2, d2), A > 0 && e4.fillRect(u2, w2 + L, o2, d2);
       }
     }
   }
-  function dt(e3, t2, i2, s2, r3) {
-    let a2 = window.devicePixelRatio || 1, o2 = (r3.barWidth || 2) * a2, n2 = (r3.barSpacing || 3) * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = B(i2, l2), c2 = t2.height, d2 = Math.max(1.5 * a2, o2 / 2), b2 = s2 * t2.width, y2 = c2 / 2, w2 = P(e3, r3.color, t2, r3), f2 = P(e3, r3.progressColor, t2, r3);
-    e3.clearRect(0, 0, t2.width, t2.height);
+  function dt(e4, t2, i2, s2, r3) {
+    let a2 = window.devicePixelRatio || 1, o2 = (r3.barWidth || 2) * a2, n2 = (r3.barSpacing || 3) * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = B(i2, l2), c2 = t2.height, d2 = Math.max(1.5 * a2, o2 / 2), b2 = s2 * t2.width, y2 = c2 / 2, w2 = P(e4, r3.color, t2, r3), f2 = P(e4, r3.progressColor, t2, r3);
+    e4.clearRect(0, 0, t2.width, t2.height);
     for (let p2 = 0; p2 < h2.length; p2++) {
       let g2 = p2 * (o2 + n2) + o2 / 2;
       if (g2 > t2.width) break;
       let u2 = h2[p2] * c2 * 0.9;
-      e3.fillStyle = g2 < b2 ? f2 : w2, e3.beginPath(), e3.arc(g2, y2 - u2 / 2, d2, 0, Math.PI * 2), e3.fill(), e3.beginPath(), e3.arc(g2, y2 + u2 / 2, d2, 0, Math.PI * 2), e3.fill();
+      e4.fillStyle = g2 < b2 ? f2 : w2, e4.beginPath(), e4.arc(g2, y2 - u2 / 2, d2, 0, Math.PI * 2), e4.fill(), e4.beginPath(), e4.arc(g2, y2 + u2 / 2, d2, 0, Math.PI * 2), e4.fill();
     }
   }
-  function At(e3, t2, i2, s2, r3) {
+  function At(e4, t2, i2, s2, r3) {
     let a2 = t2.width, o2 = t2.height, n2 = o2 / 2, l2 = 4, h2 = l2 / 2, c2 = !!r3.seekActive;
-    if (e3.clearRect(0, 0, a2, o2), e3.fillStyle = P(e3, r3.color, t2, r3) || "rgba(255, 255, 255, 0.2)", ct(e3, h2, a2, n2, l2), e3.fill(), s2 > 0) {
+    if (e4.clearRect(0, 0, a2, o2), e4.fillStyle = P(e4, r3.color, t2, r3) || "rgba(255, 255, 255, 0.2)", ct(e4, h2, a2, n2, l2), e4.fill(), s2 > 0) {
       let d2 = Math.max(h2 * 2, s2 * a2);
-      e3.save(), e3.globalAlpha = r3.seekHandle && !c2 ? 0.7 : 1, e3.fillStyle = P(e3, r3.progressColor, t2, r3) || "rgba(255, 255, 255, 0.9)", ct(e3, h2, d2, n2, l2), e3.fill(), e3.restore();
+      e4.save(), e4.globalAlpha = r3.seekHandle && !c2 ? 0.7 : 1, e4.fillStyle = P(e4, r3.progressColor, t2, r3) || "rgba(255, 255, 255, 0.9)", ct(e4, h2, d2, n2, l2), e4.fill(), e4.restore();
     }
   }
   var Mt = { bars: V, bar: V, mirror: Pt, line: Tt, blocks: ut, block: ut, dots: dt, dot: dt, seekbar: At };
-  function ft(e3, t2, i2, s2, r3) {
-    (Mt[r3.waveformStyle] || V)(e3, t2, i2, s2, r3);
+  function ft(e4, t2, i2, s2, r3) {
+    (Mt[r3.waveformStyle] || V)(e4, t2, i2, s2, r3);
   }
-  function mt(e3) {
+  function mt(e4) {
     try {
-      let t2 = e3.getChannelData(0), i2 = e3.sampleRate, s2 = Ct(t2, i2);
+      let t2 = e4.getChannelData(0), i2 = e4.sampleRate, s2 = Ct(t2, i2);
       if (s2.length < 2) return 120;
       let r3 = [];
       for (let l2 = 1; l2 < s2.length; l2++) r3.push((s2[l2] - s2[l2 - 1]) / i2);
@@ -55663,11 +55663,11 @@ ${text}
       return console.warn("[WaveformPlayer] BPM detection failed:", t2), null;
     }
   }
-  function Ct(e3, t2) {
+  function Ct(e4, t2) {
     let r3 = [], a2 = 0;
-    for (let o2 = 0; o2 < e3.length - 2048; o2 += 1024) {
+    for (let o2 = 0; o2 < e4.length - 2048; o2 += 1024) {
       let n2 = 0;
-      for (let c2 = o2; c2 < o2 + 2048; c2++) n2 += e3[c2] * e3[c2];
+      for (let c2 = o2; c2 < o2 + 2048; c2++) n2 += e4[c2] * e4[c2];
       n2 = n2 / 2048;
       let l2 = n2 - a2, h2 = a2 * 1.8 + 0.01;
       if (l2 > h2 && n2 > 0.01) {
@@ -55678,10 +55678,10 @@ ${text}
     }
     return r3;
   }
-  function Lt(e3, t2 = 1800) {
-    let i2 = e3.length / t2, s2 = e3.numberOfChannels, r3 = [];
+  function Lt(e4, t2 = 1800) {
+    let i2 = e4.length / t2, s2 = e4.numberOfChannels, r3 = [];
     for (let o2 = 0; o2 < s2; o2++) {
-      let n2 = e3.getChannelData(o2);
+      let n2 = e4.getChannelData(o2);
       for (let l2 = 0; l2 < t2; l2++) {
         let h2 = ~~(l2 * i2), c2 = ~~(h2 + i2), d2 = 0, b2 = 0;
         for (let w2 = h2; w2 < c2; w2++) {
@@ -55695,12 +55695,12 @@ ${text}
     let a2 = $2(r3);
     return a2 > 0 ? r3.map((o2) => o2 / a2) : r3;
   }
-  async function G2(e3, t2 = 1800, i2 = false) {
+  async function G2(e4, t2 = 1800, i2 = false) {
     let s2;
     try {
       let r3 = window.AudioContext || window.webkitAudioContext;
       s2 = new r3();
-      let o2 = await (await fetch(e3)).arrayBuffer(), n2 = await s2.decodeAudioData(o2), l2 = Lt(n2, t2);
+      let o2 = await (await fetch(e4)).arrayBuffer(), n2 = await s2.decodeAudioData(o2), l2 = Lt(n2, t2);
       l2 = _t(l2);
       let h2 = null;
       return i2 && (h2 = mt(n2)), { peaks: l2, bpm: h2 };
@@ -55708,28 +55708,28 @@ ${text}
       s2 && s2.close();
     }
   }
-  function yt(e3 = 1800) {
+  function yt(e4 = 1800) {
     let t2 = [];
-    for (let i2 = 0; i2 < e3; i2++) {
-      let s2 = Math.random() * 0.5 + 0.3, r3 = Math.sin(i2 / e3 * Math.PI * 4) * 0.2;
+    for (let i2 = 0; i2 < e4; i2++) {
+      let s2 = Math.random() * 0.5 + 0.3, r3 = Math.sin(i2 / e4 * Math.PI * 4) * 0.2;
       t2.push(m2(s2 + r3, 0.1, 1));
     }
     return t2;
   }
-  function _t(e3, t2 = 0.95) {
-    let i2 = $2(e3);
-    if (i2 === 0 || i2 > t2) return e3;
+  function _t(e4, t2 = 0.95) {
+    let i2 = $2(e4);
+    if (i2 === 0 || i2 > t2) return e4;
     let s2 = t2 / i2;
-    return e3.map((r3) => r3 * s2);
+    return e4.map((r3) => r3 * s2);
   }
   var K = 128;
-  function gt(e3) {
+  function gt(e4) {
     let t2 = document.documentElement, i2 = document.body;
-    return t2.classList.contains(e3) || t2.classList.contains(`${e3}-mode`) || t2.classList.contains(`theme-${e3}`) || t2.getAttribute("data-theme") === e3 || t2.getAttribute("data-color-scheme") === e3 || i2.classList.contains(e3) || i2.classList.contains(`${e3}-mode`) || i2.getAttribute("data-theme") === e3;
+    return t2.classList.contains(e4) || t2.classList.contains(`${e4}-mode`) || t2.classList.contains(`theme-${e4}`) || t2.getAttribute("data-theme") === e4 || t2.getAttribute("data-color-scheme") === e4 || i2.classList.contains(e4) || i2.classList.contains(`${e4}-mode`) || i2.getAttribute("data-theme") === e4;
   }
-  function xt(e3) {
+  function xt(e4) {
     let t2 = 0, i2 = 0;
-    for (let s2 = e3; s2 && s2.nodeType === 1 && i2 < 0.995; s2 = s2.parentElement) {
+    for (let s2 = e4; s2 && s2.nodeType === 1 && i2 < 0.995; s2 = s2.parentElement) {
       let r3 = U(getComputedStyle(s2).backgroundColor);
       if (!r3 || r3.a <= 0) continue;
       let a2 = r3.a * (1 - i2);
@@ -55738,27 +55738,27 @@ ${text}
     return { sum: t2, alpha: i2 };
   }
   function Rt() {
-    let e3 = lt(getComputedStyle(document.body).color);
-    if (e3 !== null) return e3 > K ? "dark" : "light";
+    let e4 = lt(getComputedStyle(document.body).color);
+    if (e4 !== null) return e4 > K ? "dark" : "light";
     if (window.matchMedia) {
       if (window.matchMedia("(prefers-color-scheme: dark)").matches) return "dark";
       if (window.matchMedia("(prefers-color-scheme: light)").matches) return "light";
     }
     return "dark";
   }
-  function R(e3) {
+  function R(e4) {
     if (gt("dark")) return "dark";
     if (gt("light")) return "light";
     try {
-      let t2 = e3 && e3.nodeType === 1 ? e3 : document.body, { sum: i2, alpha: s2 } = xt(t2), r3 = Rt(), a2 = i2 + (r3 === "dark" ? 0 : 255) * (1 - s2);
+      let t2 = e4 && e4.nodeType === 1 ? e4 : document.body, { sum: i2, alpha: s2 } = xt(t2), r3 = Rt(), a2 = i2 + (r3 === "dark" ? 0 : 255) * (1 - s2);
       return a2 > K ? "light" : a2 < K ? "dark" : r3;
     } catch {
       return "dark";
     }
   }
   var C = { dark: { waveformColor: "rgba(255, 255, 255, 0.3)", progressColor: "rgba(255, 255, 255, 0.9)" }, light: { waveformColor: "rgba(0, 0, 0, 0.2)", progressColor: "rgba(0, 0, 0, 0.8)" } };
-  function J(e3, t2) {
-    if (e3 && C[e3]) return C[e3];
+  function J(e4, t2) {
+    if (e4 && C[e4]) return C[e4];
     let i2 = R(t2);
     return C[i2];
   }
@@ -55771,50 +55771,50 @@ ${text}
   var Bt = { height: { min: 1, integer: true }, samples: { min: 1, integer: true }, barWidth: { min: 0 }, barSpacing: { min: 0 }, barRadius: { min: 0 }, bpm: { min: 1 }, playbackRate: { min: N2, max: F } };
   var Ht = ["autoplay", "showControls", "showInfo", "showTime", "showHoverTime", "seekHandle", "showBPM", "singlePlay", "playOnSeek", "enableMediaSession", "showMarkers", "accessibleSeek", "showPlaybackSpeed"];
   var Ot = ["onLoad", "onPlay", "onPause", "onEnd", "onError", "onTimeUpdate", "onNextTrack", "onPreviousTrack"];
-  function Y(e3, t2) {
-    console.warn(`[WaveformPlayer] Invalid ${e3} option, using default:`, t2);
+  function Y(e4, t2) {
+    console.warn(`[WaveformPlayer] Invalid ${e4} option, using default:`, t2);
   }
-  function z(e3) {
-    let t2 = H2(e3);
+  function z(e4) {
+    let t2 = H2(e4);
     return t2 ? t2.reduce((i2, s2) => {
       let r3 = s2 && typeof s2 == "object" ? _(s2.time, null, { min: 0 }) : null;
       return r3 === null ? (Y("marker", s2), i2) : (i2.push({ ...s2, time: r3, label: s2.label == null ? "" : s2.label }), i2);
-    }, []) : (e3 != null && Y("markers", e3), []);
+    }, []) : (e4 != null && Y("markers", e4), []);
   }
-  function Z(e3) {
-    let t2 = (s2) => e3[s2] != null, i2 = (s2) => {
-      Y(s2, e3[s2]), e3[s2] = W[s2];
+  function Z(e4) {
+    let t2 = (s2) => e4[s2] != null, i2 = (s2) => {
+      Y(s2, e4[s2]), e4[s2] = W[s2];
     };
     for (let [s2, r3] of Object.entries(Bt)) {
       if (!t2(s2)) continue;
-      let a2 = _(e3[s2], null, r3);
-      a2 === null ? i2(s2) : e3[s2] = a2;
+      let a2 = _(e4[s2], null, r3);
+      a2 === null ? i2(s2) : e4[s2] = a2;
     }
-    for (let [s2, r3] of Object.entries(Dt)) t2(s2) && rt(e3[s2], r3) === null && i2(s2);
-    for (let s2 of Ht) e3[s2] = at(e3[s2]);
-    for (let s2 of Ot) t2(s2) && typeof e3[s2] != "function" && i2(s2);
+    for (let [s2, r3] of Object.entries(Dt)) t2(s2) && rt(e4[s2], r3) === null && i2(s2);
+    for (let s2 of Ht) e4[s2] = at(e4[s2]);
+    for (let s2 of Ot) t2(s2) && typeof e4[s2] != "function" && i2(s2);
     if (t2("playbackRates")) {
-      let s2 = D(e3.playbackRates, { min: N2, max: F, fallback: null });
-      s2 === null ? i2("playbackRates") : e3.playbackRates = s2;
+      let s2 = D(e4.playbackRates, { min: N2, max: F, fallback: null });
+      s2 === null ? i2("playbackRates") : e4.playbackRates = s2;
     }
-    e3.markers = z(e3.markers);
+    e4.markers = z(e4.markers);
     for (let s2 of ["buttonSize", "buttonRadius"]) {
       if (!t2(s2)) continue;
-      let r3 = e3[s2];
+      let r3 = e4[s2];
       (typeof r3 == "number" ? Number.isFinite(r3) : typeof r3 == "string" && r3.trim() !== "") || i2(s2);
     }
     for (let s2 of ["waveformColor", "progressColor"]) {
       if (!t2(s2)) continue;
-      let r3 = e3[s2];
+      let r3 = e4[s2];
       !(typeof r3 == "string" && r3.trim() !== "") && !Array.isArray(r3) && i2(s2);
     }
-    return e3;
+    return e4;
   }
   var It = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#71717a" fill-opacity="0.15"/><g fill="none" stroke="#a1a1aa" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="17" r="2.2"/><circle cx="17" cy="15" r="2.2"/><path d="M10.2 17V7l9-1.6v9"/></g></svg>');
   var bt = 5;
   var wt = 10;
   var Wt = 'button, a[href], input, [role="slider"]';
-  var T = class e2 {
+  var T = class e3 {
     static instances = /* @__PURE__ */ new Map();
     static currentlyPlaying = null;
     constructor(t2, i2 = {}) {
@@ -55825,11 +55825,11 @@ ${text}
       this._autoTheme = this.options.colorPreset == null || !C[this.options.colorPreset], this._presetKeys = [], this._scheme = this.options.colorPreset && C[this.options.colorPreset] ? this.options.colorPreset : R(this.container);
       for (let [n2, l2] of Object.entries(a2)) (this.options[n2] === null || this.options[n2] === void 0) && (this.options[n2] = l2, this._presetKeys.push(n2));
       let o2 = X[this.options.waveformStyle];
-      o2 && (s2.barWidth === void 0 && i2.barWidth === void 0 && (this.options.barWidth = o2.barWidth), s2.barSpacing === void 0 && i2.barSpacing === void 0 && (this.options.barSpacing = o2.barSpacing)), this.audio = null, this.canvas = null, this.ctx = null, this.waveformData = [], this.progress = 0, this._activeMarkerIndex = -1, this._markerLabelTimer = null, this.isPlaying = false, this.isLoading = false, this.hasError = false, this.updateTimer = null, this.resizeObserver = null, this._ac = new AbortController(), this.id = this.container.id || nt(this.options.url), e2.instances.set(this.id, this), e2._watchTheme();
+      o2 && (s2.barWidth === void 0 && i2.barWidth === void 0 && (this.options.barWidth = o2.barWidth), s2.barSpacing === void 0 && i2.barSpacing === void 0 && (this.options.barSpacing = o2.barSpacing)), this.audio = null, this.canvas = null, this.ctx = null, this.waveformData = [], this.progress = 0, this._activeMarkerIndex = -1, this._markerLabelTimer = null, this.isPlaying = false, this.isLoading = false, this.hasError = false, this.updateTimer = null, this.resizeObserver = null, this._ac = new AbortController(), this.id = this.container.id || nt(this.options.url), e3.instances.set(this.id, this), e3._watchTheme();
       try {
         this.init();
       } catch (n2) {
-        throw e2.instances.delete(this.id), this._ac.abort(), n2;
+        throw e3.instances.delete(this.id), this._ac.abort(), n2;
       }
       setTimeout(() => {
         this._emit("waveformplayer:ready", { player: this, url: this.options.url });
@@ -56042,7 +56042,7 @@ ${text}
     }
     initKeyboardControls() {
       this.container.setAttribute("tabindex", "-1"), this.container.addEventListener("click", (t2) => {
-        t2.target.closest(Wt) || (e2.getAllInstances().forEach((i2) => {
+        t2.target.closest(Wt) || (e3.getAllInstances().forEach((i2) => {
           i2 !== this && i2.container.setAttribute("tabindex", "-1");
         }), this.container.setAttribute("tabindex", "0"), this.container.focus());
       }, { signal: this._ac.signal }), this.container.addEventListener("keydown", (t2) => {
@@ -56384,9 +56384,9 @@ ${text}
       this.container.classList.toggle("waveform-theme-light", this._scheme === "light"), this.canvas && this.drawWaveform();
     }
     static _watchTheme() {
-      if (e2._themeWatch || typeof document > "u") return;
+      if (e3._themeWatch || typeof document > "u") return;
       let t2 = () => requestAnimationFrame(() => {
-        e2.instances.forEach((a2) => {
+        e3.instances.forEach((a2) => {
           try {
             a2.refreshTheme();
           } catch {
@@ -56399,7 +56399,7 @@ ${text}
         r3 = window.matchMedia("(prefers-color-scheme: dark)"), r3.addEventListener("change", t2);
       } catch {
       }
-      e2._themeWatch = { obs: s2, mq: r3, refresh: t2 };
+      e3._themeWatch = { obs: s2, mq: r3, refresh: t2 };
     }
     updateSpeedUI() {
       if (!this.audio) return;
@@ -56414,14 +56414,14 @@ ${text}
       });
     }
     play() {
-      if (this.options.singlePlay && e2.currentlyPlaying && e2.currentlyPlaying !== this && e2.currentlyPlaying.pause(), this.options.audioMode === "external") {
-        this._emit("waveformplayer:request-play", this._buildTrackDetail(), true).defaultPrevented || (e2.currentlyPlaying = this);
+      if (this.options.singlePlay && e3.currentlyPlaying && e3.currentlyPlaying !== this && e3.currentlyPlaying.pause(), this.options.audioMode === "external") {
+        this._emit("waveformplayer:request-play", this._buildTrackDetail(), true).defaultPrevented || (e3.currentlyPlaying = this);
         return;
       }
-      return e2.currentlyPlaying = this, this.audio.play();
+      return e3.currentlyPlaying = this, this.audio.play();
     }
     pause() {
-      if (e2.currentlyPlaying === this && (e2.currentlyPlaying = null), this.options.audioMode === "external") {
+      if (e3.currentlyPlaying === this && (e3.currentlyPlaying = null), this.options.audioMode === "external") {
         this._emit("waveformplayer:request-pause", this._buildTrackDetail(), true);
         return;
       }
@@ -56456,7 +56456,7 @@ ${text}
       i2 !== null && (this.audio.playbackRate = i2, this.options.playbackRate = i2, this.updateSpeedUI());
     }
     destroy() {
-      this.isDestroying = true, this._emit("waveformplayer:destroy", { player: this, url: this.options.url }), this.pause(), this.stopSmoothUpdate(), clearTimeout(this._markerLabelTimer), this._ac?.abort(), this.resizeObserver && (this.resizeObserver.disconnect(), this.resizeObserver = null), this.resizeHandler && (window.removeEventListener("resize", this.resizeHandler), this.resizeHandler = null), e2.instances.delete(this.id), e2.currentlyPlaying === this && (e2.currentlyPlaying = null), this.audio && (this.audio.pause(), this.audio.src = "", this.audio.load(), this.audio = null), this.container.innerHTML = "", delete this.container.dataset.waveformInitialized, this.canvas = null, this.ctx = null, this.playBtn = null, this.waveformData = [];
+      this.isDestroying = true, this._emit("waveformplayer:destroy", { player: this, url: this.options.url }), this.pause(), this.stopSmoothUpdate(), clearTimeout(this._markerLabelTimer), this._ac?.abort(), this.resizeObserver && (this.resizeObserver.disconnect(), this.resizeObserver = null), this.resizeHandler && (window.removeEventListener("resize", this.resizeHandler), this.resizeHandler = null), e3.instances.delete(this.id), e3.currentlyPlaying === this && (e3.currentlyPlaying = null), this.audio && (this.audio.pause(), this.audio.src = "", this.audio.load(), this.audio = null), this.container.innerHTML = "", delete this.container.dataset.waveformInitialized, this.canvas = null, this.ctx = null, this.playBtn = null, this.waveformData = [];
     }
     static getInstance(t2) {
       if (typeof t2 == "string") {
@@ -56489,16 +56489,16 @@ ${text}
   T.utils = { formatTime: E, extractTitleFromUrl: I, escapeHtml: S2, isSafeHref: st, parseDataAttributes: O, detectColorScheme: R };
   var et = () => typeof window < "u" && typeof document < "u";
   var Nt = () => true;
-  function kt(e3) {
-    if (!(e3.dataset.waveformInitialized === "true" || T.getInstance(e3))) try {
-      new T(e3), e3.dataset.waveformInitialized = "true";
+  function kt(e4) {
+    if (!(e4.dataset.waveformInitialized === "true" || T.getInstance(e4))) try {
+      new T(e4), e4.dataset.waveformInitialized = "true";
     } catch (t2) {
-      console.error("[WaveformPlayer] Failed to initialize:", t2, e3);
+      console.error("[WaveformPlayer] Failed to initialize:", t2, e4);
     }
   }
-  function tt(e3 = document) {
+  function tt(e4 = document) {
     if (!et()) return;
-    let t2 = e3 || document;
+    let t2 = e4 || document;
     t2.matches?.("[data-waveform-player]") && kt(t2), t2.querySelectorAll("[data-waveform-player]").forEach(kt);
   }
   et() && !Nt() && (document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", () => tt()) : tt());
@@ -80636,7 +80636,7 @@ ${text}
         "a",
         {
           href: "#term-name-pseudo-link",
-          onClick: (e3) => e3.preventDefault(),
+          onClick: (e4) => e4.preventDefault(),
           children: termName2
         }
       );
