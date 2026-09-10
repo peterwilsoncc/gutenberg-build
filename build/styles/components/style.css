@@ -2189,10 +2189,6 @@ body.modal-open {
 }
 .components-notice__dismiss:not(:disabled):not([aria-disabled=true]):not(.is-secondary):hover, .components-notice__dismiss:not(:disabled):not([aria-disabled=true]):not(.is-secondary):active, .components-notice__dismiss:not(:disabled):not([aria-disabled=true]):focus {
   color: var(--wpds-color-foreground-interactive-neutral-active, #1e1e1e);
-  background-color: transparent;
-}
-.components-notice__dismiss:not(:disabled):not([aria-disabled=true]):not(.is-secondary):hover {
-  box-shadow: none;
 }
 
 .components-notice-list {
@@ -3048,11 +3044,7 @@ body.lockscroll {
   margin-left: 32px;
   color: #fff;
   flex-shrink: 0;
-}
-.components-snackbar__action.components-button:focus,
-.components-snackbar__action.components-external-link:focus {
-  box-shadow: none;
-  outline: 1px dotted #fff;
+  --focus-color: #fff;
 }
 .components-snackbar__action.components-button:hover,
 .components-snackbar__action.components-external-link:hover {
