@@ -19583,7 +19583,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/gap.mjs
   function isAxialBlockGapAllowed(layout, defaultLayout2) {
-    const usedLayout = layout?.inherit || layout?.contentSize || layout?.wideSize ? { ...layout, type: "constrained" } : layout || defaultLayout2 || {};
+    const usedLayout = normalizeLegacyLayout(layout) || defaultLayout2 || {};
     return ["flex", "grid"].includes(usedLayout?.type);
   }
   function getGapBoxControlValueFromStyle2(blockGapValue) {
@@ -99787,7 +99787,7 @@ var wp;
   function useLayoutClasses(blockAttributes = {}, blockName = "") {
     const { layout } = blockAttributes;
     const { default: defaultBlockLayout } = (0, import_blocks127.getBlockSupport)(blockName, layoutBlockSupportKey) || {};
-    const usedLayout = layout?.inherit || layout?.contentSize || layout?.wideSize ? { ...layout, type: "constrained" } : layout || defaultBlockLayout || {};
+    const usedLayout = normalizeLegacyLayout(layout) || defaultBlockLayout || {};
     const layoutClassnames = [];
     if (LAYOUT_DEFINITIONS2[usedLayout?.type || "default"]?.className) {
       const baseClassName = LAYOUT_DEFINITIONS2[usedLayout?.type || "default"]?.className;
@@ -99825,7 +99825,7 @@ var wp;
   }
   function useLayoutStyles(blockAttributes = {}, blockName, selector3) {
     const { layout = {}, style = {} } = blockAttributes;
-    const usedLayout = layout?.inherit || layout?.contentSize || layout?.wideSize ? { ...layout, type: "constrained" } : layout || {};
+    const usedLayout = normalizeLegacyLayout(layout) || {};
     const fullLayoutType = getLayoutType(usedLayout?.type || "default");
     const [blockGapSupport] = useSettings("spacing.blockGap");
     const hasBlockGapSupport = blockGapSupport !== null;
@@ -100176,7 +100176,7 @@ var wp;
     const id = (0, import_compose113.useInstanceId)(BlockListBlock2);
     const { layout } = attributes;
     const { default: defaultBlockLayout } = (0, import_blocks127.getBlockSupport)(name, layoutBlockSupportKey) || {};
-    const usedLayout = layout?.inherit || layout?.contentSize || layout?.wideSize ? { ...layout, type: "constrained" } : layout || defaultBlockLayout || {};
+    const usedLayout = normalizeLegacyLayout(layout) || defaultBlockLayout || {};
     const selectorPrefix = `wp-container-${kebabCase(name)}-is-layout-`;
     const selector3 = `.${selectorPrefix}${id}`;
     const hasBlockGapSupport = blockGapSupport !== null;
