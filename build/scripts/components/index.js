@@ -24604,12 +24604,15 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/library/copy.mjs
   var import_primitives12 = __toESM(require_primitives(), 1);
   var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
-  var copy_default = /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives12.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M5 4.5h11a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V5a.5.5 0 0 1 .5-.5ZM3 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5Zm17 3v10.75c0 .69-.56 1.25-1.25 1.25H6v1.5h12.75a2.75 2.75 0 0 0 2.75-2.75V8H20Z" }) });
+  var copy_default = /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives12.Path, { d: "M20.25 6.75V19C20.25 19.6904 19.6904 20.25 19 20.25H6.75", vectorEffect: "non-scaling-stroke" }),
+    /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives12.Path, { d: "M3.75 5C3.75 4.30964 4.30964 3.75 5 3.75H16C16.6904 3.75 17.25 4.30964 17.25 5V16C17.25 16.6904 16.6904 17.25 16 17.25H5C4.30964 17.25 3.75 16.6904 3.75 16V5Z", vectorEffect: "non-scaling-stroke" })
+  ] });
 
   // packages/icons/build-module/library/error.mjs
   var import_primitives13 = __toESM(require_primitives(), 1);
   var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
-  var error_default = /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives13.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12.218 5.377a.25.25 0 0 0-.436 0l-7.29 12.96a.25.25 0 0 0 .218.373h14.58a.25.25 0 0 0 .218-.372l-7.29-12.96Zm-1.743-.735c.669-1.19 2.381-1.19 3.05 0l7.29 12.96a1.75 1.75 0 0 1-1.525 2.608H4.71a1.75 1.75 0 0 1-1.525-2.608l7.29-12.96ZM12.75 17.46h-1.5v-1.5h1.5v1.5Zm-1.5-3h1.5v-5h-1.5v5Z" }) });
+  var error_default = /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives13.Path, { d: "M12 9L12 14M12 15.5V17M11.1284 5.04947L3.83827 18.0097C3.46331 18.6763 3.94502 19.5 4.70985 19.5H19.2902C20.055 19.5 20.5367 18.6763 20.1617 18.0097L12.8716 5.04947C12.4893 4.36982 11.5107 4.36982 11.1284 5.04947Z", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/icons/build-module/library/info.mjs
   var import_primitives14 = __toESM(require_primitives(), 1);
@@ -24677,10 +24680,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/library/settings.mjs
   var import_primitives26 = __toESM(require_primitives(), 1);
   var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
-  var settings_default = /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(import_primitives26.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_primitives26.Path, { d: "m19 7.5h-7.628c-.3089-.87389-1.1423-1.5-2.122-1.5-.97966 0-1.81309.62611-2.12197 1.5h-2.12803v1.5h2.12803c.30888.87389 1.14231 1.5 2.12197 1.5.9797 0 1.8131-.62611 2.122-1.5h7.628z" }),
-    /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_primitives26.Path, { d: "m19 15h-2.128c-.3089-.8739-1.1423-1.5-2.122-1.5s-1.8131.6261-2.122 1.5h-7.628v1.5h7.628c.3089.8739 1.1423 1.5 2.122 1.5s1.8131-.6261 2.122-1.5h2.128z" })
-  ] });
+  var settings_default = /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_primitives26.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_primitives26.Path, { d: "M5 8H19M19 16H5M10.75 8C10.75 8.82843 10.0784 9.5 9.25 9.5C8.42157 9.5 7.75 8.82843 7.75 8C7.75 7.17157 8.42157 6.5 9.25 6.5C10.0784 6.5 10.75 7.17157 10.75 8ZM16.25 16C16.25 16.8284 15.5784 17.5 14.75 17.5C13.9216 17.5 13.25 16.8284 13.25 16C13.25 15.1716 13.9216 14.5 14.75 14.5C15.5784 14.5 16.25 15.1716 16.25 16Z", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/icons/build-module/library/swatch.mjs
   var import_primitives27 = __toESM(require_primitives(), 1);

@@ -6512,7 +6512,7 @@ mark.wp-note {
   pointer-events: none;
 }
 .editor-document-bar__icon-layout.editor-document-bar__icon-layout svg {
-  fill: #949494;
+  color: #949494;
 }
 @media (min-width: 600px) {
   .editor-document-bar__icon-layout.editor-document-bar__icon-layout {

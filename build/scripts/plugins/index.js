@@ -422,7 +422,7 @@ var wp;
   // packages/icons/build-module/library/plugins.mjs
   var import_primitives = __toESM(require_primitives(), 1);
   var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-  var plugins_default = /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives.Path, { d: "M10.5 4v4h3V4H15v4h1.5a1 1 0 011 1v4l-3 4v2a1 1 0 01-1 1h-3a1 1 0 01-1-1v-2l-3-4V9a1 1 0 011-1H9V4h1.5zm.5 12.5v2h2v-2l3-4v-3H8v3l3 4z" }) });
+  var plugins_default = /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_primitives.Path, { d: "M9.75 8.75H7.75C7.47386 8.75 7.25 8.97386 7.25 9.25V12.75L10.25 16.75V18.75C10.25 19.0261 10.4739 19.25 10.75 19.25H13.25C13.5261 19.25 13.75 19.0261 13.75 18.75V16.75L16.75 12.75V9.25C16.75 8.97386 16.5261 8.75 16.25 8.75H14.25M9.75 8.75V4M9.75 8.75H14.25M14.25 8.75V4", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/plugins/build-module/api/index.mjs
   var plugins = {};

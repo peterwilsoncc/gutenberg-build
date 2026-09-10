@@ -1127,7 +1127,7 @@ iframe[name=editor-canvas] {
   height: 24px;
 }
 .block-editor-block-patterns-list__item .block-editor-patterns__pattern-icon-wrapper .block-editor-patterns__pattern-icon {
-  fill: var(--wp-block-synced-color);
+  color: var(--wp-block-synced-color);
 }
 
 .block-editor-patterns__grid-pagination-wrapper .block-editor-patterns__grid-pagination {
@@ -4812,7 +4812,7 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 .block-editor-block-visibility-modal__options-icon--checked {
-  fill: #ddd;
+  color: #ddd;
 }
 .block-editor-block-visibility-modal__sub-options {
   width: 100%;
