@@ -56324,7 +56324,6 @@ var wp;
   var import_i18n40 = __toESM(require_i18n(), 1);
   var import_blocks26 = __toESM(require_blocks(), 1);
   var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge2 } = unlock(import_components28.privateApis);
   function OptionalParentSelectButton({ children, onClick }) {
     if (!onClick) {
       return children;
@@ -56428,7 +56427,7 @@ var wp;
                     /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(Stack, { direction: "column", gap: "xs", children: [
                       /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(TitleElement, { className: "block-editor-block-card__title", children: [
                         /* @__PURE__ */ (0, import_jsx_runtime245.jsx)("span", { className: "block-editor-block-card__name", children: !!name?.length ? name : title }),
-                        !parentClientId && !isChild && !!name?.length && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(WCBadge2, { children: title })
+                        !parentClientId && !isChild && !!name?.length && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(Badge, { children: title })
                       ] }),
                       children
                     ] })
@@ -82208,7 +82207,7 @@ var wp;
 
   // packages/block-editor/build-module/components/link-control/link-preview.mjs
   var import_jsx_runtime408 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge3 } = unlock(import_components163.privateApis);
+  var { Badge: WCBadge2 } = unlock(import_components163.privateApis);
   function LinkPreview({
     value,
     onEditClick,
@@ -82313,7 +82312,7 @@ var wp;
                           gap: 1,
                           children: value.badges.map(
                             (badge, index2) => /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
-                              WCBadge3,
+                              WCBadge2,
                               {
                                 intent: badge.intent,
                                 children: badge.label
@@ -93226,7 +93225,7 @@ var wp;
   var import_components209 = __toESM(require_components(), 1);
   var import_i18n211 = __toESM(require_i18n(), 1);
   var import_jsx_runtime472 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge4 } = unlock(import_components209.privateApis);
+  var { Badge: WCBadge3 } = unlock(import_components209.privateApis);
   function StateControlBadges({
     viewportStates = [],
     pseudoStates = [],
@@ -93273,7 +93272,7 @@ var wp;
         wrap: "wrap",
         children: activeStates.map((state) => {
           const badge = /* @__PURE__ */ (0, import_jsx_runtime472.jsxs)(
-            WCBadge4,
+            WCBadge3,
             {
               className: "block-editor-global-styles-state-control__badge",
               intent: "info",
@@ -109503,7 +109502,7 @@ var wp;
   var import_components275 = __toESM(require_components(), 1);
   var import_dom75 = __toESM(require_dom(), 1);
   var import_jsx_runtime572 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge5 } = unlock(import_components275.privateApis);
+  var { Badge: WCBadge4 } = unlock(import_components275.privateApis);
   function LinkPreview2({ title, url, image, badges }) {
     return /* @__PURE__ */ (0, import_jsx_runtime572.jsxs)(import_components275.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
       /* @__PURE__ */ (0, import_jsx_runtime572.jsx)(import_components275.FlexItem, { className: "link-preview-button__content", children: /* @__PURE__ */ (0, import_jsx_runtime572.jsxs)(import_components275.__experimentalHStack, { alignment: "top", children: [
@@ -109543,7 +109542,7 @@ var wp;
                   className: "link-preview-button__badges",
                   alignment: "left",
                   children: badges.map((badge) => /* @__PURE__ */ (0, import_jsx_runtime572.jsx)(
-                    WCBadge5,
+                    WCBadge4,
                     {
                       intent: badge.intent,
                       children: badge.label

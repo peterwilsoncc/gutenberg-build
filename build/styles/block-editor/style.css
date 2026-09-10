@@ -746,6 +746,7 @@ iframe[name=editor-canvas] {
   align-items: center;
   flex-wrap: wrap;
   gap: 4px 8px;
+  overflow-wrap: anywhere;
 }
 .block-editor-block-card__title.block-editor-block-card__title {
   font-size: 13px;
