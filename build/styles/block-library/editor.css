@@ -1092,6 +1092,11 @@ figure.wp-block-image:not(.wp-block) {
   direction: ltr;
 }
 
+.wp-block-math__learn-more {
+  display: inline-block;
+  margin-top: var(--wpds-dimension-gap-sm, 8px);
+}
+
 .wp-block-media-text__media {
   position: relative;
 }

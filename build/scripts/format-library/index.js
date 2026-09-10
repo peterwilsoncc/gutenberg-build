@@ -8641,25 +8641,37 @@ var wp;
         anchor: popoverAnchor,
         onFocusOutside: () => formRef.current?.reportValidity(),
         className: "block-editor-format-toolbar__math-popover",
-        children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)(
           "form",
           {
             ref: formRef,
-            style: { minWidth: "300px", padding: "4px" },
+            style: { minWidth: "300px", padding: "16px" },
             onSubmit: (event) => event.preventDefault(),
-            children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
-              ValidatedInputControl,
-              {
-                hideLabelFromVision: true,
-                label: (0, import_i18n21.__)("LaTeX math syntax"),
-                value: latex,
-                customValidity: error2 ? { type: "invalid", message: error2 } : void 0,
-                onValueChange: handleLatexChange,
-                placeholder: (0, import_i18n21.__)("e.g., x^2, \\frac{a}{b}"),
-                autoComplete: "off",
-                className: "block-editor-format-toolbar__math-input"
-              }
-            )
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+                ValidatedInputControl,
+                {
+                  label: (0, import_i18n21.__)("LaTeX math syntax"),
+                  value: latex,
+                  customValidity: error2 ? { type: "invalid", message: error2 } : void 0,
+                  onValueChange: handleLatexChange,
+                  placeholder: (0, import_i18n21.__)("e.g., x^2, \\frac{a}{b}, \\sqrt{x}"),
+                  autoComplete: "off",
+                  className: "block-editor-format-toolbar__math-input"
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+                Link,
+                {
+                  openInNewTab: true,
+                  className: "block-editor-format-toolbar__math-learn-more",
+                  href: (0, import_i18n21.__)(
+                    "https://wordpress.org/documentation/article/math-block/"
+                  ),
+                  children: (0, import_i18n21.__)("Learn more about LaTeX syntax")
+                }
+              )
+            ]
           }
         )
       }

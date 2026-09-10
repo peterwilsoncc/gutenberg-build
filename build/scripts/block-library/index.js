@@ -42735,42 +42735,56 @@ ${text}
           focusOnMount: false,
           onFocusOutside: () => formRef.current?.reportValidity(),
           __unstableSlotName: "__unstable-block-tools-after",
-          children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime321.jsxs)(
             "form",
             {
               ref: formRef,
-              style: { padding: "4px", minWidth: "300px" },
+              style: { padding: "16px", minWidth: "300px" },
               onSubmit: (event) => event.preventDefault(),
-              children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
-                ValidatedTextareaControl,
-                {
-                  label: (0, import_i18n102.__)("LaTeX math syntax"),
-                  hideLabelFromVision: true,
-                  value: latex ?? "",
-                  className: "wp-block-math__textarea-control",
-                  customValidity: error2 ? { type: "invalid", message: error2 } : void 0,
-                  onValueChange: (newLatex) => {
-                    if (!latexToMathML) {
-                      setAttributes({ latex: newLatex });
-                      return;
-                    }
-                    let newMathML = "";
-                    try {
-                      newMathML = latexToMathML(newLatex, {
-                        displayMode: true
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+                  ValidatedTextareaControl,
+                  {
+                    label: (0, import_i18n102.__)("LaTeX math syntax"),
+                    value: latex ?? "",
+                    className: "wp-block-math__textarea-control",
+                    customValidity: error2 ? { type: "invalid", message: error2 } : void 0,
+                    onValueChange: (newLatex) => {
+                      if (!latexToMathML) {
+                        setAttributes({ latex: newLatex });
+                        return;
+                      }
+                      let newMathML = "";
+                      try {
+                        newMathML = latexToMathML(newLatex, {
+                          displayMode: true
+                        });
+                        setError(null);
+                      } catch (err) {
+                        setError(err.message);
+                      }
+                      setAttributes({
+                        mathML: newMathML,
+                        latex: newLatex
                       });
-                      setError(null);
-                    } catch (err) {
-                      setError(err.message);
-                    }
-                    setAttributes({
-                      mathML: newMathML,
-                      latex: newLatex
-                    });
-                  },
-                  placeholder: (0, import_i18n102.__)("e.g., x^2, \\frac{a}{b}")
-                }
-              )
+                    },
+                    placeholder: (0, import_i18n102.__)(
+                      "e.g., x^2, \\frac{a}{b}, \\sqrt{x}"
+                    )
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+                  Link,
+                  {
+                    openInNewTab: true,
+                    className: "wp-block-math__learn-more",
+                    href: (0, import_i18n102.__)(
+                      "https://wordpress.org/documentation/article/math-block/"
+                    ),
+                    children: (0, import_i18n102.__)("Learn more about LaTeX syntax")
+                  }
+                )
+              ]
             }
           )
         }
