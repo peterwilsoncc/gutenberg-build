@@ -630,8 +630,8 @@ p + .components-button.is-tertiary {
   }
 }
 .components-checkbox-control__input[type=checkbox][aria-disabled=true], .components-checkbox-control__input[type=checkbox]:disabled {
-  background: #f0f0f0;
-  border-color: #ddd;
+  background: var(--wpds-color-background-interactive-neutral-disabled, #fff);
+  border-color: var(--wpds-color-stroke-interactive-neutral-disabled, #dbdbdb);
   cursor: default;
   opacity: 1;
 }
@@ -684,24 +684,17 @@ p + .components-button.is-tertiary {
 
 svg.components-checkbox-control__checked,
 svg.components-checkbox-control__indeterminate {
-  --checkmark-size: var(--checkbox-input-size);
   color: #fff;
   cursor: var(--wpds-cursor-control, pointer);
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: var(--checkmark-size);
-  height: var(--checkmark-size);
+  width: var(--checkbox-input-size);
+  height: var(--checkbox-input-size);
   -webkit-user-select: none;
           user-select: none;
   pointer-events: none;
-}
-@media (min-width: 600px) {
-  svg.components-checkbox-control__checked,
-  svg.components-checkbox-control__indeterminate {
-    --checkmark-size: calc(var(--checkbox-input-size) + 4px);
-  }
 }
 
 .components-checkbox-control:has(:disabled) svg.components-checkbox-control__checked,

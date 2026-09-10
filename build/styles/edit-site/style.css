@@ -792,8 +792,8 @@
   }
 }
 .dataviews-filters__search-widget-listitem .dataviews-filters__search-widget-listitem-multi-selection[aria-disabled=true], .dataviews-filters__search-widget-listitem .dataviews-filters__search-widget-listitem-multi-selection:disabled {
-  background: #f0f0f0;
-  border-color: #ddd;
+  background: var(--wpds-color-background-interactive-neutral-disabled, #fff);
+  border-color: var(--wpds-color-stroke-interactive-neutral-disabled, #dbdbdb);
   cursor: default;
   opacity: 1;
 }

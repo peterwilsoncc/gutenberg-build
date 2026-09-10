@@ -38105,11 +38105,15 @@ This message will only show in development mode. It won't appear in production. 
           }), showIndeterminateIcon ? /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(icon_default2, {
             icon: reset_default,
             className: "components-checkbox-control__indeterminate",
-            role: "presentation"
+            role: "presentation",
+            size: 16,
+            viewBox: "4 4 16 16"
           }) : null, showCheckedIcon ? /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(icon_default2, {
             icon: check_default,
             className: "components-checkbox-control__checked",
-            role: "presentation"
+            role: "presentation",
+            size: 16,
+            viewBox: "4 4 16 16"
           }) : null]
         }), label && /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("label", {
           className: "components-checkbox-control__label",
