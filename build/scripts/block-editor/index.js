@@ -93713,60 +93713,6 @@ var wp;
     migrateLightBlockWrapper
   );
 
-  // packages/block-editor/build-module/hooks/cross-origin-isolation.mjs
-  function addCrossOriginAttribute(el) {
-    if (!el.hasAttribute("crossorigin")) {
-      el.setAttribute("crossorigin", "anonymous");
-    }
-  }
-  if (window.crossOriginIsolated) {
-    let startObservingBody = function() {
-      if (document.body) {
-        observer.observe(document.body, {
-          childList: true,
-          attributes: true,
-          subtree: true
-        });
-      } else if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", () => {
-          if (document.body) {
-            observer.observe(document.body, {
-              childList: true,
-              attributes: true,
-              subtree: true
-            });
-          }
-        });
-      }
-    };
-    startObservingBody2 = startObservingBody;
-    const observer = new window.MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        [mutation.addedNodes, mutation.target].forEach((value) => {
-          const nodes = value instanceof window.NodeList ? value : [value];
-          nodes.forEach((node) => {
-            const el = node;
-            if (!el.querySelectorAll) {
-              return;
-            }
-            el.querySelectorAll("source,script,video,link").forEach(
-              (v2) => {
-                addCrossOriginAttribute(v2);
-              }
-            );
-            if (["SOURCE", "SCRIPT", "VIDEO", "LINK"].includes(
-              el.nodeName
-            )) {
-              addCrossOriginAttribute(el);
-            }
-          });
-        });
-      });
-    });
-    startObservingBody();
-  }
-  var startObservingBody2;
-
   // packages/block-editor/build-module/hooks/align.mjs
   var import_hooks18 = __toESM(require_hooks(), 1);
   var import_blocks111 = __toESM(require_blocks(), 1);
