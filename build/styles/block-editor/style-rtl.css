@@ -3398,6 +3398,11 @@ iframe[name=editor-canvas] {
   height: 24px;
 }
 
+.block-editor-plain-text {
+  width: 100%;
+  field-sizing: content;
+}
+
 .block-editor-responsive-block-control {
   margin-bottom: 28px;
   border-bottom: 1px solid #ccc;
