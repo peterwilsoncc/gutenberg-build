@@ -42190,7 +42190,10 @@ var wp;
           };
         } else {
           mediaA11yProps = {
-            "aria-label": (0, import_i18n43.__)("Navigate to item")
+            "aria-label": titleField?.getValueFormatted({
+              item,
+              field: titleField
+            }) || (0, import_i18n43.__)("Navigate to item")
           };
         }
       }

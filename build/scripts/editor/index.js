@@ -49757,7 +49757,10 @@ var wp;
           };
         } else {
           mediaA11yProps = {
-            "aria-label": (0, import_i18n98.__)("Navigate to item")
+            "aria-label": titleField2?.getValueFormatted({
+              item,
+              field: titleField2
+            }) || (0, import_i18n98.__)("Navigate to item")
           };
         }
       }

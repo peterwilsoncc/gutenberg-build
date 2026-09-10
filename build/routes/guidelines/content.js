@@ -32370,7 +32370,10 @@ var GridItem = (0, import_element98.forwardRef)(
         };
       } else {
         mediaA11yProps = {
-          "aria-label": (0, import_i18n21.__)("Navigate to item")
+          "aria-label": titleField?.getValueFormatted({
+            item,
+            field: titleField
+          }) || (0, import_i18n21.__)("Navigate to item")
         };
       }
     }
