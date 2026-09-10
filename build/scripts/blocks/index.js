@@ -1533,6 +1533,11 @@ var wp;
       support: ["typography", "textIndent"],
       useEngine: true
     },
+    textShadow: {
+      value: ["typography", "textShadow"],
+      support: ["typography", "textShadow"],
+      useEngine: true
+    },
     writingMode: {
       value: ["typography", "writingMode"],
       support: ["typography", "__experimentalWritingMode"],
@@ -2502,6 +2507,7 @@ var wp;
     "textDecoration",
     "textIndent",
     "textTransform",
+    "textShadow",
     "letterSpacing"
   ];
   function filterElementBlockSupports(blockSupports, name, element) {

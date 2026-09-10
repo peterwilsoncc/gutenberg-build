@@ -3100,6 +3100,7 @@ return array(
 				'__experimentalTextTransform' => true,
 				'__experimentalTextDecoration' => true,
 				'__experimentalWritingMode' => true,
+				'textShadow' => true,
 				'fitText' => true,
 				'__experimentalDefaultControls' => array(
 					'fontSize' => true
@@ -4891,6 +4892,7 @@ return array(
 				'__experimentalLetterSpacing' => true,
 				'__experimentalTextTransform' => true,
 				'__experimentalWritingMode' => true,
+				'textShadow' => true,
 				'fitText' => true,
 				'__experimentalDefaultControls' => array(
 					'fontSize' => true

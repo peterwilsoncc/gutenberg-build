@@ -225,6 +225,9 @@ var VALID_SETTINGS = [
   "typography.textColumns",
   "typography.textDecoration",
   "typography.textIndent",
+  "typography.textShadow",
+  "typography.defaultTextShadowPresets",
+  "typography.textShadowPresets",
   "typography.textTransform",
   "typography.writingMode",
   "viewport.mobile",
@@ -519,6 +522,14 @@ var PRESET_METADATA = [
     cssVarInfix: "font-family",
     classes: [
       { classSuffix: "font-family", propertyName: "font-family" }
+    ]
+  },
+  {
+    path: ["typography", "textShadowPresets"],
+    valueKey: "textShadow",
+    cssVarInfix: "text-shadow",
+    classes: [
+      { classSuffix: "text-shadow", propertyName: "text-shadow" }
     ]
   },
   {

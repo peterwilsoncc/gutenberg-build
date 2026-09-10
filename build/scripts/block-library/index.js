@@ -35273,6 +35273,7 @@ ${url}
         __experimentalTextTransform: true,
         __experimentalTextDecoration: true,
         __experimentalWritingMode: true,
+        textShadow: true,
         fitText: true,
         __experimentalDefaultControls: {
           fontSize: true
@@ -55118,6 +55119,7 @@ ${text}
         __experimentalLetterSpacing: true,
         __experimentalTextTransform: true,
         __experimentalWritingMode: true,
+        textShadow: true,
         fitText: true,
         __experimentalDefaultControls: {
           fontSize: true

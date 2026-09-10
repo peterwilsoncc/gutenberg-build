@@ -4224,7 +4224,8 @@ button.font-library__upload-area {
   overflow: hidden;
 }
 
-.global-styles-ui__shadow-preview-panel {
+.global-styles-ui__shadow-preview-panel,
+.global-styles-ui__text-shadow-preview-panel {
   height: 144px;
   border: #ddd 1px solid;
   border-radius: 2px;
@@ -4234,7 +4235,7 @@ button.font-library__upload-area {
   background-size: 16px 16px;
 }
 
-.global-styles-ui__shadow-preview-panel .global-styles-ui__shadow-preview-block {
+.global-styles-ui__shadow-preview-block {
   border: #ddd 1px solid;
   border-radius: 2px;
   background-color: #fff;
@@ -4242,20 +4243,42 @@ button.font-library__upload-area {
   height: 60px;
 }
 
-.global-styles-ui__shadow-editor__dropdown-content {
+.global-styles-ui__text-shadow-preview-panel {
+  margin-block: -8px 16px;
+}
+
+.global-styles-ui__text-shadow-preview-text {
+  font-size: 24px;
+}
+
+.global-styles-ui__text-shadow-editor__header {
+  margin-block-end: 8px;
+}
+
+.global-styles-ui__text-shadow-editor__inputs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.global-styles-ui__shadow-editor__dropdown-content,
+.global-styles-ui__text-shadow-editor__dropdown-content {
   width: 280px;
 }
 
-.global-styles-ui__shadow-editor-panel {
+.global-styles-ui__shadow-editor-panel,
+.global-styles-ui__text-shadow-editor-panel {
   margin-bottom: 4px;
 }
 
-.global-styles-ui__shadow-editor__dropdown {
+.global-styles-ui__shadow-editor__dropdown,
+.global-styles-ui__text-shadow-editor__dropdown {
   width: 100%;
   position: relative;
 }
 
-.global-styles-ui__shadow-editor__dropdown-toggle {
+.global-styles-ui__shadow-editor__dropdown-toggle,
+.global-styles-ui__text-shadow-editor__dropdown-toggle {
   width: 100%;
   height: auto;
   padding-top: 8px;
@@ -4264,24 +4287,31 @@ button.font-library__upload-area {
   border-radius: inherit;
 }
 
-.global-styles-ui__shadow-editor__dropdown-toggle.is-open {
+.global-styles-ui__shadow-editor__dropdown-toggle.is-open,
+.global-styles-ui__text-shadow-editor__dropdown-toggle.is-open {
   background: #f0f0f0;
   color: var(--wp-admin-theme-color);
 }
 
-.global-styles-ui__shadow-editor__remove-button {
+.global-styles-ui__shadow-editor__remove-button,
+.global-styles-ui__text-shadow-editor__remove-button {
   position: absolute;
   left: 8px;
   top: 8px;
   opacity: 0;
 }
 
-.global-styles-ui__shadow-editor__dropdown-toggle:hover + .global-styles-ui__shadow-editor__remove-button, .global-styles-ui__shadow-editor__remove-button:focus, .global-styles-ui__shadow-editor__remove-button:hover {
+.global-styles-ui__shadow-editor__dropdown-toggle:hover + .global-styles-ui__shadow-editor__remove-button, .global-styles-ui__text-shadow-editor__dropdown-toggle:hover + .global-styles-ui__shadow-editor__remove-button, .global-styles-ui__shadow-editor__remove-button:focus, .global-styles-ui__shadow-editor__remove-button:hover,
+.global-styles-ui__shadow-editor__dropdown-toggle:hover + .global-styles-ui__text-shadow-editor__remove-button,
+.global-styles-ui__text-shadow-editor__dropdown-toggle:hover + .global-styles-ui__text-shadow-editor__remove-button,
+.global-styles-ui__text-shadow-editor__remove-button:focus,
+.global-styles-ui__text-shadow-editor__remove-button:hover {
   opacity: 1;
 }
 
 @media (hover: none) {
-  .global-styles-ui__shadow-editor__remove-button {
+  .global-styles-ui__shadow-editor__remove-button,
+  .global-styles-ui__text-shadow-editor__remove-button {
     opacity: 1;
   }
 }

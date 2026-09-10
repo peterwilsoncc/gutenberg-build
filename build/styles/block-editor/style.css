@@ -1854,6 +1854,72 @@ iframe[name=editor-canvas] {
   }
 }
 
+.block-editor-global-styles__text-shadow {
+  width: 260px;
+  padding: 8px;
+}
+
+.block-editor-global-styles__text-shadow-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  border: #ddd 1px solid;
+  border-radius: 2px;
+  font-size: 24px;
+  margin-bottom: 16px;
+  /*rtl:begin:ignore*/
+  background-image: repeating-linear-gradient(45deg, #e0e0e0 25%, transparent 25%, transparent 75%, #e0e0e0 75%, #e0e0e0), repeating-linear-gradient(45deg, #e0e0e0 25%, transparent 25%, transparent 75%, #e0e0e0 75%, #e0e0e0);
+  background-position: 0 0, 8px 8px;
+  /*rtl:end:ignore*/
+  background-size: 16px 16px;
+}
+
+.block-editor-global-styles__text-shadow-list-item {
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+.block-editor-global-styles__text-shadow-list-item:not(.is-active) svg {
+  opacity: 0;
+}
+
+.block-editor-global-styles__text-shadow-dropdown {
+  display: block;
+  padding: 0;
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+}
+
+.block-editor-global-styles__text-shadow-dropdown-toggle {
+  width: 100%;
+  padding: 8px;
+}
+.block-editor-global-styles__text-shadow-dropdown-toggle.is-open {
+  background-color: #f0f0f0;
+}
+
+.block-editor-global-styles__text-shadow-remove-button {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  opacity: 0;
+}
+@media not (prefers-reduced-motion) {
+  .block-editor-global-styles__text-shadow-remove-button {
+    transition: opacity 0.1s ease-in-out;
+  }
+}
+.block-editor-global-styles__text-shadow-dropdown:hover .block-editor-global-styles__text-shadow-remove-button, .block-editor-global-styles__text-shadow-remove-button:focus, .block-editor-global-styles__text-shadow-remove-button:hover {
+  opacity: 1;
+}
+@media (hover: none) {
+  .block-editor-global-styles__text-shadow-remove-button {
+    opacity: 1;
+  }
+}
+
 .is-inherited-from-global-styles .components-base-control__label,
 .is-inherited-from-global-styles .components-input-control__label {
   text-decoration-line: underline;
