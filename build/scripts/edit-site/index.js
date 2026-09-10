@@ -189,7 +189,7 @@ var wp;
             },
             [subscribe3, value, getSnapshot]
           );
-          useEffect83(
+          useEffect84(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe3(function() {
@@ -215,7 +215,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React155 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState97 = React155.useState, useEffect83 = React155.useEffect, useLayoutEffect13 = React155.useLayoutEffect, useDebugValue2 = React155.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React155 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState97 = React155.useState, useEffect84 = React155.useEffect, useLayoutEffect13 = React155.useLayoutEffect, useDebugValue2 = React155.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React155.useSyncExternalStore ? React155.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -243,7 +243,7 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React155 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore4 = shim.useSyncExternalStore, useRef117 = React155.useRef, useEffect83 = React155.useEffect, useMemo120 = React155.useMemo, useDebugValue2 = React155.useDebugValue;
+        var React155 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore4 = shim.useSyncExternalStore, useRef117 = React155.useRef, useEffect84 = React155.useEffect, useMemo120 = React155.useMemo, useDebugValue2 = React155.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe3, getSnapshot, getServerSnapshot, selector2, isEqual2) {
           var instRef = useRef117(null);
           if (null === instRef.current) {
@@ -286,7 +286,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector2, isEqual2]
           );
           var value = useSyncExternalStore4(subscribe3, instRef[0], instRef[1]);
-          useEffect83(
+          useEffect84(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -35391,8 +35391,8 @@ var wp;
                 transition: "canvas-mode-edit-transition"
               });
             }
-            openGeneralSidebar2("edit-site/global-styles");
             setStylesPath("/revisions");
+            openGeneralSidebar2("edit-site/global-styles");
           }
         }
       ];
@@ -39114,7 +39114,9 @@ var wp;
     }, [location, history, previousCanvas]);
     return goBack;
   }
-  function useSpecificEditorSettings() {
+  function useSpecificEditorSettings({
+    defaultRenderingMode = "post-only"
+  } = {}) {
     const { query } = useLocation12();
     const { canvas = "view" } = query;
     const onNavigateToEntityRecord = useNavigateToEntityRecord();
@@ -39153,13 +39155,15 @@ var wp;
         supportsTemplateMode: true,
         onNavigateToEntityRecord,
         onNavigateToPreviousEntityRecord,
-        isPreviewMode: canvas === "view"
+        isPreviewMode: canvas === "view",
+        defaultRenderingMode
       };
     }, [
       settings2,
       globalStyles,
       globalSettings,
       canvas,
+      defaultRenderingMode,
       currentPostIsTrashed,
       onNavigateToEntityRecord,
       onNavigateToPreviousEntityRecord
@@ -39709,7 +39713,12 @@ var wp;
     }
     return (0, import_url9.addQueryArgs)(path, { canvas: void 0, revision: void 0 });
   }
-  function EditSiteEditor({ isHomeRoute = false }) {
+  function EditSiteEditor({
+    isHomeRoute = false,
+    // Routes that stand for the whole site pass 'template-locked', so the
+    // canvas shows the template around whatever it is rendering.
+    defaultRenderingMode = "post-only"
+  }) {
     const location = useLocation17();
     const history = useHistory11();
     const { canvas = "view" } = location.query;
@@ -39738,9 +39747,19 @@ var wp;
       CanvasLoader,
       "edit-site-editor__loading-progress"
     );
-    const editorSettings = useSpecificEditorSettings();
+    const editorSettings = useSpecificEditorSettings({
+      defaultRenderingMode
+    });
     const { resetZoomLevel } = unlock((0, import_data33.useDispatch)(import_block_editor5.store));
-    const { setCurrentRevisionId } = unlock((0, import_data33.useDispatch)(import_editor17.store));
+    const { setCurrentRevisionId, resetStylesNavigation } = unlock(
+      (0, import_data33.useDispatch)(import_editor17.store)
+    );
+    const isStylesEditing = isEditMode && location.name === "styles";
+    (0, import_element107.useEffect)(() => {
+      if (!isStylesEditing) {
+        resetStylesNavigation();
+      }
+    }, [isStylesEditing, resetStylesNavigation]);
     const { createSuccessNotice } = (0, import_data33.useDispatch)(import_notices2.store);
     const onActionPerformed = (0, import_element107.useCallback)(
       (actionId, items) => {
@@ -39871,7 +39890,7 @@ var wp;
       },
       preview({ siteData }) {
         const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(EditSiteEditor, { isHomeRoute: true }) : void 0;
+        return isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(EditSiteEditor, { isHomeRoute: true, defaultRenderingMode: "template-locked" }) : void 0;
       },
       mobileSidebar({ siteData }) {
         if (!isThemeDataLoaded(siteData)) {
@@ -59453,7 +59472,7 @@ If there's a particular need for this, please submit a feature request at https:
     areas: {
       sidebar: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(SidebarNavigationScreenIdentity, {}),
       content: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(SidebarIdentity, {}),
-      preview: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(EditSiteEditor, {}),
+      preview: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(EditSiteEditor, { defaultRenderingMode: "template-locked" }),
       mobileContent: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(SidebarIdentity, {})
     },
     widths: {
@@ -71604,8 +71623,8 @@ If there's a particular need for this, please submit a feature request at https:
       ]);
     }, [path, history, openGeneralSidebar2, setPreference]);
     const openRevisions = (0, import_element224.useCallback)(async () => {
-      await openGlobalStyles();
       setStylesPath("/revisions");
+      await openGlobalStyles();
     }, [openGlobalStyles, setStylesPath]);
     const shouldShowGlobalStylesFooter = !!revisionsCount && !isLoadingRevisions;
     return /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(import_jsx_runtime363.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
@@ -71757,7 +71776,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (query.preview === "stylebook") {
       return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(StyleBookPreviewArea, { siteData });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(EditSiteEditor, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(EditSiteEditor, { defaultRenderingMode: "template-locked" });
   }
   var stylesRoute = {
     name: "styles",

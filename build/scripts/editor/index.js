@@ -119750,11 +119750,17 @@ ${content}
     const isRevisionsOpened = stylesPath2.startsWith("/revisions") && !showStylebook2;
     const isRevisionsStyleBookOpened = stylesPath2.startsWith("/revisions") && showStylebook2;
     const previousActiveArea = (0, import_compose101.usePrevious)(activeComplementaryArea);
+    const hasRequestedPath = stylesPath2 !== "/" && !shouldResetNavigation;
     (0, import_element411.useEffect)(() => {
-      if (activeComplementaryArea === "edit-site/global-styles" && previousActiveArea !== "edit-site/global-styles") {
+      if (activeComplementaryArea === "edit-site/global-styles" && previousActiveArea !== "edit-site/global-styles" && !hasRequestedPath) {
         resetStylesNavigation2();
       }
-    }, [activeComplementaryArea, previousActiveArea, resetStylesNavigation2]);
+    }, [
+      activeComplementaryArea,
+      previousActiveArea,
+      hasRequestedPath,
+      resetStylesNavigation2
+    ]);
     (0, import_element411.useEffect)(() => {
       if (shouldResetNavigation) {
         resetStylesNavigation2();
