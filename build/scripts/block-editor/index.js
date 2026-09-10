@@ -62559,7 +62559,7 @@ var wp;
     const selectEditorBlock = (0, import_element188.useCallback)(
       (event) => {
         const isKeyboardActivation = event?.detail === 0;
-        selectBlock2(event, clientId, isKeyboardActivation ? -1 : null);
+        selectBlock2(event, clientId, isKeyboardActivation ? 0 : null);
         event.preventDefault();
       },
       [clientId, selectBlock2]
