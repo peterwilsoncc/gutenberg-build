@@ -57170,6 +57170,7 @@ ${text}
   // packages/block-library/build-module/playlist/edit.mjs
   var import_jsx_runtime387 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES6 = ["audio"];
+  var EMPTY_ARRAY6 = [];
   var AUDIO_FILE_EXTENSION = /\.(aac|aif|aiff|flac|m4a|m4b|mp3|oga|ogg|opus|wav|weba)$/i;
   var DEFAULT_WAVEFORM_STYLE = "bars";
   var FILE_LIST_OBJECT_NAME = "[object FileList]";
@@ -57252,7 +57253,7 @@ ${text}
       (select10) => {
         const { getBlock: _getBlock } = select10(import_block_editor173.store);
         return {
-          innerBlockTracks: _getBlock(clientId)?.innerBlocks ?? []
+          innerBlockTracks: _getBlock(clientId)?.innerBlocks ?? EMPTY_ARRAY6
         };
       },
       [clientId]
@@ -62982,7 +62983,7 @@ ${text}
   // packages/block-library/build-module/post-terms/use-post-terms.mjs
   var import_core_data68 = __toESM(require_core_data(), 1);
   var import_data113 = __toESM(require_data(), 1);
-  var EMPTY_ARRAY6 = [];
+  var EMPTY_ARRAY7 = [];
   function usePostTerms({ postId, term }) {
     const { slug } = term;
     return (0, import_data113.useSelect)(
@@ -62990,7 +62991,7 @@ ${text}
         const visible = term?.visibility?.publicly_queryable;
         if (!visible || !postId) {
           return {
-            postTerms: EMPTY_ARRAY6,
+            postTerms: EMPTY_ARRAY7,
             isLoading: false,
             hasPostTerms: false
           };
@@ -65638,7 +65639,7 @@ ${text}
   var import_element131 = __toESM(require_element(), 1);
   var import_compose51 = __toESM(require_compose(), 1);
   var import_jsx_runtime419 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY7 = [];
+  var EMPTY_ARRAY8 = [];
   var BASE_QUERY = {
     order: "asc",
     _fields: "id,title",
@@ -65646,13 +65647,13 @@ ${text}
   };
   function ParentControl({ parents, postType, onChange }) {
     const [search, setSearch] = (0, import_element131.useState)("");
-    const [value, setValue] = (0, import_element131.useState)(EMPTY_ARRAY7);
-    const [suggestions, setSuggestions] = (0, import_element131.useState)(EMPTY_ARRAY7);
+    const [value, setValue] = (0, import_element131.useState)(EMPTY_ARRAY8);
+    const [suggestions, setSuggestions] = (0, import_element131.useState)(EMPTY_ARRAY8);
     const debouncedSearch = (0, import_compose51.useDebounce)(setSearch, 250);
     const { searchResults, searchHasResolved } = (0, import_data119.useSelect)(
       (select10) => {
         if (!search) {
-          return { searchResults: EMPTY_ARRAY7, searchHasResolved: true };
+          return { searchResults: EMPTY_ARRAY8, searchHasResolved: true };
         }
         const { getEntityRecords, hasFinishedResolution } = select10(import_core_data74.store);
         const selectorArgs = [
@@ -65679,7 +65680,7 @@ ${text}
     const currentParents = (0, import_data119.useSelect)(
       (select10) => {
         if (!parents?.length) {
-          return EMPTY_ARRAY7;
+          return EMPTY_ARRAY8;
         }
         const { getEntityRecords } = select10(import_core_data74.store);
         return getEntityRecords("postType", postType, {
@@ -65692,7 +65693,7 @@ ${text}
     );
     (0, import_element131.useEffect)(() => {
       if (!parents?.length) {
-        setValue(EMPTY_ARRAY7);
+        setValue(EMPTY_ARRAY8);
       }
       if (!currentParents?.length) {
         return;
@@ -65714,7 +65715,7 @@ ${text}
     }, [parents, currentParents]);
     const entitiesInfo = (0, import_element131.useMemo)(() => {
       if (!searchResults?.length) {
-        return EMPTY_ARRAY7;
+        return EMPTY_ARRAY8;
       }
       return getEntitiesInfo(
         mapToIHasNameAndId(searchResults, "title.rendered")
@@ -65742,7 +65743,7 @@ ${text}
           return accumulator;
         }, /* @__PURE__ */ new Set())
       );
-      setSuggestions(EMPTY_ARRAY7);
+      setSuggestions(EMPTY_ARRAY8);
       onChange({ parents: ids });
     };
     return /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
@@ -65768,7 +65769,7 @@ ${text}
   var import_html_entities12 = __toESM(require_html_entities(), 1);
   var import_i18n192 = __toESM(require_i18n(), 1);
   var import_jsx_runtime420 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY8 = [];
+  var EMPTY_ARRAY9 = [];
   var BASE_QUERY2 = {
     order: "asc",
     _fields: "id,name",
@@ -65847,13 +65848,13 @@ ${text}
     label
   }) {
     const [search, setSearch] = (0, import_element132.useState)("");
-    const [value, setValue] = (0, import_element132.useState)(EMPTY_ARRAY8);
-    const [suggestions, setSuggestions] = (0, import_element132.useState)(EMPTY_ARRAY8);
+    const [value, setValue] = (0, import_element132.useState)(EMPTY_ARRAY9);
+    const [suggestions, setSuggestions] = (0, import_element132.useState)(EMPTY_ARRAY9);
     const debouncedSearch = (0, import_compose52.useDebounce)(setSearch, 250);
     const { searchResults, searchHasResolved } = (0, import_data120.useSelect)(
       (select10) => {
         if (!search) {
-          return { searchResults: EMPTY_ARRAY8, searchHasResolved: true };
+          return { searchResults: EMPTY_ARRAY9, searchHasResolved: true };
         }
         const { getEntityRecords, hasFinishedResolution } = select10(import_core_data75.store);
         const combinedExclude = [...termIds, ...oppositeTermIds];
@@ -65881,7 +65882,7 @@ ${text}
     const existingTerms = (0, import_data120.useSelect)(
       (select10) => {
         if (!termIds?.length) {
-          return EMPTY_ARRAY8;
+          return EMPTY_ARRAY9;
         }
         const { getEntityRecords } = select10(import_core_data75.store);
         return getEntityRecords("taxonomy", taxonomy.slug, {
@@ -65894,7 +65895,7 @@ ${text}
     );
     (0, import_element132.useEffect)(() => {
       if (!termIds?.length) {
-        setValue(EMPTY_ARRAY8);
+        setValue(EMPTY_ARRAY9);
       }
       if (!existingTerms?.length) {
         return;
@@ -65925,7 +65926,7 @@ ${text}
           newTermIds.add(termId);
         }
       }
-      setSuggestions(EMPTY_ARRAY8);
+      setSuggestions(EMPTY_ARRAY9);
       onChange(Array.from(newTermIds));
     };
     return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)("div", { className: "block-library-query-inspector__taxonomy-control", children: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
@@ -78067,7 +78068,7 @@ ${text}
 
   // packages/block-library/build-module/tab-list/edit.mjs
   var import_jsx_runtime533 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY9 = [];
+  var EMPTY_ARRAY10 = [];
   function Edit18({
     attributes: attributes2,
     clientId,
@@ -78089,7 +78090,7 @@ ${text}
         );
         return {
           tabsClientId: rootClientId,
-          tabPanels: tabPanelsBlock?.innerBlocks ?? EMPTY_ARRAY9,
+          tabPanels: tabPanelsBlock?.innerBlocks ?? EMPTY_ARRAY10,
           editorActiveTabIndex: tabsAttributes?.editorActiveTabIndex,
           activeTabIndex: tabsAttributes?.activeTabIndex ?? 0
         };
@@ -78377,7 +78378,7 @@ ${text}
   var import_block_editor260 = __toESM(require_block_editor(), 1);
   var import_data150 = __toESM(require_data(), 1);
   var import_element154 = __toESM(require_element(), 1);
-  var EMPTY_ARRAY10 = [];
+  var EMPTY_ARRAY11 = [];
   function useTabListItemsSync(tabsClientId) {
     const { tabPanels, tabListClientId } = (0, import_data150.useSelect)(
       (select10) => {
@@ -78390,7 +78391,7 @@ ${text}
           (block) => block.name === "core/tab-list"
         );
         return {
-          tabPanels: tabPanelsBlock?.innerBlocks ?? EMPTY_ARRAY10,
+          tabPanels: tabPanelsBlock?.innerBlocks ?? EMPTY_ARRAY11,
           tabListClientId: tabList?.clientId ?? null
         };
       },
@@ -81020,7 +81021,7 @@ ${text}
   var import_compose65 = __toESM(require_compose(), 1);
   var import_html_entities17 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime556 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY11 = [];
+  var EMPTY_ARRAY12 = [];
   var BASE_QUERY3 = {
     order: "asc",
     _fields: "id,name",
@@ -81033,13 +81034,13 @@ ${text}
     ...props
   }) {
     const [search, setSearch] = (0, import_element163.useState)("");
-    const [value, setValue] = (0, import_element163.useState)(EMPTY_ARRAY11);
-    const [suggestions, setSuggestions] = (0, import_element163.useState)(EMPTY_ARRAY11);
+    const [value, setValue] = (0, import_element163.useState)(EMPTY_ARRAY12);
+    const [suggestions, setSuggestions] = (0, import_element163.useState)(EMPTY_ARRAY12);
     const debouncedSearch = (0, import_compose65.useDebounce)(setSearch, 250);
     const { searchResults, searchHasResolved } = (0, import_data165.useSelect)(
       (select10) => {
         if (!search) {
-          return { searchResults: EMPTY_ARRAY11, searchHasResolved: true };
+          return { searchResults: EMPTY_ARRAY12, searchHasResolved: true };
         }
         const { getEntityRecords, hasFinishedResolution } = select10(import_core_data99.store);
         const selectorArgs = [
@@ -81066,7 +81067,7 @@ ${text}
     const currentTerms = (0, import_data165.useSelect)(
       (select10) => {
         if (!include?.length) {
-          return EMPTY_ARRAY11;
+          return EMPTY_ARRAY12;
         }
         const { getEntityRecords } = select10(import_core_data99.store);
         return getEntityRecords("taxonomy", taxonomy, {
@@ -81079,7 +81080,7 @@ ${text}
     );
     (0, import_element163.useEffect)(() => {
       if (!include?.length) {
-        setValue(EMPTY_ARRAY11);
+        setValue(EMPTY_ARRAY12);
       }
       if (!currentTerms?.length) {
         return;
@@ -81098,7 +81099,7 @@ ${text}
     }, [include, currentTerms]);
     const entitiesInfo = (0, import_element163.useMemo)(() => {
       if (!searchResults?.length) {
-        return { names: EMPTY_ARRAY11, mapByName: {} };
+        return { names: EMPTY_ARRAY12, mapByName: {} };
       }
       const names = [];
       const mapByName = {};
@@ -81126,7 +81127,7 @@ ${text}
           return accumulator;
         }, /* @__PURE__ */ new Set())
       );
-      setSuggestions(EMPTY_ARRAY11);
+      setSuggestions(EMPTY_ARRAY12);
       onChange(ids);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(
