@@ -15754,15 +15754,14 @@ ${content}
 
   // packages/edit-widgets/build-module/components/more-menu/tools-more-menu-group.mjs
   var import_components15 = __toESM(require_components(), 1);
-  var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
   var { Fill: ToolsMoreMenuGroup, Slot: Slot4 } = (0, import_components15.createSlotFill)(
     "EditWidgetsToolsMoreMenuGroup"
   );
-  ToolsMoreMenuGroup.Slot = ({ fillProps }) => /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(Slot4, { fillProps, children: (fills) => fills.length > 0 && fills });
+  ToolsMoreMenuGroup.Slot = Slot4;
   var tools_more_menu_group_default = ToolsMoreMenuGroup;
 
   // packages/edit-widgets/build-module/components/more-menu/index.mjs
-  var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
   function MoreMenu() {
     const [
       isKeyboardShortcutsModalActive,
@@ -15774,8 +15773,8 @@ ${content}
       toggleKeyboardShortcutsModal
     );
     const isLargeViewport = (0, import_compose9.useViewportMatch)("medium");
-    return /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(import_jsx_runtime80.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(import_jsx_runtime79.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
         import_components16.DropdownMenu,
         {
           icon: more_vertical_default,
@@ -15788,8 +15787,8 @@ ${content}
             tooltipPosition: "bottom",
             size: "compact"
           },
-          children: (onClose) => /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(import_jsx_runtime80.Fragment, { children: [
-            isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components16.MenuGroup, { label: (0, import_i18n20._x)("View", "noun"), children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+          children: (onClose) => /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(import_jsx_runtime79.Fragment, { children: [
+            isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(import_components16.MenuGroup, { label: (0, import_i18n20._x)("View", "noun"), children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
               import_preferences5.PreferenceToggleMenuItem,
               {
                 scope: "core/edit-widgets",
@@ -15806,8 +15805,8 @@ ${content}
                 )
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(import_components16.MenuGroup, { label: (0, import_i18n20.__)("Tools"), children: [
-              /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(import_components16.MenuGroup, { label: (0, import_i18n20.__)("Tools"), children: [
+              /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
                 import_components16.MenuItem,
                 {
                   onClick: () => {
@@ -15817,7 +15816,7 @@ ${content}
                   children: (0, import_i18n20.__)("Keyboard shortcuts")
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
                 import_preferences5.PreferenceToggleMenuItem,
                 {
                   scope: "core/edit-widgets",
@@ -15825,7 +15824,7 @@ ${content}
                   label: (0, import_i18n20.__)("Welcome Guide")
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(
                 import_components16.MenuItem,
                 {
                   role: "menuitem",
@@ -15837,23 +15836,23 @@ ${content}
                   rel: "noopener",
                   children: [
                     (0, import_i18n20.__)("Help"),
-                    /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(VisuallyHidden, {
-                      render: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("span", {}),
+                    /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(VisuallyHidden, {
+                      render: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", {}),
                       /* translators: accessibility text */
                       children: (0, import_i18n20.__)("(opens in a new tab)")
                     })
                   ]
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
                 tools_more_menu_group_default.Slot,
                 {
                   fillProps: { onClose }
                 }
               )
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(import_components16.MenuGroup, { label: (0, import_i18n20.__)("Preferences"), children: [
-              /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(import_components16.MenuGroup, { label: (0, import_i18n20.__)("Preferences"), children: [
+              /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
                 import_preferences5.PreferenceToggleMenuItem,
                 {
                   scope: "core/edit-widgets",
@@ -15872,7 +15871,7 @@ ${content}
                   )
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
                 import_preferences5.PreferenceToggleMenuItem,
                 {
                   scope: "core/edit-widgets",
@@ -15883,7 +15882,7 @@ ${content}
                   label: (0, import_i18n20.__)("Use theme styles")
                 }
               ),
-              isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+              isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
                 import_preferences5.PreferenceToggleMenuItem,
                 {
                   scope: "core/edit-widgets",
@@ -15904,7 +15903,7 @@ ${content}
           ] })
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
         KeyboardShortcutHelpModal,
         {
           isModalActive: isKeyboardShortcutsModalActive,
@@ -15915,7 +15914,7 @@ ${content}
   }
 
   // packages/edit-widgets/build-module/components/header/index.mjs
-  var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
   function Header3() {
     const isLargeViewport = (0, import_compose10.useViewportMatch)("medium");
     const blockToolbarRef = (0, import_element62.useRef)();
@@ -15928,21 +15927,21 @@ ${content}
       }),
       []
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_jsx_runtime81.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)("div", { className: "edit-widgets-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)("div", { className: "edit-widgets-header__navigable-toolbar-wrapper", children: [
-        isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("h1", { className: "edit-widgets-header__title", children: (0, import_i18n21.__)("Widgets") }),
-        !isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_jsx_runtime80.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)("div", { className: "edit-widgets-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)("div", { className: "edit-widgets-header__navigable-toolbar-wrapper", children: [
+        isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("h1", { className: "edit-widgets-header__title", children: (0, import_i18n21.__)("Widgets") }),
+        !isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
           VisuallyHidden,
           {
             className: "edit-widgets-header__title",
-            render: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("h1", {}),
+            render: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("h1", {}),
             children: (0, import_i18n21.__)("Widgets")
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(document_tools_default, {}),
-        hasFixedToolbar && isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(import_jsx_runtime81.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("div", { className: "selected-block-tools-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_block_editor12.BlockToolbar, { hideDragHandle: true }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(document_tools_default, {}),
+        hasFixedToolbar && isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(import_jsx_runtime80.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("div", { className: "selected-block-tools-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_block_editor12.BlockToolbar, { hideDragHandle: true }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
             import_components17.Popover.Slot,
             {
               ref: blockToolbarRef,
@@ -15951,10 +15950,10 @@ ${content}
           )
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)("div", { className: "edit-widgets-header__actions", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(pinned_items_default.Slot, { scope: "core/edit-widgets" }),
-        /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(save_button_default, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(MoreMenu, {})
+      /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)("div", { className: "edit-widgets-header__actions", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(pinned_items_default.Slot, { scope: "core/edit-widgets" }),
+        /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(save_button_default, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(MoreMenu, {})
       ] })
     ] }) });
   }
@@ -15970,10 +15969,10 @@ ${content}
   // packages/edit-widgets/build-module/components/notices/index.mjs
   var import_notices2 = __toESM(require_notices(), 1);
   var import_theme = __toESM(require_theme(), 1);
-  var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
   function Notices() {
-    return /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(import_theme.ThemeProvider, { cornerRadius: "none", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(import_theme.ThemeProvider, { cornerRadius: "none", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
         import_notices2.InlineNotices,
         {
           className: "edit-widgets-notices",
@@ -15981,13 +15980,13 @@ ${content}
           dismissibleNoticesClassName: "edit-widgets-notices__dismissible"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_notices2.SnackbarNotices, { className: "edit-widgets-notices__snackbar" })
+      /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_notices2.SnackbarNotices, { className: "edit-widgets-notices__snackbar" })
     ] });
   }
   var notices_default = Notices;
 
   // packages/edit-widgets/build-module/components/widget-areas-block-editor-content/index.mjs
-  var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
   function WidgetAreasBlockEditorContent({
     blockEditorSettings
   }) {
@@ -16002,19 +16001,19 @@ ${content}
     const styles = (0, import_element63.useMemo)(() => {
       return hasThemeStyles ? blockEditorSettings.styles : [];
     }, [blockEditorSettings, hasThemeStyles]);
-    return /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)("div", { className: "edit-widgets-block-editor", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(notices_default, {}),
-      !isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_block_editor13.BlockToolbar, { hideDragHandle: true }),
-      /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)(import_block_editor13.BlockTools, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(keyboard_shortcuts_default, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)("div", { className: "edit-widgets-block-editor", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(notices_default, {}),
+      !isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_block_editor13.BlockToolbar, { hideDragHandle: true }),
+      /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(import_block_editor13.BlockTools, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(keyboard_shortcuts_default, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
           import_block_editor13.__unstableEditorStyles,
           {
             styles,
             scope: ":where(.editor-styles-wrapper)"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_block_editor13.BlockSelectionClearer, { children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_block_editor13.WritingFlow, { children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_block_editor13.BlockList, { className: "edit-widgets-main-block-list" }) }) })
+        /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_block_editor13.BlockSelectionClearer, { children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_block_editor13.WritingFlow, { children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_block_editor13.BlockList, { className: "edit-widgets-main-block-list" }) }) })
       ] })
     ] });
   }
@@ -16073,7 +16072,7 @@ ${content}
   var use_widget_library_insertion_point_default = useWidgetLibraryInsertionPoint;
 
   // packages/edit-widgets/build-module/components/secondary-sidebar/inserter-sidebar.mjs
-  var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
   function InserterSidebar() {
     const isMobileViewport = (0, import_compose12.useViewportMatch)("medium", "<");
     const { rootClientId, insertionIndex } = use_widget_library_insertion_point_default();
@@ -16082,7 +16081,7 @@ ${content}
       return setIsInserterOpened2(false);
     }, [setIsInserterOpened2]);
     const libraryRef = (0, import_element64.useRef)();
-    return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)("div", { className: "edit-widgets-layout__inserter-panel", children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)("div", { className: "edit-widgets-layout__inserter-panel-content", children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("div", { className: "edit-widgets-layout__inserter-panel", children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("div", { className: "edit-widgets-layout__inserter-panel-content", children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
       import_block_editor15.__experimentalLibrary,
       {
         showInserterHelpPanel: true,
@@ -16102,7 +16101,7 @@ ${content}
   var import_element65 = __toESM(require_element(), 1);
   var import_i18n22 = __toESM(require_i18n(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
-  var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
   function ListViewSidebar() {
     const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data26.useDispatch)(store2);
     const { getListViewToggleRef: getListViewToggleRef2 } = unlock2((0, import_data26.useSelect)(store2));
@@ -16122,15 +16121,15 @@ ${content}
     );
     return (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)(
         "div",
         {
           className: "edit-widgets-editor__list-view-panel",
           onKeyDown: closeOnEscape,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)("div", { className: "edit-widgets-editor__list-view-panel-header", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime85.jsx)("strong", { children: (0, import_i18n22.__)("List View") }),
-              /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)("div", { className: "edit-widgets-editor__list-view-panel-header", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime84.jsx)("strong", { children: (0, import_i18n22.__)("List View") }),
+              /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
                 import_components18.Button,
                 {
                   icon: close_small_default,
@@ -16140,12 +16139,12 @@ ${content}
                 }
               )
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
               "div",
               {
                 className: "edit-widgets-editor__list-view-panel-content",
                 ref: setDropZoneElement,
-                children: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(import_block_editor16.__experimentalListView, { dropZoneElement, focusOnMount: true })
+                children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_block_editor16.__experimentalListView, { dropZoneElement, focusOnMount: true })
               }
             )
           ]
@@ -16155,7 +16154,7 @@ ${content}
   }
 
   // packages/edit-widgets/build-module/components/secondary-sidebar/index.mjs
-  var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
   function SecondarySidebar() {
     const { isInserterOpen, isListViewOpen } = (0, import_data27.useSelect)((select) => {
       const { isInserterOpened: isInserterOpened2, isListViewOpened: isListViewOpened2 } = select(store2);
@@ -16165,16 +16164,16 @@ ${content}
       };
     }, []);
     if (isInserterOpen) {
-      return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(InserterSidebar, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(InserterSidebar, {});
     }
     if (isListViewOpen) {
-      return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(ListViewSidebar, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(ListViewSidebar, {});
     }
     return null;
   }
 
   // packages/edit-widgets/build-module/components/layout/interface.mjs
-  var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
   var interfaceLabels = {
     /* translators: accessibility text for the widgets screen top bar landmark region. */
     header: (0, import_i18n23.__)("Widgets top bar"),
@@ -16221,23 +16220,23 @@ ${content}
     }, [isInserterOpened2, isListViewOpened2, isHugeViewport]);
     const secondarySidebarLabel = isListViewOpened2 ? (0, import_i18n23.__)("List View") : (0, import_i18n23.__)("Block Library");
     const hasSecondarySidebar = isListViewOpened2 || isInserterOpened2;
-    return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
       interface_skeleton_default,
       {
         labels: {
           ...interfaceLabels,
           secondarySidebar: secondarySidebarLabel
         },
-        header: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(header_default, {}),
-        secondarySidebar: hasSecondarySidebar && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(SecondarySidebar, {}),
-        sidebar: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(complementary_area_default.Slot, { scope: "core/edit-widgets" }),
-        content: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_jsx_runtime87.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+        header: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(header_default, {}),
+        secondarySidebar: hasSecondarySidebar && /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(SecondarySidebar, {}),
+        sidebar: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(complementary_area_default.Slot, { scope: "core/edit-widgets" }),
+        content: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_jsx_runtime86.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
           WidgetAreasBlockEditorContent,
           {
             blockEditorSettings
           }
         ) }),
-        footer: hasBlockBreadCrumbsEnabled && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("div", { className: "edit-widgets-layout__footer", children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_block_editor17.BlockBreadcrumb, { rootLabelText: (0, import_i18n23.__)("Widgets") }) })
+        footer: hasBlockBreadCrumbsEnabled && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime86.jsx)("div", { className: "edit-widgets-layout__footer", children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_block_editor17.BlockBreadcrumb, { rootLabelText: (0, import_i18n23.__)("Widgets") }) })
       }
     );
   }
@@ -16276,7 +16275,7 @@ ${content}
   var import_i18n25 = __toESM(require_i18n(), 1);
   var import_element68 = __toESM(require_element(), 1);
   var import_preferences9 = __toESM(require_preferences(), 1);
-  var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuide() {
     const isActive = (0, import_data30.useSelect)(
       (select) => !!select(import_preferences9.store).get(
@@ -16301,7 +16300,7 @@ ${content}
     const numWidgetAreas = widgetAreas?.filter(
       (widgetArea) => widgetArea.id !== "wp_inactive_widgets"
     ).length ?? 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
       import_components19.Guide,
       {
         className: "edit-widgets-welcome-guide",
@@ -16310,16 +16309,16 @@ ${content}
         onFinish: () => toggle("core/edit-widgets", "welcomeGuide"),
         pages: [
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/welcome-canvas.svg",
                 animatedSrc: "https://s.w.org/images/block-editor/welcome-canvas.gif"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_jsx_runtime88.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("h1", { className: "edit-widgets-welcome-guide__heading", children: (0, import_i18n25.__)("Welcome to block Widgets") }),
-              isEntirelyBlockWidgets ? /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_jsx_runtime88.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("p", { className: "edit-widgets-welcome-guide__text", children: (0, import_i18n25.sprintf)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(import_jsx_runtime87.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("h1", { className: "edit-widgets-welcome-guide__heading", children: (0, import_i18n25.__)("Welcome to block Widgets") }),
+              isEntirelyBlockWidgets ? /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_jsx_runtime87.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("p", { className: "edit-widgets-welcome-guide__text", children: (0, import_i18n25.sprintf)(
                 // Translators: %s: Number of block areas in the current theme.
                 (0, import_i18n25._n)(
                   "Your theme provides %s \u201Cblock\u201D area for you to add and edit content.\xA0Try adding a search bar, social icons, or other types of blocks here and see how they\u2019ll look on your site.",
@@ -16327,16 +16326,16 @@ ${content}
                   numWidgetAreas
                 ),
                 numWidgetAreas
-              ) }) }) : /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_jsx_runtime88.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("p", { className: "edit-widgets-welcome-guide__text", children: (0, import_i18n25.__)(
+              ) }) }) : /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(import_jsx_runtime87.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("p", { className: "edit-widgets-welcome-guide__text", children: (0, import_i18n25.__)(
                   "You can now add any block to your site\u2019s widget areas. Don\u2019t worry, all of your favorite widgets still work flawlessly."
                 ) }),
-                /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)("p", { className: "edit-widgets-welcome-guide__text", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("strong", { children: (0, import_i18n25.__)(
+                /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)("p", { className: "edit-widgets-welcome-guide__text", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("strong", { children: (0, import_i18n25.__)(
                     "Want to stick with the old widgets?"
                   ) }),
                   " ",
-                  /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
                     import_components19.ExternalLink,
                     {
                       href: (0, import_i18n25.__)(
@@ -16352,36 +16351,36 @@ ${content}
             ] })
           },
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/welcome-editor.svg",
                 animatedSrc: "https://s.w.org/images/block-editor/welcome-editor.gif"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_jsx_runtime88.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("h1", { className: "edit-widgets-welcome-guide__heading", children: (0, import_i18n25.__)("Customize each block") }),
-              /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("p", { className: "edit-widgets-welcome-guide__text", children: (0, import_i18n25.__)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(import_jsx_runtime87.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("h1", { className: "edit-widgets-welcome-guide__heading", children: (0, import_i18n25.__)("Customize each block") }),
+              /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("p", { className: "edit-widgets-welcome-guide__text", children: (0, import_i18n25.__)(
                 "Each block comes with its own set of controls for changing things like color, width, and alignment. These will show and hide automatically when you have a block selected."
               ) })
             ] })
           },
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/welcome-library.svg",
                 animatedSrc: "https://s.w.org/images/block-editor/welcome-library.gif"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_jsx_runtime88.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("h1", { className: "edit-widgets-welcome-guide__heading", children: (0, import_i18n25.__)("Explore all blocks") }),
-              /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("p", { className: "edit-widgets-welcome-guide__text", children: (0, import_element68.createInterpolateElement)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(import_jsx_runtime87.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("h1", { className: "edit-widgets-welcome-guide__heading", children: (0, import_i18n25.__)("Explore all blocks") }),
+              /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("p", { className: "edit-widgets-welcome-guide__text", children: (0, import_element68.createInterpolateElement)(
                 (0, import_i18n25.__)(
                   "All of the blocks available to you live in the block library. You\u2019ll find it wherever you see the <InserterIconImage /> icon."
                 ),
                 {
-                  InserterIconImage: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+                  InserterIconImage: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
                     "img",
                     {
                       className: "edit-widgets-welcome-guide__inserter-icon",
@@ -16394,21 +16393,21 @@ ${content}
             ] })
           },
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/welcome-documentation.svg",
                 animatedSrc: "https://s.w.org/images/block-editor/welcome-documentation.gif"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_jsx_runtime88.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("h1", { className: "edit-widgets-welcome-guide__heading", children: (0, import_i18n25.__)("Learn more") }),
-              /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("p", { className: "edit-widgets-welcome-guide__text", children: (0, import_element68.createInterpolateElement)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(import_jsx_runtime87.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("h1", { className: "edit-widgets-welcome-guide__heading", children: (0, import_i18n25.__)("Learn more") }),
+              /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("p", { className: "edit-widgets-welcome-guide__text", children: (0, import_element68.createInterpolateElement)(
                 (0, import_i18n25.__)(
                   "New to the block editor? Want to learn more about using it? <a>Here's a detailed guide.</a>"
                 ),
                 {
-                  a: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+                  a: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
                     import_components19.ExternalLink,
                     {
                       href: (0, import_i18n25.__)(
@@ -16425,20 +16424,20 @@ ${content}
     );
   }
   function WelcomeGuideImage({ nonAnimatedSrc, animatedSrc }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)("picture", { className: "edit-widgets-welcome-guide__image", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)("picture", { className: "edit-widgets-welcome-guide__image", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
         "source",
         {
           srcSet: nonAnimatedSrc,
           media: "(prefers-reduced-motion: reduce)"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("img", { src: animatedSrc, width: "312", height: "240", alt: "" })
+      /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("img", { src: animatedSrc, width: "312", height: "240", alt: "" })
     ] });
   }
 
   // packages/edit-widgets/build-module/components/layout/index.mjs
-  var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
   function Layout({ blockEditorSettings }) {
     const { createErrorNotice } = (0, import_data31.useDispatch)(import_notices4.store);
     function onPluginAreaError(name2) {
@@ -16454,21 +16453,21 @@ ${content}
     }
     const navigateRegionsProps = (0, import_components20.__unstableUseNavigateRegions)();
     const adminPrimary = (0, import_element69.useMemo)(() => getAdminThemeColors().primary, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_theme2.ThemeProvider, { isRoot: true, color: { primary: adminPrimary }, children: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)("div", { ...navigateRegionsProps, children: /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_theme2.ThemeProvider, { isRoot: true, color: { primary: adminPrimary }, children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)("div", { ...navigateRegionsProps, children: /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(
       WidgetAreasBlockEditorProvider,
       {
         blockEditorSettings,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
             interface_default,
             {
               blockEditorSettings
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(Sidebar, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_plugins3.PluginArea, { onError: onPluginAreaError }),
-          /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(UnsavedChangesWarning, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(WelcomeGuide, {})
+          /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(Sidebar, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_plugins3.PluginArea, { onError: onPluginAreaError }),
+          /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(UnsavedChangesWarning, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(WelcomeGuide, {})
         ]
       }
     ) }) }) });
@@ -16476,7 +16475,7 @@ ${content}
   var layout_default2 = Layout;
 
   // packages/edit-widgets/build-module/index.mjs
-  var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
   var disabledBlocks = [
     "core/more",
     "core/freeform",
@@ -16509,7 +16508,7 @@ ${content}
     settings2.__experimentalFetchLinkSuggestions = (search, searchOptions) => (0, import_core_data12.__experimentalFetchLinkSuggestions)(search, searchOptions, settings2);
     (0, import_blocks3.setFreeformContentHandlerName)("core/html");
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(import_element70.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(layout_default2, { blockEditorSettings: settings2 }) })
+      /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_element70.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(layout_default2, { blockEditorSettings: settings2 }) })
     );
     return root;
   }
