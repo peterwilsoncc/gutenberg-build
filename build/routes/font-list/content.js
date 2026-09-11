@@ -12476,7 +12476,6 @@ var {
   useHasColorPanel: useHasColorPanel2,
   useHasBackgroundPanel: useHasBackgroundPanel2
 } = unlock3(import_block_editor3.privateApis);
-var { Menu } = unlock3(import_components11.privateApis);
 function hasAnyValue(value) {
   if (value === void 0 || value === null) {
     return false;
@@ -25376,7 +25375,6 @@ var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/presets/preset-group.mjs
 var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu2 } = unlock3(import_components42.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
 var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
@@ -25389,7 +25387,6 @@ var import_element47 = __toESM(require_element(), 1);
 // packages/global-styles-ui/build-module/presets/preset-edit-header.mjs
 var import_components43 = __toESM(require_components(), 1);
 var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu3 } = unlock3(import_components43.privateApis);
 
 // packages/global-styles-ui/build-module/presets/dialogs/confirm-delete-dialog.mjs
 var import_components44 = __toESM(require_components(), 1);
