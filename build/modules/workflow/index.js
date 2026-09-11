@@ -16774,7 +16774,8 @@ __export(autocomplete_exports, {
   Root: () => Root2,
   Row: () => Row,
   Status: () => Status,
-  Value: () => Value
+  Value: () => Value,
+  useFilteredItems: () => useFilteredItems2
 });
 
 // packages/ui/build-module/form/primitives/autocomplete/clear.mjs
@@ -18297,6 +18298,11 @@ var Status = (0, import_element45.forwardRef)(
     );
   }
 );
+
+// packages/ui/build-module/form/primitives/autocomplete/use-filtered-items.mjs
+function useFilteredItems2() {
+  return index_parts_exports.useFilteredItems();
+}
 
 // packages/ui/build-module/form/primitives/autocomplete/value.mjs
 var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
