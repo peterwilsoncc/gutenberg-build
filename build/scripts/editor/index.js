@@ -95241,8 +95241,10 @@ If there's a particular need for this, please submit a feature request at https:
       const postTypeSlug = postTypeConfig.slug;
       const isDesignPostType = DESIGN_POST_TYPES.includes(postTypeSlug);
       const isPattern = postTypeSlug === "wp_block";
+      const postThumbnails = currentTheme?.theme_supports?.["post-thumbnails"];
+      const themeSupportsThumbnails = Array.isArray(postThumbnails) ? postThumbnails.includes(postTypeSlug) : !!postThumbnails;
       fields2 = [
-        postTypeConfig.supports?.thumbnail && currentTheme?.theme_supports?.["post-thumbnails"] && featured_image_default,
+        postTypeConfig.supports?.thumbnail && themeSupportsThumbnails && featured_image_default,
         !isDesignPostType && postTypeConfig.supports?.author && author_default,
         postTypeSlug === "wp_template" && templateAuthorField,
         postTypeSlug === "wp_template_part" && templatePartAuthorField,
