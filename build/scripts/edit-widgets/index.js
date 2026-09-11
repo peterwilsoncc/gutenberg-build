@@ -1058,7 +1058,11 @@ var wp;
   function PinnedItems({ scope, ...props }) {
     return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_components3.Fill, { name: `PinnedItems/${scope}`, ...props });
   }
-  function PinnedItemsSlot({ scope, className, ...props }) {
+  function PinnedItemsSlot({
+    scope,
+    className,
+    ...props
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_components3.Slot, { name: `PinnedItems/${scope}`, ...props, children: (fills) => fills?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
       "div",
       {
@@ -1076,7 +1080,10 @@ var wp;
   // packages/interface/build-module/components/complementary-area/index.mjs
   var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
   var ANIMATION_DURATION = 0.3;
-  function ComplementaryAreaSlot({ scope, ...props }) {
+  function ComplementaryAreaSlot({
+    scope,
+    ...props
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_components4.Slot, { name: `ComplementaryArea/${scope}`, ...props });
   }
   var variants = {
@@ -1086,7 +1093,10 @@ var wp;
     open: { width: "auto" },
     // Resolved with the `custom` value passed to `AnimatePresence`, which is
     // the only way an already removed element can be given a fresh transition.
-    closed: (transition) => ({ width: 0, transition })
+    closed: (transition) => ({
+      width: 0,
+      transition
+    })
   };
   function renderContainer(render, props) {
     if ((0, import_element3.isValidElement)(render)) {
@@ -1239,7 +1249,7 @@ var wp;
       if (isActiveByDefault && activeArea === void 0 && !isSmall) {
         enableComplementaryArea2(scope, identifier);
       } else if (activeArea === void 0 && isSmall) {
-        disableComplementaryArea2(scope, identifier);
+        disableComplementaryArea2(scope);
       }
       setIsReady(true);
     }, [
@@ -1295,8 +1305,6 @@ var wp;
               complementary_area_header_default,
               {
                 className: headerClassName,
-                closeLabel,
-                onClose: () => disableComplementaryArea2(scope),
                 toggleButtonProps: {
                   label: closeLabel,
                   size: "compact",
