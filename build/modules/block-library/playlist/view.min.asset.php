@@ -1,0 +1,1 @@
+<?php return array('dependencies' => array(), 'module_dependencies' => array(array('id' => '@wordpress/interactivity', 'import' => 'static')), 'version' => 'c3a72583ec4594071721');
