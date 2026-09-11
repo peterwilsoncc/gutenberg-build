@@ -2361,7 +2361,6 @@ var wp;
             selection.collapse(element, 0);
           }
         }
-        window.queueMicrotask(handleSelectionChange);
         return;
       }
       if (!isSelected) {

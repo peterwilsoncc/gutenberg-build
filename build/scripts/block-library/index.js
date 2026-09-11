@@ -3247,7 +3247,7 @@ var wp;
     privateApis: () => privateApis4,
     registerCoreBlocks: () => registerCoreBlocks
   });
-  var import_blocks111 = __toESM(require_blocks(), 1);
+  var import_blocks112 = __toESM(require_blocks(), 1);
   var import_compose66 = __toESM(require_compose(), 1);
   var import_data172 = __toESM(require_data(), 1);
   var import_block_editor291 = __toESM(require_block_editor(), 1);
@@ -54500,6 +54500,7 @@ ${text}
     settings: () => settings58
   });
   var import_i18n155 = __toESM(require_i18n(), 1);
+  var import_blocks65 = __toESM(require_blocks(), 1);
 
   // packages/block-library/build-module/paragraph/deprecated.mjs
   var import_element112 = __toESM(require_element(), 1);
@@ -55304,9 +55305,13 @@ ${text}
   var transforms_default22 = transforms21;
 
   // packages/block-library/build-module/paragraph/index.mjs
+  var { editableRootKey } = unlock(import_blocks65.privateApis);
   var { name: name59 } = block_default58;
   var settings58 = {
     icon: paragraph_default,
+    // Opt into the editing host behaviour privately. It's a Symbol setting
+    // rather than a public `supports` key so it stays an internal detail.
+    [editableRootKey]: true,
     example: {
       attributes: {
         content: (0, import_i18n155.__)(
@@ -55461,7 +55466,7 @@ ${text}
   var import_data101 = __toESM(require_data(), 1);
   var import_notices14 = __toESM(require_notices(), 1);
   var import_i18n158 = __toESM(require_i18n(), 1);
-  var import_blocks65 = __toESM(require_blocks(), 1);
+  var import_blocks66 = __toESM(require_blocks(), 1);
   var import_blob16 = __toESM(require_blob(), 1);
 
   // packages/block-library/build-module/utils/waveform-player.mjs
@@ -57419,13 +57424,13 @@ ${text}
               hasInvalidFile = true;
               return null;
             }
-            return (0, import_blocks65.createBlock)("core/playlist-track", {
+            return (0, import_blocks66.createBlock)("core/playlist-track", {
               blob: (0, import_blob16.createBlobURL)(mediaItem),
               title: mediaItem.name
             });
           }
           const track = getTrackAttributes(mediaItem);
-          return track.src ? (0, import_blocks65.createBlock)("core/playlist-track", track) : null;
+          return track.src ? (0, import_blocks66.createBlock)("core/playlist-track", track) : null;
         }).filter(Boolean);
         if (hasInvalidFile) {
           onUploadError(
@@ -57967,7 +57972,7 @@ ${text}
   }
 
   // packages/block-library/build-module/playlist/transforms.mjs
-  var import_blocks66 = __toESM(require_blocks(), 1);
+  var import_blocks67 = __toESM(require_blocks(), 1);
   var import_url19 = __toESM(require_url(), 1);
   var transforms22 = {
     from: [
@@ -57975,11 +57980,11 @@ ${text}
         type: "block",
         isMultiBlock: true,
         blocks: ["core/audio"],
-        transform: (attributes2) => (0, import_blocks66.createBlock)(
+        transform: (attributes2) => (0, import_blocks67.createBlock)(
           "core/playlist",
           { ...attributes2[0] },
           attributes2.map(
-            ({ blob, id, src }) => (0, import_blocks66.createBlock)("core/playlist-track", {
+            ({ blob, id, src }) => (0, import_blocks67.createBlock)("core/playlist-track", {
               blob,
               id,
               src,
@@ -57994,7 +57999,7 @@ ${text}
         type: "block",
         blocks: ["core/audio"],
         isMatch: ({}, block) => block.innerBlocks.length === 1 && block.innerBlocks[0].name === "core/playlist-track",
-        transform: ({ style: style2, ...attributes2 }, [track]) => (0, import_blocks66.createBlock)("core/audio", {
+        transform: ({ style: style2, ...attributes2 }, [track]) => (0, import_blocks67.createBlock)("core/audio", {
           ...attributes2,
           ...style2?.spacing && {
             style: { spacing: style2.spacing }
@@ -58492,10 +58497,10 @@ ${text}
   var import_element119 = __toESM(require_element(), 1);
   var import_html_entities9 = __toESM(require_html_entities(), 1);
   var import_i18n161 = __toESM(require_i18n(), 1);
-  var import_blocks68 = __toESM(require_blocks(), 1);
+  var import_blocks69 = __toESM(require_blocks(), 1);
 
   // packages/block-library/build-module/post-author/utils.mjs
-  var import_blocks67 = __toESM(require_blocks(), 1);
+  var import_blocks68 = __toESM(require_blocks(), 1);
   var import_i18n160 = __toESM(require_i18n(), 1);
   var import_block_editor176 = __toESM(require_block_editor(), 1);
   var { cleanEmptyObject: cleanEmptyObject6 } = unlock(import_block_editor176.privateApis);
@@ -58519,7 +58524,7 @@ ${text}
     const shouldInsertPostAuthorBiographyBlock = showBio && blockTypes.some(
       (blockType) => blockType.name === "core/post-author-biography"
     );
-    return (0, import_blocks67.createBlock)(
+    return (0, import_blocks68.createBlock)(
       "core/group",
       {
         ...restAttributes,
@@ -58542,7 +58547,7 @@ ${text}
         }
       },
       [
-        shouldInsertAvatarBlock && (0, import_blocks67.createBlock)("core/avatar", {
+        shouldInsertAvatarBlock && (0, import_blocks68.createBlock)("core/avatar", {
           size: avatarSize,
           style: cleanEmptyObject6({
             border: {
@@ -58553,7 +58558,7 @@ ${text}
             }
           })
         }),
-        (0, import_blocks67.createBlock)(
+        (0, import_blocks68.createBlock)(
           "core/group",
           {
             style: {
@@ -58572,7 +58577,7 @@ ${text}
             }
           },
           [
-            shouldInsertParagraphBlock && (0, import_blocks67.createBlock)("core/paragraph", {
+            shouldInsertParagraphBlock && (0, import_blocks68.createBlock)("core/paragraph", {
               content: byline,
               placeholder: (0, import_i18n160.__)("Write byline\u2026"),
               style: {
@@ -58582,7 +58587,7 @@ ${text}
                 }
               }
             }),
-            shouldInsertPostAuthorNameBlock && (0, import_blocks67.createBlock)("core/post-author-name", {
+            shouldInsertPostAuthorNameBlock && (0, import_blocks68.createBlock)("core/post-author-name", {
               isLink,
               linkTarget,
               style: {
@@ -58592,7 +58597,7 @@ ${text}
                 }
               }
             }),
-            shouldInsertPostAuthorBiographyBlock && (0, import_blocks67.createBlock)("core/post-author-biography", {
+            shouldInsertPostAuthorBiographyBlock && (0, import_blocks68.createBlock)("core/post-author-biography", {
               style: {
                 typography: {
                   fontSize: "0.7em",
@@ -58701,7 +58706,7 @@ ${text}
       [postType, postId]
     );
     const blockTypes = (0, import_data103.useSelect)(
-      (select10) => select10(import_blocks68.store).getBlockTypes(),
+      (select10) => select10(import_blocks69.store).getBlockTypes(),
       []
     );
     const { editEntityRecord } = (0, import_data103.useDispatch)(import_core_data58.store);
@@ -59219,13 +59224,13 @@ ${text}
   var deprecated_default29 = [v124];
 
   // packages/block-library/build-module/post-author-name/transforms.mjs
-  var import_blocks69 = __toESM(require_blocks(), 1);
+  var import_blocks70 = __toESM(require_blocks(), 1);
   var transforms23 = {
     from: [
       {
         type: "block",
         blocks: ["core/post-author"],
-        transform: ({ textAlign }) => (0, import_blocks69.createBlock)("core/post-author-name", {
+        transform: ({ textAlign }) => (0, import_blocks70.createBlock)("core/post-author-name", {
           style: { typography: { textAlign } }
         })
       }
@@ -59632,7 +59637,7 @@ ${text}
   }
 
   // packages/block-library/build-module/post-comments-count/transforms.mjs
-  var import_blocks70 = __toESM(require_blocks(), 1);
+  var import_blocks71 = __toESM(require_blocks(), 1);
   var transforms24 = {
     to: [
       {
@@ -59640,7 +59645,7 @@ ${text}
         blocks: ["core/post-comments-link"],
         transform: ({ style: style2 }) => {
           const textAlign = style2?.typography?.textAlign;
-          return (0, import_blocks70.createBlock)("core/post-comments-link", {
+          return (0, import_blocks71.createBlock)("core/post-comments-link", {
             ...textAlign && {
               style: {
                 typography: {
@@ -60024,7 +60029,7 @@ ${text}
   var edit_default24 = PostCommentsLinkEdit;
 
   // packages/block-library/build-module/post-comments-link/transforms.mjs
-  var import_blocks71 = __toESM(require_blocks(), 1);
+  var import_blocks72 = __toESM(require_blocks(), 1);
   var transforms25 = {
     to: [
       {
@@ -60032,7 +60037,7 @@ ${text}
         blocks: ["core/post-comments-count"],
         transform: ({ style: style2 }) => {
           const textAlign = style2?.typography?.textAlign;
-          return (0, import_blocks71.createBlock)("core/post-comments-count", {
+          return (0, import_blocks72.createBlock)("core/post-comments-count", {
             ...textAlign && {
               style: {
                 typography: {
@@ -60216,7 +60221,7 @@ ${text}
   // packages/block-library/build-module/post-content/edit.mjs
   var import_i18n168 = __toESM(require_i18n(), 1);
   var import_block_editor185 = __toESM(require_block_editor(), 1);
-  var import_blocks72 = __toESM(require_blocks(), 1);
+  var import_blocks73 = __toESM(require_blocks(), 1);
   var import_core_data62 = __toESM(require_core_data(), 1);
   var import_data107 = __toESM(require_data(), 1);
   var import_element123 = __toESM(require_element(), 1);
@@ -60238,7 +60243,7 @@ ${text}
     );
     const blockProps = (0, import_block_editor185.useBlockProps)({ className: layoutClassNames });
     const blocks = (0, import_element123.useMemo)(() => {
-      return content?.raw ? (0, import_blocks72.parse)(content.raw) : [];
+      return content?.raw ? (0, import_blocks73.parse)(content.raw) : [];
     }, [content?.raw]);
     const blockPreviewProps = (0, import_block_editor185.__experimentalUseBlockPreview)({
       blocks,
@@ -60499,7 +60504,7 @@ ${text}
   var import_i18n169 = __toESM(require_i18n(), 1);
   var import_keycodes8 = __toESM(require_keycodes(), 1);
   var import_data108 = __toESM(require_data(), 1);
-  var import_blocks73 = __toESM(require_blocks(), 1);
+  var import_blocks74 = __toESM(require_blocks(), 1);
   var import_jsx_runtime399 = __toESM(require_jsx_runtime(), 1);
   function PostDateEdit(props) {
     const {
@@ -60543,7 +60548,7 @@ ${text}
       [postTypeSlug]
     );
     const activeBlockVariationName = (0, import_data108.useSelect)(
-      (select10) => select10(import_blocks73.store).getActiveBlockVariation(name118, attributes2)?.name,
+      (select10) => select10(import_blocks74.store).getActiveBlockVariation(name118, attributes2)?.name,
       [name118, attributes2]
     );
     const blockEditingMode = (0, import_block_editor186.useBlockEditingMode)();
@@ -61275,20 +61280,20 @@ ${text}
   }
 
   // packages/block-library/build-module/post-excerpt/transforms.mjs
-  var import_blocks74 = __toESM(require_blocks(), 1);
+  var import_blocks75 = __toESM(require_blocks(), 1);
   var transforms26 = {
     from: [
       {
         type: "block",
         blocks: ["core/post-content"],
-        transform: () => (0, import_blocks74.createBlock)("core/post-excerpt")
+        transform: () => (0, import_blocks75.createBlock)("core/post-excerpt")
       }
     ],
     to: [
       {
         type: "block",
         blocks: ["core/post-content"],
-        transform: () => (0, import_blocks74.createBlock)("core/post-content")
+        transform: () => (0, import_blocks75.createBlock)("core/post-content")
       }
     ]
   };
@@ -63076,7 +63081,7 @@ ${text}
 
   // packages/block-library/build-module/post-terms/edit.mjs
   var import_block_editor195 = __toESM(require_block_editor(), 1);
-  var import_blocks75 = __toESM(require_blocks(), 1);
+  var import_blocks76 = __toESM(require_blocks(), 1);
   var import_components112 = __toESM(require_components(), 1);
   var import_data114 = __toESM(require_data(), 1);
   var import_html_entities10 = __toESM(require_html_entities(), 1);
@@ -63216,7 +63221,7 @@ ${text}
             onChange: (value) => setAttributes({ suffix: value }),
             tagName: "span",
             __unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter(
-              (0, import_blocks75.createBlock)((0, import_blocks75.getDefaultBlockName)())
+              (0, import_blocks76.createBlock)((0, import_blocks76.getDefaultBlockName)())
             ) : void 0
           }
         )
@@ -63422,7 +63427,7 @@ ${text}
   var import_element128 = __toESM(require_element(), 1);
   var import_block_editor196 = __toESM(require_block_editor(), 1);
   var import_components113 = __toESM(require_components(), 1);
-  var import_blocks76 = __toESM(require_blocks(), 1);
+  var import_blocks77 = __toESM(require_blocks(), 1);
   var import_core_data70 = __toESM(require_core_data(), 1);
   var import_wordcount = __toESM(require_wordcount(), 1);
   var import_jsx_runtime409 = __toESM(require_jsx_runtime(), 1);
@@ -63444,7 +63449,7 @@ ${text}
       if (contentStructure instanceof Function) {
         content = contentStructure({ blocks });
       } else if (blocks) {
-        content = (0, import_blocks76.__unstableSerializeAndClean)(blocks);
+        content = (0, import_blocks77.__unstableSerializeAndClean)(blocks);
       } else {
         content = contentStructure;
       }
@@ -64086,7 +64091,7 @@ ${text}
   // packages/block-library/build-module/preformatted/edit.mjs
   var import_i18n183 = __toESM(require_i18n(), 1);
   var import_block_editor198 = __toESM(require_block_editor(), 1);
-  var import_blocks77 = __toESM(require_blocks(), 1);
+  var import_blocks78 = __toESM(require_blocks(), 1);
   var import_jsx_runtime411 = __toESM(require_jsx_runtime(), 1);
   function PreformattedEdit({
     attributes: attributes2,
@@ -64117,7 +64122,7 @@ ${text}
         ...blockProps,
         __unstablePastePlainText: true,
         __unstableOnSplitAtDoubleLineEnd: insertBlocksAfter ? () => insertBlocksAfter(
-          (0, import_blocks77.createBlock)((0, import_blocks77.getDefaultBlockName)())
+          (0, import_blocks78.createBlock)((0, import_blocks78.getDefaultBlockName)())
         ) : void 0
       }
     );
@@ -64195,13 +64200,13 @@ ${text}
   }
 
   // packages/block-library/build-module/preformatted/transforms.mjs
-  var import_blocks78 = __toESM(require_blocks(), 1);
+  var import_blocks79 = __toESM(require_blocks(), 1);
   var transforms27 = {
     from: [
       {
         type: "block",
         blocks: ["core/code", "core/paragraph", "core/verse"],
-        transform: ({ content, anchor }) => (0, import_blocks78.createBlock)("core/preformatted", {
+        transform: ({ content, anchor }) => (0, import_blocks79.createBlock)("core/preformatted", {
           content,
           anchor
         })
@@ -64220,17 +64225,17 @@ ${text}
       {
         type: "block",
         blocks: ["core/paragraph"],
-        transform: (attributes2) => (0, import_blocks78.createBlock)("core/paragraph", attributes2)
+        transform: (attributes2) => (0, import_blocks79.createBlock)("core/paragraph", attributes2)
       },
       {
         type: "block",
         blocks: ["core/code"],
-        transform: (attributes2) => (0, import_blocks78.createBlock)("core/code", attributes2)
+        transform: (attributes2) => (0, import_blocks79.createBlock)("core/code", attributes2)
       },
       {
         type: "block",
         blocks: ["core/verse"],
-        transform: (attributes2) => (0, import_blocks78.createBlock)("core/verse", attributes2)
+        transform: (attributes2) => (0, import_blocks79.createBlock)("core/verse", attributes2)
       }
     ]
   };
@@ -64909,7 +64914,7 @@ ${text}
   // packages/block-library/build-module/pullquote/edit.mjs
   var import_i18n185 = __toESM(require_i18n(), 1);
   var import_block_editor201 = __toESM(require_block_editor(), 1);
-  var import_blocks79 = __toESM(require_blocks(), 1);
+  var import_blocks80 = __toESM(require_blocks(), 1);
 
   // packages/block-library/build-module/pullquote/figure.mjs
   var Figure = "figure";
@@ -64959,8 +64964,8 @@ ${text}
           }),
           className: "wp-block-pullquote__citation",
           __unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter(
-            (0, import_blocks79.createBlock)(
-              (0, import_blocks79.getDefaultBlockName)()
+            (0, import_blocks80.createBlock)(
+              (0, import_blocks80.getDefaultBlockName)()
             )
           ) : void 0
         }
@@ -65073,7 +65078,7 @@ ${text}
   }
 
   // packages/block-library/build-module/pullquote/transforms.mjs
-  var import_blocks80 = __toESM(require_blocks(), 1);
+  var import_blocks81 = __toESM(require_blocks(), 1);
   var import_rich_text8 = __toESM(require_rich_text(), 1);
   var transforms28 = {
     from: [
@@ -65082,7 +65087,7 @@ ${text}
         isMultiBlock: true,
         blocks: ["core/paragraph"],
         transform: (attributes2) => {
-          return (0, import_blocks80.createBlock)("core/pullquote", {
+          return (0, import_blocks81.createBlock)("core/pullquote", {
             value: (0, import_rich_text8.toHTMLString)({
               value: (0, import_rich_text8.join)(
                 attributes2.map(
@@ -65099,7 +65104,7 @@ ${text}
         type: "block",
         blocks: ["core/heading"],
         transform: ({ content, anchor }) => {
-          return (0, import_blocks80.createBlock)("core/pullquote", {
+          return (0, import_blocks81.createBlock)("core/pullquote", {
             value: content,
             anchor
           });
@@ -65114,20 +65119,20 @@ ${text}
           const paragraphs = [];
           if (value) {
             paragraphs.push(
-              (0, import_blocks80.createBlock)("core/paragraph", {
+              (0, import_blocks81.createBlock)("core/paragraph", {
                 content: value
               })
             );
           }
           if (citation) {
             paragraphs.push(
-              (0, import_blocks80.createBlock)("core/paragraph", {
+              (0, import_blocks81.createBlock)("core/paragraph", {
                 content: citation
               })
             );
           }
           if (paragraphs.length === 0) {
-            return (0, import_blocks80.createBlock)("core/paragraph", {
+            return (0, import_blocks81.createBlock)("core/paragraph", {
               content: ""
             });
           }
@@ -65139,11 +65144,11 @@ ${text}
         blocks: ["core/heading"],
         transform: ({ value, citation }) => {
           if (!value) {
-            return (0, import_blocks80.createBlock)("core/heading", {
+            return (0, import_blocks81.createBlock)("core/heading", {
               content: citation
             });
           }
-          const headingBlock = (0, import_blocks80.createBlock)("core/heading", {
+          const headingBlock = (0, import_blocks81.createBlock)("core/heading", {
             content: value
           });
           if (!citation) {
@@ -65151,7 +65156,7 @@ ${text}
           }
           return [
             headingBlock,
-            (0, import_blocks80.createBlock)("core/heading", {
+            (0, import_blocks81.createBlock)("core/heading", {
               content: citation
             })
           ];
@@ -65283,7 +65288,7 @@ ${text}
   var import_block_editor203 = __toESM(require_block_editor(), 1);
   var import_html_entities11 = __toESM(require_html_entities(), 1);
   var import_i18n187 = __toESM(require_i18n(), 1);
-  var import_blocks81 = __toESM(require_blocks(), 1);
+  var import_blocks82 = __toESM(require_blocks(), 1);
   var getEntitiesInfo = (entities) => {
     const mapping = entities?.reduce(
       (accumulator, entity) => {
@@ -65431,7 +65436,7 @@ ${text}
   }
   function useAllowedControls(attributes2) {
     return (0, import_data117.useSelect)(
-      (select10) => select10(import_blocks81.store).getActiveBlockVariation(
+      (select10) => select10(import_blocks82.store).getActiveBlockVariation(
         "core/query",
         attributes2
       )?.allowedControls,
@@ -65449,7 +65454,7 @@ ${text}
       query: { postType, inherit },
       namespace
     } = queryBlockAttributes;
-    const clonedBlocks = blocks.map((block) => (0, import_blocks81.cloneBlock)(block));
+    const clonedBlocks = blocks.map((block) => (0, import_blocks82.cloneBlock)(block));
     const queryClientIds = [];
     const blocksQueue = [...clonedBlocks];
     while (blocksQueue.length > 0) {
@@ -65475,7 +65480,7 @@ ${text}
     return (0, import_data117.useSelect)(
       (select10) => {
         const activeVariationName = select10(
-          import_blocks81.store
+          import_blocks82.store
         ).getActiveBlockVariation("core/query", attributes2)?.name;
         if (!activeVariationName) {
           return "core/query";
@@ -65494,7 +65499,7 @@ ${text}
   function useScopedBlockVariations(attributes2) {
     const { activeVariationName, blockVariations } = (0, import_data117.useSelect)(
       (select10) => {
-        const { getActiveBlockVariation, getBlockVariations: getBlockVariations4 } = select10(import_blocks81.store);
+        const { getActiveBlockVariation, getBlockVariations: getBlockVariations4 } = select10(import_blocks82.store);
         return {
           activeVariationName: getActiveBlockVariation(
             "core/query",
@@ -65534,7 +65539,7 @@ ${text}
     return (0, import_data117.useSelect)(
       (select10) => {
         const { getClientIdsOfDescendants, getBlockName } = select10(import_block_editor203.store);
-        const { getBlockSupport: getBlockSupport2, getBlockType: getBlockType6 } = select10(import_blocks81.store);
+        const { getBlockSupport: getBlockSupport2, getBlockType: getBlockType6 } = select10(import_blocks82.store);
         const blockTitles = /* @__PURE__ */ new Set();
         getClientIdsOfDescendants(clientId).forEach(
           (descendantClientId) => {
@@ -66966,7 +66971,7 @@ ${text}
 
   // packages/block-library/build-module/query/edit/query-placeholder.mjs
   var import_data126 = __toESM(require_data(), 1);
-  var import_blocks82 = __toESM(require_blocks(), 1);
+  var import_blocks83 = __toESM(require_blocks(), 1);
   var import_element136 = __toESM(require_element(), 1);
   var import_block_editor207 = __toESM(require_block_editor(), 1);
   var import_components128 = __toESM(require_components(), 1);
@@ -66989,7 +66994,7 @@ ${text}
     const isSmallContainer = containerWidth > 0 && containerWidth < SMALL_CONTAINER_BREAKPOINT;
     const { blockType, activeBlockVariation } = (0, import_data126.useSelect)(
       (select10) => {
-        const { getActiveBlockVariation, getBlockType: getBlockType6 } = select10(import_blocks82.store);
+        const { getActiveBlockVariation, getBlockType: getBlockType6 } = select10(import_blocks83.store);
         return {
           blockType: getBlockType6(name118),
           activeBlockVariation: getActiveBlockVariation(
@@ -67074,7 +67079,7 @@ ${text}
           if (variation.innerBlocks) {
             replaceInnerBlocks(
               clientId,
-              (0, import_blocks82.createBlocksFromInnerBlocksTemplate)(
+              (0, import_blocks83.createBlocksFromInnerBlocksTemplate)(
                 variation.innerBlocks
               ),
               false
@@ -67218,7 +67223,7 @@ ${text}
   var variations_default14 = variations14;
 
   // packages/block-library/build-module/query/deprecated.mjs
-  var import_blocks83 = __toESM(require_blocks(), 1);
+  var import_blocks84 = __toESM(require_blocks(), 1);
   var import_block_editor210 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime434 = __toESM(require_jsx_runtime(), 1);
   var { cleanEmptyObject: cleanEmptyObject7 } = unlock(import_block_editor210.privateApis);
@@ -67265,7 +67270,7 @@ ${text}
         color: style2?.color,
         elements: style2?.elements?.link ? { link: style2?.elements?.link } : void 0
       }) : void 0;
-      const updatedGroupBlock = (0, import_blocks83.createBlock)(
+      const updatedGroupBlock = (0, import_blocks84.createBlock)(
         "core/group",
         {
           ...groupBlock.attributes,
@@ -67278,7 +67283,7 @@ ${text}
       );
       return [newAttributes, [updatedGroupBlock]];
     }
-    const newGroupBlock = (0, import_blocks83.createBlock)(
+    const newGroupBlock = (0, import_blocks84.createBlock)(
       "core/group",
       {
         backgroundColor,
@@ -67348,7 +67353,7 @@ ${text}
     }
     const { type, columns } = displayLayout;
     const updatedLayoutType = type === "flex" ? "grid" : "default";
-    const newPostTemplateBlock = (0, import_blocks83.createBlock)(
+    const newPostTemplateBlock = (0, import_blocks84.createBlock)(
       "core/post-template",
       {
         ...postTemplateBlock.attributes,
@@ -69270,7 +69275,7 @@ ${text}
   var import_i18n215 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/quote/deprecated.mjs
-  var import_blocks84 = __toESM(require_blocks(), 1);
+  var import_blocks85 = __toESM(require_blocks(), 1);
   var import_block_editor221 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime448 = __toESM(require_jsx_runtime(), 1);
   var migrateToQuoteV2 = (attributes2) => {
@@ -69279,7 +69284,7 @@ ${text}
       {
         ...restAttributes
       },
-      value ? (0, import_blocks84.parseWithAttributeSchema)(value, {
+      value ? (0, import_blocks85.parseWithAttributeSchema)(value, {
         type: "array",
         source: "query",
         selector: "p",
@@ -69290,8 +69295,8 @@ ${text}
           }
         }
       }).map(
-        ({ content }) => (0, import_blocks84.createBlock)("core/paragraph", { content })
-      ) : (0, import_blocks84.createBlock)("core/paragraph")
+        ({ content }) => (0, import_blocks85.createBlock)("core/paragraph", { content })
+      ) : (0, import_blocks85.createBlock)("core/paragraph")
     ];
   };
   var TEXT_ALIGN_OPTIONS2 = ["left", "right", "center"];
@@ -69771,15 +69776,15 @@ ${text}
 
   // packages/block-library/build-module/quote/transforms.mjs
   var import_block_editor224 = __toESM(require_block_editor(), 1);
-  var import_blocks85 = __toESM(require_blocks(), 1);
+  var import_blocks86 = __toESM(require_blocks(), 1);
   var transforms29 = {
     from: [
       {
         type: "block",
         blocks: ["core/verse"],
         transform: ({ content }) => {
-          return (0, import_blocks85.createBlock)("core/quote", {}, [
-            (0, import_blocks85.createBlock)("core/paragraph", { content })
+          return (0, import_blocks86.createBlock)("core/quote", {}, [
+            (0, import_blocks86.createBlock)("core/paragraph", { content })
           ]);
         }
       },
@@ -69794,7 +69799,7 @@ ${text}
           fontSize,
           style: style2
         }) => {
-          return (0, import_blocks85.createBlock)(
+          return (0, import_blocks86.createBlock)(
             "core/quote",
             {
               align,
@@ -69803,15 +69808,15 @@ ${text}
               fontSize,
               style: style2
             },
-            [(0, import_blocks85.createBlock)("core/paragraph", { content: value })]
+            [(0, import_blocks86.createBlock)("core/paragraph", { content: value })]
           );
         }
       },
       {
         type: "prefix",
         prefix: ">",
-        transform: (content) => (0, import_blocks85.createBlock)("core/quote", {}, [
-          (0, import_blocks85.createBlock)("core/paragraph", { content })
+        transform: (content) => (0, import_blocks86.createBlock)("core/quote", {}, [
+          (0, import_blocks86.createBlock)("core/paragraph", { content })
         ])
       },
       {
@@ -69823,7 +69828,7 @@ ${text}
         }),
         selector: "blockquote",
         transform: (node, handler) => {
-          return (0, import_blocks85.createBlock)(
+          return (0, import_blocks86.createBlock)(
             "core/quote",
             // Don't try to parse any `cite` out of this content.
             // * There may be more than one cite.
@@ -69853,10 +69858,10 @@ ${text}
           }
           return !blocks.some(({ name: name118 }) => name118 === "core/quote");
         },
-        __experimentalConvert: (blocks) => (0, import_blocks85.createBlock)(
+        __experimentalConvert: (blocks) => (0, import_blocks86.createBlock)(
           "core/quote",
           {},
-          blocks.map((block) => (0, import_blocks85.cloneSanitizedBlock)(block))
+          blocks.map((block) => (0, import_blocks86.cloneSanitizedBlock)(block))
         )
       }
     ],
@@ -69871,7 +69876,7 @@ ${text}
         },
         transform: ({ align, citation, anchor, fontSize, style: style2 }, innerBlocks) => {
           const value = innerBlocks.map(({ attributes: attributes2 }) => `${attributes2.content}`).join("<br>");
-          return (0, import_blocks85.createBlock)("core/pullquote", {
+          return (0, import_blocks86.createBlock)("core/pullquote", {
             value,
             align,
             citation,
@@ -69889,7 +69894,7 @@ ${text}
             if (innerBlock.name === "core/paragraph") {
               return true;
             }
-            const converted = (0, import_blocks85.switchToBlockType)(
+            const converted = (0, import_blocks86.switchToBlockType)(
               innerBlock,
               "core/paragraph"
             );
@@ -69901,10 +69906,10 @@ ${text}
             if (innerBlock.name === "core/paragraph") {
               return innerBlock;
             }
-            return (0, import_blocks85.switchToBlockType)(innerBlock, "core/paragraph") || [];
+            return (0, import_blocks86.switchToBlockType)(innerBlock, "core/paragraph") || [];
           });
           const content = paragraphs.map(({ attributes: attributes2 }) => attributes2.content || "").filter(Boolean).join("<br>");
-          return (0, import_blocks85.createBlock)("core/verse", { content });
+          return (0, import_blocks86.createBlock)("core/verse", { content });
         }
       },
       {
@@ -69919,7 +69924,7 @@ ${text}
             if (innerBlock.name === "core/paragraph") {
               return true;
             }
-            const converted = (0, import_blocks85.switchToBlockType)(
+            const converted = (0, import_blocks86.switchToBlockType)(
               innerBlock,
               "core/paragraph"
             );
@@ -69931,11 +69936,11 @@ ${text}
             if (innerBlock.name === "core/paragraph") {
               return innerBlock;
             }
-            return (0, import_blocks85.switchToBlockType)(innerBlock, "core/paragraph") || [];
+            return (0, import_blocks86.switchToBlockType)(innerBlock, "core/paragraph") || [];
           });
           return import_block_editor224.RichText.isEmpty(citation) ? paragraphs : [
             ...paragraphs,
-            (0, import_blocks85.createBlock)("core/paragraph", {
+            (0, import_blocks86.createBlock)("core/paragraph", {
               content: citation
             })
           ];
@@ -69944,12 +69949,12 @@ ${text}
       {
         type: "block",
         blocks: ["core/group"],
-        transform: ({ citation, anchor }, innerBlocks) => (0, import_blocks85.createBlock)(
+        transform: ({ citation, anchor }, innerBlocks) => (0, import_blocks86.createBlock)(
           "core/group",
           { anchor },
           import_block_editor224.RichText.isEmpty(citation) ? innerBlocks : [
             ...innerBlocks,
-            (0, import_blocks85.createBlock)("core/paragraph", {
+            (0, import_blocks86.createBlock)("core/paragraph", {
               content: citation
             })
           ]
@@ -69958,7 +69963,7 @@ ${text}
     ],
     ungroup: ({ citation }, innerBlocks) => import_block_editor224.RichText.isEmpty(citation) ? innerBlocks : [
       ...innerBlocks,
-      (0, import_blocks85.createBlock)("core/paragraph", {
+      (0, import_blocks86.createBlock)("core/paragraph", {
         content: citation
       })
     ]
@@ -70047,7 +70052,7 @@ ${text}
   var import_i18n216 = __toESM(require_i18n(), 1);
   var import_block_editor225 = __toESM(require_block_editor(), 1);
   var import_patterns = __toESM(require_patterns(), 1);
-  var import_blocks86 = __toESM(require_blocks(), 1);
+  var import_blocks87 = __toESM(require_blocks(), 1);
   var import_jsx_runtime451 = __toESM(require_jsx_runtime(), 1);
   var { useLayoutClasses } = unlock(import_block_editor225.privateApis);
   var { isOverridableBlock } = unlock(import_patterns.privateApis);
@@ -70137,7 +70142,7 @@ ${text}
       const { getSettings: getSettings2 } = select10(import_block_editor225.store);
       return {
         onNavigateToEntityRecord: getSettings2().onNavigateToEntityRecord,
-        hasPatternOverridesSource: !!(0, import_blocks86.getBlockBindingsSource)(
+        hasPatternOverridesSource: !!(0, import_blocks87.getBlockBindingsSource)(
           "core/pattern-overrides"
         ),
         supportedBlockTypesRaw: getSettings2().__experimentalBlockBindingsSupportedAttributes || EMPTY_OBJECT3
@@ -70408,7 +70413,7 @@ ${text}
   // packages/block-library/build-module/read-more/edit.mjs
   var import_block_editor226 = __toESM(require_block_editor(), 1);
   var import_components139 = __toESM(require_components(), 1);
-  var import_blocks87 = __toESM(require_blocks(), 1);
+  var import_blocks88 = __toESM(require_blocks(), 1);
   var import_i18n217 = __toESM(require_i18n(), 1);
   var import_jsx_runtime452 = __toESM(require_jsx_runtime(), 1);
   function ReadMore({
@@ -70456,7 +70461,7 @@ ${text}
           value: content,
           onChange: (newValue) => setAttributes({ content: newValue }),
           __unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter(
-            (0, import_blocks87.createBlock)((0, import_blocks87.getDefaultBlockName)())
+            (0, import_blocks88.createBlock)((0, import_blocks88.getDefaultBlockName)())
           ) : void 0,
           withoutInteractiveFormatting: true,
           ...blockProps
@@ -71695,22 +71700,22 @@ ${text}
   }
 
   // packages/block-library/build-module/separator/transforms.mjs
-  var import_blocks88 = __toESM(require_blocks(), 1);
+  var import_blocks89 = __toESM(require_blocks(), 1);
   var transforms30 = {
     from: [
       {
         type: "input",
         regExp: /^-{3,}$/,
         transform: () => {
-          const defaultVariation = (0, import_blocks88.getBlockVariations)(
+          const defaultVariation = (0, import_blocks89.getBlockVariations)(
             "core/separator"
           )?.find((variation) => variation.isDefault);
           return [
-            (0, import_blocks88.createBlock)(
+            (0, import_blocks89.createBlock)(
               "core/separator",
               defaultVariation?.attributes ?? {}
             ),
-            (0, import_blocks88.createBlock)((0, import_blocks88.getDefaultBlockName)())
+            (0, import_blocks89.createBlock)((0, import_blocks89.getDefaultBlockName)())
           ];
         }
       },
@@ -71728,7 +71733,7 @@ ${text}
         blocks: ["core/spacer"],
         // Transform to Spacer.
         transform: ({ anchor }) => {
-          return (0, import_blocks88.createBlock)("core/spacer", {
+          return (0, import_blocks89.createBlock)("core/spacer", {
             anchor: anchor || void 0
           });
         }
@@ -71834,9 +71839,9 @@ ${text}
 
   // packages/block-library/build-module/shortcode/transforms.mjs
   var import_autop = __toESM(require_autop(), 1);
-  var import_blocks89 = __toESM(require_blocks(), 1);
+  var import_blocks90 = __toESM(require_blocks(), 1);
   var import_shortcode2 = __toESM(require_shortcode(), 1);
-  var getShortcodeFromTransforms = () => (0, import_blocks89.getBlockTransforms)("from").filter(
+  var getShortcodeFromTransforms = () => (0, import_blocks90.getBlockTransforms)("from").filter(
     (transform) => transform.type === "shortcode" && transform.blockName !== "core/shortcode"
   );
   var isSingleShortcode = (text, tag) => {
@@ -71879,7 +71884,7 @@ ${text}
           return [].concat(fromTransform.tag).some((tag) => isSingleShortcode(text, tag));
         },
         transform: ({ text = "" }) => {
-          return (0, import_blocks89.rawHandler)({ HTML: `<p>${text.trim()}</p>` });
+          return (0, import_blocks90.rawHandler)({ HTML: `<p>${text.trim()}</p>` });
         }
       }));
     }
@@ -72562,14 +72567,14 @@ ${text}
   }
 
   // packages/block-library/build-module/site-logo/transforms.mjs
-  var import_blocks90 = __toESM(require_blocks(), 1);
+  var import_blocks91 = __toESM(require_blocks(), 1);
   var transforms32 = {
     to: [
       {
         type: "block",
         blocks: ["core/site-title"],
         transform: ({ isLink, linkTarget }) => {
-          return (0, import_blocks90.createBlock)("core/site-title", {
+          return (0, import_blocks91.createBlock)("core/site-title", {
             isLink,
             linkTarget
           });
@@ -72682,7 +72687,7 @@ ${text}
   var import_core_data84 = __toESM(require_core_data(), 1);
   var import_block_editor234 = __toESM(require_block_editor(), 1);
   var import_i18n226 = __toESM(require_i18n(), 1);
-  var import_blocks91 = __toESM(require_blocks(), 1);
+  var import_blocks92 = __toESM(require_blocks(), 1);
   var import_jsx_runtime461 = __toESM(require_jsx_runtime(), 1);
   function SiteTaglineEdit(props) {
     useDeprecatedTextAlign(props);
@@ -72716,7 +72721,7 @@ ${text}
         value: tagline,
         disableLineBreaks: true,
         __unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter(
-          (0, import_blocks91.createBlock)((0, import_blocks91.getDefaultBlockName)())
+          (0, import_blocks92.createBlock)((0, import_blocks92.getDefaultBlockName)())
         ) : void 0,
         ...blockProps
       }
@@ -73185,14 +73190,14 @@ ${text}
   var deprecated_default48 = [v220, v144];
 
   // packages/block-library/build-module/site-title/transforms.mjs
-  var import_blocks92 = __toESM(require_blocks(), 1);
+  var import_blocks93 = __toESM(require_blocks(), 1);
   var transforms33 = {
     to: [
       {
         type: "block",
         blocks: ["core/site-logo"],
         transform: ({ isLink, linkTarget }) => {
-          return (0, import_blocks92.createBlock)("core/site-logo", {
+          return (0, import_blocks93.createBlock)("core/site-logo", {
             isLink,
             linkTarget
           });
@@ -73239,7 +73244,7 @@ ${text}
   var import_components147 = __toESM(require_components(), 1);
   var import_compose61 = __toESM(require_compose(), 1);
   var import_i18n229 = __toESM(require_i18n(), 1);
-  var import_blocks93 = __toESM(require_blocks(), 1);
+  var import_blocks94 = __toESM(require_blocks(), 1);
 
   // packages/block-library/build-module/social-link/social-list.mjs
   var import_i18n228 = __toESM(require_i18n(), 1);
@@ -73603,7 +73608,7 @@ ${text}
     const isContentOnlyMode = (0, import_block_editor236.useBlockEditingMode)() === "contentOnly";
     const { activeVariation } = (0, import_data138.useSelect)(
       (select10) => {
-        const { getActiveBlockVariation } = select10(import_blocks93.store);
+        const { getActiveBlockVariation } = select10(import_blocks94.store);
         return {
           activeVariation: getActiveBlockVariation(name118, attributes2)
         };
@@ -75085,7 +75090,7 @@ ${text}
   };
 
   // packages/block-library/build-module/spacer/transforms.mjs
-  var import_blocks94 = __toESM(require_blocks(), 1);
+  var import_blocks95 = __toESM(require_blocks(), 1);
   var transforms34 = {
     to: [
       {
@@ -75093,7 +75098,7 @@ ${text}
         blocks: ["core/separator"],
         // Transform to Separator.
         transform: ({ anchor }) => {
-          return (0, import_blocks94.createBlock)("core/separator", {
+          return (0, import_blocks95.createBlock)("core/separator", {
             anchor: anchor || void 0
           });
         }
@@ -75162,7 +75167,7 @@ ${text}
   var import_data142 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/tabs/use-tab-actions.mjs
-  var import_blocks95 = __toESM(require_blocks(), 1);
+  var import_blocks96 = __toESM(require_blocks(), 1);
   var import_block_editor244 = __toESM(require_block_editor(), 1);
   var import_data141 = __toESM(require_data(), 1);
   function useTabActions(tabsClientId) {
@@ -75193,7 +75198,7 @@ ${text}
       }
       const newIndex = atIndex ?? tabPanelBlocks.length;
       insertBlock(
-        (0, import_blocks95.createBlock)("core/tab-panel"),
+        (0, import_blocks96.createBlock)("core/tab-panel"),
         newIndex,
         tabPanelsClientId,
         false
@@ -77205,7 +77210,7 @@ ${text}
   }
 
   // packages/block-library/build-module/table/transforms.mjs
-  var import_blocks96 = __toESM(require_blocks(), 1);
+  var import_blocks97 = __toESM(require_blocks(), 1);
 
   // packages/block-library/build-module/table/utils.mjs
   function normalizeRowColSpan(rowColSpan) {
@@ -77304,7 +77309,7 @@ ${text}
             },
             {}
           );
-          return (0, import_blocks96.createBlock)("core/table", attributes2);
+          return (0, import_blocks97.createBlock)("core/table", attributes2);
         }
       }
     ]
@@ -77626,7 +77631,7 @@ ${text}
 
   // packages/block-library/build-module/table-of-contents/edit.mjs
   var import_block_editor256 = __toESM(require_block_editor(), 1);
-  var import_blocks98 = __toESM(require_blocks(), 1);
+  var import_blocks99 = __toESM(require_blocks(), 1);
   var import_components154 = __toESM(require_components(), 1);
   var import_data147 = __toESM(require_data(), 1);
   var import_element152 = __toESM(require_element(), 1);
@@ -77672,7 +77677,7 @@ ${text}
   }
 
   // packages/block-library/build-module/table-of-contents/utils.mjs
-  var import_blocks97 = __toESM(require_blocks(), 1);
+  var import_blocks98 = __toESM(require_blocks(), 1);
   var import_escape_html3 = __toESM(require_escape_html(), 1);
   function linearToNestedHeadingList2(headingList) {
     const nestedHeadingList = [];
@@ -77707,7 +77712,7 @@ ${text}
   }
   function createListItemBlocks(nestedHeadingList, ordered) {
     return nestedHeadingList.map(
-      ({ heading: { content, link }, children }) => (0, import_blocks97.createBlock)(
+      ({ heading: { content, link }, children }) => (0, import_blocks98.createBlock)(
         "core/list-item",
         {
           // Headings are plain text, and links can carry query args on
@@ -77717,7 +77722,7 @@ ${text}
           )}">${(0, import_escape_html3.escapeEditableHTML)(content)}</a>` : (0, import_escape_html3.escapeEditableHTML)(content)
         },
         children?.length ? [
-          (0, import_blocks97.createBlock)(
+          (0, import_blocks98.createBlock)(
             "core/list",
             { ordered },
             createListItemBlocks(children, ordered)
@@ -77888,7 +77893,7 @@ ${text}
             setIsConfirmingDetach(false);
             replaceBlocks(
               clientId,
-              (0, import_blocks98.createBlock)(
+              (0, import_blocks99.createBlock)(
                 "core/list",
                 { ordered },
                 createListItemBlocks(headingTree, ordered)
@@ -78660,20 +78665,20 @@ ${text}
   });
 
   // packages/block-library/build-module/tag-cloud/transforms.mjs
-  var import_blocks99 = __toESM(require_blocks(), 1);
+  var import_blocks100 = __toESM(require_blocks(), 1);
   var transforms36 = {
     from: [
       {
         type: "block",
         blocks: ["core/categories"],
-        transform: () => (0, import_blocks99.createBlock)("core/tag-cloud")
+        transform: () => (0, import_blocks100.createBlock)("core/tag-cloud")
       }
     ],
     to: [
       {
         type: "block",
         blocks: ["core/categories"],
-        transform: () => (0, import_blocks99.createBlock)("core/categories")
+        transform: () => (0, import_blocks100.createBlock)("core/categories")
       }
     ]
   };
@@ -79009,7 +79014,7 @@ ${text}
   };
 
   // packages/block-library/build-module/template-part/edit/index.mjs
-  var import_blocks104 = __toESM(require_blocks(), 1);
+  var import_blocks105 = __toESM(require_blocks(), 1);
   var import_data158 = __toESM(require_data(), 1);
   var import_block_editor268 = __toESM(require_block_editor(), 1);
   var import_components163 = __toESM(require_components(), 1);
@@ -79030,7 +79035,7 @@ ${text}
   var import_core_data87 = __toESM(require_core_data(), 1);
   var import_block_editor264 = __toESM(require_block_editor(), 1);
   var import_element155 = __toESM(require_element(), 1);
-  var import_blocks100 = __toESM(require_blocks(), 1);
+  var import_blocks101 = __toESM(require_blocks(), 1);
   var import_i18n244 = __toESM(require_i18n(), 1);
   function useAlternativeTemplateParts(area, excludedId) {
     const { templateParts, isResolving } = (0, import_data152.useSelect)((select10) => {
@@ -79083,7 +79088,7 @@ ${text}
       const record = {
         title,
         slug: cleanSlug,
-        content: (0, import_blocks100.serialize)(blocks),
+        content: (0, import_blocks101.serialize)(blocks),
         // `area` is filterable on the server and defaults to `UNCATEGORIZED`
         // if provided value is not allowed.
         area
@@ -79275,12 +79280,12 @@ ${text}
   var import_components160 = __toESM(require_components(), 1);
 
   // packages/block-library/build-module/template-part/edit/utils/map-template-part-to-block-pattern.mjs
-  var import_blocks101 = __toESM(require_blocks(), 1);
+  var import_blocks102 = __toESM(require_blocks(), 1);
   function mapTemplatePartToBlockPattern(templatePart) {
     return {
       name: createTemplatePartId(templatePart.theme, templatePart.slug),
       title: templatePart.title.rendered,
-      blocks: (0, import_blocks101.parse)(templatePart.content.raw),
+      blocks: (0, import_blocks102.parse)(templatePart.content.raw),
       templatePart
     };
   }
@@ -79372,7 +79377,7 @@ ${text}
   var import_notices21 = __toESM(require_notices(), 1);
 
   // packages/block-library/build-module/template-part/edit/utils/transformers.mjs
-  var import_blocks102 = __toESM(require_blocks(), 1);
+  var import_blocks103 = __toESM(require_blocks(), 1);
   function transformWidgetToBlock(widget) {
     if (widget.id_base !== "block") {
       let attributes2;
@@ -79387,10 +79392,10 @@ ${text}
         };
       }
       return switchLegacyWidgetType(
-        (0, import_blocks102.createBlock)("core/legacy-widget", attributes2)
+        (0, import_blocks103.createBlock)("core/legacy-widget", attributes2)
       );
     }
-    const parsedBlocks = (0, import_blocks102.parse)(widget.instance.raw.content, {
+    const parsedBlocks = (0, import_blocks103.parse)(widget.instance.raw.content, {
       __unstableSkipAutop: true
     });
     if (!parsedBlocks.length) {
@@ -79398,14 +79403,14 @@ ${text}
     }
     const block = parsedBlocks[0];
     if (block.name === "core/widget-group") {
-      return (0, import_blocks102.createBlock)(
-        (0, import_blocks102.getGroupingBlockName)(),
+      return (0, import_blocks103.createBlock)(
+        (0, import_blocks103.getGroupingBlockName)(),
         void 0,
         transformInnerBlocks(block.innerBlocks)
       );
     }
     if (block.innerBlocks.length > 0) {
-      return (0, import_blocks102.cloneBlock)(
+      return (0, import_blocks103.cloneBlock)(
         block,
         void 0,
         transformInnerBlocks(block.innerBlocks)
@@ -79414,7 +79419,7 @@ ${text}
     return block;
   }
   function switchLegacyWidgetType(block) {
-    const transforms40 = (0, import_blocks102.getPossibleBlockTransformations)([block]).filter(
+    const transforms40 = (0, import_blocks103.getPossibleBlockTransformations)([block]).filter(
       (item) => {
         if (!item.transforms) {
           return true;
@@ -79431,14 +79436,14 @@ ${text}
     if (!transforms40.length) {
       return void 0;
     }
-    return (0, import_blocks102.switchToBlockType)(block, transforms40[0].name);
+    return (0, import_blocks103.switchToBlockType)(block, transforms40[0].name);
   }
   function transformInnerBlocks(innerBlocks = []) {
     return innerBlocks.flatMap((block) => {
       if (block.name === "core/legacy-widget") {
         return switchLegacyWidgetType(block);
       }
-      return (0, import_blocks102.createBlock)(
+      return (0, import_blocks103.createBlock)(
         block.name,
         block.attributes,
         transformInnerBlocks(block.innerBlocks)
@@ -79667,7 +79672,7 @@ ${text}
   var import_block_editor267 = __toESM(require_block_editor(), 1);
   var import_data157 = __toESM(require_data(), 1);
   var import_element160 = __toESM(require_element(), 1);
-  var import_blocks103 = __toESM(require_blocks(), 1);
+  var import_blocks104 = __toESM(require_blocks(), 1);
   var import_jsx_runtime543 = __toESM(require_jsx_runtime(), 1);
   function useRenderAppender(hasInnerBlocks) {
     const blockEditingMode = (0, import_block_editor267.useBlockEditingMode)();
@@ -79724,7 +79729,7 @@ ${text}
       if (!content || typeof content !== "string") {
         return [];
       }
-      return (0, import_blocks103.parse)(content);
+      return (0, import_blocks104.parse)(content);
     }, [id, editedBlocks, content]);
     const innerBlocksProps = (0, import_block_editor267.useInnerBlocksProps)(blockProps, {
       value: blocks,
@@ -79925,7 +79930,7 @@ ${text}
         templatePartId,
         {
           blocks: pattern.blocks,
-          content: (0, import_blocks104.serialize)(pattern.blocks)
+          content: (0, import_blocks105.serialize)(pattern.blocks)
         }
       );
       createSuccessNotice(
@@ -81493,7 +81498,7 @@ ${text}
 
   // packages/block-library/build-module/terms-query/edit/terms-query-placeholder.mjs
   var import_data166 = __toESM(require_data(), 1);
-  var import_blocks105 = __toESM(require_blocks(), 1);
+  var import_blocks106 = __toESM(require_blocks(), 1);
   var import_block_editor275 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime559 = __toESM(require_jsx_runtime(), 1);
   function TermsQueryPlaceholder({
@@ -81507,7 +81512,7 @@ ${text}
           getActiveBlockVariation,
           getBlockType: getBlockType6,
           getBlockVariations: getBlockVariations4
-        } = select10(import_blocks105.store);
+        } = select10(import_blocks106.store);
         return {
           blockType: getBlockType6(name118),
           activeBlockVariation: getActiveBlockVariation(
@@ -81533,7 +81538,7 @@ ${text}
           if (variation.innerBlocks) {
             replaceInnerBlocks(
               clientId,
-              (0, import_blocks105.createBlocksFromInnerBlocksTemplate)(
+              (0, import_blocks106.createBlocksFromInnerBlocksTemplate)(
                 variation.innerBlocks
               ),
               false
@@ -82042,13 +82047,13 @@ ${text}
   }
 
   // packages/block-library/build-module/text-columns/transforms.mjs
-  var import_blocks106 = __toESM(require_blocks(), 1);
+  var import_blocks107 = __toESM(require_blocks(), 1);
   var transforms37 = {
     to: [
       {
         type: "block",
         blocks: ["core/columns"],
-        transform: ({ className, columns, content, width }) => (0, import_blocks106.createBlock)(
+        transform: ({ className, columns, content, width }) => (0, import_blocks107.createBlock)(
           "core/columns",
           {
             align: "wide" === width || "full" === width ? width : void 0,
@@ -82056,8 +82061,8 @@ ${text}
             columns
           },
           content.map(
-            ({ children }) => (0, import_blocks106.createBlock)("core/column", {}, [
-              (0, import_blocks106.createBlock)("core/paragraph", {
+            ({ children }) => (0, import_blocks107.createBlock)("core/column", {}, [
+              (0, import_blocks107.createBlock)("core/paragraph", {
                 content: children
               })
             ])
@@ -82233,7 +82238,7 @@ ${text}
   // packages/block-library/build-module/verse/edit.mjs
   var import_i18n262 = __toESM(require_i18n(), 1);
   var import_block_editor283 = __toESM(require_block_editor(), 1);
-  var import_blocks107 = __toESM(require_blocks(), 1);
+  var import_blocks108 = __toESM(require_blocks(), 1);
   var import_jsx_runtime568 = __toESM(require_jsx_runtime(), 1);
   function VerseEdit(props) {
     const {
@@ -82266,7 +82271,7 @@ ${text}
         ...blockProps,
         __unstablePastePlainText: true,
         __unstableOnSplitAtDoubleLineEnd: insertBlocksAfter ? () => insertBlocksAfter(
-          (0, import_blocks107.createBlock)((0, import_blocks107.getDefaultBlockName)())
+          (0, import_blocks108.createBlock)((0, import_blocks108.getDefaultBlockName)())
         ) : void 0
       }
     );
@@ -82362,20 +82367,20 @@ ${text}
   }
 
   // packages/block-library/build-module/verse/transforms.mjs
-  var import_blocks108 = __toESM(require_blocks(), 1);
+  var import_blocks109 = __toESM(require_blocks(), 1);
   var transforms38 = {
     from: [
       {
         type: "block",
         blocks: ["core/paragraph"],
-        transform: (attributes2) => (0, import_blocks108.createBlock)("core/verse", attributes2)
+        transform: (attributes2) => (0, import_blocks109.createBlock)("core/verse", attributes2)
       }
     ],
     to: [
       {
         type: "block",
         blocks: ["core/paragraph"],
-        transform: (attributes2) => (0, import_blocks108.createBlock)("core/paragraph", attributes2)
+        transform: (attributes2) => (0, import_blocks109.createBlock)("core/paragraph", attributes2)
       }
     ]
   };
@@ -83408,7 +83413,7 @@ ${text}
 
   // packages/block-library/build-module/video/transforms.mjs
   var import_blob21 = __toESM(require_blob(), 1);
-  var import_blocks109 = __toESM(require_blocks(), 1);
+  var import_blocks110 = __toESM(require_blocks(), 1);
   var transforms39 = {
     from: [
       {
@@ -83418,7 +83423,7 @@ ${text}
         },
         transform(files) {
           const file = files[0];
-          const block = (0, import_blocks109.createBlock)("core/video", {
+          const block = (0, import_blocks110.createBlock)("core/video", {
             blob: (0, import_blob21.createBlobURL)(file)
           });
           return block;
@@ -83481,7 +83486,7 @@ ${text}
             attributes2.blob = attributes2.src;
             delete attributes2.src;
           }
-          return (0, import_blocks109.createBlock)("core/video", attributes2);
+          return (0, import_blocks110.createBlock)("core/video", attributes2);
         }
       }
     ]
@@ -83727,7 +83732,7 @@ ${text}
   var import_block_editor290 = __toESM(require_block_editor(), 1);
   var import_data171 = __toESM(require_data(), 1);
   var import_core_data102 = __toESM(require_core_data(), 1);
-  var import_blocks110 = __toESM(require_blocks(), 1);
+  var import_blocks111 = __toESM(require_blocks(), 1);
   var import_jsx_runtime577 = __toESM(require_jsx_runtime(), 1);
   var formatName = "core/footnote";
   var { usesContextKey } = unlock(import_block_editor290.privateApis);
@@ -83759,7 +83764,7 @@ ${text}
       } = registry.select(import_block_editor290.store);
       const isFootnotesSupported = (0, import_data171.useSelect)(
         (select10) => {
-          if (!select10(import_blocks110.store).getBlockType("core/footnotes")) {
+          if (!select10(import_blocks111.store).getBlockType("core/footnotes")) {
             return false;
           }
           const allowedBlocks = select10(import_block_editor290.store).getSettings().allowedBlockTypes;
@@ -83844,7 +83849,7 @@ ${text}
             while (rootClientId && getBlockName(rootClientId) !== POST_CONTENT_BLOCK_NAME) {
               rootClientId = getBlockRootClientId(rootClientId);
             }
-            fnBlock = (0, import_blocks110.createBlock)("core/footnotes");
+            fnBlock = (0, import_blocks111.createBlock)("core/footnotes");
             insertBlock(fnBlock, void 0, rootClientId);
           }
           selectionChange(fnBlock.clientId, id, 0, 0);
@@ -84022,9 +84027,9 @@ ${text}
     if (window.__unstableAutoRegisterBlocks) {
       window.__unstableAutoRegisterBlocks.forEach((blockName) => {
         const bootstrappedBlockType = unlock(
-          (0, import_data172.select)(import_blocks111.store)
+          (0, import_data172.select)(import_blocks112.store)
         ).getBootstrappedBlockType(blockName);
-        (0, import_blocks111.registerBlockType)(blockName, {
+        (0, import_blocks112.registerBlockType)(blockName, {
           // Use all metadata from PHP registration,
           // but fall back title to block name if not provided,
           // ensure minimum apiVersion 3 for block wrapper support,
@@ -84074,12 +84079,12 @@ ${text}
         });
       });
     }
-    (0, import_blocks111.setDefaultBlockName)(name59);
+    (0, import_blocks112.setDefaultBlockName)(name59);
     if (window.wp && window.wp.oldEditor && blocks.some(({ name: name510 }) => name510 === name13)) {
-      (0, import_blocks111.setFreeformContentHandlerName)(name13);
+      (0, import_blocks112.setFreeformContentHandlerName)(name13);
     }
-    (0, import_blocks111.setUnregisteredTypeHandlerName)(name48);
-    (0, import_blocks111.setGroupingBlockName)(name35);
+    (0, import_blocks112.setUnregisteredTypeHandlerName)(name48);
+    (0, import_blocks112.setGroupingBlockName)(name35);
   };
   var __experimentalRegisterExperimentalCoreBlocks = true ? ({ enableFSEBlocks } = {}) => {
     const enabledExperiments = [enableFSEBlocks ? "fse" : null];

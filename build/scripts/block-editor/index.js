@@ -26067,10 +26067,8 @@ var wp;
                   switchToDefaultOrRemove();
                 }
               }
-              if (!getBlockOrder2(_clientId).length && (0, import_blocks25.isUnmodifiedBlock)(
-                getBlock2(_clientId),
-                "content"
-              )) {
+              const wrapper = getBlock2(_clientId);
+              if (wrapper && !getBlockOrder2(_clientId).length && (0, import_blocks25.isUnmodifiedBlock)(wrapper, "content")) {
                 removeBlock2(_clientId, false);
               }
             });
@@ -57371,9 +57369,11 @@ var wp;
             }
             if (node.contentEditable === "true" && !isMultiSelecting3()) {
               setContentEditableWrapper(node, false);
-              let element = startNode.nodeType === startNode.ELEMENT_NODE ? startNode : startNode.parentElement;
-              element = element?.closest("[contenteditable]");
-              element?.focus();
+              if (ownerDocument2.activeElement === node && ownerDocument2.hasFocus()) {
+                let element = startNode.nodeType === startNode.ELEMENT_NODE ? startNode : startNode.parentElement;
+                element = element?.closest("[contenteditable]");
+                element?.focus();
+              }
             }
             return;
           }
@@ -84561,7 +84561,7 @@ var wp;
     });
     (0, import_element262.useLayoutEffect)(() => {
       const element = anchorRef.current;
-      if (!isSelected || !element) {
+      if (!isSelected || element?.contentEditable !== "true") {
         return;
       }
       const { ownerDocument: ownerDocument2 } = element;
