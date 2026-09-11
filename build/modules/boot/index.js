@@ -12433,6 +12433,7 @@ function Canvas({ canvas }) {
           {
             postType: canvas.postType,
             postId: canvas.postId,
+            renderingMode: canvas.renderingMode,
             settings,
             backButton,
             onActionPerformed,

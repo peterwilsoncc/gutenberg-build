@@ -70,7 +70,10 @@ var route = {
   title: () => (0, import_i18n._x)("Identity", "site identity"),
   async canvas() {
     return {
-      isPreview: true
+      isPreview: true,
+      // This route shows the site, so it shows the template around
+      // whatever the canvas resolves to, including a static front page.
+      renderingMode: "template-locked"
     };
   },
   loader: async () => {
