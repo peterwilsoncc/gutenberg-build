@@ -739,12 +739,12 @@ svg.components-checkbox-control__indeterminate {
 }
 @media not (prefers-reduced-motion) {
   .components-circular-option-picker__option-wrapper {
-    transition: 100ms transform ease;
+    transition: 100ms transform ease-out;
     will-change: transform;
   }
 }
 .components-circular-option-picker__option-wrapper:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 .components-circular-option-picker__option-wrapper > div {
   height: 100%;
@@ -754,10 +754,7 @@ svg.components-checkbox-control__indeterminate {
 .components-circular-option-picker__option-wrapper::before {
   content: "";
   position: absolute;
-  top: 1px;
-  right: 1px;
-  bottom: 1px;
-  left: 1px;
+  inset: 1px;
   border-radius: 50%;
   z-index: -1;
   background: url('data:image/svg+xml,%3Csvg width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M6 8V6H4v2h2zM8 8V6h2v2H8zM10 16H8v-2h2v2zM12 16v-2h2v2h-2zM12 18v-2h-2v2H8v2h2v-2h2zM14 18v2h-2v-2h2zM16 18h-2v-2h2v2z" fill="%23555D65"/%3E%3Cpath fill-rule="evenodd" clip-rule="evenodd" d="M18 18h2v-2h-2v-2h2v-2h-2v-2h2V8h-2v2h-2V8h-2v2h2v2h-2v2h2v2h2v2zm-2-4v-2h2v2h-2z" fill="%23555D65"/%3E%3Cpath d="M18 18v2h-2v-2h2z" fill="%23555D65"/%3E%3Cpath fill-rule="evenodd" clip-rule="evenodd" d="M8 10V8H6v2H4v2h2v2H4v2h2v2H4v2h2v2H4v2h2v-2h2v2h2v-2h2v2h2v-2h2v2h2v-2h2v2h2v-2h2v-2h-2v-2h2v-2h-2v-2h2v-2h-2v-2h2V8h-2V6h2V4h-2v2h-2V4h-2v2h-2V4h-2v2h-2V4h-2v2h2v2h-2v2H8zm0 2v-2H6v2h2zm2 0v-2h2v2h-2zm0 2v-2H8v2H6v2h2v2H6v2h2v2h2v-2h2v2h2v-2h2v2h2v-2h2v2h2v-2h-2v-2h2v-2h-2v-2h2v-2h-2v-2h2V8h-2V6h-2v2h-2V6h-2v2h-2v2h2v2h-2v2h-2z" fill="%23555D65"/%3E%3Cpath fill-rule="evenodd" clip-rule="evenodd" d="M4 0H2v2H0v2h2v2H0v2h2v2H0v2h2v2H0v2h2v2H0v2h2v2H0v2h2v2H0v2h2v-2h2v2h2v-2h2v2h2v-2h2v2h2v-2h2v2h2v-2h2v2h2v-2h2v2h2v-2h2v-2h-2v-2h2v-2h-2v-2h2v-2h-2v-2h2v-2h-2v-2h2V8h-2V6h2V4h-2V2h2V0h-2v2h-2V0h-2v2h-2V0h-2v2h-2V0h-2v2h-2V0h-2v2H8V0H6v2H4V0zm0 4V2H2v2h2zm2 0V2h2v2H6zm0 2V4H4v2H2v2h2v2H2v2h2v2H2v2h2v2H2v2h2v2H2v2h2v2h2v-2h2v2h2v-2h2v2h2v-2h2v2h2v-2h2v2h2v-2h2v2h2v-2h-2v-2h2v-2h-2v-2h2v-2h-2v-2h2v-2h-2v-2h2V8h-2V6h2V4h-2V2h-2v2h-2V2h-2v2h-2V2h-2v2h-2V2h-2v2H8v2H6z" fill="%23555D65"/%3E%3C/svg%3E');
@@ -781,11 +778,7 @@ svg.components-checkbox-control__indeterminate {
 .components-circular-option-picker__option {
   cursor: var(--wpds-cursor-control, pointer);
 }
-.components-circular-option-picker__option:hover {
-  box-shadow: inset 0 0 0 14px !important;
-}
 .components-circular-option-picker__option[aria-pressed=true], .components-circular-option-picker__option[aria-selected=true] {
-  box-shadow: inset 0 0 0 4px;
   position: relative;
   z-index: 1;
   overflow: visible;
@@ -801,31 +794,10 @@ svg.components-checkbox-control__indeterminate {
 .components-circular-option-picker__option::after {
   content: "";
   position: absolute;
-  top: -1px;
-  right: -1px;
-  bottom: -1px;
-  left: -1px;
+  inset: -1px;
+  border: 1px solid transparent;
   border-radius: 50%;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
-  border: 1px solid transparent;
-  box-sizing: inherit;
-}
-.components-circular-option-picker__option:focus::after {
-  content: "";
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 2px #fff;
-  position: absolute;
-  top: 50%;
-  right: 50%;
-  transform: translate(50%, -50%);
-  border: 2px solid #757575;
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-}
-.components-circular-option-picker__option.components-button:focus {
-  background-color: transparent;
-  box-shadow: inset 0 0 0 14px;
-  outline: none;
 }
 
 .components-circular-option-picker__button-action .components-circular-option-picker__option {
