@@ -39143,9 +39143,7 @@ var wp;
     }, [location, history, previousCanvas]);
     return goBack;
   }
-  function useSpecificEditorSettings({
-    defaultRenderingMode = "post-only"
-  } = {}) {
+  function useSpecificEditorSettings() {
     const { query } = useLocation12();
     const { canvas = "view" } = query;
     const onNavigateToEntityRecord = useNavigateToEntityRecord();
@@ -39184,15 +39182,13 @@ var wp;
         supportsTemplateMode: true,
         onNavigateToEntityRecord,
         onNavigateToPreviousEntityRecord,
-        isPreviewMode: canvas === "view",
-        defaultRenderingMode
+        isPreviewMode: canvas === "view"
       };
     }, [
       settings2,
       globalStyles,
       globalSettings,
       canvas,
-      defaultRenderingMode,
       currentPostIsTrashed,
       onNavigateToEntityRecord,
       onNavigateToPreviousEntityRecord
@@ -39745,8 +39741,9 @@ var wp;
   function EditSiteEditor({
     isHomeRoute = false,
     // Routes that stand for the whole site pass 'template-locked', so the
-    // canvas shows the template around whatever it is rendering.
-    defaultRenderingMode = "post-only"
+    // canvas shows the template around whatever it is rendering, and the
+    // controls for switching it are not offered.
+    renderingMode
   }) {
     const location = useLocation17();
     const history = useHistory11();
@@ -39776,9 +39773,7 @@ var wp;
       CanvasLoader,
       "edit-site-editor__loading-progress"
     );
-    const editorSettings = useSpecificEditorSettings({
-      defaultRenderingMode
-    });
+    const editorSettings = useSpecificEditorSettings();
     const { resetZoomLevel } = unlock((0, import_data33.useDispatch)(import_block_editor5.store));
     const { setCurrentRevisionId, resetStylesNavigation } = unlock(
       (0, import_data33.useDispatch)(import_editor17.store)
@@ -39856,6 +39851,7 @@ var wp;
           postId: postWithTemplate ? context.postId : postId,
           templateId: postWithTemplate ? postId : void 0,
           settings: editorSettings,
+          renderingMode,
           className: "edit-site-editor__editor-interface",
           customSaveButton: _isPreviewingTheme && /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(SaveButton, { size: "compact" }),
           customSavePanel: _isPreviewingTheme && /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(SavePanel, {}),
@@ -39919,7 +39915,7 @@ var wp;
       },
       preview({ siteData }) {
         const isBlockTheme = siteData.currentTheme?.is_block_theme;
-        return isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(EditSiteEditor, { isHomeRoute: true, defaultRenderingMode: "template-locked" }) : void 0;
+        return isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(EditSiteEditor, { isHomeRoute: true, renderingMode: "template-locked" }) : void 0;
       },
       mobileSidebar({ siteData }) {
         if (!isThemeDataLoaded(siteData)) {
@@ -59520,7 +59516,7 @@ If there's a particular need for this, please submit a feature request at https:
     areas: {
       sidebar: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(SidebarNavigationScreenIdentity, {}),
       content: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(SidebarIdentity, {}),
-      preview: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(EditSiteEditor, { defaultRenderingMode: "template-locked" }),
+      preview: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(EditSiteEditor, { renderingMode: "template-locked" }),
       mobileContent: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(SidebarIdentity, {})
     },
     widths: {
@@ -71824,7 +71820,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (query.preview === "stylebook") {
       return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(StyleBookPreviewArea, { siteData });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(EditSiteEditor, { defaultRenderingMode: "template-locked" });
+    return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(EditSiteEditor, { renderingMode: "template-locked" });
   }
   var stylesRoute = {
     name: "styles",

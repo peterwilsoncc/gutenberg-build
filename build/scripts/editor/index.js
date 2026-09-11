@@ -317,6 +317,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/warning
+  var require_warning = __commonJS({
+    "package-external:@wordpress/warning"(exports, module) {
+      module.exports = window.wp.warning;
+    }
+  });
+
   // package-external:@wordpress/notices
   var require_notices = __commonJS({
     "package-external:@wordpress/notices"(exports, module) {
@@ -525,13 +532,6 @@ var wp;
   var require_theme = __commonJS({
     "package-external:@wordpress/theme"(exports, module) {
       module.exports = window.wp.theme;
-    }
-  });
-
-  // package-external:@wordpress/warning
-  var require_warning = __commonJS({
-    "package-external:@wordpress/warning"(exports, module) {
-      module.exports = window.wp.warning;
     }
   });
 
@@ -5941,6 +5941,7 @@ var wp;
   var import_api_fetch8 = __toESM(require_api_fetch(), 1);
   var import_escape_html = __toESM(require_escape_html(), 1);
   var import_deprecated9 = __toESM(require_deprecated(), 1);
+  var import_warning2 = __toESM(require_warning(), 1);
   var import_blocks20 = __toESM(require_blocks(), 1);
   var import_notices20 = __toESM(require_notices(), 1);
   var import_core_data62 = __toESM(require_core_data(), 1);
@@ -94848,6 +94849,7 @@ If there's a particular need for this, please submit a feature request at https:
       recovery,
       initialEdits,
       initialViewport,
+      renderingMode: renderingMode2,
       children,
       BlockEditorProviderComponent = ExperimentalBlockEditorProvider,
       __unstableTemplate: template2
@@ -94874,7 +94876,7 @@ If there's a particular need for this, please submit a feature request at https:
           } = unlock(select9(store));
           const { getEntitiesConfig, getEntityRecordEdits } = select9(import_core_data58.store);
           const _mode = getRenderingMode2();
-          const _defaultMode = getDefaultRenderingMode2(post2.type);
+          const _defaultMode = renderingMode2 ?? getDefaultRenderingMode2(post2.type);
           const hasResolvedDefaultMode = _defaultMode === "template-locked" ? hasTemplate : _defaultMode !== void 0;
           const isRenderingModeReady = _defaultMode !== void 0;
           const entityEdits = getEntityRecordEdits(
@@ -94893,7 +94895,7 @@ If there's a particular need for this, please submit a feature request at https:
             currentRevisionId: _getCurrentRevisionId()
           };
         },
-        [post2.type, post2.id, hasTemplate]
+        [post2.type, post2.id, hasTemplate, renderingMode2]
       );
       const shouldRenderTemplate = hasTemplate && mode !== "post-only";
       const rootLevelPost = shouldRenderTemplate ? template2 : post2;
@@ -94995,8 +94997,9 @@ If there's a particular need for this, please submit a feature request at https:
         setCanvasWidth2
       ]);
       (0, import_element285.useLayoutEffect)(() => {
-        updateEditorSettings2(settings);
-      }, [settings, updateEditorSettings2]);
+        updateEditorSettings2({ ...settings, renderingMode: renderingMode2 });
+        return () => updateEditorSettings2({ renderingMode: void 0 });
+      }, [settings, renderingMode2, updateEditorSettings2]);
       (0, import_element285.useEffect)(() => {
         setCurrentTemplateId2(template2?.id);
       }, [template2?.id, setCurrentTemplateId2]);
@@ -95334,15 +95337,18 @@ If there's a particular need for this, please submit a feature request at https:
         template: savedTemplate.slug
       }
     );
+    const { defaultRenderingMode, renderingMode: renderingMode2 } = select9.getEditorSettings();
     registry.dispatch(import_notices19.store).createSuccessNotice(
       (0, import_i18n221.__)("Custom template created. You're in template mode now."),
       {
         type: "snackbar",
-        actions: [
+        // An editor with a fixed rendering mode has no other mode
+        // to go back to, so the action is not offered.
+        actions: renderingMode2 ? [] : [
           {
             label: (0, import_i18n221.__)("Back"),
             onClick: () => dispatch9.setRenderingMode(
-              select9.getEditorSettings().defaultRenderingMode
+              defaultRenderingMode
             )
           }
         ]
@@ -96094,7 +96100,14 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   var setRenderingMode = (mode) => ({ dispatch: dispatch9, registry, select: select9 }) => {
-    if (select9.__unstableIsEditorReady() && !select9.getEditorSettings().isPreviewMode) {
+    const settings = select9.getEditorSettings();
+    if (settings.renderingMode && mode !== settings.renderingMode) {
+      (0, import_warning2.default)(
+        `setRenderingMode( '${mode}' ) was ignored: this editor is using overriding rendering mode from '${settings.renderingMode}'.`
+      );
+      return;
+    }
+    if (select9.__unstableIsEditorReady() && !settings.isPreviewMode) {
       registry.dispatch(import_block_editor37.store).clearSelectedBlock();
     }
     dispatch9({
@@ -100163,7 +100176,7 @@ ${content}
   var import_components171 = __toESM(require_components(), 1);
   var import_plugins4 = __toESM(require_plugins(), 1);
   var import_data121 = __toESM(require_data(), 1);
-  var import_warning2 = __toESM(require_warning(), 1);
+  var import_warning3 = __toESM(require_warning(), 1);
 
   // packages/editor/build-module/components/preferences-modal/enable-plugin-document-setting-panel.mjs
   var import_components170 = __toESM(require_components(), 1);
@@ -100231,7 +100244,7 @@ ${content}
     );
     const { toggleEditorPanelOpened: toggleEditorPanelOpened2 } = (0, import_data121.useDispatch)(store);
     if (void 0 === name2) {
-      (0, import_warning2.default)("PluginDocumentSettingPanel requires a name property.");
+      (0, import_warning3.default)("PluginDocumentSettingPanel requires a name property.");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime484.jsxs)(import_jsx_runtime484.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(
@@ -100653,6 +100666,7 @@ ${content}
       onNavigateToEntityRecord,
       getEditorSettings: getEditorSettings2,
       hasGoBack,
+      hasRenderingMode,
       id
     } = (0, import_data125.useSelect)((select9) => {
       const {
@@ -100668,6 +100682,7 @@ ${content}
         hasGoBack: editorSettings2.hasOwnProperty(
           "onNavigateToPreviousEntityRecord"
         ),
+        hasRenderingMode: !!editorSettings2.renderingMode,
         id: getCurrentTemplateId2()
       };
     }, []);
@@ -100753,7 +100768,7 @@ ${content}
             /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(ResetDefaultTemplate, { onClick: onClose }),
             canCreateTemplate && /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(CreateNewTemplate, {})
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(import_components179.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
+          !hasRenderingMode && /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(import_components179.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime496.jsx)(
             import_components179.MenuItem,
             {
               icon: !isTemplateHidden ? check_default : void 0,
@@ -100762,7 +100777,9 @@ ${content}
               onClick: () => {
                 const newRenderingMode = isTemplateHidden ? "template-locked" : "post-only";
                 setRenderingMode2(newRenderingMode);
-                setDefaultRenderingMode2(newRenderingMode);
+                setDefaultRenderingMode2(
+                  newRenderingMode
+                );
               },
               children: (0, import_i18n244.__)("Show template")
             }
@@ -108488,6 +108505,7 @@ ${content}
       isViewable,
       showIconLabels,
       isTemplateHidden,
+      hasRenderingMode,
       templateId: templateId2,
       isResponsiveEditing,
       isResponsiveEditingEnabled,
@@ -108521,6 +108539,7 @@ ${content}
         isViewable: getPostType(_currentPostType)?.viewable ?? false,
         showIconLabels: get("core", "showIconLabels"),
         isTemplateHidden: getRenderingMode2() === "post-only",
+        hasRenderingMode: !!getEditorSettings2().renderingMode,
         templateId: getCurrentTemplateId2(),
         isResponsiveEditing: _isResponsiveEditing(),
         isResponsiveEditingEnabled: getEditorSettings2().responsiveEditingEnabled,
@@ -108644,7 +108663,7 @@ ${content}
                 }
               ) })
             ] }),
-            !isTemplate2 && !!templateId2 && /* @__PURE__ */ (0, import_jsx_runtime573.jsxs)(import_jsx_runtime573.Fragment, { children: [
+            !isTemplate2 && !!templateId2 && !hasRenderingMode && /* @__PURE__ */ (0, import_jsx_runtime573.jsxs)(import_jsx_runtime573.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(menu_exports.Separator, {}),
               /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(menu_exports.Group, { children: /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(
                 menu_exports.CheckboxItem,
@@ -118694,6 +118713,7 @@ ${content}
     children,
     initialEdits,
     initialViewport,
+    renderingMode: renderingMode2,
     // This could be part of the settings.
     onActionPerformed,
     // The following abstractions are not ideal but necessary
@@ -118721,7 +118741,7 @@ ${content}
         } = select9(import_core_data151.store);
         const { getRenderingMode: getRenderingMode2, getCurrentPostType: getCurrentPostType2 } = select9(store);
         const postArgs = ["postType", postType2, postId2];
-        const renderingMode2 = getRenderingMode2();
+        const currentRenderingMode = getRenderingMode2();
         const currentPostType = getCurrentPostType2();
         const _isBlockTheme = getCurrentTheme()?.is_block_theme;
         const globalStylesId = __experimentalGetCurrentGlobalStylesId();
@@ -118743,7 +118763,7 @@ ${content}
           ),
           error: getResolutionError("getEntityRecord", postArgs)?.message,
           isBlockTheme: _isBlockTheme,
-          showGlobalStyles: _isBlockTheme && userCanEditGlobalStyles && (currentPostType === "wp_template" || renderingMode2 === "template-locked")
+          showGlobalStyles: _isBlockTheme && userCanEditGlobalStyles && (currentPostType === "wp_template" || currentRenderingMode === "template-locked")
         };
       },
       [postType2, postId2, templateId2]
@@ -118767,6 +118787,7 @@ ${content}
           settings,
           initialEdits,
           initialViewport,
+          renderingMode: renderingMode2,
           useSubRegistry: false,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(EditorInterface, { ...props, children: extraContent }),
