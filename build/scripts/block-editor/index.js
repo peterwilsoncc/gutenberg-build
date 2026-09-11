@@ -19878,29 +19878,39 @@ var wp;
   var EMPTY_ARRAY4 = [];
   var DEFAULT_CONTROLS = ["none", "left", "center", "right", "wide", "full"];
   var WIDE_CONTROLS = ["wide", "full"];
+  function useAlignmentSettings(isNoneOnly) {
+    return (0, import_data12.useSelect)(
+      (select3) => {
+        if (isNoneOnly) {
+          return {
+            wideControlsEnabled: false,
+            themeSupportsLayout: false,
+            isBlockBasedTheme: false
+          };
+        }
+        const settings2 = select3(store).getSettings();
+        return {
+          wideControlsEnabled: settings2.alignWide ?? false,
+          themeSupportsLayout: settings2.supportsLayout,
+          isBlockBasedTheme: settings2.__unstableIsBlockBasedTheme
+        };
+      },
+      [isNoneOnly]
+    );
+  }
   function useAvailableAlignments(controls = DEFAULT_CONTROLS) {
     if (!controls.includes("none")) {
       controls = ["none", ...controls];
     }
     const isNoneOnly = controls.length === 1 && controls[0] === "none";
-    const [wideControlsEnabled, themeSupportsLayout, isBlockBasedTheme] = (0, import_data12.useSelect)(
-      (select3) => {
-        if (isNoneOnly) {
-          return [false, false, false];
-        }
-        const settings2 = select3(store).getSettings();
-        return [
-          settings2.alignWide ?? false,
-          settings2.supportsLayout,
-          settings2.__unstableIsBlockBasedTheme
-        ];
-      },
-      [isNoneOnly]
-    );
+    const settings2 = useAlignmentSettings(isNoneOnly);
     const layout = useLayout();
     if (isNoneOnly) {
       return EMPTY_ARRAY4;
     }
+    return getAvailableAlignments(controls, layout, settings2);
+  }
+  function getAvailableAlignments(controls, layout, { wideControlsEnabled, themeSupportsLayout, isBlockBasedTheme }) {
     const layoutType = getLayoutType(layout?.type);
     if (themeSupportsLayout) {
       const layoutAlignments = layoutType.getAlignments(
@@ -19931,6 +19941,37 @@ var wp;
       return EMPTY_ARRAY4;
     }
     return alignments;
+  }
+  function useAlignmentMenu(controls = DEFAULT_CONTROLS) {
+    if (!controls.includes("none")) {
+      controls = ["none", ...controls];
+    }
+    const isNoneOnly = controls.length === 1 && controls[0] === "none";
+    const settings2 = useAlignmentSettings(isNoneOnly);
+    const layout = useLayout();
+    const [globalLayout] = useSettings("layout");
+    if (isNoneOnly) {
+      return { enabled: EMPTY_ARRAY4, unavailable: EMPTY_ARRAY4 };
+    }
+    const enabled = getAvailableAlignments(controls, layout, settings2);
+    const layoutOffersAlignments = !!getAvailableAlignments(
+      DEFAULT_CONTROLS,
+      layout,
+      settings2
+    ).length;
+    if (!layoutOffersAlignments) {
+      return { enabled, unavailable: EMPTY_ARRAY4 };
+    }
+    const themeNames = getAvailableAlignments(
+      DEFAULT_CONTROLS,
+      { ...globalLayout, type: "constrained" },
+      settings2
+    ).map(({ name }) => name);
+    const enabledNames = enabled.map(({ name }) => name);
+    const unavailable = controls.filter(
+      (name) => WIDE_CONTROLS.includes(name) && themeNames.includes(name) && !enabledNames.includes(name)
+    );
+    return { enabled, unavailable };
   }
 
   // packages/block-editor/build-module/components/block-alignment-control/constants.mjs
@@ -19974,11 +20015,20 @@ var wp;
     label = (0, import_i18n17.__)("Align block"),
     description
   }) {
-    const enabledControls = useAvailableAlignments(controls);
-    const hasEnabledControls = !!enabledControls.length;
-    if (!hasEnabledControls) {
+    const { enabled: enabledControls, unavailable: unavailableControls } = useAlignmentMenu(controls);
+    if (!enabledControls.length && !unavailableControls.length) {
       return null;
     }
+    const menuControls = enabledControls.length ? [...enabledControls] : [{ name: "none" }];
+    const enabledNames = menuControls.map(({ name }) => name);
+    menuControls.splice(
+      enabledNames.indexOf("none") + 1,
+      0,
+      ...unavailableControls.map((name) => ({
+        name,
+        isUnavailable: true
+      }))
+    );
     function onChangeAlignment(align) {
       onChange([value, "none"].includes(align) ? void 0 : align);
     }
@@ -20002,8 +20052,12 @@ var wp;
     } : {
       toggleProps: description ? { description } : {},
       children: ({ onClose }) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_jsx_runtime133.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_components13.MenuGroup, { className: "block-editor-block-alignment-control__menu-group", children: enabledControls.map(
-          ({ name: controlName, info }) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_jsx_runtime133.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_components13.MenuGroup, { className: "block-editor-block-alignment-control__menu-group", children: menuControls.map(
+          ({
+            name: controlName,
+            info,
+            isUnavailable
+          }) => {
             const { icon, title } = BLOCK_ALIGNMENTS_CONTROLS[controlName];
             const isSelected = controlName === value || !value && controlName === "none";
             return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
@@ -20018,6 +20072,7 @@ var wp;
                   }
                 ),
                 isSelected,
+                disabled: isUnavailable,
                 onClick: () => {
                   onChangeAlignment(
                     controlName
@@ -20025,7 +20080,7 @@ var wp;
                   onClose();
                 },
                 role: "menuitemradio",
-                info,
+                info: isUnavailable ? (0, import_i18n17.__)("Not available") : info,
                 children: title
               },
               controlName
@@ -93763,11 +93818,9 @@ var wp;
       (0, import_blocks111.getBlockSupport)(blockName, "align"),
       (0, import_blocks111.hasBlockSupport)(blockName, "alignWide", true)
     );
-    const validAlignments = useAvailableAlignments(
-      blockAllowedAlignments
-    ).map(({ name }) => name);
+    const { enabled, unavailable } = useAlignmentMenu(blockAllowedAlignments);
     const blockEditingMode = useBlockEditingMode();
-    if (!validAlignments.length || blockEditingMode !== "default") {
+    if (!enabled.length && !unavailable.length || blockEditingMode !== "default") {
       return null;
     }
     const updateAlignment = (nextAlign) => {
@@ -93785,7 +93838,7 @@ var wp;
       {
         value: align,
         onChange: updateAlignment,
-        controls: validAlignments
+        controls: blockAllowedAlignments
       }
     ) });
   }
