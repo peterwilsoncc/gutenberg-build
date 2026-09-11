@@ -830,10 +830,9 @@ var wp;
     (select) => (state, scope, item) => {
       scope = normalizeComplementaryAreaScope(scope);
       item = normalizeComplementaryAreaName(scope, item);
-      const pinnedItems = select(import_preferences2.store).get(
-        scope,
-        "pinnedItems"
-      );
+      const pinnedItems = select(
+        import_preferences2.store
+      ).get(scope, "pinnedItems");
       return pinnedItems?.[item] ?? true;
     }
   );

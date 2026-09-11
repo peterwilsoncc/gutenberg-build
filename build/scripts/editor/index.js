@@ -92175,10 +92175,9 @@ If there's a particular need for this, please submit a feature request at https:
     (select9) => (state2, scope, item) => {
       scope = normalizeComplementaryAreaScope(scope);
       item = normalizeComplementaryAreaName(scope, item);
-      const pinnedItems = select9(import_preferences5.store).get(
-        scope,
-        "pinnedItems"
-      );
+      const pinnedItems = select9(
+        import_preferences5.store
+      ).get(scope, "pinnedItems");
       return pinnedItems?.[item] ?? true;
     }
   );
@@ -117713,7 +117712,7 @@ ${content}
       return () => {
         unsubscribe();
         if (getActiveComplementaryArea2("core") === FLOATING_NOTES_SIDEBAR) {
-          disableComplementaryArea2("core", FLOATING_NOTES_SIDEBAR);
+          disableComplementaryArea2("core");
         }
       };
     }, [enabled, registry]);
