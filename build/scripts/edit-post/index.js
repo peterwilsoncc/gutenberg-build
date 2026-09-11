@@ -10938,11 +10938,6 @@ var wp;
   // packages/edit-post/build-module/components/more-menu/index.mjs
   var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
   var { MoreMenuPreferenceItem, ToolsMoreMenuGroup, ViewMoreMenuGroup } = unlock2(import_editor16.privateApis);
-  var FULLSCREEN_SHORTCUT = {
-    ariaKeyShortcut: import_keycodes.ariaKeyShortcut.secondary("f"),
-    displayShortcut: import_keycodes.displayShortcut.secondary("f"),
-    label: import_keycodes.shortcutAriaLabel.secondary("f")
-  };
   var MoreMenu = () => {
     const isLargeViewport = (0, import_compose.useViewportMatch)("large");
     return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_jsx_runtime36.Fragment, { children: [
@@ -10957,7 +10952,7 @@ var wp;
           messageDeactivated: (0, import_i18n11.__)(
             "Fullscreen mode deactivated."
           ),
-          shortcut: FULLSCREEN_SHORTCUT
+          shortcut: import_keycodes.keyboardShortcut.secondary("f")
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(ToolsMoreMenuGroup, { children: [

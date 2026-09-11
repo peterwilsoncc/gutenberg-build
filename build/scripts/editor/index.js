@@ -107877,6 +107877,7 @@ ${content}
   var import_data204 = __toESM(require_data(), 1);
   var import_components233 = __toESM(require_components(), 1);
   var import_preferences17 = __toESM(require_preferences(), 1);
+  var import_keycodes15 = __toESM(require_keycodes(), 1);
 
   // packages/editor/build-module/components/more-menu/copy-content-menu-item.mjs
   var import_data201 = __toESM(require_data(), 1);
@@ -108017,28 +108018,6 @@ ${content}
   var import_i18n302 = __toESM(require_i18n(), 1);
   var import_data202 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts7 = __toESM(require_keyboard_shortcuts(), 1);
-
-  // packages/editor/build-module/utils/keyboard-shortcut.mjs
-  var import_keycodes15 = __toESM(require_keycodes(), 1);
-  function getKeyboardShortcut({ character, modifier } = {}) {
-    if (!character) {
-      return null;
-    }
-    if (!modifier) {
-      return {
-        ariaKeyShortcut: character,
-        displayShortcut: character,
-        label: character
-      };
-    }
-    return {
-      ariaKeyShortcut: import_keycodes15.ariaKeyShortcut[modifier](character),
-      displayShortcut: import_keycodes15.displayShortcut[modifier](character),
-      label: import_keycodes15.shortcutAriaLabel[modifier](character)
-    };
-  }
-
-  // packages/editor/build-module/components/mode-switcher/index.mjs
   var import_jsx_runtime565 = __toESM(require_jsx_runtime(), 1);
   var MODES = [
     {
@@ -108051,11 +108030,11 @@ ${content}
     }
   ];
   function ModeSwitcher() {
-    const { keyCombination, isRichEditingEnabled, isCodeEditingEnabled, mode } = (0, import_data202.useSelect)(
+    const { shortcut, isRichEditingEnabled, isCodeEditingEnabled, mode } = (0, import_data202.useSelect)(
       (select9) => ({
-        keyCombination: select9(
-          import_keyboard_shortcuts7.store
-        ).getShortcutKeyCombination("core/editor/toggle-mode"),
+        shortcut: select9(import_keyboard_shortcuts7.store).getKeyboardShortcut(
+          "core/editor/toggle-mode"
+        ),
         isRichEditingEnabled: select9(store).getEditorSettings().richEditingEnabled,
         isCodeEditingEnabled: select9(store).getEditorSettings().codeEditingEnabled,
         mode: select9(store).getEditorMode()
@@ -108070,7 +108049,6 @@ ${content}
     if (!isCodeEditingEnabled && mode === "text") {
       selectedMode = "visual";
     }
-    const shortcut = getKeyboardShortcut(keyCombination);
     const choices = MODES.map((choice) => {
       if (!isCodeEditingEnabled && choice.value === "text") {
         choice = {
@@ -108223,14 +108201,6 @@ ${content}
 
   // packages/editor/build-module/components/more-menu/index.mjs
   var import_jsx_runtime568 = __toESM(require_jsx_runtime(), 1);
-  var DISTRACTION_FREE_SHORTCUT = getKeyboardShortcut({
-    character: "\\",
-    modifier: "primaryShift"
-  });
-  var KEYBOARD_SHORTCUTS_SHORTCUT = getKeyboardShortcut({
-    character: "h",
-    modifier: "access"
-  });
   function MoreMenu({ isRevisionMode = false }) {
     const { openModal: openModal2 } = (0, import_data204.useDispatch)(store3);
     const { set: setPreference } = (0, import_data204.useDispatch)(import_preferences17.store);
@@ -108311,7 +108281,7 @@ ${content}
                   messageDeactivated: (0, import_i18n304.__)(
                     "Distraction free mode deactivated."
                   ),
-                  shortcut: DISTRACTION_FREE_SHORTCUT
+                  shortcut: import_keycodes15.keyboardShortcut.primaryShift("\\")
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime568.jsx)(
@@ -108346,7 +108316,7 @@ ${content}
                 menu_exports.Item,
                 {
                   onClick: () => openModal2("editor/keyboard-shortcut-help"),
-                  shortcut: KEYBOARD_SHORTCUTS_SHORTCUT,
+                  shortcut: import_keycodes15.keyboardShortcut.access("h"),
                   children: /* @__PURE__ */ (0, import_jsx_runtime568.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n304.__)("Keyboard shortcuts") })
                 }
               ),
@@ -115972,7 +115942,7 @@ ${content}
   var SIDEBAR_ACTIVE_BY_DEFAULT = true;
   function Sidebar({ extraPanels, onActionPerformed }) {
     use_auto_switch_editor_sidebars_default();
-    const { tabName, keyboardShortcut, isRevisionsMode: isRevisionsMode2 } = (0, import_data260.useSelect)(
+    const { tabName, keyboardShortcut: keyboardShortcut2, isRevisionsMode: isRevisionsMode2 } = (0, import_data260.useSelect)(
       (select9) => {
         const shortcut = select9(
           import_keyboard_shortcuts11.store
@@ -116034,7 +116004,7 @@ ${content}
           /* translators: button label text should, if possible, be under 16 characters. */
           (0, import_i18n352._x)("Settings", "panel button label")
         ),
-        toggleShortcut: keyboardShortcut,
+        toggleShortcut: keyboardShortcut2,
         icon: (0, import_i18n352.isRTL)() ? drawer_left_default : drawer_right_default,
         isActiveByDefault: SIDEBAR_ACTIVE_BY_DEFAULT,
         render: /* @__PURE__ */ (0, import_jsx_runtime623.jsx)(tabs_exports.Root, { value: tabName, onValueChange: onTabSelect }),
