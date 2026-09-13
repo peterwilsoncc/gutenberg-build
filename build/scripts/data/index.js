@@ -2221,8 +2221,7 @@ var wp;
   var import_element3 = __toESM(require_element(), 1);
   var Context2 = (0, import_element3.createContext)(false);
   Context2.displayName = "AsyncModeContext";
-  var { Consumer: Consumer2, Provider: Provider2 } = Context2;
-  var context_default2 = Provider2;
+  var context_default2 = Context2.Provider;
 
   // packages/data/build-module/components/async-mode-provider/use-async-mode.mjs
   function useAsyncMode() {
