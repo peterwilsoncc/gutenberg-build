@@ -39293,6 +39293,7 @@ var wp;
       MoreMenuItem,
       {
         onClick: () => toggle("core/edit-site", "welcomeGuide"),
+        "aria-haspopup": "dialog",
         children: (0, import_i18n26.__)("Welcome Guide")
       }
     );

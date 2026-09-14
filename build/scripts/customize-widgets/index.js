@@ -421,7 +421,7 @@ var wp;
   var import_block_library = __toESM(require_block_library(), 1);
   var import_widgets5 = __toESM(require_widgets(), 1);
   var import_blocks2 = __toESM(require_blocks(), 1);
-  var import_data17 = __toESM(require_data(), 1);
+  var import_data18 = __toESM(require_data(), 1);
   var import_preferences4 = __toESM(require_preferences(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
@@ -12804,7 +12804,7 @@ ${content}
   // packages/customize-widgets/build-module/components/sidebar-block-editor/index.mjs
   var import_compose4 = __toESM(require_compose(), 1);
   var import_core_data = __toESM(require_core_data(), 1);
-  var import_data12 = __toESM(require_data(), 1);
+  var import_data13 = __toESM(require_data(), 1);
   var import_element56 = __toESM(require_element(), 1);
   var import_block_editor8 = __toESM(require_block_editor(), 1);
   var import_media_utils = __toESM(require_media_utils(), 1);
@@ -12969,6 +12969,7 @@ ${content}
 
   // packages/customize-widgets/build-module/components/more-menu/index.mjs
   var import_components4 = __toESM(require_components(), 1);
+  var import_data7 = __toESM(require_data(), 1);
   var import_element48 = __toESM(require_element(), 1);
   var import_i18n11 = __toESM(require_i18n(), 1);
   var import_keycodes2 = __toESM(require_keycodes(), 1);
@@ -13281,6 +13282,7 @@ ${content}
       "core/customize-widgets/keyboard-shortcuts",
       toggleKeyboardShortcutsModal
     );
+    const { toggle } = (0, import_data7.useDispatch)(import_preferences.store);
     return /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)(import_jsx_runtime56.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
         import_components4.ToolbarDropdownMenu,
@@ -13325,11 +13327,13 @@ ${content}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
-                import_preferences.PreferenceToggleMenuItem,
+                import_components4.MenuItem,
                 {
-                  scope: "core/customize-widgets",
-                  name: "welcomeGuide",
-                  label: (0, import_i18n11.__)("Welcome Guide")
+                  onClick: () => toggle(
+                    "core/customize-widgets",
+                    "welcomeGuide"
+                  ),
+                  children: (0, import_i18n11.__)("Welcome Guide")
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)(
@@ -13471,13 +13475,13 @@ ${content}
 
   // packages/customize-widgets/build-module/components/inserter/use-inserter.mjs
   var import_element50 = __toESM(require_element(), 1);
-  var import_data7 = __toESM(require_data(), 1);
+  var import_data8 = __toESM(require_data(), 1);
   function useInserter(inserter) {
-    const isInserterOpened2 = (0, import_data7.useSelect)(
+    const isInserterOpened2 = (0, import_data8.useSelect)(
       (select) => select(store).isInserterOpened(),
       []
     );
-    const { setIsInserterOpened: setIsInserterOpened2 } = (0, import_data7.useDispatch)(store);
+    const { setIsInserterOpened: setIsInserterOpened2 } = (0, import_data8.useDispatch)(store);
     (0, import_element50.useEffect)(() => {
       if (isInserterOpened2) {
         inserter.open();
@@ -13492,7 +13496,7 @@ ${content}
           let isOpen = updater;
           if (typeof updater === "function") {
             isOpen = updater(
-              (0, import_data7.select)(store).isInserterOpened()
+              (0, import_data8.select)(store).isInserterOpened()
             );
           }
           setIsInserterOpened2(isOpen);
@@ -13682,7 +13686,7 @@ ${content}
 
   // packages/customize-widgets/build-module/components/focus-control/use-blocks-focus-control.mjs
   var import_element53 = __toESM(require_element(), 1);
-  var import_data8 = __toESM(require_data(), 1);
+  var import_data9 = __toESM(require_data(), 1);
   var import_block_editor4 = __toESM(require_block_editor(), 1);
   var import_widgets3 = __toESM(require_widgets(), 1);
 
@@ -13747,7 +13751,7 @@ ${content}
 
   // packages/customize-widgets/build-module/components/focus-control/use-blocks-focus-control.mjs
   function useBlocksFocusControl(blocks) {
-    const { selectBlock } = (0, import_data8.useDispatch)(import_block_editor4.store);
+    const { selectBlock } = (0, import_data9.useDispatch)(import_block_editor4.store);
     const [focusedWidgetIdRef] = useFocusControl();
     const blocksRef = (0, import_element53.useRef)(blocks);
     (0, import_element53.useEffect)(() => {
@@ -13802,11 +13806,11 @@ ${content}
   // packages/customize-widgets/build-module/components/welcome-guide/index.mjs
   var import_i18n13 = __toESM(require_i18n(), 1);
   var import_components6 = __toESM(require_components(), 1);
-  var import_data9 = __toESM(require_data(), 1);
+  var import_data10 = __toESM(require_data(), 1);
   var import_preferences2 = __toESM(require_preferences(), 1);
   var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuide({ sidebar }) {
-    const { toggle } = (0, import_data9.useDispatch)(import_preferences2.store);
+    const { toggle } = (0, import_data10.useDispatch)(import_preferences2.store);
     const isEntirelyBlockWidgets = sidebar.getWidgets().every((widget) => widget.id.startsWith("block-"));
     return /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)("div", { className: "customize-widgets-welcome-guide", children: [
       /* @__PURE__ */ (0, import_jsx_runtime60.jsx)("div", { className: "customize-widgets-welcome-guide__image__wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)("picture", { children: [
@@ -13877,7 +13881,7 @@ ${content}
   var import_element54 = __toESM(require_element(), 1);
   var import_keyboard_shortcuts4 = __toESM(require_keyboard_shortcuts(), 1);
   var import_keycodes4 = __toESM(require_keycodes(), 1);
-  var import_data10 = __toESM(require_data(), 1);
+  var import_data11 = __toESM(require_data(), 1);
   var import_i18n14 = __toESM(require_i18n(), 1);
   var import_block_editor6 = __toESM(require_block_editor(), 1);
   var { usesNativeUndo } = unlock2(import_block_editor6.privateApis);
@@ -13903,7 +13907,7 @@ ${content}
     return null;
   }
   function KeyboardShortcutsRegister() {
-    const { registerShortcut, unregisterShortcut } = (0, import_data10.useDispatch)(
+    const { registerShortcut, unregisterShortcut } = (0, import_data11.useDispatch)(
       import_keyboard_shortcuts4.store
     );
     (0, import_element54.useEffect)(() => {
@@ -13958,11 +13962,11 @@ ${content}
   // packages/customize-widgets/build-module/components/block-appender/index.mjs
   var import_element55 = __toESM(require_element(), 1);
   var import_block_editor7 = __toESM(require_block_editor(), 1);
-  var import_data11 = __toESM(require_data(), 1);
+  var import_data12 = __toESM(require_data(), 1);
   var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
   function BlockAppender(props) {
     const ref = (0, import_element55.useRef)();
-    const isBlocksListEmpty = (0, import_data11.useSelect)(
+    const isBlocksListEmpty = (0, import_data12.useSelect)(
       (select) => select(import_block_editor7.store).getBlockCount() === 0
     );
     (0, import_element55.useEffect)(() => {
@@ -13994,7 +13998,7 @@ ${content}
       isFixedToolbarActive,
       keepCaretInsideBlock,
       isWelcomeGuideActive
-    } = (0, import_data12.useSelect)((select) => {
+    } = (0, import_data13.useSelect)((select) => {
       const { get } = select(import_preferences3.store);
       return {
         hasUploadPermissions: select(import_core_data.store).canUser("create", {
@@ -14123,11 +14127,11 @@ ${content}
 
   // packages/customize-widgets/build-module/components/customize-widgets/use-clear-selected-block.mjs
   var import_element58 = __toESM(require_element(), 1);
-  var import_data13 = __toESM(require_data(), 1);
+  var import_data14 = __toESM(require_data(), 1);
   var import_block_editor9 = __toESM(require_block_editor(), 1);
   function useClearSelectedBlock(sidebarControl, popoverRef) {
-    const { hasSelectedBlock, hasMultiSelection } = (0, import_data13.useSelect)(import_block_editor9.store);
-    const { clearSelectedBlock } = (0, import_data13.useDispatch)(import_block_editor9.store);
+    const { hasSelectedBlock, hasMultiSelection } = (0, import_data14.useSelect)(import_block_editor9.store);
+    const { clearSelectedBlock } = (0, import_data14.useDispatch)(import_block_editor9.store);
     (0, import_element58.useEffect)(() => {
       if (popoverRef.current && sidebarControl) {
         let handleClearSelectedBlock = function(element) {
@@ -14384,7 +14388,7 @@ ${content}
   }
 
   // packages/customize-widgets/build-module/controls/sidebar-control.mjs
-  var import_data15 = __toESM(require_data(), 1);
+  var import_data16 = __toESM(require_data(), 1);
 
   // packages/customize-widgets/build-module/components/sidebar-block-editor/sidebar-adapter.mjs
   var { wp } = window;
@@ -14644,7 +14648,7 @@ ${content}
   // packages/customize-widgets/build-module/controls/inserter-outer-section.mjs
   var import_keycodes5 = __toESM(require_keycodes(), 1);
   var import_dom21 = __toESM(require_dom(), 1);
-  var import_data14 = __toESM(require_data(), 1);
+  var import_data15 = __toESM(require_data(), 1);
   function getInserterOuterSection() {
     const {
       wp: { customize }
@@ -14677,7 +14681,7 @@ ${content}
             if (this.expanded() && (event.keyCode === import_keycodes5.ESCAPE || event.code === "Escape") && !event.defaultPrevented) {
               event.preventDefault();
               event.stopPropagation();
-              (0, import_data14.dispatch)(store).setIsInserterOpened(
+              (0, import_data15.dispatch)(store).setIsInserterOpened(
                 false
               );
             }
@@ -14689,7 +14693,7 @@ ${content}
         this.isFromInternalAction = false;
         this.expanded.bind(() => {
           if (!this.isFromInternalAction) {
-            (0, import_data14.dispatch)(store).setIsInserterOpened(
+            (0, import_data15.dispatch)(store).setIsInserterOpened(
               this.expanded()
             );
           }
@@ -14761,7 +14765,7 @@ ${content}
       onChangeSectionExpanded(expanded, args) {
         if (!args.unchanged) {
           if (!expanded) {
-            (0, import_data15.dispatch)(store).setIsInserterOpened(
+            (0, import_data16.dispatch)(store).setIsInserterOpened(
               false
             );
           }
@@ -14776,7 +14780,7 @@ ${content}
   // packages/customize-widgets/build-module/filters/move-to-sidebar.mjs
   var import_block_editor10 = __toESM(require_block_editor(), 1);
   var import_compose5 = __toESM(require_compose(), 1);
-  var import_data16 = __toESM(require_data(), 1);
+  var import_data17 = __toESM(require_data(), 1);
   var import_hooks2 = __toESM(require_hooks(), 1);
   var import_widgets4 = __toESM(require_widgets(), 1);
   var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
@@ -14788,7 +14792,7 @@ ${content}
       const hasMultipleSidebars = sidebarControls?.length > 1;
       const blockName = props.name;
       const clientId = props.clientId;
-      const canInsertBlockInSidebar = (0, import_data16.useSelect)(
+      const canInsertBlockInSidebar = (0, import_data17.useSelect)(
         (select) => {
           return select(import_block_editor10.store).canInsertBlockType(
             blockName,
@@ -14797,11 +14801,11 @@ ${content}
         },
         [blockName]
       );
-      const block = (0, import_data16.useSelect)(
+      const block = (0, import_data17.useSelect)(
         (select) => select(import_block_editor10.store).getBlock(clientId),
         [clientId]
       );
-      const { removeBlock } = (0, import_data16.useDispatch)(import_block_editor10.store);
+      const { removeBlock } = (0, import_data17.useDispatch)(import_block_editor10.store);
       const [, focusWidget] = useFocusControl();
       function moveToSidebar(sidebarControlId) {
         const newSidebarControl = sidebarControls.find(
@@ -14891,11 +14895,11 @@ ${content}
   ];
   var ENABLE_EXPERIMENTAL_FSE_BLOCKS = false;
   function initialize(editorName, blockEditorSettings) {
-    (0, import_data17.dispatch)(import_preferences4.store).setDefaults("core/customize-widgets", {
+    (0, import_data18.dispatch)(import_preferences4.store).setDefaults("core/customize-widgets", {
       fixedToolbar: false,
       welcomeGuide: true
     });
-    (0, import_data17.dispatch)(import_blocks2.store).reapplyBlockTypeFilters();
+    (0, import_data18.dispatch)(import_blocks2.store).reapplyBlockTypeFilters();
     const coreBlocks = (0, import_block_library.__experimentalGetCoreBlocks)().filter((block) => {
       return !(DISABLED_BLOCKS.includes(block.name) || block.name.startsWith("core/post") || block.name.startsWith("core/query") || block.name.startsWith("core/site") || block.name.startsWith("core/navigation") || block.name.startsWith("core/term"));
     });

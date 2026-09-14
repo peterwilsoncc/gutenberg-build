@@ -406,7 +406,7 @@ var wp;
     store: () => store2
   });
   var import_blocks3 = __toESM(require_blocks(), 1);
-  var import_data32 = __toESM(require_data(), 1);
+  var import_data33 = __toESM(require_data(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
   var import_element70 = __toESM(require_element(), 1);
   var import_block_library = __toESM(require_block_library(), 1);
@@ -14619,7 +14619,7 @@ var wp;
   // packages/edit-widgets/build-module/components/layout/index.mjs
   var import_i18n26 = __toESM(require_i18n(), 1);
   var import_element69 = __toESM(require_element(), 1);
-  var import_data31 = __toESM(require_data(), 1);
+  var import_data32 = __toESM(require_data(), 1);
   var import_plugins3 = __toESM(require_plugins(), 1);
   var import_notices4 = __toESM(require_notices(), 1);
   var import_components20 = __toESM(require_components(), 1);
@@ -15253,13 +15253,13 @@ ${content}
   var import_compose13 = __toESM(require_compose(), 1);
   var import_block_editor17 = __toESM(require_block_editor(), 1);
   var import_element66 = __toESM(require_element(), 1);
-  var import_data28 = __toESM(require_data(), 1);
+  var import_data29 = __toESM(require_data(), 1);
   var import_i18n23 = __toESM(require_i18n(), 1);
   var import_preferences8 = __toESM(require_preferences(), 1);
 
   // packages/edit-widgets/build-module/components/header/index.mjs
   var import_block_editor12 = __toESM(require_block_editor(), 1);
-  var import_data22 = __toESM(require_data(), 1);
+  var import_data23 = __toESM(require_data(), 1);
   var import_element62 = __toESM(require_element(), 1);
   var import_i18n21 = __toESM(require_i18n(), 1);
   var import_components17 = __toESM(require_components(), 1);
@@ -15456,6 +15456,7 @@ ${content}
 
   // packages/edit-widgets/build-module/components/more-menu/index.mjs
   var import_components16 = __toESM(require_components(), 1);
+  var import_data22 = __toESM(require_data(), 1);
   var import_element61 = __toESM(require_element(), 1);
   var import_i18n20 = __toESM(require_i18n(), 1);
   var import_preferences5 = __toESM(require_preferences(), 1);
@@ -15773,6 +15774,7 @@ ${content}
       toggleKeyboardShortcutsModal
     );
     const isLargeViewport = (0, import_compose9.useViewportMatch)("medium");
+    const { toggle } = (0, import_data22.useDispatch)(import_preferences5.store);
     return /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(import_jsx_runtime79.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
         import_components16.DropdownMenu,
@@ -15817,11 +15819,14 @@ ${content}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
-                import_preferences5.PreferenceToggleMenuItem,
+                import_components16.MenuItem,
                 {
-                  scope: "core/edit-widgets",
-                  name: "welcomeGuide",
-                  label: (0, import_i18n20.__)("Welcome Guide")
+                  onClick: () => toggle(
+                    "core/edit-widgets",
+                    "welcomeGuide"
+                  ),
+                  "aria-haspopup": "dialog",
+                  children: (0, import_i18n20.__)("Welcome Guide")
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(
@@ -15918,7 +15923,7 @@ ${content}
   function Header3() {
     const isLargeViewport = (0, import_compose10.useViewportMatch)("medium");
     const blockToolbarRef = (0, import_element62.useRef)();
-    const { hasFixedToolbar } = (0, import_data22.useSelect)(
+    const { hasFixedToolbar } = (0, import_data23.useSelect)(
       (select) => ({
         hasFixedToolbar: !!select(import_preferences6.store).get(
           "core/edit-widgets",
@@ -15962,7 +15967,7 @@ ${content}
   // packages/edit-widgets/build-module/components/widget-areas-block-editor-content/index.mjs
   var import_block_editor13 = __toESM(require_block_editor(), 1);
   var import_compose11 = __toESM(require_compose(), 1);
-  var import_data23 = __toESM(require_data(), 1);
+  var import_data24 = __toESM(require_data(), 1);
   var import_element63 = __toESM(require_element(), 1);
   var import_preferences7 = __toESM(require_preferences(), 1);
 
@@ -15990,7 +15995,7 @@ ${content}
   function WidgetAreasBlockEditorContent({
     blockEditorSettings
   }) {
-    const hasThemeStyles = (0, import_data23.useSelect)(
+    const hasThemeStyles = (0, import_data24.useSelect)(
       (select) => !!select(import_preferences7.store).get(
         "core/edit-widgets",
         "themeStyles"
@@ -16019,20 +16024,20 @@ ${content}
   }
 
   // packages/edit-widgets/build-module/components/secondary-sidebar/index.mjs
-  var import_data27 = __toESM(require_data(), 1);
+  var import_data28 = __toESM(require_data(), 1);
 
   // packages/edit-widgets/build-module/components/secondary-sidebar/inserter-sidebar.mjs
   var import_block_editor15 = __toESM(require_block_editor(), 1);
   var import_compose12 = __toESM(require_compose(), 1);
   var import_element64 = __toESM(require_element(), 1);
-  var import_data25 = __toESM(require_data(), 1);
+  var import_data26 = __toESM(require_data(), 1);
 
   // packages/edit-widgets/build-module/hooks/use-widget-library-insertion-point.mjs
-  var import_data24 = __toESM(require_data(), 1);
+  var import_data25 = __toESM(require_data(), 1);
   var import_block_editor14 = __toESM(require_block_editor(), 1);
   var import_core_data11 = __toESM(require_core_data(), 1);
   var useWidgetLibraryInsertionPoint = () => {
-    const firstRootId = (0, import_data24.useSelect)((select) => {
+    const firstRootId = (0, import_data25.useSelect)((select) => {
       const { getEntityRecord } = select(import_core_data11.store);
       const widgetAreasPost = getEntityRecord(
         KIND,
@@ -16041,7 +16046,7 @@ ${content}
       );
       return widgetAreasPost?.blocks[0]?.clientId;
     }, []);
-    return (0, import_data24.useSelect)(
+    return (0, import_data25.useSelect)(
       (select) => {
         const {
           getBlockRootClientId,
@@ -16076,7 +16081,7 @@ ${content}
   function InserterSidebar() {
     const isMobileViewport = (0, import_compose12.useViewportMatch)("medium", "<");
     const { rootClientId, insertionIndex } = use_widget_library_insertion_point_default();
-    const { setIsInserterOpened: setIsInserterOpened2 } = (0, import_data25.useDispatch)(store2);
+    const { setIsInserterOpened: setIsInserterOpened2 } = (0, import_data26.useDispatch)(store2);
     const closeInserter = (0, import_element64.useCallback)(() => {
       return setIsInserterOpened2(false);
     }, [setIsInserterOpened2]);
@@ -16097,14 +16102,14 @@ ${content}
   // packages/edit-widgets/build-module/components/secondary-sidebar/list-view-sidebar.mjs
   var import_block_editor16 = __toESM(require_block_editor(), 1);
   var import_components18 = __toESM(require_components(), 1);
-  var import_data26 = __toESM(require_data(), 1);
+  var import_data27 = __toESM(require_data(), 1);
   var import_element65 = __toESM(require_element(), 1);
   var import_i18n22 = __toESM(require_i18n(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
   function ListViewSidebar() {
-    const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data26.useDispatch)(store2);
-    const { getListViewToggleRef: getListViewToggleRef2 } = unlock2((0, import_data26.useSelect)(store2));
+    const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data27.useDispatch)(store2);
+    const { getListViewToggleRef: getListViewToggleRef2 } = unlock2((0, import_data27.useSelect)(store2));
     const [dropZoneElement, setDropZoneElement] = (0, import_element65.useState)(null);
     const closeListView = (0, import_element65.useCallback)(() => {
       setIsListViewOpened2(false);
@@ -16156,7 +16161,7 @@ ${content}
   // packages/edit-widgets/build-module/components/secondary-sidebar/index.mjs
   var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
   function SecondarySidebar() {
-    const { isInserterOpen, isListViewOpen } = (0, import_data27.useSelect)((select) => {
+    const { isInserterOpen, isListViewOpen } = (0, import_data28.useSelect)((select) => {
       const { isInserterOpened: isInserterOpened2, isListViewOpened: isListViewOpened2 } = select(store2);
       return {
         isInserterOpen: isInserterOpened2(),
@@ -16187,13 +16192,13 @@ ${content}
   function Interface({ blockEditorSettings }) {
     const isMobileViewport = (0, import_compose13.useViewportMatch)("medium", "<");
     const isHugeViewport = (0, import_compose13.useViewportMatch)("huge", ">=");
-    const { setIsInserterOpened: setIsInserterOpened2, setIsListViewOpened: setIsListViewOpened2, closeGeneralSidebar: closeGeneralSidebar2 } = (0, import_data28.useDispatch)(store2);
+    const { setIsInserterOpened: setIsInserterOpened2, setIsListViewOpened: setIsListViewOpened2, closeGeneralSidebar: closeGeneralSidebar2 } = (0, import_data29.useDispatch)(store2);
     const {
       hasBlockBreadCrumbsEnabled,
       hasSidebarEnabled,
       isInserterOpened: isInserterOpened2,
       isListViewOpened: isListViewOpened2
-    } = (0, import_data28.useSelect)(
+    } = (0, import_data29.useSelect)(
       (select) => ({
         hasSidebarEnabled: !!select(
           store
@@ -16245,9 +16250,9 @@ ${content}
   // packages/edit-widgets/build-module/components/layout/unsaved-changes-warning.mjs
   var import_i18n24 = __toESM(require_i18n(), 1);
   var import_element67 = __toESM(require_element(), 1);
-  var import_data29 = __toESM(require_data(), 1);
+  var import_data30 = __toESM(require_data(), 1);
   function UnsavedChangesWarning() {
-    const isDirty = (0, import_data29.useSelect)((select) => {
+    const isDirty = (0, import_data30.useSelect)((select) => {
       const { getEditedWidgetAreas: getEditedWidgetAreas2 } = select(store2);
       const editedWidgetAreas = getEditedWidgetAreas2();
       return editedWidgetAreas?.length > 0;
@@ -16270,22 +16275,22 @@ ${content}
   }
 
   // packages/edit-widgets/build-module/components/welcome-guide/index.mjs
-  var import_data30 = __toESM(require_data(), 1);
+  var import_data31 = __toESM(require_data(), 1);
   var import_components19 = __toESM(require_components(), 1);
   var import_i18n25 = __toESM(require_i18n(), 1);
   var import_element68 = __toESM(require_element(), 1);
   var import_preferences9 = __toESM(require_preferences(), 1);
   var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuide() {
-    const isActive = (0, import_data30.useSelect)(
+    const isActive = (0, import_data31.useSelect)(
       (select) => !!select(import_preferences9.store).get(
         "core/edit-widgets",
         "welcomeGuide"
       ),
       []
     );
-    const { toggle } = (0, import_data30.useDispatch)(import_preferences9.store);
-    const widgetAreas = (0, import_data30.useSelect)(
+    const { toggle } = (0, import_data31.useDispatch)(import_preferences9.store);
+    const widgetAreas = (0, import_data31.useSelect)(
       (select) => select(store2).getWidgetAreas({ per_page: -1 }),
       []
     );
@@ -16439,7 +16444,7 @@ ${content}
   // packages/edit-widgets/build-module/components/layout/index.mjs
   var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
   function Layout({ blockEditorSettings }) {
-    const { createErrorNotice } = (0, import_data31.useDispatch)(import_notices4.store);
+    const { createErrorNotice } = (0, import_data32.useDispatch)(import_notices4.store);
     function onPluginAreaError(name2) {
       createErrorNotice(
         (0, import_i18n26.sprintf)(
@@ -16488,13 +16493,13 @@ ${content}
     const coreBlocks = (0, import_block_library.__experimentalGetCoreBlocks)().filter((block) => {
       return !(disabledBlocks.includes(block.name) || block.name.startsWith("core/post") || block.name.startsWith("core/query") || block.name.startsWith("core/site") || block.name.startsWith("core/navigation") || block.name.startsWith("core/term"));
     });
-    (0, import_data32.dispatch)(import_preferences10.store).setDefaults("core/edit-widgets", {
+    (0, import_data33.dispatch)(import_preferences10.store).setDefaults("core/edit-widgets", {
       fixedToolbar: false,
       welcomeGuide: true,
       showBlockBreadcrumbs: true,
       themeStyles: true
     });
-    (0, import_data32.dispatch)(import_blocks3.store).reapplyBlockTypeFilters();
+    (0, import_data33.dispatch)(import_blocks3.store).reapplyBlockTypeFilters();
     (0, import_block_library.registerCoreBlocks)(coreBlocks);
     (0, import_widgets5.registerLegacyWidgetBlock)();
     if (true) {

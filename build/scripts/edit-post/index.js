@@ -10781,6 +10781,7 @@ var wp;
           "core/edit-post",
           isEditingTemplate2 ? "welcomeGuideTemplate" : "welcomeGuide"
         ),
+        "aria-haspopup": "dialog",
         children: (0, import_i18n7.__)("Welcome Guide")
       }
     );
