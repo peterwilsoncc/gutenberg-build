@@ -9,7 +9,7 @@ var wp;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
   var __require = /* @__PURE__ */ ((x2) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x2, {
-    get: (a3, b3) => (typeof require !== "undefined" ? require : a3)[b3]
+    get: (a2, b2) => (typeof require !== "undefined" ? require : a2)[b2]
   }) : x2)(function(x2) {
     if (typeof require !== "undefined") return require.apply(this, arguments);
     throw Error('Dynamic require of "' + x2 + '" is not supported');
@@ -141,54 +141,54 @@ var wp;
   var require_es6 = __commonJS({
     "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
       "use strict";
-      module.exports = function equal(a3, b3) {
-        if (a3 === b3) return true;
-        if (a3 && b3 && typeof a3 == "object" && typeof b3 == "object") {
-          if (a3.constructor !== b3.constructor) return false;
-          var length2, i3, keys;
-          if (Array.isArray(a3)) {
-            length2 = a3.length;
-            if (length2 != b3.length) return false;
-            for (i3 = length2; i3-- !== 0; )
-              if (!equal(a3[i3], b3[i3])) return false;
+      module.exports = function equal(a2, b2) {
+        if (a2 === b2) return true;
+        if (a2 && b2 && typeof a2 == "object" && typeof b2 == "object") {
+          if (a2.constructor !== b2.constructor) return false;
+          var length2, i2, keys;
+          if (Array.isArray(a2)) {
+            length2 = a2.length;
+            if (length2 != b2.length) return false;
+            for (i2 = length2; i2-- !== 0; )
+              if (!equal(a2[i2], b2[i2])) return false;
             return true;
           }
-          if (a3 instanceof Map && b3 instanceof Map) {
-            if (a3.size !== b3.size) return false;
-            for (i3 of a3.entries())
-              if (!b3.has(i3[0])) return false;
-            for (i3 of a3.entries())
-              if (!equal(i3[1], b3.get(i3[0]))) return false;
+          if (a2 instanceof Map && b2 instanceof Map) {
+            if (a2.size !== b2.size) return false;
+            for (i2 of a2.entries())
+              if (!b2.has(i2[0])) return false;
+            for (i2 of a2.entries())
+              if (!equal(i2[1], b2.get(i2[0]))) return false;
             return true;
           }
-          if (a3 instanceof Set && b3 instanceof Set) {
-            if (a3.size !== b3.size) return false;
-            for (i3 of a3.entries())
-              if (!b3.has(i3[0])) return false;
+          if (a2 instanceof Set && b2 instanceof Set) {
+            if (a2.size !== b2.size) return false;
+            for (i2 of a2.entries())
+              if (!b2.has(i2[0])) return false;
             return true;
           }
-          if (ArrayBuffer.isView(a3) && ArrayBuffer.isView(b3)) {
-            length2 = a3.length;
-            if (length2 != b3.length) return false;
-            for (i3 = length2; i3-- !== 0; )
-              if (a3[i3] !== b3[i3]) return false;
+          if (ArrayBuffer.isView(a2) && ArrayBuffer.isView(b2)) {
+            length2 = a2.length;
+            if (length2 != b2.length) return false;
+            for (i2 = length2; i2-- !== 0; )
+              if (a2[i2] !== b2[i2]) return false;
             return true;
           }
-          if (a3.constructor === RegExp) return a3.source === b3.source && a3.flags === b3.flags;
-          if (a3.valueOf !== Object.prototype.valueOf) return a3.valueOf() === b3.valueOf();
-          if (a3.toString !== Object.prototype.toString) return a3.toString() === b3.toString();
-          keys = Object.keys(a3);
+          if (a2.constructor === RegExp) return a2.source === b2.source && a2.flags === b2.flags;
+          if (a2.valueOf !== Object.prototype.valueOf) return a2.valueOf() === b2.valueOf();
+          if (a2.toString !== Object.prototype.toString) return a2.toString() === b2.toString();
+          keys = Object.keys(a2);
           length2 = keys.length;
-          if (length2 !== Object.keys(b3).length) return false;
-          for (i3 = length2; i3-- !== 0; )
-            if (!Object.prototype.hasOwnProperty.call(b3, keys[i3])) return false;
-          for (i3 = length2; i3-- !== 0; ) {
-            var key = keys[i3];
-            if (!equal(a3[key], b3[key])) return false;
+          if (length2 !== Object.keys(b2).length) return false;
+          for (i2 = length2; i2-- !== 0; )
+            if (!Object.prototype.hasOwnProperty.call(b2, keys[i2])) return false;
+          for (i2 = length2; i2-- !== 0; ) {
+            var key = keys[i2];
+            if (!equal(a2[key], b2[key])) return false;
           }
           return true;
         }
-        return a3 !== a3 && b3 !== b3;
+        return a2 !== a2 && b2 !== b2;
       };
     }
   });
@@ -2571,13 +2571,13 @@ var wp;
   var import_deepmerge = __toESM(require_cjs(), 1);
 
   // node_modules/is-plain-object/dist/is-plain-object.mjs
-  function isObject(o4) {
-    return Object.prototype.toString.call(o4) === "[object Object]";
+  function isObject(o3) {
+    return Object.prototype.toString.call(o3) === "[object Object]";
   }
-  function isPlainObject(o4) {
+  function isPlainObject(o3) {
     var ctor, prot;
-    if (isObject(o4) === false) return false;
-    ctor = o4.constructor;
+    if (isObject(o3) === false) return false;
+    ctor = o3.constructor;
     if (ctor === void 0) return true;
     prot = ctor.prototype;
     if (isObject(prot) === false) return false;
@@ -2621,14 +2621,14 @@ var wp;
     var tail;
     options = options || {};
     function memoized() {
-      var node = head2, len2 = arguments.length, args, i3;
+      var node = head2, len2 = arguments.length, args, i2;
       searchCache: while (node) {
         if (node.args.length !== arguments.length) {
           node = node.next;
           continue;
         }
-        for (i3 = 0; i3 < len2; i3++) {
-          if (node.args[i3] !== arguments[i3]) {
+        for (i2 = 0; i2 < len2; i2++) {
+          if (node.args[i2] !== arguments[i2]) {
             node = node.next;
             continue searchCache;
           }
@@ -2649,8 +2649,8 @@ var wp;
         return node.val;
       }
       args = new Array(len2);
-      for (i3 = 0; i3 < len2; i3++) {
-        args[i3] = arguments[i3];
+      for (i2 = 0; i2 < len2; i2++) {
+        args[i2] = arguments[i2];
       }
       node = {
         args,
@@ -2938,166 +2938,179 @@ var wp;
   }
 
   // node_modules/colord/index.mjs
-  var r = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) };
-  var t = function(r5) {
+  for (r4 = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) }, t3 = function(r5) {
     return "string" == typeof r5 ? r5.length > 0 : "number" == typeof r5;
-  };
-  var n = function(r5, t4, n3) {
+  }, n2 = function(r5, t4, n3) {
     return void 0 === t4 && (t4 = 0), void 0 === n3 && (n3 = Math.pow(10, t4)), Math.round(n3 * r5) / n3 + 0;
-  };
-  var e = function(r5, t4, n3) {
+  }, u2 = function(r5, t4, n3) {
     return void 0 === t4 && (t4 = 0), void 0 === n3 && (n3 = 1), r5 > n3 ? n3 : r5 > t4 ? r5 : t4;
+  }, e2 = function(r5) {
+    return (r5 = isFinite(r5) ? r5 % 360 : 0) < 0 ? r5 + 360 : r5;
+  }, o3 = function(r5, t4) {
+    return void 0 === t4 && (t4 = 0), n2(r5, t4) % 360;
+  }, a2 = function(r5) {
+    return { r: u2(r5.r, 0, 255), g: u2(r5.g, 0, 255), b: u2(r5.b, 0, 255), a: u2(r5.a) };
+  }, i2 = function(r5) {
+    return { r: n2(r5.r), g: n2(r5.g), b: n2(r5.b), a: n2(r5.a, 3) };
+  }, s2 = /^#([0-9a-f]{3,8})$/i, d2 = function(r5, t4) {
+    var n3 = r5.charCodeAt(t4);
+    return (15 & n3) + 9 * (n3 >> 6);
+  }, h2 = function(r5, t4) {
+    return d2(r5, t4) << 4 | d2(r5, t4 + 1);
+  }, b2 = [], f2 = 0; f2 < 256; f2++) b2.push((f2 < 16 ? "0" : "") + f2.toString(16));
+  var r4;
+  var t3;
+  var n2;
+  var u2;
+  var e2;
+  var o3;
+  var a2;
+  var i2;
+  var s2;
+  var d2;
+  var h2;
+  var b2;
+  var f2;
+  var g = function(r4) {
+    return b2[u2(r4, 0, 255)];
   };
-  var u = function(r5) {
-    return (r5 = isFinite(r5) ? r5 % 360 : 0) > 0 ? r5 : r5 + 360;
+  var c = function(r4) {
+    var t3 = r4.r, n2 = r4.g, u2 = r4.b, e2 = r4.a, o3 = Math.max(t3, n2, u2), a2 = o3 - Math.min(t3, n2, u2), i2 = a2 ? o3 === t3 ? (n2 - u2) / a2 : o3 === n2 ? 2 + (u2 - t3) / a2 : 4 + (t3 - n2) / a2 : 0;
+    return { h: 60 * (i2 < 0 ? i2 + 6 : i2), s: o3 ? a2 / o3 * 100 : 0, v: o3 / 255 * 100, a: e2 };
   };
-  var a = function(r5) {
-    return { r: e(r5.r, 0, 255), g: e(r5.g, 0, 255), b: e(r5.b, 0, 255), a: e(r5.a) };
+  var v = function(r4) {
+    var t3 = r4.h, n2 = r4.s, u2 = r4.v, e2 = r4.a;
+    t3 = t3 / 360 * 6, n2 /= 100, u2 /= 100;
+    var o3 = Math.floor(t3), a2 = u2 * (1 - n2), i2 = u2 * (1 - (t3 - o3) * n2), s2 = u2 * (1 - (1 - t3 + o3) * n2), d2 = o3 % 6;
+    return { r: 255 * [u2, i2, a2, a2, s2, u2][d2], g: 255 * [s2, u2, u2, i2, a2, a2][d2], b: 255 * [a2, a2, s2, u2, u2, i2][d2], a: e2 };
   };
-  var o = function(r5) {
-    return { r: n(r5.r), g: n(r5.g), b: n(r5.b), a: n(r5.a, 3) };
+  var l = function(r4) {
+    return { h: e2(r4.h), s: u2(r4.s, 0, 100), l: u2(r4.l, 0, 100), a: u2(r4.a) };
   };
-  var i = /^#([0-9a-f]{3,8})$/i;
-  var s = function(r5) {
-    var t4 = r5.toString(16);
-    return t4.length < 2 ? "0" + t4 : t4;
+  var p2 = function(r4) {
+    return { h: o3(r4.h), s: n2(r4.s), l: n2(r4.l), a: n2(r4.a, 3) };
   };
-  var d = function(r5) {
-    var t4 = r5.r, n3 = r5.g, e3 = r5.b, u3 = r5.a, a3 = Math.max(t4, n3, e3), o4 = a3 - Math.min(t4, n3, e3), i3 = o4 ? a3 === t4 ? (n3 - e3) / o4 : a3 === n3 ? 2 + (e3 - t4) / o4 : 4 + (t4 - n3) / o4 : 0;
-    return { h: 60 * (i3 < 0 ? i3 + 6 : i3), s: a3 ? o4 / a3 * 100 : 0, v: a3 / 255 * 100, a: u3 };
+  var m = function(r4) {
+    return v((n2 = (t3 = r4).s, { h: t3.h, s: (n2 *= ((u2 = t3.l) < 50 ? u2 : 100 - u2) / 100) > 0 ? 2 * n2 / (u2 + n2) * 100 : 0, v: u2 + n2, a: t3.a }));
+    var t3, n2, u2;
   };
-  var h = function(r5) {
-    var t4 = r5.h, n3 = r5.s, e3 = r5.v, u3 = r5.a;
-    t4 = t4 / 360 * 6, n3 /= 100, e3 /= 100;
-    var a3 = Math.floor(t4), o4 = e3 * (1 - n3), i3 = e3 * (1 - (t4 - a3) * n3), s3 = e3 * (1 - (1 - t4 + a3) * n3), d3 = a3 % 6;
-    return { r: 255 * [e3, i3, o4, o4, s3, e3][d3], g: 255 * [s3, e3, e3, i3, o4, o4][d3], b: 255 * [o4, o4, s3, e3, e3, i3][d3], a: u3 };
+  var y = function(r4) {
+    return { h: (t3 = c(r4)).h, s: (e2 = (200 - (n2 = t3.s)) * (u2 = t3.v) / 100) > 0 && e2 < 200 ? n2 * u2 / 100 / (e2 <= 100 ? e2 : 200 - e2) * 100 : 0, l: e2 / 2, a: t3.a };
+    var t3, n2, u2, e2;
   };
-  var b = function(r5) {
-    return { h: u(r5.h), s: e(r5.s, 0, 100), l: e(r5.l, 0, 100), a: e(r5.a) };
-  };
-  var g = function(r5) {
-    return { h: n(r5.h), s: n(r5.s), l: n(r5.l), a: n(r5.a, 3) };
-  };
-  var f = function(r5) {
-    return h((n3 = (t4 = r5).s, { h: t4.h, s: (n3 *= ((e3 = t4.l) < 50 ? e3 : 100 - e3) / 100) > 0 ? 2 * n3 / (e3 + n3) * 100 : 0, v: e3 + n3, a: t4.a }));
-    var t4, n3, e3;
-  };
-  var c = function(r5) {
-    return { h: (t4 = d(r5)).h, s: (u3 = (200 - (n3 = t4.s)) * (e3 = t4.v) / 100) > 0 && u3 < 200 ? n3 * e3 / 100 / (u3 <= 100 ? u3 : 200 - u3) * 100 : 0, l: u3 / 2, a: t4.a };
-    var t4, n3, e3, u3;
-  };
-  var l = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-  var p2 = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-  var v = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-  var m = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-  var y = { string: [[function(r5) {
-    var t4 = i.exec(r5);
-    return t4 ? (r5 = t4[1]).length <= 4 ? { r: parseInt(r5[0] + r5[0], 16), g: parseInt(r5[1] + r5[1], 16), b: parseInt(r5[2] + r5[2], 16), a: 4 === r5.length ? n(parseInt(r5[3] + r5[3], 16) / 255, 2) : 1 } : 6 === r5.length || 8 === r5.length ? { r: parseInt(r5.substr(0, 2), 16), g: parseInt(r5.substr(2, 2), 16), b: parseInt(r5.substr(4, 2), 16), a: 8 === r5.length ? n(parseInt(r5.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
-  }, "hex"], [function(r5) {
-    var t4 = v.exec(r5) || m.exec(r5);
-    return t4 ? t4[2] !== t4[4] || t4[4] !== t4[6] ? null : a({ r: Number(t4[1]) / (t4[2] ? 100 / 255 : 1), g: Number(t4[3]) / (t4[4] ? 100 / 255 : 1), b: Number(t4[5]) / (t4[6] ? 100 / 255 : 1), a: void 0 === t4[7] ? 1 : Number(t4[7]) / (t4[8] ? 100 : 1) }) : null;
-  }, "rgb"], [function(t4) {
-    var n3 = l.exec(t4) || p2.exec(t4);
-    if (!n3) return null;
-    var e3, u3, a3 = b({ h: (e3 = n3[1], u3 = n3[2], void 0 === u3 && (u3 = "deg"), Number(e3) * (r[u3] || 1)), s: Number(n3[3]), l: Number(n3[4]), a: void 0 === n3[5] ? 1 : Number(n3[5]) / (n3[6] ? 100 : 1) });
-    return f(a3);
-  }, "hsl"]], object: [[function(r5) {
-    var n3 = r5.r, e3 = r5.g, u3 = r5.b, o4 = r5.a, i3 = void 0 === o4 ? 1 : o4;
-    return t(n3) && t(e3) && t(u3) ? a({ r: Number(n3), g: Number(e3), b: Number(u3), a: Number(i3) }) : null;
-  }, "rgb"], [function(r5) {
-    var n3 = r5.h, e3 = r5.s, u3 = r5.l, a3 = r5.a, o4 = void 0 === a3 ? 1 : a3;
-    if (!t(n3) || !t(e3) || !t(u3)) return null;
-    var i3 = b({ h: Number(n3), s: Number(e3), l: Number(u3), a: Number(o4) });
-    return f(i3);
-  }, "hsl"], [function(r5) {
-    var n3 = r5.h, a3 = r5.s, o4 = r5.v, i3 = r5.a, s3 = void 0 === i3 ? 1 : i3;
-    if (!t(n3) || !t(a3) || !t(o4)) return null;
-    var d3 = (function(r6) {
-      return { h: u(r6.h), s: e(r6.s, 0, 100), v: e(r6.v, 0, 100), a: e(r6.a) };
-    })({ h: Number(n3), s: Number(a3), v: Number(o4), a: Number(s3) });
-    return h(d3);
+  var N = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var x = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var M = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var H = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var $ = { string: [[function(r4) {
+    if (!s2.test(r4)) return null;
+    var t3 = r4.length;
+    return t3 <= 5 ? { r: 17 * d2(r4, 1), g: 17 * d2(r4, 2), b: 17 * d2(r4, 3), a: 5 === t3 ? n2(17 * d2(r4, 4) / 255, 2) : 1 } : 7 === t3 || 9 === t3 ? { r: h2(r4, 1), g: h2(r4, 3), b: h2(r4, 5), a: 9 === t3 ? n2(h2(r4, 7) / 255, 2) : 1 } : null;
+  }, "hex"], [function(r4) {
+    var t3 = M.exec(r4) || H.exec(r4);
+    return t3 ? t3[2] !== t3[4] || t3[4] !== t3[6] ? null : a2({ r: Number(t3[1]) / (t3[2] ? 100 / 255 : 1), g: Number(t3[3]) / (t3[4] ? 100 / 255 : 1), b: Number(t3[5]) / (t3[6] ? 100 / 255 : 1), a: void 0 === t3[7] ? 1 : Number(t3[7]) / (t3[8] ? 100 : 1) }) : null;
+  }, "rgb"], [function(t3) {
+    var n2 = N.exec(t3) || x.exec(t3);
+    if (!n2) return null;
+    var u2, e2, o3 = l({ h: (u2 = n2[1], e2 = n2[2], void 0 === e2 && (e2 = "deg"), Number(u2) * (r4[e2] || 1)), s: Number(n2[3]), l: Number(n2[4]), a: void 0 === n2[5] ? 1 : Number(n2[5]) / (n2[6] ? 100 : 1) });
+    return m(o3);
+  }, "hsl"]], object: [[function(r4) {
+    var n2 = r4.r, u2 = r4.g, e2 = r4.b, o3 = r4.a, i2 = void 0 === o3 ? 1 : o3;
+    return t3(n2) && t3(u2) && t3(e2) ? a2({ r: Number(n2), g: Number(u2), b: Number(e2), a: Number(i2) }) : null;
+  }, "rgb"], [function(r4) {
+    var n2 = r4.h, u2 = r4.s, e2 = r4.l, o3 = r4.a, a2 = void 0 === o3 ? 1 : o3;
+    if (!t3(n2) || !t3(u2) || !t3(e2)) return null;
+    var i2 = l({ h: Number(n2), s: Number(u2), l: Number(e2), a: Number(a2) });
+    return m(i2);
+  }, "hsl"], [function(r4) {
+    var n2 = r4.h, o3 = r4.s, a2 = r4.v, i2 = r4.a, s2 = void 0 === i2 ? 1 : i2;
+    if (!t3(n2) || !t3(o3) || !t3(a2)) return null;
+    var d2 = (function(r5) {
+      return { h: e2(r5.h), s: u2(r5.s, 0, 100), v: u2(r5.v, 0, 100), a: u2(r5.a) };
+    })({ h: Number(n2), s: Number(o3), v: Number(a2), a: Number(s2) });
+    return v(d2);
   }, "hsv"]] };
-  var N = function(r5, t4) {
-    for (var n3 = 0; n3 < t4.length; n3++) {
-      var e3 = t4[n3][0](r5);
-      if (e3) return [e3, t4[n3][1]];
+  var j = function(r4, t3) {
+    for (var n2 = 0; n2 < t3.length; n2++) {
+      var u2 = t3[n2][0](r4);
+      if (u2) return [u2, t3[n2][1]];
     }
     return [null, void 0];
   };
-  var x = function(r5) {
-    return "string" == typeof r5 ? N(r5.trim(), y.string) : "object" == typeof r5 && null !== r5 ? N(r5, y.object) : [null, void 0];
+  var w = function(r4) {
+    return "string" == typeof r4 ? j(r4.trim(), $.string) : "object" == typeof r4 && null !== r4 ? j(r4, $.object) : [null, void 0];
   };
-  var M = function(r5, t4) {
-    var n3 = c(r5);
-    return { h: n3.h, s: e(n3.s + 100 * t4, 0, 100), l: n3.l, a: n3.a };
+  var k = function(r4, t3) {
+    var n2 = y(r4);
+    return { h: n2.h, s: u2(n2.s + 100 * t3, 0, 100), l: n2.l, a: n2.a };
   };
-  var H = function(r5) {
-    return (299 * r5.r + 587 * r5.g + 114 * r5.b) / 1e3 / 255;
+  var E = function(r4) {
+    return (299 * r4.r + 587 * r4.g + 114 * r4.b) / 1e3 / 255;
   };
-  var $ = function(r5, t4) {
-    var n3 = c(r5);
-    return { h: n3.h, s: n3.s, l: e(n3.l + 100 * t4, 0, 100), a: n3.a };
+  var R = function(r4, t3) {
+    var n2 = y(r4);
+    return { h: n2.h, s: n2.s, l: u2(n2.l + 100 * t3, 0, 100), a: n2.a };
   };
-  var j = (function() {
-    function r5(r6) {
-      this.parsed = x(r6)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
+  var q = (function() {
+    function r4(r5) {
+      this.parsed = w(r5)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
     }
-    return r5.prototype.isValid = function() {
+    return r4.prototype.isValid = function() {
       return null !== this.parsed;
-    }, r5.prototype.brightness = function() {
-      return n(H(this.rgba), 2);
-    }, r5.prototype.isDark = function() {
-      return H(this.rgba) < 0.5;
-    }, r5.prototype.isLight = function() {
-      return H(this.rgba) >= 0.5;
-    }, r5.prototype.toHex = function() {
-      return r6 = o(this.rgba), t4 = r6.r, e3 = r6.g, u3 = r6.b, i3 = (a3 = r6.a) < 1 ? s(n(255 * a3)) : "", "#" + s(t4) + s(e3) + s(u3) + i3;
-      var r6, t4, e3, u3, a3, i3;
-    }, r5.prototype.toRgb = function() {
-      return o(this.rgba);
-    }, r5.prototype.toRgbString = function() {
-      return r6 = o(this.rgba), t4 = r6.r, n3 = r6.g, e3 = r6.b, (u3 = r6.a) < 1 ? "rgba(" + t4 + ", " + n3 + ", " + e3 + ", " + u3 + ")" : "rgb(" + t4 + ", " + n3 + ", " + e3 + ")";
-      var r6, t4, n3, e3, u3;
-    }, r5.prototype.toHsl = function() {
-      return g(c(this.rgba));
-    }, r5.prototype.toHslString = function() {
-      return r6 = g(c(this.rgba)), t4 = r6.h, n3 = r6.s, e3 = r6.l, (u3 = r6.a) < 1 ? "hsla(" + t4 + ", " + n3 + "%, " + e3 + "%, " + u3 + ")" : "hsl(" + t4 + ", " + n3 + "%, " + e3 + "%)";
-      var r6, t4, n3, e3, u3;
-    }, r5.prototype.toHsv = function() {
-      return r6 = d(this.rgba), { h: n(r6.h), s: n(r6.s), v: n(r6.v), a: n(r6.a, 3) };
-      var r6;
-    }, r5.prototype.invert = function() {
-      return w({ r: 255 - (r6 = this.rgba).r, g: 255 - r6.g, b: 255 - r6.b, a: r6.a });
-      var r6;
-    }, r5.prototype.saturate = function(r6) {
-      return void 0 === r6 && (r6 = 0.1), w(M(this.rgba, r6));
-    }, r5.prototype.desaturate = function(r6) {
-      return void 0 === r6 && (r6 = 0.1), w(M(this.rgba, -r6));
-    }, r5.prototype.grayscale = function() {
-      return w(M(this.rgba, -1));
-    }, r5.prototype.lighten = function(r6) {
-      return void 0 === r6 && (r6 = 0.1), w($(this.rgba, r6));
-    }, r5.prototype.darken = function(r6) {
-      return void 0 === r6 && (r6 = 0.1), w($(this.rgba, -r6));
-    }, r5.prototype.rotate = function(r6) {
-      return void 0 === r6 && (r6 = 15), this.hue(this.hue() + r6);
-    }, r5.prototype.alpha = function(r6) {
-      return "number" == typeof r6 ? w({ r: (t4 = this.rgba).r, g: t4.g, b: t4.b, a: r6 }) : n(this.rgba.a, 3);
-      var t4;
-    }, r5.prototype.hue = function(r6) {
-      var t4 = c(this.rgba);
-      return "number" == typeof r6 ? w({ h: r6, s: t4.s, l: t4.l, a: t4.a }) : n(t4.h);
-    }, r5.prototype.isEqual = function(r6) {
-      return this.toHex() === w(r6).toHex();
-    }, r5;
+    }, r4.prototype.brightness = function() {
+      return n2(E(this.rgba), 2);
+    }, r4.prototype.isDark = function() {
+      return E(this.rgba) < 0.5;
+    }, r4.prototype.isLight = function() {
+      return E(this.rgba) >= 0.5;
+    }, r4.prototype.toHex = function() {
+      return r5 = i2(this.rgba), t3 = r5.r, u2 = r5.g, e2 = r5.b, a2 = (o3 = r5.a) < 1 ? g(n2(255 * o3)) : "", "#" + g(t3) + g(u2) + g(e2) + a2;
+      var r5, t3, u2, e2, o3, a2;
+    }, r4.prototype.toRgb = function() {
+      return i2(this.rgba);
+    }, r4.prototype.toRgbString = function() {
+      return r5 = i2(this.rgba), t3 = r5.r, n2 = r5.g, u2 = r5.b, (e2 = r5.a) < 1 ? "rgba(" + t3 + ", " + n2 + ", " + u2 + ", " + e2 + ")" : "rgb(" + t3 + ", " + n2 + ", " + u2 + ")";
+      var r5, t3, n2, u2, e2;
+    }, r4.prototype.toHsl = function() {
+      return p2(y(this.rgba));
+    }, r4.prototype.toHslString = function() {
+      return r5 = p2(y(this.rgba)), t3 = r5.h, n2 = r5.s, u2 = r5.l, (e2 = r5.a) < 1 ? "hsla(" + t3 + ", " + n2 + "%, " + u2 + "%, " + e2 + ")" : "hsl(" + t3 + ", " + n2 + "%, " + u2 + "%)";
+      var r5, t3, n2, u2, e2;
+    }, r4.prototype.toHsv = function() {
+      return r5 = c(this.rgba), { h: o3(r5.h), s: n2(r5.s), v: n2(r5.v), a: n2(r5.a, 3) };
+      var r5;
+    }, r4.prototype.invert = function() {
+      return A({ r: 255 - (r5 = this.rgba).r, g: 255 - r5.g, b: 255 - r5.b, a: r5.a });
+      var r5;
+    }, r4.prototype.saturate = function(r5) {
+      return void 0 === r5 && (r5 = 0.1), A(k(this.rgba, r5));
+    }, r4.prototype.desaturate = function(r5) {
+      return void 0 === r5 && (r5 = 0.1), A(k(this.rgba, -r5));
+    }, r4.prototype.grayscale = function() {
+      return A(k(this.rgba, -1));
+    }, r4.prototype.lighten = function(r5) {
+      return void 0 === r5 && (r5 = 0.1), A(R(this.rgba, r5));
+    }, r4.prototype.darken = function(r5) {
+      return void 0 === r5 && (r5 = 0.1), A(R(this.rgba, -r5));
+    }, r4.prototype.rotate = function(r5) {
+      return void 0 === r5 && (r5 = 15), this.hue(y(this.rgba).h + r5);
+    }, r4.prototype.alpha = function(r5) {
+      return "number" == typeof r5 ? A({ r: (t3 = this.rgba).r, g: t3.g, b: t3.b, a: r5 }) : n2(this.rgba.a, 3);
+      var t3;
+    }, r4.prototype.hue = function(r5) {
+      var t3 = y(this.rgba);
+      return "number" == typeof r5 ? A({ h: r5, s: t3.s, l: t3.l, a: t3.a }) : o3(t3.h);
+    }, r4.prototype.isEqual = function(r5) {
+      return this.toHex() === A(r5).toHex();
+    }, r4;
   })();
-  var w = function(r5) {
-    return r5 instanceof j ? r5 : new j(r5);
+  var A = function(r4) {
+    return r4 instanceof q ? r4 : new q(r4);
   };
-  var S = [];
-  var k = function(r5) {
-    r5.forEach(function(r6) {
-      S.indexOf(r6) < 0 && (r6(j, y), S.push(r6));
+  var C = [];
+  var D = function(r4) {
+    r4.forEach(function(r5) {
+      C.indexOf(r5) < 0 && (r5(q, $), C.push(r5));
     });
   };
 
@@ -3110,7 +3123,7 @@ var wp;
       a: []
     };
     colors2.forEach((color) => {
-      const rgbColor = w(color).toRgb();
+      const rgbColor = A(color).toRgb();
       values.r.push(rgbColor.r / 255);
       values.g.push(rgbColor.g / 255);
       values.b.push(rgbColor.b / 255);
@@ -6136,7 +6149,7 @@ var wp;
         mediaIds.add(id);
       }
     });
-    return [...mediaIds].sort((a3, b3) => a3 - b3);
+    return [...mediaIds].sort((a2, b2) => a2 - b2);
   }
 
   // packages/editor/build-module/store/utils/attach-media-in-post/invalidate-attachment-resolutions.mjs
@@ -7166,7 +7179,7 @@ var wp;
         return null;
       }
       const currentIndex = revisions.findIndex(
-        (r5) => r5[revisionKey] === currentRevisionId
+        (r4) => r4[revisionKey] === currentRevisionId
       );
       if (currentIndex >= 0 && currentIndex < revisions.length - 1) {
         return revisions[currentIndex + 1];
@@ -7402,18 +7415,18 @@ var wp;
   var import_i18n7 = __toESM(require_i18n(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
-  function r2(e3) {
-    var t4, f3, n3 = "";
-    if ("string" == typeof e3 || "number" == typeof e3) n3 += e3;
-    else if ("object" == typeof e3) if (Array.isArray(e3)) {
-      var o4 = e3.length;
-      for (t4 = 0; t4 < o4; t4++) e3[t4] && (f3 = r2(e3[t4])) && (n3 && (n3 += " "), n3 += f3);
-    } else for (f3 in e3) e3[f3] && (n3 && (n3 += " "), n3 += f3);
-    return n3;
+  function r(e2) {
+    var t3, f2, n2 = "";
+    if ("string" == typeof e2 || "number" == typeof e2) n2 += e2;
+    else if ("object" == typeof e2) if (Array.isArray(e2)) {
+      var o3 = e2.length;
+      for (t3 = 0; t3 < o3; t3++) e2[t3] && (f2 = r(e2[t3])) && (n2 && (n2 += " "), n2 += f2);
+    } else for (f2 in e2) e2[f2] && (n2 && (n2 += " "), n2 += f2);
+    return n2;
   }
   function clsx() {
-    for (var e3, t4, f3 = 0, n3 = "", o4 = arguments.length; f3 < o4; f3++) (e3 = arguments[f3]) && (t4 = r2(e3)) && (n3 && (n3 += " "), n3 += t4);
-    return n3;
+    for (var e2, t3, f2 = 0, n2 = "", o3 = arguments.length; f2 < o3; f2++) (e2 = arguments[f2]) && (t3 = r(e2)) && (n2 && (n2 += " "), n2 += t3);
+    return n2;
   }
   var clsx_default = clsx;
 
@@ -7716,8 +7729,8 @@ var wp;
       });
       mutationObserverRef.current = mutationObserver;
       const roots = /* @__PURE__ */ new Set();
-      for (let i3 = 1; i3 < sortedNodes.length; i3 += 1) {
-        const root = getCommonAncestor(sortedNodes[i3 - 1], sortedNodes[i3]);
+      for (let i2 = 1; i2 < sortedNodes.length; i2 += 1) {
+        const root = getCommonAncestor(sortedNodes[i2 - 1], sortedNodes[i2]);
         if (root) {
           roots.add(root);
         }
@@ -7802,7 +7815,7 @@ var wp;
       }
     });
     let nextAutomaticIndex = 0;
-    automaticItems.sort((a3, b3) => sortByDocumentPosition(a3.element, b3.element));
+    automaticItems.sort((a2, b2) => sortByDocumentPosition(a2.element, b2.element));
     automaticItems.forEach((item) => {
       while (reservedIndices.has(nextAutomaticIndex)) {
         nextAutomaticIndex += 1;
@@ -7812,7 +7825,7 @@ var wp;
       nextAutomaticIndex += 1;
     });
     if (reservedIndices.size > 0) {
-      items.sort((a3, b3) => a3.index - b3.index);
+      items.sort((a2, b2) => a2.index - b2.index);
     }
     return [items, automaticItems.map((item) => item.element)];
   }
@@ -7825,26 +7838,26 @@ var wp;
   }
   function hasMovedNode(entries) {
     for (const entry of entries) {
-      for (let i3 = 0; i3 < entry.removedNodes.length; i3 += 1) {
-        if (entry.removedNodes[i3].isConnected) {
+      for (let i2 = 0; i2 < entry.removedNodes.length; i2 += 1) {
+        if (entry.removedNodes[i2].isConnected) {
           return true;
         }
       }
     }
     return false;
   }
-  function sortByDocumentPosition(a3, b3) {
-    return a3.compareDocumentPosition(b3) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+  function sortByDocumentPosition(a2, b2) {
+    return a2.compareDocumentPosition(b2) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
   }
 
   // node_modules/@base-ui/react/internals/useRenderElement.mjs
   var React9 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/utils/useMergedRefs.mjs
-  function useMergedRefs(a3, b3, c6, d3) {
+  function useMergedRefs(a2, b2, c6, d2) {
     const forkRef = useRefWithInit(createForkRef).current;
-    if (didChange(forkRef, a3, b3, c6, d3)) {
-      update(forkRef, [a3, b3, c6, d3]);
+    if (didChange(forkRef, a2, b2, c6, d2)) {
+      update(forkRef, [a2, b2, c6, d2]);
     }
     return forkRef.callback;
   }
@@ -7862,8 +7875,8 @@ var wp;
       refs: []
     };
   }
-  function didChange(forkRef, a3, b3, c6, d3) {
-    return forkRef.refs[0] !== a3 || forkRef.refs[1] !== b3 || forkRef.refs[2] !== c6 || forkRef.refs[3] !== d3;
+  function didChange(forkRef, a2, b2, c6, d2) {
+    return forkRef.refs[0] !== a2 || forkRef.refs[1] !== b2 || forkRef.refs[2] !== c6 || forkRef.refs[3] !== d2;
   }
   function didChangeN(forkRef, newRefs) {
     return forkRef.refs.length !== newRefs.length || forkRef.refs.some((ref, index2) => ref !== newRefs[index2]);
@@ -7881,8 +7894,8 @@ var wp;
       }
       if (instance != null) {
         const cleanupCallbacks = Array(refs.length).fill(null);
-        for (let i3 = 0; i3 < refs.length; i3 += 1) {
-          const ref = refs[i3];
+        for (let i2 = 0; i2 < refs.length; i2 += 1) {
+          const ref = refs[i2];
           if (ref == null) {
             continue;
           }
@@ -7890,7 +7903,7 @@ var wp;
             case "function": {
               const refCleanup = ref(instance);
               if (typeof refCleanup === "function") {
-                cleanupCallbacks[i3] = refCleanup;
+                cleanupCallbacks[i2] = refCleanup;
               }
               break;
             }
@@ -7902,14 +7915,14 @@ var wp;
           }
         }
         forkRef.cleanup = () => {
-          for (let i3 = 0; i3 < refs.length; i3 += 1) {
-            const ref = refs[i3];
+          for (let i2 = 0; i2 < refs.length; i2 += 1) {
+            const ref = refs[i2];
             if (ref == null) {
               continue;
             }
             switch (typeof ref) {
               case "function": {
-                const cleanupCallback = cleanupCallbacks[i3];
+                const cleanupCallback = cleanupCallbacks[i2];
                 if (typeof cleanupCallback === "function") {
                   cleanupCallback();
                 } else {
@@ -7950,17 +7963,17 @@ var wp;
   }
 
   // node_modules/@base-ui/utils/mergeObjects.mjs
-  function mergeObjects(a3, b3) {
-    if (a3 && !b3) {
-      return a3;
+  function mergeObjects(a2, b2) {
+    if (a2 && !b2) {
+      return a2;
     }
-    if (!a3 && b3) {
-      return b3;
+    if (!a2 && b2) {
+      return b2;
     }
-    if (a3 || b3) {
+    if (a2 || b2) {
       return {
-        ...a3,
-        ...b3
+        ...a2,
+        ...b2
       };
     }
     return void 0;
@@ -8005,22 +8018,22 @@ var wp;
 
   // node_modules/@base-ui/react/merge-props/mergeProps.mjs
   var EMPTY_PROPS = {};
-  function mergeProps(a3, b3, c6, d3, e3) {
-    if (!c6 && !d3 && !e3 && !a3) {
-      return createInitialMergedProps(b3);
+  function mergeProps(a2, b2, c6, d2, e2) {
+    if (!c6 && !d2 && !e2 && !a2) {
+      return createInitialMergedProps(b2);
     }
-    let merged = createInitialMergedProps(a3);
-    if (b3) {
-      merged = mergeInto(merged, b3);
+    let merged = createInitialMergedProps(a2);
+    if (b2) {
+      merged = mergeInto(merged, b2);
     }
     if (c6) {
       merged = mergeInto(merged, c6);
     }
-    if (d3) {
-      merged = mergeInto(merged, d3);
+    if (d2) {
+      merged = mergeInto(merged, d2);
     }
-    if (e3) {
-      merged = mergeInto(merged, e3);
+    if (e2) {
+      merged = mergeInto(merged, e2);
     }
     return merged;
   }
@@ -8032,8 +8045,8 @@ var wp;
       return createInitialMergedProps(props[0]);
     }
     let merged = createInitialMergedProps(props[0]);
-    for (let i3 = 1; i3 < props.length; i3 += 1) {
-      merged = mergeInto(merged, props[i3]);
+    for (let i2 = 1; i2 < props.length; i2 += 1) {
+      merged = mergeInto(merged, props[i2]);
     }
     return merged;
   }
@@ -8450,8 +8463,8 @@ var wp;
       this.callbacksCount = 0;
       this.startId = this.nextId;
       if (currentCallbacksCount > 0) {
-        for (let i3 = 0; i3 < currentCallbacks.length; i3 += 1) {
-          currentCallbacks[i3]?.(timestamp);
+        for (let i2 = 0; i2 < currentCallbacks.length; i2 += 1) {
+          currentCallbacks[i2]?.(timestamp);
         }
       }
     };
@@ -8675,9 +8688,9 @@ var wp;
         return void 0;
       }
       return subscribeMapChange((map) => {
-        const i3 = componentRef.current ? map.get(componentRef.current)?.index : null;
-        if (i3 != null) {
-          setInternalIndex(i3);
+        const i2 = componentRef.current ? map.get(componentRef.current)?.index : null;
+        if (i2 != null) {
+          setInternalIndex(i2);
         }
       });
     }, [externalIndex, subscribeMapChange]);
@@ -10241,8 +10254,8 @@ var wp;
   // node_modules/@base-ui/utils/mergeCleanups.mjs
   function mergeCleanups(...cleanups) {
     return () => {
-      for (let i3 = 0; i3 < cleanups.length; i3 += 1) {
-        const cleanup = cleanups[i3];
+      for (let i2 = 0; i2 < cleanups.length; i2 += 1) {
+        const cleanup = cleanups[i2];
         if (cleanup) {
           cleanup();
         }
@@ -10530,7 +10543,7 @@ var wp;
         }
         const colInRow = rows[currentRow].indexOf(prevIndex);
         const step = direction === "up" ? -1 : 1;
-        for (let nextRow = currentRow + step, i3 = 0; i3 < rows.length; i3 += 1, nextRow += step) {
+        for (let nextRow = currentRow + step, i2 = 0; i2 < rows.length; i2 += 1, nextRow += step) {
           if (nextRow < 0 || nextRow >= rows.length) {
             if (!loopFocus || hasVirtualizedGaps) {
               return void 0;
@@ -10561,7 +10574,7 @@ var wp;
         const rowStep = direction === "up" ? -verticalCols : verticalCols;
         const lastRowStart = maxIndex - maxIndex % verticalCols;
         const rowCount = floor(maxIndex / verticalCols) + 1;
-        for (let rowStart = prevIndex - colInRow + rowStep, i3 = 0; i3 < rowCount; i3 += 1, rowStart += rowStep) {
+        for (let rowStart = prevIndex - colInRow + rowStep, i2 = 0; i2 < rowCount; i2 += 1, rowStart += rowStep) {
           if (rowStart < 0 || rowStart > maxIndex) {
             if (!loopFocus) {
               return void 0;
@@ -11365,7 +11378,7 @@ var wp;
       this.nodesRef.current.push(node);
     }
     removeNode(node) {
-      const index2 = this.nodesRef.current.findIndex((n3) => n3 === node);
+      const index2 = this.nodesRef.current.findIndex((n2) => n2 === node);
       if (index2 !== -1) {
         this.nodesRef.current.splice(index2, 1);
       }
@@ -12691,8 +12704,8 @@ var wp;
     let statefulPlacement = placement;
     let resetCount = 0;
     const middlewareData = {};
-    for (let i3 = 0; i3 < middleware.length; i3++) {
-      const currentMiddleware = middleware[i3];
+    for (let i2 = 0; i2 < middleware.length; i2++) {
+      const currentMiddleware = middleware[i2];
       if (!currentMiddleware) {
         continue;
       }
@@ -12743,7 +12756,7 @@ var wp;
             y: y3
           } = computeCoordsFromPlacement(rects, statefulPlacement, rtl));
         }
-        i3 = -1;
+        i2 = -1;
       }
     }
     return {
@@ -12815,7 +12828,7 @@ var wp;
             const ignoreCrossAxisOverflow = checkCrossAxis === "alignment" ? initialSideAxis !== getSideAxis(nextPlacement) : false;
             if (!ignoreCrossAxisOverflow || // We leave the current main axis only if every placement on that axis
             // overflows the main axis.
-            overflowsData.every((d3) => getSideAxis(d3.placement) === initialSideAxis ? d3.overflows[0] > 0 : true)) {
+            overflowsData.every((d2) => getSideAxis(d2.placement) === initialSideAxis ? d2.overflows[0] > 0 : true)) {
               return {
                 data: {
                   index: nextIndex,
@@ -12827,20 +12840,20 @@ var wp;
               };
             }
           }
-          let resetPlacement = (_overflowsData$filter = overflowsData.filter((d3) => d3.overflows[0] <= 0).sort((a3, b3) => a3.overflows[1] - b3.overflows[1])[0]) == null ? void 0 : _overflowsData$filter.placement;
+          let resetPlacement = (_overflowsData$filter = overflowsData.filter((d2) => d2.overflows[0] <= 0).sort((a2, b2) => a2.overflows[1] - b2.overflows[1])[0]) == null ? void 0 : _overflowsData$filter.placement;
           if (!resetPlacement) {
             switch (fallbackStrategy) {
               case "bestFit": {
                 var _overflowsData$filter2;
-                const placement2 = (_overflowsData$filter2 = overflowsData.filter((d3) => {
+                const placement2 = (_overflowsData$filter2 = overflowsData.filter((d2) => {
                   if (hasFallbackAxisSideDirection) {
-                    const currentSideAxis = getSideAxis(d3.placement);
+                    const currentSideAxis = getSideAxis(d2.placement);
                     return currentSideAxis === initialSideAxis || // Create a bias to the `y` side axis due to horizontal
                     // reading directions favoring greater width.
                     currentSideAxis === "y";
                   }
                   return true;
-                }).map((d3) => [d3.placement, d3.overflows.filter((overflow2) => overflow2 > 0).reduce((acc, overflow2) => acc + overflow2, 0)]).sort((a3, b3) => a3[1] - b3[1])[0]) == null ? void 0 : _overflowsData$filter2[0];
+                }).map((d2) => [d2.placement, d2.overflows.filter((overflow2) => overflow2 > 0).reduce((acc, overflow2) => acc + overflow2, 0)]).sort((a2, b2) => a2[1] - b2[1])[0]) == null ? void 0 : _overflowsData$filter2[0];
                 if (placement2) {
                   resetPlacement = placement2;
                 }
@@ -13448,8 +13461,8 @@ var wp;
     let right = firstRect.right;
     let bottom = firstRect.bottom;
     let left = firstRect.left;
-    for (let i3 = 1; i3 < clippingAncestors.length; i3++) {
-      const rect = getClientRectFromClippingAncestor(element, clippingAncestors[i3], strategy);
+    for (let i2 = 1; i2 < clippingAncestors.length; i2++) {
+      const rect = getClientRectFromClippingAncestor(element, clippingAncestors[i2], strategy);
       top = max(rect.top, top);
       right = min(rect.right, right);
       bottom = min(rect.bottom, bottom);
@@ -13574,8 +13587,8 @@ var wp;
     isElement,
     isRTL
   };
-  function rectsAreEqual(a3, b3) {
-    return a3.x === b3.x && a3.y === b3.y && a3.width === b3.width && a3.height === b3.height;
+  function rectsAreEqual(a2, b2) {
+    return a2.x === b2.x && a2.y === b2.y && a2.width === b2.width && a2.height === b2.height;
   }
   function observeMove(element, onMove, ancestorResize) {
     let io = null;
@@ -13752,52 +13765,52 @@ var wp;
   var noop2 = function noop3() {
   };
   var index = isClient ? import_react2.useLayoutEffect : noop2;
-  function deepEqual(a3, b3) {
-    if (a3 === b3) {
+  function deepEqual(a2, b2) {
+    if (a2 === b2) {
       return true;
     }
-    if (typeof a3 !== typeof b3) {
+    if (typeof a2 !== typeof b2) {
       return false;
     }
-    if (typeof a3 === "function" && a3.toString() === b3.toString()) {
+    if (typeof a2 === "function" && a2.toString() === b2.toString()) {
       return true;
     }
     let length2;
-    let i3;
+    let i2;
     let keys;
-    if (a3 && b3 && typeof a3 === "object") {
-      if (Array.isArray(a3)) {
-        length2 = a3.length;
-        if (length2 !== b3.length) return false;
-        for (i3 = length2; i3-- !== 0; ) {
-          if (!deepEqual(a3[i3], b3[i3])) {
+    if (a2 && b2 && typeof a2 === "object") {
+      if (Array.isArray(a2)) {
+        length2 = a2.length;
+        if (length2 !== b2.length) return false;
+        for (i2 = length2; i2-- !== 0; ) {
+          if (!deepEqual(a2[i2], b2[i2])) {
             return false;
           }
         }
         return true;
       }
-      keys = Object.keys(a3);
+      keys = Object.keys(a2);
       length2 = keys.length;
-      if (length2 !== Object.keys(b3).length) {
+      if (length2 !== Object.keys(b2).length) {
         return false;
       }
-      for (i3 = length2; i3-- !== 0; ) {
-        if (!{}.hasOwnProperty.call(b3, keys[i3])) {
+      for (i2 = length2; i2-- !== 0; ) {
+        if (!{}.hasOwnProperty.call(b2, keys[i2])) {
           return false;
         }
       }
-      for (i3 = length2; i3-- !== 0; ) {
-        const key = keys[i3];
-        if (key === "_owner" && a3.$$typeof) {
+      for (i2 = length2; i2-- !== 0; ) {
+        const key = keys[i2];
+        if (key === "_owner" && a2.$$typeof) {
           continue;
         }
-        if (!deepEqual(a3[key], b3[key])) {
+        if (!deepEqual(a2[key], b2[key])) {
           return false;
         }
       }
       return true;
     }
-    return a3 !== a3 && b3 !== b3;
+    return a2 !== a2 && b2 !== b2;
   }
   function getDPR(element) {
     if (typeof window === "undefined") {
@@ -14136,8 +14149,8 @@ var wp;
       }
       let triggerElement;
       if (triggerId) {
-        for (let i3 = this.attachedStores.length - 1; i3 >= 0 && !triggerElement; i3 -= 1) {
-          triggerElement = this.attachedStores[i3].context.triggerElements.getById(triggerId);
+        for (let i2 = this.attachedStores.length - 1; i2 >= 0 && !triggerElement; i2 -= 1) {
+          triggerElement = this.attachedStores[i2].context.triggerElements.getById(triggerId);
         }
         triggerElement ??= this.fallbackStore.context.triggerElements.getById(triggerId);
       }
@@ -14225,11 +14238,11 @@ var wp;
   // node_modules/@base-ui/utils/store/useStore.mjs
   var canUseRawUseSyncExternalStore = isReactVersionAtLeast(19);
   var useStoreImplementation = canUseRawUseSyncExternalStore ? useStoreFast : useStoreLegacy;
-  function useStore(store4, selector2, a1, a22, a3) {
-    return useStoreImplementation(store4, selector2, a1, a22, a3);
+  function useStore(store4, selector2, a1, a2, a3) {
+    return useStoreImplementation(store4, selector2, a1, a2, a3);
   }
-  function useStoreR19(store4, selector2, a1, a22, a3) {
-    const getSelection = React31.useCallback(() => selector2(store4.getSnapshot(), a1, a22, a3), [store4, selector2, a1, a22, a3]);
+  function useStoreR19(store4, selector2, a1, a2, a3) {
+    const getSelection = React31.useCallback(() => selector2(store4.getSnapshot(), a1, a2, a3), [store4, selector2, a1, a2, a3]);
     return (0, import_shim.useSyncExternalStore)(store4.subscribe, getSelection, getSelection);
   }
   register({
@@ -14241,8 +14254,8 @@ var wp;
         instance.didChangeStore = true;
         instance.getSnapshot = () => {
           let didChange2 = false;
-          for (let i3 = 0; i3 < instance.syncHooks.length; i3 += 1) {
-            const hook = instance.syncHooks[i3];
+          for (let i2 = 0; i2 < instance.syncHooks.length; i2 += 1) {
+            const hook = instance.syncHooks[i2];
             const value = hook.selector(hook.store.state, hook.a1, hook.a2, hook.a3);
             if (!Object.is(hook.value, value)) {
               didChange2 = true;
@@ -14280,10 +14293,10 @@ var wp;
       }
     }
   });
-  function useStoreFast(store4, selector2, a1, a22, a3) {
+  function useStoreFast(store4, selector2, a1, a2, a3) {
     const instance = getInstance();
     if (!instance) {
-      return useStoreR19(store4, selector2, a1, a22, a3);
+      return useStoreR19(store4, selector2, a1, a2, a3);
     }
     const index2 = instance.syncIndex;
     instance.syncIndex += 1;
@@ -14293,29 +14306,29 @@ var wp;
         store: store4,
         selector: selector2,
         a1,
-        a2: a22,
+        a2,
         a3,
-        value: selector2(store4.getSnapshot(), a1, a22, a3)
+        value: selector2(store4.getSnapshot(), a1, a2, a3)
       };
       instance.syncHooks.push(hook);
     } else {
       hook = instance.syncHooks[index2];
-      if (hook.store !== store4 || hook.selector !== selector2 || !Object.is(hook.a1, a1) || !Object.is(hook.a2, a22) || !Object.is(hook.a3, a3)) {
+      if (hook.store !== store4 || hook.selector !== selector2 || !Object.is(hook.a1, a1) || !Object.is(hook.a2, a2) || !Object.is(hook.a3, a3)) {
         if (hook.store !== store4) {
           instance.didChangeStore = true;
         }
         hook.store = store4;
         hook.selector = selector2;
         hook.a1 = a1;
-        hook.a2 = a22;
+        hook.a2 = a2;
         hook.a3 = a3;
-        hook.value = selector2(store4.getSnapshot(), a1, a22, a3);
+        hook.value = selector2(store4.getSnapshot(), a1, a2, a3);
       }
     }
     return hook.value;
   }
-  function useStoreLegacy(store4, selector2, a1, a22, a3) {
-    return (0, import_with_selector.useSyncExternalStoreWithSelector)(store4.subscribe, store4.getSnapshot, store4.getSnapshot, (state2) => selector2(state2, a1, a22, a3));
+  function useStoreLegacy(store4, selector2, a1, a2, a3) {
+    return (0, import_with_selector.useSyncExternalStoreWithSelector)(store4.subscribe, store4.getSnapshot, store4.getSnapshot, (state2) => selector2(state2, a1, a2, a3));
   }
 
   // node_modules/@base-ui/utils/store/Store.mjs
@@ -14410,8 +14423,8 @@ var wp;
       };
       this.setState(newState);
     }
-    use(selector2, a1, a22, a3) {
-      return useStore(this, selector2, a1, a22, a3);
+    use(selector2, a1, a2, a3) {
+      return useStore(this, selector2, a1, a2, a3);
     }
   };
 
@@ -14518,9 +14531,9 @@ var wp;
      *
      * @param key Key of the selector to use.
      */
-    select(key, a1, a22, a3) {
+    select(key, a1, a2, a3) {
       const selector2 = this.selectors[key];
-      return selector2(this.state, a1, a22, a3);
+      return selector2(this.state, a1, a2, a3);
     }
     /**
      * Returns a value from the store's state using a selector function.
@@ -14529,9 +14542,9 @@ var wp;
      *
      * @param key Key of the selector to use.
      */
-    useState(key, a1, a22, a3) {
+    useState(key, a1, a2, a3) {
       React32.useDebugValue(key);
-      return useStore(this, this.selectors[key], a1, a22, a3);
+      return useStore(this, this.selectors[key], a1, a2, a3);
     }
     /**
      * Wraps a function with `useStableCallback` to ensure it has a stable reference
@@ -15350,7 +15363,7 @@ var wp;
     }, [domReferenceElement]);
     useIsoLayoutEffect(() => {
       store4.context.dataRef.current.floatingContext = context;
-      const node = tree?.nodesRef.current.find((n3) => n3.id === nodeId);
+      const node = tree?.nodesRef.current.find((n2) => n2.id === nodeId);
       if (node) {
         node.context = context;
       }
@@ -17707,8 +17720,8 @@ var wp;
           return true;
         }
         const itemString = stringifyAsLabel(item, itemToString);
-        for (let i3 = 0; i3 <= itemString.length - query.length; i3 += 1) {
-          if (collator.compare(itemString.slice(i3, i3 + query.length), query) === 0) {
+        for (let i2 = 0; i2 <= itemString.length - query.length; i2 += 1) {
+          if (collator.compare(itemString.slice(i2, i2 + query.length), query) === 0) {
             return true;
           }
         }
@@ -17767,7 +17780,7 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/areArraysEqual.mjs
-  function areArraysEqual(array1, array2, itemComparer = (a3, b3) => a3 === b3) {
+  function areArraysEqual(array1, array2, itemComparer = (a2, b2) => a2 === b2) {
     return array1.length === array2.length && array1.every((value, index2) => itemComparer(value, array2[index2]));
   }
 
@@ -21868,7 +21881,7 @@ var wp;
           selectedIndex: null,
           type: reason_parts_exports.keyboard
         });
-        store4.state.setSelectedValue(selectedValue.filter((_, i3) => i3 !== index2), createChangeEventDetails(reason_parts_exports.none, event.nativeEvent));
+        store4.state.setSelectedValue(selectedValue.filter((_, i2) => i2 !== index2), createChangeEventDetails(reason_parts_exports.none, event.nativeEvent));
       } else if (event.key === "Enter" || event.key === " ") {
         stopEvent(event);
         nextIndex = void 0;
@@ -21968,7 +21981,7 @@ var wp;
       const eventDetails = createChangeEventDetails(reason_parts_exports.chipRemovePress, event.nativeEvent);
       const removedItem = selectedValue[index2];
       clearActiveIndexForRemovedItem(removedItem);
-      store4.state.setSelectedValue(selectedValue.filter((_, i3) => i3 !== index2), eventDetails);
+      store4.state.setSelectedValue(selectedValue.filter((_, i2) => i2 !== index2), eventDetails);
       store4.state.inputRef.current?.focus();
       return eventDetails;
     }
@@ -26873,8 +26886,8 @@ var wp;
   function getTargetElement(event) {
     if ("composedPath" in event) {
       const path = event.composedPath();
-      for (let i3 = 0; i3 < path.length; i3 += 1) {
-        const element = path[i3];
+      for (let i2 = 0; i2 < path.length; i2 += 1) {
+        const element = path[i2];
         if (isElement(element)) {
           return element;
         }
@@ -31137,11 +31150,11 @@ var wp;
     const [leftStartTime, leftEndTime] = [
       +toDate(intervalLeft.start, options?.in),
       +toDate(intervalLeft.end, options?.in)
-    ].sort((a3, b3) => a3 - b3);
+    ].sort((a2, b2) => a2 - b2);
     const [rightStartTime, rightEndTime] = [
       +toDate(intervalRight.start, options?.in),
       +toDate(intervalRight.end, options?.in)
-    ].sort((a3, b3) => a3 - b3);
+    ].sort((a2, b2) => a2 - b2);
     if (options?.inclusive)
       return leftStartTime <= rightEndTime && rightStartTime <= leftEndTime;
     return leftStartTime < rightEndTime && rightStartTime < leftEndTime;
@@ -32967,8 +32980,8 @@ var wp;
   function parseAnyDigitsSigned(dateString) {
     return parseNumericPattern(numericPatterns.anyDigitsSigned, dateString);
   }
-  function parseNDigits(n3, dateString) {
-    switch (n3) {
+  function parseNDigits(n2, dateString) {
+    switch (n2) {
       case 1:
         return parseNumericPattern(numericPatterns.singleDigit, dateString);
       case 2:
@@ -32978,11 +32991,11 @@ var wp;
       case 4:
         return parseNumericPattern(numericPatterns.fourDigits, dateString);
       default:
-        return parseNumericPattern(new RegExp("^\\d{1," + n3 + "}"), dateString);
+        return parseNumericPattern(new RegExp("^\\d{1," + n2 + "}"), dateString);
     }
   }
-  function parseNDigitsSigned(n3, dateString) {
-    switch (n3) {
+  function parseNDigitsSigned(n2, dateString) {
+    switch (n2) {
       case 1:
         return parseNumericPattern(numericPatterns.singleDigitSigned, dateString);
       case 2:
@@ -32992,7 +33005,7 @@ var wp;
       case 4:
         return parseNumericPattern(numericPatterns.fourDigitsSigned, dateString);
       default:
-        return parseNumericPattern(new RegExp("^-?\\d{1," + n3 + "}"), dateString);
+        return parseNumericPattern(new RegExp("^-?\\d{1," + n2 + "}"), dateString);
     }
   }
   function dayPeriodEnumToHours(dayPeriod) {
@@ -34476,8 +34489,8 @@ var wp;
     if (dateStr.length > 0 && notWhitespaceRegExp.test(dateStr)) {
       return invalidDate();
     }
-    const uniquePrioritySetters = setters.map((setter) => setter.priority).sort((a3, b3) => b3 - a3).filter((priority2, index2, array) => array.indexOf(priority2) === index2).map(
-      (priority2) => setters.filter((setter) => setter.priority === priority2).sort((a3, b3) => b3.subPriority - a3.subPriority)
+    const uniquePrioritySetters = setters.map((setter) => setter.priority).sort((a2, b2) => b2 - a2).filter((priority2, index2, array) => array.indexOf(priority2) === index2).map(
+      (priority2) => setters.filter((setter) => setter.priority === priority2).sort((a2, b2) => b2.subPriority - a2.subPriority)
     ).map((setterArray) => setterArray[0]);
     let date = toDate(referenceDate, options?.in);
     if (isNaN(+date)) return invalidDate();
@@ -34778,7 +34791,7 @@ var wp;
         if (dateLib && typeof dateLib.format === "function") {
           formatDate2 = dateLib.format.bind(dateLib);
         } else {
-          formatDate2 = (d3, pattern) => format(d3, pattern, { locale: enUS, ...options });
+          formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
         }
         let label = formatDate2(date, "PPPP");
         if (modifiers.today)
@@ -34797,7 +34810,7 @@ var wp;
         if (dateLib && typeof dateLib.format === "function") {
           formatDate2 = dateLib.format.bind(dateLib);
         } else {
-          formatDate2 = (d3, pattern) => format(d3, pattern, { locale: enUS, ...options });
+          formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
         }
         return formatDate2(date, "LLLL yyyy");
       },
@@ -34806,7 +34819,7 @@ var wp;
         if (dateLib && typeof dateLib.format === "function") {
           formatDate2 = dateLib.format.bind(dateLib);
         } else {
-          formatDate2 = (d3, pattern) => format(d3, pattern, { locale: enUS, ...options });
+          formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
         }
         let label = formatDate2(date, "PPPP");
         if (modifiers?.today) {
@@ -34821,7 +34834,7 @@ var wp;
         if (dateLib && typeof dateLib.format === "function") {
           formatDate2 = dateLib.format.bind(dateLib);
         } else {
-          formatDate2 = (d3, pattern) => format(d3, pattern, { locale: enUS, ...options });
+          formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
         }
         return formatDate2(date, "cccc");
       }
@@ -34879,7 +34892,7 @@ var wp;
       };
       this.eachYearOfInterval = (interval) => {
         const years = this.overrides?.eachYearOfInterval ? this.overrides.eachYearOfInterval(interval) : eachYearOfInterval(interval);
-        const uniqueYears = new Set(years.map((d3) => this.getYear(d3)));
+        const uniqueYears = new Set(years.map((d2) => this.getYear(d2)));
         if (uniqueYears.size === years.length) {
           return years;
         }
@@ -34987,8 +35000,8 @@ var wp;
         numberingSystem: numerals
       });
       const digitMap = {};
-      for (let i3 = 0; i3 < 10; i3++) {
-        digitMap[i3.toString()] = formatter.format(i3);
+      for (let i2 = 0; i2 < 10; i2++) {
+        digitMap[i2.toString()] = formatter.format(i2);
       }
       return digitMap;
     }
@@ -35316,14 +35329,14 @@ var wp;
   function Nav(props) {
     const { onPreviousClick, onNextClick, previousMonth, nextMonth, ...navProps } = props;
     const { components, classNames, styles, labels: { labelPrevious: labelPrevious2, labelNext: labelNext2 } } = useDayPicker();
-    const handleNextClick = (0, import_react19.useCallback)((e3) => {
+    const handleNextClick = (0, import_react19.useCallback)((e2) => {
       if (nextMonth) {
-        onNextClick?.(e3);
+        onNextClick?.(e2);
       }
     }, [nextMonth, onNextClick]);
-    const handlePreviousClick = (0, import_react19.useCallback)((e3) => {
+    const handlePreviousClick = (0, import_react19.useCallback)((e2) => {
       if (previousMonth) {
-        onPreviousClick?.(e3);
+        onPreviousClick?.(e2);
       }
     }, [previousMonth, onPreviousClick]);
     return import_react19.default.createElement(
@@ -35570,10 +35583,10 @@ var wp;
       const customModifiers = {};
       for (const name2 in internalModifiersMap) {
         const days2 = internalModifiersMap[name2];
-        dayFlags[name2] = days2.some((d3) => d3 === day);
+        dayFlags[name2] = days2.some((d2) => d2 === day);
       }
       for (const name2 in customModifiersMap) {
-        customModifiers[name2] = customModifiersMap[name2].some((d3) => d3 === day);
+        customModifiers[name2] = customModifiersMap[name2].some((d2) => d2 === day);
       }
       return {
         ...dayFlags,
@@ -35844,8 +35857,8 @@ var wp;
     const referenceToday = today ?? dateLib.today();
     const start2 = broadcastCalendar ? dateLib.startOfBroadcastWeek(referenceToday, dateLib) : ISOWeek ? dateLib.startOfISOWeek(referenceToday) : dateLib.startOfWeek(referenceToday);
     const days = [];
-    for (let i3 = 0; i3 < 7; i3++) {
-      const day = dateLib.addDays(start2, i3);
+    for (let i2 = 0; i2 < 7; i2++) {
+      const day = dateLib.addDays(start2, i2);
       days.push(day);
     }
     return days;
@@ -36155,15 +36168,15 @@ var wp;
     const nOfDays = differenceInCalendarDays2(gridEndDate, startWeekFirstDate);
     const nOfMonths = differenceInCalendarMonths2(lastMonth, firstMonth) + 1;
     const dates = [];
-    for (let i3 = 0; i3 <= nOfDays; i3++) {
-      const date = addDays2(startWeekFirstDate, i3);
+    for (let i2 = 0; i2 <= nOfDays; i2++) {
+      const date = addDays2(startWeekFirstDate, i2);
       dates.push(date);
     }
     const nrOfDaysWithFixedWeeks = broadcastCalendar ? 35 : 42;
     const extraDates = nrOfDaysWithFixedWeeks * nOfMonths;
     if (fixedWeeks && dates.length < extraDates) {
       const daysToAdd = extraDates - dates.length;
-      for (let i3 = 0; i3 < daysToAdd; i3++) {
+      for (let i2 = 0; i2 < daysToAdd; i2++) {
         const date = addDays2(dates[dates.length - 1], 1);
         dates.push(date);
       }
@@ -36186,8 +36199,8 @@ var wp;
   function getDisplayMonths(firstDisplayedMonth, calendarEndMonth, props, dateLib) {
     const { numberOfMonths = 1 } = props;
     const months = [];
-    for (let i3 = 0; i3 < numberOfMonths; i3++) {
-      const month = dateLib.addMonths(firstDisplayedMonth, i3);
+    for (let i2 = 0; i2 < numberOfMonths; i2++) {
+      const month = dateLib.addMonths(firstDisplayedMonth, i2);
       if (calendarEndMonth && month > calendarEndMonth) {
         break;
       }
@@ -36378,7 +36391,7 @@ var wp;
       props.reverseMonths
     ]);
     const { disableNavigation, onMonthChange } = props;
-    const isDayInCalendar = (day) => weeks.some((week) => week.days.some((d3) => d3.isEqualTo(day)));
+    const isDayInCalendar = (day) => weeks.some((week) => week.days.some((d2) => d2.isEqualTo(day)));
     const goToMonth = (date) => {
       if (disableNavigation) {
         return;
@@ -36536,10 +36549,10 @@ var wp;
     const selected = !onSelect ? internallySelected : initiallySelected;
     const { isSameDay: isSameDay3 } = dateLib;
     const isSelected2 = (date) => {
-      return selected?.some((d3) => isSameDay3(d3, date)) ?? false;
+      return selected?.some((d2) => isSameDay3(d2, date)) ?? false;
     };
     const { min: min4, max: max4 } = props;
-    const select9 = (triggerDate, modifiers, e3) => {
+    const select9 = (triggerDate, modifiers, e2) => {
       let newDates = [...selected ?? []];
       if (isSelected2(triggerDate)) {
         if (selected?.length === min4) {
@@ -36548,7 +36561,7 @@ var wp;
         if (required && selected?.length === 1) {
           return;
         }
-        newDates = selected?.filter((d3) => !isSameDay3(d3, triggerDate));
+        newDates = selected?.filter((d2) => !isSameDay3(d2, triggerDate));
       } else {
         if (selected?.length === max4) {
           newDates = [triggerDate];
@@ -36559,7 +36572,7 @@ var wp;
       if (!onSelect) {
         setSelected(newDates);
       }
-      onSelect?.(newDates, triggerDate, modifiers, e3);
+      onSelect?.(newDates, triggerDate, modifiers, e2);
       return newDates;
     };
     return {
@@ -36628,7 +36641,7 @@ var wp;
     let date = range.from;
     const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
     const totalDaysLimit = Math.min(totalDays, 6);
-    for (let i3 = 0; i3 <= totalDaysLimit; i3++) {
+    for (let i2 = 0; i2 <= totalDaysLimit; i2++) {
       if (dayOfWeekArr.includes(date.getDay())) {
         return true;
       }
@@ -36686,7 +36699,7 @@ var wp;
     if (functionMatchers.length) {
       let date = range.from;
       const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
-      for (let i3 = 0; i3 <= totalDays; i3++) {
+      for (let i2 = 0; i2 <= totalDays; i2++) {
         if (functionMatchers.some((matcher) => matcher(date))) {
           return true;
         }
@@ -36702,7 +36715,7 @@ var wp;
     const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
     const selected = !onSelect ? internallySelected : initiallySelected;
     const isSelected2 = (date) => selected && rangeIncludesDate(selected, date, false, dateLib);
-    const select9 = (triggerDate, modifiers, e3) => {
+    const select9 = (triggerDate, modifiers, e2) => {
       const { min: min4, max: max4 } = props;
       let newRange;
       if (triggerDate) {
@@ -36729,7 +36742,7 @@ var wp;
       if (!onSelect) {
         setSelected(newRange);
       }
-      onSelect?.(newRange, triggerDate, modifiers, e3);
+      onSelect?.(newRange, triggerDate, modifiers, e2);
       return newRange;
     };
     return {
@@ -36748,7 +36761,7 @@ var wp;
     const isSelected2 = (compareDate) => {
       return selected ? isSameDay3(selected, compareDate) : false;
     };
-    const select9 = (triggerDate, modifiers, e3) => {
+    const select9 = (triggerDate, modifiers, e2) => {
       let newDate = triggerDate;
       if (!required && selected && selected && isSameDay3(triggerDate, selected)) {
         newDate = void 0;
@@ -36757,9 +36770,9 @@ var wp;
         setSelected(newDate);
       }
       if (required) {
-        onSelect?.(newDate, triggerDate, modifiers, e3);
+        onSelect?.(newDate, triggerDate, modifiers, e2);
       } else {
-        onSelect?.(newDate, triggerDate, modifiers, e3);
+        onSelect?.(newDate, triggerDate, modifiers, e2);
       }
       return newDate;
     };
@@ -36962,62 +36975,62 @@ var wp;
       goToMonth(nextMonth);
       onNextClick?.(nextMonth);
     }, [goToMonth, nextMonth, onNextClick]);
-    const handleDayClick = (0, import_react36.useCallback)((day, m2) => (e3) => {
-      e3.preventDefault();
-      e3.stopPropagation();
+    const handleDayClick = (0, import_react36.useCallback)((day, m2) => (e2) => {
+      e2.preventDefault();
+      e2.stopPropagation();
       setFocused(day);
       if (m2.disabled) {
         return;
       }
-      select9?.(day.date, m2, e3);
-      onDayClick?.(day.date, m2, e3);
+      select9?.(day.date, m2, e2);
+      onDayClick?.(day.date, m2, e2);
     }, [select9, onDayClick, setFocused]);
-    const handleDayFocus = (0, import_react36.useCallback)((day, m2) => (e3) => {
+    const handleDayFocus = (0, import_react36.useCallback)((day, m2) => (e2) => {
       setFocused(day);
-      onDayFocus?.(day.date, m2, e3);
+      onDayFocus?.(day.date, m2, e2);
     }, [onDayFocus, setFocused]);
-    const handleDayBlur = (0, import_react36.useCallback)((day, m2) => (e3) => {
+    const handleDayBlur = (0, import_react36.useCallback)((day, m2) => (e2) => {
       blur();
-      onDayBlur?.(day.date, m2, e3);
+      onDayBlur?.(day.date, m2, e2);
     }, [blur, onDayBlur]);
-    const handleDayKeyDown = (0, import_react36.useCallback)((day, modifiers) => (e3) => {
+    const handleDayKeyDown = (0, import_react36.useCallback)((day, modifiers) => (e2) => {
       const keyMap = {
         ArrowLeft: [
-          e3.shiftKey ? "month" : "day",
+          e2.shiftKey ? "month" : "day",
           props.dir === "rtl" ? "after" : "before"
         ],
         ArrowRight: [
-          e3.shiftKey ? "month" : "day",
+          e2.shiftKey ? "month" : "day",
           props.dir === "rtl" ? "before" : "after"
         ],
-        ArrowDown: [e3.shiftKey ? "year" : "week", "after"],
-        ArrowUp: [e3.shiftKey ? "year" : "week", "before"],
-        PageUp: [e3.shiftKey ? "year" : "month", "before"],
-        PageDown: [e3.shiftKey ? "year" : "month", "after"],
+        ArrowDown: [e2.shiftKey ? "year" : "week", "after"],
+        ArrowUp: [e2.shiftKey ? "year" : "week", "before"],
+        PageUp: [e2.shiftKey ? "year" : "month", "before"],
+        PageDown: [e2.shiftKey ? "year" : "month", "after"],
         Home: ["startOfWeek", "before"],
         End: ["endOfWeek", "after"]
       };
-      if (keyMap[e3.key]) {
-        e3.preventDefault();
-        e3.stopPropagation();
-        const [moveBy, moveDir] = keyMap[e3.key];
+      if (keyMap[e2.key]) {
+        e2.preventDefault();
+        e2.stopPropagation();
+        const [moveBy, moveDir] = keyMap[e2.key];
         moveFocus(moveBy, moveDir);
       }
-      onDayKeyDown?.(day.date, modifiers, e3);
+      onDayKeyDown?.(day.date, modifiers, e2);
     }, [moveFocus, onDayKeyDown, props.dir]);
-    const handleDayMouseEnter = (0, import_react36.useCallback)((day, modifiers) => (e3) => {
-      onDayMouseEnter?.(day.date, modifiers, e3);
+    const handleDayMouseEnter = (0, import_react36.useCallback)((day, modifiers) => (e2) => {
+      onDayMouseEnter?.(day.date, modifiers, e2);
     }, [onDayMouseEnter]);
-    const handleDayMouseLeave = (0, import_react36.useCallback)((day, modifiers) => (e3) => {
-      onDayMouseLeave?.(day.date, modifiers, e3);
+    const handleDayMouseLeave = (0, import_react36.useCallback)((day, modifiers) => (e2) => {
+      onDayMouseLeave?.(day.date, modifiers, e2);
     }, [onDayMouseLeave]);
-    const handleMonthChange = (0, import_react36.useCallback)((date, monthOffset) => (e3) => {
-      const selectedMonth = Number(e3.target.value);
+    const handleMonthChange = (0, import_react36.useCallback)((date, monthOffset) => (e2) => {
+      const selectedMonth = Number(e2.target.value);
       const month = dateLib.setMonth(dateLib.startOfMonth(date), selectedMonth);
       goToMonth(dateLib.addMonths(month, -monthOffset));
     }, [dateLib, goToMonth]);
-    const handleYearChange = (0, import_react36.useCallback)((date, monthOffset) => (e3) => {
-      const selectedYear = Number(e3.target.value);
+    const handleYearChange = (0, import_react36.useCallback)((date, monthOffset) => (e2) => {
+      const selectedYear = Number(e2.target.value);
       const month = dateLib.setYear(dateLib.startOfMonth(date), selectedYear);
       goToMonth(dateLib.addMonths(month, -monthOffset));
     }, [dateLib, goToMonth]);
@@ -37902,12 +37915,12 @@ var wp;
         [localizationProps.labels, customLabels]
       );
       const onChange = (0, import_element56.useCallback)(
-        (selected2, triggerDate, modifiers, e3) => {
+        (selected2, triggerDate, modifiers, e2) => {
           onValueChange?.(
             selected2 ?? null,
             triggerDate,
             modifiers,
-            e3
+            e2
           );
         },
         [onValueChange]
@@ -38064,12 +38077,12 @@ var wp;
         [localizationProps.labels, customLabels]
       );
       const onChange = (0, import_element57.useCallback)(
-        (selected2, triggerDate, modifiers2, e3) => {
+        (selected2, triggerDate, modifiers2, e2) => {
           onValueChange?.(
             selected2 ?? null,
             triggerDate,
             modifiers2,
-            e3
+            e2
           );
         },
         [onValueChange]
@@ -44274,9 +44287,9 @@ var wp;
   raf.setTimeout = (handler, ms) => {
     let time = raf.now() + ms;
     let cancel = () => {
-      let i3 = timeouts.findIndex((t4) => t4.cancel == cancel);
-      if (~i3) timeouts.splice(i3, 1);
-      pendingCount -= ~i3 ? 1 : 0;
+      let i2 = timeouts.findIndex((t3) => t3.cancel == cancel);
+      if (~i2) timeouts.splice(i2, 1);
+      pendingCount -= ~i2 ? 1 : 0;
     };
     let timeout = {
       time,
@@ -44288,7 +44301,7 @@ var wp;
     start();
     return timeout;
   };
-  var findTimeout = (time) => ~(~timeouts.findIndex((t4) => t4.time > time) || ~timeouts.length);
+  var findTimeout = (time) => ~(~timeouts.findIndex((t3) => t3.time > time) || ~timeouts.length);
   raf.cancel = (fn) => {
     onStartQueue.delete(fn);
     onFrameQueue.delete(fn);
@@ -44369,7 +44382,7 @@ var wp;
     ts = raf.now();
     let count = findTimeout(ts);
     if (count) {
-      eachSafely(timeouts.splice(0, count), (t4) => t4.handler());
+      eachSafely(timeouts.splice(0, count), (t3) => t3.handler());
       pendingCount -= count;
     }
     if (!pendingCount) {
@@ -44409,8 +44422,8 @@ var wp;
     values.forEach((value) => {
       try {
         each2(value);
-      } catch (e3) {
-        raf.catch(e3);
+      } catch (e2) {
+        raf.catch(e2);
       }
     });
   }
@@ -44426,27 +44439,27 @@ var wp;
   });
   var is = {
     arr: Array.isArray,
-    obj: (a3) => !!a3 && a3.constructor.name === "Object",
-    fun: (a3) => typeof a3 === "function",
-    str: (a3) => typeof a3 === "string",
-    num: (a3) => typeof a3 === "number",
-    und: (a3) => a3 === void 0
+    obj: (a2) => !!a2 && a2.constructor.name === "Object",
+    fun: (a2) => typeof a2 === "function",
+    str: (a2) => typeof a2 === "string",
+    num: (a2) => typeof a2 === "number",
+    und: (a2) => a2 === void 0
   };
-  function isEqual(a3, b3) {
-    if (is.arr(a3)) {
-      if (!is.arr(b3) || a3.length !== b3.length) return false;
-      for (let i3 = 0; i3 < a3.length; i3++) {
-        if (a3[i3] !== b3[i3]) return false;
+  function isEqual(a2, b2) {
+    if (is.arr(a2)) {
+      if (!is.arr(b2) || a2.length !== b2.length) return false;
+      for (let i2 = 0; i2 < a2.length; i2++) {
+        if (a2[i2] !== b2[i2]) return false;
       }
       return true;
     }
-    return a3 === b3;
+    return a2 === b2;
   }
   var each = (obj, fn) => obj.forEach(fn);
   function eachProp(obj, fn, ctx9) {
     if (is.arr(obj)) {
-      for (let i3 = 0; i3 < obj.length; i3++) {
-        fn.call(ctx9, obj[i3], `${i3}`);
+      for (let i2 = 0; i2 < obj.length; i2++) {
+        fn.call(ctx9, obj[i2], `${i2}`);
       }
       return;
     }
@@ -44456,7 +44469,7 @@ var wp;
       }
     }
   }
-  var toArray = (a3) => is.und(a3) ? [] : is.arr(a3) ? a3 : [a3];
+  var toArray = (a2) => is.und(a2) ? [] : is.arr(a2) ? a2 : [a2];
   function flush(queue, iterator) {
     if (queue.size) {
       const items = Array.from(queue);
@@ -44548,8 +44561,8 @@ var wp;
   }
   function advance(dt) {
     const nextFrame = prevFrame;
-    for (let i3 = 0; i3 < currentFrame.length; i3++) {
-      const animation = currentFrame[i3];
+    for (let i2 = 0; i2 < currentFrame.length; i2++) {
+      const animation = currentFrame[i2];
       priority = animation.priority;
       if (!animation.idle) {
         willAdvance(animation);
@@ -44764,21 +44777,21 @@ var wp;
     }
     return null;
   }
-  function hue2rgb(p4, q, t4) {
-    if (t4 < 0) t4 += 1;
-    if (t4 > 1) t4 -= 1;
-    if (t4 < 1 / 6) return p4 + (q - p4) * 6 * t4;
-    if (t4 < 1 / 2) return q;
-    if (t4 < 2 / 3) return p4 + (q - p4) * (2 / 3 - t4) * 6;
+  function hue2rgb(p4, q2, t3) {
+    if (t3 < 0) t3 += 1;
+    if (t3 > 1) t3 -= 1;
+    if (t3 < 1 / 6) return p4 + (q2 - p4) * 6 * t3;
+    if (t3 < 1 / 2) return q2;
+    if (t3 < 2 / 3) return p4 + (q2 - p4) * (2 / 3 - t3) * 6;
     return p4;
   }
-  function hslToRgb(h3, s3, l3) {
-    const q = l3 < 0.5 ? l3 * (1 + s3) : l3 + s3 - l3 * s3;
-    const p4 = 2 * l3 - q;
-    const r5 = hue2rgb(p4, q, h3 + 1 / 3);
-    const g3 = hue2rgb(p4, q, h3);
-    const b3 = hue2rgb(p4, q, h3 - 1 / 3);
-    return Math.round(r5 * 255) << 24 | Math.round(g3 * 255) << 16 | Math.round(b3 * 255) << 8;
+  function hslToRgb(h2, s2, l3) {
+    const q2 = l3 < 0.5 ? l3 * (1 + s2) : l3 + s2 - l3 * s2;
+    const p4 = 2 * l3 - q2;
+    const r4 = hue2rgb(p4, q2, h2 + 1 / 3);
+    const g3 = hue2rgb(p4, q2, h2);
+    const b2 = hue2rgb(p4, q2, h2 - 1 / 3);
+    return Math.round(r4 * 255) << 24 | Math.round(g3 * 255) << 16 | Math.round(b2 * 255) << 8;
   }
   function parse255(str3) {
     const int = parseInt(str3, 10);
@@ -44806,11 +44819,11 @@ var wp;
     let int32Color = normalizeColor(input);
     if (int32Color === null) return input;
     int32Color = int32Color || 0;
-    let r5 = (int32Color & 4278190080) >>> 24;
+    let r4 = (int32Color & 4278190080) >>> 24;
     let g3 = (int32Color & 16711680) >>> 16;
-    let b3 = (int32Color & 65280) >>> 8;
-    let a3 = (int32Color & 255) / 255;
-    return `rgba(${r5}, ${g3}, ${b3}, ${a3})`;
+    let b2 = (int32Color & 65280) >>> 8;
+    let a2 = (int32Color & 255) / 255;
+    return `rgba(${r4}, ${g3}, ${b2}, ${a2})`;
   }
   var createInterpolator = (range, output, extrapolate) => {
     if (is.fun(range)) {
@@ -44831,7 +44844,7 @@ var wp;
     const inputRange = config2.range || [0, 1];
     const extrapolateLeft = config2.extrapolateLeft || config2.extrapolate || "extend";
     const extrapolateRight = config2.extrapolateRight || config2.extrapolate || "extend";
-    const easing = config2.easing || ((t4) => t4);
+    const easing = config2.easing || ((t3) => t3);
     return (input) => {
       const range2 = findRange(input, inputRange);
       return interpolate(input, inputRange[range2], inputRange[range2 + 1], outputRange[range2], outputRange[range2 + 1], easing, extrapolateLeft, extrapolateRight, config2.map);
@@ -44859,13 +44872,13 @@ var wp;
     return result;
   }
   function findRange(input, inputRange) {
-    for (var i3 = 1; i3 < inputRange.length - 1; ++i3) if (inputRange[i3] >= input) break;
-    return i3 - 1;
+    for (var i2 = 1; i2 < inputRange.length - 1; ++i2) if (inputRange[i2] >= input) break;
+    return i2 - 1;
   }
   function _extends() {
     _extends = Object.assign ? Object.assign.bind() : function(target) {
-      for (var i3 = 1; i3 < arguments.length; i3++) {
-        var source = arguments[i3];
+      for (var i2 = 1; i2 < arguments.length; i2++) {
+        var source = arguments[i2];
         for (var key in source) {
           if (Object.prototype.hasOwnProperty.call(source, key)) {
             target[key] = source[key];
@@ -44982,11 +44995,11 @@ var wp;
       return getFluidValue(value).replace(cssVariableRegex, variableToRgba).replace(colorRegex, colorToRgba).replace(namedColorRegex, colorToRgba);
     });
     const keyframes = output.map((value) => value.match(numberRegex).map(Number));
-    const outputRanges = keyframes[0].map((_, i3) => keyframes.map((values) => {
-      if (!(i3 in values)) {
+    const outputRanges = keyframes[0].map((_, i2) => keyframes.map((values) => {
+      if (!(i2 in values)) {
         throw Error('The arity of each "output" value must be equal');
       }
-      return values[i3];
+      return values[i2];
     }));
     const interpolators = outputRanges.map((output2) => createInterpolator(_extends({}, config2, {
       output: output2
@@ -44994,8 +45007,8 @@ var wp;
     return (input) => {
       var _output$find;
       const missingUnit = !unitRegex.test(output[0]) && ((_output$find = output.find((value) => unitRegex.test(value))) == null ? void 0 : _output$find.replace(numberRegex, ""));
-      let i3 = 0;
-      return output[0].replace(numberRegex, () => `${interpolators[i3++](input)}${missingUnit || ""}`).replace(rgbaRegex, rgbaRound);
+      let i2 = 0;
+      return output[0].replace(numberRegex, () => `${interpolators[i2++](input)}${missingUnit || ""}`).replace(rgbaRegex, rgbaRound);
     };
   };
   var prefix = "react-spring: ";
@@ -45071,8 +45084,8 @@ var wp;
     if (next.length !== prev.length) {
       return false;
     }
-    for (let i3 = 0; i3 < next.length; i3++) {
-      if (next[i3] !== prev[i3]) {
+    for (let i2 = 0; i2 < next.length; i2++) {
+      if (next[i2] !== prev[i2]) {
         return false;
       }
     }
@@ -45256,7 +45269,7 @@ var wp;
     setValue(source) {
       const payload = this.getPayload();
       if (source.length == payload.length) {
-        return payload.map((node, i3) => node.setValue(source[i3])).some(Boolean);
+        return payload.map((node, i2) => node.setValue(source[i2])).some(Boolean);
       }
       super.setValue(source.map(makeAnimated));
       return true;
@@ -45272,8 +45285,8 @@ var wp;
   }
   function _extends2() {
     _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-      for (var i3 = 1; i3 < arguments.length; i3++) {
-        var source = arguments[i3];
+      for (var i2 = 1; i2 < arguments.length; i2++) {
+        var source = arguments[i2];
         for (var key in source) {
           if (Object.prototype.hasOwnProperty.call(source, key)) {
             target[key] = source[key];
@@ -45390,8 +45403,8 @@ var wp;
   // node_modules/@react-spring/core/dist/react-spring-core.esm.js
   function _extends3() {
     _extends3 = Object.assign ? Object.assign.bind() : function(target) {
-      for (var i3 = 1; i3 < arguments.length; i3++) {
-        var source = arguments[i3];
+      for (var i2 = 1; i2 < arguments.length; i2++) {
+        var source = arguments[i2];
         for (var key in source) {
           if (Object.prototype.hasOwnProperty.call(source, key)) {
             target[key] = source[key];
@@ -45833,7 +45846,7 @@ var wp;
     })();
   }
   function stopAsync(state2, cancelId) {
-    flush(state2.timeouts, (t4) => t4.cancel());
+    flush(state2.timeouts, (t3) => t3.cancel());
     state2.pauseQueue.clear();
     state2.resumeQueue.clear();
     state2.asyncId = state2.asyncTo = state2.promise = void 0;
@@ -45983,9 +45996,9 @@ var wp;
       if (!payload && hasFluidValue(anim.to)) {
         toValues = toArray(getFluidValue(anim.to));
       }
-      anim.values.forEach((node2, i3) => {
+      anim.values.forEach((node2, i2) => {
         if (node2.done) return;
-        const to2 = node2.constructor == AnimatedString ? 1 : payload ? payload[i3].lastPosition : toValues[i3];
+        const to2 = node2.constructor == AnimatedString ? 1 : payload ? payload[i2].lastPosition : toValues[i2];
         let finished = anim.immediate;
         let position = to2;
         if (!finished) {
@@ -45995,8 +46008,8 @@ var wp;
             return;
           }
           let elapsed = node2.elapsedTime += dt;
-          const from = anim.fromValues[i3];
-          const v0 = node2.v0 != null ? node2.v0 : node2.v0 = is.arr(config2.velocity) ? config2.velocity[i3] : config2.velocity;
+          const from = anim.fromValues[i2];
+          const v0 = node2.v0 != null ? node2.v0 : node2.v0 = is.arr(config2.velocity) ? config2.velocity[i2] : config2.velocity;
           let velocity;
           const precision = config2.precision || (from == to2 ? 5e-3 : Math.min(1, Math.abs(to2 - from) * 1e-3));
           if (!is.und(config2.duration)) {
@@ -46018,10 +46031,10 @@ var wp;
             finished = p4 == 1;
           } else if (config2.decay) {
             const decay = config2.decay === true ? 0.998 : config2.decay;
-            const e3 = Math.exp(-(1 - decay) * elapsed);
-            position = from + v0 / (1 - decay) * (1 - e3);
+            const e2 = Math.exp(-(1 - decay) * elapsed);
+            position = from + v0 / (1 - decay) * (1 - e2);
             finished = Math.abs(node2.lastPosition - position) <= precision;
-            velocity = v0 * e3;
+            velocity = v0 * e2;
           } else {
             velocity = node2.lastVelocity == null ? v0 : node2.lastVelocity;
             const restVelocity = config2.restVelocity || precision / 10;
@@ -46032,7 +46045,7 @@ var wp;
             let isBouncing = false;
             const step = 1;
             const numSteps = Math.ceil(dt / step);
-            for (let n3 = 0; n3 < numSteps; ++n3) {
+            for (let n2 = 0; n2 < numSteps; ++n2) {
               isMoving = Math.abs(velocity) > restVelocity;
               if (!isMoving) {
                 finished = Math.abs(to2 - position) <= precision;
@@ -46060,7 +46073,7 @@ var wp;
             finished = true;
           }
         }
-        if (payload && !payload[i3].done) {
+        if (payload && !payload[i2].done) {
           finished = false;
         }
         if (finished) {
@@ -46816,9 +46829,9 @@ var wp;
     if (source == null) return {};
     var target = {};
     var sourceKeys = Object.keys(source);
-    var key, i3;
-    for (i3 = 0; i3 < sourceKeys.length; i3++) {
-      key = sourceKeys[i3];
+    var key, i2;
+    for (i2 = 0; i2 < sourceKeys.length; i2++) {
+      key = sourceKeys[i2];
       if (excluded.indexOf(key) >= 0) continue;
       target[key] = source[key];
     }
@@ -46970,9 +46983,9 @@ var wp;
     if (source == null) return {};
     var target = {};
     var sourceKeys = Object.keys(source);
-    var key, i3;
-    for (i3 = 0; i3 < sourceKeys.length; i3++) {
-      key = sourceKeys[i3];
+    var key, i2;
+    for (i2 = 0; i2 < sourceKeys.length; i2++) {
+      key = sourceKeys[i2];
       if (excluded.indexOf(key) >= 0) continue;
       target[key] = source[key];
     }
@@ -46998,7 +47011,7 @@ var wp;
       scrollLeft
     } = _ref, attributes = _objectWithoutPropertiesLoose2(_ref, _excluded$2);
     const values = Object.values(attributes);
-    const names = Object.keys(attributes).map((name2) => isFilterElement || instance.hasAttribute(name2) ? name2 : attributeCache[name2] || (attributeCache[name2] = name2.replace(/([A-Z])/g, (n3) => "-" + n3.toLowerCase())));
+    const names = Object.keys(attributes).map((name2) => isFilterElement || instance.hasAttribute(name2) ? name2 : attributeCache[name2] || (attributeCache[name2] = name2.replace(/([A-Z])/g, (n2) => "-" + n2.toLowerCase())));
     if (children !== void 0) {
       instance.textContent = children;
     }
@@ -47012,8 +47025,8 @@ var wp;
         }
       }
     }
-    names.forEach((name2, i3) => {
-      instance.setAttribute(name2, values[i3]);
+    names.forEach((name2, i2) => {
+      instance.setAttribute(name2, values[i2]);
     });
     if (scrollTop !== void 0) {
       instance.scrollTop = scrollTop;
@@ -47121,10 +47134,10 @@ var wp;
     _get() {
       let transform = "";
       let identity4 = true;
-      each(this.inputs, (input, i3) => {
+      each(this.inputs, (input, i2) => {
         const arg1 = getFluidValue(input[0]);
-        const [t4, id] = this.transforms[i3](is.arr(arg1) ? arg1 : input.map(getFluidValue));
-        transform += " " + t4;
+        const [t3, id] = this.transforms[i2](is.arr(arg1) ? arg1 : input.map(getFluidValue));
+        transform += " " + t3;
         identity4 = identity4 && id;
       });
       return identity4 ? "none" : transform;
@@ -47671,7 +47684,7 @@ var wp;
           return null;
         }
         const normalizedValue = normalizeValue(value);
-        const sortedIds = normalizedValue.toSorted((a3, b3) => a3 - b3);
+        const sortedIds = normalizedValue.toSorted((a2, b2) => a2 - b2);
         const { getEntityRecords } = select9(import_core_data7.store);
         return getEntityRecords("postType", "attachment", {
           include: sortedIds
@@ -47688,7 +47701,7 @@ var wp;
     let stableAttachments = attachments;
     if (attachments === null && stableAttachmentsRef.current && value) {
       const stableIds = new Set(
-        stableAttachmentsRef.current.map((a3) => a3.id)
+        stableAttachmentsRef.current.map((a2) => a2.id)
       );
       if (normalizeValue(value).every((id) => stableIds.has(id))) {
         stableAttachments = stableAttachmentsRef.current;
@@ -47700,9 +47713,9 @@ var wp;
       }
       const normalizedValue = normalizeValue(value);
       const attachmentMap = new Map(
-        stableAttachments.map((a3) => [a3.id, a3])
+        stableAttachments.map((a2) => [a2.id, a2])
       );
-      return normalizedValue.map((id) => attachmentMap.get(id)).filter((a3) => a3 !== void 0);
+      return normalizedValue.map((id) => attachmentMap.get(id)).filter((a2) => a2 !== void 0);
     }, [stableAttachments, value]);
     const { createErrorNotice } = (0, import_data8.useDispatch)(import_notices2.store);
     const { receiveEntityRecords } = (0, import_data8.useDispatch)(import_core_data7.store);
@@ -47734,7 +47747,7 @@ var wp;
         if (!orderedAttachments) {
           return;
         }
-        const currentIds = orderedAttachments.map((a3) => a3.id);
+        const currentIds = orderedAttachments.map((a2) => a2.id);
         const index2 = currentIds.indexOf(itemId);
         const newIndex = direction === "up" ? index2 - 1 : index2 + 1;
         [currentIds[index2], currentIds[newIndex]] = [
@@ -47818,7 +47831,7 @@ var wp;
       }));
       if (targetItemId !== void 0) {
         const targetIndex = items.findIndex(
-          (a3) => a3.id === targetItemId
+          (a2) => a2.id === targetItemId
         );
         items.splice(targetIndex, 1, ...blobItems);
       } else {
@@ -48084,7 +48097,7 @@ var wp;
             per_page: -1
           });
           const frontPage = templates?.find(
-            (t4) => t4.slug === "front-page"
+            (t3) => t3.slug === "front-page"
           );
           if (frontPage) {
             return getItemTitle(frontPage);
@@ -48285,7 +48298,7 @@ var wp;
           post_type: postType2
         });
         const match3 = allTemplates?.find(
-          (t4) => t4.slug === templateSlug
+          (t3) => t3.slug === templateSlug
         );
         return match3 ? getItemTitle(match3) : void 0;
       },
@@ -48439,9 +48452,9 @@ var wp;
           },
           ...getOptionsFromTree(treeNode.children || [], level + 1)
         ]);
-        const sortedNodes = mappedNodes.sort(([a3], [b3]) => {
-          const priorityA = getItemPriority(a3.rawName, fieldValue);
-          const priorityB = getItemPriority(b3.rawName, fieldValue);
+        const sortedNodes = mappedNodes.sort(([a2], [b2]) => {
+          const priorityA = getItemPriority(a2.rawName, fieldValue);
+          const priorityB = getItemPriority(b2.rawName, fieldValue);
           return priorityA >= priorityB ? 1 : -1;
         });
         return sortedNodes.flat();
@@ -49249,9 +49262,9 @@ var wp;
     { id: "standard", caption: (0, import_i18n55.__)("Standard") },
     { id: "status", caption: (0, import_i18n55.__)("Status") },
     { id: "video", caption: (0, import_i18n55.__)("Video") }
-  ].sort((a3, b3) => {
-    const normalizedA = a3.caption.toUpperCase();
-    const normalizedB = b3.caption.toUpperCase();
+  ].sort((a2, b2) => {
+    const normalizedA = a2.caption.toUpperCase();
+    const normalizedB = b2.caption.toUpperCase();
     if (normalizedA < normalizedB) {
       return -1;
     }
@@ -49271,10 +49284,10 @@ var wp;
     getElements: async () => {
       const themeSupports = await (0, import_data18.resolveSelect)(import_core_data17.store).getThemeSupports();
       return POST_FORMATS.filter(
-        (f3) => themeSupports?.formats?.includes(
-          f3.id
+        (f2) => themeSupports?.formats?.includes(
+          f2.id
         )
-      ).map((f3) => ({ value: f3.id, label: f3.caption }));
+      ).map((f2) => ({ value: f2.id, label: f2.caption }));
     }
   };
   var format_default = formatField;
@@ -50048,12 +50061,12 @@ var wp;
 
   // node_modules/tslib/tslib.es6.mjs
   var __assign = function() {
-    __assign = Object.assign || function __assign2(t4) {
-      for (var s3, i3 = 1, n3 = arguments.length; i3 < n3; i3++) {
-        s3 = arguments[i3];
-        for (var p4 in s3) if (Object.prototype.hasOwnProperty.call(s3, p4)) t4[p4] = s3[p4];
+    __assign = Object.assign || function __assign2(t3) {
+      for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
+        s2 = arguments[i2];
+        for (var p4 in s2) if (Object.prototype.hasOwnProperty.call(s2, p4)) t3[p4] = s2[p4];
       }
-      return t4;
+      return t3;
     };
     return __assign.apply(this, arguments);
   };
@@ -50123,173 +50136,173 @@ var wp;
   // node_modules/client-zip/index.js
   "stream" in Blob.prototype || Object.defineProperty(Blob.prototype, "stream", { value() {
     return new Response(this).body;
-  } }), "setBigUint64" in DataView.prototype || Object.defineProperty(DataView.prototype, "setBigUint64", { value(e3, n3, t4) {
-    const i3 = Number(0xffffffffn & n3), r5 = Number(n3 >> 32n);
-    this.setUint32(e3 + (t4 ? 0 : 4), i3, t4), this.setUint32(e3 + (t4 ? 4 : 0), r5, t4);
+  } }), "setBigUint64" in DataView.prototype || Object.defineProperty(DataView.prototype, "setBigUint64", { value(e2, n2, t3) {
+    const i2 = Number(0xffffffffn & n2), r4 = Number(n2 >> 32n);
+    this.setUint32(e2 + (t3 ? 0 : 4), i2, t3), this.setUint32(e2 + (t3 ? 4 : 0), r4, t3);
   } });
-  var e2 = (e3) => new DataView(new ArrayBuffer(e3));
-  var n2 = (e3) => new Uint8Array(e3.buffer || e3);
-  var t2 = (e3) => new TextEncoder().encode(String(e3));
-  var i2 = (e3) => Math.min(4294967295, Number(e3));
-  var r3 = (e3) => Math.min(65535, Number(e3));
-  function f2(e3, i3) {
-    if (void 0 === i3 || i3 instanceof Date || (i3 = new Date(i3)), e3 instanceof File) return { isFile: 1, t: i3 || new Date(e3.lastModified), i: e3.stream() };
-    if (e3 instanceof Response) return { isFile: 1, t: i3 || new Date(e3.headers.get("Last-Modified") || Date.now()), i: e3.body };
-    if (void 0 === i3) i3 = /* @__PURE__ */ new Date();
-    else if (isNaN(i3)) throw new Error("Invalid modification date.");
-    if (void 0 === e3) return { isFile: 0, t: i3 };
-    if ("string" == typeof e3) return { isFile: 1, t: i3, i: t2(e3) };
-    if (e3 instanceof Blob) return { isFile: 1, t: i3, i: e3.stream() };
-    if (e3 instanceof Uint8Array || e3 instanceof ReadableStream) return { isFile: 1, t: i3, i: e3 };
-    if (e3 instanceof ArrayBuffer || ArrayBuffer.isView(e3)) return { isFile: 1, t: i3, i: n2(e3) };
-    if (Symbol.asyncIterator in e3) return { isFile: 1, t: i3, i: o2(e3[Symbol.asyncIterator]()) };
+  var e = (e2) => new DataView(new ArrayBuffer(e2));
+  var n = (e2) => new Uint8Array(e2.buffer || e2);
+  var t = (e2) => new TextEncoder().encode(String(e2));
+  var i = (e2) => Math.min(4294967295, Number(e2));
+  var r2 = (e2) => Math.min(65535, Number(e2));
+  function f(e2, i2) {
+    if (void 0 === i2 || i2 instanceof Date || (i2 = new Date(i2)), e2 instanceof File) return { isFile: 1, t: i2 || new Date(e2.lastModified), i: e2.stream() };
+    if (e2 instanceof Response) return { isFile: 1, t: i2 || new Date(e2.headers.get("Last-Modified") || Date.now()), i: e2.body };
+    if (void 0 === i2) i2 = /* @__PURE__ */ new Date();
+    else if (isNaN(i2)) throw new Error("Invalid modification date.");
+    if (void 0 === e2) return { isFile: 0, t: i2 };
+    if ("string" == typeof e2) return { isFile: 1, t: i2, i: t(e2) };
+    if (e2 instanceof Blob) return { isFile: 1, t: i2, i: e2.stream() };
+    if (e2 instanceof Uint8Array || e2 instanceof ReadableStream) return { isFile: 1, t: i2, i: e2 };
+    if (e2 instanceof ArrayBuffer || ArrayBuffer.isView(e2)) return { isFile: 1, t: i2, i: n(e2) };
+    if (Symbol.asyncIterator in e2) return { isFile: 1, t: i2, i: o(e2[Symbol.asyncIterator]()) };
     throw new TypeError("Unsupported input format.");
   }
-  function o2(e3, n3 = e3) {
-    return new ReadableStream({ async pull(n4) {
-      let t4 = 0;
-      for (; n4.desiredSize > t4; ) {
-        const i3 = await e3.next();
-        if (!i3.value) {
-          n4.close();
+  function o(e2, n2 = e2) {
+    return new ReadableStream({ async pull(n3) {
+      let t3 = 0;
+      for (; n3.desiredSize > t3; ) {
+        const i2 = await e2.next();
+        if (!i2.value) {
+          n3.close();
           break;
         }
         {
-          const e4 = a2(i3.value);
-          n4.enqueue(e4), t4 += e4.byteLength;
+          const e3 = a(i2.value);
+          n3.enqueue(e3), t3 += e3.byteLength;
         }
       }
-    }, cancel(e4) {
-      n3.throw?.(e4);
+    }, cancel(e3) {
+      n2.throw?.(e3);
     } });
   }
-  function a2(e3) {
-    return "string" == typeof e3 ? t2(e3) : e3 instanceof Uint8Array ? e3 : n2(e3);
+  function a(e2) {
+    return "string" == typeof e2 ? t(e2) : e2 instanceof Uint8Array ? e2 : n(e2);
   }
-  function s2(e3, i3, r5) {
-    let [f3, o4] = (function(e4) {
-      return e4 ? e4 instanceof Uint8Array ? [e4, 1] : ArrayBuffer.isView(e4) || e4 instanceof ArrayBuffer ? [n2(e4), 1] : [t2(e4), 0] : [void 0, 0];
-    })(i3);
-    if (e3 instanceof File) return { o: d2(f3 || t2(e3.name)), u: BigInt(e3.size), l: o4 };
-    if (e3 instanceof Response) {
-      const n3 = e3.headers.get("content-disposition"), i4 = n3 && n3.match(/;\s*filename\*?=["']?(.*?)["']?$/i), a3 = i4 && i4[1] || e3.url && new URL(e3.url).pathname.split("/").findLast(Boolean), s3 = a3 && decodeURIComponent(a3), u3 = r5 || +e3.headers.get("content-length");
-      return { o: d2(f3 || t2(s3)), u: BigInt(u3), l: o4 };
+  function s(e2, i2, r4) {
+    let [f2, o3] = (function(e3) {
+      return e3 ? e3 instanceof Uint8Array ? [e3, 1] : ArrayBuffer.isView(e3) || e3 instanceof ArrayBuffer ? [n(e3), 1] : [t(e3), 0] : [void 0, 0];
+    })(i2);
+    if (e2 instanceof File) return { o: d(f2 || t(e2.name)), u: BigInt(e2.size), l: o3 };
+    if (e2 instanceof Response) {
+      const n2 = e2.headers.get("content-disposition"), i3 = n2 && n2.match(/;\s*filename\*?=["']?(.*?)["']?$/i), a2 = i3 && i3[1] || e2.url && new URL(e2.url).pathname.split("/").findLast(Boolean), s2 = a2 && decodeURIComponent(a2), u2 = r4 || +e2.headers.get("content-length");
+      return { o: d(f2 || t(s2)), u: BigInt(u2), l: o3 };
     }
-    return f3 = d2(f3, void 0 !== e3 || void 0 !== r5), "string" == typeof e3 ? { o: f3, u: BigInt(t2(e3).length), l: o4 } : e3 instanceof Blob ? { o: f3, u: BigInt(e3.size), l: o4 } : e3 instanceof ArrayBuffer || ArrayBuffer.isView(e3) ? { o: f3, u: BigInt(e3.byteLength), l: o4 } : { o: f3, u: u2(e3, r5), l: o4 };
+    return f2 = d(f2, void 0 !== e2 || void 0 !== r4), "string" == typeof e2 ? { o: f2, u: BigInt(t(e2).length), l: o3 } : e2 instanceof Blob ? { o: f2, u: BigInt(e2.size), l: o3 } : e2 instanceof ArrayBuffer || ArrayBuffer.isView(e2) ? { o: f2, u: BigInt(e2.byteLength), l: o3 } : { o: f2, u: u(e2, r4), l: o3 };
   }
-  function u2(e3, n3) {
-    return n3 > -1 ? BigInt(n3) : e3 ? void 0 : 0n;
+  function u(e2, n2) {
+    return n2 > -1 ? BigInt(n2) : e2 ? void 0 : 0n;
   }
-  function d2(e3, n3 = 1) {
-    if (!e3 || e3.every(((c6) => 47 === c6))) throw new Error("The file must have a name.");
-    if (n3) for (; 47 === e3[e3.length - 1]; ) e3 = e3.subarray(0, -1);
-    else 47 !== e3[e3.length - 1] && (e3 = new Uint8Array([...e3, 47]));
-    return e3;
+  function d(e2, n2 = 1) {
+    if (!e2 || e2.every(((c6) => 47 === c6))) throw new Error("The file must have a name.");
+    if (n2) for (; 47 === e2[e2.length - 1]; ) e2 = e2.subarray(0, -1);
+    else 47 !== e2[e2.length - 1] && (e2 = new Uint8Array([...e2, 47]));
+    return e2;
   }
   var l2 = new Uint32Array(256);
-  for (let e3 = 0; e3 < 256; ++e3) {
-    let n3 = e3;
-    for (let e4 = 0; e4 < 8; ++e4) n3 = n3 >>> 1 ^ (1 & n3 && 3988292384);
-    l2[e3] = n3;
+  for (let e2 = 0; e2 < 256; ++e2) {
+    let n2 = e2;
+    for (let e3 = 0; e3 < 8; ++e3) n2 = n2 >>> 1 ^ (1 & n2 && 3988292384);
+    l2[e2] = n2;
   }
-  function y2(e3, n3 = 0) {
-    n3 ^= -1;
-    for (var t4 = 0, i3 = e3.length; t4 < i3; t4++) n3 = n3 >>> 8 ^ l2[255 & n3 ^ e3[t4]];
-    return (-1 ^ n3) >>> 0;
+  function y2(e2, n2 = 0) {
+    n2 ^= -1;
+    for (var t3 = 0, i2 = e2.length; t3 < i2; t3++) n2 = n2 >>> 8 ^ l2[255 & n2 ^ e2[t3]];
+    return (-1 ^ n2) >>> 0;
   }
-  function w2(e3, n3, t4 = 0) {
-    const i3 = e3.getSeconds() >> 1 | e3.getMinutes() << 5 | e3.getHours() << 11, r5 = e3.getDate() | e3.getMonth() + 1 << 5 | e3.getFullYear() - 1980 << 9;
-    n3.setUint16(t4, i3, 1), n3.setUint16(t4 + 2, r5, 1);
+  function w2(e2, n2, t3 = 0) {
+    const i2 = e2.getSeconds() >> 1 | e2.getMinutes() << 5 | e2.getHours() << 11, r4 = e2.getDate() | e2.getMonth() + 1 << 5 | e2.getFullYear() - 1980 << 9;
+    n2.setUint16(t3, i2, 1), n2.setUint16(t3 + 2, r4, 1);
   }
-  function B({ o: e3, l: n3 }, t4) {
-    return 8 * (!n3 || (t4 ?? (function(e4) {
+  function B({ o: e2, l: n2 }, t3) {
+    return 8 * (!n2 || (t3 ?? (function(e3) {
       try {
-        b2.decode(e4);
+        b.decode(e3);
       } catch {
         return 0;
       }
       return 1;
-    })(e3)));
+    })(e2)));
   }
-  var b2 = new TextDecoder("utf8", { fatal: 1 });
-  function p3(t4, i3 = 0) {
-    const r5 = e2(30);
-    return r5.setUint32(0, 1347093252), r5.setUint32(4, 754976768 | i3), w2(t4.t, r5, 10), r5.setUint16(26, t4.o.length, 1), n2(r5);
+  var b = new TextDecoder("utf8", { fatal: 1 });
+  function p3(t3, i2 = 0) {
+    const r4 = e(30);
+    return r4.setUint32(0, 1347093252), r4.setUint32(4, 754976768 | i2), w2(t3.t, r4, 10), r4.setUint16(26, t3.o.length, 1), n(r4);
   }
-  async function* g2(e3) {
-    let { i: n3 } = e3;
-    if ("then" in n3 && (n3 = await n3), n3 instanceof Uint8Array) yield n3, e3.m = y2(n3, 0), e3.u = BigInt(n3.length);
+  async function* g2(e2) {
+    let { i: n2 } = e2;
+    if ("then" in n2 && (n2 = await n2), n2 instanceof Uint8Array) yield n2, e2.m = y2(n2, 0), e2.u = BigInt(n2.length);
     else {
-      e3.u = 0n;
-      const t4 = n3.getReader();
+      e2.u = 0n;
+      const t3 = n2.getReader();
       for (; ; ) {
-        const { value: n4, done: i3 } = await t4.read();
-        if (i3) break;
-        e3.m = y2(n4, e3.m), e3.u += BigInt(n4.length), yield n4;
+        const { value: n3, done: i2 } = await t3.read();
+        if (i2) break;
+        e2.m = y2(n3, e2.m), e2.u += BigInt(n3.length), yield n3;
       }
     }
   }
-  function I(t4, r5) {
-    const f3 = e2(16 + (r5 ? 8 : 0));
-    return f3.setUint32(0, 1347094280), f3.setUint32(4, t4.isFile ? t4.m : 0, 1), r5 ? (f3.setBigUint64(8, t4.u, 1), f3.setBigUint64(16, t4.u, 1)) : (f3.setUint32(8, i2(t4.u), 1), f3.setUint32(12, i2(t4.u), 1)), n2(f3);
+  function I(t3, r4) {
+    const f2 = e(16 + (r4 ? 8 : 0));
+    return f2.setUint32(0, 1347094280), f2.setUint32(4, t3.isFile ? t3.m : 0, 1), r4 ? (f2.setBigUint64(8, t3.u, 1), f2.setBigUint64(16, t3.u, 1)) : (f2.setUint32(8, i(t3.u), 1), f2.setUint32(12, i(t3.u), 1)), n(f2);
   }
-  function v2(t4, r5, f3 = 0, o4 = 0) {
-    const a3 = e2(46);
-    return a3.setUint32(0, 1347092738), a3.setUint32(4, 755182848), a3.setUint16(8, 2048 | f3), w2(t4.t, a3, 12), a3.setUint32(16, t4.isFile ? t4.m : 0, 1), a3.setUint32(20, i2(t4.u), 1), a3.setUint32(24, i2(t4.u), 1), a3.setUint16(28, t4.o.length, 1), a3.setUint16(30, o4, 1), a3.setUint16(40, t4.isFile ? 33204 : 16893, 1), a3.setUint32(42, i2(r5), 1), n2(a3);
+  function v2(t3, r4, f2 = 0, o3 = 0) {
+    const a2 = e(46);
+    return a2.setUint32(0, 1347092738), a2.setUint32(4, 755182848), a2.setUint16(8, 2048 | f2), w2(t3.t, a2, 12), a2.setUint32(16, t3.isFile ? t3.m : 0, 1), a2.setUint32(20, i(t3.u), 1), a2.setUint32(24, i(t3.u), 1), a2.setUint16(28, t3.o.length, 1), a2.setUint16(30, o3, 1), a2.setUint16(40, t3.isFile ? 33204 : 16893, 1), a2.setUint32(42, i(r4), 1), n(a2);
   }
-  function h2(t4, i3, r5) {
-    const f3 = e2(r5);
-    return f3.setUint16(0, 1, 1), f3.setUint16(2, r5 - 4, 1), 16 & r5 && (f3.setBigUint64(4, t4.u, 1), f3.setBigUint64(12, t4.u, 1)), f3.setBigUint64(r5 - 8, i3, 1), n2(f3);
+  function h(t3, i2, r4) {
+    const f2 = e(r4);
+    return f2.setUint16(0, 1, 1), f2.setUint16(2, r4 - 4, 1), 16 & r4 && (f2.setBigUint64(4, t3.u, 1), f2.setBigUint64(12, t3.u, 1)), f2.setBigUint64(r4 - 8, i2, 1), n(f2);
   }
-  function D(e3) {
-    return e3 instanceof File || e3 instanceof Response ? [[e3], [e3]] : [[e3.input, e3.name, e3.size], [e3.input, e3.lastModified]];
+  function D2(e2) {
+    return e2 instanceof File || e2 instanceof Response ? [[e2], [e2]] : [[e2.input, e2.name, e2.size], [e2.input, e2.lastModified]];
   }
-  var S2 = (e3) => (function(e4) {
-    let n3 = BigInt(22), t4 = 0n, i3 = 0;
-    for (const r5 of e4) {
-      if (!r5.o) throw new Error("Every file must have a non-empty name.");
-      if (void 0 === r5.u) throw new Error(`Missing size for file "${new TextDecoder().decode(r5.o)}".`);
-      const e5 = r5.u >= 0xffffffffn, f3 = t4 >= 0xffffffffn;
-      t4 += BigInt(46 + r5.o.length + (e5 && 8)) + r5.u, n3 += BigInt(r5.o.length + 46 + (12 * f3 | 28 * e5)), i3 || (i3 = e5);
+  var S = (e2) => (function(e3) {
+    let n2 = BigInt(22), t3 = 0n, i2 = 0;
+    for (const r4 of e3) {
+      if (!r4.o) throw new Error("Every file must have a non-empty name.");
+      if (void 0 === r4.u) throw new Error(`Missing size for file "${new TextDecoder().decode(r4.o)}".`);
+      const e4 = r4.u >= 0xffffffffn, f2 = t3 >= 0xffffffffn;
+      t3 += BigInt(46 + r4.o.length + (e4 && 8)) + r4.u, n2 += BigInt(r4.o.length + 46 + (12 * f2 | 28 * e4)), i2 || (i2 = e4);
     }
-    return (i3 || t4 >= 0xffffffffn) && (n3 += BigInt(76)), n3 + t4;
-  })((function* (e4) {
-    for (const n3 of e4) yield s2(...D(n3)[0]);
-  })(e3));
-  function A(e3, n3 = {}) {
-    const t4 = { "Content-Type": "application/zip", "Content-Disposition": "attachment" };
-    return ("bigint" == typeof n3.length || Number.isInteger(n3.length)) && n3.length > 0 && (t4["Content-Length"] = String(n3.length)), n3.metadata && (t4["Content-Length"] = String(S2(n3.metadata))), new Response(N2(e3, n3), { headers: t4 });
+    return (i2 || t3 >= 0xffffffffn) && (n2 += BigInt(76)), n2 + t3;
+  })((function* (e3) {
+    for (const n2 of e3) yield s(...D2(n2)[0]);
+  })(e2));
+  function A2(e2, n2 = {}) {
+    const t3 = { "Content-Type": "application/zip", "Content-Disposition": "attachment" };
+    return ("bigint" == typeof n2.length || Number.isInteger(n2.length)) && n2.length > 0 && (t3["Content-Length"] = String(n2.length)), n2.metadata && (t3["Content-Length"] = String(S(n2.metadata))), new Response(N2(e2, n2), { headers: t3 });
   }
-  function N2(t4, a3 = {}) {
-    const u3 = (function(e3) {
-      const n3 = e3[Symbol.iterator in e3 ? Symbol.iterator : Symbol.asyncIterator]();
+  function N2(t3, a2 = {}) {
+    const u2 = (function(e2) {
+      const n2 = e2[Symbol.iterator in e2 ? Symbol.iterator : Symbol.asyncIterator]();
       return { async next() {
-        const e4 = await n3.next();
-        if (e4.done) return e4;
-        const [t5, i3] = D(e4.value);
-        return { done: 0, value: Object.assign(f2(...i3), s2(...t5)) };
-      }, throw: n3.throw?.bind(n3), [Symbol.asyncIterator]() {
+        const e3 = await n2.next();
+        if (e3.done) return e3;
+        const [t4, i2] = D2(e3.value);
+        return { done: 0, value: Object.assign(f(...i2), s(...t4)) };
+      }, throw: n2.throw?.bind(n2), [Symbol.asyncIterator]() {
         return this;
       } };
-    })(t4);
-    return o2((async function* (t5, f3) {
-      const o4 = [];
-      let a4 = 0n, s3 = 0n, u4 = 0;
-      for await (const e3 of t5) {
-        const n3 = B(e3, f3.buffersAreUTF8);
-        yield p3(e3, n3), yield new Uint8Array(e3.o), e3.isFile && (yield* g2(e3));
-        const t6 = e3.u >= 0xffffffffn, i3 = 12 * (a4 >= 0xffffffffn) | 28 * t6;
-        yield I(e3, t6), o4.push(v2(e3, a4, n3, i3)), o4.push(e3.o), i3 && o4.push(h2(e3, a4, i3)), t6 && (a4 += 8n), s3++, a4 += BigInt(46 + e3.o.length) + e3.u, u4 || (u4 = t6);
+    })(t3);
+    return o((async function* (t4, f2) {
+      const o3 = [];
+      let a3 = 0n, s2 = 0n, u3 = 0;
+      for await (const e2 of t4) {
+        const n2 = B(e2, f2.buffersAreUTF8);
+        yield p3(e2, n2), yield new Uint8Array(e2.o), e2.isFile && (yield* g2(e2));
+        const t5 = e2.u >= 0xffffffffn, i2 = 12 * (a3 >= 0xffffffffn) | 28 * t5;
+        yield I(e2, t5), o3.push(v2(e2, a3, n2, i2)), o3.push(e2.o), i2 && o3.push(h(e2, a3, i2)), t5 && (a3 += 8n), s2++, a3 += BigInt(46 + e2.o.length) + e2.u, u3 || (u3 = t5);
       }
-      let d3 = 0n;
-      for (const e3 of o4) yield e3, d3 += BigInt(e3.length);
-      if (u4 || a4 >= 0xffffffffn) {
-        const t6 = e2(76);
-        t6.setUint32(0, 1347094022), t6.setBigUint64(4, BigInt(44), 1), t6.setUint32(12, 755182848), t6.setBigUint64(24, s3, 1), t6.setBigUint64(32, s3, 1), t6.setBigUint64(40, d3, 1), t6.setBigUint64(48, a4, 1), t6.setUint32(56, 1347094023), t6.setBigUint64(64, a4 + d3, 1), t6.setUint32(72, 1, 1), yield n2(t6);
+      let d2 = 0n;
+      for (const e2 of o3) yield e2, d2 += BigInt(e2.length);
+      if (u3 || a3 >= 0xffffffffn) {
+        const t5 = e(76);
+        t5.setUint32(0, 1347094022), t5.setBigUint64(4, BigInt(44), 1), t5.setUint32(12, 755182848), t5.setBigUint64(24, s2, 1), t5.setBigUint64(32, s2, 1), t5.setBigUint64(40, d2, 1), t5.setBigUint64(48, a3, 1), t5.setUint32(56, 1347094023), t5.setBigUint64(64, a3 + d2, 1), t5.setUint32(72, 1, 1), yield n(t5);
       }
-      const l3 = e2(22);
-      l3.setUint32(0, 1347093766), l3.setUint16(8, r3(s3), 1), l3.setUint16(10, r3(s3), 1), l3.setUint32(12, i2(d3), 1), l3.setUint32(16, i2(a4), 1), yield n2(l3);
-    })(u3, a3), u3);
+      const l3 = e(22);
+      l3.setUint32(0, 1347093766), l3.setUint16(8, r2(s2), 1), l3.setUint16(10, r2(s2), 1), l3.setUint32(12, i(d2), 1), l3.setUint32(16, i(a3), 1), yield n(l3);
+    })(u2, a2), u2);
   }
 
   // packages/fields/build-module/actions/export-pattern.mjs
@@ -50340,7 +50353,7 @@ var wp;
       });
       return (0, import_blob2.downloadBlob)(
         (0, import_i18n68.__)("patterns-export") + ".zip",
-        await A(filesToZip).blob(),
+        await A2(filesToZip).blob(),
         "application/zip"
       );
     }
@@ -51491,7 +51504,7 @@ var wp;
           value: result.id.toString()
         };
       });
-      const includeCurrent = !filterValue && suggestions.findIndex((s3) => s3.value === value) === -1;
+      const includeCurrent = !filterValue && suggestions.findIndex((s2) => s2.value === value) === -1;
       setOptions(suggestions.concat(includeCurrent ? defaultPost : []));
       setIsLoading(false);
     };
@@ -52742,7 +52755,7 @@ var wp;
       view?.descriptionField
     ].filter(Boolean);
     return fields2.filter(
-      (f3) => !togglableFields.includes(f3.id) && f3.type !== "media" && f3.enableHiding !== false
+      (f2) => !togglableFields.includes(f2.id) && f2.type !== "media" && f2.enableHiding !== false
     );
   }
 
@@ -52756,10 +52769,10 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
   var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
   function WithMenuSeparators({ children }) {
-    return import_element151.Children.toArray(children).filter(Boolean).map((child, i3) => /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(import_element151.Fragment, { children: [
-      i3 > 0 && /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_exports.Separator, {}),
+    return import_element151.Children.toArray(children).filter(Boolean).map((child, i2) => /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(import_element151.Fragment, { children: [
+      i2 > 0 && /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_exports.Separator, {}),
       child
-    ] }, i3));
+    ] }, i2));
   }
   var _HeaderMenu = (0, import_element151.forwardRef)(function HeaderMenu({
     fieldId,
@@ -52777,7 +52790,7 @@ var wp;
     let isSortable = false;
     let canAddFilter = false;
     let operators = [];
-    const field = fields2.find((f3) => f3.id === fieldId);
+    const field = fields2.find((f2) => f2.id === fieldId);
     const { setIsShowingFilter } = (0, import_element151.useContext)(dataviews_context_default);
     if (!field) {
       return null;
@@ -52793,7 +52806,7 @@ var wp;
     const visibleFieldIds = getTableColumns(view, fields2);
     const index2 = visibleFieldIds.indexOf(fieldId);
     const hiddenFields = getHideableFields(view, fields2).filter(
-      (f3) => !visibleFieldIds.includes(f3.id)
+      (f2) => !visibleFieldIds.includes(f2.id)
     );
     const canInsert = (canInsertLeft || canInsertRight) && !!hiddenFields.length;
     const isRtl = (0, import_i18n96.isRTL)();
@@ -53397,10 +53410,10 @@ var wp;
     if (!regularFields?.length) {
       return null;
     }
-    const titleField2 = fields2.find((f3) => f3.id === view.titleField);
-    const previewField = fields2.find((f3) => f3.id === view.mediaField);
+    const titleField2 = fields2.find((f2) => f2.id === view.titleField);
+    const previewField = fields2.find((f2) => f2.id === view.mediaField);
     const descriptionField3 = fields2.find(
-      (f3) => f3.id === view.descriptionField
+      (f2) => f2.id === view.descriptionField
     );
     const lockedFields = [
       {
@@ -53418,7 +53431,7 @@ var wp;
     ].filter(({ field }) => isDefined(field));
     const visibleFieldIds = view.fields ?? [];
     const visibleRegularFieldsCount = regularFields.filter(
-      (f3) => visibleFieldIds.includes(f3.id)
+      (f2) => visibleFieldIds.includes(f2.id)
     ).length;
     const visibleLockedFields = lockedFields.filter(
       ({ isVisibleFlag }) => view[isVisibleFlag] ?? true
@@ -53513,7 +53526,7 @@ var wp;
     column,
     align
   }) {
-    const field = fields2.find((f3) => f3.id === column);
+    const field = fields2.find((f2) => f2.id === column);
     if (!field) {
       return null;
     }
@@ -53603,7 +53616,7 @@ var wp;
           ) }),
           columns.map((column) => {
             const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
-            const field = fields2.find((f3) => f3.id === column);
+            const field = fields2.find((f2) => f2.id === column);
             const effectiveAlign = getEffectiveAlign(align, field?.type);
             return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
               "td",
@@ -53638,7 +53651,7 @@ var wp;
                 "dataviews-view-table__actions-column--sticky": true,
                 "dataviews-view-table__actions-column--stuck": isActionsColumnSticky
               }),
-              onClick: (e3) => e3.stopPropagation(),
+              onClick: (e2) => e2.stopPropagation(),
               children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(ItemActions, { item, actions: actions2 })
             }
           )
@@ -53666,7 +53679,7 @@ var wp;
   }) {
     const { containerRef } = (0, import_element157.useContext)(dataviews_context_default);
     const isDelayedLoading = useDelayedLoading(isLoading);
-    const groupField = view.groupBy?.field ? fields2.find((f3) => f3.id === view.groupBy?.field) : null;
+    const groupField = view.groupBy?.field ? fields2.find((f2) => f2.id === view.groupBy?.field) : null;
     const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
     const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
     const { getSelectionProps } = useSelectionProps({
@@ -53852,7 +53865,7 @@ var wp;
                   columns.map((column, index2) => {
                     const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
                     const field = fields2.find(
-                      (f3) => f3.id === column
+                      (f2) => f2.id === column
                     );
                     const effectiveAlign = getEffectiveAlign(
                       align,
@@ -54088,8 +54101,8 @@ var wp;
   var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
   function chunk(array, size4) {
     const chunks = [];
-    for (let i3 = 0, j2 = array.length; i3 < j2; i3 += size4) {
-      chunks.push(array.slice(i3, i3 + size4));
+    for (let i2 = 0, j2 = array.length; i2 < j2; i2 += size4) {
+      chunks.push(array.slice(i2, i2 + size4));
     }
     return chunks;
   }
@@ -54360,7 +54373,7 @@ var wp;
     const otherFields = view.fields ?? [];
     const { regularFields, badgeFields } = otherFields.reduce(
       (accumulator, fieldId) => {
-        const field = fields2.find((f3) => f3.id === fieldId);
+        const field = fields2.find((f2) => f2.id === fieldId);
         if (!field) {
           return accumulator;
         }
@@ -54497,18 +54510,18 @@ var wp;
             "aria-rowcount": totalRows,
             ref: resizeObserverRef,
             inert,
-            children: chunk(data, gridColumns).map((row, i3) => /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
+            children: chunk(data, gridColumns).map((row, i2) => /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
               import_components31.Composite.Row,
               {
                 render: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
                   "div",
                   {
                     role: "row",
-                    "aria-rowindex": i3 + 1,
+                    "aria-rowindex": i2 + 1,
                     "aria-label": (0, import_i18n101.sprintf)(
                       /* translators: %d: The row number in the grid */
                       (0, import_i18n101.__)("Row %d"),
-                      i3 + 1
+                      i2 + 1
                     ),
                     className: "dataviews-view-grid__row",
                     style: {
@@ -54569,7 +54582,7 @@ var wp;
                   );
                 })
               },
-              i3
+              i2
             ))
           }
         )
@@ -54596,7 +54609,7 @@ var wp;
   }) {
     const isDelayedLoading = useDelayedLoading(!!isLoading);
     const hasData = !!data?.length;
-    const groupField = view.groupBy?.field ? fields2.find((f3) => f3.id === view.groupBy?.field) : null;
+    const groupField = view.groupBy?.field ? fields2.find((f2) => f2.id === view.groupBy?.field) : null;
     const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
     const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
     const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
@@ -55030,7 +55043,7 @@ var wp;
     const descriptionField3 = fields2.find(
       (field) => field.id === view.descriptionField
     );
-    const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f3) => fieldId === f3.id)).filter(isDefined2);
+    const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f2) => fieldId === f2.id)).filter(isDefined2);
     const { getSelectionProps } = useSelectionProps({
       data,
       getItemId: getItemId2,
@@ -55460,7 +55473,7 @@ var wp;
     const descriptionField3 = fields2.find(
       (field) => field.id === view.descriptionField
     );
-    const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f3) => fieldId === f3.id)).filter(isDefined3);
+    const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f2) => fieldId === f2.id)).filter(isDefined3);
     return data.map((item, index2) => {
       return /* @__PURE__ */ (0, import_react58.createElement)(
         activity_item_default,
@@ -55575,8 +55588,8 @@ var wp;
     const { totalPages } = paginationInfo;
     const currentPage = view.page ?? 1;
     const pageSelectOptions = Array.from(Array(totalPages)).map(
-      (_, i3) => {
-        const page = i3 + 1;
+      (_, i2) => {
+        const page = i2 + 1;
         return {
           value: page.toString(),
           label: page.toString(),
@@ -56090,7 +56103,7 @@ var wp;
     const otherFields = view.fields ?? [];
     const { regularFields, badgeFields } = otherFields.reduce(
       (accumulator, fieldId) => {
-        const field = fields2.find((f3) => f3.id === fieldId);
+        const field = fields2.find((f2) => f2.id === fieldId);
         if (!field) {
           return accumulator;
         }
@@ -56104,7 +56117,7 @@ var wp;
     const usedPreviewSize = view.layout?.previewSize;
     const isMultiselect = useIsMultiselectPicker(actions2);
     const size4 = "900px";
-    const groupField = view.groupBy?.field ? fields2.find((f3) => f3.id === view.groupBy?.field) : null;
+    const groupField = view.groupBy?.field ? fields2.find((f2) => f2.id === view.groupBy?.field) : null;
     const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
     const isInfiniteScroll = (view.infiniteScrollEnabled && !dataByGroup) ?? false;
     const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
@@ -56312,7 +56325,7 @@ var wp;
     column,
     align
   }) {
-    const field = fields2.find((f3) => f3.id === column);
+    const field = fields2.find((f2) => f2.id === column);
     if (!field) {
       return null;
     }
@@ -56477,7 +56490,7 @@ var wp;
         headerMenuToFocusRef.current = void 0;
       }
     });
-    const groupField = view.groupBy?.field ? fields2.find((f3) => f3.id === view.groupBy?.field) : null;
+    const groupField = view.groupBy?.field ? fields2.find((f2) => f2.id === view.groupBy?.field) : null;
     const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
     const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
     const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
@@ -56897,8 +56910,8 @@ var wp;
     const descriptionField3 = fields2.find(
       (field) => field.id === view?.descriptionField
     );
-    const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f3) => fieldId === f3.id)).filter(isDefined4);
-    const groupField = view.groupBy?.field ? fields2.find((f3) => f3.id === view.groupBy?.field) : null;
+    const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f2) => fieldId === f2.id)).filter(isDefined4);
+    const groupField = view.groupBy?.field ? fields2.find((f2) => f2.id === view.groupBy?.field) : null;
     const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
     const isInfiniteScroll = (view.infiniteScrollEnabled && !dataByGroup) ?? false;
     const setsize = isInfiniteScroll ? paginationInfo?.totalItems : void 0;
@@ -57106,7 +57119,7 @@ var wp;
       return context.containerWidth >= size4.breakpoint;
     });
     const layoutPreviewSize = view.layout?.previewSize ?? 230;
-    const previewSizeToUse = breakValues.map((size4, index2) => ({ ...size4, index: index2 })).filter((size4) => size4.value <= layoutPreviewSize).sort((a3, b3) => b3.value - a3.value)[0]?.index ?? 0;
+    const previewSizeToUse = breakValues.map((size4, index2) => ({ ...size4, index: index2 })).filter((size4) => size4.value <= layoutPreviewSize).sort((a2, b2) => b2.value - a2.value)[0]?.index ?? 0;
     const marks = breakValues.map((size4, index2) => {
       return {
         value: index2
@@ -57463,9 +57476,9 @@ var wp;
   function sortBasedOnDOMPosition(items, getElement) {
     const pairs = items.map((item, index2) => [index2, item]);
     let isOrderDifferent = false;
-    pairs.sort(([indexA, a3], [indexB, b3]) => {
-      const elementA = getElement(a3);
-      const elementB = getElement(b3);
+    pairs.sort(([indexA, a2], [indexB, b2]) => {
+      const elementA = getElement(a2);
+      const elementB = getElement(b2);
       if (elementA === elementB) return 0;
       if (!elementA || !elementB) return 0;
       if (isElementPreceding(elementA, elementB)) {
@@ -57478,8 +57491,8 @@ var wp;
     if (isOrderDifferent) return pairs.map(([_, item]) => item);
     return items;
   }
-  function isElementPreceding(a3, b3) {
-    return Boolean(b3.compareDocumentPosition(a3) & Node.DOCUMENT_POSITION_PRECEDING);
+  function isElementPreceding(a2, b2) {
+    return Boolean(b2.compareDocumentPosition(a2) & Node.DOCUMENT_POSITION_PRECEDING);
   }
   function isTouchDevice() {
     return canUseDOM && !!navigator.maxTouchPoints;
@@ -59013,7 +59026,7 @@ If there's a particular need for this, please submit a feature request at https:
       renderedItems: initialState.renderedItems
     }, syncPrivateStore), { __unstableCollectionLookup: collectionLookup });
     const sortItems = (renderedItems) => {
-      const sortedItems = sortBasedOnDOMPosition(renderedItems, (i3) => i3.element);
+      const sortedItems = sortBasedOnDOMPosition(renderedItems, (i2) => i2.element);
       privateStore.setState("renderedItems", sortedItems);
       collection.setState("renderedItems", sortedItems);
     };
@@ -59155,8 +59168,8 @@ If there's a particular need for this, please submit a feature request at https:
     });
   }
   function findLastEnabledItem(items) {
-    for (let i3 = items.length - 1; i3 >= 0; i3 -= 1) {
-      const item = items[i3];
+    for (let i2 = items.length - 1; i2 >= 0; i2 -= 1) {
+      const item = items[i2];
       if (!item) continue;
       if (item.disabled) continue;
       return item;
@@ -59172,8 +59185,8 @@ If there's a particular need for this, please submit a feature request at https:
     return items.filter((item) => item.rowId === rowId);
   }
   function findEnabledItemId({ items, fromIndex, step, rowId, excludeId }) {
-    for (let i3 = fromIndex; i3 >= 0 && i3 < items.length; i3 += step) {
-      const item = items[i3];
+    for (let i2 = fromIndex; i2 >= 0 && i2 < items.length; i2 += step) {
+      const item = items[i2];
       if (!item) continue;
       if (item.rowId !== rowId) continue;
       if (item.disabled) continue;
@@ -59256,11 +59269,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function normalizeRows(rows, activeId, focusShift) {
     const maxLength = getMaxRowLength(rows);
-    for (const row of rows) for (let i3 = 0; i3 < maxLength; i3 += 1) {
-      const item = row[i3];
+    for (const row of rows) for (let i2 = 0; i2 < maxLength; i2 += 1) {
+      const item = row[i2];
       if (!item || focusShift && item.disabled) {
-        const previousItem = i3 === 0 && focusShift ? findFirstEnabledItem(row) : row[i3 - 1];
-        row[i3] = previousItem && activeId !== previousItem.id && focusShift ? previousItem : createEmptyItem(previousItem?.rowId);
+        const previousItem = i2 === 0 && focusShift ? findFirstEnabledItem(row) : row[i2 - 1];
+        row[i2] = previousItem && activeId !== previousItem.id && focusShift ? previousItem : createEmptyItem(previousItem?.rowId);
       }
     }
     return rows;
@@ -59269,11 +59282,11 @@ If there's a particular need for this, please submit a feature request at https:
     const rows = groupItemsByRows(items);
     const maxLength = getMaxRowLength(rows);
     const verticalized = [];
-    for (let i3 = 0; i3 < maxLength; i3 += 1) for (const row of rows) {
-      const item = row[i3];
+    for (let i2 = 0; i2 < maxLength; i2 += 1) for (const row of rows) {
+      const item = row[i2];
       if (item) verticalized.push({
         ...item,
-        rowId: item.rowId ? `${i3}` : void 0
+        rowId: item.rowId ? `${i2}` : void 0
       });
     }
     return verticalized;
@@ -59808,9 +59821,9 @@ If there's a particular need for this, please submit a feature request at https:
     const nextPageOffset = getNextPageOffset(scrollingElement, pageUp);
     let id;
     let prevDifference;
-    for (let i3 = 0; i3 < renderedItems.length; i3 += 1) {
+    for (let i2 = 0; i2 < renderedItems.length; i2 += 1) {
       const previousId = id;
-      id = next(i3);
+      id = next(i2);
       if (!id) break;
       if (id === previousId) continue;
       const itemElement = getEnabledItem(store4, id)?.element;
@@ -61447,7 +61460,7 @@ If there's a particular need for this, please submit a feature request at https:
     return offsets;
   }
   function mergeOverlappingOffsets(offsets) {
-    offsets.sort(([a3], [b3]) => a3 - b3);
+    offsets.sort(([a2], [b2]) => a2 - b2);
     const merged = [];
     for (const [offset4, length2] of offsets) {
       const last = merged[merged.length - 1];
@@ -61462,8 +61475,8 @@ If there's a particular need for this, please submit a feature request at https:
     let index2 = 0;
     for (const char of itemValue) {
       const normalizedLength = normalizeValue2(char).length;
-      for (let i3 = 0; i3 < normalizedLength; i3 += 1) {
-        starts.push(i3 === 0 ? index2 : -1);
+      for (let i2 = 0; i2 < normalizedLength; i2 += 1) {
+        starts.push(i2 === 0 ? index2 : -1);
         ends.push(index2);
       }
       index2 += char.length;
@@ -61471,10 +61484,10 @@ If there's a particular need for this, please submit a feature request at https:
     starts.push(itemValue.length);
     ends.push(itemValue.length);
     let nextBoundary = itemValue.length;
-    for (let i3 = starts.length - 1; i3 >= 0; i3 -= 1) {
-      const start2 = starts[i3];
+    for (let i2 = starts.length - 1; i2 >= 0; i2 -= 1) {
+      const start2 = starts[i2];
       if (start2 == null) continue;
-      if (start2 === -1) starts[i3] = nextBoundary;
+      if (start2 === -1) starts[i2] = nextBoundary;
       else nextBoundary = start2;
     }
     return {
@@ -61512,13 +61525,13 @@ If there's a particular need for this, please submit a feature request at https:
       return parts;
     }
     const [firstOffset] = firstEntry;
-    [itemValue.slice(0, firstOffset), ...offsets.flatMap(([offset4, length2], i3) => {
+    [itemValue.slice(0, firstOffset), ...offsets.flatMap(([offset4, length2], i2) => {
       const value = itemValue.slice(offset4, offset4 + length2);
-      const nextOffset = offsets[i3 + 1]?.[0];
+      const nextOffset = offsets[i2 + 1]?.[0];
       return [value, itemValue.slice(offset4 + length2, nextOffset)];
-    })].forEach((value, i3) => {
+    })].forEach((value, i2) => {
       if (!value) return;
-      parts.push(span(value, i3 % 2 === 0));
+      parts.push(span(value, i2 % 2 === 0));
     });
     return parts;
   }
@@ -62050,7 +62063,7 @@ If there's a particular need for this, please submit a feature request at https:
       filter.operators?.length === 1 ? void 0 : null
     );
     const currentFilter = view.filters?.find(
-      (f3) => f3.field === filter.field
+      (f2) => f2.field === filter.field
     );
     const currentValue = getCurrentValue(filter, currentFilter);
     return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
@@ -62308,11 +62321,11 @@ If there's a particular need for this, please submit a feature request at https:
     fields: fields2
   }) {
     const currentFilter = view.filters?.find(
-      (f3) => f3.field === filter.field
+      (f2) => f2.field === filter.field
     );
     const currentValue = getCurrentValue(filter, currentFilter);
     const field = (0, import_element175.useMemo)(() => {
-      const currentField = fields2.find((f3) => f3.id === filter.field);
+      const currentField = fields2.find((f2) => f2.id === filter.field);
       if (currentField) {
         return {
           ...currentField,
@@ -63094,11 +63107,11 @@ If there's a particular need for this, please submit a feature request at https:
     const toggleRef = (0, import_element177.useRef)(null);
     const { filter, view, onChangeView } = commonProps;
     const filterInView = view.filters?.find(
-      (f3) => f3.field === filter.field
+      (f2) => f2.field === filter.field
     );
     let activeElements = [];
     const field = (0, import_element177.useMemo)(() => {
-      const currentField = fields2.find((f3) => f3.id === filter.field);
+      const currentField = fields2.find((f2) => f2.id === filter.field);
       if (currentField) {
         return {
           ...currentField,
@@ -63378,7 +63391,7 @@ If there's a particular need for this, please submit a feature request at https:
             ...view,
             page: 1,
             search: "",
-            filters: view.filters?.filter((f3) => !!f3.isLocked) || []
+            filters: view.filters?.filter((f2) => !!f2.isLocked) || []
           });
         },
         children: (0, import_i18n118.__)("Reset")
@@ -63398,7 +63411,7 @@ If there's a particular need for this, please submit a feature request at https:
         const operators = field.filterBy.operators;
         const isPrimary = !!field.filterBy?.isPrimary;
         const isLocked = view.filters?.some(
-          (f3) => f3.field === field.id && !!f3.isLocked
+          (f2) => f2.field === field.id && !!f2.isLocked
         ) ?? false;
         filters.push({
           field: field.id,
@@ -63411,26 +63424,26 @@ If there's a particular need for this, please submit a feature request at https:
           ),
           operators,
           isVisible: isLocked || isPrimary || !!view.filters?.some(
-            (f3) => f3.field === field.id && isRegisteredOperator(f3.operator)
+            (f2) => f2.field === field.id && isRegisteredOperator(f2.operator)
           ),
           isPrimary,
           isLocked
         });
       });
-      filters.sort((a3, b3) => {
-        if (a3.isLocked && !b3.isLocked) {
+      filters.sort((a2, b2) => {
+        if (a2.isLocked && !b2.isLocked) {
           return -1;
         }
-        if (!a3.isLocked && b3.isLocked) {
+        if (!a2.isLocked && b2.isLocked) {
           return 1;
         }
-        if (a3.isPrimary && !b3.isPrimary) {
+        if (a2.isPrimary && !b2.isPrimary) {
           return -1;
         }
-        if (!a3.isPrimary && b3.isPrimary) {
+        if (!a2.isPrimary && b2.isPrimary) {
           return 1;
         }
-        return a3.name.localeCompare(b3.name);
+        return a2.name.localeCompare(b2.name);
       });
       return filters;
     }, [fields2, view]);
@@ -64155,8 +64168,8 @@ If there's a particular need for this, please submit a feature request at https:
               tabIndex: -1,
               onChange: () => {
               },
-              onFocus: (e3) => {
-                e3.target.previousElementSibling?.querySelector(
+              onFocus: (e2) => {
+                e2.target.previousElementSibling?.querySelector(
                   'input[type="text"]'
                 )?.focus();
               }
@@ -64335,8 +64348,8 @@ If there's a particular need for this, please submit a feature request at https:
           name: nameAttr,
           onChange: () => {
           },
-          onFocus: (e3) => {
-            e3.target.previousElementSibling?.querySelector(
+          onFocus: (e2) => {
+            e2.target.previousElementSibling?.querySelector(
               '[data-active-item="true"]'
             )?.focus();
           }
@@ -66260,7 +66273,7 @@ If there's a particular need for this, please submit a feature request at https:
     onColorChange,
     disabled: disabled2
   }) => {
-    const validColor = color && w(color).isValid() ? color : "#ffffff";
+    const validColor = color && A(color).isValid() ? color : "#ffffff";
     return /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
       import_components70.Dropdown,
       {
@@ -66532,8 +66545,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/field-types/utils/sort-text.mjs
-  var sort_text_default = (a3, b3, direction) => {
-    return direction === "asc" ? a3.localeCompare(b3) : b3.localeCompare(a3);
+  var sort_text_default = (a2, b2, direction) => {
+    return direction === "asc" ? a2.localeCompare(b2) : b2.localeCompare(a2);
   };
 
   // packages/dataviews/build-module/field-types/utils/is-valid-required.mjs
@@ -66647,8 +66660,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n132 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/field-types/utils/sort-number.mjs
-  var sort_number_default = (a3, b3, direction) => {
-    return direction === "asc" ? a3 - b3 : b3 - a3;
+  var sort_number_default = (a2, b2, direction) => {
+    return direction === "asc" ? a2 - b2 : b2 - a2;
   };
 
   // packages/dataviews/build-module/field-types/utils/is-valid-min.mjs
@@ -66932,9 +66945,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return (0, import_date14.dateI18n)(formatDatetime.datetime, (0, import_date14.getDate)(value));
   }
-  var sort = (a3, b3, direction) => {
-    const timeA = new Date(a3).getTime();
-    const timeB = new Date(b3).getTime();
+  var sort = (a2, b2, direction) => {
+    const timeA = new Date(a2).getTime();
+    const timeB = new Date(b2).getTime();
     return direction === "asc" ? timeA - timeB : timeB - timeA;
   };
   var datetime_default = {
@@ -66996,9 +67009,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return (0, import_date15.dateI18n)(formatDate2.date, (0, import_date15.getDate)(value));
   }
-  var sort2 = (a3, b3, direction) => {
-    const timeA = new Date(a3).getTime();
-    const timeB = new Date(b3).getTime();
+  var sort2 = (a2, b2, direction) => {
+    const timeA = new Date(a2).getTime();
+    const timeB = new Date(b2).getTime();
     return direction === "asc" ? timeA - timeB : timeB - timeA;
   };
   var date_default2 = {
@@ -67069,9 +67082,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return (0, import_date16.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
   }
-  var sort3 = (a3, b3, direction) => {
-    const timeA = parseTime2(a3);
-    const timeB = parseTime2(b3);
+  var sort3 = (a2, b2, direction) => {
+    const timeA = parseTime2(a2);
+    const timeB = parseTime2(b2);
     if (timeA === null || timeB === null) {
       if (timeA === timeB) {
         return 0;
@@ -67145,9 +67158,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return null;
   }
-  var sort4 = (a3, b3, direction) => {
-    const boolA = Boolean(a3);
-    const boolB = Boolean(b3);
+  var sort4 = (a2, b2, direction) => {
+    const boolA = Boolean(a2);
+    const boolB = Boolean(b2);
     if (boolA === boolB) {
       return 0;
     }
@@ -67228,9 +67241,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return null;
   }
-  var sort5 = (a3, b3, direction) => {
-    const arrA = Array.isArray(a3) ? a3 : [];
-    const arrB = Array.isArray(b3) ? b3 : [];
+  var sort5 = (a2, b2, direction) => {
+    const arrA = Array.isArray(a2) ? a2 : [];
+    const arrB = Array.isArray(b2) ? b2 : [];
     if (arrA.length !== arrB.length) {
       return direction === "asc" ? arrA.length - arrB.length : arrB.length - arrA.length;
     }
@@ -67328,7 +67341,7 @@ If there's a particular need for this, please submit a feature request at https:
       return /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(RenderFromElements, { item, field });
     }
     const value = get_value_formatted_default_default({ item, field });
-    if (!value || !w(value).isValid()) {
+    if (!value || !A(value).isValid()) {
       return value;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime360.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
@@ -67350,14 +67363,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function isValidCustom6(item, field) {
     const value = field.getValue({ item });
-    if (![void 0, "", null].includes(value) && !w(value).isValid()) {
+    if (![void 0, "", null].includes(value) && !A(value).isValid()) {
       return (0, import_i18n136.__)("Value must be a valid color.");
     }
     return null;
   }
-  var sort6 = (a3, b3, direction) => {
-    const colorA = w(a3);
-    const colorB = w(b3);
+  var sort6 = (a2, b2, direction) => {
+    const colorA = A(a2);
+    const colorB = A(b2);
     if (!colorA.isValid() && !colorB.isValid()) {
       return 0;
     }
@@ -67432,11 +67445,11 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/no-type.mjs
-  var sort7 = (a3, b3, direction) => {
-    if (typeof a3 === "number" && typeof b3 === "number") {
-      return sort_number_default(a3, b3, direction);
+  var sort7 = (a2, b2, direction) => {
+    if (typeof a2 === "number" && typeof b2 === "number") {
+      return sort_number_default(a2, b2, direction);
     }
-    return sort_text_default(a3, b3, direction);
+    return sort_text_default(a2, b2, direction);
   };
   var no_type_default = {
     // type: no type for this one
@@ -67572,9 +67585,9 @@ If there's a particular need for this, please submit a feature request at https:
     return fields2.map((field) => {
       const fieldType = getFieldTypeByName(field.type);
       const getValue3 = field.getValue || get_value_from_id_default(field.id);
-      const sort8 = function(a3, b3, direction) {
-        const aValue = getValue3({ item: a3 });
-        const bValue = getValue3({ item: b3 });
+      const sort8 = function(a2, b2, direction) {
+        const aValue = getValue3({ item: a2 });
+        const bValue = getValue3({ item: b2 });
         return field.sort ? field.sort(aValue, bValue, direction) : fieldType.sort(aValue, bValue, direction);
       };
       return {
@@ -67705,9 +67718,9 @@ If there's a particular need for this, please submit a feature request at https:
         (record) => !shownDataIds.has(getItemId2(record))
       );
       const allRecords = scrollDirection === "up" ? [...newRecords, ...prevWithoutDuplicates] : [...prevWithoutDuplicates, ...newRecords];
-      allRecords.sort((a3, b3) => {
-        const posA = a3.position;
-        const posB = b3.position;
+      allRecords.sort((a2, b2) => {
+        const posA = a2.position;
+        const posB = b2.position;
         return posA - posB;
       });
       let result = allRecords;
@@ -67716,7 +67729,7 @@ If there's a particular need for this, please submit a feature request at https:
         const visibleMax = Math.max(...visibleEntries);
         const buffer = 20;
         const recordPositions = allRecords.map(
-          (r5) => r5.position
+          (r4) => r4.position
         );
         const minRecordPos = Math.min(...recordPositions);
         const maxRecordPos = Math.max(...recordPositions);
@@ -68694,8 +68707,8 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const result = { ...formValidity };
     let current = result;
-    for (let i3 = 0; i3 < path.length - 1; i3++) {
-      const segment2 = path[i3];
+    for (let i2 = 0; i2 < path.length - 1; i2++) {
+      const segment2 = path[i2];
       if (!current[segment2]) {
         current[segment2] = {};
       }
@@ -68715,8 +68728,8 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const result = { ...formValidity };
     let current = result;
-    for (let i3 = 0; i3 < path.length - 1; i3++) {
-      const segment2 = path[i3];
+    for (let i2 = 0; i2 < path.length - 1; i2++) {
+      const segment2 = path[i2];
       if (!current[segment2]) {
         return formValidity;
       }
@@ -69240,17 +69253,17 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [field]
     );
-    const fieldsAsFieldType = fields2.map((f3) => ({
-      ...f3,
-      Edit: f3.Edit === null ? void 0 : f3.Edit,
+    const fieldsAsFieldType = fields2.map((f2) => ({
+      ...f2,
+      Edit: f2.Edit === null ? void 0 : f2.Edit,
       isValid: {
-        required: f3.isValid.required?.constraint,
-        elements: f3.isValid.elements?.constraint,
-        min: f3.isValid.min?.constraint,
-        max: f3.isValid.max?.constraint,
-        pattern: f3.isValid.pattern?.constraint,
-        minLength: f3.isValid.minLength?.constraint,
-        maxLength: f3.isValid.maxLength?.constraint
+        required: f2.isValid.required?.constraint,
+        elements: f2.isValid.elements?.constraint,
+        min: f2.isValid.min?.constraint,
+        max: f2.isValid.max?.constraint,
+        pattern: f2.isValid.pattern?.constraint,
+        minLength: f2.isValid.minLength?.constraint,
+        maxLength: f2.isValid.maxLength?.constraint
       }
     }));
     const { validity } = use_form_validity_default(modalData, fieldsAsFieldType, form);
@@ -70132,7 +70145,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { fields: fieldDefinitions } = (0, import_element225.useContext)(dataform_context_default);
     const markWhenOptional = (0, import_element225.useMemo)(() => {
       const requiredCount = fieldDefinitions.filter(
-        (f3) => !!f3.isValid?.required
+        (f2) => !!f2.isValid?.required
       ).length;
       const optionalCount = fieldDefinitions.length - requiredCount;
       return requiredCount > optionalCount;
@@ -70260,11 +70273,11 @@ If there's a particular need for this, please submit a feature request at https:
       return field.enableSorting !== false && field.id === view.groupBy?.field;
     }) : null;
     if (sortByField || groupByField) {
-      filteredData.sort((a3, b3) => {
+      filteredData.sort((a2, b2) => {
         if (groupByField) {
           const groupCompare = groupByField.sort(
-            a3,
-            b3,
+            a2,
+            b2,
             view.groupBy?.direction ?? "asc"
           );
           if (groupCompare !== 0) {
@@ -70272,7 +70285,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         }
         if (sortByField) {
-          return sortByField.sort(a3, b3, view.sort?.direction ?? "desc");
+          return sortByField.sort(a2, b2, view.sort?.direction ?? "desc");
         }
         return 0;
       });
@@ -70542,9 +70555,9 @@ If there's a particular need for this, please submit a feature request at https:
   var EPSILON = 1e-6;
   var ARRAY_TYPE = typeof Float32Array !== "undefined" ? Float32Array : Array;
   var RANDOM = Math.random;
-  function round2(a3) {
-    if (a3 >= 0) return Math.round(a3);
-    return a3 % 0.5 === 0 ? Math.floor(a3) : Math.round(a3);
+  function round2(a2) {
+    if (a2 >= 0) return Math.round(a2);
+    return a2 % 0.5 === 0 ? Math.floor(a2) : Math.round(a2);
   }
   var degree = Math.PI / 180;
   var radian = 180 / Math.PI;
@@ -70590,23 +70603,23 @@ If there's a particular need for this, please submit a feature request at https:
     out[3] = 1;
     return out;
   }
-  function clone(a3) {
+  function clone(a2) {
     var out = new ARRAY_TYPE(6);
-    out[0] = a3[0];
-    out[1] = a3[1];
-    out[2] = a3[2];
-    out[3] = a3[3];
-    out[4] = a3[4];
-    out[5] = a3[5];
+    out[0] = a2[0];
+    out[1] = a2[1];
+    out[2] = a2[2];
+    out[3] = a2[3];
+    out[4] = a2[4];
+    out[5] = a2[5];
     return out;
   }
-  function copy(out, a3) {
-    out[0] = a3[0];
-    out[1] = a3[1];
-    out[2] = a3[2];
-    out[3] = a3[3];
-    out[4] = a3[4];
-    out[5] = a3[5];
+  function copy(out, a2) {
+    out[0] = a2[0];
+    out[1] = a2[1];
+    out[2] = a2[2];
+    out[3] = a2[3];
+    out[4] = a2[4];
+    out[5] = a2[5];
     return out;
   }
   function identity2(out) {
@@ -70618,28 +70631,28 @@ If there's a particular need for this, please submit a feature request at https:
     out[5] = 0;
     return out;
   }
-  function fromValues(a3, b3, c6, d3, tx, ty) {
+  function fromValues(a2, b2, c6, d2, tx, ty) {
     var out = new ARRAY_TYPE(6);
-    out[0] = a3;
-    out[1] = b3;
+    out[0] = a2;
+    out[1] = b2;
     out[2] = c6;
-    out[3] = d3;
+    out[3] = d2;
     out[4] = tx;
     out[5] = ty;
     return out;
   }
-  function set3(out, a3, b3, c6, d3, tx, ty) {
-    out[0] = a3;
-    out[1] = b3;
+  function set3(out, a2, b2, c6, d2, tx, ty) {
+    out[0] = a2;
+    out[1] = b2;
     out[2] = c6;
-    out[3] = d3;
+    out[3] = d2;
     out[4] = tx;
     out[5] = ty;
     return out;
   }
-  function invert(out, a3) {
-    var aa = a3[0], ab = a3[1], ac = a3[2], ad = a3[3];
-    var atx = a3[4], aty = a3[5];
+  function invert(out, a2) {
+    var aa = a2[0], ab = a2[1], ac = a2[2], ad = a2[3];
+    var atx = a2[4], aty = a2[5];
     var det = aa * ad - ab * ac;
     if (!det) {
       return null;
@@ -70653,59 +70666,59 @@ If there's a particular need for this, please submit a feature request at https:
     out[5] = (ab * atx - aa * aty) * det;
     return out;
   }
-  function determinant(a3) {
-    return a3[0] * a3[3] - a3[1] * a3[2];
+  function determinant(a2) {
+    return a2[0] * a2[3] - a2[1] * a2[2];
   }
-  function multiply(out, a3, b3) {
-    var a0 = a3[0], a1 = a3[1], a22 = a3[2], a32 = a3[3], a4 = a3[4], a5 = a3[5];
-    var b0 = b3[0], b1 = b3[1], b22 = b3[2], b32 = b3[3], b4 = b3[4], b5 = b3[5];
+  function multiply(out, a2, b2) {
+    var a0 = a2[0], a1 = a2[1], a22 = a2[2], a3 = a2[3], a4 = a2[4], a5 = a2[5];
+    var b0 = b2[0], b1 = b2[1], b22 = b2[2], b3 = b2[3], b4 = b2[4], b5 = b2[5];
     out[0] = a0 * b0 + a22 * b1;
-    out[1] = a1 * b0 + a32 * b1;
-    out[2] = a0 * b22 + a22 * b32;
-    out[3] = a1 * b22 + a32 * b32;
+    out[1] = a1 * b0 + a3 * b1;
+    out[2] = a0 * b22 + a22 * b3;
+    out[3] = a1 * b22 + a3 * b3;
     out[4] = a0 * b4 + a22 * b5 + a4;
-    out[5] = a1 * b4 + a32 * b5 + a5;
+    out[5] = a1 * b4 + a3 * b5 + a5;
     return out;
   }
-  function rotate(out, a3, rad) {
-    var a0 = a3[0], a1 = a3[1], a22 = a3[2], a32 = a3[3], a4 = a3[4], a5 = a3[5];
-    var s3 = Math.sin(rad);
+  function rotate(out, a2, rad) {
+    var a0 = a2[0], a1 = a2[1], a22 = a2[2], a3 = a2[3], a4 = a2[4], a5 = a2[5];
+    var s2 = Math.sin(rad);
     var c6 = Math.cos(rad);
-    out[0] = a0 * c6 + a22 * s3;
-    out[1] = a1 * c6 + a32 * s3;
-    out[2] = a0 * -s3 + a22 * c6;
-    out[3] = a1 * -s3 + a32 * c6;
+    out[0] = a0 * c6 + a22 * s2;
+    out[1] = a1 * c6 + a3 * s2;
+    out[2] = a0 * -s2 + a22 * c6;
+    out[3] = a1 * -s2 + a3 * c6;
     out[4] = a4;
     out[5] = a5;
     return out;
   }
-  function scale(out, a3, v3) {
-    var a0 = a3[0], a1 = a3[1], a22 = a3[2], a32 = a3[3], a4 = a3[4], a5 = a3[5];
+  function scale(out, a2, v3) {
+    var a0 = a2[0], a1 = a2[1], a22 = a2[2], a3 = a2[3], a4 = a2[4], a5 = a2[5];
     var v0 = v3[0], v1 = v3[1];
     out[0] = a0 * v0;
     out[1] = a1 * v0;
     out[2] = a22 * v1;
-    out[3] = a32 * v1;
+    out[3] = a3 * v1;
     out[4] = a4;
     out[5] = a5;
     return out;
   }
-  function translate(out, a3, v3) {
-    var a0 = a3[0], a1 = a3[1], a22 = a3[2], a32 = a3[3], a4 = a3[4], a5 = a3[5];
+  function translate(out, a2, v3) {
+    var a0 = a2[0], a1 = a2[1], a22 = a2[2], a3 = a2[3], a4 = a2[4], a5 = a2[5];
     var v0 = v3[0], v1 = v3[1];
     out[0] = a0;
     out[1] = a1;
     out[2] = a22;
-    out[3] = a32;
+    out[3] = a3;
     out[4] = a0 * v0 + a22 * v1 + a4;
-    out[5] = a1 * v0 + a32 * v1 + a5;
+    out[5] = a1 * v0 + a3 * v1 + a5;
     return out;
   }
   function fromRotation(out, rad) {
-    var s3 = Math.sin(rad), c6 = Math.cos(rad);
+    var s2 = Math.sin(rad), c6 = Math.cos(rad);
     out[0] = c6;
-    out[1] = s3;
-    out[2] = -s3;
+    out[1] = s2;
+    out[2] = -s2;
     out[3] = c6;
     out[4] = 0;
     out[5] = 0;
@@ -70729,55 +70742,55 @@ If there's a particular need for this, please submit a feature request at https:
     out[5] = v3[1];
     return out;
   }
-  function str(a3) {
-    return "mat2d(" + a3[0] + ", " + a3[1] + ", " + a3[2] + ", " + a3[3] + ", " + a3[4] + ", " + a3[5] + ")";
+  function str(a2) {
+    return "mat2d(" + a2[0] + ", " + a2[1] + ", " + a2[2] + ", " + a2[3] + ", " + a2[4] + ", " + a2[5] + ")";
   }
-  function frob(a3) {
-    return Math.sqrt(a3[0] * a3[0] + a3[1] * a3[1] + a3[2] * a3[2] + a3[3] * a3[3] + a3[4] * a3[4] + a3[5] * a3[5] + 1);
+  function frob(a2) {
+    return Math.sqrt(a2[0] * a2[0] + a2[1] * a2[1] + a2[2] * a2[2] + a2[3] * a2[3] + a2[4] * a2[4] + a2[5] * a2[5] + 1);
   }
-  function add(out, a3, b3) {
-    out[0] = a3[0] + b3[0];
-    out[1] = a3[1] + b3[1];
-    out[2] = a3[2] + b3[2];
-    out[3] = a3[3] + b3[3];
-    out[4] = a3[4] + b3[4];
-    out[5] = a3[5] + b3[5];
+  function add(out, a2, b2) {
+    out[0] = a2[0] + b2[0];
+    out[1] = a2[1] + b2[1];
+    out[2] = a2[2] + b2[2];
+    out[3] = a2[3] + b2[3];
+    out[4] = a2[4] + b2[4];
+    out[5] = a2[5] + b2[5];
     return out;
   }
-  function subtract(out, a3, b3) {
-    out[0] = a3[0] - b3[0];
-    out[1] = a3[1] - b3[1];
-    out[2] = a3[2] - b3[2];
-    out[3] = a3[3] - b3[3];
-    out[4] = a3[4] - b3[4];
-    out[5] = a3[5] - b3[5];
+  function subtract(out, a2, b2) {
+    out[0] = a2[0] - b2[0];
+    out[1] = a2[1] - b2[1];
+    out[2] = a2[2] - b2[2];
+    out[3] = a2[3] - b2[3];
+    out[4] = a2[4] - b2[4];
+    out[5] = a2[5] - b2[5];
     return out;
   }
-  function multiplyScalar(out, a3, b3) {
-    out[0] = a3[0] * b3;
-    out[1] = a3[1] * b3;
-    out[2] = a3[2] * b3;
-    out[3] = a3[3] * b3;
-    out[4] = a3[4] * b3;
-    out[5] = a3[5] * b3;
+  function multiplyScalar(out, a2, b2) {
+    out[0] = a2[0] * b2;
+    out[1] = a2[1] * b2;
+    out[2] = a2[2] * b2;
+    out[3] = a2[3] * b2;
+    out[4] = a2[4] * b2;
+    out[5] = a2[5] * b2;
     return out;
   }
-  function multiplyScalarAndAdd(out, a3, b3, scale3) {
-    out[0] = a3[0] + b3[0] * scale3;
-    out[1] = a3[1] + b3[1] * scale3;
-    out[2] = a3[2] + b3[2] * scale3;
-    out[3] = a3[3] + b3[3] * scale3;
-    out[4] = a3[4] + b3[4] * scale3;
-    out[5] = a3[5] + b3[5] * scale3;
+  function multiplyScalarAndAdd(out, a2, b2, scale3) {
+    out[0] = a2[0] + b2[0] * scale3;
+    out[1] = a2[1] + b2[1] * scale3;
+    out[2] = a2[2] + b2[2] * scale3;
+    out[3] = a2[3] + b2[3] * scale3;
+    out[4] = a2[4] + b2[4] * scale3;
+    out[5] = a2[5] + b2[5] * scale3;
     return out;
   }
-  function exactEquals(a3, b3) {
-    return a3[0] === b3[0] && a3[1] === b3[1] && a3[2] === b3[2] && a3[3] === b3[3] && a3[4] === b3[4] && a3[5] === b3[5];
+  function exactEquals(a2, b2) {
+    return a2[0] === b2[0] && a2[1] === b2[1] && a2[2] === b2[2] && a2[3] === b2[3] && a2[4] === b2[4] && a2[5] === b2[5];
   }
-  function equals(a3, b3) {
-    var a0 = a3[0], a1 = a3[1], a22 = a3[2], a32 = a3[3], a4 = a3[4], a5 = a3[5];
-    var b0 = b3[0], b1 = b3[1], b22 = b3[2], b32 = b3[3], b4 = b3[4], b5 = b3[5];
-    return Math.abs(a0 - b0) <= EPSILON * Math.max(1, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= EPSILON * Math.max(1, Math.abs(a1), Math.abs(b1)) && Math.abs(a22 - b22) <= EPSILON * Math.max(1, Math.abs(a22), Math.abs(b22)) && Math.abs(a32 - b32) <= EPSILON * Math.max(1, Math.abs(a32), Math.abs(b32)) && Math.abs(a4 - b4) <= EPSILON * Math.max(1, Math.abs(a4), Math.abs(b4)) && Math.abs(a5 - b5) <= EPSILON * Math.max(1, Math.abs(a5), Math.abs(b5));
+  function equals(a2, b2) {
+    var a0 = a2[0], a1 = a2[1], a22 = a2[2], a3 = a2[3], a4 = a2[4], a5 = a2[5];
+    var b0 = b2[0], b1 = b2[1], b22 = b2[2], b3 = b2[3], b4 = b2[4], b5 = b2[5];
+    return Math.abs(a0 - b0) <= EPSILON * Math.max(1, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= EPSILON * Math.max(1, Math.abs(a1), Math.abs(b1)) && Math.abs(a22 - b22) <= EPSILON * Math.max(1, Math.abs(a22), Math.abs(b22)) && Math.abs(a3 - b3) <= EPSILON * Math.max(1, Math.abs(a3), Math.abs(b3)) && Math.abs(a4 - b4) <= EPSILON * Math.max(1, Math.abs(a4), Math.abs(b4)) && Math.abs(a5 - b5) <= EPSILON * Math.max(1, Math.abs(a5), Math.abs(b5));
   }
   var mul = multiply;
   var sub = subtract;
@@ -70840,10 +70853,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return out;
   }
-  function clone2(a3) {
+  function clone2(a2) {
     var out = new ARRAY_TYPE(2);
-    out[0] = a3[0];
-    out[1] = a3[1];
+    out[0] = a2[0];
+    out[1] = a2[1];
     return out;
   }
   function fromValues2(x2, y3) {
@@ -70852,9 +70865,9 @@ If there's a particular need for this, please submit a feature request at https:
     out[1] = y3;
     return out;
   }
-  function copy2(out, a3) {
-    out[0] = a3[0];
-    out[1] = a3[1];
+  function copy2(out, a2) {
+    out[0] = a2[0];
+    out[1] = a2[1];
     return out;
   }
   function set4(out, x2, y3) {
@@ -70862,156 +70875,156 @@ If there's a particular need for this, please submit a feature request at https:
     out[1] = y3;
     return out;
   }
-  function add2(out, a3, b3) {
-    out[0] = a3[0] + b3[0];
-    out[1] = a3[1] + b3[1];
+  function add2(out, a2, b2) {
+    out[0] = a2[0] + b2[0];
+    out[1] = a2[1] + b2[1];
     return out;
   }
-  function subtract2(out, a3, b3) {
-    out[0] = a3[0] - b3[0];
-    out[1] = a3[1] - b3[1];
+  function subtract2(out, a2, b2) {
+    out[0] = a2[0] - b2[0];
+    out[1] = a2[1] - b2[1];
     return out;
   }
-  function multiply2(out, a3, b3) {
-    out[0] = a3[0] * b3[0];
-    out[1] = a3[1] * b3[1];
+  function multiply2(out, a2, b2) {
+    out[0] = a2[0] * b2[0];
+    out[1] = a2[1] * b2[1];
     return out;
   }
-  function divide(out, a3, b3) {
-    out[0] = a3[0] / b3[0];
-    out[1] = a3[1] / b3[1];
+  function divide(out, a2, b2) {
+    out[0] = a2[0] / b2[0];
+    out[1] = a2[1] / b2[1];
     return out;
   }
-  function ceil(out, a3) {
-    out[0] = Math.ceil(a3[0]);
-    out[1] = Math.ceil(a3[1]);
+  function ceil(out, a2) {
+    out[0] = Math.ceil(a2[0]);
+    out[1] = Math.ceil(a2[1]);
     return out;
   }
-  function floor2(out, a3) {
-    out[0] = Math.floor(a3[0]);
-    out[1] = Math.floor(a3[1]);
+  function floor2(out, a2) {
+    out[0] = Math.floor(a2[0]);
+    out[1] = Math.floor(a2[1]);
     return out;
   }
-  function min3(out, a3, b3) {
-    out[0] = Math.min(a3[0], b3[0]);
-    out[1] = Math.min(a3[1], b3[1]);
+  function min3(out, a2, b2) {
+    out[0] = Math.min(a2[0], b2[0]);
+    out[1] = Math.min(a2[1], b2[1]);
     return out;
   }
-  function max3(out, a3, b3) {
-    out[0] = Math.max(a3[0], b3[0]);
-    out[1] = Math.max(a3[1], b3[1]);
+  function max3(out, a2, b2) {
+    out[0] = Math.max(a2[0], b2[0]);
+    out[1] = Math.max(a2[1], b2[1]);
     return out;
   }
-  function round3(out, a3) {
-    out[0] = round2(a3[0]);
-    out[1] = round2(a3[1]);
+  function round3(out, a2) {
+    out[0] = round2(a2[0]);
+    out[1] = round2(a2[1]);
     return out;
   }
-  function scale2(out, a3, b3) {
-    out[0] = a3[0] * b3;
-    out[1] = a3[1] * b3;
+  function scale2(out, a2, b2) {
+    out[0] = a2[0] * b2;
+    out[1] = a2[1] * b2;
     return out;
   }
-  function scaleAndAdd(out, a3, b3, scale3) {
-    out[0] = a3[0] + b3[0] * scale3;
-    out[1] = a3[1] + b3[1] * scale3;
+  function scaleAndAdd(out, a2, b2, scale3) {
+    out[0] = a2[0] + b2[0] * scale3;
+    out[1] = a2[1] + b2[1] * scale3;
     return out;
   }
-  function distance(a3, b3) {
-    var x2 = b3[0] - a3[0], y3 = b3[1] - a3[1];
+  function distance(a2, b2) {
+    var x2 = b2[0] - a2[0], y3 = b2[1] - a2[1];
     return Math.sqrt(x2 * x2 + y3 * y3);
   }
-  function squaredDistance(a3, b3) {
-    var x2 = b3[0] - a3[0], y3 = b3[1] - a3[1];
+  function squaredDistance(a2, b2) {
+    var x2 = b2[0] - a2[0], y3 = b2[1] - a2[1];
     return x2 * x2 + y3 * y3;
   }
-  function length(a3) {
-    var x2 = a3[0], y3 = a3[1];
+  function length(a2) {
+    var x2 = a2[0], y3 = a2[1];
     return Math.sqrt(x2 * x2 + y3 * y3);
   }
-  function squaredLength(a3) {
-    var x2 = a3[0], y3 = a3[1];
+  function squaredLength(a2) {
+    var x2 = a2[0], y3 = a2[1];
     return x2 * x2 + y3 * y3;
   }
-  function negate(out, a3) {
-    out[0] = -a3[0];
-    out[1] = -a3[1];
+  function negate(out, a2) {
+    out[0] = -a2[0];
+    out[1] = -a2[1];
     return out;
   }
-  function inverse(out, a3) {
-    out[0] = 1 / a3[0];
-    out[1] = 1 / a3[1];
+  function inverse(out, a2) {
+    out[0] = 1 / a2[0];
+    out[1] = 1 / a2[1];
     return out;
   }
-  function normalize(out, a3) {
-    var x2 = a3[0], y3 = a3[1];
+  function normalize(out, a2) {
+    var x2 = a2[0], y3 = a2[1];
     var len2 = x2 * x2 + y3 * y3;
     if (len2 > 0) {
       len2 = 1 / Math.sqrt(len2);
     }
-    out[0] = a3[0] * len2;
-    out[1] = a3[1] * len2;
+    out[0] = a2[0] * len2;
+    out[1] = a2[1] * len2;
     return out;
   }
-  function dot(a3, b3) {
-    return a3[0] * b3[0] + a3[1] * b3[1];
+  function dot(a2, b2) {
+    return a2[0] * b2[0] + a2[1] * b2[1];
   }
-  function cross(out, a3, b3) {
-    var z = a3[0] * b3[1] - a3[1] * b3[0];
+  function cross(out, a2, b2) {
+    var z = a2[0] * b2[1] - a2[1] * b2[0];
     out[0] = out[1] = 0;
     out[2] = z;
     return out;
   }
-  function lerp(out, a3, b3, t4) {
-    var ax = a3[0], ay = a3[1];
-    out[0] = ax + t4 * (b3[0] - ax);
-    out[1] = ay + t4 * (b3[1] - ay);
+  function lerp(out, a2, b2, t3) {
+    var ax = a2[0], ay = a2[1];
+    out[0] = ax + t3 * (b2[0] - ax);
+    out[1] = ay + t3 * (b2[1] - ay);
     return out;
   }
   function random(out, scale3) {
     scale3 = scale3 === void 0 ? 1 : scale3;
-    var r5 = RANDOM() * 2 * Math.PI;
-    out[0] = Math.cos(r5) * scale3;
-    out[1] = Math.sin(r5) * scale3;
+    var r4 = RANDOM() * 2 * Math.PI;
+    out[0] = Math.cos(r4) * scale3;
+    out[1] = Math.sin(r4) * scale3;
     return out;
   }
-  function transformMat2(out, a3, m2) {
-    var x2 = a3[0], y3 = a3[1];
+  function transformMat2(out, a2, m2) {
+    var x2 = a2[0], y3 = a2[1];
     out[0] = m2[0] * x2 + m2[2] * y3;
     out[1] = m2[1] * x2 + m2[3] * y3;
     return out;
   }
-  function transformMat2d(out, a3, m2) {
-    var x2 = a3[0], y3 = a3[1];
+  function transformMat2d(out, a2, m2) {
+    var x2 = a2[0], y3 = a2[1];
     out[0] = m2[0] * x2 + m2[2] * y3 + m2[4];
     out[1] = m2[1] * x2 + m2[3] * y3 + m2[5];
     return out;
   }
-  function transformMat3(out, a3, m2) {
-    var x2 = a3[0], y3 = a3[1];
+  function transformMat3(out, a2, m2) {
+    var x2 = a2[0], y3 = a2[1];
     out[0] = m2[0] * x2 + m2[3] * y3 + m2[6];
     out[1] = m2[1] * x2 + m2[4] * y3 + m2[7];
     return out;
   }
-  function transformMat4(out, a3, m2) {
-    var x2 = a3[0];
-    var y3 = a3[1];
+  function transformMat4(out, a2, m2) {
+    var x2 = a2[0];
+    var y3 = a2[1];
     out[0] = m2[0] * x2 + m2[4] * y3 + m2[12];
     out[1] = m2[1] * x2 + m2[5] * y3 + m2[13];
     return out;
   }
-  function rotate2(out, a3, b3, rad) {
-    var p0 = a3[0] - b3[0], p1 = a3[1] - b3[1], sinC = Math.sin(rad), cosC = Math.cos(rad);
-    out[0] = p0 * cosC - p1 * sinC + b3[0];
-    out[1] = p0 * sinC + p1 * cosC + b3[1];
+  function rotate2(out, a2, b2, rad) {
+    var p0 = a2[0] - b2[0], p1 = a2[1] - b2[1], sinC = Math.sin(rad), cosC = Math.cos(rad);
+    out[0] = p0 * cosC - p1 * sinC + b2[0];
+    out[1] = p0 * sinC + p1 * cosC + b2[1];
     return out;
   }
-  function angle(a3, b3) {
-    var ax = a3[0], ay = a3[1], bx = b3[0], by = b3[1];
+  function angle(a2, b2) {
+    var ax = a2[0], ay = a2[1], bx = b2[0], by = b2[1];
     return Math.abs(Math.atan2(ay * bx - ax * by, ax * bx + ay * by));
   }
-  function signedAngle(a3, b3) {
-    var ax = a3[0], ay = a3[1], bx = b3[0], by = b3[1];
+  function signedAngle(a2, b2) {
+    var ax = a2[0], ay = a2[1], bx = b2[0], by = b2[1];
     return Math.atan2(ax * by - ay * bx, ax * bx + ay * by);
   }
   function zero(out) {
@@ -71019,15 +71032,15 @@ If there's a particular need for this, please submit a feature request at https:
     out[1] = 0;
     return out;
   }
-  function str2(a3) {
-    return "vec2(" + a3[0] + ", " + a3[1] + ")";
+  function str2(a2) {
+    return "vec2(" + a2[0] + ", " + a2[1] + ")";
   }
-  function exactEquals2(a3, b3) {
-    return a3[0] === b3[0] && a3[1] === b3[1];
+  function exactEquals2(a2, b2) {
+    return a2[0] === b2[0] && a2[1] === b2[1];
   }
-  function equals2(a3, b3) {
-    var a0 = a3[0], a1 = a3[1];
-    var b0 = b3[0], b1 = b3[1];
+  function equals2(a2, b2) {
+    var a0 = a2[0], a1 = a2[1];
+    var b0 = b2[0], b1 = b2[1];
     return Math.abs(a0 - b0) <= EPSILON * Math.max(1, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= EPSILON * Math.max(1, Math.abs(a1), Math.abs(b1));
   }
   var len = length;
@@ -71039,8 +71052,8 @@ If there's a particular need for this, please submit a feature request at https:
   var sqrLen = squaredLength;
   var forEach = (function() {
     var vec = create2();
-    return function(a3, stride, offset4, count, fn, arg) {
-      var i3, l3;
+    return function(a2, stride, offset4, count, fn, arg) {
+      var i2, l3;
       if (!stride) {
         stride = 2;
       }
@@ -71048,18 +71061,18 @@ If there's a particular need for this, please submit a feature request at https:
         offset4 = 0;
       }
       if (count) {
-        l3 = Math.min(count * stride + offset4, a3.length);
+        l3 = Math.min(count * stride + offset4, a2.length);
       } else {
-        l3 = a3.length;
+        l3 = a2.length;
       }
-      for (i3 = offset4; i3 < l3; i3 += stride) {
-        vec[0] = a3[i3];
-        vec[1] = a3[i3 + 1];
+      for (i2 = offset4; i2 < l3; i2 += stride) {
+        vec[0] = a2[i2];
+        vec[1] = a2[i2 + 1];
         fn(vec, vec, arg);
-        a3[i3] = vec[0];
-        a3[i3 + 1] = vec[1];
+        a2[i2] = vec[0];
+        a2[i2 + 1] = vec[1];
       }
-      return a3;
+      return a2;
     };
   })();
 
@@ -71242,19 +71255,19 @@ If there's a particular need for this, please submit a feature request at https:
     let maxX = screenCorners[0][0];
     let minY = screenCorners[0][1];
     let maxY = screenCorners[0][1];
-    for (let i3 = 1; i3 < screenCorners.length; i3++) {
-      const s3 = screenCorners[i3];
-      if (s3[0] < minX) {
-        minX = s3[0];
+    for (let i2 = 1; i2 < screenCorners.length; i2++) {
+      const s2 = screenCorners[i2];
+      if (s2[0] < minX) {
+        minX = s2[0];
       }
-      if (s3[0] > maxX) {
-        maxX = s3[0];
+      if (s2[0] > maxX) {
+        maxX = s2[0];
       }
-      if (s3[1] < minY) {
-        minY = s3[1];
+      if (s2[1] < minY) {
+        minY = s2[1];
       }
-      if (s3[1] > maxY) {
-        maxY = s3[1];
+      if (s2[1] > maxY) {
+        maxY = s2[1];
       }
     }
     return { left: minX, top: minY, width: maxX - minX, height: maxY - minY };
@@ -71482,18 +71495,18 @@ If there's a particular need for this, please submit a feature request at https:
     const spanBeta = cropWPx * absS + cropHPx * absC;
     const limitAlpha = aspectRatio * safeZoom;
     const limitBeta = safeZoom;
-    let t4 = 1;
+    let t3 = 1;
     if (spanAlpha > 0) {
-      t4 = Math.min(t4, limitAlpha / spanAlpha);
+      t3 = Math.min(t3, limitAlpha / spanAlpha);
     }
     if (spanBeta > 0) {
-      t4 = Math.min(t4, limitBeta / spanBeta);
+      t3 = Math.min(t3, limitBeta / spanBeta);
     }
-    if (t4 >= 1 - EPSILON2) {
+    if (t3 >= 1 - EPSILON2) {
       return safeRect;
     }
-    const newW = W * t4;
-    const newH = H2 * t4;
+    const newW = W * t3;
+    const newH = H2 * t3;
     const centerX = safeRect.x + W / 2;
     const centerY = safeRect.y + H2 / 2;
     let newX = centerX - newW / 2;
@@ -71602,13 +71615,13 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-editor/build-module/image-editor/core/state.mjs
   var STATE_EPSILON = 1e-6;
-  function nearlyEqual(a3, b3) {
-    return Math.abs(a3 - b3) < STATE_EPSILON;
+  function nearlyEqual(a2, b2) {
+    return Math.abs(a2 - b2) < STATE_EPSILON;
   }
-  function areCropperStatesEqual(a3, b3) {
-    const aImage = a3.image;
-    const bImage = b3.image;
-    return aImage?.src === bImage?.src && aImage?.naturalWidth === bImage?.naturalWidth && aImage?.naturalHeight === bImage?.naturalHeight && nearlyEqual(a3.pan.x, b3.pan.x) && nearlyEqual(a3.pan.y, b3.pan.y) && nearlyEqual(a3.zoom, b3.zoom) && nearlyEqual(a3.rotation, b3.rotation) && a3.flip.horizontal === b3.flip.horizontal && a3.flip.vertical === b3.flip.vertical && nearlyEqual(a3.cropRect.x, b3.cropRect.x) && nearlyEqual(a3.cropRect.y, b3.cropRect.y) && nearlyEqual(a3.cropRect.width, b3.cropRect.width) && nearlyEqual(a3.cropRect.height, b3.cropRect.height);
+  function areCropperStatesEqual(a2, b2) {
+    const aImage = a2.image;
+    const bImage = b2.image;
+    return aImage?.src === bImage?.src && aImage?.naturalWidth === bImage?.naturalWidth && aImage?.naturalHeight === bImage?.naturalHeight && nearlyEqual(a2.pan.x, b2.pan.x) && nearlyEqual(a2.pan.y, b2.pan.y) && nearlyEqual(a2.zoom, b2.zoom) && nearlyEqual(a2.rotation, b2.rotation) && a2.flip.horizontal === b2.flip.horizontal && a2.flip.vertical === b2.flip.vertical && nearlyEqual(a2.cropRect.x, b2.cropRect.x) && nearlyEqual(a2.cropRect.y, b2.cropRect.y) && nearlyEqual(a2.cropRect.width, b2.cropRect.width) && nearlyEqual(a2.cropRect.height, b2.cropRect.height);
   }
   function clampRequestedZoom(state2, zoom) {
     if (state2.image) {
@@ -71805,18 +71818,18 @@ If there's a particular need for this, please submit a feature request at https:
         }
         const fitScale = 1 / Math.max(rect.width, rect.height);
         const zoomCap = state2.zoom > 0 ? MAX_ZOOM / state2.zoom : fitScale;
-        const s3 = Math.min(fitScale, zoomCap);
-        const newW = rect.width * s3;
-        const newH = rect.height * s3;
+        const s2 = Math.min(fitScale, zoomCap);
+        const newW = rect.width * s2;
+        const newH = rect.height * s2;
         const oldCx = rect.x + rect.width / 2;
         const oldCy = rect.y + rect.height / 2;
         return commitBase(
           enforceContainment({
             ...state2,
-            zoom: state2.zoom * s3,
+            zoom: state2.zoom * s2,
             pan: {
-              x: (state2.pan.x - oldCx + 0.5) * s3,
-              y: (state2.pan.y - oldCy + 0.5) * s3
+              x: (state2.pan.x - oldCx + 0.5) * s2,
+              y: (state2.pan.y - oldCy + 0.5) * s2
             },
             cropRect: {
               x: (1 - newW) / 2,
@@ -71926,20 +71939,20 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-editor/build-module/image-editor/core/crop-rect.mjs
   function computeInscribedRect(aspectRatio, visualSize) {
     let w3 = 1;
-    let h3 = 1;
+    let h2 = 1;
     if (aspectRatio && aspectRatio > 0 && visualSize.width > 0) {
       const normalizedRatio = aspectRatio * visualSize.height / visualSize.width;
       if (normalizedRatio <= 1) {
         w3 = normalizedRatio;
       } else {
-        h3 = 1 / normalizedRatio;
+        h2 = 1 / normalizedRatio;
       }
     }
     return {
       x: (1 - w3) / 2,
-      y: (1 - h3) / 2,
+      y: (1 - h2) / 2,
       width: w3,
-      height: h3
+      height: h2
     };
   }
 
@@ -71954,34 +71967,34 @@ If there's a particular need for this, please submit a feature request at https:
   function computeFreeResizeRect(drag2, clientX, clientY, imageSize, bounds, minCropSize = DEFAULT_MIN_CROP_SIZE) {
     const dx = imageSize.width > 0 ? (clientX - drag2.startX) / imageSize.width : 0;
     const dy = imageSize.height > 0 ? (clientY - drag2.startY) / imageSize.height : 0;
-    const s3 = drag2.startRect;
+    const s2 = drag2.startRect;
     const handle = drag2.handle;
-    let edgeTop = s3.y;
-    let edgeBottom = s3.y + s3.height;
-    let edgeLeft = s3.x;
-    let edgeRight = s3.x + s3.width;
+    let edgeTop = s2.y;
+    let edgeBottom = s2.y + s2.height;
+    let edgeLeft = s2.x;
+    let edgeRight = s2.x + s2.width;
     if (handle === "n" || handle === "nw" || handle === "ne") {
       edgeTop = Math.max(
         bounds.minY,
-        Math.min(s3.y + dy, edgeBottom - minCropSize.height)
+        Math.min(s2.y + dy, edgeBottom - minCropSize.height)
       );
     }
     if (handle === "s" || handle === "sw" || handle === "se") {
       edgeBottom = Math.max(
         edgeTop + minCropSize.height,
-        Math.min(s3.y + s3.height + dy, bounds.maxY)
+        Math.min(s2.y + s2.height + dy, bounds.maxY)
       );
     }
     if (handle === "w" || handle === "nw" || handle === "sw") {
       edgeLeft = Math.max(
         bounds.minX,
-        Math.min(s3.x + dx, edgeRight - minCropSize.width)
+        Math.min(s2.x + dx, edgeRight - minCropSize.width)
       );
     }
     if (handle === "e" || handle === "ne" || handle === "se") {
       edgeRight = Math.max(
         edgeLeft + minCropSize.width,
-        Math.min(s3.x + s3.width + dx, bounds.maxX)
+        Math.min(s2.x + s2.width + dx, bounds.maxX)
       );
     }
     return {
@@ -71997,14 +72010,14 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const dx = (clientX - drag2.startX) / imageSize.width;
     const dy = (clientY - drag2.startY) / imageSize.height;
-    const s3 = drag2.startRect;
+    const s2 = drag2.startRect;
     const handle = drag2.handle;
-    const anchorX = handle === "nw" || handle === "sw" ? s3.x + s3.width : s3.x;
-    const anchorY = handle === "nw" || handle === "ne" ? s3.y + s3.height : s3.y;
+    const anchorX = handle === "nw" || handle === "sw" ? s2.x + s2.width : s2.x;
+    const anchorY = handle === "nw" || handle === "ne" ? s2.y + s2.height : s2.y;
     const dirX = handle === "nw" || handle === "sw" ? -1 : 1;
     const dirY = handle === "nw" || handle === "ne" ? -1 : 1;
-    const draggedX = (handle === "nw" || handle === "sw" ? s3.x : s3.x + s3.width) + dx;
-    const draggedY = (handle === "nw" || handle === "ne" ? s3.y : s3.y + s3.height) + dy;
+    const draggedX = (handle === "nw" || handle === "sw" ? s2.x : s2.x + s2.width) + dx;
+    const draggedY = (handle === "nw" || handle === "ne" ? s2.y : s2.y + s2.height) + dy;
     let distW = (draggedX - anchorX) * dirX;
     let distH = (draggedY - anchorY) * dirY;
     const minDistW = Math.max(
@@ -72038,9 +72051,9 @@ If there's a particular need for this, please submit a feature request at https:
     return { x: newX, y: newY, width: distW, height: distH };
   }
   function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds, minCropSize = DEFAULT_MIN_CROP_SIZE) {
-    const s3 = drag2.startRect;
-    const pixelW = s3.width * imageSize.width;
-    const pixelH = s3.height * imageSize.height;
+    const s2 = drag2.startRect;
+    const pixelW = s2.width * imageSize.width;
+    const pixelH = s2.height * imageSize.height;
     if (pixelH <= 0 || pixelW <= 0) {
       return computeFreeResizeRect(
         drag2,
@@ -72051,7 +72064,7 @@ If there's a particular need for this, please submit a feature request at https:
         minCropSize
       );
     }
-    const normalizedRatio = s3.width / s3.height;
+    const normalizedRatio = s2.width / s2.height;
     const handle = drag2.handle;
     if (handle === "nw" || handle === "ne" || handle === "sw" || handle === "se") {
       return computeLockedResizeRect(
@@ -72075,7 +72088,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (handle === "n" || handle === "s") {
       let newHeight2 = free.height;
       let newWidth2 = newHeight2 * normalizedRatio;
-      const centerX = s3.x + s3.width / 2;
+      const centerX = s2.x + s2.width / 2;
       const maxWidth = Math.min(centerX - bounds.minX, bounds.maxX - centerX) * 2;
       if (newWidth2 > maxWidth) {
         newWidth2 = maxWidth;
@@ -72089,7 +72102,7 @@ If there's a particular need for this, please submit a feature request at https:
         newHeight2 = minHeight;
         newWidth2 = newHeight2 * normalizedRatio;
       }
-      const newY = handle === "n" ? s3.y + s3.height - newHeight2 : s3.y;
+      const newY = handle === "n" ? s2.y + s2.height - newHeight2 : s2.y;
       return {
         x: centerX - newWidth2 / 2,
         y: newY,
@@ -72099,7 +72112,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     let newWidth = free.width;
     let newHeight = newWidth / normalizedRatio;
-    const centerY = s3.y + s3.height / 2;
+    const centerY = s2.y + s2.height / 2;
     const maxHeight = Math.min(centerY - bounds.minY, bounds.maxY - centerY) * 2;
     if (newHeight > maxHeight) {
       newHeight = maxHeight;
@@ -72113,7 +72126,7 @@ If there's a particular need for this, please submit a feature request at https:
       newWidth = minWidth;
       newHeight = newWidth / normalizedRatio;
     }
-    const newX = handle === "w" ? s3.x + s3.width - newWidth : s3.x;
+    const newX = handle === "w" ? s2.x + s2.width - newWidth : s2.x;
     return {
       x: newX,
       y: centerY - newHeight / 2,
@@ -72229,26 +72242,26 @@ If there's a particular need for this, please submit a feature request at https:
      * @param e  The native PointerEvent.
      * @param el The DOM element to capture the pointer on.
      */
-    handlePointerDown(e3, el) {
-      if (e3.button !== 0) {
+    handlePointerDown(e2, el) {
+      if (e2.button !== 0) {
         return;
       }
-      if (e3.pointerType === "touch") {
+      if (e2.pointerType === "touch") {
         return;
       }
-      e3.preventDefault();
+      e2.preventDefault();
       const ownerDoc = el.ownerDocument;
       if (ownerDoc?.activeElement instanceof HTMLElement && ownerDoc.activeElement !== el) {
         ownerDoc.activeElement.blur();
       }
       el.focus();
-      el.setPointerCapture(e3.pointerId);
+      el.setPointerCapture(e2.pointerId);
       this.setStatus({ isDragging: true });
       this.options.onGestureStart?.();
       const currentState = this.options.getState();
       this.drag = {
-        startX: e3.clientX,
-        startY: e3.clientY,
+        startX: e2.clientX,
+        startY: e2.clientY,
         startPanX: currentState.pan.x,
         startPanY: currentState.pan.y
       };
@@ -72260,7 +72273,7 @@ If there's a particular need for this, please submit a feature request at https:
         const pe = moveEvent;
         cancelAnimationFrame(this.rafId);
         this.rafId = requestAnimationFrame(() => {
-          const s3 = this.options.getState();
+          const s2 = this.options.getState();
           const imgSize = this.options.getImageSize();
           const containerSize = this.options.getContainerSize();
           const panSize = imgSize ?? containerSize;
@@ -72268,14 +72281,14 @@ If there's a particular need for this, please submit a feature request at https:
           const deltaY = panSize.height > 0 ? (pe.clientY - drag2.startY) / panSize.height : 0;
           const { pan: newCrop } = restrictPanZoom(
             {
-              ...s3,
+              ...s2,
               pan: {
                 x: drag2.startPanX + deltaX,
                 y: drag2.startPanY + deltaY
               }
             },
-            getImageSizeFromState(s3),
-            s3.cropRect
+            getImageSizeFromState(s2),
+            s2.cropRect
           );
           this.options.actions.setPan(newCrop);
         });
@@ -72308,8 +72321,8 @@ If there's a particular need for this, please submit a feature request at https:
      *
      * @param e The native WheelEvent.
      */
-    handleWheel(e3) {
-      e3.preventDefault();
+    handleWheel(e2) {
+      e2.preventDefault();
       if (this.drag) {
         return;
       }
@@ -72322,32 +72335,32 @@ If there's a particular need for this, please submit a feature request at https:
         this.wheelGestureActive = false;
         this.options.onGestureEnd?.();
       }, DOUBLE_TAP_TIME);
-      const s3 = this.options.getState();
-      const delta = -e3.deltaY * this.zoomSpeed;
+      const s2 = this.options.getState();
+      const delta = -e2.deltaY * this.zoomSpeed;
       const newZoom = Math.min(
         this.maxZoom,
-        Math.max(this.minZoom, s3.zoom + delta)
+        Math.max(this.minZoom, s2.zoom + delta)
       );
-      if (newZoom === s3.zoom) {
+      if (newZoom === s2.zoom) {
         return;
       }
       const containerSize = this.options.getContainerSize();
       const imgSize = this.options.getImageSize();
       const visSize = imgSize ?? containerSize;
-      const target = e3.currentTarget;
+      const target = e2.currentTarget;
       const rect = target instanceof Element ? target.getBoundingClientRect() : void 0;
       if (visSize.width > 0 && visSize.height > 0 && rect) {
-        const fx = e3.clientX - rect.left - containerSize.width / 2;
-        const fy = e3.clientY - rect.top - containerSize.height / 2;
-        const zoomRatio = 1 - newZoom / s3.zoom;
+        const fx = e2.clientX - rect.left - containerSize.width / 2;
+        const fy = e2.clientY - rect.top - containerSize.height / 2;
+        const zoomRatio = 1 - newZoom / s2.zoom;
         const focalNormX = fx / visSize.width;
         const focalNormY = fy / visSize.height;
-        const newCropX = s3.pan.x + (focalNormX - s3.pan.x) * zoomRatio;
-        const newCropY = s3.pan.y + (focalNormY - s3.pan.y) * zoomRatio;
+        const newCropX = s2.pan.x + (focalNormX - s2.pan.x) * zoomRatio;
+        const newCropY = s2.pan.y + (focalNormY - s2.pan.y) * zoomRatio;
         const { pan: clampedCrop } = restrictPanZoom(
-          { ...s3, zoom: newZoom, pan: { x: newCropX, y: newCropY } },
-          getImageSizeFromState(s3),
-          s3.cropRect
+          { ...s2, zoom: newZoom, pan: { x: newCropX, y: newCropY } },
+          getImageSizeFromState(s2),
+          s2.cropRect
         );
         this.options.actions.setZoomAtPoint(newZoom, clampedCrop);
       } else {
@@ -72368,35 +72381,35 @@ If there's a particular need for this, please submit a feature request at https:
      *                      Defaults to globalThis.document. Pass the iframe's
      *                      contentDocument when running inside an iframe.
      */
-    handleTouchStart(e3, containerRect, doc = document) {
-      if (this.touch && e3.touches.length === 2) {
-        const s3 = this.options.getState();
-        const distance2 = getTouchDistance(e3.touches[0], e3.touches[1]);
-        const midX = (e3.touches[0].clientX + e3.touches[1].clientX) / 2;
-        const midY = (e3.touches[0].clientY + e3.touches[1].clientY) / 2;
+    handleTouchStart(e2, containerRect, doc = document) {
+      if (this.touch && e2.touches.length === 2) {
+        const s2 = this.options.getState();
+        const distance2 = getTouchDistance(e2.touches[0], e2.touches[1]);
+        const midX = (e2.touches[0].clientX + e2.touches[1].clientX) / 2;
+        const midY = (e2.touches[0].clientY + e2.touches[1].clientY) / 2;
         this.touch.didPinch = true;
         this.touch.startDistance = distance2;
-        this.touch.startZoom = s3.zoom;
-        this.touch.startPanX = s3.pan.x;
-        this.touch.startPanY = s3.pan.y;
+        this.touch.startZoom = s2.zoom;
+        this.touch.startPanX = s2.pan.x;
+        this.touch.startPanY = s2.pan.y;
         this.touch.startMidX = midX;
         this.touch.startMidY = midY;
         this.touch.containerRect = containerRect;
         this.setStatus({ isDragging: false });
         return;
       }
-      if (e3.touches.length === 1) {
-        const tapX = e3.touches[0].clientX;
-        const tapY = e3.touches[0].clientY;
-        if (this.tryDoubleTap(e3, tapX, tapY, containerRect)) {
+      if (e2.touches.length === 1) {
+        const tapX = e2.touches[0].clientX;
+        const tapY = e2.touches[0].clientY;
+        if (this.tryDoubleTap(e2, tapX, tapY, containerRect)) {
           return;
         }
         const currentState = this.options.getState();
         this.touch = {
           startDistance: 0,
           startZoom: currentState.zoom,
-          lastTouchX: e3.touches[0].clientX,
-          lastTouchY: e3.touches[0].clientY,
+          lastTouchX: e2.touches[0].clientX,
+          lastTouchY: e2.touches[0].clientY,
           startPanX: currentState.pan.x,
           startPanY: currentState.pan.y,
           containerRect,
@@ -72406,11 +72419,11 @@ If there's a particular need for this, please submit a feature request at https:
           moved: false
         };
         this.options.onGestureStart?.();
-      } else if (e3.touches.length === 2) {
+      } else if (e2.touches.length === 2) {
         const currentState = this.options.getState();
-        const distance2 = getTouchDistance(e3.touches[0], e3.touches[1]);
-        const midX = (e3.touches[0].clientX + e3.touches[1].clientX) / 2;
-        const midY = (e3.touches[0].clientY + e3.touches[1].clientY) / 2;
+        const distance2 = getTouchDistance(e2.touches[0], e2.touches[1]);
+        const midX = (e2.touches[0].clientX + e2.touches[1].clientX) / 2;
+        const midY = (e2.touches[0].clientY + e2.touches[1].clientY) / 2;
         this.touch = {
           startDistance: distance2,
           startZoom: currentState.zoom,
@@ -72457,7 +72470,7 @@ If there's a particular need for this, please submit a feature request at https:
       moveEvent.preventDefault();
       cancelAnimationFrame(this.rafId);
       this.rafId = requestAnimationFrame(() => {
-        const s3 = this.options.getState();
+        const s2 = this.options.getState();
         if (moveEvent.touches.length === 2) {
           if (!touch.didPinch) {
             touch.didPinch = true;
@@ -72465,9 +72478,9 @@ If there's a particular need for this, please submit a feature request at https:
               moveEvent.touches[0],
               moveEvent.touches[1]
             );
-            touch.startZoom = s3.zoom;
-            touch.startPanX = s3.pan.x;
-            touch.startPanY = s3.pan.y;
+            touch.startZoom = s2.zoom;
+            touch.startPanX = s2.pan.x;
+            touch.startPanY = s2.pan.y;
             touch.startMidX = (moveEvent.touches[0].clientX + moveEvent.touches[1].clientX) / 2;
             touch.startMidY = (moveEvent.touches[0].clientY + moveEvent.touches[1].clientY) / 2;
             this.setStatus({ isDragging: false });
@@ -72499,15 +72512,15 @@ If there's a particular need for this, please submit a feature request at https:
             const newCropY = touch.startPanY + panDy + (startFocalNormY - touch.startPanY) * zoomRatio;
             const { pan: clampedCrop } = restrictPanZoom(
               {
-                ...s3,
+                ...s2,
                 zoom: newZoom,
                 pan: { x: newCropX, y: newCropY }
               },
-              getImageSizeFromState(s3),
-              s3.cropRect
+              getImageSizeFromState(s2),
+              s2.cropRect
             );
             this.options.actions.setZoomAtPoint(newZoom, clampedCrop);
-          } else if (newZoom !== s3.zoom) {
+          } else if (newZoom !== s2.zoom) {
             this.options.actions.setZoom(newZoom);
           }
         } else if (moveEvent.touches.length === 1 && !touch.didPinch) {
@@ -72522,14 +72535,14 @@ If there's a particular need for this, please submit a feature request at https:
           const deltaY = panSize.height > 0 ? (moveEvent.touches[0].clientY - touch.lastTouchY) / panSize.height : 0;
           const { pan: newCrop } = restrictPanZoom(
             {
-              ...s3,
+              ...s2,
               pan: {
                 x: touch.startPanX + deltaX,
                 y: touch.startPanY + deltaY
               }
             },
-            getImageSizeFromState(s3),
-            s3.cropRect
+            getImageSizeFromState(s2),
+            s2.cropRect
           );
           this.options.actions.setPan(newCrop);
         }
@@ -72541,7 +72554,7 @@ If there's a particular need for this, please submit a feature request at https:
     // the tap was handled as a double-tap (caller should early-return),
     // `false` otherwise (caller proceeds with normal single-tap handling).
     // Either way, records the tap for next time.
-    tryDoubleTap(e3, tapX, tapY, containerRect) {
+    tryDoubleTap(e2, tapX, tapY, containerRect) {
       const now = Date.now();
       const lastTap = this.lastTap;
       if (!lastTap) {
@@ -72557,7 +72570,7 @@ If there's a particular need for this, please submit a feature request at https:
         this.lastTap = { time: now, x: tapX, y: tapY };
         return false;
       }
-      e3.preventDefault();
+      e2.preventDefault();
       this.lastTap = null;
       const currentState = this.options.getState();
       const containerSize = this.options.getContainerSize();
@@ -72601,12 +72614,12 @@ If there's a particular need for this, please submit a feature request at https:
      *
      * @param e The native KeyboardEvent.
      */
-    handleKeyDown(e3) {
+    handleKeyDown(e2) {
       const currentState = this.options.getState();
-      switch (e3.key) {
+      switch (e2.key) {
         case "ArrowUp": {
-          e3.preventDefault();
-          const keyboardStep = this.getKeyboardStep(e3);
+          e2.preventDefault();
+          const keyboardStep = this.getKeyboardStep(e2);
           const { pan: newCrop } = restrictPanZoom(
             {
               ...currentState,
@@ -72622,8 +72635,8 @@ If there's a particular need for this, please submit a feature request at https:
           break;
         }
         case "ArrowDown": {
-          e3.preventDefault();
-          const keyboardStep = this.getKeyboardStep(e3);
+          e2.preventDefault();
+          const keyboardStep = this.getKeyboardStep(e2);
           const { pan: newCrop } = restrictPanZoom(
             {
               ...currentState,
@@ -72639,8 +72652,8 @@ If there's a particular need for this, please submit a feature request at https:
           break;
         }
         case "ArrowLeft": {
-          e3.preventDefault();
-          const keyboardStep = this.getKeyboardStep(e3);
+          e2.preventDefault();
+          const keyboardStep = this.getKeyboardStep(e2);
           const { pan: newCrop } = restrictPanZoom(
             {
               ...currentState,
@@ -72656,8 +72669,8 @@ If there's a particular need for this, please submit a feature request at https:
           break;
         }
         case "ArrowRight": {
-          e3.preventDefault();
-          const keyboardStep = this.getKeyboardStep(e3);
+          e2.preventDefault();
+          const keyboardStep = this.getKeyboardStep(e2);
           const { pan: newCrop } = restrictPanZoom(
             {
               ...currentState,
@@ -72674,7 +72687,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
         case "+":
         case "=": {
-          e3.preventDefault();
+          e2.preventDefault();
           const newZoom = Math.min(
             this.maxZoom,
             Math.max(this.minZoom, currentState.zoom + 0.5)
@@ -72684,7 +72697,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
         case "-":
         case "_": {
-          e3.preventDefault();
+          e2.preventDefault();
           const newZoom = Math.min(
             this.maxZoom,
             Math.max(this.minZoom, currentState.zoom - 0.5)
@@ -72694,28 +72707,28 @@ If there's a particular need for this, please submit a feature request at https:
         }
         case "r":
         case "R": {
-          if (e3.metaKey || e3.ctrlKey || e3.altKey) {
+          if (e2.metaKey || e2.ctrlKey || e2.altKey) {
             break;
           }
-          e3.preventDefault();
-          this.options.actions.snapRotate90(e3.shiftKey ? -1 : 1);
+          e2.preventDefault();
+          this.options.actions.snapRotate90(e2.shiftKey ? -1 : 1);
           break;
         }
         case "h":
         case "H": {
-          if (e3.metaKey || e3.ctrlKey || e3.altKey || e3.shiftKey) {
+          if (e2.metaKey || e2.ctrlKey || e2.altKey || e2.shiftKey) {
             break;
           }
-          e3.preventDefault();
+          e2.preventDefault();
           this.options.actions.toggleFlip?.("horizontal");
           break;
         }
         case "v":
         case "V": {
-          if (e3.metaKey || e3.ctrlKey || e3.altKey || e3.shiftKey) {
+          if (e2.metaKey || e2.ctrlKey || e2.altKey || e2.shiftKey) {
             break;
           }
-          e3.preventDefault();
+          e2.preventDefault();
           this.options.actions.toggleFlip?.("vertical");
           break;
         }
@@ -72874,45 +72887,45 @@ If there's a particular need for this, please submit a feature request at https:
         optionsRef.current?.onGestureEnd?.();
       }
     }, [isDisabled, isGestureActive, stopPlacementGesture]);
-    const onPointerDown = (0, import_element228.useCallback)((e3) => {
+    const onPointerDown = (0, import_element228.useCallback)((e2) => {
       if (optionsRef.current?.disabled) {
         return;
       }
-      const el = e3.currentTarget;
-      controllerRef.current?.handlePointerDown(e3.nativeEvent, el);
+      const el = e2.currentTarget;
+      controllerRef.current?.handlePointerDown(e2.nativeEvent, el);
     }, []);
-    const onTouchStart = (0, import_element228.useCallback)((e3) => {
+    const onTouchStart = (0, import_element228.useCallback)((e2) => {
       if (optionsRef.current?.disabled) {
         return;
       }
-      const el = e3.currentTarget;
+      const el = e2.currentTarget;
       const rect = el.getBoundingClientRect();
       controllerRef.current?.handleTouchStart(
-        e3.nativeEvent,
+        e2.nativeEvent,
         rect,
         el.ownerDocument
       );
     }, []);
     const onKeyDown = (0, import_element228.useCallback)(
-      (e3) => {
+      (e2) => {
         if (optionsRef.current?.disabled) {
           return;
         }
-        if (isHandledKeyboardPan(e3.nativeEvent)) {
+        if (isHandledKeyboardPan(e2.nativeEvent)) {
           setIsKeyboardPanning(true);
           signalKeyboardGesture();
-        } else if (isHandledKeyboardZoom(e3.nativeEvent)) {
+        } else if (isHandledKeyboardZoom(e2.nativeEvent)) {
           signalKeyboardGesture();
         }
-        controllerRef.current?.handleKeyDown(e3.nativeEvent);
+        controllerRef.current?.handleKeyDown(e2.nativeEvent);
       },
       [signalKeyboardGesture]
     );
-    const onWheelNative = (0, import_element228.useCallback)((e3) => {
+    const onWheelNative = (0, import_element228.useCallback)((e2) => {
       if (optionsRef.current?.disabled) {
         return;
       }
-      controllerRef.current?.handleWheel(e3);
+      controllerRef.current?.handleWheel(e2);
     }, []);
     return {
       handlers: {
@@ -72945,11 +72958,11 @@ If there's a particular need for this, please submit a feature request at https:
     const sx = safeState.flip.horizontal ? -1 : 1;
     const sy = safeState.flip.vertical ? -1 : 1;
     const z = safeState.zoom;
-    const a3 = sx * cos * z;
-    const b3 = sy * sin * z;
+    const a2 = sx * cos * z;
+    const b2 = sy * sin * z;
     const c6 = -sx * sin * z;
-    const d3 = sy * cos * z;
-    return `matrix(${a3}, ${b3}, ${c6}, ${d3}, ${translateX}, ${translateY})`;
+    const d2 = sy * cos * z;
+    return `matrix(${a2}, ${b2}, ${c6}, ${d2}, ${translateX}, ${translateY})`;
   }
 
   // packages/media-editor/build-module/image-editor/react/hooks/use-transform-style.mjs
@@ -73381,8 +73394,8 @@ If there's a particular need for this, please submit a feature request at https:
         let latestX = event.clientX;
         let latestY = event.clientY;
         let latestShift = event.shiftKey;
-        const onMove = (e3) => {
-          const pe = e3;
+        const onMove = (e2) => {
+          const pe = e2;
           latestX = pe.clientX;
           latestY = pe.clientY;
           latestShift = pe.shiftKey;
@@ -73391,24 +73404,24 @@ If there's a particular need for this, please submit a feature request at https:
           }
           rafId2 = requestAnimationFrame(() => {
             rafId2 = 0;
-            const h3 = latestHandlersRef.current;
-            if (!h3) {
+            const h2 = latestHandlersRef.current;
+            if (!h2) {
               return;
             }
             let newRect;
-            if (h3.hasLockedRatio) {
-              newRect = h3.computeLockedRect(drag2, latestX, latestY);
+            if (h2.hasLockedRatio) {
+              newRect = h2.computeLockedRect(drag2, latestX, latestY);
             } else if (latestShift) {
-              newRect = h3.computeShiftLockedRect(
+              newRect = h2.computeShiftLockedRect(
                 drag2,
                 latestX,
                 latestY
               );
             } else {
-              newRect = h3.computeFreeRect(drag2, latestX, latestY);
-              newRect = h3.snapCropRect?.(newRect, drag2.handle) ?? newRect;
+              newRect = h2.computeFreeRect(drag2, latestX, latestY);
+              newRect = h2.snapCropRect?.(newRect, drag2.handle) ?? newRect;
             }
-            h3.onCropChange(newRect);
+            h2.onCropChange(newRect);
           });
         };
         let ended = false;
@@ -74704,11 +74717,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }
   }
-  function areMediaEditorStatesEqual(a3, b3) {
-    if (a3 === b3) {
+  function areMediaEditorStatesEqual(a2, b2) {
+    if (a2 === b2) {
       return true;
     }
-    return areCropperStatesEqual(a3.cropper, b3.cropper) && a3.cropOptions.aspectRatioValue === b3.cropOptions.aspectRatioValue;
+    return areCropperStatesEqual(a2.cropper, b2.cropper) && a2.cropOptions.aspectRatioValue === b2.cropOptions.aspectRatioValue;
   }
   function buildInitialMediaEditorState(initialCropper, initialOptions) {
     return {
@@ -74734,8 +74747,8 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return void 0;
   }
-  function areCropperImagesEqual(a3, b3) {
-    return a3?.src === b3?.src && a3?.naturalWidth === b3?.naturalWidth && a3?.naturalHeight === b3?.naturalHeight;
+  function areCropperImagesEqual(a2, b2) {
+    return a2?.src === b2?.src && a2?.naturalWidth === b2?.naturalWidth && a2?.naturalHeight === b2?.naturalHeight;
   }
   function useMediaEditorState(initialState) {
     const [state2, dispatch9] = (0, import_element236.useReducer)(
@@ -77107,8 +77120,8 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/uuid/dist/stringify.js
   var byteToHex = [];
-  for (let i3 = 0; i3 < 256; ++i3) {
-    byteToHex.push((i3 + 256).toString(16).slice(1));
+  for (let i2 = 0; i2 < 256; ++i2) {
+    byteToHex.push((i2 + 256).toString(16).slice(1));
   }
   function unsafeStringify(arr, offset4 = 0) {
     return (byteToHex[arr[offset4 + 0]] + byteToHex[arr[offset4 + 1]] + byteToHex[arr[offset4 + 2]] + byteToHex[arr[offset4 + 3]] + "-" + byteToHex[arr[offset4 + 4]] + byteToHex[arr[offset4 + 5]] + "-" + byteToHex[arr[offset4 + 6]] + byteToHex[arr[offset4 + 7]] + "-" + byteToHex[arr[offset4 + 8]] + byteToHex[arr[offset4 + 9]] + "-" + byteToHex[arr[offset4 + 10]] + byteToHex[arr[offset4 + 11]] + byteToHex[arr[offset4 + 12]] + byteToHex[arr[offset4 + 13]] + byteToHex[arr[offset4 + 14]] + byteToHex[arr[offset4 + 15]]).toLowerCase();
@@ -77140,8 +77153,8 @@ If there's a particular need for this, please submit a feature request at https:
       if (offset4 < 0 || offset4 + 16 > buf.length) {
         throw new RangeError(`UUID byte range ${offset4}:${offset4 + 15} is out of buffer bounds`);
       }
-      for (let i3 = 0; i3 < 16; ++i3) {
-        buf[offset4 + i3] = rnds[i3];
+      for (let i2 = 0; i2 < 16; ++i2) {
+        buf[offset4 + i2] = rnds[i2];
       }
       return buf;
     }
@@ -77255,7 +77268,7 @@ If there's a particular need for this, please submit a feature request at https:
     const postData = currentPostId ? { post: currentPostId } : {};
     if (!isTransportOnly) {
       const trackingFiles = Array.from(filesList).map(
-        (f3) => f3?.name || ""
+        (f2) => f2?.name || ""
       );
       addFiles(trackingFiles);
     }
@@ -77924,7 +77937,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (numbers.length === 0) {
       return null;
     }
-    numbers.sort((a3, b3) => Math.abs(input - a3) - Math.abs(input - b3));
+    numbers.sort((a2, b2) => Math.abs(input - a2) - Math.abs(input - b2));
     return numbers[0];
   }
   var FONT_WEIGHT_KEYWORDS = {
@@ -79070,7 +79083,7 @@ If there's a particular need for this, please submit a feature request at https:
         canEditCSS: !!globalStyles?._links?.["wp:action-edit-css"]
       };
     }, []);
-    const currentBlockStyle = variation ? blockVariations.find((s3) => s3.name === variation) : null;
+    const currentBlockStyle = variation ? blockVariations.find((s2) => s2.name === variation) : null;
     const inheritedStyleWithLayout = (0, import_element254.useMemo)(() => {
       return {
         ...inheritedStyle,
@@ -79734,9 +79747,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function unloadFontFaceInBrowser(fontFace, removeFrom = "all") {
     const unloadFontFace = (fonts) => {
-      fonts.forEach((f3) => {
-        if (f3.family === formatFontFaceName(fontFace?.fontFamily) && f3.weight === fontFace?.fontWeight && f3.style === fontFace?.fontStyle) {
-          fonts.delete(f3);
+      fonts.forEach((f2) => {
+        if (f2.family === formatFontFaceName(fontFace?.fontFamily) && f2.weight === fontFace?.fontWeight && f2.style === fontFace?.fontStyle) {
+          fonts.delete(f2);
         }
       });
     };
@@ -79882,36 +79895,36 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/font-library/utils/toggleFont.mjs
   function toggleFont(font2, face, initialfonts = []) {
-    const isFontActivated = (f3) => f3.slug === font2.slug;
+    const isFontActivated = (f2) => f2.slug === font2.slug;
     const getActivatedFont = (fonts) => fonts.find(isFontActivated);
     const toggleEntireFontFamily = (activatedFont2) => {
       if (!activatedFont2) {
         return [...initialfonts, font2];
       }
       return initialfonts.filter(
-        (f3) => !isFontActivated(f3)
+        (f2) => !isFontActivated(f2)
       );
     };
     const toggleFontVariant = (activatedFont2) => {
-      const isFaceActivated = (f3) => f3.fontWeight === face.fontWeight && f3.fontStyle === face.fontStyle;
+      const isFaceActivated = (f2) => f2.fontWeight === face.fontWeight && f2.fontStyle === face.fontStyle;
       if (!activatedFont2) {
         return [...initialfonts, { ...font2, fontFace: [face] }];
       }
       let newFontFaces = activatedFont2.fontFace || [];
       if (newFontFaces.find(isFaceActivated)) {
         newFontFaces = newFontFaces.filter(
-          (f3) => !isFaceActivated(f3)
+          (f2) => !isFaceActivated(f2)
         );
       } else {
         newFontFaces = [...newFontFaces, face];
       }
       if (newFontFaces.length === 0) {
         return initialfonts.filter(
-          (f3) => !isFontActivated(f3)
+          (f2) => !isFontActivated(f2)
         );
       }
       return initialfonts.map(
-        (f3) => isFontActivated(f3) ? { ...f3, fontFace: newFontFaces } : f3
+        (f2) => isFontActivated(f2) ? { ...f2, fontFace: newFontFaces } : f2
       );
     };
     const activatedFont = getActivatedFont(initialfonts);
@@ -79972,9 +79985,9 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const [modalTabOpen, setModalTabOpen] = (0, import_element256.useState)("");
     const [libraryFontSelected, setLibraryFontSelected] = (0, import_element256.useState)(void 0);
-    const themeFonts = fontFamilies?.theme ? fontFamilies.theme.map((f3) => setUIValuesNeeded(f3, { source: "theme" })).sort((a3, b3) => a3.name.localeCompare(b3.name)) : [];
-    const customFonts = fontFamilies?.custom ? fontFamilies.custom.map((f3) => setUIValuesNeeded(f3, { source: "custom" })).sort((a3, b3) => a3.name.localeCompare(b3.name)) : [];
-    const baseCustomFonts = libraryFonts ? libraryFonts.map((f3) => setUIValuesNeeded(f3, { source: "custom" })).sort((a3, b3) => a3.name.localeCompare(b3.name)) : [];
+    const themeFonts = fontFamilies?.theme ? fontFamilies.theme.map((f2) => setUIValuesNeeded(f2, { source: "theme" })).sort((a2, b2) => a2.name.localeCompare(b2.name)) : [];
+    const customFonts = fontFamilies?.custom ? fontFamilies.custom.map((f2) => setUIValuesNeeded(f2, { source: "custom" })).sort((a2, b2) => a2.name.localeCompare(b2.name)) : [];
+    const baseCustomFonts = libraryFonts ? libraryFonts.map((f2) => setUIValuesNeeded(f2, { source: "custom" })).sort((a2, b2) => a2.name.localeCompare(b2.name)) : [];
     (0, import_element256.useEffect)(() => {
       if (!modalTabOpen) {
         setLibraryFontSelected(void 0);
@@ -79986,7 +79999,7 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       const fonts = font2.source === "theme" ? themeFonts : baseCustomFonts;
-      const fontSelected = fonts.find((f3) => f3.slug === font2.slug);
+      const fontSelected = fonts.find((f2) => f2.slug === font2.slug);
       setLibraryFontSelected({
         ...fontSelected || font2,
         source: font2.source
@@ -80153,7 +80166,7 @@ If there's a particular need for this, please submit a feature request at https:
     const deactivateFontFamily = (font2) => {
       const initialCustomFonts = fontFamilies?.[font2.source ?? ""] ?? [];
       const newCustomFonts = initialCustomFonts.filter(
-        (f3) => f3.slug !== font2.slug
+        (f2) => f2.slug !== font2.slug
       );
       const activeFonts = {
         ...fontFamilies,
@@ -80510,20 +80523,20 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
   function sortFontFaces(faces) {
-    return faces.sort((a3, b3) => {
-      if (a3.fontStyle === "normal" && b3.fontStyle !== "normal") {
+    return faces.sort((a2, b2) => {
+      if (a2.fontStyle === "normal" && b2.fontStyle !== "normal") {
         return -1;
       }
-      if (b3.fontStyle === "normal" && a3.fontStyle !== "normal") {
+      if (b2.fontStyle === "normal" && a2.fontStyle !== "normal") {
         return 1;
       }
-      if (a3.fontStyle === b3.fontStyle) {
-        return getNumericFontWeight(a3.fontWeight?.toString() ?? "normal") - getNumericFontWeight(b3.fontWeight?.toString() ?? "normal");
+      if (a2.fontStyle === b2.fontStyle) {
+        return getNumericFontWeight(a2.fontWeight?.toString() ?? "normal") - getNumericFontWeight(b2.fontWeight?.toString() ?? "normal");
       }
-      if (!a3.fontStyle || !b3.fontStyle) {
-        return !a3.fontStyle ? 1 : -1;
+      if (!a2.fontStyle || !b2.fontStyle) {
+        return !a2.fontStyle ? 1 : -1;
       }
-      return a3.fontStyle.localeCompare(b3.fontStyle);
+      return a2.fontStyle.localeCompare(b2.fontStyle);
     });
   }
 
@@ -80540,7 +80553,7 @@ If there's a particular need for this, please submit a feature request at https:
         fontFace: (family.fontFace ?? []).map(
           (face) => `${face.fontStyle}-${face.fontWeight}`
         ).sort()
-      })).sort((a3, b3) => a3.slug.localeCompare(b3.slug));
+      })).sort((a2, b2) => a2.slug.localeCompare(b2.slug));
     }
     return JSON.stringify(normalized);
   }
@@ -80578,10 +80591,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return getFontFamiliesKey(editedFontFamilies) !== getFontFamiliesKey(savedFontFamilies);
     }, [editedFontFamilies, savedFontFamilies]);
-    const themeFonts = fontFamilies?.theme ? fontFamilies.theme.map((f3) => setUIValuesNeeded(f3, { source: "theme" })).sort((a3, b3) => a3.name.localeCompare(b3.name)) : [];
-    const themeFontsSlugs = new Set(themeFonts.map((f3) => f3.slug));
+    const themeFonts = fontFamilies?.theme ? fontFamilies.theme.map((f2) => setUIValuesNeeded(f2, { source: "theme" })).sort((a2, b2) => a2.name.localeCompare(b2.name)) : [];
+    const themeFontsSlugs = new Set(themeFonts.map((f2) => f2.slug));
     const baseThemeFonts = baseFontFamilies?.theme ? themeFonts.concat(
-      baseFontFamilies.theme.filter((f3) => !themeFontsSlugs.has(f3.slug)).map((f3) => setUIValuesNeeded(f3, { source: "theme" })).sort((a3, b3) => a3.name.localeCompare(b3.name))
+      baseFontFamilies.theme.filter((f2) => !themeFontsSlugs.has(f2.slug)).map((f2) => setUIValuesNeeded(f2, { source: "theme" })).sort((a2, b2) => a2.name.localeCompare(b2.name))
     ) : [];
     const customFontFamilyId = libraryFontSelected?.source === "custom" && libraryFontSelected?.id;
     const canUserDelete = (0, import_data54.useSelect)(
@@ -80661,7 +80674,7 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       const initialFonts = fontFamilies?.[libraryFontSelected.source]?.filter(
-        (f3) => f3.slug !== libraryFontSelected.slug
+        (f2) => f2.slug !== libraryFontSelected.slug
       ) ?? [];
       const newFonts = isSelectAllChecked ? initialFonts : [...initialFonts, libraryFontSelected];
       setFontFamilies({
@@ -80855,7 +80868,7 @@ If there's a particular need for this, please submit a feature request at https:
                       className: "font-library__fonts-list",
                       children: libraryFontSelected && getFontFacesToDisplay(
                         libraryFontSelected
-                      ).map((face, i3) => /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
+                      ).map((face, i2) => /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
                         "li",
                         {
                           className: "font-library__fonts-list-item",
@@ -80865,10 +80878,10 @@ If there's a particular need for this, please submit a feature request at https:
                               font: libraryFontSelected,
                               face
                             },
-                            `face${i3}`
+                            `face${i2}`
                           )
                         },
-                        `face${i3}`
+                        `face${i2}`
                       ))
                     }
                   )
@@ -81384,7 +81397,7 @@ If there's a particular need for this, please submit a feature request at https:
                     role: "list",
                     className: "font-library__fonts-list",
                     children: selectedFont && getSortedFontFaces(selectedFont).map(
-                      (face, i3) => /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
+                      (face, i2) => /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
                         "li",
                         {
                           className: "font-library__fonts-list-item",
@@ -81403,7 +81416,7 @@ If there's a particular need for this, please submit a feature request at https:
                             }
                           )
                         },
-                        `face${i3}`
+                        `face${i2}`
                       )
                     )
                   }
@@ -81469,10 +81482,10 @@ If there's a particular need for this, please submit a feature request at https:
                           value: page.toString(),
                           options: [
                             ...Array(totalPages)
-                          ].map((e3, i3) => {
+                          ].map((e2, i2) => {
                             return {
-                              label: (i3 + 1).toString(),
-                              value: (i3 + 1).toString()
+                              label: (i2 + 1).toString(),
+                              value: (i2 + 1).toString()
                             };
                           }),
                           onChange: (newPage) => setPage(
@@ -81529,7 +81542,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/font-library/lib/unbrotli.mjs
   var __require2 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
-    get: (a3, b3) => (typeof __require !== "undefined" ? __require : a3)[b3]
+    get: (a2, b2) => (typeof __require !== "undefined" ? __require : a2)[b2]
   }) : x2)(function(x2) {
     if (typeof __require !== "undefined") return __require.apply(this, arguments);
     throw Error('Dynamic require of "' + x2 + '" is not supported');
@@ -81537,38 +81550,38 @@ If there's a particular need for this, please submit a feature request at https:
   var unbrotli_default = (function() {
     var define, module, exports;
     return (/* @__PURE__ */ (function() {
-      function r5(e3, n3, t4) {
-        function o4(i22, f3) {
-          if (!n3[i22]) {
-            if (!e3[i22]) {
+      function r4(e2, n2, t3) {
+        function o3(i22, f2) {
+          if (!n2[i22]) {
+            if (!e2[i22]) {
               var c6 = "function" == typeof __require2 && __require2;
-              if (!f3 && c6) return c6(i22, true);
-              if (u3) return u3(i22, true);
-              var a3 = new Error("Cannot find module '" + i22 + "'");
-              throw a3.code = "MODULE_NOT_FOUND", a3;
+              if (!f2 && c6) return c6(i22, true);
+              if (u2) return u2(i22, true);
+              var a2 = new Error("Cannot find module '" + i22 + "'");
+              throw a2.code = "MODULE_NOT_FOUND", a2;
             }
-            var p4 = n3[i22] = { exports: {} };
-            e3[i22][0].call(
+            var p4 = n2[i22] = { exports: {} };
+            e2[i22][0].call(
               p4.exports,
               function(r22) {
-                var n22 = e3[i22][1][r22];
-                return o4(n22 || r22);
+                var n22 = e2[i22][1][r22];
+                return o3(n22 || r22);
               },
               p4,
               p4.exports,
-              r5,
-              e3,
-              n3,
-              t4
+              r4,
+              e2,
+              n2,
+              t3
             );
           }
-          return n3[i22].exports;
+          return n2[i22].exports;
         }
-        for (var u3 = "function" == typeof __require2 && __require2, i3 = 0; i3 < t4.length; i3++)
-          o4(t4[i3]);
-        return o4;
+        for (var u2 = "function" == typeof __require2 && __require2, i2 = 0; i2 < t3.length; i2++)
+          o3(t3[i2]);
+        return o3;
       }
-      return r5;
+      return r4;
     })())(
       {
         1: [
@@ -81618,8 +81631,8 @@ If there's a particular need for this, please submit a feature request at https:
               this.bit_end_pos_ = 0;
               this.eos_ = 0;
               this.readMoreInput();
-              for (var i3 = 0; i3 < 4; i3++) {
-                this.val_ |= this.buf_[this.pos_] << 8 * i3;
+              for (var i2 = 0; i2 < 4; i2++) {
+                this.val_ |= this.buf_[this.pos_] << 8 * i2;
                 ++this.pos_;
               }
               return this.bit_end_pos_ > 0;
@@ -83606,17 +83619,17 @@ If there's a particular need for this, please submit a feature request at https:
               1080
             ]);
             function DecodeWindowBits(br) {
-              var n3;
+              var n2;
               if (br.readBits(1) === 0) {
                 return 16;
               }
-              n3 = br.readBits(3);
-              if (n3 > 0) {
-                return 17 + n3;
+              n2 = br.readBits(3);
+              if (n2 > 0) {
+                return 17 + n2;
               }
-              n3 = br.readBits(3);
-              if (n3 > 0) {
-                return 8 + n3;
+              n2 = br.readBits(3);
+              if (n2 > 0) {
+                return 8 + n2;
               }
               return 17;
             }
@@ -83641,7 +83654,7 @@ If there's a particular need for this, please submit a feature request at https:
               var out = new MetaBlockLength();
               var size_nibbles;
               var size_bytes;
-              var i3;
+              var i2;
               out.input_end = br.readBits(1);
               if (out.input_end && br.readBits(1)) {
                 return out;
@@ -83653,18 +83666,18 @@ If there's a particular need for this, please submit a feature request at https:
                   throw new Error("Invalid reserved bit");
                 size_bytes = br.readBits(2);
                 if (size_bytes === 0) return out;
-                for (i3 = 0; i3 < size_bytes; i3++) {
+                for (i2 = 0; i2 < size_bytes; i2++) {
                   var next_byte = br.readBits(8);
-                  if (i3 + 1 === size_bytes && size_bytes > 1 && next_byte === 0)
+                  if (i2 + 1 === size_bytes && size_bytes > 1 && next_byte === 0)
                     throw new Error("Invalid size byte");
-                  out.meta_block_length |= next_byte << i3 * 8;
+                  out.meta_block_length |= next_byte << i2 * 8;
                 }
               } else {
-                for (i3 = 0; i3 < size_nibbles; ++i3) {
+                for (i2 = 0; i2 < size_nibbles; ++i2) {
                   var next_nibble = br.readBits(4);
-                  if (i3 + 1 === size_nibbles && size_nibbles > 4 && next_nibble === 0)
+                  if (i2 + 1 === size_nibbles && size_nibbles > 4 && next_nibble === 0)
                     throw new Error("Invalid size nibble");
-                  out.meta_block_length |= next_nibble << i3 * 4;
+                  out.meta_block_length |= next_nibble << i2 * 4;
                 }
               }
               ++out.meta_block_length;
@@ -83694,7 +83707,7 @@ If there's a particular need for this, please submit a feature request at https:
               var repeat_code_len = 0;
               var space = 32768;
               var table = [];
-              for (var i3 = 0; i3 < 32; i3++)
+              for (var i2 = 0; i2 < 32; i2++)
                 table.push(new HuffmanCode(0, 0));
               BrotliBuildHuffmanTable(
                 table,
@@ -83765,7 +83778,7 @@ If there's a particular need for this, please submit a feature request at https:
               br.readMoreInput();
               simple_code_or_skip = br.readBits(2);
               if (simple_code_or_skip === 1) {
-                var i3;
+                var i2;
                 var max_bits_counter = alphabet_size - 1;
                 var max_bits = 0;
                 var symbols = new Int32Array(4);
@@ -83774,9 +83787,9 @@ If there's a particular need for this, please submit a feature request at https:
                   max_bits_counter >>= 1;
                   ++max_bits;
                 }
-                for (i3 = 0; i3 < num_symbols; ++i3) {
-                  symbols[i3] = br.readBits(max_bits) % alphabet_size;
-                  code_lengths[symbols[i3]] = 2;
+                for (i2 = 0; i2 < num_symbols; ++i2) {
+                  symbols[i2] = br.readBits(max_bits) % alphabet_size;
+                  code_lengths[symbols[i2]] = 2;
                 }
                 code_lengths[symbols[0]] = 1;
                 switch (num_symbols) {
@@ -83812,7 +83825,7 @@ If there's a particular need for this, please submit a feature request at https:
                     break;
                 }
               } else {
-                var i3;
+                var i2;
                 var code_length_code_lengths = new Uint8Array(
                   CODE_LENGTH_CODES
                 );
@@ -83836,8 +83849,8 @@ If there's a particular need for this, please submit a feature request at https:
                   new HuffmanCode(2, 3),
                   new HuffmanCode(4, 5)
                 ];
-                for (i3 = simple_code_or_skip; i3 < CODE_LENGTH_CODES && space > 0; ++i3) {
-                  var code_len_idx = kCodeLengthCodeOrder[i3];
+                for (i2 = simple_code_or_skip; i2 < CODE_LENGTH_CODES && space > 0; ++i2) {
+                  var code_len_idx = kCodeLengthCodeOrder[i2];
                   var p4 = 0;
                   var v3;
                   br.fillBitWindow();
@@ -83895,19 +83908,19 @@ If there's a particular need for this, please submit a feature request at https:
             }
             function MoveToFront(v3, index2) {
               var value = v3[index2];
-              var i3 = index2;
-              for (; i3; --i3) v3[i3] = v3[i3 - 1];
+              var i2 = index2;
+              for (; i2; --i2) v3[i2] = v3[i2 - 1];
               v3[0] = value;
             }
             function InverseMoveToFrontTransform(v3, v_len) {
               var mtf = new Uint8Array(256);
-              var i3;
-              for (i3 = 0; i3 < 256; ++i3) {
-                mtf[i3] = i3;
+              var i2;
+              for (i2 = 0; i2 < 256; ++i2) {
+                mtf[i2] = i2;
               }
-              for (i3 = 0; i3 < v_len; ++i3) {
-                var index2 = v3[i3];
-                v3[i3] = mtf[index2];
+              for (i2 = 0; i2 < v_len; ++i2) {
+                var index2 = v3[i2];
+                v3[i2] = mtf[index2];
                 if (index2) MoveToFront(mtf, index2);
               }
             }
@@ -83920,11 +83933,11 @@ If there's a particular need for this, please submit a feature request at https:
               this.htrees = new Uint32Array(num_htrees);
             }
             HuffmanTreeGroup.prototype.decode = function(br) {
-              var i3;
+              var i2;
               var table_size;
               var next = 0;
-              for (i3 = 0; i3 < this.num_htrees; ++i3) {
-                this.htrees[i3] = next;
+              for (i2 = 0; i2 < this.num_htrees; ++i2) {
+                this.htrees[i2] = next;
                 table_size = ReadHuffmanCode(
                   this.alphabet_size,
                   this.codes,
@@ -83939,7 +83952,7 @@ If there's a particular need for this, please submit a feature request at https:
               var use_rle_for_zeros;
               var max_run_length_prefix = 0;
               var table;
-              var i3;
+              var i2;
               br.readMoreInput();
               var num_htrees = out.num_htrees = DecodeVarLenUint8(br) + 1;
               var context_map = out.context_map = new Uint8Array(
@@ -83953,8 +83966,8 @@ If there's a particular need for this, please submit a feature request at https:
                 max_run_length_prefix = br.readBits(4) + 1;
               }
               table = [];
-              for (i3 = 0; i3 < HUFFMAN_MAX_TABLE_SIZE; i3++) {
-                table[i3] = new HuffmanCode(0, 0);
+              for (i2 = 0; i2 < HUFFMAN_MAX_TABLE_SIZE; i2++) {
+                table[i2] = new HuffmanCode(0, 0);
               }
               ReadHuffmanCode(
                 num_htrees + max_run_length_prefix,
@@ -83962,27 +83975,27 @@ If there's a particular need for this, please submit a feature request at https:
                 0,
                 br
               );
-              for (i3 = 0; i3 < context_map_size; ) {
+              for (i2 = 0; i2 < context_map_size; ) {
                 var code;
                 br.readMoreInput();
                 code = ReadSymbol(table, 0, br);
                 if (code === 0) {
-                  context_map[i3] = 0;
-                  ++i3;
+                  context_map[i2] = 0;
+                  ++i2;
                 } else if (code <= max_run_length_prefix) {
                   var reps = 1 + (1 << code) + br.readBits(code);
                   while (--reps) {
-                    if (i3 >= context_map_size) {
+                    if (i2 >= context_map_size) {
                       throw new Error(
                         "[DecodeContextMap] i >= context_map_size"
                       );
                     }
-                    context_map[i3] = 0;
-                    ++i3;
+                    context_map[i2] = 0;
+                    ++i2;
                   }
                 } else {
-                  context_map[i3] = code - max_run_length_prefix;
-                  ++i3;
+                  context_map[i2] = code - max_run_length_prefix;
+                  ++i2;
                 }
               }
               if (br.readBits(1)) {
@@ -84112,7 +84125,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
             exports2.BrotliDecompressBuffer = BrotliDecompressBuffer;
             function BrotliDecompress(input, output) {
-              var i3;
+              var i2;
               var pos = 0;
               var input_end = 0;
               var window_bits = 0;
@@ -84177,9 +84190,9 @@ If there's a particular need for this, please submit a feature request at https:
                 var context_lookup_offset2 = 0;
                 var context_mode;
                 var htree_command;
-                for (i3 = 0; i3 < 3; ++i3) {
-                  hgroup[i3].codes = null;
-                  hgroup[i3].htrees = null;
+                for (i2 = 0; i2 < 3; ++i2) {
+                  hgroup[i2].codes = null;
+                  hgroup[i2].htrees = null;
                 }
                 br.readMoreInput();
                 var _out = DecodeMetaBlockLength(br);
@@ -84217,27 +84230,27 @@ If there's a particular need for this, please submit a feature request at https:
                   pos += meta_block_remaining_len;
                   continue;
                 }
-                for (i3 = 0; i3 < 3; ++i3) {
-                  num_block_types[i3] = DecodeVarLenUint8(br) + 1;
-                  if (num_block_types[i3] >= 2) {
+                for (i2 = 0; i2 < 3; ++i2) {
+                  num_block_types[i2] = DecodeVarLenUint8(br) + 1;
+                  if (num_block_types[i2] >= 2) {
                     ReadHuffmanCode(
-                      num_block_types[i3] + 2,
+                      num_block_types[i2] + 2,
                       block_type_trees,
-                      i3 * HUFFMAN_MAX_TABLE_SIZE,
+                      i2 * HUFFMAN_MAX_TABLE_SIZE,
                       br
                     );
                     ReadHuffmanCode(
                       kNumBlockLengthCodes,
                       block_len_trees,
-                      i3 * HUFFMAN_MAX_TABLE_SIZE,
+                      i2 * HUFFMAN_MAX_TABLE_SIZE,
                       br
                     );
-                    block_length[i3] = ReadBlockLength(
+                    block_length[i2] = ReadBlockLength(
                       block_len_trees,
-                      i3 * HUFFMAN_MAX_TABLE_SIZE,
+                      i2 * HUFFMAN_MAX_TABLE_SIZE,
                       br
                     );
-                    block_type_rb_index[i3] = 1;
+                    block_type_rb_index[i2] = 1;
                   }
                 }
                 br.readMoreInput();
@@ -84248,9 +84261,9 @@ If there's a particular need for this, please submit a feature request at https:
                 context_modes = new Uint8Array(
                   num_block_types[0]
                 );
-                for (i3 = 0; i3 < num_block_types[0]; ++i3) {
+                for (i2 = 0; i2 < num_block_types[0]; ++i2) {
                   br.readMoreInput();
-                  context_modes[i3] = br.readBits(2) << 1;
+                  context_modes[i2] = br.readBits(2) << 1;
                 }
                 var _o1 = DecodeContextMap(
                   num_block_types[0] << kLiteralContextBits,
@@ -84276,8 +84289,8 @@ If there's a particular need for this, please submit a feature request at https:
                   num_distance_codes,
                   num_dist_htrees
                 );
-                for (i3 = 0; i3 < 3; ++i3) {
-                  hgroup[i3].decode(br);
+                for (i2 = 0; i2 < 3; ++i2) {
+                  hgroup[i2].decode(br);
                 }
                 context_map_slice = 0;
                 dist_context_map_slice = 0;
@@ -84617,10 +84630,10 @@ If there's a particular need for this, please submit a feature request at https:
               }
               return (key & step - 1) + step;
             }
-            function ReplicateValue(table, i3, step, end, code) {
+            function ReplicateValue(table, i2, step, end, code) {
               do {
                 end -= step;
-                table[i3 + end] = new HuffmanCode(
+                table[i2 + end] = new HuffmanCode(
                   code.bits,
                   code.value
                 );
@@ -84746,9 +84759,9 @@ If there's a particular need for this, please submit a feature request at https:
             var revLookup = [];
             var Arr = typeof Uint8Array !== "undefined" ? Uint8Array : Array;
             var code = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-            for (var i3 = 0, len2 = code.length; i3 < len2; ++i3) {
-              lookup[i3] = code[i3];
-              revLookup[code.charCodeAt(i3)] = i3;
+            for (var i2 = 0, len2 = code.length; i2 < len2; ++i2) {
+              lookup[i2] = code[i2];
+              revLookup[code.charCodeAt(i2)] = i2;
             }
             revLookup["-".charCodeAt(0)] = 62;
             revLookup["_".charCodeAt(0)] = 63;
@@ -84940,12 +84953,12 @@ If there's a particular need for this, please submit a feature request at https:
               this.buffer = buffer;
               this.pos = 0;
             }
-            BrotliInput.prototype.read = function(buf, i3, count) {
+            BrotliInput.prototype.read = function(buf, i2, count) {
               if (this.pos + count > this.buffer.length) {
                 count = this.buffer.length - this.pos;
               }
               for (var p4 = 0; p4 < count; p4++)
-                buf[i3 + p4] = this.buffer[this.pos + p4];
+                buf[i2 + p4] = this.buffer[this.pos + p4];
               this.pos += count;
               return count;
             };
@@ -84995,10 +85008,10 @@ If there's a particular need for this, please submit a feature request at https:
               this.prefix = new Uint8Array(prefix2.length);
               this.transform = transform;
               this.suffix = new Uint8Array(suffix.length);
-              for (var i3 = 0; i3 < prefix2.length; i3++)
-                this.prefix[i3] = prefix2.charCodeAt(i3);
-              for (var i3 = 0; i3 < suffix.length; i3++)
-                this.suffix[i3] = suffix.charCodeAt(i3);
+              for (var i2 = 0; i2 < prefix2.length; i2++)
+                this.prefix[i2] = prefix2.charCodeAt(i2);
+              for (var i2 = 0; i2 < suffix.length; i2++)
+                this.suffix[i2] = suffix.charCodeAt(i2);
             }
             var kTransforms = [
               new Transform("", kIdentity, ""),
@@ -85125,26 +85138,26 @@ If there's a particular need for this, please submit a feature request at https:
             ];
             exports2.kTransforms = kTransforms;
             exports2.kNumTransforms = kTransforms.length;
-            function ToUpperCase(p4, i3) {
-              if (p4[i3] < 192) {
-                if (p4[i3] >= 97 && p4[i3] <= 122) {
-                  p4[i3] ^= 32;
+            function ToUpperCase(p4, i2) {
+              if (p4[i2] < 192) {
+                if (p4[i2] >= 97 && p4[i2] <= 122) {
+                  p4[i2] ^= 32;
                 }
                 return 1;
               }
-              if (p4[i3] < 224) {
-                p4[i3 + 1] ^= 32;
+              if (p4[i2] < 224) {
+                p4[i2 + 1] ^= 32;
                 return 2;
               }
-              p4[i3 + 2] ^= 5;
+              p4[i2 + 2] ^= 5;
               return 3;
             }
             exports2.transformDictionaryWord = function(dst, idx, word, len2, transform) {
               var prefix2 = kTransforms[transform].prefix;
               var suffix = kTransforms[transform].suffix;
-              var t4 = kTransforms[transform].transform;
-              var skip = t4 < kOmitFirst1 ? 0 : t4 - (kOmitFirst1 - 1);
-              var i3 = 0;
+              var t3 = kTransforms[transform].transform;
+              var skip = t3 < kOmitFirst1 ? 0 : t3 - (kOmitFirst1 - 1);
+              var i2 = 0;
               var start_idx = idx;
               var uppercase;
               if (skip > len2) {
@@ -85156,16 +85169,16 @@ If there's a particular need for this, please submit a feature request at https:
               }
               word += skip;
               len2 -= skip;
-              if (t4 <= kOmitLast9) {
-                len2 -= t4;
+              if (t3 <= kOmitLast9) {
+                len2 -= t3;
               }
-              for (i3 = 0; i3 < len2; i3++) {
-                dst[idx++] = BrotliDictionary.dictionary[word + i3];
+              for (i2 = 0; i2 < len2; i2++) {
+                dst[idx++] = BrotliDictionary.dictionary[word + i2];
               }
               uppercase = idx - len2;
-              if (t4 === kUppercaseFirst) {
+              if (t3 === kUppercaseFirst) {
                 ToUpperCase(dst, uppercase);
-              } else if (t4 === kUppercaseAll) {
+              } else if (t3 === kUppercaseAll) {
                 while (len2 > 0) {
                   var step = ToUpperCase(dst, uppercase);
                   uppercase += step;
@@ -85195,7 +85208,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/font-library/lib/inflate.mjs
   var __require3 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
-    get: (a3, b3) => (typeof __require !== "undefined" ? __require : a3)[b3]
+    get: (a2, b2) => (typeof __require !== "undefined" ? __require : a2)[b2]
   }) : x2)(function(x2) {
     if (typeof __require !== "undefined") return __require.apply(this, arguments);
     throw Error('Dynamic require of "' + x2 + '" is not supported');
@@ -85203,38 +85216,38 @@ If there's a particular need for this, please submit a feature request at https:
   var inflate_default = (function() {
     var define, module, exports;
     return (/* @__PURE__ */ (function() {
-      function r5(e3, n3, t4) {
-        function o4(i22, f3) {
-          if (!n3[i22]) {
-            if (!e3[i22]) {
+      function r4(e2, n2, t3) {
+        function o3(i22, f2) {
+          if (!n2[i22]) {
+            if (!e2[i22]) {
               var c6 = "function" == typeof __require3 && __require3;
-              if (!f3 && c6) return c6(i22, true);
-              if (u3) return u3(i22, true);
-              var a3 = new Error("Cannot find module '" + i22 + "'");
-              throw a3.code = "MODULE_NOT_FOUND", a3;
+              if (!f2 && c6) return c6(i22, true);
+              if (u2) return u2(i22, true);
+              var a2 = new Error("Cannot find module '" + i22 + "'");
+              throw a2.code = "MODULE_NOT_FOUND", a2;
             }
-            var p4 = n3[i22] = { exports: {} };
-            e3[i22][0].call(
+            var p4 = n2[i22] = { exports: {} };
+            e2[i22][0].call(
               p4.exports,
               function(r22) {
-                var n22 = e3[i22][1][r22];
-                return o4(n22 || r22);
+                var n22 = e2[i22][1][r22];
+                return o3(n22 || r22);
               },
               p4,
               p4.exports,
-              r5,
-              e3,
-              n3,
-              t4
+              r4,
+              e2,
+              n2,
+              t3
             );
           }
-          return n3[i22].exports;
+          return n2[i22].exports;
         }
-        for (var u3 = "function" == typeof __require3 && __require3, i3 = 0; i3 < t4.length; i3++)
-          o4(t4[i3]);
-        return o4;
+        for (var u2 = "function" == typeof __require3 && __require3, i2 = 0; i2 < t3.length; i2++)
+          o3(t3[i2]);
+        return o3;
       }
-      return r5;
+      return r4;
     })())(
       {
         1: [
@@ -85286,21 +85299,21 @@ If there's a particular need for this, please submit a feature request at https:
                   );
                   return;
                 }
-                for (var i3 = 0; i3 < len2; i3++) {
-                  dest[dest_offs + i3] = src[src_offs + i3];
+                for (var i2 = 0; i2 < len2; i2++) {
+                  dest[dest_offs + i2] = src[src_offs + i2];
                 }
               },
               // Join array of chunks to single array.
               flattenChunks: function(chunks) {
-                var i3, l3, len2, pos, chunk2, result;
+                var i2, l3, len2, pos, chunk2, result;
                 len2 = 0;
-                for (i3 = 0, l3 = chunks.length; i3 < l3; i3++) {
-                  len2 += chunks[i3].length;
+                for (i2 = 0, l3 = chunks.length; i2 < l3; i2++) {
+                  len2 += chunks[i2].length;
                 }
                 result = new Uint8Array(len2);
                 pos = 0;
-                for (i3 = 0, l3 = chunks.length; i3 < l3; i3++) {
-                  chunk2 = chunks[i3];
+                for (i2 = 0, l3 = chunks.length; i2 < l3; i2++) {
+                  chunk2 = chunks[i2];
                   result.set(chunk2, pos);
                   pos += chunk2.length;
                 }
@@ -85309,8 +85322,8 @@ If there's a particular need for this, please submit a feature request at https:
             };
             var fnUntyped = {
               arraySet: function(dest, src, src_offs, len2, dest_offs) {
-                for (var i3 = 0; i3 < len2; i3++) {
-                  dest[dest_offs + i3] = src[src_offs + i3];
+                for (var i2 = 0; i2 < len2; i2++) {
+                  dest[dest_offs + i2] = src[src_offs + i2];
                 }
               },
               // Join array of chunks to single array.
@@ -85352,12 +85365,12 @@ If there's a particular need for this, please submit a feature request at https:
               STR_APPLY_UIA_OK = false;
             }
             var _utf8len = new utils.Buf8(256);
-            for (var q = 0; q < 256; q++) {
-              _utf8len[q] = q >= 252 ? 6 : q >= 248 ? 5 : q >= 240 ? 4 : q >= 224 ? 3 : q >= 192 ? 2 : 1;
+            for (var q2 = 0; q2 < 256; q2++) {
+              _utf8len[q2] = q2 >= 252 ? 6 : q2 >= 248 ? 5 : q2 >= 240 ? 4 : q2 >= 224 ? 3 : q2 >= 192 ? 2 : 1;
             }
             _utf8len[254] = _utf8len[254] = 1;
             exports2.string2buf = function(str3) {
-              var buf, c6, c22, m_pos, i3, str_len = str3.length, buf_len = 0;
+              var buf, c6, c22, m_pos, i2, str_len = str3.length, buf_len = 0;
               for (m_pos = 0; m_pos < str_len; m_pos++) {
                 c6 = str3.charCodeAt(m_pos);
                 if ((c6 & 64512) === 55296 && m_pos + 1 < str_len) {
@@ -85370,7 +85383,7 @@ If there's a particular need for this, please submit a feature request at https:
                 buf_len += c6 < 128 ? 1 : c6 < 2048 ? 2 : c6 < 65536 ? 3 : 4;
               }
               buf = new utils.Buf8(buf_len);
-              for (i3 = 0, m_pos = 0; i3 < buf_len; m_pos++) {
+              for (i2 = 0, m_pos = 0; i2 < buf_len; m_pos++) {
                 c6 = str3.charCodeAt(m_pos);
                 if ((c6 & 64512) === 55296 && m_pos + 1 < str_len) {
                   c22 = str3.charCodeAt(m_pos + 1);
@@ -85380,19 +85393,19 @@ If there's a particular need for this, please submit a feature request at https:
                   }
                 }
                 if (c6 < 128) {
-                  buf[i3++] = c6;
+                  buf[i2++] = c6;
                 } else if (c6 < 2048) {
-                  buf[i3++] = 192 | c6 >>> 6;
-                  buf[i3++] = 128 | c6 & 63;
+                  buf[i2++] = 192 | c6 >>> 6;
+                  buf[i2++] = 128 | c6 & 63;
                 } else if (c6 < 65536) {
-                  buf[i3++] = 224 | c6 >>> 12;
-                  buf[i3++] = 128 | c6 >>> 6 & 63;
-                  buf[i3++] = 128 | c6 & 63;
+                  buf[i2++] = 224 | c6 >>> 12;
+                  buf[i2++] = 128 | c6 >>> 6 & 63;
+                  buf[i2++] = 128 | c6 & 63;
                 } else {
-                  buf[i3++] = 240 | c6 >>> 18;
-                  buf[i3++] = 128 | c6 >>> 12 & 63;
-                  buf[i3++] = 128 | c6 >>> 6 & 63;
-                  buf[i3++] = 128 | c6 & 63;
+                  buf[i2++] = 240 | c6 >>> 18;
+                  buf[i2++] = 128 | c6 >>> 12 & 63;
+                  buf[i2++] = 128 | c6 >>> 6 & 63;
+                  buf[i2++] = 128 | c6 & 63;
                 }
               }
               return buf;
@@ -85407,8 +85420,8 @@ If there's a particular need for this, please submit a feature request at https:
                 }
               }
               var result = "";
-              for (var i3 = 0; i3 < len2; i3++) {
-                result += String.fromCharCode(buf[i3]);
+              for (var i2 = 0; i2 < len2; i2++) {
+                result += String.fromCharCode(buf[i2]);
               }
               return result;
             }
@@ -85417,17 +85430,17 @@ If there's a particular need for this, please submit a feature request at https:
             };
             exports2.binstring2buf = function(str3) {
               var buf = new utils.Buf8(str3.length);
-              for (var i3 = 0, len2 = buf.length; i3 < len2; i3++) {
-                buf[i3] = str3.charCodeAt(i3);
+              for (var i2 = 0, len2 = buf.length; i2 < len2; i2++) {
+                buf[i2] = str3.charCodeAt(i2);
               }
               return buf;
             };
             exports2.buf2string = function(buf, max4) {
-              var i3, out, c6, c_len;
+              var i2, out, c6, c_len;
               var len2 = max4 || buf.length;
               var utf16buf = new Array(len2 * 2);
-              for (out = 0, i3 = 0; i3 < len2; ) {
-                c6 = buf[i3++];
+              for (out = 0, i2 = 0; i2 < len2; ) {
+                c6 = buf[i2++];
                 if (c6 < 128) {
                   utf16buf[out++] = c6;
                   continue;
@@ -85435,12 +85448,12 @@ If there's a particular need for this, please submit a feature request at https:
                 c_len = _utf8len[c6];
                 if (c_len > 4) {
                   utf16buf[out++] = 65533;
-                  i3 += c_len - 1;
+                  i2 += c_len - 1;
                   continue;
                 }
                 c6 &= c_len === 2 ? 31 : c_len === 3 ? 15 : 7;
-                while (c_len > 1 && i3 < len2) {
-                  c6 = c6 << 6 | buf[i3++] & 63;
+                while (c_len > 1 && i2 < len2) {
+                  c6 = c6 << 6 | buf[i2++] & 63;
                   c_len--;
                 }
                 if (c_len > 1) {
@@ -85482,18 +85495,18 @@ If there's a particular need for this, please submit a feature request at https:
           function(require2, module2, exports2) {
             "use strict";
             function adler32(adler, buf, len2, pos) {
-              var s1 = adler & 65535 | 0, s22 = adler >>> 16 & 65535 | 0, n3 = 0;
+              var s1 = adler & 65535 | 0, s2 = adler >>> 16 & 65535 | 0, n2 = 0;
               while (len2 !== 0) {
-                n3 = len2 > 2e3 ? 2e3 : len2;
-                len2 -= n3;
+                n2 = len2 > 2e3 ? 2e3 : len2;
+                len2 -= n2;
                 do {
                   s1 = s1 + buf[pos++] | 0;
-                  s22 = s22 + s1 | 0;
-                } while (--n3);
+                  s2 = s2 + s1 | 0;
+                } while (--n2);
                 s1 %= 65521;
-                s22 %= 65521;
+                s2 %= 65521;
               }
-              return s1 | s22 << 16 | 0;
+              return s1 | s2 << 16 | 0;
             }
             module2.exports = adler32;
           },
@@ -85550,21 +85563,21 @@ If there's a particular need for this, please submit a feature request at https:
             "use strict";
             function makeTable() {
               var c6, table = [];
-              for (var n3 = 0; n3 < 256; n3++) {
-                c6 = n3;
+              for (var n2 = 0; n2 < 256; n2++) {
+                c6 = n2;
                 for (var k2 = 0; k2 < 8; k2++) {
                   c6 = c6 & 1 ? 3988292384 ^ c6 >>> 1 : c6 >>> 1;
                 }
-                table[n3] = c6;
+                table[n2] = c6;
               }
               return table;
             }
             var crcTable = makeTable();
             function crc32(crc, buf, len2, pos) {
-              var t4 = crcTable, end = pos + len2;
+              var t3 = crcTable, end = pos + len2;
               crc ^= -1;
-              for (var i3 = pos; i3 < end; i3++) {
-                crc = crc >>> 8 ^ t4[(crc ^ buf[i3]) & 255];
+              for (var i2 = pos; i2 < end; i2++) {
+                crc = crc >>> 8 ^ t3[(crc ^ buf[i2]) & 255];
               }
               return crc ^ -1;
             }
@@ -85874,8 +85887,8 @@ If there's a particular need for this, please submit a feature request at https:
             var ENOUGH_DISTS = 592;
             var MAX_WBITS = 15;
             var DEF_WBITS = MAX_WBITS;
-            function zswap32(q) {
-              return (q >>> 24 & 255) + (q >>> 8 & 65280) + ((q & 65280) << 8) + ((q & 255) << 24);
+            function zswap32(q2) {
+              return (q2 >>> 24 & 255) + (q2 >>> 8 & 65280) + ((q2 & 65280) << 8) + ((q2 & 255) << 24);
             }
             function InflateState() {
               this.mode = 0;
@@ -86127,7 +86140,7 @@ If there's a particular need for this, please submit a feature request at https:
                 4
               );
               var opts;
-              var n3;
+              var n2;
               var order = (
                 /* permutation of code lengths */
                 [
@@ -86699,8 +86712,8 @@ If there's a particular need for this, please submit a feature request at https:
                         state2.lens[state2.have++] = here_val;
                       } else {
                         if (here_val === 16) {
-                          n3 = here_bits + 2;
-                          while (bits < n3) {
+                          n2 = here_bits + 2;
+                          while (bits < n2) {
                             if (have === 0) {
                               break inf_leave;
                             }
@@ -86720,8 +86733,8 @@ If there's a particular need for this, please submit a feature request at https:
                           hold >>>= 2;
                           bits -= 2;
                         } else if (here_val === 17) {
-                          n3 = here_bits + 3;
-                          while (bits < n3) {
+                          n2 = here_bits + 3;
+                          while (bits < n2) {
                             if (have === 0) {
                               break inf_leave;
                             }
@@ -86736,8 +86749,8 @@ If there's a particular need for this, please submit a feature request at https:
                           hold >>>= 3;
                           bits -= 3;
                         } else {
-                          n3 = here_bits + 7;
-                          while (bits < n3) {
+                          n2 = here_bits + 7;
+                          while (bits < n2) {
                             if (have === 0) {
                               break inf_leave;
                             }
@@ -86899,8 +86912,8 @@ If there's a particular need for this, please submit a feature request at https:
                   /* falls through */
                   case LENEXT:
                     if (state2.extra) {
-                      n3 = state2.extra;
-                      while (bits < n3) {
+                      n2 = state2.extra;
+                      while (bits < n2) {
                         if (have === 0) {
                           break inf_leave;
                         }
@@ -86969,8 +86982,8 @@ If there's a particular need for this, please submit a feature request at https:
                   /* falls through */
                   case DISTEXT:
                     if (state2.extra) {
-                      n3 = state2.extra;
-                      while (bits < n3) {
+                      n2 = state2.extra;
+                      while (bits < n2) {
                         if (have === 0) {
                           break inf_leave;
                         }
@@ -87846,7 +87859,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     removeEventListener(type, listener) {
       let bin = this.listeners[type] || [];
-      let pos = bin.findIndex((e3) => e3 === listener);
+      let pos = bin.findIndex((e2) => e2 === listener);
       if (pos > -1) {
         bin.splice(pos, 1);
         this.listeners[type] = bin;
@@ -87855,7 +87868,7 @@ If there's a particular need for this, please submit a feature request at https:
     dispatch(event) {
       let bin = this.listeners[event.type];
       if (bin) {
-        for (let l3 = 0, e3 = bin.length; l3 < e3; l3++) {
+        for (let l3 = 0, e2 = bin.length; l3 < e2; l3++) {
           if (!event.__mayPropagate) break;
           bin[l3](event);
         }
@@ -87897,23 +87910,23 @@ If there's a particular need for this, please submit a feature request at https:
       this.start = position;
       this.offset = 0;
     }
-    skip(n3 = 0, bits = 8) {
-      this.offset += n3 * bits / 8;
+    skip(n2 = 0, bits = 8) {
+      this.offset += n2 * bits / 8;
     }
     getValue(type, increment) {
       let pos = this.start + this.offset;
       this.offset += increment;
       try {
         return this.data[type](pos);
-      } catch (e3) {
+      } catch (e2) {
         console.error(`parser`, type, increment, this);
         console.error(`parser`, this.start, this.offset);
-        throw e3;
+        throw e2;
       }
     }
-    flags(n3) {
-      if (n3 === 8 || n3 === 16 || n3 === 32 || n3 === 64) {
-        return this[`uint${n3}`].toString(2).padStart(n3, 0).split(``).map((v3) => v3 === "1");
+    flags(n2) {
+      if (n2 === 8 || n2 === 16 || n2 === 32 || n2 === 64) {
+        return this[`uint${n2}`].toString(2).padStart(n2, 0).split(``).map((v3) => v3 === "1");
       }
       console.error(
         `Error parsing flags: flag types can only be 1, 2, 4, or 8 bytes long`
@@ -87921,12 +87934,12 @@ If there's a particular need for this, please submit a feature request at https:
       console.trace();
     }
     get tag() {
-      const t4 = this.uint32;
+      const t3 = this.uint32;
       return asText([
-        t4 >> 24 & 255,
-        t4 >> 16 & 255,
-        t4 >> 8 & 255,
-        t4 & 255
+        t3 >> 24 & 255,
+        t3 >> 16 & 255,
+        t3 >> 8 & 255,
+        t3 & 255
       ]);
     }
     get fixed() {
@@ -87944,7 +87957,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     get uint128() {
       let value = 0;
-      for (let i3 = 0; i3 < 5; i3++) {
+      for (let i2 = 0; i2 < 5; i2++) {
         let byte = this.uint8;
         value = value * 128 + (byte & 127);
         if (byte < 128) break;
@@ -87979,12 +87992,12 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     }
-    readBytes(n3 = 0, position = 0, bits = 8, signed = false) {
-      n3 = n3 || this.length;
-      if (n3 === 0) return [];
+    readBytes(n2 = 0, position = 0, bits = 8, signed = false) {
+      n2 = n2 || this.length;
+      if (n2 === 0) return [];
       if (position) this.currentPosition = position;
       const fn = `${signed ? `` : `u`}int${bits}`, slice2 = [];
-      while (n3--) slice2.push(this[fn]);
+      while (n2--) slice2.push(this[fn]);
       return slice2;
     }
   };
@@ -88159,10 +88172,10 @@ If there's a particular need for this, please submit a feature request at https:
       );
       let dictOffset = p22.currentPosition;
       this.directory[0].offset = 0;
-      this.directory.forEach((e3, i3) => {
-        let next = this.directory[i3 + 1];
+      this.directory.forEach((e2, i2) => {
+        let next = this.directory[i2 + 1];
         if (next) {
-          next.offset = e3.offset + (e3.transformLength !== void 0 ? e3.transformLength : e3.origLength);
+          next.offset = e2.offset + (e2.transformLength !== void 0 ? e2.transformLength : e2.origLength);
         }
       });
       let decoded;
@@ -88212,8 +88225,8 @@ If there's a particular need for this, please submit a feature request at https:
             { tag: entry.tag, offset: 0, length: entry.origLength },
             data
           );
-        } catch (e3) {
-          console.error(e3);
+        } catch (e2) {
+          console.error(e2);
         }
       });
     });
@@ -88412,9 +88425,9 @@ If there's a particular need for this, please submit a feature request at https:
       return vmtx$1;
     })
   ]).then((data) => {
-    data.forEach((e3) => {
-      let name2 = Object.keys(e3)[0];
-      tableClasses[name2] = e3[name2];
+    data.forEach((e2) => {
+      let name2 = Object.keys(e2)[0];
+      tableClasses[name2] = e2[name2];
     });
     tableClassesLoaded = true;
   });
@@ -88494,8 +88507,8 @@ If there's a particular need for this, please submit a feature request at https:
   var WOFF2 = [119, 79, 70, 50];
   function match2(ar1, ar2) {
     if (ar1.length !== ar2.length) return;
-    for (let i3 = 0; i3 < ar1.length; i3++) {
-      if (ar1[i3] !== ar2[i3]) return;
+    for (let i2 = 0; i2 < ar1.length; i2++) {
+      if (ar1[i2] !== ar2[i2]) return;
     }
     return true;
   }
@@ -88596,18 +88609,18 @@ If there's a particular need for this, please submit a feature request at https:
         throw new Error(
           "Cannot measure text: font was unloaded. Please reload before calling measureText()"
         );
-      let d3 = document.createElement("div");
-      d3.textContent = text;
-      d3.style.fontFamily = this.name;
-      d3.style.fontSize = `${size4}px`;
-      d3.style.color = `transparent`;
-      d3.style.background = `transparent`;
-      d3.style.top = `0`;
-      d3.style.left = `0`;
-      d3.style.position = `absolute`;
-      document.body.appendChild(d3);
-      let bbox = d3.getBoundingClientRect();
-      document.body.removeChild(d3);
+      let d2 = document.createElement("div");
+      d2.textContent = text;
+      d2.style.fontFamily = this.name;
+      d2.style.fontSize = `${size4}px`;
+      d2.style.color = `transparent`;
+      d2.style.background = `transparent`;
+      d2.style.top = `0`;
+      d2.style.left = `0`;
+      d2.style.position = `absolute`;
+      document.body.appendChild(d2);
+      let bbox = d2.getBoundingClientRect();
+      document.body.removeChild(d2);
       const OS22 = this.opentype.tables["OS/2"];
       bbox.fontSize = size4;
       bbox.ascender = OS22.sTypoAscender;
@@ -88708,14 +88721,14 @@ If there's a particular need for this, please submit a feature request at https:
     }
     getSupportedCharCodes(preservePropNames = false) {
       if (preservePropNames) {
-        return this.subHeaders.map((h3) => ({
-          firstCode: h3.firstCode,
-          lastCode: h3.lastCode
+        return this.subHeaders.map((h2) => ({
+          firstCode: h2.firstCode,
+          lastCode: h2.lastCode
         }));
       }
-      return this.subHeaders.map((h3) => ({
-        start: h3.firstCode,
-        end: h3.lastCode
+      return this.subHeaders.map((h2) => ({
+        start: h2.firstCode,
+        end: h2.lastCode
       }));
     }
   };
@@ -88777,14 +88790,14 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }
     buildSegments(idRangePosition, glyphIdArrayPosition, p22) {
-      const build = (_, i3) => {
-        let startCode = this.startCode[i3], endCode = this.endCode[i3], idDelta = this.idDelta[i3], idRangeOffset = this.idRangeOffset[i3], idRangeOffsetPointer = idRangePosition + 2 * i3, glyphIDs = [];
+      const build = (_, i2) => {
+        let startCode = this.startCode[i2], endCode = this.endCode[i2], idDelta = this.idDelta[i2], idRangeOffset = this.idRangeOffset[i2], idRangeOffsetPointer = idRangePosition + 2 * i2, glyphIDs = [];
         if (idRangeOffset === 0) {
-          for (let i22 = startCode + idDelta, e3 = endCode + idDelta; i22 <= e3; i22++) {
+          for (let i22 = startCode + idDelta, e2 = endCode + idDelta; i22 <= e2; i22++) {
             glyphIDs.push(i22);
           }
         } else {
-          for (let i22 = 0, e3 = endCode - startCode; i22 <= e3; i22++) {
+          for (let i22 = 0, e2 = endCode - startCode; i22 <= e2; i22++) {
             p22.currentPosition = idRangeOffsetPointer + idRangeOffset + i22 * 2;
             glyphIDs.push(p22.uint16);
           }
@@ -88800,9 +88813,9 @@ If there's a particular need for this, please submit a feature request at https:
       return [...new Array(this.segCount)].map(build);
     }
     reverse(glyphID) {
-      let s3 = this.segments.find((v3) => v3.glyphIDs.includes(glyphID));
-      if (!s3) return {};
-      const code = s3.startCode + s3.glyphIDs.indexOf(glyphID);
+      let s2 = this.segments.find((v3) => v3.glyphIDs.includes(glyphID));
+      if (!s2) return {};
+      const code = s2.startCode + s2.glyphIDs.indexOf(glyphID);
       return { code, unicode: String.fromCodePoint(code) };
     }
     getGlyphId(charCode) {
@@ -88811,7 +88824,7 @@ If there's a particular need for this, please submit a feature request at https:
       if ((charCode & 65534) === 65534 || (charCode & 65535) === 65535)
         return 0;
       let segment2 = this.segments.find(
-        (s3) => s3.startCode <= charCode && charCode <= s3.endCode
+        (s2) => s2.startCode <= charCode && charCode <= s2.endCode
       );
       if (!segment2) return 0;
       return segment2.glyphIDs[charCode - segment2.startCode];
@@ -88884,7 +88897,7 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
       return this.groups.findIndex(
-        (s3) => s3.startcharCode <= charCode && charCode <= s3.endcharCode
+        (s2) => s2.startcharCode <= charCode && charCode <= s2.endcharCode
       ) !== -1;
     }
     reverse(glyphID) {
@@ -88965,7 +88978,7 @@ If there's a particular need for this, please submit a feature request at https:
       if ((charCode & 65534) === 65534 || (charCode & 65535) === 65535)
         return 0;
       return this.groups.findIndex(
-        (s3) => s3.startCharCode <= charCode && charCode <= s3.endCharCode
+        (s2) => s2.startCharCode <= charCode && charCode <= s2.endCharCode
       ) !== -1;
     }
     reverse(glyphID) {
@@ -89011,7 +89024,7 @@ If there's a particular need for this, please submit a feature request at https:
     supports(charCode) {
       if (charCode.charCodeAt) charCode = charCode.charCodeAt(0);
       return this.groups.findIndex(
-        (s3) => s3.startCharCode <= charCode && charCode <= s3.endCharCode
+        (s2) => s2.startCharCode <= charCode && charCode <= s2.endCharCode
       ) !== -1;
     }
     reverse(glyphID) {
@@ -89105,45 +89118,45 @@ If there's a particular need for this, please submit a feature request at https:
       return this.encodingRecords[tableID].table;
     }
     getSupportedEncodings() {
-      return this.encodingRecords.map((r5) => ({
-        platformID: r5.platformID,
-        encodingId: r5.encodingID
+      return this.encodingRecords.map((r4) => ({
+        platformID: r4.platformID,
+        encodingId: r4.encodingID
       }));
     }
     getSupportedCharCodes(platformID, encodingID) {
       const recordID = this.encodingRecords.findIndex(
-        (r5) => r5.platformID === platformID && r5.encodingID === encodingID
+        (r4) => r4.platformID === platformID && r4.encodingID === encodingID
       );
       if (recordID === -1) return false;
       const subtable = this.getSubTable(recordID);
       return subtable.getSupportedCharCodes();
     }
     reverse(glyphid) {
-      for (let i3 = 0; i3 < this.numTables; i3++) {
-        let code = this.getSubTable(i3).reverse(glyphid);
+      for (let i2 = 0; i2 < this.numTables; i2++) {
+        let code = this.getSubTable(i2).reverse(glyphid);
         if (code) return code;
       }
     }
     getGlyphId(char) {
       let last = 0;
       this.encodingRecords.some((_, tableID) => {
-        let t4 = this.getSubTable(tableID);
-        if (!t4.getGlyphId) return false;
-        last = t4.getGlyphId(char);
+        let t3 = this.getSubTable(tableID);
+        if (!t3.getGlyphId) return false;
+        last = t3.getGlyphId(char);
         return last !== 0;
       });
       return last;
     }
     supports(char) {
       return this.encodingRecords.some((_, tableID) => {
-        const t4 = this.getSubTable(tableID);
-        return t4.supports && t4.supports(char) !== false;
+        const t3 = this.getSubTable(tableID);
+        return t3.supports && t3.supports(char) !== false;
       });
     }
     supportsVariation(variation) {
       return this.encodingRecords.some((_, tableID) => {
-        const t4 = this.getSubTable(tableID);
-        return t4.supportsVariation && t4.supportsVariation(variation) !== false;
+        const t3 = this.getSubTable(tableID);
+        return t3.supportsVariation && t3.supportsVariation(variation) !== false;
       });
     }
   };
@@ -89234,9 +89247,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
   var LongHorMetric = class {
-    constructor(w3, b3) {
+    constructor(w3, b2) {
       this.advanceWidth = w3;
-      this.lsb = b3;
+      this.lsb = b2;
     }
   };
   var hmtx$1 = Object.freeze({ __proto__: null, hmtx });
@@ -89313,14 +89326,14 @@ If there's a particular need for this, please submit a feature request at https:
     if (length2 === 0) return ``;
     if (platformID === 0 || platformID === 3) {
       const str22 = [];
-      for (let i3 = 0, e3 = length2 / 2; i3 < e3; i3++)
-        str22[i3] = String.fromCharCode(p22.uint16);
+      for (let i2 = 0, e2 = length2 / 2; i2 < e2; i2++)
+        str22[i2] = String.fromCharCode(p22.uint16);
       return str22.join(``);
     }
     const bytes = p22.readBytes(length2);
     const str3 = [];
-    bytes.forEach(function(b3, i3) {
-      str3[i3] = String.fromCharCode(b3);
+    bytes.forEach(function(b2, i2) {
+      str3[i2] = String.fromCharCode(b2);
     });
     return str3.join(``);
   }
@@ -89394,16 +89407,16 @@ If there's a particular need for this, please submit a feature request at https:
         );
         this.namesOffset = p22.currentPosition;
         this.glyphNameOffsets = [1];
-        for (let i3 = 0; i3 < this.numGlyphs; i3++) {
-          let index2 = this.glyphNameIndex[i3];
+        for (let i2 = 0; i2 < this.numGlyphs; i2++) {
+          let index2 = this.glyphNameIndex[i2];
           if (index2 < macStrings.length) {
-            this.glyphNameOffsets.push(this.glyphNameOffsets[i3]);
+            this.glyphNameOffsets.push(this.glyphNameOffsets[i2]);
             continue;
           }
           let bytelength = p22.int8;
           p22.skip(bytelength);
           this.glyphNameOffsets.push(
-            this.glyphNameOffsets[i3] + bytelength + 1
+            this.glyphNameOffsets[i2] + bytelength + 1
           );
         }
       }
@@ -89433,7 +89446,7 @@ If there's a particular need for this, please submit a feature request at https:
         8,
         true
       );
-      return data.map((b3) => String.fromCharCode(b3)).join(``);
+      return data.map((b2) => String.fromCharCode(b2)).join(``);
     }
   };
   var macStrings = [
@@ -90722,11 +90735,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }
     getSupportedScripts() {
-      return this.scriptList.scriptRecords.map((r5) => r5.scriptTag);
+      return this.scriptList.scriptRecords.map((r4) => r4.scriptTag);
     }
     getScriptTable(scriptTag) {
       let record = this.scriptList.scriptRecords.find(
-        (r5) => r5.scriptTag === scriptTag
+        (r4) => r4.scriptTag === scriptTag
       );
       this.parser.currentPosition = this.scriptList.start + record.scriptOffset;
       let table = new ScriptTable(this.parser);
@@ -90782,7 +90795,7 @@ If there's a particular need for this, please submit a feature request at https:
         record = this.featureList.featureRecords[indexOrTag];
       } else {
         record = this.featureList.featureRecords.find(
-          (f3) => f3.featureTag === indexOrTag
+          (f2) => f2.featureTag === indexOrTag
         );
       }
       if (!record) return;
@@ -90846,7 +90859,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     getDocumentForGlyph(glyphID) {
       let id = this.documentRecords.findIndex(
-        (d3) => d3.startGlyphID <= glyphID && glyphID <= d3.endGlyphID
+        (d2) => d2.startGlyphID <= glyphID && glyphID <= d2.endGlyphID
       );
       if (id === -1) return "";
       return this.getDocument(id);
@@ -90882,8 +90895,8 @@ If there's a particular need for this, please submit a feature request at https:
       const instanceStart = axisStart + this.axisCount * this.axisSize;
       lazy$1(this, `instances`, () => {
         let instances = [];
-        for (let i3 = 0; i3 < this.instanceCount; i3++) {
-          p22.currentPosition = instanceStart + i3 * this.instanceSize;
+        for (let i2 = 0; i2 < this.instanceCount; i2++) {
+          p22.currentPosition = instanceStart + i2 * this.instanceSize;
           instances.push(
             new InstanceRecord(p22, this.axisCount, this.instanceSize)
           );
@@ -90892,10 +90905,10 @@ If there's a particular need for this, please submit a feature request at https:
       });
     }
     getSupportedAxes() {
-      return this.axes.map((a3) => a3.tag);
+      return this.axes.map((a2) => a2.tag);
     }
     getAxis(name2) {
-      return this.axes.find((a3) => a3.tag === name2);
+      return this.axes.find((a2) => a2.tag === name2);
     }
   };
   var VariationAxisRecord = class {
@@ -90925,11 +90938,11 @@ If there's a particular need for this, please submit a feature request at https:
   var cvt = class extends SimpleTable {
     constructor(dict, dataview) {
       const { p: p22 } = super(dict, dataview);
-      const n3 = dict.length / 2;
+      const n2 = dict.length / 2;
       lazy$1(
         this,
         `items`,
-        () => [...new Array(n3)].map((_) => p22.fword)
+        () => [...new Array(n2)].map((_) => p22.fword)
       );
     }
   };
@@ -90976,19 +90989,19 @@ If there's a particular need for this, please submit a feature request at https:
   var loca = class extends SimpleTable {
     constructor(dict, dataview, tables) {
       const { p: p22 } = super(dict, dataview);
-      const n3 = tables.maxp.numGlyphs + 1;
+      const n2 = tables.maxp.numGlyphs + 1;
       if (tables.head.indexToLocFormat === 0) {
         this.x2 = true;
         lazy$1(
           this,
           `offsets`,
-          () => [...new Array(n3)].map((_) => p22.Offset16)
+          () => [...new Array(n2)].map((_) => p22.Offset16)
         );
       } else {
         lazy$1(
           this,
           `offsets`,
-          () => [...new Array(n3)].map((_) => p22.Offset32)
+          () => [...new Array(n2)].map((_) => p22.Offset32)
         );
       }
     }
@@ -91338,7 +91351,7 @@ If there's a particular need for this, please submit a feature request at https:
       lazy$1(this, `tables`, () => {
         let offset4 = this.tableStart + 4;
         const tables = [];
-        for (let i3 = 0; i3 < this.nTables; i3++) {
+        for (let i2 = 0; i2 < this.nTables; i2++) {
           p22.currentPosition = offset4;
           let subtable = new KernSubTable(p22);
           tables.push(subtable);
@@ -91552,9 +91565,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
   var LongVertMetric = class {
-    constructor(h3, b3) {
-      this.advanceHeight = h3;
-      this.topSideBearing = b3;
+    constructor(h2, b2) {
+      this.advanceHeight = h2;
+      this.topSideBearing = b2;
     }
   };
   var vmtx$1 = Object.freeze({ __proto__: null, vmtx });
@@ -91843,7 +91856,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/font-families.mjs
   var import_jsx_runtime424 = __toESM(require_jsx_runtime(), 1);
   function mapFontsWithSource(fonts, source) {
-    return fonts ? fonts.map((f3) => setUIValuesNeeded(f3, { source })) : [];
+    return fonts ? fonts.map((f2) => setUIValuesNeeded(f2, { source })) : [];
   }
   function FontFamiliesInner() {
     const { baseCustomFonts, modalTabOpen, setModalTabOpen } = (0, import_element265.useContext)(FontLibraryContext);
@@ -91856,7 +91869,7 @@ If there's a particular need for this, please submit a feature request at https:
     const themeFonts = mapFontsWithSource(fontFamilies?.theme, "theme");
     const customFonts = mapFontsWithSource(fontFamilies?.custom, "custom");
     const activeFonts = [...themeFonts, ...customFonts].sort(
-      (a3, b3) => a3.name.localeCompare(b3.name)
+      (a2, b2) => a2.name.localeCompare(b2.name)
     );
     const hasFonts = 0 < activeFonts.length;
     const hasInstalledFonts = hasFonts || baseFontFamilies?.theme?.length > 0 || (baseCustomFonts?.length ?? 0) > 0;
@@ -93252,7 +93265,7 @@ If there's a particular need for this, please submit a feature request at https:
       "shadow.presets",
       origin
     );
-    const shadow = presets.find((s3) => s3.slug === slug);
+    const shadow = presets.find((s2) => s2.slug === slug);
     const [isDeleteOpen, setIsDeleteOpen] = (0, import_element272.useState)(false);
     const [isRenameOpen, setIsRenameOpen] = (0, import_element272.useState)(false);
     (0, import_element272.useEffect)(() => {
@@ -93263,7 +93276,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!origin || !slug || !shadow) {
       return null;
     }
-    const baseShadow = basePresets.find((s3) => s3.slug === slug);
+    const baseShadow = basePresets.find((s2) => s2.slug === slug);
     const onShadowChange = (value) => setPresets(
       presets.map(
         (p4) => p4.slug === slug ? { ...shadow, shadow: value } : p4
@@ -93381,7 +93394,7 @@ If there's a particular need for this, please submit a feature request at https:
       onChange([...shadowParts, defaultShadow].join(", "));
     };
     const onRemoveShadowPart = (index2) => {
-      onChange(shadowParts.filter((p4, i3) => i3 !== index2).join(", "));
+      onChange(shadowParts.filter((p4, i2) => i2 !== index2).join(", "));
       addShadowButtonRef.current?.focus();
     };
     return /* @__PURE__ */ (0, import_jsx_runtime449.jsxs)(import_jsx_runtime449.Fragment, { children: [
@@ -93851,7 +93864,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const onRemoveTextShadowPart = (index2) => {
       onChange(
-        textShadowParts.filter((p4, i3) => i3 !== index2).join(", ")
+        textShadowParts.filter((p4, i2) => i2 !== index2).join(", ")
       );
       addTextShadowButtonRef.current?.focus();
     };
@@ -94847,7 +94860,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n205 = __toESM(require_i18n(), 1);
   var import_components139 = __toESM(require_components(), 1);
   var import_jsx_runtime462 = __toESM(require_jsx_runtime(), 1);
-  var hasSameSizeValues = (a3, b3) => a3.map((item) => item.size).join("") === b3.map((item) => item.size).join("");
+  var hasSameSizeValues = (a2, b2) => a2.map((item) => item.size).join("") === b2.map((item) => item.size).join("");
   var resetMenu = (onConfirm) => ({
     label: (0, import_i18n205.__)("Reset font size presets"),
     optionsLabel: (0, import_i18n205.__)("Font size presets options"),
@@ -95042,7 +95055,7 @@ If there's a particular need for this, please submit a feature request at https:
       origin
     );
     const [globalFluid] = useSetting("typography.fluid");
-    const fontSize = presets.find((s3) => s3.slug === slug);
+    const fontSize = presets.find((s2) => s2.slug === slug);
     const [isDeleteOpen, setIsDeleteOpen] = (0, import_element278.useState)(false);
     const [isRenameOpen, setIsRenameOpen] = (0, import_element278.useState)(false);
     (0, import_element278.useEffect)(() => {
@@ -96458,9 +96471,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     removeEmpty(array) {
       const ret = [];
-      for (let i3 = 0; i3 < array.length; i3++) {
-        if (array[i3]) {
-          ret.push(array[i3]);
+      for (let i2 = 0; i2 < array.length; i2++) {
+        if (array[i2]) {
+          ret.push(array[i2]);
         }
       }
       return ret;
@@ -96499,8 +96512,8 @@ If there's a particular need for this, please submit a feature request at https:
         if (!component.removed) {
           if (!component.added && this.useLongestToken) {
             let value = newTokens.slice(newPos, newPos + component.count);
-            value = value.map(function(value2, i3) {
-              const oldValue = oldTokens[oldPos + i3];
+            value = value.map(function(value2, i2) {
+              const oldValue = oldTokens[oldPos + i2];
               return oldValue.length > value2.length ? oldValue : value2;
             });
             component.value = this.join(value);
@@ -96530,25 +96543,25 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/diff/libesm/util/string.js
   function longestCommonPrefix(str1, str22) {
-    let i3;
-    for (i3 = 0; i3 < str1.length && i3 < str22.length; i3++) {
-      if (str1[i3] != str22[i3]) {
-        return str1.slice(0, i3);
+    let i2;
+    for (i2 = 0; i2 < str1.length && i2 < str22.length; i2++) {
+      if (str1[i2] != str22[i2]) {
+        return str1.slice(0, i2);
       }
     }
-    return str1.slice(0, i3);
+    return str1.slice(0, i2);
   }
   function longestCommonSuffix(str1, str22) {
-    let i3;
+    let i2;
     if (!str1 || !str22 || str1[str1.length - 1] != str22[str22.length - 1]) {
       return "";
     }
-    for (i3 = 0; i3 < str1.length && i3 < str22.length; i3++) {
-      if (str1[str1.length - (i3 + 1)] != str22[str22.length - (i3 + 1)]) {
-        return str1.slice(-i3);
+    for (i2 = 0; i2 < str1.length && i2 < str22.length; i2++) {
+      if (str1[str1.length - (i2 + 1)] != str22[str22.length - (i2 + 1)]) {
+        return str1.slice(-i2);
       }
     }
-    return str1.slice(-i3);
+    return str1.slice(-i2);
   }
   function replacePrefix(string, oldPrefix, newPrefix) {
     if (string.slice(0, oldPrefix.length) != oldPrefix) {
@@ -96574,37 +96587,37 @@ If there's a particular need for this, please submit a feature request at https:
   function maximumOverlap(string1, string2) {
     return string2.slice(0, overlapCount(string1, string2));
   }
-  function overlapCount(a3, b3) {
+  function overlapCount(a2, b2) {
     let startA = 0;
-    if (a3.length > b3.length) {
-      startA = a3.length - b3.length;
+    if (a2.length > b2.length) {
+      startA = a2.length - b2.length;
     }
-    let endB = b3.length;
-    if (a3.length < b3.length) {
-      endB = a3.length;
+    let endB = b2.length;
+    if (a2.length < b2.length) {
+      endB = a2.length;
     }
     const map = Array(endB);
     let k2 = 0;
     map[0] = 0;
     for (let j2 = 1; j2 < endB; j2++) {
-      if (b3[j2] == b3[k2]) {
+      if (b2[j2] == b2[k2]) {
         map[j2] = map[k2];
       } else {
         map[j2] = k2;
       }
-      while (k2 > 0 && b3[j2] != b3[k2]) {
+      while (k2 > 0 && b2[j2] != b2[k2]) {
         k2 = map[k2];
       }
-      if (b3[j2] == b3[k2]) {
+      if (b2[j2] == b2[k2]) {
         k2++;
       }
     }
     k2 = 0;
-    for (let i3 = startA; i3 < a3.length; i3++) {
-      while (k2 > 0 && a3[i3] != b3[k2]) {
+    for (let i2 = startA; i2 < a2.length; i2++) {
+      while (k2 > 0 && a2[i2] != b2[k2]) {
         k2 = map[k2];
       }
-      if (a3[i3] == b3[k2]) {
+      if (a2[i2] == b2[k2]) {
         k2++;
       }
     }
@@ -96626,13 +96639,13 @@ If there's a particular need for this, please submit a feature request at https:
     if (segmenter) {
       return leadingAndTrailingWs(string, segmenter)[1];
     }
-    let i3;
-    for (i3 = string.length - 1; i3 >= 0; i3--) {
-      if (!string[i3].match(/\s/)) {
+    let i2;
+    for (i2 = string.length - 1; i2 >= 0; i2--) {
+      if (!string[i2].match(/\s/)) {
         break;
       }
     }
-    return string.substring(i3 + 1);
+    return string.substring(i2 + 1);
   }
   function leadingWs(string, segmenter) {
     if (segmenter) {
@@ -96701,8 +96714,8 @@ If there's a particular need for this, please submit a feature request at https:
       return tokens;
     }
     join(tokens) {
-      return tokens.map((token, i3) => {
-        if (i3 == 0) {
+      return tokens.map((token, i2) => {
+        if (i2 == 0) {
           return token;
         } else {
           return token.replace(/^\s+/, "");
@@ -96830,9 +96843,9 @@ If there's a particular need for this, please submit a feature request at https:
     if (!linesAndNewlines[linesAndNewlines.length - 1]) {
       linesAndNewlines.pop();
     }
-    for (let i3 = 0; i3 < linesAndNewlines.length; i3++) {
-      const line = linesAndNewlines[i3];
-      if (i3 % 2 && !options.newlineIsToken) {
+    for (let i2 = 0; i2 < linesAndNewlines.length; i2++) {
+      const line = linesAndNewlines[i2];
+      if (i2 % 2 && !options.newlineIsToken) {
         retLines[retLines.length - 1] += line;
       } else {
         retLines.push(line);
@@ -97046,13 +97059,13 @@ If there's a particular need for this, please submit a feature request at https:
         const lo = Math.min(rem.index, bestMatch.index);
         const hi = Math.max(rem.index, bestMatch.index);
         let crossesCurrentContent = false;
-        for (let i3 = lo + 1; i3 < hi; i3++) {
-          const status = blocks[i3].__revisionDiffStatus?.status;
+        for (let i2 = lo + 1; i2 < hi; i2++) {
+          const status = blocks[i2].__revisionDiffStatus?.status;
           if (status === void 0) {
             crossesCurrentContent = true;
             break;
           }
-          if (status === "added" && !pairedAdded.has(i3)) {
+          if (status === "added" && !pairedAdded.has(i2)) {
             crossesCurrentContent = true;
             break;
           }
@@ -97077,8 +97090,8 @@ If there's a particular need for this, please submit a feature request at https:
     }).filter(Boolean);
   }
   function diffRawBlocks(currentRaw, previousRaw) {
-    currentRaw = currentRaw.filter((b3) => !isWhitespaceRawBlock(b3));
-    previousRaw = previousRaw.filter((b3) => !isWhitespaceRawBlock(b3));
+    currentRaw = currentRaw.filter((b2) => !isWhitespaceRawBlock(b2));
+    previousRaw = previousRaw.filter((b2) => !isWhitespaceRawBlock(b2));
     const createBlockSignature = (rawBlock) => JSON.stringify({
       name: rawBlock.blockName,
       attrs: rawBlock.attrs,
@@ -97096,21 +97109,21 @@ If there's a particular need for this, please submit a feature request at https:
     let prevIdx = 0;
     for (const part of diff) {
       if (part.added) {
-        for (let i3 = 0; i3 < part.count; i3++) {
+        for (let i2 = 0; i2 < part.count; i2++) {
           result.push({
             ...currentRaw[currIdx++],
             __revisionDiffStatus: { status: "added" }
           });
         }
       } else if (part.removed) {
-        for (let i3 = 0; i3 < part.count; i3++) {
+        for (let i2 = 0; i2 < part.count; i2++) {
           result.push({
             ...previousRaw[prevIdx++],
             __revisionDiffStatus: { status: "removed" }
           });
         }
       } else {
-        for (let i3 = 0; i3 < part.count; i3++) {
+        for (let i2 = 0; i2 < part.count; i2++) {
           const currBlock = currentRaw[currIdx++];
           const prevBlock = previousRaw[prevIdx++];
           const diffedInnerBlocks = diffRawBlocks(
@@ -97273,13 +97286,13 @@ If there's a particular need for this, please submit a feature request at https:
         );
         let rangeStart = 0;
         let rangeFormatChanged = checkFormatChanged(0);
-        for (let i3 = 1; i3 <= len2; i3++) {
-          const formatChanged = i3 < len2 && checkFormatChanged(i3);
-          if (i3 === len2 || formatChanged !== rangeFormatChanged) {
+        for (let i2 = 1; i2 <= len2; i2++) {
+          const formatChanged = i2 < len2 && checkFormatChanged(i2);
+          if (i2 === len2 || formatChanged !== rangeFormatChanged) {
             const rangeSlice = (0, import_rich_text2.slice)(
               currentRichText,
               currentIdx + rangeStart,
-              currentIdx + i3
+              currentIdx + i2
             );
             if (rangeFormatChanged) {
               const { type } = describeFormatChange(
@@ -97307,13 +97320,13 @@ If there's a particular need for this, please submit a feature request at https:
                   }
                 },
                 0,
-                i3 - rangeStart
+                i2 - rangeStart
               );
               result = (0, import_rich_text2.concat)(result, marked);
             } else {
               result = (0, import_rich_text2.concat)(result, rangeSlice);
             }
-            rangeStart = i3;
+            rangeStart = i2;
             rangeFormatChanged = formatChanged;
           }
         }
@@ -97382,9 +97395,9 @@ If there's a particular need for this, please submit a feature request at https:
       parsedBlock.attributes.__revisionDiffStatus = rawBlock.__revisionDiffStatus;
     }
     if (parsedBlock.innerBlocks && rawBlock.innerBlocks) {
-      for (let i3 = 0; i3 < parsedBlock.innerBlocks.length; i3++) {
-        const parsedInner = parsedBlock.innerBlocks[i3];
-        const rawInner = rawBlock.innerBlocks[i3];
+      for (let i2 = 0; i2 < parsedBlock.innerBlocks.length; i2++) {
+        const parsedInner = parsedBlock.innerBlocks[i2];
+        const rawInner = rawBlock.innerBlocks[i2];
         if (parsedInner && rawInner) {
           applyDiffRecursively(parsedInner, rawInner);
         }
@@ -97419,11 +97432,11 @@ If there's a particular need for this, please submit a feature request at https:
       if (chunk2.removed) {
         prevIndex += chunk2.count;
       } else if (chunk2.added) {
-        for (let i3 = 0; i3 < chunk2.count; i3++) {
+        for (let i2 = 0; i2 < chunk2.count; i2++) {
           result.push(newBlocks[newIndex++]);
         }
       } else {
-        for (let i3 = 0; i3 < chunk2.count; i3++) {
+        for (let i2 = 0; i2 < chunk2.count; i2++) {
           const newBlock = newBlocks[newIndex++];
           const prevBlock = prevBlocks[prevIndex++];
           result.push({
@@ -100300,11 +100313,11 @@ If there's a particular need for this, please submit a feature request at https:
     if (ratio === void 0 || ratio === null) {
       return NaN;
     }
-    const [a3, b3, ...rest] = String(ratio).split("/").map(Number);
-    if (a3 <= 0 || b3 <= 0 || Number.isNaN(a3) || Number.isNaN(b3) || rest.length) {
+    const [a2, b2, ...rest] = String(ratio).split("/").map(Number);
+    if (a2 <= 0 || b2 <= 0 || Number.isNaN(a2) || Number.isNaN(b2) || rest.length) {
       return NaN;
     }
-    return b3 ? a3 / b3 : a3;
+    return b2 ? a2 / b2 : a2;
   }
   function aspectRatioPresetFromSettings({ name: name2, ratio } = {}) {
     const value = ratioToNumber(ratio);
@@ -105100,9 +105113,9 @@ ${content}
           },
           ...getOptionsFromTree(treeNode.children || [], level + 1)
         ]);
-        const sortedNodes = mappedNodes.sort(([a3], [b3]) => {
-          const priorityA = getItemPriority2(a3.rawName, fieldValue);
-          const priorityB = getItemPriority2(b3.rawName, fieldValue);
+        const sortedNodes = mappedNodes.sort(([a2], [b2]) => {
+          const priorityA = getItemPriority2(a2.rawName, fieldValue);
+          const priorityB = getItemPriority2(b2.rawName, fieldValue);
           return priorityA >= priorityB ? 1 : -1;
         });
         return sortedNodes.flat();
@@ -107414,9 +107427,9 @@ ${content}
     { id: "standard", caption: (0, import_i18n259.__)("Standard") },
     { id: "status", caption: (0, import_i18n259.__)("Status") },
     { id: "video", caption: (0, import_i18n259.__)("Video") }
-  ].sort((a3, b3) => {
-    const normalizedA = a3.caption.toUpperCase();
-    const normalizedB = b3.caption.toUpperCase();
+  ].sort((a2, b2) => {
+    const normalizedA = a2.caption.toUpperCase();
+    const normalizedB = b2.caption.toUpperCase();
     if (normalizedA < normalizedB) {
       return -1;
     }
@@ -108795,7 +108808,7 @@ ${content}
         const query = {
           ...DEFAULT_QUERY3,
           // Sort ids so reordering alone doesn't produce a new query key and re-fetch.
-          include: _termIds?.length ? [..._termIds].sort((a3, b3) => a3 - b3).join(",") : void 0,
+          include: _termIds?.length ? [..._termIds].sort((a2, b2) => a2 - b2).join(",") : void 0,
           per_page: -1
         };
         return {
@@ -110882,8 +110895,8 @@ ${content}
     let oldIndex = 0;
     let newIndex = 0;
     let adjustedPosition = position;
-    for (let i3 = 0; i3 < changes.length; i3++) {
-      const change = changes[i3];
+    for (let i2 = 0; i2 < changes.length; i2++) {
+      const change = changes[i2];
       if (!change.added && !change.removed) {
         oldIndex += change.value.length;
         newIndex += change.value.length;
@@ -110893,15 +110906,15 @@ ${content}
       const newStart = newIndex;
       let oldLength = 0;
       let newLength = 0;
-      while (i3 < changes.length && (changes[i3].added || changes[i3].removed)) {
-        if (changes[i3].removed) {
-          oldLength += changes[i3].value.length;
+      while (i2 < changes.length && (changes[i2].added || changes[i2].removed)) {
+        if (changes[i2].removed) {
+          oldLength += changes[i2].value.length;
         } else {
-          newLength += changes[i3].value.length;
+          newLength += changes[i2].value.length;
         }
-        i3++;
+        i2++;
       }
-      i3--;
+      i2--;
       const oldEnd = oldStart + oldLength;
       const newEnd = newStart + newLength;
       if (position < oldStart) {
@@ -114427,24 +114440,24 @@ ${content}
   var import_i18n316 = __toESM(require_i18n(), 1);
 
   // node_modules/colord/plugins/a11y.mjs
-  var o3 = function(o4) {
-    var t4 = o4 / 255;
-    return t4 < 0.04045 ? t4 / 12.92 : Math.pow((t4 + 0.055) / 1.055, 2.4);
+  var o2 = function(o3) {
+    var t3 = o3 / 255;
+    return t3 < 0.04045 ? t3 / 12.92 : Math.pow((t3 + 0.055) / 1.055, 2.4);
   };
-  var t3 = function(t4) {
-    return 0.2126 * o3(t4.r) + 0.7152 * o3(t4.g) + 0.0722 * o3(t4.b);
+  var t2 = function(t3) {
+    return 0.2126 * o2(t3.r) + 0.7152 * o2(t3.g) + 0.0722 * o2(t3.b);
   };
-  var r4 = function(o4) {
-    o4.prototype.luminance = function() {
-      return o5 = t3(this.rgba), void 0 === (r5 = 2) && (r5 = 0), void 0 === n3 && (n3 = Math.pow(10, r5)), Math.round(n3 * o5) / n3 + 0;
-      var o5, r5, n3;
-    }, o4.prototype.contrast = function(r5) {
-      void 0 === r5 && (r5 = "#FFF");
-      var n3, a3, i3, e3, v3, u3, d3, c6 = r5 instanceof o4 ? r5 : new o4(r5);
-      return e3 = this.rgba, v3 = c6.toRgb(), u3 = t3(e3), d3 = t3(v3), n3 = u3 > d3 ? (u3 + 0.05) / (d3 + 0.05) : (d3 + 0.05) / (u3 + 0.05), void 0 === (a3 = 2) && (a3 = 0), void 0 === i3 && (i3 = Math.pow(10, a3)), Math.floor(i3 * n3) / i3 + 0;
-    }, o4.prototype.isReadable = function(o5, t4) {
-      return void 0 === o5 && (o5 = "#FFF"), void 0 === t4 && (t4 = {}), this.contrast(o5) >= (e3 = void 0 === (i3 = (r5 = t4).size) ? "normal" : i3, "AAA" === (a3 = void 0 === (n3 = r5.level) ? "AA" : n3) && "normal" === e3 ? 7 : "AA" === a3 && "large" === e3 ? 3 : 4.5);
-      var r5, n3, a3, i3, e3;
+  var r3 = function(o3) {
+    o3.prototype.luminance = function() {
+      return o4 = t2(this.rgba), void 0 === (r4 = 2) && (r4 = 0), void 0 === n2 && (n2 = Math.pow(10, r4)), Math.round(n2 * o4) / n2 + 0;
+      var o4, r4, n2;
+    }, o3.prototype.contrast = function(r4) {
+      void 0 === r4 && (r4 = "#FFF");
+      var n2, a2, i2, e2, v3, u2, d2, c6 = r4 instanceof o3 ? r4 : new o3(r4);
+      return e2 = this.rgba, v3 = c6.toRgb(), u2 = t2(e2), d2 = t2(v3), n2 = u2 > d2 ? (u2 + 0.05) / (d2 + 0.05) : (d2 + 0.05) / (u2 + 0.05), void 0 === (a2 = 2) && (a2 = 0), void 0 === i2 && (i2 = Math.pow(10, a2)), Math.floor(i2 * n2) / i2 + 0;
+    }, o3.prototype.isReadable = function(o4, t3) {
+      return void 0 === o4 && (o4 = "#FFF"), void 0 === t3 && (t3 = {}), this.contrast(o4) >= (e2 = void 0 === (i2 = (r4 = t3).size) ? "normal" : i2, "AAA" === (a2 = void 0 === (n2 = r4.level) ? "AA" : n2) && "normal" === e2 ? 7 : "AA" === a2 && "large" === e2 ? 3 : 4.5);
+      var r4, n2, a2, i2, e2;
     };
   };
 
@@ -114470,7 +114483,7 @@ ${content}
 
   // packages/editor/build-module/components/collaborators-presence/avatar/component.mjs
   var import_jsx_runtime611 = __toESM(require_jsx_runtime(), 1);
-  k([r4]);
+  D([r3]);
   var GRAY_900 = "#1e1e1e";
   var WHITE = "#fff";
   function Avatar({
@@ -114495,7 +114508,7 @@ ${content}
     const showBadge = variant === "badge" && !!name2;
     const initials = name2 ? name2.split(/\s+/).slice(0, 2).map((word) => word[0]).join("").toUpperCase() : void 0;
     const nameColor = (0, import_element379.useMemo)(
-      () => borderColor && w(borderColor).isReadable(GRAY_900, {
+      () => borderColor && A(borderColor).isReadable(GRAY_900, {
         level: "AA",
         size: "normal"
       }) ? GRAY_900 : WHITE,
@@ -114692,17 +114705,17 @@ ${content}
     const record = (0, import_rich_text6.create)({ html });
     const formats = record.formats;
     let start2 = -1;
-    for (let i3 = 0; i3 < formats.length; i3++) {
-      const stack = formats[i3];
+    for (let i2 = 0; i2 < formats.length; i2++) {
+      const stack = formats[i2];
       const hit = stack?.find(
-        (f3) => f3.type === NOTE_FORMAT_TYPE && f3.attributes && f3.attributes["data-id"] === target
+        (f2) => f2.type === NOTE_FORMAT_TYPE && f2.attributes && f2.attributes["data-id"] === target
       );
       if (hit) {
         if (start2 === -1) {
-          start2 = i3;
+          start2 = i2;
         }
       } else if (start2 !== -1) {
-        return { start: start2, end: i3 };
+        return { start: start2, end: i2 };
       }
     }
     if (start2 !== -1) {
@@ -114754,14 +114767,14 @@ ${content}
   }
   function applyNoteFormat(record, format7, start2, end) {
     const formats = record.formats.slice();
-    for (let i3 = start2; i3 < end; i3++) {
-      const stack = formats[i3] ? formats[i3].slice() : [];
+    for (let i2 = start2; i2 < end; i2++) {
+      const stack = formats[i2] ? formats[i2].slice() : [];
       stack.push(format7);
-      formats[i3] = stack;
+      formats[i2] = stack;
     }
     const spans = /* @__PURE__ */ new Map();
-    for (let i3 = 0; i3 < formats.length; i3++) {
-      const stack = formats[i3];
+    for (let i2 = 0; i2 < formats.length; i2++) {
+      const stack = formats[i2];
       if (!stack) {
         continue;
       }
@@ -114772,9 +114785,9 @@ ${content}
         const id = fmt.attributes?.["data-id"];
         const span = spans.get(id);
         if (span) {
-          span.end = i3;
+          span.end = i2;
         } else {
-          spans.set(id, { start: i3, end: i3 });
+          spans.set(id, { start: i2, end: i2 });
         }
       }
     }
@@ -114782,8 +114795,8 @@ ${content}
       const span = spans.get(id);
       return span ? span.end - span.start : 0;
     };
-    for (let i3 = 0; i3 < formats.length; i3++) {
-      const stack = formats[i3];
+    for (let i2 = 0; i2 < formats.length; i2++) {
+      const stack = formats[i2];
       if (!stack || stack.length < 2) {
         continue;
       }
@@ -114793,11 +114806,11 @@ ${content}
       }
       if (notes.length > 1) {
         notes.sort(
-          (a3, b3) => sizeOf(b3.attributes?.["data-id"]) - sizeOf(a3.attributes?.["data-id"])
+          (a2, b2) => sizeOf(b2.attributes?.["data-id"]) - sizeOf(a2.attributes?.["data-id"])
         );
       }
       const others = stack.filter((fmt) => fmt.type !== NOTE_FORMAT_TYPE);
-      formats[i3] = [...notes, ...others];
+      formats[i2] = [...notes, ...others];
     }
     return { ...record, formats };
   }
@@ -114845,7 +114858,7 @@ ${content}
   }) {
     const offsets = {};
     const orderedThreads = [...threads].sort(
-      (a3, b3) => (blockRects[a3.id]?.top ?? Number.MAX_VALUE) - (blockRects[b3.id]?.top ?? Number.MAX_VALUE)
+      (a2, b2) => (blockRects[a2.id]?.top ?? Number.MAX_VALUE) - (blockRects[b2.id]?.top ?? Number.MAX_VALUE)
     );
     const anchorIndex = Math.max(
       0,
@@ -114861,8 +114874,8 @@ ${content}
     offsets[anchorThread.id] = THREAD_ALIGN_OFFSET;
     let prevAdjustedTop = anchorTop + THREAD_ALIGN_OFFSET;
     let prevHeight = anchorHeight;
-    for (let i3 = anchorIndex + 1; i3 < orderedThreads.length; i3++) {
-      const thread = orderedThreads[i3];
+    for (let i2 = anchorIndex + 1; i2 < orderedThreads.length; i2++) {
+      const thread = orderedThreads[i2];
       const threadRect = blockRects[thread.id];
       if (!threadRect) {
         continue;
@@ -114879,8 +114892,8 @@ ${content}
       prevHeight = threadHeight;
     }
     let belowAdjustedTop = anchorTop + THREAD_ALIGN_OFFSET;
-    for (let i3 = anchorIndex - 1; i3 >= 0; i3--) {
-      const thread = orderedThreads[i3];
+    for (let i2 = anchorIndex - 1; i2 >= 0; i2--) {
+      const thread = orderedThreads[i2];
       const threadRect = blockRects[thread.id];
       if (!threadRect) {
         continue;
@@ -115383,7 +115396,7 @@ ${content}
         clearTimeout(timeoutRef.current);
       }
       timeoutRef.current = setTimeout(() => {
-        setRecomputeToken((t4) => t4 + 1);
+        setRecomputeToken((t3) => t3 + 1);
       }, delayMs);
       return () => {
         if (timeoutRef.current) {
@@ -115409,7 +115422,7 @@ ${content}
       }
       requestAnimationFrameRef.current = requestAnimationFrame(() => {
         requestAnimationFrameRef.current = null;
-        setRecomputeToken((t4) => t4 + 1);
+        setRecomputeToken((t3) => t3 + 1);
       });
     }, []);
     return [recomputeToken, rerenderOnNextFrame];
@@ -115513,7 +115526,7 @@ ${content}
       const x2 = rect.left - overlayRect.left;
       const y3 = rect.top - overlayRect.top;
       const isDuplicate = rects.some(
-        (r5) => r5.x === x2 && r5.y === y3 && r5.width === rect.width && r5.height === rect.height
+        (r4) => r4.x === x2 && r4.y === y3 && r4.width === rect.width && r4.height === rect.height
       );
       if (isDuplicate) {
         continue;
@@ -115535,13 +115548,13 @@ ${content}
     const allBlocks = editorDocument.querySelectorAll("[data-block]");
     let startIndex = -1;
     let endIndex = -1;
-    for (let i3 = 0; i3 < allBlocks.length; i3++) {
-      const blockId = allBlocks[i3].getAttribute("data-block");
+    for (let i2 = 0; i2 < allBlocks.length; i2++) {
+      const blockId = allBlocks[i2].getAttribute("data-block");
       if (blockId === startBlockId) {
-        startIndex = i3;
+        startIndex = i2;
       }
       if (blockId === endBlockId) {
-        endIndex = i3;
+        endIndex = i2;
       }
     }
     if (startIndex === -1 || endIndex === -1) {
@@ -115551,9 +115564,9 @@ ${content}
       [startIndex, endIndex] = [endIndex, startIndex];
     }
     const result = [];
-    for (let i3 = startIndex + 1; i3 < endIndex; i3++) {
-      const block = allBlocks[i3];
-      if (!result.some((r5) => r5.contains(block))) {
+    for (let i2 = startIndex + 1; i2 < endIndex; i2++) {
+      const block = allBlocks[i2];
+      if (!result.some((r4) => r4.contains(block))) {
         result.push(block);
       }
     }
@@ -115636,9 +115649,9 @@ ${content}
     }
     return { node: blockElement, offset: 0 };
   };
-  var isNodeBefore = (a3, b3) => (
+  var isNodeBefore = (a2, b2) => (
     // eslint-disable-next-line no-bitwise
-    !!(a3.compareDocumentPosition(b3) & Node.DOCUMENT_POSITION_FOLLOWING)
+    !!(a2.compareDocumentPosition(b2) & Node.DOCUMENT_POSITION_FOLLOWING)
   );
 
   // packages/editor/build-module/components/collaborators-overlay/compute-selection.mjs
@@ -115737,12 +115750,12 @@ ${content}
     return computeMultiBlockOverlayRects(start2, end, overlayContext);
   }
   function blockBoundingRect(blockEl, overlayRect) {
-    const r5 = blockEl.getBoundingClientRect();
+    const r4 = blockEl.getBoundingClientRect();
     return {
-      x: r5.left - overlayRect.left,
-      y: r5.top - overlayRect.top,
-      width: r5.width,
-      height: r5.height
+      x: r4.left - overlayRect.left,
+      y: r4.top - overlayRect.top,
+      width: r4.width,
+      height: r4.height
     };
   }
   function computeMultiBlockOverlayRects(start2, end, overlayContext) {
@@ -116166,7 +116179,7 @@ ${content}
       };
       const results = [];
       const hasOtherCollaborators = sortedUsers.some(
-        (u3) => !u3.isMe
+        (u2) => !u2.isMe
       );
       sortedUsers.forEach((user) => {
         if (user.isMe && (!showOwnCursor || !hasOtherCollaborators)) {
@@ -116208,23 +116221,23 @@ ${content}
           } catch {
             return;
           }
-          const promote = (r5) => {
-            if (!r5.localClientId) {
-              return r5;
+          const promote = (r4) => {
+            if (!r4.localClientId) {
+              return r4;
             }
             const el = blockEditorDocument.querySelector(
-              `[data-block="${r5.localClientId}"]`
+              `[data-block="${r4.localClientId}"]`
             );
             if (!el) {
-              return r5;
+              return r4;
             }
             const container = blockContainerOf(el);
             const containerId = container.getAttribute("data-block");
-            if (!containerId || containerId === r5.localClientId) {
-              return r5;
+            if (!containerId || containerId === r4.localClientId) {
+              return r4;
             }
             return {
-              ...r5,
+              ...r4,
               localClientId: containerId,
               richTextOffset: null,
               attributeKey: null
@@ -116346,7 +116359,7 @@ ${content}
       const refs = cursorRefsMap.current;
       const currentIds = /* @__PURE__ */ new Set([
         ...cursors.map((c6) => c6.clientId),
-        ...highlights.map((h3) => h3.clientId)
+        ...highlights.map((h2) => h2.clientId)
       ]);
       for (const id of refs.keys()) {
         if (!currentIds.has(id)) {
@@ -116484,11 +116497,11 @@ ${content}
       (c6) => !c6.isMe
     );
     const collaboratorsForList = (0, import_element385.useMemo)(() => {
-      return [...activeCollaborators].sort((a3, b3) => {
-        if (a3.isMe && !b3.isMe) {
+      return [...activeCollaborators].sort((a2, b2) => {
+        if (a2.isMe && !b2.isMe) {
           return -1;
         }
-        if (!a3.isMe && b3.isMe) {
+        if (!a2.isMe && b2.isMe) {
           return 1;
         }
         return 0;
@@ -116985,7 +116998,7 @@ ${content}
       [rawRevisions]
     );
     const selectedIndex = revisions?.findIndex(
-      (r5) => r5[revisionKey] === currentRevisionId
+      (r4) => r4[revisionKey] === currentRevisionId
     );
     const handleSliderChange = (index2) => {
       const revision = revisions?.[index2];
@@ -117662,13 +117675,13 @@ ${content}
     useFlashEditableBlocks
   } = unlock(import_block_editor84.privateApis);
   function getPostContentAttributes(blocks) {
-    for (let i3 = 0; i3 < blocks.length; i3++) {
-      if (blocks[i3].name === "core/post-content") {
-        return blocks[i3].attributes;
+    for (let i2 = 0; i2 < blocks.length; i2++) {
+      if (blocks[i2].name === "core/post-content") {
+        return blocks[i2].attributes;
       }
-      if (blocks[i3].innerBlocks.length) {
+      if (blocks[i2].innerBlocks.length) {
         const nestedPostContent = getPostContentAttributes(
-          blocks[i3].innerBlocks
+          blocks[i2].innerBlocks
         );
         if (nestedPostContent) {
           return nestedPostContent;
@@ -117677,8 +117690,8 @@ ${content}
     }
   }
   function checkForPostContentAtRootLevel(blocks) {
-    for (let i3 = 0; i3 < blocks.length; i3++) {
-      if (blocks[i3].name === "core/post-content") {
+    for (let i2 = 0; i2 < blocks.length; i2++) {
+      if (blocks[i2].name === "core/post-content") {
         return true;
       }
     }
@@ -117687,7 +117700,7 @@ ${content}
   var CANVAS_MIN_WIDTH = 300;
   var CANVAS_TARGET_ASPECT_RATIO = 9 / 16;
   function getCanvasHeight(width, containerSize) {
-    const lerp2 = (a3, b3, amount) => a3 + (b3 - a3) * amount;
+    const lerp2 = (a2, b2, amount) => a2 + (b2 - a2) * amount;
     const lerpFactor = 1 - Math.max(
       0,
       Math.min(
@@ -119421,7 +119434,7 @@ ${content}
         actions2.push(setAsHomepageAction, setAsPostsPageAction);
       }
       actions2 = actions2.sort(
-        (a3, b3) => b3.id === "move-to-trash" ? -1 : 0
+        (a2, b2) => b2.id === "move-to-trash" ? -1 : 0
       );
       actions2 = actions2.filter((action) => {
         if (!action.context) {
@@ -119430,11 +119443,11 @@ ${content}
         return action.context === context;
       });
       if (onActionPerformed) {
-        for (let i3 = 0; i3 < actions2.length; ++i3) {
-          if (actions2[i3].callback) {
-            const existingCallback = actions2[i3].callback;
-            actions2[i3] = {
-              ...actions2[i3],
+        for (let i2 = 0; i2 < actions2.length; ++i2) {
+          if (actions2[i2].callback) {
+            const existingCallback = actions2[i2].callback;
+            actions2[i2] = {
+              ...actions2[i2],
               callback: (items, argsObject) => {
                 existingCallback(items, {
                   ...argsObject,
@@ -119443,7 +119456,7 @@ ${content}
                       argsObject.onActionPerformed(_items);
                     }
                     onActionPerformed(
-                      actions2[i3].id,
+                      actions2[i2].id,
                       _items
                     );
                   }
@@ -119451,10 +119464,10 @@ ${content}
               }
             };
           }
-          if (actions2[i3].RenderModal) {
-            const ExistingRenderModal = actions2[i3].RenderModal;
-            actions2[i3] = {
-              ...actions2[i3],
+          if (actions2[i2].RenderModal) {
+            const ExistingRenderModal = actions2[i2].RenderModal;
+            actions2[i2] = {
+              ...actions2[i2],
               RenderModal: (props) => {
                 return /* @__PURE__ */ (0, import_jsx_runtime635.jsx)(
                   ExistingRenderModal,
@@ -119465,7 +119478,7 @@ ${content}
                         props.onActionPerformed(_items);
                       }
                       onActionPerformed(
-                        actions2[i3].id,
+                        actions2[i2].id,
                         _items
                       );
                     }
@@ -120781,7 +120794,7 @@ ${content}
         return;
       }
       const index2 = revisions.findIndex(
-        (r5) => String(r5[revisionKey]) === String(currentRevisionId)
+        (r4) => String(r4[revisionKey]) === String(currentRevisionId)
       );
       if (index2 < 0) {
         return;
@@ -123067,11 +123080,11 @@ ${content}
             thread,
             start: getInlineMarkerStart(thread, attributes)
           };
-        }).filter(Boolean).sort((a3, b3) => {
-          if (a3.start !== b3.start) {
-            return a3.start - b3.start;
+        }).filter(Boolean).sort((a2, b2) => {
+          if (a2.start !== b2.start) {
+            return a2.start - b2.start;
           }
-          return a3.thread.id - b3.thread.id;
+          return a2.thread.id - b2.thread.id;
         });
         for (const { thread } of orderedThreads) {
           if (thread.status === "hold") {
@@ -123448,7 +123461,7 @@ ${content}
       const out = [];
       orderedBlockIds.forEach((blockId) => {
         const threadsForBlock = notes.filter(
-          (t4) => t4.blockClientId === blockId
+          (t3) => t3.blockClientId === blockId
         );
         out.push(...threadsForBlock);
         if (blockId === selectedBlockClientId) {
@@ -123464,7 +123477,7 @@ ${content}
       orderedBlockIds
     ]);
     const handleDelete = async (note) => {
-      const currentIndex = threads.findIndex((t4) => t4.id === note.id);
+      const currentIndex = threads.findIndex((t3) => t3.id === note.id);
       const nextThread = threads[currentIndex + 1];
       const prevThread = threads[currentIndex - 1];
       const deleted = await onDelete(note);
@@ -123493,7 +123506,7 @@ ${content}
     const targetNoteId = (0, import_element427.useMemo)(() => {
       const blockNoteIds = getNoteIdsFromMetadata({ noteId });
       const blockThreads = notes.filter(
-        (t4) => blockNoteIds.includes(t4.id)
+        (t3) => blockNoteIds.includes(t3.id)
       );
       return pickPrimaryNote(blockThreads)?.id;
     }, [noteId, notes]);
@@ -123526,7 +123539,7 @@ ${content}
       if (event.defaultPrevented) {
         return;
       }
-      const currentIndex = threads.findIndex((t4) => t4.id === thread.id);
+      const currentIndex = threads.findIndex((t3) => t3.id === thread.id);
       const isSelfTarget2 = event.currentTarget === event.target;
       if ((event.key === "Enter" || event.key === "ArrowRight") && isSelfTarget2 && !isSelected2) {
         selectNote2(thread.id);
@@ -123732,7 +123745,7 @@ ${content}
       }
       const participantsMap = /* @__PURE__ */ new Map();
       const allNotes = [note, ...note.reply].sort(
-        (a3, b3) => new Date(a3.date) - new Date(b3.date)
+        (a2, b2) => new Date(a2.date) - new Date(b2.date)
       );
       for (const entry of allNotes) {
         if (!entry.author_name || participantsMap.has(entry.author)) {

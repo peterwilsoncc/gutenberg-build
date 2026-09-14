@@ -271,54 +271,54 @@ var require_data = __commonJS({
 var require_es6 = __commonJS({
   "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
     "use strict";
-    module.exports = function equal(a2, b2) {
-      if (a2 === b2) return true;
-      if (a2 && b2 && typeof a2 == "object" && typeof b2 == "object") {
-        if (a2.constructor !== b2.constructor) return false;
-        var length, i2, keys;
-        if (Array.isArray(a2)) {
-          length = a2.length;
-          if (length != b2.length) return false;
-          for (i2 = length; i2-- !== 0; )
-            if (!equal(a2[i2], b2[i2])) return false;
+    module.exports = function equal(a, b) {
+      if (a === b) return true;
+      if (a && b && typeof a == "object" && typeof b == "object") {
+        if (a.constructor !== b.constructor) return false;
+        var length, i, keys;
+        if (Array.isArray(a)) {
+          length = a.length;
+          if (length != b.length) return false;
+          for (i = length; i-- !== 0; )
+            if (!equal(a[i], b[i])) return false;
           return true;
         }
-        if (a2 instanceof Map && b2 instanceof Map) {
-          if (a2.size !== b2.size) return false;
-          for (i2 of a2.entries())
-            if (!b2.has(i2[0])) return false;
-          for (i2 of a2.entries())
-            if (!equal(i2[1], b2.get(i2[0]))) return false;
+        if (a instanceof Map && b instanceof Map) {
+          if (a.size !== b.size) return false;
+          for (i of a.entries())
+            if (!b.has(i[0])) return false;
+          for (i of a.entries())
+            if (!equal(i[1], b.get(i[0]))) return false;
           return true;
         }
-        if (a2 instanceof Set && b2 instanceof Set) {
-          if (a2.size !== b2.size) return false;
-          for (i2 of a2.entries())
-            if (!b2.has(i2[0])) return false;
+        if (a instanceof Set && b instanceof Set) {
+          if (a.size !== b.size) return false;
+          for (i of a.entries())
+            if (!b.has(i[0])) return false;
           return true;
         }
-        if (ArrayBuffer.isView(a2) && ArrayBuffer.isView(b2)) {
-          length = a2.length;
-          if (length != b2.length) return false;
-          for (i2 = length; i2-- !== 0; )
-            if (a2[i2] !== b2[i2]) return false;
+        if (ArrayBuffer.isView(a) && ArrayBuffer.isView(b)) {
+          length = a.length;
+          if (length != b.length) return false;
+          for (i = length; i-- !== 0; )
+            if (a[i] !== b[i]) return false;
           return true;
         }
-        if (a2.constructor === RegExp) return a2.source === b2.source && a2.flags === b2.flags;
-        if (a2.valueOf !== Object.prototype.valueOf) return a2.valueOf() === b2.valueOf();
-        if (a2.toString !== Object.prototype.toString) return a2.toString() === b2.toString();
-        keys = Object.keys(a2);
+        if (a.constructor === RegExp) return a.source === b.source && a.flags === b.flags;
+        if (a.valueOf !== Object.prototype.valueOf) return a.valueOf() === b.valueOf();
+        if (a.toString !== Object.prototype.toString) return a.toString() === b.toString();
+        keys = Object.keys(a);
         length = keys.length;
-        if (length !== Object.keys(b2).length) return false;
-        for (i2 = length; i2-- !== 0; )
-          if (!Object.prototype.hasOwnProperty.call(b2, keys[i2])) return false;
-        for (i2 = length; i2-- !== 0; ) {
-          var key = keys[i2];
-          if (!equal(a2[key], b2[key])) return false;
+        if (length !== Object.keys(b).length) return false;
+        for (i = length; i-- !== 0; )
+          if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
+        for (i = length; i-- !== 0; ) {
+          var key = keys[i];
+          if (!equal(a[key], b[key])) return false;
         }
         return true;
       }
-      return a2 !== a2 && b2 !== b2;
+      return a !== a && b !== b;
     };
   }
 });
@@ -448,18 +448,18 @@ var require_api_fetch = __commonJS({
 });
 
 // node_modules/clsx/dist/clsx.mjs
-function r(e2) {
-  var t2, f2, n2 = "";
-  if ("string" == typeof e2 || "number" == typeof e2) n2 += e2;
-  else if ("object" == typeof e2) if (Array.isArray(e2)) {
-    var o2 = e2.length;
-    for (t2 = 0; t2 < o2; t2++) e2[t2] && (f2 = r(e2[t2])) && (n2 && (n2 += " "), n2 += f2);
-  } else for (f2 in e2) e2[f2] && (n2 && (n2 += " "), n2 += f2);
-  return n2;
+function r(e) {
+  var t, f, n = "";
+  if ("string" == typeof e || "number" == typeof e) n += e;
+  else if ("object" == typeof e) if (Array.isArray(e)) {
+    var o = e.length;
+    for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+  } else for (f in e) e[f] && (n && (n += " "), n += f);
+  return n;
 }
 function clsx() {
-  for (var e2, t2, f2 = 0, n2 = "", o2 = arguments.length; f2 < o2; f2++) (e2 = arguments[f2]) && (t2 = r(e2)) && (n2 && (n2 += " "), n2 += t2);
-  return n2;
+  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
+  return n;
 }
 var clsx_default = clsx;
 
@@ -620,10 +620,10 @@ var useIsoLayoutEffect = typeof document !== "undefined" ? React4.useLayoutEffec
 var React7 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/useMergedRefs.mjs
-function useMergedRefs(a2, b2, c2, d2) {
+function useMergedRefs(a, b, c2, d) {
   const forkRef = useRefWithInit(createForkRef).current;
-  if (didChange(forkRef, a2, b2, c2, d2)) {
-    update(forkRef, [a2, b2, c2, d2]);
+  if (didChange(forkRef, a, b, c2, d)) {
+    update(forkRef, [a, b, c2, d]);
   }
   return forkRef.callback;
 }
@@ -641,8 +641,8 @@ function createForkRef() {
     refs: []
   };
 }
-function didChange(forkRef, a2, b2, c2, d2) {
-  return forkRef.refs[0] !== a2 || forkRef.refs[1] !== b2 || forkRef.refs[2] !== c2 || forkRef.refs[3] !== d2;
+function didChange(forkRef, a, b, c2, d) {
+  return forkRef.refs[0] !== a || forkRef.refs[1] !== b || forkRef.refs[2] !== c2 || forkRef.refs[3] !== d;
 }
 function didChangeN(forkRef, newRefs) {
   return forkRef.refs.length !== newRefs.length || forkRef.refs.some((ref, index2) => ref !== newRefs[index2]);
@@ -660,8 +660,8 @@ function update(forkRef, refs) {
     }
     if (instance != null) {
       const cleanupCallbacks = Array(refs.length).fill(null);
-      for (let i2 = 0; i2 < refs.length; i2 += 1) {
-        const ref = refs[i2];
+      for (let i = 0; i < refs.length; i += 1) {
+        const ref = refs[i];
         if (ref == null) {
           continue;
         }
@@ -669,7 +669,7 @@ function update(forkRef, refs) {
           case "function": {
             const refCleanup = ref(instance);
             if (typeof refCleanup === "function") {
-              cleanupCallbacks[i2] = refCleanup;
+              cleanupCallbacks[i] = refCleanup;
             }
             break;
           }
@@ -681,14 +681,14 @@ function update(forkRef, refs) {
         }
       }
       forkRef.cleanup = () => {
-        for (let i2 = 0; i2 < refs.length; i2 += 1) {
-          const ref = refs[i2];
+        for (let i = 0; i < refs.length; i += 1) {
+          const ref = refs[i];
           if (ref == null) {
             continue;
           }
           switch (typeof ref) {
             case "function": {
-              const cleanupCallback = cleanupCallbacks[i2];
+              const cleanupCallback = cleanupCallbacks[i];
               if (typeof cleanupCallback === "function") {
                 cleanupCallback();
               } else {
@@ -729,17 +729,17 @@ function getReactElementRef(element) {
 }
 
 // node_modules/@base-ui/utils/mergeObjects.mjs
-function mergeObjects(a2, b2) {
-  if (a2 && !b2) {
-    return a2;
+function mergeObjects(a, b) {
+  if (a && !b) {
+    return a;
   }
-  if (!a2 && b2) {
-    return b2;
+  if (!a && b) {
+    return b;
   }
-  if (a2 || b2) {
+  if (a || b) {
     return {
-      ...a2,
-      ...b2
+      ...a,
+      ...b
     };
   }
   return void 0;
@@ -784,22 +784,22 @@ function resolveStyle(style, state) {
 
 // node_modules/@base-ui/react/merge-props/mergeProps.mjs
 var EMPTY_PROPS = {};
-function mergeProps(a2, b2, c2, d2, e2) {
-  if (!c2 && !d2 && !e2 && !a2) {
-    return createInitialMergedProps(b2);
+function mergeProps(a, b, c2, d, e) {
+  if (!c2 && !d && !e && !a) {
+    return createInitialMergedProps(b);
   }
-  let merged = createInitialMergedProps(a2);
-  if (b2) {
-    merged = mergeInto(merged, b2);
+  let merged = createInitialMergedProps(a);
+  if (b) {
+    merged = mergeInto(merged, b);
   }
   if (c2) {
     merged = mergeInto(merged, c2);
   }
-  if (d2) {
-    merged = mergeInto(merged, d2);
+  if (d) {
+    merged = mergeInto(merged, d);
   }
-  if (e2) {
-    merged = mergeInto(merged, e2);
+  if (e) {
+    merged = mergeInto(merged, e);
   }
   return merged;
 }
@@ -811,8 +811,8 @@ function mergePropsN(props) {
     return createInitialMergedProps(props[0]);
   }
   let merged = createInitialMergedProps(props[0]);
-  for (let i2 = 1; i2 < props.length; i2 += 1) {
-    merged = mergeInto(merged, props[i2]);
+  for (let i = 1; i < props.length; i += 1) {
+    merged = mergeInto(merged, props[i]);
   }
   return merged;
 }
@@ -1220,8 +1220,8 @@ var Scheduler = class {
     this.callbacksCount = 0;
     this.startId = this.nextId;
     if (currentCallbacksCount > 0) {
-      for (let i2 = 0; i2 < currentCallbacks.length; i2 += 1) {
-        currentCallbacks[i2]?.(timestamp);
+      for (let i = 0; i < currentCallbacks.length; i += 1) {
+        currentCallbacks[i]?.(timestamp);
       }
     }
   };
@@ -2693,8 +2693,8 @@ function useDelayGroup(context, options = {
 // node_modules/@base-ui/utils/mergeCleanups.mjs
 function mergeCleanups(...cleanups) {
   return () => {
-    for (let i2 = 0; i2 < cleanups.length; i2 += 1) {
-      const cleanup = cleanups[i2];
+    for (let i = 0; i < cleanups.length; i += 1) {
+      const cleanup = cleanups[i];
       if (cleanup) {
         cleanup();
       }
@@ -3979,8 +3979,8 @@ var computePosition = async (reference, floating, config) => {
   let statefulPlacement = placement;
   let resetCount = 0;
   const middlewareData = {};
-  for (let i2 = 0; i2 < middleware.length; i2++) {
-    const currentMiddleware = middleware[i2];
+  for (let i = 0; i < middleware.length; i++) {
+    const currentMiddleware = middleware[i];
     if (!currentMiddleware) {
       continue;
     }
@@ -4031,7 +4031,7 @@ var computePosition = async (reference, floating, config) => {
           y: y2
         } = computeCoordsFromPlacement(rects, statefulPlacement, rtl));
       }
-      i2 = -1;
+      i = -1;
     }
   }
   return {
@@ -4103,7 +4103,7 @@ var flip = function(options) {
           const ignoreCrossAxisOverflow = checkCrossAxis === "alignment" ? initialSideAxis !== getSideAxis(nextPlacement) : false;
           if (!ignoreCrossAxisOverflow || // We leave the current main axis only if every placement on that axis
           // overflows the main axis.
-          overflowsData.every((d2) => getSideAxis(d2.placement) === initialSideAxis ? d2.overflows[0] > 0 : true)) {
+          overflowsData.every((d) => getSideAxis(d.placement) === initialSideAxis ? d.overflows[0] > 0 : true)) {
             return {
               data: {
                 index: nextIndex,
@@ -4115,20 +4115,20 @@ var flip = function(options) {
             };
           }
         }
-        let resetPlacement = (_overflowsData$filter = overflowsData.filter((d2) => d2.overflows[0] <= 0).sort((a2, b2) => a2.overflows[1] - b2.overflows[1])[0]) == null ? void 0 : _overflowsData$filter.placement;
+        let resetPlacement = (_overflowsData$filter = overflowsData.filter((d) => d.overflows[0] <= 0).sort((a, b) => a.overflows[1] - b.overflows[1])[0]) == null ? void 0 : _overflowsData$filter.placement;
         if (!resetPlacement) {
           switch (fallbackStrategy) {
             case "bestFit": {
               var _overflowsData$filter2;
-              const placement2 = (_overflowsData$filter2 = overflowsData.filter((d2) => {
+              const placement2 = (_overflowsData$filter2 = overflowsData.filter((d) => {
                 if (hasFallbackAxisSideDirection) {
-                  const currentSideAxis = getSideAxis(d2.placement);
+                  const currentSideAxis = getSideAxis(d.placement);
                   return currentSideAxis === initialSideAxis || // Create a bias to the `y` side axis due to horizontal
                   // reading directions favoring greater width.
                   currentSideAxis === "y";
                 }
                 return true;
-              }).map((d2) => [d2.placement, d2.overflows.filter((overflow2) => overflow2 > 0).reduce((acc, overflow2) => acc + overflow2, 0)]).sort((a2, b2) => a2[1] - b2[1])[0]) == null ? void 0 : _overflowsData$filter2[0];
+              }).map((d) => [d.placement, d.overflows.filter((overflow2) => overflow2 > 0).reduce((acc, overflow2) => acc + overflow2, 0)]).sort((a, b) => a[1] - b[1])[0]) == null ? void 0 : _overflowsData$filter2[0];
               if (placement2) {
                 resetPlacement = placement2;
               }
@@ -4736,8 +4736,8 @@ function getClippingRect(_ref) {
   let right = firstRect.right;
   let bottom = firstRect.bottom;
   let left = firstRect.left;
-  for (let i2 = 1; i2 < clippingAncestors.length; i2++) {
-    const rect = getClientRectFromClippingAncestor(element, clippingAncestors[i2], strategy);
+  for (let i = 1; i < clippingAncestors.length; i++) {
+    const rect = getClientRectFromClippingAncestor(element, clippingAncestors[i], strategy);
     top = max(rect.top, top);
     right = min(rect.right, right);
     bottom = min(rect.bottom, bottom);
@@ -4862,8 +4862,8 @@ var platform2 = {
   isElement,
   isRTL
 };
-function rectsAreEqual(a2, b2) {
-  return a2.x === b2.x && a2.y === b2.y && a2.width === b2.width && a2.height === b2.height;
+function rectsAreEqual(a, b) {
+  return a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
 }
 function observeMove(element, onMove, ancestorResize) {
   let io = null;
@@ -5040,52 +5040,52 @@ var isClient = typeof document !== "undefined";
 var noop2 = function noop3() {
 };
 var index = isClient ? import_react2.useLayoutEffect : noop2;
-function deepEqual(a2, b2) {
-  if (a2 === b2) {
+function deepEqual(a, b) {
+  if (a === b) {
     return true;
   }
-  if (typeof a2 !== typeof b2) {
+  if (typeof a !== typeof b) {
     return false;
   }
-  if (typeof a2 === "function" && a2.toString() === b2.toString()) {
+  if (typeof a === "function" && a.toString() === b.toString()) {
     return true;
   }
   let length;
-  let i2;
+  let i;
   let keys;
-  if (a2 && b2 && typeof a2 === "object") {
-    if (Array.isArray(a2)) {
-      length = a2.length;
-      if (length !== b2.length) return false;
-      for (i2 = length; i2-- !== 0; ) {
-        if (!deepEqual(a2[i2], b2[i2])) {
+  if (a && b && typeof a === "object") {
+    if (Array.isArray(a)) {
+      length = a.length;
+      if (length !== b.length) return false;
+      for (i = length; i-- !== 0; ) {
+        if (!deepEqual(a[i], b[i])) {
           return false;
         }
       }
       return true;
     }
-    keys = Object.keys(a2);
+    keys = Object.keys(a);
     length = keys.length;
-    if (length !== Object.keys(b2).length) {
+    if (length !== Object.keys(b).length) {
       return false;
     }
-    for (i2 = length; i2-- !== 0; ) {
-      if (!{}.hasOwnProperty.call(b2, keys[i2])) {
+    for (i = length; i-- !== 0; ) {
+      if (!{}.hasOwnProperty.call(b, keys[i])) {
         return false;
       }
     }
-    for (i2 = length; i2-- !== 0; ) {
-      const key = keys[i2];
-      if (key === "_owner" && a2.$$typeof) {
+    for (i = length; i-- !== 0; ) {
+      const key = keys[i];
+      if (key === "_owner" && a.$$typeof) {
         continue;
       }
-      if (!deepEqual(a2[key], b2[key])) {
+      if (!deepEqual(a[key], b[key])) {
         return false;
       }
     }
     return true;
   }
-  return a2 !== a2 && b2 !== b2;
+  return a !== a && b !== b;
 }
 function getDPR(element) {
   if (typeof window === "undefined") {
@@ -5424,8 +5424,8 @@ var BasePopupHandle = class {
     }
     let triggerElement;
     if (triggerId) {
-      for (let i2 = this.attachedStores.length - 1; i2 >= 0 && !triggerElement; i2 -= 1) {
-        triggerElement = this.attachedStores[i2].context.triggerElements.getById(triggerId);
+      for (let i = this.attachedStores.length - 1; i >= 0 && !triggerElement; i -= 1) {
+        triggerElement = this.attachedStores[i].context.triggerElements.getById(triggerId);
       }
       triggerElement ??= this.fallbackStore.context.triggerElements.getById(triggerId);
     }
@@ -5529,8 +5529,8 @@ register({
       instance.didChangeStore = true;
       instance.getSnapshot = () => {
         let didChange2 = false;
-        for (let i2 = 0; i2 < instance.syncHooks.length; i2 += 1) {
-          const hook = instance.syncHooks[i2];
+        for (let i = 0; i < instance.syncHooks.length; i += 1) {
+          const hook = instance.syncHooks[i];
           const value = hook.selector(hook.store.state, hook.a1, hook.a2, hook.a3);
           if (!Object.is(hook.value, value)) {
             didChange2 = true;
@@ -6584,7 +6584,7 @@ function useFloatingWithStore(options, store) {
   }, [domReferenceElement]);
   useIsoLayoutEffect(() => {
     store.context.dataRef.current.floatingContext = context;
-    const node = tree?.nodesRef.current.find((n2) => n2.id === nodeId);
+    const node = tree?.nodesRef.current.find((n) => n.id === nodeId);
     if (node) {
       node.context = context;
     }
@@ -10279,8 +10279,8 @@ var TOOLTIP_TRIGGER_IDENTIFIER = "data-base-ui-tooltip-trigger";
 function getTargetElement(event) {
   if ("composedPath" in event) {
     const path = event.composedPath();
-    for (let i2 = 0; i2 < path.length; i2 += 1) {
-      const element = path[i2];
+    for (let i = 0; i < path.length; i += 1) {
+      const element = path[i];
       if (isElement(element)) {
         return element;
       }
@@ -12503,11 +12503,11 @@ function areIntervalsOverlapping(intervalLeft, intervalRight, options) {
   const [leftStartTime, leftEndTime] = [
     +toDate(intervalLeft.start, options?.in),
     +toDate(intervalLeft.end, options?.in)
-  ].sort((a2, b2) => a2 - b2);
+  ].sort((a, b) => a - b);
   const [rightStartTime, rightEndTime] = [
     +toDate(intervalRight.start, options?.in),
     +toDate(intervalRight.end, options?.in)
-  ].sort((a2, b2) => a2 - b2);
+  ].sort((a, b) => a - b);
   if (options?.inclusive)
     return leftStartTime <= rightEndTime && rightStartTime <= leftEndTime;
   return leftStartTime < rightEndTime && rightStartTime < leftEndTime;
@@ -14333,8 +14333,8 @@ function parseTimezonePattern(pattern, dateString) {
 function parseAnyDigitsSigned(dateString) {
   return parseNumericPattern(numericPatterns.anyDigitsSigned, dateString);
 }
-function parseNDigits(n2, dateString) {
-  switch (n2) {
+function parseNDigits(n, dateString) {
+  switch (n) {
     case 1:
       return parseNumericPattern(numericPatterns.singleDigit, dateString);
     case 2:
@@ -14344,11 +14344,11 @@ function parseNDigits(n2, dateString) {
     case 4:
       return parseNumericPattern(numericPatterns.fourDigits, dateString);
     default:
-      return parseNumericPattern(new RegExp("^\\d{1," + n2 + "}"), dateString);
+      return parseNumericPattern(new RegExp("^\\d{1," + n + "}"), dateString);
   }
 }
-function parseNDigitsSigned(n2, dateString) {
-  switch (n2) {
+function parseNDigitsSigned(n, dateString) {
+  switch (n) {
     case 1:
       return parseNumericPattern(numericPatterns.singleDigitSigned, dateString);
     case 2:
@@ -14358,7 +14358,7 @@ function parseNDigitsSigned(n2, dateString) {
     case 4:
       return parseNumericPattern(numericPatterns.fourDigitsSigned, dateString);
     default:
-      return parseNumericPattern(new RegExp("^-?\\d{1," + n2 + "}"), dateString);
+      return parseNumericPattern(new RegExp("^-?\\d{1," + n + "}"), dateString);
   }
 }
 function dayPeriodEnumToHours(dayPeriod) {
@@ -15842,8 +15842,8 @@ function parse(dateStr, formatStr, referenceDate, options) {
   if (dateStr.length > 0 && notWhitespaceRegExp.test(dateStr)) {
     return invalidDate();
   }
-  const uniquePrioritySetters = setters.map((setter) => setter.priority).sort((a2, b2) => b2 - a2).filter((priority, index2, array) => array.indexOf(priority) === index2).map(
-    (priority) => setters.filter((setter) => setter.priority === priority).sort((a2, b2) => b2.subPriority - a2.subPriority)
+  const uniquePrioritySetters = setters.map((setter) => setter.priority).sort((a, b) => b - a).filter((priority, index2, array) => array.indexOf(priority) === index2).map(
+    (priority) => setters.filter((setter) => setter.priority === priority).sort((a, b) => b.subPriority - a.subPriority)
   ).map((setterArray) => setterArray[0]);
   let date = toDate(referenceDate, options?.in);
   if (isNaN(+date)) return invalidDate();
@@ -16144,7 +16144,7 @@ var enUS2 = {
       if (dateLib && typeof dateLib.format === "function") {
         formatDate2 = dateLib.format.bind(dateLib);
       } else {
-        formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
+        formatDate2 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
       }
       let label = formatDate2(date, "PPPP");
       if (modifiers.today)
@@ -16163,7 +16163,7 @@ var enUS2 = {
       if (dateLib && typeof dateLib.format === "function") {
         formatDate2 = dateLib.format.bind(dateLib);
       } else {
-        formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
+        formatDate2 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
       }
       return formatDate2(date, "LLLL yyyy");
     },
@@ -16172,7 +16172,7 @@ var enUS2 = {
       if (dateLib && typeof dateLib.format === "function") {
         formatDate2 = dateLib.format.bind(dateLib);
       } else {
-        formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
+        formatDate2 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
       }
       let label = formatDate2(date, "PPPP");
       if (modifiers?.today) {
@@ -16187,7 +16187,7 @@ var enUS2 = {
       if (dateLib && typeof dateLib.format === "function") {
         formatDate2 = dateLib.format.bind(dateLib);
       } else {
-        formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
+        formatDate2 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
       }
       return formatDate2(date, "cccc");
     }
@@ -16245,7 +16245,7 @@ var DateLib = class _DateLib {
     };
     this.eachYearOfInterval = (interval) => {
       const years = this.overrides?.eachYearOfInterval ? this.overrides.eachYearOfInterval(interval) : eachYearOfInterval(interval);
-      const uniqueYears = new Set(years.map((d2) => this.getYear(d2)));
+      const uniqueYears = new Set(years.map((d) => this.getYear(d)));
       if (uniqueYears.size === years.length) {
         return years;
       }
@@ -16353,8 +16353,8 @@ var DateLib = class _DateLib {
       numberingSystem: numerals
     });
     const digitMap = {};
-    for (let i2 = 0; i2 < 10; i2++) {
-      digitMap[i2.toString()] = formatter.format(i2);
+    for (let i = 0; i < 10; i++) {
+      digitMap[i.toString()] = formatter.format(i);
     }
     return digitMap;
   }
@@ -16682,14 +16682,14 @@ var import_react19 = __toESM(require_react(), 1);
 function Nav(props) {
   const { onPreviousClick, onNextClick, previousMonth, nextMonth, ...navProps } = props;
   const { components, classNames, styles, labels: { labelPrevious: labelPrevious2, labelNext: labelNext2 } } = useDayPicker();
-  const handleNextClick = (0, import_react19.useCallback)((e2) => {
+  const handleNextClick = (0, import_react19.useCallback)((e) => {
     if (nextMonth) {
-      onNextClick?.(e2);
+      onNextClick?.(e);
     }
   }, [nextMonth, onNextClick]);
-  const handlePreviousClick = (0, import_react19.useCallback)((e2) => {
+  const handlePreviousClick = (0, import_react19.useCallback)((e) => {
     if (previousMonth) {
-      onPreviousClick?.(e2);
+      onPreviousClick?.(e);
     }
   }, [previousMonth, onPreviousClick]);
   return import_react19.default.createElement(
@@ -16936,10 +16936,10 @@ function createGetModifiers(days, props, navStart, navEnd, dateLib) {
     const customModifiers = {};
     for (const name in internalModifiersMap) {
       const days2 = internalModifiersMap[name];
-      dayFlags[name] = days2.some((d2) => d2 === day);
+      dayFlags[name] = days2.some((d) => d === day);
     }
     for (const name in customModifiersMap) {
-      customModifiers[name] = customModifiersMap[name].some((d2) => d2 === day);
+      customModifiers[name] = customModifiersMap[name].some((d) => d === day);
     }
     return {
       ...dayFlags,
@@ -17210,8 +17210,8 @@ function getWeekdays(dateLib, ISOWeek, broadcastCalendar, today) {
   const referenceToday = today ?? dateLib.today();
   const start = broadcastCalendar ? dateLib.startOfBroadcastWeek(referenceToday, dateLib) : ISOWeek ? dateLib.startOfISOWeek(referenceToday) : dateLib.startOfWeek(referenceToday);
   const days = [];
-  for (let i2 = 0; i2 < 7; i2++) {
-    const day = dateLib.addDays(start, i2);
+  for (let i = 0; i < 7; i++) {
+    const day = dateLib.addDays(start, i);
     days.push(day);
   }
   return days;
@@ -17521,15 +17521,15 @@ function getDates(displayMonths, maxDate, props, dateLib) {
   const nOfDays = differenceInCalendarDays2(gridEndDate, startWeekFirstDate);
   const nOfMonths = differenceInCalendarMonths2(lastMonth, firstMonth) + 1;
   const dates = [];
-  for (let i2 = 0; i2 <= nOfDays; i2++) {
-    const date = addDays2(startWeekFirstDate, i2);
+  for (let i = 0; i <= nOfDays; i++) {
+    const date = addDays2(startWeekFirstDate, i);
     dates.push(date);
   }
   const nrOfDaysWithFixedWeeks = broadcastCalendar ? 35 : 42;
   const extraDates = nrOfDaysWithFixedWeeks * nOfMonths;
   if (fixedWeeks && dates.length < extraDates) {
     const daysToAdd = extraDates - dates.length;
-    for (let i2 = 0; i2 < daysToAdd; i2++) {
+    for (let i = 0; i < daysToAdd; i++) {
       const date = addDays2(dates[dates.length - 1], 1);
       dates.push(date);
     }
@@ -17552,8 +17552,8 @@ function getDays(calendarMonths) {
 function getDisplayMonths(firstDisplayedMonth, calendarEndMonth, props, dateLib) {
   const { numberOfMonths = 1 } = props;
   const months = [];
-  for (let i2 = 0; i2 < numberOfMonths; i2++) {
-    const month = dateLib.addMonths(firstDisplayedMonth, i2);
+  for (let i = 0; i < numberOfMonths; i++) {
+    const month = dateLib.addMonths(firstDisplayedMonth, i);
     if (calendarEndMonth && month > calendarEndMonth) {
       break;
     }
@@ -17744,7 +17744,7 @@ function useCalendar(props, dateLib) {
     props.reverseMonths
   ]);
   const { disableNavigation, onMonthChange } = props;
-  const isDayInCalendar = (day) => weeks.some((week) => week.days.some((d2) => d2.isEqualTo(day)));
+  const isDayInCalendar = (day) => weeks.some((week) => week.days.some((d) => d.isEqualTo(day)));
   const goToMonth = (date) => {
     if (disableNavigation) {
       return;
@@ -17902,10 +17902,10 @@ function useMulti(props, dateLib) {
   const selected = !onSelect ? internallySelected : initiallySelected;
   const { isSameDay: isSameDay2 } = dateLib;
   const isSelected = (date) => {
-    return selected?.some((d2) => isSameDay2(d2, date)) ?? false;
+    return selected?.some((d) => isSameDay2(d, date)) ?? false;
   };
   const { min: min3, max: max3 } = props;
-  const select = (triggerDate, modifiers, e2) => {
+  const select = (triggerDate, modifiers, e) => {
     let newDates = [...selected ?? []];
     if (isSelected(triggerDate)) {
       if (selected?.length === min3) {
@@ -17914,7 +17914,7 @@ function useMulti(props, dateLib) {
       if (required && selected?.length === 1) {
         return;
       }
-      newDates = selected?.filter((d2) => !isSameDay2(d2, triggerDate));
+      newDates = selected?.filter((d) => !isSameDay2(d, triggerDate));
     } else {
       if (selected?.length === max3) {
         newDates = [triggerDate];
@@ -17925,7 +17925,7 @@ function useMulti(props, dateLib) {
     if (!onSelect) {
       setSelected(newDates);
     }
-    onSelect?.(newDates, triggerDate, modifiers, e2);
+    onSelect?.(newDates, triggerDate, modifiers, e);
     return newDates;
   };
   return {
@@ -17994,7 +17994,7 @@ function rangeContainsDayOfWeek(range, dayOfWeek, dateLib = defaultDateLib) {
   let date = range.from;
   const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
   const totalDaysLimit = Math.min(totalDays, 6);
-  for (let i2 = 0; i2 <= totalDaysLimit; i2++) {
+  for (let i = 0; i <= totalDaysLimit; i++) {
     if (dayOfWeekArr.includes(date.getDay())) {
       return true;
     }
@@ -18052,7 +18052,7 @@ function rangeContainsModifiers(range, modifiers, dateLib = defaultDateLib) {
   if (functionMatchers.length) {
     let date = range.from;
     const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
-    for (let i2 = 0; i2 <= totalDays; i2++) {
+    for (let i = 0; i <= totalDays; i++) {
       if (functionMatchers.some((matcher) => matcher(date))) {
         return true;
       }
@@ -18068,7 +18068,7 @@ function useRange(props, dateLib) {
   const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
   const selected = !onSelect ? internallySelected : initiallySelected;
   const isSelected = (date) => selected && rangeIncludesDate(selected, date, false, dateLib);
-  const select = (triggerDate, modifiers, e2) => {
+  const select = (triggerDate, modifiers, e) => {
     const { min: min3, max: max3 } = props;
     let newRange;
     if (triggerDate) {
@@ -18095,7 +18095,7 @@ function useRange(props, dateLib) {
     if (!onSelect) {
       setSelected(newRange);
     }
-    onSelect?.(newRange, triggerDate, modifiers, e2);
+    onSelect?.(newRange, triggerDate, modifiers, e);
     return newRange;
   };
   return {
@@ -18114,7 +18114,7 @@ function useSingle(props, dateLib) {
   const isSelected = (compareDate) => {
     return selected ? isSameDay2(selected, compareDate) : false;
   };
-  const select = (triggerDate, modifiers, e2) => {
+  const select = (triggerDate, modifiers, e) => {
     let newDate = triggerDate;
     if (!required && selected && selected && isSameDay2(triggerDate, selected)) {
       newDate = void 0;
@@ -18123,9 +18123,9 @@ function useSingle(props, dateLib) {
       setSelected(newDate);
     }
     if (required) {
-      onSelect?.(newDate, triggerDate, modifiers, e2);
+      onSelect?.(newDate, triggerDate, modifiers, e);
     } else {
-      onSelect?.(newDate, triggerDate, modifiers, e2);
+      onSelect?.(newDate, triggerDate, modifiers, e);
     }
     return newDate;
   };
@@ -18328,62 +18328,62 @@ function DayPicker(initialProps) {
     goToMonth(nextMonth);
     onNextClick?.(nextMonth);
   }, [goToMonth, nextMonth, onNextClick]);
-  const handleDayClick = (0, import_react36.useCallback)((day, m2) => (e2) => {
-    e2.preventDefault();
-    e2.stopPropagation();
+  const handleDayClick = (0, import_react36.useCallback)((day, m2) => (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     setFocused(day);
     if (m2.disabled) {
       return;
     }
-    select?.(day.date, m2, e2);
-    onDayClick?.(day.date, m2, e2);
+    select?.(day.date, m2, e);
+    onDayClick?.(day.date, m2, e);
   }, [select, onDayClick, setFocused]);
-  const handleDayFocus = (0, import_react36.useCallback)((day, m2) => (e2) => {
+  const handleDayFocus = (0, import_react36.useCallback)((day, m2) => (e) => {
     setFocused(day);
-    onDayFocus?.(day.date, m2, e2);
+    onDayFocus?.(day.date, m2, e);
   }, [onDayFocus, setFocused]);
-  const handleDayBlur = (0, import_react36.useCallback)((day, m2) => (e2) => {
+  const handleDayBlur = (0, import_react36.useCallback)((day, m2) => (e) => {
     blur();
-    onDayBlur?.(day.date, m2, e2);
+    onDayBlur?.(day.date, m2, e);
   }, [blur, onDayBlur]);
-  const handleDayKeyDown = (0, import_react36.useCallback)((day, modifiers) => (e2) => {
+  const handleDayKeyDown = (0, import_react36.useCallback)((day, modifiers) => (e) => {
     const keyMap = {
       ArrowLeft: [
-        e2.shiftKey ? "month" : "day",
+        e.shiftKey ? "month" : "day",
         props.dir === "rtl" ? "after" : "before"
       ],
       ArrowRight: [
-        e2.shiftKey ? "month" : "day",
+        e.shiftKey ? "month" : "day",
         props.dir === "rtl" ? "before" : "after"
       ],
-      ArrowDown: [e2.shiftKey ? "year" : "week", "after"],
-      ArrowUp: [e2.shiftKey ? "year" : "week", "before"],
-      PageUp: [e2.shiftKey ? "year" : "month", "before"],
-      PageDown: [e2.shiftKey ? "year" : "month", "after"],
+      ArrowDown: [e.shiftKey ? "year" : "week", "after"],
+      ArrowUp: [e.shiftKey ? "year" : "week", "before"],
+      PageUp: [e.shiftKey ? "year" : "month", "before"],
+      PageDown: [e.shiftKey ? "year" : "month", "after"],
       Home: ["startOfWeek", "before"],
       End: ["endOfWeek", "after"]
     };
-    if (keyMap[e2.key]) {
-      e2.preventDefault();
-      e2.stopPropagation();
-      const [moveBy, moveDir] = keyMap[e2.key];
+    if (keyMap[e.key]) {
+      e.preventDefault();
+      e.stopPropagation();
+      const [moveBy, moveDir] = keyMap[e.key];
       moveFocus(moveBy, moveDir);
     }
-    onDayKeyDown?.(day.date, modifiers, e2);
+    onDayKeyDown?.(day.date, modifiers, e);
   }, [moveFocus, onDayKeyDown, props.dir]);
-  const handleDayMouseEnter = (0, import_react36.useCallback)((day, modifiers) => (e2) => {
-    onDayMouseEnter?.(day.date, modifiers, e2);
+  const handleDayMouseEnter = (0, import_react36.useCallback)((day, modifiers) => (e) => {
+    onDayMouseEnter?.(day.date, modifiers, e);
   }, [onDayMouseEnter]);
-  const handleDayMouseLeave = (0, import_react36.useCallback)((day, modifiers) => (e2) => {
-    onDayMouseLeave?.(day.date, modifiers, e2);
+  const handleDayMouseLeave = (0, import_react36.useCallback)((day, modifiers) => (e) => {
+    onDayMouseLeave?.(day.date, modifiers, e);
   }, [onDayMouseLeave]);
-  const handleMonthChange = (0, import_react36.useCallback)((date, monthOffset) => (e2) => {
-    const selectedMonth = Number(e2.target.value);
+  const handleMonthChange = (0, import_react36.useCallback)((date, monthOffset) => (e) => {
+    const selectedMonth = Number(e.target.value);
     const month = dateLib.setMonth(dateLib.startOfMonth(date), selectedMonth);
     goToMonth(dateLib.addMonths(month, -monthOffset));
   }, [dateLib, goToMonth]);
-  const handleYearChange = (0, import_react36.useCallback)((date, monthOffset) => (e2) => {
-    const selectedYear = Number(e2.target.value);
+  const handleYearChange = (0, import_react36.useCallback)((date, monthOffset) => (e) => {
+    const selectedYear = Number(e.target.value);
     const month = dateLib.setYear(dateLib.startOfMonth(date), selectedYear);
     goToMonth(dateLib.addMonths(month, -monthOffset));
   }, [dateLib, goToMonth]);
@@ -19268,12 +19268,12 @@ var Calendar = (0, import_element29.forwardRef)(
       [localizationProps.labels, customLabels]
     );
     const onChange = (0, import_element29.useCallback)(
-      (selected2, triggerDate, modifiers, e2) => {
+      (selected2, triggerDate, modifiers, e) => {
         onValueChange?.(
           selected2 ?? null,
           triggerDate,
           modifiers,
-          e2
+          e
         );
       },
       [onValueChange]
@@ -19430,12 +19430,12 @@ var RangeCalendar = (0, import_element30.forwardRef)(
       [localizationProps.labels, customLabels]
     );
     const onChange = (0, import_element30.useCallback)(
-      (selected2, triggerDate, modifiers2, e2) => {
+      (selected2, triggerDate, modifiers2, e) => {
         onValueChange?.(
           selected2 ?? null,
           triggerDate,
           modifiers2,
-          e2
+          e
         );
       },
       [onValueChange]
@@ -23504,8 +23504,8 @@ var UnforwardedValidatedFormTokenField = ({
             tabIndex: -1,
             onChange: () => {
             },
-            onFocus: (e2) => {
-              e2.target.previousElementSibling?.querySelector(
+            onFocus: (e) => {
+              e.target.previousElementSibling?.querySelector(
                 'input[type="text"]'
               )?.focus();
             }
@@ -23684,8 +23684,8 @@ var UnforwardedValidatedToggleGroupControl = ({
         name: nameAttr,
         onChange: () => {
         },
-        onFocus: (e2) => {
-          e2.target.previousElementSibling?.querySelector(
+        onFocus: (e) => {
+          e.target.previousElementSibling?.querySelector(
             '[data-active-item="true"]'
           )?.focus();
         }
@@ -25600,161 +25600,174 @@ function ArrayControl({
 }
 
 // node_modules/colord/index.mjs
-var r2 = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) };
-var t = function(r3) {
+for (r2 = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) }, t = function(r3) {
   return "string" == typeof r3 ? r3.length > 0 : "number" == typeof r3;
-};
-var n = function(r3, t2, n2) {
+}, n = function(r3, t2, n2) {
   return void 0 === t2 && (t2 = 0), void 0 === n2 && (n2 = Math.pow(10, t2)), Math.round(n2 * r3) / n2 + 0;
-};
-var e = function(r3, t2, n2) {
+}, u = function(r3, t2, n2) {
   return void 0 === t2 && (t2 = 0), void 0 === n2 && (n2 = 1), r3 > n2 ? n2 : r3 > t2 ? r3 : t2;
-};
-var u = function(r3) {
-  return (r3 = isFinite(r3) ? r3 % 360 : 0) > 0 ? r3 : r3 + 360;
-};
-var a = function(r3) {
-  return { r: e(r3.r, 0, 255), g: e(r3.g, 0, 255), b: e(r3.b, 0, 255), a: e(r3.a) };
-};
-var o = function(r3) {
+}, e = function(r3) {
+  return (r3 = isFinite(r3) ? r3 % 360 : 0) < 0 ? r3 + 360 : r3;
+}, o = function(r3, t2) {
+  return void 0 === t2 && (t2 = 0), n(r3, t2) % 360;
+}, a = function(r3) {
+  return { r: u(r3.r, 0, 255), g: u(r3.g, 0, 255), b: u(r3.b, 0, 255), a: u(r3.a) };
+}, i = function(r3) {
   return { r: n(r3.r), g: n(r3.g), b: n(r3.b), a: n(r3.a, 3) };
+}, s = /^#([0-9a-f]{3,8})$/i, d = function(r3, t2) {
+  var n2 = r3.charCodeAt(t2);
+  return (15 & n2) + 9 * (n2 >> 6);
+}, h = function(r3, t2) {
+  return d(r3, t2) << 4 | d(r3, t2 + 1);
+}, b = [], f = 0; f < 256; f++) b.push((f < 16 ? "0" : "") + f.toString(16));
+var r2;
+var t;
+var n;
+var u;
+var e;
+var o;
+var a;
+var i;
+var s;
+var d;
+var h;
+var b;
+var f;
+var g = function(r2) {
+  return b[u(r2, 0, 255)];
 };
-var i = /^#([0-9a-f]{3,8})$/i;
-var s = function(r3) {
-  var t2 = r3.toString(16);
-  return t2.length < 2 ? "0" + t2 : t2;
+var c = function(r2) {
+  var t = r2.r, n = r2.g, u = r2.b, e = r2.a, o = Math.max(t, n, u), a = o - Math.min(t, n, u), i = a ? o === t ? (n - u) / a : o === n ? 2 + (u - t) / a : 4 + (t - n) / a : 0;
+  return { h: 60 * (i < 0 ? i + 6 : i), s: o ? a / o * 100 : 0, v: o / 255 * 100, a: e };
 };
-var d = function(r3) {
-  var t2 = r3.r, n2 = r3.g, e2 = r3.b, u2 = r3.a, a2 = Math.max(t2, n2, e2), o2 = a2 - Math.min(t2, n2, e2), i2 = o2 ? a2 === t2 ? (n2 - e2) / o2 : a2 === n2 ? 2 + (e2 - t2) / o2 : 4 + (t2 - n2) / o2 : 0;
-  return { h: 60 * (i2 < 0 ? i2 + 6 : i2), s: a2 ? o2 / a2 * 100 : 0, v: a2 / 255 * 100, a: u2 };
+var v = function(r2) {
+  var t = r2.h, n = r2.s, u = r2.v, e = r2.a;
+  t = t / 360 * 6, n /= 100, u /= 100;
+  var o = Math.floor(t), a = u * (1 - n), i = u * (1 - (t - o) * n), s = u * (1 - (1 - t + o) * n), d = o % 6;
+  return { r: 255 * [u, i, a, a, s, u][d], g: 255 * [s, u, u, i, a, a][d], b: 255 * [a, a, s, u, u, i][d], a: e };
 };
-var h = function(r3) {
-  var t2 = r3.h, n2 = r3.s, e2 = r3.v, u2 = r3.a;
-  t2 = t2 / 360 * 6, n2 /= 100, e2 /= 100;
-  var a2 = Math.floor(t2), o2 = e2 * (1 - n2), i2 = e2 * (1 - (t2 - a2) * n2), s2 = e2 * (1 - (1 - t2 + a2) * n2), d2 = a2 % 6;
-  return { r: 255 * [e2, i2, o2, o2, s2, e2][d2], g: 255 * [s2, e2, e2, i2, o2, o2][d2], b: 255 * [o2, o2, s2, e2, e2, i2][d2], a: u2 };
+var l = function(r2) {
+  return { h: e(r2.h), s: u(r2.s, 0, 100), l: u(r2.l, 0, 100), a: u(r2.a) };
 };
-var b = function(r3) {
-  return { h: u(r3.h), s: e(r3.s, 0, 100), l: e(r3.l, 0, 100), a: e(r3.a) };
+var p = function(r2) {
+  return { h: o(r2.h), s: n(r2.s), l: n(r2.l), a: n(r2.a, 3) };
 };
-var g = function(r3) {
-  return { h: n(r3.h), s: n(r3.s), l: n(r3.l), a: n(r3.a, 3) };
+var m = function(r2) {
+  return v((n = (t = r2).s, { h: t.h, s: (n *= ((u = t.l) < 50 ? u : 100 - u) / 100) > 0 ? 2 * n / (u + n) * 100 : 0, v: u + n, a: t.a }));
+  var t, n, u;
 };
-var f = function(r3) {
-  return h((n2 = (t2 = r3).s, { h: t2.h, s: (n2 *= ((e2 = t2.l) < 50 ? e2 : 100 - e2) / 100) > 0 ? 2 * n2 / (e2 + n2) * 100 : 0, v: e2 + n2, a: t2.a }));
-  var t2, n2, e2;
+var y = function(r2) {
+  return { h: (t = c(r2)).h, s: (e = (200 - (n = t.s)) * (u = t.v) / 100) > 0 && e < 200 ? n * u / 100 / (e <= 100 ? e : 200 - e) * 100 : 0, l: e / 2, a: t.a };
+  var t, n, u, e;
 };
-var c = function(r3) {
-  return { h: (t2 = d(r3)).h, s: (u2 = (200 - (n2 = t2.s)) * (e2 = t2.v) / 100) > 0 && u2 < 200 ? n2 * e2 / 100 / (u2 <= 100 ? u2 : 200 - u2) * 100 : 0, l: u2 / 2, a: t2.a };
-  var t2, n2, e2, u2;
-};
-var l = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-var p = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-var v = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-var m = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-var y = { string: [[function(r3) {
-  var t2 = i.exec(r3);
-  return t2 ? (r3 = t2[1]).length <= 4 ? { r: parseInt(r3[0] + r3[0], 16), g: parseInt(r3[1] + r3[1], 16), b: parseInt(r3[2] + r3[2], 16), a: 4 === r3.length ? n(parseInt(r3[3] + r3[3], 16) / 255, 2) : 1 } : 6 === r3.length || 8 === r3.length ? { r: parseInt(r3.substr(0, 2), 16), g: parseInt(r3.substr(2, 2), 16), b: parseInt(r3.substr(4, 2), 16), a: 8 === r3.length ? n(parseInt(r3.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
-}, "hex"], [function(r3) {
-  var t2 = v.exec(r3) || m.exec(r3);
-  return t2 ? t2[2] !== t2[4] || t2[4] !== t2[6] ? null : a({ r: Number(t2[1]) / (t2[2] ? 100 / 255 : 1), g: Number(t2[3]) / (t2[4] ? 100 / 255 : 1), b: Number(t2[5]) / (t2[6] ? 100 / 255 : 1), a: void 0 === t2[7] ? 1 : Number(t2[7]) / (t2[8] ? 100 : 1) }) : null;
-}, "rgb"], [function(t2) {
-  var n2 = l.exec(t2) || p.exec(t2);
-  if (!n2) return null;
-  var e2, u2, a2 = b({ h: (e2 = n2[1], u2 = n2[2], void 0 === u2 && (u2 = "deg"), Number(e2) * (r2[u2] || 1)), s: Number(n2[3]), l: Number(n2[4]), a: void 0 === n2[5] ? 1 : Number(n2[5]) / (n2[6] ? 100 : 1) });
-  return f(a2);
-}, "hsl"]], object: [[function(r3) {
-  var n2 = r3.r, e2 = r3.g, u2 = r3.b, o2 = r3.a, i2 = void 0 === o2 ? 1 : o2;
-  return t(n2) && t(e2) && t(u2) ? a({ r: Number(n2), g: Number(e2), b: Number(u2), a: Number(i2) }) : null;
-}, "rgb"], [function(r3) {
-  var n2 = r3.h, e2 = r3.s, u2 = r3.l, a2 = r3.a, o2 = void 0 === a2 ? 1 : a2;
-  if (!t(n2) || !t(e2) || !t(u2)) return null;
-  var i2 = b({ h: Number(n2), s: Number(e2), l: Number(u2), a: Number(o2) });
-  return f(i2);
-}, "hsl"], [function(r3) {
-  var n2 = r3.h, a2 = r3.s, o2 = r3.v, i2 = r3.a, s2 = void 0 === i2 ? 1 : i2;
-  if (!t(n2) || !t(a2) || !t(o2)) return null;
-  var d2 = (function(r4) {
-    return { h: u(r4.h), s: e(r4.s, 0, 100), v: e(r4.v, 0, 100), a: e(r4.a) };
-  })({ h: Number(n2), s: Number(a2), v: Number(o2), a: Number(s2) });
-  return h(d2);
+var N = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+var x = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+var M = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+var H = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+var $ = { string: [[function(r2) {
+  if (!s.test(r2)) return null;
+  var t = r2.length;
+  return t <= 5 ? { r: 17 * d(r2, 1), g: 17 * d(r2, 2), b: 17 * d(r2, 3), a: 5 === t ? n(17 * d(r2, 4) / 255, 2) : 1 } : 7 === t || 9 === t ? { r: h(r2, 1), g: h(r2, 3), b: h(r2, 5), a: 9 === t ? n(h(r2, 7) / 255, 2) : 1 } : null;
+}, "hex"], [function(r2) {
+  var t = M.exec(r2) || H.exec(r2);
+  return t ? t[2] !== t[4] || t[4] !== t[6] ? null : a({ r: Number(t[1]) / (t[2] ? 100 / 255 : 1), g: Number(t[3]) / (t[4] ? 100 / 255 : 1), b: Number(t[5]) / (t[6] ? 100 / 255 : 1), a: void 0 === t[7] ? 1 : Number(t[7]) / (t[8] ? 100 : 1) }) : null;
+}, "rgb"], [function(t) {
+  var n = N.exec(t) || x.exec(t);
+  if (!n) return null;
+  var u, e, o = l({ h: (u = n[1], e = n[2], void 0 === e && (e = "deg"), Number(u) * (r2[e] || 1)), s: Number(n[3]), l: Number(n[4]), a: void 0 === n[5] ? 1 : Number(n[5]) / (n[6] ? 100 : 1) });
+  return m(o);
+}, "hsl"]], object: [[function(r2) {
+  var n = r2.r, u = r2.g, e = r2.b, o = r2.a, i = void 0 === o ? 1 : o;
+  return t(n) && t(u) && t(e) ? a({ r: Number(n), g: Number(u), b: Number(e), a: Number(i) }) : null;
+}, "rgb"], [function(r2) {
+  var n = r2.h, u = r2.s, e = r2.l, o = r2.a, a = void 0 === o ? 1 : o;
+  if (!t(n) || !t(u) || !t(e)) return null;
+  var i = l({ h: Number(n), s: Number(u), l: Number(e), a: Number(a) });
+  return m(i);
+}, "hsl"], [function(r2) {
+  var n = r2.h, o = r2.s, a = r2.v, i = r2.a, s = void 0 === i ? 1 : i;
+  if (!t(n) || !t(o) || !t(a)) return null;
+  var d = (function(r3) {
+    return { h: e(r3.h), s: u(r3.s, 0, 100), v: u(r3.v, 0, 100), a: u(r3.a) };
+  })({ h: Number(n), s: Number(o), v: Number(a), a: Number(s) });
+  return v(d);
 }, "hsv"]] };
-var N = function(r3, t2) {
-  for (var n2 = 0; n2 < t2.length; n2++) {
-    var e2 = t2[n2][0](r3);
-    if (e2) return [e2, t2[n2][1]];
+var j = function(r2, t) {
+  for (var n = 0; n < t.length; n++) {
+    var u = t[n][0](r2);
+    if (u) return [u, t[n][1]];
   }
   return [null, void 0];
 };
-var x = function(r3) {
-  return "string" == typeof r3 ? N(r3.trim(), y.string) : "object" == typeof r3 && null !== r3 ? N(r3, y.object) : [null, void 0];
+var w = function(r2) {
+  return "string" == typeof r2 ? j(r2.trim(), $.string) : "object" == typeof r2 && null !== r2 ? j(r2, $.object) : [null, void 0];
 };
-var M = function(r3, t2) {
-  var n2 = c(r3);
-  return { h: n2.h, s: e(n2.s + 100 * t2, 0, 100), l: n2.l, a: n2.a };
+var k = function(r2, t) {
+  var n = y(r2);
+  return { h: n.h, s: u(n.s + 100 * t, 0, 100), l: n.l, a: n.a };
 };
-var H = function(r3) {
-  return (299 * r3.r + 587 * r3.g + 114 * r3.b) / 1e3 / 255;
+var E = function(r2) {
+  return (299 * r2.r + 587 * r2.g + 114 * r2.b) / 1e3 / 255;
 };
-var $ = function(r3, t2) {
-  var n2 = c(r3);
-  return { h: n2.h, s: n2.s, l: e(n2.l + 100 * t2, 0, 100), a: n2.a };
+var R = function(r2, t) {
+  var n = y(r2);
+  return { h: n.h, s: n.s, l: u(n.l + 100 * t, 0, 100), a: n.a };
 };
-var j = (function() {
-  function r3(r4) {
-    this.parsed = x(r4)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
+var q = (function() {
+  function r2(r3) {
+    this.parsed = w(r3)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
   }
-  return r3.prototype.isValid = function() {
+  return r2.prototype.isValid = function() {
     return null !== this.parsed;
-  }, r3.prototype.brightness = function() {
-    return n(H(this.rgba), 2);
-  }, r3.prototype.isDark = function() {
-    return H(this.rgba) < 0.5;
-  }, r3.prototype.isLight = function() {
-    return H(this.rgba) >= 0.5;
-  }, r3.prototype.toHex = function() {
-    return r4 = o(this.rgba), t2 = r4.r, e2 = r4.g, u2 = r4.b, i2 = (a2 = r4.a) < 1 ? s(n(255 * a2)) : "", "#" + s(t2) + s(e2) + s(u2) + i2;
-    var r4, t2, e2, u2, a2, i2;
-  }, r3.prototype.toRgb = function() {
-    return o(this.rgba);
-  }, r3.prototype.toRgbString = function() {
-    return r4 = o(this.rgba), t2 = r4.r, n2 = r4.g, e2 = r4.b, (u2 = r4.a) < 1 ? "rgba(" + t2 + ", " + n2 + ", " + e2 + ", " + u2 + ")" : "rgb(" + t2 + ", " + n2 + ", " + e2 + ")";
-    var r4, t2, n2, e2, u2;
-  }, r3.prototype.toHsl = function() {
-    return g(c(this.rgba));
-  }, r3.prototype.toHslString = function() {
-    return r4 = g(c(this.rgba)), t2 = r4.h, n2 = r4.s, e2 = r4.l, (u2 = r4.a) < 1 ? "hsla(" + t2 + ", " + n2 + "%, " + e2 + "%, " + u2 + ")" : "hsl(" + t2 + ", " + n2 + "%, " + e2 + "%)";
-    var r4, t2, n2, e2, u2;
-  }, r3.prototype.toHsv = function() {
-    return r4 = d(this.rgba), { h: n(r4.h), s: n(r4.s), v: n(r4.v), a: n(r4.a, 3) };
-    var r4;
-  }, r3.prototype.invert = function() {
-    return w({ r: 255 - (r4 = this.rgba).r, g: 255 - r4.g, b: 255 - r4.b, a: r4.a });
-    var r4;
-  }, r3.prototype.saturate = function(r4) {
-    return void 0 === r4 && (r4 = 0.1), w(M(this.rgba, r4));
-  }, r3.prototype.desaturate = function(r4) {
-    return void 0 === r4 && (r4 = 0.1), w(M(this.rgba, -r4));
-  }, r3.prototype.grayscale = function() {
-    return w(M(this.rgba, -1));
-  }, r3.prototype.lighten = function(r4) {
-    return void 0 === r4 && (r4 = 0.1), w($(this.rgba, r4));
-  }, r3.prototype.darken = function(r4) {
-    return void 0 === r4 && (r4 = 0.1), w($(this.rgba, -r4));
-  }, r3.prototype.rotate = function(r4) {
-    return void 0 === r4 && (r4 = 15), this.hue(this.hue() + r4);
-  }, r3.prototype.alpha = function(r4) {
-    return "number" == typeof r4 ? w({ r: (t2 = this.rgba).r, g: t2.g, b: t2.b, a: r4 }) : n(this.rgba.a, 3);
-    var t2;
-  }, r3.prototype.hue = function(r4) {
-    var t2 = c(this.rgba);
-    return "number" == typeof r4 ? w({ h: r4, s: t2.s, l: t2.l, a: t2.a }) : n(t2.h);
-  }, r3.prototype.isEqual = function(r4) {
-    return this.toHex() === w(r4).toHex();
-  }, r3;
+  }, r2.prototype.brightness = function() {
+    return n(E(this.rgba), 2);
+  }, r2.prototype.isDark = function() {
+    return E(this.rgba) < 0.5;
+  }, r2.prototype.isLight = function() {
+    return E(this.rgba) >= 0.5;
+  }, r2.prototype.toHex = function() {
+    return r3 = i(this.rgba), t = r3.r, u = r3.g, e = r3.b, a = (o = r3.a) < 1 ? g(n(255 * o)) : "", "#" + g(t) + g(u) + g(e) + a;
+    var r3, t, u, e, o, a;
+  }, r2.prototype.toRgb = function() {
+    return i(this.rgba);
+  }, r2.prototype.toRgbString = function() {
+    return r3 = i(this.rgba), t = r3.r, n = r3.g, u = r3.b, (e = r3.a) < 1 ? "rgba(" + t + ", " + n + ", " + u + ", " + e + ")" : "rgb(" + t + ", " + n + ", " + u + ")";
+    var r3, t, n, u, e;
+  }, r2.prototype.toHsl = function() {
+    return p(y(this.rgba));
+  }, r2.prototype.toHslString = function() {
+    return r3 = p(y(this.rgba)), t = r3.h, n = r3.s, u = r3.l, (e = r3.a) < 1 ? "hsla(" + t + ", " + n + "%, " + u + "%, " + e + ")" : "hsl(" + t + ", " + n + "%, " + u + "%)";
+    var r3, t, n, u, e;
+  }, r2.prototype.toHsv = function() {
+    return r3 = c(this.rgba), { h: o(r3.h), s: n(r3.s), v: n(r3.v), a: n(r3.a, 3) };
+    var r3;
+  }, r2.prototype.invert = function() {
+    return A({ r: 255 - (r3 = this.rgba).r, g: 255 - r3.g, b: 255 - r3.b, a: r3.a });
+    var r3;
+  }, r2.prototype.saturate = function(r3) {
+    return void 0 === r3 && (r3 = 0.1), A(k(this.rgba, r3));
+  }, r2.prototype.desaturate = function(r3) {
+    return void 0 === r3 && (r3 = 0.1), A(k(this.rgba, -r3));
+  }, r2.prototype.grayscale = function() {
+    return A(k(this.rgba, -1));
+  }, r2.prototype.lighten = function(r3) {
+    return void 0 === r3 && (r3 = 0.1), A(R(this.rgba, r3));
+  }, r2.prototype.darken = function(r3) {
+    return void 0 === r3 && (r3 = 0.1), A(R(this.rgba, -r3));
+  }, r2.prototype.rotate = function(r3) {
+    return void 0 === r3 && (r3 = 15), this.hue(y(this.rgba).h + r3);
+  }, r2.prototype.alpha = function(r3) {
+    return "number" == typeof r3 ? A({ r: (t = this.rgba).r, g: t.g, b: t.b, a: r3 }) : n(this.rgba.a, 3);
+    var t;
+  }, r2.prototype.hue = function(r3) {
+    var t = y(this.rgba);
+    return "number" == typeof r3 ? A({ h: r3, s: t.s, l: t.l, a: t.a }) : o(t.h);
+  }, r2.prototype.isEqual = function(r3) {
+    return this.toHex() === A(r3).toHex();
+  }, r2;
 })();
-var w = function(r3) {
-  return r3 instanceof j ? r3 : new j(r3);
+var A = function(r2) {
+  return r2 instanceof q ? r2 : new q(r2);
 };
 
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
@@ -25767,7 +25780,7 @@ var ColorPickerDropdown = ({
   onColorChange,
   disabled: disabled2
 }) => {
-  const validColor = color && w(color).isValid() ? color : "#ffffff";
+  const validColor = color && A(color).isValid() ? color : "#ffffff";
   return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
     import_components21.Dropdown,
     {
@@ -26039,8 +26052,8 @@ function render({
 }
 
 // packages/dataviews/build-module/field-types/utils/sort-text.mjs
-var sort_text_default = (a2, b2, direction) => {
-  return direction === "asc" ? a2.localeCompare(b2) : b2.localeCompare(a2);
+var sort_text_default = (a, b, direction) => {
+  return direction === "asc" ? a.localeCompare(b) : b.localeCompare(a);
 };
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required.mjs
@@ -26154,8 +26167,8 @@ var email_default = {
 var import_i18n21 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/sort-number.mjs
-var sort_number_default = (a2, b2, direction) => {
-  return direction === "asc" ? a2 - b2 : b2 - a2;
+var sort_number_default = (a, b, direction) => {
+  return direction === "asc" ? a - b : b - a;
 };
 
 // packages/dataviews/build-module/field-types/utils/is-valid-min.mjs
@@ -26439,9 +26452,9 @@ function getValueFormatted4({
   }
   return (0, import_date9.dateI18n)(formatDatetime.datetime, (0, import_date9.getDate)(value));
 }
-var sort = (a2, b2, direction) => {
-  const timeA = new Date(a2).getTime();
-  const timeB = new Date(b2).getTime();
+var sort = (a, b, direction) => {
+  const timeA = new Date(a).getTime();
+  const timeB = new Date(b).getTime();
   return direction === "asc" ? timeA - timeB : timeB - timeA;
 };
 var datetime_default = {
@@ -26503,9 +26516,9 @@ function getValueFormatted5({
   }
   return (0, import_date10.dateI18n)(formatDate2.date, (0, import_date10.getDate)(value));
 }
-var sort2 = (a2, b2, direction) => {
-  const timeA = new Date(a2).getTime();
-  const timeB = new Date(b2).getTime();
+var sort2 = (a, b, direction) => {
+  const timeA = new Date(a).getTime();
+  const timeB = new Date(b).getTime();
   return direction === "asc" ? timeA - timeB : timeB - timeA;
 };
 var date_default = {
@@ -26576,9 +26589,9 @@ function getValueFormatted6({
   }
   return (0, import_date11.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
 }
-var sort3 = (a2, b2, direction) => {
-  const timeA = parseTime2(a2);
-  const timeB = parseTime2(b2);
+var sort3 = (a, b, direction) => {
+  const timeA = parseTime2(a);
+  const timeB = parseTime2(b);
   if (timeA === null || timeB === null) {
     if (timeA === timeB) {
       return 0;
@@ -26652,9 +26665,9 @@ function isValidCustom4(item, field) {
   }
   return null;
 }
-var sort4 = (a2, b2, direction) => {
-  const boolA = Boolean(a2);
-  const boolB = Boolean(b2);
+var sort4 = (a, b, direction) => {
+  const boolA = Boolean(a);
+  const boolB = Boolean(b);
   if (boolA === boolB) {
     return 0;
   }
@@ -26735,9 +26748,9 @@ function isValidCustom5(item, field) {
   }
   return null;
 }
-var sort5 = (a2, b2, direction) => {
-  const arrA = Array.isArray(a2) ? a2 : [];
-  const arrB = Array.isArray(b2) ? b2 : [];
+var sort5 = (a, b, direction) => {
+  const arrA = Array.isArray(a) ? a : [];
+  const arrB = Array.isArray(b) ? b : [];
   if (arrA.length !== arrB.length) {
     return direction === "asc" ? arrA.length - arrB.length : arrB.length - arrA.length;
   }
@@ -26835,7 +26848,7 @@ function render3({ item, field }) {
     return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(RenderFromElements, { item, field });
   }
   const value = get_value_formatted_default_default({ item, field });
-  if (!value || !w(value).isValid()) {
+  if (!value || !A(value).isValid()) {
     return value;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
@@ -26857,14 +26870,14 @@ function render3({ item, field }) {
 }
 function isValidCustom6(item, field) {
   const value = field.getValue({ item });
-  if (![void 0, "", null].includes(value) && !w(value).isValid()) {
+  if (![void 0, "", null].includes(value) && !A(value).isValid()) {
     return (0, import_i18n25.__)("Value must be a valid color.");
   }
   return null;
 }
-var sort6 = (a2, b2, direction) => {
-  const colorA = w(a2);
-  const colorB = w(b2);
+var sort6 = (a, b, direction) => {
+  const colorA = A(a);
+  const colorB = A(b);
   if (!colorA.isValid() && !colorB.isValid()) {
     return 0;
   }
@@ -26939,11 +26952,11 @@ var url_default = {
 };
 
 // packages/dataviews/build-module/field-types/no-type.mjs
-var sort7 = (a2, b2, direction) => {
-  if (typeof a2 === "number" && typeof b2 === "number") {
-    return sort_number_default(a2, b2, direction);
+var sort7 = (a, b, direction) => {
+  if (typeof a === "number" && typeof b === "number") {
+    return sort_number_default(a, b, direction);
   }
-  return sort_text_default(a2, b2, direction);
+  return sort_text_default(a, b, direction);
 };
 var no_type_default = {
   // type: no type for this one
@@ -27079,9 +27092,9 @@ function normalizeFields(fields) {
   return fields.map((field) => {
     const fieldType = getFieldTypeByName(field.type);
     const getValue = field.getValue || get_value_from_id_default(field.id);
-    const sort8 = function(a2, b2, direction) {
-      const aValue = getValue({ item: a2 });
-      const bValue = getValue({ item: b2 });
+    const sort8 = function(a, b, direction) {
+      const aValue = getValue({ item: a });
+      const bValue = getValue({ item: b });
       return field.sort ? field.sort(aValue, bValue, direction) : fieldType.sort(aValue, bValue, direction);
     };
     return {
@@ -27645,8 +27658,8 @@ function setValidityAtPath(formValidity, fieldValidity, path) {
   }
   const result = { ...formValidity };
   let current = result;
-  for (let i2 = 0; i2 < path.length - 1; i2++) {
-    const segment = path[i2];
+  for (let i = 0; i < path.length - 1; i++) {
+    const segment = path[i];
     if (!current[segment]) {
       current[segment] = {};
     }
@@ -27666,8 +27679,8 @@ function removeValidationProperty(formValidity, path, property) {
   }
   const result = { ...formValidity };
   let current = result;
-  for (let i2 = 0; i2 < path.length - 1; i2++) {
-    const segment = path[i2];
+  for (let i = 0; i < path.length - 1; i++) {
+    const segment = path[i];
     if (!current[segment]) {
       return formValidity;
     }
@@ -28191,17 +28204,17 @@ function ModalContent({
     }),
     [field]
   );
-  const fieldsAsFieldType = fields.map((f2) => ({
-    ...f2,
-    Edit: f2.Edit === null ? void 0 : f2.Edit,
+  const fieldsAsFieldType = fields.map((f) => ({
+    ...f,
+    Edit: f.Edit === null ? void 0 : f.Edit,
     isValid: {
-      required: f2.isValid.required?.constraint,
-      elements: f2.isValid.elements?.constraint,
-      min: f2.isValid.min?.constraint,
-      max: f2.isValid.max?.constraint,
-      pattern: f2.isValid.pattern?.constraint,
-      minLength: f2.isValid.minLength?.constraint,
-      maxLength: f2.isValid.maxLength?.constraint
+      required: f.isValid.required?.constraint,
+      elements: f.isValid.elements?.constraint,
+      min: f.isValid.min?.constraint,
+      max: f.isValid.max?.constraint,
+      pattern: f.isValid.pattern?.constraint,
+      minLength: f.isValid.minLength?.constraint,
+      maxLength: f.isValid.maxLength?.constraint
     }
   }));
   const { validity } = use_form_validity_default(modalData, fieldsAsFieldType, form);
@@ -29083,7 +29096,7 @@ function DataFormLayout({
   const { fields: fieldDefinitions } = (0, import_element100.useContext)(dataform_context_default);
   const markWhenOptional = (0, import_element100.useMemo)(() => {
     const requiredCount = fieldDefinitions.filter(
-      (f2) => !!f2.isValid?.required
+      (f) => !!f.isValid?.required
     ).length;
     const optionalCount = fieldDefinitions.length - requiredCount;
     return requiredCount > optionalCount;

@@ -5,7 +5,7 @@ var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __require = /* @__PURE__ */ ((x2) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x2, {
-  get: (a2, b2) => (typeof require !== "undefined" ? require : a2)[b2]
+  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
 }) : x2)(function(x2) {
   if (typeof require !== "undefined") return require.apply(this, arguments);
   throw Error('Dynamic require of "' + x2 + '" is not supported');
@@ -305,54 +305,54 @@ var require_style_engine = __commonJS({
 var require_es6 = __commonJS({
   "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
     "use strict";
-    module.exports = function equal(a2, b2) {
-      if (a2 === b2) return true;
-      if (a2 && b2 && typeof a2 == "object" && typeof b2 == "object") {
-        if (a2.constructor !== b2.constructor) return false;
-        var length, i2, keys;
-        if (Array.isArray(a2)) {
-          length = a2.length;
-          if (length != b2.length) return false;
-          for (i2 = length; i2-- !== 0; )
-            if (!equal(a2[i2], b2[i2])) return false;
+    module.exports = function equal(a, b) {
+      if (a === b) return true;
+      if (a && b && typeof a == "object" && typeof b == "object") {
+        if (a.constructor !== b.constructor) return false;
+        var length, i, keys;
+        if (Array.isArray(a)) {
+          length = a.length;
+          if (length != b.length) return false;
+          for (i = length; i-- !== 0; )
+            if (!equal(a[i], b[i])) return false;
           return true;
         }
-        if (a2 instanceof Map && b2 instanceof Map) {
-          if (a2.size !== b2.size) return false;
-          for (i2 of a2.entries())
-            if (!b2.has(i2[0])) return false;
-          for (i2 of a2.entries())
-            if (!equal(i2[1], b2.get(i2[0]))) return false;
+        if (a instanceof Map && b instanceof Map) {
+          if (a.size !== b.size) return false;
+          for (i of a.entries())
+            if (!b.has(i[0])) return false;
+          for (i of a.entries())
+            if (!equal(i[1], b.get(i[0]))) return false;
           return true;
         }
-        if (a2 instanceof Set && b2 instanceof Set) {
-          if (a2.size !== b2.size) return false;
-          for (i2 of a2.entries())
-            if (!b2.has(i2[0])) return false;
+        if (a instanceof Set && b instanceof Set) {
+          if (a.size !== b.size) return false;
+          for (i of a.entries())
+            if (!b.has(i[0])) return false;
           return true;
         }
-        if (ArrayBuffer.isView(a2) && ArrayBuffer.isView(b2)) {
-          length = a2.length;
-          if (length != b2.length) return false;
-          for (i2 = length; i2-- !== 0; )
-            if (a2[i2] !== b2[i2]) return false;
+        if (ArrayBuffer.isView(a) && ArrayBuffer.isView(b)) {
+          length = a.length;
+          if (length != b.length) return false;
+          for (i = length; i-- !== 0; )
+            if (a[i] !== b[i]) return false;
           return true;
         }
-        if (a2.constructor === RegExp) return a2.source === b2.source && a2.flags === b2.flags;
-        if (a2.valueOf !== Object.prototype.valueOf) return a2.valueOf() === b2.valueOf();
-        if (a2.toString !== Object.prototype.toString) return a2.toString() === b2.toString();
-        keys = Object.keys(a2);
+        if (a.constructor === RegExp) return a.source === b.source && a.flags === b.flags;
+        if (a.valueOf !== Object.prototype.valueOf) return a.valueOf() === b.valueOf();
+        if (a.toString !== Object.prototype.toString) return a.toString() === b.toString();
+        keys = Object.keys(a);
         length = keys.length;
-        if (length !== Object.keys(b2).length) return false;
-        for (i2 = length; i2-- !== 0; )
-          if (!Object.prototype.hasOwnProperty.call(b2, keys[i2])) return false;
-        for (i2 = length; i2-- !== 0; ) {
-          var key = keys[i2];
-          if (!equal(a2[key], b2[key])) return false;
+        if (length !== Object.keys(b).length) return false;
+        for (i = length; i-- !== 0; )
+          if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
+        for (i = length; i-- !== 0; ) {
+          var key = keys[i];
+          if (!equal(a[key], b[key])) return false;
         }
         return true;
       }
-      return a2 !== a2 && b2 !== b2;
+      return a !== a && b !== b;
     };
   }
 });
@@ -482,18 +482,18 @@ var require_date = __commonJS({
 });
 
 // node_modules/clsx/dist/clsx.mjs
-function r(e2) {
-  var t2, f2, n2 = "";
-  if ("string" == typeof e2 || "number" == typeof e2) n2 += e2;
-  else if ("object" == typeof e2) if (Array.isArray(e2)) {
-    var o2 = e2.length;
-    for (t2 = 0; t2 < o2; t2++) e2[t2] && (f2 = r(e2[t2])) && (n2 && (n2 += " "), n2 += f2);
-  } else for (f2 in e2) e2[f2] && (n2 && (n2 += " "), n2 += f2);
-  return n2;
+function r(e) {
+  var t, f, n = "";
+  if ("string" == typeof e || "number" == typeof e) n += e;
+  else if ("object" == typeof e) if (Array.isArray(e)) {
+    var o = e.length;
+    for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+  } else for (f in e) e[f] && (n && (n += " "), n += f);
+  return n;
 }
 function clsx() {
-  for (var e2, t2, f2 = 0, n2 = "", o2 = arguments.length; f2 < o2; f2++) (e2 = arguments[f2]) && (t2 = r(e2)) && (n2 && (n2 += " "), n2 += t2);
-  return n2;
+  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
+  return n;
 }
 var clsx_default = clsx;
 
@@ -572,10 +572,10 @@ var useIsoLayoutEffect = typeof document !== "undefined" ? React3.useLayoutEffec
 var React6 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/utils/useMergedRefs.mjs
-function useMergedRefs(a2, b2, c2, d2) {
+function useMergedRefs(a, b, c2, d) {
   const forkRef = useRefWithInit(createForkRef).current;
-  if (didChange(forkRef, a2, b2, c2, d2)) {
-    update(forkRef, [a2, b2, c2, d2]);
+  if (didChange(forkRef, a, b, c2, d)) {
+    update(forkRef, [a, b, c2, d]);
   }
   return forkRef.callback;
 }
@@ -593,8 +593,8 @@ function createForkRef() {
     refs: []
   };
 }
-function didChange(forkRef, a2, b2, c2, d2) {
-  return forkRef.refs[0] !== a2 || forkRef.refs[1] !== b2 || forkRef.refs[2] !== c2 || forkRef.refs[3] !== d2;
+function didChange(forkRef, a, b, c2, d) {
+  return forkRef.refs[0] !== a || forkRef.refs[1] !== b || forkRef.refs[2] !== c2 || forkRef.refs[3] !== d;
 }
 function didChangeN(forkRef, newRefs) {
   return forkRef.refs.length !== newRefs.length || forkRef.refs.some((ref, index2) => ref !== newRefs[index2]);
@@ -612,8 +612,8 @@ function update(forkRef, refs) {
     }
     if (instance != null) {
       const cleanupCallbacks = Array(refs.length).fill(null);
-      for (let i2 = 0; i2 < refs.length; i2 += 1) {
-        const ref = refs[i2];
+      for (let i = 0; i < refs.length; i += 1) {
+        const ref = refs[i];
         if (ref == null) {
           continue;
         }
@@ -621,7 +621,7 @@ function update(forkRef, refs) {
           case "function": {
             const refCleanup = ref(instance);
             if (typeof refCleanup === "function") {
-              cleanupCallbacks[i2] = refCleanup;
+              cleanupCallbacks[i] = refCleanup;
             }
             break;
           }
@@ -633,14 +633,14 @@ function update(forkRef, refs) {
         }
       }
       forkRef.cleanup = () => {
-        for (let i2 = 0; i2 < refs.length; i2 += 1) {
-          const ref = refs[i2];
+        for (let i = 0; i < refs.length; i += 1) {
+          const ref = refs[i];
           if (ref == null) {
             continue;
           }
           switch (typeof ref) {
             case "function": {
-              const cleanupCallback = cleanupCallbacks[i2];
+              const cleanupCallback = cleanupCallbacks[i];
               if (typeof cleanupCallback === "function") {
                 cleanupCallback();
               } else {
@@ -681,17 +681,17 @@ function getReactElementRef(element) {
 }
 
 // node_modules/@base-ui/utils/mergeObjects.mjs
-function mergeObjects(a2, b2) {
-  if (a2 && !b2) {
-    return a2;
+function mergeObjects(a, b) {
+  if (a && !b) {
+    return a;
   }
-  if (!a2 && b2) {
-    return b2;
+  if (!a && b) {
+    return b;
   }
-  if (a2 || b2) {
+  if (a || b) {
     return {
-      ...a2,
-      ...b2
+      ...a,
+      ...b
     };
   }
   return void 0;
@@ -736,22 +736,22 @@ function resolveStyle(style, state) {
 
 // node_modules/@base-ui/react/merge-props/mergeProps.mjs
 var EMPTY_PROPS = {};
-function mergeProps(a2, b2, c2, d2, e2) {
-  if (!c2 && !d2 && !e2 && !a2) {
-    return createInitialMergedProps(b2);
+function mergeProps(a, b, c2, d, e) {
+  if (!c2 && !d && !e && !a) {
+    return createInitialMergedProps(b);
   }
-  let merged = createInitialMergedProps(a2);
-  if (b2) {
-    merged = mergeInto(merged, b2);
+  let merged = createInitialMergedProps(a);
+  if (b) {
+    merged = mergeInto(merged, b);
   }
   if (c2) {
     merged = mergeInto(merged, c2);
   }
-  if (d2) {
-    merged = mergeInto(merged, d2);
+  if (d) {
+    merged = mergeInto(merged, d);
   }
-  if (e2) {
-    merged = mergeInto(merged, e2);
+  if (e) {
+    merged = mergeInto(merged, e);
   }
   return merged;
 }
@@ -763,8 +763,8 @@ function mergePropsN(props) {
     return createInitialMergedProps(props[0]);
   }
   let merged = createInitialMergedProps(props[0]);
-  for (let i2 = 1; i2 < props.length; i2 += 1) {
-    merged = mergeInto(merged, props[i2]);
+  for (let i = 1; i < props.length; i += 1) {
+    merged = mergeInto(merged, props[i]);
   }
   return merged;
 }
@@ -1169,8 +1169,8 @@ var Scheduler = class {
     this.callbacksCount = 0;
     this.startId = this.nextId;
     if (currentCallbacksCount > 0) {
-      for (let i2 = 0; i2 < currentCallbacks.length; i2 += 1) {
-        currentCallbacks[i2]?.(timestamp);
+      for (let i = 0; i < currentCallbacks.length; i += 1) {
+        currentCallbacks[i]?.(timestamp);
       }
     }
   };
@@ -2015,8 +2015,8 @@ function useDelayGroup(context, options = {
 // node_modules/@base-ui/utils/mergeCleanups.mjs
 function mergeCleanups(...cleanups) {
   return () => {
-    for (let i2 = 0; i2 < cleanups.length; i2 += 1) {
-      const cleanup = cleanups[i2];
+    for (let i = 0; i < cleanups.length; i += 1) {
+      const cleanup = cleanups[i];
       if (cleanup) {
         cleanup();
       }
@@ -3301,8 +3301,8 @@ var computePosition = async (reference, floating, config) => {
   let statefulPlacement = placement;
   let resetCount = 0;
   const middlewareData = {};
-  for (let i2 = 0; i2 < middleware.length; i2++) {
-    const currentMiddleware = middleware[i2];
+  for (let i = 0; i < middleware.length; i++) {
+    const currentMiddleware = middleware[i];
     if (!currentMiddleware) {
       continue;
     }
@@ -3353,7 +3353,7 @@ var computePosition = async (reference, floating, config) => {
           y: y2
         } = computeCoordsFromPlacement(rects, statefulPlacement, rtl));
       }
-      i2 = -1;
+      i = -1;
     }
   }
   return {
@@ -3425,7 +3425,7 @@ var flip = function(options) {
           const ignoreCrossAxisOverflow = checkCrossAxis === "alignment" ? initialSideAxis !== getSideAxis(nextPlacement) : false;
           if (!ignoreCrossAxisOverflow || // We leave the current main axis only if every placement on that axis
           // overflows the main axis.
-          overflowsData.every((d2) => getSideAxis(d2.placement) === initialSideAxis ? d2.overflows[0] > 0 : true)) {
+          overflowsData.every((d) => getSideAxis(d.placement) === initialSideAxis ? d.overflows[0] > 0 : true)) {
             return {
               data: {
                 index: nextIndex,
@@ -3437,20 +3437,20 @@ var flip = function(options) {
             };
           }
         }
-        let resetPlacement = (_overflowsData$filter = overflowsData.filter((d2) => d2.overflows[0] <= 0).sort((a2, b2) => a2.overflows[1] - b2.overflows[1])[0]) == null ? void 0 : _overflowsData$filter.placement;
+        let resetPlacement = (_overflowsData$filter = overflowsData.filter((d) => d.overflows[0] <= 0).sort((a, b) => a.overflows[1] - b.overflows[1])[0]) == null ? void 0 : _overflowsData$filter.placement;
         if (!resetPlacement) {
           switch (fallbackStrategy) {
             case "bestFit": {
               var _overflowsData$filter2;
-              const placement2 = (_overflowsData$filter2 = overflowsData.filter((d2) => {
+              const placement2 = (_overflowsData$filter2 = overflowsData.filter((d) => {
                 if (hasFallbackAxisSideDirection) {
-                  const currentSideAxis = getSideAxis(d2.placement);
+                  const currentSideAxis = getSideAxis(d.placement);
                   return currentSideAxis === initialSideAxis || // Create a bias to the `y` side axis due to horizontal
                   // reading directions favoring greater width.
                   currentSideAxis === "y";
                 }
                 return true;
-              }).map((d2) => [d2.placement, d2.overflows.filter((overflow2) => overflow2 > 0).reduce((acc, overflow2) => acc + overflow2, 0)]).sort((a2, b2) => a2[1] - b2[1])[0]) == null ? void 0 : _overflowsData$filter2[0];
+              }).map((d) => [d.placement, d.overflows.filter((overflow2) => overflow2 > 0).reduce((acc, overflow2) => acc + overflow2, 0)]).sort((a, b) => a[1] - b[1])[0]) == null ? void 0 : _overflowsData$filter2[0];
               if (placement2) {
                 resetPlacement = placement2;
               }
@@ -4058,8 +4058,8 @@ function getClippingRect(_ref) {
   let right = firstRect.right;
   let bottom = firstRect.bottom;
   let left = firstRect.left;
-  for (let i2 = 1; i2 < clippingAncestors.length; i2++) {
-    const rect = getClientRectFromClippingAncestor(element, clippingAncestors[i2], strategy);
+  for (let i = 1; i < clippingAncestors.length; i++) {
+    const rect = getClientRectFromClippingAncestor(element, clippingAncestors[i], strategy);
     top = max(rect.top, top);
     right = min(rect.right, right);
     bottom = min(rect.bottom, bottom);
@@ -4184,8 +4184,8 @@ var platform2 = {
   isElement,
   isRTL
 };
-function rectsAreEqual(a2, b2) {
-  return a2.x === b2.x && a2.y === b2.y && a2.width === b2.width && a2.height === b2.height;
+function rectsAreEqual(a, b) {
+  return a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
 }
 function observeMove(element, onMove, ancestorResize) {
   let io = null;
@@ -4362,52 +4362,52 @@ var isClient = typeof document !== "undefined";
 var noop2 = function noop3() {
 };
 var index = isClient ? import_react2.useLayoutEffect : noop2;
-function deepEqual(a2, b2) {
-  if (a2 === b2) {
+function deepEqual(a, b) {
+  if (a === b) {
     return true;
   }
-  if (typeof a2 !== typeof b2) {
+  if (typeof a !== typeof b) {
     return false;
   }
-  if (typeof a2 === "function" && a2.toString() === b2.toString()) {
+  if (typeof a === "function" && a.toString() === b.toString()) {
     return true;
   }
   let length;
-  let i2;
+  let i;
   let keys;
-  if (a2 && b2 && typeof a2 === "object") {
-    if (Array.isArray(a2)) {
-      length = a2.length;
-      if (length !== b2.length) return false;
-      for (i2 = length; i2-- !== 0; ) {
-        if (!deepEqual(a2[i2], b2[i2])) {
+  if (a && b && typeof a === "object") {
+    if (Array.isArray(a)) {
+      length = a.length;
+      if (length !== b.length) return false;
+      for (i = length; i-- !== 0; ) {
+        if (!deepEqual(a[i], b[i])) {
           return false;
         }
       }
       return true;
     }
-    keys = Object.keys(a2);
+    keys = Object.keys(a);
     length = keys.length;
-    if (length !== Object.keys(b2).length) {
+    if (length !== Object.keys(b).length) {
       return false;
     }
-    for (i2 = length; i2-- !== 0; ) {
-      if (!{}.hasOwnProperty.call(b2, keys[i2])) {
+    for (i = length; i-- !== 0; ) {
+      if (!{}.hasOwnProperty.call(b, keys[i])) {
         return false;
       }
     }
-    for (i2 = length; i2-- !== 0; ) {
-      const key = keys[i2];
-      if (key === "_owner" && a2.$$typeof) {
+    for (i = length; i-- !== 0; ) {
+      const key = keys[i];
+      if (key === "_owner" && a.$$typeof) {
         continue;
       }
-      if (!deepEqual(a2[key], b2[key])) {
+      if (!deepEqual(a[key], b[key])) {
         return false;
       }
     }
     return true;
   }
-  return a2 !== a2 && b2 !== b2;
+  return a !== a && b !== b;
 }
 function getDPR(element) {
   if (typeof window === "undefined") {
@@ -4746,8 +4746,8 @@ var BasePopupHandle = class {
     }
     let triggerElement;
     if (triggerId) {
-      for (let i2 = this.attachedStores.length - 1; i2 >= 0 && !triggerElement; i2 -= 1) {
-        triggerElement = this.attachedStores[i2].context.triggerElements.getById(triggerId);
+      for (let i = this.attachedStores.length - 1; i >= 0 && !triggerElement; i -= 1) {
+        triggerElement = this.attachedStores[i].context.triggerElements.getById(triggerId);
       }
       triggerElement ??= this.fallbackStore.context.triggerElements.getById(triggerId);
     }
@@ -4851,8 +4851,8 @@ register({
       instance.didChangeStore = true;
       instance.getSnapshot = () => {
         let didChange2 = false;
-        for (let i2 = 0; i2 < instance.syncHooks.length; i2 += 1) {
-          const hook = instance.syncHooks[i2];
+        for (let i = 0; i < instance.syncHooks.length; i += 1) {
+          const hook = instance.syncHooks[i];
           const value = hook.selector(hook.store.state, hook.a1, hook.a2, hook.a3);
           if (!Object.is(hook.value, value)) {
             didChange2 = true;
@@ -5906,7 +5906,7 @@ function useFloatingWithStore(options, store) {
   }, [domReferenceElement]);
   useIsoLayoutEffect(() => {
     store.context.dataRef.current.floatingContext = context;
-    const node = tree?.nodesRef.current.find((n2) => n2.id === nodeId);
+    const node = tree?.nodesRef.current.find((n) => n.id === nodeId);
     if (node) {
       node.context = context;
     }
@@ -8078,8 +8078,8 @@ var TOOLTIP_TRIGGER_IDENTIFIER = "data-base-ui-tooltip-trigger";
 function getTargetElement(event) {
   if ("composedPath" in event) {
     const path = event.composedPath();
-    for (let i2 = 0; i2 < path.length; i2 += 1) {
-      const element = path[i2];
+    for (let i = 0; i < path.length; i += 1) {
+      const element = path[i];
       if (isElement(element)) {
         return element;
       }
@@ -10867,13 +10867,13 @@ function areGlobalStylesEqual(original, variation) {
 var import_deepmerge = __toESM(require_cjs(), 1);
 
 // node_modules/is-plain-object/dist/is-plain-object.mjs
-function isObject(o2) {
-  return Object.prototype.toString.call(o2) === "[object Object]";
+function isObject(o) {
+  return Object.prototype.toString.call(o) === "[object Object]";
 }
-function isPlainObject(o2) {
+function isPlainObject(o) {
   var ctor, prot;
-  if (isObject(o2) === false) return false;
-  ctor = o2.constructor;
+  if (isObject(o) === false) return false;
+  ctor = o.constructor;
   if (ctor === void 0) return true;
   prot = ctor.prototype;
   if (isObject(prot) === false) return false;
@@ -10911,161 +10911,174 @@ function mergeGlobalStyles(base, user) {
 }
 
 // node_modules/colord/index.mjs
-var r2 = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) };
-var t = function(r3) {
+for (r2 = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) }, t = function(r3) {
   return "string" == typeof r3 ? r3.length > 0 : "number" == typeof r3;
-};
-var n = function(r3, t2, n2) {
+}, n = function(r3, t2, n2) {
   return void 0 === t2 && (t2 = 0), void 0 === n2 && (n2 = Math.pow(10, t2)), Math.round(n2 * r3) / n2 + 0;
-};
-var e = function(r3, t2, n2) {
+}, u = function(r3, t2, n2) {
   return void 0 === t2 && (t2 = 0), void 0 === n2 && (n2 = 1), r3 > n2 ? n2 : r3 > t2 ? r3 : t2;
-};
-var u = function(r3) {
-  return (r3 = isFinite(r3) ? r3 % 360 : 0) > 0 ? r3 : r3 + 360;
-};
-var a = function(r3) {
-  return { r: e(r3.r, 0, 255), g: e(r3.g, 0, 255), b: e(r3.b, 0, 255), a: e(r3.a) };
-};
-var o = function(r3) {
+}, e = function(r3) {
+  return (r3 = isFinite(r3) ? r3 % 360 : 0) < 0 ? r3 + 360 : r3;
+}, o = function(r3, t2) {
+  return void 0 === t2 && (t2 = 0), n(r3, t2) % 360;
+}, a = function(r3) {
+  return { r: u(r3.r, 0, 255), g: u(r3.g, 0, 255), b: u(r3.b, 0, 255), a: u(r3.a) };
+}, i = function(r3) {
   return { r: n(r3.r), g: n(r3.g), b: n(r3.b), a: n(r3.a, 3) };
+}, s = /^#([0-9a-f]{3,8})$/i, d = function(r3, t2) {
+  var n2 = r3.charCodeAt(t2);
+  return (15 & n2) + 9 * (n2 >> 6);
+}, h = function(r3, t2) {
+  return d(r3, t2) << 4 | d(r3, t2 + 1);
+}, b = [], f = 0; f < 256; f++) b.push((f < 16 ? "0" : "") + f.toString(16));
+var r2;
+var t;
+var n;
+var u;
+var e;
+var o;
+var a;
+var i;
+var s;
+var d;
+var h;
+var b;
+var f;
+var g = function(r2) {
+  return b[u(r2, 0, 255)];
 };
-var i = /^#([0-9a-f]{3,8})$/i;
-var s = function(r3) {
-  var t2 = r3.toString(16);
-  return t2.length < 2 ? "0" + t2 : t2;
+var c = function(r2) {
+  var t = r2.r, n = r2.g, u = r2.b, e = r2.a, o = Math.max(t, n, u), a = o - Math.min(t, n, u), i = a ? o === t ? (n - u) / a : o === n ? 2 + (u - t) / a : 4 + (t - n) / a : 0;
+  return { h: 60 * (i < 0 ? i + 6 : i), s: o ? a / o * 100 : 0, v: o / 255 * 100, a: e };
 };
-var d = function(r3) {
-  var t2 = r3.r, n2 = r3.g, e2 = r3.b, u2 = r3.a, a2 = Math.max(t2, n2, e2), o2 = a2 - Math.min(t2, n2, e2), i2 = o2 ? a2 === t2 ? (n2 - e2) / o2 : a2 === n2 ? 2 + (e2 - t2) / o2 : 4 + (t2 - n2) / o2 : 0;
-  return { h: 60 * (i2 < 0 ? i2 + 6 : i2), s: a2 ? o2 / a2 * 100 : 0, v: a2 / 255 * 100, a: u2 };
+var v = function(r2) {
+  var t = r2.h, n = r2.s, u = r2.v, e = r2.a;
+  t = t / 360 * 6, n /= 100, u /= 100;
+  var o = Math.floor(t), a = u * (1 - n), i = u * (1 - (t - o) * n), s = u * (1 - (1 - t + o) * n), d = o % 6;
+  return { r: 255 * [u, i, a, a, s, u][d], g: 255 * [s, u, u, i, a, a][d], b: 255 * [a, a, s, u, u, i][d], a: e };
 };
-var h = function(r3) {
-  var t2 = r3.h, n2 = r3.s, e2 = r3.v, u2 = r3.a;
-  t2 = t2 / 360 * 6, n2 /= 100, e2 /= 100;
-  var a2 = Math.floor(t2), o2 = e2 * (1 - n2), i2 = e2 * (1 - (t2 - a2) * n2), s2 = e2 * (1 - (1 - t2 + a2) * n2), d2 = a2 % 6;
-  return { r: 255 * [e2, i2, o2, o2, s2, e2][d2], g: 255 * [s2, e2, e2, i2, o2, o2][d2], b: 255 * [o2, o2, s2, e2, e2, i2][d2], a: u2 };
+var l = function(r2) {
+  return { h: e(r2.h), s: u(r2.s, 0, 100), l: u(r2.l, 0, 100), a: u(r2.a) };
 };
-var b = function(r3) {
-  return { h: u(r3.h), s: e(r3.s, 0, 100), l: e(r3.l, 0, 100), a: e(r3.a) };
+var p2 = function(r2) {
+  return { h: o(r2.h), s: n(r2.s), l: n(r2.l), a: n(r2.a, 3) };
 };
-var g = function(r3) {
-  return { h: n(r3.h), s: n(r3.s), l: n(r3.l), a: n(r3.a, 3) };
+var m = function(r2) {
+  return v((n = (t = r2).s, { h: t.h, s: (n *= ((u = t.l) < 50 ? u : 100 - u) / 100) > 0 ? 2 * n / (u + n) * 100 : 0, v: u + n, a: t.a }));
+  var t, n, u;
 };
-var f = function(r3) {
-  return h((n2 = (t2 = r3).s, { h: t2.h, s: (n2 *= ((e2 = t2.l) < 50 ? e2 : 100 - e2) / 100) > 0 ? 2 * n2 / (e2 + n2) * 100 : 0, v: e2 + n2, a: t2.a }));
-  var t2, n2, e2;
+var y = function(r2) {
+  return { h: (t = c(r2)).h, s: (e = (200 - (n = t.s)) * (u = t.v) / 100) > 0 && e < 200 ? n * u / 100 / (e <= 100 ? e : 200 - e) * 100 : 0, l: e / 2, a: t.a };
+  var t, n, u, e;
 };
-var c = function(r3) {
-  return { h: (t2 = d(r3)).h, s: (u2 = (200 - (n2 = t2.s)) * (e2 = t2.v) / 100) > 0 && u2 < 200 ? n2 * e2 / 100 / (u2 <= 100 ? u2 : 200 - u2) * 100 : 0, l: u2 / 2, a: t2.a };
-  var t2, n2, e2, u2;
-};
-var l = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-var p2 = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-var v = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-var m = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-var y = { string: [[function(r3) {
-  var t2 = i.exec(r3);
-  return t2 ? (r3 = t2[1]).length <= 4 ? { r: parseInt(r3[0] + r3[0], 16), g: parseInt(r3[1] + r3[1], 16), b: parseInt(r3[2] + r3[2], 16), a: 4 === r3.length ? n(parseInt(r3[3] + r3[3], 16) / 255, 2) : 1 } : 6 === r3.length || 8 === r3.length ? { r: parseInt(r3.substr(0, 2), 16), g: parseInt(r3.substr(2, 2), 16), b: parseInt(r3.substr(4, 2), 16), a: 8 === r3.length ? n(parseInt(r3.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
-}, "hex"], [function(r3) {
-  var t2 = v.exec(r3) || m.exec(r3);
-  return t2 ? t2[2] !== t2[4] || t2[4] !== t2[6] ? null : a({ r: Number(t2[1]) / (t2[2] ? 100 / 255 : 1), g: Number(t2[3]) / (t2[4] ? 100 / 255 : 1), b: Number(t2[5]) / (t2[6] ? 100 / 255 : 1), a: void 0 === t2[7] ? 1 : Number(t2[7]) / (t2[8] ? 100 : 1) }) : null;
-}, "rgb"], [function(t2) {
-  var n2 = l.exec(t2) || p2.exec(t2);
-  if (!n2) return null;
-  var e2, u2, a2 = b({ h: (e2 = n2[1], u2 = n2[2], void 0 === u2 && (u2 = "deg"), Number(e2) * (r2[u2] || 1)), s: Number(n2[3]), l: Number(n2[4]), a: void 0 === n2[5] ? 1 : Number(n2[5]) / (n2[6] ? 100 : 1) });
-  return f(a2);
-}, "hsl"]], object: [[function(r3) {
-  var n2 = r3.r, e2 = r3.g, u2 = r3.b, o2 = r3.a, i2 = void 0 === o2 ? 1 : o2;
-  return t(n2) && t(e2) && t(u2) ? a({ r: Number(n2), g: Number(e2), b: Number(u2), a: Number(i2) }) : null;
-}, "rgb"], [function(r3) {
-  var n2 = r3.h, e2 = r3.s, u2 = r3.l, a2 = r3.a, o2 = void 0 === a2 ? 1 : a2;
-  if (!t(n2) || !t(e2) || !t(u2)) return null;
-  var i2 = b({ h: Number(n2), s: Number(e2), l: Number(u2), a: Number(o2) });
-  return f(i2);
-}, "hsl"], [function(r3) {
-  var n2 = r3.h, a2 = r3.s, o2 = r3.v, i2 = r3.a, s2 = void 0 === i2 ? 1 : i2;
-  if (!t(n2) || !t(a2) || !t(o2)) return null;
-  var d2 = (function(r4) {
-    return { h: u(r4.h), s: e(r4.s, 0, 100), v: e(r4.v, 0, 100), a: e(r4.a) };
-  })({ h: Number(n2), s: Number(a2), v: Number(o2), a: Number(s2) });
-  return h(d2);
+var N = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+var x = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+var M = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+var H = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+var $ = { string: [[function(r2) {
+  if (!s.test(r2)) return null;
+  var t = r2.length;
+  return t <= 5 ? { r: 17 * d(r2, 1), g: 17 * d(r2, 2), b: 17 * d(r2, 3), a: 5 === t ? n(17 * d(r2, 4) / 255, 2) : 1 } : 7 === t || 9 === t ? { r: h(r2, 1), g: h(r2, 3), b: h(r2, 5), a: 9 === t ? n(h(r2, 7) / 255, 2) : 1 } : null;
+}, "hex"], [function(r2) {
+  var t = M.exec(r2) || H.exec(r2);
+  return t ? t[2] !== t[4] || t[4] !== t[6] ? null : a({ r: Number(t[1]) / (t[2] ? 100 / 255 : 1), g: Number(t[3]) / (t[4] ? 100 / 255 : 1), b: Number(t[5]) / (t[6] ? 100 / 255 : 1), a: void 0 === t[7] ? 1 : Number(t[7]) / (t[8] ? 100 : 1) }) : null;
+}, "rgb"], [function(t) {
+  var n = N.exec(t) || x.exec(t);
+  if (!n) return null;
+  var u, e, o = l({ h: (u = n[1], e = n[2], void 0 === e && (e = "deg"), Number(u) * (r2[e] || 1)), s: Number(n[3]), l: Number(n[4]), a: void 0 === n[5] ? 1 : Number(n[5]) / (n[6] ? 100 : 1) });
+  return m(o);
+}, "hsl"]], object: [[function(r2) {
+  var n = r2.r, u = r2.g, e = r2.b, o = r2.a, i = void 0 === o ? 1 : o;
+  return t(n) && t(u) && t(e) ? a({ r: Number(n), g: Number(u), b: Number(e), a: Number(i) }) : null;
+}, "rgb"], [function(r2) {
+  var n = r2.h, u = r2.s, e = r2.l, o = r2.a, a = void 0 === o ? 1 : o;
+  if (!t(n) || !t(u) || !t(e)) return null;
+  var i = l({ h: Number(n), s: Number(u), l: Number(e), a: Number(a) });
+  return m(i);
+}, "hsl"], [function(r2) {
+  var n = r2.h, o = r2.s, a = r2.v, i = r2.a, s = void 0 === i ? 1 : i;
+  if (!t(n) || !t(o) || !t(a)) return null;
+  var d = (function(r3) {
+    return { h: e(r3.h), s: u(r3.s, 0, 100), v: u(r3.v, 0, 100), a: u(r3.a) };
+  })({ h: Number(n), s: Number(o), v: Number(a), a: Number(s) });
+  return v(d);
 }, "hsv"]] };
-var N = function(r3, t2) {
-  for (var n2 = 0; n2 < t2.length; n2++) {
-    var e2 = t2[n2][0](r3);
-    if (e2) return [e2, t2[n2][1]];
+var j = function(r2, t) {
+  for (var n = 0; n < t.length; n++) {
+    var u = t[n][0](r2);
+    if (u) return [u, t[n][1]];
   }
   return [null, void 0];
 };
-var x = function(r3) {
-  return "string" == typeof r3 ? N(r3.trim(), y.string) : "object" == typeof r3 && null !== r3 ? N(r3, y.object) : [null, void 0];
+var w = function(r2) {
+  return "string" == typeof r2 ? j(r2.trim(), $.string) : "object" == typeof r2 && null !== r2 ? j(r2, $.object) : [null, void 0];
 };
-var M = function(r3, t2) {
-  var n2 = c(r3);
-  return { h: n2.h, s: e(n2.s + 100 * t2, 0, 100), l: n2.l, a: n2.a };
+var k = function(r2, t) {
+  var n = y(r2);
+  return { h: n.h, s: u(n.s + 100 * t, 0, 100), l: n.l, a: n.a };
 };
-var H = function(r3) {
-  return (299 * r3.r + 587 * r3.g + 114 * r3.b) / 1e3 / 255;
+var E = function(r2) {
+  return (299 * r2.r + 587 * r2.g + 114 * r2.b) / 1e3 / 255;
 };
-var $ = function(r3, t2) {
-  var n2 = c(r3);
-  return { h: n2.h, s: n2.s, l: e(n2.l + 100 * t2, 0, 100), a: n2.a };
+var R = function(r2, t) {
+  var n = y(r2);
+  return { h: n.h, s: n.s, l: u(n.l + 100 * t, 0, 100), a: n.a };
 };
-var j = (function() {
-  function r3(r4) {
-    this.parsed = x(r4)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
+var q = (function() {
+  function r2(r3) {
+    this.parsed = w(r3)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
   }
-  return r3.prototype.isValid = function() {
+  return r2.prototype.isValid = function() {
     return null !== this.parsed;
-  }, r3.prototype.brightness = function() {
-    return n(H(this.rgba), 2);
-  }, r3.prototype.isDark = function() {
-    return H(this.rgba) < 0.5;
-  }, r3.prototype.isLight = function() {
-    return H(this.rgba) >= 0.5;
-  }, r3.prototype.toHex = function() {
-    return r4 = o(this.rgba), t2 = r4.r, e2 = r4.g, u2 = r4.b, i2 = (a2 = r4.a) < 1 ? s(n(255 * a2)) : "", "#" + s(t2) + s(e2) + s(u2) + i2;
-    var r4, t2, e2, u2, a2, i2;
-  }, r3.prototype.toRgb = function() {
-    return o(this.rgba);
-  }, r3.prototype.toRgbString = function() {
-    return r4 = o(this.rgba), t2 = r4.r, n2 = r4.g, e2 = r4.b, (u2 = r4.a) < 1 ? "rgba(" + t2 + ", " + n2 + ", " + e2 + ", " + u2 + ")" : "rgb(" + t2 + ", " + n2 + ", " + e2 + ")";
-    var r4, t2, n2, e2, u2;
-  }, r3.prototype.toHsl = function() {
-    return g(c(this.rgba));
-  }, r3.prototype.toHslString = function() {
-    return r4 = g(c(this.rgba)), t2 = r4.h, n2 = r4.s, e2 = r4.l, (u2 = r4.a) < 1 ? "hsla(" + t2 + ", " + n2 + "%, " + e2 + "%, " + u2 + ")" : "hsl(" + t2 + ", " + n2 + "%, " + e2 + "%)";
-    var r4, t2, n2, e2, u2;
-  }, r3.prototype.toHsv = function() {
-    return r4 = d(this.rgba), { h: n(r4.h), s: n(r4.s), v: n(r4.v), a: n(r4.a, 3) };
-    var r4;
-  }, r3.prototype.invert = function() {
-    return w({ r: 255 - (r4 = this.rgba).r, g: 255 - r4.g, b: 255 - r4.b, a: r4.a });
-    var r4;
-  }, r3.prototype.saturate = function(r4) {
-    return void 0 === r4 && (r4 = 0.1), w(M(this.rgba, r4));
-  }, r3.prototype.desaturate = function(r4) {
-    return void 0 === r4 && (r4 = 0.1), w(M(this.rgba, -r4));
-  }, r3.prototype.grayscale = function() {
-    return w(M(this.rgba, -1));
-  }, r3.prototype.lighten = function(r4) {
-    return void 0 === r4 && (r4 = 0.1), w($(this.rgba, r4));
-  }, r3.prototype.darken = function(r4) {
-    return void 0 === r4 && (r4 = 0.1), w($(this.rgba, -r4));
-  }, r3.prototype.rotate = function(r4) {
-    return void 0 === r4 && (r4 = 15), this.hue(this.hue() + r4);
-  }, r3.prototype.alpha = function(r4) {
-    return "number" == typeof r4 ? w({ r: (t2 = this.rgba).r, g: t2.g, b: t2.b, a: r4 }) : n(this.rgba.a, 3);
-    var t2;
-  }, r3.prototype.hue = function(r4) {
-    var t2 = c(this.rgba);
-    return "number" == typeof r4 ? w({ h: r4, s: t2.s, l: t2.l, a: t2.a }) : n(t2.h);
-  }, r3.prototype.isEqual = function(r4) {
-    return this.toHex() === w(r4).toHex();
-  }, r3;
+  }, r2.prototype.brightness = function() {
+    return n(E(this.rgba), 2);
+  }, r2.prototype.isDark = function() {
+    return E(this.rgba) < 0.5;
+  }, r2.prototype.isLight = function() {
+    return E(this.rgba) >= 0.5;
+  }, r2.prototype.toHex = function() {
+    return r3 = i(this.rgba), t = r3.r, u = r3.g, e = r3.b, a = (o = r3.a) < 1 ? g(n(255 * o)) : "", "#" + g(t) + g(u) + g(e) + a;
+    var r3, t, u, e, o, a;
+  }, r2.prototype.toRgb = function() {
+    return i(this.rgba);
+  }, r2.prototype.toRgbString = function() {
+    return r3 = i(this.rgba), t = r3.r, n = r3.g, u = r3.b, (e = r3.a) < 1 ? "rgba(" + t + ", " + n + ", " + u + ", " + e + ")" : "rgb(" + t + ", " + n + ", " + u + ")";
+    var r3, t, n, u, e;
+  }, r2.prototype.toHsl = function() {
+    return p2(y(this.rgba));
+  }, r2.prototype.toHslString = function() {
+    return r3 = p2(y(this.rgba)), t = r3.h, n = r3.s, u = r3.l, (e = r3.a) < 1 ? "hsla(" + t + ", " + n + "%, " + u + "%, " + e + ")" : "hsl(" + t + ", " + n + "%, " + u + "%)";
+    var r3, t, n, u, e;
+  }, r2.prototype.toHsv = function() {
+    return r3 = c(this.rgba), { h: o(r3.h), s: n(r3.s), v: n(r3.v), a: n(r3.a, 3) };
+    var r3;
+  }, r2.prototype.invert = function() {
+    return A({ r: 255 - (r3 = this.rgba).r, g: 255 - r3.g, b: 255 - r3.b, a: r3.a });
+    var r3;
+  }, r2.prototype.saturate = function(r3) {
+    return void 0 === r3 && (r3 = 0.1), A(k(this.rgba, r3));
+  }, r2.prototype.desaturate = function(r3) {
+    return void 0 === r3 && (r3 = 0.1), A(k(this.rgba, -r3));
+  }, r2.prototype.grayscale = function() {
+    return A(k(this.rgba, -1));
+  }, r2.prototype.lighten = function(r3) {
+    return void 0 === r3 && (r3 = 0.1), A(R(this.rgba, r3));
+  }, r2.prototype.darken = function(r3) {
+    return void 0 === r3 && (r3 = 0.1), A(R(this.rgba, -r3));
+  }, r2.prototype.rotate = function(r3) {
+    return void 0 === r3 && (r3 = 15), this.hue(y(this.rgba).h + r3);
+  }, r2.prototype.alpha = function(r3) {
+    return "number" == typeof r3 ? A({ r: (t = this.rgba).r, g: t.g, b: t.b, a: r3 }) : n(this.rgba.a, 3);
+    var t;
+  }, r2.prototype.hue = function(r3) {
+    var t = y(this.rgba);
+    return "number" == typeof r3 ? A({ h: r3, s: t.s, l: t.l, a: t.a }) : o(t.h);
+  }, r2.prototype.isEqual = function(r3) {
+    return this.toHex() === A(r3).toHex();
+  }, r2;
 })();
-var w = function(r3) {
-  return r3 instanceof j ? r3 : new j(r3);
+var A = function(r2) {
+  return r2 instanceof q ? r2 : new q(r2);
 };
 
 // packages/global-styles-engine/build-module/utils/duotone.mjs
@@ -11077,7 +11090,7 @@ function getValuesFromColors(colors = []) {
     a: []
   };
   colors.forEach((color) => {
-    const rgbColor = w(color).toRgb();
+    const rgbColor = A(color).toRgb();
     values.r.push(rgbColor.r / 255);
     values.g.push(rgbColor.g / 255);
     values.b.push(rgbColor.b / 255);
@@ -11981,7 +11994,7 @@ function findNearest(input, numbers) {
   if (numbers.length === 0) {
     return null;
   }
-  numbers.sort((a2, b2) => Math.abs(input - a2) - Math.abs(input - b2));
+  numbers.sort((a, b) => Math.abs(input - a) - Math.abs(input - b));
   return numbers[0];
 }
 var FONT_WEIGHT_KEYWORDS = {
@@ -12913,12 +12926,12 @@ async function fetchInstallFontFace(fontFamilyId, data, registry) {
 
 // node_modules/tslib/tslib.es6.mjs
 var __assign = function() {
-  __assign = Object.assign || function __assign2(t2) {
-    for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
-      s2 = arguments[i2];
-      for (var p3 in s2) if (Object.prototype.hasOwnProperty.call(s2, p3)) t2[p3] = s2[p3];
+  __assign = Object.assign || function __assign2(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+      for (var p3 in s) if (Object.prototype.hasOwnProperty.call(s, p3)) t[p3] = s[p3];
     }
-    return t2;
+    return t;
   };
   return __assign.apply(this, arguments);
 };
@@ -13093,9 +13106,9 @@ async function loadFontFaceInBrowser(fontFace, source, addTo = "all") {
 }
 function unloadFontFaceInBrowser(fontFace, removeFrom = "all") {
   const unloadFontFace = (fonts) => {
-    fonts.forEach((f2) => {
-      if (f2.family === formatFontFaceName(fontFace?.fontFamily) && f2.weight === fontFace?.fontWeight && f2.style === fontFace?.fontStyle) {
-        fonts.delete(f2);
+    fonts.forEach((f) => {
+      if (f.family === formatFontFaceName(fontFace?.fontFamily) && f.weight === fontFace?.fontWeight && f.style === fontFace?.fontStyle) {
+        fonts.delete(f);
       }
     });
   };
@@ -13241,36 +13254,36 @@ function setImmutably2(object, path, value) {
 
 // packages/global-styles-ui/build-module/font-library/utils/toggleFont.mjs
 function toggleFont(font2, face, initialfonts = []) {
-  const isFontActivated = (f2) => f2.slug === font2.slug;
+  const isFontActivated = (f) => f.slug === font2.slug;
   const getActivatedFont = (fonts) => fonts.find(isFontActivated);
   const toggleEntireFontFamily = (activatedFont2) => {
     if (!activatedFont2) {
       return [...initialfonts, font2];
     }
     return initialfonts.filter(
-      (f2) => !isFontActivated(f2)
+      (f) => !isFontActivated(f)
     );
   };
   const toggleFontVariant = (activatedFont2) => {
-    const isFaceActivated = (f2) => f2.fontWeight === face.fontWeight && f2.fontStyle === face.fontStyle;
+    const isFaceActivated = (f) => f.fontWeight === face.fontWeight && f.fontStyle === face.fontStyle;
     if (!activatedFont2) {
       return [...initialfonts, { ...font2, fontFace: [face] }];
     }
     let newFontFaces = activatedFont2.fontFace || [];
     if (newFontFaces.find(isFaceActivated)) {
       newFontFaces = newFontFaces.filter(
-        (f2) => !isFaceActivated(f2)
+        (f) => !isFaceActivated(f)
       );
     } else {
       newFontFaces = [...newFontFaces, face];
     }
     if (newFontFaces.length === 0) {
       return initialfonts.filter(
-        (f2) => !isFontActivated(f2)
+        (f) => !isFontActivated(f)
       );
     }
     return initialfonts.map(
-      (f2) => isFontActivated(f2) ? { ...f2, fontFace: newFontFaces } : f2
+      (f) => isFontActivated(f) ? { ...f, fontFace: newFontFaces } : f
     );
   };
   const activatedFont = getActivatedFont(initialfonts);
@@ -13331,9 +13344,9 @@ function FontLibraryProvider({ children }) {
   };
   const [modalTabOpen, setModalTabOpen] = (0, import_element31.useState)("");
   const [libraryFontSelected, setLibraryFontSelected] = (0, import_element31.useState)(void 0);
-  const themeFonts = fontFamilies?.theme ? fontFamilies.theme.map((f2) => setUIValuesNeeded(f2, { source: "theme" })).sort((a2, b2) => a2.name.localeCompare(b2.name)) : [];
-  const customFonts = fontFamilies?.custom ? fontFamilies.custom.map((f2) => setUIValuesNeeded(f2, { source: "custom" })).sort((a2, b2) => a2.name.localeCompare(b2.name)) : [];
-  const baseCustomFonts = libraryFonts ? libraryFonts.map((f2) => setUIValuesNeeded(f2, { source: "custom" })).sort((a2, b2) => a2.name.localeCompare(b2.name)) : [];
+  const themeFonts = fontFamilies?.theme ? fontFamilies.theme.map((f) => setUIValuesNeeded(f, { source: "theme" })).sort((a, b) => a.name.localeCompare(b.name)) : [];
+  const customFonts = fontFamilies?.custom ? fontFamilies.custom.map((f) => setUIValuesNeeded(f, { source: "custom" })).sort((a, b) => a.name.localeCompare(b.name)) : [];
+  const baseCustomFonts = libraryFonts ? libraryFonts.map((f) => setUIValuesNeeded(f, { source: "custom" })).sort((a, b) => a.name.localeCompare(b.name)) : [];
   (0, import_element31.useEffect)(() => {
     if (!modalTabOpen) {
       setLibraryFontSelected(void 0);
@@ -13345,7 +13358,7 @@ function FontLibraryProvider({ children }) {
       return;
     }
     const fonts = font2.source === "theme" ? themeFonts : baseCustomFonts;
-    const fontSelected = fonts.find((f2) => f2.slug === font2.slug);
+    const fontSelected = fonts.find((f) => f.slug === font2.slug);
     setLibraryFontSelected({
       ...fontSelected || font2,
       source: font2.source
@@ -13512,7 +13525,7 @@ function FontLibraryProvider({ children }) {
   const deactivateFontFamily = (font2) => {
     const initialCustomFonts = fontFamilies?.[font2.source ?? ""] ?? [];
     const newCustomFonts = initialCustomFonts.filter(
-      (f2) => f2.slug !== font2.slug
+      (f) => f.slug !== font2.slug
     );
     const activeFonts = {
       ...fontFamilies,
@@ -13869,20 +13882,20 @@ function getNumericFontWeight(value) {
   }
 }
 function sortFontFaces(faces) {
-  return faces.sort((a2, b2) => {
-    if (a2.fontStyle === "normal" && b2.fontStyle !== "normal") {
+  return faces.sort((a, b) => {
+    if (a.fontStyle === "normal" && b.fontStyle !== "normal") {
       return -1;
     }
-    if (b2.fontStyle === "normal" && a2.fontStyle !== "normal") {
+    if (b.fontStyle === "normal" && a.fontStyle !== "normal") {
       return 1;
     }
-    if (a2.fontStyle === b2.fontStyle) {
-      return getNumericFontWeight(a2.fontWeight?.toString() ?? "normal") - getNumericFontWeight(b2.fontWeight?.toString() ?? "normal");
+    if (a.fontStyle === b.fontStyle) {
+      return getNumericFontWeight(a.fontWeight?.toString() ?? "normal") - getNumericFontWeight(b.fontWeight?.toString() ?? "normal");
     }
-    if (!a2.fontStyle || !b2.fontStyle) {
-      return !a2.fontStyle ? 1 : -1;
+    if (!a.fontStyle || !b.fontStyle) {
+      return !a.fontStyle ? 1 : -1;
     }
-    return a2.fontStyle.localeCompare(b2.fontStyle);
+    return a.fontStyle.localeCompare(b.fontStyle);
   });
 }
 
@@ -13899,7 +13912,7 @@ function getFontFamiliesKey(fontFamilies) {
       fontFace: (family.fontFace ?? []).map(
         (face) => `${face.fontStyle}-${face.fontWeight}`
       ).sort()
-    })).sort((a2, b2) => a2.slug.localeCompare(b2.slug));
+    })).sort((a, b) => a.slug.localeCompare(b.slug));
   }
   return JSON.stringify(normalized);
 }
@@ -13937,10 +13950,10 @@ function InstalledFonts() {
     }
     return getFontFamiliesKey(editedFontFamilies) !== getFontFamiliesKey(savedFontFamilies);
   }, [editedFontFamilies, savedFontFamilies]);
-  const themeFonts = fontFamilies?.theme ? fontFamilies.theme.map((f2) => setUIValuesNeeded(f2, { source: "theme" })).sort((a2, b2) => a2.name.localeCompare(b2.name)) : [];
-  const themeFontsSlugs = new Set(themeFonts.map((f2) => f2.slug));
+  const themeFonts = fontFamilies?.theme ? fontFamilies.theme.map((f) => setUIValuesNeeded(f, { source: "theme" })).sort((a, b) => a.name.localeCompare(b.name)) : [];
+  const themeFontsSlugs = new Set(themeFonts.map((f) => f.slug));
   const baseThemeFonts = baseFontFamilies?.theme ? themeFonts.concat(
-    baseFontFamilies.theme.filter((f2) => !themeFontsSlugs.has(f2.slug)).map((f2) => setUIValuesNeeded(f2, { source: "theme" })).sort((a2, b2) => a2.name.localeCompare(b2.name))
+    baseFontFamilies.theme.filter((f) => !themeFontsSlugs.has(f.slug)).map((f) => setUIValuesNeeded(f, { source: "theme" })).sort((a, b) => a.name.localeCompare(b.name))
   ) : [];
   const customFontFamilyId = libraryFontSelected?.source === "custom" && libraryFontSelected?.id;
   const canUserDelete = (0, import_data7.useSelect)(
@@ -14020,7 +14033,7 @@ function InstalledFonts() {
       return;
     }
     const initialFonts = fontFamilies?.[libraryFontSelected.source]?.filter(
-      (f2) => f2.slug !== libraryFontSelected.slug
+      (f) => f.slug !== libraryFontSelected.slug
     ) ?? [];
     const newFonts = isSelectAllChecked ? initialFonts : [...initialFonts, libraryFontSelected];
     setFontFamilies({
@@ -14214,7 +14227,7 @@ function InstalledFonts() {
                     className: "font-library__fonts-list",
                     children: libraryFontSelected && getFontFacesToDisplay(
                       libraryFontSelected
-                    ).map((face, i2) => /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+                    ).map((face, i) => /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
                       "li",
                       {
                         className: "font-library__fonts-list-item",
@@ -14224,10 +14237,10 @@ function InstalledFonts() {
                             font: libraryFontSelected,
                             face
                           },
-                          `face${i2}`
+                          `face${i}`
                         )
                       },
-                      `face${i2}`
+                      `face${i}`
                     ))
                   }
                 )
@@ -14743,7 +14756,7 @@ function FontCollection({ slug }) {
                   role: "list",
                   className: "font-library__fonts-list",
                   children: selectedFont && getSortedFontFaces(selectedFont).map(
-                    (face, i2) => /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+                    (face, i) => /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
                       "li",
                       {
                         className: "font-library__fonts-list-item",
@@ -14762,7 +14775,7 @@ function FontCollection({ slug }) {
                           }
                         )
                       },
-                      `face${i2}`
+                      `face${i}`
                     )
                   )
                 }
@@ -14828,10 +14841,10 @@ function FontCollection({ slug }) {
                         value: page.toString(),
                         options: [
                           ...Array(totalPages)
-                        ].map((e2, i2) => {
+                        ].map((e, i) => {
                           return {
-                            label: (i2 + 1).toString(),
-                            value: (i2 + 1).toString()
+                            label: (i + 1).toString(),
+                            value: (i + 1).toString()
                           };
                         }),
                         onChange: (newPage) => setPage(
@@ -14888,7 +14901,7 @@ var import_element38 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-library/lib/unbrotli.mjs
 var __require2 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
-  get: (a2, b2) => (typeof __require !== "undefined" ? __require : a2)[b2]
+  get: (a, b) => (typeof __require !== "undefined" ? __require : a)[b]
 }) : x2)(function(x2) {
   if (typeof __require !== "undefined") return __require.apply(this, arguments);
   throw Error('Dynamic require of "' + x2 + '" is not supported');
@@ -14896,38 +14909,38 @@ var __require2 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __r
 var unbrotli_default = (function() {
   var define, module, exports;
   return (/* @__PURE__ */ (function() {
-    function r3(e2, n2, t2) {
-      function o2(i22, f2) {
-        if (!n2[i22]) {
-          if (!e2[i22]) {
+    function r2(e, n, t) {
+      function o(i2, f) {
+        if (!n[i2]) {
+          if (!e[i2]) {
             var c2 = "function" == typeof __require2 && __require2;
-            if (!f2 && c2) return c2(i22, true);
-            if (u2) return u2(i22, true);
-            var a2 = new Error("Cannot find module '" + i22 + "'");
-            throw a2.code = "MODULE_NOT_FOUND", a2;
+            if (!f && c2) return c2(i2, true);
+            if (u) return u(i2, true);
+            var a = new Error("Cannot find module '" + i2 + "'");
+            throw a.code = "MODULE_NOT_FOUND", a;
           }
-          var p3 = n2[i22] = { exports: {} };
-          e2[i22][0].call(
+          var p3 = n[i2] = { exports: {} };
+          e[i2][0].call(
             p3.exports,
             function(r22) {
-              var n22 = e2[i22][1][r22];
-              return o2(n22 || r22);
+              var n2 = e[i2][1][r22];
+              return o(n2 || r22);
             },
             p3,
             p3.exports,
-            r3,
-            e2,
-            n2,
-            t2
+            r2,
+            e,
+            n,
+            t
           );
         }
-        return n2[i22].exports;
+        return n[i2].exports;
       }
-      for (var u2 = "function" == typeof __require2 && __require2, i2 = 0; i2 < t2.length; i2++)
-        o2(t2[i2]);
-      return o2;
+      for (var u = "function" == typeof __require2 && __require2, i = 0; i < t.length; i++)
+        o(t[i]);
+      return o;
     }
-    return r3;
+    return r2;
   })())(
     {
       1: [
@@ -14977,8 +14990,8 @@ var unbrotli_default = (function() {
             this.bit_end_pos_ = 0;
             this.eos_ = 0;
             this.readMoreInput();
-            for (var i2 = 0; i2 < 4; i2++) {
-              this.val_ |= this.buf_[this.pos_] << 8 * i2;
+            for (var i = 0; i < 4; i++) {
+              this.val_ |= this.buf_[this.pos_] << 8 * i;
               ++this.pos_;
             }
             return this.bit_end_pos_ > 0;
@@ -16965,17 +16978,17 @@ var unbrotli_default = (function() {
             1080
           ]);
           function DecodeWindowBits(br) {
-            var n2;
+            var n;
             if (br.readBits(1) === 0) {
               return 16;
             }
-            n2 = br.readBits(3);
-            if (n2 > 0) {
-              return 17 + n2;
+            n = br.readBits(3);
+            if (n > 0) {
+              return 17 + n;
             }
-            n2 = br.readBits(3);
-            if (n2 > 0) {
-              return 8 + n2;
+            n = br.readBits(3);
+            if (n > 0) {
+              return 8 + n;
             }
             return 17;
           }
@@ -17000,7 +17013,7 @@ var unbrotli_default = (function() {
             var out = new MetaBlockLength();
             var size_nibbles;
             var size_bytes;
-            var i2;
+            var i;
             out.input_end = br.readBits(1);
             if (out.input_end && br.readBits(1)) {
               return out;
@@ -17012,18 +17025,18 @@ var unbrotli_default = (function() {
                 throw new Error("Invalid reserved bit");
               size_bytes = br.readBits(2);
               if (size_bytes === 0) return out;
-              for (i2 = 0; i2 < size_bytes; i2++) {
+              for (i = 0; i < size_bytes; i++) {
                 var next_byte = br.readBits(8);
-                if (i2 + 1 === size_bytes && size_bytes > 1 && next_byte === 0)
+                if (i + 1 === size_bytes && size_bytes > 1 && next_byte === 0)
                   throw new Error("Invalid size byte");
-                out.meta_block_length |= next_byte << i2 * 8;
+                out.meta_block_length |= next_byte << i * 8;
               }
             } else {
-              for (i2 = 0; i2 < size_nibbles; ++i2) {
+              for (i = 0; i < size_nibbles; ++i) {
                 var next_nibble = br.readBits(4);
-                if (i2 + 1 === size_nibbles && size_nibbles > 4 && next_nibble === 0)
+                if (i + 1 === size_nibbles && size_nibbles > 4 && next_nibble === 0)
                   throw new Error("Invalid size nibble");
-                out.meta_block_length |= next_nibble << i2 * 4;
+                out.meta_block_length |= next_nibble << i * 4;
               }
             }
             ++out.meta_block_length;
@@ -17053,7 +17066,7 @@ var unbrotli_default = (function() {
             var repeat_code_len = 0;
             var space = 32768;
             var table = [];
-            for (var i2 = 0; i2 < 32; i2++)
+            for (var i = 0; i < 32; i++)
               table.push(new HuffmanCode(0, 0));
             BrotliBuildHuffmanTable(
               table,
@@ -17124,7 +17137,7 @@ var unbrotli_default = (function() {
             br.readMoreInput();
             simple_code_or_skip = br.readBits(2);
             if (simple_code_or_skip === 1) {
-              var i2;
+              var i;
               var max_bits_counter = alphabet_size - 1;
               var max_bits = 0;
               var symbols = new Int32Array(4);
@@ -17133,9 +17146,9 @@ var unbrotli_default = (function() {
                 max_bits_counter >>= 1;
                 ++max_bits;
               }
-              for (i2 = 0; i2 < num_symbols; ++i2) {
-                symbols[i2] = br.readBits(max_bits) % alphabet_size;
-                code_lengths[symbols[i2]] = 2;
+              for (i = 0; i < num_symbols; ++i) {
+                symbols[i] = br.readBits(max_bits) % alphabet_size;
+                code_lengths[symbols[i]] = 2;
               }
               code_lengths[symbols[0]] = 1;
               switch (num_symbols) {
@@ -17171,7 +17184,7 @@ var unbrotli_default = (function() {
                   break;
               }
             } else {
-              var i2;
+              var i;
               var code_length_code_lengths = new Uint8Array(
                 CODE_LENGTH_CODES
               );
@@ -17195,8 +17208,8 @@ var unbrotli_default = (function() {
                 new HuffmanCode(2, 3),
                 new HuffmanCode(4, 5)
               ];
-              for (i2 = simple_code_or_skip; i2 < CODE_LENGTH_CODES && space > 0; ++i2) {
-                var code_len_idx = kCodeLengthCodeOrder[i2];
+              for (i = simple_code_or_skip; i < CODE_LENGTH_CODES && space > 0; ++i) {
+                var code_len_idx = kCodeLengthCodeOrder[i];
                 var p3 = 0;
                 var v2;
                 br.fillBitWindow();
@@ -17254,19 +17267,19 @@ var unbrotli_default = (function() {
           }
           function MoveToFront(v2, index2) {
             var value = v2[index2];
-            var i2 = index2;
-            for (; i2; --i2) v2[i2] = v2[i2 - 1];
+            var i = index2;
+            for (; i; --i) v2[i] = v2[i - 1];
             v2[0] = value;
           }
           function InverseMoveToFrontTransform(v2, v_len) {
             var mtf = new Uint8Array(256);
-            var i2;
-            for (i2 = 0; i2 < 256; ++i2) {
-              mtf[i2] = i2;
+            var i;
+            for (i = 0; i < 256; ++i) {
+              mtf[i] = i;
             }
-            for (i2 = 0; i2 < v_len; ++i2) {
-              var index2 = v2[i2];
-              v2[i2] = mtf[index2];
+            for (i = 0; i < v_len; ++i) {
+              var index2 = v2[i];
+              v2[i] = mtf[index2];
               if (index2) MoveToFront(mtf, index2);
             }
           }
@@ -17279,11 +17292,11 @@ var unbrotli_default = (function() {
             this.htrees = new Uint32Array(num_htrees);
           }
           HuffmanTreeGroup.prototype.decode = function(br) {
-            var i2;
+            var i;
             var table_size;
             var next = 0;
-            for (i2 = 0; i2 < this.num_htrees; ++i2) {
-              this.htrees[i2] = next;
+            for (i = 0; i < this.num_htrees; ++i) {
+              this.htrees[i] = next;
               table_size = ReadHuffmanCode(
                 this.alphabet_size,
                 this.codes,
@@ -17298,7 +17311,7 @@ var unbrotli_default = (function() {
             var use_rle_for_zeros;
             var max_run_length_prefix = 0;
             var table;
-            var i2;
+            var i;
             br.readMoreInput();
             var num_htrees = out.num_htrees = DecodeVarLenUint8(br) + 1;
             var context_map = out.context_map = new Uint8Array(
@@ -17312,8 +17325,8 @@ var unbrotli_default = (function() {
               max_run_length_prefix = br.readBits(4) + 1;
             }
             table = [];
-            for (i2 = 0; i2 < HUFFMAN_MAX_TABLE_SIZE; i2++) {
-              table[i2] = new HuffmanCode(0, 0);
+            for (i = 0; i < HUFFMAN_MAX_TABLE_SIZE; i++) {
+              table[i] = new HuffmanCode(0, 0);
             }
             ReadHuffmanCode(
               num_htrees + max_run_length_prefix,
@@ -17321,27 +17334,27 @@ var unbrotli_default = (function() {
               0,
               br
             );
-            for (i2 = 0; i2 < context_map_size; ) {
+            for (i = 0; i < context_map_size; ) {
               var code;
               br.readMoreInput();
               code = ReadSymbol(table, 0, br);
               if (code === 0) {
-                context_map[i2] = 0;
-                ++i2;
+                context_map[i] = 0;
+                ++i;
               } else if (code <= max_run_length_prefix) {
                 var reps = 1 + (1 << code) + br.readBits(code);
                 while (--reps) {
-                  if (i2 >= context_map_size) {
+                  if (i >= context_map_size) {
                     throw new Error(
                       "[DecodeContextMap] i >= context_map_size"
                     );
                   }
-                  context_map[i2] = 0;
-                  ++i2;
+                  context_map[i] = 0;
+                  ++i;
                 }
               } else {
-                context_map[i2] = code - max_run_length_prefix;
-                ++i2;
+                context_map[i] = code - max_run_length_prefix;
+                ++i;
               }
             }
             if (br.readBits(1)) {
@@ -17471,7 +17484,7 @@ var unbrotli_default = (function() {
           }
           exports2.BrotliDecompressBuffer = BrotliDecompressBuffer;
           function BrotliDecompress(input, output) {
-            var i2;
+            var i;
             var pos = 0;
             var input_end = 0;
             var window_bits = 0;
@@ -17536,9 +17549,9 @@ var unbrotli_default = (function() {
               var context_lookup_offset2 = 0;
               var context_mode;
               var htree_command;
-              for (i2 = 0; i2 < 3; ++i2) {
-                hgroup[i2].codes = null;
-                hgroup[i2].htrees = null;
+              for (i = 0; i < 3; ++i) {
+                hgroup[i].codes = null;
+                hgroup[i].htrees = null;
               }
               br.readMoreInput();
               var _out = DecodeMetaBlockLength(br);
@@ -17576,27 +17589,27 @@ var unbrotli_default = (function() {
                 pos += meta_block_remaining_len;
                 continue;
               }
-              for (i2 = 0; i2 < 3; ++i2) {
-                num_block_types[i2] = DecodeVarLenUint8(br) + 1;
-                if (num_block_types[i2] >= 2) {
+              for (i = 0; i < 3; ++i) {
+                num_block_types[i] = DecodeVarLenUint8(br) + 1;
+                if (num_block_types[i] >= 2) {
                   ReadHuffmanCode(
-                    num_block_types[i2] + 2,
+                    num_block_types[i] + 2,
                     block_type_trees,
-                    i2 * HUFFMAN_MAX_TABLE_SIZE,
+                    i * HUFFMAN_MAX_TABLE_SIZE,
                     br
                   );
                   ReadHuffmanCode(
                     kNumBlockLengthCodes,
                     block_len_trees,
-                    i2 * HUFFMAN_MAX_TABLE_SIZE,
+                    i * HUFFMAN_MAX_TABLE_SIZE,
                     br
                   );
-                  block_length[i2] = ReadBlockLength(
+                  block_length[i] = ReadBlockLength(
                     block_len_trees,
-                    i2 * HUFFMAN_MAX_TABLE_SIZE,
+                    i * HUFFMAN_MAX_TABLE_SIZE,
                     br
                   );
-                  block_type_rb_index[i2] = 1;
+                  block_type_rb_index[i] = 1;
                 }
               }
               br.readMoreInput();
@@ -17607,9 +17620,9 @@ var unbrotli_default = (function() {
               context_modes = new Uint8Array(
                 num_block_types[0]
               );
-              for (i2 = 0; i2 < num_block_types[0]; ++i2) {
+              for (i = 0; i < num_block_types[0]; ++i) {
                 br.readMoreInput();
-                context_modes[i2] = br.readBits(2) << 1;
+                context_modes[i] = br.readBits(2) << 1;
               }
               var _o1 = DecodeContextMap(
                 num_block_types[0] << kLiteralContextBits,
@@ -17635,8 +17648,8 @@ var unbrotli_default = (function() {
                 num_distance_codes,
                 num_dist_htrees
               );
-              for (i2 = 0; i2 < 3; ++i2) {
-                hgroup[i2].decode(br);
+              for (i = 0; i < 3; ++i) {
+                hgroup[i].decode(br);
               }
               context_map_slice = 0;
               dist_context_map_slice = 0;
@@ -17976,10 +17989,10 @@ var unbrotli_default = (function() {
             }
             return (key & step - 1) + step;
           }
-          function ReplicateValue(table, i2, step, end, code) {
+          function ReplicateValue(table, i, step, end, code) {
             do {
               end -= step;
-              table[i2 + end] = new HuffmanCode(
+              table[i + end] = new HuffmanCode(
                 code.bits,
                 code.value
               );
@@ -18105,9 +18118,9 @@ var unbrotli_default = (function() {
           var revLookup = [];
           var Arr = typeof Uint8Array !== "undefined" ? Uint8Array : Array;
           var code = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-          for (var i2 = 0, len = code.length; i2 < len; ++i2) {
-            lookup[i2] = code[i2];
-            revLookup[code.charCodeAt(i2)] = i2;
+          for (var i = 0, len = code.length; i < len; ++i) {
+            lookup[i] = code[i];
+            revLookup[code.charCodeAt(i)] = i;
           }
           revLookup["-".charCodeAt(0)] = 62;
           revLookup["_".charCodeAt(0)] = 63;
@@ -18142,18 +18155,18 @@ var unbrotli_default = (function() {
             );
             var curByte = 0;
             var len2 = placeHoldersLen > 0 ? validLen - 4 : validLen;
-            for (var i22 = 0; i22 < len2; i22 += 4) {
-              tmp = revLookup[b64.charCodeAt(i22)] << 18 | revLookup[b64.charCodeAt(i22 + 1)] << 12 | revLookup[b64.charCodeAt(i22 + 2)] << 6 | revLookup[b64.charCodeAt(i22 + 3)];
+            for (var i2 = 0; i2 < len2; i2 += 4) {
+              tmp = revLookup[b64.charCodeAt(i2)] << 18 | revLookup[b64.charCodeAt(i2 + 1)] << 12 | revLookup[b64.charCodeAt(i2 + 2)] << 6 | revLookup[b64.charCodeAt(i2 + 3)];
               arr[curByte++] = tmp >> 16 & 255;
               arr[curByte++] = tmp >> 8 & 255;
               arr[curByte++] = tmp & 255;
             }
             if (placeHoldersLen === 2) {
-              tmp = revLookup[b64.charCodeAt(i22)] << 2 | revLookup[b64.charCodeAt(i22 + 1)] >> 4;
+              tmp = revLookup[b64.charCodeAt(i2)] << 2 | revLookup[b64.charCodeAt(i2 + 1)] >> 4;
               arr[curByte++] = tmp & 255;
             }
             if (placeHoldersLen === 1) {
-              tmp = revLookup[b64.charCodeAt(i22)] << 10 | revLookup[b64.charCodeAt(i22 + 1)] << 4 | revLookup[b64.charCodeAt(i22 + 2)] >> 2;
+              tmp = revLookup[b64.charCodeAt(i2)] << 10 | revLookup[b64.charCodeAt(i2 + 1)] << 4 | revLookup[b64.charCodeAt(i2 + 2)] >> 2;
               arr[curByte++] = tmp >> 8 & 255;
               arr[curByte++] = tmp & 255;
             }
@@ -18165,8 +18178,8 @@ var unbrotli_default = (function() {
           function encodeChunk(uint8, start, end) {
             var tmp;
             var output = [];
-            for (var i22 = start; i22 < end; i22 += 3) {
-              tmp = (uint8[i22] << 16 & 16711680) + (uint8[i22 + 1] << 8 & 65280) + (uint8[i22 + 2] & 255);
+            for (var i2 = start; i2 < end; i2 += 3) {
+              tmp = (uint8[i2] << 16 & 16711680) + (uint8[i2 + 1] << 8 & 65280) + (uint8[i2 + 2] & 255);
               output.push(tripletToBase64(tmp));
             }
             return output.join("");
@@ -18177,12 +18190,12 @@ var unbrotli_default = (function() {
             var extraBytes = len2 % 3;
             var parts = [];
             var maxChunkLength = 16383;
-            for (var i22 = 0, len22 = len2 - extraBytes; i22 < len22; i22 += maxChunkLength) {
+            for (var i2 = 0, len22 = len2 - extraBytes; i2 < len22; i2 += maxChunkLength) {
               parts.push(
                 encodeChunk(
                   uint8,
-                  i22,
-                  i22 + maxChunkLength > len22 ? len22 : i22 + maxChunkLength
+                  i2,
+                  i2 + maxChunkLength > len22 ? len22 : i2 + maxChunkLength
                 )
               );
             }
@@ -18299,12 +18312,12 @@ var unbrotli_default = (function() {
             this.buffer = buffer;
             this.pos = 0;
           }
-          BrotliInput.prototype.read = function(buf, i2, count) {
+          BrotliInput.prototype.read = function(buf, i, count) {
             if (this.pos + count > this.buffer.length) {
               count = this.buffer.length - this.pos;
             }
             for (var p3 = 0; p3 < count; p3++)
-              buf[i2 + p3] = this.buffer[this.pos + p3];
+              buf[i + p3] = this.buffer[this.pos + p3];
             this.pos += count;
             return count;
           };
@@ -18354,10 +18367,10 @@ var unbrotli_default = (function() {
             this.prefix = new Uint8Array(prefix.length);
             this.transform = transform;
             this.suffix = new Uint8Array(suffix.length);
-            for (var i2 = 0; i2 < prefix.length; i2++)
-              this.prefix[i2] = prefix.charCodeAt(i2);
-            for (var i2 = 0; i2 < suffix.length; i2++)
-              this.suffix[i2] = suffix.charCodeAt(i2);
+            for (var i = 0; i < prefix.length; i++)
+              this.prefix[i] = prefix.charCodeAt(i);
+            for (var i = 0; i < suffix.length; i++)
+              this.suffix[i] = suffix.charCodeAt(i);
           }
           var kTransforms = [
             new Transform("", kIdentity, ""),
@@ -18484,26 +18497,26 @@ var unbrotli_default = (function() {
           ];
           exports2.kTransforms = kTransforms;
           exports2.kNumTransforms = kTransforms.length;
-          function ToUpperCase(p3, i2) {
-            if (p3[i2] < 192) {
-              if (p3[i2] >= 97 && p3[i2] <= 122) {
-                p3[i2] ^= 32;
+          function ToUpperCase(p3, i) {
+            if (p3[i] < 192) {
+              if (p3[i] >= 97 && p3[i] <= 122) {
+                p3[i] ^= 32;
               }
               return 1;
             }
-            if (p3[i2] < 224) {
-              p3[i2 + 1] ^= 32;
+            if (p3[i] < 224) {
+              p3[i + 1] ^= 32;
               return 2;
             }
-            p3[i2 + 2] ^= 5;
+            p3[i + 2] ^= 5;
             return 3;
           }
           exports2.transformDictionaryWord = function(dst, idx, word, len, transform) {
             var prefix = kTransforms[transform].prefix;
             var suffix = kTransforms[transform].suffix;
-            var t2 = kTransforms[transform].transform;
-            var skip = t2 < kOmitFirst1 ? 0 : t2 - (kOmitFirst1 - 1);
-            var i2 = 0;
+            var t = kTransforms[transform].transform;
+            var skip = t < kOmitFirst1 ? 0 : t - (kOmitFirst1 - 1);
+            var i = 0;
             var start_idx = idx;
             var uppercase;
             if (skip > len) {
@@ -18515,16 +18528,16 @@ var unbrotli_default = (function() {
             }
             word += skip;
             len -= skip;
-            if (t2 <= kOmitLast9) {
-              len -= t2;
+            if (t <= kOmitLast9) {
+              len -= t;
             }
-            for (i2 = 0; i2 < len; i2++) {
-              dst[idx++] = BrotliDictionary.dictionary[word + i2];
+            for (i = 0; i < len; i++) {
+              dst[idx++] = BrotliDictionary.dictionary[word + i];
             }
             uppercase = idx - len;
-            if (t2 === kUppercaseFirst) {
+            if (t === kUppercaseFirst) {
               ToUpperCase(dst, uppercase);
-            } else if (t2 === kUppercaseAll) {
+            } else if (t === kUppercaseAll) {
               while (len > 0) {
                 var step = ToUpperCase(dst, uppercase);
                 uppercase += step;
@@ -18554,7 +18567,7 @@ var unbrotli_default = (function() {
 
 // packages/global-styles-ui/build-module/font-library/lib/inflate.mjs
 var __require3 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
-  get: (a2, b2) => (typeof __require !== "undefined" ? __require : a2)[b2]
+  get: (a, b) => (typeof __require !== "undefined" ? __require : a)[b]
 }) : x2)(function(x2) {
   if (typeof __require !== "undefined") return __require.apply(this, arguments);
   throw Error('Dynamic require of "' + x2 + '" is not supported');
@@ -18562,38 +18575,38 @@ var __require3 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __r
 var inflate_default = (function() {
   var define, module, exports;
   return (/* @__PURE__ */ (function() {
-    function r3(e2, n2, t2) {
-      function o2(i22, f2) {
-        if (!n2[i22]) {
-          if (!e2[i22]) {
+    function r2(e, n, t) {
+      function o(i2, f) {
+        if (!n[i2]) {
+          if (!e[i2]) {
             var c2 = "function" == typeof __require3 && __require3;
-            if (!f2 && c2) return c2(i22, true);
-            if (u2) return u2(i22, true);
-            var a2 = new Error("Cannot find module '" + i22 + "'");
-            throw a2.code = "MODULE_NOT_FOUND", a2;
+            if (!f && c2) return c2(i2, true);
+            if (u) return u(i2, true);
+            var a = new Error("Cannot find module '" + i2 + "'");
+            throw a.code = "MODULE_NOT_FOUND", a;
           }
-          var p3 = n2[i22] = { exports: {} };
-          e2[i22][0].call(
+          var p3 = n[i2] = { exports: {} };
+          e[i2][0].call(
             p3.exports,
             function(r22) {
-              var n22 = e2[i22][1][r22];
-              return o2(n22 || r22);
+              var n2 = e[i2][1][r22];
+              return o(n2 || r22);
             },
             p3,
             p3.exports,
-            r3,
-            e2,
-            n2,
-            t2
+            r2,
+            e,
+            n,
+            t
           );
         }
-        return n2[i22].exports;
+        return n[i2].exports;
       }
-      for (var u2 = "function" == typeof __require3 && __require3, i2 = 0; i2 < t2.length; i2++)
-        o2(t2[i2]);
-      return o2;
+      for (var u = "function" == typeof __require3 && __require3, i = 0; i < t.length; i++)
+        o(t[i]);
+      return o;
     }
-    return r3;
+    return r2;
   })())(
     {
       1: [
@@ -18645,21 +18658,21 @@ var inflate_default = (function() {
                 );
                 return;
               }
-              for (var i2 = 0; i2 < len; i2++) {
-                dest[dest_offs + i2] = src[src_offs + i2];
+              for (var i = 0; i < len; i++) {
+                dest[dest_offs + i] = src[src_offs + i];
               }
             },
             // Join array of chunks to single array.
             flattenChunks: function(chunks) {
-              var i2, l2, len, pos, chunk, result;
+              var i, l2, len, pos, chunk, result;
               len = 0;
-              for (i2 = 0, l2 = chunks.length; i2 < l2; i2++) {
-                len += chunks[i2].length;
+              for (i = 0, l2 = chunks.length; i < l2; i++) {
+                len += chunks[i].length;
               }
               result = new Uint8Array(len);
               pos = 0;
-              for (i2 = 0, l2 = chunks.length; i2 < l2; i2++) {
-                chunk = chunks[i2];
+              for (i = 0, l2 = chunks.length; i < l2; i++) {
+                chunk = chunks[i];
                 result.set(chunk, pos);
                 pos += chunk.length;
               }
@@ -18668,8 +18681,8 @@ var inflate_default = (function() {
           };
           var fnUntyped = {
             arraySet: function(dest, src, src_offs, len, dest_offs) {
-              for (var i2 = 0; i2 < len; i2++) {
-                dest[dest_offs + i2] = src[src_offs + i2];
+              for (var i = 0; i < len; i++) {
+                dest[dest_offs + i] = src[src_offs + i];
               }
             },
             // Join array of chunks to single array.
@@ -18711,12 +18724,12 @@ var inflate_default = (function() {
             STR_APPLY_UIA_OK = false;
           }
           var _utf8len = new utils.Buf8(256);
-          for (var q = 0; q < 256; q++) {
-            _utf8len[q] = q >= 252 ? 6 : q >= 248 ? 5 : q >= 240 ? 4 : q >= 224 ? 3 : q >= 192 ? 2 : 1;
+          for (var q2 = 0; q2 < 256; q2++) {
+            _utf8len[q2] = q2 >= 252 ? 6 : q2 >= 248 ? 5 : q2 >= 240 ? 4 : q2 >= 224 ? 3 : q2 >= 192 ? 2 : 1;
           }
           _utf8len[254] = _utf8len[254] = 1;
           exports2.string2buf = function(str) {
-            var buf, c2, c22, m_pos, i2, str_len = str.length, buf_len = 0;
+            var buf, c2, c22, m_pos, i, str_len = str.length, buf_len = 0;
             for (m_pos = 0; m_pos < str_len; m_pos++) {
               c2 = str.charCodeAt(m_pos);
               if ((c2 & 64512) === 55296 && m_pos + 1 < str_len) {
@@ -18729,7 +18742,7 @@ var inflate_default = (function() {
               buf_len += c2 < 128 ? 1 : c2 < 2048 ? 2 : c2 < 65536 ? 3 : 4;
             }
             buf = new utils.Buf8(buf_len);
-            for (i2 = 0, m_pos = 0; i2 < buf_len; m_pos++) {
+            for (i = 0, m_pos = 0; i < buf_len; m_pos++) {
               c2 = str.charCodeAt(m_pos);
               if ((c2 & 64512) === 55296 && m_pos + 1 < str_len) {
                 c22 = str.charCodeAt(m_pos + 1);
@@ -18739,19 +18752,19 @@ var inflate_default = (function() {
                 }
               }
               if (c2 < 128) {
-                buf[i2++] = c2;
+                buf[i++] = c2;
               } else if (c2 < 2048) {
-                buf[i2++] = 192 | c2 >>> 6;
-                buf[i2++] = 128 | c2 & 63;
+                buf[i++] = 192 | c2 >>> 6;
+                buf[i++] = 128 | c2 & 63;
               } else if (c2 < 65536) {
-                buf[i2++] = 224 | c2 >>> 12;
-                buf[i2++] = 128 | c2 >>> 6 & 63;
-                buf[i2++] = 128 | c2 & 63;
+                buf[i++] = 224 | c2 >>> 12;
+                buf[i++] = 128 | c2 >>> 6 & 63;
+                buf[i++] = 128 | c2 & 63;
               } else {
-                buf[i2++] = 240 | c2 >>> 18;
-                buf[i2++] = 128 | c2 >>> 12 & 63;
-                buf[i2++] = 128 | c2 >>> 6 & 63;
-                buf[i2++] = 128 | c2 & 63;
+                buf[i++] = 240 | c2 >>> 18;
+                buf[i++] = 128 | c2 >>> 12 & 63;
+                buf[i++] = 128 | c2 >>> 6 & 63;
+                buf[i++] = 128 | c2 & 63;
               }
             }
             return buf;
@@ -18766,8 +18779,8 @@ var inflate_default = (function() {
               }
             }
             var result = "";
-            for (var i2 = 0; i2 < len; i2++) {
-              result += String.fromCharCode(buf[i2]);
+            for (var i = 0; i < len; i++) {
+              result += String.fromCharCode(buf[i]);
             }
             return result;
           }
@@ -18776,17 +18789,17 @@ var inflate_default = (function() {
           };
           exports2.binstring2buf = function(str) {
             var buf = new utils.Buf8(str.length);
-            for (var i2 = 0, len = buf.length; i2 < len; i2++) {
-              buf[i2] = str.charCodeAt(i2);
+            for (var i = 0, len = buf.length; i < len; i++) {
+              buf[i] = str.charCodeAt(i);
             }
             return buf;
           };
           exports2.buf2string = function(buf, max2) {
-            var i2, out, c2, c_len;
+            var i, out, c2, c_len;
             var len = max2 || buf.length;
             var utf16buf = new Array(len * 2);
-            for (out = 0, i2 = 0; i2 < len; ) {
-              c2 = buf[i2++];
+            for (out = 0, i = 0; i < len; ) {
+              c2 = buf[i++];
               if (c2 < 128) {
                 utf16buf[out++] = c2;
                 continue;
@@ -18794,12 +18807,12 @@ var inflate_default = (function() {
               c_len = _utf8len[c2];
               if (c_len > 4) {
                 utf16buf[out++] = 65533;
-                i2 += c_len - 1;
+                i += c_len - 1;
                 continue;
               }
               c2 &= c_len === 2 ? 31 : c_len === 3 ? 15 : 7;
-              while (c_len > 1 && i2 < len) {
-                c2 = c2 << 6 | buf[i2++] & 63;
+              while (c_len > 1 && i < len) {
+                c2 = c2 << 6 | buf[i++] & 63;
                 c_len--;
               }
               if (c_len > 1) {
@@ -18841,14 +18854,14 @@ var inflate_default = (function() {
         function(require2, module2, exports2) {
           "use strict";
           function adler32(adler, buf, len, pos) {
-            var s1 = adler & 65535 | 0, s2 = adler >>> 16 & 65535 | 0, n2 = 0;
+            var s1 = adler & 65535 | 0, s2 = adler >>> 16 & 65535 | 0, n = 0;
             while (len !== 0) {
-              n2 = len > 2e3 ? 2e3 : len;
-              len -= n2;
+              n = len > 2e3 ? 2e3 : len;
+              len -= n;
               do {
                 s1 = s1 + buf[pos++] | 0;
                 s2 = s2 + s1 | 0;
-              } while (--n2);
+              } while (--n);
               s1 %= 65521;
               s2 %= 65521;
             }
@@ -18909,21 +18922,21 @@ var inflate_default = (function() {
           "use strict";
           function makeTable() {
             var c2, table = [];
-            for (var n2 = 0; n2 < 256; n2++) {
-              c2 = n2;
-              for (var k = 0; k < 8; k++) {
+            for (var n = 0; n < 256; n++) {
+              c2 = n;
+              for (var k2 = 0; k2 < 8; k2++) {
                 c2 = c2 & 1 ? 3988292384 ^ c2 >>> 1 : c2 >>> 1;
               }
-              table[n2] = c2;
+              table[n] = c2;
             }
             return table;
           }
           var crcTable = makeTable();
           function crc32(crc, buf, len, pos) {
-            var t2 = crcTable, end = pos + len;
+            var t = crcTable, end = pos + len;
             crc ^= -1;
-            for (var i2 = pos; i2 < end; i2++) {
-              crc = crc >>> 8 ^ t2[(crc ^ buf[i2]) & 255];
+            for (var i = pos; i < end; i++) {
+              crc = crc >>> 8 ^ t[(crc ^ buf[i]) & 255];
             }
             return crc ^ -1;
           }
@@ -19233,8 +19246,8 @@ var inflate_default = (function() {
           var ENOUGH_DISTS = 592;
           var MAX_WBITS = 15;
           var DEF_WBITS = MAX_WBITS;
-          function zswap32(q) {
-            return (q >>> 24 & 255) + (q >>> 8 & 65280) + ((q & 65280) << 8) + ((q & 255) << 24);
+          function zswap32(q2) {
+            return (q2 >>> 24 & 255) + (q2 >>> 8 & 65280) + ((q2 & 65280) << 8) + ((q2 & 255) << 24);
           }
           function InflateState() {
             this.mode = 0;
@@ -19486,7 +19499,7 @@ var inflate_default = (function() {
               4
             );
             var opts;
-            var n2;
+            var n;
             var order = (
               /* permutation of code lengths */
               [
@@ -20058,8 +20071,8 @@ var inflate_default = (function() {
                       state.lens[state.have++] = here_val;
                     } else {
                       if (here_val === 16) {
-                        n2 = here_bits + 2;
-                        while (bits < n2) {
+                        n = here_bits + 2;
+                        while (bits < n) {
                           if (have === 0) {
                             break inf_leave;
                           }
@@ -20079,8 +20092,8 @@ var inflate_default = (function() {
                         hold >>>= 2;
                         bits -= 2;
                       } else if (here_val === 17) {
-                        n2 = here_bits + 3;
-                        while (bits < n2) {
+                        n = here_bits + 3;
+                        while (bits < n) {
                           if (have === 0) {
                             break inf_leave;
                           }
@@ -20095,8 +20108,8 @@ var inflate_default = (function() {
                         hold >>>= 3;
                         bits -= 3;
                       } else {
-                        n2 = here_bits + 7;
-                        while (bits < n2) {
+                        n = here_bits + 7;
+                        while (bits < n) {
                           if (have === 0) {
                             break inf_leave;
                           }
@@ -20258,8 +20271,8 @@ var inflate_default = (function() {
                 /* falls through */
                 case LENEXT:
                   if (state.extra) {
-                    n2 = state.extra;
-                    while (bits < n2) {
+                    n = state.extra;
+                    while (bits < n) {
                       if (have === 0) {
                         break inf_leave;
                       }
@@ -20328,8 +20341,8 @@ var inflate_default = (function() {
                 /* falls through */
                 case DISTEXT:
                   if (state.extra) {
-                    n2 = state.extra;
-                    while (bits < n2) {
+                    n = state.extra;
+                    while (bits < n) {
                       if (have === 0) {
                         break inf_leave;
                       }
@@ -21205,7 +21218,7 @@ var EventManager = class {
   }
   removeEventListener(type, listener) {
     let bin = this.listeners[type] || [];
-    let pos = bin.findIndex((e2) => e2 === listener);
+    let pos = bin.findIndex((e) => e === listener);
     if (pos > -1) {
       bin.splice(pos, 1);
       this.listeners[type] = bin;
@@ -21214,7 +21227,7 @@ var EventManager = class {
   dispatch(event) {
     let bin = this.listeners[event.type];
     if (bin) {
-      for (let l2 = 0, e2 = bin.length; l2 < e2; l2++) {
+      for (let l2 = 0, e = bin.length; l2 < e; l2++) {
         if (!event.__mayPropagate) break;
         bin[l2](event);
       }
@@ -21256,23 +21269,23 @@ var Parser = class {
     this.start = position;
     this.offset = 0;
   }
-  skip(n2 = 0, bits = 8) {
-    this.offset += n2 * bits / 8;
+  skip(n = 0, bits = 8) {
+    this.offset += n * bits / 8;
   }
   getValue(type, increment) {
     let pos = this.start + this.offset;
     this.offset += increment;
     try {
       return this.data[type](pos);
-    } catch (e2) {
+    } catch (e) {
       console.error(`parser`, type, increment, this);
       console.error(`parser`, this.start, this.offset);
-      throw e2;
+      throw e;
     }
   }
-  flags(n2) {
-    if (n2 === 8 || n2 === 16 || n2 === 32 || n2 === 64) {
-      return this[`uint${n2}`].toString(2).padStart(n2, 0).split(``).map((v2) => v2 === "1");
+  flags(n) {
+    if (n === 8 || n === 16 || n === 32 || n === 64) {
+      return this[`uint${n}`].toString(2).padStart(n, 0).split(``).map((v2) => v2 === "1");
     }
     console.error(
       `Error parsing flags: flag types can only be 1, 2, 4, or 8 bytes long`
@@ -21280,12 +21293,12 @@ var Parser = class {
     console.trace();
   }
   get tag() {
-    const t2 = this.uint32;
+    const t = this.uint32;
     return asText([
-      t2 >> 24 & 255,
-      t2 >> 16 & 255,
-      t2 >> 8 & 255,
-      t2 & 255
+      t >> 24 & 255,
+      t >> 16 & 255,
+      t >> 8 & 255,
+      t & 255
     ]);
   }
   get fixed() {
@@ -21303,7 +21316,7 @@ var Parser = class {
   }
   get uint128() {
     let value = 0;
-    for (let i2 = 0; i2 < 5; i2++) {
+    for (let i = 0; i < 5; i++) {
       let byte = this.uint8;
       value = value * 128 + (byte & 127);
       if (byte < 128) break;
@@ -21338,12 +21351,12 @@ var Parser = class {
       );
     }
   }
-  readBytes(n2 = 0, position = 0, bits = 8, signed = false) {
-    n2 = n2 || this.length;
-    if (n2 === 0) return [];
+  readBytes(n = 0, position = 0, bits = 8, signed = false) {
+    n = n || this.length;
+    if (n === 0) return [];
     if (position) this.currentPosition = position;
     const fn = `${signed ? `` : `u`}int${bits}`, slice = [];
-    while (n2--) slice.push(this[fn]);
+    while (n--) slice.push(this[fn]);
     return slice;
   }
 };
@@ -21518,10 +21531,10 @@ var WOFF2$1 = class extends SimpleTable {
     );
     let dictOffset = p22.currentPosition;
     this.directory[0].offset = 0;
-    this.directory.forEach((e2, i2) => {
-      let next = this.directory[i2 + 1];
+    this.directory.forEach((e, i) => {
+      let next = this.directory[i + 1];
       if (next) {
-        next.offset = e2.offset + (e2.transformLength !== void 0 ? e2.transformLength : e2.origLength);
+        next.offset = e.offset + (e.transformLength !== void 0 ? e.transformLength : e.origLength);
       }
     });
     let decoded;
@@ -21571,8 +21584,8 @@ function buildWoff2LazyLookups(woff2, decoded, createTable2) {
           { tag: entry.tag, offset: 0, length: entry.origLength },
           data
         );
-      } catch (e2) {
-        console.error(e2);
+      } catch (e) {
+        console.error(e);
       }
     });
   });
@@ -21771,9 +21784,9 @@ Promise.all([
     return vmtx$1;
   })
 ]).then((data) => {
-  data.forEach((e2) => {
-    let name2 = Object.keys(e2)[0];
-    tableClasses[name2] = e2[name2];
+  data.forEach((e) => {
+    let name2 = Object.keys(e)[0];
+    tableClasses[name2] = e[name2];
   });
   tableClassesLoaded = true;
 });
@@ -21853,8 +21866,8 @@ var WOFF = [119, 79, 70, 70];
 var WOFF2 = [119, 79, 70, 50];
 function match(ar1, ar2) {
   if (ar1.length !== ar2.length) return;
-  for (let i2 = 0; i2 < ar1.length; i2++) {
-    if (ar1[i2] !== ar2[i2]) return;
+  for (let i = 0; i < ar1.length; i++) {
+    if (ar1[i] !== ar2[i]) return;
   }
   return true;
 }
@@ -21955,18 +21968,18 @@ var Font = class extends EventManager {
       throw new Error(
         "Cannot measure text: font was unloaded. Please reload before calling measureText()"
       );
-    let d2 = document.createElement("div");
-    d2.textContent = text;
-    d2.style.fontFamily = this.name;
-    d2.style.fontSize = `${size4}px`;
-    d2.style.color = `transparent`;
-    d2.style.background = `transparent`;
-    d2.style.top = `0`;
-    d2.style.left = `0`;
-    d2.style.position = `absolute`;
-    document.body.appendChild(d2);
-    let bbox = d2.getBoundingClientRect();
-    document.body.removeChild(d2);
+    let d = document.createElement("div");
+    d.textContent = text;
+    d.style.fontFamily = this.name;
+    d.style.fontSize = `${size4}px`;
+    d.style.color = `transparent`;
+    d.style.background = `transparent`;
+    d.style.top = `0`;
+    d.style.left = `0`;
+    d.style.position = `absolute`;
+    document.body.appendChild(d);
+    let bbox = d.getBoundingClientRect();
+    document.body.removeChild(d);
     const OS22 = this.opentype.tables["OS/2"];
     bbox.fontSize = size4;
     bbox.ascender = OS22.sTypoAscender;
@@ -22067,14 +22080,14 @@ var Format2 = class extends Subtable {
   }
   getSupportedCharCodes(preservePropNames = false) {
     if (preservePropNames) {
-      return this.subHeaders.map((h2) => ({
-        firstCode: h2.firstCode,
-        lastCode: h2.lastCode
+      return this.subHeaders.map((h) => ({
+        firstCode: h.firstCode,
+        lastCode: h.lastCode
       }));
     }
-    return this.subHeaders.map((h2) => ({
-      start: h2.firstCode,
-      end: h2.lastCode
+    return this.subHeaders.map((h) => ({
+      start: h.firstCode,
+      end: h.lastCode
     }));
   }
 };
@@ -22136,15 +22149,15 @@ var Format4 = class extends Subtable {
     );
   }
   buildSegments(idRangePosition, glyphIdArrayPosition, p22) {
-    const build = (_, i2) => {
-      let startCode = this.startCode[i2], endCode = this.endCode[i2], idDelta = this.idDelta[i2], idRangeOffset = this.idRangeOffset[i2], idRangeOffsetPointer = idRangePosition + 2 * i2, glyphIDs = [];
+    const build = (_, i) => {
+      let startCode = this.startCode[i], endCode = this.endCode[i], idDelta = this.idDelta[i], idRangeOffset = this.idRangeOffset[i], idRangeOffsetPointer = idRangePosition + 2 * i, glyphIDs = [];
       if (idRangeOffset === 0) {
-        for (let i22 = startCode + idDelta, e2 = endCode + idDelta; i22 <= e2; i22++) {
-          glyphIDs.push(i22);
+        for (let i2 = startCode + idDelta, e = endCode + idDelta; i2 <= e; i2++) {
+          glyphIDs.push(i2);
         }
       } else {
-        for (let i22 = 0, e2 = endCode - startCode; i22 <= e2; i22++) {
-          p22.currentPosition = idRangeOffsetPointer + idRangeOffset + i22 * 2;
+        for (let i2 = 0, e = endCode - startCode; i2 <= e; i2++) {
+          p22.currentPosition = idRangeOffsetPointer + idRangeOffset + i2 * 2;
           glyphIDs.push(p22.uint16);
         }
       }
@@ -22159,9 +22172,9 @@ var Format4 = class extends Subtable {
     return [...new Array(this.segCount)].map(build);
   }
   reverse(glyphID) {
-    let s2 = this.segments.find((v2) => v2.glyphIDs.includes(glyphID));
-    if (!s2) return {};
-    const code = s2.startCode + s2.glyphIDs.indexOf(glyphID);
+    let s = this.segments.find((v2) => v2.glyphIDs.includes(glyphID));
+    if (!s) return {};
+    const code = s.startCode + s.glyphIDs.indexOf(glyphID);
     return { code, unicode: String.fromCodePoint(code) };
   }
   getGlyphId(charCode) {
@@ -22170,7 +22183,7 @@ var Format4 = class extends Subtable {
     if ((charCode & 65534) === 65534 || (charCode & 65535) === 65535)
       return 0;
     let segment = this.segments.find(
-      (s2) => s2.startCode <= charCode && charCode <= s2.endCode
+      (s) => s.startCode <= charCode && charCode <= s.endCode
     );
     if (!segment) return 0;
     return segment.glyphIDs[charCode - segment.startCode];
@@ -22243,7 +22256,7 @@ var Format8 = class extends Subtable {
       );
     }
     return this.groups.findIndex(
-      (s2) => s2.startcharCode <= charCode && charCode <= s2.endcharCode
+      (s) => s.startcharCode <= charCode && charCode <= s.endcharCode
     ) !== -1;
   }
   reverse(glyphID) {
@@ -22324,7 +22337,7 @@ var Format12 = class extends Subtable {
     if ((charCode & 65534) === 65534 || (charCode & 65535) === 65535)
       return 0;
     return this.groups.findIndex(
-      (s2) => s2.startCharCode <= charCode && charCode <= s2.endCharCode
+      (s) => s.startCharCode <= charCode && charCode <= s.endCharCode
     ) !== -1;
   }
   reverse(glyphID) {
@@ -22370,7 +22383,7 @@ var Format13 = class extends Subtable {
   supports(charCode) {
     if (charCode.charCodeAt) charCode = charCode.charCodeAt(0);
     return this.groups.findIndex(
-      (s2) => s2.startCharCode <= charCode && charCode <= s2.endCharCode
+      (s) => s.startCharCode <= charCode && charCode <= s.endCharCode
     ) !== -1;
   }
   reverse(glyphID) {
@@ -22464,45 +22477,45 @@ var cmap = class extends SimpleTable {
     return this.encodingRecords[tableID].table;
   }
   getSupportedEncodings() {
-    return this.encodingRecords.map((r3) => ({
-      platformID: r3.platformID,
-      encodingId: r3.encodingID
+    return this.encodingRecords.map((r2) => ({
+      platformID: r2.platformID,
+      encodingId: r2.encodingID
     }));
   }
   getSupportedCharCodes(platformID, encodingID) {
     const recordID = this.encodingRecords.findIndex(
-      (r3) => r3.platformID === platformID && r3.encodingID === encodingID
+      (r2) => r2.platformID === platformID && r2.encodingID === encodingID
     );
     if (recordID === -1) return false;
     const subtable = this.getSubTable(recordID);
     return subtable.getSupportedCharCodes();
   }
   reverse(glyphid) {
-    for (let i2 = 0; i2 < this.numTables; i2++) {
-      let code = this.getSubTable(i2).reverse(glyphid);
+    for (let i = 0; i < this.numTables; i++) {
+      let code = this.getSubTable(i).reverse(glyphid);
       if (code) return code;
     }
   }
   getGlyphId(char) {
     let last = 0;
     this.encodingRecords.some((_, tableID) => {
-      let t2 = this.getSubTable(tableID);
-      if (!t2.getGlyphId) return false;
-      last = t2.getGlyphId(char);
+      let t = this.getSubTable(tableID);
+      if (!t.getGlyphId) return false;
+      last = t.getGlyphId(char);
       return last !== 0;
     });
     return last;
   }
   supports(char) {
     return this.encodingRecords.some((_, tableID) => {
-      const t2 = this.getSubTable(tableID);
-      return t2.supports && t2.supports(char) !== false;
+      const t = this.getSubTable(tableID);
+      return t.supports && t.supports(char) !== false;
     });
   }
   supportsVariation(variation) {
     return this.encodingRecords.some((_, tableID) => {
-      const t2 = this.getSubTable(tableID);
-      return t2.supportsVariation && t2.supportsVariation(variation) !== false;
+      const t = this.getSubTable(tableID);
+      return t.supportsVariation && t.supportsVariation(variation) !== false;
     });
   }
 };
@@ -22593,9 +22606,9 @@ var hmtx = class extends SimpleTable {
   }
 };
 var LongHorMetric = class {
-  constructor(w2, b2) {
+  constructor(w2, b) {
     this.advanceWidth = w2;
-    this.lsb = b2;
+    this.lsb = b;
   }
 };
 var hmtx$1 = Object.freeze({ __proto__: null, hmtx });
@@ -22672,14 +22685,14 @@ function decodeString(p22, record) {
   if (length === 0) return ``;
   if (platformID === 0 || platformID === 3) {
     const str2 = [];
-    for (let i2 = 0, e2 = length / 2; i2 < e2; i2++)
-      str2[i2] = String.fromCharCode(p22.uint16);
+    for (let i = 0, e = length / 2; i < e; i++)
+      str2[i] = String.fromCharCode(p22.uint16);
     return str2.join(``);
   }
   const bytes = p22.readBytes(length);
   const str = [];
-  bytes.forEach(function(b2, i2) {
-    str[i2] = String.fromCharCode(b2);
+  bytes.forEach(function(b, i) {
+    str[i] = String.fromCharCode(b);
   });
   return str.join(``);
 }
@@ -22753,16 +22766,16 @@ var post = class extends SimpleTable {
       );
       this.namesOffset = p22.currentPosition;
       this.glyphNameOffsets = [1];
-      for (let i2 = 0; i2 < this.numGlyphs; i2++) {
-        let index2 = this.glyphNameIndex[i2];
+      for (let i = 0; i < this.numGlyphs; i++) {
+        let index2 = this.glyphNameIndex[i];
         if (index2 < macStrings.length) {
-          this.glyphNameOffsets.push(this.glyphNameOffsets[i2]);
+          this.glyphNameOffsets.push(this.glyphNameOffsets[i]);
           continue;
         }
         let bytelength = p22.int8;
         p22.skip(bytelength);
         this.glyphNameOffsets.push(
-          this.glyphNameOffsets[i2] + bytelength + 1
+          this.glyphNameOffsets[i] + bytelength + 1
         );
       }
     }
@@ -22792,7 +22805,7 @@ var post = class extends SimpleTable {
       8,
       true
     );
-    return data.map((b2) => String.fromCharCode(b2)).join(``);
+    return data.map((b) => String.fromCharCode(b)).join(``);
   }
 };
 var macStrings = [
@@ -24081,11 +24094,11 @@ var CommonLayoutTable = class extends SimpleTable {
     }
   }
   getSupportedScripts() {
-    return this.scriptList.scriptRecords.map((r3) => r3.scriptTag);
+    return this.scriptList.scriptRecords.map((r2) => r2.scriptTag);
   }
   getScriptTable(scriptTag) {
     let record = this.scriptList.scriptRecords.find(
-      (r3) => r3.scriptTag === scriptTag
+      (r2) => r2.scriptTag === scriptTag
     );
     this.parser.currentPosition = this.scriptList.start + record.scriptOffset;
     let table = new ScriptTable(this.parser);
@@ -24141,7 +24154,7 @@ var CommonLayoutTable = class extends SimpleTable {
       record = this.featureList.featureRecords[indexOrTag];
     } else {
       record = this.featureList.featureRecords.find(
-        (f2) => f2.featureTag === indexOrTag
+        (f) => f.featureTag === indexOrTag
       );
     }
     if (!record) return;
@@ -24205,7 +24218,7 @@ var SVGDocumentList = class extends ParsedData {
   }
   getDocumentForGlyph(glyphID) {
     let id = this.documentRecords.findIndex(
-      (d2) => d2.startGlyphID <= glyphID && glyphID <= d2.endGlyphID
+      (d) => d.startGlyphID <= glyphID && glyphID <= d.endGlyphID
     );
     if (id === -1) return "";
     return this.getDocument(id);
@@ -24241,8 +24254,8 @@ var fvar = class extends SimpleTable {
     const instanceStart = axisStart + this.axisCount * this.axisSize;
     lazy$1(this, `instances`, () => {
       let instances = [];
-      for (let i2 = 0; i2 < this.instanceCount; i2++) {
-        p22.currentPosition = instanceStart + i2 * this.instanceSize;
+      for (let i = 0; i < this.instanceCount; i++) {
+        p22.currentPosition = instanceStart + i * this.instanceSize;
         instances.push(
           new InstanceRecord(p22, this.axisCount, this.instanceSize)
         );
@@ -24251,10 +24264,10 @@ var fvar = class extends SimpleTable {
     });
   }
   getSupportedAxes() {
-    return this.axes.map((a2) => a2.tag);
+    return this.axes.map((a) => a.tag);
   }
   getAxis(name2) {
-    return this.axes.find((a2) => a2.tag === name2);
+    return this.axes.find((a) => a.tag === name2);
   }
 };
 var VariationAxisRecord = class {
@@ -24284,11 +24297,11 @@ var fvar$1 = Object.freeze({ __proto__: null, fvar });
 var cvt = class extends SimpleTable {
   constructor(dict, dataview) {
     const { p: p22 } = super(dict, dataview);
-    const n2 = dict.length / 2;
+    const n = dict.length / 2;
     lazy$1(
       this,
       `items`,
-      () => [...new Array(n2)].map((_) => p22.fword)
+      () => [...new Array(n)].map((_) => p22.fword)
     );
   }
 };
@@ -24335,19 +24348,19 @@ var glyf$1 = Object.freeze({ __proto__: null, glyf });
 var loca = class extends SimpleTable {
   constructor(dict, dataview, tables) {
     const { p: p22 } = super(dict, dataview);
-    const n2 = tables.maxp.numGlyphs + 1;
+    const n = tables.maxp.numGlyphs + 1;
     if (tables.head.indexToLocFormat === 0) {
       this.x2 = true;
       lazy$1(
         this,
         `offsets`,
-        () => [...new Array(n2)].map((_) => p22.Offset16)
+        () => [...new Array(n)].map((_) => p22.Offset16)
       );
     } else {
       lazy$1(
         this,
         `offsets`,
-        () => [...new Array(n2)].map((_) => p22.Offset32)
+        () => [...new Array(n)].map((_) => p22.Offset32)
       );
     }
   }
@@ -24697,7 +24710,7 @@ var kern = class extends SimpleTable {
     lazy$1(this, `tables`, () => {
       let offset4 = this.tableStart + 4;
       const tables = [];
-      for (let i2 = 0; i2 < this.nTables; i2++) {
+      for (let i = 0; i < this.nTables; i++) {
         p22.currentPosition = offset4;
         let subtable = new KernSubTable(p22);
         tables.push(subtable);
@@ -24911,9 +24924,9 @@ var vmtx = class extends SimpleTable {
   }
 };
 var LongVertMetric = class {
-  constructor(h2, b2) {
-    this.advanceHeight = h2;
-    this.topSideBearing = b2;
+  constructor(h, b) {
+    this.advanceHeight = h;
+    this.topSideBearing = b;
   }
 };
 var vmtx$1 = Object.freeze({ __proto__: null, vmtx });

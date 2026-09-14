@@ -9,7 +9,7 @@ var wp;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
   var __require = /* @__PURE__ */ ((x2) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x2, {
-    get: (a2, b2) => (typeof require !== "undefined" ? require : a2)[b2]
+    get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
   }) : x2)(function(x2) {
     if (typeof require !== "undefined") return require.apply(this, arguments);
     throw Error('Dynamic require of "' + x2 + '" is not supported');
@@ -429,54 +429,54 @@ var wp;
   var require_es6 = __commonJS({
     "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
       "use strict";
-      module.exports = function equal(a2, b2) {
-        if (a2 === b2) return true;
-        if (a2 && b2 && typeof a2 == "object" && typeof b2 == "object") {
-          if (a2.constructor !== b2.constructor) return false;
-          var length, i2, keys;
-          if (Array.isArray(a2)) {
-            length = a2.length;
-            if (length != b2.length) return false;
-            for (i2 = length; i2-- !== 0; )
-              if (!equal(a2[i2], b2[i2])) return false;
+      module.exports = function equal(a, b) {
+        if (a === b) return true;
+        if (a && b && typeof a == "object" && typeof b == "object") {
+          if (a.constructor !== b.constructor) return false;
+          var length, i, keys;
+          if (Array.isArray(a)) {
+            length = a.length;
+            if (length != b.length) return false;
+            for (i = length; i-- !== 0; )
+              if (!equal(a[i], b[i])) return false;
             return true;
           }
-          if (a2 instanceof Map && b2 instanceof Map) {
-            if (a2.size !== b2.size) return false;
-            for (i2 of a2.entries())
-              if (!b2.has(i2[0])) return false;
-            for (i2 of a2.entries())
-              if (!equal(i2[1], b2.get(i2[0]))) return false;
+          if (a instanceof Map && b instanceof Map) {
+            if (a.size !== b.size) return false;
+            for (i of a.entries())
+              if (!b.has(i[0])) return false;
+            for (i of a.entries())
+              if (!equal(i[1], b.get(i[0]))) return false;
             return true;
           }
-          if (a2 instanceof Set && b2 instanceof Set) {
-            if (a2.size !== b2.size) return false;
-            for (i2 of a2.entries())
-              if (!b2.has(i2[0])) return false;
+          if (a instanceof Set && b instanceof Set) {
+            if (a.size !== b.size) return false;
+            for (i of a.entries())
+              if (!b.has(i[0])) return false;
             return true;
           }
-          if (ArrayBuffer.isView(a2) && ArrayBuffer.isView(b2)) {
-            length = a2.length;
-            if (length != b2.length) return false;
-            for (i2 = length; i2-- !== 0; )
-              if (a2[i2] !== b2[i2]) return false;
+          if (ArrayBuffer.isView(a) && ArrayBuffer.isView(b)) {
+            length = a.length;
+            if (length != b.length) return false;
+            for (i = length; i-- !== 0; )
+              if (a[i] !== b[i]) return false;
             return true;
           }
-          if (a2.constructor === RegExp) return a2.source === b2.source && a2.flags === b2.flags;
-          if (a2.valueOf !== Object.prototype.valueOf) return a2.valueOf() === b2.valueOf();
-          if (a2.toString !== Object.prototype.toString) return a2.toString() === b2.toString();
-          keys = Object.keys(a2);
+          if (a.constructor === RegExp) return a.source === b.source && a.flags === b.flags;
+          if (a.valueOf !== Object.prototype.valueOf) return a.valueOf() === b.valueOf();
+          if (a.toString !== Object.prototype.toString) return a.toString() === b.toString();
+          keys = Object.keys(a);
           length = keys.length;
-          if (length !== Object.keys(b2).length) return false;
-          for (i2 = length; i2-- !== 0; )
-            if (!Object.prototype.hasOwnProperty.call(b2, keys[i2])) return false;
-          for (i2 = length; i2-- !== 0; ) {
-            var key = keys[i2];
-            if (!equal(a2[key], b2[key])) return false;
+          if (length !== Object.keys(b).length) return false;
+          for (i = length; i-- !== 0; )
+            if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
+          for (i = length; i-- !== 0; ) {
+            var key = keys[i];
+            if (!equal(a[key], b[key])) return false;
           }
           return true;
         }
-        return a2 !== a2 && b2 !== b2;
+        return a !== a && b !== b;
       };
     }
   });
@@ -1736,18 +1736,18 @@ var wp;
   var import_core_data61 = __toESM(require_core_data(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
-  function r(e2) {
-    var t2, f2, n2 = "";
-    if ("string" == typeof e2 || "number" == typeof e2) n2 += e2;
-    else if ("object" == typeof e2) if (Array.isArray(e2)) {
-      var o2 = e2.length;
-      for (t2 = 0; t2 < o2; t2++) e2[t2] && (f2 = r(e2[t2])) && (n2 && (n2 += " "), n2 += f2);
-    } else for (f2 in e2) e2[f2] && (n2 && (n2 += " "), n2 += f2);
-    return n2;
+  function r(e) {
+    var t, f, n = "";
+    if ("string" == typeof e || "number" == typeof e) n += e;
+    else if ("object" == typeof e) if (Array.isArray(e)) {
+      var o = e.length;
+      for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+    } else for (f in e) e[f] && (n && (n += " "), n += f);
+    return n;
   }
   function clsx() {
-    for (var e2, t2, f2 = 0, n2 = "", o2 = arguments.length; f2 < o2; f2++) (e2 = arguments[f2]) && (t2 = r(e2)) && (n2 && (n2 += " "), n2 += t2);
-    return n2;
+    for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
+    return n;
   }
   var clsx_default = clsx;
 
@@ -2001,8 +2001,8 @@ var wp;
       });
       mutationObserverRef.current = mutationObserver;
       const roots = /* @__PURE__ */ new Set();
-      for (let i2 = 1; i2 < sortedNodes.length; i2 += 1) {
-        const root = getCommonAncestor(sortedNodes[i2 - 1], sortedNodes[i2]);
+      for (let i = 1; i < sortedNodes.length; i += 1) {
+        const root = getCommonAncestor(sortedNodes[i - 1], sortedNodes[i]);
         if (root) {
           roots.add(root);
         }
@@ -2087,7 +2087,7 @@ var wp;
       }
     });
     let nextAutomaticIndex = 0;
-    automaticItems.sort((a2, b2) => sortByDocumentPosition(a2.element, b2.element));
+    automaticItems.sort((a, b) => sortByDocumentPosition(a.element, b.element));
     automaticItems.forEach((item) => {
       while (reservedIndices.has(nextAutomaticIndex)) {
         nextAutomaticIndex += 1;
@@ -2097,7 +2097,7 @@ var wp;
       nextAutomaticIndex += 1;
     });
     if (reservedIndices.size > 0) {
-      items.sort((a2, b2) => a2.index - b2.index);
+      items.sort((a, b) => a.index - b.index);
     }
     return [items, automaticItems.map((item) => item.element)];
   }
@@ -2110,26 +2110,26 @@ var wp;
   }
   function hasMovedNode(entries) {
     for (const entry of entries) {
-      for (let i2 = 0; i2 < entry.removedNodes.length; i2 += 1) {
-        if (entry.removedNodes[i2].isConnected) {
+      for (let i = 0; i < entry.removedNodes.length; i += 1) {
+        if (entry.removedNodes[i].isConnected) {
           return true;
         }
       }
     }
     return false;
   }
-  function sortByDocumentPosition(a2, b2) {
-    return a2.compareDocumentPosition(b2) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+  function sortByDocumentPosition(a, b) {
+    return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
   }
 
   // node_modules/@base-ui/react/internals/useRenderElement.mjs
   var React9 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/utils/useMergedRefs.mjs
-  function useMergedRefs(a2, b2, c6, d2) {
+  function useMergedRefs(a, b, c6, d) {
     const forkRef = useRefWithInit(createForkRef).current;
-    if (didChange(forkRef, a2, b2, c6, d2)) {
-      update(forkRef, [a2, b2, c6, d2]);
+    if (didChange(forkRef, a, b, c6, d)) {
+      update(forkRef, [a, b, c6, d]);
     }
     return forkRef.callback;
   }
@@ -2147,8 +2147,8 @@ var wp;
       refs: []
     };
   }
-  function didChange(forkRef, a2, b2, c6, d2) {
-    return forkRef.refs[0] !== a2 || forkRef.refs[1] !== b2 || forkRef.refs[2] !== c6 || forkRef.refs[3] !== d2;
+  function didChange(forkRef, a, b, c6, d) {
+    return forkRef.refs[0] !== a || forkRef.refs[1] !== b || forkRef.refs[2] !== c6 || forkRef.refs[3] !== d;
   }
   function didChangeN(forkRef, newRefs) {
     return forkRef.refs.length !== newRefs.length || forkRef.refs.some((ref, index2) => ref !== newRefs[index2]);
@@ -2166,8 +2166,8 @@ var wp;
       }
       if (instance != null) {
         const cleanupCallbacks = Array(refs.length).fill(null);
-        for (let i2 = 0; i2 < refs.length; i2 += 1) {
-          const ref = refs[i2];
+        for (let i = 0; i < refs.length; i += 1) {
+          const ref = refs[i];
           if (ref == null) {
             continue;
           }
@@ -2175,7 +2175,7 @@ var wp;
             case "function": {
               const refCleanup = ref(instance);
               if (typeof refCleanup === "function") {
-                cleanupCallbacks[i2] = refCleanup;
+                cleanupCallbacks[i] = refCleanup;
               }
               break;
             }
@@ -2187,14 +2187,14 @@ var wp;
           }
         }
         forkRef.cleanup = () => {
-          for (let i2 = 0; i2 < refs.length; i2 += 1) {
-            const ref = refs[i2];
+          for (let i = 0; i < refs.length; i += 1) {
+            const ref = refs[i];
             if (ref == null) {
               continue;
             }
             switch (typeof ref) {
               case "function": {
-                const cleanupCallback = cleanupCallbacks[i2];
+                const cleanupCallback = cleanupCallbacks[i];
                 if (typeof cleanupCallback === "function") {
                   cleanupCallback();
                 } else {
@@ -2235,17 +2235,17 @@ var wp;
   }
 
   // node_modules/@base-ui/utils/mergeObjects.mjs
-  function mergeObjects(a2, b2) {
-    if (a2 && !b2) {
-      return a2;
+  function mergeObjects(a, b) {
+    if (a && !b) {
+      return a;
     }
-    if (!a2 && b2) {
-      return b2;
+    if (!a && b) {
+      return b;
     }
-    if (a2 || b2) {
+    if (a || b) {
       return {
-        ...a2,
-        ...b2
+        ...a,
+        ...b
       };
     }
     return void 0;
@@ -2290,22 +2290,22 @@ var wp;
 
   // node_modules/@base-ui/react/merge-props/mergeProps.mjs
   var EMPTY_PROPS = {};
-  function mergeProps(a2, b2, c6, d2, e2) {
-    if (!c6 && !d2 && !e2 && !a2) {
-      return createInitialMergedProps(b2);
+  function mergeProps(a, b, c6, d, e) {
+    if (!c6 && !d && !e && !a) {
+      return createInitialMergedProps(b);
     }
-    let merged = createInitialMergedProps(a2);
-    if (b2) {
-      merged = mergeInto(merged, b2);
+    let merged = createInitialMergedProps(a);
+    if (b) {
+      merged = mergeInto(merged, b);
     }
     if (c6) {
       merged = mergeInto(merged, c6);
     }
-    if (d2) {
-      merged = mergeInto(merged, d2);
+    if (d) {
+      merged = mergeInto(merged, d);
     }
-    if (e2) {
-      merged = mergeInto(merged, e2);
+    if (e) {
+      merged = mergeInto(merged, e);
     }
     return merged;
   }
@@ -2317,8 +2317,8 @@ var wp;
       return createInitialMergedProps(props[0]);
     }
     let merged = createInitialMergedProps(props[0]);
-    for (let i2 = 1; i2 < props.length; i2 += 1) {
-      merged = mergeInto(merged, props[i2]);
+    for (let i = 1; i < props.length; i += 1) {
+      merged = mergeInto(merged, props[i]);
     }
     return merged;
   }
@@ -2726,8 +2726,8 @@ var wp;
       this.callbacksCount = 0;
       this.startId = this.nextId;
       if (currentCallbacksCount > 0) {
-        for (let i2 = 0; i2 < currentCallbacks.length; i2 += 1) {
-          currentCallbacks[i2]?.(timestamp);
+        for (let i = 0; i < currentCallbacks.length; i += 1) {
+          currentCallbacks[i]?.(timestamp);
         }
       }
     };
@@ -2951,9 +2951,9 @@ var wp;
         return void 0;
       }
       return subscribeMapChange((map) => {
-        const i2 = componentRef.current ? map.get(componentRef.current)?.index : null;
-        if (i2 != null) {
-          setInternalIndex(i2);
+        const i = componentRef.current ? map.get(componentRef.current)?.index : null;
+        if (i != null) {
+          setInternalIndex(i);
         }
       });
     }, [externalIndex, subscribeMapChange]);
@@ -4517,8 +4517,8 @@ var wp;
   // node_modules/@base-ui/utils/mergeCleanups.mjs
   function mergeCleanups(...cleanups) {
     return () => {
-      for (let i2 = 0; i2 < cleanups.length; i2 += 1) {
-        const cleanup = cleanups[i2];
+      for (let i = 0; i < cleanups.length; i += 1) {
+        const cleanup = cleanups[i];
         if (cleanup) {
           cleanup();
         }
@@ -5391,7 +5391,7 @@ var wp;
       this.nodesRef.current.push(node);
     }
     removeNode(node) {
-      const index2 = this.nodesRef.current.findIndex((n2) => n2 === node);
+      const index2 = this.nodesRef.current.findIndex((n) => n === node);
       if (index2 !== -1) {
         this.nodesRef.current.splice(index2, 1);
       }
@@ -6717,8 +6717,8 @@ var wp;
     let statefulPlacement = placement;
     let resetCount = 0;
     const middlewareData = {};
-    for (let i2 = 0; i2 < middleware.length; i2++) {
-      const currentMiddleware = middleware[i2];
+    for (let i = 0; i < middleware.length; i++) {
+      const currentMiddleware = middleware[i];
       if (!currentMiddleware) {
         continue;
       }
@@ -6769,7 +6769,7 @@ var wp;
             y: y2
           } = computeCoordsFromPlacement(rects, statefulPlacement, rtl));
         }
-        i2 = -1;
+        i = -1;
       }
     }
     return {
@@ -6841,7 +6841,7 @@ var wp;
             const ignoreCrossAxisOverflow = checkCrossAxis === "alignment" ? initialSideAxis !== getSideAxis(nextPlacement) : false;
             if (!ignoreCrossAxisOverflow || // We leave the current main axis only if every placement on that axis
             // overflows the main axis.
-            overflowsData.every((d2) => getSideAxis(d2.placement) === initialSideAxis ? d2.overflows[0] > 0 : true)) {
+            overflowsData.every((d) => getSideAxis(d.placement) === initialSideAxis ? d.overflows[0] > 0 : true)) {
               return {
                 data: {
                   index: nextIndex,
@@ -6853,20 +6853,20 @@ var wp;
               };
             }
           }
-          let resetPlacement = (_overflowsData$filter = overflowsData.filter((d2) => d2.overflows[0] <= 0).sort((a2, b2) => a2.overflows[1] - b2.overflows[1])[0]) == null ? void 0 : _overflowsData$filter.placement;
+          let resetPlacement = (_overflowsData$filter = overflowsData.filter((d) => d.overflows[0] <= 0).sort((a, b) => a.overflows[1] - b.overflows[1])[0]) == null ? void 0 : _overflowsData$filter.placement;
           if (!resetPlacement) {
             switch (fallbackStrategy) {
               case "bestFit": {
                 var _overflowsData$filter2;
-                const placement2 = (_overflowsData$filter2 = overflowsData.filter((d2) => {
+                const placement2 = (_overflowsData$filter2 = overflowsData.filter((d) => {
                   if (hasFallbackAxisSideDirection) {
-                    const currentSideAxis = getSideAxis(d2.placement);
+                    const currentSideAxis = getSideAxis(d.placement);
                     return currentSideAxis === initialSideAxis || // Create a bias to the `y` side axis due to horizontal
                     // reading directions favoring greater width.
                     currentSideAxis === "y";
                   }
                   return true;
-                }).map((d2) => [d2.placement, d2.overflows.filter((overflow2) => overflow2 > 0).reduce((acc, overflow2) => acc + overflow2, 0)]).sort((a2, b2) => a2[1] - b2[1])[0]) == null ? void 0 : _overflowsData$filter2[0];
+                }).map((d) => [d.placement, d.overflows.filter((overflow2) => overflow2 > 0).reduce((acc, overflow2) => acc + overflow2, 0)]).sort((a, b) => a[1] - b[1])[0]) == null ? void 0 : _overflowsData$filter2[0];
                 if (placement2) {
                   resetPlacement = placement2;
                 }
@@ -7474,8 +7474,8 @@ var wp;
     let right = firstRect.right;
     let bottom = firstRect.bottom;
     let left = firstRect.left;
-    for (let i2 = 1; i2 < clippingAncestors.length; i2++) {
-      const rect = getClientRectFromClippingAncestor(element, clippingAncestors[i2], strategy);
+    for (let i = 1; i < clippingAncestors.length; i++) {
+      const rect = getClientRectFromClippingAncestor(element, clippingAncestors[i], strategy);
       top = max(rect.top, top);
       right = min(rect.right, right);
       bottom = min(rect.bottom, bottom);
@@ -7600,8 +7600,8 @@ var wp;
     isElement,
     isRTL
   };
-  function rectsAreEqual(a2, b2) {
-    return a2.x === b2.x && a2.y === b2.y && a2.width === b2.width && a2.height === b2.height;
+  function rectsAreEqual(a, b) {
+    return a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
   }
   function observeMove(element, onMove, ancestorResize) {
     let io = null;
@@ -7778,52 +7778,52 @@ var wp;
   var noop2 = function noop3() {
   };
   var index = isClient ? import_react2.useLayoutEffect : noop2;
-  function deepEqual(a2, b2) {
-    if (a2 === b2) {
+  function deepEqual(a, b) {
+    if (a === b) {
       return true;
     }
-    if (typeof a2 !== typeof b2) {
+    if (typeof a !== typeof b) {
       return false;
     }
-    if (typeof a2 === "function" && a2.toString() === b2.toString()) {
+    if (typeof a === "function" && a.toString() === b.toString()) {
       return true;
     }
     let length;
-    let i2;
+    let i;
     let keys;
-    if (a2 && b2 && typeof a2 === "object") {
-      if (Array.isArray(a2)) {
-        length = a2.length;
-        if (length !== b2.length) return false;
-        for (i2 = length; i2-- !== 0; ) {
-          if (!deepEqual(a2[i2], b2[i2])) {
+    if (a && b && typeof a === "object") {
+      if (Array.isArray(a)) {
+        length = a.length;
+        if (length !== b.length) return false;
+        for (i = length; i-- !== 0; ) {
+          if (!deepEqual(a[i], b[i])) {
             return false;
           }
         }
         return true;
       }
-      keys = Object.keys(a2);
+      keys = Object.keys(a);
       length = keys.length;
-      if (length !== Object.keys(b2).length) {
+      if (length !== Object.keys(b).length) {
         return false;
       }
-      for (i2 = length; i2-- !== 0; ) {
-        if (!{}.hasOwnProperty.call(b2, keys[i2])) {
+      for (i = length; i-- !== 0; ) {
+        if (!{}.hasOwnProperty.call(b, keys[i])) {
           return false;
         }
       }
-      for (i2 = length; i2-- !== 0; ) {
-        const key = keys[i2];
-        if (key === "_owner" && a2.$$typeof) {
+      for (i = length; i-- !== 0; ) {
+        const key = keys[i];
+        if (key === "_owner" && a.$$typeof) {
           continue;
         }
-        if (!deepEqual(a2[key], b2[key])) {
+        if (!deepEqual(a[key], b[key])) {
           return false;
         }
       }
       return true;
     }
-    return a2 !== a2 && b2 !== b2;
+    return a !== a && b !== b;
   }
   function getDPR(element) {
     if (typeof window === "undefined") {
@@ -8162,8 +8162,8 @@ var wp;
       }
       let triggerElement;
       if (triggerId) {
-        for (let i2 = this.attachedStores.length - 1; i2 >= 0 && !triggerElement; i2 -= 1) {
-          triggerElement = this.attachedStores[i2].context.triggerElements.getById(triggerId);
+        for (let i = this.attachedStores.length - 1; i >= 0 && !triggerElement; i -= 1) {
+          triggerElement = this.attachedStores[i].context.triggerElements.getById(triggerId);
         }
         triggerElement ??= this.fallbackStore.context.triggerElements.getById(triggerId);
       }
@@ -8267,8 +8267,8 @@ var wp;
         instance.didChangeStore = true;
         instance.getSnapshot = () => {
           let didChange2 = false;
-          for (let i2 = 0; i2 < instance.syncHooks.length; i2 += 1) {
-            const hook = instance.syncHooks[i2];
+          for (let i = 0; i < instance.syncHooks.length; i += 1) {
+            const hook = instance.syncHooks[i];
             const value = hook.selector(hook.store.state, hook.a1, hook.a2, hook.a3);
             if (!Object.is(hook.value, value)) {
               didChange2 = true;
@@ -9322,7 +9322,7 @@ var wp;
     }, [domReferenceElement]);
     useIsoLayoutEffect(() => {
       store2.context.dataRef.current.floatingContext = context;
-      const node = tree?.nodesRef.current.find((n2) => n2.id === nodeId);
+      const node = tree?.nodesRef.current.find((n) => n.id === nodeId);
       if (node) {
         node.context = context;
       }
@@ -16209,8 +16209,8 @@ var wp;
   function getTargetElement(event) {
     if ("composedPath" in event) {
       const path = event.composedPath();
-      for (let i2 = 0; i2 < path.length; i2 += 1) {
-        const element = path[i2];
+      for (let i = 0; i < path.length; i += 1) {
+        const element = path[i];
         if (isElement(element)) {
           return element;
         }
@@ -20891,11 +20891,11 @@ var wp;
     const [leftStartTime, leftEndTime] = [
       +toDate(intervalLeft.start, options?.in),
       +toDate(intervalLeft.end, options?.in)
-    ].sort((a2, b2) => a2 - b2);
+    ].sort((a, b) => a - b);
     const [rightStartTime, rightEndTime] = [
       +toDate(intervalRight.start, options?.in),
       +toDate(intervalRight.end, options?.in)
-    ].sort((a2, b2) => a2 - b2);
+    ].sort((a, b) => a - b);
     if (options?.inclusive)
       return leftStartTime <= rightEndTime && rightStartTime <= leftEndTime;
     return leftStartTime < rightEndTime && rightStartTime < leftEndTime;
@@ -22721,8 +22721,8 @@ var wp;
   function parseAnyDigitsSigned(dateString) {
     return parseNumericPattern(numericPatterns.anyDigitsSigned, dateString);
   }
-  function parseNDigits(n2, dateString) {
-    switch (n2) {
+  function parseNDigits(n, dateString) {
+    switch (n) {
       case 1:
         return parseNumericPattern(numericPatterns.singleDigit, dateString);
       case 2:
@@ -22732,11 +22732,11 @@ var wp;
       case 4:
         return parseNumericPattern(numericPatterns.fourDigits, dateString);
       default:
-        return parseNumericPattern(new RegExp("^\\d{1," + n2 + "}"), dateString);
+        return parseNumericPattern(new RegExp("^\\d{1," + n + "}"), dateString);
     }
   }
-  function parseNDigitsSigned(n2, dateString) {
-    switch (n2) {
+  function parseNDigitsSigned(n, dateString) {
+    switch (n) {
       case 1:
         return parseNumericPattern(numericPatterns.singleDigitSigned, dateString);
       case 2:
@@ -22746,7 +22746,7 @@ var wp;
       case 4:
         return parseNumericPattern(numericPatterns.fourDigitsSigned, dateString);
       default:
-        return parseNumericPattern(new RegExp("^-?\\d{1," + n2 + "}"), dateString);
+        return parseNumericPattern(new RegExp("^-?\\d{1," + n + "}"), dateString);
     }
   }
   function dayPeriodEnumToHours(dayPeriod) {
@@ -24230,8 +24230,8 @@ var wp;
     if (dateStr.length > 0 && notWhitespaceRegExp.test(dateStr)) {
       return invalidDate();
     }
-    const uniquePrioritySetters = setters.map((setter) => setter.priority).sort((a2, b2) => b2 - a2).filter((priority2, index2, array) => array.indexOf(priority2) === index2).map(
-      (priority2) => setters.filter((setter) => setter.priority === priority2).sort((a2, b2) => b2.subPriority - a2.subPriority)
+    const uniquePrioritySetters = setters.map((setter) => setter.priority).sort((a, b) => b - a).filter((priority2, index2, array) => array.indexOf(priority2) === index2).map(
+      (priority2) => setters.filter((setter) => setter.priority === priority2).sort((a, b) => b.subPriority - a.subPriority)
     ).map((setterArray) => setterArray[0]);
     let date = toDate(referenceDate, options?.in);
     if (isNaN(+date)) return invalidDate();
@@ -24532,7 +24532,7 @@ var wp;
         if (dateLib && typeof dateLib.format === "function") {
           formatDate2 = dateLib.format.bind(dateLib);
         } else {
-          formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
+          formatDate2 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
         }
         let label = formatDate2(date, "PPPP");
         if (modifiers.today)
@@ -24551,7 +24551,7 @@ var wp;
         if (dateLib && typeof dateLib.format === "function") {
           formatDate2 = dateLib.format.bind(dateLib);
         } else {
-          formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
+          formatDate2 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
         }
         return formatDate2(date, "LLLL yyyy");
       },
@@ -24560,7 +24560,7 @@ var wp;
         if (dateLib && typeof dateLib.format === "function") {
           formatDate2 = dateLib.format.bind(dateLib);
         } else {
-          formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
+          formatDate2 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
         }
         let label = formatDate2(date, "PPPP");
         if (modifiers?.today) {
@@ -24575,7 +24575,7 @@ var wp;
         if (dateLib && typeof dateLib.format === "function") {
           formatDate2 = dateLib.format.bind(dateLib);
         } else {
-          formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
+          formatDate2 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
         }
         return formatDate2(date, "cccc");
       }
@@ -24633,7 +24633,7 @@ var wp;
       };
       this.eachYearOfInterval = (interval) => {
         const years = this.overrides?.eachYearOfInterval ? this.overrides.eachYearOfInterval(interval) : eachYearOfInterval(interval);
-        const uniqueYears = new Set(years.map((d2) => this.getYear(d2)));
+        const uniqueYears = new Set(years.map((d) => this.getYear(d)));
         if (uniqueYears.size === years.length) {
           return years;
         }
@@ -24741,8 +24741,8 @@ var wp;
         numberingSystem: numerals
       });
       const digitMap = {};
-      for (let i2 = 0; i2 < 10; i2++) {
-        digitMap[i2.toString()] = formatter.format(i2);
+      for (let i = 0; i < 10; i++) {
+        digitMap[i.toString()] = formatter.format(i);
       }
       return digitMap;
     }
@@ -25070,14 +25070,14 @@ var wp;
   function Nav(props) {
     const { onPreviousClick, onNextClick, previousMonth, nextMonth, ...navProps } = props;
     const { components, classNames, styles, labels: { labelPrevious: labelPrevious2, labelNext: labelNext2 } } = useDayPicker();
-    const handleNextClick = (0, import_react19.useCallback)((e2) => {
+    const handleNextClick = (0, import_react19.useCallback)((e) => {
       if (nextMonth) {
-        onNextClick?.(e2);
+        onNextClick?.(e);
       }
     }, [nextMonth, onNextClick]);
-    const handlePreviousClick = (0, import_react19.useCallback)((e2) => {
+    const handlePreviousClick = (0, import_react19.useCallback)((e) => {
       if (previousMonth) {
-        onPreviousClick?.(e2);
+        onPreviousClick?.(e);
       }
     }, [previousMonth, onPreviousClick]);
     return import_react19.default.createElement(
@@ -25324,10 +25324,10 @@ var wp;
       const customModifiers = {};
       for (const name2 in internalModifiersMap) {
         const days2 = internalModifiersMap[name2];
-        dayFlags[name2] = days2.some((d2) => d2 === day);
+        dayFlags[name2] = days2.some((d) => d === day);
       }
       for (const name2 in customModifiersMap) {
-        customModifiers[name2] = customModifiersMap[name2].some((d2) => d2 === day);
+        customModifiers[name2] = customModifiersMap[name2].some((d) => d === day);
       }
       return {
         ...dayFlags,
@@ -25598,8 +25598,8 @@ var wp;
     const referenceToday = today ?? dateLib.today();
     const start2 = broadcastCalendar ? dateLib.startOfBroadcastWeek(referenceToday, dateLib) : ISOWeek ? dateLib.startOfISOWeek(referenceToday) : dateLib.startOfWeek(referenceToday);
     const days = [];
-    for (let i2 = 0; i2 < 7; i2++) {
-      const day = dateLib.addDays(start2, i2);
+    for (let i = 0; i < 7; i++) {
+      const day = dateLib.addDays(start2, i);
       days.push(day);
     }
     return days;
@@ -25909,15 +25909,15 @@ var wp;
     const nOfDays = differenceInCalendarDays2(gridEndDate, startWeekFirstDate);
     const nOfMonths = differenceInCalendarMonths2(lastMonth, firstMonth) + 1;
     const dates = [];
-    for (let i2 = 0; i2 <= nOfDays; i2++) {
-      const date = addDays2(startWeekFirstDate, i2);
+    for (let i = 0; i <= nOfDays; i++) {
+      const date = addDays2(startWeekFirstDate, i);
       dates.push(date);
     }
     const nrOfDaysWithFixedWeeks = broadcastCalendar ? 35 : 42;
     const extraDates = nrOfDaysWithFixedWeeks * nOfMonths;
     if (fixedWeeks && dates.length < extraDates) {
       const daysToAdd = extraDates - dates.length;
-      for (let i2 = 0; i2 < daysToAdd; i2++) {
+      for (let i = 0; i < daysToAdd; i++) {
         const date = addDays2(dates[dates.length - 1], 1);
         dates.push(date);
       }
@@ -25940,8 +25940,8 @@ var wp;
   function getDisplayMonths(firstDisplayedMonth, calendarEndMonth, props, dateLib) {
     const { numberOfMonths = 1 } = props;
     const months = [];
-    for (let i2 = 0; i2 < numberOfMonths; i2++) {
-      const month = dateLib.addMonths(firstDisplayedMonth, i2);
+    for (let i = 0; i < numberOfMonths; i++) {
+      const month = dateLib.addMonths(firstDisplayedMonth, i);
       if (calendarEndMonth && month > calendarEndMonth) {
         break;
       }
@@ -26132,7 +26132,7 @@ var wp;
       props.reverseMonths
     ]);
     const { disableNavigation, onMonthChange } = props;
-    const isDayInCalendar = (day) => weeks.some((week) => week.days.some((d2) => d2.isEqualTo(day)));
+    const isDayInCalendar = (day) => weeks.some((week) => week.days.some((d) => d.isEqualTo(day)));
     const goToMonth = (date) => {
       if (disableNavigation) {
         return;
@@ -26290,10 +26290,10 @@ var wp;
     const selected = !onSelect ? internallySelected : initiallySelected;
     const { isSameDay: isSameDay2 } = dateLib;
     const isSelected2 = (date) => {
-      return selected?.some((d2) => isSameDay2(d2, date)) ?? false;
+      return selected?.some((d) => isSameDay2(d, date)) ?? false;
     };
     const { min: min3, max: max3 } = props;
-    const select4 = (triggerDate, modifiers, e2) => {
+    const select4 = (triggerDate, modifiers, e) => {
       let newDates = [...selected ?? []];
       if (isSelected2(triggerDate)) {
         if (selected?.length === min3) {
@@ -26302,7 +26302,7 @@ var wp;
         if (required && selected?.length === 1) {
           return;
         }
-        newDates = selected?.filter((d2) => !isSameDay2(d2, triggerDate));
+        newDates = selected?.filter((d) => !isSameDay2(d, triggerDate));
       } else {
         if (selected?.length === max3) {
           newDates = [triggerDate];
@@ -26313,7 +26313,7 @@ var wp;
       if (!onSelect) {
         setSelected(newDates);
       }
-      onSelect?.(newDates, triggerDate, modifiers, e2);
+      onSelect?.(newDates, triggerDate, modifiers, e);
       return newDates;
     };
     return {
@@ -26382,7 +26382,7 @@ var wp;
     let date = range.from;
     const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
     const totalDaysLimit = Math.min(totalDays, 6);
-    for (let i2 = 0; i2 <= totalDaysLimit; i2++) {
+    for (let i = 0; i <= totalDaysLimit; i++) {
       if (dayOfWeekArr.includes(date.getDay())) {
         return true;
       }
@@ -26440,7 +26440,7 @@ var wp;
     if (functionMatchers.length) {
       let date = range.from;
       const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
-      for (let i2 = 0; i2 <= totalDays; i2++) {
+      for (let i = 0; i <= totalDays; i++) {
         if (functionMatchers.some((matcher) => matcher(date))) {
           return true;
         }
@@ -26456,7 +26456,7 @@ var wp;
     const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
     const selected = !onSelect ? internallySelected : initiallySelected;
     const isSelected2 = (date) => selected && rangeIncludesDate(selected, date, false, dateLib);
-    const select4 = (triggerDate, modifiers, e2) => {
+    const select4 = (triggerDate, modifiers, e) => {
       const { min: min3, max: max3 } = props;
       let newRange;
       if (triggerDate) {
@@ -26483,7 +26483,7 @@ var wp;
       if (!onSelect) {
         setSelected(newRange);
       }
-      onSelect?.(newRange, triggerDate, modifiers, e2);
+      onSelect?.(newRange, triggerDate, modifiers, e);
       return newRange;
     };
     return {
@@ -26502,7 +26502,7 @@ var wp;
     const isSelected2 = (compareDate) => {
       return selected ? isSameDay2(selected, compareDate) : false;
     };
-    const select4 = (triggerDate, modifiers, e2) => {
+    const select4 = (triggerDate, modifiers, e) => {
       let newDate = triggerDate;
       if (!required && selected && selected && isSameDay2(triggerDate, selected)) {
         newDate = void 0;
@@ -26511,9 +26511,9 @@ var wp;
         setSelected(newDate);
       }
       if (required) {
-        onSelect?.(newDate, triggerDate, modifiers, e2);
+        onSelect?.(newDate, triggerDate, modifiers, e);
       } else {
-        onSelect?.(newDate, triggerDate, modifiers, e2);
+        onSelect?.(newDate, triggerDate, modifiers, e);
       }
       return newDate;
     };
@@ -26716,62 +26716,62 @@ var wp;
       goToMonth(nextMonth);
       onNextClick?.(nextMonth);
     }, [goToMonth, nextMonth, onNextClick]);
-    const handleDayClick = (0, import_react36.useCallback)((day, m2) => (e2) => {
-      e2.preventDefault();
-      e2.stopPropagation();
+    const handleDayClick = (0, import_react36.useCallback)((day, m2) => (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       setFocused(day);
       if (m2.disabled) {
         return;
       }
-      select4?.(day.date, m2, e2);
-      onDayClick?.(day.date, m2, e2);
+      select4?.(day.date, m2, e);
+      onDayClick?.(day.date, m2, e);
     }, [select4, onDayClick, setFocused]);
-    const handleDayFocus = (0, import_react36.useCallback)((day, m2) => (e2) => {
+    const handleDayFocus = (0, import_react36.useCallback)((day, m2) => (e) => {
       setFocused(day);
-      onDayFocus?.(day.date, m2, e2);
+      onDayFocus?.(day.date, m2, e);
     }, [onDayFocus, setFocused]);
-    const handleDayBlur = (0, import_react36.useCallback)((day, m2) => (e2) => {
+    const handleDayBlur = (0, import_react36.useCallback)((day, m2) => (e) => {
       blur();
-      onDayBlur?.(day.date, m2, e2);
+      onDayBlur?.(day.date, m2, e);
     }, [blur, onDayBlur]);
-    const handleDayKeyDown = (0, import_react36.useCallback)((day, modifiers) => (e2) => {
+    const handleDayKeyDown = (0, import_react36.useCallback)((day, modifiers) => (e) => {
       const keyMap = {
         ArrowLeft: [
-          e2.shiftKey ? "month" : "day",
+          e.shiftKey ? "month" : "day",
           props.dir === "rtl" ? "after" : "before"
         ],
         ArrowRight: [
-          e2.shiftKey ? "month" : "day",
+          e.shiftKey ? "month" : "day",
           props.dir === "rtl" ? "before" : "after"
         ],
-        ArrowDown: [e2.shiftKey ? "year" : "week", "after"],
-        ArrowUp: [e2.shiftKey ? "year" : "week", "before"],
-        PageUp: [e2.shiftKey ? "year" : "month", "before"],
-        PageDown: [e2.shiftKey ? "year" : "month", "after"],
+        ArrowDown: [e.shiftKey ? "year" : "week", "after"],
+        ArrowUp: [e.shiftKey ? "year" : "week", "before"],
+        PageUp: [e.shiftKey ? "year" : "month", "before"],
+        PageDown: [e.shiftKey ? "year" : "month", "after"],
         Home: ["startOfWeek", "before"],
         End: ["endOfWeek", "after"]
       };
-      if (keyMap[e2.key]) {
-        e2.preventDefault();
-        e2.stopPropagation();
-        const [moveBy, moveDir] = keyMap[e2.key];
+      if (keyMap[e.key]) {
+        e.preventDefault();
+        e.stopPropagation();
+        const [moveBy, moveDir] = keyMap[e.key];
         moveFocus(moveBy, moveDir);
       }
-      onDayKeyDown?.(day.date, modifiers, e2);
+      onDayKeyDown?.(day.date, modifiers, e);
     }, [moveFocus, onDayKeyDown, props.dir]);
-    const handleDayMouseEnter = (0, import_react36.useCallback)((day, modifiers) => (e2) => {
-      onDayMouseEnter?.(day.date, modifiers, e2);
+    const handleDayMouseEnter = (0, import_react36.useCallback)((day, modifiers) => (e) => {
+      onDayMouseEnter?.(day.date, modifiers, e);
     }, [onDayMouseEnter]);
-    const handleDayMouseLeave = (0, import_react36.useCallback)((day, modifiers) => (e2) => {
-      onDayMouseLeave?.(day.date, modifiers, e2);
+    const handleDayMouseLeave = (0, import_react36.useCallback)((day, modifiers) => (e) => {
+      onDayMouseLeave?.(day.date, modifiers, e);
     }, [onDayMouseLeave]);
-    const handleMonthChange = (0, import_react36.useCallback)((date, monthOffset) => (e2) => {
-      const selectedMonth = Number(e2.target.value);
+    const handleMonthChange = (0, import_react36.useCallback)((date, monthOffset) => (e) => {
+      const selectedMonth = Number(e.target.value);
       const month = dateLib.setMonth(dateLib.startOfMonth(date), selectedMonth);
       goToMonth(dateLib.addMonths(month, -monthOffset));
     }, [dateLib, goToMonth]);
-    const handleYearChange = (0, import_react36.useCallback)((date, monthOffset) => (e2) => {
-      const selectedYear = Number(e2.target.value);
+    const handleYearChange = (0, import_react36.useCallback)((date, monthOffset) => (e) => {
+      const selectedYear = Number(e.target.value);
       const month = dateLib.setYear(dateLib.startOfMonth(date), selectedYear);
       goToMonth(dateLib.addMonths(month, -monthOffset));
     }, [dateLib, goToMonth]);
@@ -27656,12 +27656,12 @@ var wp;
         [localizationProps.labels, customLabels]
       );
       const onChange = (0, import_element52.useCallback)(
-        (selected2, triggerDate, modifiers, e2) => {
+        (selected2, triggerDate, modifiers, e) => {
           onValueChange?.(
             selected2 ?? null,
             triggerDate,
             modifiers,
-            e2
+            e
           );
         },
         [onValueChange]
@@ -27818,12 +27818,12 @@ var wp;
         [localizationProps.labels, customLabels]
       );
       const onChange = (0, import_element53.useCallback)(
-        (selected2, triggerDate, modifiers2, e2) => {
+        (selected2, triggerDate, modifiers2, e) => {
           onValueChange?.(
             selected2 ?? null,
             triggerDate,
             modifiers2,
-            e2
+            e
           );
         },
         [onValueChange]
@@ -31414,8 +31414,8 @@ var wp;
   var SNAP_TO_EDIT_CANVAS_MODE_THRESHOLD = 200;
   var INITIAL_FRAME_SIZE = { width: "100%", height: "100%" };
   function calculateNewHeight(width, initialAspectRatio) {
-    const lerp = (a2, b2, amount) => {
-      return a2 + (b2 - a2) * amount;
+    const lerp = (a, b, amount) => {
+      return a + (b - a) * amount;
     };
     const lerpFactor = 1 - Math.max(
       0,
@@ -31765,9 +31765,9 @@ var wp;
   raf.setTimeout = (handler, ms) => {
     let time = raf.now() + ms;
     let cancel = () => {
-      let i2 = timeouts.findIndex((t2) => t2.cancel == cancel);
-      if (~i2) timeouts.splice(i2, 1);
-      pendingCount -= ~i2 ? 1 : 0;
+      let i = timeouts.findIndex((t) => t.cancel == cancel);
+      if (~i) timeouts.splice(i, 1);
+      pendingCount -= ~i ? 1 : 0;
     };
     let timeout = {
       time,
@@ -31779,7 +31779,7 @@ var wp;
     start();
     return timeout;
   };
-  var findTimeout = (time) => ~(~timeouts.findIndex((t2) => t2.time > time) || ~timeouts.length);
+  var findTimeout = (time) => ~(~timeouts.findIndex((t) => t.time > time) || ~timeouts.length);
   raf.cancel = (fn) => {
     onStartQueue.delete(fn);
     onFrameQueue.delete(fn);
@@ -31860,7 +31860,7 @@ var wp;
     ts = raf.now();
     let count = findTimeout(ts);
     if (count) {
-      eachSafely(timeouts.splice(0, count), (t2) => t2.handler());
+      eachSafely(timeouts.splice(0, count), (t) => t.handler());
       pendingCount -= count;
     }
     if (!pendingCount) {
@@ -31900,8 +31900,8 @@ var wp;
     values.forEach((value) => {
       try {
         each2(value);
-      } catch (e2) {
-        raf.catch(e2);
+      } catch (e) {
+        raf.catch(e);
       }
     });
   }
@@ -31917,27 +31917,27 @@ var wp;
   });
   var is = {
     arr: Array.isArray,
-    obj: (a2) => !!a2 && a2.constructor.name === "Object",
-    fun: (a2) => typeof a2 === "function",
-    str: (a2) => typeof a2 === "string",
-    num: (a2) => typeof a2 === "number",
-    und: (a2) => a2 === void 0
+    obj: (a) => !!a && a.constructor.name === "Object",
+    fun: (a) => typeof a === "function",
+    str: (a) => typeof a === "string",
+    num: (a) => typeof a === "number",
+    und: (a) => a === void 0
   };
-  function isEqual(a2, b2) {
-    if (is.arr(a2)) {
-      if (!is.arr(b2) || a2.length !== b2.length) return false;
-      for (let i2 = 0; i2 < a2.length; i2++) {
-        if (a2[i2] !== b2[i2]) return false;
+  function isEqual(a, b) {
+    if (is.arr(a)) {
+      if (!is.arr(b) || a.length !== b.length) return false;
+      for (let i = 0; i < a.length; i++) {
+        if (a[i] !== b[i]) return false;
       }
       return true;
     }
-    return a2 === b2;
+    return a === b;
   }
   var each = (obj, fn) => obj.forEach(fn);
   function eachProp(obj, fn, ctx9) {
     if (is.arr(obj)) {
-      for (let i2 = 0; i2 < obj.length; i2++) {
-        fn.call(ctx9, obj[i2], `${i2}`);
+      for (let i = 0; i < obj.length; i++) {
+        fn.call(ctx9, obj[i], `${i}`);
       }
       return;
     }
@@ -31947,7 +31947,7 @@ var wp;
       }
     }
   }
-  var toArray = (a2) => is.und(a2) ? [] : is.arr(a2) ? a2 : [a2];
+  var toArray = (a) => is.und(a) ? [] : is.arr(a) ? a : [a];
   function flush(queue, iterator) {
     if (queue.size) {
       const items = Array.from(queue);
@@ -32039,8 +32039,8 @@ var wp;
   }
   function advance(dt) {
     const nextFrame = prevFrame;
-    for (let i2 = 0; i2 < currentFrame.length; i2++) {
-      const animation = currentFrame[i2];
+    for (let i = 0; i < currentFrame.length; i++) {
+      const animation = currentFrame[i];
       priority = animation.priority;
       if (!animation.idle) {
         willAdvance(animation);
@@ -32255,21 +32255,21 @@ var wp;
     }
     return null;
   }
-  function hue2rgb(p3, q, t2) {
-    if (t2 < 0) t2 += 1;
-    if (t2 > 1) t2 -= 1;
-    if (t2 < 1 / 6) return p3 + (q - p3) * 6 * t2;
-    if (t2 < 1 / 2) return q;
-    if (t2 < 2 / 3) return p3 + (q - p3) * (2 / 3 - t2) * 6;
+  function hue2rgb(p3, q2, t) {
+    if (t < 0) t += 1;
+    if (t > 1) t -= 1;
+    if (t < 1 / 6) return p3 + (q2 - p3) * 6 * t;
+    if (t < 1 / 2) return q2;
+    if (t < 2 / 3) return p3 + (q2 - p3) * (2 / 3 - t) * 6;
     return p3;
   }
-  function hslToRgb(h2, s2, l2) {
-    const q = l2 < 0.5 ? l2 * (1 + s2) : l2 + s2 - l2 * s2;
-    const p3 = 2 * l2 - q;
-    const r3 = hue2rgb(p3, q, h2 + 1 / 3);
-    const g2 = hue2rgb(p3, q, h2);
-    const b2 = hue2rgb(p3, q, h2 - 1 / 3);
-    return Math.round(r3 * 255) << 24 | Math.round(g2 * 255) << 16 | Math.round(b2 * 255) << 8;
+  function hslToRgb(h, s, l2) {
+    const q2 = l2 < 0.5 ? l2 * (1 + s) : l2 + s - l2 * s;
+    const p3 = 2 * l2 - q2;
+    const r2 = hue2rgb(p3, q2, h + 1 / 3);
+    const g2 = hue2rgb(p3, q2, h);
+    const b = hue2rgb(p3, q2, h - 1 / 3);
+    return Math.round(r2 * 255) << 24 | Math.round(g2 * 255) << 16 | Math.round(b * 255) << 8;
   }
   function parse255(str) {
     const int = parseInt(str, 10);
@@ -32297,11 +32297,11 @@ var wp;
     let int32Color = normalizeColor(input);
     if (int32Color === null) return input;
     int32Color = int32Color || 0;
-    let r3 = (int32Color & 4278190080) >>> 24;
+    let r2 = (int32Color & 4278190080) >>> 24;
     let g2 = (int32Color & 16711680) >>> 16;
-    let b2 = (int32Color & 65280) >>> 8;
-    let a2 = (int32Color & 255) / 255;
-    return `rgba(${r3}, ${g2}, ${b2}, ${a2})`;
+    let b = (int32Color & 65280) >>> 8;
+    let a = (int32Color & 255) / 255;
+    return `rgba(${r2}, ${g2}, ${b}, ${a})`;
   }
   var createInterpolator = (range, output, extrapolate) => {
     if (is.fun(range)) {
@@ -32322,7 +32322,7 @@ var wp;
     const inputRange = config2.range || [0, 1];
     const extrapolateLeft = config2.extrapolateLeft || config2.extrapolate || "extend";
     const extrapolateRight = config2.extrapolateRight || config2.extrapolate || "extend";
-    const easing = config2.easing || ((t2) => t2);
+    const easing = config2.easing || ((t) => t);
     return (input) => {
       const range2 = findRange(input, inputRange);
       return interpolate(input, inputRange[range2], inputRange[range2 + 1], outputRange[range2], outputRange[range2 + 1], easing, extrapolateLeft, extrapolateRight, config2.map);
@@ -32350,13 +32350,13 @@ var wp;
     return result;
   }
   function findRange(input, inputRange) {
-    for (var i2 = 1; i2 < inputRange.length - 1; ++i2) if (inputRange[i2] >= input) break;
-    return i2 - 1;
+    for (var i = 1; i < inputRange.length - 1; ++i) if (inputRange[i] >= input) break;
+    return i - 1;
   }
   function _extends() {
     _extends = Object.assign ? Object.assign.bind() : function(target) {
-      for (var i2 = 1; i2 < arguments.length; i2++) {
-        var source = arguments[i2];
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
         for (var key in source) {
           if (Object.prototype.hasOwnProperty.call(source, key)) {
             target[key] = source[key];
@@ -32473,11 +32473,11 @@ var wp;
       return getFluidValue(value).replace(cssVariableRegex, variableToRgba).replace(colorRegex, colorToRgba).replace(namedColorRegex, colorToRgba);
     });
     const keyframes = output.map((value) => value.match(numberRegex).map(Number));
-    const outputRanges = keyframes[0].map((_, i2) => keyframes.map((values) => {
-      if (!(i2 in values)) {
+    const outputRanges = keyframes[0].map((_, i) => keyframes.map((values) => {
+      if (!(i in values)) {
         throw Error('The arity of each "output" value must be equal');
       }
-      return values[i2];
+      return values[i];
     }));
     const interpolators = outputRanges.map((output2) => createInterpolator(_extends({}, config2, {
       output: output2
@@ -32485,8 +32485,8 @@ var wp;
     return (input) => {
       var _output$find;
       const missingUnit = !unitRegex.test(output[0]) && ((_output$find = output.find((value) => unitRegex.test(value))) == null ? void 0 : _output$find.replace(numberRegex, ""));
-      let i2 = 0;
-      return output[0].replace(numberRegex, () => `${interpolators[i2++](input)}${missingUnit || ""}`).replace(rgbaRegex, rgbaRound);
+      let i = 0;
+      return output[0].replace(numberRegex, () => `${interpolators[i++](input)}${missingUnit || ""}`).replace(rgbaRegex, rgbaRound);
     };
   };
   var prefix = "react-spring: ";
@@ -32562,8 +32562,8 @@ var wp;
     if (next.length !== prev.length) {
       return false;
     }
-    for (let i2 = 0; i2 < next.length; i2++) {
-      if (next[i2] !== prev[i2]) {
+    for (let i = 0; i < next.length; i++) {
+      if (next[i] !== prev[i]) {
         return false;
       }
     }
@@ -32747,7 +32747,7 @@ var wp;
     setValue(source) {
       const payload = this.getPayload();
       if (source.length == payload.length) {
-        return payload.map((node, i2) => node.setValue(source[i2])).some(Boolean);
+        return payload.map((node, i) => node.setValue(source[i])).some(Boolean);
       }
       super.setValue(source.map(makeAnimated));
       return true;
@@ -32763,8 +32763,8 @@ var wp;
   }
   function _extends2() {
     _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-      for (var i2 = 1; i2 < arguments.length; i2++) {
-        var source = arguments[i2];
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
         for (var key in source) {
           if (Object.prototype.hasOwnProperty.call(source, key)) {
             target[key] = source[key];
@@ -32881,8 +32881,8 @@ var wp;
   // node_modules/@react-spring/core/dist/react-spring-core.esm.js
   function _extends3() {
     _extends3 = Object.assign ? Object.assign.bind() : function(target) {
-      for (var i2 = 1; i2 < arguments.length; i2++) {
-        var source = arguments[i2];
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
         for (var key in source) {
           if (Object.prototype.hasOwnProperty.call(source, key)) {
             target[key] = source[key];
@@ -33324,7 +33324,7 @@ var wp;
     })();
   }
   function stopAsync(state, cancelId) {
-    flush(state.timeouts, (t2) => t2.cancel());
+    flush(state.timeouts, (t) => t.cancel());
     state.pauseQueue.clear();
     state.resumeQueue.clear();
     state.asyncId = state.asyncTo = state.promise = void 0;
@@ -33474,9 +33474,9 @@ var wp;
       if (!payload && hasFluidValue(anim.to)) {
         toValues = toArray(getFluidValue(anim.to));
       }
-      anim.values.forEach((node2, i2) => {
+      anim.values.forEach((node2, i) => {
         if (node2.done) return;
-        const to2 = node2.constructor == AnimatedString ? 1 : payload ? payload[i2].lastPosition : toValues[i2];
+        const to2 = node2.constructor == AnimatedString ? 1 : payload ? payload[i].lastPosition : toValues[i];
         let finished = anim.immediate;
         let position = to2;
         if (!finished) {
@@ -33486,8 +33486,8 @@ var wp;
             return;
           }
           let elapsed = node2.elapsedTime += dt;
-          const from = anim.fromValues[i2];
-          const v0 = node2.v0 != null ? node2.v0 : node2.v0 = is.arr(config2.velocity) ? config2.velocity[i2] : config2.velocity;
+          const from = anim.fromValues[i];
+          const v0 = node2.v0 != null ? node2.v0 : node2.v0 = is.arr(config2.velocity) ? config2.velocity[i] : config2.velocity;
           let velocity;
           const precision = config2.precision || (from == to2 ? 5e-3 : Math.min(1, Math.abs(to2 - from) * 1e-3));
           if (!is.und(config2.duration)) {
@@ -33509,10 +33509,10 @@ var wp;
             finished = p3 == 1;
           } else if (config2.decay) {
             const decay = config2.decay === true ? 0.998 : config2.decay;
-            const e2 = Math.exp(-(1 - decay) * elapsed);
-            position = from + v0 / (1 - decay) * (1 - e2);
+            const e = Math.exp(-(1 - decay) * elapsed);
+            position = from + v0 / (1 - decay) * (1 - e);
             finished = Math.abs(node2.lastPosition - position) <= precision;
-            velocity = v0 * e2;
+            velocity = v0 * e;
           } else {
             velocity = node2.lastVelocity == null ? v0 : node2.lastVelocity;
             const restVelocity = config2.restVelocity || precision / 10;
@@ -33523,7 +33523,7 @@ var wp;
             let isBouncing = false;
             const step = 1;
             const numSteps = Math.ceil(dt / step);
-            for (let n2 = 0; n2 < numSteps; ++n2) {
+            for (let n = 0; n < numSteps; ++n) {
               isMoving = Math.abs(velocity) > restVelocity;
               if (!isMoving) {
                 finished = Math.abs(to2 - position) <= precision;
@@ -33551,7 +33551,7 @@ var wp;
             finished = true;
           }
         }
-        if (payload && !payload[i2].done) {
+        if (payload && !payload[i].done) {
           finished = false;
         }
         if (finished) {
@@ -34307,9 +34307,9 @@ var wp;
     if (source == null) return {};
     var target = {};
     var sourceKeys = Object.keys(source);
-    var key, i2;
-    for (i2 = 0; i2 < sourceKeys.length; i2++) {
-      key = sourceKeys[i2];
+    var key, i;
+    for (i = 0; i < sourceKeys.length; i++) {
+      key = sourceKeys[i];
       if (excluded.indexOf(key) >= 0) continue;
       target[key] = source[key];
     }
@@ -34461,9 +34461,9 @@ var wp;
     if (source == null) return {};
     var target = {};
     var sourceKeys = Object.keys(source);
-    var key, i2;
-    for (i2 = 0; i2 < sourceKeys.length; i2++) {
-      key = sourceKeys[i2];
+    var key, i;
+    for (i = 0; i < sourceKeys.length; i++) {
+      key = sourceKeys[i];
       if (excluded.indexOf(key) >= 0) continue;
       target[key] = source[key];
     }
@@ -34489,7 +34489,7 @@ var wp;
       scrollLeft
     } = _ref, attributes = _objectWithoutPropertiesLoose2(_ref, _excluded$2);
     const values = Object.values(attributes);
-    const names = Object.keys(attributes).map((name2) => isFilterElement || instance.hasAttribute(name2) ? name2 : attributeCache[name2] || (attributeCache[name2] = name2.replace(/([A-Z])/g, (n2) => "-" + n2.toLowerCase())));
+    const names = Object.keys(attributes).map((name2) => isFilterElement || instance.hasAttribute(name2) ? name2 : attributeCache[name2] || (attributeCache[name2] = name2.replace(/([A-Z])/g, (n) => "-" + n.toLowerCase())));
     if (children !== void 0) {
       instance.textContent = children;
     }
@@ -34503,8 +34503,8 @@ var wp;
         }
       }
     }
-    names.forEach((name2, i2) => {
-      instance.setAttribute(name2, values[i2]);
+    names.forEach((name2, i) => {
+      instance.setAttribute(name2, values[i]);
     });
     if (scrollTop !== void 0) {
       instance.scrollTop = scrollTop;
@@ -34612,10 +34612,10 @@ var wp;
     _get() {
       let transform = "";
       let identity2 = true;
-      each(this.inputs, (input, i2) => {
+      each(this.inputs, (input, i) => {
         const arg1 = getFluidValue(input[0]);
-        const [t2, id] = this.transforms[i2](is.arr(arg1) ? arg1 : input.map(getFluidValue));
-        transform += " " + t2;
+        const [t, id] = this.transforms[i](is.arr(arg1) ? arg1 : input.map(getFluidValue));
+        transform += " " + t;
         identity2 = identity2 && id;
       });
       return identity2 ? "none" : transform;
@@ -35637,12 +35637,12 @@ var wp;
     const { name: name2 } = useLocation10();
     const { navigate } = (0, import_element98.useContext)(SidebarNavigationContext);
     const isActive = activeOnRouteName && name2 === activeOnRouteName;
-    function handleClick(e2) {
+    function handleClick(e) {
       if (onClick) {
-        onClick(e2);
+        onClick(e);
         navigate("forward");
       } else if (to2) {
-        e2.preventDefault();
+        e.preventDefault();
         history.navigate(to2);
         navigate("forward", `[id="${uid}"]`);
       }
@@ -36840,13 +36840,13 @@ var wp;
   var import_deepmerge = __toESM(require_cjs(), 1);
 
   // node_modules/is-plain-object/dist/is-plain-object.mjs
-  function isObject(o2) {
-    return Object.prototype.toString.call(o2) === "[object Object]";
+  function isObject(o) {
+    return Object.prototype.toString.call(o) === "[object Object]";
   }
-  function isPlainObject(o2) {
+  function isPlainObject(o) {
     var ctor, prot;
-    if (isObject(o2) === false) return false;
-    ctor = o2.constructor;
+    if (isObject(o) === false) return false;
+    ctor = o.constructor;
     if (ctor === void 0) return true;
     prot = ctor.prototype;
     if (isObject(prot) === false) return false;
@@ -36943,161 +36943,174 @@ var wp;
   }
 
   // node_modules/colord/index.mjs
-  var r2 = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) };
-  var t = function(r3) {
+  for (r2 = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) }, t = function(r3) {
     return "string" == typeof r3 ? r3.length > 0 : "number" == typeof r3;
-  };
-  var n = function(r3, t2, n2) {
+  }, n = function(r3, t2, n2) {
     return void 0 === t2 && (t2 = 0), void 0 === n2 && (n2 = Math.pow(10, t2)), Math.round(n2 * r3) / n2 + 0;
-  };
-  var e = function(r3, t2, n2) {
+  }, u = function(r3, t2, n2) {
     return void 0 === t2 && (t2 = 0), void 0 === n2 && (n2 = 1), r3 > n2 ? n2 : r3 > t2 ? r3 : t2;
-  };
-  var u = function(r3) {
-    return (r3 = isFinite(r3) ? r3 % 360 : 0) > 0 ? r3 : r3 + 360;
-  };
-  var a = function(r3) {
-    return { r: e(r3.r, 0, 255), g: e(r3.g, 0, 255), b: e(r3.b, 0, 255), a: e(r3.a) };
-  };
-  var o = function(r3) {
+  }, e = function(r3) {
+    return (r3 = isFinite(r3) ? r3 % 360 : 0) < 0 ? r3 + 360 : r3;
+  }, o = function(r3, t2) {
+    return void 0 === t2 && (t2 = 0), n(r3, t2) % 360;
+  }, a = function(r3) {
+    return { r: u(r3.r, 0, 255), g: u(r3.g, 0, 255), b: u(r3.b, 0, 255), a: u(r3.a) };
+  }, i = function(r3) {
     return { r: n(r3.r), g: n(r3.g), b: n(r3.b), a: n(r3.a, 3) };
+  }, s = /^#([0-9a-f]{3,8})$/i, d = function(r3, t2) {
+    var n2 = r3.charCodeAt(t2);
+    return (15 & n2) + 9 * (n2 >> 6);
+  }, h = function(r3, t2) {
+    return d(r3, t2) << 4 | d(r3, t2 + 1);
+  }, b = [], f = 0; f < 256; f++) b.push((f < 16 ? "0" : "") + f.toString(16));
+  var r2;
+  var t;
+  var n;
+  var u;
+  var e;
+  var o;
+  var a;
+  var i;
+  var s;
+  var d;
+  var h;
+  var b;
+  var f;
+  var g = function(r2) {
+    return b[u(r2, 0, 255)];
   };
-  var i = /^#([0-9a-f]{3,8})$/i;
-  var s = function(r3) {
-    var t2 = r3.toString(16);
-    return t2.length < 2 ? "0" + t2 : t2;
+  var c = function(r2) {
+    var t = r2.r, n = r2.g, u = r2.b, e = r2.a, o = Math.max(t, n, u), a = o - Math.min(t, n, u), i = a ? o === t ? (n - u) / a : o === n ? 2 + (u - t) / a : 4 + (t - n) / a : 0;
+    return { h: 60 * (i < 0 ? i + 6 : i), s: o ? a / o * 100 : 0, v: o / 255 * 100, a: e };
   };
-  var d = function(r3) {
-    var t2 = r3.r, n2 = r3.g, e2 = r3.b, u2 = r3.a, a2 = Math.max(t2, n2, e2), o2 = a2 - Math.min(t2, n2, e2), i2 = o2 ? a2 === t2 ? (n2 - e2) / o2 : a2 === n2 ? 2 + (e2 - t2) / o2 : 4 + (t2 - n2) / o2 : 0;
-    return { h: 60 * (i2 < 0 ? i2 + 6 : i2), s: a2 ? o2 / a2 * 100 : 0, v: a2 / 255 * 100, a: u2 };
+  var v = function(r2) {
+    var t = r2.h, n = r2.s, u = r2.v, e = r2.a;
+    t = t / 360 * 6, n /= 100, u /= 100;
+    var o = Math.floor(t), a = u * (1 - n), i = u * (1 - (t - o) * n), s = u * (1 - (1 - t + o) * n), d = o % 6;
+    return { r: 255 * [u, i, a, a, s, u][d], g: 255 * [s, u, u, i, a, a][d], b: 255 * [a, a, s, u, u, i][d], a: e };
   };
-  var h = function(r3) {
-    var t2 = r3.h, n2 = r3.s, e2 = r3.v, u2 = r3.a;
-    t2 = t2 / 360 * 6, n2 /= 100, e2 /= 100;
-    var a2 = Math.floor(t2), o2 = e2 * (1 - n2), i2 = e2 * (1 - (t2 - a2) * n2), s2 = e2 * (1 - (1 - t2 + a2) * n2), d2 = a2 % 6;
-    return { r: 255 * [e2, i2, o2, o2, s2, e2][d2], g: 255 * [s2, e2, e2, i2, o2, o2][d2], b: 255 * [o2, o2, s2, e2, e2, i2][d2], a: u2 };
+  var l = function(r2) {
+    return { h: e(r2.h), s: u(r2.s, 0, 100), l: u(r2.l, 0, 100), a: u(r2.a) };
   };
-  var b = function(r3) {
-    return { h: u(r3.h), s: e(r3.s, 0, 100), l: e(r3.l, 0, 100), a: e(r3.a) };
+  var p2 = function(r2) {
+    return { h: o(r2.h), s: n(r2.s), l: n(r2.l), a: n(r2.a, 3) };
   };
-  var g = function(r3) {
-    return { h: n(r3.h), s: n(r3.s), l: n(r3.l), a: n(r3.a, 3) };
+  var m = function(r2) {
+    return v((n = (t = r2).s, { h: t.h, s: (n *= ((u = t.l) < 50 ? u : 100 - u) / 100) > 0 ? 2 * n / (u + n) * 100 : 0, v: u + n, a: t.a }));
+    var t, n, u;
   };
-  var f = function(r3) {
-    return h((n2 = (t2 = r3).s, { h: t2.h, s: (n2 *= ((e2 = t2.l) < 50 ? e2 : 100 - e2) / 100) > 0 ? 2 * n2 / (e2 + n2) * 100 : 0, v: e2 + n2, a: t2.a }));
-    var t2, n2, e2;
+  var y = function(r2) {
+    return { h: (t = c(r2)).h, s: (e = (200 - (n = t.s)) * (u = t.v) / 100) > 0 && e < 200 ? n * u / 100 / (e <= 100 ? e : 200 - e) * 100 : 0, l: e / 2, a: t.a };
+    var t, n, u, e;
   };
-  var c = function(r3) {
-    return { h: (t2 = d(r3)).h, s: (u2 = (200 - (n2 = t2.s)) * (e2 = t2.v) / 100) > 0 && u2 < 200 ? n2 * e2 / 100 / (u2 <= 100 ? u2 : 200 - u2) * 100 : 0, l: u2 / 2, a: t2.a };
-    var t2, n2, e2, u2;
-  };
-  var l = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-  var p2 = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-  var v = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-  var m = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-  var y = { string: [[function(r3) {
-    var t2 = i.exec(r3);
-    return t2 ? (r3 = t2[1]).length <= 4 ? { r: parseInt(r3[0] + r3[0], 16), g: parseInt(r3[1] + r3[1], 16), b: parseInt(r3[2] + r3[2], 16), a: 4 === r3.length ? n(parseInt(r3[3] + r3[3], 16) / 255, 2) : 1 } : 6 === r3.length || 8 === r3.length ? { r: parseInt(r3.substr(0, 2), 16), g: parseInt(r3.substr(2, 2), 16), b: parseInt(r3.substr(4, 2), 16), a: 8 === r3.length ? n(parseInt(r3.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
-  }, "hex"], [function(r3) {
-    var t2 = v.exec(r3) || m.exec(r3);
-    return t2 ? t2[2] !== t2[4] || t2[4] !== t2[6] ? null : a({ r: Number(t2[1]) / (t2[2] ? 100 / 255 : 1), g: Number(t2[3]) / (t2[4] ? 100 / 255 : 1), b: Number(t2[5]) / (t2[6] ? 100 / 255 : 1), a: void 0 === t2[7] ? 1 : Number(t2[7]) / (t2[8] ? 100 : 1) }) : null;
-  }, "rgb"], [function(t2) {
-    var n2 = l.exec(t2) || p2.exec(t2);
-    if (!n2) return null;
-    var e2, u2, a2 = b({ h: (e2 = n2[1], u2 = n2[2], void 0 === u2 && (u2 = "deg"), Number(e2) * (r2[u2] || 1)), s: Number(n2[3]), l: Number(n2[4]), a: void 0 === n2[5] ? 1 : Number(n2[5]) / (n2[6] ? 100 : 1) });
-    return f(a2);
-  }, "hsl"]], object: [[function(r3) {
-    var n2 = r3.r, e2 = r3.g, u2 = r3.b, o2 = r3.a, i2 = void 0 === o2 ? 1 : o2;
-    return t(n2) && t(e2) && t(u2) ? a({ r: Number(n2), g: Number(e2), b: Number(u2), a: Number(i2) }) : null;
-  }, "rgb"], [function(r3) {
-    var n2 = r3.h, e2 = r3.s, u2 = r3.l, a2 = r3.a, o2 = void 0 === a2 ? 1 : a2;
-    if (!t(n2) || !t(e2) || !t(u2)) return null;
-    var i2 = b({ h: Number(n2), s: Number(e2), l: Number(u2), a: Number(o2) });
-    return f(i2);
-  }, "hsl"], [function(r3) {
-    var n2 = r3.h, a2 = r3.s, o2 = r3.v, i2 = r3.a, s2 = void 0 === i2 ? 1 : i2;
-    if (!t(n2) || !t(a2) || !t(o2)) return null;
-    var d2 = (function(r4) {
-      return { h: u(r4.h), s: e(r4.s, 0, 100), v: e(r4.v, 0, 100), a: e(r4.a) };
-    })({ h: Number(n2), s: Number(a2), v: Number(o2), a: Number(s2) });
-    return h(d2);
+  var N = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var x = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var M = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var H = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var $ = { string: [[function(r2) {
+    if (!s.test(r2)) return null;
+    var t = r2.length;
+    return t <= 5 ? { r: 17 * d(r2, 1), g: 17 * d(r2, 2), b: 17 * d(r2, 3), a: 5 === t ? n(17 * d(r2, 4) / 255, 2) : 1 } : 7 === t || 9 === t ? { r: h(r2, 1), g: h(r2, 3), b: h(r2, 5), a: 9 === t ? n(h(r2, 7) / 255, 2) : 1 } : null;
+  }, "hex"], [function(r2) {
+    var t = M.exec(r2) || H.exec(r2);
+    return t ? t[2] !== t[4] || t[4] !== t[6] ? null : a({ r: Number(t[1]) / (t[2] ? 100 / 255 : 1), g: Number(t[3]) / (t[4] ? 100 / 255 : 1), b: Number(t[5]) / (t[6] ? 100 / 255 : 1), a: void 0 === t[7] ? 1 : Number(t[7]) / (t[8] ? 100 : 1) }) : null;
+  }, "rgb"], [function(t) {
+    var n = N.exec(t) || x.exec(t);
+    if (!n) return null;
+    var u, e, o = l({ h: (u = n[1], e = n[2], void 0 === e && (e = "deg"), Number(u) * (r2[e] || 1)), s: Number(n[3]), l: Number(n[4]), a: void 0 === n[5] ? 1 : Number(n[5]) / (n[6] ? 100 : 1) });
+    return m(o);
+  }, "hsl"]], object: [[function(r2) {
+    var n = r2.r, u = r2.g, e = r2.b, o = r2.a, i = void 0 === o ? 1 : o;
+    return t(n) && t(u) && t(e) ? a({ r: Number(n), g: Number(u), b: Number(e), a: Number(i) }) : null;
+  }, "rgb"], [function(r2) {
+    var n = r2.h, u = r2.s, e = r2.l, o = r2.a, a = void 0 === o ? 1 : o;
+    if (!t(n) || !t(u) || !t(e)) return null;
+    var i = l({ h: Number(n), s: Number(u), l: Number(e), a: Number(a) });
+    return m(i);
+  }, "hsl"], [function(r2) {
+    var n = r2.h, o = r2.s, a = r2.v, i = r2.a, s = void 0 === i ? 1 : i;
+    if (!t(n) || !t(o) || !t(a)) return null;
+    var d = (function(r3) {
+      return { h: e(r3.h), s: u(r3.s, 0, 100), v: u(r3.v, 0, 100), a: u(r3.a) };
+    })({ h: Number(n), s: Number(o), v: Number(a), a: Number(s) });
+    return v(d);
   }, "hsv"]] };
-  var N = function(r3, t2) {
-    for (var n2 = 0; n2 < t2.length; n2++) {
-      var e2 = t2[n2][0](r3);
-      if (e2) return [e2, t2[n2][1]];
+  var j = function(r2, t) {
+    for (var n = 0; n < t.length; n++) {
+      var u = t[n][0](r2);
+      if (u) return [u, t[n][1]];
     }
     return [null, void 0];
   };
-  var x = function(r3) {
-    return "string" == typeof r3 ? N(r3.trim(), y.string) : "object" == typeof r3 && null !== r3 ? N(r3, y.object) : [null, void 0];
+  var w = function(r2) {
+    return "string" == typeof r2 ? j(r2.trim(), $.string) : "object" == typeof r2 && null !== r2 ? j(r2, $.object) : [null, void 0];
   };
-  var M = function(r3, t2) {
-    var n2 = c(r3);
-    return { h: n2.h, s: e(n2.s + 100 * t2, 0, 100), l: n2.l, a: n2.a };
+  var k = function(r2, t) {
+    var n = y(r2);
+    return { h: n.h, s: u(n.s + 100 * t, 0, 100), l: n.l, a: n.a };
   };
-  var H = function(r3) {
-    return (299 * r3.r + 587 * r3.g + 114 * r3.b) / 1e3 / 255;
+  var E = function(r2) {
+    return (299 * r2.r + 587 * r2.g + 114 * r2.b) / 1e3 / 255;
   };
-  var $ = function(r3, t2) {
-    var n2 = c(r3);
-    return { h: n2.h, s: n2.s, l: e(n2.l + 100 * t2, 0, 100), a: n2.a };
+  var R = function(r2, t) {
+    var n = y(r2);
+    return { h: n.h, s: n.s, l: u(n.l + 100 * t, 0, 100), a: n.a };
   };
-  var j = (function() {
-    function r3(r4) {
-      this.parsed = x(r4)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
+  var q = (function() {
+    function r2(r3) {
+      this.parsed = w(r3)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
     }
-    return r3.prototype.isValid = function() {
+    return r2.prototype.isValid = function() {
       return null !== this.parsed;
-    }, r3.prototype.brightness = function() {
-      return n(H(this.rgba), 2);
-    }, r3.prototype.isDark = function() {
-      return H(this.rgba) < 0.5;
-    }, r3.prototype.isLight = function() {
-      return H(this.rgba) >= 0.5;
-    }, r3.prototype.toHex = function() {
-      return r4 = o(this.rgba), t2 = r4.r, e2 = r4.g, u2 = r4.b, i2 = (a2 = r4.a) < 1 ? s(n(255 * a2)) : "", "#" + s(t2) + s(e2) + s(u2) + i2;
-      var r4, t2, e2, u2, a2, i2;
-    }, r3.prototype.toRgb = function() {
-      return o(this.rgba);
-    }, r3.prototype.toRgbString = function() {
-      return r4 = o(this.rgba), t2 = r4.r, n2 = r4.g, e2 = r4.b, (u2 = r4.a) < 1 ? "rgba(" + t2 + ", " + n2 + ", " + e2 + ", " + u2 + ")" : "rgb(" + t2 + ", " + n2 + ", " + e2 + ")";
-      var r4, t2, n2, e2, u2;
-    }, r3.prototype.toHsl = function() {
-      return g(c(this.rgba));
-    }, r3.prototype.toHslString = function() {
-      return r4 = g(c(this.rgba)), t2 = r4.h, n2 = r4.s, e2 = r4.l, (u2 = r4.a) < 1 ? "hsla(" + t2 + ", " + n2 + "%, " + e2 + "%, " + u2 + ")" : "hsl(" + t2 + ", " + n2 + "%, " + e2 + "%)";
-      var r4, t2, n2, e2, u2;
-    }, r3.prototype.toHsv = function() {
-      return r4 = d(this.rgba), { h: n(r4.h), s: n(r4.s), v: n(r4.v), a: n(r4.a, 3) };
-      var r4;
-    }, r3.prototype.invert = function() {
-      return w({ r: 255 - (r4 = this.rgba).r, g: 255 - r4.g, b: 255 - r4.b, a: r4.a });
-      var r4;
-    }, r3.prototype.saturate = function(r4) {
-      return void 0 === r4 && (r4 = 0.1), w(M(this.rgba, r4));
-    }, r3.prototype.desaturate = function(r4) {
-      return void 0 === r4 && (r4 = 0.1), w(M(this.rgba, -r4));
-    }, r3.prototype.grayscale = function() {
-      return w(M(this.rgba, -1));
-    }, r3.prototype.lighten = function(r4) {
-      return void 0 === r4 && (r4 = 0.1), w($(this.rgba, r4));
-    }, r3.prototype.darken = function(r4) {
-      return void 0 === r4 && (r4 = 0.1), w($(this.rgba, -r4));
-    }, r3.prototype.rotate = function(r4) {
-      return void 0 === r4 && (r4 = 15), this.hue(this.hue() + r4);
-    }, r3.prototype.alpha = function(r4) {
-      return "number" == typeof r4 ? w({ r: (t2 = this.rgba).r, g: t2.g, b: t2.b, a: r4 }) : n(this.rgba.a, 3);
-      var t2;
-    }, r3.prototype.hue = function(r4) {
-      var t2 = c(this.rgba);
-      return "number" == typeof r4 ? w({ h: r4, s: t2.s, l: t2.l, a: t2.a }) : n(t2.h);
-    }, r3.prototype.isEqual = function(r4) {
-      return this.toHex() === w(r4).toHex();
-    }, r3;
+    }, r2.prototype.brightness = function() {
+      return n(E(this.rgba), 2);
+    }, r2.prototype.isDark = function() {
+      return E(this.rgba) < 0.5;
+    }, r2.prototype.isLight = function() {
+      return E(this.rgba) >= 0.5;
+    }, r2.prototype.toHex = function() {
+      return r3 = i(this.rgba), t = r3.r, u = r3.g, e = r3.b, a = (o = r3.a) < 1 ? g(n(255 * o)) : "", "#" + g(t) + g(u) + g(e) + a;
+      var r3, t, u, e, o, a;
+    }, r2.prototype.toRgb = function() {
+      return i(this.rgba);
+    }, r2.prototype.toRgbString = function() {
+      return r3 = i(this.rgba), t = r3.r, n = r3.g, u = r3.b, (e = r3.a) < 1 ? "rgba(" + t + ", " + n + ", " + u + ", " + e + ")" : "rgb(" + t + ", " + n + ", " + u + ")";
+      var r3, t, n, u, e;
+    }, r2.prototype.toHsl = function() {
+      return p2(y(this.rgba));
+    }, r2.prototype.toHslString = function() {
+      return r3 = p2(y(this.rgba)), t = r3.h, n = r3.s, u = r3.l, (e = r3.a) < 1 ? "hsla(" + t + ", " + n + "%, " + u + "%, " + e + ")" : "hsl(" + t + ", " + n + "%, " + u + "%)";
+      var r3, t, n, u, e;
+    }, r2.prototype.toHsv = function() {
+      return r3 = c(this.rgba), { h: o(r3.h), s: n(r3.s), v: n(r3.v), a: n(r3.a, 3) };
+      var r3;
+    }, r2.prototype.invert = function() {
+      return A({ r: 255 - (r3 = this.rgba).r, g: 255 - r3.g, b: 255 - r3.b, a: r3.a });
+      var r3;
+    }, r2.prototype.saturate = function(r3) {
+      return void 0 === r3 && (r3 = 0.1), A(k(this.rgba, r3));
+    }, r2.prototype.desaturate = function(r3) {
+      return void 0 === r3 && (r3 = 0.1), A(k(this.rgba, -r3));
+    }, r2.prototype.grayscale = function() {
+      return A(k(this.rgba, -1));
+    }, r2.prototype.lighten = function(r3) {
+      return void 0 === r3 && (r3 = 0.1), A(R(this.rgba, r3));
+    }, r2.prototype.darken = function(r3) {
+      return void 0 === r3 && (r3 = 0.1), A(R(this.rgba, -r3));
+    }, r2.prototype.rotate = function(r3) {
+      return void 0 === r3 && (r3 = 15), this.hue(y(this.rgba).h + r3);
+    }, r2.prototype.alpha = function(r3) {
+      return "number" == typeof r3 ? A({ r: (t = this.rgba).r, g: t.g, b: t.b, a: r3 }) : n(this.rgba.a, 3);
+      var t;
+    }, r2.prototype.hue = function(r3) {
+      var t = y(this.rgba);
+      return "number" == typeof r3 ? A({ h: r3, s: t.s, l: t.l, a: t.a }) : o(t.h);
+    }, r2.prototype.isEqual = function(r3) {
+      return this.toHex() === A(r3).toHex();
+    }, r2;
   })();
-  var w = function(r3) {
-    return r3 instanceof j ? r3 : new j(r3);
+  var A = function(r2) {
+    return r2 instanceof q ? r2 : new q(r2);
   };
 
   // packages/global-styles-engine/build-module/utils/duotone.mjs
@@ -37109,7 +37122,7 @@ var wp;
       a: []
     };
     colors2.forEach((color) => {
-      const rgbColor = w(color).toRgb();
+      const rgbColor = A(color).toRgb();
       values.r.push(rgbColor.r / 255);
       values.g.push(rgbColor.g / 255);
       values.b.push(rgbColor.b / 255);
@@ -40101,12 +40114,12 @@ var wp;
 
   // node_modules/tslib/tslib.es6.mjs
   var __assign = function() {
-    __assign = Object.assign || function __assign2(t2) {
-      for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
-        s2 = arguments[i2];
-        for (var p3 in s2) if (Object.prototype.hasOwnProperty.call(s2, p3)) t2[p3] = s2[p3];
+    __assign = Object.assign || function __assign2(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p3 in s) if (Object.prototype.hasOwnProperty.call(s, p3)) t[p3] = s[p3];
       }
-      return t2;
+      return t;
     };
     return __assign.apply(this, arguments);
   };
@@ -40797,7 +40810,7 @@ var wp;
       view?.descriptionField
     ].filter(Boolean);
     return fields2.filter(
-      (f2) => !togglableFields.includes(f2.id) && f2.type !== "media" && f2.enableHiding !== false
+      (f) => !togglableFields.includes(f.id) && f.type !== "media" && f.enableHiding !== false
     );
   }
 
@@ -40811,10 +40824,10 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
   var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
   function WithMenuSeparators({ children }) {
-    return import_element111.Children.toArray(children).filter(Boolean).map((child, i2) => /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(import_element111.Fragment, { children: [
-      i2 > 0 && /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(menu_exports.Separator, {}),
+    return import_element111.Children.toArray(children).filter(Boolean).map((child, i) => /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(import_element111.Fragment, { children: [
+      i > 0 && /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(menu_exports.Separator, {}),
       child
-    ] }, i2));
+    ] }, i));
   }
   var _HeaderMenu = (0, import_element111.forwardRef)(function HeaderMenu({
     fieldId,
@@ -40832,7 +40845,7 @@ var wp;
     let isSortable = false;
     let canAddFilter = false;
     let operators = [];
-    const field = fields2.find((f2) => f2.id === fieldId);
+    const field = fields2.find((f) => f.id === fieldId);
     const { setIsShowingFilter } = (0, import_element111.useContext)(dataviews_context_default);
     if (!field) {
       return null;
@@ -40848,7 +40861,7 @@ var wp;
     const visibleFieldIds = getTableColumns(view, fields2);
     const index2 = visibleFieldIds.indexOf(fieldId);
     const hiddenFields = getHideableFields(view, fields2).filter(
-      (f2) => !visibleFieldIds.includes(f2.id)
+      (f) => !visibleFieldIds.includes(f.id)
     );
     const canInsert = (canInsertLeft || canInsertRight) && !!hiddenFields.length;
     const isRtl = (0, import_i18n38.isRTL)();
@@ -41452,10 +41465,10 @@ var wp;
     if (!regularFields?.length) {
       return null;
     }
-    const titleField = fields2.find((f2) => f2.id === view.titleField);
-    const previewField3 = fields2.find((f2) => f2.id === view.mediaField);
+    const titleField = fields2.find((f) => f.id === view.titleField);
+    const previewField3 = fields2.find((f) => f.id === view.mediaField);
     const descriptionField = fields2.find(
-      (f2) => f2.id === view.descriptionField
+      (f) => f.id === view.descriptionField
     );
     const lockedFields = [
       {
@@ -41473,7 +41486,7 @@ var wp;
     ].filter(({ field }) => isDefined(field));
     const visibleFieldIds = view.fields ?? [];
     const visibleRegularFieldsCount = regularFields.filter(
-      (f2) => visibleFieldIds.includes(f2.id)
+      (f) => visibleFieldIds.includes(f.id)
     ).length;
     const visibleLockedFields = lockedFields.filter(
       ({ isVisibleFlag }) => view[isVisibleFlag] ?? true
@@ -41568,7 +41581,7 @@ var wp;
     column,
     align
   }) {
-    const field = fields2.find((f2) => f2.id === column);
+    const field = fields2.find((f) => f.id === column);
     if (!field) {
       return null;
     }
@@ -41658,7 +41671,7 @@ var wp;
           ) }),
           columns.map((column) => {
             const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
-            const field = fields2.find((f2) => f2.id === column);
+            const field = fields2.find((f) => f.id === column);
             const effectiveAlign = getEffectiveAlign(align, field?.type);
             return /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
               "td",
@@ -41693,7 +41706,7 @@ var wp;
                 "dataviews-view-table__actions-column--sticky": true,
                 "dataviews-view-table__actions-column--stuck": isActionsColumnSticky
               }),
-              onClick: (e2) => e2.stopPropagation(),
+              onClick: (e) => e.stopPropagation(),
               children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(ItemActions, { item, actions })
             }
           )
@@ -41721,7 +41734,7 @@ var wp;
   }) {
     const { containerRef } = (0, import_element117.useContext)(dataviews_context_default);
     const isDelayedLoading = useDelayedLoading(isLoading);
-    const groupField = view.groupBy?.field ? fields2.find((f2) => f2.id === view.groupBy?.field) : null;
+    const groupField = view.groupBy?.field ? fields2.find((f) => f.id === view.groupBy?.field) : null;
     const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
     const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
     const { getSelectionProps } = useSelectionProps({
@@ -41907,7 +41920,7 @@ var wp;
                   columns.map((column, index2) => {
                     const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
                     const field = fields2.find(
-                      (f2) => f2.id === column
+                      (f) => f.id === column
                     );
                     const effectiveAlign = getEffectiveAlign(
                       align,
@@ -42143,8 +42156,8 @@ var wp;
   var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
   function chunk(array, size4) {
     const chunks = [];
-    for (let i2 = 0, j2 = array.length; i2 < j2; i2 += size4) {
-      chunks.push(array.slice(i2, i2 + size4));
+    for (let i = 0, j2 = array.length; i < j2; i += size4) {
+      chunks.push(array.slice(i, i + size4));
     }
     return chunks;
   }
@@ -42415,7 +42428,7 @@ var wp;
     const otherFields = view.fields ?? [];
     const { regularFields, badgeFields } = otherFields.reduce(
       (accumulator, fieldId) => {
-        const field = fields2.find((f2) => f2.id === fieldId);
+        const field = fields2.find((f) => f.id === fieldId);
         if (!field) {
           return accumulator;
         }
@@ -42552,18 +42565,18 @@ var wp;
             "aria-rowcount": totalRows,
             ref: resizeObserverRef,
             inert,
-            children: chunk(data, gridColumns).map((row, i2) => /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
+            children: chunk(data, gridColumns).map((row, i) => /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
               import_components26.Composite.Row,
               {
                 render: /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
                   "div",
                   {
                     role: "row",
-                    "aria-rowindex": i2 + 1,
+                    "aria-rowindex": i + 1,
                     "aria-label": (0, import_i18n43.sprintf)(
                       /* translators: %d: The row number in the grid */
                       (0, import_i18n43.__)("Row %d"),
-                      i2 + 1
+                      i + 1
                     ),
                     className: "dataviews-view-grid__row",
                     style: {
@@ -42624,7 +42637,7 @@ var wp;
                   );
                 })
               },
-              i2
+              i
             ))
           }
         )
@@ -42651,7 +42664,7 @@ var wp;
   }) {
     const isDelayedLoading = useDelayedLoading(!!isLoading);
     const hasData = !!data?.length;
-    const groupField = view.groupBy?.field ? fields2.find((f2) => f2.id === view.groupBy?.field) : null;
+    const groupField = view.groupBy?.field ? fields2.find((f) => f.id === view.groupBy?.field) : null;
     const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
     const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
     const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
@@ -43085,7 +43098,7 @@ var wp;
     const descriptionField = fields2.find(
       (field) => field.id === view.descriptionField
     );
-    const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f2) => fieldId === f2.id)).filter(isDefined2);
+    const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f) => fieldId === f.id)).filter(isDefined2);
     const { getSelectionProps } = useSelectionProps({
       data,
       getItemId: getItemId2,
@@ -43515,7 +43528,7 @@ var wp;
     const descriptionField = fields2.find(
       (field) => field.id === view.descriptionField
     );
-    const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f2) => fieldId === f2.id)).filter(isDefined3);
+    const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f) => fieldId === f.id)).filter(isDefined3);
     return data.map((item, index2) => {
       return /* @__PURE__ */ (0, import_react54.createElement)(
         activity_item_default,
@@ -43630,8 +43643,8 @@ var wp;
     const { totalPages } = paginationInfo;
     const currentPage = view.page ?? 1;
     const pageSelectOptions = Array.from(Array(totalPages)).map(
-      (_, i2) => {
-        const page = i2 + 1;
+      (_, i) => {
+        const page = i + 1;
         return {
           value: page.toString(),
           label: page.toString(),
@@ -43951,7 +43964,7 @@ var wp;
     const otherFields = view.fields ?? [];
     const { regularFields, badgeFields } = otherFields.reduce(
       (accumulator, fieldId) => {
-        const field = fields2.find((f2) => f2.id === fieldId);
+        const field = fields2.find((f) => f.id === fieldId);
         if (!field) {
           return accumulator;
         }
@@ -43965,7 +43978,7 @@ var wp;
     const usedPreviewSize = view.layout?.previewSize;
     const isMultiselect = useIsMultiselectPicker(actions);
     const size4 = "900px";
-    const groupField = view.groupBy?.field ? fields2.find((f2) => f2.id === view.groupBy?.field) : null;
+    const groupField = view.groupBy?.field ? fields2.find((f) => f.id === view.groupBy?.field) : null;
     const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
     const isInfiniteScroll = (view.infiniteScrollEnabled && !dataByGroup) ?? false;
     const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
@@ -44173,7 +44186,7 @@ var wp;
     column,
     align
   }) {
-    const field = fields2.find((f2) => f2.id === column);
+    const field = fields2.find((f) => f.id === column);
     if (!field) {
       return null;
     }
@@ -44338,7 +44351,7 @@ var wp;
         headerMenuToFocusRef.current = void 0;
       }
     });
-    const groupField = view.groupBy?.field ? fields2.find((f2) => f2.id === view.groupBy?.field) : null;
+    const groupField = view.groupBy?.field ? fields2.find((f) => f.id === view.groupBy?.field) : null;
     const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
     const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
     const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
@@ -44758,8 +44771,8 @@ var wp;
     const descriptionField = fields2.find(
       (field) => field.id === view?.descriptionField
     );
-    const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f2) => fieldId === f2.id)).filter(isDefined4);
-    const groupField = view.groupBy?.field ? fields2.find((f2) => f2.id === view.groupBy?.field) : null;
+    const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f) => fieldId === f.id)).filter(isDefined4);
+    const groupField = view.groupBy?.field ? fields2.find((f) => f.id === view.groupBy?.field) : null;
     const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
     const isInfiniteScroll = (view.infiniteScrollEnabled && !dataByGroup) ?? false;
     const setsize = isInfiniteScroll ? paginationInfo?.totalItems : void 0;
@@ -44967,7 +44980,7 @@ var wp;
       return context.containerWidth >= size4.breakpoint;
     });
     const layoutPreviewSize = view.layout?.previewSize ?? 230;
-    const previewSizeToUse = breakValues.map((size4, index2) => ({ ...size4, index: index2 })).filter((size4) => size4.value <= layoutPreviewSize).sort((a2, b2) => b2.value - a2.value)[0]?.index ?? 0;
+    const previewSizeToUse = breakValues.map((size4, index2) => ({ ...size4, index: index2 })).filter((size4) => size4.value <= layoutPreviewSize).sort((a, b) => b.value - a.value)[0]?.index ?? 0;
     const marks = breakValues.map((size4, index2) => {
       return {
         value: index2
@@ -45324,9 +45337,9 @@ var wp;
   function sortBasedOnDOMPosition(items, getElement) {
     const pairs = items.map((item, index2) => [index2, item]);
     let isOrderDifferent = false;
-    pairs.sort(([indexA, a2], [indexB, b2]) => {
-      const elementA = getElement(a2);
-      const elementB = getElement(b2);
+    pairs.sort(([indexA, a], [indexB, b]) => {
+      const elementA = getElement(a);
+      const elementB = getElement(b);
       if (elementA === elementB) return 0;
       if (!elementA || !elementB) return 0;
       if (isElementPreceding(elementA, elementB)) {
@@ -45339,8 +45352,8 @@ var wp;
     if (isOrderDifferent) return pairs.map(([_, item]) => item);
     return items;
   }
-  function isElementPreceding(a2, b2) {
-    return Boolean(b2.compareDocumentPosition(a2) & Node.DOCUMENT_POSITION_PRECEDING);
+  function isElementPreceding(a, b) {
+    return Boolean(b.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_PRECEDING);
   }
   function isTouchDevice() {
     return canUseDOM && !!navigator.maxTouchPoints;
@@ -46874,7 +46887,7 @@ If there's a particular need for this, please submit a feature request at https:
       renderedItems: initialState.renderedItems
     }, syncPrivateStore), { __unstableCollectionLookup: collectionLookup });
     const sortItems = (renderedItems) => {
-      const sortedItems = sortBasedOnDOMPosition(renderedItems, (i2) => i2.element);
+      const sortedItems = sortBasedOnDOMPosition(renderedItems, (i) => i.element);
       privateStore.setState("renderedItems", sortedItems);
       collection.setState("renderedItems", sortedItems);
     };
@@ -47016,8 +47029,8 @@ If there's a particular need for this, please submit a feature request at https:
     });
   }
   function findLastEnabledItem(items) {
-    for (let i2 = items.length - 1; i2 >= 0; i2 -= 1) {
-      const item = items[i2];
+    for (let i = items.length - 1; i >= 0; i -= 1) {
+      const item = items[i];
       if (!item) continue;
       if (item.disabled) continue;
       return item;
@@ -47033,8 +47046,8 @@ If there's a particular need for this, please submit a feature request at https:
     return items.filter((item) => item.rowId === rowId);
   }
   function findEnabledItemId({ items, fromIndex, step, rowId, excludeId }) {
-    for (let i2 = fromIndex; i2 >= 0 && i2 < items.length; i2 += step) {
-      const item = items[i2];
+    for (let i = fromIndex; i >= 0 && i < items.length; i += step) {
+      const item = items[i];
       if (!item) continue;
       if (item.rowId !== rowId) continue;
       if (item.disabled) continue;
@@ -47117,11 +47130,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function normalizeRows(rows, activeId, focusShift) {
     const maxLength = getMaxRowLength(rows);
-    for (const row of rows) for (let i2 = 0; i2 < maxLength; i2 += 1) {
-      const item = row[i2];
+    for (const row of rows) for (let i = 0; i < maxLength; i += 1) {
+      const item = row[i];
       if (!item || focusShift && item.disabled) {
-        const previousItem = i2 === 0 && focusShift ? findFirstEnabledItem(row) : row[i2 - 1];
-        row[i2] = previousItem && activeId !== previousItem.id && focusShift ? previousItem : createEmptyItem(previousItem?.rowId);
+        const previousItem = i === 0 && focusShift ? findFirstEnabledItem(row) : row[i - 1];
+        row[i] = previousItem && activeId !== previousItem.id && focusShift ? previousItem : createEmptyItem(previousItem?.rowId);
       }
     }
     return rows;
@@ -47130,11 +47143,11 @@ If there's a particular need for this, please submit a feature request at https:
     const rows = groupItemsByRows(items);
     const maxLength = getMaxRowLength(rows);
     const verticalized = [];
-    for (let i2 = 0; i2 < maxLength; i2 += 1) for (const row of rows) {
-      const item = row[i2];
+    for (let i = 0; i < maxLength; i += 1) for (const row of rows) {
+      const item = row[i];
       if (item) verticalized.push({
         ...item,
-        rowId: item.rowId ? `${i2}` : void 0
+        rowId: item.rowId ? `${i}` : void 0
       });
     }
     return verticalized;
@@ -47669,9 +47682,9 @@ If there's a particular need for this, please submit a feature request at https:
     const nextPageOffset = getNextPageOffset(scrollingElement, pageUp);
     let id;
     let prevDifference;
-    for (let i2 = 0; i2 < renderedItems.length; i2 += 1) {
+    for (let i = 0; i < renderedItems.length; i += 1) {
       const previousId = id;
-      id = next(i2);
+      id = next(i);
       if (!id) break;
       if (id === previousId) continue;
       const itemElement = getEnabledItem(store2, id)?.element;
@@ -49308,7 +49321,7 @@ If there's a particular need for this, please submit a feature request at https:
     return offsets;
   }
   function mergeOverlappingOffsets(offsets) {
-    offsets.sort(([a2], [b2]) => a2 - b2);
+    offsets.sort(([a], [b]) => a - b);
     const merged = [];
     for (const [offset4, length] of offsets) {
       const last = merged[merged.length - 1];
@@ -49323,8 +49336,8 @@ If there's a particular need for this, please submit a feature request at https:
     let index2 = 0;
     for (const char of itemValue) {
       const normalizedLength = normalizeValue(char).length;
-      for (let i2 = 0; i2 < normalizedLength; i2 += 1) {
-        starts.push(i2 === 0 ? index2 : -1);
+      for (let i = 0; i < normalizedLength; i += 1) {
+        starts.push(i === 0 ? index2 : -1);
         ends.push(index2);
       }
       index2 += char.length;
@@ -49332,10 +49345,10 @@ If there's a particular need for this, please submit a feature request at https:
     starts.push(itemValue.length);
     ends.push(itemValue.length);
     let nextBoundary = itemValue.length;
-    for (let i2 = starts.length - 1; i2 >= 0; i2 -= 1) {
-      const start2 = starts[i2];
+    for (let i = starts.length - 1; i >= 0; i -= 1) {
+      const start2 = starts[i];
       if (start2 == null) continue;
-      if (start2 === -1) starts[i2] = nextBoundary;
+      if (start2 === -1) starts[i] = nextBoundary;
       else nextBoundary = start2;
     }
     return {
@@ -49373,13 +49386,13 @@ If there's a particular need for this, please submit a feature request at https:
       return parts;
     }
     const [firstOffset] = firstEntry;
-    [itemValue.slice(0, firstOffset), ...offsets.flatMap(([offset4, length], i2) => {
+    [itemValue.slice(0, firstOffset), ...offsets.flatMap(([offset4, length], i) => {
       const value = itemValue.slice(offset4, offset4 + length);
-      const nextOffset = offsets[i2 + 1]?.[0];
+      const nextOffset = offsets[i + 1]?.[0];
       return [value, itemValue.slice(offset4 + length, nextOffset)];
-    })].forEach((value, i2) => {
+    })].forEach((value, i) => {
       if (!value) return;
-      parts.push(span(value, i2 % 2 === 0));
+      parts.push(span(value, i % 2 === 0));
     });
     return parts;
   }
@@ -49911,7 +49924,7 @@ If there's a particular need for this, please submit a feature request at https:
       filter.operators?.length === 1 ? void 0 : null
     );
     const currentFilter = view.filters?.find(
-      (f2) => f2.field === filter.field
+      (f) => f.field === filter.field
     );
     const currentValue = getCurrentValue(filter, currentFilter);
     return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
@@ -50169,11 +50182,11 @@ If there's a particular need for this, please submit a feature request at https:
     fields: fields2
   }) {
     const currentFilter = view.filters?.find(
-      (f2) => f2.field === filter.field
+      (f) => f.field === filter.field
     );
     const currentValue = getCurrentValue(filter, currentFilter);
     const field = (0, import_element135.useMemo)(() => {
-      const currentField = fields2.find((f2) => f2.id === filter.field);
+      const currentField = fields2.find((f) => f.id === filter.field);
       if (currentField) {
         return {
           ...currentField,
@@ -50955,11 +50968,11 @@ If there's a particular need for this, please submit a feature request at https:
     const toggleRef = (0, import_element137.useRef)(null);
     const { filter, view, onChangeView } = commonProps;
     const filterInView = view.filters?.find(
-      (f2) => f2.field === filter.field
+      (f) => f.field === filter.field
     );
     let activeElements = [];
     const field = (0, import_element137.useMemo)(() => {
-      const currentField = fields2.find((f2) => f2.id === filter.field);
+      const currentField = fields2.find((f) => f.id === filter.field);
       if (currentField) {
         return {
           ...currentField,
@@ -51239,7 +51252,7 @@ If there's a particular need for this, please submit a feature request at https:
             ...view,
             page: 1,
             search: "",
-            filters: view.filters?.filter((f2) => !!f2.isLocked) || []
+            filters: view.filters?.filter((f) => !!f.isLocked) || []
           });
         },
         children: (0, import_i18n60.__)("Reset")
@@ -51259,7 +51272,7 @@ If there's a particular need for this, please submit a feature request at https:
         const operators = field.filterBy.operators;
         const isPrimary = !!field.filterBy?.isPrimary;
         const isLocked = view.filters?.some(
-          (f2) => f2.field === field.id && !!f2.isLocked
+          (f) => f.field === field.id && !!f.isLocked
         ) ?? false;
         filters.push({
           field: field.id,
@@ -51272,26 +51285,26 @@ If there's a particular need for this, please submit a feature request at https:
           ),
           operators,
           isVisible: isLocked || isPrimary || !!view.filters?.some(
-            (f2) => f2.field === field.id && isRegisteredOperator(f2.operator)
+            (f) => f.field === field.id && isRegisteredOperator(f.operator)
           ),
           isPrimary,
           isLocked
         });
       });
-      filters.sort((a2, b2) => {
-        if (a2.isLocked && !b2.isLocked) {
+      filters.sort((a, b) => {
+        if (a.isLocked && !b.isLocked) {
           return -1;
         }
-        if (!a2.isLocked && b2.isLocked) {
+        if (!a.isLocked && b.isLocked) {
           return 1;
         }
-        if (a2.isPrimary && !b2.isPrimary) {
+        if (a.isPrimary && !b.isPrimary) {
           return -1;
         }
-        if (!a2.isPrimary && b2.isPrimary) {
+        if (!a.isPrimary && b.isPrimary) {
           return 1;
         }
-        return a2.name.localeCompare(b2.name);
+        return a.name.localeCompare(b.name);
       });
       return filters;
     }, [fields2, view]);
@@ -52064,8 +52077,8 @@ If there's a particular need for this, please submit a feature request at https:
               tabIndex: -1,
               onChange: () => {
               },
-              onFocus: (e2) => {
-                e2.target.previousElementSibling?.querySelector(
+              onFocus: (e) => {
+                e.target.previousElementSibling?.querySelector(
                   'input[type="text"]'
                 )?.focus();
               }
@@ -52244,8 +52257,8 @@ If there's a particular need for this, please submit a feature request at https:
           name: nameAttr,
           onChange: () => {
           },
-          onFocus: (e2) => {
-            e2.target.previousElementSibling?.querySelector(
+          onFocus: (e) => {
+            e.target.previousElementSibling?.querySelector(
               '[data-active-item="true"]'
             )?.focus();
           }
@@ -54169,7 +54182,7 @@ If there's a particular need for this, please submit a feature request at https:
     onColorChange,
     disabled: disabled2
   }) => {
-    const validColor = color && w(color).isValid() ? color : "#ffffff";
+    const validColor = color && A(color).isValid() ? color : "#ffffff";
     return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(
       import_components65.Dropdown,
       {
@@ -54441,8 +54454,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/field-types/utils/sort-text.mjs
-  var sort_text_default = (a2, b2, direction) => {
-    return direction === "asc" ? a2.localeCompare(b2) : b2.localeCompare(a2);
+  var sort_text_default = (a, b, direction) => {
+    return direction === "asc" ? a.localeCompare(b) : b.localeCompare(a);
   };
 
   // packages/dataviews/build-module/field-types/utils/is-valid-required.mjs
@@ -54556,8 +54569,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n74 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/field-types/utils/sort-number.mjs
-  var sort_number_default = (a2, b2, direction) => {
-    return direction === "asc" ? a2 - b2 : b2 - a2;
+  var sort_number_default = (a, b, direction) => {
+    return direction === "asc" ? a - b : b - a;
   };
 
   // packages/dataviews/build-module/field-types/utils/is-valid-min.mjs
@@ -54841,9 +54854,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return (0, import_date9.dateI18n)(formatDatetime.datetime, (0, import_date9.getDate)(value));
   }
-  var sort = (a2, b2, direction) => {
-    const timeA = new Date(a2).getTime();
-    const timeB = new Date(b2).getTime();
+  var sort = (a, b, direction) => {
+    const timeA = new Date(a).getTime();
+    const timeB = new Date(b).getTime();
     return direction === "asc" ? timeA - timeB : timeB - timeA;
   };
   var datetime_default = {
@@ -54905,9 +54918,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return (0, import_date10.dateI18n)(formatDate2.date, (0, import_date10.getDate)(value));
   }
-  var sort2 = (a2, b2, direction) => {
-    const timeA = new Date(a2).getTime();
-    const timeB = new Date(b2).getTime();
+  var sort2 = (a, b, direction) => {
+    const timeA = new Date(a).getTime();
+    const timeB = new Date(b).getTime();
     return direction === "asc" ? timeA - timeB : timeB - timeA;
   };
   var date_default = {
@@ -54978,9 +54991,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return (0, import_date11.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
   }
-  var sort3 = (a2, b2, direction) => {
-    const timeA = parseTime2(a2);
-    const timeB = parseTime2(b2);
+  var sort3 = (a, b, direction) => {
+    const timeA = parseTime2(a);
+    const timeB = parseTime2(b);
     if (timeA === null || timeB === null) {
       if (timeA === timeB) {
         return 0;
@@ -55054,9 +55067,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return null;
   }
-  var sort4 = (a2, b2, direction) => {
-    const boolA = Boolean(a2);
-    const boolB = Boolean(b2);
+  var sort4 = (a, b, direction) => {
+    const boolA = Boolean(a);
+    const boolB = Boolean(b);
     if (boolA === boolB) {
       return 0;
     }
@@ -55137,9 +55150,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return null;
   }
-  var sort5 = (a2, b2, direction) => {
-    const arrA = Array.isArray(a2) ? a2 : [];
-    const arrB = Array.isArray(b2) ? b2 : [];
+  var sort5 = (a, b, direction) => {
+    const arrA = Array.isArray(a) ? a : [];
+    const arrB = Array.isArray(b) ? b : [];
     if (arrA.length !== arrB.length) {
       return direction === "asc" ? arrA.length - arrB.length : arrB.length - arrA.length;
     }
@@ -55237,7 +55250,7 @@ If there's a particular need for this, please submit a feature request at https:
       return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(RenderFromElements, { item, field });
     }
     const value = get_value_formatted_default_default({ item, field });
-    if (!value || !w(value).isValid()) {
+    if (!value || !A(value).isValid()) {
       return value;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime267.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
@@ -55259,14 +55272,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function isValidCustom6(item, field) {
     const value = field.getValue({ item });
-    if (![void 0, "", null].includes(value) && !w(value).isValid()) {
+    if (![void 0, "", null].includes(value) && !A(value).isValid()) {
       return (0, import_i18n78.__)("Value must be a valid color.");
     }
     return null;
   }
-  var sort6 = (a2, b2, direction) => {
-    const colorA = w(a2);
-    const colorB = w(b2);
+  var sort6 = (a, b, direction) => {
+    const colorA = A(a);
+    const colorB = A(b);
     if (!colorA.isValid() && !colorB.isValid()) {
       return 0;
     }
@@ -55341,11 +55354,11 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/no-type.mjs
-  var sort7 = (a2, b2, direction) => {
-    if (typeof a2 === "number" && typeof b2 === "number") {
-      return sort_number_default(a2, b2, direction);
+  var sort7 = (a, b, direction) => {
+    if (typeof a === "number" && typeof b === "number") {
+      return sort_number_default(a, b, direction);
     }
-    return sort_text_default(a2, b2, direction);
+    return sort_text_default(a, b, direction);
   };
   var no_type_default = {
     // type: no type for this one
@@ -55481,9 +55494,9 @@ If there's a particular need for this, please submit a feature request at https:
     return fields2.map((field) => {
       const fieldType = getFieldTypeByName(field.type);
       const getValue = field.getValue || get_value_from_id_default(field.id);
-      const sort8 = function(a2, b2, direction) {
-        const aValue = getValue({ item: a2 });
-        const bValue = getValue({ item: b2 });
+      const sort8 = function(a, b, direction) {
+        const aValue = getValue({ item: a });
+        const bValue = getValue({ item: b });
         return field.sort ? field.sort(aValue, bValue, direction) : fieldType.sort(aValue, bValue, direction);
       };
       return {
@@ -55614,9 +55627,9 @@ If there's a particular need for this, please submit a feature request at https:
         (record) => !shownDataIds.has(getItemId2(record))
       );
       const allRecords = scrollDirection === "up" ? [...newRecords, ...prevWithoutDuplicates] : [...prevWithoutDuplicates, ...newRecords];
-      allRecords.sort((a2, b2) => {
-        const posA = a2.position;
-        const posB = b2.position;
+      allRecords.sort((a, b) => {
+        const posA = a.position;
+        const posB = b.position;
         return posA - posB;
       });
       let result = allRecords;
@@ -55625,7 +55638,7 @@ If there's a particular need for this, please submit a feature request at https:
         const visibleMax = Math.max(...visibleEntries);
         const buffer = 20;
         const recordPositions = allRecords.map(
-          (r3) => r3.position
+          (r2) => r2.position
         );
         const minRecordPos = Math.min(...recordPositions);
         const maxRecordPos = Math.max(...recordPositions);
@@ -56635,8 +56648,8 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const result = { ...formValidity };
     let current = result;
-    for (let i2 = 0; i2 < path.length - 1; i2++) {
-      const segment = path[i2];
+    for (let i = 0; i < path.length - 1; i++) {
+      const segment = path[i];
       if (!current[segment]) {
         current[segment] = {};
       }
@@ -56656,8 +56669,8 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const result = { ...formValidity };
     let current = result;
-    for (let i2 = 0; i2 < path.length - 1; i2++) {
-      const segment = path[i2];
+    for (let i = 0; i < path.length - 1; i++) {
+      const segment = path[i];
       if (!current[segment]) {
         return formValidity;
       }
@@ -57181,17 +57194,17 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [field]
     );
-    const fieldsAsFieldType = fields2.map((f2) => ({
-      ...f2,
-      Edit: f2.Edit === null ? void 0 : f2.Edit,
+    const fieldsAsFieldType = fields2.map((f) => ({
+      ...f,
+      Edit: f.Edit === null ? void 0 : f.Edit,
       isValid: {
-        required: f2.isValid.required?.constraint,
-        elements: f2.isValid.elements?.constraint,
-        min: f2.isValid.min?.constraint,
-        max: f2.isValid.max?.constraint,
-        pattern: f2.isValid.pattern?.constraint,
-        minLength: f2.isValid.minLength?.constraint,
-        maxLength: f2.isValid.maxLength?.constraint
+        required: f.isValid.required?.constraint,
+        elements: f.isValid.elements?.constraint,
+        min: f.isValid.min?.constraint,
+        max: f.isValid.max?.constraint,
+        pattern: f.isValid.pattern?.constraint,
+        minLength: f.isValid.minLength?.constraint,
+        maxLength: f.isValid.maxLength?.constraint
       }
     }));
     const { validity } = use_form_validity_default(modalData, fieldsAsFieldType, form);
@@ -58073,7 +58086,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { fields: fieldDefinitions } = (0, import_element186.useContext)(dataform_context_default);
     const markWhenOptional = (0, import_element186.useMemo)(() => {
       const requiredCount = fieldDefinitions.filter(
-        (f2) => !!f2.isValid?.required
+        (f) => !!f.isValid?.required
       ).length;
       const optionalCount = fieldDefinitions.length - requiredCount;
       return requiredCount > optionalCount;
@@ -58201,11 +58214,11 @@ If there's a particular need for this, please submit a feature request at https:
       return field.enableSorting !== false && field.id === view.groupBy?.field;
     }) : null;
     if (sortByField || groupByField) {
-      filteredData.sort((a2, b2) => {
+      filteredData.sort((a, b) => {
         if (groupByField) {
           const groupCompare = groupByField.sort(
-            a2,
-            b2,
+            a,
+            b,
             view.groupBy?.direction ?? "asc"
           );
           if (groupCompare !== 0) {
@@ -58213,7 +58226,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         }
         if (sortByField) {
-          return sortByField.sort(a2, b2, view.sort?.direction ?? "desc");
+          return sortByField.sort(a, b, view.sort?.direction ?? "desc");
         }
         return 0;
       });
@@ -58770,7 +58783,7 @@ If there's a particular need for this, please submit a feature request at https:
           return null;
         }
         const normalizedValue = normalizeValue2(value);
-        const sortedIds = normalizedValue.toSorted((a2, b2) => a2 - b2);
+        const sortedIds = normalizedValue.toSorted((a, b) => a - b);
         const { getEntityRecords } = select4(import_core_data22.store);
         return getEntityRecords("postType", "attachment", {
           include: sortedIds
@@ -58787,7 +58800,7 @@ If there's a particular need for this, please submit a feature request at https:
     let stableAttachments = attachments;
     if (attachments === null && stableAttachmentsRef.current && value) {
       const stableIds = new Set(
-        stableAttachmentsRef.current.map((a2) => a2.id)
+        stableAttachmentsRef.current.map((a) => a.id)
       );
       if (normalizeValue2(value).every((id) => stableIds.has(id))) {
         stableAttachments = stableAttachmentsRef.current;
@@ -58799,9 +58812,9 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const normalizedValue = normalizeValue2(value);
       const attachmentMap = new Map(
-        stableAttachments.map((a2) => [a2.id, a2])
+        stableAttachments.map((a) => [a.id, a])
       );
-      return normalizedValue.map((id) => attachmentMap.get(id)).filter((a2) => a2 !== void 0);
+      return normalizedValue.map((id) => attachmentMap.get(id)).filter((a) => a !== void 0);
     }, [stableAttachments, value]);
     const { createErrorNotice } = (0, import_data39.useDispatch)(import_notices3.store);
     const { receiveEntityRecords } = (0, import_data39.useDispatch)(import_core_data22.store);
@@ -58833,7 +58846,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (!orderedAttachments) {
           return;
         }
-        const currentIds = orderedAttachments.map((a2) => a2.id);
+        const currentIds = orderedAttachments.map((a) => a.id);
         const index2 = currentIds.indexOf(itemId);
         const newIndex = direction === "up" ? index2 - 1 : index2 + 1;
         [currentIds[index2], currentIds[newIndex]] = [
@@ -58917,7 +58930,7 @@ If there's a particular need for this, please submit a feature request at https:
       }));
       if (targetItemId !== void 0) {
         const targetIndex = items.findIndex(
-          (a2) => a2.id === targetItemId
+          (a) => a.id === targetItemId
         );
         items.splice(targetIndex, 1, ...blobItems);
       } else {
@@ -59220,7 +59233,7 @@ If there's a particular need for this, please submit a feature request at https:
       return view;
     }
     const rest = (view.filters ?? []).filter(
-      (filter) => !locked.some((f2) => f2.field === filter.field)
+      (filter) => !locked.some((f) => f.field === filter.field)
     );
     return { ...view, filters: [...locked, ...rest] };
   }
@@ -59275,7 +59288,7 @@ If there's a particular need for this, please submit a feature request at https:
     const locked = getLockedFilters(activeViewOverrides);
     if (locked.length > 0 && Array.isArray(modifications.filters)) {
       modifications.filters = modifications.filters.filter(
-        (filter) => !locked.some((f2) => f2.field === filter.field)
+        (filter) => !locked.some((f) => f.field === filter.field)
       );
     }
     return Object.keys(modifications).length > 0 ? modifications : void 0;
@@ -59949,7 +59962,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (numbers.length === 0) {
       return null;
     }
-    numbers.sort((a2, b2) => Math.abs(input - a2) - Math.abs(input - b2));
+    numbers.sort((a, b) => Math.abs(input - a) - Math.abs(input - b));
     return numbers[0];
   }
   var FONT_WEIGHT_KEYWORDS = {
@@ -60911,7 +60924,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/font-library/lib/unbrotli.mjs
   var __require2 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
-    get: (a2, b2) => (typeof __require !== "undefined" ? __require : a2)[b2]
+    get: (a, b) => (typeof __require !== "undefined" ? __require : a)[b]
   }) : x2)(function(x2) {
     if (typeof __require !== "undefined") return __require.apply(this, arguments);
     throw Error('Dynamic require of "' + x2 + '" is not supported');
@@ -60919,38 +60932,38 @@ If there's a particular need for this, please submit a feature request at https:
   var unbrotli_default = (function() {
     var define, module, exports;
     return (/* @__PURE__ */ (function() {
-      function r3(e2, n2, t2) {
-        function o2(i22, f2) {
-          if (!n2[i22]) {
-            if (!e2[i22]) {
+      function r2(e, n, t) {
+        function o(i2, f) {
+          if (!n[i2]) {
+            if (!e[i2]) {
               var c6 = "function" == typeof __require2 && __require2;
-              if (!f2 && c6) return c6(i22, true);
-              if (u2) return u2(i22, true);
-              var a2 = new Error("Cannot find module '" + i22 + "'");
-              throw a2.code = "MODULE_NOT_FOUND", a2;
+              if (!f && c6) return c6(i2, true);
+              if (u) return u(i2, true);
+              var a = new Error("Cannot find module '" + i2 + "'");
+              throw a.code = "MODULE_NOT_FOUND", a;
             }
-            var p3 = n2[i22] = { exports: {} };
-            e2[i22][0].call(
+            var p3 = n[i2] = { exports: {} };
+            e[i2][0].call(
               p3.exports,
               function(r22) {
-                var n22 = e2[i22][1][r22];
-                return o2(n22 || r22);
+                var n2 = e[i2][1][r22];
+                return o(n2 || r22);
               },
               p3,
               p3.exports,
-              r3,
-              e2,
-              n2,
-              t2
+              r2,
+              e,
+              n,
+              t
             );
           }
-          return n2[i22].exports;
+          return n[i2].exports;
         }
-        for (var u2 = "function" == typeof __require2 && __require2, i2 = 0; i2 < t2.length; i2++)
-          o2(t2[i2]);
-        return o2;
+        for (var u = "function" == typeof __require2 && __require2, i = 0; i < t.length; i++)
+          o(t[i]);
+        return o;
       }
-      return r3;
+      return r2;
     })())(
       {
         1: [
@@ -61000,8 +61013,8 @@ If there's a particular need for this, please submit a feature request at https:
               this.bit_end_pos_ = 0;
               this.eos_ = 0;
               this.readMoreInput();
-              for (var i2 = 0; i2 < 4; i2++) {
-                this.val_ |= this.buf_[this.pos_] << 8 * i2;
+              for (var i = 0; i < 4; i++) {
+                this.val_ |= this.buf_[this.pos_] << 8 * i;
                 ++this.pos_;
               }
               return this.bit_end_pos_ > 0;
@@ -62988,17 +63001,17 @@ If there's a particular need for this, please submit a feature request at https:
               1080
             ]);
             function DecodeWindowBits(br) {
-              var n2;
+              var n;
               if (br.readBits(1) === 0) {
                 return 16;
               }
-              n2 = br.readBits(3);
-              if (n2 > 0) {
-                return 17 + n2;
+              n = br.readBits(3);
+              if (n > 0) {
+                return 17 + n;
               }
-              n2 = br.readBits(3);
-              if (n2 > 0) {
-                return 8 + n2;
+              n = br.readBits(3);
+              if (n > 0) {
+                return 8 + n;
               }
               return 17;
             }
@@ -63023,7 +63036,7 @@ If there's a particular need for this, please submit a feature request at https:
               var out = new MetaBlockLength();
               var size_nibbles;
               var size_bytes;
-              var i2;
+              var i;
               out.input_end = br.readBits(1);
               if (out.input_end && br.readBits(1)) {
                 return out;
@@ -63035,18 +63048,18 @@ If there's a particular need for this, please submit a feature request at https:
                   throw new Error("Invalid reserved bit");
                 size_bytes = br.readBits(2);
                 if (size_bytes === 0) return out;
-                for (i2 = 0; i2 < size_bytes; i2++) {
+                for (i = 0; i < size_bytes; i++) {
                   var next_byte = br.readBits(8);
-                  if (i2 + 1 === size_bytes && size_bytes > 1 && next_byte === 0)
+                  if (i + 1 === size_bytes && size_bytes > 1 && next_byte === 0)
                     throw new Error("Invalid size byte");
-                  out.meta_block_length |= next_byte << i2 * 8;
+                  out.meta_block_length |= next_byte << i * 8;
                 }
               } else {
-                for (i2 = 0; i2 < size_nibbles; ++i2) {
+                for (i = 0; i < size_nibbles; ++i) {
                   var next_nibble = br.readBits(4);
-                  if (i2 + 1 === size_nibbles && size_nibbles > 4 && next_nibble === 0)
+                  if (i + 1 === size_nibbles && size_nibbles > 4 && next_nibble === 0)
                     throw new Error("Invalid size nibble");
-                  out.meta_block_length |= next_nibble << i2 * 4;
+                  out.meta_block_length |= next_nibble << i * 4;
                 }
               }
               ++out.meta_block_length;
@@ -63076,7 +63089,7 @@ If there's a particular need for this, please submit a feature request at https:
               var repeat_code_len = 0;
               var space = 32768;
               var table = [];
-              for (var i2 = 0; i2 < 32; i2++)
+              for (var i = 0; i < 32; i++)
                 table.push(new HuffmanCode(0, 0));
               BrotliBuildHuffmanTable(
                 table,
@@ -63147,7 +63160,7 @@ If there's a particular need for this, please submit a feature request at https:
               br.readMoreInput();
               simple_code_or_skip = br.readBits(2);
               if (simple_code_or_skip === 1) {
-                var i2;
+                var i;
                 var max_bits_counter = alphabet_size - 1;
                 var max_bits = 0;
                 var symbols = new Int32Array(4);
@@ -63156,9 +63169,9 @@ If there's a particular need for this, please submit a feature request at https:
                   max_bits_counter >>= 1;
                   ++max_bits;
                 }
-                for (i2 = 0; i2 < num_symbols; ++i2) {
-                  symbols[i2] = br.readBits(max_bits) % alphabet_size;
-                  code_lengths[symbols[i2]] = 2;
+                for (i = 0; i < num_symbols; ++i) {
+                  symbols[i] = br.readBits(max_bits) % alphabet_size;
+                  code_lengths[symbols[i]] = 2;
                 }
                 code_lengths[symbols[0]] = 1;
                 switch (num_symbols) {
@@ -63194,7 +63207,7 @@ If there's a particular need for this, please submit a feature request at https:
                     break;
                 }
               } else {
-                var i2;
+                var i;
                 var code_length_code_lengths = new Uint8Array(
                   CODE_LENGTH_CODES
                 );
@@ -63218,8 +63231,8 @@ If there's a particular need for this, please submit a feature request at https:
                   new HuffmanCode(2, 3),
                   new HuffmanCode(4, 5)
                 ];
-                for (i2 = simple_code_or_skip; i2 < CODE_LENGTH_CODES && space > 0; ++i2) {
-                  var code_len_idx = kCodeLengthCodeOrder[i2];
+                for (i = simple_code_or_skip; i < CODE_LENGTH_CODES && space > 0; ++i) {
+                  var code_len_idx = kCodeLengthCodeOrder[i];
                   var p3 = 0;
                   var v2;
                   br.fillBitWindow();
@@ -63277,19 +63290,19 @@ If there's a particular need for this, please submit a feature request at https:
             }
             function MoveToFront(v2, index2) {
               var value = v2[index2];
-              var i2 = index2;
-              for (; i2; --i2) v2[i2] = v2[i2 - 1];
+              var i = index2;
+              for (; i; --i) v2[i] = v2[i - 1];
               v2[0] = value;
             }
             function InverseMoveToFrontTransform(v2, v_len) {
               var mtf = new Uint8Array(256);
-              var i2;
-              for (i2 = 0; i2 < 256; ++i2) {
-                mtf[i2] = i2;
+              var i;
+              for (i = 0; i < 256; ++i) {
+                mtf[i] = i;
               }
-              for (i2 = 0; i2 < v_len; ++i2) {
-                var index2 = v2[i2];
-                v2[i2] = mtf[index2];
+              for (i = 0; i < v_len; ++i) {
+                var index2 = v2[i];
+                v2[i] = mtf[index2];
                 if (index2) MoveToFront(mtf, index2);
               }
             }
@@ -63302,11 +63315,11 @@ If there's a particular need for this, please submit a feature request at https:
               this.htrees = new Uint32Array(num_htrees);
             }
             HuffmanTreeGroup.prototype.decode = function(br) {
-              var i2;
+              var i;
               var table_size;
               var next = 0;
-              for (i2 = 0; i2 < this.num_htrees; ++i2) {
-                this.htrees[i2] = next;
+              for (i = 0; i < this.num_htrees; ++i) {
+                this.htrees[i] = next;
                 table_size = ReadHuffmanCode(
                   this.alphabet_size,
                   this.codes,
@@ -63321,7 +63334,7 @@ If there's a particular need for this, please submit a feature request at https:
               var use_rle_for_zeros;
               var max_run_length_prefix = 0;
               var table;
-              var i2;
+              var i;
               br.readMoreInput();
               var num_htrees = out.num_htrees = DecodeVarLenUint8(br) + 1;
               var context_map = out.context_map = new Uint8Array(
@@ -63335,8 +63348,8 @@ If there's a particular need for this, please submit a feature request at https:
                 max_run_length_prefix = br.readBits(4) + 1;
               }
               table = [];
-              for (i2 = 0; i2 < HUFFMAN_MAX_TABLE_SIZE; i2++) {
-                table[i2] = new HuffmanCode(0, 0);
+              for (i = 0; i < HUFFMAN_MAX_TABLE_SIZE; i++) {
+                table[i] = new HuffmanCode(0, 0);
               }
               ReadHuffmanCode(
                 num_htrees + max_run_length_prefix,
@@ -63344,27 +63357,27 @@ If there's a particular need for this, please submit a feature request at https:
                 0,
                 br
               );
-              for (i2 = 0; i2 < context_map_size; ) {
+              for (i = 0; i < context_map_size; ) {
                 var code;
                 br.readMoreInput();
                 code = ReadSymbol(table, 0, br);
                 if (code === 0) {
-                  context_map[i2] = 0;
-                  ++i2;
+                  context_map[i] = 0;
+                  ++i;
                 } else if (code <= max_run_length_prefix) {
                   var reps = 1 + (1 << code) + br.readBits(code);
                   while (--reps) {
-                    if (i2 >= context_map_size) {
+                    if (i >= context_map_size) {
                       throw new Error(
                         "[DecodeContextMap] i >= context_map_size"
                       );
                     }
-                    context_map[i2] = 0;
-                    ++i2;
+                    context_map[i] = 0;
+                    ++i;
                   }
                 } else {
-                  context_map[i2] = code - max_run_length_prefix;
-                  ++i2;
+                  context_map[i] = code - max_run_length_prefix;
+                  ++i;
                 }
               }
               if (br.readBits(1)) {
@@ -63494,7 +63507,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
             exports2.BrotliDecompressBuffer = BrotliDecompressBuffer;
             function BrotliDecompress(input, output) {
-              var i2;
+              var i;
               var pos = 0;
               var input_end = 0;
               var window_bits = 0;
@@ -63559,9 +63572,9 @@ If there's a particular need for this, please submit a feature request at https:
                 var context_lookup_offset2 = 0;
                 var context_mode;
                 var htree_command;
-                for (i2 = 0; i2 < 3; ++i2) {
-                  hgroup[i2].codes = null;
-                  hgroup[i2].htrees = null;
+                for (i = 0; i < 3; ++i) {
+                  hgroup[i].codes = null;
+                  hgroup[i].htrees = null;
                 }
                 br.readMoreInput();
                 var _out = DecodeMetaBlockLength(br);
@@ -63599,27 +63612,27 @@ If there's a particular need for this, please submit a feature request at https:
                   pos += meta_block_remaining_len;
                   continue;
                 }
-                for (i2 = 0; i2 < 3; ++i2) {
-                  num_block_types[i2] = DecodeVarLenUint8(br) + 1;
-                  if (num_block_types[i2] >= 2) {
+                for (i = 0; i < 3; ++i) {
+                  num_block_types[i] = DecodeVarLenUint8(br) + 1;
+                  if (num_block_types[i] >= 2) {
                     ReadHuffmanCode(
-                      num_block_types[i2] + 2,
+                      num_block_types[i] + 2,
                       block_type_trees,
-                      i2 * HUFFMAN_MAX_TABLE_SIZE,
+                      i * HUFFMAN_MAX_TABLE_SIZE,
                       br
                     );
                     ReadHuffmanCode(
                       kNumBlockLengthCodes,
                       block_len_trees,
-                      i2 * HUFFMAN_MAX_TABLE_SIZE,
+                      i * HUFFMAN_MAX_TABLE_SIZE,
                       br
                     );
-                    block_length[i2] = ReadBlockLength(
+                    block_length[i] = ReadBlockLength(
                       block_len_trees,
-                      i2 * HUFFMAN_MAX_TABLE_SIZE,
+                      i * HUFFMAN_MAX_TABLE_SIZE,
                       br
                     );
-                    block_type_rb_index[i2] = 1;
+                    block_type_rb_index[i] = 1;
                   }
                 }
                 br.readMoreInput();
@@ -63630,9 +63643,9 @@ If there's a particular need for this, please submit a feature request at https:
                 context_modes = new Uint8Array(
                   num_block_types[0]
                 );
-                for (i2 = 0; i2 < num_block_types[0]; ++i2) {
+                for (i = 0; i < num_block_types[0]; ++i) {
                   br.readMoreInput();
-                  context_modes[i2] = br.readBits(2) << 1;
+                  context_modes[i] = br.readBits(2) << 1;
                 }
                 var _o1 = DecodeContextMap(
                   num_block_types[0] << kLiteralContextBits,
@@ -63658,8 +63671,8 @@ If there's a particular need for this, please submit a feature request at https:
                   num_distance_codes,
                   num_dist_htrees
                 );
-                for (i2 = 0; i2 < 3; ++i2) {
-                  hgroup[i2].decode(br);
+                for (i = 0; i < 3; ++i) {
+                  hgroup[i].decode(br);
                 }
                 context_map_slice = 0;
                 dist_context_map_slice = 0;
@@ -63999,10 +64012,10 @@ If there's a particular need for this, please submit a feature request at https:
               }
               return (key & step - 1) + step;
             }
-            function ReplicateValue(table, i2, step, end, code) {
+            function ReplicateValue(table, i, step, end, code) {
               do {
                 end -= step;
-                table[i2 + end] = new HuffmanCode(
+                table[i + end] = new HuffmanCode(
                   code.bits,
                   code.value
                 );
@@ -64128,9 +64141,9 @@ If there's a particular need for this, please submit a feature request at https:
             var revLookup = [];
             var Arr = typeof Uint8Array !== "undefined" ? Uint8Array : Array;
             var code = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-            for (var i2 = 0, len = code.length; i2 < len; ++i2) {
-              lookup[i2] = code[i2];
-              revLookup[code.charCodeAt(i2)] = i2;
+            for (var i = 0, len = code.length; i < len; ++i) {
+              lookup[i] = code[i];
+              revLookup[code.charCodeAt(i)] = i;
             }
             revLookup["-".charCodeAt(0)] = 62;
             revLookup["_".charCodeAt(0)] = 63;
@@ -64165,18 +64178,18 @@ If there's a particular need for this, please submit a feature request at https:
               );
               var curByte = 0;
               var len2 = placeHoldersLen > 0 ? validLen - 4 : validLen;
-              for (var i22 = 0; i22 < len2; i22 += 4) {
-                tmp = revLookup[b64.charCodeAt(i22)] << 18 | revLookup[b64.charCodeAt(i22 + 1)] << 12 | revLookup[b64.charCodeAt(i22 + 2)] << 6 | revLookup[b64.charCodeAt(i22 + 3)];
+              for (var i2 = 0; i2 < len2; i2 += 4) {
+                tmp = revLookup[b64.charCodeAt(i2)] << 18 | revLookup[b64.charCodeAt(i2 + 1)] << 12 | revLookup[b64.charCodeAt(i2 + 2)] << 6 | revLookup[b64.charCodeAt(i2 + 3)];
                 arr[curByte++] = tmp >> 16 & 255;
                 arr[curByte++] = tmp >> 8 & 255;
                 arr[curByte++] = tmp & 255;
               }
               if (placeHoldersLen === 2) {
-                tmp = revLookup[b64.charCodeAt(i22)] << 2 | revLookup[b64.charCodeAt(i22 + 1)] >> 4;
+                tmp = revLookup[b64.charCodeAt(i2)] << 2 | revLookup[b64.charCodeAt(i2 + 1)] >> 4;
                 arr[curByte++] = tmp & 255;
               }
               if (placeHoldersLen === 1) {
-                tmp = revLookup[b64.charCodeAt(i22)] << 10 | revLookup[b64.charCodeAt(i22 + 1)] << 4 | revLookup[b64.charCodeAt(i22 + 2)] >> 2;
+                tmp = revLookup[b64.charCodeAt(i2)] << 10 | revLookup[b64.charCodeAt(i2 + 1)] << 4 | revLookup[b64.charCodeAt(i2 + 2)] >> 2;
                 arr[curByte++] = tmp >> 8 & 255;
                 arr[curByte++] = tmp & 255;
               }
@@ -64188,8 +64201,8 @@ If there's a particular need for this, please submit a feature request at https:
             function encodeChunk(uint8, start2, end) {
               var tmp;
               var output = [];
-              for (var i22 = start2; i22 < end; i22 += 3) {
-                tmp = (uint8[i22] << 16 & 16711680) + (uint8[i22 + 1] << 8 & 65280) + (uint8[i22 + 2] & 255);
+              for (var i2 = start2; i2 < end; i2 += 3) {
+                tmp = (uint8[i2] << 16 & 16711680) + (uint8[i2 + 1] << 8 & 65280) + (uint8[i2 + 2] & 255);
                 output.push(tripletToBase64(tmp));
               }
               return output.join("");
@@ -64200,12 +64213,12 @@ If there's a particular need for this, please submit a feature request at https:
               var extraBytes = len2 % 3;
               var parts = [];
               var maxChunkLength = 16383;
-              for (var i22 = 0, len22 = len2 - extraBytes; i22 < len22; i22 += maxChunkLength) {
+              for (var i2 = 0, len22 = len2 - extraBytes; i2 < len22; i2 += maxChunkLength) {
                 parts.push(
                   encodeChunk(
                     uint8,
-                    i22,
-                    i22 + maxChunkLength > len22 ? len22 : i22 + maxChunkLength
+                    i2,
+                    i2 + maxChunkLength > len22 ? len22 : i2 + maxChunkLength
                   )
                 );
               }
@@ -64322,12 +64335,12 @@ If there's a particular need for this, please submit a feature request at https:
               this.buffer = buffer;
               this.pos = 0;
             }
-            BrotliInput.prototype.read = function(buf, i2, count) {
+            BrotliInput.prototype.read = function(buf, i, count) {
               if (this.pos + count > this.buffer.length) {
                 count = this.buffer.length - this.pos;
               }
               for (var p3 = 0; p3 < count; p3++)
-                buf[i2 + p3] = this.buffer[this.pos + p3];
+                buf[i + p3] = this.buffer[this.pos + p3];
               this.pos += count;
               return count;
             };
@@ -64377,10 +64390,10 @@ If there's a particular need for this, please submit a feature request at https:
               this.prefix = new Uint8Array(prefix2.length);
               this.transform = transform;
               this.suffix = new Uint8Array(suffix.length);
-              for (var i2 = 0; i2 < prefix2.length; i2++)
-                this.prefix[i2] = prefix2.charCodeAt(i2);
-              for (var i2 = 0; i2 < suffix.length; i2++)
-                this.suffix[i2] = suffix.charCodeAt(i2);
+              for (var i = 0; i < prefix2.length; i++)
+                this.prefix[i] = prefix2.charCodeAt(i);
+              for (var i = 0; i < suffix.length; i++)
+                this.suffix[i] = suffix.charCodeAt(i);
             }
             var kTransforms = [
               new Transform("", kIdentity, ""),
@@ -64507,26 +64520,26 @@ If there's a particular need for this, please submit a feature request at https:
             ];
             exports2.kTransforms = kTransforms;
             exports2.kNumTransforms = kTransforms.length;
-            function ToUpperCase(p3, i2) {
-              if (p3[i2] < 192) {
-                if (p3[i2] >= 97 && p3[i2] <= 122) {
-                  p3[i2] ^= 32;
+            function ToUpperCase(p3, i) {
+              if (p3[i] < 192) {
+                if (p3[i] >= 97 && p3[i] <= 122) {
+                  p3[i] ^= 32;
                 }
                 return 1;
               }
-              if (p3[i2] < 224) {
-                p3[i2 + 1] ^= 32;
+              if (p3[i] < 224) {
+                p3[i + 1] ^= 32;
                 return 2;
               }
-              p3[i2 + 2] ^= 5;
+              p3[i + 2] ^= 5;
               return 3;
             }
             exports2.transformDictionaryWord = function(dst, idx, word, len, transform) {
               var prefix2 = kTransforms[transform].prefix;
               var suffix = kTransforms[transform].suffix;
-              var t2 = kTransforms[transform].transform;
-              var skip = t2 < kOmitFirst1 ? 0 : t2 - (kOmitFirst1 - 1);
-              var i2 = 0;
+              var t = kTransforms[transform].transform;
+              var skip = t < kOmitFirst1 ? 0 : t - (kOmitFirst1 - 1);
+              var i = 0;
               var start_idx = idx;
               var uppercase;
               if (skip > len) {
@@ -64538,16 +64551,16 @@ If there's a particular need for this, please submit a feature request at https:
               }
               word += skip;
               len -= skip;
-              if (t2 <= kOmitLast9) {
-                len -= t2;
+              if (t <= kOmitLast9) {
+                len -= t;
               }
-              for (i2 = 0; i2 < len; i2++) {
-                dst[idx++] = BrotliDictionary.dictionary[word + i2];
+              for (i = 0; i < len; i++) {
+                dst[idx++] = BrotliDictionary.dictionary[word + i];
               }
               uppercase = idx - len;
-              if (t2 === kUppercaseFirst) {
+              if (t === kUppercaseFirst) {
                 ToUpperCase(dst, uppercase);
-              } else if (t2 === kUppercaseAll) {
+              } else if (t === kUppercaseAll) {
                 while (len > 0) {
                   var step = ToUpperCase(dst, uppercase);
                   uppercase += step;
@@ -64577,7 +64590,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/font-library/lib/inflate.mjs
   var __require3 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
-    get: (a2, b2) => (typeof __require !== "undefined" ? __require : a2)[b2]
+    get: (a, b) => (typeof __require !== "undefined" ? __require : a)[b]
   }) : x2)(function(x2) {
     if (typeof __require !== "undefined") return __require.apply(this, arguments);
     throw Error('Dynamic require of "' + x2 + '" is not supported');
@@ -64585,38 +64598,38 @@ If there's a particular need for this, please submit a feature request at https:
   var inflate_default = (function() {
     var define, module, exports;
     return (/* @__PURE__ */ (function() {
-      function r3(e2, n2, t2) {
-        function o2(i22, f2) {
-          if (!n2[i22]) {
-            if (!e2[i22]) {
+      function r2(e, n, t) {
+        function o(i2, f) {
+          if (!n[i2]) {
+            if (!e[i2]) {
               var c6 = "function" == typeof __require3 && __require3;
-              if (!f2 && c6) return c6(i22, true);
-              if (u2) return u2(i22, true);
-              var a2 = new Error("Cannot find module '" + i22 + "'");
-              throw a2.code = "MODULE_NOT_FOUND", a2;
+              if (!f && c6) return c6(i2, true);
+              if (u) return u(i2, true);
+              var a = new Error("Cannot find module '" + i2 + "'");
+              throw a.code = "MODULE_NOT_FOUND", a;
             }
-            var p3 = n2[i22] = { exports: {} };
-            e2[i22][0].call(
+            var p3 = n[i2] = { exports: {} };
+            e[i2][0].call(
               p3.exports,
               function(r22) {
-                var n22 = e2[i22][1][r22];
-                return o2(n22 || r22);
+                var n2 = e[i2][1][r22];
+                return o(n2 || r22);
               },
               p3,
               p3.exports,
-              r3,
-              e2,
-              n2,
-              t2
+              r2,
+              e,
+              n,
+              t
             );
           }
-          return n2[i22].exports;
+          return n[i2].exports;
         }
-        for (var u2 = "function" == typeof __require3 && __require3, i2 = 0; i2 < t2.length; i2++)
-          o2(t2[i2]);
-        return o2;
+        for (var u = "function" == typeof __require3 && __require3, i = 0; i < t.length; i++)
+          o(t[i]);
+        return o;
       }
-      return r3;
+      return r2;
     })())(
       {
         1: [
@@ -64668,21 +64681,21 @@ If there's a particular need for this, please submit a feature request at https:
                   );
                   return;
                 }
-                for (var i2 = 0; i2 < len; i2++) {
-                  dest[dest_offs + i2] = src[src_offs + i2];
+                for (var i = 0; i < len; i++) {
+                  dest[dest_offs + i] = src[src_offs + i];
                 }
               },
               // Join array of chunks to single array.
               flattenChunks: function(chunks) {
-                var i2, l2, len, pos, chunk2, result;
+                var i, l2, len, pos, chunk2, result;
                 len = 0;
-                for (i2 = 0, l2 = chunks.length; i2 < l2; i2++) {
-                  len += chunks[i2].length;
+                for (i = 0, l2 = chunks.length; i < l2; i++) {
+                  len += chunks[i].length;
                 }
                 result = new Uint8Array(len);
                 pos = 0;
-                for (i2 = 0, l2 = chunks.length; i2 < l2; i2++) {
-                  chunk2 = chunks[i2];
+                for (i = 0, l2 = chunks.length; i < l2; i++) {
+                  chunk2 = chunks[i];
                   result.set(chunk2, pos);
                   pos += chunk2.length;
                 }
@@ -64691,8 +64704,8 @@ If there's a particular need for this, please submit a feature request at https:
             };
             var fnUntyped = {
               arraySet: function(dest, src, src_offs, len, dest_offs) {
-                for (var i2 = 0; i2 < len; i2++) {
-                  dest[dest_offs + i2] = src[src_offs + i2];
+                for (var i = 0; i < len; i++) {
+                  dest[dest_offs + i] = src[src_offs + i];
                 }
               },
               // Join array of chunks to single array.
@@ -64734,12 +64747,12 @@ If there's a particular need for this, please submit a feature request at https:
               STR_APPLY_UIA_OK = false;
             }
             var _utf8len = new utils.Buf8(256);
-            for (var q = 0; q < 256; q++) {
-              _utf8len[q] = q >= 252 ? 6 : q >= 248 ? 5 : q >= 240 ? 4 : q >= 224 ? 3 : q >= 192 ? 2 : 1;
+            for (var q2 = 0; q2 < 256; q2++) {
+              _utf8len[q2] = q2 >= 252 ? 6 : q2 >= 248 ? 5 : q2 >= 240 ? 4 : q2 >= 224 ? 3 : q2 >= 192 ? 2 : 1;
             }
             _utf8len[254] = _utf8len[254] = 1;
             exports2.string2buf = function(str) {
-              var buf, c6, c22, m_pos, i2, str_len = str.length, buf_len = 0;
+              var buf, c6, c22, m_pos, i, str_len = str.length, buf_len = 0;
               for (m_pos = 0; m_pos < str_len; m_pos++) {
                 c6 = str.charCodeAt(m_pos);
                 if ((c6 & 64512) === 55296 && m_pos + 1 < str_len) {
@@ -64752,7 +64765,7 @@ If there's a particular need for this, please submit a feature request at https:
                 buf_len += c6 < 128 ? 1 : c6 < 2048 ? 2 : c6 < 65536 ? 3 : 4;
               }
               buf = new utils.Buf8(buf_len);
-              for (i2 = 0, m_pos = 0; i2 < buf_len; m_pos++) {
+              for (i = 0, m_pos = 0; i < buf_len; m_pos++) {
                 c6 = str.charCodeAt(m_pos);
                 if ((c6 & 64512) === 55296 && m_pos + 1 < str_len) {
                   c22 = str.charCodeAt(m_pos + 1);
@@ -64762,19 +64775,19 @@ If there's a particular need for this, please submit a feature request at https:
                   }
                 }
                 if (c6 < 128) {
-                  buf[i2++] = c6;
+                  buf[i++] = c6;
                 } else if (c6 < 2048) {
-                  buf[i2++] = 192 | c6 >>> 6;
-                  buf[i2++] = 128 | c6 & 63;
+                  buf[i++] = 192 | c6 >>> 6;
+                  buf[i++] = 128 | c6 & 63;
                 } else if (c6 < 65536) {
-                  buf[i2++] = 224 | c6 >>> 12;
-                  buf[i2++] = 128 | c6 >>> 6 & 63;
-                  buf[i2++] = 128 | c6 & 63;
+                  buf[i++] = 224 | c6 >>> 12;
+                  buf[i++] = 128 | c6 >>> 6 & 63;
+                  buf[i++] = 128 | c6 & 63;
                 } else {
-                  buf[i2++] = 240 | c6 >>> 18;
-                  buf[i2++] = 128 | c6 >>> 12 & 63;
-                  buf[i2++] = 128 | c6 >>> 6 & 63;
-                  buf[i2++] = 128 | c6 & 63;
+                  buf[i++] = 240 | c6 >>> 18;
+                  buf[i++] = 128 | c6 >>> 12 & 63;
+                  buf[i++] = 128 | c6 >>> 6 & 63;
+                  buf[i++] = 128 | c6 & 63;
                 }
               }
               return buf;
@@ -64789,8 +64802,8 @@ If there's a particular need for this, please submit a feature request at https:
                 }
               }
               var result = "";
-              for (var i2 = 0; i2 < len; i2++) {
-                result += String.fromCharCode(buf[i2]);
+              for (var i = 0; i < len; i++) {
+                result += String.fromCharCode(buf[i]);
               }
               return result;
             }
@@ -64799,17 +64812,17 @@ If there's a particular need for this, please submit a feature request at https:
             };
             exports2.binstring2buf = function(str) {
               var buf = new utils.Buf8(str.length);
-              for (var i2 = 0, len = buf.length; i2 < len; i2++) {
-                buf[i2] = str.charCodeAt(i2);
+              for (var i = 0, len = buf.length; i < len; i++) {
+                buf[i] = str.charCodeAt(i);
               }
               return buf;
             };
             exports2.buf2string = function(buf, max3) {
-              var i2, out, c6, c_len;
+              var i, out, c6, c_len;
               var len = max3 || buf.length;
               var utf16buf = new Array(len * 2);
-              for (out = 0, i2 = 0; i2 < len; ) {
-                c6 = buf[i2++];
+              for (out = 0, i = 0; i < len; ) {
+                c6 = buf[i++];
                 if (c6 < 128) {
                   utf16buf[out++] = c6;
                   continue;
@@ -64817,12 +64830,12 @@ If there's a particular need for this, please submit a feature request at https:
                 c_len = _utf8len[c6];
                 if (c_len > 4) {
                   utf16buf[out++] = 65533;
-                  i2 += c_len - 1;
+                  i += c_len - 1;
                   continue;
                 }
                 c6 &= c_len === 2 ? 31 : c_len === 3 ? 15 : 7;
-                while (c_len > 1 && i2 < len) {
-                  c6 = c6 << 6 | buf[i2++] & 63;
+                while (c_len > 1 && i < len) {
+                  c6 = c6 << 6 | buf[i++] & 63;
                   c_len--;
                 }
                 if (c_len > 1) {
@@ -64864,14 +64877,14 @@ If there's a particular need for this, please submit a feature request at https:
           function(require2, module2, exports2) {
             "use strict";
             function adler32(adler, buf, len, pos) {
-              var s1 = adler & 65535 | 0, s2 = adler >>> 16 & 65535 | 0, n2 = 0;
+              var s1 = adler & 65535 | 0, s2 = adler >>> 16 & 65535 | 0, n = 0;
               while (len !== 0) {
-                n2 = len > 2e3 ? 2e3 : len;
-                len -= n2;
+                n = len > 2e3 ? 2e3 : len;
+                len -= n;
                 do {
                   s1 = s1 + buf[pos++] | 0;
                   s2 = s2 + s1 | 0;
-                } while (--n2);
+                } while (--n);
                 s1 %= 65521;
                 s2 %= 65521;
               }
@@ -64932,21 +64945,21 @@ If there's a particular need for this, please submit a feature request at https:
             "use strict";
             function makeTable() {
               var c6, table = [];
-              for (var n2 = 0; n2 < 256; n2++) {
-                c6 = n2;
-                for (var k = 0; k < 8; k++) {
+              for (var n = 0; n < 256; n++) {
+                c6 = n;
+                for (var k2 = 0; k2 < 8; k2++) {
                   c6 = c6 & 1 ? 3988292384 ^ c6 >>> 1 : c6 >>> 1;
                 }
-                table[n2] = c6;
+                table[n] = c6;
               }
               return table;
             }
             var crcTable = makeTable();
             function crc32(crc, buf, len, pos) {
-              var t2 = crcTable, end = pos + len;
+              var t = crcTable, end = pos + len;
               crc ^= -1;
-              for (var i2 = pos; i2 < end; i2++) {
-                crc = crc >>> 8 ^ t2[(crc ^ buf[i2]) & 255];
+              for (var i = pos; i < end; i++) {
+                crc = crc >>> 8 ^ t[(crc ^ buf[i]) & 255];
               }
               return crc ^ -1;
             }
@@ -65256,8 +65269,8 @@ If there's a particular need for this, please submit a feature request at https:
             var ENOUGH_DISTS = 592;
             var MAX_WBITS = 15;
             var DEF_WBITS = MAX_WBITS;
-            function zswap32(q) {
-              return (q >>> 24 & 255) + (q >>> 8 & 65280) + ((q & 65280) << 8) + ((q & 255) << 24);
+            function zswap32(q2) {
+              return (q2 >>> 24 & 255) + (q2 >>> 8 & 65280) + ((q2 & 65280) << 8) + ((q2 & 255) << 24);
             }
             function InflateState() {
               this.mode = 0;
@@ -65509,7 +65522,7 @@ If there's a particular need for this, please submit a feature request at https:
                 4
               );
               var opts;
-              var n2;
+              var n;
               var order = (
                 /* permutation of code lengths */
                 [
@@ -66081,8 +66094,8 @@ If there's a particular need for this, please submit a feature request at https:
                         state.lens[state.have++] = here_val;
                       } else {
                         if (here_val === 16) {
-                          n2 = here_bits + 2;
-                          while (bits < n2) {
+                          n = here_bits + 2;
+                          while (bits < n) {
                             if (have === 0) {
                               break inf_leave;
                             }
@@ -66102,8 +66115,8 @@ If there's a particular need for this, please submit a feature request at https:
                           hold >>>= 2;
                           bits -= 2;
                         } else if (here_val === 17) {
-                          n2 = here_bits + 3;
-                          while (bits < n2) {
+                          n = here_bits + 3;
+                          while (bits < n) {
                             if (have === 0) {
                               break inf_leave;
                             }
@@ -66118,8 +66131,8 @@ If there's a particular need for this, please submit a feature request at https:
                           hold >>>= 3;
                           bits -= 3;
                         } else {
-                          n2 = here_bits + 7;
-                          while (bits < n2) {
+                          n = here_bits + 7;
+                          while (bits < n) {
                             if (have === 0) {
                               break inf_leave;
                             }
@@ -66281,8 +66294,8 @@ If there's a particular need for this, please submit a feature request at https:
                   /* falls through */
                   case LENEXT:
                     if (state.extra) {
-                      n2 = state.extra;
-                      while (bits < n2) {
+                      n = state.extra;
+                      while (bits < n) {
                         if (have === 0) {
                           break inf_leave;
                         }
@@ -66351,8 +66364,8 @@ If there's a particular need for this, please submit a feature request at https:
                   /* falls through */
                   case DISTEXT:
                     if (state.extra) {
-                      n2 = state.extra;
-                      while (bits < n2) {
+                      n = state.extra;
+                      while (bits < n) {
                         if (have === 0) {
                           break inf_leave;
                         }
@@ -67228,7 +67241,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     removeEventListener(type, listener) {
       let bin = this.listeners[type] || [];
-      let pos = bin.findIndex((e2) => e2 === listener);
+      let pos = bin.findIndex((e) => e === listener);
       if (pos > -1) {
         bin.splice(pos, 1);
         this.listeners[type] = bin;
@@ -67237,7 +67250,7 @@ If there's a particular need for this, please submit a feature request at https:
     dispatch(event) {
       let bin = this.listeners[event.type];
       if (bin) {
-        for (let l2 = 0, e2 = bin.length; l2 < e2; l2++) {
+        for (let l2 = 0, e = bin.length; l2 < e; l2++) {
           if (!event.__mayPropagate) break;
           bin[l2](event);
         }
@@ -67279,23 +67292,23 @@ If there's a particular need for this, please submit a feature request at https:
       this.start = position;
       this.offset = 0;
     }
-    skip(n2 = 0, bits = 8) {
-      this.offset += n2 * bits / 8;
+    skip(n = 0, bits = 8) {
+      this.offset += n * bits / 8;
     }
     getValue(type, increment) {
       let pos = this.start + this.offset;
       this.offset += increment;
       try {
         return this.data[type](pos);
-      } catch (e2) {
+      } catch (e) {
         console.error(`parser`, type, increment, this);
         console.error(`parser`, this.start, this.offset);
-        throw e2;
+        throw e;
       }
     }
-    flags(n2) {
-      if (n2 === 8 || n2 === 16 || n2 === 32 || n2 === 64) {
-        return this[`uint${n2}`].toString(2).padStart(n2, 0).split(``).map((v2) => v2 === "1");
+    flags(n) {
+      if (n === 8 || n === 16 || n === 32 || n === 64) {
+        return this[`uint${n}`].toString(2).padStart(n, 0).split(``).map((v2) => v2 === "1");
       }
       console.error(
         `Error parsing flags: flag types can only be 1, 2, 4, or 8 bytes long`
@@ -67303,12 +67316,12 @@ If there's a particular need for this, please submit a feature request at https:
       console.trace();
     }
     get tag() {
-      const t2 = this.uint32;
+      const t = this.uint32;
       return asText([
-        t2 >> 24 & 255,
-        t2 >> 16 & 255,
-        t2 >> 8 & 255,
-        t2 & 255
+        t >> 24 & 255,
+        t >> 16 & 255,
+        t >> 8 & 255,
+        t & 255
       ]);
     }
     get fixed() {
@@ -67326,7 +67339,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     get uint128() {
       let value = 0;
-      for (let i2 = 0; i2 < 5; i2++) {
+      for (let i = 0; i < 5; i++) {
         let byte = this.uint8;
         value = value * 128 + (byte & 127);
         if (byte < 128) break;
@@ -67361,12 +67374,12 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     }
-    readBytes(n2 = 0, position = 0, bits = 8, signed = false) {
-      n2 = n2 || this.length;
-      if (n2 === 0) return [];
+    readBytes(n = 0, position = 0, bits = 8, signed = false) {
+      n = n || this.length;
+      if (n === 0) return [];
       if (position) this.currentPosition = position;
       const fn = `${signed ? `` : `u`}int${bits}`, slice = [];
-      while (n2--) slice.push(this[fn]);
+      while (n--) slice.push(this[fn]);
       return slice;
     }
   };
@@ -67541,10 +67554,10 @@ If there's a particular need for this, please submit a feature request at https:
       );
       let dictOffset = p22.currentPosition;
       this.directory[0].offset = 0;
-      this.directory.forEach((e2, i2) => {
-        let next = this.directory[i2 + 1];
+      this.directory.forEach((e, i) => {
+        let next = this.directory[i + 1];
         if (next) {
-          next.offset = e2.offset + (e2.transformLength !== void 0 ? e2.transformLength : e2.origLength);
+          next.offset = e.offset + (e.transformLength !== void 0 ? e.transformLength : e.origLength);
         }
       });
       let decoded;
@@ -67594,8 +67607,8 @@ If there's a particular need for this, please submit a feature request at https:
             { tag: entry.tag, offset: 0, length: entry.origLength },
             data
           );
-        } catch (e2) {
-          console.error(e2);
+        } catch (e) {
+          console.error(e);
         }
       });
     });
@@ -67794,9 +67807,9 @@ If there's a particular need for this, please submit a feature request at https:
       return vmtx$1;
     })
   ]).then((data) => {
-    data.forEach((e2) => {
-      let name2 = Object.keys(e2)[0];
-      tableClasses[name2] = e2[name2];
+    data.forEach((e) => {
+      let name2 = Object.keys(e)[0];
+      tableClasses[name2] = e[name2];
     });
     tableClassesLoaded = true;
   });
@@ -67876,8 +67889,8 @@ If there's a particular need for this, please submit a feature request at https:
   var WOFF2 = [119, 79, 70, 50];
   function match2(ar1, ar2) {
     if (ar1.length !== ar2.length) return;
-    for (let i2 = 0; i2 < ar1.length; i2++) {
-      if (ar1[i2] !== ar2[i2]) return;
+    for (let i = 0; i < ar1.length; i++) {
+      if (ar1[i] !== ar2[i]) return;
     }
     return true;
   }
@@ -67978,18 +67991,18 @@ If there's a particular need for this, please submit a feature request at https:
         throw new Error(
           "Cannot measure text: font was unloaded. Please reload before calling measureText()"
         );
-      let d2 = document.createElement("div");
-      d2.textContent = text;
-      d2.style.fontFamily = this.name;
-      d2.style.fontSize = `${size4}px`;
-      d2.style.color = `transparent`;
-      d2.style.background = `transparent`;
-      d2.style.top = `0`;
-      d2.style.left = `0`;
-      d2.style.position = `absolute`;
-      document.body.appendChild(d2);
-      let bbox = d2.getBoundingClientRect();
-      document.body.removeChild(d2);
+      let d = document.createElement("div");
+      d.textContent = text;
+      d.style.fontFamily = this.name;
+      d.style.fontSize = `${size4}px`;
+      d.style.color = `transparent`;
+      d.style.background = `transparent`;
+      d.style.top = `0`;
+      d.style.left = `0`;
+      d.style.position = `absolute`;
+      document.body.appendChild(d);
+      let bbox = d.getBoundingClientRect();
+      document.body.removeChild(d);
       const OS22 = this.opentype.tables["OS/2"];
       bbox.fontSize = size4;
       bbox.ascender = OS22.sTypoAscender;
@@ -68090,14 +68103,14 @@ If there's a particular need for this, please submit a feature request at https:
     }
     getSupportedCharCodes(preservePropNames = false) {
       if (preservePropNames) {
-        return this.subHeaders.map((h2) => ({
-          firstCode: h2.firstCode,
-          lastCode: h2.lastCode
+        return this.subHeaders.map((h) => ({
+          firstCode: h.firstCode,
+          lastCode: h.lastCode
         }));
       }
-      return this.subHeaders.map((h2) => ({
-        start: h2.firstCode,
-        end: h2.lastCode
+      return this.subHeaders.map((h) => ({
+        start: h.firstCode,
+        end: h.lastCode
       }));
     }
   };
@@ -68159,15 +68172,15 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }
     buildSegments(idRangePosition, glyphIdArrayPosition, p22) {
-      const build = (_, i2) => {
-        let startCode = this.startCode[i2], endCode = this.endCode[i2], idDelta = this.idDelta[i2], idRangeOffset = this.idRangeOffset[i2], idRangeOffsetPointer = idRangePosition + 2 * i2, glyphIDs = [];
+      const build = (_, i) => {
+        let startCode = this.startCode[i], endCode = this.endCode[i], idDelta = this.idDelta[i], idRangeOffset = this.idRangeOffset[i], idRangeOffsetPointer = idRangePosition + 2 * i, glyphIDs = [];
         if (idRangeOffset === 0) {
-          for (let i22 = startCode + idDelta, e2 = endCode + idDelta; i22 <= e2; i22++) {
-            glyphIDs.push(i22);
+          for (let i2 = startCode + idDelta, e = endCode + idDelta; i2 <= e; i2++) {
+            glyphIDs.push(i2);
           }
         } else {
-          for (let i22 = 0, e2 = endCode - startCode; i22 <= e2; i22++) {
-            p22.currentPosition = idRangeOffsetPointer + idRangeOffset + i22 * 2;
+          for (let i2 = 0, e = endCode - startCode; i2 <= e; i2++) {
+            p22.currentPosition = idRangeOffsetPointer + idRangeOffset + i2 * 2;
             glyphIDs.push(p22.uint16);
           }
         }
@@ -68182,9 +68195,9 @@ If there's a particular need for this, please submit a feature request at https:
       return [...new Array(this.segCount)].map(build);
     }
     reverse(glyphID) {
-      let s2 = this.segments.find((v2) => v2.glyphIDs.includes(glyphID));
-      if (!s2) return {};
-      const code = s2.startCode + s2.glyphIDs.indexOf(glyphID);
+      let s = this.segments.find((v2) => v2.glyphIDs.includes(glyphID));
+      if (!s) return {};
+      const code = s.startCode + s.glyphIDs.indexOf(glyphID);
       return { code, unicode: String.fromCodePoint(code) };
     }
     getGlyphId(charCode) {
@@ -68193,7 +68206,7 @@ If there's a particular need for this, please submit a feature request at https:
       if ((charCode & 65534) === 65534 || (charCode & 65535) === 65535)
         return 0;
       let segment = this.segments.find(
-        (s2) => s2.startCode <= charCode && charCode <= s2.endCode
+        (s) => s.startCode <= charCode && charCode <= s.endCode
       );
       if (!segment) return 0;
       return segment.glyphIDs[charCode - segment.startCode];
@@ -68266,7 +68279,7 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
       return this.groups.findIndex(
-        (s2) => s2.startcharCode <= charCode && charCode <= s2.endcharCode
+        (s) => s.startcharCode <= charCode && charCode <= s.endcharCode
       ) !== -1;
     }
     reverse(glyphID) {
@@ -68347,7 +68360,7 @@ If there's a particular need for this, please submit a feature request at https:
       if ((charCode & 65534) === 65534 || (charCode & 65535) === 65535)
         return 0;
       return this.groups.findIndex(
-        (s2) => s2.startCharCode <= charCode && charCode <= s2.endCharCode
+        (s) => s.startCharCode <= charCode && charCode <= s.endCharCode
       ) !== -1;
     }
     reverse(glyphID) {
@@ -68393,7 +68406,7 @@ If there's a particular need for this, please submit a feature request at https:
     supports(charCode) {
       if (charCode.charCodeAt) charCode = charCode.charCodeAt(0);
       return this.groups.findIndex(
-        (s2) => s2.startCharCode <= charCode && charCode <= s2.endCharCode
+        (s) => s.startCharCode <= charCode && charCode <= s.endCharCode
       ) !== -1;
     }
     reverse(glyphID) {
@@ -68487,45 +68500,45 @@ If there's a particular need for this, please submit a feature request at https:
       return this.encodingRecords[tableID].table;
     }
     getSupportedEncodings() {
-      return this.encodingRecords.map((r3) => ({
-        platformID: r3.platformID,
-        encodingId: r3.encodingID
+      return this.encodingRecords.map((r2) => ({
+        platformID: r2.platformID,
+        encodingId: r2.encodingID
       }));
     }
     getSupportedCharCodes(platformID, encodingID) {
       const recordID = this.encodingRecords.findIndex(
-        (r3) => r3.platformID === platformID && r3.encodingID === encodingID
+        (r2) => r2.platformID === platformID && r2.encodingID === encodingID
       );
       if (recordID === -1) return false;
       const subtable = this.getSubTable(recordID);
       return subtable.getSupportedCharCodes();
     }
     reverse(glyphid) {
-      for (let i2 = 0; i2 < this.numTables; i2++) {
-        let code = this.getSubTable(i2).reverse(glyphid);
+      for (let i = 0; i < this.numTables; i++) {
+        let code = this.getSubTable(i).reverse(glyphid);
         if (code) return code;
       }
     }
     getGlyphId(char) {
       let last = 0;
       this.encodingRecords.some((_, tableID) => {
-        let t2 = this.getSubTable(tableID);
-        if (!t2.getGlyphId) return false;
-        last = t2.getGlyphId(char);
+        let t = this.getSubTable(tableID);
+        if (!t.getGlyphId) return false;
+        last = t.getGlyphId(char);
         return last !== 0;
       });
       return last;
     }
     supports(char) {
       return this.encodingRecords.some((_, tableID) => {
-        const t2 = this.getSubTable(tableID);
-        return t2.supports && t2.supports(char) !== false;
+        const t = this.getSubTable(tableID);
+        return t.supports && t.supports(char) !== false;
       });
     }
     supportsVariation(variation) {
       return this.encodingRecords.some((_, tableID) => {
-        const t2 = this.getSubTable(tableID);
-        return t2.supportsVariation && t2.supportsVariation(variation) !== false;
+        const t = this.getSubTable(tableID);
+        return t.supportsVariation && t.supportsVariation(variation) !== false;
       });
     }
   };
@@ -68616,9 +68629,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
   var LongHorMetric = class {
-    constructor(w2, b2) {
+    constructor(w2, b) {
       this.advanceWidth = w2;
-      this.lsb = b2;
+      this.lsb = b;
     }
   };
   var hmtx$1 = Object.freeze({ __proto__: null, hmtx });
@@ -68695,14 +68708,14 @@ If there's a particular need for this, please submit a feature request at https:
     if (length === 0) return ``;
     if (platformID === 0 || platformID === 3) {
       const str2 = [];
-      for (let i2 = 0, e2 = length / 2; i2 < e2; i2++)
-        str2[i2] = String.fromCharCode(p22.uint16);
+      for (let i = 0, e = length / 2; i < e; i++)
+        str2[i] = String.fromCharCode(p22.uint16);
       return str2.join(``);
     }
     const bytes = p22.readBytes(length);
     const str = [];
-    bytes.forEach(function(b2, i2) {
-      str[i2] = String.fromCharCode(b2);
+    bytes.forEach(function(b, i) {
+      str[i] = String.fromCharCode(b);
     });
     return str.join(``);
   }
@@ -68776,16 +68789,16 @@ If there's a particular need for this, please submit a feature request at https:
         );
         this.namesOffset = p22.currentPosition;
         this.glyphNameOffsets = [1];
-        for (let i2 = 0; i2 < this.numGlyphs; i2++) {
-          let index2 = this.glyphNameIndex[i2];
+        for (let i = 0; i < this.numGlyphs; i++) {
+          let index2 = this.glyphNameIndex[i];
           if (index2 < macStrings.length) {
-            this.glyphNameOffsets.push(this.glyphNameOffsets[i2]);
+            this.glyphNameOffsets.push(this.glyphNameOffsets[i]);
             continue;
           }
           let bytelength = p22.int8;
           p22.skip(bytelength);
           this.glyphNameOffsets.push(
-            this.glyphNameOffsets[i2] + bytelength + 1
+            this.glyphNameOffsets[i] + bytelength + 1
           );
         }
       }
@@ -68815,7 +68828,7 @@ If there's a particular need for this, please submit a feature request at https:
         8,
         true
       );
-      return data.map((b2) => String.fromCharCode(b2)).join(``);
+      return data.map((b) => String.fromCharCode(b)).join(``);
     }
   };
   var macStrings = [
@@ -70104,11 +70117,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }
     getSupportedScripts() {
-      return this.scriptList.scriptRecords.map((r3) => r3.scriptTag);
+      return this.scriptList.scriptRecords.map((r2) => r2.scriptTag);
     }
     getScriptTable(scriptTag) {
       let record = this.scriptList.scriptRecords.find(
-        (r3) => r3.scriptTag === scriptTag
+        (r2) => r2.scriptTag === scriptTag
       );
       this.parser.currentPosition = this.scriptList.start + record.scriptOffset;
       let table = new ScriptTable(this.parser);
@@ -70164,7 +70177,7 @@ If there's a particular need for this, please submit a feature request at https:
         record = this.featureList.featureRecords[indexOrTag];
       } else {
         record = this.featureList.featureRecords.find(
-          (f2) => f2.featureTag === indexOrTag
+          (f) => f.featureTag === indexOrTag
         );
       }
       if (!record) return;
@@ -70228,7 +70241,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     getDocumentForGlyph(glyphID) {
       let id = this.documentRecords.findIndex(
-        (d2) => d2.startGlyphID <= glyphID && glyphID <= d2.endGlyphID
+        (d) => d.startGlyphID <= glyphID && glyphID <= d.endGlyphID
       );
       if (id === -1) return "";
       return this.getDocument(id);
@@ -70264,8 +70277,8 @@ If there's a particular need for this, please submit a feature request at https:
       const instanceStart = axisStart + this.axisCount * this.axisSize;
       lazy$1(this, `instances`, () => {
         let instances = [];
-        for (let i2 = 0; i2 < this.instanceCount; i2++) {
-          p22.currentPosition = instanceStart + i2 * this.instanceSize;
+        for (let i = 0; i < this.instanceCount; i++) {
+          p22.currentPosition = instanceStart + i * this.instanceSize;
           instances.push(
             new InstanceRecord(p22, this.axisCount, this.instanceSize)
           );
@@ -70274,10 +70287,10 @@ If there's a particular need for this, please submit a feature request at https:
       });
     }
     getSupportedAxes() {
-      return this.axes.map((a2) => a2.tag);
+      return this.axes.map((a) => a.tag);
     }
     getAxis(name2) {
-      return this.axes.find((a2) => a2.tag === name2);
+      return this.axes.find((a) => a.tag === name2);
     }
   };
   var VariationAxisRecord = class {
@@ -70307,11 +70320,11 @@ If there's a particular need for this, please submit a feature request at https:
   var cvt = class extends SimpleTable {
     constructor(dict, dataview) {
       const { p: p22 } = super(dict, dataview);
-      const n2 = dict.length / 2;
+      const n = dict.length / 2;
       lazy$1(
         this,
         `items`,
-        () => [...new Array(n2)].map((_) => p22.fword)
+        () => [...new Array(n)].map((_) => p22.fword)
       );
     }
   };
@@ -70358,19 +70371,19 @@ If there's a particular need for this, please submit a feature request at https:
   var loca = class extends SimpleTable {
     constructor(dict, dataview, tables) {
       const { p: p22 } = super(dict, dataview);
-      const n2 = tables.maxp.numGlyphs + 1;
+      const n = tables.maxp.numGlyphs + 1;
       if (tables.head.indexToLocFormat === 0) {
         this.x2 = true;
         lazy$1(
           this,
           `offsets`,
-          () => [...new Array(n2)].map((_) => p22.Offset16)
+          () => [...new Array(n)].map((_) => p22.Offset16)
         );
       } else {
         lazy$1(
           this,
           `offsets`,
-          () => [...new Array(n2)].map((_) => p22.Offset32)
+          () => [...new Array(n)].map((_) => p22.Offset32)
         );
       }
     }
@@ -70720,7 +70733,7 @@ If there's a particular need for this, please submit a feature request at https:
       lazy$1(this, `tables`, () => {
         let offset4 = this.tableStart + 4;
         const tables = [];
-        for (let i2 = 0; i2 < this.nTables; i2++) {
+        for (let i = 0; i < this.nTables; i++) {
           p22.currentPosition = offset4;
           let subtable = new KernSubTable(p22);
           tables.push(subtable);
@@ -70934,9 +70947,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
   var LongVertMetric = class {
-    constructor(h2, b2) {
-      this.advanceHeight = h2;
-      this.topSideBearing = b2;
+    constructor(h, b) {
+      this.advanceHeight = h;
+      this.topSideBearing = b;
     }
   };
   var vmtx$1 = Object.freeze({ __proto__: null, vmtx });
@@ -71903,8 +71916,8 @@ If there's a particular need for this, please submit a feature request at https:
                 disabled: !isEditedMenuTitleValid,
                 variant: "primary",
                 type: "submit",
-                onClick: (e2) => {
-                  e2.preventDefault();
+                onClick: (e) => {
+                  e.preventDefault();
                   if (!isEditedMenuTitleValid) {
                     return;
                   }
@@ -73212,7 +73225,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
       const sortedCategories = categoriesWithCounts.sort(
-        (a2, b2) => a2.label.localeCompare(b2.label)
+        (a, b) => a.label.localeCompare(b.label)
       );
       sortedCategories.unshift({
         name: PATTERN_USER_CATEGORY,
@@ -74317,11 +74330,11 @@ If there's a particular need for this, please submit a feature request at https:
       const excludedPostTypes = ["attachment"];
       return postTypes?.filter(
         ({ viewable, slug }) => viewable && !excludedPostTypes.includes(slug)
-      ).sort((a2, b2) => {
-        if (a2.slug === "post" || b2.slug === "post") {
+      ).sort((a, b) => {
+        if (a.slug === "post" || b.slug === "post") {
           return 0;
         }
-        return a2.name.localeCompare(b2.name);
+        return a.name.localeCompare(b.name);
       });
     }, [postTypes]);
   };
@@ -76716,8 +76729,8 @@ If there's a particular need for this, please submit a feature request at https:
       });
     }
     (0, import_data82.dispatch)(store).updateSettings(settings2);
-    window.addEventListener("dragover", (e2) => e2.preventDefault(), false);
-    window.addEventListener("drop", (e2) => e2.preventDefault(), false);
+    window.addEventListener("dragover", (e) => e.preventDefault(), false);
+    window.addEventListener("drop", (e) => e.preventDefault(), false);
     root.render(
       /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(import_element254.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(App, {}) })
     );

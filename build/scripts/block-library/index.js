@@ -9,7 +9,7 @@ var wp;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
   var __require = /* @__PURE__ */ ((x3) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x3, {
-    get: (a2, b2) => (typeof require !== "undefined" ? require : a2)[b2]
+    get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
   }) : x3)(function(x3) {
     if (typeof require !== "undefined") return require.apply(this, arguments);
     throw Error('Dynamic require of "' + x3 + '" is not supported');
@@ -120,32 +120,32 @@ var wp;
     "node_modules/domhandler/lib/node.js"(exports) {
       "use strict";
       var __extends = exports && exports.__extends || /* @__PURE__ */ (function() {
-        var extendStatics = function(d2, b2) {
-          extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d3, b3) {
-            d3.__proto__ = b3;
-          } || function(d3, b3) {
-            for (var p2 in b3) if (Object.prototype.hasOwnProperty.call(b3, p2)) d3[p2] = b3[p2];
+        var extendStatics = function(d, b) {
+          extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d2, b2) {
+            d2.__proto__ = b2;
+          } || function(d2, b2) {
+            for (var p2 in b2) if (Object.prototype.hasOwnProperty.call(b2, p2)) d2[p2] = b2[p2];
           };
-          return extendStatics(d2, b2);
+          return extendStatics(d, b);
         };
-        return function(d2, b2) {
-          if (typeof b2 !== "function" && b2 !== null)
-            throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
-          extendStatics(d2, b2);
+        return function(d, b) {
+          if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+          extendStatics(d, b);
           function __258() {
-            this.constructor = d2;
+            this.constructor = d;
           }
-          d2.prototype = b2 === null ? Object.create(b2) : (__258.prototype = b2.prototype, new __258());
+          d.prototype = b === null ? Object.create(b) : (__258.prototype = b.prototype, new __258());
         };
       })();
       var __assign2 = exports && exports.__assign || function() {
-        __assign2 = Object.assign || function(t2) {
-          for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
-            s2 = arguments[i2];
-            for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
-              t2[p2] = s2[p2];
+        __assign2 = Object.assign || function(t) {
+          for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2))
+              t[p2] = s[p2];
           }
-          return t2;
+          return t;
         };
         return __assign2.apply(this, arguments);
       };
@@ -540,9 +540,9 @@ var wp;
         var children = childs.map(function(child) {
           return cloneNode(child, true);
         });
-        for (var i2 = 1; i2 < children.length; i2++) {
-          children[i2].prev = children[i2 - 1];
-          children[i2 - 1].next = children[i2];
+        for (var i = 1; i < children.length; i++) {
+          children[i].prev = children[i - 1];
+          children[i - 1].next = children[i];
         }
         return children;
       }
@@ -553,7 +553,7 @@ var wp;
   var require_lib2 = __commonJS({
     "node_modules/domhandler/lib/index.js"(exports) {
       "use strict";
-      var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o2, m3, k2, k22) {
+      var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o, m3, k2, k22) {
         if (k22 === void 0) k22 = k2;
         var desc = Object.getOwnPropertyDescriptor(m3, k2);
         if (!desc || ("get" in desc ? !m3.__esModule : desc.writable || desc.configurable)) {
@@ -561,10 +561,10 @@ var wp;
             return m3[k2];
           } };
         }
-        Object.defineProperty(o2, k22, desc);
-      }) : (function(o2, m3, k2, k22) {
+        Object.defineProperty(o, k22, desc);
+      }) : (function(o, m3, k2, k22) {
         if (k22 === void 0) k22 = k2;
-        o2[k22] = m3[k2];
+        o[k22] = m3[k2];
       }));
       var __exportStar = exports && exports.__exportStar || function(m3, exports2) {
         for (var p2 in m3) if (p2 !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p2)) __createBinding(exports2, m3, p2);
@@ -1968,8 +1968,8 @@ var wp;
         function updatePosition(str) {
           var lines = str.match(NEWLINE_REGEX);
           if (lines) lineno += lines.length;
-          var i2 = str.lastIndexOf(NEWLINE);
-          column = ~i2 ? str.length - i2 : column + str.length;
+          var i = str.lastIndexOf(NEWLINE);
+          column = ~i ? str.length - i : column + str.length;
         }
         function position() {
           var start = { line: lineno, column };
@@ -2023,18 +2023,18 @@ var wp;
         function comment() {
           var pos = position();
           if (FORWARD_SLASH != style2.charAt(0) || ASTERISK != style2.charAt(1)) return;
-          var i2 = 2;
-          while (EMPTY_STRING != style2.charAt(i2) && (ASTERISK != style2.charAt(i2) || FORWARD_SLASH != style2.charAt(i2 + 1))) {
-            ++i2;
+          var i = 2;
+          while (EMPTY_STRING != style2.charAt(i) && (ASTERISK != style2.charAt(i) || FORWARD_SLASH != style2.charAt(i + 1))) {
+            ++i;
           }
-          i2 += 2;
-          if (EMPTY_STRING === style2.charAt(i2 - 1)) {
+          i += 2;
+          if (EMPTY_STRING === style2.charAt(i - 1)) {
             return error2("End of comment missing");
           }
-          var str = style2.slice(2, i2 - 2);
+          var str = style2.slice(2, i - 2);
           column += 2;
           updatePosition(str);
-          style2 = style2.slice(i2);
+          style2 = style2.slice(i);
           column += 2;
           return pos({
             type: TYPE_COMMENT,
@@ -2663,54 +2663,54 @@ var wp;
   var require_es6 = __commonJS({
     "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
       "use strict";
-      module.exports = function equal(a2, b2) {
-        if (a2 === b2) return true;
-        if (a2 && b2 && typeof a2 == "object" && typeof b2 == "object") {
-          if (a2.constructor !== b2.constructor) return false;
-          var length, i2, keys;
-          if (Array.isArray(a2)) {
-            length = a2.length;
-            if (length != b2.length) return false;
-            for (i2 = length; i2-- !== 0; )
-              if (!equal(a2[i2], b2[i2])) return false;
+      module.exports = function equal(a, b) {
+        if (a === b) return true;
+        if (a && b && typeof a == "object" && typeof b == "object") {
+          if (a.constructor !== b.constructor) return false;
+          var length, i, keys;
+          if (Array.isArray(a)) {
+            length = a.length;
+            if (length != b.length) return false;
+            for (i = length; i-- !== 0; )
+              if (!equal(a[i], b[i])) return false;
             return true;
           }
-          if (a2 instanceof Map && b2 instanceof Map) {
-            if (a2.size !== b2.size) return false;
-            for (i2 of a2.entries())
-              if (!b2.has(i2[0])) return false;
-            for (i2 of a2.entries())
-              if (!equal(i2[1], b2.get(i2[0]))) return false;
+          if (a instanceof Map && b instanceof Map) {
+            if (a.size !== b.size) return false;
+            for (i of a.entries())
+              if (!b.has(i[0])) return false;
+            for (i of a.entries())
+              if (!equal(i[1], b.get(i[0]))) return false;
             return true;
           }
-          if (a2 instanceof Set && b2 instanceof Set) {
-            if (a2.size !== b2.size) return false;
-            for (i2 of a2.entries())
-              if (!b2.has(i2[0])) return false;
+          if (a instanceof Set && b instanceof Set) {
+            if (a.size !== b.size) return false;
+            for (i of a.entries())
+              if (!b.has(i[0])) return false;
             return true;
           }
-          if (ArrayBuffer.isView(a2) && ArrayBuffer.isView(b2)) {
-            length = a2.length;
-            if (length != b2.length) return false;
-            for (i2 = length; i2-- !== 0; )
-              if (a2[i2] !== b2[i2]) return false;
+          if (ArrayBuffer.isView(a) && ArrayBuffer.isView(b)) {
+            length = a.length;
+            if (length != b.length) return false;
+            for (i = length; i-- !== 0; )
+              if (a[i] !== b[i]) return false;
             return true;
           }
-          if (a2.constructor === RegExp) return a2.source === b2.source && a2.flags === b2.flags;
-          if (a2.valueOf !== Object.prototype.valueOf) return a2.valueOf() === b2.valueOf();
-          if (a2.toString !== Object.prototype.toString) return a2.toString() === b2.toString();
-          keys = Object.keys(a2);
+          if (a.constructor === RegExp) return a.source === b.source && a.flags === b.flags;
+          if (a.valueOf !== Object.prototype.valueOf) return a.valueOf() === b.valueOf();
+          if (a.toString !== Object.prototype.toString) return a.toString() === b.toString();
+          keys = Object.keys(a);
           length = keys.length;
-          if (length !== Object.keys(b2).length) return false;
-          for (i2 = length; i2-- !== 0; )
-            if (!Object.prototype.hasOwnProperty.call(b2, keys[i2])) return false;
-          for (i2 = length; i2-- !== 0; ) {
-            var key = keys[i2];
-            if (!equal(a2[key], b2[key])) return false;
+          if (length !== Object.keys(b).length) return false;
+          for (i = length; i-- !== 0; )
+            if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
+          for (i = length; i-- !== 0; ) {
+            var key = keys[i];
+            if (!equal(a[key], b[key])) return false;
           }
           return true;
         }
-        return a2 !== a2 && b2 !== b2;
+        return a !== a && b !== b;
       };
     }
   });
@@ -3255,18 +3255,18 @@ var wp;
   var import_i18n271 = __toESM(require_i18n(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
-  function r(e4) {
-    var t2, f2, n2 = "";
-    if ("string" == typeof e4 || "number" == typeof e4) n2 += e4;
-    else if ("object" == typeof e4) if (Array.isArray(e4)) {
-      var o2 = e4.length;
-      for (t2 = 0; t2 < o2; t2++) e4[t2] && (f2 = r(e4[t2])) && (n2 && (n2 += " "), n2 += f2);
-    } else for (f2 in e4) e4[f2] && (n2 && (n2 += " "), n2 += f2);
-    return n2;
+  function r(e3) {
+    var t, f, n = "";
+    if ("string" == typeof e3 || "number" == typeof e3) n += e3;
+    else if ("object" == typeof e3) if (Array.isArray(e3)) {
+      var o = e3.length;
+      for (t = 0; t < o; t++) e3[t] && (f = r(e3[t])) && (n && (n += " "), n += f);
+    } else for (f in e3) e3[f] && (n && (n += " "), n += f);
+    return n;
   }
   function clsx() {
-    for (var e4, t2, f2 = 0, n2 = "", o2 = arguments.length; f2 < o2; f2++) (e4 = arguments[f2]) && (t2 = r(e4)) && (n2 && (n2 += " "), n2 += t2);
-    return n2;
+    for (var e3, t, f = 0, n = "", o = arguments.length; f < o; f++) (e3 = arguments[f]) && (t = r(e3)) && (n && (n += " "), n += t);
+    return n;
   }
   var clsx_default = clsx;
 
@@ -6692,8 +6692,8 @@ var wp;
       });
       mutationObserverRef.current = mutationObserver;
       const roots = /* @__PURE__ */ new Set();
-      for (let i2 = 1; i2 < sortedNodes.length; i2 += 1) {
-        const root = getCommonAncestor(sortedNodes[i2 - 1], sortedNodes[i2]);
+      for (let i = 1; i < sortedNodes.length; i += 1) {
+        const root = getCommonAncestor(sortedNodes[i - 1], sortedNodes[i]);
         if (root) {
           roots.add(root);
         }
@@ -6778,7 +6778,7 @@ var wp;
       }
     });
     let nextAutomaticIndex = 0;
-    automaticItems.sort((a2, b2) => sortByDocumentPosition(a2.element, b2.element));
+    automaticItems.sort((a, b) => sortByDocumentPosition(a.element, b.element));
     automaticItems.forEach((item) => {
       while (reservedIndices.has(nextAutomaticIndex)) {
         nextAutomaticIndex += 1;
@@ -6788,7 +6788,7 @@ var wp;
       nextAutomaticIndex += 1;
     });
     if (reservedIndices.size > 0) {
-      items.sort((a2, b2) => a2.index - b2.index);
+      items.sort((a, b) => a.index - b.index);
     }
     return [items, automaticItems.map((item) => item.element)];
   }
@@ -6801,26 +6801,26 @@ var wp;
   }
   function hasMovedNode(entries) {
     for (const entry of entries) {
-      for (let i2 = 0; i2 < entry.removedNodes.length; i2 += 1) {
-        if (entry.removedNodes[i2].isConnected) {
+      for (let i = 0; i < entry.removedNodes.length; i += 1) {
+        if (entry.removedNodes[i].isConnected) {
           return true;
         }
       }
     }
     return false;
   }
-  function sortByDocumentPosition(a2, b2) {
-    return a2.compareDocumentPosition(b2) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+  function sortByDocumentPosition(a, b) {
+    return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
   }
 
   // node_modules/@base-ui/react/internals/useRenderElement.mjs
   var React9 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/utils/useMergedRefs.mjs
-  function useMergedRefs(a2, b2, c2, d2) {
+  function useMergedRefs(a, b, c2, d) {
     const forkRef = useRefWithInit(createForkRef).current;
-    if (didChange(forkRef, a2, b2, c2, d2)) {
-      update(forkRef, [a2, b2, c2, d2]);
+    if (didChange(forkRef, a, b, c2, d)) {
+      update(forkRef, [a, b, c2, d]);
     }
     return forkRef.callback;
   }
@@ -6838,8 +6838,8 @@ var wp;
       refs: []
     };
   }
-  function didChange(forkRef, a2, b2, c2, d2) {
-    return forkRef.refs[0] !== a2 || forkRef.refs[1] !== b2 || forkRef.refs[2] !== c2 || forkRef.refs[3] !== d2;
+  function didChange(forkRef, a, b, c2, d) {
+    return forkRef.refs[0] !== a || forkRef.refs[1] !== b || forkRef.refs[2] !== c2 || forkRef.refs[3] !== d;
   }
   function didChangeN(forkRef, newRefs) {
     return forkRef.refs.length !== newRefs.length || forkRef.refs.some((ref, index) => ref !== newRefs[index]);
@@ -6857,8 +6857,8 @@ var wp;
       }
       if (instance != null) {
         const cleanupCallbacks = Array(refs.length).fill(null);
-        for (let i2 = 0; i2 < refs.length; i2 += 1) {
-          const ref = refs[i2];
+        for (let i = 0; i < refs.length; i += 1) {
+          const ref = refs[i];
           if (ref == null) {
             continue;
           }
@@ -6866,7 +6866,7 @@ var wp;
             case "function": {
               const refCleanup = ref(instance);
               if (typeof refCleanup === "function") {
-                cleanupCallbacks[i2] = refCleanup;
+                cleanupCallbacks[i] = refCleanup;
               }
               break;
             }
@@ -6878,14 +6878,14 @@ var wp;
           }
         }
         forkRef.cleanup = () => {
-          for (let i2 = 0; i2 < refs.length; i2 += 1) {
-            const ref = refs[i2];
+          for (let i = 0; i < refs.length; i += 1) {
+            const ref = refs[i];
             if (ref == null) {
               continue;
             }
             switch (typeof ref) {
               case "function": {
-                const cleanupCallback = cleanupCallbacks[i2];
+                const cleanupCallback = cleanupCallbacks[i];
                 if (typeof cleanupCallback === "function") {
                   cleanupCallback();
                 } else {
@@ -6926,17 +6926,17 @@ var wp;
   }
 
   // node_modules/@base-ui/utils/mergeObjects.mjs
-  function mergeObjects(a2, b2) {
-    if (a2 && !b2) {
-      return a2;
+  function mergeObjects(a, b) {
+    if (a && !b) {
+      return a;
     }
-    if (!a2 && b2) {
-      return b2;
+    if (!a && b) {
+      return b;
     }
-    if (a2 || b2) {
+    if (a || b) {
       return {
-        ...a2,
-        ...b2
+        ...a,
+        ...b
       };
     }
     return void 0;
@@ -6981,22 +6981,22 @@ var wp;
 
   // node_modules/@base-ui/react/merge-props/mergeProps.mjs
   var EMPTY_PROPS = {};
-  function mergeProps(a2, b2, c2, d2, e4) {
-    if (!c2 && !d2 && !e4 && !a2) {
-      return createInitialMergedProps(b2);
+  function mergeProps(a, b, c2, d, e3) {
+    if (!c2 && !d && !e3 && !a) {
+      return createInitialMergedProps(b);
     }
-    let merged = createInitialMergedProps(a2);
-    if (b2) {
-      merged = mergeInto(merged, b2);
+    let merged = createInitialMergedProps(a);
+    if (b) {
+      merged = mergeInto(merged, b);
     }
     if (c2) {
       merged = mergeInto(merged, c2);
     }
-    if (d2) {
-      merged = mergeInto(merged, d2);
+    if (d) {
+      merged = mergeInto(merged, d);
     }
-    if (e4) {
-      merged = mergeInto(merged, e4);
+    if (e3) {
+      merged = mergeInto(merged, e3);
     }
     return merged;
   }
@@ -7008,8 +7008,8 @@ var wp;
       return createInitialMergedProps(props[0]);
     }
     let merged = createInitialMergedProps(props[0]);
-    for (let i2 = 1; i2 < props.length; i2 += 1) {
-      merged = mergeInto(merged, props[i2]);
+    for (let i = 1; i < props.length; i += 1) {
+      merged = mergeInto(merged, props[i]);
     }
     return merged;
   }
@@ -7414,8 +7414,8 @@ var wp;
       this.callbacksCount = 0;
       this.startId = this.nextId;
       if (currentCallbacksCount > 0) {
-        for (let i2 = 0; i2 < currentCallbacks.length; i2 += 1) {
-          currentCallbacks[i2]?.(timestamp);
+        for (let i = 0; i < currentCallbacks.length; i += 1) {
+          currentCallbacks[i]?.(timestamp);
         }
       }
     };
@@ -7582,9 +7582,9 @@ var wp;
         return void 0;
       }
       return subscribeMapChange((map) => {
-        const i2 = componentRef.current ? map.get(componentRef.current)?.index : null;
-        if (i2 != null) {
-          setInternalIndex(i2);
+        const i = componentRef.current ? map.get(componentRef.current)?.index : null;
+        if (i != null) {
+          setInternalIndex(i);
         }
       });
     }, [externalIndex, subscribeMapChange]);
@@ -13324,14 +13324,14 @@ var wp;
     var tail;
     options2 = options2 || {};
     function memoized() {
-      var node = head, len = arguments.length, args, i2;
+      var node = head, len = arguments.length, args, i;
       searchCache: while (node) {
         if (node.args.length !== arguments.length) {
           node = node.next;
           continue;
         }
-        for (i2 = 0; i2 < len; i2++) {
-          if (node.args[i2] !== arguments[i2]) {
+        for (i = 0; i < len; i++) {
+          if (node.args[i] !== arguments[i]) {
             node = node.next;
             continue searchCache;
           }
@@ -13352,8 +13352,8 @@ var wp;
         return node.val;
       }
       args = new Array(len);
-      for (i2 = 0; i2 < len; i2++) {
-        args[i2] = arguments[i2];
+      for (i = 0; i < len; i++) {
+        args[i] = arguments[i];
       }
       node = {
         args,
@@ -13392,12 +13392,12 @@ var wp;
 
   // node_modules/tslib/tslib.es6.mjs
   var __assign = function() {
-    __assign = Object.assign || function __assign2(t2) {
-      for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
-        s2 = arguments[i2];
-        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2)) t2[p2] = s2[p2];
+    __assign = Object.assign || function __assign2(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2)) t[p2] = s[p2];
       }
-      return t2;
+      return t;
     };
     return __assign.apply(this, arguments);
   };
@@ -16937,9 +16937,9 @@ var wp;
     edit: edit_default2,
     save: save6,
     deprecated: deprecated_default3,
-    merge: (a2, { text = "" }) => ({
-      ...a2,
-      text: (a2.text || "") + text
+    merge: (a, { text = "" }) => ({
+      ...a,
+      text: (a.text || "") + text
     }),
     __experimentalLabel(attributes2, { context }) {
       const { text } = attributes2;
@@ -17612,8 +17612,8 @@ var wp;
       "taxonomy",
       { per_page: -1 }
     );
-    const taxonomies = allTaxonomies?.filter((t2) => t2.visibility.public);
-    const taxonomy = taxonomies?.find((t2) => t2.slug === taxonomySlug);
+    const taxonomies = allTaxonomies?.filter((t) => t.visibility.public);
+    const taxonomy = taxonomies?.find((t) => t.slug === taxonomySlug);
     const isHierarchicalTaxonomy = !isResolvingTaxonomies && taxonomy?.hierarchical;
     const query = { per_page: -1, hide_empty: !showEmpty, context: "view" };
     if (isHierarchicalTaxonomy && showOnlyTopLevel) {
@@ -17751,9 +17751,9 @@ var wp;
                   import_components11.SelectControl,
                   {
                     label: (0, import_i18n20.__)("Taxonomy"),
-                    options: taxonomies.map((t2) => ({
-                      label: t2.name,
-                      value: t2.slug
+                    options: taxonomies.map((t) => ({
+                      label: t.name,
+                      value: t.slug
                     })),
                     value: taxonomySlug,
                     onChange: (selectedTaxonomy) => setAttributes({
@@ -25775,191 +25775,204 @@ var wp;
   }
 
   // node_modules/colord/index.mjs
-  var r2 = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) };
-  var t = function(r3) {
+  for (r2 = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) }, t = function(r3) {
     return "string" == typeof r3 ? r3.length > 0 : "number" == typeof r3;
-  };
-  var n = function(r3, t2, n2) {
+  }, n = function(r3, t2, n2) {
     return void 0 === t2 && (t2 = 0), void 0 === n2 && (n2 = Math.pow(10, t2)), Math.round(n2 * r3) / n2 + 0;
-  };
-  var e = function(r3, t2, n2) {
+  }, u = function(r3, t2, n2) {
     return void 0 === t2 && (t2 = 0), void 0 === n2 && (n2 = 1), r3 > n2 ? n2 : r3 > t2 ? r3 : t2;
-  };
-  var u = function(r3) {
-    return (r3 = isFinite(r3) ? r3 % 360 : 0) > 0 ? r3 : r3 + 360;
-  };
-  var a = function(r3) {
-    return { r: e(r3.r, 0, 255), g: e(r3.g, 0, 255), b: e(r3.b, 0, 255), a: e(r3.a) };
-  };
-  var o = function(r3) {
+  }, e3 = function(r3) {
+    return (r3 = isFinite(r3) ? r3 % 360 : 0) < 0 ? r3 + 360 : r3;
+  }, o = function(r3, t2) {
+    return void 0 === t2 && (t2 = 0), n(r3, t2) % 360;
+  }, a = function(r3) {
+    return { r: u(r3.r, 0, 255), g: u(r3.g, 0, 255), b: u(r3.b, 0, 255), a: u(r3.a) };
+  }, i = function(r3) {
     return { r: n(r3.r), g: n(r3.g), b: n(r3.b), a: n(r3.a, 3) };
+  }, s = /^#([0-9a-f]{3,8})$/i, d = function(r3, t2) {
+    var n2 = r3.charCodeAt(t2);
+    return (15 & n2) + 9 * (n2 >> 6);
+  }, h = function(r3, t2) {
+    return d(r3, t2) << 4 | d(r3, t2 + 1);
+  }, b = [], f = 0; f < 256; f++) b.push((f < 16 ? "0" : "") + f.toString(16));
+  var r2;
+  var t;
+  var n;
+  var u;
+  var e3;
+  var o;
+  var a;
+  var i;
+  var s;
+  var d;
+  var h;
+  var b;
+  var f;
+  var g = function(r2) {
+    return b[u(r2, 0, 255)];
   };
-  var i = /^#([0-9a-f]{3,8})$/i;
-  var s = function(r3) {
-    var t2 = r3.toString(16);
-    return t2.length < 2 ? "0" + t2 : t2;
+  var c = function(r2) {
+    var t = r2.r, n = r2.g, u = r2.b, e3 = r2.a, o = Math.max(t, n, u), a = o - Math.min(t, n, u), i = a ? o === t ? (n - u) / a : o === n ? 2 + (u - t) / a : 4 + (t - n) / a : 0;
+    return { h: 60 * (i < 0 ? i + 6 : i), s: o ? a / o * 100 : 0, v: o / 255 * 100, a: e3 };
   };
-  var d = function(r3) {
-    var t2 = r3.r, n2 = r3.g, e4 = r3.b, u2 = r3.a, a2 = Math.max(t2, n2, e4), o2 = a2 - Math.min(t2, n2, e4), i2 = o2 ? a2 === t2 ? (n2 - e4) / o2 : a2 === n2 ? 2 + (e4 - t2) / o2 : 4 + (t2 - n2) / o2 : 0;
-    return { h: 60 * (i2 < 0 ? i2 + 6 : i2), s: a2 ? o2 / a2 * 100 : 0, v: a2 / 255 * 100, a: u2 };
+  var v = function(r2) {
+    var t = r2.h, n = r2.s, u = r2.v, e3 = r2.a;
+    t = t / 360 * 6, n /= 100, u /= 100;
+    var o = Math.floor(t), a = u * (1 - n), i = u * (1 - (t - o) * n), s = u * (1 - (1 - t + o) * n), d = o % 6;
+    return { r: 255 * [u, i, a, a, s, u][d], g: 255 * [s, u, u, i, a, a][d], b: 255 * [a, a, s, u, u, i][d], a: e3 };
   };
-  var h = function(r3) {
-    var t2 = r3.h, n2 = r3.s, e4 = r3.v, u2 = r3.a;
-    t2 = t2 / 360 * 6, n2 /= 100, e4 /= 100;
-    var a2 = Math.floor(t2), o2 = e4 * (1 - n2), i2 = e4 * (1 - (t2 - a2) * n2), s2 = e4 * (1 - (1 - t2 + a2) * n2), d2 = a2 % 6;
-    return { r: 255 * [e4, i2, o2, o2, s2, e4][d2], g: 255 * [s2, e4, e4, i2, o2, o2][d2], b: 255 * [o2, o2, s2, e4, e4, i2][d2], a: u2 };
+  var l = function(r2) {
+    return { h: e3(r2.h), s: u(r2.s, 0, 100), l: u(r2.l, 0, 100), a: u(r2.a) };
   };
-  var b = function(r3) {
-    return { h: u(r3.h), s: e(r3.s, 0, 100), l: e(r3.l, 0, 100), a: e(r3.a) };
+  var p = function(r2) {
+    return { h: o(r2.h), s: n(r2.s), l: n(r2.l), a: n(r2.a, 3) };
   };
-  var g = function(r3) {
-    return { h: n(r3.h), s: n(r3.s), l: n(r3.l), a: n(r3.a, 3) };
+  var m = function(r2) {
+    return v((n = (t = r2).s, { h: t.h, s: (n *= ((u = t.l) < 50 ? u : 100 - u) / 100) > 0 ? 2 * n / (u + n) * 100 : 0, v: u + n, a: t.a }));
+    var t, n, u;
   };
-  var f = function(r3) {
-    return h((n2 = (t2 = r3).s, { h: t2.h, s: (n2 *= ((e4 = t2.l) < 50 ? e4 : 100 - e4) / 100) > 0 ? 2 * n2 / (e4 + n2) * 100 : 0, v: e4 + n2, a: t2.a }));
-    var t2, n2, e4;
+  var y = function(r2) {
+    return { h: (t = c(r2)).h, s: (e3 = (200 - (n = t.s)) * (u = t.v) / 100) > 0 && e3 < 200 ? n * u / 100 / (e3 <= 100 ? e3 : 200 - e3) * 100 : 0, l: e3 / 2, a: t.a };
+    var t, n, u, e3;
   };
-  var c = function(r3) {
-    return { h: (t2 = d(r3)).h, s: (u2 = (200 - (n2 = t2.s)) * (e4 = t2.v) / 100) > 0 && u2 < 200 ? n2 * e4 / 100 / (u2 <= 100 ? u2 : 200 - u2) * 100 : 0, l: u2 / 2, a: t2.a };
-    var t2, n2, e4, u2;
-  };
-  var l = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-  var p = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-  var v = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-  var m = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-  var y = { string: [[function(r3) {
-    var t2 = i.exec(r3);
-    return t2 ? (r3 = t2[1]).length <= 4 ? { r: parseInt(r3[0] + r3[0], 16), g: parseInt(r3[1] + r3[1], 16), b: parseInt(r3[2] + r3[2], 16), a: 4 === r3.length ? n(parseInt(r3[3] + r3[3], 16) / 255, 2) : 1 } : 6 === r3.length || 8 === r3.length ? { r: parseInt(r3.substr(0, 2), 16), g: parseInt(r3.substr(2, 2), 16), b: parseInt(r3.substr(4, 2), 16), a: 8 === r3.length ? n(parseInt(r3.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
-  }, "hex"], [function(r3) {
-    var t2 = v.exec(r3) || m.exec(r3);
-    return t2 ? t2[2] !== t2[4] || t2[4] !== t2[6] ? null : a({ r: Number(t2[1]) / (t2[2] ? 100 / 255 : 1), g: Number(t2[3]) / (t2[4] ? 100 / 255 : 1), b: Number(t2[5]) / (t2[6] ? 100 / 255 : 1), a: void 0 === t2[7] ? 1 : Number(t2[7]) / (t2[8] ? 100 : 1) }) : null;
-  }, "rgb"], [function(t2) {
-    var n2 = l.exec(t2) || p.exec(t2);
-    if (!n2) return null;
-    var e4, u2, a2 = b({ h: (e4 = n2[1], u2 = n2[2], void 0 === u2 && (u2 = "deg"), Number(e4) * (r2[u2] || 1)), s: Number(n2[3]), l: Number(n2[4]), a: void 0 === n2[5] ? 1 : Number(n2[5]) / (n2[6] ? 100 : 1) });
-    return f(a2);
-  }, "hsl"]], object: [[function(r3) {
-    var n2 = r3.r, e4 = r3.g, u2 = r3.b, o2 = r3.a, i2 = void 0 === o2 ? 1 : o2;
-    return t(n2) && t(e4) && t(u2) ? a({ r: Number(n2), g: Number(e4), b: Number(u2), a: Number(i2) }) : null;
-  }, "rgb"], [function(r3) {
-    var n2 = r3.h, e4 = r3.s, u2 = r3.l, a2 = r3.a, o2 = void 0 === a2 ? 1 : a2;
-    if (!t(n2) || !t(e4) || !t(u2)) return null;
-    var i2 = b({ h: Number(n2), s: Number(e4), l: Number(u2), a: Number(o2) });
-    return f(i2);
-  }, "hsl"], [function(r3) {
-    var n2 = r3.h, a2 = r3.s, o2 = r3.v, i2 = r3.a, s2 = void 0 === i2 ? 1 : i2;
-    if (!t(n2) || !t(a2) || !t(o2)) return null;
-    var d2 = (function(r4) {
-      return { h: u(r4.h), s: e(r4.s, 0, 100), v: e(r4.v, 0, 100), a: e(r4.a) };
-    })({ h: Number(n2), s: Number(a2), v: Number(o2), a: Number(s2) });
-    return h(d2);
+  var N = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var x = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var M = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var H = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
+  var $ = { string: [[function(r2) {
+    if (!s.test(r2)) return null;
+    var t = r2.length;
+    return t <= 5 ? { r: 17 * d(r2, 1), g: 17 * d(r2, 2), b: 17 * d(r2, 3), a: 5 === t ? n(17 * d(r2, 4) / 255, 2) : 1 } : 7 === t || 9 === t ? { r: h(r2, 1), g: h(r2, 3), b: h(r2, 5), a: 9 === t ? n(h(r2, 7) / 255, 2) : 1 } : null;
+  }, "hex"], [function(r2) {
+    var t = M.exec(r2) || H.exec(r2);
+    return t ? t[2] !== t[4] || t[4] !== t[6] ? null : a({ r: Number(t[1]) / (t[2] ? 100 / 255 : 1), g: Number(t[3]) / (t[4] ? 100 / 255 : 1), b: Number(t[5]) / (t[6] ? 100 / 255 : 1), a: void 0 === t[7] ? 1 : Number(t[7]) / (t[8] ? 100 : 1) }) : null;
+  }, "rgb"], [function(t) {
+    var n = N.exec(t) || x.exec(t);
+    if (!n) return null;
+    var u, e3, o = l({ h: (u = n[1], e3 = n[2], void 0 === e3 && (e3 = "deg"), Number(u) * (r2[e3] || 1)), s: Number(n[3]), l: Number(n[4]), a: void 0 === n[5] ? 1 : Number(n[5]) / (n[6] ? 100 : 1) });
+    return m(o);
+  }, "hsl"]], object: [[function(r2) {
+    var n = r2.r, u = r2.g, e3 = r2.b, o = r2.a, i = void 0 === o ? 1 : o;
+    return t(n) && t(u) && t(e3) ? a({ r: Number(n), g: Number(u), b: Number(e3), a: Number(i) }) : null;
+  }, "rgb"], [function(r2) {
+    var n = r2.h, u = r2.s, e3 = r2.l, o = r2.a, a = void 0 === o ? 1 : o;
+    if (!t(n) || !t(u) || !t(e3)) return null;
+    var i = l({ h: Number(n), s: Number(u), l: Number(e3), a: Number(a) });
+    return m(i);
+  }, "hsl"], [function(r2) {
+    var n = r2.h, o = r2.s, a = r2.v, i = r2.a, s = void 0 === i ? 1 : i;
+    if (!t(n) || !t(o) || !t(a)) return null;
+    var d = (function(r3) {
+      return { h: e3(r3.h), s: u(r3.s, 0, 100), v: u(r3.v, 0, 100), a: u(r3.a) };
+    })({ h: Number(n), s: Number(o), v: Number(a), a: Number(s) });
+    return v(d);
   }, "hsv"]] };
-  var N = function(r3, t2) {
-    for (var n2 = 0; n2 < t2.length; n2++) {
-      var e4 = t2[n2][0](r3);
-      if (e4) return [e4, t2[n2][1]];
+  var j = function(r2, t) {
+    for (var n = 0; n < t.length; n++) {
+      var u = t[n][0](r2);
+      if (u) return [u, t[n][1]];
     }
     return [null, void 0];
   };
-  var x = function(r3) {
-    return "string" == typeof r3 ? N(r3.trim(), y.string) : "object" == typeof r3 && null !== r3 ? N(r3, y.object) : [null, void 0];
+  var w = function(r2) {
+    return "string" == typeof r2 ? j(r2.trim(), $.string) : "object" == typeof r2 && null !== r2 ? j(r2, $.object) : [null, void 0];
   };
-  var M = function(r3, t2) {
-    var n2 = c(r3);
-    return { h: n2.h, s: e(n2.s + 100 * t2, 0, 100), l: n2.l, a: n2.a };
+  var k = function(r2, t) {
+    var n = y(r2);
+    return { h: n.h, s: u(n.s + 100 * t, 0, 100), l: n.l, a: n.a };
   };
-  var H = function(r3) {
-    return (299 * r3.r + 587 * r3.g + 114 * r3.b) / 1e3 / 255;
+  var E = function(r2) {
+    return (299 * r2.r + 587 * r2.g + 114 * r2.b) / 1e3 / 255;
   };
-  var $ = function(r3, t2) {
-    var n2 = c(r3);
-    return { h: n2.h, s: n2.s, l: e(n2.l + 100 * t2, 0, 100), a: n2.a };
+  var R = function(r2, t) {
+    var n = y(r2);
+    return { h: n.h, s: n.s, l: u(n.l + 100 * t, 0, 100), a: n.a };
   };
-  var j = (function() {
-    function r3(r4) {
-      this.parsed = x(r4)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
+  var q = (function() {
+    function r2(r3) {
+      this.parsed = w(r3)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
     }
-    return r3.prototype.isValid = function() {
+    return r2.prototype.isValid = function() {
       return null !== this.parsed;
-    }, r3.prototype.brightness = function() {
-      return n(H(this.rgba), 2);
-    }, r3.prototype.isDark = function() {
-      return H(this.rgba) < 0.5;
-    }, r3.prototype.isLight = function() {
-      return H(this.rgba) >= 0.5;
-    }, r3.prototype.toHex = function() {
-      return r4 = o(this.rgba), t2 = r4.r, e4 = r4.g, u2 = r4.b, i2 = (a2 = r4.a) < 1 ? s(n(255 * a2)) : "", "#" + s(t2) + s(e4) + s(u2) + i2;
-      var r4, t2, e4, u2, a2, i2;
-    }, r3.prototype.toRgb = function() {
-      return o(this.rgba);
-    }, r3.prototype.toRgbString = function() {
-      return r4 = o(this.rgba), t2 = r4.r, n2 = r4.g, e4 = r4.b, (u2 = r4.a) < 1 ? "rgba(" + t2 + ", " + n2 + ", " + e4 + ", " + u2 + ")" : "rgb(" + t2 + ", " + n2 + ", " + e4 + ")";
-      var r4, t2, n2, e4, u2;
-    }, r3.prototype.toHsl = function() {
-      return g(c(this.rgba));
-    }, r3.prototype.toHslString = function() {
-      return r4 = g(c(this.rgba)), t2 = r4.h, n2 = r4.s, e4 = r4.l, (u2 = r4.a) < 1 ? "hsla(" + t2 + ", " + n2 + "%, " + e4 + "%, " + u2 + ")" : "hsl(" + t2 + ", " + n2 + "%, " + e4 + "%)";
-      var r4, t2, n2, e4, u2;
-    }, r3.prototype.toHsv = function() {
-      return r4 = d(this.rgba), { h: n(r4.h), s: n(r4.s), v: n(r4.v), a: n(r4.a, 3) };
-      var r4;
-    }, r3.prototype.invert = function() {
-      return w({ r: 255 - (r4 = this.rgba).r, g: 255 - r4.g, b: 255 - r4.b, a: r4.a });
-      var r4;
-    }, r3.prototype.saturate = function(r4) {
-      return void 0 === r4 && (r4 = 0.1), w(M(this.rgba, r4));
-    }, r3.prototype.desaturate = function(r4) {
-      return void 0 === r4 && (r4 = 0.1), w(M(this.rgba, -r4));
-    }, r3.prototype.grayscale = function() {
-      return w(M(this.rgba, -1));
-    }, r3.prototype.lighten = function(r4) {
-      return void 0 === r4 && (r4 = 0.1), w($(this.rgba, r4));
-    }, r3.prototype.darken = function(r4) {
-      return void 0 === r4 && (r4 = 0.1), w($(this.rgba, -r4));
-    }, r3.prototype.rotate = function(r4) {
-      return void 0 === r4 && (r4 = 15), this.hue(this.hue() + r4);
-    }, r3.prototype.alpha = function(r4) {
-      return "number" == typeof r4 ? w({ r: (t2 = this.rgba).r, g: t2.g, b: t2.b, a: r4 }) : n(this.rgba.a, 3);
-      var t2;
-    }, r3.prototype.hue = function(r4) {
-      var t2 = c(this.rgba);
-      return "number" == typeof r4 ? w({ h: r4, s: t2.s, l: t2.l, a: t2.a }) : n(t2.h);
-    }, r3.prototype.isEqual = function(r4) {
-      return this.toHex() === w(r4).toHex();
-    }, r3;
+    }, r2.prototype.brightness = function() {
+      return n(E(this.rgba), 2);
+    }, r2.prototype.isDark = function() {
+      return E(this.rgba) < 0.5;
+    }, r2.prototype.isLight = function() {
+      return E(this.rgba) >= 0.5;
+    }, r2.prototype.toHex = function() {
+      return r3 = i(this.rgba), t = r3.r, u = r3.g, e3 = r3.b, a = (o = r3.a) < 1 ? g(n(255 * o)) : "", "#" + g(t) + g(u) + g(e3) + a;
+      var r3, t, u, e3, o, a;
+    }, r2.prototype.toRgb = function() {
+      return i(this.rgba);
+    }, r2.prototype.toRgbString = function() {
+      return r3 = i(this.rgba), t = r3.r, n = r3.g, u = r3.b, (e3 = r3.a) < 1 ? "rgba(" + t + ", " + n + ", " + u + ", " + e3 + ")" : "rgb(" + t + ", " + n + ", " + u + ")";
+      var r3, t, n, u, e3;
+    }, r2.prototype.toHsl = function() {
+      return p(y(this.rgba));
+    }, r2.prototype.toHslString = function() {
+      return r3 = p(y(this.rgba)), t = r3.h, n = r3.s, u = r3.l, (e3 = r3.a) < 1 ? "hsla(" + t + ", " + n + "%, " + u + "%, " + e3 + ")" : "hsl(" + t + ", " + n + "%, " + u + "%)";
+      var r3, t, n, u, e3;
+    }, r2.prototype.toHsv = function() {
+      return r3 = c(this.rgba), { h: o(r3.h), s: n(r3.s), v: n(r3.v), a: n(r3.a, 3) };
+      var r3;
+    }, r2.prototype.invert = function() {
+      return A({ r: 255 - (r3 = this.rgba).r, g: 255 - r3.g, b: 255 - r3.b, a: r3.a });
+      var r3;
+    }, r2.prototype.saturate = function(r3) {
+      return void 0 === r3 && (r3 = 0.1), A(k(this.rgba, r3));
+    }, r2.prototype.desaturate = function(r3) {
+      return void 0 === r3 && (r3 = 0.1), A(k(this.rgba, -r3));
+    }, r2.prototype.grayscale = function() {
+      return A(k(this.rgba, -1));
+    }, r2.prototype.lighten = function(r3) {
+      return void 0 === r3 && (r3 = 0.1), A(R(this.rgba, r3));
+    }, r2.prototype.darken = function(r3) {
+      return void 0 === r3 && (r3 = 0.1), A(R(this.rgba, -r3));
+    }, r2.prototype.rotate = function(r3) {
+      return void 0 === r3 && (r3 = 15), this.hue(y(this.rgba).h + r3);
+    }, r2.prototype.alpha = function(r3) {
+      return "number" == typeof r3 ? A({ r: (t = this.rgba).r, g: t.g, b: t.b, a: r3 }) : n(this.rgba.a, 3);
+      var t;
+    }, r2.prototype.hue = function(r3) {
+      var t = y(this.rgba);
+      return "number" == typeof r3 ? A({ h: r3, s: t.s, l: t.l, a: t.a }) : o(t.h);
+    }, r2.prototype.isEqual = function(r3) {
+      return this.toHex() === A(r3).toHex();
+    }, r2;
   })();
-  var w = function(r3) {
-    return r3 instanceof j ? r3 : new j(r3);
+  var A = function(r2) {
+    return r2 instanceof q ? r2 : new q(r2);
   };
-  var S = [];
-  var k = function(r3) {
-    r3.forEach(function(r4) {
-      S.indexOf(r4) < 0 && (r4(j, y), S.push(r4));
+  var C = [];
+  var D = function(r2) {
+    r2.forEach(function(r3) {
+      C.indexOf(r3) < 0 && (r3(q, $), C.push(r3));
     });
   };
 
   // node_modules/colord/plugins/names.mjs
-  var e2 = function(e4, f2) {
-    var a2 = { white: "#ffffff", bisque: "#ffe4c4", blue: "#0000ff", cadetblue: "#5f9ea0", chartreuse: "#7fff00", chocolate: "#d2691e", coral: "#ff7f50", antiquewhite: "#faebd7", aqua: "#00ffff", azure: "#f0ffff", whitesmoke: "#f5f5f5", papayawhip: "#ffefd5", plum: "#dda0dd", blanchedalmond: "#ffebcd", black: "#000000", gold: "#ffd700", goldenrod: "#daa520", gainsboro: "#dcdcdc", cornsilk: "#fff8dc", cornflowerblue: "#6495ed", burlywood: "#deb887", aquamarine: "#7fffd4", beige: "#f5f5dc", crimson: "#dc143c", cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkkhaki: "#bdb76b", darkgray: "#a9a9a9", darkgreen: "#006400", darkgrey: "#a9a9a9", peachpuff: "#ffdab9", darkmagenta: "#8b008b", darkred: "#8b0000", darkorchid: "#9932cc", darkorange: "#ff8c00", darkslateblue: "#483d8b", gray: "#808080", darkslategray: "#2f4f4f", darkslategrey: "#2f4f4f", deeppink: "#ff1493", deepskyblue: "#00bfff", wheat: "#f5deb3", firebrick: "#b22222", floralwhite: "#fffaf0", ghostwhite: "#f8f8ff", darkviolet: "#9400d3", magenta: "#ff00ff", green: "#008000", dodgerblue: "#1e90ff", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", blueviolet: "#8a2be2", forestgreen: "#228b22", lawngreen: "#7cfc00", indianred: "#cd5c5c", indigo: "#4b0082", fuchsia: "#ff00ff", brown: "#a52a2a", maroon: "#800000", mediumblue: "#0000cd", lightcoral: "#f08080", darkturquoise: "#00ced1", lightcyan: "#e0ffff", ivory: "#fffff0", lightyellow: "#ffffe0", lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", linen: "#faf0e6", mediumaquamarine: "#66cdaa", lemonchiffon: "#fffacd", lime: "#00ff00", khaki: "#f0e68c", mediumseagreen: "#3cb371", limegreen: "#32cd32", mediumspringgreen: "#00fa9a", lightskyblue: "#87cefa", lightblue: "#add8e6", midnightblue: "#191970", lightpink: "#ffb6c1", mistyrose: "#ffe4e1", moccasin: "#ffe4b5", mintcream: "#f5fffa", lightslategray: "#778899", lightslategrey: "#778899", navajowhite: "#ffdead", navy: "#000080", mediumvioletred: "#c71585", powderblue: "#b0e0e6", palegoldenrod: "#eee8aa", oldlace: "#fdf5e6", paleturquoise: "#afeeee", mediumturquoise: "#48d1cc", mediumorchid: "#ba55d3", rebeccapurple: "#663399", lightsteelblue: "#b0c4de", mediumslateblue: "#7b68ee", thistle: "#d8bfd8", tan: "#d2b48c", orchid: "#da70d6", mediumpurple: "#9370db", purple: "#800080", pink: "#ffc0cb", skyblue: "#87ceeb", springgreen: "#00ff7f", palegreen: "#98fb98", red: "#ff0000", yellow: "#ffff00", slateblue: "#6a5acd", lavenderblush: "#fff0f5", peru: "#cd853f", palevioletred: "#db7093", violet: "#ee82ee", teal: "#008080", slategray: "#708090", slategrey: "#708090", aliceblue: "#f0f8ff", darkseagreen: "#8fbc8f", darkolivegreen: "#556b2f", greenyellow: "#adff2f", seagreen: "#2e8b57", seashell: "#fff5ee", tomato: "#ff6347", silver: "#c0c0c0", sienna: "#a0522d", lavender: "#e6e6fa", lightgreen: "#90ee90", orange: "#ffa500", orangered: "#ff4500", steelblue: "#4682b4", royalblue: "#4169e1", turquoise: "#40e0d0", yellowgreen: "#9acd32", salmon: "#fa8072", saddlebrown: "#8b4513", sandybrown: "#f4a460", rosybrown: "#bc8f8f", darksalmon: "#e9967a", lightgoldenrodyellow: "#fafad2", snow: "#fffafa", lightgrey: "#d3d3d3", lightgray: "#d3d3d3", dimgray: "#696969", dimgrey: "#696969", olivedrab: "#6b8e23", olive: "#808000" }, r3 = {};
-    for (var d2 in a2) r3[a2[d2]] = d2;
+  var e = function(e3, f) {
+    var a = { white: "#ffffff", bisque: "#ffe4c4", blue: "#0000ff", cadetblue: "#5f9ea0", chartreuse: "#7fff00", chocolate: "#d2691e", coral: "#ff7f50", antiquewhite: "#faebd7", aqua: "#00ffff", azure: "#f0ffff", whitesmoke: "#f5f5f5", papayawhip: "#ffefd5", plum: "#dda0dd", blanchedalmond: "#ffebcd", black: "#000000", gold: "#ffd700", goldenrod: "#daa520", gainsboro: "#dcdcdc", cornsilk: "#fff8dc", cornflowerblue: "#6495ed", burlywood: "#deb887", aquamarine: "#7fffd4", beige: "#f5f5dc", crimson: "#dc143c", cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkkhaki: "#bdb76b", darkgray: "#a9a9a9", darkgreen: "#006400", darkgrey: "#a9a9a9", peachpuff: "#ffdab9", darkmagenta: "#8b008b", darkred: "#8b0000", darkorchid: "#9932cc", darkorange: "#ff8c00", darkslateblue: "#483d8b", gray: "#808080", darkslategray: "#2f4f4f", darkslategrey: "#2f4f4f", deeppink: "#ff1493", deepskyblue: "#00bfff", wheat: "#f5deb3", firebrick: "#b22222", floralwhite: "#fffaf0", ghostwhite: "#f8f8ff", darkviolet: "#9400d3", magenta: "#ff00ff", green: "#008000", dodgerblue: "#1e90ff", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", blueviolet: "#8a2be2", forestgreen: "#228b22", lawngreen: "#7cfc00", indianred: "#cd5c5c", indigo: "#4b0082", fuchsia: "#ff00ff", brown: "#a52a2a", maroon: "#800000", mediumblue: "#0000cd", lightcoral: "#f08080", darkturquoise: "#00ced1", lightcyan: "#e0ffff", ivory: "#fffff0", lightyellow: "#ffffe0", lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", linen: "#faf0e6", mediumaquamarine: "#66cdaa", lemonchiffon: "#fffacd", lime: "#00ff00", khaki: "#f0e68c", mediumseagreen: "#3cb371", limegreen: "#32cd32", mediumspringgreen: "#00fa9a", lightskyblue: "#87cefa", lightblue: "#add8e6", midnightblue: "#191970", lightpink: "#ffb6c1", mistyrose: "#ffe4e1", moccasin: "#ffe4b5", mintcream: "#f5fffa", lightslategray: "#778899", lightslategrey: "#778899", navajowhite: "#ffdead", navy: "#000080", mediumvioletred: "#c71585", powderblue: "#b0e0e6", palegoldenrod: "#eee8aa", oldlace: "#fdf5e6", paleturquoise: "#afeeee", mediumturquoise: "#48d1cc", mediumorchid: "#ba55d3", rebeccapurple: "#663399", lightsteelblue: "#b0c4de", mediumslateblue: "#7b68ee", thistle: "#d8bfd8", tan: "#d2b48c", orchid: "#da70d6", mediumpurple: "#9370db", purple: "#800080", pink: "#ffc0cb", skyblue: "#87ceeb", springgreen: "#00ff7f", palegreen: "#98fb98", red: "#ff0000", yellow: "#ffff00", slateblue: "#6a5acd", lavenderblush: "#fff0f5", peru: "#cd853f", palevioletred: "#db7093", violet: "#ee82ee", teal: "#008080", slategray: "#708090", slategrey: "#708090", aliceblue: "#f0f8ff", darkseagreen: "#8fbc8f", darkolivegreen: "#556b2f", greenyellow: "#adff2f", seagreen: "#2e8b57", seashell: "#fff5ee", tomato: "#ff6347", silver: "#c0c0c0", sienna: "#a0522d", lavender: "#e6e6fa", lightgreen: "#90ee90", orange: "#ffa500", orangered: "#ff4500", steelblue: "#4682b4", royalblue: "#4169e1", turquoise: "#40e0d0", yellowgreen: "#9acd32", salmon: "#fa8072", saddlebrown: "#8b4513", sandybrown: "#f4a460", rosybrown: "#bc8f8f", darksalmon: "#e9967a", lightgoldenrodyellow: "#fafad2", snow: "#fffafa", lightgrey: "#d3d3d3", lightgray: "#d3d3d3", dimgray: "#696969", dimgrey: "#696969", olivedrab: "#6b8e23", olive: "#808000" }, r2 = {};
+    for (var d in a) r2[a[d]] = d;
     var l2 = {};
-    e4.prototype.toName = function(f3) {
+    e3.prototype.toName = function(f2) {
       if (!(this.rgba.a || this.rgba.r || this.rgba.g || this.rgba.b)) return "transparent";
-      var d3, i2, n2 = r3[this.toHex()];
-      if (n2) return n2;
-      if (null == f3 ? void 0 : f3.closest) {
-        var o2 = this.toRgb(), t2 = 1 / 0, b2 = "black";
-        if (!l2.length) for (var c2 in a2) l2[c2] = new e4(a2[c2]).toRgb();
-        for (var g2 in a2) {
-          var u2 = (d3 = o2, i2 = l2[g2], Math.pow(d3.r - i2.r, 2) + Math.pow(d3.g - i2.g, 2) + Math.pow(d3.b - i2.b, 2));
-          u2 < t2 && (t2 = u2, b2 = g2);
+      var d2, i, n = r2[this.toHex()];
+      if (n) return n;
+      if (null == f2 ? void 0 : f2.closest) {
+        var o = this.toRgb(), t = 1 / 0, b = "black";
+        if (!l2.length) for (var c2 in a) l2[c2] = new e3(a[c2]).toRgb();
+        for (var g2 in a) {
+          var u = (d2 = o, i = l2[g2], Math.pow(d2.r - i.r, 2) + Math.pow(d2.g - i.g, 2) + Math.pow(d2.b - i.b, 2));
+          u < t && (t = u, b = g2);
         }
-        return b2;
+        return b;
       }
     };
-    f2.string.push([function(f3) {
-      var r4 = f3.toLowerCase(), d3 = "transparent" === r4 ? "#0000" : a2[r4];
-      return d3 ? new e4(d3).toRgb() : null;
+    f.string.push([function(f2) {
+      var r3 = f2.toLowerCase(), d2 = "transparent" === r3 ? "#0000" : a[r3];
+      return d2 ? new e3(d2).toRgb() : null;
     }, "name"]);
   };
 
@@ -25985,8 +25998,8 @@ var wp;
     return Array.isArray(value[0]);
   }
   function isIgnoredColor(data, index, ignoredColor) {
-    for (var i2 = 0; i2 < ignoredColor.length; i2++) {
-      if (isIgnoredColorAsNumbers(data, index, ignoredColor[i2])) {
+    for (var i = 0; i < ignoredColor.length; i++) {
+      if (isIgnoredColorAsNumbers(data, index, ignoredColor[i])) {
         return true;
       }
     }
@@ -26056,12 +26069,12 @@ var wp;
     var ignoredColor = options2.ignoredColor;
     var step = options2.step;
     var max = [0, 0, 0, 0, 0];
-    for (var i2 = 0; i2 < len; i2 += step) {
-      var red = arr[i2];
-      var green = arr[i2 + 1];
-      var blue = arr[i2 + 2];
-      var alpha = arr[i2 + 3];
-      if (ignoredColor && isIgnoredColor(arr, i2, ignoredColor)) {
+    for (var i = 0; i < len; i += step) {
+      var red = arr[i];
+      var green = arr[i + 1];
+      var blue = arr[i + 2];
+      var alpha = arr[i + 3];
+      if (ignoredColor && isIgnoredColor(arr, i, ignoredColor)) {
         continue;
       }
       var key = Math.round(red / divider) + "," + Math.round(green / divider) + "," + Math.round(blue / divider);
@@ -26100,12 +26113,12 @@ var wp;
     var count = 0;
     var ignoredColor = options2.ignoredColor;
     var step = options2.step;
-    for (var i2 = 0; i2 < len; i2 += step) {
-      var alpha = arr[i2 + 3];
-      var red = arr[i2] * alpha;
-      var green = arr[i2 + 1] * alpha;
-      var blue = arr[i2 + 2] * alpha;
-      if (ignoredColor && isIgnoredColor(arr, i2, ignoredColor)) {
+    for (var i = 0; i < len; i += step) {
+      var alpha = arr[i + 3];
+      var red = arr[i] * alpha;
+      var green = arr[i + 1] * alpha;
+      var blue = arr[i + 2] * alpha;
+      if (ignoredColor && isIgnoredColor(arr, i, ignoredColor)) {
         continue;
       }
       redTotal += red;
@@ -26129,12 +26142,12 @@ var wp;
     var count = 0;
     var ignoredColor = options2.ignoredColor;
     var step = options2.step;
-    for (var i2 = 0; i2 < len; i2 += step) {
-      var red = arr[i2];
-      var green = arr[i2 + 1];
-      var blue = arr[i2 + 2];
-      var alpha = arr[i2 + 3];
-      if (ignoredColor && isIgnoredColor(arr, i2, ignoredColor)) {
+    for (var i = 0; i < len; i += step) {
+      var red = arr[i];
+      var green = arr[i + 1];
+      var blue = arr[i + 2];
+      var alpha = arr[i + 3];
+      if (ignoredColor && isIgnoredColor(arr, i, ignoredColor)) {
         continue;
       }
       redTotal += red * red * alpha;
@@ -26324,8 +26337,8 @@ var wp;
           this.ctx.drawImage(resource, size.srcLeft, size.srcTop, size.srcWidth, size.srcHeight, 0, 0, size.destWidth, size.destHeight);
           var bitmapData = this.ctx.getImageData(0, 0, size.destWidth, size.destHeight).data;
           value = this.getColorFromArray4(bitmapData, options2);
-        } catch (e4) {
-          outputError("security error (CORS) for resource ".concat(getSrc(resource), ".\nDetails: https://developer.mozilla.org/en/docs/Web/HTML/CORS_enabled_image"), options2.silent, e4);
+        } catch (e3) {
+          outputError("security error (CORS) for resource ".concat(getSrc(resource), ".\nDetails: https://developer.mozilla.org/en/docs/Web/HTML/CORS_enabled_image"), options2.silent, e3);
         }
         return this.prepareResult(value);
       };
@@ -26417,7 +26430,7 @@ var wp;
 
   // packages/block-library/build-module/cover/edit/color-utils.mjs
   var import_hooks19 = __toESM(require_hooks(), 1);
-  k([e2]);
+  D([e]);
   var DEFAULT_BACKGROUND_COLOR = "#FFF";
   var DEFAULT_OVERLAY_COLOR = "#000";
   function compositeSourceOver(source, dest) {
@@ -26438,7 +26451,7 @@ var wp;
     if (!url) {
       return DEFAULT_BACKGROUND_COLOR;
     }
-    const { r: r3, g: g2, b: b2, a: a2 } = w(DEFAULT_BACKGROUND_COLOR).toRgb();
+    const { r: r2, g: g2, b, a } = A(DEFAULT_BACKGROUND_COLOR).toRgb();
     try {
       const imgCrossOrigin = (0, import_hooks19.applyFilters)(
         "media.crossOrigin",
@@ -26449,7 +26462,7 @@ var wp;
         // The default color is white, which is the color
         // that is returned if there's an error.
         // colord returns alpga 0-1, FAC needs 0-255
-        defaultColor: [r3, g2, b2, a2 * 255],
+        defaultColor: [r2, g2, b, a * 255],
         // Errors that come up don't reject the promise,
         // so error logging has to be silenced
         // with this option.
@@ -26463,12 +26476,12 @@ var wp;
   });
   function compositeIsDark(dimRatio, overlayColor, backgroundColor) {
     if (overlayColor === backgroundColor || dimRatio === 100) {
-      return w(overlayColor).isDark();
+      return A(overlayColor).isDark();
     }
-    const overlay = w(overlayColor).alpha(dimRatio / 100).toRgb();
-    const background = w(backgroundColor).toRgb();
+    const overlay = A(overlayColor).alpha(dimRatio / 100).toRgb();
+    const background = A(backgroundColor).toRgb();
     const composite = compositeSourceOver(overlay, background);
-    return w(composite).isDark();
+    return A(composite).isDark();
   }
 
   // packages/block-library/build-module/cover/edit/index.mjs
@@ -31561,7 +31574,7 @@ ${url}
       a: []
     };
     colors.forEach((color) => {
-      const rgbColor = w(color).toRgb();
+      const rgbColor = A(color).toRgb();
       values.r.push(rgbColor.r / 255);
       values.g.push(rgbColor.g / 255);
       values.b.push(rgbColor.b / 255);
@@ -33013,7 +33026,7 @@ ${url}
       replaceInnerBlocks(
         clientId,
         existingImageBlocks.concat(newBlocks).sort(
-          (a2, b2) => newOrderMap[a2.attributes.id] - newOrderMap[b2.attributes.id]
+          (a, b) => newOrderMap[a.attributes.id] - newOrderMap[b.attributes.id]
         )
       );
       if (newBlocks?.length > 0) {
@@ -35230,10 +35243,10 @@ ${url}
     }
     delete anchors[clientId];
     let anchor = slug;
-    let i2 = 0;
+    let i = 0;
     while (Object.values(anchors).includes(anchor)) {
-      i2 += 1;
-      anchor = slug + "-" + i2;
+      i += 1;
+      anchor = slug + "-" + i;
     }
     return anchor;
   };
@@ -48136,7 +48149,7 @@ ${text}
   function mapMenuItemsToBlocks(menuItems, level = 0) {
     let mapping = {};
     const sortedItems = [...menuItems].sort(
-      (a2, b2) => a2.menu_order - b2.menu_order
+      (a, b) => a.menu_order - b.menu_order
     );
     const innerBlocks = sortedItems.map((menuItem) => {
       if (menuItem.type === "block") {
@@ -49110,8 +49123,8 @@ ${text}
       {
         className,
         icon: (0, import_i18n131.isRTL)() ? chevron_right_small_default : chevron_left_small_default,
-        onClick: (e4) => {
-          e4.preventDefault();
+        onClick: (e3) => {
+          e3.preventDefault();
           onBack();
         },
         size: "small",
@@ -49561,8 +49574,8 @@ ${text}
           __next40pxDefaultSize: true,
           ref: addPageButtonRef,
           icon: plus_default,
-          onClick: (e4) => {
-            e4.preventDefault();
+          onClick: (e3) => {
+            e3.preventDefault();
             setAddingPage(true);
           },
           "aria-haspopup": blockInserterAriaRole,
@@ -49575,8 +49588,8 @@ ${text}
           __next40pxDefaultSize: true,
           ref: addBlockButtonRef,
           icon: plus_default,
-          onClick: (e4) => {
-            e4.preventDefault();
+          onClick: (e3) => {
+            e3.preventDefault();
             setAddingBlock(true);
           },
           "aria-haspopup": blockInserterAriaRole,
@@ -53664,14 +53677,14 @@ ${text}
       }
     }
   }
-  function registerDependency(deps, a2, b2) {
-    if (!deps.has(a2)) {
-      deps.set(a2, /* @__PURE__ */ new Set());
+  function registerDependency(deps, a, b) {
+    if (!deps.has(a)) {
+      deps.set(a, /* @__PURE__ */ new Set());
     }
-    deps.get(a2).add(b2);
-    if (hasCycle(deps, a2)) {
+    deps.get(a).add(b);
+    if (hasCycle(deps, a)) {
       throw new TypeError(
-        `Pattern ${a2} has a circular dependency and cannot be rendered.`
+        `Pattern ${a} has a circular dependency and cannot be rendered.`
       );
     }
   }
@@ -54078,11 +54091,11 @@ ${text}
       if (pages === null) {
         return /* @__PURE__ */ new Map();
       }
-      const sortedPages = pages.sort((a2, b2) => {
-        if (a2.menu_order === b2.menu_order) {
-          return a2.title.rendered.localeCompare(b2.title.rendered);
+      const sortedPages = pages.sort((a, b) => {
+        if (a.menu_order === b.menu_order) {
+          return a.title.rendered.localeCompare(b.title.rendered);
         }
-        return a2.menu_order - b2.menu_order;
+        return a.menu_order - b.menu_order;
       });
       return sortedPages.reduce((accumulator, page) => {
         const { parent } = page;
@@ -55475,518 +55488,518 @@ ${text}
   var import_i18n156 = __toESM(require_i18n(), 1);
 
   // node_modules/@arraypress/waveform-player/dist/waveform-player.esm.js
-  function $2(e4) {
-    let t2 = -1 / 0;
-    for (let i2 = 0; i2 < e4.length; i2++) e4[i2] > t2 && (t2 = e4[i2]);
-    return t2;
+  function $2(e3) {
+    let t = -1 / 0;
+    for (let i = 0; i < e3.length; i++) e3[i] > t && (t = e3[i]);
+    return t;
   }
-  function S2(e4) {
-    return String(e4 ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  function S(e3) {
+    return String(e3 ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
-  function q(e4) {
-    return S2(typeof e4 == "number" ? `${e4}px` : e4);
+  function q2(e3) {
+    return S(typeof e3 == "number" ? `${e3}px` : e3);
   }
-  function st(e4) {
-    if (typeof e4 != "string" || e4 === "") return false;
+  function st(e3) {
+    if (typeof e3 != "string" || e3 === "") return false;
     try {
-      let t2 = new URL(e4, "http://localhost/");
-      return t2.protocol === "http:" || t2.protocol === "https:";
+      let t = new URL(e3, "http://localhost/");
+      return t.protocol === "http:" || t.protocol === "https:";
     } catch {
       return false;
     }
   }
-  function m2(e4, t2 = 0, i2 = 1) {
-    return Math.max(t2, Math.min(e4, i2));
+  function m2(e3, t = 0, i = 1) {
+    return Math.max(t, Math.min(e3, i));
   }
-  function _(e4, t2 = null, i2 = {}) {
-    let { min: s2 = -1 / 0, max: r3 = 1 / 0, integer: a2 = false } = i2, o2 = typeof e4 == "number" ? e4 : typeof e4 == "string" && e4.trim() !== "" ? Number(e4) : NaN;
-    if (!Number.isFinite(o2)) return t2;
-    let n2 = m2(o2, s2, r3);
-    return a2 ? Math.round(n2) : n2;
+  function _(e3, t = null, i = {}) {
+    let { min: s = -1 / 0, max: r2 = 1 / 0, integer: a = false } = i, o = typeof e3 == "number" ? e3 : typeof e3 == "string" && e3.trim() !== "" ? Number(e3) : NaN;
+    if (!Number.isFinite(o)) return t;
+    let n = m2(o, s, r2);
+    return a ? Math.round(n) : n;
   }
-  function H2(e4, t2 = null) {
-    if (Array.isArray(e4)) return e4;
-    if (typeof e4 == "string" && e4.trim().startsWith("[")) try {
-      let i2 = JSON.parse(e4);
-      if (Array.isArray(i2)) return i2;
+  function H2(e3, t = null) {
+    if (Array.isArray(e3)) return e3;
+    if (typeof e3 == "string" && e3.trim().startsWith("[")) try {
+      let i = JSON.parse(e3);
+      if (Array.isArray(i)) return i;
     } catch {
     }
-    return t2;
+    return t;
   }
-  function D(e4, t2 = {}) {
-    let { min: i2 = -1 / 0, max: s2 = 1 / 0, fallback: r3 = null } = t2, a2 = H2(e4);
-    if (!a2 && typeof e4 == "string" && e4.trim() !== "" && (a2 = e4.split(/[,\s]+/)), !a2) return r3;
-    let o2 = a2.map((n2) => _(n2)).filter((n2) => n2 !== null && n2 >= i2 && n2 <= s2);
-    return o2.length ? o2 : r3;
+  function D2(e3, t = {}) {
+    let { min: i = -1 / 0, max: s = 1 / 0, fallback: r2 = null } = t, a = H2(e3);
+    if (!a && typeof e3 == "string" && e3.trim() !== "" && (a = e3.split(/[,\s]+/)), !a) return r2;
+    let o = a.map((n) => _(n)).filter((n) => n !== null && n >= i && n <= s);
+    return o.length ? o : r2;
   }
-  function rt(e4, t2, i2 = null) {
-    return t2.includes(e4) ? e4 : i2;
+  function rt(e3, t, i = null) {
+    return t.includes(e3) ? e3 : i;
   }
-  function at(e4) {
-    if (typeof e4 == "string") {
-      let t2 = e4.trim().toLowerCase();
-      return t2 !== "" && t2 !== "false" && t2 !== "0";
+  function at(e3) {
+    if (typeof e3 == "string") {
+      let t = e3.trim().toLowerCase();
+      return t !== "" && t !== "false" && t !== "0";
     }
-    return !!e4;
+    return !!e3;
   }
-  function vt(e4) {
-    return e4 === void 0 ? void 0 : e4 === "true";
+  function vt(e3) {
+    return e3 === void 0 ? void 0 : e3 === "true";
   }
-  function it(e4) {
-    if (typeof e4 == "string" && e4.trim().startsWith("[")) try {
-      return JSON.parse(e4);
+  function it(e3) {
+    if (typeof e3 == "string" && e3.trim().startsWith("[")) try {
+      return JSON.parse(e3);
     } catch {
     }
-    return e4;
+    return e3;
   }
-  function O(e4) {
-    let t2 = {}, i2 = (o2, n2 = o2) => {
-      let l2 = vt(e4.dataset[n2]);
-      l2 !== void 0 && (t2[o2] = l2);
-    }, s2 = (o2, n2 = o2, l2 = false) => {
-      let h2 = e4.dataset[n2];
-      h2 && (t2[o2] = l2 ? parseFloat(h2) : parseInt(h2, 10));
-    }, r3 = (o2, n2 = o2) => {
-      let l2 = e4.dataset[n2];
-      l2 && (t2[o2] = /^\d+(\.\d+)?$/.test(l2.trim()) ? parseFloat(l2) : l2);
-    }, a2 = (o2, n2 = o2) => {
-      let l2 = e4.dataset[n2];
+  function O(e3) {
+    let t = {}, i = (o, n = o) => {
+      let l2 = vt(e3.dataset[n]);
+      l2 !== void 0 && (t[o] = l2);
+    }, s = (o, n = o, l2 = false) => {
+      let h = e3.dataset[n];
+      h && (t[o] = l2 ? parseFloat(h) : parseInt(h, 10));
+    }, r2 = (o, n = o) => {
+      let l2 = e3.dataset[n];
+      l2 && (t[o] = /^\d+(\.\d+)?$/.test(l2.trim()) ? parseFloat(l2) : l2);
+    }, a = (o, n = o) => {
+      let l2 = e3.dataset[n];
       if (!l2) return;
-      let h2 = H2(l2);
-      h2 ? t2[o2] = h2 : console.warn(`[WaveformPlayer] Invalid ${n2} attribute, expected a JSON array:`, l2);
+      let h = H2(l2);
+      h ? t[o] = h : console.warn(`[WaveformPlayer] Invalid ${n} attribute, expected a JSON array:`, l2);
     };
-    if (e4.dataset.src && (t2.url = e4.dataset.src), e4.dataset.url && (t2.url = e4.dataset.url), s2("height"), s2("samples"), e4.dataset.preload && (t2.preload = e4.dataset.preload), e4.dataset.crossOrigin && (t2.crossOrigin = e4.dataset.crossOrigin), e4.dataset.audioMode && (t2.audioMode = e4.dataset.audioMode), e4.dataset.style && (t2.waveformStyle = e4.dataset.style), e4.dataset.waveformStyle && (t2.waveformStyle = e4.dataset.waveformStyle), e4.dataset.waveformGradient && (t2.waveformGradient = e4.dataset.waveformGradient), s2("barWidth"), s2("barSpacing"), s2("barRadius"), e4.dataset.buttonAlign && (t2.buttonAlign = e4.dataset.buttonAlign), e4.dataset.layout && (t2.layout = e4.dataset.layout), e4.dataset.buttonStyle && (t2.buttonStyle = e4.dataset.buttonStyle), r3("buttonSize"), r3("buttonRadius"), e4.dataset.colorPreset && (t2.colorPreset = e4.dataset.colorPreset), e4.dataset.waveformColor && (t2.waveformColor = it(e4.dataset.waveformColor)), e4.dataset.progressColor && (t2.progressColor = it(e4.dataset.progressColor)), e4.dataset.color && (t2.waveformColor = e4.dataset.color), e4.dataset.theme && (t2.colorPreset = e4.dataset.theme), i2("autoplay"), i2("showControls"), i2("showInfo"), i2("showTime"), i2("showHoverTime"), i2("seekHandle"), i2("showBPM", "showBpm"), s2("bpm"), i2("singlePlay"), i2("playOnSeek"), e4.dataset.title && (t2.title = e4.dataset.title), e4.dataset.artist && (t2.artist = e4.dataset.artist), e4.dataset.album && (t2.album = e4.dataset.album), e4.dataset.artwork && (t2.artwork = e4.dataset.artwork), e4.dataset.artworkPosition && (t2.artworkPosition = e4.dataset.artworkPosition), e4.dataset.waveform && (t2.waveform = e4.dataset.waveform), a2("markers"), s2("playbackRate", "playbackRate", true), i2("showPlaybackSpeed"), e4.dataset.playbackRates) {
-      let o2 = D(e4.dataset.playbackRates);
-      o2 ? t2.playbackRates = o2 : console.warn("[WaveformPlayer] Invalid playbackRates attribute:", e4.dataset.playbackRates);
+    if (e3.dataset.src && (t.url = e3.dataset.src), e3.dataset.url && (t.url = e3.dataset.url), s("height"), s("samples"), e3.dataset.preload && (t.preload = e3.dataset.preload), e3.dataset.crossOrigin && (t.crossOrigin = e3.dataset.crossOrigin), e3.dataset.audioMode && (t.audioMode = e3.dataset.audioMode), e3.dataset.style && (t.waveformStyle = e3.dataset.style), e3.dataset.waveformStyle && (t.waveformStyle = e3.dataset.waveformStyle), e3.dataset.waveformGradient && (t.waveformGradient = e3.dataset.waveformGradient), s("barWidth"), s("barSpacing"), s("barRadius"), e3.dataset.buttonAlign && (t.buttonAlign = e3.dataset.buttonAlign), e3.dataset.layout && (t.layout = e3.dataset.layout), e3.dataset.buttonStyle && (t.buttonStyle = e3.dataset.buttonStyle), r2("buttonSize"), r2("buttonRadius"), e3.dataset.colorPreset && (t.colorPreset = e3.dataset.colorPreset), e3.dataset.waveformColor && (t.waveformColor = it(e3.dataset.waveformColor)), e3.dataset.progressColor && (t.progressColor = it(e3.dataset.progressColor)), e3.dataset.color && (t.waveformColor = e3.dataset.color), e3.dataset.theme && (t.colorPreset = e3.dataset.theme), i("autoplay"), i("showControls"), i("showInfo"), i("showTime"), i("showHoverTime"), i("seekHandle"), i("showBPM", "showBpm"), s("bpm"), i("singlePlay"), i("playOnSeek"), e3.dataset.title && (t.title = e3.dataset.title), e3.dataset.artist && (t.artist = e3.dataset.artist), e3.dataset.album && (t.album = e3.dataset.album), e3.dataset.artwork && (t.artwork = e3.dataset.artwork), e3.dataset.artworkPosition && (t.artworkPosition = e3.dataset.artworkPosition), e3.dataset.waveform && (t.waveform = e3.dataset.waveform), a("markers"), s("playbackRate", "playbackRate", true), i("showPlaybackSpeed"), e3.dataset.playbackRates) {
+      let o = D2(e3.dataset.playbackRates);
+      o ? t.playbackRates = o : console.warn("[WaveformPlayer] Invalid playbackRates attribute:", e3.dataset.playbackRates);
     }
-    return i2("enableMediaSession"), i2("showMarkers"), i2("accessibleSeek"), e4.dataset.seekLabel && (t2.seekLabel = e4.dataset.seekLabel), e4.dataset.seekValueText && (t2.seekValueText = e4.dataset.seekValueText), e4.dataset.errorText && (t2.errorText = e4.dataset.errorText), e4.dataset.playPauseLabel && (t2.playPauseLabel = e4.dataset.playPauseLabel), e4.dataset.speedLabel && (t2.speedLabel = e4.dataset.speedLabel), e4.dataset.artworkAlt && (t2.artworkAlt = e4.dataset.artworkAlt), e4.dataset.unknownTrackText && (t2.unknownTrackText = e4.dataset.unknownTrackText), t2;
+    return i("enableMediaSession"), i("showMarkers"), i("accessibleSeek"), e3.dataset.seekLabel && (t.seekLabel = e3.dataset.seekLabel), e3.dataset.seekValueText && (t.seekValueText = e3.dataset.seekValueText), e3.dataset.errorText && (t.errorText = e3.dataset.errorText), e3.dataset.playPauseLabel && (t.playPauseLabel = e3.dataset.playPauseLabel), e3.dataset.speedLabel && (t.speedLabel = e3.dataset.speedLabel), e3.dataset.artworkAlt && (t.artworkAlt = e3.dataset.artworkAlt), e3.dataset.unknownTrackText && (t.unknownTrackText = e3.dataset.unknownTrackText), t;
   }
-  function ot(e4, ...t2) {
-    let i2 = 0;
-    return e4.replace(/%(?:(\d+)\$)?s/g, (s2, r3) => {
-      let a2 = r3 ? Number(r3) - 1 : i2++;
-      return t2[a2] ?? s2;
+  function ot(e3, ...t) {
+    let i = 0;
+    return e3.replace(/%(?:(\d+)\$)?s/g, (s, r2) => {
+      let a = r2 ? Number(r2) - 1 : i++;
+      return t[a] ?? s;
     });
   }
-  function E(e4) {
-    let t2 = Number(e4);
-    if (!t2 || !Number.isFinite(t2) || t2 < 0) return "0:00";
-    let i2 = Math.floor(t2 / 3600), s2 = Math.floor(t2 % 3600 / 60), r3 = Math.floor(t2 % 60);
-    return i2 > 0 ? `${i2}:${s2.toString().padStart(2, "0")}:${r3.toString().padStart(2, "0")}` : `${s2}:${r3.toString().padStart(2, "0")}`;
+  function E2(e3) {
+    let t = Number(e3);
+    if (!t || !Number.isFinite(t) || t < 0) return "0:00";
+    let i = Math.floor(t / 3600), s = Math.floor(t % 3600 / 60), r2 = Math.floor(t % 60);
+    return i > 0 ? `${i}:${s.toString().padStart(2, "0")}:${r2.toString().padStart(2, "0")}` : `${s}:${r2.toString().padStart(2, "0")}`;
   }
   var St = 0;
-  function nt(e4) {
-    let t2 = e4 || "audio", i2 = 5381;
-    for (let s2 = 0; s2 < t2.length; s2++) i2 = (i2 << 5) + i2 + t2.charCodeAt(s2) | 0;
-    return `wp_${(i2 >>> 0).toString(36)}_${(St++).toString(36)}`;
+  function nt(e3) {
+    let t = e3 || "audio", i = 5381;
+    for (let s = 0; s < t.length; s++) i = (i << 5) + i + t.charCodeAt(s) | 0;
+    return `wp_${(i >>> 0).toString(36)}_${(St++).toString(36)}`;
   }
-  function I(e4) {
-    if (!e4) return "Audio";
-    let t2 = e4.split("/");
-    return t2[t2.length - 1].split(".")[0].replace(/[-_]/g, " ").replace(/\b\w/g, (r3) => r3.toUpperCase());
+  function I(e3) {
+    if (!e3) return "Audio";
+    let t = e3.split("/");
+    return t[t.length - 1].split(".")[0].replace(/[-_]/g, " ").replace(/\b\w/g, (r2) => r2.toUpperCase());
   }
-  function U(e4) {
-    if (typeof e4 != "string") return null;
-    let t2 = e4.match(/rgba?\(\s*([\d.]+)\s*[,\s]\s*([\d.]+)\s*[,\s]\s*([\d.]+)\s*(?:[,/]\s*([\d.]+)(%?))?/i);
-    if (!t2) return null;
-    let i2 = Number(t2[1]), s2 = Number(t2[2]), r3 = Number(t2[3]);
-    if (!Number.isFinite(i2) || !Number.isFinite(s2) || !Number.isFinite(r3)) return null;
-    let a2 = t2[4] === void 0 ? 1 : Number(t2[4]);
-    return Number.isFinite(a2) ? (t2[5] === "%" && (a2 /= 100), { r: i2, g: s2, b: r3, a: m2(a2, 0, 1) }) : null;
+  function U(e3) {
+    if (typeof e3 != "string") return null;
+    let t = e3.match(/rgba?\(\s*([\d.]+)\s*[,\s]\s*([\d.]+)\s*[,\s]\s*([\d.]+)\s*(?:[,/]\s*([\d.]+)(%?))?/i);
+    if (!t) return null;
+    let i = Number(t[1]), s = Number(t[2]), r2 = Number(t[3]);
+    if (!Number.isFinite(i) || !Number.isFinite(s) || !Number.isFinite(r2)) return null;
+    let a = t[4] === void 0 ? 1 : Number(t[4]);
+    return Number.isFinite(a) ? (t[5] === "%" && (a /= 100), { r: i, g: s, b: r2, a: m2(a, 0, 1) }) : null;
   }
-  function lt(e4) {
-    let t2 = U(e4);
-    return !t2 || t2.a <= 0 ? null : (t2.r * 299 + t2.g * 587 + t2.b * 114) / 1e3;
+  function lt(e3) {
+    let t = U(e3);
+    return !t || t.a <= 0 ? null : (t.r * 299 + t.g * 587 + t.b * 114) / 1e3;
   }
-  function j2(...e4) {
-    let t2 = {};
-    for (let i2 of e4) for (let s2 in i2) i2[s2] !== null && i2[s2] !== void 0 && (t2[s2] = i2[s2]);
-    return t2;
+  function j2(...e3) {
+    let t = {};
+    for (let i of e3) for (let s in i) i[s] !== null && i[s] !== void 0 && (t[s] = i[s]);
+    return t;
   }
-  function ht(e4, t2) {
-    let i2;
-    return function(...r3) {
-      let a2 = () => {
-        clearTimeout(i2), e4(...r3);
+  function ht(e3, t) {
+    let i;
+    return function(...r2) {
+      let a = () => {
+        clearTimeout(i), e3(...r2);
       };
-      clearTimeout(i2), i2 = setTimeout(a2, t2);
+      clearTimeout(i), i = setTimeout(a, t);
     };
   }
-  function B(e4, t2) {
-    if (e4.length === t2) return e4;
-    if (e4.length === 0 || t2 === 0) return [];
-    let i2 = [];
-    if (t2 > e4.length) {
-      let s2 = (e4.length - 1) / (t2 - 1);
-      for (let r3 = 0; r3 < t2; r3++) {
-        let a2 = r3 * s2, o2 = Math.floor(a2), n2 = Math.ceil(a2), l2 = a2 - o2;
-        if (n2 >= e4.length) i2.push(e4[e4.length - 1]);
-        else if (o2 === n2) i2.push(e4[o2]);
+  function B(e3, t) {
+    if (e3.length === t) return e3;
+    if (e3.length === 0 || t === 0) return [];
+    let i = [];
+    if (t > e3.length) {
+      let s = (e3.length - 1) / (t - 1);
+      for (let r2 = 0; r2 < t; r2++) {
+        let a = r2 * s, o = Math.floor(a), n = Math.ceil(a), l2 = a - o;
+        if (n >= e3.length) i.push(e3[e3.length - 1]);
+        else if (o === n) i.push(e3[o]);
         else {
-          let h2 = e4[o2] * (1 - l2) + e4[n2] * l2;
-          i2.push(h2);
+          let h = e3[o] * (1 - l2) + e3[n] * l2;
+          i.push(h);
         }
       }
     } else {
-      let s2 = e4.length / t2;
-      for (let r3 = 0; r3 < t2; r3++) {
-        let a2 = Math.floor(r3 * s2), o2 = Math.floor((r3 + 1) * s2), n2 = 0, l2 = 0;
-        for (let h2 = a2; h2 <= o2 && h2 < e4.length; h2++) e4[h2] > n2 && (n2 = e4[h2]), l2++;
+      let s = e3.length / t;
+      for (let r2 = 0; r2 < t; r2++) {
+        let a = Math.floor(r2 * s), o = Math.floor((r2 + 1) * s), n = 0, l2 = 0;
+        for (let h = a; h <= o && h < e3.length; h++) e3[h] > n && (n = e3[h]), l2++;
         if (l2 === 0) {
-          let h2 = Math.min(Math.round(r3 * s2), e4.length - 1);
-          n2 = e4[h2];
+          let h = Math.min(Math.round(r2 * s), e3.length - 1);
+          n = e3[h];
         }
-        i2.push(n2);
+        i.push(n);
       }
     }
-    return i2;
+    return i;
   }
-  function P(e4, t2, i2, s2) {
-    if (!Array.isArray(t2)) return t2;
-    if (t2.length < 2) return t2[0];
-    let r3 = i2.width, a2 = i2.height, o2 = s2 && s2.waveformGradient, [n2, l2, h2, c2] = o2 === "horizontal" ? [0, 0, r3, 0] : o2 === "diagonal" ? [0, 0, r3, a2] : [0, 0, 0, a2];
+  function P(e3, t, i, s) {
+    if (!Array.isArray(t)) return t;
+    if (t.length < 2) return t[0];
+    let r2 = i.width, a = i.height, o = s && s.waveformGradient, [n, l2, h, c2] = o === "horizontal" ? [0, 0, r2, 0] : o === "diagonal" ? [0, 0, r2, a] : [0, 0, 0, a];
     try {
-      let d2 = e4.createLinearGradient(n2, l2, h2, c2);
-      return t2.forEach((b2, y2) => d2.addColorStop(y2 / (t2.length - 1), b2)), d2;
+      let d = e3.createLinearGradient(n, l2, h, c2);
+      return t.forEach((b, y2) => d.addColorStop(y2 / (t.length - 1), b)), d;
     } catch {
-      return t2[0];
+      return t[0];
     }
   }
-  function x2(e4, t2, i2, s2, r3, a2) {
-    if ((Array.isArray(a2) ? a2.some((n2) => n2 > 0) : a2 > 0) && typeof e4.roundRect == "function") {
-      let n2 = Math.min(s2 / 2, Math.abs(r3) / 2), l2 = (h2) => m2(h2, 0, n2);
-      e4.beginPath(), e4.roundRect(t2, i2, s2, r3, Array.isArray(a2) ? a2.map(l2) : l2(a2)), e4.fill();
-    } else e4.fillRect(t2, i2, s2, r3);
+  function x2(e3, t, i, s, r2, a) {
+    if ((Array.isArray(a) ? a.some((n) => n > 0) : a > 0) && typeof e3.roundRect == "function") {
+      let n = Math.min(s / 2, Math.abs(r2) / 2), l2 = (h) => m2(h, 0, n);
+      e3.beginPath(), e3.roundRect(t, i, s, r2, Array.isArray(a) ? a.map(l2) : l2(a)), e3.fill();
+    } else e3.fillRect(t, i, s, r2);
   }
-  function pt(e4, t2) {
-    return (e4.barRadius || 0) * t2;
+  function pt(e3, t) {
+    return (e3.barRadius || 0) * t;
   }
-  function Et(e4, t2) {
-    let i2 = pt(e4, t2);
-    return [i2, i2, 0, 0];
+  function Et(e3, t) {
+    let i = pt(e3, t);
+    return [i, i, 0, 0];
   }
-  function ct(e4, t2, i2, s2, r3) {
-    let a2 = r3 / 2;
-    e4.beginPath(), e4.moveTo(t2, s2 - a2), e4.lineTo(i2 - a2, s2 - a2), e4.arc(i2 - a2, s2, a2, -Math.PI / 2, Math.PI / 2), e4.lineTo(t2, s2 + a2), e4.arc(t2, s2, a2, Math.PI / 2, -Math.PI / 2), e4.closePath();
+  function ct(e3, t, i, s, r2) {
+    let a = r2 / 2;
+    e3.beginPath(), e3.moveTo(t, s - a), e3.lineTo(i - a, s - a), e3.arc(i - a, s, a, -Math.PI / 2, Math.PI / 2), e3.lineTo(t, s + a), e3.arc(t, s, a, Math.PI / 2, -Math.PI / 2), e3.closePath();
   }
-  function V(e4, t2, i2, s2, r3) {
-    let a2 = window.devicePixelRatio || 1, o2 = r3.barWidth * a2, n2 = r3.barSpacing * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = B(i2, l2), c2 = t2.height, d2 = s2 * t2.width, b2 = Et(r3, a2), y2 = P(e4, r3.color, t2, r3), w2 = P(e4, r3.progressColor, t2, r3);
-    e4.clearRect(0, 0, t2.width, t2.height), e4.fillStyle = y2;
-    for (let f2 = 0; f2 < h2.length; f2++) {
-      let p2 = f2 * (o2 + n2);
-      if (p2 + o2 > t2.width) break;
-      let g2 = h2[f2] * c2 * 0.9, u2 = c2 - g2;
-      x2(e4, p2, u2, o2, g2, b2);
+  function V(e3, t, i, s, r2) {
+    let a = window.devicePixelRatio || 1, o = r2.barWidth * a, n = r2.barSpacing * a, l2 = Math.floor(t.width / (o + n)), h = B(i, l2), c2 = t.height, d = s * t.width, b = Et(r2, a), y2 = P(e3, r2.color, t, r2), w2 = P(e3, r2.progressColor, t, r2);
+    e3.clearRect(0, 0, t.width, t.height), e3.fillStyle = y2;
+    for (let f = 0; f < h.length; f++) {
+      let p2 = f * (o + n);
+      if (p2 + o > t.width) break;
+      let g2 = h[f] * c2 * 0.9, u = c2 - g2;
+      x2(e3, p2, u, o, g2, b);
     }
-    e4.save(), e4.beginPath(), e4.rect(0, 0, d2, c2), e4.clip(), e4.fillStyle = w2;
-    for (let f2 = 0; f2 < h2.length; f2++) {
-      let p2 = f2 * (o2 + n2);
-      if (p2 > d2) break;
-      let g2 = h2[f2] * c2 * 0.9, u2 = c2 - g2;
-      x2(e4, p2, u2, o2, g2, b2);
+    e3.save(), e3.beginPath(), e3.rect(0, 0, d, c2), e3.clip(), e3.fillStyle = w2;
+    for (let f = 0; f < h.length; f++) {
+      let p2 = f * (o + n);
+      if (p2 > d) break;
+      let g2 = h[f] * c2 * 0.9, u = c2 - g2;
+      x2(e3, p2, u, o, g2, b);
     }
-    e4.restore();
+    e3.restore();
   }
-  function Pt(e4, t2, i2, s2, r3) {
-    let a2 = window.devicePixelRatio || 1, o2 = r3.barWidth * a2, n2 = r3.barSpacing * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = B(i2, l2), c2 = t2.height, d2 = c2 / 2, b2 = s2 * t2.width, y2 = pt(r3, a2), w2 = [y2, y2, 0, 0], f2 = [0, 0, y2, y2], p2 = P(e4, r3.color, t2, r3), g2 = P(e4, r3.progressColor, t2, r3);
-    e4.clearRect(0, 0, t2.width, t2.height), e4.fillStyle = p2;
-    for (let u2 = 0; u2 < h2.length; u2++) {
-      let k2 = u2 * (o2 + n2);
-      if (k2 + o2 > t2.width) break;
-      let v20 = h2[u2] * c2 * 0.45;
-      x2(e4, k2, d2 - v20, o2, v20, w2), x2(e4, k2, d2, o2, v20, f2);
+  function Pt(e3, t, i, s, r2) {
+    let a = window.devicePixelRatio || 1, o = r2.barWidth * a, n = r2.barSpacing * a, l2 = Math.floor(t.width / (o + n)), h = B(i, l2), c2 = t.height, d = c2 / 2, b = s * t.width, y2 = pt(r2, a), w2 = [y2, y2, 0, 0], f = [0, 0, y2, y2], p2 = P(e3, r2.color, t, r2), g2 = P(e3, r2.progressColor, t, r2);
+    e3.clearRect(0, 0, t.width, t.height), e3.fillStyle = p2;
+    for (let u = 0; u < h.length; u++) {
+      let k2 = u * (o + n);
+      if (k2 + o > t.width) break;
+      let v20 = h[u] * c2 * 0.45;
+      x2(e3, k2, d - v20, o, v20, w2), x2(e3, k2, d, o, v20, f);
     }
-    e4.save(), e4.beginPath(), e4.rect(0, 0, b2, c2), e4.clip(), e4.fillStyle = g2;
-    for (let u2 = 0; u2 < h2.length; u2++) {
-      let k2 = u2 * (o2 + n2);
-      if (k2 > b2) break;
-      let v20 = h2[u2] * c2 * 0.45;
-      x2(e4, k2, d2 - v20, o2, v20, w2), x2(e4, k2, d2, o2, v20, f2);
+    e3.save(), e3.beginPath(), e3.rect(0, 0, b, c2), e3.clip(), e3.fillStyle = g2;
+    for (let u = 0; u < h.length; u++) {
+      let k2 = u * (o + n);
+      if (k2 > b) break;
+      let v20 = h[u] * c2 * 0.45;
+      x2(e3, k2, d - v20, o, v20, w2), x2(e3, k2, d, o, v20, f);
     }
-    e4.restore();
+    e3.restore();
   }
-  function Tt(e4, t2, i2, s2, r3) {
-    let a2 = t2.width, o2 = t2.height, n2 = o2 / 2, l2 = o2 * 0.35;
-    e4.clearRect(0, 0, a2, o2);
-    let h2 = (c2, d2, b2 = 1, y2 = false) => {
-      let w2 = P(e4, c2, t2, r3), f2 = Array.isArray(c2) ? c2[c2.length - 1] : c2;
-      y2 && (e4.shadowBlur = 12, e4.shadowColor = f2), e4.strokeStyle = w2, e4.lineWidth = d2, e4.lineCap = "round", e4.lineJoin = "round", e4.beginPath(), e4.moveTo(0, n2);
-      let p2 = [], g2 = Math.floor(i2.length * b2);
-      for (let u2 = 0; u2 < g2; u2++) {
-        let k2 = u2 / (i2.length - 1) * a2, v20 = i2[u2], A = Math.sin(u2 * 0.1) * v20, L = n2 + A * l2;
+  function Tt(e3, t, i, s, r2) {
+    let a = t.width, o = t.height, n = o / 2, l2 = o * 0.35;
+    e3.clearRect(0, 0, a, o);
+    let h = (c2, d, b = 1, y2 = false) => {
+      let w2 = P(e3, c2, t, r2), f = Array.isArray(c2) ? c2[c2.length - 1] : c2;
+      y2 && (e3.shadowBlur = 12, e3.shadowColor = f), e3.strokeStyle = w2, e3.lineWidth = d, e3.lineCap = "round", e3.lineJoin = "round", e3.beginPath(), e3.moveTo(0, n);
+      let p2 = [], g2 = Math.floor(i.length * b);
+      for (let u = 0; u < g2; u++) {
+        let k2 = u / (i.length - 1) * a, v20 = i[u], A2 = Math.sin(u * 0.1) * v20, L = n + A2 * l2;
         p2.push({ x: k2, y: L });
       }
-      for (let u2 = 0; u2 < p2.length - 1; u2++) {
-        let k2 = p2[u2].x + (p2[u2 + 1].x - p2[u2].x) * 0.5, v20 = p2[u2].y, A = p2[u2 + 1].x - (p2[u2 + 1].x - p2[u2].x) * 0.5, L = p2[u2 + 1].y;
-        e4.bezierCurveTo(k2, v20, A, L, p2[u2 + 1].x, p2[u2 + 1].y);
+      for (let u = 0; u < p2.length - 1; u++) {
+        let k2 = p2[u].x + (p2[u + 1].x - p2[u].x) * 0.5, v20 = p2[u].y, A2 = p2[u + 1].x - (p2[u + 1].x - p2[u].x) * 0.5, L = p2[u + 1].y;
+        e3.bezierCurveTo(k2, v20, A2, L, p2[u + 1].x, p2[u + 1].y);
       }
-      e4.stroke(), y2 && (e4.shadowBlur = 0);
+      e3.stroke(), y2 && (e3.shadowBlur = 0);
     };
-    e4.strokeStyle = "rgba(255, 255, 255, 0.03)", e4.lineWidth = 0.5, e4.beginPath(), e4.moveTo(0, n2), e4.lineTo(a2, n2), e4.stroke();
+    e3.strokeStyle = "rgba(255, 255, 255, 0.03)", e3.lineWidth = 0.5, e3.beginPath(), e3.moveTo(0, n), e3.lineTo(a, n), e3.stroke();
     for (let c2 = 0; c2 <= 10; c2++) {
-      let d2 = a2 / 10 * c2;
-      e4.beginPath(), e4.moveTo(d2, 0), e4.lineTo(d2, o2), e4.stroke();
+      let d = a / 10 * c2;
+      e3.beginPath(), e3.moveTo(d, 0), e3.lineTo(d, o), e3.stroke();
     }
-    h2(r3.color, 2, 1, false), s2 > 0 && h2(r3.progressColor, 3, s2, true);
+    h(r2.color, 2, 1, false), s > 0 && h(r2.progressColor, 3, s, true);
   }
-  function ut(e4, t2, i2, s2, r3) {
-    let a2 = window.devicePixelRatio || 1, o2 = (r3.barWidth || 3) * a2, n2 = (r3.barSpacing || 1) * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = B(i2, l2), c2 = t2.height, d2 = 4 * a2, b2 = 2 * a2, y2 = s2 * t2.width, w2 = c2 / 2, f2 = P(e4, r3.color, t2, r3), p2 = P(e4, r3.progressColor, t2, r3);
-    e4.clearRect(0, 0, t2.width, t2.height);
-    for (let g2 = 0; g2 < h2.length; g2++) {
-      let u2 = g2 * (o2 + n2);
-      if (u2 + o2 > t2.width) break;
-      let k2 = h2[g2] * c2 * 0.9, v20 = Math.floor(k2 / (d2 + b2));
-      e4.fillStyle = u2 < y2 ? p2 : f2;
-      for (let A = 0; A < v20; A++) {
-        let L = A * (d2 + b2);
-        e4.fillRect(u2, w2 - L - d2, o2, d2), A > 0 && e4.fillRect(u2, w2 + L, o2, d2);
+  function ut(e3, t, i, s, r2) {
+    let a = window.devicePixelRatio || 1, o = (r2.barWidth || 3) * a, n = (r2.barSpacing || 1) * a, l2 = Math.floor(t.width / (o + n)), h = B(i, l2), c2 = t.height, d = 4 * a, b = 2 * a, y2 = s * t.width, w2 = c2 / 2, f = P(e3, r2.color, t, r2), p2 = P(e3, r2.progressColor, t, r2);
+    e3.clearRect(0, 0, t.width, t.height);
+    for (let g2 = 0; g2 < h.length; g2++) {
+      let u = g2 * (o + n);
+      if (u + o > t.width) break;
+      let k2 = h[g2] * c2 * 0.9, v20 = Math.floor(k2 / (d + b));
+      e3.fillStyle = u < y2 ? p2 : f;
+      for (let A2 = 0; A2 < v20; A2++) {
+        let L = A2 * (d + b);
+        e3.fillRect(u, w2 - L - d, o, d), A2 > 0 && e3.fillRect(u, w2 + L, o, d);
       }
     }
   }
-  function dt(e4, t2, i2, s2, r3) {
-    let a2 = window.devicePixelRatio || 1, o2 = (r3.barWidth || 2) * a2, n2 = (r3.barSpacing || 3) * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = B(i2, l2), c2 = t2.height, d2 = Math.max(1.5 * a2, o2 / 2), b2 = s2 * t2.width, y2 = c2 / 2, w2 = P(e4, r3.color, t2, r3), f2 = P(e4, r3.progressColor, t2, r3);
-    e4.clearRect(0, 0, t2.width, t2.height);
-    for (let p2 = 0; p2 < h2.length; p2++) {
-      let g2 = p2 * (o2 + n2) + o2 / 2;
-      if (g2 > t2.width) break;
-      let u2 = h2[p2] * c2 * 0.9;
-      e4.fillStyle = g2 < b2 ? f2 : w2, e4.beginPath(), e4.arc(g2, y2 - u2 / 2, d2, 0, Math.PI * 2), e4.fill(), e4.beginPath(), e4.arc(g2, y2 + u2 / 2, d2, 0, Math.PI * 2), e4.fill();
+  function dt(e3, t, i, s, r2) {
+    let a = window.devicePixelRatio || 1, o = (r2.barWidth || 2) * a, n = (r2.barSpacing || 3) * a, l2 = Math.floor(t.width / (o + n)), h = B(i, l2), c2 = t.height, d = Math.max(1.5 * a, o / 2), b = s * t.width, y2 = c2 / 2, w2 = P(e3, r2.color, t, r2), f = P(e3, r2.progressColor, t, r2);
+    e3.clearRect(0, 0, t.width, t.height);
+    for (let p2 = 0; p2 < h.length; p2++) {
+      let g2 = p2 * (o + n) + o / 2;
+      if (g2 > t.width) break;
+      let u = h[p2] * c2 * 0.9;
+      e3.fillStyle = g2 < b ? f : w2, e3.beginPath(), e3.arc(g2, y2 - u / 2, d, 0, Math.PI * 2), e3.fill(), e3.beginPath(), e3.arc(g2, y2 + u / 2, d, 0, Math.PI * 2), e3.fill();
     }
   }
-  function At(e4, t2, i2, s2, r3) {
-    let a2 = t2.width, o2 = t2.height, n2 = o2 / 2, l2 = 4, h2 = l2 / 2, c2 = !!r3.seekActive;
-    if (e4.clearRect(0, 0, a2, o2), e4.fillStyle = P(e4, r3.color, t2, r3) || "rgba(255, 255, 255, 0.2)", ct(e4, h2, a2, n2, l2), e4.fill(), s2 > 0) {
-      let d2 = Math.max(h2 * 2, s2 * a2);
-      e4.save(), e4.globalAlpha = r3.seekHandle && !c2 ? 0.7 : 1, e4.fillStyle = P(e4, r3.progressColor, t2, r3) || "rgba(255, 255, 255, 0.9)", ct(e4, h2, d2, n2, l2), e4.fill(), e4.restore();
+  function At(e3, t, i, s, r2) {
+    let a = t.width, o = t.height, n = o / 2, l2 = 4, h = l2 / 2, c2 = !!r2.seekActive;
+    if (e3.clearRect(0, 0, a, o), e3.fillStyle = P(e3, r2.color, t, r2) || "rgba(255, 255, 255, 0.2)", ct(e3, h, a, n, l2), e3.fill(), s > 0) {
+      let d = Math.max(h * 2, s * a);
+      e3.save(), e3.globalAlpha = r2.seekHandle && !c2 ? 0.7 : 1, e3.fillStyle = P(e3, r2.progressColor, t, r2) || "rgba(255, 255, 255, 0.9)", ct(e3, h, d, n, l2), e3.fill(), e3.restore();
     }
   }
   var Mt = { bars: V, bar: V, mirror: Pt, line: Tt, blocks: ut, block: ut, dots: dt, dot: dt, seekbar: At };
-  function ft(e4, t2, i2, s2, r3) {
-    (Mt[r3.waveformStyle] || V)(e4, t2, i2, s2, r3);
+  function ft(e3, t, i, s, r2) {
+    (Mt[r2.waveformStyle] || V)(e3, t, i, s, r2);
   }
-  function mt(e4) {
+  function mt(e3) {
     try {
-      let t2 = e4.getChannelData(0), i2 = e4.sampleRate, s2 = Ct(t2, i2);
-      if (s2.length < 2) return 120;
-      let r3 = [];
-      for (let l2 = 1; l2 < s2.length; l2++) r3.push((s2[l2] - s2[l2 - 1]) / i2);
-      let a2 = {};
-      r3.forEach((l2) => {
-        let h2 = 60 / l2, c2 = Math.round(h2 / 3) * 3;
-        c2 > 60 && c2 < 200 && (a2[c2] = (a2[c2] || 0) + 1);
+      let t = e3.getChannelData(0), i = e3.sampleRate, s = Ct(t, i);
+      if (s.length < 2) return 120;
+      let r2 = [];
+      for (let l2 = 1; l2 < s.length; l2++) r2.push((s[l2] - s[l2 - 1]) / i);
+      let a = {};
+      r2.forEach((l2) => {
+        let h = 60 / l2, c2 = Math.round(h / 3) * 3;
+        c2 > 60 && c2 < 200 && (a[c2] = (a[c2] || 0) + 1);
       });
-      let o2 = 0, n2 = 120;
-      for (let [l2, h2] of Object.entries(a2)) h2 > o2 && (o2 = h2, n2 = parseInt(l2));
-      return n2 < 70 && a2[n2 * 2] ? n2 *= 2 : n2 > 160 && a2[Math.round(n2 / 2)] && (n2 = Math.round(n2 / 2)), n2 - 1;
-    } catch (t2) {
-      return console.warn("[WaveformPlayer] BPM detection failed:", t2), null;
+      let o = 0, n = 120;
+      for (let [l2, h] of Object.entries(a)) h > o && (o = h, n = parseInt(l2));
+      return n < 70 && a[n * 2] ? n *= 2 : n > 160 && a[Math.round(n / 2)] && (n = Math.round(n / 2)), n - 1;
+    } catch (t) {
+      return console.warn("[WaveformPlayer] BPM detection failed:", t), null;
     }
   }
-  function Ct(e4, t2) {
-    let r3 = [], a2 = 0;
-    for (let o2 = 0; o2 < e4.length - 2048; o2 += 1024) {
-      let n2 = 0;
-      for (let c2 = o2; c2 < o2 + 2048; c2++) n2 += e4[c2] * e4[c2];
-      n2 = n2 / 2048;
-      let l2 = n2 - a2, h2 = a2 * 1.8 + 0.01;
-      if (l2 > h2 && n2 > 0.01) {
-        let c2 = r3[r3.length - 1] || 0, d2 = t2 * 0.15;
-        o2 - c2 > d2 && r3.push(o2);
+  function Ct(e3, t) {
+    let r2 = [], a = 0;
+    for (let o = 0; o < e3.length - 2048; o += 1024) {
+      let n = 0;
+      for (let c2 = o; c2 < o + 2048; c2++) n += e3[c2] * e3[c2];
+      n = n / 2048;
+      let l2 = n - a, h = a * 1.8 + 0.01;
+      if (l2 > h && n > 0.01) {
+        let c2 = r2[r2.length - 1] || 0, d = t * 0.15;
+        o - c2 > d && r2.push(o);
       }
-      a2 = n2 * 0.8 + a2 * 0.2;
+      a = n * 0.8 + a * 0.2;
     }
-    return r3;
+    return r2;
   }
-  function Lt(e4, t2 = 1800) {
-    let i2 = e4.length / t2, s2 = e4.numberOfChannels, r3 = [];
-    for (let o2 = 0; o2 < s2; o2++) {
-      let n2 = e4.getChannelData(o2);
-      for (let l2 = 0; l2 < t2; l2++) {
-        let h2 = ~~(l2 * i2), c2 = ~~(h2 + i2), d2 = 0, b2 = 0;
-        for (let w2 = h2; w2 < c2; w2++) {
-          let f2 = n2[w2];
-          f2 > b2 && (b2 = f2), f2 < d2 && (d2 = f2);
+  function Lt(e3, t = 1800) {
+    let i = e3.length / t, s = e3.numberOfChannels, r2 = [];
+    for (let o = 0; o < s; o++) {
+      let n = e3.getChannelData(o);
+      for (let l2 = 0; l2 < t; l2++) {
+        let h = ~~(l2 * i), c2 = ~~(h + i), d = 0, b = 0;
+        for (let w2 = h; w2 < c2; w2++) {
+          let f = n[w2];
+          f > b && (b = f), f < d && (d = f);
         }
-        let y2 = Math.max(Math.abs(b2), Math.abs(d2));
-        (o2 === 0 || y2 > r3[l2]) && (r3[l2] = y2);
+        let y2 = Math.max(Math.abs(b), Math.abs(d));
+        (o === 0 || y2 > r2[l2]) && (r2[l2] = y2);
       }
     }
-    let a2 = $2(r3);
-    return a2 > 0 ? r3.map((o2) => o2 / a2) : r3;
+    let a = $2(r2);
+    return a > 0 ? r2.map((o) => o / a) : r2;
   }
-  async function G2(e4, t2 = 1800, i2 = false) {
-    let s2;
+  async function G2(e3, t = 1800, i = false) {
+    let s;
     try {
-      let r3 = window.AudioContext || window.webkitAudioContext;
-      s2 = new r3();
-      let o2 = await (await fetch(e4)).arrayBuffer(), n2 = await s2.decodeAudioData(o2), l2 = Lt(n2, t2);
+      let r2 = window.AudioContext || window.webkitAudioContext;
+      s = new r2();
+      let o = await (await fetch(e3)).arrayBuffer(), n = await s.decodeAudioData(o), l2 = Lt(n, t);
       l2 = _t(l2);
-      let h2 = null;
-      return i2 && (h2 = mt(n2)), { peaks: l2, bpm: h2 };
+      let h = null;
+      return i && (h = mt(n)), { peaks: l2, bpm: h };
     } finally {
-      s2 && s2.close();
+      s && s.close();
     }
   }
-  function yt(e4 = 1800) {
-    let t2 = [];
-    for (let i2 = 0; i2 < e4; i2++) {
-      let s2 = Math.random() * 0.5 + 0.3, r3 = Math.sin(i2 / e4 * Math.PI * 4) * 0.2;
-      t2.push(m2(s2 + r3, 0.1, 1));
+  function yt(e3 = 1800) {
+    let t = [];
+    for (let i = 0; i < e3; i++) {
+      let s = Math.random() * 0.5 + 0.3, r2 = Math.sin(i / e3 * Math.PI * 4) * 0.2;
+      t.push(m2(s + r2, 0.1, 1));
     }
-    return t2;
+    return t;
   }
-  function _t(e4, t2 = 0.95) {
-    let i2 = $2(e4);
-    if (i2 === 0 || i2 > t2) return e4;
-    let s2 = t2 / i2;
-    return e4.map((r3) => r3 * s2);
+  function _t(e3, t = 0.95) {
+    let i = $2(e3);
+    if (i === 0 || i > t) return e3;
+    let s = t / i;
+    return e3.map((r2) => r2 * s);
   }
   var K = 128;
-  function gt(e4) {
-    let t2 = document.documentElement, i2 = document.body;
-    return t2.classList.contains(e4) || t2.classList.contains(`${e4}-mode`) || t2.classList.contains(`theme-${e4}`) || t2.getAttribute("data-theme") === e4 || t2.getAttribute("data-color-scheme") === e4 || i2.classList.contains(e4) || i2.classList.contains(`${e4}-mode`) || i2.getAttribute("data-theme") === e4;
+  function gt(e3) {
+    let t = document.documentElement, i = document.body;
+    return t.classList.contains(e3) || t.classList.contains(`${e3}-mode`) || t.classList.contains(`theme-${e3}`) || t.getAttribute("data-theme") === e3 || t.getAttribute("data-color-scheme") === e3 || i.classList.contains(e3) || i.classList.contains(`${e3}-mode`) || i.getAttribute("data-theme") === e3;
   }
-  function xt(e4) {
-    let t2 = 0, i2 = 0;
-    for (let s2 = e4; s2 && s2.nodeType === 1 && i2 < 0.995; s2 = s2.parentElement) {
-      let r3 = U(getComputedStyle(s2).backgroundColor);
-      if (!r3 || r3.a <= 0) continue;
-      let a2 = r3.a * (1 - i2);
-      t2 += (r3.r * 299 + r3.g * 587 + r3.b * 114) / 1e3 * a2, i2 += a2;
+  function xt(e3) {
+    let t = 0, i = 0;
+    for (let s = e3; s && s.nodeType === 1 && i < 0.995; s = s.parentElement) {
+      let r2 = U(getComputedStyle(s).backgroundColor);
+      if (!r2 || r2.a <= 0) continue;
+      let a = r2.a * (1 - i);
+      t += (r2.r * 299 + r2.g * 587 + r2.b * 114) / 1e3 * a, i += a;
     }
-    return { sum: t2, alpha: i2 };
+    return { sum: t, alpha: i };
   }
   function Rt() {
-    let e4 = lt(getComputedStyle(document.body).color);
-    if (e4 !== null) return e4 > K ? "dark" : "light";
+    let e3 = lt(getComputedStyle(document.body).color);
+    if (e3 !== null) return e3 > K ? "dark" : "light";
     if (window.matchMedia) {
       if (window.matchMedia("(prefers-color-scheme: dark)").matches) return "dark";
       if (window.matchMedia("(prefers-color-scheme: light)").matches) return "light";
     }
     return "dark";
   }
-  function R(e4) {
+  function R2(e3) {
     if (gt("dark")) return "dark";
     if (gt("light")) return "light";
     try {
-      let t2 = e4 && e4.nodeType === 1 ? e4 : document.body, { sum: i2, alpha: s2 } = xt(t2), r3 = Rt(), a2 = i2 + (r3 === "dark" ? 0 : 255) * (1 - s2);
-      return a2 > K ? "light" : a2 < K ? "dark" : r3;
+      let t = e3 && e3.nodeType === 1 ? e3 : document.body, { sum: i, alpha: s } = xt(t), r2 = Rt(), a = i + (r2 === "dark" ? 0 : 255) * (1 - s);
+      return a > K ? "light" : a < K ? "dark" : r2;
     } catch {
       return "dark";
     }
   }
-  var C = { dark: { waveformColor: "rgba(255, 255, 255, 0.3)", progressColor: "rgba(255, 255, 255, 0.9)" }, light: { waveformColor: "rgba(0, 0, 0, 0.2)", progressColor: "rgba(0, 0, 0, 0.8)" } };
-  function J(e4, t2) {
-    if (e4 && C[e4]) return C[e4];
-    let i2 = R(t2);
-    return C[i2];
+  var C2 = { dark: { waveformColor: "rgba(255, 255, 255, 0.3)", progressColor: "rgba(255, 255, 255, 0.9)" }, light: { waveformColor: "rgba(0, 0, 0, 0.2)", progressColor: "rgba(0, 0, 0, 0.8)" } };
+  function J(e3, t) {
+    if (e3 && C2[e3]) return C2[e3];
+    let i = R2(t);
+    return C2[i];
   }
   var W = { url: "", height: 64, samples: 1800, preload: "metadata", crossOrigin: null, audioMode: "self", playbackRate: 1, showPlaybackSpeed: false, playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2], buttonAlign: "auto", layout: "default", buttonStyle: "circle", buttonSize: null, buttonRadius: null, waveformStyle: "mirror", barWidth: 2, barSpacing: 0, barRadius: 1, waveformGradient: "vertical", colorPreset: null, waveformColor: null, progressColor: null, autoplay: false, showControls: true, showInfo: true, showTime: true, showHoverTime: false, seekHandle: false, showBPM: false, bpm: null, singlePlay: true, playOnSeek: true, enableMediaSession: true, markers: [], showMarkers: true, accessibleSeek: true, seekLabel: null, seekValueText: null, title: null, artist: null, artwork: null, artworkPosition: "info", album: "", errorText: "Unable to load audio", playPauseLabel: "Play/Pause", speedLabel: "Playback speed", artworkAlt: "Album artwork", unknownTrackText: "Unknown Track", playIcon: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>', pauseIcon: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>', onLoad: null, onPlay: null, onPause: null, onEnd: null, onError: null, onTimeUpdate: null, onNextTrack: null, onPreviousTrack: null };
   var X = { bars: { barWidth: 3, barSpacing: 1 }, mirror: { barWidth: 2, barSpacing: 2 }, line: { barWidth: 2, barSpacing: 0 }, blocks: { barWidth: 4, barSpacing: 2 }, dots: { barWidth: 3, barSpacing: 3 }, seekbar: { barWidth: 1, barSpacing: 0 } };
   var Q = ["auto", "top", "center", "bottom"];
   var N2 = 0.25;
   var F = 4;
-  var Dt = { buttonAlign: Q, layout: ["default", "preview"], buttonStyle: ["circle", "minimal"], artworkPosition: ["info", "button"], waveformStyle: Object.keys(X), waveformGradient: ["vertical", "horizontal", "diagonal"], audioMode: ["self", "external"], preload: ["none", "metadata", "auto"], colorPreset: Object.keys(C), crossOrigin: ["anonymous", "use-credentials"] };
+  var Dt = { buttonAlign: Q, layout: ["default", "preview"], buttonStyle: ["circle", "minimal"], artworkPosition: ["info", "button"], waveformStyle: Object.keys(X), waveformGradient: ["vertical", "horizontal", "diagonal"], audioMode: ["self", "external"], preload: ["none", "metadata", "auto"], colorPreset: Object.keys(C2), crossOrigin: ["anonymous", "use-credentials"] };
   var Bt = { height: { min: 1, integer: true }, samples: { min: 1, integer: true }, barWidth: { min: 0 }, barSpacing: { min: 0 }, barRadius: { min: 0 }, bpm: { min: 1 }, playbackRate: { min: N2, max: F } };
   var Ht = ["autoplay", "showControls", "showInfo", "showTime", "showHoverTime", "seekHandle", "showBPM", "singlePlay", "playOnSeek", "enableMediaSession", "showMarkers", "accessibleSeek", "showPlaybackSpeed"];
   var Ot = ["onLoad", "onPlay", "onPause", "onEnd", "onError", "onTimeUpdate", "onNextTrack", "onPreviousTrack"];
-  function Y(e4, t2) {
-    console.warn(`[WaveformPlayer] Invalid ${e4} option, using default:`, t2);
+  function Y(e3, t) {
+    console.warn(`[WaveformPlayer] Invalid ${e3} option, using default:`, t);
   }
-  function z(e4) {
-    let t2 = H2(e4);
-    return t2 ? t2.reduce((i2, s2) => {
-      let r3 = s2 && typeof s2 == "object" ? _(s2.time, null, { min: 0 }) : null;
-      return r3 === null ? (Y("marker", s2), i2) : (i2.push({ ...s2, time: r3, label: s2.label == null ? "" : s2.label }), i2);
-    }, []) : (e4 != null && Y("markers", e4), []);
+  function z(e3) {
+    let t = H2(e3);
+    return t ? t.reduce((i, s) => {
+      let r2 = s && typeof s == "object" ? _(s.time, null, { min: 0 }) : null;
+      return r2 === null ? (Y("marker", s), i) : (i.push({ ...s, time: r2, label: s.label == null ? "" : s.label }), i);
+    }, []) : (e3 != null && Y("markers", e3), []);
   }
-  function Z(e4) {
-    let t2 = (s2) => e4[s2] != null, i2 = (s2) => {
-      Y(s2, e4[s2]), e4[s2] = W[s2];
+  function Z(e3) {
+    let t = (s) => e3[s] != null, i = (s) => {
+      Y(s, e3[s]), e3[s] = W[s];
     };
-    for (let [s2, r3] of Object.entries(Bt)) {
-      if (!t2(s2)) continue;
-      let a2 = _(e4[s2], null, r3);
-      a2 === null ? i2(s2) : e4[s2] = a2;
+    for (let [s, r2] of Object.entries(Bt)) {
+      if (!t(s)) continue;
+      let a = _(e3[s], null, r2);
+      a === null ? i(s) : e3[s] = a;
     }
-    for (let [s2, r3] of Object.entries(Dt)) t2(s2) && rt(e4[s2], r3) === null && i2(s2);
-    for (let s2 of Ht) e4[s2] = at(e4[s2]);
-    for (let s2 of Ot) t2(s2) && typeof e4[s2] != "function" && i2(s2);
-    if (t2("playbackRates")) {
-      let s2 = D(e4.playbackRates, { min: N2, max: F, fallback: null });
-      s2 === null ? i2("playbackRates") : e4.playbackRates = s2;
+    for (let [s, r2] of Object.entries(Dt)) t(s) && rt(e3[s], r2) === null && i(s);
+    for (let s of Ht) e3[s] = at(e3[s]);
+    for (let s of Ot) t(s) && typeof e3[s] != "function" && i(s);
+    if (t("playbackRates")) {
+      let s = D2(e3.playbackRates, { min: N2, max: F, fallback: null });
+      s === null ? i("playbackRates") : e3.playbackRates = s;
     }
-    e4.markers = z(e4.markers);
-    for (let s2 of ["buttonSize", "buttonRadius"]) {
-      if (!t2(s2)) continue;
-      let r3 = e4[s2];
-      (typeof r3 == "number" ? Number.isFinite(r3) : typeof r3 == "string" && r3.trim() !== "") || i2(s2);
+    e3.markers = z(e3.markers);
+    for (let s of ["buttonSize", "buttonRadius"]) {
+      if (!t(s)) continue;
+      let r2 = e3[s];
+      (typeof r2 == "number" ? Number.isFinite(r2) : typeof r2 == "string" && r2.trim() !== "") || i(s);
     }
-    for (let s2 of ["waveformColor", "progressColor"]) {
-      if (!t2(s2)) continue;
-      let r3 = e4[s2];
-      !(typeof r3 == "string" && r3.trim() !== "") && !Array.isArray(r3) && i2(s2);
+    for (let s of ["waveformColor", "progressColor"]) {
+      if (!t(s)) continue;
+      let r2 = e3[s];
+      !(typeof r2 == "string" && r2.trim() !== "") && !Array.isArray(r2) && i(s);
     }
-    return e4;
+    return e3;
   }
   var It = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#71717a" fill-opacity="0.15"/><g fill="none" stroke="#a1a1aa" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="17" r="2.2"/><circle cx="17" cy="15" r="2.2"/><path d="M10.2 17V7l9-1.6v9"/></g></svg>');
   var bt = 5;
   var wt = 10;
   var Wt = 'button, a[href], input, [role="slider"]';
-  var T = class e3 {
+  var T = class e2 {
     static instances = /* @__PURE__ */ new Map();
     static currentlyPlaying = null;
-    constructor(t2, i2 = {}) {
-      if (this.container = typeof t2 == "string" ? document.querySelector(t2) : t2, !this.container) throw new Error("[WaveformPlayer] Container element not found");
-      let s2 = O(this.container), r3 = { ...i2 };
-      r3.style && !r3.waveformStyle && (r3.waveformStyle = r3.style), r3.src && !r3.url && (r3.url = r3.src), this.options = Z(j2(W, s2, r3));
-      let a2 = J(this.options.colorPreset, this.container);
-      this._autoTheme = this.options.colorPreset == null || !C[this.options.colorPreset], this._presetKeys = [], this._scheme = this.options.colorPreset && C[this.options.colorPreset] ? this.options.colorPreset : R(this.container);
-      for (let [n2, l2] of Object.entries(a2)) (this.options[n2] === null || this.options[n2] === void 0) && (this.options[n2] = l2, this._presetKeys.push(n2));
-      let o2 = X[this.options.waveformStyle];
-      o2 && (s2.barWidth === void 0 && i2.barWidth === void 0 && (this.options.barWidth = o2.barWidth), s2.barSpacing === void 0 && i2.barSpacing === void 0 && (this.options.barSpacing = o2.barSpacing)), this.audio = null, this.canvas = null, this.ctx = null, this.waveformData = [], this.progress = 0, this._activeMarkerIndex = -1, this._markerLabelTimer = null, this.isPlaying = false, this.isLoading = false, this.hasError = false, this.updateTimer = null, this.resizeObserver = null, this._ac = new AbortController(), this.id = this.container.id || nt(this.options.url), e3.instances.set(this.id, this), e3._watchTheme();
+    constructor(t, i = {}) {
+      if (this.container = typeof t == "string" ? document.querySelector(t) : t, !this.container) throw new Error("[WaveformPlayer] Container element not found");
+      let s = O(this.container), r2 = { ...i };
+      r2.style && !r2.waveformStyle && (r2.waveformStyle = r2.style), r2.src && !r2.url && (r2.url = r2.src), this.options = Z(j2(W, s, r2));
+      let a = J(this.options.colorPreset, this.container);
+      this._autoTheme = this.options.colorPreset == null || !C2[this.options.colorPreset], this._presetKeys = [], this._scheme = this.options.colorPreset && C2[this.options.colorPreset] ? this.options.colorPreset : R2(this.container);
+      for (let [n, l2] of Object.entries(a)) (this.options[n] === null || this.options[n] === void 0) && (this.options[n] = l2, this._presetKeys.push(n));
+      let o = X[this.options.waveformStyle];
+      o && (s.barWidth === void 0 && i.barWidth === void 0 && (this.options.barWidth = o.barWidth), s.barSpacing === void 0 && i.barSpacing === void 0 && (this.options.barSpacing = o.barSpacing)), this.audio = null, this.canvas = null, this.ctx = null, this.waveformData = [], this.progress = 0, this._activeMarkerIndex = -1, this._markerLabelTimer = null, this.isPlaying = false, this.isLoading = false, this.hasError = false, this.updateTimer = null, this.resizeObserver = null, this._ac = new AbortController(), this.id = this.container.id || nt(this.options.url), e2.instances.set(this.id, this), e2._watchTheme();
       try {
         this.init();
-      } catch (n2) {
-        throw e3.instances.delete(this.id), this._ac.abort(), n2;
+      } catch (n) {
+        throw e2.instances.delete(this.id), this._ac.abort(), n;
       }
       setTimeout(() => {
         this._emit("waveformplayer:ready", { player: this, url: this.options.url });
       }, 100);
     }
-    _emit(t2, i2, s2 = false) {
-      let r3 = new CustomEvent(t2, { bubbles: true, cancelable: s2, detail: i2 });
-      return this.container.dispatchEvent(r3), r3;
+    _emit(t, i, s = false) {
+      let r2 = new CustomEvent(t, { bubbles: true, cancelable: s, detail: i });
+      return this.container.dispatchEvent(r2), r2;
     }
-    _requestSeek(t2) {
-      this._emit("waveformplayer:request-seek", { ...this._buildTrackDetail(), percent: t2 }, true).defaultPrevented || (this.progress = t2, this.drawWaveform?.());
+    _requestSeek(t) {
+      this._emit("waveformplayer:request-seek", { ...this._buildTrackDetail(), percent: t }, true).defaultPrevented || (this.progress = t, this.drawWaveform?.());
     }
     init() {
       this.createDOM(), this.createAudio(), this.initPlaybackSpeed(), this.initKeyboardControls(), this.initSeekControl(), this.bindEvents(), this.setupResizeObserver(), requestAnimationFrame(() => {
         this.resizeCanvas(), this.options.url && this.load(this.options.url).then(() => {
           this.options.autoplay && this.play()?.catch(() => {
           });
-        }).catch((t2) => {
-          console.error("[WaveformPlayer] Failed to load audio:", t2);
+        }).catch((t) => {
+          console.error("[WaveformPlayer] Failed to load audio:", t);
         });
       });
     }
     createDOM() {
       this.container.innerHTML = "", this.container.className = "waveform-player";
-      let t2 = Q.includes(this.options.buttonAlign) ? this.options.buttonAlign : "auto";
-      t2 === "auto" && (this.options.waveformStyle === "bars" ? t2 = "bottom" : t2 = "center"), this.options.layout === "preview" && this.container.classList.add("waveform-layout-preview"), this.container.classList.toggle("waveform-theme-light", this._scheme === "light");
-      let s2 = [];
-      this.options.buttonSize != null && s2.push(`--wfp-btn-size: ${q(this.options.buttonSize)}`), this.options.buttonRadius != null && s2.push(`--wfp-btn-radius: ${q(this.options.buttonRadius)}`);
-      let r3 = s2.length ? ` style="${s2.join("; ")};"` : "", a2 = this.options.artworkPosition === "button" && this.options.artwork, o2 = a2 ? `<img class="waveform-btn-artwork" src="${S2(this.options.artwork)}" alt="" aria-hidden="true">` : "", n2 = this.options.showControls ? `
-        <button class="waveform-btn${this.options.buttonStyle === "minimal" ? " waveform-btn-minimal" : ""}${a2 ? " waveform-btn-has-artwork" : ""}" aria-label="${S2(this.options.playPauseLabel)}"${r3}>
-          ${o2}
+      let t = Q.includes(this.options.buttonAlign) ? this.options.buttonAlign : "auto";
+      t === "auto" && (this.options.waveformStyle === "bars" ? t = "bottom" : t = "center"), this.options.layout === "preview" && this.container.classList.add("waveform-layout-preview"), this.container.classList.toggle("waveform-theme-light", this._scheme === "light");
+      let s = [];
+      this.options.buttonSize != null && s.push(`--wfp-btn-size: ${q2(this.options.buttonSize)}`), this.options.buttonRadius != null && s.push(`--wfp-btn-radius: ${q2(this.options.buttonRadius)}`);
+      let r2 = s.length ? ` style="${s.join("; ")};"` : "", a = this.options.artworkPosition === "button" && this.options.artwork, o = a ? `<img class="waveform-btn-artwork" src="${S(this.options.artwork)}" alt="" aria-hidden="true">` : "", n = this.options.showControls ? `
+        <button class="waveform-btn${this.options.buttonStyle === "minimal" ? " waveform-btn-minimal" : ""}${a ? " waveform-btn-has-artwork" : ""}" aria-label="${S(this.options.playPauseLabel)}"${r2}>
+          ${o}
           <span class="waveform-icon-play">${this.options.playIcon}</span>
           <span class="waveform-icon-pause" style="display:none;">${this.options.pauseIcon}</span>
         </button>
         ` : "", l2 = this.options.showInfo ? `
       <div class="waveform-info">
         ${this.options.artworkPosition !== "button" && this.options.artwork ? `
-          <img class="waveform-artwork" src="${S2(this.options.artwork)}" alt="${S2(this.options.artworkAlt)}" style="
+          <img class="waveform-artwork" src="${S(this.options.artwork)}" alt="${S(this.options.artworkAlt)}" style="
             width: 40px;
             height: 40px;
             border-radius: 4px;
@@ -55996,7 +56009,7 @@ ${text}
         ` : ""}
         <div class="waveform-text">
           <span class="waveform-title"></span>
-          ${this.options.artist ? `<span class="waveform-artist">${S2(this.options.artist)}</span>` : ""}
+          ${this.options.artist ? `<span class="waveform-artist">${S(this.options.artist)}</span>` : ""}
         </div>
         <div class="waveform-meta" style="display: flex; align-items: center; gap: 1rem;">
           ${this.options.showBPM ? `
@@ -56006,11 +56019,11 @@ ${text}
           ` : ""}
           ${this.options.showPlaybackSpeed ? `
             <div class="waveform-speed">
-              <button class="speed-btn" aria-label="${S2(this.options.speedLabel)}" aria-haspopup="menu" aria-expanded="false">
+              <button class="speed-btn" aria-label="${S(this.options.speedLabel)}" aria-haspopup="menu" aria-expanded="false">
                 <span class="speed-value">1x</span>
               </button>
-              <div class="speed-menu" role="menu" aria-label="${S2(this.options.speedLabel)}" style="display: none;">
-                ${this.options.playbackRates.map((h2) => `<button class="speed-option" role="menuitemradio" tabindex="-1" aria-checked="false" data-rate="${h2}">${h2}x</button>`).join("")}
+              <div class="speed-menu" role="menu" aria-label="${S(this.options.speedLabel)}" style="display: none;">
+                ${this.options.playbackRates.map((h) => `<button class="speed-option" role="menuitemradio" tabindex="-1" aria-checked="false" data-rate="${h}">${h}x</button>`).join("")}
               </div>
             </div>
           ` : ""}
@@ -56025,15 +56038,15 @@ ${text}
       this.container.innerHTML = `
   <div class="waveform-player-inner">
     <div class="waveform-body">
-      <div class="waveform-track waveform-align-${t2}">
-        ${n2}
+      <div class="waveform-track waveform-align-${t}">
+        ${n}
         
         <div class="waveform-container">
           <canvas></canvas>
           <div class="waveform-markers"></div>
           <div class="waveform-loading" style="display:none;"></div>
           <div class="waveform-error" style="display:none;" role="alert">
-            <span class="waveform-error-text">${S2(this.options.errorText)}</span>
+            <span class="waveform-error-text">${S(this.options.errorText)}</span>
           </div>
         </div>
       </div>
@@ -56043,62 +56056,62 @@ ${text}
   </div>
 `, this.playBtn = this.container.querySelector(".waveform-btn"), this.canvas = this.container.querySelector("canvas"), this.ctx = this.canvas.getContext("2d"), this.titleEl = this.container.querySelector(".waveform-title"), this.artistEl = this.container.querySelector(".waveform-artist"), this.artworkEl = this.container.querySelector(".waveform-artwork, .waveform-btn-artwork"), this.bindArtworkFallback(this.artworkEl), this.currentTimeEl = this.container.querySelector(".time-current"), this.totalTimeEl = this.container.querySelector(".time-total"), this.bpmEl = this.container.querySelector(".waveform-bpm"), this.bpmValueEl = this.container.querySelector(".bpm-value"), this.loadingEl = this.container.querySelector(".waveform-loading"), this.errorEl = this.container.querySelector(".waveform-error"), this.markersContainer = this.container.querySelector(".waveform-markers"), this.speedBtn = this.container.querySelector(".speed-btn"), this.speedMenu = this.container.querySelector(".speed-menu"), this.resizeCanvas(), this.updateBPMDisplay();
     }
-    bindArtworkFallback(t2) {
-      t2 && t2.addEventListener("error", () => {
-        t2.src.startsWith("data:") || (t2.src = It);
+    bindArtworkFallback(t) {
+      t && t.addEventListener("error", () => {
+        t.src.startsWith("data:") || (t.src = It);
       }, { signal: this._ac.signal });
     }
     createArtworkElement() {
-      let t2 = document.createElement("img");
-      return t2.className = "waveform-artwork", t2.style.width = "40px", t2.style.height = "40px", t2.style.borderRadius = "4px", t2.style.objectFit = "cover", t2.style.flexShrink = "0", this.bindArtworkFallback(t2), t2;
+      let t = document.createElement("img");
+      return t.className = "waveform-artwork", t.style.width = "40px", t.style.height = "40px", t.style.borderRadius = "4px", t.style.objectFit = "cover", t.style.flexShrink = "0", this.bindArtworkFallback(t), t;
     }
     createButtonArtworkElement() {
-      let t2 = document.createElement("img");
-      return t2.className = "waveform-btn-artwork", t2.alt = "", t2.setAttribute("aria-hidden", "true"), this.bindArtworkFallback(t2), t2;
+      let t = document.createElement("img");
+      return t.className = "waveform-btn-artwork", t.alt = "", t.setAttribute("aria-hidden", "true"), this.bindArtworkFallback(t), t;
     }
     createArtistElement() {
-      let t2 = document.createElement("span");
-      return t2.className = "waveform-artist", t2;
+      let t = document.createElement("span");
+      return t.className = "waveform-artist", t;
     }
-    syncArtist(t2) {
-      if (this.options.artist = t2 || null, !!this.options.showInfo) {
-        if (!t2) {
+    syncArtist(t) {
+      if (this.options.artist = t || null, !!this.options.showInfo) {
+        if (!t) {
           this.artistEl?.remove(), this.artistEl = null;
           return;
         }
         if (!this.artistEl) {
-          let i2 = this.container.querySelector(".waveform-title");
-          if (!i2) return;
-          this.artistEl = this.createArtistElement(), i2.after(this.artistEl);
+          let i = this.container.querySelector(".waveform-title");
+          if (!i) return;
+          this.artistEl = this.createArtistElement(), i.after(this.artistEl);
         }
-        this.artistEl.textContent = t2, this.artistEl.style.display = "";
+        this.artistEl.textContent = t, this.artistEl.style.display = "";
       }
     }
-    syncButtonArtwork(t2) {
+    syncButtonArtwork(t) {
       if (this.playBtn) {
-        if (!t2) {
+        if (!t) {
           this.artworkEl?.remove(), this.artworkEl = null, this.playBtn.classList.remove("waveform-btn-has-artwork");
           return;
         }
-        this.artworkEl || (this.artworkEl = this.createButtonArtworkElement(), this.playBtn.prepend(this.artworkEl)), this.artworkEl.src = t2, this.playBtn.classList.add("waveform-btn-has-artwork");
+        this.artworkEl || (this.artworkEl = this.createButtonArtworkElement(), this.playBtn.prepend(this.artworkEl)), this.artworkEl.src = t, this.playBtn.classList.add("waveform-btn-has-artwork");
       }
     }
-    syncArtwork(t2, i2 = "") {
-      if (this.options.artwork = t2 || null, this.options.artworkAlt = i2 || "", this.options.artworkPosition === "button") {
+    syncArtwork(t, i = "") {
+      if (this.options.artwork = t || null, this.options.artworkAlt = i || "", this.options.artworkPosition === "button") {
         this.syncButtonArtwork(this.options.artwork);
         return;
       }
       if (this.options.showInfo) {
-        if (!t2) {
+        if (!t) {
           this.artworkEl?.remove(), this.artworkEl = null;
           return;
         }
         if (!this.artworkEl) {
-          let s2 = this.container.querySelector(".waveform-text");
-          if (!s2) return;
-          this.artworkEl = this.createArtworkElement(), s2.before(this.artworkEl);
+          let s = this.container.querySelector(".waveform-text");
+          if (!s) return;
+          this.artworkEl = this.createArtworkElement(), s.before(this.artworkEl);
         }
-        this.artworkEl.src = t2, this.artworkEl.alt = i2 || "";
+        this.artworkEl.src = t, this.artworkEl.alt = i || "";
       }
     }
     createAudio() {
@@ -56112,103 +56125,103 @@ ${text}
       this.audio && this.options.playbackRate && this.options.playbackRate !== 1 && (this.audio.playbackRate = this.options.playbackRate), this.options.showPlaybackSpeed && this.initSpeedControls();
     }
     initSpeedControls() {
-      let t2 = this.container.querySelector(".speed-btn"), i2 = this.container.querySelector(".speed-menu");
-      if (!t2 || !i2) return;
-      let s2 = () => Array.from(i2.querySelectorAll(".speed-option")), r3 = () => i2.style.display !== "none", a2 = (l2) => {
-        if (i2.style.display = l2 ? "block" : "none", t2.setAttribute("aria-expanded", l2 ? "true" : "false"), l2) {
-          let h2 = s2();
-          (h2.find((c2) => c2.getAttribute("aria-checked") === "true") || h2[0])?.focus();
+      let t = this.container.querySelector(".speed-btn"), i = this.container.querySelector(".speed-menu");
+      if (!t || !i) return;
+      let s = () => Array.from(i.querySelectorAll(".speed-option")), r2 = () => i.style.display !== "none", a = (l2) => {
+        if (i.style.display = l2 ? "block" : "none", t.setAttribute("aria-expanded", l2 ? "true" : "false"), l2) {
+          let h = s();
+          (h.find((c2) => c2.getAttribute("aria-checked") === "true") || h[0])?.focus();
         }
-      }, o2 = (l2) => {
-        let h2 = s2();
-        h2.length && h2[(l2 + h2.length) % h2.length].focus();
-      }, n2 = (l2) => {
-        this.setPlaybackRate(parseFloat(l2.dataset.rate)), a2(false), t2.focus();
+      }, o = (l2) => {
+        let h = s();
+        h.length && h[(l2 + h.length) % h.length].focus();
+      }, n = (l2) => {
+        this.setPlaybackRate(parseFloat(l2.dataset.rate)), a(false), t.focus();
       };
-      t2.addEventListener("click", (l2) => {
-        l2.stopPropagation(), a2(!r3());
-      }, { signal: this._ac.signal }), document.addEventListener("click", () => a2(false), { signal: this._ac.signal }), i2.addEventListener("click", (l2) => {
+      t.addEventListener("click", (l2) => {
+        l2.stopPropagation(), a(!r2());
+      }, { signal: this._ac.signal }), document.addEventListener("click", () => a(false), { signal: this._ac.signal }), i.addEventListener("click", (l2) => {
         l2.stopPropagation();
-        let h2 = l2.target.closest(".speed-option");
-        h2 && n2(h2);
-      }, { signal: this._ac.signal }), t2.closest(".waveform-speed")?.addEventListener("keydown", (l2) => {
-        let h2 = s2(), c2 = h2.indexOf(document.activeElement);
-        if (!r3()) {
-          (l2.key === "ArrowDown" || l2.key === "ArrowUp") && document.activeElement === t2 && (l2.preventDefault(), a2(true));
+        let h = l2.target.closest(".speed-option");
+        h && n(h);
+      }, { signal: this._ac.signal }), t.closest(".waveform-speed")?.addEventListener("keydown", (l2) => {
+        let h = s(), c2 = h.indexOf(document.activeElement);
+        if (!r2()) {
+          (l2.key === "ArrowDown" || l2.key === "ArrowUp") && document.activeElement === t && (l2.preventDefault(), a(true));
           return;
         }
         switch (l2.key) {
           case "ArrowDown":
-            l2.preventDefault(), o2(c2 < 0 ? 0 : c2 + 1);
+            l2.preventDefault(), o(c2 < 0 ? 0 : c2 + 1);
             break;
           case "ArrowUp":
-            l2.preventDefault(), o2(c2 < 0 ? h2.length - 1 : c2 - 1);
+            l2.preventDefault(), o(c2 < 0 ? h.length - 1 : c2 - 1);
             break;
           case "Home":
-            l2.preventDefault(), o2(0);
+            l2.preventDefault(), o(0);
             break;
           case "End":
-            l2.preventDefault(), o2(h2.length - 1);
+            l2.preventDefault(), o(h.length - 1);
             break;
           case "Escape":
-            l2.preventDefault(), a2(false), t2.focus();
+            l2.preventDefault(), a(false), t.focus();
             break;
           case "Tab":
-            a2(false);
+            a(false);
             break;
         }
       }, { signal: this._ac.signal }), this.updateSpeedUI();
     }
     initKeyboardControls() {
-      this.container.setAttribute("tabindex", "-1"), this.container.addEventListener("click", (t2) => {
-        t2.target.closest(Wt) || (e3.getAllInstances().forEach((i2) => {
-          i2 !== this && i2.container.setAttribute("tabindex", "-1");
+      this.container.setAttribute("tabindex", "-1"), this.container.addEventListener("click", (t) => {
+        t.target.closest(Wt) || (e2.getAllInstances().forEach((i) => {
+          i !== this && i.container.setAttribute("tabindex", "-1");
         }), this.container.setAttribute("tabindex", "0"), this.container.focus());
-      }, { signal: this._ac.signal }), this.container.addEventListener("keydown", (t2) => {
+      }, { signal: this._ac.signal }), this.container.addEventListener("keydown", (t) => {
         if (document.activeElement !== this.container) return;
-        let i2 = t2.key, s2 = !!this.audio, r3 = s2 ? this.audio.currentTime : 0;
-        if (s2 && i2 >= "0" && i2 <= "9") {
-          t2.preventDefault(), this.seekToPercent(parseInt(i2) / 10);
+        let i = t.key, s = !!this.audio, r2 = s ? this.audio.currentTime : 0;
+        if (s && i >= "0" && i <= "9") {
+          t.preventDefault(), this.seekToPercent(parseInt(i) / 10);
           return;
         }
-        let a2 = { " ": () => this.togglePlay() };
-        s2 && (a2.ArrowLeft = () => this.seekTo(m2(r3 - 5, 0, this.audio.duration)), a2.ArrowRight = () => this.seekTo(m2(r3 + 5, 0, this.audio.duration)), a2.ArrowUp = () => this.setVolume(m2(this.audio.volume + 0.1)), a2.ArrowDown = () => this.setVolume(m2(this.audio.volume - 0.1)), a2.m = a2.M = () => this.audio.muted = !this.audio.muted), a2[i2] && (t2.preventDefault(), a2[i2]());
+        let a = { " ": () => this.togglePlay() };
+        s && (a.ArrowLeft = () => this.seekTo(m2(r2 - 5, 0, this.audio.duration)), a.ArrowRight = () => this.seekTo(m2(r2 + 5, 0, this.audio.duration)), a.ArrowUp = () => this.setVolume(m2(this.audio.volume + 0.1)), a.ArrowDown = () => this.setVolume(m2(this.audio.volume - 0.1)), a.m = a.M = () => this.audio.muted = !this.audio.muted), a[i] && (t.preventDefault(), a[i]());
       }, { signal: this._ac.signal });
     }
     initSeekControl() {
-      this.options.accessibleSeek && (this.seekEl = this.container.querySelector(".waveform-container"), this.seekEl && (this.seekEl.setAttribute("role", "slider"), this.seekEl.setAttribute("tabindex", "0"), this.seekEl.setAttribute("aria-valuemin", "0"), this.applySeekLabel(), this.updateSeekAccessibility(), this.seekEl.addEventListener("keydown", (t2) => {
-        if (t2.key === " " || t2.key === "Spacebar") {
-          t2.preventDefault(), t2.stopPropagation(), this.togglePlay();
+      this.options.accessibleSeek && (this.seekEl = this.container.querySelector(".waveform-container"), this.seekEl && (this.seekEl.setAttribute("role", "slider"), this.seekEl.setAttribute("tabindex", "0"), this.seekEl.setAttribute("aria-valuemin", "0"), this.applySeekLabel(), this.updateSeekAccessibility(), this.seekEl.addEventListener("keydown", (t) => {
+        if (t.key === " " || t.key === "Spacebar") {
+          t.preventDefault(), t.stopPropagation(), this.togglePlay();
           return;
         }
-        let i2 = this.getSeekDuration();
-        if (!i2) return;
-        let s2 = this.getSeekCurrentTime(), r3;
-        switch (t2.key) {
+        let i = this.getSeekDuration();
+        if (!i) return;
+        let s = this.getSeekCurrentTime(), r2;
+        switch (t.key) {
           case "ArrowLeft":
           case "ArrowDown":
-            r3 = s2 - bt;
+            r2 = s - bt;
             break;
           case "ArrowRight":
           case "ArrowUp":
-            r3 = s2 + bt;
+            r2 = s + bt;
             break;
           case "PageDown":
-            r3 = s2 - wt;
+            r2 = s - wt;
             break;
           case "PageUp":
-            r3 = s2 + wt;
+            r2 = s + wt;
             break;
           case "Home":
-            r3 = 0;
+            r2 = 0;
             break;
           case "End":
-            r3 = i2;
+            r2 = i;
             break;
           default:
             return;
         }
-        t2.preventDefault(), t2.stopPropagation(), this.seekToSeconds(r3);
+        t.preventDefault(), t.stopPropagation(), this.seekToSeconds(r2);
       }, { signal: this._ac.signal })));
     }
     getSeekDuration() {
@@ -56217,25 +56230,25 @@ ${text}
     getSeekCurrentTime() {
       return this.options.audioMode === "external" ? this.progress * (this._extDuration || 0) : this.audio && Number.isFinite(this.audio.currentTime) ? this.audio.currentTime : 0;
     }
-    seekToSeconds(t2) {
-      let i2 = this.getSeekDuration();
-      if (!i2) return;
-      let s2 = m2(t2, 0, i2);
+    seekToSeconds(t) {
+      let i = this.getSeekDuration();
+      if (!i) return;
+      let s = m2(t, 0, i);
       if (this.options.audioMode === "external") {
-        this._requestSeek(s2 / i2), this.updateSeekAccessibility();
+        this._requestSeek(s / i), this.updateSeekAccessibility();
         return;
       }
-      this.seekTo(s2);
+      this.seekTo(s);
     }
-    applySeekLabel(t2 = this.options.title) {
+    applySeekLabel(t = this.options.title) {
       if (!this.seekEl) return;
-      let i2 = this.options.seekLabel || t2 || "Seek";
-      this.seekEl.setAttribute("aria-label", i2);
+      let i = this.options.seekLabel || t || "Seek";
+      this.seekEl.setAttribute("aria-label", i);
     }
     updateSeekAccessibility() {
       if (!this.seekEl) return;
-      let t2 = this.getSeekDuration(), i2 = Math.min(this.getSeekCurrentTime(), t2);
-      this.seekEl.setAttribute("aria-valuemax", String(Math.round(t2))), this.seekEl.setAttribute("aria-valuenow", String(Math.round(i2))), this.seekEl.setAttribute("aria-valuetext", ot(this.options.seekValueText || "%1$s of %2$s", E(i2), E(t2)));
+      let t = this.getSeekDuration(), i = Math.min(this.getSeekCurrentTime(), t);
+      this.seekEl.setAttribute("aria-valuemax", String(Math.round(t))), this.seekEl.setAttribute("aria-valuenow", String(Math.round(i))), this.seekEl.setAttribute("aria-valuetext", ot(this.options.seekValueText || "%1$s of %2$s", E2(i), E2(t)));
     }
     initMediaSession() {
       if (!("mediaSession" in navigator) || !this.options.enableMediaSession || !this.audio) return;
@@ -56243,221 +56256,221 @@ ${text}
         this.seekTo(m2(this.audio.currentTime - 10, 0, this.audio.duration));
       }), navigator.mediaSession.setActionHandler("seekforward", () => {
         this.seekTo(m2(this.audio.currentTime + 10, 0, this.audio.duration));
-      }), navigator.mediaSession.setActionHandler("seekto", (s2) => {
-        s2.seekTime !== null && this.seekTo(s2.seekTime);
+      }), navigator.mediaSession.setActionHandler("seekto", (s) => {
+        s.seekTime !== null && this.seekTo(s.seekTime);
       });
-      let t2 = this.options.onNextTrack, i2 = this.options.onPreviousTrack;
+      let t = this.options.onNextTrack, i = this.options.onPreviousTrack;
       try {
-        navigator.mediaSession.setActionHandler("nexttrack", typeof t2 == "function" ? () => t2(this) : null);
+        navigator.mediaSession.setActionHandler("nexttrack", typeof t == "function" ? () => t(this) : null);
       } catch {
       }
       try {
-        navigator.mediaSession.setActionHandler("previoustrack", typeof i2 == "function" ? () => i2(this) : null);
+        navigator.mediaSession.setActionHandler("previoustrack", typeof i == "function" ? () => i(this) : null);
       } catch {
       }
     }
     _applyMediaMetadata() {
       !("mediaSession" in navigator) || !this.options.enableMediaSession || (navigator.mediaSession.metadata = new MediaMetadata({ title: this.options.title || this.options.unknownTrackText, artist: this.options.artist || "", album: this.options.album || "", artwork: this.options.artwork ? [{ src: this.options.artwork, sizes: "512x512", type: "image/jpeg" }] : [] }));
     }
-    _updateMediaSession(t2) {
+    _updateMediaSession(t) {
       if (!(!("mediaSession" in navigator) || !this.options.enableMediaSession || !this.audio)) try {
-        t2 === "playing" && this.initMediaSession(), navigator.mediaSession.playbackState = t2;
-        let i2 = this.audio.duration;
-        navigator.mediaSession.setPositionState && i2 && isFinite(i2) && navigator.mediaSession.setPositionState({ duration: i2, playbackRate: this.audio.playbackRate || 1, position: m2(this.audio.currentTime, 0, i2) });
+        t === "playing" && this.initMediaSession(), navigator.mediaSession.playbackState = t;
+        let i = this.audio.duration;
+        navigator.mediaSession.setPositionState && i && isFinite(i) && navigator.mediaSession.setPositionState({ duration: i, playbackRate: this.audio.playbackRate || 1, position: m2(this.audio.currentTime, 0, i) });
       } catch {
       }
     }
     bindEvents() {
-      this.playBtn && this.playBtn.addEventListener("click", () => this.togglePlay()), this.audio && (this.audio.addEventListener("loadstart", () => this.setLoading(true)), this.audio.addEventListener("loadedmetadata", () => this.onMetadataLoaded()), this.audio.addEventListener("canplay", () => this.setLoading(false)), this.audio.addEventListener("play", () => this.onPlay()), this.audio.addEventListener("pause", () => this.onPause()), this.audio.addEventListener("ended", () => this.onEnded()), this.audio.addEventListener("error", (i2) => this.onError(i2))), this.canvas.addEventListener("click", (i2) => this.handleCanvasClick(i2)), this._dragging = false, this._seekHover = false, this._handleNear = false, this.canvas.addEventListener("pointerenter", () => {
+      this.playBtn && this.playBtn.addEventListener("click", () => this.togglePlay()), this.audio && (this.audio.addEventListener("loadstart", () => this.setLoading(true)), this.audio.addEventListener("loadedmetadata", () => this.onMetadataLoaded()), this.audio.addEventListener("canplay", () => this.setLoading(false)), this.audio.addEventListener("play", () => this.onPlay()), this.audio.addEventListener("pause", () => this.onPause()), this.audio.addEventListener("ended", () => this.onEnded()), this.audio.addEventListener("error", (i) => this.onError(i))), this.canvas.addEventListener("click", (i) => this.handleCanvasClick(i)), this._dragging = false, this._seekHover = false, this._handleNear = false, this.canvas.addEventListener("pointerenter", () => {
         this._seekHover = true, this.drawWaveform(), this._updateSeekHandle();
       }), this.canvas.addEventListener("pointerleave", () => {
         this._seekHover = false, this._handleNear = false, this._dragging || this._hideHoverTip(), this.drawWaveform(), this._updateSeekHandle();
-      }), this.canvas.addEventListener("pointerdown", (i2) => {
-        if (!(i2.pointerType === "mouse" && i2.button !== 0)) {
+      }), this.canvas.addEventListener("pointerdown", (i) => {
+        if (!(i.pointerType === "mouse" && i.button !== 0)) {
           this._dragging = true;
           try {
-            this.canvas.setPointerCapture(i2.pointerId);
+            this.canvas.setPointerCapture(i.pointerId);
           } catch {
           }
-          this._scrubTo(i2.clientX);
+          this._scrubTo(i.clientX);
         }
-      }), this.canvas.addEventListener("pointermove", (i2) => {
+      }), this.canvas.addEventListener("pointermove", (i) => {
         if (this._dragging) {
-          this._scrubTo(i2.clientX);
+          this._scrubTo(i.clientX);
           return;
         }
-        let s2 = this.canvas.getBoundingClientRect();
-        s2.width && (this._handleNear = Math.abs(i2.clientX - s2.left - this.progress * s2.width) <= 10, this._updateSeekHandle());
+        let s = this.canvas.getBoundingClientRect();
+        s.width && (this._handleNear = Math.abs(i.clientX - s.left - this.progress * s.width) <= 10, this._updateSeekHandle());
       });
-      let t2 = (i2) => {
+      let t = (i) => {
         if (this._dragging) {
           this._dragging = false, this._suppressClick = true;
           try {
-            this.canvas.releasePointerCapture(i2.pointerId);
+            this.canvas.releasePointerCapture(i.pointerId);
           } catch {
           }
-          this._seekFromPointer(i2.clientX), !this._seekHover && !this.options.showHoverTime && this._hideHoverTip(), this._updateSeekHandle();
+          this._seekFromPointer(i.clientX), !this._seekHover && !this.options.showHoverTime && this._hideHoverTip(), this._updateSeekHandle();
         }
       };
-      this.canvas.addEventListener("pointerup", t2), this.canvas.addEventListener("pointercancel", t2), this.setupHoverTime(), this.setupSeekHandle(), this.resizeHandler = ht(() => this.resizeCanvas(), 100), window.addEventListener("resize", this.resizeHandler);
+      this.canvas.addEventListener("pointerup", t), this.canvas.addEventListener("pointercancel", t), this.setupHoverTime(), this.setupSeekHandle(), this.resizeHandler = ht(() => this.resizeCanvas(), 100), window.addEventListener("resize", this.resizeHandler);
     }
     setupResizeObserver() {
       "ResizeObserver" in window && (this.resizeObserver = new ResizeObserver(() => {
         this.resizeCanvas();
       }), this.canvas?.parentElement && this.resizeObserver.observe(this.canvas.parentElement));
     }
-    async load(t2) {
+    async load(t) {
       try {
         this.setLoading(true), this.progress = 0, this.hasError = false, this.container.classList.remove("waveform-is-placeholder");
-        let i2 = !!this.options.waveform;
-        i2 && this.setWaveformData(this.options.waveform);
-        let s2 = this.options.title || I(t2);
-        if (this.titleEl && (this.titleEl.textContent = s2), this.applySeekLabel(s2), this.audio && (this.audio.src = t2, this.audio.preload !== "none" && await new Promise((r3, a2) => {
-          let o2 = () => {
-            this.audio.removeEventListener("loadedmetadata", o2), this.audio.removeEventListener("error", n2), r3();
-          }, n2 = (l2) => {
-            this.audio.removeEventListener("loadedmetadata", o2), this.audio.removeEventListener("error", n2), a2(l2);
+        let i = !!this.options.waveform;
+        i && this.setWaveformData(this.options.waveform);
+        let s = this.options.title || I(t);
+        if (this.titleEl && (this.titleEl.textContent = s), this.applySeekLabel(s), this.audio && (this.audio.src = t, this.audio.preload !== "none" && await new Promise((r2, a) => {
+          let o = () => {
+            this.audio.removeEventListener("loadedmetadata", o), this.audio.removeEventListener("error", n), r2();
+          }, n = (l2) => {
+            this.audio.removeEventListener("loadedmetadata", o), this.audio.removeEventListener("error", n), a(l2);
           };
-          this.audio.addEventListener("loadedmetadata", o2), this.audio.addEventListener("error", n2);
-        })), !i2) try {
-          let r3 = await G2(t2, this.options.samples, this.options.showBPM);
-          this.waveformData = r3.peaks, r3.bpm && (this.detectedBPM = r3.bpm, this.updateBPMDisplay());
-        } catch (r3) {
-          console.warn("[WaveformPlayer] Using placeholder waveform:", r3), this.waveformData = yt(this.options.samples), this.container.classList.add("waveform-is-placeholder");
+          this.audio.addEventListener("loadedmetadata", o), this.audio.addEventListener("error", n);
+        })), !i) try {
+          let r2 = await G2(t, this.options.samples, this.options.showBPM);
+          this.waveformData = r2.peaks, r2.bpm && (this.detectedBPM = r2.bpm, this.updateBPMDisplay());
+        } catch (r2) {
+          console.warn("[WaveformPlayer] Using placeholder waveform:", r2), this.waveformData = yt(this.options.samples), this.container.classList.add("waveform-is-placeholder");
         }
         this.drawWaveform(), this.renderMarkers(), this.options.onLoad && this.options.onLoad(this);
-      } catch (i2) {
-        this.onError(i2);
+      } catch (i) {
+        this.onError(i);
       } finally {
         this.setLoading(false);
       }
     }
-    async loadTrack(t2, i2 = null, s2 = null, r3 = {}) {
-      let a2 = Object.prototype.hasOwnProperty.call(r3, "artwork"), o2 = Object.prototype.hasOwnProperty.call(r3, "artworkAlt");
-      this.isPlaying && this.pause(), this.audio && (this.audio.src = "", this.audio.load()), this.hasError = false, this.errorEl && (this.errorEl.style.display = "none"), this.canvas && (this.canvas.style.opacity = "1"), this.playBtn && (this.playBtn.disabled = false), this.progress = 0, this.waveformData = [], this.options = Z(j2(this.options, { url: t2, title: i2 === null ? this.options.title : i2, artist: s2 === null ? this.options.artist : s2, ...r3 })), a2 && (this.options.artwork = r3.artwork || null), o2 ? this.options.artworkAlt = r3.artworkAlt || "" : a2 && (this.options.artworkAlt = this.options.artwork ? W.artworkAlt : ""), r3.preload && this.audio && (this.audio.preload = this.options.preload), r3.crossOrigin && this.audio && (this.audio.crossOrigin = this.options.crossOrigin), s2 !== null && this.syncArtist(s2), (a2 || o2) && this.syncArtwork(a2 ? r3.artwork : this.options.artwork, o2 ? r3.artworkAlt : this.options.artworkAlt), this.options.markers = r3.markers ? z(r3.markers) : [], this.options.waveform = r3.waveform || null, await this.load(t2), r3.autoplay !== false && this.play()?.catch(() => {
+    async loadTrack(t, i = null, s = null, r2 = {}) {
+      let a = Object.prototype.hasOwnProperty.call(r2, "artwork"), o = Object.prototype.hasOwnProperty.call(r2, "artworkAlt");
+      this.isPlaying && this.pause(), this.audio && (this.audio.src = "", this.audio.load()), this.hasError = false, this.errorEl && (this.errorEl.style.display = "none"), this.canvas && (this.canvas.style.opacity = "1"), this.playBtn && (this.playBtn.disabled = false), this.progress = 0, this.waveformData = [], this.options = Z(j2(this.options, { url: t, title: i === null ? this.options.title : i, artist: s === null ? this.options.artist : s, ...r2 })), a && (this.options.artwork = r2.artwork || null), o ? this.options.artworkAlt = r2.artworkAlt || "" : a && (this.options.artworkAlt = this.options.artwork ? W.artworkAlt : ""), r2.preload && this.audio && (this.audio.preload = this.options.preload), r2.crossOrigin && this.audio && (this.audio.crossOrigin = this.options.crossOrigin), s !== null && this.syncArtist(s), (a || o) && this.syncArtwork(a ? r2.artwork : this.options.artwork, o ? r2.artworkAlt : this.options.artworkAlt), this.options.markers = r2.markers ? z(r2.markers) : [], this.options.waveform = r2.waveform || null, await this.load(t), r2.autoplay !== false && this.play()?.catch(() => {
       });
     }
-    setWaveformData(t2) {
-      if (typeof t2 == "string" && t2.trim().endsWith(".json")) {
-        fetch(t2.trim()).then((i2) => i2.json()).then((i2) => {
-          this.waveformData = Array.isArray(i2) ? i2 : i2.peaks || [], i2.markers && !this.options.markers?.length && (this.options.markers = z(i2.markers), this.renderMarkers()), this.drawWaveform();
+    setWaveformData(t) {
+      if (typeof t == "string" && t.trim().endsWith(".json")) {
+        fetch(t.trim()).then((i) => i.json()).then((i) => {
+          this.waveformData = Array.isArray(i) ? i : i.peaks || [], i.markers && !this.options.markers?.length && (this.options.markers = z(i.markers), this.renderMarkers()), this.drawWaveform();
         }).catch(() => {
         });
         return;
       }
-      this.waveformData = D(t2, { fallback: [] }), this.drawWaveform();
+      this.waveformData = D2(t, { fallback: [] }), this.drawWaveform();
     }
     drawWaveform() {
       !this.ctx || this.waveformData.length === 0 || ft(this.ctx, this.canvas, this.waveformData, this.progress, { ...this.options, waveformStyle: this.options.waveformStyle || "bars", color: this.options.waveformColor, progressColor: this.options.progressColor, seekActive: this._seekHover || this._dragging });
     }
     resizeCanvas() {
       if (!this.canvas || this.isDestroying) return;
-      let t2 = window.devicePixelRatio || 1, i2 = this.canvas.parentElement.getBoundingClientRect();
-      this.canvas.width = i2.width * t2, this.canvas.height = this.options.height * t2, this.canvas.parentElement.style.height = this.options.height + "px", this.drawWaveform();
+      let t = window.devicePixelRatio || 1, i = this.canvas.parentElement.getBoundingClientRect();
+      this.canvas.width = i.width * t, this.canvas.height = this.options.height * t, this.canvas.parentElement.style.height = this.options.height + "px", this.drawWaveform();
     }
     renderMarkers() {
       if (!this.markersContainer || (this.markersContainer.innerHTML = "", this._activeMarkerIndex = -1, clearTimeout(this._markerLabelTimer), !this.options.showMarkers || !this.options.markers?.length)) return;
-      let t2 = this.getSeekDuration();
-      t2 && this.options.markers.forEach((i2, s2) => {
-        if (i2.time > t2) {
-          console.warn(`[WaveformPlayer] Marker "${i2.label}" at ${i2.time}s exceeds audio duration of ${t2}s`);
+      let t = this.getSeekDuration();
+      t && this.options.markers.forEach((i, s) => {
+        if (i.time > t) {
+          console.warn(`[WaveformPlayer] Marker "${i.label}" at ${i.time}s exceeds audio duration of ${t}s`);
           return;
         }
-        let r3 = i2.time / t2 * 100, a2 = document.createElement("button");
-        a2.className = "waveform-marker", a2.style.left = `${r3}%`, a2.style.backgroundColor = i2.color || "rgba(255, 255, 255, 0.5)", a2.setAttribute("aria-label", i2.label), a2.setAttribute("data-time", i2.time);
-        let o2 = document.createElement("span");
-        o2.className = "waveform-marker-tooltip", o2.textContent = i2.label, a2.appendChild(o2), a2.addEventListener("click", (n2) => {
-          n2.stopPropagation(), this.seekTo(i2.time), this.options.playOnSeek && !this.isPlaying && this.play();
-        }), this.markersContainer.appendChild(a2);
+        let r2 = i.time / t * 100, a = document.createElement("button");
+        a.className = "waveform-marker", a.style.left = `${r2}%`, a.style.backgroundColor = i.color || "rgba(255, 255, 255, 0.5)", a.setAttribute("aria-label", i.label), a.setAttribute("data-time", i.time);
+        let o = document.createElement("span");
+        o.className = "waveform-marker-tooltip", o.textContent = i.label, a.appendChild(o), a.addEventListener("click", (n) => {
+          n.stopPropagation(), this.seekTo(i.time), this.options.playOnSeek && !this.isPlaying && this.play();
+        }), this.markersContainer.appendChild(a);
       });
     }
-    setActiveMarker(t2) {
+    setActiveMarker(t) {
       if (!this.markersContainer) return;
-      this.markersContainer.querySelectorAll(".waveform-marker").forEach((s2, r3) => s2.classList.toggle("active", r3 === t2));
+      this.markersContainer.querySelectorAll(".waveform-marker").forEach((s, r2) => s.classList.toggle("active", r2 === t));
     }
     updateActiveMarker() {
       if (!this.markersContainer) return;
-      let t2 = this.markersContainer.querySelectorAll(".waveform-marker");
-      if (!t2.length) return;
-      let i2 = this.getSeekDuration(), s2 = i2 ? this.progress * i2 : 0, r3 = -1, a2 = -1 / 0;
-      t2.forEach((o2, n2) => {
-        let l2 = parseFloat(o2.getAttribute("data-time"));
-        Number.isFinite(l2) && l2 <= s2 + 0.05 && l2 > a2 && (a2 = l2, r3 = n2);
-      }), r3 !== this._activeMarkerIndex && (this._activeMarkerIndex = r3, this.setActiveMarker(r3), clearTimeout(this._markerLabelTimer), t2.forEach((o2, n2) => o2.classList.toggle("show-label", n2 === r3)), r3 >= 0 && (this._markerLabelTimer = setTimeout(() => {
-        this.markersContainer?.querySelectorAll(".waveform-marker").forEach((o2) => o2.classList.remove("show-label"));
+      let t = this.markersContainer.querySelectorAll(".waveform-marker");
+      if (!t.length) return;
+      let i = this.getSeekDuration(), s = i ? this.progress * i : 0, r2 = -1, a = -1 / 0;
+      t.forEach((o, n) => {
+        let l2 = parseFloat(o.getAttribute("data-time"));
+        Number.isFinite(l2) && l2 <= s + 0.05 && l2 > a && (a = l2, r2 = n);
+      }), r2 !== this._activeMarkerIndex && (this._activeMarkerIndex = r2, this.setActiveMarker(r2), clearTimeout(this._markerLabelTimer), t.forEach((o, n) => o.classList.toggle("show-label", n === r2)), r2 >= 0 && (this._markerLabelTimer = setTimeout(() => {
+        this.markersContainer?.querySelectorAll(".waveform-marker").forEach((o) => o.classList.remove("show-label"));
       }, 2500)));
     }
     setupHoverTime() {
       if (!this.seekEl) return;
-      let t2 = document.createElement("div");
-      t2.className = "waveform-hover-time", t2.setAttribute("aria-hidden", "true"), this.seekEl.appendChild(t2), this.hoverTimeEl = t2, this.options.showHoverTime && (this.seekEl.addEventListener("pointermove", (i2) => {
-        this._dragging || this._updateHoverTip(i2.clientX);
+      let t = document.createElement("div");
+      t.className = "waveform-hover-time", t.setAttribute("aria-hidden", "true"), this.seekEl.appendChild(t), this.hoverTimeEl = t, this.options.showHoverTime && (this.seekEl.addEventListener("pointermove", (i) => {
+        this._dragging || this._updateHoverTip(i.clientX);
       }), this.seekEl.addEventListener("pointerleave", () => {
         this._dragging || this._hideHoverTip();
       }));
     }
-    _updateHoverTip(t2) {
-      let i2 = this.hoverTimeEl;
-      if (!i2) return;
-      let s2 = this.getSeekDuration();
-      if (!s2) {
-        i2.style.opacity = "0";
+    _updateHoverTip(t) {
+      let i = this.hoverTimeEl;
+      if (!i) return;
+      let s = this.getSeekDuration();
+      if (!s) {
+        i.style.opacity = "0";
         return;
       }
-      let r3 = this.canvas.getBoundingClientRect(), a2 = m2((t2 - r3.left) / r3.width);
-      i2.textContent = E(a2 * s2), i2.style.left = a2 * 100 + "%", i2.style.opacity = "1";
+      let r2 = this.canvas.getBoundingClientRect(), a = m2((t - r2.left) / r2.width);
+      i.textContent = E2(a * s), i.style.left = a * 100 + "%", i.style.opacity = "1";
     }
     _hideHoverTip() {
       this.hoverTimeEl && (this.hoverTimeEl.style.opacity = "0");
     }
-    _scrubTo(t2) {
-      let i2 = this.canvas.getBoundingClientRect();
-      if (!i2.width) return;
-      this.progress = m2((t2 - i2.left) / i2.width), this.drawWaveform(), this._updateSeekHandle();
-      let s2 = this.getSeekDuration();
-      s2 && this.currentTimeEl ? (this.currentTimeEl.textContent = E(this.progress * s2), this._hideHoverTip()) : this._updateHoverTip(t2);
+    _scrubTo(t) {
+      let i = this.canvas.getBoundingClientRect();
+      if (!i.width) return;
+      this.progress = m2((t - i.left) / i.width), this.drawWaveform(), this._updateSeekHandle();
+      let s = this.getSeekDuration();
+      s && this.currentTimeEl ? (this.currentTimeEl.textContent = E2(this.progress * s), this._hideHoverTip()) : this._updateHoverTip(t);
     }
     setupSeekHandle() {
       if (!this.options.seekHandle || this.options.waveformStyle !== "seekbar" || !this.seekEl) return;
-      let t2 = document.createElement("div");
-      t2.className = "waveform-seek-handle", t2.setAttribute("aria-hidden", "true"), this.seekEl.appendChild(t2), this.seekHandleEl = t2;
+      let t = document.createElement("div");
+      t.className = "waveform-seek-handle", t.setAttribute("aria-hidden", "true"), this.seekEl.appendChild(t), this.seekHandleEl = t;
     }
     _updateSeekHandle() {
-      let t2 = this.seekHandleEl;
-      t2 && (t2.style.left = this.progress * 100 + "%", t2.classList.toggle("is-visible", this._seekHover || this._dragging), t2.classList.toggle("is-active", this._dragging || this._handleNear));
+      let t = this.seekHandleEl;
+      t && (t.style.left = this.progress * 100 + "%", t.classList.toggle("is-visible", this._seekHover || this._dragging), t.classList.toggle("is-active", this._dragging || this._handleNear));
     }
-    handleCanvasClick(t2) {
+    handleCanvasClick(t) {
       if (this._suppressClick) {
         this._suppressClick = false;
         return;
       }
-      this._seekFromPointer(t2.clientX);
+      this._seekFromPointer(t.clientX);
     }
-    _seekFromPointer(t2) {
-      let i2 = this.canvas.getBoundingClientRect();
-      if (!i2.width) return;
-      let s2 = m2((t2 - i2.left) / i2.width);
+    _seekFromPointer(t) {
+      let i = this.canvas.getBoundingClientRect();
+      if (!i.width) return;
+      let s = m2((t - i.left) / i.width);
       if (this.options.audioMode === "external") {
-        this._requestSeek(s2);
+        this._requestSeek(s);
         return;
       }
-      !this.audio || !this.audio.duration || this.seekToPercent(s2);
+      !this.audio || !this.audio.duration || this.seekToPercent(s);
     }
-    setLoading(t2) {
-      if (this.isLoading = t2, this.loadingEl) {
-        let i2 = t2 && this.waveformData.length === 0;
-        this.loadingEl.style.display = i2 ? "block" : "none";
+    setLoading(t) {
+      if (this.isLoading = t, this.loadingEl) {
+        let i = t && this.waveformData.length === 0;
+        this.loadingEl.style.display = i ? "block" : "none";
       }
-      this.seekEl && this.seekEl.setAttribute("aria-busy", t2 ? "true" : "false");
+      this.seekEl && this.seekEl.setAttribute("aria-busy", t ? "true" : "false");
     }
     onMetadataLoaded() {
-      this.isDestroying || (this.totalTimeEl && (this.totalTimeEl.textContent = E(this.audio.duration)), this.renderMarkers(), this.updateSeekAccessibility());
+      this.isDestroying || (this.totalTimeEl && (this.totalTimeEl.textContent = E2(this.audio.duration)), this.renderMarkers(), this.updateSeekAccessibility());
     }
-    setPlayButtonState(t2) {
+    setPlayButtonState(t) {
       if (!this.playBtn) return;
-      this.playBtn.classList.toggle("playing", t2);
-      let i2 = this.playBtn.querySelector(".waveform-icon-play"), s2 = this.playBtn.querySelector(".waveform-icon-pause");
-      i2 && (i2.style.display = t2 ? "none" : "flex"), s2 && (s2.style.display = t2 ? "flex" : "none");
+      this.playBtn.classList.toggle("playing", t);
+      let i = this.playBtn.querySelector(".waveform-icon-play"), s = this.playBtn.querySelector(".waveform-icon-pause");
+      i && (i.style.display = t ? "none" : "flex"), s && (s.style.display = t ? "flex" : "none");
     }
     onPlay() {
       this.isDestroying || (this.isPlaying = true, this.setPlayButtonState(true), this.startSmoothUpdate(), this._updateMediaSession("playing"), this._emit("waveformplayer:play", { player: this, url: this.options.url }), this.options.onPlay && this.options.onPlay(this));
@@ -56467,80 +56480,80 @@ ${text}
     }
     onEnded() {
       if (this.isDestroying) return;
-      let t2 = this.audio.duration;
-      this.progress = 0, this.audio.currentTime = 0, this.drawWaveform(), this.currentTimeEl && (this.currentTimeEl.textContent = "0:00"), this._emit("waveformplayer:ended", { player: this, url: this.options.url, currentTime: t2, duration: t2 }), this.onPause(), this.options.onEnd && this.options.onEnd(this);
+      let t = this.audio.duration;
+      this.progress = 0, this.audio.currentTime = 0, this.drawWaveform(), this.currentTimeEl && (this.currentTimeEl.textContent = "0:00"), this._emit("waveformplayer:ended", { player: this, url: this.options.url, currentTime: t, duration: t }), this.onPause(), this.options.onEnd && this.options.onEnd(this);
     }
-    onError(t2) {
-      this.isDestroying || (console.error("[WaveformPlayer] Audio error:", t2), this.hasError = true, this.setLoading(false), this.errorEl && (this.errorEl.style.display = "flex"), this.canvas && (this.canvas.style.opacity = "0.2"), this.playBtn && (this.playBtn.disabled = true), this.options.onError && this.options.onError(t2, this));
+    onError(t) {
+      this.isDestroying || (console.error("[WaveformPlayer] Audio error:", t), this.hasError = true, this.setLoading(false), this.errorEl && (this.errorEl.style.display = "flex"), this.canvas && (this.canvas.style.opacity = "0.2"), this.playBtn && (this.playBtn.disabled = true), this.options.onError && this.options.onError(t, this));
     }
     startSmoothUpdate() {
       this.stopSmoothUpdate();
-      let t2 = () => {
-        this.isPlaying && this.audio && this.audio.duration && (this.updateProgress(), this.updateTimer = requestAnimationFrame(t2));
+      let t = () => {
+        this.isPlaying && this.audio && this.audio.duration && (this.updateProgress(), this.updateTimer = requestAnimationFrame(t));
       };
-      this.updateTimer = requestAnimationFrame(t2);
+      this.updateTimer = requestAnimationFrame(t);
     }
     stopSmoothUpdate() {
       this.updateTimer && (cancelAnimationFrame(this.updateTimer), this.updateTimer = null);
     }
     updateProgress() {
       if (!this.audio || !this.audio.duration || this._dragging) return;
-      let t2 = this.audio.currentTime / this.audio.duration;
-      Math.abs(t2 - this.progress) > 1e-3 && (this.progress = t2, this.drawWaveform(), this._updateSeekHandle()), this.currentTimeEl && (this.currentTimeEl.textContent = E(this.audio.currentTime)), this._emit("waveformplayer:timeupdate", { player: this, currentTime: this.audio.currentTime, duration: this.audio.duration, progress: this.progress, url: this.options.url }), this.options.onTimeUpdate && this.options.onTimeUpdate(this.audio.currentTime, this.audio.duration, this), this.updateActiveMarker(), this.updateSeekAccessibility();
+      let t = this.audio.currentTime / this.audio.duration;
+      Math.abs(t - this.progress) > 1e-3 && (this.progress = t, this.drawWaveform(), this._updateSeekHandle()), this.currentTimeEl && (this.currentTimeEl.textContent = E2(this.audio.currentTime)), this._emit("waveformplayer:timeupdate", { player: this, currentTime: this.audio.currentTime, duration: this.audio.duration, progress: this.progress, url: this.options.url }), this.options.onTimeUpdate && this.options.onTimeUpdate(this.audio.currentTime, this.audio.duration, this), this.updateActiveMarker(), this.updateSeekAccessibility();
     }
     updateBPMDisplay() {
-      let t2 = this.options.bpm || this.detectedBPM;
-      this.bpmEl && this.bpmValueEl && t2 && (this.bpmValueEl.textContent = Math.round(t2), this.bpmEl.style.display = "inline-flex");
+      let t = this.options.bpm || this.detectedBPM;
+      this.bpmEl && this.bpmValueEl && t && (this.bpmValueEl.textContent = Math.round(t), this.bpmEl.style.display = "inline-flex");
     }
     refreshTheme() {
       if (!this._autoTheme) return;
-      this._scheme = R(this.container);
-      let t2 = J(this.options.colorPreset, this.container);
-      for (let i2 of this._presetKeys || []) i2 in t2 && (this.options[i2] = t2[i2]);
+      this._scheme = R2(this.container);
+      let t = J(this.options.colorPreset, this.container);
+      for (let i of this._presetKeys || []) i in t && (this.options[i] = t[i]);
       this._applyThemeColors();
     }
     _applyThemeColors() {
       this.container.classList.toggle("waveform-theme-light", this._scheme === "light"), this.canvas && this.drawWaveform();
     }
     static _watchTheme() {
-      if (e3._themeWatch || typeof document > "u") return;
-      let t2 = () => requestAnimationFrame(() => {
-        e3.instances.forEach((a2) => {
+      if (e2._themeWatch || typeof document > "u") return;
+      let t = () => requestAnimationFrame(() => {
+        e2.instances.forEach((a) => {
           try {
-            a2.refreshTheme();
+            a.refreshTheme();
           } catch {
           }
         });
-      }), i2 = { attributes: true, attributeFilter: ["class", "data-theme", "data-color-scheme", "style"] }, s2 = new MutationObserver(t2);
-      s2.observe(document.documentElement, i2), document.body && s2.observe(document.body, i2);
-      let r3 = null;
+      }), i = { attributes: true, attributeFilter: ["class", "data-theme", "data-color-scheme", "style"] }, s = new MutationObserver(t);
+      s.observe(document.documentElement, i), document.body && s.observe(document.body, i);
+      let r2 = null;
       try {
-        r3 = window.matchMedia("(prefers-color-scheme: dark)"), r3.addEventListener("change", t2);
+        r2 = window.matchMedia("(prefers-color-scheme: dark)"), r2.addEventListener("change", t);
       } catch {
       }
-      e3._themeWatch = { obs: s2, mq: r3, refresh: t2 };
+      e2._themeWatch = { obs: s, mq: r2, refresh: t };
     }
     updateSpeedUI() {
       if (!this.audio) return;
-      let t2 = this.container.querySelector(".speed-value");
-      if (t2) {
-        let i2 = this.audio.playbackRate;
-        t2.textContent = i2 === 1 ? "1x" : `${i2}x`;
+      let t = this.container.querySelector(".speed-value");
+      if (t) {
+        let i = this.audio.playbackRate;
+        t.textContent = i === 1 ? "1x" : `${i}x`;
       }
-      this.container.querySelectorAll(".speed-option").forEach((i2) => {
-        let s2 = parseFloat(i2.dataset.rate) === this.audio.playbackRate;
-        i2.classList.toggle("active", s2), i2.setAttribute("aria-checked", s2 ? "true" : "false");
+      this.container.querySelectorAll(".speed-option").forEach((i) => {
+        let s = parseFloat(i.dataset.rate) === this.audio.playbackRate;
+        i.classList.toggle("active", s), i.setAttribute("aria-checked", s ? "true" : "false");
       });
     }
     play() {
-      if (this.options.singlePlay && e3.currentlyPlaying && e3.currentlyPlaying !== this && e3.currentlyPlaying.pause(), this.options.audioMode === "external") {
-        this._emit("waveformplayer:request-play", this._buildTrackDetail(), true).defaultPrevented || (e3.currentlyPlaying = this);
+      if (this.options.singlePlay && e2.currentlyPlaying && e2.currentlyPlaying !== this && e2.currentlyPlaying.pause(), this.options.audioMode === "external") {
+        this._emit("waveformplayer:request-play", this._buildTrackDetail(), true).defaultPrevented || (e2.currentlyPlaying = this);
         return;
       }
-      return e3.currentlyPlaying = this, this.audio.play();
+      return e2.currentlyPlaying = this, this.audio.play();
     }
     pause() {
-      if (e3.currentlyPlaying === this && (e3.currentlyPlaying = null), this.options.audioMode === "external") {
+      if (e2.currentlyPlaying === this && (e2.currentlyPlaying = null), this.options.audioMode === "external") {
         this._emit("waveformplayer:request-pause", this._buildTrackDetail(), true);
         return;
       }
@@ -56549,76 +56562,76 @@ ${text}
     _buildTrackDetail() {
       return { url: this.options.url, title: this.options.title, artist: this.options.artist, artwork: this.options.artwork, markers: this.options.markers, waveform: this.options.waveform, id: this.id, player: this };
     }
-    setPlayingState(t2) {
-      let i2 = this.isPlaying;
-      this.isPlaying = !!t2, this.setPlayButtonState(this.isPlaying), this.isPlaying && !i2 ? (this.startSmoothUpdate?.(), this._emit("waveformplayer:play", { player: this, url: this.options.url }), this.options.onPlay && this.options.onPlay(this)) : !this.isPlaying && i2 && (this.stopSmoothUpdate?.(), this._emit("waveformplayer:pause", { player: this, url: this.options.url }), this.options.onPause && this.options.onPause(this));
+    setPlayingState(t) {
+      let i = this.isPlaying;
+      this.isPlaying = !!t, this.setPlayButtonState(this.isPlaying), this.isPlaying && !i ? (this.startSmoothUpdate?.(), this._emit("waveformplayer:play", { player: this, url: this.options.url }), this.options.onPlay && this.options.onPlay(this)) : !this.isPlaying && i && (this.stopSmoothUpdate?.(), this._emit("waveformplayer:pause", { player: this, url: this.options.url }), this.options.onPause && this.options.onPause(this));
     }
-    setProgress(t2, i2) {
-      !i2 || i2 <= 0 || (this.progress = m2(t2 / i2), this.currentTimeEl && (this.currentTimeEl.textContent = E(t2)), this._extDuration = i2, this.totalTimeEl && (!this.totalTimeEl.dataset._extSet || this.totalTimeEl.dataset._extDur !== String(i2)) && (this.totalTimeEl.textContent = E(i2), this.totalTimeEl.dataset._extSet = "1", this.totalTimeEl.dataset._extDur = String(i2)), this.drawWaveform?.(), this.updateActiveMarker(), this._emit("waveformplayer:timeupdate", { player: this, currentTime: t2, duration: i2, progress: this.progress, url: this.options.url }), this.options.onTimeUpdate && this.options.onTimeUpdate(t2, i2, this), this.progress >= 1 ? this._extEnded || (this._extEnded = true, this._emit("waveformplayer:ended", { player: this, url: this.options.url, currentTime: i2, duration: i2 }), this.options.onEnd && this.options.onEnd(this)) : this._extEnded = false, this.updateSeekAccessibility());
+    setProgress(t, i) {
+      !i || i <= 0 || (this.progress = m2(t / i), this.currentTimeEl && (this.currentTimeEl.textContent = E2(t)), this._extDuration = i, this.totalTimeEl && (!this.totalTimeEl.dataset._extSet || this.totalTimeEl.dataset._extDur !== String(i)) && (this.totalTimeEl.textContent = E2(i), this.totalTimeEl.dataset._extSet = "1", this.totalTimeEl.dataset._extDur = String(i)), this.drawWaveform?.(), this.updateActiveMarker(), this._emit("waveformplayer:timeupdate", { player: this, currentTime: t, duration: i, progress: this.progress, url: this.options.url }), this.options.onTimeUpdate && this.options.onTimeUpdate(t, i, this), this.progress >= 1 ? this._extEnded || (this._extEnded = true, this._emit("waveformplayer:ended", { player: this, url: this.options.url, currentTime: i, duration: i }), this.options.onEnd && this.options.onEnd(this)) : this._extEnded = false, this.updateSeekAccessibility());
     }
     togglePlay() {
       this.isPlaying ? this.pause() : this.play();
     }
-    seekTo(t2) {
-      this.audio && this.audio.duration && (this.audio.currentTime = m2(t2, 0, this.audio.duration), this.updateProgress());
+    seekTo(t) {
+      this.audio && this.audio.duration && (this.audio.currentTime = m2(t, 0, this.audio.duration), this.updateProgress());
     }
-    seekToPercent(t2) {
-      this.audio && this.audio.duration && (this.audio.currentTime = this.audio.duration * m2(t2), this.updateProgress());
+    seekToPercent(t) {
+      this.audio && this.audio.duration && (this.audio.currentTime = this.audio.duration * m2(t), this.updateProgress());
     }
-    setVolume(t2) {
-      let i2 = Number(t2);
-      this.audio && Number.isFinite(i2) && (this.audio.volume = m2(i2));
+    setVolume(t) {
+      let i = Number(t);
+      this.audio && Number.isFinite(i) && (this.audio.volume = m2(i));
     }
-    setPlaybackRate(t2) {
+    setPlaybackRate(t) {
       if (!this.audio) return;
-      let i2 = _(t2, null, { min: N2, max: F });
-      i2 !== null && (this.audio.playbackRate = i2, this.options.playbackRate = i2, this.updateSpeedUI());
+      let i = _(t, null, { min: N2, max: F });
+      i !== null && (this.audio.playbackRate = i, this.options.playbackRate = i, this.updateSpeedUI());
     }
     destroy() {
-      this.isDestroying = true, this._emit("waveformplayer:destroy", { player: this, url: this.options.url }), this.pause(), this.stopSmoothUpdate(), clearTimeout(this._markerLabelTimer), this._ac?.abort(), this.resizeObserver && (this.resizeObserver.disconnect(), this.resizeObserver = null), this.resizeHandler && (window.removeEventListener("resize", this.resizeHandler), this.resizeHandler = null), e3.instances.delete(this.id), e3.currentlyPlaying === this && (e3.currentlyPlaying = null), this.audio && (this.audio.pause(), this.audio.src = "", this.audio.load(), this.audio = null), this.container.innerHTML = "", delete this.container.dataset.waveformInitialized, this.canvas = null, this.ctx = null, this.playBtn = null, this.waveformData = [];
+      this.isDestroying = true, this._emit("waveformplayer:destroy", { player: this, url: this.options.url }), this.pause(), this.stopSmoothUpdate(), clearTimeout(this._markerLabelTimer), this._ac?.abort(), this.resizeObserver && (this.resizeObserver.disconnect(), this.resizeObserver = null), this.resizeHandler && (window.removeEventListener("resize", this.resizeHandler), this.resizeHandler = null), e2.instances.delete(this.id), e2.currentlyPlaying === this && (e2.currentlyPlaying = null), this.audio && (this.audio.pause(), this.audio.src = "", this.audio.load(), this.audio = null), this.container.innerHTML = "", delete this.container.dataset.waveformInitialized, this.canvas = null, this.ctx = null, this.playBtn = null, this.waveformData = [];
     }
-    static getInstance(t2) {
-      if (typeof t2 == "string") {
-        let i2 = this.instances.get(t2);
-        if (i2) return i2;
-        let s2 = document.getElementById(t2);
-        if (s2) return Array.from(this.instances.values()).find((r3) => r3.container === s2);
+    static getInstance(t) {
+      if (typeof t == "string") {
+        let i = this.instances.get(t);
+        if (i) return i;
+        let s = document.getElementById(t);
+        if (s) return Array.from(this.instances.values()).find((r2) => r2.container === s);
       }
-      if (t2 instanceof HTMLElement) return Array.from(this.instances.values()).find((i2) => i2.container === t2);
+      if (t instanceof HTMLElement) return Array.from(this.instances.values()).find((i) => i.container === t);
     }
     static getAllInstances() {
       return Array.from(this.instances.values());
     }
     static destroyAll() {
-      this.instances.forEach((t2) => t2.destroy()), this.instances.clear();
+      this.instances.forEach((t) => t.destroy()), this.instances.clear();
     }
-    static async generateWaveformData(t2, i2 = 1800) {
+    static async generateWaveformData(t, i = 1800) {
       try {
-        return (await G2(t2, i2)).peaks;
-      } catch (s2) {
-        throw console.error("[WaveformPlayer] Failed to generate waveform:", s2), s2;
+        return (await G2(t, i)).peaks;
+      } catch (s) {
+        throw console.error("[WaveformPlayer] Failed to generate waveform:", s), s;
       }
     }
-    static getPeaksUrl(t2) {
-      if (!t2) return;
-      let i2 = t2.replace(/\.(mp3|wav|ogg|flac|m4a|aac)(\?[^#]*)?(#.*)?$/i, ".json$2$3");
-      return i2 === t2 ? void 0 : i2;
+    static getPeaksUrl(t) {
+      if (!t) return;
+      let i = t.replace(/\.(mp3|wav|ogg|flac|m4a|aac)(\?[^#]*)?(#.*)?$/i, ".json$2$3");
+      return i === t ? void 0 : i;
     }
   };
-  T.utils = { formatTime: E, extractTitleFromUrl: I, escapeHtml: S2, isSafeHref: st, parseDataAttributes: O, detectColorScheme: R };
+  T.utils = { formatTime: E2, extractTitleFromUrl: I, escapeHtml: S, isSafeHref: st, parseDataAttributes: O, detectColorScheme: R2 };
   var et = () => typeof window < "u" && typeof document < "u";
   var Nt = () => true;
-  function kt(e4) {
-    if (!(e4.dataset.waveformInitialized === "true" || T.getInstance(e4))) try {
-      new T(e4), e4.dataset.waveformInitialized = "true";
-    } catch (t2) {
-      console.error("[WaveformPlayer] Failed to initialize:", t2, e4);
+  function kt(e3) {
+    if (!(e3.dataset.waveformInitialized === "true" || T.getInstance(e3))) try {
+      new T(e3), e3.dataset.waveformInitialized = "true";
+    } catch (t) {
+      console.error("[WaveformPlayer] Failed to initialize:", t, e3);
     }
   }
-  function tt(e4 = document) {
+  function tt(e3 = document) {
     if (!et()) return;
-    let t2 = e4 || document;
-    t2.matches?.("[data-waveform-player]") && kt(t2), t2.querySelectorAll("[data-waveform-player]").forEach(kt);
+    let t = e3 || document;
+    t.matches?.("[data-waveform-player]") && kt(t), t.querySelectorAll("[data-waveform-player]").forEach(kt);
   }
   et() && !Nt() && (document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", () => tt()) : tt());
   T.init = tt;
@@ -56700,7 +56713,7 @@ ${text}
       return colorFunction;
     }
     const [possibleColor] = gradientPart.split(/\s+/);
-    if (w(possibleColor).isValid()) {
+    if (A(possibleColor).isValid()) {
       return possibleColor;
     }
   }
@@ -56735,7 +56748,7 @@ ${text}
     }
   }
   function resolveColorValue(element, colorValue) {
-    if (!colorValue || w(colorValue).isValid()) {
+    if (!colorValue || A(colorValue).isValid()) {
       return colorValue;
     }
     const colorResolver = element.ownerDocument.createElement("span");
@@ -56746,19 +56759,19 @@ ${text}
     element.appendChild(colorResolver);
     const resolvedColor = getComputedStyle4(colorResolver).color;
     colorResolver.remove();
-    return resolvedColor && w(resolvedColor).isValid() ? resolvedColor : colorValue;
+    return resolvedColor && A(resolvedColor).isValid() ? resolvedColor : colorValue;
   }
   function getResolvedGradientStops(element, gradientValue) {
-    const stops = getWaveformGradientStops(gradientValue)?.map((colorValue) => resolveColorValue(element, colorValue)).filter((colorValue) => w(colorValue).isValid());
+    const stops = getWaveformGradientStops(gradientValue)?.map((colorValue) => resolveColorValue(element, colorValue)).filter((colorValue) => A(colorValue).isValid());
     return stops?.length > 1 ? stops : void 0;
   }
   function applyAlpha(colorValue, alpha) {
     if (Array.isArray(colorValue)) {
       return colorValue.map(
-        (color) => w(color).alpha(alpha).toRgbString()
+        (color) => A(color).alpha(alpha).toRgbString()
       );
     }
-    return w(colorValue).alpha(alpha).toRgbString();
+    return A(colorValue).alpha(alpha).toRgbString();
   }
   function getRepresentativeColor(colorValue) {
     if (Array.isArray(colorValue)) {
@@ -56888,7 +56901,7 @@ ${text}
     }
   }
   function styleSvgIcons(container, buttonColor) {
-    const isButtonDark = w(buttonColor).isDark();
+    const isButtonDark = A(buttonColor).isDark();
     const iconColor = isButtonDark ? "#ffffff" : "#000000";
     const svgPaths = container.querySelectorAll("svg path");
     svgPaths.forEach((path) => {
@@ -57507,9 +57520,9 @@ ${text}
     }, [currentTrackClientId, setCurrentTrackClientId, tracks]);
     const onChangeOrder = (0, import_element117.useCallback)(
       (trackOrder) => {
-        const sortedBlocks = [...innerBlockTracks].sort((a2, b2) => {
-          const titleA = a2.attributes.title || "";
-          const titleB = b2.attributes.title || "";
+        const sortedBlocks = [...innerBlockTracks].sort((a, b) => {
+          const titleA = a.attributes.title || "";
+          const titleB = b.attributes.title || "";
           if (trackOrder === "asc") {
             return titleA.localeCompare(titleB);
           }
@@ -66068,9 +66081,9 @@ ${text}
     { value: "standard", label: (0, import_i18n193.__)("Standard") },
     { value: "status", label: (0, import_i18n193.__)("Status") },
     { value: "video", label: (0, import_i18n193.__)("Video") }
-  ].sort((a2, b2) => {
-    const normalizedA = a2.label.toUpperCase();
-    const normalizedB = b2.label.toUpperCase();
+  ].sort((a, b) => {
+    const normalizedA = a.label.toUpperCase();
+    const normalizedB = b.label.toUpperCase();
     if (normalizedA < normalizedB) {
       return -1;
     }
@@ -68358,14 +68371,14 @@ ${text}
   var createPaginationItem = (content, Tag = "a", extraClass = "") => /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(Tag, { className: `page-numbers ${extraClass}`, children: content }, content);
   var previewPaginationNumbers = (midSize) => {
     const paginationItems = [];
-    for (let i2 = 1; i2 <= midSize; i2++) {
-      paginationItems.push(createPaginationItem(i2));
+    for (let i = 1; i <= midSize; i++) {
+      paginationItems.push(createPaginationItem(i));
     }
     paginationItems.push(
       createPaginationItem(midSize + 1, "span", "current")
     );
-    for (let i2 = 1; i2 <= midSize; i2++) {
-      paginationItems.push(createPaginationItem(midSize + 1 + i2));
+    for (let i = 1; i <= midSize; i++) {
+      paginationItems.push(createPaginationItem(midSize + 1 + i));
     }
     paginationItems.push(createPaginationItem("...", "span", "dots"));
     paginationItems.push(createPaginationItem(midSize * 2 + 3));
@@ -77486,9 +77499,9 @@ ${text}
       if (heading.level === headingList[0].level) {
         if (headingList[key + 1]?.level > heading.level) {
           let endOfSlice = headingList.length;
-          for (let i2 = key + 1; i2 < headingList.length; i2++) {
-            if (headingList[i2].level === heading.level) {
-              endOfSlice = i2;
+          for (let i = key + 1; i < headingList.length; i++) {
+            if (headingList[i].level === heading.level) {
+              endOfSlice = i;
               break;
             }
           }
@@ -77688,9 +77701,9 @@ ${text}
       if (heading.level === headingList[0].level) {
         if (headingList[key + 1]?.level > heading.level) {
           let endOfSlice = headingList.length;
-          for (let i2 = key + 1; i2 < headingList.length; i2++) {
-            if (headingList[i2].level === heading.level) {
-              endOfSlice = i2;
+          for (let i = key + 1; i < headingList.length; i++) {
+            if (headingList[i].level === heading.level) {
+              endOfSlice = i;
               break;
             }
           }
@@ -80756,7 +80769,7 @@ ${text}
         "a",
         {
           href: "#term-name-pseudo-link",
-          onClick: (e4) => e4.preventDefault(),
+          onClick: (e3) => e3.preventDefault(),
           children: termName2
         }
       );
@@ -83684,8 +83697,8 @@ ${text}
 
   // node_modules/uuid/dist/stringify.js
   var byteToHex = [];
-  for (let i2 = 0; i2 < 256; ++i2) {
-    byteToHex.push((i2 + 256).toString(16).slice(1));
+  for (let i = 0; i < 256; ++i) {
+    byteToHex.push((i + 256).toString(16).slice(1));
   }
   function unsafeStringify(arr, offset = 0) {
     return (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
@@ -83717,8 +83730,8 @@ ${text}
       if (offset < 0 || offset + 16 > buf.length) {
         throw new RangeError(`UUID byte range ${offset}:${offset + 15} is out of buffer bounds`);
       }
-      for (let i2 = 0; i2 < 16; ++i2) {
-        buf[offset + i2] = rnds[i2];
+      for (let i = 0; i < 16; ++i) {
+        buf[offset + i] = rnds[i];
       }
       return buf;
     }
