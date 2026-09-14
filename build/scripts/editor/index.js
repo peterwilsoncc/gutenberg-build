@@ -119502,7 +119502,6 @@ ${content}
 
   // packages/editor/build-module/components/post-actions/index.mjs
   var import_jsx_runtime636 = __toESM(require_jsx_runtime(), 1);
-  var { Menu } = unlock(import_components251.privateApis);
   function PostActions({ postType: postType2, postId: postId2, onActionPerformed }) {
     const [activeModalAction, setActiveModalAction] = (0, import_element404.useState)(null);
     const { item, permissions } = (0, import_data233.useSelect)(
@@ -119532,9 +119531,9 @@ ${content}
       });
     }, [allActions, itemWithPermissions]);
     return /* @__PURE__ */ (0, import_jsx_runtime636.jsxs)(import_jsx_runtime636.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime636.jsxs)(Menu, { placement: "bottom-end", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime636.jsxs)(menu_exports.Root, { disabled: !actions2.length, children: [
         /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(
-          Menu.TriggerButton,
+          menu_exports.Trigger,
           {
             render: /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(
               import_components251.Button,
@@ -119549,14 +119548,20 @@ ${content}
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(Menu.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(
-          ActionsDropdownMenuGroup,
+        /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(
+          menu_exports.Popup,
           {
-            actions: actions2,
-            items: [itemWithPermissions],
-            setActiveModalAction
+            positioner: /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(menu_exports.Positioner, { side: "bottom", align: "end" }),
+            children: /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(
+              ActionsDropdownMenuGroup,
+              {
+                actions: actions2,
+                items: [itemWithPermissions],
+                setActiveModalAction
+              }
+            )
           }
-        ) })
+        )
       ] }),
       !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(
         ActionModal2,
@@ -119570,7 +119575,7 @@ ${content}
   }
   function DropdownMenuItemTrigger({ action, onClick, items }) {
     const label = typeof action.label === "string" ? action.label : action.label(items);
-    return /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(Menu.Item, { onClick, children: /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(Menu.ItemLabel, { children: label }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(menu_exports.Item, { onClick, children: /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(menu_exports.ItemLabel, { children: label }) });
   }
   function ActionModal2({ action, items, closeModal: closeModal2 }) {
     const label = typeof action.label === "string" ? action.label : action.label(items);
@@ -119592,7 +119597,7 @@ ${content}
   }
   function ActionsDropdownMenuGroup({ actions: actions2, items, setActiveModalAction }) {
     const registry = (0, import_data233.useRegistry)();
-    return /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(Menu.Group, { children: actions2.map((action) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(menu_exports.Group, { children: actions2.map((action) => {
       return /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(
         DropdownMenuItemTrigger,
         {
@@ -122436,11 +122441,11 @@ ${content}
   var import_components270 = __toESM(require_components(), 1);
   var import_i18n359 = __toESM(require_i18n(), 1);
   var import_jsx_runtime670 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu2 } = unlock(import_components270.privateApis);
+  var { Menu } = unlock(import_components270.privateApis);
   function NoteActionsMenu({ items, buttonRef }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime670.jsxs)(Menu2, { placement: "bottom-end", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime670.jsxs)(Menu, { placement: "bottom-end", children: [
       /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(
-        Menu2.TriggerButton,
+        Menu.TriggerButton,
         {
           render: /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(
             import_components270.Button,
@@ -122456,10 +122461,10 @@ ${content}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(
-        Menu2.Popover,
+        Menu.Popover,
         {
           modal: false,
-          children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(Menu2.Item, { onClick: item.onClick, children: /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(Menu2.ItemLabel, { children: item.title }) }, item.id))
+          children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(Menu.Item, { onClick: item.onClick, children: /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(Menu.ItemLabel, { children: item.title }) }, item.id))
         }
       )
     ] });
