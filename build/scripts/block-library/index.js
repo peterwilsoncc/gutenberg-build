@@ -774,10 +774,10 @@ var wp;
       }
       function formatAttributes(attributes2) {
         var map = {};
-        var index = 0;
+        var index2 = 0;
         var attributesLength = attributes2.length;
-        for (; index < attributesLength; index++) {
-          var attribute = attributes2[index];
+        for (; index2 < attributesLength; index2++) {
+          var attribute = attributes2[index2];
           map[attribute.name] = attribute.value;
         }
         return map;
@@ -802,10 +802,10 @@ var wp;
         }
         var domNodes = [];
         var current;
-        var index = 0;
+        var index2 = 0;
         var nodesLength = nodes.length;
-        for (; index < nodesLength; index++) {
-          var node = nodes[index];
+        for (; index2 < nodesLength; index2++) {
+          var node = nodes[index2];
           switch (node.nodeType) {
             case 1: {
               var tagName = formatTagName(node.nodeName);
@@ -826,7 +826,7 @@ var wp;
             default:
               continue;
           }
-          var prev = domNodes[index - 1] || null;
+          var prev = domNodes[index2 - 1] || null;
           if (prev) {
             prev.next = current;
           }
@@ -1957,7 +1957,7 @@ var wp;
       var EMPTY_STRING = "";
       var TYPE_COMMENT = "comment";
       var TYPE_DECLARATION = "declaration";
-      function index(style2, options2) {
+      function index2(style2, options2) {
         if (typeof style2 !== "string") {
           throw new TypeError("First argument must be a string");
         }
@@ -2074,7 +2074,7 @@ var wp;
       function trim(str) {
         return str ? str.replace(TRIM_REGEX, EMPTY_STRING) : EMPTY_STRING;
       }
-      module.exports = index;
+      module.exports = index2;
     }
   });
 
@@ -2320,7 +2320,7 @@ var wp;
       var react_1 = require_react();
       var attributes_to_props_1 = __importDefault(require_attributes_to_props());
       var utilities_1 = require_utilities3();
-      var React50 = {
+      var React51 = {
         cloneElement: react_1.cloneElement,
         createElement: react_1.createElement,
         isValidElement: react_1.isValidElement
@@ -2332,19 +2332,19 @@ var wp;
         var reactElements = [];
         var hasReplace = typeof options2.replace === "function";
         var transform = options2.transform || utilities_1.returnFirstArg;
-        var _a = options2.library || React50, cloneElement5 = _a.cloneElement, createElement3 = _a.createElement, isValidElement3 = _a.isValidElement;
+        var _a = options2.library || React51, cloneElement5 = _a.cloneElement, createElement3 = _a.createElement, isValidElement3 = _a.isValidElement;
         var nodesLength = nodes.length;
-        for (var index = 0; index < nodesLength; index++) {
-          var node = nodes[index];
+        for (var index2 = 0; index2 < nodesLength; index2++) {
+          var node = nodes[index2];
           if (hasReplace) {
-            var replaceElement = options2.replace(node, index);
+            var replaceElement = options2.replace(node, index2);
             if (isValidElement3(replaceElement)) {
               if (nodesLength > 1) {
                 replaceElement = cloneElement5(replaceElement, {
-                  key: replaceElement.key || index
+                  key: replaceElement.key || index2
                 });
               }
-              reactElements.push(transform(replaceElement, node, index));
+              reactElements.push(transform(replaceElement, node, index2));
               continue;
             }
           }
@@ -2356,7 +2356,7 @@ var wp;
             if (options2.trim && isWhitespace) {
               continue;
             }
-            reactElements.push(transform(node.data, node, index));
+            reactElements.push(transform(node.data, node, index2));
             continue;
           }
           var element = node;
@@ -2389,9 +2389,9 @@ var wp;
               continue;
           }
           if (nodesLength > 1) {
-            props.key = index;
+            props.key = index2;
           }
-          reactElements.push(transform(createElement3(node.name, props, children), node, index));
+          reactElements.push(transform(createElement3(node.name, props, children), node, index2));
         }
         return reactElements.length === 1 ? reactElements[0] : reactElements;
       }
@@ -2522,7 +2522,7 @@ var wp;
           return x3 === y2 && (0 !== x3 || 1 / x3 === 1 / y2) || x3 !== x3 && y2 !== y2;
         }
         function useSyncExternalStore$2(subscribe2, getSnapshot2) {
-          didWarnOld18Alpha || void 0 === React50.startTransition || (didWarnOld18Alpha = true, console.error(
+          didWarnOld18Alpha || void 0 === React51.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
           var value = getSnapshot2();
@@ -2544,7 +2544,7 @@ var wp;
             },
             [subscribe2, value, getSnapshot2]
           );
-          useEffect70(
+          useEffect69(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe2(function() {
@@ -2570,8 +2570,8 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React50 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState91 = React50.useState, useEffect70 = React50.useEffect, useLayoutEffect5 = React50.useLayoutEffect, useDebugValue = React50.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-        exports.useSyncExternalStore = void 0 !== React50.useSyncExternalStore ? React50.useSyncExternalStore : shim;
+        var React51 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState91 = React51.useState, useEffect69 = React51.useEffect, useLayoutEffect5 = React51.useLayoutEffect, useDebugValue = React51.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        exports.useSyncExternalStore = void 0 !== React51.useSyncExternalStore ? React51.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
     }
@@ -6448,20 +6448,31 @@ var wp;
   // node_modules/@base-ui/utils/useControlled.mjs
   var React = __toESM(require_react(), 1);
 
-  // node_modules/@base-ui/utils/error.mjs
-  var set;
+  // node_modules/@base-ui/utils/createLogOnce.mjs
+  var loggedMessages;
   if (true) {
-    set = /* @__PURE__ */ new Set();
+    loggedMessages = /* @__PURE__ */ new Set();
   }
-  function error(...messages) {
-    if (true) {
-      const messageKey = messages.join(" ");
-      if (!set.has(messageKey)) {
-        set.add(messageKey);
-        console.error(`Base UI: ${messageKey}`);
+  function createLogOnce(severity, prefix) {
+    return function logOnce(...messages) {
+      if (true) {
+        const message = messages.join(" ");
+        const output = prefix ? `${prefix}: ${message}` : message;
+        const key = `${severity}:${output}`;
+        if (!loggedMessages.has(key)) {
+          loggedMessages.add(key);
+          if (severity === "warn") {
+            console.warn(output);
+          } else {
+            console.error(output);
+          }
+        }
       }
-    }
+    };
   }
+
+  // node_modules/@base-ui/utils/error.mjs
+  var error = createLogOnce("error", "Base UI");
 
   // node_modules/@base-ui/utils/useControlled.mjs
   function useControlled({
@@ -6474,7 +6485,7 @@ var wp;
       current: isControlled
     } = React.useRef(controlled !== void 0);
     const [valueState, setValue] = React.useState(defaultProp);
-    const value = isControlled ? controlled : valueState;
+    const value = isControlled && controlled !== void 0 ? controlled : valueState;
     if (true) {
       React.useEffect(() => {
         if (isControlled !== (controlled !== void 0)) {
@@ -6575,19 +6586,13 @@ var wp;
   }
 
   // node_modules/@base-ui/utils/warn.mjs
-  var set2;
-  if (true) {
-    set2 = /* @__PURE__ */ new Set();
+  var warn = createLogOnce("warn", "Base UI");
+
+  // node_modules/@base-ui/utils/empty.mjs
+  function NOOP() {
   }
-  function warn(...messages) {
-    if (true) {
-      const messageKey = messages.join(" ");
-      if (!set2.has(messageKey)) {
-        set2.add(messageKey);
-        console.warn(`Base UI: ${messageKey}`);
-      }
-    }
-  }
+  var EMPTY_ARRAY = Object.freeze([]);
+  var EMPTY_OBJECT = Object.freeze({});
 
   // node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
   var React6 = __toESM(require_react(), 1);
@@ -6631,7 +6636,7 @@ var wp;
     const map = useRefWithInit(createMap).current;
     const nextIndexRef = React6.useRef(0);
     const isDirtyRef = React6.useRef(true);
-    const itemsRef = React6.useRef([]);
+    const itemsRef = React6.useRef(null);
     const mutationObserverRef = React6.useRef(null);
     const scheduleMapUpdate = useStableCallback(() => {
       if (isDirtyRef.current) {
@@ -6705,14 +6710,22 @@ var wp;
     const flush = useStableCallback(() => {
       const [items, automaticNodes] = getCompositeListSnapshot(map);
       const nextMap = syncRefs(items);
+      const previousItems = itemsRef.current;
+      const changed = !previousItems || previousItems.length !== items.length || items.some((item, index2) => {
+        const previousItem = previousItems[index2];
+        return item.index !== previousItem.index || item.element !== previousItem.element || item.registration.index !== previousItem.registration.index || item.registration.metadata !== previousItem.registration.metadata;
+      });
       observe(automaticNodes);
       itemsRef.current = items;
       isDirtyRef.current = false;
+      if (!changed) {
+        return;
+      }
       listeners.forEach((listener) => listener(nextMap));
       onMapChange(nextMap);
     });
     useIsoLayoutEffect(() => {
-      if (!isDirtyRef.current) {
+      if (!isDirtyRef.current && itemsRef.current) {
         syncRefs(itemsRef.current);
       }
       return () => {
@@ -6764,16 +6777,16 @@ var wp;
       if (!node.isConnected) {
         return;
       }
-      const index = registration.index;
+      const index2 = registration.index;
       const item = {
-        index: index ?? -1,
+        index: index2 ?? -1,
         element: node,
         registration
       };
-      if (index === null) {
+      if (index2 === null) {
         automaticItems.push(item);
-      } else if (index >= 0) {
-        reservedIndices.add(index);
+      } else if (index2 >= 0) {
+        reservedIndices.add(index2);
         items.push(item);
       }
     });
@@ -6842,7 +6855,7 @@ var wp;
     return forkRef.refs[0] !== a || forkRef.refs[1] !== b || forkRef.refs[2] !== c2 || forkRef.refs[3] !== d;
   }
   function didChangeN(forkRef, newRefs) {
-    return forkRef.refs.length !== newRefs.length || forkRef.refs.some((ref, index) => ref !== newRefs[index]);
+    return forkRef.refs.length !== newRefs.length || forkRef.refs.some((ref, index2) => ref !== newRefs[index2]);
   }
   function update(forkRef, refs) {
     forkRef.refs = refs;
@@ -6941,12 +6954,6 @@ var wp;
     }
     return void 0;
   }
-
-  // node_modules/@base-ui/utils/empty.mjs
-  function NOOP() {
-  }
-  var EMPTY_ARRAY = Object.freeze([]);
-  var EMPTY_OBJECT = Object.freeze({});
 
   // node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
   function getStateAttributesProps(state, customMapping) {
@@ -7137,19 +7144,21 @@ var wp;
   // node_modules/@base-ui/react/internals/useRenderElement.mjs
   var import_react = __toESM(require_react(), 1);
   function useRenderElement(element, componentProps, params = {}) {
-    const renderProp = componentProps.render;
-    const outProps = useRenderElementProps(componentProps, params);
+    let renderProp = componentProps.render;
+    if (params.enabled !== false) {
+      renderProp = unwrapLazyRenderProp(renderProp);
+    }
+    const outProps = useRenderElementProps(componentProps, params, renderProp);
     if (params.enabled === false) {
       return null;
     }
     const state = params.state ?? EMPTY_OBJECT;
     return evaluateRenderProp(element, renderProp, outProps, state);
   }
-  function useRenderElementProps(componentProps, params = {}) {
+  function useRenderElementProps(componentProps, params, renderProp) {
     const {
       className: classNameProp,
-      style: styleProp,
-      render: renderProp
+      style: styleProp
     } = componentProps;
     const {
       state = EMPTY_OBJECT,
@@ -7192,6 +7201,13 @@ var wp;
   var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
   var COMPONENT_IDENTIFIER_PATTERN = /^[A-Z][A-Za-z0-9$]*$/;
   var LOWERCASE_CHARACTER_PATTERN = /[a-z]/;
+  function unwrapLazyRenderProp(render) {
+    if (render?.$$typeof !== REACT_LAZY_TYPE) {
+      return render;
+    }
+    const unwrapped = React9.Children.toArray(render)[0];
+    return /* @__PURE__ */ React9.isValidElement(unwrapped) ? unwrapped : render;
+  }
   function evaluateRenderProp(element, render, props, state) {
     if (render) {
       if (typeof render === "function") {
@@ -7202,17 +7218,12 @@ var wp;
       }
       const mergedProps = mergeProps(props, render.props);
       mergedProps.ref = props.ref;
-      let newElement = render;
-      if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-        const children = React9.Children.toArray(render);
-        newElement = children[0];
-      }
       if (true) {
-        if (!/* @__PURE__ */ React9.isValidElement(newElement)) {
+        if (!/* @__PURE__ */ React9.isValidElement(render)) {
           throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
         }
       }
-      return /* @__PURE__ */ React9.cloneElement(newElement, mergedProps);
+      return /* @__PURE__ */ React9.cloneElement(render, mergedProps);
     }
     if (element) {
       if (typeof element === "string") {
@@ -7432,11 +7443,14 @@ var wp;
       return id;
     }
     cancel(id) {
-      const index = id - this.startId;
-      if (index < 0 || index >= this.callbacks.length) {
+      const index2 = id - this.startId;
+      if (index2 < 0 || index2 >= this.callbacks.length) {
         return;
       }
-      this.callbacks[index] = null;
+      if (this.callbacks[index2] === null) {
+        return;
+      }
+      this.callbacks[index2] = null;
       this.callbacksCount -= 1;
     }
   };
@@ -7479,9 +7493,9 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-  function useTransitionStatus(open, enableIdleState = false, deferEndingState = false) {
+  function useTransitionStatus(open, enableIdleState = false, deferEndingState = false, animateInitialOpen = false) {
     const [transitionStatus, setTransitionStatus] = React12.useState(open && enableIdleState ? "idle" : void 0);
-    const [mounted, setMounted] = React12.useState(open);
+    const [mounted, setMounted] = React12.useState(open && !animateInitialOpen);
     if (open && !mounted) {
       setMounted(true);
       setTransitionStatus("starting");
@@ -7560,7 +7574,7 @@ var wp;
       }
       return indexRef.current;
     } : -1);
-    const index = externalIndex ?? internalIndex;
+    const index2 = externalIndex ?? internalIndex;
     const componentRef = React13.useRef(null);
     const ref = React13.useCallback((node) => {
       const previousNode = componentRef.current;
@@ -7590,16 +7604,25 @@ var wp;
     }, [externalIndex, subscribeMapChange]);
     return {
       ref,
-      index
+      index: index2
     };
   }
 
+  // node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
+  var TransitionStatusDataAttributes_exports = {};
+  __export(TransitionStatusDataAttributes_exports, {
+    endingStyle: () => endingStyle,
+    startingStyle: () => startingStyle
+  });
+  var startingStyle = "data-starting-style";
+  var endingStyle = "data-ending-style";
+
   // node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
   var STARTING_HOOK = {
-    "data-starting-style": ""
+    [startingStyle]: ""
   };
   var ENDING_HOOK = {
-    "data-ending-style": ""
+    [endingStyle]: ""
   };
   var transitionStatusMapping = {
     transitionStatus(value) {
@@ -7620,15 +7643,25 @@ var wp;
   function hasWindow() {
     return typeof window !== "undefined";
   }
+  function getNodeName(node) {
+    if (isNode(node)) {
+      return (node.nodeName || "").toLowerCase();
+    }
+    return "#document";
+  }
   function getWindow(node) {
     var _node$ownerDocument;
     return (node == null || (_node$ownerDocument = node.ownerDocument) == null ? void 0 : _node$ownerDocument.defaultView) || window;
   }
-  function isElement(value) {
+  function getDocumentElement(node) {
+    var _ref;
+    return (_ref = (isNode(node) ? node.ownerDocument : node.document) || window.document) == null ? void 0 : _ref.documentElement;
+  }
+  function isNode(value) {
     if (!hasWindow()) {
       return false;
     }
-    return value instanceof Element || value instanceof getWindow(value).Element;
+    return value instanceof Node || value instanceof getWindow(value).Node;
   }
   function isHTMLElement(value) {
     if (!hasWindow()) {
@@ -7642,8 +7675,24 @@ var wp;
     }
     return value instanceof ShadowRoot || value instanceof getWindow(value).ShadowRoot;
   }
+  function isLastTraversableNode(node) {
+    return /^(html|body|#document)$/.test(getNodeName(node));
+  }
   function getComputedStyle2(element) {
     return getWindow(element).getComputedStyle(element);
+  }
+  function getParentNode(node) {
+    if (getNodeName(node) === "html") {
+      return node;
+    }
+    const result = (
+      // Step into the shadow DOM of the parent of a slotted node.
+      node.assignedSlot || // DOM Element detected.
+      node.parentNode || // ShadowRoot detected.
+      isShadowRoot(node) && node.host || // Fallback.
+      getDocumentElement(node)
+    );
+    return isShadowRoot(result) ? result.host : result;
   }
 
   // node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
@@ -7897,7 +7946,23 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-  function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false) {
+  var pendingCallbacks = null;
+  function flushBeforePaint(fn) {
+    if (!pendingCallbacks) {
+      const callbacks = [];
+      pendingCallbacks = callbacks;
+      queueMicrotask(() => {
+        pendingCallbacks = null;
+        ReactDOM.flushSync(() => {
+          for (const callback of callbacks) {
+            callback();
+          }
+        });
+      });
+    }
+    pendingCallbacks.push(fn);
+  }
+  function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, batch = false) {
     const frame = useAnimationFrame();
     return useStableCallback((fnToExecute, signal = null) => {
       frame.cancel();
@@ -7907,7 +7972,15 @@ var wp;
       }
       const resolvedElement = element;
       const done = () => {
-        ReactDOM.flushSync(fnToExecute);
+        if (!batch) {
+          ReactDOM.flushSync(fnToExecute);
+          return;
+        }
+        flushBeforePaint(() => {
+          if (!signal?.aborted) {
+            fnToExecute();
+          }
+        });
       };
       if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
         fnToExecute();
@@ -7931,7 +8004,7 @@ var wp;
         });
       }
       if (waitForStartingStyleRemoved) {
-        const startingStyleAttribute = "data-starting-style";
+        const startingStyleAttribute = startingStyle;
         if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
           frame.request(exec);
           return;
@@ -7961,10 +8034,11 @@ var wp;
       enabled = true,
       open,
       ref,
+      batch = false,
       onComplete: onCompleteParam
     } = parameters;
     const onComplete = useStableCallback(onCompleteParam);
-    const runOnceAnimationsFinish = useAnimationsFinished(ref, open);
+    const runOnceAnimationsFinish = useAnimationsFinished(ref, open, batch);
     React17.useEffect(() => {
       if (!enabled) {
         return void 0;
@@ -8013,7 +8087,7 @@ var wp;
     return timeout;
   }
 
-  // node_modules/@base-ui/react/internals/shadowDom.mjs
+  // node_modules/@base-ui/utils/shadowDom.mjs
   function activeElement(doc) {
     let element = doc.activeElement;
     while (element?.shadowRoot?.activeElement != null) {
@@ -8042,7 +8116,7 @@ var wp;
   }
   function getTarget(event) {
     if ("composedPath" in event) {
-      return event.composedPath()[0];
+      return event.composedPath()[0] ?? event.target;
     }
     return event.target;
   }
@@ -8051,8 +8125,8 @@ var wp;
   var round = Math.round;
 
   // node_modules/@base-ui/react/floating-ui-react/utils/composite.mjs
-  function isIndexOutOfListBounds(list, index) {
-    return index < 0 || index >= list.length;
+  function isIndexOutOfListBounds(list, index2) {
+    return index2 < 0 || index2 >= list.length;
   }
   function getMinListIndex(listRef, disabledIndices) {
     return findNonDisabledListIndex(listRef.current, {
@@ -8072,18 +8146,18 @@ var wp;
     disabledIndices,
     amount = 1
   } = {}) {
-    let index = startingIndex;
+    let index2 = startingIndex;
     do {
-      index += decrement ? -amount : amount;
-    } while (index >= 0 && index <= list.length - 1 && isListIndexDisabled(list, index, disabledIndices));
-    return index;
+      index2 += decrement ? -amount : amount;
+    } while (index2 >= 0 && index2 <= list.length - 1 && isListIndexDisabled(list, index2, disabledIndices));
+    return index2;
   }
-  function isListIndexDisabled(list, index, disabledIndices) {
-    const isExplicitlyDisabled = typeof disabledIndices === "function" ? disabledIndices(index) : disabledIndices?.includes(index) ?? false;
+  function isListIndexDisabled(list, index2, disabledIndices) {
+    const isExplicitlyDisabled = typeof disabledIndices === "function" ? disabledIndices(index2) : disabledIndices?.includes(index2) ?? false;
     if (isExplicitlyDisabled) {
       return true;
     }
-    const element = list[index];
+    const element = list[index2];
     if (!element) {
       return false;
     }
@@ -8216,8 +8290,25 @@ var wp;
     return value ? "true" : void 0;
   }
 
-  // node_modules/@base-ui/react/internals/field-root-context/FieldRootContext.mjs
+  // node_modules/@base-ui/react/internals/useValueChanged.mjs
   var React19 = __toESM(require_react(), 1);
+  function useValueChanged(value, onChange) {
+    const valueRef = React19.useRef(value);
+    const onChangeCallback = useStableCallback(onChange);
+    useIsoLayoutEffect(() => {
+      if (valueRef.current !== value) {
+        onChangeCallback(valueRef.current);
+      }
+      valueRef.current = value;
+    }, [value, onChangeCallback]);
+  }
+
+  // node_modules/@base-ui/react/internals/field-root-context/FieldRootContext.mjs
+  var React20 = __toESM(require_react(), 1);
+
+  // node_modules/@base-ui/react/field/control/FieldControlDataAttributes.mjs
+  var valid = "data-valid";
+  var invalid = "data-invalid";
 
   // node_modules/@base-ui/react/internals/field-constants/constants.mjs
   var DEFAULT_VALIDITY_STATE = {
@@ -8251,11 +8342,11 @@ var wp;
       }
       if (value) {
         return {
-          "data-valid": ""
+          [valid]: ""
         };
       }
       return {
-        "data-invalid": ""
+        [invalid]: ""
       };
     }
   };
@@ -8294,10 +8385,10 @@ var wp;
       change: NOOP
     }
   };
-  var FieldRootContext = /* @__PURE__ */ React19.createContext(DEFAULT_FIELD_ROOT_CONTEXT);
+  var FieldRootContext = /* @__PURE__ */ React20.createContext(DEFAULT_FIELD_ROOT_CONTEXT);
   if (true) FieldRootContext.displayName = "FieldRootContext";
   function useFieldRootContext(optional = true) {
-    const context = React19.useContext(FieldRootContext);
+    const context = React20.useContext(FieldRootContext);
     if (context.setValidityData === NOOP && !optional) {
       throw new Error(true ? "Base UI: FieldRootContext is missing. Field parts must be placed within <Field.Root>." : formatErrorMessage_default(28));
     }
@@ -8334,8 +8425,8 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/form-context/FormContext.mjs
-  var React20 = __toESM(require_react(), 1);
-  var FormContext = /* @__PURE__ */ React20.createContext({
+  var React21 = __toESM(require_react(), 1);
+  var FormContext = /* @__PURE__ */ React21.createContext({
     elementRef: {
       current: null
     },
@@ -8347,23 +8438,24 @@ var wp;
     errors: {},
     clearErrors: NOOP,
     validationMode: "onSubmit",
-    submitAttemptedRef: {
-      current: false
+    submitCountRef: {
+      current: 0
     }
   });
   if (true) FormContext.displayName = "FormContext";
   function useFormContext() {
-    return React20.useContext(FormContext);
+    return React21.useContext(FormContext);
   }
 
   // node_modules/@base-ui/react/internals/labelable-provider/useLabelableId.mjs
-  var React22 = __toESM(require_react(), 1);
+  var React23 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/internals/labelable-provider/LabelableContext.mjs
-  var React21 = __toESM(require_react(), 1);
-  var LabelableContext = /* @__PURE__ */ React21.createContext({
+  var React22 = __toESM(require_react(), 1);
+  var LabelableContext = /* @__PURE__ */ React22.createContext({
     controlId: void 0,
     registerControlId: NOOP,
+    resetControlId: NOOP,
     labelId: void 0,
     setLabelId: NOOP,
     messageIds: [],
@@ -8372,25 +8464,24 @@ var wp;
   });
   if (true) LabelableContext.displayName = "LabelableContext";
   function useLabelableContext() {
-    return React21.useContext(LabelableContext);
+    return React22.useContext(LabelableContext);
   }
 
   // node_modules/@base-ui/react/internals/labelable-provider/useLabelableId.mjs
   function useLabelableId(params = {}) {
     const {
       id,
-      implicit = false,
-      controlRef
+      enabled = true
     } = params;
     const {
       controlId,
-      registerControlId
+      registerControlId,
+      resetControlId
     } = useLabelableContext();
-    const defaultId = useBaseUiId(id);
-    const controlIdForEffect = implicit ? controlId : void 0;
+    const defaultId = useBaseUiId();
     const controlSourceRef = useRefWithInit(() => /* @__PURE__ */ Symbol());
-    const hasRegisteredRef = React22.useRef(false);
-    const hadExplicitIdRef = React22.useRef(id != null);
+    const hasRegisteredRef = React23.useRef(false);
+    const hadExplicitIdRef = React23.useRef(false);
     const unregisterControlId = useStableCallback(() => {
       if (!hasRegisteredRef.current || registerControlId === NOOP) {
         return;
@@ -8399,24 +8490,18 @@ var wp;
       registerControlId(controlSourceRef.current, void 0);
     });
     useIsoLayoutEffect(() => {
-      if (registerControlId === NOOP) {
+      if (!enabled || registerControlId === NOOP) {
+        unregisterControlId();
         return void 0;
       }
       let nextId;
-      if (implicit) {
-        const elem = controlRef?.current;
-        if (isElement(elem) && elem.closest("label") != null) {
-          nextId = id ?? null;
-        } else {
-          nextId = controlIdForEffect ?? defaultId;
-        }
-      } else if (id != null) {
+      if (id !== void 0) {
         hadExplicitIdRef.current = true;
         nextId = id;
       } else if (hadExplicitIdRef.current) {
         nextId = defaultId;
       } else {
-        unregisterControlId();
+        resetControlId();
         return void 0;
       }
       if (nextId === void 0) {
@@ -8426,43 +8511,43 @@ var wp;
       hasRegisteredRef.current = true;
       registerControlId(controlSourceRef.current, nextId);
       return void 0;
-    }, [id, controlRef, controlIdForEffect, registerControlId, implicit, defaultId, controlSourceRef, unregisterControlId]);
-    React22.useEffect(() => {
+    }, [id, enabled, registerControlId, resetControlId, defaultId, controlSourceRef, unregisterControlId]);
+    useIsoLayoutEffect(() => {
       return unregisterControlId;
     }, [unregisterControlId]);
-    return controlId ?? defaultId;
+    return (enabled ? controlId : void 0) ?? id ?? defaultId;
   }
 
   // node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
-  var React23 = __toESM(require_react(), 1);
-  var DirectionContext = /* @__PURE__ */ React23.createContext(void 0);
+  var React24 = __toESM(require_react(), 1);
+  var DirectionContext = /* @__PURE__ */ React24.createContext(void 0);
   if (true) DirectionContext.displayName = "DirectionContext";
   function useDirection() {
-    const context = React23.useContext(DirectionContext);
+    const context = React24.useContext(DirectionContext);
     return context?.direction ?? "ltr";
   }
 
   // node_modules/@base-ui/react/field/item/FieldItemContext.mjs
-  var React24 = __toESM(require_react(), 1);
-  var FieldItemContext = /* @__PURE__ */ React24.createContext({
+  var React25 = __toESM(require_react(), 1);
+  var FieldItemContext = /* @__PURE__ */ React25.createContext({
     disabled: false
   });
   if (true) FieldItemContext.displayName = "FieldItemContext";
   function useFieldItemContext() {
-    const context = React24.useContext(FieldItemContext);
+    const context = React25.useContext(FieldItemContext);
     return context;
   }
 
   // node_modules/@base-ui/react/field/root/useFieldValidation.mjs
-  var React25 = __toESM(require_react(), 1);
+  var React26 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/field/utils/getCombinedFieldValidityData.mjs
-  function getCombinedFieldValidityData(validityData, invalid) {
+  function getCombinedFieldValidityData(validityData, invalid2) {
     return {
       ...validityData,
       state: {
         ...validityData.state,
-        valid: !invalid && validityData.state.valid
+        valid: !invalid2 && validityData.state.valid
       }
     };
   }
@@ -8491,11 +8576,15 @@ var wp;
     }
     return fallback2;
   }
-  function clearCustomValidity(element, inputs) {
-    for (const input of inputs.keys()) {
-      input.setCustomValidity("");
-    }
-    element?.setCustomValidity("");
+  function makeState(customError) {
+    return {
+      ...DEFAULT_VALIDITY_STATE,
+      valid: !customError,
+      customError
+    };
+  }
+  function getNativeErrors(element) {
+    return element && element.validationMessage ? [element.validationMessage] : [];
   }
   function useFieldValidation(params) {
     const {
@@ -8507,10 +8596,11 @@ var wp;
       validate,
       validityData,
       validationDebounceTime,
-      invalid,
+      invalid: invalid2,
       markedDirtyRef,
       state,
       shouldValidateOnChange,
+      validationMode,
       registeredFieldIdRef
     } = params;
     const {
@@ -8518,10 +8608,11 @@ var wp;
       getDescriptionProps
     } = useLabelableContext();
     const timeout = useTimeout();
-    const inputRef = React25.useRef(null);
+    const inputRef = React26.useRef(null);
     const registeredInputs = useRefWithInit(() => /* @__PURE__ */ new Map()).current;
-    const validationCommitIdRef = React25.useRef(0);
-    const registerInput = React25.useCallback((element, registration) => {
+    const validationCommitIdRef = React26.useRef(0);
+    const customValidityRef = React26.useRef(null);
+    const registerInput = React26.useCallback((element, registration) => {
       registeredInputs.set(element, registration);
       return () => {
         registeredInputs.delete(element);
@@ -8534,7 +8625,7 @@ var wp;
     const commit = useStableCallback(async (value, revalidate = false) => {
       validationCommitIdRef.current += 1;
       const validationCommitId = validationCommitIdRef.current;
-      function updateRegisteredFieldValidity(nextValidityData2, externalInvalid = invalid) {
+      function updateRegisteredFieldValidity(nextValidityData, externalInvalid = invalid2) {
         const fieldId = registeredFieldIdRef.current ?? controlId;
         if (fieldId == null) {
           return;
@@ -8543,42 +8634,39 @@ var wp;
         if (!currentFieldData) {
           return;
         }
-        const validityDataWithFormErrors = getCombinedFieldValidityData(nextValidityData2, externalInvalid);
+        const validityDataWithFormErrors = getCombinedFieldValidityData(nextValidityData, externalInvalid);
         formRef.current.fields.set(fieldId, {
           ...currentFieldData,
           validityData: validityDataWithFormErrors
         });
       }
-      function publishAllValid(input, externalInvalid) {
-        const nextValidityData2 = {
+      function makeValidityData(validityState, errorMessages) {
+        const errors = validityState.valid === false ? errorMessages : [];
+        return {
           value,
-          state: {
-            ...DEFAULT_VALIDITY_STATE,
-            valid: true
-          },
-          error: "",
-          errors: [],
+          state: validityState,
+          error: errors[0] ?? "",
+          errors,
           initialValue: validityData.initialValue
         };
-        clearCustomValidity(input, registeredInputs);
-        updateRegisteredFieldValidity(nextValidityData2, externalInvalid);
-        setValidityData(nextValidityData2);
       }
-      const element = registeredInputs.size > 0 ? findRepresentativeInput(registeredInputs, elementRef.current) : inputRef.current;
-      if (revalidate) {
-        if (state.valid !== false || !element) {
-          return;
+      function setCustomValidity(element2, message) {
+        const displaced = element2.validity.customError ? element2.validationMessage : "";
+        const ownedMessage = message.replace(/\r\n?/g, "\n");
+        element2.setCustomValidity(ownedMessage);
+        customValidityRef.current = [element2, ownedMessage, displaced];
+      }
+      function clearCustomValidity() {
+        const record = customValidityRef.current;
+        customValidityRef.current = null;
+        if (record && (!record[0].willValidate || record[0].validationMessage === record[1])) {
+          record[0].setCustomValidity(record[2]);
         }
-        const currentNativeValidity = element.validity;
-        if (!currentNativeValidity.valueMissing) {
-          publishAllValid(element, false);
-          return;
-        }
-        for (const key of validityKeys) {
-          if (key !== "valid" && key !== "valueMissing" && key !== "customError" && currentNativeValidity[key]) {
-            return;
-          }
-        }
+      }
+      function publish(validityState, errorMessages, externalInvalid) {
+        const nextValidityData = makeValidityData(validityState, errorMessages);
+        updateRegisteredFieldValidity(nextValidityData, externalInvalid);
+        setValidityData(nextValidityData);
       }
       function getState(el) {
         const computedState = validityKeys.reduce((acc, key) => {
@@ -8602,19 +8690,37 @@ var wp;
         }
         return computedState;
       }
+      function resolveRepresentativeInput() {
+        return registeredInputs.size > 0 ? findRepresentativeInput(registeredInputs, elementRef.current) : inputRef.current;
+      }
+      let element = resolveRepresentativeInput();
+      function refreshState() {
+        element = resolveRepresentativeInput();
+        return element?.willValidate ? getState(element) : makeState(false);
+      }
+      if (revalidate) {
+        if (state.valid !== false || !element) {
+          return;
+        }
+        if (!element.validity.valueMissing) {
+          clearCustomValidity();
+          const currentElement = resolveRepresentativeInput();
+          const foreign = currentElement?.validity.customError ? getNativeErrors(currentElement) : [];
+          publish(makeState(foreign.length > 0), foreign, false);
+          return;
+        }
+        for (const key of validityKeys) {
+          if (key !== "valid" && key !== "valueMissing" && key !== "customError" && element.validity[key]) {
+            return;
+          }
+        }
+      }
       timeout.clear();
-      let result = null;
-      let validationErrors = [];
-      const nextState = element ? getState(element) : {
-        ...DEFAULT_VALIDITY_STATE,
-        valid: true
-      };
-      let defaultValidationMessage;
+      clearCustomValidity();
+      let nextState = refreshState();
+      let validationErrors = getNativeErrors(element);
       const isValidatingOnChange = shouldValidateOnChange();
-      if (element && element.validationMessage && !isValidatingOnChange) {
-        defaultValidationMessage = element.validationMessage;
-        validationErrors = [element.validationMessage];
-      } else {
+      if (validationErrors.length === 0 || isValidatingOnChange) {
         const formValues = Array.from(formRef.current.fields.values()).reduce((acc, field) => {
           if (field.name) {
             acc[field.name] = field.getValue();
@@ -8622,50 +8728,43 @@ var wp;
           return acc;
         }, {});
         const resultOrPromise = validate(value, formValues);
+        let result;
         if (typeof resultOrPromise === "object" && resultOrPromise !== null && "then" in resultOrPromise) {
+          if (nextState.valid === false) {
+            publish(nextState, validationErrors);
+          } else if (validationMode === "onSubmit" || !validityData.state.customError) {
+            nextState.valid = null;
+            publish(nextState, validationErrors);
+          }
           result = await resultOrPromise;
           if (validationCommitId !== validationCommitIdRef.current) {
             return;
           }
+          nextState = refreshState();
         } else {
           result = resultOrPromise;
         }
-        if (result !== null) {
+        validationErrors = result ? [].concat(result).filter(Boolean) : [];
+        if (validationErrors.length > 0) {
           nextState.valid = false;
           nextState.customError = true;
-          if (Array.isArray(result)) {
-            validationErrors = result;
-            element?.setCustomValidity(result.join("\n"));
-          } else if (result) {
-            validationErrors = [result];
-            element?.setCustomValidity(result);
+          if (element?.willValidate) {
+            setCustomValidity(element, validationErrors.join("\n"));
           }
-        } else if (isValidatingOnChange) {
-          clearCustomValidity(element, registeredInputs);
-          nextState.customError = false;
-          if (element && element.validationMessage) {
-            defaultValidationMessage = element.validationMessage;
-            validationErrors = [element.validationMessage];
-          } else if ((!element || element.validity.valid) && !nextState.valid) {
-            nextState.valid = true;
-          }
+        } else {
+          validationErrors = getNativeErrors(element);
         }
       }
-      const nextValidityData = {
-        value,
-        state: nextState,
-        error: defaultValidationMessage ?? (Array.isArray(result) ? result[0] : result ?? ""),
-        errors: validationErrors,
-        initialValue: validityData.initialValue
-      };
-      updateRegisteredFieldValidity(nextValidityData);
-      setValidityData(nextValidityData);
+      publish(nextState, validationErrors);
     });
-    const change = useStableCallback((value) => {
+    const change = useStableCallback((value, cancelPending = false) => {
       timeout.clear();
+      validationCommitIdRef.current += 1;
+      if (cancelPending) {
+        return;
+      }
       const validateOnChange = shouldValidateOnChange();
       if (validateOnChange && value !== "" && validationDebounceTime) {
-        validationCommitIdRef.current += 1;
         timeout.start(validationDebounceTime, () => {
           commit(value);
         });
@@ -8673,10 +8772,10 @@ var wp;
         commit(value, !validateOnChange);
       }
     });
-    const getValidationProps = React25.useCallback((disabled2, externalProps = {}) => mergeProps(getDescriptionProps(externalProps), state.valid === false && !state.disabled && !disabled2 ? {
+    const getValidationProps = React26.useCallback((disabled2, externalProps = {}) => mergeProps(getDescriptionProps(externalProps), state.valid === false && !state.disabled && !disabled2 ? {
       "aria-invalid": true
     } : EMPTY_OBJECT), [getDescriptionProps, state.disabled, state.valid]);
-    return React25.useMemo(() => ({
+    return React26.useMemo(() => ({
       getValidationProps,
       inputRef,
       registeredInputs,
@@ -8746,7 +8845,7 @@ var wp;
     }
     return native ? {
       id,
-      htmlFor: resolvedControlId ?? void 0,
+      htmlFor: resolvedControlId,
       onMouseDown: handleInteraction
     } : {
       id,
@@ -8765,7 +8864,7 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/composite/item/useCompositeItem.mjs
-  var React26 = __toESM(require_react(), 1);
+  var React27 = __toESM(require_react(), 1);
   function useCompositeItem(params = {}) {
     const {
       highlightItemOnHover,
@@ -8774,15 +8873,15 @@ var wp;
     } = useCompositeRootContext();
     const {
       ref,
-      index
+      index: index2
     } = useCompositeListItem(params);
-    const isHighlighted = highlightedIndex === index;
-    const itemRef = React26.useRef(null);
+    const isHighlighted = highlightedIndex === index2;
+    const itemRef = React27.useRef(null);
     const mergedRef = useMergedRefs(ref, itemRef);
     const compositeProps = {
       tabIndex: isHighlighted ? 0 : -1,
       onFocus() {
-        onHighlightedIndexChange(index);
+        onHighlightedIndexChange(index2);
       },
       onMouseMove() {
         const item = itemRef.current;
@@ -8798,7 +8897,7 @@ var wp;
     return {
       compositeProps,
       compositeRef: mergedRef,
-      index
+      index: index2
     };
   }
 
@@ -8822,13 +8921,13 @@ var wp;
   }
 
   // node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
-  var React27 = __toESM(require_react(), 1);
+  var React28 = __toESM(require_react(), 1);
   var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
   var DirectionProvider = function DirectionProvider2(props) {
     const {
       direction = "ltr"
     } = props;
-    const contextValue = React27.useMemo(() => ({
+    const contextValue = React28.useMemo(() => ({
       direction
     }), [direction]);
     return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(DirectionContext.Provider, {
@@ -8844,14 +8943,42 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/csp-context/CSPContext.mjs
-  var React28 = __toESM(require_react(), 1);
-  var CSPContext = /* @__PURE__ */ React28.createContext(void 0);
+  var React29 = __toESM(require_react(), 1);
+  var CSPContext = /* @__PURE__ */ React29.createContext(void 0);
   if (true) CSPContext.displayName = "CSPContext";
   var DEFAULT_CSP_CONTEXT_VALUE = {
     disableStyleElements: false
   };
   function useCSPContext() {
-    return React28.useContext(CSPContext) ?? DEFAULT_CSP_CONTEXT_VALUE;
+    return React29.useContext(CSPContext) ?? DEFAULT_CSP_CONTEXT_VALUE;
+  }
+
+  // node_modules/@base-ui/react/utils/getElementTransform.mjs
+  function getElementTransform(element, computedStyle) {
+    const transform = (computedStyle ?? getWindow(element).getComputedStyle(element)).transform;
+    let translateX = 0;
+    let translateY = 0;
+    let scale = 1;
+    if (transform && transform !== "none") {
+      const matrix = transform.match(/matrix(?:3d)?\(([^)]+)\)/);
+      if (matrix) {
+        const values = matrix[1].split(", ").map(parseFloat);
+        if (values.length === 6) {
+          translateX = values[4];
+          translateY = values[5];
+          scale = Math.sqrt(values[0] * values[0] + values[1] * values[1]);
+        } else if (values.length === 16) {
+          translateX = values[12];
+          translateY = values[13];
+          scale = values[0];
+        }
+      }
+    }
+    return {
+      x: translateX,
+      y: translateY,
+      scale
+    };
   }
 
   // node_modules/@base-ui/react/field/index.parts.mjs
@@ -8867,14 +8994,14 @@ var wp;
   });
 
   // node_modules/@base-ui/react/field/root/FieldRoot.mjs
-  var React32 = __toESM(require_react(), 1);
+  var React33 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/fieldset/root/FieldsetRootContext.mjs
-  var React29 = __toESM(require_react(), 1);
-  var FieldsetRootContext = /* @__PURE__ */ React29.createContext(void 0);
+  var React30 = __toESM(require_react(), 1);
+  var FieldsetRootContext = /* @__PURE__ */ React30.createContext(void 0);
   if (true) FieldsetRootContext.displayName = "FieldsetRootContext";
   function useFieldsetRootContext(optional = false) {
-    const context = React29.useContext(FieldsetRootContext);
+    const context = React30.useContext(FieldsetRootContext);
     if (!context && !optional) {
       throw new Error(true ? "Base UI: FieldsetRootContext is missing. Fieldset parts must be placed within <Fieldset.Root>." : formatErrorMessage_default(86));
     }
@@ -8882,14 +9009,14 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/labelable-provider/LabelableProvider.mjs
-  var React30 = __toESM(require_react(), 1);
+  var React31 = __toESM(require_react(), 1);
   var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
   var LabelableProvider = function LabelableProvider2(props) {
     const defaultId = useBaseUiId();
-    const initialControlId = props.controlId === void 0 ? defaultId : props.controlId;
-    const [controlId, setControlIdState] = React30.useState(initialControlId);
-    const [labelId, setLabelId] = React30.useState(props.labelId);
-    const [messageIds, setMessageIds] = React30.useState([]);
+    const [controlIdState, setControlIdState] = React31.useState(defaultId);
+    const [labelId, setLabelId] = React31.useState();
+    const [messageIds, setMessageIds] = React31.useState([]);
+    const controlId = controlIdState === void 0 ? defaultId : controlIdState;
     const registrationsRef = useRefWithInit(() => /* @__PURE__ */ new Map());
     const {
       messageIds: parentMessageIds
@@ -8898,16 +9025,16 @@ var wp;
       const registrations = registrationsRef.current;
       if (nextId === void 0) {
         registrations.delete(source);
-        return;
+      } else {
+        registrations.set(source, nextId);
       }
-      registrations.set(source, nextId);
       setControlIdState((prev) => {
         if (registrations.size === 0) {
-          return void 0;
+          return prev;
         }
         let nextControlId;
         for (const id of registrations.values()) {
-          if (prev !== void 0 && id === prev) {
+          if (id === prev) {
             return prev;
           }
           if (nextControlId === void 0) {
@@ -8917,7 +9044,12 @@ var wp;
         return nextControlId;
       });
     });
-    const getDescriptionProps = React30.useCallback((externalProps) => {
+    const resetControlId = useStableCallback(() => {
+      if (registrationsRef.current.size === 0) {
+        setControlIdState(defaultId);
+      }
+    });
+    const getDescriptionProps = React31.useCallback((externalProps) => {
       const ids = externalProps["aria-describedby"] ? externalProps["aria-describedby"].split(" ") : [];
       ids.push(...parentMessageIds, ...messageIds);
       return {
@@ -8925,15 +9057,16 @@ var wp;
         "aria-describedby": Array.from(new Set(ids)).join(" ") || void 0
       };
     }, [parentMessageIds, messageIds]);
-    const contextValue = React30.useMemo(() => ({
+    const contextValue = React31.useMemo(() => ({
       controlId,
       registerControlId,
+      resetControlId,
       labelId,
       setLabelId,
       messageIds,
       setMessageIds,
       getDescriptionProps
-    }), [controlId, registerControlId, labelId, setLabelId, messageIds, setMessageIds, getDescriptionProps]);
+    }), [controlId, registerControlId, resetControlId, labelId, setLabelId, messageIds, setMessageIds, getDescriptionProps]);
     return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(LabelableContext.Provider, {
       value: contextValue,
       children: props.children
@@ -8942,11 +9075,12 @@ var wp;
   if (true) LabelableProvider.displayName = "LabelableProvider";
 
   // node_modules/@base-ui/react/internals/field-register-control/useFieldControlRegistration.mjs
-  var React31 = __toESM(require_react(), 1);
+  var React32 = __toESM(require_react(), 1);
   function useFieldControlRegistration(params) {
     const {
+      change,
       commit,
-      invalid,
+      invalid: invalid2,
       markedDirtyRef,
       name: name118,
       setRegisteredFieldName,
@@ -8957,9 +9091,9 @@ var wp;
     const {
       formRef
     } = useFormContext();
-    const activeFieldControlSourceRef = React31.useRef(null);
-    const registrationRef = React31.useRef(null);
-    const initialValueCapturedRef = React31.useRef(false);
+    const activeFieldControlSourceRef = React32.useRef(null);
+    const registrationRef = React32.useRef(null);
+    const initialValueCapturedRef = React32.useRef(false);
     const getValueForForm = useStableCallback(() => {
       const registration = registrationRef.current;
       if (!registration) {
@@ -8991,7 +9125,7 @@ var wp;
         getValue: getValueForForm,
         name: name118 ?? registration.name,
         controlRef: registration.controlRef,
-        validityData: getCombinedFieldValidityData(validityData, invalid),
+        validityData: getCombinedFieldValidityData(validityData, invalid2),
         validate
       });
     }
@@ -9021,10 +9155,10 @@ var wp;
         getValue: getValueForForm,
         name: name118 ?? registration.name,
         controlRef: registration.controlRef,
-        validityData: getCombinedFieldValidityData(validityData, invalid),
+        validityData: getCombinedFieldValidityData(validityData, invalid2),
         validate
       });
-    }, [formRef, getValueForForm, invalid, name118, setRegisteredFieldName, validate, validityData]);
+    }, [formRef, getValueForForm, invalid2, name118, setRegisteredFieldName, validate, validityData]);
     useIsoLayoutEffect(() => {
       const fields = formRef.current.fields;
       return () => {
@@ -9038,6 +9172,7 @@ var wp;
       if (!registration) {
         if (activeFieldControlSourceRef.current === source) {
           activeFieldControlSourceRef.current = null;
+          change(void 0, true);
           deleteRegistration();
           registrationRef.current = null;
           setRegisteredFieldName(void 0);
@@ -9046,6 +9181,10 @@ var wp;
         return;
       }
       const previousId = registrationRef.current?.id;
+      const previousSource = activeFieldControlSourceRef.current;
+      if (previousSource && previousSource !== source) {
+        change(void 0, true);
+      }
       activeFieldControlSourceRef.current = source;
       registrationRef.current = registration;
       if (!name118) {
@@ -9063,11 +9202,11 @@ var wp;
 
   // node_modules/@base-ui/react/field/root/FieldRoot.mjs
   var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
-  var FieldRootInner = /* @__PURE__ */ React32.forwardRef(function FieldRootInner2(componentProps, forwardedRef) {
+  var FieldRootInner = /* @__PURE__ */ React33.forwardRef(function FieldRootInner2(componentProps, forwardedRef) {
     const {
       errors,
       validationMode: formValidationMode,
-      submitAttemptedRef
+      submitCountRef
     } = useFormContext();
     const {
       render,
@@ -9087,15 +9226,15 @@ var wp;
     const disabledFieldset = useFieldsetRootContext(true)?.disabled;
     const validate = useStableCallback(validateProp || (() => null));
     const disabled2 = disabledFieldset || disabledProp;
-    const [touchedState, setTouchedUnwrapped] = React32.useState(false);
-    const [dirtyState, setDirtyUnwrapped] = React32.useState(false);
-    const [filled, setFilled] = React32.useState(false);
-    const [focused, setFocused] = React32.useState(false);
+    const [touchedState, setTouchedUnwrapped] = React33.useState(false);
+    const [dirtyState, setDirtyUnwrapped] = React33.useState(false);
+    const [filled, setFilled] = React33.useState(false);
+    const [focused, setFocused] = React33.useState(false);
     const dirty = dirtyProp ?? dirtyState;
     const touched = touchedProp ?? touchedState;
-    const markedDirtyRef = React32.useRef(dirty);
-    const registeredFieldIdRef = React32.useRef(void 0);
-    const [registeredFieldName, setRegisteredFieldName] = React32.useState();
+    const markedDirtyRef = React33.useRef(dirty);
+    const registeredFieldIdRef = React33.useRef(void 0);
+    const [registeredFieldName, setRegisteredFieldName] = React33.useState();
     const effectiveName = name118 ?? registeredFieldName;
     useIsoLayoutEffect(() => {
       if (dirtyProp !== void 0) {
@@ -9117,40 +9256,42 @@ var wp;
       }
       setTouchedUnwrapped(value);
     });
-    const shouldValidateOnChange = useStableCallback(() => validationMode === "onChange" || validationMode === "onSubmit" && submitAttemptedRef.current);
+    const shouldValidateOnChange = useStableCallback(() => validationMode === "onChange" || validationMode === "onSubmit" && submitCountRef.current > 0);
     const formError = effectiveName && Object.hasOwn(errors, effectiveName) ? errors[effectiveName] : null;
     const hasFormError = !!(Array.isArray(formError) ? formError.length : formError);
-    const invalid = invalidProp === true || hasFormError;
-    const [validityData, setValidityData] = React32.useState({
+    const invalid2 = invalidProp === true || hasFormError;
+    const [validityData, setValidityData] = React33.useState({
       state: DEFAULT_VALIDITY_STATE,
       error: "",
       errors: [],
       value: null,
       initialValue: null
     });
-    const valid = !invalid && (disabled2 ? null : validityData.state.valid);
-    const state = React32.useMemo(() => ({
+    const valid2 = !invalid2 && (disabled2 ? null : validityData.state.valid);
+    const state = React33.useMemo(() => ({
       disabled: disabled2,
       touched,
       dirty,
-      valid,
+      valid: valid2,
       filled,
       focused
-    }), [disabled2, touched, dirty, valid, filled, focused]);
+    }), [disabled2, touched, dirty, valid2, filled, focused]);
     const validation = useFieldValidation({
       setValidityData,
       validate,
       validityData,
       validationDebounceTime,
-      invalid,
+      invalid: invalid2,
       markedDirtyRef,
       state,
       shouldValidateOnChange,
+      validationMode,
       registeredFieldIdRef
     });
     const [validateFieldControl, registerFieldControl] = useFieldControlRegistration({
+      change: validation.change,
       commit: validation.commit,
-      invalid,
+      invalid: invalid2,
       markedDirtyRef,
       name: name118,
       setRegisteredFieldName,
@@ -9158,11 +9299,11 @@ var wp;
       setValidityData,
       validityData
     });
-    React32.useImperativeHandle(actionsRef, () => ({
+    React33.useImperativeHandle(actionsRef, () => ({
       validate: validateFieldControl
     }), [validateFieldControl]);
-    const contextValue = React32.useMemo(() => ({
-      invalid,
+    const contextValue = React33.useMemo(() => ({
+      invalid: invalid2,
       name: effectiveName,
       validityData,
       setValidityData,
@@ -9176,7 +9317,7 @@ var wp;
       state,
       registerFieldControl,
       validation
-    }), [invalid, effectiveName, validityData, disabled2, setTouched, setDirty, setFilled, setFocused, validationMode, shouldValidateOnChange, state, registerFieldControl, validation]);
+    }), [invalid2, effectiveName, validityData, disabled2, setTouched, setDirty, setFilled, setFocused, validationMode, shouldValidateOnChange, state, registerFieldControl, validation]);
     const element = useRenderElement("div", componentProps, {
       ref: forwardedRef,
       state,
@@ -9189,7 +9330,7 @@ var wp;
     });
   });
   if (true) FieldRootInner.displayName = "FieldRootInner";
-  var FieldRoot = /* @__PURE__ */ React32.forwardRef(function FieldRoot2(componentProps, forwardedRef) {
+  var FieldRoot = /* @__PURE__ */ React33.forwardRef(function FieldRoot2(componentProps, forwardedRef) {
     return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(LabelableProvider, {
       children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(FieldRootInner, {
         ...componentProps,
@@ -9200,8 +9341,8 @@ var wp;
   if (true) FieldRoot.displayName = "FieldRoot";
 
   // node_modules/@base-ui/react/field/label/FieldLabel.mjs
-  var React33 = __toESM(require_react(), 1);
-  var FieldLabel = /* @__PURE__ */ React33.forwardRef(function FieldLabel2(componentProps, forwardedRef) {
+  var React34 = __toESM(require_react(), 1);
+  var FieldLabel = /* @__PURE__ */ React34.forwardRef(function FieldLabel2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -9219,13 +9360,13 @@ var wp;
       ...fieldRootContext.state,
       disabled: fieldRootContext.disabled || fieldItemContext.disabled
     };
-    const labelRef = React33.useRef(null);
+    const labelRef = React34.useRef(null);
     const labelProps = useLabel({
       id: labelId ?? idProp,
       native: nativeLabel
     });
     if (true) {
-      React33.useEffect(() => {
+      React34.useEffect(() => {
         if (!labelRef.current) {
           return;
         }
@@ -9254,13 +9395,13 @@ var wp;
   if (true) FieldLabel.displayName = "FieldLabel";
 
   // node_modules/@base-ui/react/field/error/FieldError.mjs
-  var React34 = __toESM(require_react(), 1);
+  var React35 = __toESM(require_react(), 1);
   var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
   var stateAttributesMapping = {
     ...fieldValidityMapping,
     ...transitionStatusMapping
   };
-  var FieldError = /* @__PURE__ */ React34.forwardRef(function FieldError2(componentProps, forwardedRef) {
+  var FieldError = /* @__PURE__ */ React35.forwardRef(function FieldError2(componentProps, forwardedRef) {
     const {
       render,
       id: idProp,
@@ -9308,9 +9449,9 @@ var wp;
         setMessageIds((v20) => v20.filter((item) => item !== id));
       };
     }, [rendered, id, setMessageIds]);
-    const errorRef = React34.useRef(null);
-    const [lastRenderedMessage, setLastRenderedMessage] = React34.useState(null);
-    const [lastRenderedMessageKey, setLastRenderedMessageKey] = React34.useState(null);
+    const errorRef = React35.useRef(null);
+    const [lastRenderedMessage, setLastRenderedMessage] = React35.useState(null);
+    const [lastRenderedMessageKey, setLastRenderedMessageKey] = React35.useState(null);
     let error2 = validityData.error;
     if (!hasSpecificMatch && hasFormError) {
       error2 = formError;
@@ -9361,8 +9502,8 @@ var wp;
   if (true) FieldError.displayName = "FieldError";
 
   // node_modules/@base-ui/react/field/description/FieldDescription.mjs
-  var React35 = __toESM(require_react(), 1);
-  var FieldDescription = /* @__PURE__ */ React35.forwardRef(function FieldDescription2(componentProps, forwardedRef) {
+  var React36 = __toESM(require_react(), 1);
+  var FieldDescription = /* @__PURE__ */ React36.forwardRef(function FieldDescription2(componentProps, forwardedRef) {
     const {
       render,
       id: idProp,
@@ -9402,8 +9543,8 @@ var wp;
   if (true) FieldDescription.displayName = "FieldDescription";
 
   // node_modules/@base-ui/react/field/control/FieldControl.mjs
-  var React36 = __toESM(require_react(), 1);
-  var FieldControl = /* @__PURE__ */ React36.forwardRef(function FieldControl2(componentProps, forwardedRef) {
+  var React37 = __toESM(require_react(), 1);
+  var FieldControl = /* @__PURE__ */ React37.forwardRef(function FieldControl2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -9430,7 +9571,9 @@ var wp;
       validation
     } = useFieldRootContext();
     const {
-      clearErrors
+      clearErrors,
+      elementRef: formElementRef,
+      submitCountRef
     } = useFormContext();
     const disabled2 = fieldDisabled || disabledProp;
     const name118 = fieldName ?? nameProp;
@@ -9444,20 +9587,6 @@ var wp;
     const id = useLabelableId({
       id: idProp
     });
-    useIsoLayoutEffect(() => {
-      const hasExternalValue = valueProp != null;
-      if (validation.inputRef.current?.value || hasExternalValue && valueProp !== "") {
-        setFilled(true);
-      } else if (hasExternalValue && valueProp === "") {
-        setFilled(false);
-      }
-    }, [validation.inputRef, setFilled, valueProp]);
-    const inputRef = React36.useRef(null);
-    useIsoLayoutEffect(() => {
-      if (autoFocus && inputRef.current === activeElement(ownerDocument(inputRef.current))) {
-        setFocused(true);
-      }
-    }, [autoFocus, setFocused]);
     const [valueUnwrapped] = useControlled({
       controlled: valueProp,
       default: defaultValue,
@@ -9466,8 +9595,30 @@ var wp;
     });
     const isControlled = valueProp !== void 0;
     const value = isControlled ? valueUnwrapped : void 0;
+    const serializedValue = value == null ? void 0 : String(value);
     const getValueFromInput = useStableCallback(() => validation.inputRef.current?.value);
-    useRegisterFieldControl(validation.inputRef, id, value, getValueFromInput, !disabled2, nameProp);
+    useRegisterFieldControl(validation.inputRef, id, serializedValue, getValueFromInput, !disabled2, nameProp);
+    useIsoLayoutEffect(() => {
+      const currentValue = serializedValue ?? validation.inputRef.current?.value;
+      if (currentValue !== void 0) {
+        setFilled(currentValue !== "");
+      }
+    }, [serializedValue, validation.inputRef, setFilled]);
+    useValueChanged(serializedValue, () => {
+      if (serializedValue === void 0) {
+        return;
+      }
+      clearErrors(name118);
+      setDirty(serializedValue !== (validityData.initialValue ?? ""));
+      validation.change(serializedValue);
+    });
+    const inputRef = React37.useRef(null);
+    const enterValidationTimeout = useTimeout();
+    useIsoLayoutEffect(() => {
+      if (autoFocus && inputRef.current === activeElement(ownerDocument(inputRef.current))) {
+        setFocused(true);
+      }
+    }, [autoFocus, setFocused]);
     const element = useRenderElement("input", componentProps, {
       ref: [forwardedRef, inputRef],
       state,
@@ -9485,10 +9636,14 @@ var wp;
         },
         onChange(event) {
           const inputValue = event.currentTarget.value;
-          onValueChange?.(inputValue, createChangeEventDetails(reason_parts_exports.none, event.nativeEvent));
+          const details = createChangeEventDetails(reason_parts_exports.none, event.nativeEvent);
+          onValueChange?.(inputValue, details);
+          if (isControlled) {
+            return;
+          }
           setDirty(inputValue !== (validityData.initialValue ?? ""));
           setFilled(inputValue !== "");
-          if (!event.nativeEvent.defaultPrevented) {
+          if (!event.nativeEvent.defaultPrevented && !details.isCanceled) {
             clearErrors(name118);
             validation.change(inputValue);
           }
@@ -9500,13 +9655,34 @@ var wp;
           setTouched(true);
           setFocused(false);
           if (validationMode === "onBlur") {
-            validation.commit(event.currentTarget.value);
+            const inputValue = event.currentTarget.value;
+            validation.commit(inputValue);
+            if (isControlled) {
+              queueMicrotask(() => {
+                const nextValue = validation.inputRef.current?.value;
+                if (nextValue !== void 0 && nextValue !== inputValue && nextValue !== (validityData.initialValue ?? "")) {
+                  validation.commit(nextValue);
+                }
+              });
+            }
           }
         },
         onKeyDown(event) {
           if (event.currentTarget.tagName === "INPUT" && event.key === "Enter") {
             setTouched(true);
-            validation.commit(event.currentTarget.value);
+            const value2 = event.currentTarget.value;
+            const form = event.currentTarget.form;
+            if (form && form === formElementRef.current && !event.defaultPrevented) {
+              const input = event.currentTarget;
+              const submitCount = submitCountRef.current;
+              enterValidationTimeout.start(0, () => {
+                if (submitCountRef.current === submitCount) {
+                  validation.commit(input.value);
+                }
+              });
+            } else {
+              validation.commit(value2);
+            }
           }
         }
       }, elementProps, (props) => validation.getValidationProps(disabled2, props)],
@@ -9517,7 +9693,7 @@ var wp;
   if (true) FieldControl.displayName = "FieldControl";
 
   // node_modules/@base-ui/react/field/validity/FieldValidity.mjs
-  var React37 = __toESM(require_react(), 1);
+  var React38 = __toESM(require_react(), 1);
   var import_jsx_runtime182 = __toESM(require_jsx_runtime(), 1);
   var FieldValidity = function FieldValidity2(props) {
     const {
@@ -9525,30 +9701,30 @@ var wp;
     } = props;
     const {
       validityData,
-      invalid
+      invalid: invalid2
     } = useFieldRootContext(false);
-    const combinedFieldValidityData = React37.useMemo(() => getCombinedFieldValidityData(validityData, invalid), [validityData, invalid]);
+    const combinedFieldValidityData = React38.useMemo(() => getCombinedFieldValidityData(validityData, invalid2), [validityData, invalid2]);
     const isInvalid = combinedFieldValidityData.state.valid === false;
     const {
       transitionStatus
     } = useTransitionStatus(isInvalid);
-    const fieldValidityState = React37.useMemo(() => {
+    const fieldValidityState = React38.useMemo(() => {
       return {
         ...combinedFieldValidityData,
         validity: combinedFieldValidityData.state,
         transitionStatus
       };
     }, [combinedFieldValidityData, transitionStatus]);
-    return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(React37.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(React38.Fragment, {
       children: children(fieldValidityState)
     });
   };
   if (true) FieldValidity.displayName = "FieldValidity";
 
   // node_modules/@base-ui/react/field/item/FieldItem.mjs
-  var React38 = __toESM(require_react(), 1);
+  var React39 = __toESM(require_react(), 1);
   var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
-  var FieldItem = /* @__PURE__ */ React38.forwardRef(function FieldItem2(componentProps, forwardedRef) {
+  var FieldItem = /* @__PURE__ */ React39.forwardRef(function FieldItem2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -9565,7 +9741,7 @@ var wp;
       ...fieldState,
       disabled: disabled2
     };
-    const fieldItemContext = React38.useMemo(() => ({
+    const fieldItemContext = React39.useMemo(() => ({
       disabled: disabled2
     }), [disabled2]);
     const element = useRenderElement("div", componentProps, {
@@ -9584,9 +9760,9 @@ var wp;
   if (true) FieldItem.displayName = "FieldItem";
 
   // node_modules/@base-ui/react/input/Input.mjs
-  var React39 = __toESM(require_react(), 1);
+  var React40 = __toESM(require_react(), 1);
   var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
-  var Input = /* @__PURE__ */ React39.forwardRef(function Input2(props, forwardedRef) {
+  var Input = /* @__PURE__ */ React40.forwardRef(function Input2(props, forwardedRef) {
     return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(index_parts_exports.Control, {
       ref: forwardedRef,
       ...props
@@ -9595,16 +9771,15 @@ var wp;
   if (true) Input.displayName = "Input";
 
   // node_modules/@base-ui/react/internals/composite/root/CompositeRoot.mjs
-  var React41 = __toESM(require_react(), 1);
+  var React42 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/internals/composite/root/useCompositeRoot.mjs
-  var React40 = __toESM(require_react(), 1);
+  var React41 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/internals/composite/constants.mjs
   var ACTIVE_COMPOSITE_ITEM = "data-composite-item-active";
 
   // node_modules/@base-ui/react/internals/composite/root/useCompositeRoot.mjs
-  var EMPTY_ARRAY2 = [];
   function useCompositeRoot(params) {
     const {
       loopFocus = true,
@@ -9618,24 +9793,41 @@ var wp;
       enableHomeAndEndKeys = false,
       stopEventPropagation,
       disabledIndices,
-      modifierKeys = EMPTY_ARRAY2
+      modifierKeys = EMPTY_ARRAY
     } = params;
-    const [internalHighlightedIndex, internalSetHighlightedIndex] = React40.useState(0);
+    const [internalHighlightedIndex, internalSetHighlightedIndex] = React41.useState(0);
     const isGrid = grid != null;
-    const rootRef = React40.useRef(null);
+    const rootRef = React41.useRef(null);
     const mergedRef = useMergedRefs(rootRef, externalRef);
-    const elementsRef = React40.useRef([]);
-    const hasSetDefaultIndexRef = React40.useRef(false);
+    const elementsRef = React41.useRef([]);
+    const hasSetDefaultIndexRef = React41.useRef(false);
+    const highlightedElementRef = React41.useRef(null);
     const highlightedIndex = externalHighlightedIndex ?? internalHighlightedIndex;
-    const onHighlightedIndexChange = useStableCallback((index, shouldScrollIntoView = false) => {
-      (externalSetHighlightedIndex ?? internalSetHighlightedIndex)(index);
+    const onHighlightedIndexChange = useStableCallback((index2, shouldScrollIntoView = false) => {
+      highlightedElementRef.current = elementsRef.current[index2] ?? null;
+      (externalSetHighlightedIndex ?? internalSetHighlightedIndex)(index2);
       if (shouldScrollIntoView) {
-        const newActiveItem = elementsRef.current[index];
+        const newActiveItem = elementsRef.current[index2];
         scrollIntoViewIfNeeded(rootRef.current, newActiveItem, direction, orientation);
       }
     });
     const onMapChange = useStableCallback((map) => {
-      if (map.size === 0 || hasSetDefaultIndexRef.current) {
+      if (map.size === 0) {
+        return;
+      }
+      if (hasSetDefaultIndexRef.current) {
+        const elements = elementsRef.current;
+        const nextIndex = elements.indexOf(highlightedElementRef.current);
+        if (nextIndex === -1) {
+          const replacement = elements[highlightedIndex];
+          if (!replacement || isListIndexDisabled(elements, highlightedIndex, disabledIndices)) {
+            onHighlightedIndexChange(getFallbackIndex(elements, disabledIndices));
+          } else {
+            highlightedElementRef.current = replacement;
+          }
+        } else if (nextIndex !== highlightedIndex) {
+          onHighlightedIndexChange(nextIndex);
+        }
         return;
       }
       hasSetDefaultIndexRef.current = true;
@@ -9785,6 +9977,22 @@ var wp;
       relayKeyboardEvent: onKeyDown
     };
   }
+  function getFallbackIndex(elements, disabledIndices) {
+    let fallbackIndex = -1;
+    for (let index2 = 0; index2 < elements.length; index2 += 1) {
+      const element = elements[index2];
+      if (!element || isListIndexDisabled(elements, index2, disabledIndices)) {
+        continue;
+      }
+      if (element.hasAttribute(ACTIVE_COMPOSITE_ITEM)) {
+        return index2;
+      }
+      if (fallbackIndex === -1) {
+        fallbackIndex = index2;
+      }
+    }
+    return Math.max(fallbackIndex, 0);
+  }
   function isModifierKeySet(event, ignoredModifierKeys) {
     for (const key of MODIFIER_KEYS) {
       if (ignoredModifierKeys.includes(key)) {
@@ -9852,7 +10060,7 @@ var wp;
       props: [defaultProps, ...props, elementProps],
       stateAttributesMapping: stateAttributesMapping4
     });
-    const contextValue = React41.useMemo(() => ({
+    const contextValue = React42.useMemo(() => ({
       highlightedIndex,
       onHighlightedIndexChange,
       highlightItemOnHover,
@@ -9890,7 +10098,7 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/PrehydrationScript.mjs
-  var React42 = __toESM(require_react(), 1);
+  var React43 = __toESM(require_react(), 1);
   var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
   function PrehydrationScript(props) {
     const {
@@ -9923,30 +10131,33 @@ var wp;
   });
 
   // node_modules/@base-ui/react/tabs/root/TabsRoot.mjs
-  var React44 = __toESM(require_react(), 1);
+  var React45 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/tabs/root/TabsRootContext.mjs
-  var React43 = __toESM(require_react(), 1);
-  var TabsRootContext = /* @__PURE__ */ React43.createContext(void 0);
+  var React44 = __toESM(require_react(), 1);
+  var TabsRootContext = /* @__PURE__ */ React44.createContext(void 0);
   if (true) TabsRootContext.displayName = "TabsRootContext";
   function useTabsRootContext() {
-    const context = React43.useContext(TabsRootContext);
+    const context = React44.useContext(TabsRootContext);
     if (context === void 0) {
       throw new Error(true ? "Base UI: TabsRootContext is missing. Tabs parts must be placed within <Tabs.Root>." : formatErrorMessage_default(64));
     }
     return context;
   }
 
+  // node_modules/@base-ui/react/tabs/root/TabsRootDataAttributes.mjs
+  var activationDirection = "data-activation-direction";
+
   // node_modules/@base-ui/react/tabs/root/stateAttributesMapping.mjs
   var tabsStateAttributesMapping = {
     tabActivationDirection: (dir) => ({
-      "data-activation-direction": dir
+      [activationDirection]: dir
     })
   };
 
   // node_modules/@base-ui/react/tabs/root/TabsRoot.mjs
   var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
-  var TabsRoot = /* @__PURE__ */ React44.forwardRef(function TabsRoot2(componentProps, forwardedRef) {
+  var TabsRoot = /* @__PURE__ */ React45.forwardRef(function TabsRoot2(componentProps, forwardedRef) {
     const {
       className,
       defaultValue: defaultValueProp = 0,
@@ -9958,8 +10169,8 @@ var wp;
       ...elementProps
     } = componentProps;
     const hasExplicitDefaultValueProp = componentProps.defaultValue !== void 0;
-    const tabPanelRefs = React44.useRef([]);
-    const [mountedTabPanels, setMountedTabPanels] = React44.useState(() => /* @__PURE__ */ new Map());
+    const tabPanelRefs = React45.useRef([]);
+    const [mountedTabPanels, setMountedTabPanels] = React45.useState(() => /* @__PURE__ */ new Map());
     const [value, setValue] = useControlled({
       controlled: valueProp,
       default: defaultValueProp,
@@ -9967,10 +10178,10 @@ var wp;
       state: "value"
     });
     const isControlled = valueProp !== void 0;
-    const [tabMap, setTabMap] = React44.useState(() => /* @__PURE__ */ new Map());
-    const lastKnownTabElementRef = React44.useRef(void 0);
-    const getTabElementBySelectedValue = React44.useCallback((selectedValue) => findTabElement(tabMap, selectedValue), [tabMap]);
-    const [activationDirectionState, setActivationDirectionState] = React44.useState(() => ({
+    const [tabMap, setTabMap] = React45.useState(() => /* @__PURE__ */ new Map());
+    const lastKnownTabElementRef = React45.useRef(void 0);
+    const getTabElementBySelectedValue = React45.useCallback((selectedValue) => findTabElement(tabMap, selectedValue), [tabMap]);
+    const [activationDirectionState, setActivationDirectionState] = React45.useState(() => ({
       previousValue: value,
       tabActivationDirection: "none"
     }));
@@ -9996,8 +10207,8 @@ var wp;
       });
     }, [nextPreviousValue, shouldSyncActivationDirectionState, tabActivationDirection]);
     const onValueChange = useStableCallback((newValue, eventDetails) => {
-      const activationDirection = computeActivationDirection(value, newValue, orientation, tabMap);
-      eventDetails.activationDirection = activationDirection;
+      const activationDirection2 = computeActivationDirection(value, newValue, orientation, tabMap);
+      eventDetails.activationDirection = activationDirection2;
       onValueChangeProp?.(newValue, eventDetails);
       if (eventDetails.isCanceled) {
         return;
@@ -10026,10 +10237,10 @@ var wp;
         });
       };
     });
-    const getTabPanelIdByValue = React44.useCallback((tabValue) => {
+    const getTabPanelIdByValue = React45.useCallback((tabValue) => {
       return mountedTabPanels.get(tabValue);
     }, [mountedTabPanels]);
-    const getTabIdByPanelValue = React44.useCallback((tabPanelValue) => {
+    const getTabIdByPanelValue = React45.useCallback((tabPanelValue) => {
       for (const tabMetadata of tabMap.values()) {
         if (tabPanelValue === tabMetadata.value) {
           return tabMetadata.id;
@@ -10037,7 +10248,7 @@ var wp;
       }
       return void 0;
     }, [tabMap]);
-    const tabsContextValue = React44.useMemo(() => ({
+    const tabsContextValue = React45.useMemo(() => ({
       getTabElementBySelectedValue,
       getTabIdByPanelValue,
       getTabPanelIdByValue,
@@ -10048,7 +10259,7 @@ var wp;
       tabActivationDirection,
       value
     }), [getTabElementBySelectedValue, getTabIdByPanelValue, getTabPanelIdByValue, onValueChange, orientation, registerMountedTabPanel, setTabMap, tabActivationDirection, value]);
-    const selectedTabMetadata = React44.useMemo(() => {
+    const selectedTabMetadata = React45.useMemo(() => {
       for (const tabMetadata of tabMap.values()) {
         if (tabMetadata.value === value) {
           return tabMetadata;
@@ -10056,7 +10267,7 @@ var wp;
       }
       return void 0;
     }, [tabMap, value]);
-    const firstEnabledTabValue = React44.useMemo(() => {
+    const firstEnabledTabValue = React45.useMemo(() => {
       for (const tabMetadata of tabMap.values()) {
         if (!tabMetadata.disabled) {
           return tabMetadata.value;
@@ -10064,10 +10275,10 @@ var wp;
       }
       return void 0;
     }, [tabMap]);
-    const shouldNotifyInitialValueChangeRef = React44.useRef(!hasExplicitDefaultValueProp);
-    const initialDefaultValueRef = React44.useRef(defaultValueProp);
-    const shouldHonorDisabledDefaultValueRef = React44.useRef(hasExplicitDefaultValueProp);
-    const didRegisterTabsRef = React44.useRef(false);
+    const shouldNotifyInitialValueChangeRef = React45.useRef(!hasExplicitDefaultValueProp);
+    const initialDefaultValueRef = React45.useRef(defaultValueProp);
+    const shouldHonorDisabledDefaultValueRef = React45.useRef(hasExplicitDefaultValueProp);
+    const didRegisterTabsRef = React45.useRef(false);
     useIsoLayoutEffect(() => {
       if (isControlled) {
         return;
@@ -10170,14 +10381,14 @@ var wp;
   }
 
   // node_modules/@base-ui/react/tabs/tab/TabsTab.mjs
-  var React46 = __toESM(require_react(), 1);
+  var React47 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/tabs/list/TabsListContext.mjs
-  var React45 = __toESM(require_react(), 1);
-  var TabsListContext = /* @__PURE__ */ React45.createContext(void 0);
+  var React46 = __toESM(require_react(), 1);
+  var TabsListContext = /* @__PURE__ */ React46.createContext(void 0);
   if (true) TabsListContext.displayName = "TabsListContext";
   function useTabsListContext() {
-    const context = React45.useContext(TabsListContext);
+    const context = React46.useContext(TabsListContext);
     if (context === void 0) {
       throw new Error(true ? "Base UI: TabsListContext is missing. TabsList parts must be placed within <Tabs.List>." : formatErrorMessage_default(65));
     }
@@ -10185,7 +10396,7 @@ var wp;
   }
 
   // node_modules/@base-ui/react/tabs/tab/TabsTab.mjs
-  var TabsTab = /* @__PURE__ */ React46.forwardRef(function TabsTab2(componentProps, forwardedRef) {
+  var TabsTab = /* @__PURE__ */ React47.forwardRef(function TabsTab2(componentProps, forwardedRef) {
     const {
       className,
       disabled: disabled2 = false,
@@ -10213,7 +10424,7 @@ var wp;
       onHighlightedIndexChange
     } = useCompositeRootContext();
     const id = useBaseUiId(idProp);
-    const tabMetadata = React46.useMemo(() => ({
+    const tabMetadata = React47.useMemo(() => ({
       disabled: disabled2,
       id,
       value
@@ -10221,15 +10432,15 @@ var wp;
     const {
       compositeProps,
       compositeRef,
-      index
+      index: index2
       // hook is used instead of the CompositeItem component
       // because the index is needed for Tab internals
     } = useCompositeItem({
       metadata: tabMetadata
     });
     const active = value === activeTabValue;
-    const isNavigatingRef = React46.useRef(false);
-    const unobserveTabElementRef = React46.useRef(null);
+    const isNavigatingRef = React47.useRef(false);
+    const unobserveTabElementRef = React47.useRef(null);
     const observeTabElement = useStableCallback((element2) => {
       unobserveTabElementRef.current?.();
       unobserveTabElementRef.current = element2 ? registerTabResizeObserverElement(element2) : null;
@@ -10239,7 +10450,7 @@ var wp;
         isNavigatingRef.current = false;
         return;
       }
-      if (!(active && index > -1 && highlightedIndex !== index)) {
+      if (!(active && index2 > -1 && highlightedIndex !== index2)) {
         return;
       }
       const listElement = tabsListElement;
@@ -10250,9 +10461,9 @@ var wp;
         }
       }
       if (!disabled2) {
-        onHighlightedIndexChange(index);
+        onHighlightedIndexChange(index2);
       }
-    }, [active, index, highlightedIndex, onHighlightedIndexChange, disabled2, tabsListElement]);
+    }, [active, index2, highlightedIndex, onHighlightedIndexChange, disabled2, tabsListElement]);
     const {
       getButtonProps,
       buttonRef
@@ -10262,8 +10473,8 @@ var wp;
       focusableWhenDisabled: true
     });
     const tabPanelId = getTabPanelIdByValue(value);
-    const isPressingRef = React46.useRef(false);
-    const isMainButtonRef = React46.useRef(false);
+    const isPressingRef = React47.useRef(false);
+    const isMainButtonRef = React47.useRef(false);
     function activate(event) {
       onValueChange(value, createChangeEventDetails(reason_parts_exports.none, event.nativeEvent, void 0, {
         activationDirection: "none"
@@ -10329,7 +10540,17 @@ var wp;
   if (true) TabsTab.displayName = "TabsTab";
 
   // node_modules/@base-ui/react/tabs/indicator/TabsIndicator.mjs
-  var React47 = __toESM(require_react(), 1);
+  var React48 = __toESM(require_react(), 1);
+
+  // node_modules/@base-ui/react/tabs/indicator/TabsIndicatorCssVars.mjs
+  var activeTabLeft = "--active-tab-left";
+  var activeTabRight = "--active-tab-right";
+  var activeTabTop = "--active-tab-top";
+  var activeTabBottom = "--active-tab-bottom";
+  var activeTabWidth = "--active-tab-width";
+  var activeTabHeight = "--active-tab-height";
+
+  // node_modules/@base-ui/react/tabs/indicator/TabsIndicator.mjs
   var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
   var _PrehydrationScript;
   var stateAttributesMapping2 = {
@@ -10337,7 +10558,8 @@ var wp;
     activeTabPosition: () => null,
     activeTabSize: () => null
   };
-  var TabsIndicator = /* @__PURE__ */ React47.forwardRef(function TabsIndicator2(componentProps, forwardedRef) {
+  var MAX_LAYOUT_ROUNDING_ERROR = 2;
+  var TabsIndicator = /* @__PURE__ */ React48.forwardRef(function TabsIndicator2(componentProps, forwardedRef) {
     const {
       className,
       render,
@@ -10356,7 +10578,7 @@ var wp;
       registerIndicatorUpdateListener
     } = useTabsListContext();
     const rerender = useForcedRerendering();
-    React47.useEffect(() => {
+    React48.useEffect(() => {
       return registerIndicatorUpdateListener(rerender);
     }, [registerIndicatorUpdateListener, rerender]);
     let left = 0;
@@ -10382,15 +10604,15 @@ var wp;
         const tabsListRect = tabsListElement.getBoundingClientRect();
         const scaleX = tabListWidth > 0 ? tabsListRect.width / tabListWidth : 1;
         const scaleY = tabListHeight > 0 ? tabsListRect.height / tabListHeight : 1;
-        const hasNonZeroScale = scaleX > Number.EPSILON && scaleY > Number.EPSILON;
-        if (hasNonZeroScale) {
-          const tabLeftDelta = tabRect.left - tabsListRect.left;
-          const tabTopDelta = tabRect.top - tabsListRect.top;
-          left = tabLeftDelta / scaleX + tabsListElement.scrollLeft - tabsListElement.clientLeft;
-          top = tabTopDelta / scaleY + tabsListElement.scrollTop - tabsListElement.clientTop;
-        } else {
-          left = activeTab.offsetLeft;
-          top = activeTab.offsetTop;
+        const layoutOffset = getLayoutOffset(activeTab, tabsListElement);
+        left = layoutOffset.left;
+        top = layoutOffset.top;
+        const rectLeft = (tabRect.left - tabsListRect.left) / scaleX + tabsListElement.scrollLeft - tabsListElement.clientLeft;
+        const rectTop = (tabRect.top - tabsListRect.top) / scaleY + tabsListElement.scrollTop - tabsListElement.clientTop;
+        const tabTranslation = getActiveTabTranslation(activeTab);
+        if (Math.abs(rectLeft - tabTranslation.x - left) <= MAX_LAYOUT_ROUNDING_ERROR && Math.abs(rectTop - tabTranslation.y - top) <= MAX_LAYOUT_ROUNDING_ERROR) {
+          left = rectLeft;
+          top = rectTop;
         }
         width = computedWidth;
         height = computedHeight;
@@ -10409,12 +10631,12 @@ var wp;
       height
     } : null;
     const style2 = isTabSelected ? {
-      "--active-tab-left": `${left}px`,
-      "--active-tab-right": `${right}px`,
-      "--active-tab-top": `${top}px`,
-      "--active-tab-bottom": `${bottom}px`,
-      "--active-tab-width": `${width}px`,
-      "--active-tab-height": `${height}px`
+      [activeTabLeft]: `${left}px`,
+      [activeTabRight]: `${right}px`,
+      [activeTabTop]: `${top}px`,
+      [activeTabBottom]: `${bottom}px`,
+      [activeTabWidth]: `${width}px`,
+      [activeTabHeight]: `${height}px`
     } : void 0;
     const displayIndicator = isTabSelected && width > 0 && height > 0;
     const state = {
@@ -10439,21 +10661,94 @@ var wp;
     if (value == null) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime188.jsxs)(React47.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime188.jsxs)(React48.Fragment, {
       children: [element, renderBeforeHydration && (_PrehydrationScript || (_PrehydrationScript = /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(PrehydrationScript, {
         script
       })))]
     });
   });
   if (true) TabsIndicator.displayName = "TabsIndicator";
+  function getLayoutOffset(element, ancestor) {
+    const elementOffset = getCumulativeOffset(element);
+    const ancestorOffset = getCumulativeOffset(ancestor);
+    let left = elementOffset.left - ancestorOffset.left - ancestor.clientLeft;
+    let top = elementOffset.top - ancestorOffset.top - ancestor.clientTop;
+    let node = getParentNode(element);
+    while (isHTMLElement(node) && node !== ancestor && !isLastTraversableNode(node)) {
+      left -= node.scrollLeft;
+      top -= node.scrollTop;
+      node = getParentNode(node);
+    }
+    return {
+      left,
+      top
+    };
+  }
+  function getCumulativeOffset(element) {
+    let left = 0;
+    let top = 0;
+    let currentElement = element;
+    while (currentElement != null) {
+      left += currentElement.offsetLeft;
+      top += currentElement.offsetTop;
+      const offsetParent = currentElement.offsetParent;
+      if (offsetParent != null) {
+        left += offsetParent.clientLeft;
+        top += offsetParent.clientTop;
+      }
+      currentElement = offsetParent;
+    }
+    return {
+      left,
+      top
+    };
+  }
+  function getActiveTabTranslation(element) {
+    const computedStyle = getWindow(element).getComputedStyle(element);
+    const {
+      x: x3,
+      y: y2
+    } = getElementTransform(element, computedStyle);
+    let translateX = x3;
+    let translateY = y2;
+    const {
+      translate
+    } = computedStyle;
+    if (translate && translate !== "none") {
+      const parts = translate.split(" ");
+      translateX += resolveTranslateLength(parts[0], element.offsetWidth);
+      translateY += resolveTranslateLength(parts[1], element.offsetHeight);
+    }
+    return {
+      x: translateX,
+      y: translateY
+    };
+  }
+  function resolveTranslateLength(value, referenceSize) {
+    if (!value) {
+      return 0;
+    }
+    const numeric = parseFloat(value);
+    if (!Number.isFinite(numeric)) {
+      return 0;
+    }
+    return value.endsWith("%") ? numeric / 100 * referenceSize : numeric;
+  }
 
   // node_modules/@base-ui/react/tabs/panel/TabsPanel.mjs
-  var React48 = __toESM(require_react(), 1);
+  var React49 = __toESM(require_react(), 1);
+
+  // node_modules/@base-ui/react/tabs/panel/TabsPanelDataAttributes.mjs
+  var index = "data-index";
+  var startingStyle2 = TransitionStatusDataAttributes_exports.startingStyle;
+  var endingStyle2 = TransitionStatusDataAttributes_exports.endingStyle;
+
+  // node_modules/@base-ui/react/tabs/panel/TabsPanel.mjs
   var stateAttributesMapping3 = {
     ...tabsStateAttributesMapping,
     ...transitionStatusMapping
   };
-  var TabsPanel = /* @__PURE__ */ React48.forwardRef(function TabsPanel2(componentProps, forwardedRef) {
+  var TabsPanel = /* @__PURE__ */ React49.forwardRef(function TabsPanel2(componentProps, forwardedRef) {
     const {
       className,
       value,
@@ -10472,7 +10767,7 @@ var wp;
     const id = useBaseUiId();
     const {
       ref: listItemRef,
-      index
+      index: index2
     } = useCompositeListItem();
     const open = value === selectedValue;
     const {
@@ -10488,7 +10783,7 @@ var wp;
       tabActivationDirection,
       transitionStatus
     };
-    const panelRef = React48.useRef(null);
+    const panelRef = React49.useRef(null);
     const element = useRenderElement("div", componentProps, {
       state,
       ref: [forwardedRef, listItemRef, panelRef],
@@ -10500,7 +10795,7 @@ var wp;
         tabIndex: open ? 0 : -1,
         inert: inertValue(!open),
         // Computed key: a plain literal key fails the DOM-props excess property check.
-        ["data-index"]: index
+        [index]: index2
       }, elementProps],
       stateAttributesMapping: stateAttributesMapping3
     });
@@ -10528,9 +10823,9 @@ var wp;
   if (true) TabsPanel.displayName = "TabsPanel";
 
   // node_modules/@base-ui/react/tabs/list/TabsList.mjs
-  var React49 = __toESM(require_react(), 1);
+  var React50 = __toESM(require_react(), 1);
   var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
-  var TabsList = /* @__PURE__ */ React49.forwardRef(function TabsList2(componentProps, forwardedRef) {
+  var TabsList = /* @__PURE__ */ React50.forwardRef(function TabsList2(componentProps, forwardedRef) {
     const {
       activateOnFocus = false,
       className,
@@ -10544,11 +10839,11 @@ var wp;
       setTabMap,
       tabActivationDirection
     } = useTabsRootContext();
-    const [highlightedTabIndex, setHighlightedTabIndex] = React49.useState(0);
-    const [tabsListElement, setTabsListElement] = React49.useState(null);
-    const indicatorUpdateListenersRef = React49.useRef(/* @__PURE__ */ new Set());
-    const tabResizeObserverElementsRef = React49.useRef(/* @__PURE__ */ new Set());
-    const resizeObserverRef = React49.useRef(null);
+    const [highlightedTabIndex, setHighlightedTabIndex] = React50.useState(0);
+    const [tabsListElement, setTabsListElement] = React50.useState(null);
+    const indicatorUpdateListenersRef = React50.useRef(/* @__PURE__ */ new Set());
+    const tabResizeObserverElementsRef = React50.useRef(/* @__PURE__ */ new Set());
+    const resizeObserverRef = React50.useRef(null);
     useIsoLayoutEffect(() => {
       if (typeof ResizeObserver === "undefined") {
         return void 0;
@@ -10592,7 +10887,7 @@ var wp;
       "aria-orientation": orientation === "vertical" ? "vertical" : void 0,
       role: "tablist"
     };
-    const tabsListContextValue = React49.useMemo(() => ({
+    const tabsListContextValue = React50.useMemo(() => ({
       activateOnFocus,
       registerIndicatorUpdateListener,
       registerTabResizeObserverElement,
@@ -14419,7 +14714,7 @@ var wp;
             ...blockProps.style
           },
           children: /* @__PURE__ */ (0, import_jsx_runtime218.jsxs)("ol", { children: [
-            placeholderItems.map((text, index) => /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("a", { href: `#breadcrumbs-pseudo-link-${index}`, children: text }) }, index)),
+            placeholderItems.map((text, index2) => /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("a", { href: `#breadcrumbs-pseudo-link-${index2}`, children: text }) }, index2)),
             showCurrentItem && /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime218.jsx)("span", { "aria-current": "page", children: (0, import_i18n15.__)("Current") }) })
           ] })
         }
@@ -18949,9 +19244,9 @@ var wp;
         const { canInsertBlockType, canRemoveBlock, getBlockOrder } = select10(import_block_editor37.store);
         const blockOrder = getBlockOrder(clientId);
         const preventRemovalBlockIndexes = blockOrder.reduce(
-          (acc, blockId, index) => {
+          (acc, blockId, index2) => {
             if (!canRemoveBlock(blockId)) {
-              acc.push(index);
+              acc.push(index2);
             }
             return acc;
           },
@@ -19491,9 +19786,9 @@ var wp;
       (columnWidth) => !columnWidth
     );
     const equalColumnWidth = innerBlocks.length ? `${+(100 / innerBlocks.length).toFixed(2)}%` : void 0;
-    return innerBlocks.map((column, index) => {
+    return innerBlocks.map((column, index2) => {
       const columnInnerBlocks = Array.isArray(column?.innerBlocks) ? column.innerBlocks : [];
-      const columnWidth = columnWidths[index] || (allColumnWidthsUnavailable ? equalColumnWidth : void 0);
+      const columnWidth = columnWidths[index2] || (allColumnWidthsUnavailable ? equalColumnWidth : void 0);
       const childLayout = columnWidth ? { selfStretch: "fixed", flexSize: columnWidth } : { selfStretch: "fill" };
       const {
         layout: layoutAttribute,
@@ -21716,7 +22011,7 @@ var wp;
     setActiveCommentId,
     blocks,
     firstCommentId
-  }) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("ol", { ...blockProps, children: comments && comments.map(({ commentId, ...comment }, index) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
+  }) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("ol", { ...blockProps, children: comments && comments.map(({ commentId, ...comment }, index2) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
     import_block_editor53.BlockContextProvider,
     {
       value: {
@@ -21738,7 +22033,7 @@ var wp;
         }
       )
     },
-    comment.commentId || index
+    comment.commentId || index2
   )) });
   function CommentTemplateEdit({
     clientId,
@@ -25997,28 +26292,28 @@ var wp;
   function isRGBArray(value) {
     return Array.isArray(value[0]);
   }
-  function isIgnoredColor(data, index, ignoredColor) {
+  function isIgnoredColor(data, index2, ignoredColor) {
     for (var i = 0; i < ignoredColor.length; i++) {
-      if (isIgnoredColorAsNumbers(data, index, ignoredColor[i])) {
+      if (isIgnoredColorAsNumbers(data, index2, ignoredColor[i])) {
         return true;
       }
     }
     return false;
   }
-  function isIgnoredColorAsNumbers(data, index, ignoredColor) {
+  function isIgnoredColorAsNumbers(data, index2, ignoredColor) {
     switch (ignoredColor.length) {
       case 3:
-        if (isIgnoredRGBColor(data, index, ignoredColor)) {
+        if (isIgnoredRGBColor(data, index2, ignoredColor)) {
           return true;
         }
         break;
       case 4:
-        if (isIgnoredRGBAColor(data, index, ignoredColor)) {
+        if (isIgnoredRGBAColor(data, index2, ignoredColor)) {
           return true;
         }
         break;
       case 5:
-        if (isIgnoredRGBAColorWithThreshold(data, index, ignoredColor)) {
+        if (isIgnoredRGBAColorWithThreshold(data, index2, ignoredColor)) {
           return true;
         }
         break;
@@ -26026,31 +26321,31 @@ var wp;
         return false;
     }
   }
-  function isIgnoredRGBColor(data, index, ignoredColor) {
-    if (data[index + 3] !== 255) {
+  function isIgnoredRGBColor(data, index2, ignoredColor) {
+    if (data[index2 + 3] !== 255) {
       return true;
     }
-    if (data[index] === ignoredColor[0] && data[index + 1] === ignoredColor[1] && data[index + 2] === ignoredColor[2]) {
+    if (data[index2] === ignoredColor[0] && data[index2 + 1] === ignoredColor[1] && data[index2 + 2] === ignoredColor[2]) {
       return true;
     }
     return false;
   }
-  function isIgnoredRGBAColor(data, index, ignoredColor) {
-    if (data[index + 3] && ignoredColor[3]) {
-      return data[index] === ignoredColor[0] && data[index + 1] === ignoredColor[1] && data[index + 2] === ignoredColor[2] && data[index + 3] === ignoredColor[3];
+  function isIgnoredRGBAColor(data, index2, ignoredColor) {
+    if (data[index2 + 3] && ignoredColor[3]) {
+      return data[index2] === ignoredColor[0] && data[index2 + 1] === ignoredColor[1] && data[index2 + 2] === ignoredColor[2] && data[index2 + 3] === ignoredColor[3];
     }
-    return data[index + 3] === ignoredColor[3];
+    return data[index2 + 3] === ignoredColor[3];
   }
   function inRange(colorComponent, ignoredColorComponent, value) {
     return colorComponent >= ignoredColorComponent - value && colorComponent <= ignoredColorComponent + value;
   }
-  function isIgnoredRGBAColorWithThreshold(data, index, ignoredColor) {
+  function isIgnoredRGBAColorWithThreshold(data, index2, ignoredColor) {
     var redIgnored = ignoredColor[0];
     var greenIgnored = ignoredColor[1];
     var blueIgnored = ignoredColor[2];
     var alphaIgnored = ignoredColor[3];
     var threshold = ignoredColor[4];
-    var alphaData = data[index + 3];
+    var alphaData = data[index2 + 3];
     var alphaInRange = inRange(alphaData, alphaIgnored, threshold);
     if (!alphaIgnored) {
       return alphaInRange;
@@ -26058,7 +26353,7 @@ var wp;
     if (!alphaData && alphaInRange) {
       return true;
     }
-    if (inRange(data[index], redIgnored, threshold) && inRange(data[index + 1], greenIgnored, threshold) && inRange(data[index + 2], blueIgnored, threshold) && alphaInRange) {
+    if (inRange(data[index2], redIgnored, threshold) && inRange(data[index2 + 1], greenIgnored, threshold) && inRange(data[index2 + 2], blueIgnored, threshold) && alphaInRange) {
       return true;
     }
     return false;
@@ -31066,11 +31361,11 @@ ${url}
       }
     },
     isEligible({ images, ids }) {
-      return images && images.length > 0 && (!ids && images || ids && images && ids.length !== images.length || images.some((id, index) => {
-        if (!id && ids[index] !== null) {
+      return images && images.length > 0 && (!ids && images || ids && images && ids.length !== images.length || images.some((id, index2) => {
+        if (!id && ids[index2] !== null) {
           return true;
         }
-        return parseInt(id, 10) !== ids[index];
+        return parseInt(id, 10) !== ids[index2];
       }));
     },
     migrate(attributes2) {
@@ -32278,7 +32573,7 @@ ${url}
   }
 
   // packages/block-library/build-module/gallery/use-dynamic-gallery.mjs
-  var EMPTY_ARRAY3 = [];
+  var EMPTY_ARRAY2 = [];
   function buildImageBlockAttributes(media, galleryAttributes) {
     const { sizeSlug, linkTo, linkTarget, aspectRatio } = galleryAttributes;
     const hasAspectRatio = !!aspectRatio && aspectRatio !== "auto";
@@ -32329,14 +32624,14 @@ ${url}
       (select10) => {
         if (!query) {
           return {
-            dynamicMedia: EMPTY_ARRAY3,
+            dynamicMedia: EMPTY_ARRAY2,
             dynamicMediaTotal: 0,
             isResolvingDynamic: false
           };
         }
         const selectorArgs = ["postType", "attachment", query];
         return {
-          dynamicMedia: select10(import_core_data21.store).getEntityRecords(...selectorArgs) ?? EMPTY_ARRAY3,
+          dynamicMedia: select10(import_core_data21.store).getEntityRecords(...selectorArgs) ?? EMPTY_ARRAY2,
           // Total matching attachments (the `X-WP-Total` header), which the
           // query's `per_page` cap doesn't bound — so it reveals when the
           // post has more attached images than are shown.
@@ -32762,7 +33057,7 @@ ${url}
     "Drag and drop images, upload, or choose from your library."
   );
   var DEFAULT_BLOCK3 = { name: "core/image" };
-  var EMPTY_ARRAY4 = [];
+  var EMPTY_ARRAY3 = [];
   function GalleryEdit(props) {
     const {
       setAttributes,
@@ -32849,7 +33144,7 @@ ${url}
         return {
           getBlock: _getBlock,
           getSettings: _getSettings,
-          innerBlockImages: _getBlock(clientId)?.innerBlocks ?? EMPTY_ARRAY4,
+          innerBlockImages: _getBlock(clientId)?.innerBlocks ?? EMPTY_ARRAY3,
           multiGallerySelection: multiSelectedClientIds.length && multiSelectedClientIds.every(
             (_clientId) => getBlockName(_clientId) === "core/gallery"
           ),
@@ -33001,7 +33296,7 @@ ${url}
         return file;
       });
       const newOrderMap = processedImages.reduce(
-        (result, image, index) => (result[image.id] = index, result),
+        (result, image, index2) => (result[image.id] = index2, result),
         {}
       );
       const existingImageBlocks = !newFileUploads ? innerBlockImages.filter(
@@ -33226,7 +33521,7 @@ ${url}
       // `shouldRenderBlockListView`). This reaches the block's list settings
       // only while the inner blocks are mounted, which is why the dynamic view
       // still renders the (empty) inner blocks.
-      allowedBlocks: isDynamic ? EMPTY_ARRAY4 : void 0
+      allowedBlocks: isDynamic ? EMPTY_ARRAY3 : void 0
     });
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     if (!hasImages && !isDynamic) {
@@ -36296,7 +36591,7 @@ ${nextContent}
       const nextInnerBlocks = parsedBlock?.innerBlocks ?? [];
       const prevInnerBlocks = registry.select(import_block_editor101.store).getBlocks(clientId);
       const innerBlocksUnchanged = prevInnerBlocks.length === nextInnerBlocks.length && prevInnerBlocks.every(
-        (block, index) => (0, import_blocks31.serialize)(block) === (0, import_blocks31.serialize)(nextInnerBlocks[index])
+        (block, index2) => (0, import_blocks31.serialize)(block) === (0, import_blocks31.serialize)(nextInnerBlocks[index2])
       );
       registry.batch(() => {
         updateBlock(clientId, {
@@ -46606,10 +46901,10 @@ ${text}
       currentMenuId
     );
     const menuChoices = (0, import_element85.useMemo)(() => {
-      return navigationMenus?.map(({ id, title, status }, index) => {
+      return navigationMenus?.map(({ id, title, status }, index2) => {
         const label = buildMenuLabel(
           title?.rendered,
-          index + 1,
+          index2 + 1,
           status
         );
         return {
@@ -48588,14 +48883,14 @@ ${text}
   // packages/block-library/build-module/navigation/edit/use-inner-blocks.mjs
   var import_data77 = __toESM(require_data(), 1);
   var import_block_editor140 = __toESM(require_block_editor(), 1);
-  var EMPTY_ARRAY5 = [];
+  var EMPTY_ARRAY4 = [];
   function useInnerBlocks(clientId) {
     return (0, import_data77.useSelect)(
       (select10) => {
         const { getBlock, getBlocks, hasSelectedInnerBlock } = select10(import_block_editor140.store);
         const _uncontrolledInnerBlocks = getBlock(clientId).innerBlocks;
         const _hasUncontrolledInnerBlocks = !!_uncontrolledInnerBlocks?.length;
-        const _controlledInnerBlocks = _hasUncontrolledInnerBlocks ? EMPTY_ARRAY5 : getBlocks(clientId);
+        const _controlledInnerBlocks = _hasUncontrolledInnerBlocks ? EMPTY_ARRAY4 : getBlocks(clientId);
         return {
           innerBlocks: _hasUncontrolledInnerBlocks ? _uncontrolledInnerBlocks : _controlledInnerBlocks,
           hasUncontrolledInnerBlocks: _hasUncontrolledInnerBlocks,
@@ -53977,7 +54272,7 @@ ${text}
       }
     }
     const transformSubmenus = (listOfLinks) => {
-      listOfLinks.forEach((block, index, listOfLinksArray) => {
+      listOfLinks.forEach((block, index2, listOfLinksArray) => {
         const { attributes: attributes2, innerBlocks } = block;
         if (innerBlocks.length !== 0) {
           transformSubmenus(innerBlocks);
@@ -53986,7 +54281,7 @@ ${text}
             attributes2,
             innerBlocks
           );
-          listOfLinksArray[index] = transformedBlock;
+          listOfLinksArray[index2] = transformedBlock;
         }
       });
     };
@@ -56694,8 +56989,8 @@ ${text}
     }
     let depth = 0;
     let foundOpeningParenthesis = false;
-    for (let index = 0; index < value.length; index++) {
-      const character = value[index];
+    for (let index2 = 0; index2 < value.length; index2++) {
+      const character = value[index2];
       if (character === "(") {
         foundOpeningParenthesis = true;
         ++depth;
@@ -56703,7 +56998,7 @@ ${text}
         --depth;
       }
       if (foundOpeningParenthesis && depth === 0) {
-        return value.slice(0, index + 1);
+        return value.slice(0, index2 + 1);
       }
     }
   }
@@ -57291,7 +57586,7 @@ ${text}
   // packages/block-library/build-module/playlist/edit.mjs
   var import_jsx_runtime387 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES6 = ["audio"];
-  var EMPTY_ARRAY6 = [];
+  var EMPTY_ARRAY5 = [];
   var AUDIO_FILE_EXTENSION = /\.(aac|aif|aiff|flac|m4a|m4b|mp3|oga|ogg|opus|wav|weba)$/i;
   var DEFAULT_WAVEFORM_STYLE = "bars";
   var FILE_LIST_OBJECT_NAME = "[object FileList]";
@@ -57374,7 +57669,7 @@ ${text}
       (select10) => {
         const { getBlock: _getBlock } = select10(import_block_editor173.store);
         return {
-          innerBlockTracks: _getBlock(clientId)?.innerBlocks ?? EMPTY_ARRAY6
+          innerBlockTracks: _getBlock(clientId)?.innerBlocks ?? EMPTY_ARRAY5
         };
       },
       [clientId]
@@ -63104,7 +63399,7 @@ ${text}
   // packages/block-library/build-module/post-terms/use-post-terms.mjs
   var import_core_data68 = __toESM(require_core_data(), 1);
   var import_data113 = __toESM(require_data(), 1);
-  var EMPTY_ARRAY7 = [];
+  var EMPTY_ARRAY6 = [];
   function usePostTerms({ postId, term }) {
     const { slug } = term;
     return (0, import_data113.useSelect)(
@@ -63112,7 +63407,7 @@ ${text}
         const visible = term?.visibility?.publicly_queryable;
         if (!visible || !postId) {
           return {
-            postTerms: EMPTY_ARRAY7,
+            postTerms: EMPTY_ARRAY6,
             isLoading: false,
             hasPostTerms: false
           };
@@ -65760,7 +66055,7 @@ ${text}
   var import_element131 = __toESM(require_element(), 1);
   var import_compose51 = __toESM(require_compose(), 1);
   var import_jsx_runtime419 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY8 = [];
+  var EMPTY_ARRAY7 = [];
   var BASE_QUERY = {
     order: "asc",
     _fields: "id,title",
@@ -65768,13 +66063,13 @@ ${text}
   };
   function ParentControl({ parents, postType, onChange }) {
     const [search, setSearch] = (0, import_element131.useState)("");
-    const [value, setValue] = (0, import_element131.useState)(EMPTY_ARRAY8);
-    const [suggestions, setSuggestions] = (0, import_element131.useState)(EMPTY_ARRAY8);
+    const [value, setValue] = (0, import_element131.useState)(EMPTY_ARRAY7);
+    const [suggestions, setSuggestions] = (0, import_element131.useState)(EMPTY_ARRAY7);
     const debouncedSearch = (0, import_compose51.useDebounce)(setSearch, 250);
     const { searchResults, searchHasResolved } = (0, import_data119.useSelect)(
       (select10) => {
         if (!search) {
-          return { searchResults: EMPTY_ARRAY8, searchHasResolved: true };
+          return { searchResults: EMPTY_ARRAY7, searchHasResolved: true };
         }
         const { getEntityRecords, hasFinishedResolution } = select10(import_core_data74.store);
         const selectorArgs = [
@@ -65801,7 +66096,7 @@ ${text}
     const currentParents = (0, import_data119.useSelect)(
       (select10) => {
         if (!parents?.length) {
-          return EMPTY_ARRAY8;
+          return EMPTY_ARRAY7;
         }
         const { getEntityRecords } = select10(import_core_data74.store);
         return getEntityRecords("postType", postType, {
@@ -65814,7 +66109,7 @@ ${text}
     );
     (0, import_element131.useEffect)(() => {
       if (!parents?.length) {
-        setValue(EMPTY_ARRAY8);
+        setValue(EMPTY_ARRAY7);
       }
       if (!currentParents?.length) {
         return;
@@ -65836,7 +66131,7 @@ ${text}
     }, [parents, currentParents]);
     const entitiesInfo = (0, import_element131.useMemo)(() => {
       if (!searchResults?.length) {
-        return EMPTY_ARRAY8;
+        return EMPTY_ARRAY7;
       }
       return getEntitiesInfo(
         mapToIHasNameAndId(searchResults, "title.rendered")
@@ -65864,7 +66159,7 @@ ${text}
           return accumulator;
         }, /* @__PURE__ */ new Set())
       );
-      setSuggestions(EMPTY_ARRAY8);
+      setSuggestions(EMPTY_ARRAY7);
       onChange({ parents: ids });
     };
     return /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
@@ -65890,7 +66185,7 @@ ${text}
   var import_html_entities12 = __toESM(require_html_entities(), 1);
   var import_i18n192 = __toESM(require_i18n(), 1);
   var import_jsx_runtime420 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY9 = [];
+  var EMPTY_ARRAY8 = [];
   var BASE_QUERY2 = {
     order: "asc",
     _fields: "id,name",
@@ -65969,13 +66264,13 @@ ${text}
     label
   }) {
     const [search, setSearch] = (0, import_element132.useState)("");
-    const [value, setValue] = (0, import_element132.useState)(EMPTY_ARRAY9);
-    const [suggestions, setSuggestions] = (0, import_element132.useState)(EMPTY_ARRAY9);
+    const [value, setValue] = (0, import_element132.useState)(EMPTY_ARRAY8);
+    const [suggestions, setSuggestions] = (0, import_element132.useState)(EMPTY_ARRAY8);
     const debouncedSearch = (0, import_compose52.useDebounce)(setSearch, 250);
     const { searchResults, searchHasResolved } = (0, import_data120.useSelect)(
       (select10) => {
         if (!search) {
-          return { searchResults: EMPTY_ARRAY9, searchHasResolved: true };
+          return { searchResults: EMPTY_ARRAY8, searchHasResolved: true };
         }
         const { getEntityRecords, hasFinishedResolution } = select10(import_core_data75.store);
         const combinedExclude = [...termIds, ...oppositeTermIds];
@@ -66003,7 +66298,7 @@ ${text}
     const existingTerms = (0, import_data120.useSelect)(
       (select10) => {
         if (!termIds?.length) {
-          return EMPTY_ARRAY9;
+          return EMPTY_ARRAY8;
         }
         const { getEntityRecords } = select10(import_core_data75.store);
         return getEntityRecords("taxonomy", taxonomy.slug, {
@@ -66016,7 +66311,7 @@ ${text}
     );
     (0, import_element132.useEffect)(() => {
       if (!termIds?.length) {
-        setValue(EMPTY_ARRAY9);
+        setValue(EMPTY_ARRAY8);
       }
       if (!existingTerms?.length) {
         return;
@@ -66047,7 +66342,7 @@ ${text}
           newTermIds.add(termId);
         }
       }
-      setSuggestions(EMPTY_ARRAY9);
+      setSuggestions(EMPTY_ARRAY8);
       onChange(Array.from(newTermIds));
     };
     return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)("div", { className: "block-library-query-inspector__taxonomy-control", children: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
@@ -67343,9 +67638,9 @@ ${text}
     return foundBlock;
   };
   var replacePostTemplateBlock = (innerBlocks = [], replacementBlock) => {
-    innerBlocks.forEach((block, index) => {
+    innerBlocks.forEach((block, index2) => {
       if (block.name === "core/post-template") {
-        innerBlocks.splice(index, 1, replacementBlock);
+        innerBlocks.splice(index2, 1, replacementBlock);
       } else if (block.innerBlocks.length) {
         block.innerBlocks = replacePostTemplateBlock(
           block.innerBlocks,
@@ -76362,8 +76657,8 @@ ${text}
         ...state[sectionName].slice(0, rowIndex),
         {
           cells: Array.from({ length: cellCount }).map(
-            (_2, index) => {
-              const firstCellInColumn = firstRow?.cells?.[index] ?? {};
+            (_2, index2) => {
+              const firstCellInColumn = firstRow?.cells?.[index2] ?? {};
               const inheritedAttributes = Object.fromEntries(
                 Object.entries(firstCellInColumn).filter(
                   ([key]) => INHERITED_COLUMN_ATTRIBUTES.includes(key)
@@ -76384,7 +76679,7 @@ ${text}
   function deleteRow(state, { sectionName, rowIndex }) {
     return {
       [sectionName]: state[sectionName].filter(
-        (row, index) => index !== rowIndex
+        (row, index2) => index2 !== rowIndex
       )
     };
   }
@@ -76435,7 +76730,7 @@ ${text}
           sectionName,
           section.map((row) => ({
             cells: row.cells.length >= columnIndex ? row.cells.filter(
-              (cell, index) => index !== columnIndex
+              (cell, index2) => index2 !== columnIndex
             ) : row.cells
           })).filter((row) => row.cells.length)
         ];
@@ -77522,7 +77817,7 @@ ${text}
     return nestedHeadingList;
   }
   function TableOfContentsList({ nestedHeadingList, ordered = true }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(import_jsx_runtime529.Fragment, { children: nestedHeadingList.map((node, index) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime529.jsx)(import_jsx_runtime529.Fragment, { children: nestedHeadingList.map((node, index2) => {
       const { content, link } = node.heading;
       const entry = link ? /* @__PURE__ */ (0, import_jsx_runtime529.jsx)("a", { className: ENTRY_CLASS_NAME, href: link, children: content }) : /* @__PURE__ */ (0, import_jsx_runtime529.jsx)("span", { className: ENTRY_CLASS_NAME, children: content });
       const NestedListTag = ordered ? "ol" : "ul";
@@ -77535,7 +77830,7 @@ ${text}
             ordered
           }
         ) }) : null
-      ] }, index);
+      ] }, index2);
     }) });
   }
   var hasOwn = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
@@ -77661,7 +77956,7 @@ ${text}
     onClick,
     ordered = true
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_jsx_runtime530.Fragment, { children: nestedHeadingList.map((node, index) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_jsx_runtime530.Fragment, { children: nestedHeadingList.map((node, index2) => {
       const { content, link } = node.heading;
       const entry = link ? /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(
         "a",
@@ -77685,7 +77980,7 @@ ${text}
             ordered
           }
         ) }) : null
-      ] }, index);
+      ] }, index2);
     }) });
   }
 
@@ -78189,7 +78484,7 @@ ${text}
 
   // packages/block-library/build-module/tab-list/edit.mjs
   var import_jsx_runtime533 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY10 = [];
+  var EMPTY_ARRAY9 = [];
   function Edit18({
     attributes: attributes2,
     clientId,
@@ -78211,7 +78506,7 @@ ${text}
         );
         return {
           tabsClientId: rootClientId,
-          tabPanels: tabPanelsBlock?.innerBlocks ?? EMPTY_ARRAY10,
+          tabPanels: tabPanelsBlock?.innerBlocks ?? EMPTY_ARRAY9,
           editorActiveTabIndex: tabsAttributes?.editorActiveTabIndex,
           activeTabIndex: tabsAttributes?.activeTabIndex ?? 0
         };
@@ -78262,9 +78557,9 @@ ${text}
       if (!isBlockSelected(tabsClientId) && !hasSelectedInnerBlock(tabsClientId, true)) {
         return;
       }
-      const focusButtonAt = (index) => {
+      const focusButtonAt = (index2) => {
         window.requestAnimationFrame(() => {
-          const button = menuRef.current?.querySelectorAll("button")?.[index];
+          const button = menuRef.current?.querySelectorAll("button")?.[index2];
           (button?.querySelector("[contenteditable]") ?? button)?.focus();
         });
       };
@@ -78324,8 +78619,8 @@ ${text}
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime533.jsx)(TabMovers, { tabsClientId }),
       /* @__PURE__ */ (0, import_jsx_runtime533.jsx)(TabToolbarControls, { tabsClientId }),
-      /* @__PURE__ */ (0, import_jsx_runtime533.jsx)("div", { ...blockProps, children: tabsList.map((tab, index) => {
-        const isActive = index === effectiveActiveIndex;
+      /* @__PURE__ */ (0, import_jsx_runtime533.jsx)("div", { ...blockProps, children: tabsList.map((tab, index2) => {
+        const isActive = index2 === effectiveActiveIndex;
         return /* @__PURE__ */ (0, import_jsx_runtime533.jsx)(
           "button",
           {
@@ -78336,7 +78631,7 @@ ${text}
             style: buttonStyle,
             tabIndex: -1,
             onFocus: () => {
-              selectTabPanel(index);
+              selectTabPanel(index2);
             },
             children: /* @__PURE__ */ (0, import_jsx_runtime533.jsx)(
               import_block_editor258.RichText,
@@ -78345,13 +78640,13 @@ ${text}
                 withoutInteractiveFormatting: true,
                 placeholder: (0, import_i18n241.__)("Tab title"),
                 value: tab.label,
-                onChange: (newLabel) => handleLabelChange(index, newLabel),
-                __unstableOnSplitAtEnd: () => insertTab(index + 1),
-                onRemove: () => removeTab(index)
+                onChange: (newLabel) => handleLabelChange(index2, newLabel),
+                __unstableOnSplitAtEnd: () => insertTab(index2 + 1),
+                onRemove: () => removeTab(index2)
               }
             )
           },
-          tab.clientId || index
+          tab.clientId || index2
         );
       }) })
     ] });
@@ -78375,7 +78670,7 @@ ${text}
       ...borderProps.style,
       ...spacingProps.style
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime534.jsx)("div", { ...blockProps, children: tabs.map((tab, index) => /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime534.jsx)("div", { ...blockProps, children: tabs.map((tab, index2) => /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(
       import_block_editor259.RichText.Content,
       {
         className: buttonClassName || void 0,
@@ -78385,7 +78680,7 @@ ${text}
         type: "button",
         role: "tab"
       },
-      index
+      index2
     )) });
   }
 
@@ -78499,7 +78794,7 @@ ${text}
   var import_block_editor260 = __toESM(require_block_editor(), 1);
   var import_data150 = __toESM(require_data(), 1);
   var import_element154 = __toESM(require_element(), 1);
-  var EMPTY_ARRAY11 = [];
+  var EMPTY_ARRAY10 = [];
   function useTabListItemsSync(tabsClientId) {
     const { tabPanels, tabListClientId } = (0, import_data150.useSelect)(
       (select10) => {
@@ -78512,7 +78807,7 @@ ${text}
           (block) => block.name === "core/tab-list"
         );
         return {
-          tabPanels: tabPanelsBlock?.innerBlocks ?? EMPTY_ARRAY11,
+          tabPanels: tabPanelsBlock?.innerBlocks ?? EMPTY_ARRAY10,
           tabListClientId: tabList?.clientId ?? null
         };
       },
@@ -78637,14 +78932,14 @@ ${text}
         },
         {
           name: "core/tab-panels",
-          innerBlocks: [1, 2].map((index) => ({
+          innerBlocks: [1, 2].map((index2) => ({
             name: "core/tab-panel",
             attributes: {
-              anchor: `tab-${index}`,
+              anchor: `tab-${index2}`,
               label: (0, import_i18n242.sprintf)(
                 /** translators: %s: tab index number */
                 (0, import_i18n242.__)("Tab %s"),
-                index
+                index2
               )
             },
             innerBlocks: [
@@ -81142,7 +81437,7 @@ ${text}
   var import_compose65 = __toESM(require_compose(), 1);
   var import_html_entities17 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime556 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY12 = [];
+  var EMPTY_ARRAY11 = [];
   var BASE_QUERY3 = {
     order: "asc",
     _fields: "id,name",
@@ -81155,13 +81450,13 @@ ${text}
     ...props
   }) {
     const [search, setSearch] = (0, import_element163.useState)("");
-    const [value, setValue] = (0, import_element163.useState)(EMPTY_ARRAY12);
-    const [suggestions, setSuggestions] = (0, import_element163.useState)(EMPTY_ARRAY12);
+    const [value, setValue] = (0, import_element163.useState)(EMPTY_ARRAY11);
+    const [suggestions, setSuggestions] = (0, import_element163.useState)(EMPTY_ARRAY11);
     const debouncedSearch = (0, import_compose65.useDebounce)(setSearch, 250);
     const { searchResults, searchHasResolved } = (0, import_data165.useSelect)(
       (select10) => {
         if (!search) {
-          return { searchResults: EMPTY_ARRAY12, searchHasResolved: true };
+          return { searchResults: EMPTY_ARRAY11, searchHasResolved: true };
         }
         const { getEntityRecords, hasFinishedResolution } = select10(import_core_data99.store);
         const selectorArgs = [
@@ -81188,7 +81483,7 @@ ${text}
     const currentTerms = (0, import_data165.useSelect)(
       (select10) => {
         if (!include?.length) {
-          return EMPTY_ARRAY12;
+          return EMPTY_ARRAY11;
         }
         const { getEntityRecords } = select10(import_core_data99.store);
         return getEntityRecords("taxonomy", taxonomy, {
@@ -81201,7 +81496,7 @@ ${text}
     );
     (0, import_element163.useEffect)(() => {
       if (!include?.length) {
-        setValue(EMPTY_ARRAY12);
+        setValue(EMPTY_ARRAY11);
       }
       if (!currentTerms?.length) {
         return;
@@ -81220,7 +81515,7 @@ ${text}
     }, [include, currentTerms]);
     const entitiesInfo = (0, import_element163.useMemo)(() => {
       if (!searchResults?.length) {
-        return { names: EMPTY_ARRAY12, mapByName: {} };
+        return { names: EMPTY_ARRAY11, mapByName: {} };
       }
       const names = [];
       const mapByName = {};
@@ -81248,7 +81543,7 @@ ${text}
           return accumulator;
         }, /* @__PURE__ */ new Set())
       );
-      setSuggestions(EMPTY_ARRAY12);
+      setSuggestions(EMPTY_ARRAY11);
       onChange(ids);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(
@@ -81960,7 +82255,7 @@ ${text}
           ...(0, import_block_editor280.useBlockProps)({
             className: `align${width} columns-${columns}`
           }),
-          children: Array.from({ length: columns }).map((_2, index) => {
+          children: Array.from({ length: columns }).map((_2, index2) => {
             return /* @__PURE__ */ (0, import_jsx_runtime565.jsx)(
               "div",
               {
@@ -81969,26 +82264,26 @@ ${text}
                   import_block_editor280.RichText,
                   {
                     tagName: "p",
-                    value: content?.[index]?.children,
+                    value: content?.[index2]?.children,
                     onChange: (nextContent) => {
                       setAttributes({
                         content: [
-                          ...content.slice(0, index),
+                          ...content.slice(0, index2),
                           { children: nextContent },
-                          ...content.slice(index + 1)
+                          ...content.slice(index2 + 1)
                         ]
                       });
                     },
                     "aria-label": (0, import_i18n261.sprintf)(
                       // translators: %d: column index (starting with 1)
                       (0, import_i18n261.__)("Column %d text"),
-                      index + 1
+                      index2 + 1
                     ),
                     placeholder: (0, import_i18n261.__)("New Column")
                   }
                 )
               },
-              `column-${index}`
+              `column-${index2}`
             );
           })
         }
@@ -82048,13 +82343,13 @@ ${text}
         ...import_block_editor281.useBlockProps.save({
           className: `align${width} columns-${columns}`
         }),
-        children: Array.from({ length: columns }).map((_2, index) => /* @__PURE__ */ (0, import_jsx_runtime566.jsx)("div", { className: "wp-block-column", children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
+        children: Array.from({ length: columns }).map((_2, index2) => /* @__PURE__ */ (0, import_jsx_runtime566.jsx)("div", { className: "wp-block-column", children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
           import_block_editor281.RichText.Content,
           {
             tagName: "p",
-            value: content?.[index]?.children
+            value: content?.[index2]?.children
           }
-        ) }, `column-${index}`))
+        ) }, `column-${index2}`))
       }
     );
   }
@@ -82803,7 +83098,7 @@ ${text}
     default: false
   };
   function TrackList({ tracks, onEditPress }) {
-    const content = tracks.map((track, index) => {
+    const content = tracks.map((track, index2) => {
       return /* @__PURE__ */ (0, import_jsx_runtime573.jsxs)(
         import_components179.__experimentalHStack,
         {
@@ -82817,7 +83112,7 @@ ${text}
                 {
                   __next40pxDefaultSize: true,
                   variant: "tertiary",
-                  onClick: () => onEditPress(index),
+                  onClick: () => onEditPress(index2),
                   "aria-label": (0, import_i18n265.sprintf)(
                     /* translators: %s: Label of the video text track e.g: "French subtitles". */
                     (0, import_i18n265._x)("Edit %s", "text tracks"),
@@ -83038,7 +83333,7 @@ ${text}
                 onRemove: () => {
                   onChange(
                     tracks.filter(
-                      (_track, index) => index !== trackBeingEdited
+                      (_track, index2) => index2 !== trackBeingEdited
                     )
                   );
                   setTrackBeingEdited(null);

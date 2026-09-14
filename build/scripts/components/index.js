@@ -5907,7 +5907,7 @@ If there's a particular need for this, please submit a feature request at https:
     const ref = (0, import_react12.useRef)(null);
     const id3 = useId(props.id);
     const [transition, setTransition] = (0, import_react12.useState)(null);
-    const { open, mounted, animated, contentElement } = useStoreStateObject(store, {
+    const { open: open2, mounted, animated, contentElement } = useStoreStateObject(store, {
       open: "open",
       mounted: "mounted",
       animated: "animated",
@@ -5932,7 +5932,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [store]);
     useSafeLayoutEffect(() => {
       if (!animated) {
-        if (!open) {
+        if (!open2) {
           hasClosedRef.current = true;
           setTransition(null);
         } else if (hasClosedRef.current) {
@@ -5946,12 +5946,12 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       return afterPaint(() => {
-        setTransition(open ? "enter" : mounted ? "leave" : null);
+        setTransition(open2 ? "enter" : mounted ? "leave" : null);
       });
     }, [
       animated,
       contentElement,
-      open,
+      open2,
       mounted
     ]);
     useSafeLayoutEffect(() => {
@@ -5961,8 +5961,8 @@ If there's a particular need for this, please submit a feature request at https:
       if (!contentElement) return;
       const stopAnimation = () => store?.setState("animating", false);
       const stopAnimationSync = () => (0, import_react_dom.flushSync)(stopAnimation);
-      if (transition === "leave" && open) return;
-      if (transition === "enter" && !open) return;
+      if (transition === "leave" && open2) return;
+      if (transition === "enter" && !open2) return;
       if (typeof animated === "number") return afterTimeout(animated, stopAnimationSync);
       const elements2 = [contentElement];
       if (otherElement) elements2.push(otherElement);
@@ -5981,7 +5981,7 @@ If there's a particular need for this, please submit a feature request at https:
       contentElement,
       otherElement,
       otherElementRef,
-      open,
+      open2,
       transition
     ]);
     props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(DialogScopedContextProvider, {
@@ -5998,7 +5998,7 @@ If there's a particular need for this, please submit a feature request at https:
       return styleProp;
     }, [hidden, styleProp]);
     props = {
-      "data-open": open || void 0,
+      "data-open": open2 || void 0,
       "data-enter": transition === "enter" || void 0,
       "data-leave": transition === "leave" || void 0,
       hidden,
@@ -6025,13 +6025,13 @@ If there's a particular need for this, please submit a feature request at https:
     const store = props.store || props.disclosure ? mergeStore(props.store, omit2(props.disclosure, ["contentElement", "disclosureElement"])) : void 0;
     throwOnConflictingProps(props, store);
     const syncState = store?.getState();
-    const open = defaultValue(props.open, syncState?.open, props.defaultOpen, false);
+    const open2 = defaultValue(props.open, syncState?.open, props.defaultOpen, false);
     const animated = defaultValue(props.animated, syncState?.animated, false);
     const initialState2 = {
-      open,
+      open: open2,
       animated,
-      animating: !!animated && open,
-      mounted: open,
+      animating: !!animated && open2,
+      mounted: open2,
       contentElement: defaultValue(syncState?.contentElement, null),
       disclosureElement: defaultValue(syncState?.disclosureElement, null)
     };
@@ -6053,7 +6053,7 @@ If there's a particular need for this, please submit a feature request at https:
       setOpen: (value) => disclosure.setState("open", value),
       show: () => disclosure.setState("open", true),
       hide: () => disclosure.setState("open", false),
-      toggle: () => disclosure.setState("open", (open2) => !open2),
+      toggle: () => disclosure.setState("open", (open3) => !open3),
       stopAnimation: () => disclosure.setState("animating", false),
       setContentElement: (value) => disclosure.setState("contentElement", value),
       setDisclosureElement: (value) => disclosure.setState("disclosureElement", value)
@@ -6088,8 +6088,8 @@ If there's a particular need for this, please submit a feature request at https:
     const ref = (0, import_react13.useRef)(null);
     const id3 = useId(props.id);
     const tabId = useStoreState(tabIdProp ? void 0 : store.panels, ["items"], () => tabIdProp || store?.panels.item(id3)?.tabId);
-    const open = useStoreState(store, ["selectedId"], (state) => !!tabId && state.selectedId === tabId);
-    const disclosure = useDisclosureStore({ open });
+    const open2 = useStoreState(store, ["selectedId"], (state) => !!tabId && state.selectedId === tabId);
+    const disclosure = useDisclosureStore({ open: open2 });
     const mounted = useStoreState(disclosure, "mounted");
     const scrollPositionRef = (0, import_react13.useRef)(null);
     const getScrollElement = useEvent(() => {
@@ -7390,10 +7390,10 @@ If there's a particular need for this, please submit a feature request at https:
   function isEventInsideDialog(targets, contentElement, disclosureElement) {
     return targets.elements.some((target) => isElementWithinDialog(target, contentElement, disclosureElement));
   }
-  function useEventOutside({ store, type, listener, capture, open, contentElement, focusedRef }) {
+  function useEventOutside({ store, type, listener, capture, open: open2, contentElement, focusedRef }) {
     const callListener = useEvent(listener);
     (0, import_react23.useEffect)(() => {
-      if (!open) return;
+      if (!open2) return;
       const onEvent = (event) => {
         const { contentElement: contentElement2, disclosureElement } = store.getState();
         if (!contentElement2) return;
@@ -7416,7 +7416,7 @@ If there's a particular need for this, please submit a feature request at https:
       const win = contentElement ? getHighestReadableWindow(contentElement) : void 0;
       return addGlobalEventListener(type, onEvent, capture, win);
     }, [
-      open,
+      open2,
       capture,
       store,
       type,
@@ -7430,13 +7430,13 @@ If there's a particular need for this, please submit a feature request at https:
     return !!hideOnInteractOutside;
   }
   function useHideOnInteractOutside({ store, hideOnInteractOutside, domReady, interactedOutsideRef, focusedStoreRef }) {
-    const open = useStoreState(store, "open");
+    const open2 = useStoreState(store, "open");
     const contentElement = useStoreState(store, "contentElement");
     const eventWindow = contentElement ? getHighestReadableWindow(contentElement) : void 0;
-    const previousMouseDownRef = usePreviousMouseDownRef(open, eventWindow, contentElement);
+    const previousMouseDownRef = usePreviousMouseDownRef(open2, eventWindow, contentElement);
     const focusedRef = (0, import_react23.useRef)(false);
     useSafeLayoutEffect(() => {
-      if (!open) return;
+      if (!open2) return;
       if (!domReady) return;
       if (!contentElement) return;
       focusedRef.current = false;
@@ -7447,7 +7447,7 @@ If there's a particular need for this, please submit a feature request at https:
       contentElement.addEventListener("focusin", onFocus, true);
       return () => contentElement.removeEventListener("focusin", onFocus, true);
     }, [
-      open,
+      open2,
       domReady,
       contentElement,
       store,
@@ -7456,7 +7456,7 @@ If there's a particular need for this, please submit a feature request at https:
     const props = {
       store,
       capture: true,
-      open,
+      open: open2,
       contentElement,
       focusedRef
     };
@@ -7726,8 +7726,8 @@ If there's a particular need for this, please submit a feature request at https:
     const store = useDialogStore({
       store: storeProp || context,
       open: openProp,
-      setOpen(open2) {
-        if (open2) return;
+      setOpen(open3) {
+        if (open3) return;
         const dialog = ref.current;
         if (!dialog) return;
         const event = new Event("close", {
@@ -7744,7 +7744,7 @@ If there's a particular need for this, please submit a feature request at https:
     const preserveTabOrderProp = props.preserveTabOrder;
     const preserveTabOrder = useStoreState(store, ["mounted"], (state) => preserveTabOrderProp && !modal && state.mounted);
     const id3 = useId(props.id);
-    const open = useStoreState(store, "open");
+    const open2 = useStoreState(store, "open");
     const mounted = useStoreState(store, "mounted");
     const contentElement = useStoreState(store, "contentElement");
     const hidden = isHidden(mounted, props.hidden, props.alwaysVisible);
@@ -7786,7 +7786,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, [domReady]);
     useSafeLayoutEffect(() => {
-      if (!open) return;
+      if (!open2) return;
       if (focusedStoreRef.current === store) return;
       const dialog = ref.current;
       const hasNamedDisclosure = () => {
@@ -7815,7 +7815,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       if (dialog && contains(dialog, activeElement2)) return;
       setCapturedDisclosure(activeElement2);
-    }, [store, open]);
+    }, [store, open2]);
     (0, import_react27.useEffect)(() => {
       if (!mounted) return;
       if (!domReady) return;
@@ -7835,7 +7835,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [mounted, domReady]);
     const [needsHiddenDismiss, setNeedsHiddenDismiss] = (0, import_react27.useState)(false);
     useSafeLayoutEffect(() => {
-      if (!(modal && open && domReady) || !contentElement) {
+      if (!(modal && open2 && domReady) || !contentElement) {
         setNeedsHiddenDismiss(false);
         return;
       }
@@ -7852,24 +7852,24 @@ If there's a particular need for this, please submit a feature request at https:
       return () => observer.disconnect();
     }, [
       modal,
-      open,
+      open2,
       domReady,
       contentElement
     ]);
     useSafeLayoutEffect(() => {
       if (!supportsInert()) return;
-      if (open) return;
+      if (open2) return;
       if (!mounted) return;
       if (!domReady) return;
       const dialog = ref.current;
       if (!dialog) return;
       return disableTree(dialog);
     }, [
-      open,
+      open2,
       mounted,
       domReady
     ]);
-    const canTakeTreeSnapshot = open && domReady;
+    const canTakeTreeSnapshot = open2 && domReady;
     const openingCohortRef = (0, import_react27.useRef)(null);
     useSafeLayoutEffect(() => {
       if (!id3 || !hasDefaultModalPortal || !canTakeTreeSnapshot || !portalNode) {
@@ -7936,7 +7936,7 @@ If there's a particular need for this, please submit a feature request at https:
     const autoFocusOnShowProp = useBooleanEvent(autoFocusOnShow);
     const [autoFocusEnabled, setAutoFocusEnabled] = (0, import_react27.useState)(false);
     (0, import_react27.useEffect)(() => {
-      if (!open) return;
+      if (!open2) return;
       if (!mayAutoFocusOnShow) return;
       if (!domReady) return;
       if (!contentElement?.isConnected) return;
@@ -7945,8 +7945,8 @@ If there's a particular need for this, please submit a feature request at https:
       if (!autoFocusOnShowProp(isElementFocusable ? element : null)) return;
       setAutoFocusEnabled(true);
       queueMicrotask(() => {
-        const { open: open2, disclosureElement } = store.getState();
-        if (!open2) return;
+        const { open: open3, disclosureElement } = store.getState();
+        if (!open3) return;
         const activeElement2 = getActiveElement(contentElement, { frame: false });
         const deepestActiveElement = activeElement2 && getDeepestActiveElement(activeElement2);
         if (focusedStoreRef.current === store && activeElement2 && deepestActiveElement && isFocusable(deepestActiveElement) && !isElementInDialog(activeElement2, contentElement, disclosureElement) && !isElementInDialog(deepestActiveElement, contentElement, disclosureElement)) return;
@@ -7957,7 +7957,7 @@ If there's a particular need for this, please submit a feature request at https:
         element.focus({ preventScroll: true });
       });
     }, [
-      open,
+      open2,
       mayAutoFocusOnShow,
       domReady,
       contentElement,
@@ -7972,10 +7972,10 @@ If there's a particular need for this, please submit a feature request at https:
     const autoFocusOnHideProp = useBooleanEvent(autoFocusOnHide);
     const [hasOpened, setHasOpened] = (0, import_react27.useState)(false);
     useSafeLayoutEffect(() => {
-      if (!open) return;
+      if (!open2) return;
       setHasOpened(true);
       return () => setHasOpened(false);
-    }, [open]);
+    }, [open2]);
     const focusOnHide = (0, import_react27.useCallback)((dialog, retry = true) => {
       if (interactedOutsideRef.current) return;
       const { disclosureElement } = store.getState();
@@ -8011,14 +8011,14 @@ If there's a particular need for this, please submit a feature request at https:
     ]);
     const focusedOnHideRef = (0, import_react27.useRef)(false);
     useSafeLayoutEffect(() => {
-      if (open) return;
+      if (open2) return;
       if (!hasOpened) return;
       if (!mayAutoFocusOnHide) return;
       const dialog = ref.current;
       focusedOnHideRef.current = true;
       focusOnHide(dialog);
     }, [
-      open,
+      open2,
       hasOpened,
       domReady,
       mayAutoFocusOnHide,
@@ -8995,25 +8995,25 @@ If there's a particular need for this, please submit a feature request at https:
         const overflowAvailableWidth = min(width - overflow[widthSide], maximumClippingWidth);
         const shiftData = state.middlewareData.shift;
         const noShift = !shiftData;
-        let availableHeight = overflowAvailableHeight;
-        let availableWidth = overflowAvailableWidth;
+        let availableHeight2 = overflowAvailableHeight;
+        let availableWidth2 = overflowAvailableWidth;
         if (shiftData != null && shiftData.enabled.x) {
-          availableWidth = maximumClippingWidth;
+          availableWidth2 = maximumClippingWidth;
         }
         if (shiftData != null && shiftData.enabled.y) {
-          availableHeight = maximumClippingHeight;
+          availableHeight2 = maximumClippingHeight;
         }
         if (noShift && !alignment) {
           if (isYAxis) {
-            availableWidth = width - 2 * max(overflow.left, overflow.right);
+            availableWidth2 = width - 2 * max(overflow.left, overflow.right);
           } else {
-            availableHeight = height - 2 * max(overflow.top, overflow.bottom);
+            availableHeight2 = height - 2 * max(overflow.top, overflow.bottom);
           }
         }
         await apply({
           ...state,
-          availableWidth,
-          availableHeight
+          availableWidth: availableWidth2,
+          availableHeight: availableHeight2
         });
         const nextDimensions = await platform3.getDimensions(elements2.floating);
         if (width !== nextDimensions.width || height !== nextDimensions.height) {
@@ -9871,19 +9871,19 @@ If there's a particular need for this, please submit a feature request at https:
   function getSizeMiddleware(props, shouldCancel) {
     return size2({
       padding: props.overflowPadding,
-      apply({ elements: elements2, availableWidth, availableHeight, rects }) {
+      apply({ elements: elements2, availableWidth: availableWidth2, availableHeight: availableHeight2, rects }) {
         if (shouldCancel?.()) return;
         const wrapper = elements2.floating;
         const referenceWidth = Math.round(rects.reference.width);
-        availableWidth = Math.floor(availableWidth);
-        availableHeight = Math.floor(availableHeight);
+        availableWidth2 = Math.floor(availableWidth2);
+        availableHeight2 = Math.floor(availableHeight2);
         wrapper.style.setProperty("--popover-anchor-width", `${referenceWidth}px`);
-        wrapper.style.setProperty("--popover-available-width", `${availableWidth}px`);
-        wrapper.style.setProperty("--popover-available-height", `${availableHeight}px`);
+        wrapper.style.setProperty("--popover-available-width", `${availableWidth2}px`);
+        wrapper.style.setProperty("--popover-available-height", `${availableHeight2}px`);
         if (props.sameWidth) wrapper.style.width = `${referenceWidth}px`;
         if (props.fitViewport) {
-          wrapper.style.maxWidth = `${availableWidth}px`;
-          wrapper.style.maxHeight = `${availableHeight}px`;
+          wrapper.style.maxWidth = `${availableWidth2}px`;
+          wrapper.style.maxHeight = `${availableHeight2}px`;
         }
       }
     });
@@ -10271,7 +10271,7 @@ If there's a particular need for this, please submit a feature request at https:
     const hideOnHoverOutsideProp = useBooleanEvent(hideOnHoverOutside);
     const mayDisablePointerEvents = !!disablePointerEventsOnApproach;
     const disablePointerEventsProp = useBooleanEvent(disablePointerEventsOnApproach);
-    const open = useStoreState(store, "open");
+    const open2 = useStoreState(store, "open");
     const mounted = useStoreState(store, "mounted");
     const clearHideTimeout = (0, import_react29.useCallback)(() => {
       window.clearTimeout(hideTimeoutRef.current);
@@ -10345,14 +10345,14 @@ If there's a particular need for this, please submit a feature request at https:
     ]);
     (0, import_react29.useEffect)(() => {
       if (!domReady) return;
-      if (open) return;
+      if (open2) return;
       store?.setAutoFocusOnShow(false);
     }, [
       store,
       domReady,
-      open
+      open2
     ]);
-    const openRef = useLiveRef(open);
+    const openRef = useLiveRef(open2);
     (0, import_react29.useEffect)(() => {
       if (!domReady) return;
       return () => {
@@ -10831,7 +10831,7 @@ If there's a particular need for this, please submit a feature request at https:
     const ref = (0, import_react33.useRef)(null);
     const [expanded, setExpanded] = (0, import_react33.useState)(false);
     const disclosureElement = useStoreState(store, "disclosureElement");
-    const open = useStoreState(store, "open");
+    const open2 = useStoreState(store, "open");
     const setDisclosureElement = (0, import_react33.useCallback)((element) => {
       const previousElement = ref.current;
       ref.current = element;
@@ -10848,11 +10848,11 @@ If there's a particular need for this, please submit a feature request at https:
         store?.setDisclosureElement(ref.current);
         isCurrentDisclosure = true;
       }
-      setExpanded(open && isCurrentDisclosure);
+      setExpanded(open2 && isCurrentDisclosure);
     }, [
       disclosureElement,
       store,
-      open
+      open2
     ]);
     const onClickProp = props.onClick;
     const toggleOnClickProp = useBooleanEvent(toggleOnClick);
@@ -10992,13 +10992,13 @@ If there's a particular need for this, please submit a feature request at https:
   function isNativeRadio(tagName, type) {
     return tagName === "input" && (!type || type === "radio");
   }
-  var useRadio = createHook(function useRadio2({ store, name: nameProp, value, checked, ...props }) {
+  var useRadio = createHook(function useRadio2({ store, name: nameProp, value, checked: checked2, ...props }) {
     const context = useRadioContext();
     store = store || context;
     const groupDisabled = (0, import_react36.useContext)(RadioGroupDisabledContext);
     const id3 = useId(props.id);
     const ref = (0, import_react36.useRef)(null);
-    const isChecked = useStoreState(store, ["value"], (state) => checked ?? getIsChecked(value, state?.value));
+    const isChecked = useStoreState(store, ["value"], (state) => checked2 ?? getIsChecked(value, state?.value));
     const storeId = useStoreState(store, "id");
     const name = nameProp ?? storeId;
     (0, import_react36.useEffect)(() => {
@@ -11100,8 +11100,8 @@ If there's a particular need for this, please submit a feature request at https:
   function isCheckedRadio(element) {
     if (!element) return false;
     if (element.tagName === "INPUT") {
-      const { type, checked } = element;
-      if (type === "radio") return checked;
+      const { type, checked: checked2 } = element;
+      if (type === "radio") return checked2;
     }
     if (element.getAttribute("role") !== "radio") return false;
     return element.getAttribute("aria-checked") === "true";
@@ -11708,11 +11708,11 @@ If there's a particular need for this, please submit a feature request at https:
     if (props.checked) return props.children || checkmark;
     return null;
   }
-  var useCheckboxCheck = createHook(function useCheckboxCheck2({ store, checked, ...props }) {
+  var useCheckboxCheck = createHook(function useCheckboxCheck2({ store, checked: checked2, ...props }) {
     const context = (0, import_react45.useContext)(CheckboxCheckedContext);
-    checked = checked ?? context;
+    checked2 = checked2 ?? context;
     const children = getChildren({
-      checked,
+      checked: checked2,
       children: props.children
     });
     props = {
@@ -11736,12 +11736,12 @@ If there's a particular need for this, please submit a feature request at https:
   // node_modules/@ariakit/react-components/dist/select/select-item-check.js
   var import_react46 = __toESM(require_react(), 1);
   var TagName42 = "span";
-  var useSelectItemCheck = createHook(function useSelectItemCheck2({ store, checked, ...props }) {
+  var useSelectItemCheck = createHook(function useSelectItemCheck2({ store, checked: checked2, ...props }) {
     const context = (0, import_react46.useContext)(SelectItemCheckedContext);
-    checked = checked ?? context;
+    checked2 = checked2 ?? context;
     props = useCheckboxCheck({
       ...props,
-      checked
+      checked: checked2
     });
     return props;
   });
@@ -12101,7 +12101,7 @@ If there's a particular need for this, please submit a feature request at https:
     const context = useCheckboxContext();
     store = store || context;
     const [_checked, setChecked] = (0, import_react49.useState)(defaultChecked ?? false);
-    const checked = useStoreState(store, ["value"], (state) => {
+    const checked2 = useStoreState(store, ["value"], (state) => {
       if (checkedProp !== void 0) return checkedProp;
       if (state?.value === void 0) return _checked;
       if (valueProp != null) {
@@ -12117,8 +12117,8 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const ref = (0, import_react49.useRef)(null);
     const nativeCheckbox = isNativeCheckbox(useTagName(ref, TagName47), props.type);
-    const mixed = checked ? checked === "mixed" : void 0;
-    const isChecked = checked === "mixed" ? false : checked;
+    const mixed = checked2 ? checked2 === "mixed" : void 0;
+    const isChecked = checked2 === "mixed" ? false : checked2;
     const disabled2 = disabledFromProps(props);
     const [propertyUpdated, schedulePropertyUpdate] = useForceUpdate();
     (0, import_react49.useEffect)(() => {
@@ -12178,7 +12178,7 @@ If there's a particular need for this, please submit a feature request at https:
     props = {
       role: !nativeCheckbox ? "checkbox" : void 0,
       type: nativeCheckbox ? "checkbox" : void 0,
-      "aria-checked": checked,
+      "aria-checked": checked2,
       ...props,
       ref: useMergeRefs(ref, props.ref),
       onChange,
@@ -12539,8 +12539,8 @@ If there's a particular need for this, please submit a feature request at https:
       const initialFocus = getInitialFocus(event, dir);
       if (initialFocus) {
         event.preventDefault();
-        const { open } = store.getState();
-        if (open) {
+        const { open: open2 } = store.getState();
+        if (open2) {
           const id4 = initialFocus === "last" ? store.last() : store.first();
           store.move(id4);
           return;
@@ -12556,8 +12556,8 @@ If there's a particular need for this, please submit a feature request at https:
       if (event.defaultPrevented) return;
       if (!store) return;
       const isKeyboardClick = !event.detail;
-      const { open } = store.getState();
-      if (!open || isKeyboardClick) {
+      const { open: open2 } = store.getState();
+      if (!open2 || isKeyboardClick) {
         if (!hasParentMenu || isKeyboardClick) store.setAutoFocusOnShow(true);
         store.setInitialFocus(isKeyboardClick ? "first" : "container");
       }
@@ -12736,12 +12736,12 @@ If there's a particular need for this, please submit a feature request at https:
   // node_modules/@ariakit/react-components/dist/menu/menu-item-check.js
   var import_react55 = __toESM(require_react(), 1);
   var TagName54 = "span";
-  var useMenuItemCheck = createHook(function useMenuItemCheck2({ store, checked, ...props }) {
+  var useMenuItemCheck = createHook(function useMenuItemCheck2({ store, checked: checked2, ...props }) {
     const context = (0, import_react55.useContext)(MenuItemCheckedContext);
-    checked = checked ?? context;
+    checked2 = checked2 ?? context;
     props = useCheckboxCheck({
       ...props,
-      checked
+      checked: checked2
     });
     return props;
   });
@@ -12753,23 +12753,23 @@ If there's a particular need for this, please submit a feature request at https:
   // node_modules/@ariakit/react-components/dist/menu/menu-item-checkbox.js
   var import_react56 = __toESM(require_react(), 1);
   var TagName55 = "div";
-  function getValue(storeValue, value, checked) {
+  function getValue(storeValue, value, checked2) {
     if (value === void 0) {
       if (Array.isArray(storeValue)) return storeValue;
-      return !!checked;
+      return !!checked2;
     }
     const primitiveValue = getPrimitiveValue(value);
     if (!Array.isArray(storeValue)) {
-      if (checked) return primitiveValue;
+      if (checked2) return primitiveValue;
       return storeValue === primitiveValue ? false : storeValue;
     }
-    if (checked) {
+    if (checked2) {
       if (storeValue.includes(primitiveValue)) return storeValue;
       return [...storeValue, primitiveValue];
     }
     return storeValue.filter((v3) => v3 !== primitiveValue);
   }
-  var useMenuItemCheckbox = createHook(function useMenuItemCheckbox2({ store, name, value, checked, defaultChecked: defaultCheckedProp, hideOnClick = false, ...props }) {
+  var useMenuItemCheckbox = createHook(function useMenuItemCheckbox2({ store, name, value, checked: checked2, defaultChecked: defaultCheckedProp, hideOnClick = false, ...props }) {
     const context = useMenuScopedContext();
     store = store || context;
     invariant(store, "MenuItemCheckbox must be wrapped in a MenuList or Menu component");
@@ -12786,22 +12786,22 @@ If there's a particular need for this, please submit a feature request at https:
       defaultChecked
     ]);
     (0, import_react56.useEffect)(() => {
-      if (checked === void 0) return;
+      if (checked2 === void 0) return;
       store?.setValue(name, (prevValue) => {
-        return getValue(prevValue, value, checked);
+        return getValue(prevValue, value, checked2);
       });
     }, [
       store,
       name,
       value,
-      checked
+      checked2
     ]);
     const checkboxStore = useCheckboxStore({
       value: useStoreState(store, ["values"], (state) => state.values[name]),
       setValue(internalValue) {
         store?.setValue(name, () => {
-          if (checked === void 0) return internalValue;
-          const nextValue = getValue(internalValue, value, checked);
+          if (checked2 === void 0) return internalValue;
+          const nextValue = getValue(internalValue, value, checked2);
           if (!Array.isArray(nextValue)) return nextValue;
           if (!Array.isArray(internalValue)) return nextValue;
           if (shallowEqual(internalValue, nextValue)) return internalValue;
@@ -12817,7 +12817,7 @@ If there's a particular need for this, please submit a feature request at https:
       store: checkboxStore,
       name,
       value,
-      checked,
+      checked: checked2,
       ...props
     });
     props = useMenuItem({
@@ -12836,12 +12836,12 @@ If there's a particular need for this, please submit a feature request at https:
   var import_react57 = __toESM(require_react(), 1);
   var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
   var TagName56 = "div";
-  function getValue2(prevValue, value, checked) {
-    if (checked === void 0) return prevValue;
-    if (checked) return value;
+  function getValue2(prevValue, value, checked2) {
+    if (checked2 === void 0) return prevValue;
+    if (checked2) return value;
     return prevValue === value ? false : prevValue;
   }
-  var useMenuItemRadio = createHook(function useMenuItemRadio2({ store, name, value, checked, defaultChecked: defaultCheckedProp, onChange: onChangeProp, hideOnClick = false, ...props }) {
+  var useMenuItemRadio = createHook(function useMenuItemRadio2({ store, name, value, checked: checked2, defaultChecked: defaultCheckedProp, onChange: onChangeProp, hideOnClick = false, ...props }) {
     const context = useMenuScopedContext();
     store = store || context;
     invariant(store, "MenuItemRadio must be wrapped in a MenuList or Menu component");
@@ -12857,15 +12857,15 @@ If there's a particular need for this, please submit a feature request at https:
       defaultChecked
     ]);
     (0, import_react57.useEffect)(() => {
-      if (checked === void 0) return;
+      if (checked2 === void 0) return;
       store?.setValue(name, (prevValue) => {
-        return getValue2(prevValue, value, checked);
+        return getValue2(prevValue, value, checked2);
       });
     }, [
       store,
       name,
       value,
-      checked
+      checked2
     ]);
     const isChecked = useStoreState(store, ["values"], (state) => state.values[name] === value);
     props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(MenuItemCheckedContext.Provider, {
@@ -12885,7 +12885,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (event.defaultPrevented) return;
         const element = event.currentTarget;
         store?.setValue(name, (prevValue) => {
-          return getValue2(prevValue, value, checked ?? element.checked);
+          return getValue2(prevValue, value, checked2 ?? element.checked);
         });
       },
       ...props
@@ -14559,7 +14559,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/framer-motion/dist/es/render/html/utils/build-styles.mjs
   function buildHTMLStyles(state, latestValues, transformTemplate) {
-    const { style: style2, vars, transformOrigin } = state;
+    const { style: style2, vars, transformOrigin: transformOrigin2 } = state;
     let hasTransform2 = false;
     let hasTransformOrigin = false;
     for (const key in latestValues) {
@@ -14574,7 +14574,7 @@ If there's a particular need for this, please submit a feature request at https:
         const valueAsType = getValueAsType(value, numberValueTypes[key]);
         if (key.startsWith("origin")) {
           hasTransformOrigin = true;
-          transformOrigin[key] = valueAsType;
+          transformOrigin2[key] = valueAsType;
         } else {
           style2[key] = valueAsType;
         }
@@ -14588,7 +14588,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }
     if (hasTransformOrigin) {
-      const { originX = "50%", originY = "50%", originZ = 0 } = transformOrigin;
+      const { originX = "50%", originY = "50%", originZ = 0 } = transformOrigin2;
       style2.transformOrigin = `${originX} ${originY} ${originZ}`;
     }
   }
@@ -29294,7 +29294,7 @@ This message will only show in development mode. It won't appear in production. 
       } = {},
       transform = true,
       whileElementsMounted,
-      open
+      open: open2
     } = options2;
     const [data, setData] = React10.useState({
       x: 0,
@@ -29330,7 +29330,7 @@ This message will only show in development mode. It won't appear in production. 
     const hasWhileElementsMounted = whileElementsMounted != null;
     const whileElementsMountedRef = useLatestRef(whileElementsMounted);
     const platformRef = useLatestRef(platform3);
-    const openRef = useLatestRef(open);
+    const openRef = useLatestRef(open2);
     const update2 = React10.useCallback(() => {
       if (!referenceRef.current || !floatingRef.current) {
         return;
@@ -29361,14 +29361,14 @@ This message will only show in development mode. It won't appear in production. 
       });
     }, [latestMiddleware, placement, strategy, platformRef, openRef]);
     index(() => {
-      if (open === false && dataRef.current.isPositioned) {
+      if (open2 === false && dataRef.current.isPositioned) {
         dataRef.current.isPositioned = false;
         setData((data2) => ({
           ...data2,
           isPositioned: false
         }));
       }
-    }, [open]);
+    }, [open2]);
     const isMountedRef = React10.useRef(false);
     index(() => {
       isMountedRef.current = true;
@@ -31997,7 +31997,7 @@ This message will only show in development mode. It won't appear in production. 
       onClose,
       onToggle,
       style: style2,
-      open,
+      open: open2,
       defaultOpen,
       // Deprecated props
       position: position2,
@@ -32015,7 +32015,7 @@ This message will only show in development mode. It won't appear in production. 
     const containerRef = (0, import_element66.useRef)(null);
     const [isOpen, setIsOpen] = useControlledValue({
       defaultValue: defaultOpen,
-      value: open,
+      value: open2,
       onChange: onToggle
     });
     function closeIfFocusOutside() {
@@ -38450,7 +38450,7 @@ This message will only show in development mode. It won't appear in production. 
       label,
       className,
       heading,
-      checked,
+      checked: checked2,
       indeterminate,
       help,
       id: idProp,
@@ -38473,7 +38473,7 @@ This message will only show in development mode. It won't appear in production. 
       node2.indeterminate = !!indeterminate;
       setShowCheckedIcon(node2.matches(":checked"));
       setShowIndeterminateIcon(node2.matches(":indeterminate"));
-    }, [checked, indeterminate]);
+    }, [checked2, indeterminate]);
     const id3 = (0, import_compose39.useInstanceId)(CheckboxControl, "inspector-checkbox-control", idProp);
     const onChangeValue = (event) => onChange(event.target.checked);
     return /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(base_control_default, {
@@ -38497,7 +38497,7 @@ This message will only show in development mode. It won't appear in production. 
             type: "checkbox",
             value: "1",
             onChange: onChangeValue,
-            checked,
+            checked: checked2,
             "aria-describedby": !!help ? id3 + "__help" : void 0,
             onClick: (event) => {
               event.currentTarget.focus();
@@ -38605,20 +38605,31 @@ This message will only show in development mode. It won't appear in production. 
   // node_modules/@base-ui/utils/useControlled.mjs
   var React11 = __toESM(require_react(), 1);
 
-  // node_modules/@base-ui/utils/error.mjs
-  var set;
+  // node_modules/@base-ui/utils/createLogOnce.mjs
+  var loggedMessages;
   if (true) {
-    set = /* @__PURE__ */ new Set();
+    loggedMessages = /* @__PURE__ */ new Set();
   }
-  function error(...messages) {
-    if (true) {
-      const messageKey = messages.join(" ");
-      if (!set.has(messageKey)) {
-        set.add(messageKey);
-        console.error(`Base UI: ${messageKey}`);
+  function createLogOnce(severity, prefix2) {
+    return function logOnce(...messages) {
+      if (true) {
+        const message = messages.join(" ");
+        const output = prefix2 ? `${prefix2}: ${message}` : message;
+        const key = `${severity}:${output}`;
+        if (!loggedMessages.has(key)) {
+          loggedMessages.add(key);
+          if (severity === "warn") {
+            console.warn(output);
+          } else {
+            console.error(output);
+          }
+        }
       }
-    }
+    };
   }
+
+  // node_modules/@base-ui/utils/error.mjs
+  var error = createLogOnce("error", "Base UI");
 
   // node_modules/@base-ui/utils/useControlled.mjs
   function useControlled({
@@ -38631,7 +38642,7 @@ This message will only show in development mode. It won't appear in production. 
       current: isControlled
     } = React11.useRef(controlled !== void 0);
     const [valueState, setValue] = React11.useState(defaultProp);
-    const value = isControlled ? controlled : valueState;
+    const value = isControlled && controlled !== void 0 ? controlled : valueState;
     if (true) {
       React11.useEffect(() => {
         if (isControlled !== (controlled !== void 0)) {
@@ -38732,19 +38743,13 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // node_modules/@base-ui/utils/warn.mjs
-  var set2;
-  if (true) {
-    set2 = /* @__PURE__ */ new Set();
+  var warn4 = createLogOnce("warn", "Base UI");
+
+  // node_modules/@base-ui/utils/empty.mjs
+  function NOOP() {
   }
-  function warn4(...messages) {
-    if (true) {
-      const messageKey = messages.join(" ");
-      if (!set2.has(messageKey)) {
-        set2.add(messageKey);
-        console.warn(`Base UI: ${messageKey}`);
-      }
-    }
-  }
+  var EMPTY_ARRAY = Object.freeze([]);
+  var EMPTY_OBJECT = Object.freeze({});
 
   // node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
   var React16 = __toESM(require_react(), 1);
@@ -38788,7 +38793,7 @@ This message will only show in development mode. It won't appear in production. 
     const map = useRefWithInit(createMap).current;
     const nextIndexRef = React16.useRef(0);
     const isDirtyRef = React16.useRef(true);
-    const itemsRef = React16.useRef([]);
+    const itemsRef = React16.useRef(null);
     const mutationObserverRef = React16.useRef(null);
     const scheduleMapUpdate = useStableCallback(() => {
       if (isDirtyRef.current) {
@@ -38862,14 +38867,22 @@ This message will only show in development mode. It won't appear in production. 
     const flush2 = useStableCallback(() => {
       const [items, automaticNodes] = getCompositeListSnapshot(map);
       const nextMap = syncRefs(items);
+      const previousItems = itemsRef.current;
+      const changed = !previousItems || previousItems.length !== items.length || items.some((item, index2) => {
+        const previousItem = previousItems[index2];
+        return item.index !== previousItem.index || item.element !== previousItem.element || item.registration.index !== previousItem.registration.index || item.registration.metadata !== previousItem.registration.metadata;
+      });
       observe(automaticNodes);
       itemsRef.current = items;
       isDirtyRef.current = false;
+      if (!changed) {
+        return;
+      }
       listeners.forEach((listener) => listener(nextMap));
       onMapChange(nextMap);
     });
     useIsoLayoutEffect(() => {
-      if (!isDirtyRef.current) {
+      if (!isDirtyRef.current && itemsRef.current) {
         syncRefs(itemsRef.current);
       }
       return () => {
@@ -39099,12 +39112,6 @@ This message will only show in development mode. It won't appear in production. 
     return void 0;
   }
 
-  // node_modules/@base-ui/utils/empty.mjs
-  function NOOP() {
-  }
-  var EMPTY_ARRAY = Object.freeze([]);
-  var EMPTY_OBJECT = Object.freeze({});
-
   // node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
   function getStateAttributesProps(state, customMapping) {
     const props = {};
@@ -39294,19 +39301,21 @@ This message will only show in development mode. It won't appear in production. 
   // node_modules/@base-ui/react/internals/useRenderElement.mjs
   var import_react104 = __toESM(require_react(), 1);
   function useRenderElement(element, componentProps, params = {}) {
-    const renderProp = componentProps.render;
-    const outProps = useRenderElementProps(componentProps, params);
+    let renderProp = componentProps.render;
+    if (params.enabled !== false) {
+      renderProp = unwrapLazyRenderProp(renderProp);
+    }
+    const outProps = useRenderElementProps(componentProps, params, renderProp);
     if (params.enabled === false) {
       return null;
     }
     const state = params.state ?? EMPTY_OBJECT;
     return evaluateRenderProp(element, renderProp, outProps, state);
   }
-  function useRenderElementProps(componentProps, params = {}) {
+  function useRenderElementProps(componentProps, params, renderProp) {
     const {
       className: classNameProp,
-      style: styleProp,
-      render: renderProp
+      style: styleProp
     } = componentProps;
     const {
       state = EMPTY_OBJECT,
@@ -39349,6 +39358,13 @@ This message will only show in development mode. It won't appear in production. 
   var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
   var COMPONENT_IDENTIFIER_PATTERN = /^[A-Z][A-Za-z0-9$]*$/;
   var LOWERCASE_CHARACTER_PATTERN = /[a-z]/;
+  function unwrapLazyRenderProp(render) {
+    if (render?.$$typeof !== REACT_LAZY_TYPE) {
+      return render;
+    }
+    const unwrapped = React19.Children.toArray(render)[0];
+    return /* @__PURE__ */ React19.isValidElement(unwrapped) ? unwrapped : render;
+  }
   function evaluateRenderProp(element, render, props, state) {
     if (render) {
       if (typeof render === "function") {
@@ -39359,17 +39375,12 @@ This message will only show in development mode. It won't appear in production. 
       }
       const mergedProps = mergeProps2(props, render.props);
       mergedProps.ref = props.ref;
-      let newElement = render;
-      if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-        const children = React19.Children.toArray(render);
-        newElement = children[0];
-      }
       if (true) {
-        if (!/* @__PURE__ */ React19.isValidElement(newElement)) {
+        if (!/* @__PURE__ */ React19.isValidElement(render)) {
           throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
         }
       }
-      return /* @__PURE__ */ React19.cloneElement(newElement, mergedProps);
+      return /* @__PURE__ */ React19.cloneElement(render, mergedProps);
     }
     if (element) {
       if (typeof element === "string") {
@@ -39593,6 +39604,9 @@ This message will only show in development mode. It won't appear in production. 
       if (index2 < 0 || index2 >= this.callbacks.length) {
         return;
       }
+      if (this.callbacks[index2] === null) {
+        return;
+      }
       this.callbacks[index2] = null;
       this.callbacksCount -= 1;
     }
@@ -39636,21 +39650,21 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-  function useTransitionStatus(open, enableIdleState = false, deferEndingState = false) {
-    const [transitionStatus, setTransitionStatus] = React22.useState(open && enableIdleState ? "idle" : void 0);
-    const [mounted, setMounted] = React22.useState(open);
-    if (open && !mounted) {
+  function useTransitionStatus(open2, enableIdleState = false, deferEndingState = false, animateInitialOpen = false) {
+    const [transitionStatus, setTransitionStatus] = React22.useState(open2 && enableIdleState ? "idle" : void 0);
+    const [mounted, setMounted] = React22.useState(open2 && !animateInitialOpen);
+    if (open2 && !mounted) {
       setMounted(true);
       setTransitionStatus("starting");
     }
-    if (!open && mounted && transitionStatus !== "ending" && !deferEndingState) {
+    if (!open2 && mounted && transitionStatus !== "ending" && !deferEndingState) {
       setTransitionStatus("ending");
     }
-    if (!open && !mounted && transitionStatus === "ending") {
+    if (!open2 && !mounted && transitionStatus === "ending") {
       setTransitionStatus(void 0);
     }
     useIsoLayoutEffect(() => {
-      if (!open && mounted && transitionStatus !== "ending" && deferEndingState) {
+      if (!open2 && mounted && transitionStatus !== "ending" && deferEndingState) {
         const frame2 = AnimationFrame.request(() => {
           setTransitionStatus("ending");
         });
@@ -39659,9 +39673,9 @@ This message will only show in development mode. It won't appear in production. 
         };
       }
       return void 0;
-    }, [open, mounted, transitionStatus, deferEndingState]);
+    }, [open2, mounted, transitionStatus, deferEndingState]);
     useIsoLayoutEffect(() => {
-      if (!open || enableIdleState) {
+      if (!open2 || enableIdleState) {
         return void 0;
       }
       const frame2 = AnimationFrame.request(() => {
@@ -39670,12 +39684,12 @@ This message will only show in development mode. It won't appear in production. 
       return () => {
         AnimationFrame.cancel(frame2);
       };
-    }, [enableIdleState, open]);
+    }, [enableIdleState, open2]);
     useIsoLayoutEffect(() => {
-      if (!open || !enableIdleState) {
+      if (!open2 || !enableIdleState) {
         return void 0;
       }
-      if (open && mounted && transitionStatus !== "idle") {
+      if (open2 && mounted && transitionStatus !== "idle") {
         setTransitionStatus("starting");
       }
       const frame2 = AnimationFrame.request(() => {
@@ -39684,7 +39698,7 @@ This message will only show in development mode. It won't appear in production. 
       return () => {
         AnimationFrame.cancel(frame2);
       };
-    }, [enableIdleState, open, mounted, transitionStatus]);
+    }, [enableIdleState, open2, mounted, transitionStatus]);
     return {
       mounted,
       setMounted,
@@ -39751,17 +39765,16 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
+  // node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
+  var startingStyle = "data-starting-style";
+  var endingStyle = "data-ending-style";
+
   // node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
-  var TransitionStatusDataAttributes = /* @__PURE__ */ (function(TransitionStatusDataAttributes2) {
-    TransitionStatusDataAttributes2["startingStyle"] = "data-starting-style";
-    TransitionStatusDataAttributes2["endingStyle"] = "data-ending-style";
-    return TransitionStatusDataAttributes2;
-  })({});
   var STARTING_HOOK = {
-    "data-starting-style": ""
+    [startingStyle]: ""
   };
   var ENDING_HOOK = {
-    "data-ending-style": ""
+    [endingStyle]: ""
   };
   var transitionStatusMapping = {
     transitionStatus(value) {
@@ -40055,7 +40068,23 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-  function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false) {
+  var pendingCallbacks = null;
+  function flushBeforePaint(fn) {
+    if (!pendingCallbacks) {
+      const callbacks = [];
+      pendingCallbacks = callbacks;
+      queueMicrotask(() => {
+        pendingCallbacks = null;
+        ReactDOM2.flushSync(() => {
+          for (const callback of callbacks) {
+            callback();
+          }
+        });
+      });
+    }
+    pendingCallbacks.push(fn);
+  }
+  function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, batch2 = false) {
     const frame2 = useAnimationFrame();
     return useStableCallback((fnToExecute, signal = null) => {
       frame2.cancel();
@@ -40065,7 +40094,15 @@ This message will only show in development mode. It won't appear in production. 
       }
       const resolvedElement = element;
       const done = () => {
-        ReactDOM2.flushSync(fnToExecute);
+        if (!batch2) {
+          ReactDOM2.flushSync(fnToExecute);
+          return;
+        }
+        flushBeforePaint(() => {
+          if (!signal?.aborted) {
+            fnToExecute();
+          }
+        });
       };
       if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
         fnToExecute();
@@ -40089,7 +40126,7 @@ This message will only show in development mode. It won't appear in production. 
         });
       }
       if (waitForStartingStyleRemoved) {
-        const startingStyleAttribute = "data-starting-style";
+        const startingStyleAttribute = startingStyle;
         if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
           frame2.request(exec);
           return;
@@ -40117,12 +40154,13 @@ This message will only show in development mode. It won't appear in production. 
   function useOpenChangeComplete(parameters) {
     const {
       enabled = true,
-      open,
+      open: open2,
       ref,
+      batch: batch2 = false,
       onComplete: onCompleteParam
     } = parameters;
     const onComplete = useStableCallback(onCompleteParam);
-    const runOnceAnimationsFinish = useAnimationsFinished(ref, open);
+    const runOnceAnimationsFinish = useAnimationsFinished(ref, open2, batch2);
     React27.useEffect(() => {
       if (!enabled) {
         return void 0;
@@ -40132,7 +40170,7 @@ This message will only show in development mode. It won't appear in production. 
       return () => {
         abortController.abort();
       };
-    }, [enabled, open, onComplete, runOnceAnimationsFinish]);
+    }, [enabled, open2, onComplete, runOnceAnimationsFinish]);
   }
 
   // node_modules/@base-ui/utils/platform/parts.mjs
@@ -40140,6 +40178,7 @@ This message will only show in development mode. It won't appear in production. 
   __export(parts_exports, {
     engine: () => engine_exports,
     env: () => env_exports,
+    mediaQuery: () => media_query_exports,
     os: () => os_exports,
     screenReader: () => screen_reader_exports
   });
@@ -40224,6 +40263,13 @@ This message will only show in development mode. It won't appear in production. 
     jsdom: () => jsdom
   });
   var jsdom = /jsdom|happydom/.test(lowerUserAgent);
+
+  // node_modules/@base-ui/utils/platform/media-query.mjs
+  var media_query_exports = {};
+  __export(media_query_exports, {
+    iOS: () => iOS
+  });
+  var iOS = "@supports (-webkit-touch-callout: none)";
 
   // node_modules/@base-ui/utils/useTimeout.mjs
   var EMPTY2 = 0;
@@ -40517,15 +40563,7 @@ This message will only show in development mode. It won't appear in production. 
     return type === "click" || type === "mousedown" || type === "keydown" || type === "keyup";
   }
 
-  // node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
-  var FOCUSABLE_ATTRIBUTE = "data-base-ui-focusable";
-  var TYPEABLE_SELECTOR = "input:not([type='hidden']):not([disabled]),[contenteditable]:not([contenteditable='false']),textarea:not([disabled])";
-  var ARROW_LEFT = "ArrowLeft";
-  var ARROW_RIGHT = "ArrowRight";
-  var ARROW_UP = "ArrowUp";
-  var ARROW_DOWN = "ArrowDown";
-
-  // node_modules/@base-ui/react/internals/shadowDom.mjs
+  // node_modules/@base-ui/utils/shadowDom.mjs
   function activeElement(doc) {
     let element = doc.activeElement;
     while (element?.shadowRoot?.activeElement != null) {
@@ -40554,10 +40592,88 @@ This message will only show in development mode. It won't appear in production. 
   }
   function getTarget(event) {
     if ("composedPath" in event) {
-      return event.composedPath()[0];
+      return event.composedPath()[0] ?? event.target;
     }
     return event.target;
   }
+
+  // node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
+  var FOCUSABLE_ATTRIBUTE = "data-base-ui-focusable";
+  var TYPEABLE_SELECTOR = "input:not([type='hidden']):not([disabled]),[contenteditable]:not([contenteditable='false']),textarea:not([disabled])";
+  var ARROW_LEFT = "ArrowLeft";
+  var ARROW_RIGHT = "ArrowRight";
+  var ARROW_UP = "ArrowUp";
+  var ARROW_DOWN = "ArrowDown";
+
+  // node_modules/@base-ui/react/utils/CommonPopupDataAttributes.mjs
+  var open = "data-open";
+  var closed = "data-closed";
+  var anchorHidden = "data-anchor-hidden";
+
+  // node_modules/@base-ui/react/utils/CommonTriggerDataAttributes.mjs
+  var CommonTriggerDataAttributes_exports = {};
+  __export(CommonTriggerDataAttributes_exports, {
+    popupOpen: () => popupOpen,
+    pressed: () => pressed
+  });
+  var popupOpen = "data-popup-open";
+  var pressed = "data-pressed";
+
+  // node_modules/@base-ui/react/utils/popupStateMapping.mjs
+  var TRIGGER_HOOK = {
+    [popupOpen]: ""
+  };
+  var PRESSABLE_TRIGGER_HOOK = {
+    [popupOpen]: "",
+    [pressed]: ""
+  };
+  var POPUP_OPEN_HOOK = {
+    [open]: ""
+  };
+  var POPUP_CLOSED_HOOK = {
+    [closed]: ""
+  };
+  var ANCHOR_HIDDEN_HOOK = {
+    [anchorHidden]: ""
+  };
+  var triggerOpenStateMapping = {
+    open(value) {
+      if (value) {
+        return TRIGGER_HOOK;
+      }
+      return null;
+    }
+  };
+  var pressableTriggerOpenStateMapping = {
+    open(value) {
+      if (value) {
+        return PRESSABLE_TRIGGER_HOOK;
+      }
+      return null;
+    }
+  };
+  var popupStateMapping = {
+    open(value) {
+      if (value) {
+        return POPUP_OPEN_HOOK;
+      }
+      return POPUP_CLOSED_HOOK;
+    },
+    anchorHidden(value) {
+      if (value) {
+        return ANCHOR_HIDDEN_HOOK;
+      }
+      return null;
+    }
+  };
+  var popupTransitionStateMapping = {
+    ...popupStateMapping,
+    ...transitionStatusMapping
+  };
+
+  // node_modules/@base-ui/react/tooltip/trigger/TooltipTriggerDataAttributes.mjs
+  var popupOpen2 = CommonTriggerDataAttributes_exports.popupOpen;
+  var triggerDisabled = "data-trigger-disabled";
 
   // node_modules/@base-ui/react/floating-ui-react/utils/element.mjs
   function isTargetInsideEnabledTrigger(target, triggerElements) {
@@ -40566,11 +40682,11 @@ This message will only show in development mode. It won't appear in production. 
     }
     const targetElement = target;
     if (triggerElements.hasElement(targetElement)) {
-      return !targetElement.hasAttribute("data-trigger-disabled");
+      return !targetElement.hasAttribute(triggerDisabled);
     }
     for (const [, trigger] of triggerElements.entries()) {
       if (contains2(trigger, targetElement)) {
-        return !trigger.hasAttribute("data-trigger-disabled");
+        return !trigger.hasAttribute(triggerDisabled);
       }
     }
     return false;
@@ -41273,6 +41389,7 @@ This message will only show in development mode. It won't appear in production. 
       style: style2,
       children,
       container,
+      portalOwnerRole,
       ...elementProps
     } = componentProps;
     const {
@@ -41292,7 +41409,7 @@ This message will only show in development mode. It won't appear in production. 
     const [focusManagerState, setFocusManagerState] = React29.useState(null);
     const focusInsideDisabledRef = React29.useRef(false);
     const modal = focusManagerState?.modal;
-    const open = focusManagerState?.open;
+    const open2 = focusManagerState?.open;
     const shouldRenderGuards = !!focusManagerState && !focusManagerState.modal && focusManagerState.open && !!portalNode;
     React29.useEffect(() => {
       if (!portalNode || modal) {
@@ -41314,12 +41431,12 @@ This message will only show in development mode. It won't appear in production. 
       return mergeCleanups(addEventListener(portalNode, "focusin", onFocus, true), addEventListener(portalNode, "focusout", onFocus, true));
     }, [portalNode, modal]);
     useIsoLayoutEffect(() => {
-      if (!portalNode || open !== true || !focusInsideDisabledRef.current) {
+      if (!portalNode || open2 !== true || !focusInsideDisabledRef.current) {
         return;
       }
       enableFocusInside(portalNode);
       focusInsideDisabledRef.current = false;
-    }, [open, portalNode]);
+    }, [open2, portalNode]);
     const portalContextValue = React29.useMemo(() => ({
       beforeOutsideRef,
       afterOutsideRef,
@@ -41344,6 +41461,7 @@ This message will only show in development mode. It won't appear in production. 
             }
           }
         }), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime174.jsx)("span", {
+          role: portalOwnerRole,
           "aria-owns": portalNodeId,
           style: ownerVisuallyHidden
         }), portalNode && /* @__PURE__ */ ReactDOM3.createPortal(children, portalNode), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(FocusGuard, {
@@ -41553,7 +41671,7 @@ This message will only show in development mode. It won't appear in production. 
       getInsideElements
     } = props;
     const store = "rootStore" in context ? context.rootStore : context;
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const domReference = store.useState("domReferenceElement");
     const floating = store.useState("floatingElement");
     const {
@@ -41566,7 +41684,7 @@ This message will only show in development mode. It won't appear in production. 
     const initialFocusRef = useValueAsRef(initialFocus);
     const returnFocusRef = useValueAsRef(returnFocus);
     const openInteractionTypeRef = useValueAsRef(openInteractionType);
-    const openRef = useValueAsRef(open);
+    const openRef = useValueAsRef(open2);
     const tree = useFloatingTree(externalTree);
     const portalContext = usePortalContext();
     const preventReturnFocusRef = React31.useRef(false);
@@ -41603,7 +41721,7 @@ This message will only show in development mode. It won't appear in production. 
       return addEventListener(doc, "keydown", onKeyDown);
     }, [disabled2, floatingFocusElement, modal, isUntrappedTypeableCombobox, getTabbableContent]);
     React31.useEffect(() => {
-      if (disabled2 || !open) {
+      if (disabled2 || !open2) {
         return void 0;
       }
       const doc = ownerDocument(floatingFocusElement);
@@ -41635,7 +41753,7 @@ This message will only show in development mode. It won't appear in production. 
         // if the popup dismissed between pointerdown and pointerup.
         clearPointerDownOutside
       );
-    }, [disabled2, floating, domReference, floatingFocusElement, open, portalContext, pointerDownTimeout, getResolvedInsideElements]);
+    }, [disabled2, floating, domReference, floatingFocusElement, open2, portalContext, pointerDownTimeout, getResolvedInsideElements]);
     React31.useEffect(() => {
       if (disabled2 || !closeOnFocusOut) {
         return void 0;
@@ -41719,7 +41837,7 @@ This message will only show in development mode. It won't appear in production. 
       return mergeCleanups(domReferenceElement && addEventListener(domReferenceElement, "focusout", handleFocusOutside), domReferenceElement && addEventListener(domReferenceElement, "pointerdown", handlePointerDown), floating && addEventListener(floating, "focusin", handleFocusIn), floating && addEventListener(floating, "focusout", handleFocusOutside), floating && portalContext && addEventListener(floating, "focusout", markInsideReactTree, true));
     }, [disabled2, domReference, floating, floatingFocusElement, modal, tree, portalContext, store, closeOnFocusOut, restoreFocus, getTabbableContent, isUntrappedTypeableCombobox, getNodeId, dataRef, blurTimeout, pointerDownTimeout, restoreFocusFrame, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
     React31.useEffect(() => {
-      if (disabled2 || !floating || !open) {
+      if (disabled2 || !floating || !open2) {
         return void 0;
       }
       const portalNodes = Array.from(portalContext?.portalNode?.querySelectorAll(`[${createAttribute("portal")}]`) || []);
@@ -41737,9 +41855,9 @@ This message will only show in development mode. It won't appear in production. 
         markerCleanup();
         ariaHiddenCleanup();
       };
-    }, [open, disabled2, domReference, floating, modal, portalContext, isUntrappedTypeableCombobox, tree, getNodeId, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
+    }, [open2, disabled2, domReference, floating, modal, portalContext, isUntrappedTypeableCombobox, tree, getNodeId, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
     useIsoLayoutEffect(() => {
-      if (!open || disabled2 || !isHTMLElement(floatingFocusElement)) {
+      if (!open2 || disabled2 || !isHTMLElement(floatingFocusElement)) {
         return;
       }
       closeTypeRef.current = "";
@@ -41786,7 +41904,7 @@ This message will only show in development mode. It won't appear in production. 
           }
         });
       });
-    }, [disabled2, open, floatingFocusElement, getTabbableContent, initialFocusRef, openInteractionTypeRef, openRef]);
+    }, [disabled2, open2, floatingFocusElement, getTabbableContent, initialFocusRef, openInteractionTypeRef, openRef]);
     useIsoLayoutEffect(() => {
       if (disabled2 || !floatingFocusElement) {
         return void 0;
@@ -41873,7 +41991,7 @@ This message will only show in development mode. It won't appear in production. 
       };
     }, [disabled2, floating, floatingFocusElement, returnFocusRef, openInteractionTypeRef, events, tree, domReference, getNodeId, getResolvedInsideElements]);
     useIsoLayoutEffect(() => {
-      if (!parts_exports.engine.webkit || open || !floating) {
+      if (!parts_exports.engine.webkit || open2 || !floating) {
         return;
       }
       const activeEl = activeElement(ownerDocument(floating));
@@ -41883,7 +42001,7 @@ This message will only show in development mode. It won't appear in production. 
       if (contains2(floating, activeEl)) {
         activeEl.blur();
       }
-    }, [open, floating]);
+    }, [open2, floating]);
     useIsoLayoutEffect(() => {
       if (disabled2 || !portalContext) {
         return void 0;
@@ -41891,14 +42009,14 @@ This message will only show in development mode. It won't appear in production. 
       portalContext.setFocusManagerState({
         modal,
         closeOnFocusOut,
-        open,
+        open: open2,
         onOpenChange: store.setOpen,
         domReference
       });
       return () => {
         portalContext.setFocusManagerState(null);
       };
-    }, [disabled2, portalContext, modal, open, store, closeOnFocusOut, domReference]);
+    }, [disabled2, portalContext, modal, open2, store, closeOnFocusOut, domReference]);
     useIsoLayoutEffect(() => {
       if (disabled2 || !floatingFocusElement) {
         return void 0;
@@ -41977,13 +42095,13 @@ This message will only show in development mode. It won't appear in production. 
           store.setOpen(nextOpen, details);
         }
       }
-      function getNextOpen(open, currentTarget, isClickLikeOpenEvent2) {
+      function getNextOpen(open2, currentTarget, isClickLikeOpenEvent2) {
         const openEvent = dataRef.current.openEvent;
         const hasClickedOnInactiveTrigger = store.select("domReferenceElement") !== currentTarget;
-        if (open && hasClickedOnInactiveTrigger) {
+        if (open2 && hasClickedOnInactiveTrigger) {
           return true;
         }
-        if (!open) {
+        if (!open2) {
           return true;
         }
         if (!toggle) {
@@ -42001,11 +42119,11 @@ This message will only show in development mode. It won't appear in production. 
         onMouseDown(event) {
           const pointerType = pointerTypeRef.current;
           const nativeEvent = event.nativeEvent;
-          const open = store.select("open");
+          const open2 = store.select("open");
           if (event.button !== 0 || eventOption === "click" || isMouseLikePointerType(pointerType, true) && ignoreMouse) {
             return;
           }
-          const nextOpen = getNextOpen(open, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown");
+          const nextOpen = getNextOpen(open2, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown");
           const target = getTarget(nativeEvent);
           if (isTypeableElement(target)) {
             setOpenWithTouchDelay(nextOpen, nativeEvent, target, pointerType);
@@ -42028,8 +42146,8 @@ This message will only show in development mode. It won't appear in production. 
           if (isMouseLikePointerType(pointerType, true) && ignoreMouse) {
             return;
           }
-          const open = store.select("open");
-          const nextOpen = getNextOpen(open, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown" || openEventType === "keydown" || openEventType === "keyup");
+          const open2 = store.select("open");
+          const nextOpen = getNextOpen(open2, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown" || openEventType === "keydown" || openEventType === "keyup");
           setOpenWithTouchDelay(nextOpen, event.nativeEvent, event.currentTarget, pointerType);
         },
         onKeyDown() {
@@ -42064,10 +42182,11 @@ This message will only show in development mode. It won't appear in production. 
       externalTree
     } = props;
     const store = "rootStore" in context ? context.rootStore : context;
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const floatingElement = store.useState("floatingElement");
     const {
-      dataRef
+      dataRef,
+      events
     } = store.context;
     const tree = useFloatingTree(externalTree);
     const outsidePressFn = useStableCallback(typeof outsidePressProp === "function" ? outsidePressProp : () => false);
@@ -42081,6 +42200,7 @@ This message will only show in development mode. It won't appear in production. 
     const pressStartedInsideRef = React33.useRef(false);
     const pressStartPreventedRef = React33.useRef(false);
     const suppressNextOutsideClickRef = React33.useRef(false);
+    const sawPressWhileOpenRef = React33.useRef(false);
     const isComposingRef = React33.useRef(false);
     const currentPointerTypeRef = React33.useRef("");
     const touchStateRef = React33.useRef(null);
@@ -42105,7 +42225,7 @@ This message will only show in development mode. It won't appear in production. 
       store.setOpen(false, createChangeEventDetails(reason_parts_exports.triggerPress, event.nativeEvent));
     });
     const closeOnEscapeKeyDown = useStableCallback((event) => {
-      if (!open || !enabled || !escapeKey2 || event.key !== "Escape") {
+      if (!open2 || !enabled || !escapeKey2 || event.key !== "Escape") {
         return;
       }
       if (isComposingRef.current) {
@@ -42129,7 +42249,7 @@ This message will only show in development mode. It won't appear in production. 
       clearInsideReactTreeTimeout.start(0, clearInsideReactTree);
     });
     const markPressStartedInsideReactTree = useStableCallback((event) => {
-      if (!open || !enabled || event.button !== 0) {
+      if (!open2 || !enabled || event.button !== 0) {
         return;
       }
       const target = getTarget(event.nativeEvent);
@@ -42142,7 +42262,7 @@ This message will only show in development mode. It won't appear in production. 
       }
     });
     const markInsidePressStartPrevented = useStableCallback((event) => {
-      if (!open || !enabled) {
+      if (!open2 || !enabled) {
         return;
       }
       if (!(event.defaultPrevented || event.nativeEvent.defaultPrevented)) {
@@ -42153,13 +42273,28 @@ This message will only show in development mode. It won't appear in production. 
       }
     });
     React33.useEffect(() => {
-      if (!open || !enabled) {
+      function handleOpenChange(details) {
+        if (!details.open) {
+          sawPressWhileOpenRef.current = false;
+        }
+      }
+      events.on("openchange", handleOpenChange);
+      return () => {
+        events.off("openchange", handleOpenChange);
+      };
+    }, [events]);
+    React33.useEffect(() => {
+      if (!open2 || !enabled) {
+        if (!open2) {
+          sawPressWhileOpenRef.current = false;
+        }
         return clearInsideReactTree;
       }
       dataRef.current.__escapeKeyBubbles = escapeKeyBubbles;
       dataRef.current.__outsidePressBubbles = outsidePressBubbles;
       const compositionTimeout = new Timeout();
       const preventedPressSuppressionTimeout = new Timeout();
+      const doc = ownerDocument(floatingElement);
       function handleCompositionStart() {
         compositionTimeout.clear();
         isComposingRef.current = true;
@@ -42256,10 +42391,15 @@ This message will only show in development mode. It won't appear in production. 
         if (isEventWithinFloatingTree(event)) {
           return;
         }
-        if (getOutsidePressEvent() === "intentional" && suppressNextOutsideClickRef.current) {
-          preventedPressSuppressionTimeout.clear();
-          suppressNextOutsideClickRef.current = false;
-          return;
+        if (getOutsidePressEvent() === "intentional") {
+          if (event.detail !== 0 && !isVirtualClick(event) && !sawPressWhileOpenRef.current) {
+            return;
+          }
+          if (suppressNextOutsideClickRef.current) {
+            preventedPressSuppressionTimeout.clear();
+            suppressNextOutsideClickRef.current = false;
+            return;
+          }
         }
         if (typeof outsidePress2 === "function" && !outsidePress2(event)) {
           return;
@@ -42314,6 +42454,9 @@ This message will only show in development mode. It won't appear in production. 
       function closeOnPressOutsideCapture(event) {
         cancelDismissOnEndTimeout.clear();
         if (event.type === "pointerdown") {
+          if (event.button === 0) {
+            sawPressWhileOpenRef.current = true;
+          }
           currentPointerTypeRef.current = event.pointerType;
         }
         if (event.type === "mousedown" && touchStateRef.current && !touchStateRef.current.dismissOnMouseDown) {
@@ -42328,6 +42471,9 @@ This message will only show in development mode. It won't appear in production. 
         });
       }
       function handlePressEndCapture(event) {
+        if (event.type === "pointercancel") {
+          sawPressWhileOpenRef.current = false;
+        }
         if (!pressStartedInsideRef.current) {
           return;
         }
@@ -42392,8 +42538,16 @@ This message will only show in development mode. It won't appear in production. 
       function handleTouchEndCapture(event) {
         addTargetEventListenerOnce(event, handleTouchEnd);
       }
-      const doc = ownerDocument(floatingElement);
-      const unsubscribe = mergeCleanups(escapeKey2 && mergeCleanups(addEventListener(doc, "keydown", closeOnEscapeKeyDown), addEventListener(doc, "compositionstart", handleCompositionStart), addEventListener(doc, "compositionend", handleCompositionEnd)), outsidePressEnabled && mergeCleanups(addEventListener(doc, "click", closeOnPressOutsideCapture, true), addEventListener(doc, "pointerdown", closeOnPressOutsideCapture, true), addEventListener(doc, "pointerup", handlePressEndCapture, true), addEventListener(doc, "pointercancel", handlePressEndCapture, true), addEventListener(doc, "mousedown", closeOnPressOutsideCapture, true), addEventListener(doc, "mouseup", handlePressEndCapture, true), addEventListener(doc, "touchstart", handleTouchStartCapture, true), addEventListener(doc, "touchmove", handleTouchMoveCapture, true), addEventListener(doc, "touchend", handleTouchEndCapture, true)));
+      const unsubscribe = mergeCleanups(escapeKey2 && mergeCleanups(addEventListener(doc, "keydown", closeOnEscapeKeyDown), addEventListener(doc, "compositionstart", handleCompositionStart), addEventListener(doc, "compositionend", handleCompositionEnd)), outsidePressEnabled && mergeCleanups(addEventListener(doc, "click", closeOnPressOutsideCapture, true), addEventListener(doc, "pointerdown", closeOnPressOutsideCapture, true), addEventListener(doc, "pointerup", handlePressEndCapture, true), addEventListener(doc, "pointercancel", handlePressEndCapture, true), addEventListener(doc, "mousedown", closeOnPressOutsideCapture, true), addEventListener(doc, "mouseup", handlePressEndCapture, true), addEventListener(doc, "touchstart", handleTouchStartCapture, {
+        capture: true,
+        passive: true
+      }), addEventListener(doc, "touchmove", handleTouchMoveCapture, {
+        capture: true,
+        passive: true
+      }), addEventListener(doc, "touchend", handleTouchEndCapture, {
+        capture: true,
+        passive: true
+      })));
       return () => {
         unsubscribe();
         compositionTimeout.clear();
@@ -42402,7 +42556,7 @@ This message will only show in development mode. It won't appear in production. 
         suppressNextOutsideClickRef.current = false;
         clearInsideReactTree();
       };
-    }, [dataRef, floatingElement, escapeKey2, outsidePressEnabled, outsidePress2, open, enabled, escapeKeyBubbles, outsidePressBubbles, closeOnEscapeKeyDown, clearInsideReactTree, getOutsidePressEventProp, hasBlockingChild, isEventWithinOwnElements, tree, store, cancelDismissOnEndTimeout]);
+    }, [dataRef, floatingElement, escapeKey2, outsidePressEnabled, outsidePress2, open2, enabled, escapeKeyBubbles, outsidePressBubbles, closeOnEscapeKeyDown, clearInsideReactTree, getOutsidePressEventProp, hasBlockingChild, isEventWithinOwnElements, tree, store, cancelDismissOnEndTimeout]);
     const reference = React33.useMemo(() => ({
       onKeyDown: closeOnEscapeKeyDown,
       onPointerDown: closeOnReferencePress,
@@ -42506,8 +42660,8 @@ This message will only show in development mode. It won't appear in production. 
     }
     /**
      * Points the handle at a root's store and notifies subscribers so detached triggers re-render and
-     * re-register into it (their registration ref re-fires on the store-pointer change). Returns a
-     * cleanup function that detaches the store again.
+     * re-register into it (their registration effect migrates them when the store pointer changes).
+     * Returns a cleanup function that detaches the store again.
      * @internal
      */
     attachStore(newStore) {
@@ -42751,6 +42905,14 @@ This message will only show in development mode. It won't appear in production. 
   // node_modules/@base-ui/utils/store/Store.mjs
   var Store = class {
     /**
+     * Creates a store with the given initial state, constructing the class it is called on.
+     * Calling it on a generic base class (e.g. `ReactStore.create(...)`) constructs that
+     * class but degrades the inferred instance type to `Store`; use `new` there instead.
+     */
+    static create(state) {
+      return new this(state);
+    }
+    /**
      * The current state of the store.
      * This property is updated immediately when the state changes as a result of calling {@link setState}, {@link update}, or {@link set}.
      * To subscribe to state changes, use the {@link useState} method. The value returned by {@link useState} is updated after the component renders (similarly to React's useState).
@@ -42803,6 +42965,8 @@ This message will only show in development mode. It won't appear in production. 
     }
     /**
      * Merges the provided changes into the current state and notifies listeners if there are changes.
+     * Each value must match its state key. Pass an exact known subset rather than a broad
+     * `Partial<State>`, which may contain `undefined` for required state fields.
      *
      * @param changes An object containing the changes to apply to the current state.
      */
@@ -42898,9 +43062,13 @@ This message will only show in development mode. It won't appear in production. 
     }
     /**
      * Synchronizes multiple external values into the store.
+     * Each value must match its state key. Pass an exact known subset rather than a broad
+     * `Partial<State>`, which may contain `undefined` for required state fields.
      *
      * Note that the while the values in `state` are updated immediately, the values returned
      * by `useState` are updated before the next render (similarly to React's `useState`).
+     *
+     * @param statePart An exact subset of state fields to synchronize. Unknown keys are not accepted.
      */
     useSyncedValues(statePart) {
       const store = this;
@@ -43099,7 +43267,7 @@ This message will only show in development mode. It won't appear in production. 
       nested,
       onOpenChange
     } = options2;
-    const open = popupStore.useState("open");
+    const open2 = popupStore.useState("open");
     const referenceElement = popupStore.useState("activeTriggerElement");
     const floatingElement = popupStore.useState(treatPopupAsFloatingElement ? "popupElement" : "positionerElement");
     const triggerElements = popupStore.context.triggerElements;
@@ -43107,7 +43275,7 @@ This message will only show in development mode. It won't appear in production. 
     const internalStoreRef = React37.useRef(null);
     if (floatingRootContextProp === void 0 && internalStoreRef.current === null) {
       internalStoreRef.current = new FloatingRootStore({
-        open,
+        open: open2,
         transitionStatus: void 0,
         referenceElement,
         floatingElement,
@@ -43122,7 +43290,7 @@ This message will only show in development mode. It won't appear in production. 
     popupStore.useSyncedValue("floatingId", floatingId);
     useIsoLayoutEffect(() => {
       const valuesToSync = {
-        open,
+        open: open2,
         floatingId,
         referenceElement,
         floatingElement
@@ -43134,7 +43302,7 @@ This message will only show in development mode. It won't appear in production. 
         valuesToSync.positionReference = referenceElement;
       }
       store.update(valuesToSync);
-    }, [open, floatingId, referenceElement, floatingElement, store]);
+    }, [open2, floatingId, referenceElement, floatingElement, store]);
     store.context.onOpenChange = handleOpenChange;
     store.context.nested = nested;
     return store;
@@ -43154,50 +43322,58 @@ This message will only show in development mode. It won't appear in production. 
     }, [handle, store]);
     return null;
   }
-  function useTriggerRegistration(id3, store) {
-    const registeredElementIdRef = React38.useRef(null);
-    const registeredElementRef = React38.useRef(null);
-    return React38.useCallback((element) => {
-      if (id3 === void 0) {
-        return;
-      }
-      let shouldSyncTriggerCount = false;
-      if (registeredElementIdRef.current !== null) {
-        const registeredId = registeredElementIdRef.current;
-        const registeredElement = registeredElementRef.current;
-        const currentElement = store.context.triggerElements.getById(registeredId);
-        if (registeredElement && currentElement === registeredElement) {
-          store.context.triggerElements.delete(registeredId);
-          shouldSyncTriggerCount = true;
-        }
-        registeredElementIdRef.current = null;
-        registeredElementRef.current = null;
-      }
-      if (element !== null) {
-        registeredElementIdRef.current = id3;
-        registeredElementRef.current = element;
-        store.context.triggerElements.add(id3, element);
-        shouldSyncTriggerCount = true;
-      }
-      if (shouldSyncTriggerCount) {
-        const triggerCount = store.context.triggerElements.size;
-        if (store.select("open") && store.state.triggerCount !== triggerCount) {
-          store.set("triggerCount", triggerCount);
-        }
-      }
-    }, [store, id3]);
+  function syncTriggerCount(store) {
+    const triggerCount = store.context.triggerElements.size;
+    if (store.select("open") && store.state.triggerCount !== triggerCount) {
+      store.set("triggerCount", triggerCount);
+    }
   }
-  function setPopupOpenState(state, open, trigger, preventUnmountOnClose = false) {
-    if (open) {
-      state.preventUnmountingOnClose = false;
+  function useTriggerRegistration(id3, store) {
+    const registrationRef = React38.useRef(null);
+    return useStableCallback((element) => {
+      const registration = registrationRef.current;
+      if (registration !== null) {
+        if (registration.element === element && registration.store === store && registration.id === id3) {
+          return;
+        }
+        registrationRef.current = null;
+        const registeredStore = registration.store;
+        if (registeredStore.context.triggerElements.getById(registration.id) === registration.element) {
+          registeredStore.context.triggerElements.delete(registration.id);
+          syncTriggerCount(registeredStore);
+        }
+      }
+      if (element !== null && id3 !== void 0) {
+        registrationRef.current = {
+          store,
+          id: id3,
+          element
+        };
+        store.context.triggerElements.add(id3, element);
+        syncTriggerCount(store);
+      }
+    });
+  }
+  function createPopupOpenState(state, open2, trigger, preventUnmountOnClose = false) {
+    let preventUnmountingOnClose = state.preventUnmountingOnClose;
+    if (open2) {
+      preventUnmountingOnClose = false;
     } else if (preventUnmountOnClose) {
-      state.preventUnmountingOnClose = true;
+      preventUnmountingOnClose = true;
     }
     const triggerId = trigger?.id ?? null;
-    if (triggerId || open) {
-      state.activeTriggerId = triggerId;
-      state.activeTriggerElement = trigger ?? null;
+    let activeTriggerId = state.activeTriggerId;
+    let activeTriggerElement = state.activeTriggerElement;
+    if (triggerId || open2) {
+      activeTriggerId = triggerId;
+      activeTriggerElement = trigger ?? null;
     }
+    return {
+      open: open2,
+      preventUnmountingOnClose,
+      activeTriggerId,
+      activeTriggerElement
+    };
   }
   function attachPreventUnmountOnClose(eventDetails) {
     let preventUnmountOnClose = false;
@@ -43210,35 +43386,42 @@ This message will only show in development mode. It won't appear in production. 
     const isMountedByThisTrigger = store.useState("isMountedByTrigger", triggerId);
     const baseRegisterTrigger = useTriggerRegistration(triggerId, store);
     const applyTriggerData = useStableCallback((element) => {
-      const open = store.select("open");
+      const open2 = store.select("open");
       const activeTriggerId = store.select("activeTriggerId");
       if (activeTriggerId === triggerId) {
-        store.update({
+        const changes = {
           activeTriggerElement: element,
-          ...open ? stateUpdates : null
-        });
+          ...open2 ? stateUpdates : null
+        };
+        store.update(changes);
         return;
       }
-      if (activeTriggerId == null && open) {
-        store.update({
-          activeTriggerId: triggerId,
+      if (activeTriggerId == null && open2) {
+        const changes = {
+          activeTriggerId: triggerId ?? null,
           activeTriggerElement: element,
           ...stateUpdates
-        });
+        };
+        store.update(changes);
       }
     });
-    const registerTrigger = React38.useCallback((element) => {
+    const registerTrigger = useStableCallback((element) => {
       baseRegisterTrigger(element);
       if (element) {
         applyTriggerData(element);
       }
-    }, [baseRegisterTrigger, applyTriggerData]);
+    });
+    useIsoLayoutEffect(() => {
+      registerTrigger(triggerElementRef.current);
+      return () => registerTrigger(null);
+    }, [registerTrigger, triggerElementRef, store, triggerId]);
     useIsoLayoutEffect(() => {
       if (isMountedByThisTrigger) {
-        store.update({
+        const changes = {
           activeTriggerElement: triggerElementRef.current,
           ...stateUpdates
-        });
+        };
+        store.update(changes);
       }
     }, [isMountedByThisTrigger, store, triggerElementRef, ...Object.values(stateUpdates)]);
     return {
@@ -43251,12 +43434,12 @@ This message will only show in development mode. It won't appear in production. 
       closeOnActiveTriggerUnmount = false
     } = options2;
     const resolvedActiveTriggerIdRef = React38.useRef(null);
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const reactiveTriggerCount = store.useState("triggerCount");
     const activeTriggerId = store.useState("activeTriggerId");
     const reactiveActiveTriggerElement = store.useState("activeTriggerElement");
     useIsoLayoutEffect(() => {
-      if (!open) {
+      if (!open2) {
         resolvedActiveTriggerIdRef.current = null;
         if (store.state.triggerCount !== 0) {
           store.set("triggerCount", 0);
@@ -43325,16 +43508,16 @@ This message will only show in development mode. It won't appear in production. 
           });
         }
       }
-    }, [open, store, reactiveTriggerCount, activeTriggerId, reactiveActiveTriggerElement, closeOnActiveTriggerUnmount]);
+    }, [open2, store, reactiveTriggerCount, activeTriggerId, reactiveActiveTriggerElement, closeOnActiveTriggerUnmount]);
   }
-  function useOpenStateTransitions(open, store, onUnmount) {
+  function useOpenStateTransitions(open2, store, onUnmount, animateInitialOpen) {
     const {
       mounted,
       setMounted,
       transitionStatus
-    } = useTransitionStatus(open);
+    } = useTransitionStatus(open2, false, false, animateInitialOpen);
     const preventUnmountingOnClose = store.useState("preventUnmountingOnClose");
-    const syncedPreventUnmountingOnClose = open ? false : preventUnmountingOnClose;
+    const syncedPreventUnmountingOnClose = open2 ? false : preventUnmountingOnClose;
     store.useSyncedValues({
       mounted,
       transitionStatus,
@@ -43352,11 +43535,11 @@ This message will only show in development mode. It won't appear in production. 
       store.context.onOpenChangeComplete?.(false);
     });
     useOpenChangeComplete({
-      enabled: mounted && !open && !syncedPreventUnmountingOnClose,
-      open,
+      enabled: mounted && !open2 && !syncedPreventUnmountingOnClose,
+      open: open2,
       ref: store.context.popupRef,
       onComplete() {
-        if (!open) {
+        if (!open2) {
           forceUnmount();
         }
       }
@@ -43472,30 +43655,25 @@ This message will only show in development mode. It won't appear in production. 
     }
   };
 
-  // node_modules/@base-ui/react/floating-ui-react/utils/getEmptyRootContext.mjs
-  function getEmptyRootContext() {
-    return new FloatingRootStore({
-      open: false,
-      transitionStatus: void 0,
-      floatingElement: null,
-      referenceElement: null,
-      triggerElements: new PopupTriggerMap(),
-      floatingId: void 0,
-      syncOnly: false,
-      nested: false,
-      onOpenChange: void 0
-    });
-  }
-
   // node_modules/@base-ui/react/utils/popups/store.mjs
-  function createInitialPopupStoreState() {
+  function createInitialPopupStoreState(triggerElements, floatingId, nested = false) {
     return {
       open: false,
       openProp: void 0,
       mounted: false,
       transitionStatus: void 0,
-      floatingRootContext: getEmptyRootContext(),
-      floatingId: void 0,
+      floatingRootContext: new FloatingRootStore({
+        open: false,
+        transitionStatus: void 0,
+        floatingElement: null,
+        referenceElement: null,
+        triggerElements,
+        floatingId,
+        syncOnly: true,
+        nested,
+        onOpenChange: void 0
+      }),
+      floatingId,
       triggerCount: 0,
       preventUnmountingOnClose: false,
       payload: void 0,
@@ -43585,7 +43763,7 @@ This message will only show in development mode. It won't appear in production. 
     const referenceElement = store.useState("referenceElement");
     const floatingElement = store.useState("floatingElement");
     const domReferenceElement = store.useState("domReferenceElement");
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const floatingId = store.useState("floatingId");
     const [positionReference, setPositionReferenceRaw] = React40.useState(null);
     const [localDomReference, setLocalDomReference] = React40.useState(void 0);
@@ -43650,7 +43828,7 @@ This message will only show in development mode. It won't appear in production. 
     const context = React40.useMemo(() => ({
       ...position2,
       dataRef: store.context.dataRef,
-      open,
+      open: open2,
       onOpenChange: store.setOpen,
       events: store.context.events,
       floatingId,
@@ -43658,7 +43836,7 @@ This message will only show in development mode. It won't appear in production. 
       elements: elements2,
       nodeId,
       rootStore: store
-    }), [position2, refs, elements2, nodeId, store, open, floatingId]);
+    }), [position2, refs, elements2, nodeId, store, open2, floatingId]);
     useIsoLayoutEffect(() => {
       if (domReferenceElement) {
         domReferenceRef.current = domReferenceElement;
@@ -43707,6 +43885,7 @@ This message will only show in development mode. It won't appear in production. 
         const currentDomReference = store.select("domReferenceElement");
         if (!store.select("open") && isHTMLElement(currentDomReference) && currentDomReference === activeElement(ownerDocument(currentDomReference))) {
           blockFocusRef.current = true;
+          blockedReferenceRef.current = currentDomReference;
         }
       }
       function onKeyDown() {
@@ -43893,7 +44072,7 @@ This message will only show in development mode. It won't appear in production. 
       nodeId: nodeIdProp
     } = parameters;
     const store = "rootStore" in context ? context.rootStore : context;
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const floatingElement = store.useState("floatingElement");
     const domReferenceElement = store.useState("domReferenceElement");
     const {
@@ -43913,13 +44092,13 @@ This message will only show in development mode. It won't appear in production. 
       clearSafePolygonPointerEventsMutation(instance);
     });
     useIsoLayoutEffect(() => {
-      if (!open) {
+      if (!open2) {
         instance.pointerType = void 0;
         instance.restTimeoutPending = false;
         instance.interactedInside = false;
         clearPointerEvents();
       }
-    }, [open, instance, clearPointerEvents]);
+    }, [open2, instance, clearPointerEvents]);
     React42.useEffect(() => {
       return clearPointerEvents;
     }, [clearPointerEvents]);
@@ -43927,7 +44106,7 @@ This message will only show in development mode. It won't appear in production. 
       if (!enabled) {
         return void 0;
       }
-      if (open && instance.handleCloseOptions?.blockPointerEvents && isHoverOpen() && isElement2(domReferenceElement) && floatingElement) {
+      if (open2 && instance.handleCloseOptions?.blockPointerEvents && isHoverOpen() && isElement2(domReferenceElement) && floatingElement) {
         const ref = domReferenceElement;
         const floatingEl = floatingElement;
         const doc = ownerDocument(floatingElement);
@@ -43948,7 +44127,7 @@ This message will only show in development mode. It won't appear in production. 
         };
       }
       return void 0;
-    }, [enabled, open, domReferenceElement, floatingElement, instance, isHoverOpen, tree, parentId, clearPointerEvents]);
+    }, [enabled, open2, domReferenceElement, floatingElement, instance, isHoverOpen, tree, parentId, clearPointerEvents]);
     React42.useEffect(() => {
       if (!enabled) {
         return void 0;
@@ -44088,7 +44267,7 @@ This message will only show in development mode. It won't appear in production. 
       clearSafePolygonPointerEventsMutation(instance);
     });
     if (isActiveTrigger) {
-      instance.handleCloseOptions = handleCloseRef.current?.__options;
+      instance.handleCloseOptions = handleClose?.__options;
     }
     React43.useEffect(() => cleanupMouseMoveHandler, [cleanupMouseMoveHandler]);
     React43.useEffect(() => {
@@ -44385,7 +44564,7 @@ This message will only show in development mode. It won't appear in production. 
       }
     }
     const store = "rootStore" in context ? context.rootStore : context;
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const floatingElement = store.useState("floatingElement");
     const domReferenceElement = store.useState("domReferenceElement");
     const dataRef = store.context.dataRef;
@@ -44402,12 +44581,12 @@ This message will only show in development mode. It won't appear in production. 
       onNavigateProp(indexRef.current === -1 ? null : indexRef.current, event);
     });
     const previousMountedRef = React44.useRef(!!floatingElement);
-    const previousOpenRef = React44.useRef(open);
+    const previousOpenRef = React44.useRef(open2);
     const forceSyncFocusRef = React44.useRef(false);
     const forceScrollIntoViewRef = React44.useRef(false);
     const cancelQueuedFocusRef = React44.useRef(null);
     const disabledIndicesRef = useValueAsRef(disabledIndices);
-    const latestOpenRef = useValueAsRef(open);
+    const latestOpenRef = useValueAsRef(open2);
     const selectedIndexRef = useValueAsRef(selectedIndex);
     const resetOnPointerLeaveRef = useValueAsRef(resetOnPointerLeave);
     const focusFrame = useAnimationFrame();
@@ -44456,7 +44635,7 @@ This message will only show in development mode. It won't appear in production. 
       if (!enabled) {
         return;
       }
-      if (open && floatingElement) {
+      if (open2 && floatingElement) {
         indexRef.current = selectedIndex ?? -1;
         if (focusItemOnOpenRef.current && selectedIndex != null) {
           forceScrollIntoViewRef.current = true;
@@ -44466,12 +44645,12 @@ This message will only show in development mode. It won't appear in production. 
         indexRef.current = -1;
         onNavigate();
       }
-    }, [enabled, open, floatingElement, selectedIndex, onNavigate]);
+    }, [enabled, open2, floatingElement, selectedIndex, onNavigate]);
     useIsoLayoutEffect(() => {
       if (!enabled) {
         return;
       }
-      if (!open) {
+      if (!open2) {
         forceSyncFocusRef.current = false;
         return;
       }
@@ -44509,7 +44688,7 @@ This message will only show in development mode. It won't appear in production. 
         focusItem();
         forceScrollIntoViewRef.current = false;
       }
-    }, [enabled, open, floatingElement, activeIndex, selectedIndexRef, nested, listRef, orientation, rtl2, onNavigate, focusItem, waitForListPopulatedFrame]);
+    }, [enabled, open2, floatingElement, activeIndex, selectedIndexRef, nested, listRef, orientation, rtl2, onNavigate, focusItem, waitForListPopulatedFrame]);
     useIsoLayoutEffect(() => {
       if (!enabled || floatingElement || !tree || virtual || !previousMountedRef.current) {
         return;
@@ -44525,15 +44704,15 @@ This message will only show in development mode. It won't appear in production. 
       }
     }, [enabled, floatingElement, domReferenceElement, tree, parentId, virtual]);
     useIsoLayoutEffect(() => {
-      previousOpenRef.current = open;
+      previousOpenRef.current = open2;
       previousMountedRef.current = !!floatingElement;
     });
     useIsoLayoutEffect(() => {
-      if (!open) {
+      if (!open2) {
         keyRef.current = null;
         focusItemOnOpenRef.current = focusItemOnOpen;
       }
-    }, [open, focusItemOnOpen]);
+    }, [open2, focusItemOnOpen]);
     const hasActiveIndex = activeIndex != null;
     const syncCurrentTarget = useStableCallback((event) => {
       if (!latestOpenRef.current) {
@@ -44601,7 +44780,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       if (isMainOrientationKey(event.key, orientation)) {
         stopEvent(event);
-        if (open && !virtual && activeElement(event.currentTarget.ownerDocument) === event.currentTarget) {
+        if (open2 && !virtual && activeElement(event.currentTarget.ownerDocument) === event.currentTarget) {
           indexRef.current = isMainOrientationToEndKey(event.key, orientation, rtl2) ? minIndex : maxIndex;
           onNavigate(event);
           return;
@@ -44707,16 +44886,15 @@ This message will only show in development mode. It won't appear in production. 
       return itemProps;
     }, [syncCurrentTarget, latestOpenRef, floatingFocusElementRef, focusItemOnHover, listRef, onNavigate, resetOnPointerLeaveRef, virtual]);
     const ariaActiveDescendantProp = React44.useMemo(() => {
-      return virtual && open && hasActiveIndex && {
+      return virtual && open2 && hasActiveIndex && {
         "aria-activedescendant": `${id3}-${activeIndex}`
       };
-    }, [virtual, open, hasActiveIndex, id3, activeIndex]);
+    }, [virtual, open2, hasActiveIndex, id3, activeIndex]);
     const floating = React44.useMemo(() => {
       return {
-        "aria-orientation": orientation === "both" ? void 0 : orientation,
         ...!typeableComboboxReference ? ariaActiveDescendantProp : {},
         onKeyDown(event) {
-          if (event.key === "Tab" && event.shiftKey && open && !virtual) {
+          if (event.key === "Tab" && event.shiftKey && open2 && !virtual) {
             const target = getTarget(event.nativeEvent);
             if (target && !contains2(floatingFocusElementRef.current, target)) {
               return;
@@ -44737,7 +44915,7 @@ This message will only show in development mode. It won't appear in production. 
           isPointerModalityRef.current = true;
         }
       };
-    }, [ariaActiveDescendantProp, commonOnKeyDown, floatingFocusElementRef, orientation, typeableComboboxReference, store, open, virtual, domReferenceElement]);
+    }, [ariaActiveDescendantProp, commonOnKeyDown, floatingFocusElementRef, typeableComboboxReference, store, open2, virtual, domReferenceElement]);
     const trigger = React44.useMemo(() => {
       function openOnNavigationKeyDown(event) {
         store.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent, event.currentTarget));
@@ -44840,7 +45018,7 @@ This message will only show in development mode. It won't appear in production. 
       selectedIndex = null
     } = props;
     const store = "rootStore" in context ? context.rootStore : context;
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const timeout = useTimeout();
     const stringRef = React45.useRef("");
     const prevIndexRef = React45.useRef(selectedIndex ?? activeIndex ?? -1);
@@ -44887,7 +45065,7 @@ This message will only show in development mode. It won't appear in production. 
       event.ctrlKey || event.metaKey || event.altKey) {
         return;
       }
-      if (open && event.key !== " ") {
+      if (open2 && event.key !== " ") {
         stopEvent(event);
         onTyping?.(true);
       }
@@ -44931,7 +45109,7 @@ This message will only show in development mode. It won't appear in production. 
       onTyping?.(false);
     });
     useIsoLayoutEffect(() => {
-      if (!open && selectedIndex !== null) {
+      if (!open2 && selectedIndex !== null) {
         return;
       }
       timeout.clear();
@@ -44939,7 +45117,7 @@ This message will only show in development mode. It won't appear in production. 
       if (stringRef.current !== "") {
         stringRef.current = "";
       }
-    }, [open, selectedIndex, timeout]);
+    }, [open2, selectedIndex, timeout]);
     const sharedProps = React45.useMemo(() => ({
       onKeyDown,
       onBlur
@@ -45181,68 +45359,6 @@ This message will only show in development mode. It won't appear in production. 
     }
   };
 
-  // node_modules/@base-ui/react/utils/popupStateMapping.mjs
-  var CommonPopupDataAttributes = (function(CommonPopupDataAttributes2) {
-    CommonPopupDataAttributes2["open"] = "data-open";
-    CommonPopupDataAttributes2["closed"] = "data-closed";
-    CommonPopupDataAttributes2[CommonPopupDataAttributes2["startingStyle"] = TransitionStatusDataAttributes.startingStyle] = "startingStyle";
-    CommonPopupDataAttributes2[CommonPopupDataAttributes2["endingStyle"] = TransitionStatusDataAttributes.endingStyle] = "endingStyle";
-    CommonPopupDataAttributes2["anchorHidden"] = "data-anchor-hidden";
-    CommonPopupDataAttributes2["side"] = "data-side";
-    CommonPopupDataAttributes2["align"] = "data-align";
-    return CommonPopupDataAttributes2;
-  })({});
-  var TRIGGER_HOOK = {
-    "data-popup-open": ""
-  };
-  var PRESSABLE_TRIGGER_HOOK = {
-    "data-popup-open": "",
-    "data-pressed": ""
-  };
-  var POPUP_OPEN_HOOK = {
-    "data-open": ""
-  };
-  var POPUP_CLOSED_HOOK = {
-    "data-closed": ""
-  };
-  var ANCHOR_HIDDEN_HOOK = {
-    "data-anchor-hidden": ""
-  };
-  var triggerOpenStateMapping = {
-    open(value) {
-      if (value) {
-        return TRIGGER_HOOK;
-      }
-      return null;
-    }
-  };
-  var pressableTriggerOpenStateMapping = {
-    open(value) {
-      if (value) {
-        return PRESSABLE_TRIGGER_HOOK;
-      }
-      return null;
-    }
-  };
-  var popupStateMapping = {
-    open(value) {
-      if (value) {
-        return POPUP_OPEN_HOOK;
-      }
-      return POPUP_CLOSED_HOOK;
-    },
-    anchorHidden(value) {
-      if (value) {
-        return ANCHOR_HIDDEN_HOOK;
-      }
-      return null;
-    }
-  };
-  var popupTransitionStateMapping = {
-    ...popupStateMapping,
-    ...transitionStatusMapping
-  };
-
   // node_modules/@base-ui/react/internals/composite/composite.mjs
   var ARROW_UP2 = "ArrowUp";
   var ARROW_DOWN2 = "ArrowDown";
@@ -45335,9 +45451,9 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
-  function useOpenMethodTriggerProps(open, setOpenMethod) {
+  function useOpenMethodTriggerProps(open2, setOpenMethod) {
     const handleTriggerClick = useStableCallback((_2, interactionType) => {
-      const isOpen = typeof open === "function" ? open() : open;
+      const isOpen = typeof open2 === "function" ? open2() : open2;
       if (!isOpen) {
         setOpenMethod(interactionType || // On iOS Safari, the hitslop around touch targets means tapping outside an element's
         // bounds does not fire `pointerdown` but does fire `mousedown`. The `interactionType`
@@ -45354,11 +45470,11 @@ This message will only show in development mode. It won't appear in production. 
       onPointerDown
     }), [onClick, onPointerDown]);
   }
-  function useOpenInteractionType(open) {
+  function useOpenInteractionType(open2) {
     const [openMethod, setOpenMethod] = React49.useState(null);
-    const triggerProps = useOpenMethodTriggerProps(open, setOpenMethod);
-    useValueChanged(open, (previousOpen) => {
-      if (previousOpen && !open) {
+    const triggerProps = useOpenMethodTriggerProps(open2, setOpenMethod);
+    useValueChanged(open2, (previousOpen) => {
+      if (previousOpen && !open2) {
         setOpenMethod(null);
       }
     });
@@ -45478,10 +45594,17 @@ This message will only show in development mode. It won't appear in production. 
       };
     }
   });
-  var arrow4 = (options2, deps) => ({
-    ...baseArrow(options2),
-    options: [options2, deps]
-  });
+  var arrow4 = (options2, deps) => {
+    const {
+      name,
+      fn
+    } = baseArrow(options2);
+    return {
+      name,
+      fn,
+      options: [options2, deps]
+    };
+  };
 
   // node_modules/@base-ui/react/utils/hideMiddleware.mjs
   var hide4 = {
@@ -45493,14 +45616,14 @@ This message will only show in development mode. It won't appear in production. 
         x: x2,
         y: y3
       } = state.rects.reference;
-      const anchorHidden = width === 0 && height === 0 && x2 === 0 && y3 === 0;
+      const anchorHidden2 = width === 0 && height === 0 && x2 === 0 && y3 === 0;
       const overflow = await state.platform.detectOverflow(state, {
         elementContext: "reference"
       });
       const referenceHidden = overflow.top - height >= 0 || overflow.right - width >= 0 || overflow.bottom - height >= 0 || overflow.left - width >= 0;
       return {
         data: {
-          referenceHidden: referenceHidden || anchorHidden
+          referenceHidden: referenceHidden || anchorHidden2
         }
       };
     }
@@ -45512,9 +45635,18 @@ This message will only show in development mode. It won't appear in production. 
     sideY: "top"
   };
 
+  // node_modules/@base-ui/react/utils/CommonPositionerCssVars.mjs
+  var availableWidth = "--available-width";
+  var availableHeight = "--available-height";
+  var anchorWidth = "--anchor-width";
+  var anchorHeight = "--anchor-height";
+  var transformOrigin = "--transform-origin";
+  var positionerWidth = "--positioner-width";
+  var positionerHeight = "--positioner-height";
+
   // node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
-  var AVAILABLE_WIDTH_VAR = "--available-width";
-  var AVAILABLE_HEIGHT_VAR = "--available-height";
+  var AVAILABLE_WIDTH_VAR = availableWidth;
+  var AVAILABLE_HEIGHT_VAR = availableHeight;
   function getLogicalSide(sideParam, renderedSide, isRtl) {
     const isLogicalSideParam = sideParam === "inline-start" || sideParam === "inline-end";
     const logicalRight = isRtl ? "inline-start" : "inline-end";
@@ -45692,16 +45824,16 @@ This message will only show in development mode. It won't appear in production. 
         elements: {
           floating
         },
-        availableWidth,
-        availableHeight,
+        availableWidth: availableWidth2,
+        availableHeight: availableHeight2,
         rects
       }) {
         if (!mountedRef.current) {
           return;
         }
         const floatingStyle = floating.style;
-        floatingStyle.setProperty(AVAILABLE_WIDTH_VAR, `${availableWidth}px`);
-        floatingStyle.setProperty(AVAILABLE_HEIGHT_VAR, `${availableHeight}px`);
+        floatingStyle.setProperty(AVAILABLE_WIDTH_VAR, `${availableWidth2}px`);
+        floatingStyle.setProperty(AVAILABLE_HEIGHT_VAR, `${availableHeight2}px`);
         const dpr = getWindow2(floating).devicePixelRatio || 1;
         const {
           x: x3,
@@ -45709,48 +45841,49 @@ This message will only show in development mode. It won't appear in production. 
           width,
           height
         } = rects.reference;
-        const anchorWidth = (Math.round((x3 + width) * dpr) - Math.round(x3 * dpr)) / dpr;
-        const anchorHeight = (Math.round((y4 + height) * dpr) - Math.round(y4 * dpr)) / dpr;
-        floatingStyle.setProperty("--anchor-width", `${anchorWidth}px`);
-        floatingStyle.setProperty("--anchor-height", `${anchorHeight}px`);
+        const anchorWidth2 = (Math.round((x3 + width) * dpr) - Math.round(x3 * dpr)) / dpr;
+        const anchorHeight2 = (Math.round((y4 + height) * dpr) - Math.round(y4 * dpr)) / dpr;
+        floatingStyle.setProperty(anchorWidth, `${anchorWidth2}px`);
+        floatingStyle.setProperty(anchorHeight, `${anchorHeight2}px`);
       }
     }), arrow4((state) => ({
       // `transform-origin` calculations rely on an element existing. If the arrow hasn't been set,
       // we'll create a fake element.
       element: arrowRef.current || ownerDocument(state.elements.floating).createElement("div"),
-      padding: arrowPadding,
+      // No padding for the fake arrow: it would displace aligned popups on narrow anchors.
+      padding: arrowRef.current ? arrowPadding : 0,
       offsetParent: "floating"
     }), [arrowPadding]), {
       name: "transformOrigin",
       fn(state) {
         const {
-          elements: elements3,
+          elements: {
+            floating
+          },
           middlewareData: middlewareData2,
           placement: renderedPlacement2,
+          platform: platform3,
           rects,
           y: y4
         } = state;
-        const currentRenderedSide = getSide(renderedPlacement2);
-        const currentRenderedAxis = getSideAxis(currentRenderedSide);
+        const renderedSide2 = getSide(renderedPlacement2);
+        const renderedAlign2 = getAlignment(renderedPlacement2);
+        const isVertical = getSideAxis(renderedSide2) === "y";
         const arrowEl = arrowRef.current;
-        const arrowX = middlewareData2.arrow?.x || 0;
-        const arrowY = middlewareData2.arrow?.y || 0;
-        const arrowWidth = arrowEl?.clientWidth || 0;
-        const arrowHeight = arrowEl?.clientHeight || 0;
-        const transformX = arrowX + arrowWidth / 2;
-        const transformY = arrowY + arrowHeight / 2;
-        const shiftY = Math.abs(middlewareData2.shift?.y || 0);
-        const halfAnchorHeight = rects.reference.height / 2;
         const sideOffsetValue = typeof sideOffset === "function" ? sideOffset(getOffsetData(state, sideParam, isRtl)) : sideOffset;
-        const isOverlappingAnchor = shiftY > sideOffsetValue;
-        const adjacentTransformOrigin = {
-          top: `${transformX}px calc(100% + ${sideOffsetValue}px)`,
-          bottom: `${transformX}px ${-sideOffsetValue}px`,
-          left: `calc(100% + ${sideOffsetValue}px) ${transformY}px`,
-          right: `${-sideOffsetValue}px ${transformY}px`
-        }[currentRenderedSide];
-        const overlapTransformOrigin = `${transformX}px ${rects.reference.y + halfAnchorHeight - y4}px`;
-        elements3.floating.style.setProperty("--transform-origin", crossAxisShiftEnabled && currentRenderedAxis === "y" && isOverlappingAnchor ? overlapTransformOrigin : adjacentTransformOrigin);
+        let crossOrigin;
+        if (!arrowEl && renderedAlign2 && Math.abs(isVertical ? middlewareData2.shift?.x || 0 : middlewareData2.shift?.y || 0) <= 1) {
+          crossOrigin = renderedAlign2 === "start" === (isVertical && platform3.isRTL?.(floating) === true) ? "100%" : "0%";
+        } else {
+          const arrowOffset = isVertical ? middlewareData2.arrow?.x || 0 : middlewareData2.arrow?.y || 0;
+          const arrowSize = isVertical ? arrowEl?.clientWidth || 0 : arrowEl?.clientHeight || 0;
+          crossOrigin = `${arrowOffset + arrowSize / 2}px`;
+        }
+        let sideOrigin = renderedSide2 === "top" || renderedSide2 === "left" ? `calc(100% + ${sideOffsetValue}px)` : `${-sideOffsetValue}px`;
+        if (crossAxisShiftEnabled && isVertical && Math.abs(middlewareData2.shift?.y || 0) > sideOffsetValue) {
+          sideOrigin = `${rects.reference.y + rects.reference.height / 2 - y4}px`;
+        }
+        floating.style.setProperty(transformOrigin, isVertical ? `${crossOrigin} ${sideOrigin}` : `${sideOrigin} ${crossOrigin}`);
         return {};
       }
     }, hide4, adaptiveOrigin2);
@@ -45765,6 +45898,7 @@ This message will only show in development mode. It won't appear in production. 
       }
     }, [mounted, floatingRootContext]);
     const autoUpdateOptions = React51.useMemo(() => ({
+      ancestorScroll: !disableAnchorTracking,
       elementResize: !disableAnchorTracking && typeof ResizeObserver !== "undefined",
       layoutShift: !disableAnchorTracking && typeof IntersectionObserver !== "undefined"
     }), [disableAnchorTracking]);
@@ -45857,7 +45991,7 @@ This message will only show in development mode. It won't appear in production. 
     const renderedSide = getSide(renderedPlacement);
     const logicalRenderedSide = getLogicalSide(sideParam, renderedSide, isRtl);
     const renderedAlign = getAlignment(renderedPlacement) || "center";
-    const anchorHidden = Boolean(middlewareData.hide?.referenceHidden);
+    const anchorHidden2 = Boolean(middlewareData.hide?.referenceHidden);
     useIsoLayoutEffect(() => {
       if (lazyFlip && mounted && isPositioned && renderedSide !== side) {
         setMountSide(renderedSide);
@@ -45877,12 +46011,12 @@ This message will only show in development mode. It won't appear in production. 
       side: logicalRenderedSide,
       align: renderedAlign,
       physicalSide: renderedSide,
-      anchorHidden,
+      anchorHidden: anchorHidden2,
       refs,
       context,
       isPositioned,
       update: update2
-    }), [floatingStyles, arrowStyles, arrowRef, arrowUncentered, logicalRenderedSide, renderedAlign, renderedSide, anchorHidden, refs, context, isPositioned, update2]);
+    }), [floatingStyles, arrowStyles, arrowRef, arrowUncentered, logicalRenderedSide, renderedAlign, renderedSide, anchorHidden2, refs, context, isPositioned, update2]);
   }
   function isRef2(param) {
     return param != null && "current" in param;
@@ -45931,8 +46065,8 @@ This message will only show in development mode. It won't appear in production. 
         return;
       }
       const viewportWidth = ownerDocument(positionerElement).documentElement.clientWidth;
-      const popupWidth = positionerElement.offsetWidth;
-      setTouchOpenShouldLockScroll(viewportWidth > 0 && popupWidth > 0 && popupWidth >= viewportWidth - VIEWPORT_WIDTH_TOLERANCE_PX);
+      const popupWidth2 = positionerElement.offsetWidth;
+      setTouchOpenShouldLockScroll(viewportWidth > 0 && popupWidth2 > 0 && popupWidth2 >= viewportWidth - VIEWPORT_WIDTH_TOLERANCE_PX);
     }, [enabled, touchOpen, positionerElement]);
     useScrollLock(enabled && (!touchOpen || touchOpenShouldLockScroll), referenceElement);
   }
@@ -46021,9 +46155,9 @@ This message will only show in development mode. It won't appear in production. 
       arrowUncentered,
       arrowStyles
     } = useMenuPositionerContext();
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const state = {
-      open,
+      open: open2,
       side,
       align,
       uncentered: arrowUncentered
@@ -46053,13 +46187,13 @@ This message will only show in development mode. It won't appear in production. 
     const {
       store
     } = useMenuRootContext();
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const mounted = store.useState("mounted");
     const transitionStatus = store.useState("transitionStatus");
     const lastOpenChangeReason = store.useState("lastOpenChangeReason");
     const contextMenuContext = useContextMenuRootContext();
     const state = {
-      open,
+      open: open2,
       transitionStatus
     };
     return useRenderElement("div", componentProps, {
@@ -46113,13 +46247,13 @@ This message will only show in development mode. It won't appear in production. 
     const {
       events: menuEvents
     } = store.useState("floatingTreeRoot");
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const contextMenuContext = useContextMenuRootContext(true);
     const isContextMenu = contextMenuContext !== void 0;
     return React59.useMemo(() => ({
       id: id3,
       role: "menuitem",
-      tabIndex: open && highlighted ? 0 : -1,
+      tabIndex: open2 && highlighted ? 0 : -1,
       onKeyDown(event) {
         if (event.key === " " && typingRef?.current) {
           event.preventDefault();
@@ -46161,7 +46295,7 @@ This message will only show in development mode. It won't appear in production. 
           }
         }
       }
-    }), [closeOnClick, highlighted, id3, menuEvents, nodeId, open, store, typingRef, itemRef, contextMenuContext, isContextMenu, itemMetadata]);
+    }), [closeOnClick, highlighted, id3, menuEvents, nodeId, open2, store, typingRef, itemRef, contextMenuContext, isContextMenu, itemMetadata]);
   }
 
   // node_modules/@base-ui/react/menu/item/useMenuItem.mjs
@@ -46218,24 +46352,19 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItemDataAttributes.mjs
-  var MenuCheckboxItemDataAttributes = /* @__PURE__ */ (function(MenuCheckboxItemDataAttributes2) {
-    MenuCheckboxItemDataAttributes2["checked"] = "data-checked";
-    MenuCheckboxItemDataAttributes2["unchecked"] = "data-unchecked";
-    MenuCheckboxItemDataAttributes2["disabled"] = "data-disabled";
-    MenuCheckboxItemDataAttributes2["highlighted"] = "data-highlighted";
-    return MenuCheckboxItemDataAttributes2;
-  })({});
+  var checked = "data-checked";
+  var unchecked = "data-unchecked";
 
   // node_modules/@base-ui/react/menu/utils/stateAttributesMapping.mjs
   var itemMapping = {
     checked(value) {
       if (value) {
         return {
-          [MenuCheckboxItemDataAttributes.checked]: ""
+          [checked]: ""
         };
       }
       return {
-        [MenuCheckboxItemDataAttributes.unchecked]: ""
+        [unchecked]: ""
       };
     },
     ...transitionStatusMapping
@@ -46271,7 +46400,7 @@ This message will only show in development mode. It won't appear in production. 
     const disabled2 = disabledProp || rootDisabled;
     const highlighted = store.useState("isActive", listItem.index);
     const itemProps = store.useState("itemProps");
-    const [checked, setChecked] = useControlled({
+    const [checked2, setChecked] = useControlled({
       controlled: checkedProp,
       default: defaultChecked ?? false,
       name: "MenuCheckboxItem",
@@ -46293,13 +46422,13 @@ This message will only show in development mode. It won't appear in production. 
     const state = React61.useMemo(() => ({
       disabled: disabled2,
       highlighted,
-      checked
-    }), [disabled2, highlighted, checked]);
+      checked: checked2
+    }), [disabled2, highlighted, checked2]);
     function handleClick(event) {
       const details = createChangeEventDetails(reason_parts_exports.itemPress, event.nativeEvent, void 0, {
         preventUnmountOnClose: NOOP
       });
-      onCheckedChange?.(!checked, details);
+      onCheckedChange?.(!checked2, details);
       if (details.isCanceled) {
         return;
       }
@@ -46310,7 +46439,7 @@ This message will only show in development mode. It won't appear in production. 
       stateAttributesMapping: itemMapping,
       props: [itemProps, {
         role: "menuitemcheckbox",
-        "aria-checked": checked,
+        "aria-checked": checked2,
         onClick: handleClick
       }, elementProps, getItemProps],
       ref: [itemRef, forwardedRef, listItem.ref]
@@ -46340,6 +46469,8 @@ This message will only show in development mode. It won't appear in production. 
       setMounted
     } = useTransitionStatus(item.checked);
     useOpenChangeComplete({
+      batch: true,
+      enabled: !item.checked,
       open: item.checked,
       ref: indicatorRef,
       onComplete() {
@@ -46430,7 +46561,7 @@ This message will only show in development mode. It won't appear in production. 
       ref: forwardedRef,
       props: {
         id: id3,
-        role: "presentation",
+        "aria-hidden": true,
         ...elementProps
       }
     });
@@ -46579,7 +46710,7 @@ This message will only show in development mode. It won't appear in production. 
       align
     } = useMenuPositionerContext();
     const insideToolbar = useToolbarRootContext(true) != null;
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const transitionStatus = store.useState("transitionStatus");
     const popupProps = store.useState("popupProps");
     const mounted = store.useState("mounted");
@@ -46596,10 +46727,10 @@ This message will only show in development mode. It won't appear in production. 
     const openMethod = store.useState("openMethod");
     const isContextMenu = parent.type === "context-menu";
     useOpenChangeComplete({
-      open,
+      open: open2,
       ref: store.context.popupRef,
       onComplete() {
-        if (open) {
+        if (open2) {
           store.context.onOpenChangeComplete?.(true);
         }
       }
@@ -46622,7 +46753,7 @@ This message will only show in development mode. It won't appear in production. 
       transitionStatus,
       side,
       align,
-      open,
+      open: open2,
       nested: parent.type === "menu",
       instant: instantType
     };
@@ -46684,18 +46815,21 @@ This message will only show in development mode. It won't appear in production. 
       ...portalProps
     } = props;
     const {
-      store
+      store,
+      parent
     } = useMenuRootContext();
     const mounted = store.useState("mounted");
     const shouldRender = mounted || keepMounted;
     if (!shouldRender) {
       return null;
     }
+    const portalOwnerRole = parent.type === "menu" || parent.type === "menubar" ? "group" : void 0;
     return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(MenuPortalContext.Provider, {
       value: keepMounted,
       children: /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(FloatingPortal, {
         ref: forwardedRef,
-        ...portalProps
+        ...portalProps,
+        portalOwnerRole
       })
     });
   });
@@ -46732,7 +46866,7 @@ This message will only show in development mode. It won't appear in production. 
     const floatingRootContext = store.useState("floatingRootContext");
     const floatingTreeRoot = store.useState("floatingTreeRoot");
     const mounted = store.useState("mounted");
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const modal = store.useState("modal");
     const openMethod = store.useState("openMethod");
     const triggerElement = store.useState("activeTriggerElement");
@@ -46828,13 +46962,13 @@ This message will only show in development mode. It won't appear in production. 
     }, [floatingTreeRoot.events, store]);
     const closeTimeout = useTimeout();
     React72.useEffect(() => {
-      if (!open) {
+      if (!open2) {
         closeTimeout.clear();
       }
-    }, [open, closeTimeout]);
+    }, [open2, closeTimeout]);
     React72.useEffect(() => {
       function onItemHover(event) {
-        if (!open || event.nodeId !== store.select("floatingParentNodeId")) {
+        if (!open2 || event.nodeId !== store.select("floatingParentNodeId")) {
           return;
         }
         if (event.target && triggerElement && triggerElement !== event.target) {
@@ -46856,16 +46990,16 @@ This message will only show in development mode. It won't appear in production. 
       return () => {
         floatingTreeRoot.events.off("itemhover", onItemHover);
       };
-    }, [floatingTreeRoot.events, open, triggerElement, store, closeTimeout]);
+    }, [floatingTreeRoot.events, open2, triggerElement, store, closeTimeout]);
     React72.useEffect(() => {
       const eventDetails = {
-        open,
+        open: open2,
         nodeId: floatingNodeId,
         parentNodeId: floatingParentNodeId,
         reason: store.select("lastOpenChangeReason")
       };
       floatingTreeRoot.events.emit("menuopenchange", eventDetails);
-    }, [floatingTreeRoot.events, open, store, floatingNodeId, floatingParentNodeId]);
+    }, [floatingTreeRoot.events, open2, store, floatingNodeId, floatingParentNodeId]);
     useIsoLayoutEffect(() => {
       const currentTrigger = domReference;
       const previousTrigger = previousTriggerRef.current;
@@ -46885,7 +47019,7 @@ This message will only show in development mode. It won't appear in production. 
       return void 0;
     }, [domReference, runOnceAnimationsFinish, store]);
     const state = {
-      open,
+      open: open2,
       side: positioner.side,
       align: positioner.align,
       anchorHidden: positioner.anchorHidden,
@@ -46894,14 +47028,14 @@ This message will only show in development mode. It won't appear in production. 
     };
     const menubarModal = parent.type === "menubar" && parent.context.modal;
     const popupModal = modal && lastOpenChangeReason !== reason_parts_exports.triggerHover;
-    useAnchoredPopupScrollLock(open && (menubarModal || popupModal), openMethod === "touch", positionerElement, triggerElement);
+    useAnchoredPopupScrollLock(open2 && (menubarModal || popupModal), openMethod === "touch", positionerElement, triggerElement);
     const element = usePositioner(componentProps, state, {
       styles: positioner.positionerStyles,
       transitionStatus,
       props: elementProps,
       refs: [forwardedRef, store.useStateSetter("positionerElement")],
       hidden: !mounted,
-      inert: !open
+      inert: !open2
     });
     const shouldRenderBackdrop = mounted && parent.type !== "menu" && (parent.type !== "menubar" && modal && lastOpenChangeReason !== reason_parts_exports.triggerHover || parent.type === "menubar" && parent.context.modal);
     let backdropCutout = null;
@@ -46914,7 +47048,7 @@ This message will only show in development mode. It won't appear in production. 
       value: positioner,
       children: [shouldRenderBackdrop && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(InternalBackdrop, {
         ref: parent.type === "context-menu" || parent.type === "nested-context-menu" ? parent.context.internalBackdropRef : null,
-        inert: inertValue(!open),
+        inert: inertValue(!open2),
         cutout: backdropCutout
       }), /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(FloatingNode, {
         id: floatingNodeId,
@@ -47046,7 +47180,7 @@ This message will only show in development mode. It won't appear in production. 
     } = useMenuRadioGroupContext();
     const rootDisabled = store.useState("disabled");
     const disabled2 = disabledProp || groupDisabled || rootDisabled;
-    const checked = selectedValue === value;
+    const checked2 = selectedValue === value;
     const {
       getItemProps,
       itemRef
@@ -47063,8 +47197,8 @@ This message will only show in development mode. It won't appear in production. 
     const state = React76.useMemo(() => ({
       disabled: disabled2,
       highlighted,
-      checked
-    }), [disabled2, highlighted, checked]);
+      checked: checked2
+    }), [disabled2, highlighted, checked2]);
     function handleClick(event) {
       const details = createChangeEventDetails(reason_parts_exports.itemPress, event.nativeEvent, void 0, {
         preventUnmountOnClose: NOOP
@@ -47076,7 +47210,7 @@ This message will only show in development mode. It won't appear in production. 
       stateAttributesMapping: itemMapping,
       props: [itemProps, {
         role: "menuitemradio",
-        "aria-checked": checked,
+        "aria-checked": checked2,
         onClick: handleClick
       }, elementProps, getItemProps],
       ref: [itemRef, forwardedRef, listItem.ref]
@@ -47106,6 +47240,8 @@ This message will only show in development mode. It won't appear in production. 
       setMounted
     } = useTransitionStatus(item.checked);
     useOpenChangeComplete({
+      batch: true,
+      enabled: !item.checked,
       open: item.checked,
       ref: indicatorRef,
       onComplete() {
@@ -47192,11 +47328,10 @@ This message will only show in development mode. It won't appear in production. 
     }
   };
   var MenuStore = class extends ReactStore {
-    constructor(initialState2) {
-      super({
-        ...createInitialState(),
-        ...initialState2
-      }, createInitialContext(), selectors2);
+    constructor(initialState2, floatingId, nested = false) {
+      const triggerElements = new PopupTriggerMap();
+      const state = createInitialState(triggerElements, floatingId, nested, initialState2);
+      super(state, createInitialContext(triggerElements), selectors2);
       this.unsubscribeParentListener = this.observe("parent", (parent) => {
         this.unsubscribeParentListener?.();
         if (parent.type === "menu") {
@@ -47224,21 +47359,22 @@ This message will only show in development mode. It won't appear in production. 
         this.unsubscribeParentListener = null;
       });
     }
-    setOpen(open, eventDetails) {
+    setOpen(open2, eventDetails) {
       this.state.floatingRootContext.context.events.emit("setOpen", {
-        open,
+        open: open2,
         eventDetails
       });
     }
     unsubscribeParentListener = null;
   };
   function createNullMenuStore() {
-    const store = new NullStore(Object.freeze(createInitialState()), Object.freeze(createInitialContext()), selectors2);
+    const triggerElements = new PopupTriggerMap();
+    const store = new NullStore(Object.freeze(createInitialState(triggerElements)), Object.freeze(createInitialContext(triggerElements)), selectors2);
     return Object.assign(store, {
       setOpen: NOOP
     });
   }
-  function createInitialContext() {
+  function createInitialContext(triggerElements) {
     return {
       positionerRef: /* @__PURE__ */ React79.createRef(),
       popupRef: /* @__PURE__ */ React79.createRef(),
@@ -47257,12 +47393,12 @@ This message will only show in development mode. It won't appear in production. 
       triggerFocusTargetRef: /* @__PURE__ */ React79.createRef(),
       beforeContentFocusGuardRef: /* @__PURE__ */ React79.createRef(),
       onOpenChangeComplete: void 0,
-      triggerElements: new PopupTriggerMap()
+      triggerElements
     };
   }
-  function createInitialState() {
+  function createInitialState(triggerElements, floatingId, nested = false, initialState2) {
     return {
-      ...createInitialPopupStoreState(),
+      ...createInitialPopupStoreState(triggerElements, floatingId, nested),
       disabled: false,
       modal: true,
       openMethod: null,
@@ -47282,7 +47418,8 @@ This message will only show in development mode. It won't appear in production. 
       itemProps: EMPTY_OBJECT,
       keyboardEventRelay: void 0,
       closeDelay: 0,
-      adaptiveOrigin: void 0
+      adaptiveOrigin: void 0,
+      ...initialState2
     };
   }
 
@@ -47341,22 +47478,30 @@ This message will only show in development mode. It won't appear in production. 
         type: void 0
       };
     }, [contextMenuContext, parentMenuRootContext, menubarContext, isSubmenu]);
+    const rootId = useId5();
+    const floatingId = useId5();
+    const floatingParentNodeIdFromContext = useFloatingParentNodeId();
+    const parentMenuStore = parentFromContext.type === "menu" ? parentFromContext.store : void 0;
+    const animateInitialOpen = (openProp ?? defaultOpen) && parentMenuStore?.state.transitionStatus === "starting";
+    const seededInstantType = useRefWithInit(() => animateInitialOpen ? parentMenuStore?.state.instantType : void 0).current;
     const store = useMenuRootStore({
       open: defaultOpen,
       openProp,
       activeTriggerId: defaultTriggerIdProp,
       triggerIdProp,
-      parent: parentFromContext
-    });
+      parent: parentFromContext,
+      disabled: disabledProp,
+      highlightItemOnHover,
+      modal: parentFromContext.type === void 0 ? modalProp : void 0,
+      rootId,
+      instantType: seededInstantType
+    }, floatingId, floatingParentNodeIdFromContext != null);
     store.useControlledProp("openProp", openProp);
     store.useControlledProp("triggerIdProp", triggerIdProp);
     store.useContextCallback("onOpenChangeComplete", onOpenChangeComplete);
-    const rootId = useId5();
-    const floatingId = useId5();
     const floatingTreeRoot = store.useState("floatingTreeRoot");
     const floatingNodeIdFromContext = useFloatingNodeId(floatingTreeRoot);
-    const floatingParentNodeIdFromContext = useFloatingParentNodeId();
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const activeTriggerElement = store.useState("activeTriggerElement");
     const positionerElement = store.useState("positionerElement");
     const hoverEnabled = store.useState("hoverEnabled");
@@ -47380,7 +47525,7 @@ This message will only show in development mode. It won't appear in production. 
     const {
       openMethod,
       triggerProps: interactionTypeProps
-    } = useOpenInteractionType(open);
+    } = useOpenInteractionType(open2);
     store.useSyncedValues({
       disabled: disabledProp,
       highlightItemOnHover,
@@ -47390,10 +47535,38 @@ This message will only show in development mode. It won't appear in production. 
     });
     useImplicitActiveTrigger(store);
     const {
-      forceUnmount
-    } = useOpenStateTransitions(open, store, () => {
+      forceUnmount,
+      transitionStatus
+    } = useOpenStateTransitions(open2, store, () => {
       store.set("allowMouseEnter", false);
-    });
+    }, animateInitialOpen);
+    const runOnceAnimationsFinish = useAnimationsFinished(store.context.popupRef);
+    React81.useEffect(() => {
+      if (seededInstantType === void 0) {
+        return void 0;
+      }
+      const clearSeededInstantType = () => {
+        if (store.state.instantType === seededInstantType) {
+          store.set("instantType", void 0);
+        }
+      };
+      if (!open2) {
+        clearSeededInstantType();
+        return void 0;
+      }
+      if (transitionStatus !== void 0) {
+        return void 0;
+      }
+      if (store.context.popupRef.current == null) {
+        clearSeededInstantType();
+        return void 0;
+      }
+      const abortController = new AbortController();
+      runOnceAnimationsFinish(clearSeededInstantType, abortController.signal);
+      return () => {
+        abortController.abort();
+      };
+    }, [seededInstantType, open2, transitionStatus, runOnceAnimationsFinish, store]);
     useIsoLayoutEffect(() => {
       if (contextMenuContext && !parentMenuRootContext) {
         store.update({
@@ -47412,13 +47585,13 @@ This message will only show in development mode. It won't appear in production. 
       }
     }, [contextMenuContext, parentMenuRootContext, floatingNodeIdFromContext, floatingParentNodeIdFromContext, store]);
     React81.useEffect(() => {
-      if (!open) {
+      if (!open2) {
         openEventRef.current = null;
       }
       if (parent.type !== "context-menu") {
         return;
       }
-      if (!open) {
+      if (!open2) {
         allowOutsidePressDismissalTimeout.clear();
         allowOutsidePressDismissalRef.current = false;
         return;
@@ -47426,18 +47599,18 @@ This message will only show in development mode. It won't appear in production. 
       allowOutsidePressDismissalTimeout.start(500, () => {
         allowOutsidePressDismissalRef.current = true;
       });
-    }, [allowOutsidePressDismissalTimeout, open, parent.type]);
+    }, [allowOutsidePressDismissalTimeout, open2, parent.type]);
     useIsoLayoutEffect(() => {
-      if (!open && !hoverEnabled) {
+      if (!open2 && !hoverEnabled) {
         store.set("hoverEnabled", true);
       }
-    }, [open, hoverEnabled, store]);
+    }, [open2, hoverEnabled, store]);
     const setOpen = useStableCallback((nextOpen, eventDetails) => {
       const reason = eventDetails.reason;
       if (!nextOpen && !store.select("open")) {
         return;
       }
-      if (open === nextOpen && eventDetails.trigger === activeTriggerElement && lastOpenChangeReason === reason) {
+      if (open2 === nextOpen && eventDetails.trigger === activeTriggerElement && lastOpenChangeReason === reason) {
         return;
       }
       const shouldPreventUnmountOnClose = attachPreventUnmountOnClose(eventDetails);
@@ -47464,23 +47637,21 @@ This message will only show in development mode. It won't appear in production. 
       }
       const isKeyboardClick = (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.itemPress) && nativeEvent.detail === 0;
       const isDismissClose = !nextOpen && (reason === reason_parts_exports.escapeKey || reason == null);
-      const updatedState = {
-        open: nextOpen,
-        openChangeReason: reason
-      };
       openEventRef.current = eventDetails.event;
-      setPopupOpenState(updatedState, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
-      store.update(updatedState);
+      const popupOpenState = createPopupOpenState(store.state, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
+      popupOpenState.openChangeReason = reason;
       if (parent.type === "menubar" && (reason === reason_parts_exports.triggerFocus || reason === reason_parts_exports.focusOut || reason === reason_parts_exports.triggerHover || reason === reason_parts_exports.listNavigation || reason === reason_parts_exports.siblingOpen)) {
-        store.set("instantType", "group");
+        popupOpenState.instantType = "group";
       } else if (isKeyboardClick || isDismissClose) {
-        store.set("instantType", isKeyboardClick ? "click" : "dismiss");
+        popupOpenState.instantType = isKeyboardClick ? "click" : "dismiss";
       } else {
-        store.set("instantType", void 0);
+        popupOpenState.instantType = void 0;
       }
+      store.update(popupOpenState);
     });
     const floatingRootContext = useSyncedFloatingRootContext({
       popupStore: store,
+      floatingRootContext: store.state.floatingRootContext,
       floatingId,
       nested: floatingParentNodeIdFromContext != null,
       onOpenChange: setOpen
@@ -47556,7 +47727,7 @@ This message will only show in development mode. It won't appear in production. 
       activeIndex,
       resetMs: TYPEAHEAD_RESET_MS,
       onMatch: (index2) => {
-        if (open && index2 !== activeIndex) {
+        if (open2 && index2 !== activeIndex) {
           store.set("activeIndex", index2);
         }
       },
@@ -47569,18 +47740,26 @@ This message will only show in development mode. It won't appear in production. 
         }
       }, interactionTypeProps);
       mergedProps["aria-haspopup"] = "menu";
-      mergedProps["aria-expanded"] = open;
+      mergedProps["aria-expanded"] = open2;
       return mergedProps;
-    }, [store, typeahead.reference, listNavigation2.reference, dismiss.reference, interactionTypeProps, open]);
+    }, [store, typeahead.reference, listNavigation2.reference, dismiss.reference, interactionTypeProps, open2]);
     const inactiveTriggerProps = React81.useMemo(() => {
       const mergedProps = mergeProps2(listNavigation2.trigger, dismiss.trigger, interactionTypeProps);
       mergedProps["aria-haspopup"] = "menu";
       mergedProps["aria-expanded"] = false;
       return mergedProps;
     }, [listNavigation2.trigger, dismiss.trigger, interactionTypeProps]);
+    useRefWithInit(() => {
+      store.update({
+        inactiveTriggerProps
+      });
+      return null;
+    });
     const popupProps = React81.useMemo(() => mergeProps2(FOCUSABLE_POPUP_PROPS, {
       id: floatingId,
       role: "menu",
+      // `menu` is implicitly vertical, so only the non-default value needs to be rendered.
+      "aria-orientation": orientation === "horizontal" ? "horizontal" : void 0,
       "aria-labelledby": activeTriggerElement?.id,
       onMouseMove() {
         store.set("allowMouseEnter", true);
@@ -47599,7 +47778,7 @@ This message will only show in development mode. It won't appear in production. 
           relay(event);
         }
       }
-    }, typeahead.floating, listNavigation2.floating, dismiss.floating), [activeTriggerElement, floatingId, parent.type, store, typeahead.floating, listNavigation2.floating, dismiss.floating]);
+    }, typeahead.floating, listNavigation2.floating, dismiss.floating), [activeTriggerElement, floatingId, orientation, parent.type, store, typeahead.floating, listNavigation2.floating, dismiss.floating]);
     const itemProps = listNavigation2.item ?? EMPTY_OBJECT;
     usePopupInteractionProps(store, {
       floatingRootContext,
@@ -47630,8 +47809,8 @@ This message will only show in development mode. It won't appear in production. 
     return content;
   });
   if (true) MenuRoot.displayName = "MenuRoot";
-  function useMenuRootStore(initialState2) {
-    const store = useRefWithInit(() => new MenuStore(initialState2)).current;
+  function useMenuRootStore(initialState2, floatingId, nested) {
+    const store = useRefWithInit(() => new MenuStore(initialState2, floatingId, nested)).current;
     return store;
   }
 
@@ -47776,7 +47955,7 @@ This message will only show in development mode. It won't appear in production. 
     const {
       enabled = true,
       mouseDownAction,
-      open
+      open: open2
     } = params;
     const ignoreClickRef = React85.useRef(false);
     return React85.useMemo(() => {
@@ -47785,7 +47964,7 @@ This message will only show in development mode. It won't appear in production. 
       }
       return {
         onMouseDown: (event) => {
-          if (mouseDownAction === "open" && !open || mouseDownAction === "close" && open) {
+          if (mouseDownAction === "open" && !open2 || mouseDownAction === "close" && open2) {
             ignoreClickRef.current = true;
             ownerDocument(event.currentTarget).addEventListener("click", () => {
               ignoreClickRef.current = false;
@@ -47801,7 +47980,7 @@ This message will only show in development mode. It won't appear in production. 
           }
         }
       };
-    }, [enabled, mouseDownAction, open]);
+    }, [enabled, mouseDownAction, open2]);
   }
 
   // node_modules/@base-ui/react/menu/trigger/MenuTrigger.mjs
@@ -48001,20 +48180,20 @@ This message will only show in development mode. It won't appear in production. 
     }, thisTriggerId);
   });
   if (true) MenuTrigger.displayName = "MenuTrigger";
-  function useStickIfOpen(open, openReason) {
+  function useStickIfOpen(open2, openReason) {
     const stickIfOpenTimeout = useTimeout();
     const [stickIfOpen, setStickIfOpen] = React86.useState(false);
     useIsoLayoutEffect(() => {
-      if (open && openReason === reason_parts_exports.triggerHover) {
+      if (open2 && openReason === reason_parts_exports.triggerHover) {
         setStickIfOpen(true);
         stickIfOpenTimeout.start(PATIENT_CLICK_THRESHOLD, () => {
           setStickIfOpen(false);
         });
-      } else if (!open) {
+      } else if (!open2) {
         stickIfOpenTimeout.clear();
         setStickIfOpen(false);
       }
-    }, [open, openReason, stickIfOpenTimeout]);
+    }, [open2, openReason, stickIfOpenTimeout]);
     return stickIfOpen;
   }
   function useMenuParent() {
@@ -48078,6 +48257,10 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
+  // node_modules/@base-ui/react/utils/CommonPopupCssVars.mjs
+  var popupWidth = "--popup-width";
+  var popupHeight = "--popup-height";
+
   // node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
   function usePopupAutoResize(parameters) {
     const {
@@ -48114,8 +48297,8 @@ This message will only show in development mode. It won't appear in production. 
       const restorePopupTransform = overrideElementStyle(popupElement, "transform", "none");
       const restorePopupScale = overrideElementStyle(popupElement, "scale", "1");
       const restorePositionerAvailableSize = applyElementStyles(positionerElement, {
-        "--available-width": "max-content",
-        "--available-height": "max-content"
+        [availableWidth]: "max-content",
+        [availableHeight]: "max-content"
       });
       function restoreMeasurementOverrides() {
         restorePopupPosition();
@@ -48152,8 +48335,8 @@ This message will only show in development mode. It won't appear in production. 
       animationFrame.request(() => {
         setPopupCssSize(popupElement, newDimensions);
         runOnceAnimationsFinish(() => {
-          popupElement.style.setProperty("--popup-width", "auto");
-          popupElement.style.setProperty("--popup-height", "auto");
+          popupElement.style.setProperty(popupWidth, "auto");
+          popupElement.style.setProperty(popupHeight, "auto");
         }, abortController.signal);
       });
       return () => {
@@ -48195,14 +48378,14 @@ This message will only show in development mode. It won't appear in production. 
   function setPopupCssSize(popupElement, size4) {
     const width = size4 === "auto" ? "auto" : `${size4.width}px`;
     const height = size4 === "auto" ? "auto" : `${size4.height}px`;
-    popupElement.style.setProperty("--popup-width", width);
-    popupElement.style.setProperty("--popup-height", height);
+    popupElement.style.setProperty(popupWidth, width);
+    popupElement.style.setProperty(popupHeight, height);
   }
   function setPositionerCssSize(positionerElement, size4) {
     const width = size4 === "max-content" ? "max-content" : `${size4.width}px`;
     const height = size4 === "max-content" ? "max-content" : `${size4.height}px`;
-    positionerElement.style.setProperty("--positioner-width", width);
-    positionerElement.style.setProperty("--positioner-height", height);
+    positionerElement.style.setProperty(positionerWidth, width);
+    positionerElement.style.setProperty(positionerHeight, height);
   }
 
   // node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
@@ -48290,11 +48473,14 @@ This message will only show in development mode. It won't appear in production. 
     }
   };
 
+  // node_modules/@base-ui/react/utils/CommonViewportDataAttributes.mjs
+  var activationDirection = "data-activation-direction";
+
   // node_modules/@base-ui/react/utils/usePopupViewport.mjs
   var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
   var popupViewportStateMapping = {
     activationDirection: (value) => value ? {
-      "data-activation-direction": value
+      [activationDirection]: value
     } : null
   };
   function usePopupViewport(parameters) {
@@ -48306,12 +48492,12 @@ This message will only show in development mode. It won't appear in production. 
     const direction = useDirection();
     const activeTrigger = store.useState("activeTriggerElement");
     const activeTriggerId = store.useState("activeTriggerId");
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const payload = store.useState("payload");
     const mounted = store.useState("mounted");
     const popupElement = store.useState("popupElement");
     const positionerElement = store.useState("positionerElement");
-    const previousActiveTrigger = usePreviousValue(open ? activeTrigger : null);
+    const previousActiveTrigger = usePreviousValue(open2 ? activeTrigger : null);
     const currentContentKey = usePopupContentKey(activeTriggerId, payload);
     const capturedNodeRef = React90.useRef(null);
     const [previousContentNode, setPreviousContentNode] = React90.useState(null);
@@ -48354,10 +48540,10 @@ This message will only show in development mode. It won't appear in production. 
     });
     const lastHandledTriggerRef = React90.useRef(null);
     useIsoLayoutEffect(() => {
-      if (!open || !mounted) {
+      if (!open2 || !mounted) {
         lastHandledTriggerRef.current = null;
       }
-    }, [open, mounted]);
+    }, [open2, mounted]);
     useIsoLayoutEffect(() => {
       if (activeTrigger && previousActiveTrigger && activeTrigger !== previousActiveTrigger && lastHandledTriggerRef.current !== activeTrigger && capturedNodeRef.current) {
         setPreviousContentNode(capturedNodeRef.current);
@@ -48407,8 +48593,8 @@ This message will only show in development mode. It won't appear in production. 
           ref: previousContainerRef,
           style: {
             ...previousContentDimensions ? {
-              "--popup-width": `${previousContentDimensions.width}px`,
-              "--popup-height": `${previousContentDimensions.height}px`
+              [popupWidth]: `${previousContentDimensions.width}px`,
+              [popupHeight]: `${previousContentDimensions.height}px`
             } : null,
             position: "absolute"
           },
@@ -48605,27 +48791,30 @@ This message will only show in development mode. It won't appear in production. 
       store
     } = useMenuRootContext();
     const thisTriggerId = useBaseUiId(idProp);
-    const open = store.useState("open");
+    const open2 = store.useState("open");
     const floatingRootContext = store.useState("floatingRootContext");
     const floatingTreeRoot = store.useState("floatingTreeRoot");
     const popupId = store.useState("triggerPopupId", thisTriggerId);
     const baseRegisterTrigger = useTriggerRegistration(thisTriggerId, store);
-    const registerTrigger = React93.useCallback((element2) => {
-      const cleanup = baseRegisterTrigger(element2);
+    const registerTrigger = useStableCallback((element2) => {
+      baseRegisterTrigger(element2);
       if (element2 !== null && store.select("open") && store.select("activeTriggerId") == null) {
         store.update({
-          activeTriggerId: thisTriggerId,
+          activeTriggerId: thisTriggerId ?? null,
           activeTriggerElement: element2,
           closeDelay
         });
       }
-      return cleanup;
-    }, [baseRegisterTrigger, closeDelay, store, thisTriggerId]);
+    });
     const triggerElementRef = React93.useRef(null);
     const handleTriggerElementRef = React93.useCallback((el) => {
       triggerElementRef.current = el;
       store.set("activeTriggerElement", el);
     }, [store]);
+    useIsoLayoutEffect(() => {
+      registerTrigger(triggerElementRef.current);
+      return () => registerTrigger(null);
+    }, [registerTrigger, thisTriggerId, store]);
     store.useSyncedValue("closeDelay", closeDelay);
     const parentMenuStore = submenuRootContext.parentMenu;
     const rootDisabled = store.useState("disabled");
@@ -48698,12 +48887,12 @@ This message will only show in development mode. It won't appear in production. 
     const state = {
       disabled: disabled2,
       highlighted,
-      open
+      open: open2
     };
     const openMethod = store.useState("openMethod");
     const lastOpenChangeReason = store.useState("lastOpenChangeReason");
     const openedByKeyboard = lastOpenChangeReason === reason_parts_exports.listNavigation || openMethod === "keyboard";
-    const shouldOmitExpanded = open && openedByKeyboard && parts_exports.screenReader.voiceOver;
+    const shouldOmitExpanded = open2 && openedByKeyboard && parts_exports.screenReader.voiceOver;
     const element = useRenderElement("div", componentProps, {
       state,
       stateAttributesMapping: triggerOpenStateMapping,
@@ -48720,7 +48909,7 @@ This message will only show in development mode. It won't appear in production. 
         shouldOmitExpanded ? VOICE_OVER_EXPANDED_PROPS : void 0,
         {
           "aria-controls": popupId,
-          tabIndex: open || highlighted ? 0 : -1,
+          tabIndex: open2 || highlighted ? 0 : -1,
           onBlur() {
             if (highlighted) {
               parentMenuStore.set("activeIndex", null);
@@ -51015,7 +51204,7 @@ This message will only show in development mode. It won't appear in production. 
       defaultOpen ?? false
     );
     const [trigger, setTrigger] = (0, import_element130.useState)(null);
-    const open = openProp ?? uncontrolledOpen;
+    const open2 = openProp ?? uncontrolledOpen;
     const handleIframePointerDown = (0, import_element130.useCallback)(
       (event) => {
         if (trigger && !isInsideCurrentMenu(event, trigger)) {
@@ -51025,7 +51214,7 @@ This message will only show in development mode. It won't appear in production. 
       [resolvedActionsRef, trigger]
     );
     useCloseOnIframePointerDown({
-      enabled: open && modal === false && !disabled2 && trigger !== null,
+      enabled: open2 && modal === false && !disabled2 && trigger !== null,
       onPointerDown: handleIframePointerDown,
       ownerDocument: trigger?.ownerDocument ?? null
     });
@@ -51615,7 +51804,7 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // node_modules/date-fns/set.js
-  function set3(date, values, options2) {
+  function set(date, values, options2) {
     let _date = toDate(date, options2?.in);
     if (isNaN(+_date)) return constructFrom(options2?.in || date, NaN);
     if (values.year != null) _date.setFullYear(values.year);
@@ -56101,7 +56290,7 @@ This message will only show in development mode. It won't appear in production. 
     return Day22;
   })({});
   var inRange = (date, min2, max2) => (isEqual(date, min2) || isAfter(date, min2)) && (isEqual(date, max2) || isBefore(date, max2));
-  var clearTime2 = (date) => set3(date, {
+  var clearTime2 = (date) => set(date, {
     hours: 0,
     minutes: 0,
     seconds: 0,
@@ -57772,7 +57961,7 @@ This message will only show in development mode. It won't appear in production. 
       disableOpenOnArrowDown = false,
       text,
       noIcons,
-      open,
+      open: open2,
       defaultOpen,
       onToggle: onToggleProp,
       // Context
@@ -57874,7 +58063,7 @@ This message will only show in development mode. It won't appear in production. 
           }, [indexOfSet, indexOfControl].join())))]
         });
       },
-      open,
+      open: open2,
       defaultOpen,
       onToggle: onToggleProp
     });
@@ -58871,7 +59060,7 @@ This message will only show in development mode. It won't appear in production. 
   function UnforwardedFormToggle(props, ref) {
     const {
       className,
-      checked,
+      checked: checked2,
       id: id3,
       disabled: disabled2,
       onChange = noop17,
@@ -58879,7 +59068,7 @@ This message will only show in development mode. It won't appear in production. 
       ...additionalProps
     } = props;
     const wrapperClasses = clsx_default("components-form-toggle", className, {
-      "is-checked": checked,
+      "is-checked": checked2,
       "is-disabled": disabled2
     });
     return /* @__PURE__ */ (0, import_jsx_runtime260.jsxs)("span", {
@@ -58888,7 +59077,7 @@ This message will only show in development mode. It won't appear in production. 
         className: "components-form-toggle__input",
         id: id3,
         type: "checkbox",
-        checked,
+        checked: checked2,
         onChange,
         disabled: disabled2,
         onClick: (event) => {
@@ -60155,8 +60344,8 @@ This message will only show in development mode. It won't appear in production. 
         result.push(path);
         path = "";
       }
-      var open = tryConsume("OPEN");
-      if (open) {
+      var open2 = tryConsume("OPEN");
+      if (open2) {
         var prefix2 = consumeText();
         var name_1 = tryConsume("NAME") || "";
         var pattern_1 = tryConsume("PATTERN") || "";
@@ -61803,7 +61992,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedRadioGroup({
     label,
-    checked,
+    checked: checked2,
     defaultChecked,
     disabled: disabled2,
     onChange,
@@ -61811,7 +62000,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...props
   }, ref) {
     const radioStore = useRadioStore({
-      value: checked,
+      value: checked2,
       defaultValue: defaultChecked,
       setValue: (newValue) => {
         onChange?.(newValue ?? void 0);
@@ -64280,7 +64469,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
   function UnforwardedToggleControl({
     label,
-    checked,
+    checked: checked2,
     help,
     className,
     onChange,
@@ -64297,8 +64486,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     let describedBy, helpLabel;
     if (help) {
       if (typeof help === "function") {
-        if (checked !== void 0) {
-          helpLabel = help(checked);
+        if (checked2 !== void 0) {
+          helpLabel = help(checked2);
         }
       } else {
         helpLabel = help;
@@ -64319,7 +64508,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         spacing: 2,
         children: [/* @__PURE__ */ (0, import_jsx_runtime305.jsx)(form_toggle_default, {
           id: id3,
-          checked,
+          checked: checked2,
           onChange: onChangeToggle,
           "aria-describedby": describedBy,
           disabled: disabled2,
@@ -66967,7 +67156,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       children,
       defaultOpen = false,
-      open,
+      open: open2,
       onOpenChange,
       placement,
       // From internal components context
@@ -66985,7 +67174,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }
     const menuStore = useMenuStore({
       parent: parentContext?.store,
-      open,
+      open: open2,
       defaultOpen,
       placement: computedPlacement,
       focusLoop: true,

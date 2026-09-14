@@ -404,7 +404,7 @@ var wp;
             },
             [subscribe5, value, getSnapshot2]
           );
-          useEffect139(
+          useEffect138(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe5(function() {
@@ -430,7 +430,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React208 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState178 = React208.useState, useEffect139 = React208.useEffect, useLayoutEffect21 = React208.useLayoutEffect, useDebugValue2 = React208.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React208 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState178 = React208.useState, useEffect138 = React208.useEffect, useLayoutEffect21 = React208.useLayoutEffect, useDebugValue2 = React208.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React208.useSyncExternalStore ? React208.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -458,7 +458,7 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React208 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef166 = React208.useRef, useEffect139 = React208.useEffect, useMemo190 = React208.useMemo, useDebugValue2 = React208.useDebugValue;
+        var React208 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef166 = React208.useRef, useEffect138 = React208.useEffect, useMemo190 = React208.useMemo, useDebugValue2 = React208.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe5, getSnapshot2, getServerSnapshot2, selector2, isEqual2) {
           var instRef = useRef166(null);
           if (null === instRef.current) {
@@ -501,7 +501,7 @@ var wp;
             [getSnapshot2, getServerSnapshot2, selector2, isEqual2]
           );
           var value = useSyncExternalStore7(subscribe5, instRef[0], instRef[1]);
-          useEffect139(
+          useEffect138(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -2516,7 +2516,7 @@ var wp;
       (part) => LEGACY_STYLE_STATE_ALIASES[part] ?? part
     );
     return legacyPathParts.some(
-      (part, index2) => part !== pathParts[index2]
+      (part, index3) => part !== pathParts[index3]
     ) ? legacyPathParts.join(".") : void 0;
   }
 
@@ -7485,20 +7485,31 @@ var wp;
   // node_modules/@base-ui/utils/useControlled.mjs
   var React = __toESM(require_react(), 1);
 
-  // node_modules/@base-ui/utils/error.mjs
-  var set;
+  // node_modules/@base-ui/utils/createLogOnce.mjs
+  var loggedMessages;
   if (true) {
-    set = /* @__PURE__ */ new Set();
+    loggedMessages = /* @__PURE__ */ new Set();
   }
-  function error(...messages) {
-    if (true) {
-      const messageKey = messages.join(" ");
-      if (!set.has(messageKey)) {
-        set.add(messageKey);
-        console.error(`Base UI: ${messageKey}`);
+  function createLogOnce(severity, prefix2) {
+    return function logOnce(...messages) {
+      if (true) {
+        const message2 = messages.join(" ");
+        const output = prefix2 ? `${prefix2}: ${message2}` : message2;
+        const key = `${severity}:${output}`;
+        if (!loggedMessages.has(key)) {
+          loggedMessages.add(key);
+          if (severity === "warn") {
+            console.warn(output);
+          } else {
+            console.error(output);
+          }
+        }
       }
-    }
+    };
   }
+
+  // node_modules/@base-ui/utils/error.mjs
+  var error = createLogOnce("error", "Base UI");
 
   // node_modules/@base-ui/utils/useControlled.mjs
   function useControlled({
@@ -7511,7 +7522,7 @@ var wp;
       current: isControlled
     } = React.useRef(controlled !== void 0);
     const [valueState, setValue] = React.useState(defaultProp);
-    const value = isControlled ? controlled : valueState;
+    const value = isControlled && controlled !== void 0 ? controlled : valueState;
     if (true) {
       React.useEffect(() => {
         if (isControlled !== (controlled !== void 0)) {
@@ -7612,19 +7623,13 @@ var wp;
   }
 
   // node_modules/@base-ui/utils/warn.mjs
-  var set2;
-  if (true) {
-    set2 = /* @__PURE__ */ new Set();
+  var warn = createLogOnce("warn", "Base UI");
+
+  // node_modules/@base-ui/utils/empty.mjs
+  function NOOP() {
   }
-  function warn(...messages) {
-    if (true) {
-      const messageKey = messages.join(" ");
-      if (!set2.has(messageKey)) {
-        set2.add(messageKey);
-        console.warn(`Base UI: ${messageKey}`);
-      }
-    }
-  }
+  var EMPTY_ARRAY3 = Object.freeze([]);
+  var EMPTY_OBJECT2 = Object.freeze({});
 
   // node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
   var React6 = __toESM(require_react(), 1);
@@ -7668,7 +7673,7 @@ var wp;
     const map = useRefWithInit(createMap).current;
     const nextIndexRef = React6.useRef(0);
     const isDirtyRef = React6.useRef(true);
-    const itemsRef = React6.useRef([]);
+    const itemsRef = React6.useRef(null);
     const mutationObserverRef = React6.useRef(null);
     const scheduleMapUpdate = useStableCallback(() => {
       if (isDirtyRef.current) {
@@ -7742,14 +7747,22 @@ var wp;
     const flush2 = useStableCallback(() => {
       const [items, automaticNodes] = getCompositeListSnapshot(map);
       const nextMap = syncRefs(items);
+      const previousItems = itemsRef.current;
+      const changed = !previousItems || previousItems.length !== items.length || items.some((item, index3) => {
+        const previousItem = previousItems[index3];
+        return item.index !== previousItem.index || item.element !== previousItem.element || item.registration.index !== previousItem.registration.index || item.registration.metadata !== previousItem.registration.metadata;
+      });
       observe(automaticNodes);
       itemsRef.current = items;
       isDirtyRef.current = false;
+      if (!changed) {
+        return;
+      }
       listeners2.forEach((listener) => listener(nextMap));
       onMapChange(nextMap);
     });
     useIsoLayoutEffect(() => {
-      if (!isDirtyRef.current) {
+      if (!isDirtyRef.current && itemsRef.current) {
         syncRefs(itemsRef.current);
       }
       return () => {
@@ -7801,16 +7814,16 @@ var wp;
       if (!node.isConnected) {
         return;
       }
-      const index2 = registration.index;
+      const index3 = registration.index;
       const item = {
-        index: index2 ?? -1,
+        index: index3 ?? -1,
         element: node,
         registration
       };
-      if (index2 === null) {
+      if (index3 === null) {
         automaticItems.push(item);
-      } else if (index2 >= 0) {
-        reservedIndices.add(index2);
+      } else if (index3 >= 0) {
+        reservedIndices.add(index3);
         items.push(item);
       }
     });
@@ -7879,7 +7892,7 @@ var wp;
     return forkRef.refs[0] !== a2 || forkRef.refs[1] !== b2 || forkRef.refs[2] !== c6 || forkRef.refs[3] !== d2;
   }
   function didChangeN(forkRef, newRefs) {
-    return forkRef.refs.length !== newRefs.length || forkRef.refs.some((ref, index2) => ref !== newRefs[index2]);
+    return forkRef.refs.length !== newRefs.length || forkRef.refs.some((ref, index3) => ref !== newRefs[index3]);
   }
   function update(forkRef, refs) {
     forkRef.refs = refs;
@@ -7978,12 +7991,6 @@ var wp;
     }
     return void 0;
   }
-
-  // node_modules/@base-ui/utils/empty.mjs
-  function NOOP() {
-  }
-  var EMPTY_ARRAY3 = Object.freeze([]);
-  var EMPTY_OBJECT2 = Object.freeze({});
 
   // node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
   function getStateAttributesProps(state2, customMapping) {
@@ -8174,19 +8181,21 @@ var wp;
   // node_modules/@base-ui/react/internals/useRenderElement.mjs
   var import_react = __toESM(require_react(), 1);
   function useRenderElement(element, componentProps, params = {}) {
-    const renderProp = componentProps.render;
-    const outProps = useRenderElementProps(componentProps, params);
+    let renderProp = componentProps.render;
+    if (params.enabled !== false) {
+      renderProp = unwrapLazyRenderProp(renderProp);
+    }
+    const outProps = useRenderElementProps(componentProps, params, renderProp);
     if (params.enabled === false) {
       return null;
     }
     const state2 = params.state ?? EMPTY_OBJECT2;
     return evaluateRenderProp(element, renderProp, outProps, state2);
   }
-  function useRenderElementProps(componentProps, params = {}) {
+  function useRenderElementProps(componentProps, params, renderProp) {
     const {
       className: classNameProp,
-      style: styleProp,
-      render: renderProp
+      style: styleProp
     } = componentProps;
     const {
       state: state2 = EMPTY_OBJECT2,
@@ -8229,6 +8238,13 @@ var wp;
   var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
   var COMPONENT_IDENTIFIER_PATTERN = /^[A-Z][A-Za-z0-9$]*$/;
   var LOWERCASE_CHARACTER_PATTERN = /[a-z]/;
+  function unwrapLazyRenderProp(render5) {
+    if (render5?.$$typeof !== REACT_LAZY_TYPE) {
+      return render5;
+    }
+    const unwrapped = React9.Children.toArray(render5)[0];
+    return /* @__PURE__ */ React9.isValidElement(unwrapped) ? unwrapped : render5;
+  }
   function evaluateRenderProp(element, render5, props, state2) {
     if (render5) {
       if (typeof render5 === "function") {
@@ -8239,17 +8255,12 @@ var wp;
       }
       const mergedProps = mergeProps(props, render5.props);
       mergedProps.ref = props.ref;
-      let newElement = render5;
-      if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-        const children = React9.Children.toArray(render5);
-        newElement = children[0];
-      }
       if (true) {
-        if (!/* @__PURE__ */ React9.isValidElement(newElement)) {
+        if (!/* @__PURE__ */ React9.isValidElement(render5)) {
           throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
         }
       }
-      return /* @__PURE__ */ React9.cloneElement(newElement, mergedProps);
+      return /* @__PURE__ */ React9.cloneElement(render5, mergedProps);
     }
     if (element) {
       if (typeof element === "string") {
@@ -8481,11 +8492,14 @@ var wp;
       return id;
     }
     cancel(id) {
-      const index2 = id - this.startId;
-      if (index2 < 0 || index2 >= this.callbacks.length) {
+      const index3 = id - this.startId;
+      if (index3 < 0 || index3 >= this.callbacks.length) {
         return;
       }
-      this.callbacks[index2] = null;
+      if (this.callbacks[index3] === null) {
+        return;
+      }
+      this.callbacks[index3] = null;
       this.callbacksCount -= 1;
     }
   };
@@ -8528,21 +8542,21 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-  function useTransitionStatus(open, enableIdleState = false, deferEndingState = false) {
-    const [transitionStatus, setTransitionStatus] = React12.useState(open && enableIdleState ? "idle" : void 0);
-    const [mounted, setMounted] = React12.useState(open);
-    if (open && !mounted) {
+  function useTransitionStatus(open3, enableIdleState = false, deferEndingState = false, animateInitialOpen = false) {
+    const [transitionStatus, setTransitionStatus] = React12.useState(open3 && enableIdleState ? "idle" : void 0);
+    const [mounted, setMounted] = React12.useState(open3 && !animateInitialOpen);
+    if (open3 && !mounted) {
       setMounted(true);
       setTransitionStatus("starting");
     }
-    if (!open && mounted && transitionStatus !== "ending" && !deferEndingState) {
+    if (!open3 && mounted && transitionStatus !== "ending" && !deferEndingState) {
       setTransitionStatus("ending");
     }
-    if (!open && !mounted && transitionStatus === "ending") {
+    if (!open3 && !mounted && transitionStatus === "ending") {
       setTransitionStatus(void 0);
     }
     useIsoLayoutEffect(() => {
-      if (!open && mounted && transitionStatus !== "ending" && deferEndingState) {
+      if (!open3 && mounted && transitionStatus !== "ending" && deferEndingState) {
         const frame = AnimationFrame.request(() => {
           setTransitionStatus("ending");
         });
@@ -8551,9 +8565,9 @@ var wp;
         };
       }
       return void 0;
-    }, [open, mounted, transitionStatus, deferEndingState]);
+    }, [open3, mounted, transitionStatus, deferEndingState]);
     useIsoLayoutEffect(() => {
-      if (!open || enableIdleState) {
+      if (!open3 || enableIdleState) {
         return void 0;
       }
       const frame = AnimationFrame.request(() => {
@@ -8562,12 +8576,12 @@ var wp;
       return () => {
         AnimationFrame.cancel(frame);
       };
-    }, [enableIdleState, open]);
+    }, [enableIdleState, open3]);
     useIsoLayoutEffect(() => {
-      if (!open || !enableIdleState) {
+      if (!open3 || !enableIdleState) {
         return void 0;
       }
-      if (open && mounted && transitionStatus !== "idle") {
+      if (open3 && mounted && transitionStatus !== "idle") {
         setTransitionStatus("starting");
       }
       const frame = AnimationFrame.request(() => {
@@ -8576,7 +8590,7 @@ var wp;
       return () => {
         AnimationFrame.cancel(frame);
       };
-    }, [enableIdleState, open, mounted, transitionStatus]);
+    }, [enableIdleState, open3, mounted, transitionStatus]);
     return {
       mounted,
       setMounted,
@@ -8588,11 +8602,11 @@ var wp;
   function useCollapsibleRoot(parameters) {
     const {
       open: openParam,
-      defaultOpen,
+      defaultOpen = false,
       onOpenChange,
       disabled: disabled2
     } = parameters;
-    const [open, setOpen] = useControlled({
+    const [open3, setOpen] = useControlled({
       controlled: openParam,
       default: defaultOpen,
       name: "Collapsible",
@@ -8602,12 +8616,12 @@ var wp;
       mounted,
       setMounted,
       transitionStatus
-    } = useTransitionStatus(open, true, true);
+    } = useTransitionStatus(open3, true, true);
     const defaultPanelId = useBaseUiId();
     const [registeredPanelId, setPanelIdState] = React13.useState();
     const panelId = registeredPanelId === null ? void 0 : registeredPanelId ?? defaultPanelId;
     const handleTrigger = useStableCallback((event) => {
-      const nextOpen = !open;
+      const nextOpen = !open3;
       const eventDetails = createChangeEventDetails(reason_parts_exports.triggerPress, event.nativeEvent);
       onOpenChange(nextOpen, eventDetails);
       if (eventDetails.isCanceled) {
@@ -8620,13 +8634,13 @@ var wp;
       disabled: disabled2,
       handleTrigger,
       mounted,
-      open,
+      open: open3,
       panelId,
       setMounted,
       setOpen,
       setPanelIdState,
       transitionStatus
-    }), [defaultPanelId, disabled2, handleTrigger, mounted, open, panelId, setMounted, setOpen, setPanelIdState, transitionStatus]);
+    }), [defaultPanelId, disabled2, handleTrigger, mounted, open3, panelId, setMounted, setOpen, setPanelIdState, transitionStatus]);
   }
 
   // node_modules/@base-ui/react/collapsible/root/CollapsibleRootContext.mjs
@@ -8666,7 +8680,7 @@ var wp;
       }
       return indexRef.current;
     } : -1);
-    const index2 = externalIndex ?? internalIndex;
+    const index3 = externalIndex ?? internalIndex;
     const componentRef = React15.useRef(null);
     const ref = React15.useCallback((node) => {
       const previousNode = componentRef.current;
@@ -8696,21 +8710,25 @@ var wp;
     }, [externalIndex, subscribeMapChange]);
     return {
       ref,
-      index: index2
+      index: index3
     };
   }
 
+  // node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
+  var TransitionStatusDataAttributes_exports = {};
+  __export(TransitionStatusDataAttributes_exports, {
+    endingStyle: () => endingStyle,
+    startingStyle: () => startingStyle
+  });
+  var startingStyle = "data-starting-style";
+  var endingStyle = "data-ending-style";
+
   // node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
-  var TransitionStatusDataAttributes = /* @__PURE__ */ (function(TransitionStatusDataAttributes2) {
-    TransitionStatusDataAttributes2["startingStyle"] = "data-starting-style";
-    TransitionStatusDataAttributes2["endingStyle"] = "data-ending-style";
-    return TransitionStatusDataAttributes2;
-  })({});
   var STARTING_HOOK = {
-    "data-starting-style": ""
+    [startingStyle]: ""
   };
   var ENDING_HOOK = {
-    "data-ending-style": ""
+    [endingStyle]: ""
   };
   var transitionStatusMapping = {
     transitionStatus(value) {
@@ -8725,32 +8743,26 @@ var wp;
   };
 
   // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanelDataAttributes.mjs
-  var CollapsiblePanelDataAttributes = (function(CollapsiblePanelDataAttributes2) {
-    CollapsiblePanelDataAttributes2["open"] = "data-open";
-    CollapsiblePanelDataAttributes2["closed"] = "data-closed";
-    CollapsiblePanelDataAttributes2[CollapsiblePanelDataAttributes2["startingStyle"] = TransitionStatusDataAttributes.startingStyle] = "startingStyle";
-    CollapsiblePanelDataAttributes2[CollapsiblePanelDataAttributes2["endingStyle"] = TransitionStatusDataAttributes.endingStyle] = "endingStyle";
-    return CollapsiblePanelDataAttributes2;
-  })({});
+  var open = "data-open";
+  var closed = "data-closed";
+  var startingStyle2 = TransitionStatusDataAttributes_exports.startingStyle;
+  var endingStyle2 = TransitionStatusDataAttributes_exports.endingStyle;
 
   // node_modules/@base-ui/react/collapsible/trigger/CollapsibleTriggerDataAttributes.mjs
-  var CollapsibleTriggerDataAttributes = /* @__PURE__ */ (function(CollapsibleTriggerDataAttributes2) {
-    CollapsibleTriggerDataAttributes2["panelOpen"] = "data-panel-open";
-    return CollapsibleTriggerDataAttributes2;
-  })({});
+  var panelOpen = "data-panel-open";
 
   // node_modules/@base-ui/react/utils/collapsibleOpenStateMapping.mjs
   var PANEL_OPEN_HOOK = {
-    [CollapsiblePanelDataAttributes.open]: ""
+    [open]: ""
   };
   var PANEL_CLOSED_HOOK = {
-    [CollapsiblePanelDataAttributes.closed]: ""
+    [closed]: ""
   };
   var triggerOpenStateMapping = {
     open(value) {
       if (value) {
         return {
-          [CollapsibleTriggerDataAttributes.panelOpen]: ""
+          [panelOpen]: ""
         };
       }
       return null;
@@ -9204,7 +9216,23 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-  function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false) {
+  var pendingCallbacks = null;
+  function flushBeforePaint(fn) {
+    if (!pendingCallbacks) {
+      const callbacks = [];
+      pendingCallbacks = callbacks;
+      queueMicrotask(() => {
+        pendingCallbacks = null;
+        ReactDOM.flushSync(() => {
+          for (const callback of callbacks) {
+            callback();
+          }
+        });
+      });
+    }
+    pendingCallbacks.push(fn);
+  }
+  function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, batch2 = false) {
     const frame = useAnimationFrame();
     return useStableCallback((fnToExecute, signal = null) => {
       frame.cancel();
@@ -9214,7 +9242,15 @@ var wp;
       }
       const resolvedElement = element;
       const done = () => {
-        ReactDOM.flushSync(fnToExecute);
+        if (!batch2) {
+          ReactDOM.flushSync(fnToExecute);
+          return;
+        }
+        flushBeforePaint(() => {
+          if (!signal?.aborted) {
+            fnToExecute();
+          }
+        });
       };
       if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
         fnToExecute();
@@ -9238,7 +9274,7 @@ var wp;
         });
       }
       if (waitForStartingStyleRemoved) {
-        const startingStyleAttribute = "data-starting-style";
+        const startingStyleAttribute = startingStyle;
         if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
           frame.request(exec);
           return;
@@ -9266,12 +9302,13 @@ var wp;
   function useOpenChangeComplete(parameters) {
     const {
       enabled = true,
-      open,
+      open: open3,
       ref,
+      batch: batch2 = false,
       onComplete: onCompleteParam
     } = parameters;
     const onComplete = useStableCallback(onCompleteParam);
-    const runOnceAnimationsFinish = useAnimationsFinished(ref, open);
+    const runOnceAnimationsFinish = useAnimationsFinished(ref, open3, batch2);
     React19.useEffect(() => {
       if (!enabled) {
         return void 0;
@@ -9281,7 +9318,7 @@ var wp;
       return () => {
         abortController.abort();
       };
-    }, [enabled, open, onComplete, runOnceAnimationsFinish]);
+    }, [enabled, open3, onComplete, runOnceAnimationsFinish]);
   }
 
   // node_modules/@base-ui/react/collapsible/panel/useCollapsiblePanel.mjs
@@ -9297,7 +9334,7 @@ var wp;
       keepMounted,
       mounted,
       onOpenChange,
-      open,
+      open: open3,
       setMounted,
       setOpen,
       transitionStatus
@@ -9307,20 +9344,20 @@ var wp;
     const [dimensions, setDimensionsUnwrapped] = React20.useState(EMPTY_DIMENSIONS);
     const lastMeasuredDimensionsRef = React20.useRef(EMPTY_DIMENSIONS);
     const shouldSkipNextOpenRef = React20.useRef(false);
-    const shouldPreventMountAnimationRef = React20.useRef(open);
+    const shouldPreventMountAnimationRef = React20.useRef(open3);
     const shouldPreventActivityResumeAnimationRef = React20.useRef(false);
     const [forcePanelIdle, setForcePanelIdle] = React20.useState(false);
     const pendingTemporaryStyleRestoreRef = React20.useRef(null);
     const mergedPanelRef = useMergedRefs(externalRef, panelRef);
-    const latestOpenRef = useValueAsRef(open);
+    const latestOpenRef = useValueAsRef(open3);
     const runOnceCloseAnimationsFinish = useAnimationsFinished(panelRef);
-    const hidden = !open && !mounted;
+    const hidden = !open3 && !mounted;
     const panelTransitionStatus = forcePanelIdle ? "idle" : transitionStatus;
-    const shouldPreventOpenAnimation = open && // These 2 refs are safe to read in render, they are only written from committed
+    const shouldPreventOpenAnimation = open3 && // These 2 refs are safe to read in render, they are only written from committed
     // layout/effect paths and gate one-shot motion suppression for the next open
     // lifecycle. They intentionally expose the last committed motion snapshot.
     (shouldPreventMountAnimationRef.current || shouldPreventActivityResumeAnimationRef.current);
-    const renderedDimensions = !open && mounted && // These 2 refs are also safe to read in render, both hold the last committed
+    const renderedDimensions = !open3 && mounted && // These 2 refs are also safe to read in render, both hold the last committed
     // animation mode and measurement. This fallback only restores a previously
     // measured pixel size after the live dimensions state has been reset back to `auto`.
     animationTypeRef.current === "css-animation" && dimensions.height === void 0 && dimensions.width === void 0 ? lastMeasuredDimensionsRef.current : dimensions;
@@ -9343,7 +9380,7 @@ var wp;
       };
     });
     const markActivityResumeAnimationSuppressed = useStableCallback(() => {
-      if (open && mounted && animationTypeRef.current === "css-animation") {
+      if (open3 && mounted && animationTypeRef.current === "css-animation") {
         shouldPreventActivityResumeAnimationRef.current = true;
       }
     });
@@ -9364,16 +9401,16 @@ var wp;
       if (!panel) {
         return void 0;
       }
-      if (!open && pendingTemporaryStyleRestoreRef.current) {
+      if (!open3 && pendingTemporaryStyleRestoreRef.current) {
         restorePendingTemporaryStyle();
       }
       const animationType = getAnimationType(panel, shouldPreventOpenAnimation);
       animationTypeRef.current = animationType;
-      if (open && transitionStatus === "idle" && shouldPreventMountAnimationRef.current && animationType === "css-animation") {
+      if (open3 && transitionStatus === "idle" && shouldPreventMountAnimationRef.current && animationType === "css-animation") {
         lastMeasuredDimensionsRef.current = getDimensions(panel);
         return void 0;
       }
-      if (open && transitionStatus === "starting") {
+      if (open3 && transitionStatus === "starting") {
         const skipNextOpen = shouldSkipNextOpenRef.current;
         shouldSkipNextOpenRef.current = false;
         if (animationType === "none") {
@@ -9404,7 +9441,7 @@ var wp;
         setForcePanelIdle(true);
         return void 0;
       }
-      if (!open && mounted && (transitionStatus === "idle" || transitionStatus === "starting")) {
+      if (!open3 && mounted && (transitionStatus === "idle" || transitionStatus === "starting")) {
         shouldPreventMountAnimationRef.current = false;
         shouldPreventActivityResumeAnimationRef.current = false;
         if (animationType === "none") {
@@ -9434,20 +9471,20 @@ var wp;
         restoreAnimationName();
       }
       return void 0;
-    }, [mounted, open, restorePendingTemporaryStyle, setDimensions, setMounted, setPendingTemporaryStyleRestore, shouldPreventOpenAnimation, transitionStatus]);
+    }, [mounted, open3, restorePendingTemporaryStyle, setDimensions, setMounted, setPendingTemporaryStyleRestore, shouldPreventOpenAnimation, transitionStatus]);
     useOpenChangeComplete({
-      enabled: open && mounted && panelTransitionStatus === "idle",
+      enabled: open3 && mounted && panelTransitionStatus === "idle",
       open: true,
       ref: panelRef,
       onComplete() {
-        if (!open) {
+        if (!open3) {
           return;
         }
         setDimensions(EMPTY_DIMENSIONS, false);
       }
     });
     React20.useEffect(() => {
-      if (open || !mounted || panelTransitionStatus !== "ending") {
+      if (open3 || !mounted || panelTransitionStatus !== "ending") {
         return void 0;
       }
       const panel = panelRef.current;
@@ -9470,7 +9507,7 @@ var wp;
         AnimationFrame.cancel(endingStyleFrame);
         abortController.abort();
       };
-    }, [latestOpenRef, mounted, open, panelTransitionStatus, runOnceCloseAnimationsFinish, setDimensions, setMounted]);
+    }, [latestOpenRef, mounted, open3, panelTransitionStatus, runOnceCloseAnimationsFinish, setDimensions, setMounted]);
     useIsoLayoutEffect(() => {
       const panel = panelRef.current;
       if (!panel || !hiddenUntilFound || !hidden) {
@@ -9494,12 +9531,12 @@ var wp;
       }
       return addEventListener(panel, "beforematch", handleBeforeMatch);
     }, [onOpenChange, setOpen]);
-    const shouldRender = keepMounted || hiddenUntilFound || mounted || open;
+    const shouldRender = keepMounted || hiddenUntilFound || mounted || open3;
     return {
       height: renderedDimensions.height,
       props: {
         ...shouldPersistHiddenTransitionStyles ? {
-          [CollapsiblePanelDataAttributes.startingStyle]: ""
+          [startingStyle2]: ""
         } : void 0,
         hidden,
         id: idParam
@@ -9581,6 +9618,7 @@ var wp;
   __export(parts_exports, {
     engine: () => engine_exports,
     env: () => env_exports,
+    mediaQuery: () => media_query_exports,
     os: () => os_exports,
     screenReader: () => screen_reader_exports
   });
@@ -9665,6 +9703,13 @@ var wp;
     jsdom: () => jsdom
   });
   var jsdom = /jsdom|happydom/.test(lowerUserAgent);
+
+  // node_modules/@base-ui/utils/platform/media-query.mjs
+  var media_query_exports = {};
+  __export(media_query_exports, {
+    iOS: () => iOS
+  });
+  var iOS = "@supports (-webkit-touch-callout: none)";
 
   // node_modules/@base-ui/utils/useTimeout.mjs
   var EMPTY2 = 0;
@@ -9961,15 +10006,7 @@ var wp;
     return type === "click" || type === "mousedown" || type === "keydown" || type === "keyup";
   }
 
-  // node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
-  var FOCUSABLE_ATTRIBUTE = "data-base-ui-focusable";
-  var TYPEABLE_SELECTOR = "input:not([type='hidden']):not([disabled]),[contenteditable]:not([contenteditable='false']),textarea:not([disabled])";
-  var ARROW_LEFT = "ArrowLeft";
-  var ARROW_RIGHT = "ArrowRight";
-  var ARROW_UP = "ArrowUp";
-  var ARROW_DOWN = "ArrowDown";
-
-  // node_modules/@base-ui/react/internals/shadowDom.mjs
+  // node_modules/@base-ui/utils/shadowDom.mjs
   function activeElement(doc) {
     let element = doc.activeElement;
     while (element?.shadowRoot?.activeElement != null) {
@@ -9998,10 +10035,88 @@ var wp;
   }
   function getTarget(event) {
     if ("composedPath" in event) {
-      return event.composedPath()[0];
+      return event.composedPath()[0] ?? event.target;
     }
     return event.target;
   }
+
+  // node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
+  var FOCUSABLE_ATTRIBUTE = "data-base-ui-focusable";
+  var TYPEABLE_SELECTOR = "input:not([type='hidden']):not([disabled]),[contenteditable]:not([contenteditable='false']),textarea:not([disabled])";
+  var ARROW_LEFT = "ArrowLeft";
+  var ARROW_RIGHT = "ArrowRight";
+  var ARROW_UP = "ArrowUp";
+  var ARROW_DOWN = "ArrowDown";
+
+  // node_modules/@base-ui/react/utils/CommonPopupDataAttributes.mjs
+  var open2 = "data-open";
+  var closed2 = "data-closed";
+  var anchorHidden = "data-anchor-hidden";
+
+  // node_modules/@base-ui/react/utils/CommonTriggerDataAttributes.mjs
+  var CommonTriggerDataAttributes_exports = {};
+  __export(CommonTriggerDataAttributes_exports, {
+    popupOpen: () => popupOpen,
+    pressed: () => pressed
+  });
+  var popupOpen = "data-popup-open";
+  var pressed = "data-pressed";
+
+  // node_modules/@base-ui/react/utils/popupStateMapping.mjs
+  var TRIGGER_HOOK = {
+    [popupOpen]: ""
+  };
+  var PRESSABLE_TRIGGER_HOOK = {
+    [popupOpen]: "",
+    [pressed]: ""
+  };
+  var POPUP_OPEN_HOOK = {
+    [open2]: ""
+  };
+  var POPUP_CLOSED_HOOK = {
+    [closed2]: ""
+  };
+  var ANCHOR_HIDDEN_HOOK = {
+    [anchorHidden]: ""
+  };
+  var triggerOpenStateMapping2 = {
+    open(value) {
+      if (value) {
+        return TRIGGER_HOOK;
+      }
+      return null;
+    }
+  };
+  var pressableTriggerOpenStateMapping = {
+    open(value) {
+      if (value) {
+        return PRESSABLE_TRIGGER_HOOK;
+      }
+      return null;
+    }
+  };
+  var popupStateMapping = {
+    open(value) {
+      if (value) {
+        return POPUP_OPEN_HOOK;
+      }
+      return POPUP_CLOSED_HOOK;
+    },
+    anchorHidden(value) {
+      if (value) {
+        return ANCHOR_HIDDEN_HOOK;
+      }
+      return null;
+    }
+  };
+  var popupTransitionStateMapping = {
+    ...popupStateMapping,
+    ...transitionStatusMapping
+  };
+
+  // node_modules/@base-ui/react/tooltip/trigger/TooltipTriggerDataAttributes.mjs
+  var popupOpen2 = CommonTriggerDataAttributes_exports.popupOpen;
+  var triggerDisabled = "data-trigger-disabled";
 
   // node_modules/@base-ui/react/floating-ui-react/utils/element.mjs
   function isTargetInsideEnabledTrigger(target, triggerElements) {
@@ -10010,11 +10125,11 @@ var wp;
     }
     const targetElement = target;
     if (triggerElements.hasElement(targetElement)) {
-      return !targetElement.hasAttribute("data-trigger-disabled");
+      return !targetElement.hasAttribute(triggerDisabled);
     }
     for (const [, trigger] of triggerElements.entries()) {
       if (contains(trigger, targetElement)) {
-        return !trigger.hasAttribute("data-trigger-disabled");
+        return !trigger.hasAttribute(triggerDisabled);
       }
     }
     return false;
@@ -10153,7 +10268,7 @@ var wp;
     open: false
   }) {
     const {
-      open
+      open: open3
     } = options;
     const store4 = "rootStore" in context ? context.rootStore : context;
     const floatingId = store4.useState("floatingId");
@@ -10168,10 +10283,10 @@ var wp;
       timeout
     } = groupContext;
     const [isInstantPhase, setIsInstantPhase] = React21.useState(false);
-    const openRef = React21.useRef(open);
+    const openRef = React21.useRef(open3);
     useIsoLayoutEffect(() => {
-      openRef.current = open;
-    }, [open]);
+      openRef.current = open3;
+    }, [open3]);
     useIsoLayoutEffect(() => {
       function unset() {
         currentContextRef.current?.setIsInstantPhase(false);
@@ -10183,7 +10298,7 @@ var wp;
       if (!currentIdRef.current) {
         return void 0;
       }
-      if (!open && currentIdRef.current === floatingId) {
+      if (!open3 && currentIdRef.current === floatingId) {
         setIsInstantPhase(false);
         if (timeoutMs) {
           const closingId = floatingId;
@@ -10202,9 +10317,9 @@ var wp;
         unset();
       }
       return void 0;
-    }, [open, floatingId, currentIdRef, delayRef, timeoutMs, initialDelayRef, currentContextRef, timeout, store4]);
+    }, [open3, floatingId, currentIdRef, delayRef, timeoutMs, initialDelayRef, currentContextRef, timeout, store4]);
     useIsoLayoutEffect(() => {
-      if (!open) {
+      if (!open3) {
         return;
       }
       const prevContext = currentContextRef.current;
@@ -10227,7 +10342,7 @@ var wp;
         setIsInstantPhase(false);
         prevContext?.setIsInstantPhase(false);
       }
-    }, [open, floatingId, store4, currentIdRef, delayRef, initialDelayRef, currentContextRef, timeout]);
+    }, [open3, floatingId, store4, currentIdRef, delayRef, initialDelayRef, currentContextRef, timeout]);
     useIsoLayoutEffect(() => {
       return () => {
         if (currentIdRef.current === floatingId) {
@@ -10242,10 +10357,11 @@ var wp;
       };
     }, [currentContextRef, currentIdRef, delayRef, floatingId, initialDelayRef, timeout]);
     return React21.useMemo(() => ({
+      activeIdRef: currentIdRef,
       hasProvider,
       delayRef,
       isInstantPhase
-    }), [hasProvider, delayRef, isInstantPhase]);
+    }), [currentIdRef, hasProvider, delayRef, isInstantPhase]);
   }
 
   // node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
@@ -10442,11 +10558,11 @@ var wp;
   }
 
   // node_modules/@base-ui/react/floating-ui-react/utils/composite.mjs
-  function isDifferentGridRow(index2, cols, prevRow) {
-    return Math.floor(index2 / cols) !== prevRow;
+  function isDifferentGridRow(index3, cols, prevRow) {
+    return Math.floor(index3 / cols) !== prevRow;
   }
-  function isIndexOutOfListBounds(list, index2) {
-    return index2 < 0 || index2 >= list.length;
+  function isIndexOutOfListBounds(list, index3) {
+    return index3 < 0 || index3 >= list.length;
   }
   function getMinListIndex(listRef, disabledIndices) {
     return findNonDisabledListIndex(listRef.current, {
@@ -10466,11 +10582,11 @@ var wp;
     disabledIndices,
     amount = 1
   } = {}) {
-    let index2 = startingIndex;
+    let index3 = startingIndex;
     do {
-      index2 += decrement ? -amount : amount;
-    } while (index2 >= 0 && index2 <= list.length - 1 && isListIndexDisabled(list, index2, disabledIndices));
-    return index2;
+      index3 += decrement ? -amount : amount;
+    } while (index3 >= 0 && index3 <= list.length - 1 && isListIndexDisabled(list, index3, disabledIndices));
+    return index3;
   }
   function getGridNavigatedIndex(list, {
     event,
@@ -10719,12 +10835,12 @@ var wp;
     }
     return nextIndex;
   }
-  function isListIndexDisabled(list, index2, disabledIndices) {
-    const isExplicitlyDisabled = typeof disabledIndices === "function" ? disabledIndices(index2) : disabledIndices?.includes(index2) ?? false;
+  function isListIndexDisabled(list, index3, disabledIndices) {
+    const isExplicitlyDisabled = typeof disabledIndices === "function" ? disabledIndices(index3) : disabledIndices?.includes(index3) ?? false;
     if (isExplicitlyDisabled) {
       return true;
     }
-    const element = list[index2];
+    const element = list[index3];
     if (!element) {
       return false;
     }
@@ -10884,8 +11000,8 @@ var wp;
       return void 0;
     }
     const active = activeElement(ownerDocument(container));
-    const index2 = list.indexOf(active);
-    const nextIndex = index2 === -1 ? dir === 1 ? 0 : len2 - 1 : index2 + dir;
+    const index3 = list.indexOf(active);
+    const nextIndex = index3 === -1 ? dir === 1 ? 0 : len2 - 1 : index3 + dir;
     return list[nextIndex];
   }
   function getNextTabbable(referenceElement) {
@@ -10903,11 +11019,11 @@ var wp;
     if (elementCount === 0) {
       return null;
     }
-    const index2 = list.indexOf(referenceElement);
-    if (index2 === -1) {
+    const index3 = list.indexOf(referenceElement);
+    if (index3 === -1) {
       return null;
     }
-    const nextIndex = (index2 + dir + elementCount) % elementCount;
+    const nextIndex = (index3 + dir + elementCount) % elementCount;
     return list[nextIndex];
   }
   function getTabbableAfterElement(referenceElement) {
@@ -11252,6 +11368,7 @@ var wp;
       style,
       children,
       container,
+      portalOwnerRole,
       ...elementProps
     } = componentProps;
     const {
@@ -11271,7 +11388,7 @@ var wp;
     const [focusManagerState, setFocusManagerState] = React23.useState(null);
     const focusInsideDisabledRef = React23.useRef(false);
     const modal = focusManagerState?.modal;
-    const open = focusManagerState?.open;
+    const open3 = focusManagerState?.open;
     const shouldRenderGuards = !!focusManagerState && !focusManagerState.modal && focusManagerState.open && !!portalNode;
     React23.useEffect(() => {
       if (!portalNode || modal) {
@@ -11293,12 +11410,12 @@ var wp;
       return mergeCleanups(addEventListener(portalNode, "focusin", onFocus, true), addEventListener(portalNode, "focusout", onFocus, true));
     }, [portalNode, modal]);
     useIsoLayoutEffect(() => {
-      if (!portalNode || open !== true || !focusInsideDisabledRef.current) {
+      if (!portalNode || open3 !== true || !focusInsideDisabledRef.current) {
         return;
       }
       enableFocusInside(portalNode);
       focusInsideDisabledRef.current = false;
-    }, [open, portalNode]);
+    }, [open3, portalNode]);
     const portalContextValue = React23.useMemo(() => ({
       beforeOutsideRef,
       afterOutsideRef,
@@ -11323,6 +11440,7 @@ var wp;
             }
           }
         }), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("span", {
+          role: portalOwnerRole,
           "aria-owns": portalNodeId,
           style: ownerVisuallyHidden
         }), portalNode && /* @__PURE__ */ ReactDOM2.createPortal(children, portalNode), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(FocusGuard, {
@@ -11378,9 +11496,9 @@ var wp;
       this.nodesRef.current.push(node);
     }
     removeNode(node) {
-      const index2 = this.nodesRef.current.findIndex((n2) => n2 === node);
-      if (index2 !== -1) {
-        this.nodesRef.current.splice(index2, 1);
+      const index3 = this.nodesRef.current.findIndex((n2) => n2 === node);
+      if (index3 !== -1) {
+        this.nodesRef.current.splice(index3, 1);
       }
     }
   };
@@ -11532,7 +11650,7 @@ var wp;
       getInsideElements
     } = props;
     const store4 = "rootStore" in context ? context.rootStore : context;
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const domReference = store4.useState("domReferenceElement");
     const floating = store4.useState("floatingElement");
     const {
@@ -11545,7 +11663,7 @@ var wp;
     const initialFocusRef = useValueAsRef(initialFocus);
     const returnFocusRef = useValueAsRef(returnFocus);
     const openInteractionTypeRef = useValueAsRef(openInteractionType);
-    const openRef = useValueAsRef(open);
+    const openRef = useValueAsRef(open3);
     const tree = useFloatingTree(externalTree);
     const portalContext = usePortalContext();
     const preventReturnFocusRef = React25.useRef(false);
@@ -11582,7 +11700,7 @@ var wp;
       return addEventListener(doc, "keydown", onKeyDown);
     }, [disabled2, floatingFocusElement, modal, isUntrappedTypeableCombobox, getTabbableContent]);
     React25.useEffect(() => {
-      if (disabled2 || !open) {
+      if (disabled2 || !open3) {
         return void 0;
       }
       const doc = ownerDocument(floatingFocusElement);
@@ -11614,7 +11732,7 @@ var wp;
         // if the popup dismissed between pointerdown and pointerup.
         clearPointerDownOutside
       );
-    }, [disabled2, floating, domReference, floatingFocusElement, open, portalContext, pointerDownTimeout, getResolvedInsideElements]);
+    }, [disabled2, floating, domReference, floatingFocusElement, open3, portalContext, pointerDownTimeout, getResolvedInsideElements]);
     React25.useEffect(() => {
       if (disabled2 || !closeOnFocusOut) {
         return void 0;
@@ -11698,7 +11816,7 @@ var wp;
       return mergeCleanups(domReferenceElement && addEventListener(domReferenceElement, "focusout", handleFocusOutside), domReferenceElement && addEventListener(domReferenceElement, "pointerdown", handlePointerDown), floating && addEventListener(floating, "focusin", handleFocusIn), floating && addEventListener(floating, "focusout", handleFocusOutside), floating && portalContext && addEventListener(floating, "focusout", markInsideReactTree, true));
     }, [disabled2, domReference, floating, floatingFocusElement, modal, tree, portalContext, store4, closeOnFocusOut, restoreFocus, getTabbableContent, isUntrappedTypeableCombobox, getNodeId, dataRef, blurTimeout, pointerDownTimeout, restoreFocusFrame, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
     React25.useEffect(() => {
-      if (disabled2 || !floating || !open) {
+      if (disabled2 || !floating || !open3) {
         return void 0;
       }
       const portalNodes = Array.from(portalContext?.portalNode?.querySelectorAll(`[${createAttribute("portal")}]`) || []);
@@ -11716,9 +11834,9 @@ var wp;
         markerCleanup();
         ariaHiddenCleanup();
       };
-    }, [open, disabled2, domReference, floating, modal, portalContext, isUntrappedTypeableCombobox, tree, getNodeId, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
+    }, [open3, disabled2, domReference, floating, modal, portalContext, isUntrappedTypeableCombobox, tree, getNodeId, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
     useIsoLayoutEffect(() => {
-      if (!open || disabled2 || !isHTMLElement(floatingFocusElement)) {
+      if (!open3 || disabled2 || !isHTMLElement(floatingFocusElement)) {
         return;
       }
       closeTypeRef.current = "";
@@ -11765,7 +11883,7 @@ var wp;
           }
         });
       });
-    }, [disabled2, open, floatingFocusElement, getTabbableContent, initialFocusRef, openInteractionTypeRef, openRef]);
+    }, [disabled2, open3, floatingFocusElement, getTabbableContent, initialFocusRef, openInteractionTypeRef, openRef]);
     useIsoLayoutEffect(() => {
       if (disabled2 || !floatingFocusElement) {
         return void 0;
@@ -11852,7 +11970,7 @@ var wp;
       };
     }, [disabled2, floating, floatingFocusElement, returnFocusRef, openInteractionTypeRef, events, tree, domReference, getNodeId, getResolvedInsideElements]);
     useIsoLayoutEffect(() => {
-      if (!parts_exports.engine.webkit || open || !floating) {
+      if (!parts_exports.engine.webkit || open3 || !floating) {
         return;
       }
       const activeEl = activeElement(ownerDocument(floating));
@@ -11862,7 +11980,7 @@ var wp;
       if (contains(floating, activeEl)) {
         activeEl.blur();
       }
-    }, [open, floating]);
+    }, [open3, floating]);
     useIsoLayoutEffect(() => {
       if (disabled2 || !portalContext) {
         return void 0;
@@ -11870,14 +11988,14 @@ var wp;
       portalContext.setFocusManagerState({
         modal,
         closeOnFocusOut,
-        open,
+        open: open3,
         onOpenChange: store4.setOpen,
         domReference
       });
       return () => {
         portalContext.setFocusManagerState(null);
       };
-    }, [disabled2, portalContext, modal, open, store4, closeOnFocusOut, domReference]);
+    }, [disabled2, portalContext, modal, open3, store4, closeOnFocusOut, domReference]);
     useIsoLayoutEffect(() => {
       if (disabled2 || !floatingFocusElement) {
         return void 0;
@@ -11956,13 +12074,13 @@ var wp;
           store4.setOpen(nextOpen, details);
         }
       }
-      function getNextOpen(open, currentTarget, isClickLikeOpenEvent2) {
+      function getNextOpen(open3, currentTarget, isClickLikeOpenEvent2) {
         const openEvent = dataRef.current.openEvent;
         const hasClickedOnInactiveTrigger = store4.select("domReferenceElement") !== currentTarget;
-        if (open && hasClickedOnInactiveTrigger) {
+        if (open3 && hasClickedOnInactiveTrigger) {
           return true;
         }
-        if (!open) {
+        if (!open3) {
           return true;
         }
         if (!toggle) {
@@ -11980,11 +12098,11 @@ var wp;
         onMouseDown(event) {
           const pointerType = pointerTypeRef.current;
           const nativeEvent = event.nativeEvent;
-          const open = store4.select("open");
+          const open3 = store4.select("open");
           if (event.button !== 0 || eventOption === "click" || isMouseLikePointerType(pointerType, true) && ignoreMouse) {
             return;
           }
-          const nextOpen = getNextOpen(open, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown");
+          const nextOpen = getNextOpen(open3, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown");
           const target = getTarget(nativeEvent);
           if (isTypeableElement(target)) {
             setOpenWithTouchDelay(nextOpen, nativeEvent, target, pointerType);
@@ -12007,8 +12125,8 @@ var wp;
           if (isMouseLikePointerType(pointerType, true) && ignoreMouse) {
             return;
           }
-          const open = store4.select("open");
-          const nextOpen = getNextOpen(open, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown" || openEventType === "keydown" || openEventType === "keyup");
+          const open3 = store4.select("open");
+          const nextOpen = getNextOpen(open3, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown" || openEventType === "keydown" || openEventType === "keyup");
           setOpenWithTouchDelay(nextOpen, event.nativeEvent, event.currentTarget, pointerType);
         },
         onKeyDown() {
@@ -12085,7 +12203,7 @@ var wp;
       axis = "both"
     } = props;
     const store4 = "rootStore" in context ? context.rootStore : context;
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const floating = store4.useState("floatingElement");
     const domReference = store4.useState("domReferenceElement");
     const dataRef = store4.context.dataRef;
@@ -12112,14 +12230,14 @@ var wp;
       }));
     });
     const handleReferenceEnterOrMove = useStableCallback((event) => {
-      if (!open) {
+      if (!open3) {
         setReference(event.clientX, event.clientY, event.currentTarget);
       } else if (!cleanupListenerRef.current) {
         setReference(event.clientX, event.clientY, event.currentTarget);
         setReactive([]);
       }
     });
-    const openCheck = isMouseLikePointerType(pointerType) ? floating : open;
+    const openCheck = isMouseLikePointerType(pointerType) ? floating : open3;
     React27.useEffect(() => {
       if (!enabled) {
         resetReference(domReference);
@@ -12157,10 +12275,10 @@ var wp;
       }
     }, [enabled, floating]);
     React27.useEffect(() => {
-      if (!enabled && open) {
+      if (!enabled && open3) {
         initialRef.current = true;
       }
-    }, [enabled, open]);
+    }, [enabled, open3]);
     const reference = React27.useMemo(() => {
       function setPointerTypeRef(event) {
         setPointerType(event.pointerType);
@@ -12200,10 +12318,11 @@ var wp;
       externalTree
     } = props;
     const store4 = "rootStore" in context ? context.rootStore : context;
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const floatingElement = store4.useState("floatingElement");
     const {
-      dataRef
+      dataRef,
+      events
     } = store4.context;
     const tree = useFloatingTree(externalTree);
     const outsidePressFn = useStableCallback(typeof outsidePressProp === "function" ? outsidePressProp : () => false);
@@ -12217,6 +12336,7 @@ var wp;
     const pressStartedInsideRef = React28.useRef(false);
     const pressStartPreventedRef = React28.useRef(false);
     const suppressNextOutsideClickRef = React28.useRef(false);
+    const sawPressWhileOpenRef = React28.useRef(false);
     const isComposingRef = React28.useRef(false);
     const currentPointerTypeRef = React28.useRef("");
     const touchStateRef = React28.useRef(null);
@@ -12241,7 +12361,7 @@ var wp;
       store4.setOpen(false, createChangeEventDetails(reason_parts_exports.triggerPress, event.nativeEvent));
     });
     const closeOnEscapeKeyDown = useStableCallback((event) => {
-      if (!open || !enabled || !escapeKey2 || event.key !== "Escape") {
+      if (!open3 || !enabled || !escapeKey2 || event.key !== "Escape") {
         return;
       }
       if (isComposingRef.current) {
@@ -12265,7 +12385,7 @@ var wp;
       clearInsideReactTreeTimeout.start(0, clearInsideReactTree);
     });
     const markPressStartedInsideReactTree = useStableCallback((event) => {
-      if (!open || !enabled || event.button !== 0) {
+      if (!open3 || !enabled || event.button !== 0) {
         return;
       }
       const target = getTarget(event.nativeEvent);
@@ -12278,7 +12398,7 @@ var wp;
       }
     });
     const markInsidePressStartPrevented = useStableCallback((event) => {
-      if (!open || !enabled) {
+      if (!open3 || !enabled) {
         return;
       }
       if (!(event.defaultPrevented || event.nativeEvent.defaultPrevented)) {
@@ -12289,13 +12409,28 @@ var wp;
       }
     });
     React28.useEffect(() => {
-      if (!open || !enabled) {
+      function handleOpenChange(details) {
+        if (!details.open) {
+          sawPressWhileOpenRef.current = false;
+        }
+      }
+      events.on("openchange", handleOpenChange);
+      return () => {
+        events.off("openchange", handleOpenChange);
+      };
+    }, [events]);
+    React28.useEffect(() => {
+      if (!open3 || !enabled) {
+        if (!open3) {
+          sawPressWhileOpenRef.current = false;
+        }
         return clearInsideReactTree;
       }
       dataRef.current.__escapeKeyBubbles = escapeKeyBubbles;
       dataRef.current.__outsidePressBubbles = outsidePressBubbles;
       const compositionTimeout = new Timeout();
       const preventedPressSuppressionTimeout = new Timeout();
+      const doc = ownerDocument(floatingElement);
       function handleCompositionStart() {
         compositionTimeout.clear();
         isComposingRef.current = true;
@@ -12392,10 +12527,15 @@ var wp;
         if (isEventWithinFloatingTree(event)) {
           return;
         }
-        if (getOutsidePressEvent() === "intentional" && suppressNextOutsideClickRef.current) {
-          preventedPressSuppressionTimeout.clear();
-          suppressNextOutsideClickRef.current = false;
-          return;
+        if (getOutsidePressEvent() === "intentional") {
+          if (event.detail !== 0 && !isVirtualClick(event) && !sawPressWhileOpenRef.current) {
+            return;
+          }
+          if (suppressNextOutsideClickRef.current) {
+            preventedPressSuppressionTimeout.clear();
+            suppressNextOutsideClickRef.current = false;
+            return;
+          }
         }
         if (typeof outsidePress2 === "function" && !outsidePress2(event)) {
           return;
@@ -12450,6 +12590,9 @@ var wp;
       function closeOnPressOutsideCapture(event) {
         cancelDismissOnEndTimeout.clear();
         if (event.type === "pointerdown") {
+          if (event.button === 0) {
+            sawPressWhileOpenRef.current = true;
+          }
           currentPointerTypeRef.current = event.pointerType;
         }
         if (event.type === "mousedown" && touchStateRef.current && !touchStateRef.current.dismissOnMouseDown) {
@@ -12464,6 +12607,9 @@ var wp;
         });
       }
       function handlePressEndCapture(event) {
+        if (event.type === "pointercancel") {
+          sawPressWhileOpenRef.current = false;
+        }
         if (!pressStartedInsideRef.current) {
           return;
         }
@@ -12528,8 +12674,16 @@ var wp;
       function handleTouchEndCapture(event) {
         addTargetEventListenerOnce(event, handleTouchEnd);
       }
-      const doc = ownerDocument(floatingElement);
-      const unsubscribe = mergeCleanups(escapeKey2 && mergeCleanups(addEventListener(doc, "keydown", closeOnEscapeKeyDown), addEventListener(doc, "compositionstart", handleCompositionStart), addEventListener(doc, "compositionend", handleCompositionEnd)), outsidePressEnabled && mergeCleanups(addEventListener(doc, "click", closeOnPressOutsideCapture, true), addEventListener(doc, "pointerdown", closeOnPressOutsideCapture, true), addEventListener(doc, "pointerup", handlePressEndCapture, true), addEventListener(doc, "pointercancel", handlePressEndCapture, true), addEventListener(doc, "mousedown", closeOnPressOutsideCapture, true), addEventListener(doc, "mouseup", handlePressEndCapture, true), addEventListener(doc, "touchstart", handleTouchStartCapture, true), addEventListener(doc, "touchmove", handleTouchMoveCapture, true), addEventListener(doc, "touchend", handleTouchEndCapture, true)));
+      const unsubscribe = mergeCleanups(escapeKey2 && mergeCleanups(addEventListener(doc, "keydown", closeOnEscapeKeyDown), addEventListener(doc, "compositionstart", handleCompositionStart), addEventListener(doc, "compositionend", handleCompositionEnd)), outsidePressEnabled && mergeCleanups(addEventListener(doc, "click", closeOnPressOutsideCapture, true), addEventListener(doc, "pointerdown", closeOnPressOutsideCapture, true), addEventListener(doc, "pointerup", handlePressEndCapture, true), addEventListener(doc, "pointercancel", handlePressEndCapture, true), addEventListener(doc, "mousedown", closeOnPressOutsideCapture, true), addEventListener(doc, "mouseup", handlePressEndCapture, true), addEventListener(doc, "touchstart", handleTouchStartCapture, {
+        capture: true,
+        passive: true
+      }), addEventListener(doc, "touchmove", handleTouchMoveCapture, {
+        capture: true,
+        passive: true
+      }), addEventListener(doc, "touchend", handleTouchEndCapture, {
+        capture: true,
+        passive: true
+      })));
       return () => {
         unsubscribe();
         compositionTimeout.clear();
@@ -12538,7 +12692,7 @@ var wp;
         suppressNextOutsideClickRef.current = false;
         clearInsideReactTree();
       };
-    }, [dataRef, floatingElement, escapeKey2, outsidePressEnabled, outsidePress2, open, enabled, escapeKeyBubbles, outsidePressBubbles, closeOnEscapeKeyDown, clearInsideReactTree, getOutsidePressEventProp, hasBlockingChild, isEventWithinOwnElements, tree, store4, cancelDismissOnEndTimeout]);
+    }, [dataRef, floatingElement, escapeKey2, outsidePressEnabled, outsidePress2, open3, enabled, escapeKeyBubbles, outsidePressBubbles, closeOnEscapeKeyDown, clearInsideReactTree, getOutsidePressEventProp, hasBlockingChild, isEventWithinOwnElements, tree, store4, cancelDismissOnEndTimeout]);
     const reference = React28.useMemo(() => ({
       onKeyDown: closeOnEscapeKeyDown,
       onPointerDown: closeOnReferencePress,
@@ -13117,25 +13271,25 @@ var wp;
         const overflowAvailableWidth = min(width - overflow[widthSide], maximumClippingWidth);
         const shiftData = state2.middlewareData.shift;
         const noShift = !shiftData;
-        let availableHeight = overflowAvailableHeight;
-        let availableWidth = overflowAvailableWidth;
+        let availableHeight2 = overflowAvailableHeight;
+        let availableWidth2 = overflowAvailableWidth;
         if (shiftData != null && shiftData.enabled.x) {
-          availableWidth = maximumClippingWidth;
+          availableWidth2 = maximumClippingWidth;
         }
         if (shiftData != null && shiftData.enabled.y) {
-          availableHeight = maximumClippingHeight;
+          availableHeight2 = maximumClippingHeight;
         }
         if (noShift && !alignment) {
           if (isYAxis) {
-            availableWidth = width - 2 * max(overflow.left, overflow.right);
+            availableWidth2 = width - 2 * max(overflow.left, overflow.right);
           } else {
-            availableHeight = height - 2 * max(overflow.top, overflow.bottom);
+            availableHeight2 = height - 2 * max(overflow.top, overflow.bottom);
           }
         }
         await apply({
           ...state2,
-          availableWidth,
-          availableHeight
+          availableWidth: availableWidth2,
+          availableHeight: availableHeight2
         });
         const nextDimensions = await platform3.getDimensions(elements2.floating);
         if (width !== nextDimensions.width || height !== nextDimensions.height) {
@@ -13845,7 +13999,7 @@ var wp;
       } = {},
       transform = true,
       whileElementsMounted,
-      open
+      open: open3
     } = options;
     const [data, setData] = React29.useState({
       x: 0,
@@ -13881,7 +14035,7 @@ var wp;
     const hasWhileElementsMounted = whileElementsMounted != null;
     const whileElementsMountedRef = useLatestRef(whileElementsMounted);
     const platformRef = useLatestRef(platform3);
-    const openRef = useLatestRef(open);
+    const openRef = useLatestRef(open3);
     const update4 = React29.useCallback(() => {
       if (!referenceRef.current || !floatingRef.current) {
         return;
@@ -13912,14 +14066,14 @@ var wp;
       });
     }, [latestMiddleware, placement, strategy, platformRef, openRef]);
     index(() => {
-      if (open === false && dataRef.current.isPositioned) {
+      if (open3 === false && dataRef.current.isPositioned) {
         dataRef.current.isPositioned = false;
         setData((data2) => ({
           ...data2,
           isPositioned: false
         }));
       }
-    }, [open]);
+    }, [open3]);
     const isMountedRef = React29.useRef(false);
     index(() => {
       isMountedRef.current = true;
@@ -14089,8 +14243,8 @@ var wp;
     }
     /**
      * Points the handle at a root's store and notifies subscribers so detached triggers re-render and
-     * re-register into it (their registration ref re-fires on the store-pointer change). Returns a
-     * cleanup function that detaches the store again.
+     * re-register into it (their registration effect migrates them when the store pointer changes).
+     * Returns a cleanup function that detaches the store again.
      * @internal
      */
     attachStore(newStore) {
@@ -14107,9 +14261,9 @@ var wp;
         }
       }
       return () => {
-        const index2 = this.attachedStores.lastIndexOf(newStore);
-        if (index2 !== -1) {
-          this.attachedStores.splice(index2, 1);
+        const index3 = this.attachedStores.lastIndexOf(newStore);
+        if (index3 !== -1) {
+          this.attachedStores.splice(index3, 1);
         }
         this.setActiveStore(this.attachedStores[this.attachedStores.length - 1] ?? null);
       };
@@ -14298,7 +14452,7 @@ var wp;
     if (!instance) {
       return useStoreR19(store4, selector2, a1, a2, a3);
     }
-    const index2 = instance.syncIndex;
+    const index3 = instance.syncIndex;
     instance.syncIndex += 1;
     let hook;
     if (!instance.didInitialize) {
@@ -14312,7 +14466,7 @@ var wp;
       };
       instance.syncHooks.push(hook);
     } else {
-      hook = instance.syncHooks[index2];
+      hook = instance.syncHooks[index3];
       if (hook.store !== store4 || hook.selector !== selector2 || !Object.is(hook.a1, a1) || !Object.is(hook.a2, a2) || !Object.is(hook.a3, a3)) {
         if (hook.store !== store4) {
           instance.didChangeStore = true;
@@ -14333,6 +14487,14 @@ var wp;
 
   // node_modules/@base-ui/utils/store/Store.mjs
   var Store = class {
+    /**
+     * Creates a store with the given initial state, constructing the class it is called on.
+     * Calling it on a generic base class (e.g. `ReactStore.create(...)`) constructs that
+     * class but degrades the inferred instance type to `Store`; use `new` there instead.
+     */
+    static create(state2) {
+      return new this(state2);
+    }
     /**
      * The current state of the store.
      * This property is updated immediately when the state changes as a result of calling {@link setState}, {@link update}, or {@link set}.
@@ -14386,6 +14548,8 @@ var wp;
     }
     /**
      * Merges the provided changes into the current state and notifies listeners if there are changes.
+     * Each value must match its state key. Pass an exact known subset rather than a broad
+     * `Partial<State>`, which may contain `undefined` for required state fields.
      *
      * @param changes An object containing the changes to apply to the current state.
      */
@@ -14481,9 +14645,13 @@ var wp;
     }
     /**
      * Synchronizes multiple external values into the store.
+     * Each value must match its state key. Pass an exact known subset rather than a broad
+     * `Partial<State>`, which may contain `undefined` for required state fields.
      *
      * Note that the while the values in `state` are updated immediately, the values returned
      * by `useState` are updated before the next render (similarly to React's `useState`).
+     *
+     * @param statePart An exact subset of state fields to synchronize. Unknown keys are not accepted.
      */
     useSyncedValues(statePart) {
       const store4 = this;
@@ -14491,7 +14659,7 @@ var wp;
         React32.useDebugValue(statePart, (p4) => Object.keys(p4));
         const keys = React32.useRef(Object.keys(statePart)).current;
         const nextKeys = Object.keys(statePart);
-        if (keys.length !== nextKeys.length || keys.some((key, index2) => key !== nextKeys[index2])) {
+        if (keys.length !== nextKeys.length || keys.some((key, index3) => key !== nextKeys[index3])) {
           console.error("ReactStore.useSyncedValues expects the same prop keys on every render. Keys should be stable.");
         }
       }
@@ -14691,7 +14859,7 @@ var wp;
       nested,
       onOpenChange
     } = options;
-    const open = popupStore.useState("open");
+    const open3 = popupStore.useState("open");
     const referenceElement = popupStore.useState("activeTriggerElement");
     const floatingElement = popupStore.useState(treatPopupAsFloatingElement ? "popupElement" : "positionerElement");
     const triggerElements = popupStore.context.triggerElements;
@@ -14699,7 +14867,7 @@ var wp;
     const internalStoreRef = React34.useRef(null);
     if (floatingRootContextProp === void 0 && internalStoreRef.current === null) {
       internalStoreRef.current = new FloatingRootStore({
-        open,
+        open: open3,
         transitionStatus: void 0,
         referenceElement,
         floatingElement,
@@ -14714,7 +14882,7 @@ var wp;
     popupStore.useSyncedValue("floatingId", floatingId);
     useIsoLayoutEffect(() => {
       const valuesToSync = {
-        open,
+        open: open3,
         floatingId,
         referenceElement,
         floatingElement
@@ -14726,7 +14894,7 @@ var wp;
         valuesToSync.positionReference = referenceElement;
       }
       store4.update(valuesToSync);
-    }, [open, floatingId, referenceElement, floatingElement, store4]);
+    }, [open3, floatingId, referenceElement, floatingElement, store4]);
     store4.context.onOpenChange = handleOpenChange;
     store4.context.nested = nested;
     return store4;
@@ -14760,50 +14928,58 @@ var wp;
     }, [handle, store4]);
     return null;
   }
-  function useTriggerRegistration(id, store4) {
-    const registeredElementIdRef = React35.useRef(null);
-    const registeredElementRef = React35.useRef(null);
-    return React35.useCallback((element) => {
-      if (id === void 0) {
-        return;
-      }
-      let shouldSyncTriggerCount = false;
-      if (registeredElementIdRef.current !== null) {
-        const registeredId = registeredElementIdRef.current;
-        const registeredElement = registeredElementRef.current;
-        const currentElement = store4.context.triggerElements.getById(registeredId);
-        if (registeredElement && currentElement === registeredElement) {
-          store4.context.triggerElements.delete(registeredId);
-          shouldSyncTriggerCount = true;
-        }
-        registeredElementIdRef.current = null;
-        registeredElementRef.current = null;
-      }
-      if (element !== null) {
-        registeredElementIdRef.current = id;
-        registeredElementRef.current = element;
-        store4.context.triggerElements.add(id, element);
-        shouldSyncTriggerCount = true;
-      }
-      if (shouldSyncTriggerCount) {
-        const triggerCount = store4.context.triggerElements.size;
-        if (store4.select("open") && store4.state.triggerCount !== triggerCount) {
-          store4.set("triggerCount", triggerCount);
-        }
-      }
-    }, [store4, id]);
+  function syncTriggerCount(store4) {
+    const triggerCount = store4.context.triggerElements.size;
+    if (store4.select("open") && store4.state.triggerCount !== triggerCount) {
+      store4.set("triggerCount", triggerCount);
+    }
   }
-  function setPopupOpenState(state2, open, trigger, preventUnmountOnClose = false) {
-    if (open) {
-      state2.preventUnmountingOnClose = false;
+  function useTriggerRegistration(id, store4) {
+    const registrationRef = React35.useRef(null);
+    return useStableCallback((element) => {
+      const registration = registrationRef.current;
+      if (registration !== null) {
+        if (registration.element === element && registration.store === store4 && registration.id === id) {
+          return;
+        }
+        registrationRef.current = null;
+        const registeredStore = registration.store;
+        if (registeredStore.context.triggerElements.getById(registration.id) === registration.element) {
+          registeredStore.context.triggerElements.delete(registration.id);
+          syncTriggerCount(registeredStore);
+        }
+      }
+      if (element !== null && id !== void 0) {
+        registrationRef.current = {
+          store: store4,
+          id,
+          element
+        };
+        store4.context.triggerElements.add(id, element);
+        syncTriggerCount(store4);
+      }
+    });
+  }
+  function createPopupOpenState(state2, open3, trigger, preventUnmountOnClose = false) {
+    let preventUnmountingOnClose = state2.preventUnmountingOnClose;
+    if (open3) {
+      preventUnmountingOnClose = false;
     } else if (preventUnmountOnClose) {
-      state2.preventUnmountingOnClose = true;
+      preventUnmountingOnClose = true;
     }
     const triggerId = trigger?.id ?? null;
-    if (triggerId || open) {
-      state2.activeTriggerId = triggerId;
-      state2.activeTriggerElement = trigger ?? null;
+    let activeTriggerId = state2.activeTriggerId;
+    let activeTriggerElement = state2.activeTriggerElement;
+    if (triggerId || open3) {
+      activeTriggerId = triggerId;
+      activeTriggerElement = trigger ?? null;
     }
+    return {
+      open: open3,
+      preventUnmountingOnClose,
+      activeTriggerId,
+      activeTriggerElement
+    };
   }
   function attachPreventUnmountOnClose(eventDetails) {
     let preventUnmountOnClose = false;
@@ -14825,9 +15001,10 @@ var wp;
     options.onBeforeDispatch?.();
     store4.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
     const changeState = () => {
+      const popupOpenState = createPopupOpenState(store4.state, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
       const updatedState = {
         ...options.extraState,
-        open: nextOpen
+        ...popupOpenState
       };
       if (isFocusOpen) {
         updatedState.instantType = "focus";
@@ -14836,7 +15013,6 @@ var wp;
       } else if (isHover) {
         updatedState.instantType = void 0;
       }
-      setPopupOpenState(updatedState, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
       store4.update(updatedState);
     };
     if (isHover) {
@@ -14849,35 +15025,42 @@ var wp;
     const isMountedByThisTrigger = store4.useState("isMountedByTrigger", triggerId);
     const baseRegisterTrigger = useTriggerRegistration(triggerId, store4);
     const applyTriggerData = useStableCallback((element) => {
-      const open = store4.select("open");
+      const open3 = store4.select("open");
       const activeTriggerId = store4.select("activeTriggerId");
       if (activeTriggerId === triggerId) {
-        store4.update({
+        const changes = {
           activeTriggerElement: element,
-          ...open ? stateUpdates : null
-        });
+          ...open3 ? stateUpdates : null
+        };
+        store4.update(changes);
         return;
       }
-      if (activeTriggerId == null && open) {
-        store4.update({
-          activeTriggerId: triggerId,
+      if (activeTriggerId == null && open3) {
+        const changes = {
+          activeTriggerId: triggerId ?? null,
           activeTriggerElement: element,
           ...stateUpdates
-        });
+        };
+        store4.update(changes);
       }
     });
-    const registerTrigger = React35.useCallback((element) => {
+    const registerTrigger = useStableCallback((element) => {
       baseRegisterTrigger(element);
       if (element) {
         applyTriggerData(element);
       }
-    }, [baseRegisterTrigger, applyTriggerData]);
+    });
+    useIsoLayoutEffect(() => {
+      registerTrigger(triggerElementRef.current);
+      return () => registerTrigger(null);
+    }, [registerTrigger, triggerElementRef, store4, triggerId]);
     useIsoLayoutEffect(() => {
       if (isMountedByThisTrigger) {
-        store4.update({
+        const changes = {
           activeTriggerElement: triggerElementRef.current,
           ...stateUpdates
-        });
+        };
+        store4.update(changes);
       }
     }, [isMountedByThisTrigger, store4, triggerElementRef, ...Object.values(stateUpdates)]);
     return {
@@ -14890,12 +15073,12 @@ var wp;
       closeOnActiveTriggerUnmount = false
     } = options;
     const resolvedActiveTriggerIdRef = React35.useRef(null);
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const reactiveTriggerCount = store4.useState("triggerCount");
     const activeTriggerId = store4.useState("activeTriggerId");
     const reactiveActiveTriggerElement = store4.useState("activeTriggerElement");
     useIsoLayoutEffect(() => {
-      if (!open) {
+      if (!open3) {
         resolvedActiveTriggerIdRef.current = null;
         if (store4.state.triggerCount !== 0) {
           store4.set("triggerCount", 0);
@@ -14964,16 +15147,16 @@ var wp;
           });
         }
       }
-    }, [open, store4, reactiveTriggerCount, activeTriggerId, reactiveActiveTriggerElement, closeOnActiveTriggerUnmount]);
+    }, [open3, store4, reactiveTriggerCount, activeTriggerId, reactiveActiveTriggerElement, closeOnActiveTriggerUnmount]);
   }
-  function useOpenStateTransitions(open, store4, onUnmount) {
+  function useOpenStateTransitions(open3, store4, onUnmount, animateInitialOpen) {
     const {
       mounted,
       setMounted,
       transitionStatus
-    } = useTransitionStatus(open);
+    } = useTransitionStatus(open3, false, false, animateInitialOpen);
     const preventUnmountingOnClose = store4.useState("preventUnmountingOnClose");
-    const syncedPreventUnmountingOnClose = open ? false : preventUnmountingOnClose;
+    const syncedPreventUnmountingOnClose = open3 ? false : preventUnmountingOnClose;
     store4.useSyncedValues({
       mounted,
       transitionStatus,
@@ -14991,11 +15174,11 @@ var wp;
       store4.context.onOpenChangeComplete?.(false);
     });
     useOpenChangeComplete({
-      enabled: mounted && !open && !syncedPreventUnmountingOnClose,
-      open,
+      enabled: mounted && !open3 && !syncedPreventUnmountingOnClose,
+      open: open3,
       ref: store4.context.popupRef,
       onComplete() {
-        if (!open) {
+        if (!open3) {
           forceUnmount();
         }
       }
@@ -15111,30 +15294,25 @@ var wp;
     }
   };
 
-  // node_modules/@base-ui/react/floating-ui-react/utils/getEmptyRootContext.mjs
-  function getEmptyRootContext() {
-    return new FloatingRootStore({
-      open: false,
-      transitionStatus: void 0,
-      floatingElement: null,
-      referenceElement: null,
-      triggerElements: new PopupTriggerMap(),
-      floatingId: void 0,
-      syncOnly: false,
-      nested: false,
-      onOpenChange: void 0
-    });
-  }
-
   // node_modules/@base-ui/react/utils/popups/store.mjs
-  function createInitialPopupStoreState() {
+  function createInitialPopupStoreState(triggerElements, floatingId, nested = false) {
     return {
       open: false,
       openProp: void 0,
       mounted: false,
       transitionStatus: void 0,
-      floatingRootContext: getEmptyRootContext(),
-      floatingId: void 0,
+      floatingRootContext: new FloatingRootStore({
+        open: false,
+        transitionStatus: void 0,
+        floatingElement: null,
+        referenceElement: null,
+        triggerElements,
+        floatingId,
+        syncOnly: true,
+        nested,
+        onOpenChange: void 0
+      }),
+      floatingId,
       triggerCount: 0,
       preventUnmountingOnClose: false,
       payload: void 0,
@@ -15147,19 +15325,6 @@ var wp;
       inactiveTriggerProps: EMPTY_OBJECT2,
       popupProps: EMPTY_OBJECT2
     };
-  }
-  function createPopupFloatingRootContext(triggerElements, floatingId, nested = false) {
-    return new FloatingRootStore({
-      open: false,
-      transitionStatus: void 0,
-      floatingElement: null,
-      referenceElement: null,
-      triggerElements,
-      floatingId,
-      syncOnly: true,
-      nested,
-      onOpenChange: void 0
-    });
   }
   var activeTriggerIdSelector = (state2) => state2.triggerIdProp ?? state2.activeTriggerId;
   var openSelector = (state2) => state2.openProp ?? state2.open;
@@ -15228,7 +15393,7 @@ var wp;
   // node_modules/@base-ui/react/floating-ui-react/hooks/useFloatingRootContext.mjs
   function useFloatingRootContext(options) {
     const {
-      open = false,
+      open: open3 = false,
       onOpenChange,
       elements: elements2 = {}
     } = options;
@@ -15241,7 +15406,7 @@ var wp;
       }
     }
     const store4 = useRefWithInit(() => new FloatingRootStore({
-      open,
+      open: open3,
       transitionStatus: void 0,
       onOpenChange,
       referenceElement: elements2.reference ?? null,
@@ -15253,7 +15418,7 @@ var wp;
     })).current;
     useIsoLayoutEffect(() => {
       const valuesToSync = {
-        open,
+        open: open3,
         floatingId
       };
       if (elements2.reference !== void 0) {
@@ -15264,7 +15429,7 @@ var wp;
         valuesToSync.floatingElement = elements2.floating;
       }
       store4.update(valuesToSync);
-    }, [open, floatingId, elements2.reference, elements2.floating, store4]);
+    }, [open3, floatingId, elements2.reference, elements2.floating, store4]);
     store4.context.onOpenChange = onOpenChange;
     store4.context.nested = nested;
     return store4;
@@ -15282,7 +15447,7 @@ var wp;
     const referenceElement = store4.useState("referenceElement");
     const floatingElement = store4.useState("floatingElement");
     const domReferenceElement = store4.useState("domReferenceElement");
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const floatingId = store4.useState("floatingId");
     const [positionReference, setPositionReferenceRaw] = React37.useState(null);
     const [localDomReference, setLocalDomReference] = React37.useState(void 0);
@@ -15347,7 +15512,7 @@ var wp;
     const context = React37.useMemo(() => ({
       ...position,
       dataRef: store4.context.dataRef,
-      open,
+      open: open3,
       onOpenChange: store4.setOpen,
       events: store4.context.events,
       floatingId,
@@ -15355,7 +15520,7 @@ var wp;
       elements: elements2,
       nodeId,
       rootStore: store4
-    }), [position, refs, elements2, nodeId, store4, open, floatingId]);
+    }), [position, refs, elements2, nodeId, store4, open3, floatingId]);
     useIsoLayoutEffect(() => {
       if (domReferenceElement) {
         domReferenceRef.current = domReferenceElement;
@@ -15404,6 +15569,7 @@ var wp;
         const currentDomReference = store4.select("domReferenceElement");
         if (!store4.select("open") && isHTMLElement(currentDomReference) && currentDomReference === activeElement(ownerDocument(currentDomReference))) {
           blockFocusRef.current = true;
+          blockedReferenceRef.current = currentDomReference;
         }
       }
       function onKeyDown() {
@@ -15590,7 +15756,7 @@ var wp;
       nodeId: nodeIdProp
     } = parameters;
     const store4 = "rootStore" in context ? context.rootStore : context;
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const floatingElement = store4.useState("floatingElement");
     const domReferenceElement = store4.useState("domReferenceElement");
     const {
@@ -15610,13 +15776,13 @@ var wp;
       clearSafePolygonPointerEventsMutation(instance);
     });
     useIsoLayoutEffect(() => {
-      if (!open) {
+      if (!open3) {
         instance.pointerType = void 0;
         instance.restTimeoutPending = false;
         instance.interactedInside = false;
         clearPointerEvents();
       }
-    }, [open, instance, clearPointerEvents]);
+    }, [open3, instance, clearPointerEvents]);
     React39.useEffect(() => {
       return clearPointerEvents;
     }, [clearPointerEvents]);
@@ -15624,7 +15790,7 @@ var wp;
       if (!enabled) {
         return void 0;
       }
-      if (open && instance.handleCloseOptions?.blockPointerEvents && isHoverOpen() && isElement(domReferenceElement) && floatingElement) {
+      if (open3 && instance.handleCloseOptions?.blockPointerEvents && isHoverOpen() && isElement(domReferenceElement) && floatingElement) {
         const ref = domReferenceElement;
         const floatingEl = floatingElement;
         const doc = ownerDocument(floatingElement);
@@ -15645,7 +15811,7 @@ var wp;
         };
       }
       return void 0;
-    }, [enabled, open, domReferenceElement, floatingElement, instance, isHoverOpen, tree, parentId, clearPointerEvents]);
+    }, [enabled, open3, domReferenceElement, floatingElement, instance, isHoverOpen, tree, parentId, clearPointerEvents]);
     React39.useEffect(() => {
       if (!enabled) {
         return void 0;
@@ -15785,7 +15951,7 @@ var wp;
       clearSafePolygonPointerEventsMutation(instance);
     });
     if (isActiveTrigger) {
-      instance.handleCloseOptions = handleCloseRef.current?.__options;
+      instance.handleCloseOptions = handleClose?.__options;
     }
     React40.useEffect(() => cleanupMouseMoveHandler, [cleanupMouseMoveHandler]);
     React40.useEffect(() => {
@@ -16082,7 +16248,7 @@ var wp;
       }
     }
     const store4 = "rootStore" in context ? context.rootStore : context;
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const floatingElement = store4.useState("floatingElement");
     const domReferenceElement = store4.useState("domReferenceElement");
     const dataRef = store4.context.dataRef;
@@ -16099,12 +16265,12 @@ var wp;
       onNavigateProp(indexRef.current === -1 ? null : indexRef.current, event);
     });
     const previousMountedRef = React41.useRef(!!floatingElement);
-    const previousOpenRef = React41.useRef(open);
+    const previousOpenRef = React41.useRef(open3);
     const forceSyncFocusRef = React41.useRef(false);
     const forceScrollIntoViewRef = React41.useRef(false);
     const cancelQueuedFocusRef = React41.useRef(null);
     const disabledIndicesRef = useValueAsRef(disabledIndices);
-    const latestOpenRef = useValueAsRef(open);
+    const latestOpenRef = useValueAsRef(open3);
     const selectedIndexRef = useValueAsRef(selectedIndex);
     const resetOnPointerLeaveRef = useValueAsRef(resetOnPointerLeave);
     const focusFrame = useAnimationFrame();
@@ -16153,7 +16319,7 @@ var wp;
       if (!enabled) {
         return;
       }
-      if (open && floatingElement) {
+      if (open3 && floatingElement) {
         indexRef.current = selectedIndex ?? -1;
         if (focusItemOnOpenRef.current && selectedIndex != null) {
           forceScrollIntoViewRef.current = true;
@@ -16163,12 +16329,12 @@ var wp;
         indexRef.current = -1;
         onNavigate();
       }
-    }, [enabled, open, floatingElement, selectedIndex, onNavigate]);
+    }, [enabled, open3, floatingElement, selectedIndex, onNavigate]);
     useIsoLayoutEffect(() => {
       if (!enabled) {
         return;
       }
-      if (!open) {
+      if (!open3) {
         forceSyncFocusRef.current = false;
         return;
       }
@@ -16206,7 +16372,7 @@ var wp;
         focusItem();
         forceScrollIntoViewRef.current = false;
       }
-    }, [enabled, open, floatingElement, activeIndex, selectedIndexRef, nested, listRef, orientation, rtl, onNavigate, focusItem, waitForListPopulatedFrame]);
+    }, [enabled, open3, floatingElement, activeIndex, selectedIndexRef, nested, listRef, orientation, rtl, onNavigate, focusItem, waitForListPopulatedFrame]);
     useIsoLayoutEffect(() => {
       if (!enabled || floatingElement || !tree || virtual || !previousMountedRef.current) {
         return;
@@ -16222,23 +16388,23 @@ var wp;
       }
     }, [enabled, floatingElement, domReferenceElement, tree, parentId, virtual]);
     useIsoLayoutEffect(() => {
-      previousOpenRef.current = open;
+      previousOpenRef.current = open3;
       previousMountedRef.current = !!floatingElement;
     });
     useIsoLayoutEffect(() => {
-      if (!open) {
+      if (!open3) {
         keyRef.current = null;
         focusItemOnOpenRef.current = focusItemOnOpen;
       }
-    }, [open, focusItemOnOpen]);
+    }, [open3, focusItemOnOpen]);
     const hasActiveIndex = activeIndex != null;
     const syncCurrentTarget = useStableCallback((event) => {
       if (!latestOpenRef.current) {
         return;
       }
-      const index2 = listRef.current.indexOf(event.currentTarget);
-      if (index2 !== -1 && (indexRef.current !== index2 || activeIndex !== index2)) {
-        indexRef.current = index2;
+      const index3 = listRef.current.indexOf(event.currentTarget);
+      if (index3 !== -1 && (indexRef.current !== index3 || activeIndex !== index3)) {
+        indexRef.current = index3;
         onNavigate(event);
       }
     });
@@ -16287,9 +16453,9 @@ var wp;
         }
       }
       if (navigateGrid != null) {
-        const index2 = navigateGrid(event, indexRef.current, listRef, orientation, loopFocus, rtl, disabledIndices, minIndex, maxIndex);
-        if (index2 != null) {
-          indexRef.current = index2;
+        const index3 = navigateGrid(event, indexRef.current, listRef, orientation, loopFocus, rtl, disabledIndices, minIndex, maxIndex);
+        if (index3 != null) {
+          indexRef.current = index3;
           onNavigate(event);
         }
         if (orientation === "both") {
@@ -16298,7 +16464,7 @@ var wp;
       }
       if (isMainOrientationKey(event.key, orientation)) {
         stopEvent(event);
-        if (open && !virtual && activeElement(event.currentTarget.ownerDocument) === event.currentTarget) {
+        if (open3 && !virtual && activeElement(event.currentTarget.ownerDocument) === event.currentTarget) {
           indexRef.current = isMainOrientationToEndKey(event.key, orientation, rtl) ? minIndex : maxIndex;
           onNavigate(event);
           return;
@@ -16404,16 +16570,15 @@ var wp;
       return itemProps;
     }, [syncCurrentTarget, latestOpenRef, floatingFocusElementRef, focusItemOnHover, listRef, onNavigate, resetOnPointerLeaveRef, virtual]);
     const ariaActiveDescendantProp = React41.useMemo(() => {
-      return virtual && open && hasActiveIndex && {
+      return virtual && open3 && hasActiveIndex && {
         "aria-activedescendant": `${id}-${activeIndex}`
       };
-    }, [virtual, open, hasActiveIndex, id, activeIndex]);
+    }, [virtual, open3, hasActiveIndex, id, activeIndex]);
     const floating = React41.useMemo(() => {
       return {
-        "aria-orientation": orientation === "both" ? void 0 : orientation,
         ...!typeableComboboxReference ? ariaActiveDescendantProp : {},
         onKeyDown(event) {
-          if (event.key === "Tab" && event.shiftKey && open && !virtual) {
+          if (event.key === "Tab" && event.shiftKey && open3 && !virtual) {
             const target = getTarget(event.nativeEvent);
             if (target && !contains(floatingFocusElementRef.current, target)) {
               return;
@@ -16434,7 +16599,7 @@ var wp;
           isPointerModalityRef.current = true;
         }
       };
-    }, [ariaActiveDescendantProp, commonOnKeyDown, floatingFocusElementRef, orientation, typeableComboboxReference, store4, open, virtual, domReferenceElement]);
+    }, [ariaActiveDescendantProp, commonOnKeyDown, floatingFocusElementRef, typeableComboboxReference, store4, open3, virtual, domReferenceElement]);
     const trigger = React41.useMemo(() => {
       function openOnNavigationKeyDown(event) {
         store4.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent, event.currentTarget));
@@ -16537,21 +16702,21 @@ var wp;
       selectedIndex = null
     } = props;
     const store4 = "rootStore" in context ? context.rootStore : context;
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const timeout = useTimeout();
     const stringRef = React42.useRef("");
     const prevIndexRef = React42.useRef(selectedIndex ?? activeIndex ?? -1);
     const matchIndexRef = React42.useRef(null);
     const onKeyDown = useStableCallback((event) => {
-      function getElement(index3) {
-        return elementsRef?.current[index3];
+      function getElement(index4) {
+        return elementsRef?.current[index4];
       }
-      function isItemAvailable(index3) {
-        const element = getElement(index3);
+      function isItemAvailable(index4) {
+        const element = getElement(index4);
         if (element && !isElementVisible(element) || element?.matches(":disabled")) {
           return false;
         }
-        return disabledIndices == null || !isListIndexDisabled(EMPTY_ARRAY3, index3, disabledIndices);
+        return disabledIndices == null || !isListIndexDisabled(EMPTY_ARRAY3, index4, disabledIndices);
       }
       function getMatchingIndex(list, string, startIndex2 = 0) {
         if (list.length === 0) {
@@ -16560,12 +16725,12 @@ var wp;
         const normalizedStartIndex = (startIndex2 % list.length + list.length) % list.length;
         const lowerString = string.toLowerCase();
         for (let offset4 = 0; offset4 < list.length; offset4 += 1) {
-          const index3 = (normalizedStartIndex + offset4) % list.length;
-          const text = list[index3];
-          if (!text?.toLowerCase().startsWith(lowerString) || !isItemAvailable(index3)) {
+          const index4 = (normalizedStartIndex + offset4) % list.length;
+          const text = list[index4];
+          if (!text?.toLowerCase().startsWith(lowerString) || !isItemAvailable(index4)) {
             continue;
           }
-          return index3;
+          return index4;
         }
         return -1;
       }
@@ -16584,7 +16749,7 @@ var wp;
       event.ctrlKey || event.metaKey || event.altKey) {
         return;
       }
-      if (open && event.key !== " ") {
+      if (open3 && event.key !== " ") {
         stopEvent(event);
         onTyping?.(true);
       }
@@ -16592,7 +16757,7 @@ var wp;
       if (isNewSession) {
         prevIndexRef.current = selectedIndex ?? activeIndex ?? -1;
       }
-      const allowRapidSuccessionOfFirstLetter = listContent.every((text, index3) => text && isItemAvailable(index3) ? text[0]?.toLowerCase() !== text[1]?.toLowerCase() : true);
+      const allowRapidSuccessionOfFirstLetter = listContent.every((text, index4) => text && isItemAvailable(index4) ? text[0]?.toLowerCase() !== text[1]?.toLowerCase() : true);
       if (allowRapidSuccessionOfFirstLetter && stringRef.current === event.key) {
         stringRef.current = "";
         prevIndexRef.current = matchIndexRef.current;
@@ -16605,10 +16770,10 @@ var wp;
       });
       const prevIndex = isNewSession ? selectedIndex ?? activeIndex ?? -1 : prevIndexRef.current;
       const startIndex = (prevIndex ?? 0) + 1;
-      const index2 = getMatchingIndex(listContent, stringRef.current, startIndex);
-      if (index2 !== -1) {
-        onMatchProp?.(index2);
-        matchIndexRef.current = index2;
+      const index3 = getMatchingIndex(listContent, stringRef.current, startIndex);
+      if (index3 !== -1) {
+        onMatchProp?.(index3);
+        matchIndexRef.current = index3;
       } else if (event.key !== " ") {
         stringRef.current = "";
         onTyping?.(false);
@@ -16628,7 +16793,7 @@ var wp;
       onTyping?.(false);
     });
     useIsoLayoutEffect(() => {
-      if (!open && selectedIndex !== null) {
+      if (!open3 && selectedIndex !== null) {
         return;
       }
       timeout.clear();
@@ -16636,7 +16801,7 @@ var wp;
       if (stringRef.current !== "") {
         stringRef.current = "";
       }
-    }, [open, selectedIndex, timeout]);
+    }, [open3, selectedIndex, timeout]);
     const sharedProps = React42.useMemo(() => ({
       onKeyDown,
       onBlur
@@ -16878,68 +17043,6 @@ var wp;
     }
   };
 
-  // node_modules/@base-ui/react/utils/popupStateMapping.mjs
-  var CommonPopupDataAttributes = (function(CommonPopupDataAttributes2) {
-    CommonPopupDataAttributes2["open"] = "data-open";
-    CommonPopupDataAttributes2["closed"] = "data-closed";
-    CommonPopupDataAttributes2[CommonPopupDataAttributes2["startingStyle"] = TransitionStatusDataAttributes.startingStyle] = "startingStyle";
-    CommonPopupDataAttributes2[CommonPopupDataAttributes2["endingStyle"] = TransitionStatusDataAttributes.endingStyle] = "endingStyle";
-    CommonPopupDataAttributes2["anchorHidden"] = "data-anchor-hidden";
-    CommonPopupDataAttributes2["side"] = "data-side";
-    CommonPopupDataAttributes2["align"] = "data-align";
-    return CommonPopupDataAttributes2;
-  })({});
-  var TRIGGER_HOOK = {
-    "data-popup-open": ""
-  };
-  var PRESSABLE_TRIGGER_HOOK = {
-    "data-popup-open": "",
-    "data-pressed": ""
-  };
-  var POPUP_OPEN_HOOK = {
-    "data-open": ""
-  };
-  var POPUP_CLOSED_HOOK = {
-    "data-closed": ""
-  };
-  var ANCHOR_HIDDEN_HOOK = {
-    "data-anchor-hidden": ""
-  };
-  var triggerOpenStateMapping2 = {
-    open(value) {
-      if (value) {
-        return TRIGGER_HOOK;
-      }
-      return null;
-    }
-  };
-  var pressableTriggerOpenStateMapping = {
-    open(value) {
-      if (value) {
-        return PRESSABLE_TRIGGER_HOOK;
-      }
-      return null;
-    }
-  };
-  var popupStateMapping = {
-    open(value) {
-      if (value) {
-        return POPUP_OPEN_HOOK;
-      }
-      return POPUP_CLOSED_HOOK;
-    },
-    anchorHidden(value) {
-      if (value) {
-        return ANCHOR_HIDDEN_HOOK;
-      }
-      return null;
-    }
-  };
-  var popupTransitionStateMapping = {
-    ...popupStateMapping,
-    ...transitionStatusMapping
-  };
-
   // node_modules/@base-ui/react/internals/composite/composite.mjs
   var ARROW_UP2 = "ArrowUp";
   var ARROW_DOWN2 = "ArrowDown";
@@ -17114,9 +17217,9 @@ var wp;
   }
 
   // node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
-  function useOpenMethodTriggerProps(open, setOpenMethod) {
+  function useOpenMethodTriggerProps(open3, setOpenMethod) {
     const handleTriggerClick = useStableCallback((_, interactionType) => {
-      const isOpen2 = typeof open === "function" ? open() : open;
+      const isOpen2 = typeof open3 === "function" ? open3() : open3;
       if (!isOpen2) {
         setOpenMethod(interactionType || // On iOS Safari, the hitslop around touch targets means tapping outside an element's
         // bounds does not fire `pointerdown` but does fire `mousedown`. The `interactionType`
@@ -17133,11 +17236,11 @@ var wp;
       onPointerDown
     }), [onClick, onPointerDown]);
   }
-  function useOpenInteractionType(open) {
+  function useOpenInteractionType(open3) {
     const [openMethod, setOpenMethod] = React46.useState(null);
-    const triggerProps = useOpenMethodTriggerProps(open, setOpenMethod);
-    useValueChanged(open, (previousOpen) => {
-      if (previousOpen && !open) {
+    const triggerProps = useOpenMethodTriggerProps(open3, setOpenMethod);
+    useValueChanged(open3, (previousOpen) => {
+      if (previousOpen && !open3) {
         setOpenMethod(null);
       }
     });
@@ -17218,6 +17321,22 @@ var wp;
     return React48.useContext(ComboboxHasItemsContext);
   }
 
+  // node_modules/@base-ui/utils/areArraysEqual.mjs
+  function areArraysEqual(array1, array2, itemComparer = Object.is) {
+    const {
+      length: length2
+    } = array1;
+    if (length2 !== array2.length) {
+      return false;
+    }
+    for (let i2 = 0; i2 < length2; i2 += 1) {
+      if (!itemComparer(array1[i2], array2[i2])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   // node_modules/@base-ui/react/internals/itemEquality.mjs
   var defaultItemEquality = (itemValue, selectedValue) => Object.is(itemValue, selectedValue);
   function compareItemEquality(itemValue, selectedValue, comparer) {
@@ -17226,8 +17345,14 @@ var wp;
     }
     return comparer(itemValue, selectedValue);
   }
+  function isSelectedValueDirty(currentValue, initialValue, comparer) {
+    if (Array.isArray(currentValue) && Array.isArray(initialValue)) {
+      return !areArraysEqual(currentValue, initialValue, (itemValue, initialItemValue) => compareItemEquality(itemValue, initialItemValue, comparer));
+    }
+    return currentValue !== initialValue;
+  }
   function selectedValueIncludes(selectedValues, itemValue, comparer) {
-    if (!selectedValues || selectedValues.length === 0) {
+    if (!selectedValues) {
       return false;
     }
     return selectedValues.some((selectedValue) => {
@@ -17238,7 +17363,7 @@ var wp;
     });
   }
   function findItemIndex(itemValues, selectedValue, comparer) {
-    if (!itemValues || itemValues.length === 0) {
+    if (!itemValues) {
       return -1;
     }
     return itemValues.findIndex((itemValue) => {
@@ -17248,10 +17373,27 @@ var wp;
       return compareItemEquality(itemValue, selectedValue, comparer);
     });
   }
+  function createSelectionMatcher(selectedValues, comparer) {
+    if (comparer !== defaultItemEquality) {
+      return (itemValue) => selectedValueIncludes(selectedValues, itemValue, comparer);
+    }
+    const index3 = new Set(selectedValues);
+    index3.delete(void 0);
+    return (itemValue) => index3.has(itemValue) && (itemValue !== 0 || selectedValues.some((v3) => Object.is(itemValue, v3)));
+  }
   function findSelectionIndex(itemValues, selectedValue, comparer, multiple) {
-    const lastValue = multiple && Array.isArray(selectedValue) ? selectedValue[selectedValue.length - 1] : selectedValue;
-    const index2 = findItemIndex(itemValues, lastValue, comparer);
-    return index2 === -1 ? null : index2;
+    const index3 = multiple && Array.isArray(selectedValue) ? (
+      // Anchor to the first selected item in rendered order so the index does not depend
+      // on the order in which the values were added to the array.
+      itemValues.findIndex(createSelectionMatcher(selectedValue, comparer))
+    ) : findItemIndex(itemValues, selectedValue, comparer);
+    return index3 === -1 ? null : index3;
+  }
+  function resolveSelectedIndex(index3, itemValue, registry, selectedValues, comparer, currentIndex) {
+    if (selectedValueIncludes(selectedValues, itemValue, comparer)) {
+      return currentIndex != null && index3 > currentIndex && selectedValueIncludes(selectedValues, registry[currentIndex], comparer) ? currentIndex : index3;
+    }
+    return index3 === currentIndex ? findSelectionIndex(registry, selectedValues, comparer, true) : currentIndex;
   }
   function removeItem(selectedValues, itemValue, comparer) {
     return selectedValues.filter((selectedValue) => !compareItemEquality(itemValue, selectedValue, comparer));
@@ -17277,8 +17419,14 @@ var wp;
 
   // node_modules/@base-ui/react/internals/resolveValueLabel.mjs
   var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
+  function isGroup(item) {
+    return typeof item === "object" && item != null && Array.isArray(item.items);
+  }
   function isGroupedItems(items) {
-    return items != null && items.length > 0 && typeof items[0] === "object" && items[0] != null && "items" in items[0];
+    return isGroup(items?.[0]);
+  }
+  function flattenLeafItems(items) {
+    return isGroupedItems(items) ? items.flatMap((group) => group.items) : items;
   }
   function hasNullItemLabel(items) {
     if (!Array.isArray(items)) {
@@ -17336,11 +17484,12 @@ var wp;
       return value.label;
     }
     if (items && !Array.isArray(items)) {
-      return items[value] ?? fallback();
+      const label = Object.hasOwn(items, value) ? items[value] : void 0;
+      return label ?? fallback();
     }
     if (Array.isArray(items)) {
       const arrayItems = items;
-      const flatItems = isGroupedItems(arrayItems) ? arrayItems.flatMap((group) => group.items) : arrayItems;
+      const flatItems = flattenLeafItems(arrayItems);
       if (value == null || typeof value !== "object") {
         const match3 = flatItems.find((item) => item.value === value);
         if (match3 && match3.label != null) {
@@ -17358,13 +17507,13 @@ var wp;
     return fallback();
   }
   function resolveMultipleLabels(values, items, itemToStringLabel) {
-    return values.reduce((acc, value, index2) => {
-      if (index2 > 0) {
+    return values.reduce((acc, value, index3) => {
+      if (index3 > 0) {
         acc.push(", ");
       }
       acc.push(/* @__PURE__ */ (0, import_jsx_runtime103.jsx)(React49.Fragment, {
         children: resolveSelectedLabel(value, items, itemToStringLabel)
-      }, index2));
+      }, index3));
       return acc;
     }, []);
   }
@@ -17401,7 +17550,7 @@ var wp;
     inline: (state2) => state2.inline,
     activeIndex: (state2) => state2.activeIndex,
     selectedIndex: (state2) => state2.selectedIndex,
-    isActive: (state2, index2) => state2.activeIndex === index2,
+    isActive: (state2, index3) => state2.activeIndex === index3,
     isSelected: (state2, itemValue) => {
       const comparer = state2.isItemEqualToValue;
       const selectedValue = state2.selectedValue;
@@ -17443,6 +17592,10 @@ var wp;
   // node_modules/@base-ui/react/internals/field-root-context/FieldRootContext.mjs
   var React50 = __toESM(require_react(), 1);
 
+  // node_modules/@base-ui/react/field/control/FieldControlDataAttributes.mjs
+  var valid = "data-valid";
+  var invalid = "data-invalid";
+
   // node_modules/@base-ui/react/internals/field-constants/constants.mjs
   var DEFAULT_VALIDITY_STATE = {
     badInput: false,
@@ -17475,11 +17628,11 @@ var wp;
       }
       if (value) {
         return {
-          "data-valid": ""
+          [valid]: ""
         };
       }
       return {
-        "data-invalid": ""
+        [invalid]: ""
       };
     }
   };
@@ -17571,8 +17724,8 @@ var wp;
     errors: {},
     clearErrors: NOOP,
     validationMode: "onSubmit",
-    submitAttemptedRef: {
-      current: false
+    submitCountRef: {
+      current: 0
     }
   });
   if (true) FormContext.displayName = "FormContext";
@@ -17588,6 +17741,7 @@ var wp;
   var LabelableContext = /* @__PURE__ */ React52.createContext({
     controlId: void 0,
     registerControlId: NOOP,
+    resetControlId: NOOP,
     labelId: void 0,
     setLabelId: NOOP,
     messageIds: [],
@@ -17603,18 +17757,17 @@ var wp;
   function useLabelableId(params = {}) {
     const {
       id,
-      implicit = false,
-      controlRef
+      enabled = true
     } = params;
     const {
       controlId,
-      registerControlId
+      registerControlId,
+      resetControlId
     } = useLabelableContext();
-    const defaultId = useBaseUiId(id);
-    const controlIdForEffect = implicit ? controlId : void 0;
+    const defaultId = useBaseUiId();
     const controlSourceRef = useRefWithInit(() => /* @__PURE__ */ Symbol());
     const hasRegisteredRef = React53.useRef(false);
-    const hadExplicitIdRef = React53.useRef(id != null);
+    const hadExplicitIdRef = React53.useRef(false);
     const unregisterControlId = useStableCallback(() => {
       if (!hasRegisteredRef.current || registerControlId === NOOP) {
         return;
@@ -17623,24 +17776,18 @@ var wp;
       registerControlId(controlSourceRef.current, void 0);
     });
     useIsoLayoutEffect(() => {
-      if (registerControlId === NOOP) {
+      if (!enabled || registerControlId === NOOP) {
+        unregisterControlId();
         return void 0;
       }
       let nextId2;
-      if (implicit) {
-        const elem = controlRef?.current;
-        if (isElement(elem) && elem.closest("label") != null) {
-          nextId2 = id ?? null;
-        } else {
-          nextId2 = controlIdForEffect ?? defaultId;
-        }
-      } else if (id != null) {
+      if (id !== void 0) {
         hadExplicitIdRef.current = true;
         nextId2 = id;
       } else if (hadExplicitIdRef.current) {
         nextId2 = defaultId;
       } else {
-        unregisterControlId();
+        resetControlId();
         return void 0;
       }
       if (nextId2 === void 0) {
@@ -17650,11 +17797,11 @@ var wp;
       hasRegisteredRef.current = true;
       registerControlId(controlSourceRef.current, nextId2);
       return void 0;
-    }, [id, controlRef, controlIdForEffect, registerControlId, implicit, defaultId, controlSourceRef, unregisterControlId]);
-    React53.useEffect(() => {
+    }, [id, enabled, registerControlId, resetControlId, defaultId, controlSourceRef, unregisterControlId]);
+    useIsoLayoutEffect(() => {
       return unregisterControlId;
     }, [unregisterControlId]);
-    return controlId ?? defaultId;
+    return (enabled ? controlId : void 0) ?? id ?? defaultId;
   }
 
   // node_modules/@base-ui/react/combobox/root/utils/index.mjs
@@ -17677,7 +17824,8 @@ var wp;
       if (!query) {
         return true;
       }
-      const selectedString = selectedValue != null ? stringifyAsLabel(selectedValue, itemToStringLabel) : "";
+      const selectedValueToString = itemToStringLabel?.selected ?? itemToStringLabel;
+      const selectedString = selectedValue != null ? stringifyAsLabel(selectedValue, selectedValueToString) : "";
       if (selectedString && collatorFilter.contains(selectedString, query) && selectedString.length === query.length) {
         return true;
       }
@@ -17688,7 +17836,7 @@ var wp;
   // node_modules/@base-ui/react/combobox/root/utils/useFilter.mjs
   var React54 = __toESM(require_react(), 1);
 
-  // node_modules/@base-ui/react/utils/stringifyLocale.mjs
+  // node_modules/@base-ui/utils/stringifyLocale.mjs
   function stringifyLocale(locale) {
     if (Array.isArray(locale)) {
       return locale.map((value) => stringifyLocale(value)).join(",");
@@ -17779,11 +17927,6 @@ var wp;
     return allowOverflowIntent ? element.clientHeight > 0 : element.scrollHeight > element.clientHeight;
   }
 
-  // node_modules/@base-ui/react/internals/areArraysEqual.mjs
-  function areArraysEqual(array1, array2, itemComparer = (a2, b2) => a2 === b2) {
-    return array1.length === array2.length && array1.every((value, index2) => itemComparer(value, array2[index2]));
-  }
-
   // node_modules/@base-ui/react/combobox/root/utils/constants.mjs
   var NO_ACTIVE_VALUE = /* @__PURE__ */ Symbol("none");
   var INITIAL_LAST_HIGHLIGHT = {
@@ -17800,6 +17943,20 @@ var wp;
     return context?.direction ?? "ltr";
   }
 
+  // node_modules/@base-ui/react/combobox/items/itemCollection.mjs
+  function findCollectionItem(valueToItem, itemValue, isEqual2) {
+    const exactItem = valueToItem.get(itemValue);
+    if (exactItem !== void 0 || isEqual2 === defaultItemEquality) {
+      return exactItem;
+    }
+    for (const [derivedValue, item] of valueToItem) {
+      if (compareItemEquality(derivedValue, itemValue, isEqual2)) {
+        return item;
+      }
+    }
+    return void 0;
+  }
+
   // node_modules/@base-ui/react/combobox/root/AriaCombobox.mjs
   var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
   function AriaCombobox(props) {
@@ -17809,7 +17966,7 @@ var wp;
       defaultSelectedValue = null,
       selectedValue: selectedValueProp,
       onSelectedValueChange,
-      defaultInputValue: defaultInputValueProp,
+      defaultInputValue,
       inputValue: inputValueProp,
       open: openProp,
       defaultOpen = false,
@@ -17822,15 +17979,16 @@ var wp;
       required = false,
       inputRef: inputRefProp,
       grid = false,
-      items,
+      items: itemsProp,
       filteredItems: filteredItemsProp,
       filter: filterProp,
+      filterQuery: filterQueryProp,
       openOnInputClick = true,
       autoHighlight = false,
       keepHighlight = false,
       highlightItemOnHover = true,
       loopFocus = true,
-      itemToStringLabel,
+      itemToStringLabel: itemToStringLabelProp,
       itemToStringValue,
       isItemEqualToValue = defaultItemEquality,
       virtualized = false,
@@ -17864,8 +18022,63 @@ var wp;
     const collatorFilter = useCoreFilter({
       locale
     });
+    const collection = Array.isArray(itemsProp) ? null : itemsProp;
+    if (collection && typeof collection.label !== "function") {
+      throw new Error(true ? "Base UI: the `items` prop received an object that is not a collection, so its items cannot be read. Pass an array of items, an array of groups with items, or the result of `createItems()`. See https://base-ui.com/react/components/combobox#createitems" : formatErrorMessage_default(100));
+    }
+    const items = collection ? collection.data : itemsProp;
+    const itemToValue = collection?.value;
+    const storeItems = itemToValue ? void 0 : items;
+    const externalWindow = React56.useMemo(() => {
+      if (!filteredItemsProp || !itemToValue) {
+        return void 0;
+      }
+      const flat = flattenLeafItems(filteredItemsProp);
+      const values = flat.map(itemToValue);
+      let valueToItem;
+      return {
+        values,
+        findItem(itemValue, isEqual2) {
+          if (!valueToItem) {
+            valueToItem = /* @__PURE__ */ new Map();
+            for (let i2 = 0; i2 < values.length; i2 += 1) {
+              if (!valueToItem.has(values[i2])) {
+                valueToItem.set(values[i2], flat[i2]);
+              }
+            }
+          }
+          return findCollectionItem(valueToItem, itemValue, isEqual2);
+        }
+      };
+    }, [filteredItemsProp, itemToValue]);
+    const itemToStringLabel = React56.useMemo(() => {
+      if (!collection) {
+        return itemToStringLabelProp;
+      }
+      return (itemValue) => {
+        return collection.label(itemValue, isItemEqualToValue, (unresolvedValue) => {
+          const externalItem = externalWindow?.findItem(unresolvedValue, isItemEqualToValue);
+          if (externalItem != null) {
+            return collection.itemLabel(externalItem);
+          }
+          return stringifyAsLabel(unresolvedValue, itemToStringLabelProp);
+        });
+      };
+    }, [collection, itemToStringLabelProp, externalWindow, isItemEqualToValue]);
+    const filterItemToString = React56.useMemo(() => {
+      if (!collection) {
+        return itemToStringLabelProp;
+      }
+      return Object.assign((item) => collection.itemLabel(item), {
+        selected: (value) => stringifyAsLabel(value, itemToStringLabel)
+      });
+    }, [collection, itemToStringLabel, itemToStringLabelProp]);
+    function stringifyValueLabel(item) {
+      return stringifyAsLabel(item, itemToStringLabel);
+    }
     const [queryChangedAfterOpen, setQueryChangedAfterOpen] = React56.useState(false);
     const [closeQuery, setCloseQuery] = React56.useState(null);
+    const previousCloseQueryRef = React56.useRef(closeQuery);
     const listRef = React56.useRef([]);
     const labelsRef = React56.useRef([]);
     const popupRef = React56.useRef(null);
@@ -17886,7 +18099,7 @@ var wp;
     const name2 = fieldName ?? nameProp;
     const multiple = selectionMode === "multiple";
     const single = selectionMode === "single";
-    const hasInputValue = inputValueProp !== void 0 || defaultInputValueProp !== void 0;
+    const hasInputValue = inputValueProp !== void 0 || defaultInputValue !== void 0;
     const hasItems = items !== void 0;
     const hasFilteredItemsProp = filteredItemsProp !== void 0;
     let autoHighlightMode;
@@ -17908,14 +18121,14 @@ var wp;
       if (filterProp !== void 0) {
         return filterProp;
       }
-      return createCollatorItemFilter(collatorFilter, itemToStringLabel);
-    }, [filterProp, collatorFilter, itemToStringLabel]);
+      return createCollatorItemFilter(collatorFilter, filterItemToString);
+    }, [filterProp, collatorFilter, filterItemToString]);
     const initialDefaultInputValue = useRefWithInit(() => {
       if (hasInputValue) {
-        return defaultInputValueProp ?? "";
+        return defaultInputValue ?? "";
       }
       if (single) {
-        return stringifyAsLabel(selectedValue, itemToStringLabel);
+        return stringifyValueLabel(selectedValue);
       }
       return "";
     }).current;
@@ -17925,27 +18138,19 @@ var wp;
       name: "Combobox",
       state: "inputValue"
     });
-    const [open, setOpenUnwrapped] = useControlled({
+    const [open3, setOpenUnwrapped] = useControlled({
       controlled: openProp,
       default: defaultOpen,
       name: "Combobox",
       state: "open"
     });
     const isGrouped = isGroupedItems(items);
-    const query = closeQuery ?? String(inputValue).trim();
-    const selectedLabelString = single ? stringifyAsLabel(selectedValue, itemToStringLabel) : "";
+    const query = !open3 && closeQuery !== null ? closeQuery : String(inputValue).trim();
+    const selectedLabelString = single ? stringifyValueLabel(selectedValue) : "";
     const shouldBypassFiltering = single && !queryChangedAfterOpen && query !== "" && selectedLabelString.length === query.length && collatorFilter.contains(selectedLabelString, query);
-    const filterQuery = shouldBypassFiltering ? "" : query;
-    const shouldIgnoreExternalFiltering = hasItems && hasFilteredItemsProp && shouldBypassFiltering;
-    const flatItems = React56.useMemo(() => {
-      if (!items) {
-        return EMPTY_ARRAY3;
-      }
-      if (isGrouped) {
-        return items.flatMap((group) => group.items);
-      }
-      return items;
-    }, [items, isGrouped]);
+    const filterQuery = shouldBypassFiltering ? "" : filterQueryProp ?? query;
+    const shouldIgnoreExternalFiltering = hasItems && hasFilteredItemsProp && shouldBypassFiltering && (!collection || collection.hasValue(selectedValue, isItemEqualToValue));
+    const flatItems = React56.useMemo(() => items ? flattenLeafItems(items) : EMPTY_ARRAY3, [items]);
     const filteredItems = React56.useMemo(() => {
       if (filteredItemsProp && !shouldIgnoreExternalFiltering) {
         return filteredItemsProp;
@@ -17968,7 +18173,7 @@ var wp;
               if (itemsToTake.length >= remainingLimit) {
                 break;
               }
-              if (filter(item, filterQuery, itemToStringLabel)) {
+              if (filter(item, filterQuery, filterItemToString)) {
                 itemsToTake.push(item);
               }
             }
@@ -17987,7 +18192,7 @@ var wp;
       if (filterQuery === "") {
         return limit > -1 ? flatItems.slice(0, limit) : (
           // The cast here is done as `flatItems` is readonly.
-          // valuesRef.current, a mutable ref, can be set to `flatFilteredItems`, which may
+          // valuesRef.current, a mutable ref, can be set to `flatFilteredValues`, which may
           // reference this exact readonly value, creating a mutation risk.
           // However, <Combobox.Item> can never mutate this value as the mutating effect
           // bails early when `items` is provided, and this is only ever returned
@@ -18000,44 +18205,31 @@ var wp;
         if (limit > -1 && limitedItems.length >= limit) {
           break;
         }
-        if (filter(item, filterQuery, itemToStringLabel)) {
+        if (filter(item, filterQuery, filterItemToString)) {
           limitedItems.push(item);
         }
       }
       return limitedItems;
-    }, [filteredItemsProp, shouldIgnoreExternalFiltering, items, isGrouped, filterQuery, limit, filter, itemToStringLabel, flatItems]);
-    const flatFilteredItems = React56.useMemo(() => {
-      if (isGrouped) {
-        const groups = filteredItems;
-        return groups.flatMap((g3) => g3.items);
+    }, [filteredItemsProp, shouldIgnoreExternalFiltering, items, isGrouped, filterQuery, limit, filter, filterItemToString, flatItems]);
+    const flatFilteredValues = React56.useMemo(() => {
+      if (externalWindow && filteredItems === filteredItemsProp) {
+        return externalWindow.values;
       }
-      return filteredItems;
-    }, [filteredItems, isGrouped]);
+      const flat = flattenLeafItems(filteredItems);
+      return itemToValue ? flat.map((item) => itemToValue(item)) : flat;
+    }, [filteredItems, filteredItemsProp, externalWindow, itemToValue]);
     const store4 = useRefWithInit(() => {
       let initialSelectedIndex = null;
-      if (inlineProp && open && hasItems && selectionMode !== "none") {
-        initialSelectedIndex = findSelectionIndex(flatFilteredItems, selectedValue, isItemEqualToValue, multiple);
+      if (inlineProp && open3 && hasItems && selectionMode !== "none") {
+        initialSelectedIndex = findSelectionIndex(flatFilteredValues, selectedValue, isItemEqualToValue, multiple);
       }
-      return new Store({
+      return new ReactStore({
         id,
         labelId: void 0,
         selectedValue,
-        open,
-        items,
+        open: open3,
+        items: storeItems,
         selectionMode,
-        listRef,
-        labelsRef,
-        popupRef,
-        emptyRef,
-        inputRef,
-        startDismissRef,
-        endDismissRef,
-        keyboardActiveRef,
-        chipsContainerRef,
-        clearRef,
-        valuesRef,
-        pointerDownItemRef,
-        selectionEventRef,
         name: name2,
         form,
         disabled: disabled2,
@@ -18074,7 +18266,8 @@ var wp;
         inputInsidePopup: true,
         // Avoid duplicate names in the server HTML. Popup inputs aren't rendered
         // until after hydration, so the hidden input takes over then if needed.
-        inputOwnsFormValue: selectionMode === "none",
+        inputOwnsFormValue: selectionMode === "none"
+      }, {
         // Placeholder callbacks replaced on first render
         onOpenChangeComplete: NOOP,
         setOpen: NOOP,
@@ -18083,8 +18276,21 @@ var wp;
         setIndices: NOOP,
         handleSelection: NOOP,
         forceMount: NOOP,
-        requestSubmit: NOOP
-      });
+        requestSubmit: NOOP,
+        listRef,
+        labelsRef,
+        popupRef,
+        emptyRef,
+        inputRef,
+        startDismissRef,
+        endDismissRef,
+        keyboardActiveRef,
+        chipsContainerRef,
+        clearRef,
+        valuesRef,
+        pointerDownItemRef,
+        selectionEventRef
+      }, selectors2);
     }).current;
     const fieldRawValue = selectionMode === "none" ? inputValue : selectedValue;
     const fieldStringValue = React56.useMemo(() => {
@@ -18098,37 +18304,38 @@ var wp;
     }, [fieldRawValue, itemToStringValue, selectionMode, selectedValue]);
     const onItemHighlighted = useStableCallback(onItemHighlightedProp);
     const onOpenChangeComplete = useStableCallback(onOpenChangeCompleteProp);
-    const activeIndex = useStore(store4, selectors2.activeIndex);
-    const selectedIndex = useStore(store4, selectors2.selectedIndex);
-    const positionerElement = useStore(store4, selectors2.positionerElement);
-    const listElement = useStore(store4, selectors2.listElement);
-    const triggerElement = useStore(store4, selectors2.triggerElement);
-    const inputElement = useStore(store4, selectors2.inputElement);
-    const inputGroupElement = useStore(store4, selectors2.inputGroupElement);
-    const inline4 = useStore(store4, selectors2.inline);
-    const inputInsidePopup = useStore(store4, selectors2.inputInsidePopup);
-    const inputOwnsFormValue = useStore(store4, selectors2.inputOwnsFormValue);
+    const activeIndex = store4.useState("activeIndex");
+    const selectedIndex = store4.useState("selectedIndex");
+    const positionerElement = store4.useState("positionerElement");
+    const listElement = store4.useState("listElement");
+    const triggerElement = store4.useState("triggerElement");
+    const inputElement = store4.useState("inputElement");
+    const inputGroupElement = store4.useState("inputGroupElement");
+    const inline4 = store4.useState("inline");
+    const inputInsidePopup = store4.useState("inputInsidePopup");
+    const inputOwnsFormValue = store4.useState("inputOwnsFormValue");
+    const inputMatchesSelectedValue = single && !inputInsidePopup && inputValue === selectedLabelString;
     const triggerRef = useValueAsRef(triggerElement);
     const {
       mounted,
       setMounted,
       transitionStatus
-    } = useTransitionStatus(open);
+    } = useTransitionStatus(open3);
     const {
       openMethod,
       triggerProps
-    } = useOpenInteractionType(open);
+    } = useOpenInteractionType(open3);
     const getStringifiedValueForForm = useStableCallback(() => fieldStringValue);
     useRegisterFieldControl(inputInsidePopup ? triggerRef : inputRef, id, fieldRawValue, getStringifiedValueForForm, !disabled2, nameProp);
     const forceMount = useStableCallback(() => {
       if (items) {
-        labelsRef.current = flatFilteredItems.map((item) => stringifyAsLabel(item, itemToStringLabel));
+        labelsRef.current = flatFilteredValues.map(stringifyValueLabel);
       } else {
         store4.set("forceMounted", true);
       }
     });
-    const emitHighlight = useStableCallback((value, index2, type) => {
-      if (index2 === -1) {
+    const emitHighlight = useStableCallback((value, index3, type) => {
+      if (index3 === -1) {
         if (lastHighlightRef.current === INITIAL_LAST_HIGHLIGHT) {
           return;
         }
@@ -18136,15 +18343,22 @@ var wp;
       } else {
         lastHighlightRef.current = {
           value,
-          index: index2
+          index: index3
         };
       }
       onItemHighlighted(value, createGenericEventDetails(type, void 0, {
-        index: index2
+        index: index3
       }));
     });
     const setIndices = useStableCallback((options) => {
-      store4.update(options);
+      const update4 = {};
+      if (options.activeIndex !== void 0) {
+        update4.activeIndex = options.activeIndex;
+      }
+      if (options.selectedIndex !== void 0) {
+        update4.selectedIndex = options.selectedIndex;
+      }
+      store4.update(update4);
       const activeIndexOption = options.activeIndex;
       if (activeIndexOption === void 0) {
         return;
@@ -18157,13 +18371,13 @@ var wp;
       }
     });
     const setInputValue = useStableCallback((next, eventDetails) => {
-      hadInputClearRef.current = eventDetails.reason === reason_parts_exports.inputClear;
       props.onInputValueChange?.(next, eventDetails);
       if (eventDetails.isCanceled) {
         return;
       }
+      hadInputClearRef.current = eventDetails.reason === reason_parts_exports.inputClear;
       if (eventDetails.reason === reason_parts_exports.inputChange) {
-        if (open && closeQuery !== null) {
+        if (open3 && closeQuery !== null) {
           setCloseQuery(null);
         }
         const event = eventDetails.event;
@@ -18190,7 +18404,7 @@ var wp;
               }
             }
           }
-          if (hasQuery && autoHighlightMode && store4.state.activeIndex == null && (open || inline4)) {
+          if (hasQuery && autoHighlightMode && store4.state.activeIndex == null && (open3 || inline4)) {
             store4.set("activeIndex", 0);
           }
         }
@@ -18202,23 +18416,29 @@ var wp;
       }
       setInputValueUnwrapped(next);
     });
+    const handleInterruptedReopen = useStableCallback((isInputChange) => {
+      const clearsPendingInput = !isInputChange && inputInsidePopup && !inline4 && inputValue !== "" && (String(inputValue).trim() === closeQuery || inputValue === selectedLabelString);
+      if (!isInputChange && (clearsPendingInput || inputValue === "" || inputMatchesSelectedValue)) {
+        setQueryChangedAfterOpen(false);
+      }
+      setCloseQuery(null);
+      if (clearsPendingInput) {
+        setInputValue("", createChangeEventDetails(reason_parts_exports.inputClear));
+      }
+    });
     const setOpen = useStableCallback((nextOpen, eventDetails) => {
-      if (open === nextOpen) {
+      if (open3 === nextOpen) {
         return;
       }
-      if (eventDetails.reason === reason_parts_exports.escapeKey && hasItems && flatFilteredItems.length === 0 && !emptyRef.current) {
+      if (eventDetails.reason === reason_parts_exports.escapeKey && hasItems && flatFilteredValues.length === 0 && !emptyRef.current) {
         eventDetails.allowPropagation();
       }
       props.onOpenChange?.(nextOpen, eventDetails);
       if (eventDetails.isCanceled) {
         return;
       }
-      if (nextOpen && inputInsidePopup && !inline4 && closeQuery !== null) {
-        setQueryChangedAfterOpen(false);
-        setCloseQuery(null);
-        if (inputValue !== "" && eventDetails.reason !== reason_parts_exports.inputChange) {
-          setInputValue("", createChangeEventDetails(reason_parts_exports.inputClear, eventDetails.event));
-        }
+      if (nextOpen && closeQuery !== null) {
+        handleInterruptedReopen(eventDetails.reason === reason_parts_exports.inputChange);
       }
       if (!nextOpen && queryChangedAfterOpen) {
         if (single) {
@@ -18238,7 +18458,9 @@ var wp;
             });
           }
           if (!inputInsidePopup || inline4) {
-            setInputValue("", createChangeEventDetails(reason_parts_exports.inputClear, eventDetails.event));
+            setInputValue("", createChangeEventDetails(reason_parts_exports.inputClear, eventDetails.event, void 0, {
+              isItemPress: eventDetails.reason === reason_parts_exports.itemPress
+            }));
           }
         }
       }
@@ -18260,7 +18482,7 @@ var wp;
       setSelectedValueUnwrapped(nextValue);
       const shouldFillInput = selectionMode === "none" && popupRef.current && fillInputOnItemPress || single && !store4.state.inputInsidePopup;
       if (shouldFillInput) {
-        setInputValue(stringifyAsLabel(nextValue, itemToStringLabel), createChangeEventDetails(eventDetails.reason, eventDetails.event));
+        setInputValue(stringifyValueLabel(nextValue), createChangeEventDetails(eventDetails.reason, eventDetails.event));
       }
     });
     const handleSelection = useStableCallback((event, itemValue) => {
@@ -18288,7 +18510,13 @@ var wp;
           return;
         }
         if (store4.state.inputInsidePopup) {
-          setInputValue("", createChangeEventDetails(reason_parts_exports.inputClear, eventDetails.event));
+          setInputValue("", createChangeEventDetails(reason_parts_exports.inputClear, eventDetails.event, void 0, {
+            isItemPress: true
+          }));
+          const pendingHighlight = pendingQueryHighlightRef.current;
+          if (pendingHighlight && !isCurrentlySelected) {
+            pendingHighlight.toggledValue = itemValue;
+          }
         } else {
           setOpen(false, eventDetails);
         }
@@ -18330,7 +18558,7 @@ var wp;
             setInputValue("", createChangeEventDetails(reason_parts_exports.inputClear));
           }
         } else {
-          const stringVal = stringifyAsLabel(selectedValue, itemToStringLabel);
+          const stringVal = stringifyValueLabel(selectedValue);
           if (inputRef.current && inputRef.current.value !== stringVal) {
             const reason = stringVal === "" ? reason_parts_exports.inputClear : reason_parts_exports.none;
             setInputValue(stringVal, createChangeEventDetails(reason));
@@ -18348,10 +18576,10 @@ var wp;
     }, [inline4, positionerElement]);
     useOpenChangeComplete({
       enabled: !props.actionsRef,
-      open,
+      open: open3,
       ref: resolvedPopupRef,
       onComplete() {
-        if (!open) {
+        if (!open3) {
           handleUnmount();
         }
       }
@@ -18359,29 +18587,33 @@ var wp;
     React56.useImperativeHandle(props.actionsRef, () => ({
       unmount: handleUnmount
     }), [handleUnmount]);
-    useIsoLayoutEffect(function syncClosedState() {
-      if (open) {
+    useIsoLayoutEffect(function syncSelectedIndex() {
+      const closeQueryReleased = previousCloseQueryRef.current !== null && closeQuery === null;
+      previousCloseQueryRef.current = closeQuery;
+      if (open3 && (!closeQueryReleased || !hasItems)) {
         return;
       }
-      pointerDownItemRef.current = null;
+      if (!open3) {
+        pointerDownItemRef.current = null;
+      }
       if (selectionMode === "none") {
         return;
       }
-      const registry = hasItems ? flatItems : valuesRef.current;
+      const registry = hasItems ? flatFilteredValues : valuesRef.current;
       setIndices({
         selectedIndex: findSelectionIndex(registry, selectedValue, isItemEqualToValue, multiple)
       });
-    }, [open, selectedValue, selectionMode, multiple, hasItems, flatItems, isItemEqualToValue, setIndices]);
+    }, [open3, closeQuery, selectedValue, selectionMode, multiple, hasItems, flatFilteredValues, isItemEqualToValue, setIndices]);
     useIsoLayoutEffect(() => {
       if (items) {
-        valuesRef.current = flatFilteredItems;
-        listRef.current.length = flatFilteredItems.length;
+        valuesRef.current = flatFilteredValues;
+        listRef.current.length = flatFilteredValues.length;
       }
-    }, [items, flatFilteredItems]);
+    }, [items, flatFilteredValues]);
     useIsoLayoutEffect(() => {
       const pendingHighlight = pendingQueryHighlightRef.current;
       if (pendingHighlight) {
-        const listIsNavigable = open || inline4 || store4.state.positionerElement?.hidden === false;
+        const listIsNavigable = open3 || inline4 || store4.state.positionerElement?.hidden === false;
         if (pendingHighlight.hasQuery) {
           if (autoHighlightMode && listIsNavigable) {
             store4.set("activeIndex", 0);
@@ -18400,11 +18632,13 @@ var wp;
               }
               const currentSelectedValue = store4.state.selectedValue;
               const isMultiple = store4.state.selectionMode === "multiple";
-              const lastSelectedValue = isMultiple && Array.isArray(currentSelectedValue) ? currentSelectedValue[currentSelectedValue.length - 1] : currentSelectedValue;
-              const hasSelection = store4.state.selectionMode !== "none" && lastSelectedValue != null;
-              if (hasSelection || clearedBySelection) {
-                const registry = hasItems || hasFilteredItemsProp ? flatFilteredItems : valuesRef.current;
-                store4.set("activeIndex", hasSelection ? findSelectionIndex(registry, currentSelectedValue, store4.state.isItemEqualToValue, isMultiple) : null);
+              const hasSelection = isMultiple && Array.isArray(currentSelectedValue) ? currentSelectedValue.length > 0 : store4.state.selectionMode !== "none" && currentSelectedValue != null;
+              if (hasSelection) {
+                const registry = hasItems || hasFilteredItemsProp ? flatFilteredValues : valuesRef.current;
+                const toggledIndex = findItemIndex(registry, pendingHighlight.toggledValue, store4.state.isItemEqualToValue);
+                store4.set("activeIndex", toggledIndex !== -1 ? toggledIndex : findSelectionIndex(registry, currentSelectedValue, store4.state.isItemEqualToValue, isMultiple));
+              } else if (clearedBySelection) {
+                store4.set("activeIndex", null);
               } else if (autoHighlightMode === "always") {
                 store4.set("activeIndex", 0);
               }
@@ -18412,11 +18646,11 @@ var wp;
           }
         }
       }
-      if (!open && !inline4) {
+      if (!open3 && !inline4) {
         return;
       }
-      const shouldUseFlatFilteredItems = hasItems || hasFilteredItemsProp;
-      const candidateItems = shouldUseFlatFilteredItems ? flatFilteredItems : valuesRef.current;
+      const shouldUseFlatFilteredValues = hasItems || hasFilteredItemsProp;
+      const candidateItems = shouldUseFlatFilteredValues ? flatFilteredValues : valuesRef.current;
       const storeActiveIndex = store4.state.activeIndex;
       if (storeActiveIndex == null) {
         if (autoHighlightMode === "always" && candidateItems.length > 0) {
@@ -18443,9 +18677,9 @@ var wp;
       emitHighlight,
       hasFilteredItemsProp,
       hasItems,
-      flatFilteredItems,
+      flatFilteredValues,
       inline4,
-      open,
+      open3,
       store4,
       // Reruns the effect when the query changes without affecting the deps above, such as
       // clearing the input when no items are filtered out (individually rendered items).
@@ -18459,58 +18693,61 @@ var wp;
       setFilled(multiple ? Array.isArray(selectedValue) && selectedValue.length > 0 : selectedValue != null);
     }, [setFilled, selectionMode, inputValue, selectedValue, multiple]);
     React56.useEffect(() => {
-      if (hasItems && autoHighlightMode && flatFilteredItems.length === 0) {
+      if (hasItems && autoHighlightMode && flatFilteredValues.length === 0) {
         setIndices({
           activeIndex: null
         });
       }
-    }, [hasItems, autoHighlightMode, flatFilteredItems.length, setIndices]);
-    function isSelectedValueDirty(value) {
-      const initialValue = validityData.initialValue;
-      if (Array.isArray(value) && Array.isArray(initialValue)) {
-        return !areArraysEqual(value, initialValue, (itemValue, initialItemValue) => compareItemEquality(itemValue, initialItemValue, isItemEqualToValue));
+    }, [hasItems, autoHighlightMode, flatFilteredValues.length, setIndices]);
+    function handleQueryChanged() {
+      if (open3 && query !== "" && query !== String(initialDefaultInputValue) && !inputMatchesSelectedValue) {
+        setQueryChangedAfterOpen(true);
       }
-      return value !== initialValue;
     }
-    useValueChanged(query, () => {
-      if (!open || query === "" || query === String(initialDefaultInputValue)) {
-        return;
+    function handleOpenChanged() {
+      if (open3 && closeQuery !== null) {
+        handleInterruptedReopen(false);
       }
-      setQueryChangedAfterOpen(true);
-    });
+    }
+    let syncedSelectedLabel = false;
     function syncInputToSelectedLabel() {
-      const nextInputValue = stringifyAsLabel(selectedValue, itemToStringLabel);
-      if (inputValue !== nextInputValue) {
-        setInputValue(nextInputValue, createChangeEventDetails(reason_parts_exports.none));
+      if (!syncedSelectedLabel && inputValue !== selectedLabelString) {
+        syncedSelectedLabel = true;
+        setInputValue(selectedLabelString, createChangeEventDetails(reason_parts_exports.none));
       }
     }
-    useValueChanged(selectedValue, () => {
+    function handleSelectedValueChanged() {
       if (selectionMode === "none") {
         return;
       }
       clearErrors(name2);
-      setDirty(isSelectedValueDirty(selectedValue));
+      setDirty(isSelectedValueDirty(selectedValue, validityData.initialValue, isItemEqualToValue));
       validation.change(selectedValue);
       if (single && !hasInputValue && !inputInsidePopup) {
         syncInputToSelectedLabel();
       }
-    });
-    useValueChanged(inputValue, () => {
+    }
+    function syncInputAfterItemsOrLabelChange() {
+      if (single && !hasInputValue && !inputInsidePopup && !queryChangedAfterOpen) {
+        syncInputToSelectedLabel();
+      }
+    }
+    function handleInputValueChanged() {
       if (selectionMode !== "none") {
         return;
       }
       clearErrors(name2);
       setDirty(inputValue !== validityData.initialValue);
       validation.change(inputValue);
-    });
-    useValueChanged(items, () => {
-      if (!single || hasInputValue || inputInsidePopup || queryChangedAfterOpen) {
-        return;
-      }
-      syncInputToSelectedLabel();
-    });
+    }
+    useValueChanged(query, handleQueryChanged);
+    useValueChanged(open3, handleOpenChanged);
+    useValueChanged(selectedValue, handleSelectedValueChanged);
+    useValueChanged(selectedLabelString, syncInputAfterItemsOrLabelChange);
+    useValueChanged(items, syncInputAfterItemsOrLabelChange);
+    useValueChanged(inputValue, handleInputValueChanged);
     const floatingRootContext = useFloatingRootContext({
-      open: inline4 ? true : open,
+      open: inline4 ? true : open3,
       onOpenChange: setOpen,
       elements: {
         reference: inputInsidePopup ? triggerElement : inputElement,
@@ -18518,7 +18755,7 @@ var wp;
       }
     });
     const ariaHasPopup = grid ? "grid" : "listbox";
-    const expanded = open || inline4;
+    const expanded = open3 || inline4;
     const ariaExpanded = expanded ? "true" : "false";
     const role = React56.useMemo(() => {
       const isPlainInput = inputElement?.tagName === "INPUT";
@@ -18535,7 +18772,7 @@ var wp;
         reference["aria-expanded"] = ariaExpanded;
         reference["aria-haspopup"] = ariaHasPopup;
         reference["aria-controls"] = expanded ? listElement?.id : void 0;
-        reference["aria-autocomplete"] = autoComplete;
+        reference["aria-autocomplete"] = readOnly ? "none" : autoComplete;
       }
       return {
         reference,
@@ -18543,9 +18780,9 @@ var wp;
           role: "presentation"
         }
       };
-    }, [inputElement, expanded, ariaExpanded, ariaHasPopup, listElement?.id, autoComplete]);
+    }, [inputElement, expanded, ariaExpanded, ariaHasPopup, listElement?.id, autoComplete, readOnly]);
     const click = useClick(floatingRootContext, {
-      enabled: !readOnly && !disabled2 && openOnInputClick,
+      enabled: !disabled2 && openOnInputClick,
       event: "mousedown-only",
       toggle: false,
       // Apply a small delay for touch to let mobile viewport/keyboard positioning settle.
@@ -18554,7 +18791,7 @@ var wp;
       reason: reason_parts_exports.inputPress
     });
     const dismiss = useDismiss(floatingRootContext, {
-      enabled: !readOnly && !disabled2 && !inline4,
+      enabled: !disabled2 && !inline4,
       outsidePressEvent: {
         mouse: "sloppy",
         // The visual viewport (affected by the mobile software keyboard) can be
@@ -18570,7 +18807,7 @@ var wp;
       }
     });
     const listNavigation2 = useListNavigation(floatingRootContext, {
-      enabled: !readOnly && !disabled2,
+      enabled: !disabled2,
       id,
       listRef,
       activeIndex,
@@ -18586,7 +18823,7 @@ var wp;
       disabledIndices: EMPTY_ARRAY3,
       grid: grid ? gridNavigation : void 0,
       onNavigate(nextActiveIndex, event) {
-        if (!event && !open || transitionStatus === "ending") {
+        if (!event && !open3 || transitionStatus === "ending") {
           return;
         }
         if (!event) {
@@ -18620,6 +18857,14 @@ var wp;
         onFocus: void 0
       };
     }, [listNavigation2.item]);
+    store4.useContextCallback("setOpen", setOpen);
+    store4.useContextCallback("setInputValue", setInputValue);
+    store4.useContextCallback("setSelectedValue", setSelectedValue);
+    store4.useContextCallback("setIndices", setIndices);
+    store4.useContextCallback("handleSelection", handleSelection);
+    store4.useContextCallback("forceMount", forceMount);
+    store4.useContextCallback("requestSubmit", requestSubmit);
+    store4.useContextCallback("onOpenChangeComplete", onOpenChangeCompleteProp);
     useOnFirstRender(() => {
       store4.update({
         inline: inlineProp,
@@ -18627,57 +18872,52 @@ var wp;
         listProps,
         inputProps,
         triggerProps,
-        itemProps,
-        setOpen,
-        setInputValue,
-        setSelectedValue,
-        setIndices,
-        handleSelection,
-        forceMount,
-        requestSubmit,
-        onOpenChangeComplete
+        itemProps
       });
     });
+    const syncedValues = {
+      id,
+      selectedValue,
+      open: open3,
+      mounted,
+      transitionStatus,
+      items: storeItems,
+      inline: inlineProp,
+      popupProps,
+      listProps,
+      inputProps,
+      triggerProps,
+      itemProps,
+      openMethod,
+      selectionMode,
+      name: name2,
+      form,
+      disabled: disabled2,
+      readOnly,
+      required,
+      grid,
+      virtualized,
+      openOnInputClick,
+      itemToStringLabel,
+      modal,
+      autoHighlight: autoHighlightMode,
+      isItemEqualToValue,
+      submitOnItemClick,
+      hasInputValue
+    };
     useIsoLayoutEffect(() => {
       store4.update({
-        id,
-        selectedValue,
-        open,
-        mounted,
-        transitionStatus,
-        items,
-        inline: inlineProp,
-        popupProps,
-        listProps,
-        inputProps,
-        triggerProps,
-        openMethod,
-        itemProps,
-        selectionMode,
-        name: name2,
-        form,
-        disabled: disabled2,
-        readOnly,
-        required,
-        grid,
-        virtualized,
-        openOnInputClick,
-        itemToStringLabel,
-        modal,
-        autoHighlight: autoHighlightMode,
-        isItemEqualToValue,
-        submitOnItemClick,
-        hasInputValue,
+        ...syncedValues,
         inputOwnsFormValue: selectionMode === "none" && (inlineProp || !store4.state.inputInsidePopup)
       });
-    }, [store4, id, selectedValue, open, mounted, transitionStatus, items, popupProps, listProps, inputProps, itemProps, openMethod, triggerProps, selectionMode, name2, disabled2, readOnly, required, grid, virtualized, openOnInputClick, itemToStringLabel, modal, isItemEqualToValue, submitOnItemClick, hasInputValue, inlineProp, autoHighlightMode, form]);
+    }, [store4, ...Object.values(syncedValues)]);
     const hiddenInputRef = useMergedRefs(inputRefProp, validation.inputRef);
     const itemsContextValue = React56.useMemo(() => ({
       query,
       hasItems,
       filteredItems,
-      flatFilteredItems
-    }), [query, hasItems, filteredItems, flatFilteredItems]);
+      flatFilteredValues
+    }), [query, hasItems, filteredItems, flatFilteredValues]);
     const serializedValue = React56.useMemo(() => {
       if (Array.isArray(fieldRawValue)) {
         return "";
@@ -18720,7 +18960,7 @@ var wp;
             const nextValue = event.currentTarget.value;
             const nextValueLower = nextValue.toLowerCase();
             const details = createChangeEventDetails(reason_parts_exports.none, event.nativeEvent);
-            const findSerializedMatchIndex = () => valuesRef.current.findIndex((candidate) => stringifyAsValue(candidate, itemToStringValue).toLowerCase() === nextValueLower || stringifyAsLabel(candidate, itemToStringLabel).toLowerCase() === nextValueLower);
+            const findSerializedMatchIndex = () => valuesRef.current.findIndex((candidate) => stringifyAsValue(candidate, itemToStringValue).toLowerCase() === nextValueLower || stringifyValueLabel(candidate).toLowerCase() === nextValueLower);
             function handleChange() {
               if (multiple) {
                 return;
@@ -18731,8 +18971,8 @@ var wp;
               }
               let matchingIndex = findSerializedMatchIndex();
               if (matchingIndex === -1) {
-                matchingIndex = valuesRef.current.findIndex((_, index2) => {
-                  const renderedLabel = labelsRef.current[index2];
+                matchingIndex = valuesRef.current.findIndex((_, index3) => {
+                  const renderedLabel = labelsRef.current[index3];
                   return renderedLabel != null && renderedLabel.toLowerCase() === nextValueLower;
                 });
               }
@@ -18786,15 +19026,21 @@ var wp;
   // node_modules/@base-ui/react/combobox/trigger/ComboboxTrigger.mjs
   var React57 = __toESM(require_react(), 1);
 
+  // node_modules/@base-ui/react/combobox/input/ComboboxInputDataAttributes.mjs
+  var popupOpen3 = CommonTriggerDataAttributes_exports.popupOpen;
+  var pressed2 = CommonTriggerDataAttributes_exports.pressed;
+  var popupSide = "data-popup-side";
+  var listEmpty = "data-list-empty";
+
   // node_modules/@base-ui/react/combobox/utils/stateAttributesMapping.mjs
   var triggerStateAttributesMapping = {
     ...pressableTriggerOpenStateMapping,
     ...fieldValidityMapping,
     popupSide: (side) => side ? {
-      "data-popup-side": side
+      [popupSide]: side
     } : null,
     listEmpty: (empty) => empty ? {
-      "data-list-empty": ""
+      [listEmpty]: ""
     } : null
   };
 
@@ -18842,10 +19088,10 @@ var wp;
 
   // node_modules/@base-ui/react/combobox/utils/parts.mjs
   function usePopupSide(store4) {
-    const mounted = useStore(store4, selectors2.mounted);
-    const popupSide = useStore(store4, selectors2.popupSide);
-    const positionerElement = useStore(store4, selectors2.positionerElement);
-    return mounted && positionerElement ? popupSide : null;
+    const mounted = store4.useState("mounted");
+    const popupSide2 = store4.useState("popupSide");
+    const positionerElement = store4.useState("positionerElement");
+    return mounted && positionerElement ? popupSide2 : null;
   }
   function useListEmpty() {
     return useComboboxDerivedItemsContext().filteredItems.length === 0;
@@ -18853,16 +19099,16 @@ var wp;
   function getChipNavigationKeys(direction) {
     return direction === "rtl" ? ["ArrowRight", "ArrowLeft"] : ["ArrowLeft", "ArrowRight"];
   }
-  function getIndexAfterChipRemoval(index2, chipCount) {
-    const nextIndex = index2 >= chipCount - 1 ? chipCount - 2 : index2;
+  function getIndexAfterChipRemoval(index3, chipCount) {
+    const nextIndex = index3 >= chipCount - 1 ? chipCount - 2 : index3;
     return nextIndex >= 0 ? nextIndex : void 0;
   }
   function clickHighlightedItem(store4, activeIndex, nativeEvent) {
-    const listItem = store4.state.listRef.current[activeIndex];
+    const listItem = store4.context.listRef.current[activeIndex];
     if (listItem) {
-      store4.state.selectionEventRef.current = nativeEvent;
+      store4.context.selectionEventRef.current = nativeEvent;
       listItem.click();
-      store4.state.selectionEventRef.current = null;
+      store4.context.selectionEventRef.current = null;
     }
   }
 
@@ -18889,37 +19135,37 @@ var wp;
       labelId: fieldLabelId
     } = useLabelableContext();
     const store4 = useComboboxRootContext();
-    const selectionMode = useStore(store4, selectors2.selectionMode);
-    const comboboxDisabled = useStore(store4, selectors2.disabled);
-    const readOnly = useStore(store4, selectors2.readOnly);
-    const required = useStore(store4, selectors2.required);
-    const positionerElement = useStore(store4, selectors2.positionerElement);
-    const listElement = useStore(store4, selectors2.listElement);
-    const storedPopupId = useStore(store4, selectors2.popupId);
-    const triggerProps = useStore(store4, selectors2.triggerProps);
-    const inputInsidePopup = useStore(store4, selectors2.inputInsidePopup);
-    const rootId = useStore(store4, selectors2.id);
-    const comboboxLabelId = useStore(store4, selectors2.labelId);
-    const open = useStore(store4, selectors2.open);
-    const selectedValue = useStore(store4, selectors2.selectedValue);
-    const activeIndex = useStore(store4, selectors2.activeIndex);
-    const selectedIndex = useStore(store4, selectors2.selectedIndex);
-    const hasSelectedValue = useStore(store4, selectors2.hasSelectedValue);
+    const selectionMode = store4.useState("selectionMode");
+    const comboboxDisabled = store4.useState("disabled");
+    const readOnly = store4.useState("readOnly");
+    const required = store4.useState("required");
+    const positionerElement = store4.useState("positionerElement");
+    const listElement = store4.useState("listElement");
+    const storedPopupId = store4.useState("popupId");
+    const triggerProps = store4.useState("triggerProps");
+    const inputInsidePopup = store4.useState("inputInsidePopup");
+    const rootId = store4.useState("id");
+    const comboboxLabelId = store4.useState("labelId");
+    const open3 = store4.useState("open");
+    const selectedValue = store4.useState("selectedValue");
+    const activeIndex = store4.useState("activeIndex");
+    const selectedIndex = store4.useState("selectedIndex");
+    const hasSelectedValue = store4.useState("hasSelectedValue");
     const floatingRootContext = useComboboxFloatingContext();
     const inputValue = useComboboxInputValueContext();
     const focusTimeout = useTimeout();
     const disabled2 = fieldDisabled || comboboxDisabled || disabledProp;
-    const listEmpty = useListEmpty();
-    const popupSide = usePopupSide(store4);
+    const listEmpty2 = useListEmpty();
+    const popupSide2 = usePopupSide(store4);
     useLabelableId({
       id: inputInsidePopup ? idProp : void 0
     });
     const id = inputInsidePopup ? idProp ?? rootId : idProp;
     const ariaLabelledBy = resolveAriaLabelledBy(fieldLabelId, comboboxLabelId);
     let ariaControls;
-    if (open && inputInsidePopup) {
+    if (open3 && inputInsidePopup) {
       ariaControls = storedPopupId ?? getComboboxPopupId(rootId);
-    } else if (open) {
+    } else if (open3) {
       ariaControls = listElement?.id;
     }
     const currentPointerTypeRef = React57.useRef("");
@@ -18929,21 +19175,23 @@ var wp;
     const {
       reference: triggerTypeaheadProps
     } = useTypeahead(floatingRootContext, {
-      enabled: !open && !readOnly && !comboboxDisabled && selectionMode === "single",
-      listRef: store4.state.labelsRef,
+      // Typeahead on a closed trigger commits a value rather than moving a highlight, so it stays
+      // gated on `readOnly`.
+      enabled: !open3 && !readOnly && !comboboxDisabled && selectionMode === "single",
+      listRef: store4.context.labelsRef,
       activeIndex,
       selectedIndex,
-      onMatch(index2) {
-        const nextSelectedValue = store4.state.valuesRef.current[index2];
+      onMatch(index3) {
+        const nextSelectedValue = store4.context.valuesRef.current[index3];
         if (nextSelectedValue !== void 0) {
-          store4.state.setSelectedValue(nextSelectedValue, createChangeEventDetails(reason_parts_exports.none));
+          store4.context.setSelectedValue(nextSelectedValue, createChangeEventDetails(reason_parts_exports.none));
         }
       }
     });
     const {
       reference: triggerClickProps
     } = useClick(floatingRootContext, {
-      enabled: !readOnly && !comboboxDisabled,
+      enabled: !comboboxDisabled,
       event: "mousedown"
     });
     const {
@@ -18955,10 +19203,11 @@ var wp;
     });
     const state2 = {
       ...fieldState,
-      open,
+      readOnly,
+      open: open3,
       disabled: disabled2,
-      popupSide,
-      listEmpty,
+      popupSide: popupSide2,
+      listEmpty: listEmpty2,
       placeholder: selectionMode === "none" ? false : !hasSelectedValue
     };
     const setTriggerElement = useStableCallback((element2) => {
@@ -18971,19 +19220,22 @@ var wp;
         id,
         tabIndex: inputInsidePopup ? 0 : -1,
         role: inputInsidePopup ? "combobox" : void 0,
-        "aria-expanded": open,
+        "aria-expanded": open3,
         "aria-haspopup": inputInsidePopup ? "dialog" : "listbox",
         "aria-controls": ariaControls,
         "aria-required": inputInsidePopup ? required || void 0 : void 0,
+        // Only valid alongside the `combobox` role; without it the trigger is a plain button, and
+        // the `Combobox.Input` outside the popup already carries `aria-readonly`.
+        "aria-readonly": inputInsidePopup ? readOnly || void 0 : void 0,
         "aria-labelledby": ariaLabelledBy,
         onPointerDown: trackPointerType,
         onPointerEnter: trackPointerType,
         onFocus() {
           setFocused(true);
-          if (disabled2 || readOnly) {
+          if (disabled2) {
             return;
           }
-          focusTimeout.start(0, store4.state.forceMount);
+          focusTimeout.start(0, store4.context.forceMount);
         },
         onBlur(event) {
           if (contains(positionerElement, event.relatedTarget)) {
@@ -18997,20 +19249,20 @@ var wp;
           }
         },
         onMouseDown(event) {
-          if (disabled2 || readOnly) {
+          if (disabled2) {
             return;
           }
           if (!inputInsidePopup) {
             floatingRootContext.set("domReferenceElement", event.currentTarget);
           }
-          store4.state.forceMount();
+          store4.context.forceMount();
           if (currentPointerTypeRef.current !== "touch") {
-            store4.state.inputRef.current?.focus();
+            store4.context.inputRef.current?.focus();
             if (!inputInsidePopup) {
               event.preventDefault();
             }
           }
-          if (open) {
+          if (open3) {
             return;
           }
           const doc = ownerDocument(event.currentTarget);
@@ -19028,7 +19280,7 @@ var wp;
             if (isMouseWithinBounds(mouseEvent, currentTriggerElement)) {
               return;
             }
-            store4.state.setOpen(false, createChangeEventDetails(reason_parts_exports.cancelOpen, mouseEvent));
+            store4.context.setOpen(false, createChangeEventDetails(reason_parts_exports.cancelOpen, mouseEvent));
           }
           if (inputInsidePopup) {
             doc.addEventListener("mouseup", handleMouseUp, {
@@ -19037,13 +19289,10 @@ var wp;
           }
         },
         onKeyDown(event) {
-          if (readOnly) {
-            return;
-          }
           if (event.key === "ArrowDown" || event.key === "ArrowUp") {
             stopEvent(event);
-            store4.state.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent));
-            store4.state.inputRef.current?.focus();
+            store4.context.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent));
+            store4.context.inputRef.current?.focus();
           }
         }
       }, validation.getValidationProps(disabled2, elementProps), getButtonProps],
@@ -19089,7 +19338,7 @@ var wp;
     });
     const mergedRef = useMergedRefs(forwardedRef, buttonRef);
     function handleDismiss(event) {
-      store4.state.setOpen(false, createChangeEventDetails(reason_parts_exports.closePress, event.nativeEvent, event.currentTarget));
+      store4.context.setOpen(false, createChangeEventDetails(reason_parts_exports.closePress, event.nativeEvent, event.currentTarget));
     }
     const dismissProps = getButtonProps({
       onClick: handleDismiss
@@ -19132,25 +19381,25 @@ var wp;
     const store4 = useComboboxRootContext();
     const inputValue = useComboboxInputValueContext();
     const direction = useDirection();
-    const required = useStore(store4, selectors2.required);
-    const comboboxDisabled = useStore(store4, selectors2.disabled);
-    const readOnly = useStore(store4, selectors2.readOnly);
-    const name2 = useStore(store4, selectors2.name);
-    const form = useStore(store4, selectors2.form);
-    const selectionMode = useStore(store4, selectors2.selectionMode);
-    const autoHighlightMode = useStore(store4, selectors2.autoHighlight);
-    const inputProps = useStore(store4, selectors2.inputProps);
-    const triggerProps = useStore(store4, selectors2.triggerProps);
-    const open = useStore(store4, selectors2.open);
-    const mounted = useStore(store4, selectors2.mounted);
-    const selectedValue = useStore(store4, selectors2.selectedValue);
-    const rootId = useStore(store4, selectors2.id);
-    const inline4 = useStore(store4, selectors2.inline);
-    const modal = useStore(store4, selectors2.modal);
+    const required = store4.useState("required");
+    const comboboxDisabled = store4.useState("disabled");
+    const readOnly = store4.useState("readOnly");
+    const name2 = store4.useState("name");
+    const form = store4.useState("form");
+    const selectionMode = store4.useState("selectionMode");
+    const autoHighlightMode = store4.useState("autoHighlight");
+    const inputProps = store4.useState("inputProps");
+    const triggerProps = store4.useState("triggerProps");
+    const open3 = store4.useState("open");
+    const mounted = store4.useState("mounted");
+    const selectedValue = store4.useState("selectedValue");
+    const rootId = store4.useState("id");
+    const inline4 = store4.useState("inline");
+    const modal = store4.useState("modal");
     const autoHighlightEnabled = Boolean(autoHighlightMode);
-    const popupSide = usePopupSide(store4);
+    const popupSide2 = usePopupSide(store4);
     const disabled2 = fieldDisabled || comboboxDisabled || disabledProp;
-    const listEmpty = useListEmpty();
+    const listEmpty2 = useListEmpty();
     const isInsidePopup = hasPositionerParent || inline4;
     const focusManagerModal = !isInsidePopup || modal;
     const id = useBaseUiId(idProp ?? (!isInsidePopup ? rootId : void 0));
@@ -19163,7 +19412,7 @@ var wp;
     const setInputElement = useStableCallback((element2) => {
       const nextIsInsidePopup = hasPositionerParent || store4.state.inline;
       if (nextIsInsidePopup && !store4.state.hasInputValue) {
-        store4.state.setInputValue("", createChangeEventDetails(reason_parts_exports.none));
+        store4.context.setInputValue("", createChangeEventDetails(reason_parts_exports.none));
       }
       store4.update({
         inputElement: element2,
@@ -19173,22 +19422,22 @@ var wp;
     });
     const validationProps = hasPositionerParent ? elementProps : validation.getValidationProps(disabled2, elementProps);
     function clearHighlight() {
-      store4.state.setIndices({
+      store4.context.setIndices({
         activeIndex: null,
         selectedIndex: null,
-        type: store4.state.keyboardActiveRef.current ? reason_parts_exports.keyboard : reason_parts_exports.pointer
+        type: store4.context.keyboardActiveRef.current ? reason_parts_exports.keyboard : reason_parts_exports.pointer
       });
     }
     function markPointerActive() {
-      store4.state.keyboardActiveRef.current = false;
+      store4.context.keyboardActiveRef.current = false;
     }
     const state2 = {
       ...fieldStateForInput,
-      open,
+      open: open3,
       disabled: disabled2,
       readOnly,
-      popupSide,
-      listEmpty
+      popupSide: popupSide2,
+      listEmpty: listEmpty2
     };
     function handleKeyDown(event) {
       if (!comboboxChipsContext) {
@@ -19230,7 +19479,7 @@ var wp;
     }
     const element = useRenderElement("input", componentProps, {
       state: state2,
-      ref: [forwardedRef, store4.state.inputRef, setInputElement],
+      ref: [forwardedRef, store4.context.inputRef, setInputElement],
       props: [inputProps, triggerProps, {
         value: composingValue ?? inputValue,
         "aria-readonly": readOnly || void 0,
@@ -19252,10 +19501,10 @@ var wp;
           shouldRestoreActiveIndexRef.current = false;
           const nextActiveIndex = lastActiveIndexRef.current;
           if (nextActiveIndex == null || // `valuesRef` can be sparse, so guard against restoring a removed slot.
-          !Object.hasOwn(store4.state.valuesRef.current, nextActiveIndex)) {
+          !Object.hasOwn(store4.context.valuesRef.current, nextActiveIndex)) {
             return;
           }
-          store4.state.setIndices({
+          store4.context.setIndices({
             activeIndex: nextActiveIndex
           });
         },
@@ -19266,7 +19515,7 @@ var wp;
           if (inline4 && activeIndex !== null && autoHighlightMode !== "always") {
             lastActiveIndexRef.current = activeIndex;
             shouldRestoreActiveIndexRef.current = true;
-            store4.state.setIndices({
+            store4.context.setIndices({
               activeIndex: null
             });
           }
@@ -19286,7 +19535,7 @@ var wp;
           isComposingRef.current = false;
           const next = event.currentTarget.value;
           setComposingValue(null);
-          store4.state.setInputValue(next, createChangeEventDetails(reason_parts_exports.inputChange, event.nativeEvent));
+          store4.context.setInputValue(next, createChangeEventDetails(reason_parts_exports.inputChange, event.nativeEvent));
         },
         onChange(event) {
           const nativeEvent = event.nativeEvent;
@@ -19297,7 +19546,7 @@ var wp;
             if (readOnly || disabled2 || !trimmed || !shouldOpenOnInput) {
               return;
             }
-            store4.state.setOpen(true, createChangeEventDetails(reason_parts_exports.inputChange, nativeEvent));
+            store4.context.setOpen(true, createChangeEventDetails(reason_parts_exports.inputChange, nativeEvent));
             if (!autoHighlightEnabled) {
               clearHighlight();
             }
@@ -19306,18 +19555,18 @@ var wp;
             const nextVal = event.currentTarget.value;
             setComposingValue(nextVal);
             if (nextVal === "" && !store4.state.openOnInputClick && !store4.state.inputInsidePopup) {
-              store4.state.setOpen(false, createChangeEventDetails(reason_parts_exports.inputClear, nativeEvent));
+              store4.context.setOpen(false, createChangeEventDetails(reason_parts_exports.inputClear, nativeEvent));
             }
             const trimmed = nextVal.trim();
             const shouldMaintainHighlight = autoHighlightEnabled && trimmed !== "";
             maybeOpenOnInput(trimmed);
-            if (open && store4.state.activeIndex !== null && !shouldMaintainHighlight) {
+            if (open3 && store4.state.activeIndex !== null && !shouldMaintainHighlight) {
               clearHighlight();
             }
             return;
           }
           const inputChangeDetails = createChangeEventDetails(reason_parts_exports.inputChange, nativeEvent);
-          store4.state.setInputValue(event.currentTarget.value, inputChangeDetails);
+          store4.context.setInputValue(event.currentTarget.value, inputChangeDetails);
           if (inputChangeDetails.isCanceled) {
             return;
           }
@@ -19325,25 +19574,28 @@ var wp;
           const clearDetails = createChangeEventDetails(reason_parts_exports.inputClear, nativeEvent);
           if (empty && !store4.state.inputInsidePopup) {
             if (selectionMode === "single") {
-              store4.state.setSelectedValue(null, clearDetails);
+              store4.context.setSelectedValue(null, clearDetails);
             }
             if (!store4.state.openOnInputClick) {
-              store4.state.setOpen(false, clearDetails);
+              store4.context.setOpen(false, clearDetails);
             }
           }
           maybeOpenOnInput(event.currentTarget.value.trim());
-          if (open && store4.state.activeIndex !== null && !autoHighlightEnabled) {
+          if (open3 && store4.state.activeIndex !== null && !autoHighlightEnabled) {
             clearHighlight();
           }
         },
         onKeyDown(event) {
-          if (disabled2 || readOnly) {
-            return;
-          }
           if (event.ctrlKey || event.shiftKey || event.altKey || event.metaKey) {
             return;
           }
-          store4.state.keyboardActiveRef.current = true;
+          store4.context.keyboardActiveRef.current = true;
+          if (disabled2 || readOnly) {
+            if (readOnly && event.key === "Enter" && open3 && store4.state.activeIndex !== null) {
+              stopEvent(event);
+            }
+            return;
+          }
           const input = event.currentTarget;
           const scrollAmount = input.scrollWidth - input.clientWidth;
           const isRTL28 = direction === "rtl";
@@ -19365,8 +19617,8 @@ var wp;
             const isClear = selectionMode === "multiple" && Array.isArray(selectedValue) ? selectedValue.length === 0 : selectedValue === null;
             const details = createChangeEventDetails(reason_parts_exports.escapeKey, event.nativeEvent);
             const value = selectionMode === "multiple" ? [] : null;
-            store4.state.setInputValue("", details);
-            store4.state.setSelectedValue(value, details);
+            store4.context.setInputValue("", details);
+            store4.context.setSelectedValue(value, details);
             if (!isClear && !store4.state.inline && !details.isPropagationAllowed) {
               event.stopPropagation();
             }
@@ -19375,9 +19627,9 @@ var wp;
           if (comboboxChipsContext && event.key === "Backspace" && input.value === "" && comboboxChipsContext.highlightedChipIndex === void 0 && Array.isArray(selectedValue) && selectedValue.length > 0) {
             const renderedChipsCount = comboboxChipsContext.chipsRef.current.length;
             const removalIndex = renderedChipsCount > 0 ? renderedChipsCount - 1 : selectedValue.length - 1;
-            const newValue = selectedValue.filter((_, index2) => index2 !== removalIndex);
+            const newValue = selectedValue.filter((_, index3) => index3 !== removalIndex);
             clearHighlight();
-            store4.state.setSelectedValue(newValue, createChangeEventDetails(reason_parts_exports.none, event.nativeEvent));
+            store4.context.setSelectedValue(newValue, createChangeEventDetails(reason_parts_exports.none, event.nativeEvent));
             return;
           }
           const hadHighlightedChip = comboboxChipsContext?.highlightedChipIndex !== void 0;
@@ -19386,19 +19638,19 @@ var wp;
           if (nextIndex !== void 0) {
             comboboxChipsContext?.chipsRef.current[nextIndex]?.focus();
           } else if (hadHighlightedChip) {
-            store4.state.inputRef.current?.focus();
+            store4.context.inputRef.current?.focus();
           }
           if (event.which === 229) {
             return;
           }
-          if (event.key === "Enter" && open) {
+          if (event.key === "Enter" && open3) {
             const activeIndex = store4.state.activeIndex;
             const nativeEvent = event.nativeEvent;
             if (activeIndex === null) {
               if (inline4) {
                 return;
               }
-              store4.state.setOpen(false, createChangeEventDetails(reason_parts_exports.none, nativeEvent));
+              store4.context.setOpen(false, createChangeEventDetails(reason_parts_exports.none, nativeEvent));
               return;
             }
             stopEvent(event);
@@ -19415,8 +19667,8 @@ var wp;
       children: element
     }) : element;
     return /* @__PURE__ */ (0, import_jsx_runtime106.jsxs)(React61.Fragment, {
-      children: [open && focusManagerModal && /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(ComboboxInternalDismissButton, {
-        ref: store4.state.startDismissRef
+      children: [open3 && focusManagerModal && /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(ComboboxInternalDismissButton, {
+        ref: store4.context.startDismissRef
       }), renderedInput]
     });
   });
@@ -19426,8 +19678,8 @@ var wp;
   var React62 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/combobox/utils/handleInputPress.mjs
-  function handleInputPress(event, store4, disabled2, readOnly, shouldIgnoreTarget) {
-    if (event.baseUIHandlerPrevented || readOnly) {
+  function handleInputPress(event, store4, disabled2, shouldIgnoreTarget) {
+    if (event.baseUIHandlerPrevented) {
       return;
     }
     const target = getTarget(event.nativeEvent);
@@ -19439,9 +19691,9 @@ var wp;
     if (disabled2) {
       return;
     }
-    store4.state.inputRef.current?.focus();
+    store4.context.inputRef.current?.focus();
     if (store4.state.openOnInputClick) {
-      store4.state.setOpen(true, createChangeEventDetails(reason_parts_exports.inputPress, event.nativeEvent));
+      store4.context.setOpen(true, createChangeEventDetails(reason_parts_exports.inputPress, event.nativeEvent));
     }
   }
 
@@ -19457,22 +19709,22 @@ var wp;
       state: fieldState
     } = useFieldRootContext();
     const store4 = useComboboxRootContext();
-    const open = useStore(store4, selectors2.open);
-    const comboboxDisabled = useStore(store4, selectors2.disabled);
-    const readOnly = useStore(store4, selectors2.readOnly);
-    const hasSelectedValue = useStore(store4, selectors2.hasSelectedValue);
-    const selectionMode = useStore(store4, selectors2.selectionMode);
-    const popupSide = usePopupSide(store4);
+    const open3 = store4.useState("open");
+    const comboboxDisabled = store4.useState("disabled");
+    const readOnly = store4.useState("readOnly");
+    const hasSelectedValue = store4.useState("hasSelectedValue");
+    const selectionMode = store4.useState("selectionMode");
+    const popupSide2 = usePopupSide(store4);
     const disabled2 = comboboxDisabled;
-    const listEmpty = useListEmpty();
+    const listEmpty2 = useListEmpty();
     const placeholder = selectionMode === "none" ? false : !hasSelectedValue;
     const state2 = {
       ...fieldState,
-      open,
+      open: open3,
       disabled: disabled2,
       readOnly,
-      popupSide,
-      listEmpty,
+      popupSide: popupSide2,
+      listEmpty: listEmpty2,
       placeholder
     };
     const setInputGroupElement = useStableCallback((element) => {
@@ -19483,8 +19735,8 @@ var wp;
       props: [{
         role: "group",
         onMouseDown(event) {
-          handleInputPress(event, store4, disabled2, readOnly, (target) => {
-            return contains(store4.state.chipsContainerRef.current, target);
+          handleInputPress(event, store4, disabled2, (target) => {
+            return contains(store4.context.chipsContainerRef.current, target);
           });
         }
       }, elementProps],
@@ -19534,12 +19786,12 @@ var wp;
       disabled: fieldDisabled
     } = useFieldRootContext();
     const store4 = useComboboxRootContext();
-    const selectionMode = useStore(store4, selectors2.selectionMode);
-    const comboboxDisabled = useStore(store4, selectors2.disabled);
-    const readOnly = useStore(store4, selectors2.readOnly);
-    const open = useStore(store4, selectors2.open);
-    const selectedValue = useStore(store4, selectors2.selectedValue);
-    const hasSelectionChips = useStore(store4, selectors2.hasSelectionChips);
+    const selectionMode = store4.useState("selectionMode");
+    const comboboxDisabled = store4.useState("disabled");
+    const readOnly = store4.useState("readOnly");
+    const open3 = store4.useState("open");
+    const selectedValue = store4.useState("selectedValue");
+    const hasSelectionChips = store4.useState("hasSelectionChips");
     const inputValue = useComboboxInputValueContext();
     let visible = false;
     if (selectionMode === "none") {
@@ -19565,12 +19817,12 @@ var wp;
     const state2 = {
       disabled: disabled2,
       visible,
-      open,
+      open: open3,
       transitionStatus
     };
     useOpenChangeComplete({
       open: visible,
-      ref: store4.state.clearRef,
+      ref: store4.context.clearRef,
       onComplete() {
         if (!visible) {
           setMounted(false);
@@ -19579,7 +19831,7 @@ var wp;
     });
     const element = useRenderElement("button", componentProps, {
       state: state2,
-      ref: [forwardedRef, buttonRef, store4.state.clearRef],
+      ref: [forwardedRef, buttonRef, store4.context.clearRef],
       props: [{
         tabIndex: -1,
         children: "x",
@@ -19591,22 +19843,22 @@ var wp;
           if (disabled2 || readOnly) {
             return;
           }
-          const type = store4.state.keyboardActiveRef.current ? reason_parts_exports.keyboard : reason_parts_exports.pointer;
-          store4.state.setInputValue("", createChangeEventDetails(reason_parts_exports.clearPress, event.nativeEvent));
+          const type = store4.context.keyboardActiveRef.current ? reason_parts_exports.keyboard : reason_parts_exports.pointer;
+          store4.context.setInputValue("", createChangeEventDetails(reason_parts_exports.clearPress, event.nativeEvent));
           if (selectionMode !== "none") {
-            store4.state.setSelectedValue(Array.isArray(selectedValue) ? [] : null, createChangeEventDetails(reason_parts_exports.clearPress, event.nativeEvent));
-            store4.state.setIndices({
+            store4.context.setSelectedValue(Array.isArray(selectedValue) ? [] : null, createChangeEventDetails(reason_parts_exports.clearPress, event.nativeEvent));
+            store4.context.setIndices({
               activeIndex: null,
               selectedIndex: null,
               type
             });
           } else {
-            store4.state.setIndices({
+            store4.context.setIndices({
               activeIndex: null,
               type
             });
           }
-          store4.state.inputRef.current?.focus();
+          store4.context.inputRef.current?.focus();
         }
       }, elementProps, getButtonProps],
       stateAttributesMapping
@@ -19681,11 +19933,12 @@ var wp;
       filteredItems,
       hasItems
     } = useComboboxDerivedItemsContext();
-    const selectionMode = useStore(store4, selectors2.selectionMode);
-    const grid = useStore(store4, selectors2.grid);
-    const listProps = useStore(store4, selectors2.listProps);
-    const virtualized = useStore(store4, selectors2.virtualized);
-    const forceMounted = useStore(store4, selectors2.forceMounted);
+    const selectionMode = store4.useState("selectionMode");
+    const grid = store4.useState("grid");
+    const readOnly = store4.useState("readOnly");
+    const listProps = store4.useState("listProps");
+    const virtualized = store4.useState("virtualized");
+    const forceMounted = store4.useState("forceMounted");
     const multiple = selectionMode === "multiple";
     const empty = filteredItems.length === 0;
     const setPositionerElement = useStableCallback((element2) => {
@@ -19715,6 +19968,9 @@ var wp;
         id: floatingId,
         role: grid ? "grid" : "listbox",
         "aria-multiselectable": multiple ? "true" : void 0,
+        // On a grid the attribute describes cell editability, not selection, so it's left to the
+        // combobox element in that mode.
+        "aria-readonly": !grid && readOnly ? true : void 0,
         onKeyDown(event) {
           if (store4.state.disabled || store4.state.readOnly) {
             return;
@@ -19729,19 +19985,19 @@ var wp;
           }
         },
         onKeyDownCapture() {
-          store4.state.keyboardActiveRef.current = true;
+          store4.context.keyboardActiveRef.current = true;
         },
         onPointerMoveCapture() {
-          store4.state.keyboardActiveRef.current = false;
+          store4.context.keyboardActiveRef.current = false;
         }
       }, elementProps]
     });
     if (virtualized) {
       return element;
     }
-    const labelsRef = hasItems && !forceMounted ? void 0 : store4.state.labelsRef;
+    const labelsRef = hasItems && !forceMounted ? void 0 : store4.context.labelsRef;
     return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(CompositeList, {
-      elementsRef: store4.state.listRef,
+      elementsRef: store4.context.listRef,
       labelsRef,
       children: element
     });
@@ -19844,8 +20100,8 @@ var wp;
       ...portalProps
     } = props;
     const store4 = useComboboxRootContext();
-    const mounted = useStore(store4, selectors2.mounted);
-    const forceMounted = useStore(store4, selectors2.forceMounted);
+    const mounted = store4.useState("mounted");
+    const forceMounted = store4.useState("forceMounted");
     const shouldRender = mounted || keepMounted || forceMounted;
     if (!shouldRender) {
       return null;
@@ -19874,11 +20130,11 @@ var wp;
       ...elementProps
     } = componentProps;
     const store4 = useComboboxRootContext();
-    const open = useStore(store4, selectors2.open);
-    const mounted = useStore(store4, selectors2.mounted);
-    const transitionStatus = useStore(store4, selectors2.transitionStatus);
+    const open3 = store4.useState("open");
+    const mounted = store4.useState("mounted");
+    const transitionStatus = store4.useState("transitionStatus");
     const state2 = {
-      open,
+      open: open3,
       transitionStatus
     };
     return useRenderElement("div", componentProps, {
@@ -19967,10 +20223,17 @@ var wp;
       };
     }
   });
-  var arrow4 = (options, deps) => ({
-    ...baseArrow(options),
-    options: [options, deps]
-  });
+  var arrow4 = (options, deps) => {
+    const {
+      name: name2,
+      fn
+    } = baseArrow(options);
+    return {
+      name: name2,
+      fn,
+      options: [options, deps]
+    };
+  };
 
   // node_modules/@base-ui/react/utils/hideMiddleware.mjs
   var hide4 = {
@@ -19982,14 +20245,14 @@ var wp;
         x: x2,
         y: y3
       } = state2.rects.reference;
-      const anchorHidden = width === 0 && height === 0 && x2 === 0 && y3 === 0;
+      const anchorHidden2 = width === 0 && height === 0 && x2 === 0 && y3 === 0;
       const overflow = await state2.platform.detectOverflow(state2, {
         elementContext: "reference"
       });
       const referenceHidden = overflow.top - height >= 0 || overflow.right - width >= 0 || overflow.bottom - height >= 0 || overflow.left - width >= 0;
       return {
         data: {
-          referenceHidden: referenceHidden || anchorHidden
+          referenceHidden: referenceHidden || anchorHidden2
         }
       };
     }
@@ -20001,9 +20264,18 @@ var wp;
     sideY: "top"
   };
 
+  // node_modules/@base-ui/react/utils/CommonPositionerCssVars.mjs
+  var availableWidth = "--available-width";
+  var availableHeight = "--available-height";
+  var anchorWidth = "--anchor-width";
+  var anchorHeight = "--anchor-height";
+  var transformOrigin = "--transform-origin";
+  var positionerWidth = "--positioner-width";
+  var positionerHeight = "--positioner-height";
+
   // node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
-  var AVAILABLE_WIDTH_VAR = "--available-width";
-  var AVAILABLE_HEIGHT_VAR = "--available-height";
+  var AVAILABLE_WIDTH_VAR = availableWidth;
+  var AVAILABLE_HEIGHT_VAR = availableHeight;
   function getLogicalSide(sideParam, renderedSide, isRtl) {
     const isLogicalSideParam = sideParam === "inline-start" || sideParam === "inline-end";
     const logicalRight = isRtl ? "inline-start" : "inline-end";
@@ -20181,16 +20453,16 @@ var wp;
         elements: {
           floating
         },
-        availableWidth,
-        availableHeight,
+        availableWidth: availableWidth2,
+        availableHeight: availableHeight2,
         rects
       }) {
         if (!mountedRef.current) {
           return;
         }
         const floatingStyle = floating.style;
-        floatingStyle.setProperty(AVAILABLE_WIDTH_VAR, `${availableWidth}px`);
-        floatingStyle.setProperty(AVAILABLE_HEIGHT_VAR, `${availableHeight}px`);
+        floatingStyle.setProperty(AVAILABLE_WIDTH_VAR, `${availableWidth2}px`);
+        floatingStyle.setProperty(AVAILABLE_HEIGHT_VAR, `${availableHeight2}px`);
         const dpr = getWindow(floating).devicePixelRatio || 1;
         const {
           x: x3,
@@ -20198,48 +20470,49 @@ var wp;
           width,
           height
         } = rects.reference;
-        const anchorWidth = (Math.round((x3 + width) * dpr) - Math.round(x3 * dpr)) / dpr;
-        const anchorHeight = (Math.round((y4 + height) * dpr) - Math.round(y4 * dpr)) / dpr;
-        floatingStyle.setProperty("--anchor-width", `${anchorWidth}px`);
-        floatingStyle.setProperty("--anchor-height", `${anchorHeight}px`);
+        const anchorWidth2 = (Math.round((x3 + width) * dpr) - Math.round(x3 * dpr)) / dpr;
+        const anchorHeight2 = (Math.round((y4 + height) * dpr) - Math.round(y4 * dpr)) / dpr;
+        floatingStyle.setProperty(anchorWidth, `${anchorWidth2}px`);
+        floatingStyle.setProperty(anchorHeight, `${anchorHeight2}px`);
       }
     }), arrow4((state2) => ({
       // `transform-origin` calculations rely on an element existing. If the arrow hasn't been set,
       // we'll create a fake element.
       element: arrowRef.current || ownerDocument(state2.elements.floating).createElement("div"),
-      padding: arrowPadding,
+      // No padding for the fake arrow: it would displace aligned popups on narrow anchors.
+      padding: arrowRef.current ? arrowPadding : 0,
       offsetParent: "floating"
     }), [arrowPadding]), {
       name: "transformOrigin",
       fn(state2) {
         const {
-          elements: elements3,
+          elements: {
+            floating
+          },
           middlewareData: middlewareData2,
           placement: renderedPlacement2,
+          platform: platform3,
           rects,
           y: y4
         } = state2;
-        const currentRenderedSide = getSide(renderedPlacement2);
-        const currentRenderedAxis = getSideAxis(currentRenderedSide);
+        const renderedSide2 = getSide(renderedPlacement2);
+        const renderedAlign2 = getAlignment(renderedPlacement2);
+        const isVertical = getSideAxis(renderedSide2) === "y";
         const arrowEl = arrowRef.current;
-        const arrowX = middlewareData2.arrow?.x || 0;
-        const arrowY = middlewareData2.arrow?.y || 0;
-        const arrowWidth = arrowEl?.clientWidth || 0;
-        const arrowHeight = arrowEl?.clientHeight || 0;
-        const transformX = arrowX + arrowWidth / 2;
-        const transformY = arrowY + arrowHeight / 2;
-        const shiftY = Math.abs(middlewareData2.shift?.y || 0);
-        const halfAnchorHeight = rects.reference.height / 2;
         const sideOffsetValue = typeof sideOffset === "function" ? sideOffset(getOffsetData(state2, sideParam, isRtl)) : sideOffset;
-        const isOverlappingAnchor = shiftY > sideOffsetValue;
-        const adjacentTransformOrigin = {
-          top: `${transformX}px calc(100% + ${sideOffsetValue}px)`,
-          bottom: `${transformX}px ${-sideOffsetValue}px`,
-          left: `calc(100% + ${sideOffsetValue}px) ${transformY}px`,
-          right: `${-sideOffsetValue}px ${transformY}px`
-        }[currentRenderedSide];
-        const overlapTransformOrigin = `${transformX}px ${rects.reference.y + halfAnchorHeight - y4}px`;
-        elements3.floating.style.setProperty("--transform-origin", crossAxisShiftEnabled && currentRenderedAxis === "y" && isOverlappingAnchor ? overlapTransformOrigin : adjacentTransformOrigin);
+        let crossOrigin;
+        if (!arrowEl && renderedAlign2 && Math.abs(isVertical ? middlewareData2.shift?.x || 0 : middlewareData2.shift?.y || 0) <= 1) {
+          crossOrigin = renderedAlign2 === "start" === (isVertical && platform3.isRTL?.(floating) === true) ? "100%" : "0%";
+        } else {
+          const arrowOffset = isVertical ? middlewareData2.arrow?.x || 0 : middlewareData2.arrow?.y || 0;
+          const arrowSize = isVertical ? arrowEl?.clientWidth || 0 : arrowEl?.clientHeight || 0;
+          crossOrigin = `${arrowOffset + arrowSize / 2}px`;
+        }
+        let sideOrigin = renderedSide2 === "top" || renderedSide2 === "left" ? `calc(100% + ${sideOffsetValue}px)` : `${-sideOffsetValue}px`;
+        if (crossAxisShiftEnabled && isVertical && Math.abs(middlewareData2.shift?.y || 0) > sideOffsetValue) {
+          sideOrigin = `${rects.reference.y + rects.reference.height / 2 - y4}px`;
+        }
+        floating.style.setProperty(transformOrigin, isVertical ? `${crossOrigin} ${sideOrigin}` : `${sideOrigin} ${crossOrigin}`);
         return {};
       }
     }, hide4, adaptiveOrigin2);
@@ -20254,6 +20527,7 @@ var wp;
       }
     }, [mounted, floatingRootContext]);
     const autoUpdateOptions = React73.useMemo(() => ({
+      ancestorScroll: !disableAnchorTracking,
       elementResize: !disableAnchorTracking && typeof ResizeObserver !== "undefined",
       layoutShift: !disableAnchorTracking && typeof IntersectionObserver !== "undefined"
     }), [disableAnchorTracking]);
@@ -20346,7 +20620,7 @@ var wp;
     const renderedSide = getSide(renderedPlacement);
     const logicalRenderedSide = getLogicalSide(sideParam, renderedSide, isRtl);
     const renderedAlign = getAlignment(renderedPlacement) || "center";
-    const anchorHidden = Boolean(middlewareData.hide?.referenceHidden);
+    const anchorHidden2 = Boolean(middlewareData.hide?.referenceHidden);
     useIsoLayoutEffect(() => {
       if (lazyFlip && mounted && isPositioned && renderedSide !== side) {
         setMountSide(renderedSide);
@@ -20366,12 +20640,12 @@ var wp;
       side: logicalRenderedSide,
       align: renderedAlign,
       physicalSide: renderedSide,
-      anchorHidden,
+      anchorHidden: anchorHidden2,
       refs,
       context,
       isPositioned,
       update: update4
-    }), [floatingStyles, arrowStyles, arrowRef, arrowUncentered, logicalRenderedSide, renderedAlign, renderedSide, anchorHidden, refs, context, isPositioned, update4]);
+    }), [floatingStyles, arrowStyles, arrowRef, arrowUncentered, logicalRenderedSide, renderedAlign, renderedSide, anchorHidden2, refs, context, isPositioned, update4]);
   }
   function isRef(param) {
     return param != null && "current" in param;
@@ -20420,8 +20694,8 @@ var wp;
         return;
       }
       const viewportWidth = ownerDocument(positionerElement).documentElement.clientWidth;
-      const popupWidth = positionerElement.offsetWidth;
-      setTouchOpenShouldLockScroll(viewportWidth > 0 && popupWidth > 0 && popupWidth >= viewportWidth - VIEWPORT_WIDTH_TOLERANCE_PX);
+      const popupWidth2 = positionerElement.offsetWidth;
+      setTouchOpenShouldLockScroll(viewportWidth > 0 && popupWidth2 > 0 && popupWidth2 >= viewportWidth - VIEWPORT_WIDTH_TOLERANCE_PX);
     }, [enabled, touchOpen, positionerElement]);
     useScrollLock(enabled && (!touchOpen || touchOpenShouldLockScroll), referenceElement);
   }
@@ -20452,16 +20726,16 @@ var wp;
     const store4 = useComboboxRootContext();
     const floatingRootContext = useComboboxFloatingContext();
     const keepMounted = useComboboxPortalContext();
-    const modal = useStore(store4, selectors2.modal);
-    const open = useStore(store4, selectors2.open);
-    const mounted = useStore(store4, selectors2.mounted);
-    const openMethod = useStore(store4, selectors2.openMethod);
-    const positionerElement = useStore(store4, selectors2.positionerElement);
-    const triggerElement = useStore(store4, selectors2.triggerElement);
-    const inputElement = useStore(store4, selectors2.inputElement);
-    const inputGroupElement = useStore(store4, selectors2.inputGroupElement);
-    const inputInsidePopup = useStore(store4, selectors2.inputInsidePopup);
-    const transitionStatus = useStore(store4, selectors2.transitionStatus);
+    const modal = store4.useState("modal");
+    const open3 = store4.useState("open");
+    const mounted = store4.useState("mounted");
+    const openMethod = store4.useState("openMethod");
+    const positionerElement = store4.useState("positionerElement");
+    const triggerElement = store4.useState("triggerElement");
+    const inputElement = store4.useState("inputElement");
+    const inputGroupElement = store4.useState("inputGroupElement");
+    const inputInsidePopup = store4.useState("inputInsidePopup");
+    const transitionStatus = store4.useState("transitionStatus");
     const empty = useListEmpty();
     const resolvedAnchor = anchor ?? (inputInsidePopup ? triggerElement : inputGroupElement ?? inputElement);
     const positioning = useAnchorPositioning({
@@ -20482,9 +20756,9 @@ var wp;
       collisionAvoidance,
       lazyFlip: true
     });
-    useAnchoredPopupScrollLock(open && modal, openMethod === "touch", positionerElement, triggerElement);
+    useAnchoredPopupScrollLock(open3 && modal, openMethod === "touch", positionerElement, triggerElement);
     const state2 = {
-      open,
+      open: open3,
       side: positioning.side,
       align: positioning.align,
       anchorHidden: positioning.anchorHidden,
@@ -20502,12 +20776,12 @@ var wp;
       props: elementProps,
       refs: [forwardedRef, setPositionerElement],
       hidden: !mounted,
-      inert: !open
+      inert: !open3
     });
     return /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(ComboboxPositionerContext.Provider, {
       value: positioning,
       children: [mounted && modal && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(InternalBackdrop, {
-        inert: inertValue(!open),
+        inert: inertValue(!open3),
         cutout: inputGroupElement ?? inputElement ?? triggerElement
       }), element]
     });
@@ -20533,34 +20807,34 @@ var wp;
     const store4 = useComboboxRootContext();
     const positioning = useComboboxPositionerContext();
     const floatingRootContext = useComboboxFloatingContext();
-    const mounted = useStore(store4, selectors2.mounted);
-    const open = useStore(store4, selectors2.open);
-    const openMethod = useStore(store4, selectors2.openMethod);
-    const popupProps = useStore(store4, selectors2.popupProps);
-    const transitionStatus = useStore(store4, selectors2.transitionStatus);
-    const inputInsidePopup = useStore(store4, selectors2.inputInsidePopup);
-    const inputElement = useStore(store4, selectors2.inputElement);
-    const modal = useStore(store4, selectors2.modal);
-    const rootId = useStore(store4, selectors2.id);
+    const mounted = store4.useState("mounted");
+    const open3 = store4.useState("open");
+    const openMethod = store4.useState("openMethod");
+    const popupProps = store4.useState("popupProps");
+    const transitionStatus = store4.useState("transitionStatus");
+    const inputInsidePopup = store4.useState("inputInsidePopup");
+    const inputElement = store4.useState("inputElement");
+    const modal = store4.useState("modal");
+    const rootId = store4.useState("id");
     const empty = useListEmpty();
     const popupId = elementProps.id ?? (inputInsidePopup ? getComboboxPopupId(rootId) : void 0);
     useIsoLayoutEffect(() => {
-      store4.set("popupId", store4.state.popupRef.current?.id || popupId);
+      store4.set("popupId", store4.context.popupRef.current?.id || popupId);
       return () => {
         store4.set("popupId", void 0);
       };
     }, [store4, popupId]);
     useOpenChangeComplete({
-      open,
-      ref: store4.state.popupRef,
+      open: open3,
+      ref: store4.context.popupRef,
       onComplete() {
-        if (open) {
-          store4.state.onOpenChangeComplete(true);
+        if (open3) {
+          store4.context.onOpenChangeComplete(true);
         }
       }
     });
     const state2 = {
-      open,
+      open: open3,
       side: positioning.side,
       align: positioning.align,
       anchorHidden: positioning.anchorHidden,
@@ -20569,20 +20843,20 @@ var wp;
     };
     const element = useRenderElement("div", componentProps, {
       state: state2,
-      ref: [forwardedRef, store4.state.popupRef],
+      ref: [forwardedRef, store4.context.popupRef],
       props: [popupProps, {
         id: popupId,
         role: inputInsidePopup ? "dialog" : "presentation",
         onFocus(event) {
           const target = getTarget(event.nativeEvent);
           if (openMethod !== "touch" && (contains(store4.state.listElement, target) || target === event.currentTarget)) {
-            store4.state.inputRef.current?.focus();
+            store4.context.inputRef.current?.focus();
           }
         }
       }, getDisabledMountTransitionStyles(transitionStatus), elementProps],
       stateAttributesMapping: stateAttributesMapping3
     });
-    const computedDefaultInitialFocus = inputInsidePopup ? (interactionType) => interactionType === "touch" ? store4.state.popupRef.current : inputElement : false;
+    const computedDefaultInitialFocus = inputInsidePopup ? (interactionType) => interactionType === "touch" ? store4.context.popupRef.current : inputElement : false;
     const resolvedInitialFocus = initialFocus === void 0 ? computedDefaultInitialFocus : initialFocus;
     let resolvedFinalFocus;
     if (finalFocus != null) {
@@ -20598,10 +20872,10 @@ var wp;
       openInteractionType: openMethod,
       initialFocus: resolvedInitialFocus,
       returnFocus: resolvedFinalFocus,
-      getInsideElements: () => [store4.state.startDismissRef.current, store4.state.endDismissRef.current],
+      getInsideElements: () => [store4.context.startDismissRef.current, store4.context.endDismissRef.current],
       children: /* @__PURE__ */ (0, import_jsx_runtime112.jsxs)(React76.Fragment, {
         children: [element, focusManagerModal && /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(ComboboxInternalDismissButton, {
-          ref: store4.state.endDismissRef
+          ref: store4.context.endDismissRef
         })]
       })
     });
@@ -20625,9 +20899,9 @@ var wp;
       arrowUncentered,
       arrowStyles
     } = useComboboxPositionerContext();
-    const open = useStore(store4, selectors2.open);
+    const open3 = store4.useState("open");
     const state2 = {
-      open,
+      open: open3,
       side,
       align,
       uncentered: arrowUncentered
@@ -20670,6 +20944,8 @@ var wp;
       items,
       ...elementProps
     } = componentProps;
+    const store4 = useComboboxRootContext();
+    const grid = store4.useState("grid");
     const [labelId, setLabelId] = React79.useState();
     const contextValue = React79.useMemo(() => ({
       labelId,
@@ -20679,7 +20955,9 @@ var wp;
     const element = useRenderElement("div", componentProps, {
       ref: forwardedRef,
       props: [{
-        role: "group",
+        // `group` is not a valid owned element of `grid`, and `row` must be owned
+        // by `grid`, `rowgroup`, or `treegrid`.
+        role: grid ? "rowgroup" : "group",
         "aria-labelledby": labelId
       }, elementProps]
     });
@@ -20720,7 +20998,8 @@ var wp;
     const element = useRenderElement("div", componentProps, {
       ref: forwardedRef,
       props: [{
-        id
+        id,
+        "aria-hidden": true
       }, elementProps]
     });
     return element;
@@ -20779,52 +21058,55 @@ var wp;
     const store4 = useComboboxRootContext();
     const isRow = useComboboxRowContext();
     const hasItems = useComboboxHasItemsContext();
-    const selectionMode = useStore(store4, selectors2.selectionMode);
-    const rootDisabled = useStore(store4, selectors2.disabled);
-    const readOnly = useStore(store4, selectors2.readOnly);
-    const isItemEqualToValue = useStore(store4, selectors2.isItemEqualToValue);
+    const selectionMode = store4.useState("selectionMode");
+    const rootDisabled = store4.useState("disabled");
+    const readOnly = store4.useState("readOnly");
+    const isItemEqualToValue = store4.useState("isItemEqualToValue");
     const disabled2 = rootDisabled || disabledProp;
     const selectable = selectionMode !== "none";
-    const index2 = indexProp ?? indexFromFilter ?? listItem.index;
-    const hasRegistered = index2 !== -1;
-    const rootId = useStore(store4, selectors2.id);
-    const highlighted = useStore(store4, selectors2.isActive, index2);
-    const matchesSelectedValue = useStore(store4, selectors2.isSelected, itemValue);
-    const itemProps = useStore(store4, selectors2.itemProps);
+    const index3 = indexProp ?? indexFromFilter ?? listItem.index;
+    const hasRegistered = index3 !== -1;
+    const rootId = store4.useState("id");
+    const highlighted = store4.useState("isActive", index3);
+    const matchesSelectedValue = store4.useState("isSelected", itemValue);
+    const itemProps = store4.useState("itemProps");
     const itemRef = React83.useRef(null);
-    const id = rootId != null && hasRegistered ? `${rootId}-${index2}` : void 0;
+    const id = rootId != null && hasRegistered ? `${rootId}-${index3}` : void 0;
     const selected = matchesSelectedValue && selectable;
     useIsoLayoutEffect(() => {
       const shouldRun = hasRegistered && (virtualized || indexProp != null);
       if (!shouldRun) {
         return void 0;
       }
-      const list = store4.state.listRef.current;
-      list[index2] = itemRef.current;
+      const list = store4.context.listRef.current;
+      list[index3] = itemRef.current;
       return () => {
-        delete list[index2];
+        delete list[index3];
       };
-    }, [hasRegistered, virtualized, index2, indexProp, store4]);
+    }, [hasRegistered, virtualized, index3, indexProp, store4]);
     useIsoLayoutEffect(() => {
       if (!hasRegistered || hasItems) {
         return void 0;
       }
-      const visibleMap = store4.state.valuesRef.current;
-      visibleMap[index2] = itemValue;
+      const visibleValues = store4.context.valuesRef.current;
+      visibleValues[index3] = itemValue;
       return () => {
-        delete visibleMap[index2];
+        delete visibleValues[index3];
       };
-    }, [hasRegistered, hasItems, index2, itemValue, store4]);
+    }, [hasRegistered, hasItems, index3, itemValue, store4]);
     useIsoLayoutEffect(() => {
       if (!hasRegistered || hasItems) {
         return;
       }
       const selectedValue = store4.state.selectedValue;
-      const lastSelectedValue = Array.isArray(selectedValue) ? selectedValue[selectedValue.length - 1] : selectedValue;
-      if (compareItemEquality(itemValue, lastSelectedValue, isItemEqualToValue)) {
-        store4.set("selectedIndex", index2);
+      let nextIndex = store4.state.selectedIndex;
+      if (store4.state.selectionMode === "multiple" && Array.isArray(selectedValue)) {
+        nextIndex = resolveSelectedIndex(index3, itemValue, store4.context.valuesRef.current, selectedValue, isItemEqualToValue, nextIndex);
+      } else if (compareItemEquality(itemValue, selectedValue, isItemEqualToValue)) {
+        nextIndex = index3;
       }
-    }, [hasRegistered, hasItems, store4, index2, itemValue, isItemEqualToValue]);
+      store4.set("selectedIndex", nextIndex);
+    }, [hasRegistered, hasItems, store4, index3, itemValue, isItemEqualToValue]);
     const {
       getButtonProps,
       buttonRef
@@ -20841,11 +21123,11 @@ var wp;
     };
     function commitSelection(nativeEvent) {
       function selectItem() {
-        store4.state.handleSelection(nativeEvent, itemValue);
+        store4.context.handleSelection(nativeEvent, itemValue);
       }
       if (store4.state.submitOnItemClick) {
         ReactDOM6.flushSync(selectItem);
-        store4.state.requestSubmit();
+        store4.context.requestSubmit();
       } else {
         selectItem();
       }
@@ -20860,7 +21142,7 @@ var wp;
       tabIndex: void 0,
       onPointerDownCapture(event) {
         if (event.isPrimary) {
-          store4.state.pointerDownItemRef.current = event.currentTarget;
+          store4.context.pointerDownItemRef.current = event.currentTarget;
         }
         event.preventDefault();
       },
@@ -20874,8 +21156,8 @@ var wp;
         commitSelection(event.nativeEvent);
       },
       onMouseUp(event) {
-        const pointerStartedOnItem = store4.state.pointerDownItemRef.current === event.currentTarget;
-        store4.state.pointerDownItemRef.current = null;
+        const pointerStartedOnItem = store4.context.pointerDownItemRef.current === event.currentTarget;
+        store4.context.pointerDownItemRef.current = null;
         if (disabled2 || readOnly || event.button !== 0 || pointerStartedOnItem || !highlighted) {
           return;
         }
@@ -20902,11 +21184,12 @@ var wp;
       forwardedRef
     } = props;
     const store4 = useComboboxRootContext();
-    const isItemEqualToValue = useStore(store4, selectors2.isItemEqualToValue);
+    const isItemEqualToValue = store4.useState("isItemEqualToValue");
     const {
-      flatFilteredItems
+      flatFilteredValues
     } = useComboboxDerivedItemsContext();
-    const indexFromFilter = findItemIndex(flatFilteredItems, componentProps.value ?? null, isItemEqualToValue);
+    const lookupValue = componentProps.value ?? null;
+    const indexFromFilter = findItemIndex(flatFilteredValues, lookupValue, isItemEqualToValue);
     return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(ComboboxItemInner, {
       componentProps,
       forwardedRef,
@@ -20916,7 +21199,7 @@ var wp;
   }
   var ComboboxItem = /* @__PURE__ */ React83.memo(/* @__PURE__ */ React83.forwardRef(function ComboboxItem2(componentProps, forwardedRef) {
     const store4 = useComboboxRootContext();
-    const virtualized = useStore(store4, selectors2.virtualized);
+    const virtualized = store4.useState("virtualized");
     if (virtualized && componentProps.index == null) {
       return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(ComboboxItemVirtualizedIndex, {
         componentProps,
@@ -20972,7 +21255,7 @@ var wp;
     const emptyRef = useInitialLiveRegionTextMutation();
     const children = filteredItems.length === 0 ? childrenProp : null;
     return useRenderElement("div", componentProps, {
-      ref: [forwardedRef, store4.state.emptyRef, emptyRef],
+      ref: [forwardedRef, store4.context.emptyRef, emptyRef],
       props: [{
         children,
         role: "status",
@@ -21058,12 +21341,12 @@ var wp;
   var React89 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/field/utils/getCombinedFieldValidityData.mjs
-  function getCombinedFieldValidityData(validityData, invalid) {
+  function getCombinedFieldValidityData(validityData, invalid2) {
     return {
       ...validityData,
       state: {
         ...validityData.state,
-        valid: !invalid && validityData.state.valid
+        valid: !invalid2 && validityData.state.valid
       }
     };
   }
@@ -21092,11 +21375,15 @@ var wp;
     }
     return fallback;
   }
-  function clearCustomValidity(element, inputs) {
-    for (const input of inputs.keys()) {
-      input.setCustomValidity("");
-    }
-    element?.setCustomValidity("");
+  function makeState(customError) {
+    return {
+      ...DEFAULT_VALIDITY_STATE,
+      valid: !customError,
+      customError
+    };
+  }
+  function getNativeErrors(element) {
+    return element && element.validationMessage ? [element.validationMessage] : [];
   }
   function useFieldValidation(params) {
     const {
@@ -21108,10 +21395,11 @@ var wp;
       validate,
       validityData,
       validationDebounceTime,
-      invalid,
+      invalid: invalid2,
       markedDirtyRef,
       state: state2,
       shouldValidateOnChange,
+      validationMode,
       registeredFieldIdRef
     } = params;
     const {
@@ -21122,6 +21410,7 @@ var wp;
     const inputRef = React89.useRef(null);
     const registeredInputs = useRefWithInit(() => /* @__PURE__ */ new Map()).current;
     const validationCommitIdRef = React89.useRef(0);
+    const customValidityRef = React89.useRef(null);
     const registerInput = React89.useCallback((element, registration) => {
       registeredInputs.set(element, registration);
       return () => {
@@ -21135,7 +21424,7 @@ var wp;
     const commit = useStableCallback(async (value, revalidate = false) => {
       validationCommitIdRef.current += 1;
       const validationCommitId = validationCommitIdRef.current;
-      function updateRegisteredFieldValidity(nextValidityData2, externalInvalid = invalid) {
+      function updateRegisteredFieldValidity(nextValidityData, externalInvalid = invalid2) {
         const fieldId = registeredFieldIdRef.current ?? controlId;
         if (fieldId == null) {
           return;
@@ -21144,42 +21433,39 @@ var wp;
         if (!currentFieldData) {
           return;
         }
-        const validityDataWithFormErrors = getCombinedFieldValidityData(nextValidityData2, externalInvalid);
+        const validityDataWithFormErrors = getCombinedFieldValidityData(nextValidityData, externalInvalid);
         formRef.current.fields.set(fieldId, {
           ...currentFieldData,
           validityData: validityDataWithFormErrors
         });
       }
-      function publishAllValid(input, externalInvalid) {
-        const nextValidityData2 = {
+      function makeValidityData(validityState, errorMessages) {
+        const errors = validityState.valid === false ? errorMessages : [];
+        return {
           value,
-          state: {
-            ...DEFAULT_VALIDITY_STATE,
-            valid: true
-          },
-          error: "",
-          errors: [],
+          state: validityState,
+          error: errors[0] ?? "",
+          errors,
           initialValue: validityData.initialValue
         };
-        clearCustomValidity(input, registeredInputs);
-        updateRegisteredFieldValidity(nextValidityData2, externalInvalid);
-        setValidityData(nextValidityData2);
       }
-      const element = registeredInputs.size > 0 ? findRepresentativeInput(registeredInputs, elementRef.current) : inputRef.current;
-      if (revalidate) {
-        if (state2.valid !== false || !element) {
-          return;
+      function setCustomValidity(element2, message2) {
+        const displaced = element2.validity.customError ? element2.validationMessage : "";
+        const ownedMessage = message2.replace(/\r\n?/g, "\n");
+        element2.setCustomValidity(ownedMessage);
+        customValidityRef.current = [element2, ownedMessage, displaced];
+      }
+      function clearCustomValidity() {
+        const record = customValidityRef.current;
+        customValidityRef.current = null;
+        if (record && (!record[0].willValidate || record[0].validationMessage === record[1])) {
+          record[0].setCustomValidity(record[2]);
         }
-        const currentNativeValidity = element.validity;
-        if (!currentNativeValidity.valueMissing) {
-          publishAllValid(element, false);
-          return;
-        }
-        for (const key of validityKeys) {
-          if (key !== "valid" && key !== "valueMissing" && key !== "customError" && currentNativeValidity[key]) {
-            return;
-          }
-        }
+      }
+      function publish(validityState, errorMessages, externalInvalid) {
+        const nextValidityData = makeValidityData(validityState, errorMessages);
+        updateRegisteredFieldValidity(nextValidityData, externalInvalid);
+        setValidityData(nextValidityData);
       }
       function getState2(el) {
         const computedState = validityKeys.reduce((acc, key) => {
@@ -21203,19 +21489,37 @@ var wp;
         }
         return computedState;
       }
+      function resolveRepresentativeInput() {
+        return registeredInputs.size > 0 ? findRepresentativeInput(registeredInputs, elementRef.current) : inputRef.current;
+      }
+      let element = resolveRepresentativeInput();
+      function refreshState() {
+        element = resolveRepresentativeInput();
+        return element?.willValidate ? getState2(element) : makeState(false);
+      }
+      if (revalidate) {
+        if (state2.valid !== false || !element) {
+          return;
+        }
+        if (!element.validity.valueMissing) {
+          clearCustomValidity();
+          const currentElement = resolveRepresentativeInput();
+          const foreign = currentElement?.validity.customError ? getNativeErrors(currentElement) : [];
+          publish(makeState(foreign.length > 0), foreign, false);
+          return;
+        }
+        for (const key of validityKeys) {
+          if (key !== "valid" && key !== "valueMissing" && key !== "customError" && element.validity[key]) {
+            return;
+          }
+        }
+      }
       timeout.clear();
-      let result = null;
-      let validationErrors = [];
-      const nextState = element ? getState2(element) : {
-        ...DEFAULT_VALIDITY_STATE,
-        valid: true
-      };
-      let defaultValidationMessage;
+      clearCustomValidity();
+      let nextState = refreshState();
+      let validationErrors = getNativeErrors(element);
       const isValidatingOnChange = shouldValidateOnChange();
-      if (element && element.validationMessage && !isValidatingOnChange) {
-        defaultValidationMessage = element.validationMessage;
-        validationErrors = [element.validationMessage];
-      } else {
+      if (validationErrors.length === 0 || isValidatingOnChange) {
         const formValues = Array.from(formRef.current.fields.values()).reduce((acc, field) => {
           if (field.name) {
             acc[field.name] = field.getValue();
@@ -21223,50 +21527,43 @@ var wp;
           return acc;
         }, {});
         const resultOrPromise = validate(value, formValues);
+        let result;
         if (typeof resultOrPromise === "object" && resultOrPromise !== null && "then" in resultOrPromise) {
+          if (nextState.valid === false) {
+            publish(nextState, validationErrors);
+          } else if (validationMode === "onSubmit" || !validityData.state.customError) {
+            nextState.valid = null;
+            publish(nextState, validationErrors);
+          }
           result = await resultOrPromise;
           if (validationCommitId !== validationCommitIdRef.current) {
             return;
           }
+          nextState = refreshState();
         } else {
           result = resultOrPromise;
         }
-        if (result !== null) {
+        validationErrors = result ? [].concat(result).filter(Boolean) : [];
+        if (validationErrors.length > 0) {
           nextState.valid = false;
           nextState.customError = true;
-          if (Array.isArray(result)) {
-            validationErrors = result;
-            element?.setCustomValidity(result.join("\n"));
-          } else if (result) {
-            validationErrors = [result];
-            element?.setCustomValidity(result);
+          if (element?.willValidate) {
+            setCustomValidity(element, validationErrors.join("\n"));
           }
-        } else if (isValidatingOnChange) {
-          clearCustomValidity(element, registeredInputs);
-          nextState.customError = false;
-          if (element && element.validationMessage) {
-            defaultValidationMessage = element.validationMessage;
-            validationErrors = [element.validationMessage];
-          } else if ((!element || element.validity.valid) && !nextState.valid) {
-            nextState.valid = true;
-          }
+        } else {
+          validationErrors = getNativeErrors(element);
         }
       }
-      const nextValidityData = {
-        value,
-        state: nextState,
-        error: defaultValidationMessage ?? (Array.isArray(result) ? result[0] : result ?? ""),
-        errors: validationErrors,
-        initialValue: validityData.initialValue
-      };
-      updateRegisteredFieldValidity(nextValidityData);
-      setValidityData(nextValidityData);
+      publish(nextState, validationErrors);
     });
-    const change = useStableCallback((value) => {
+    const change = useStableCallback((value, cancelPending = false) => {
       timeout.clear();
+      validationCommitIdRef.current += 1;
+      if (cancelPending) {
+        return;
+      }
       const validateOnChange = shouldValidateOnChange();
       if (validateOnChange && value !== "" && validationDebounceTime) {
-        validationCommitIdRef.current += 1;
         timeout.start(validationDebounceTime, () => {
           commit(value);
         });
@@ -21314,13 +21611,13 @@ var wp;
       defaultOpen = false,
       disabled: disabled2 = false,
       onOpenChange: onOpenChangeProp,
-      open,
+      open: open3,
       style,
       ...elementProps
     } = componentProps;
     const onOpenChange = useStableCallback(onOpenChangeProp);
     const collapsible = useCollapsibleRoot({
-      open,
+      open: open3,
       defaultOpen,
       onOpenChange,
       disabled: disabled2
@@ -21357,7 +21654,7 @@ var wp;
   var CollapsibleTrigger = /* @__PURE__ */ React91.forwardRef(function CollapsibleTrigger2(componentProps, forwardedRef) {
     const {
       panelId,
-      open,
+      open: open3,
       handleTrigger,
       state: state2,
       disabled: contextDisabled
@@ -21382,8 +21679,8 @@ var wp;
       state: state2,
       ref: [forwardedRef, buttonRef],
       props: [{
-        "aria-controls": open ? panelId : void 0,
-        "aria-expanded": open,
+        "aria-controls": open3 ? panelId : void 0,
+        "aria-expanded": open3,
         onClick: handleTrigger
       }, elementProps, getButtonProps],
       stateAttributesMapping: stateAttributesMapping4
@@ -21396,11 +21693,8 @@ var wp;
   var React92 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanelCssVars.mjs
-  var CollapsiblePanelCssVars = /* @__PURE__ */ (function(CollapsiblePanelCssVars2) {
-    CollapsiblePanelCssVars2["collapsiblePanelHeight"] = "--collapsible-panel-height";
-    CollapsiblePanelCssVars2["collapsiblePanelWidth"] = "--collapsible-panel-width";
-    return CollapsiblePanelCssVars2;
-  })({});
+  var collapsiblePanelHeight = "--collapsible-panel-height";
+  var collapsiblePanelWidth = "--collapsible-panel-width";
 
   // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanel.mjs
   var CollapsiblePanel = /* @__PURE__ */ React92.forwardRef(function CollapsiblePanel2(componentProps, forwardedRef) {
@@ -21424,7 +21718,7 @@ var wp;
       defaultPanelId,
       mounted,
       onOpenChange,
-      open,
+      open: open3,
       setMounted,
       setPanelIdState,
       setOpen,
@@ -21456,7 +21750,7 @@ var wp;
       keepMounted,
       mounted,
       onOpenChange,
-      open,
+      open: open3,
       setMounted,
       setOpen,
       transitionStatus
@@ -21476,8 +21770,8 @@ var wp;
         props,
         {
           style: {
-            [CollapsiblePanelCssVars.collapsiblePanelHeight]: height === void 0 ? "auto" : `${height}px`,
-            [CollapsiblePanelCssVars.collapsiblePanelWidth]: width === void 0 ? "auto" : `${width}px`
+            [collapsiblePanelHeight]: height === void 0 ? "auto" : `${height}px`,
+            [collapsiblePanelWidth]: width === void 0 ? "auto" : `${width}px`
           }
         },
         elementProps,
@@ -21530,6 +21824,7 @@ var wp;
     Status: () => ComboboxStatus,
     Trigger: () => ComboboxTrigger,
     Value: () => ComboboxValue,
+    createItems: () => createComboboxItems,
     useFilter: () => useComboboxFilter,
     useFilteredItems: () => useFilteredItems
   });
@@ -21618,7 +21913,7 @@ var wp;
     }
     return native ? {
       id,
-      htmlFor: resolvedControlId ?? void 0,
+      htmlFor: resolvedControlId,
       onMouseDown: handleInteraction
     } : {
       id,
@@ -21648,10 +21943,10 @@ var wp;
     delete elementPropsWithoutId.id;
     const fieldRootContext = useFieldRootContext();
     const store4 = useComboboxRootContext();
-    const inputInsidePopup = useStore(store4, selectors2.inputInsidePopup);
-    const triggerElement = useStore(store4, selectors2.triggerElement);
-    const inputElement = useStore(store4, selectors2.inputElement);
-    const rootId = useStore(store4, selectors2.id);
+    const inputInsidePopup = store4.useState("inputInsidePopup");
+    const triggerElement = store4.useState("triggerElement");
+    const inputElement = store4.useState("inputElement");
+    const rootId = store4.useState("id");
     const defaultLabelId = getDefaultLabelId(rootId);
     const localControlId = triggerElement?.id ?? (inputInsidePopup ? rootId : void 0);
     if (true) {
@@ -21690,13 +21985,13 @@ var wp;
       placeholder
     } = props;
     const store4 = useComboboxRootContext();
-    const itemToStringLabel = useStore(store4, selectors2.itemToStringLabel);
-    const selectedValue = useStore(store4, selectors2.selectedValue);
-    const items = useStore(store4, selectors2.items);
-    const multiple = useStore(store4, selectors2.selectionMode) === "multiple";
-    const hasSelectedValue = useStore(store4, selectors2.hasSelectedValue);
+    const itemToStringLabel = store4.useState("itemToStringLabel");
+    const selectedValue = store4.useState("selectedValue");
+    const items = store4.useState("items");
+    const multiple = store4.useState("selectionMode") === "multiple";
+    const hasSelectedValue = store4.useState("hasSelectedValue");
     const shouldCheckNullItemLabel = !hasSelectedValue && placeholder != null && childrenProp == null;
-    const hasNullLabel = useStore(store4, selectors2.hasNullItemLabel, shouldCheckNullItemLabel);
+    const hasNullLabel = store4.useState("hasNullItemLabel", shouldCheckNullItemLabel);
     let children = null;
     if (typeof childrenProp === "function") {
       children = childrenProp(selectedValue);
@@ -21761,6 +22056,8 @@ var wp;
       stateAttributesMapping: transitionStatusMapping
     });
     useOpenChangeComplete({
+      batch: true,
+      enabled: !selected,
       open: selected,
       ref: indicatorRef,
       onComplete() {
@@ -21784,22 +22081,22 @@ var wp;
       ...elementProps
     } = componentProps;
     const store4 = useComboboxRootContext();
-    const open = useStore(store4, selectors2.open);
-    const hasSelectionChips = useStore(store4, selectors2.hasSelectionChips);
+    const open3 = store4.useState("open");
+    const hasSelectionChips = store4.useState("hasSelectionChips");
     const [highlightedChipIndex, setHighlightedChipIndex] = React97.useState(void 0);
-    if (open && highlightedChipIndex !== void 0) {
+    if (open3 && highlightedChipIndex !== void 0) {
       setHighlightedChipIndex(void 0);
     }
     const chipsRef = React97.useRef([]);
     const element = useRenderElement("div", componentProps, {
-      ref: [forwardedRef, store4.state.chipsContainerRef],
+      ref: [forwardedRef, store4.context.chipsContainerRef],
       // NVDA enters browse mode instead of staying in focus mode when navigating with
       // arrow keys inside a container unless it has a toolbar role.
       props: [hasSelectionChips ? {
         role: "toolbar"
       } : EMPTY_OBJECT2, {
         onMouseDown(event) {
-          handleInputPress(event, store4, store4.state.disabled, store4.state.readOnly);
+          handleInputPress(event, store4, store4.state.disabled);
         }
       }, elementProps]
     });
@@ -21849,45 +22146,45 @@ var wp;
       chipsRef
     } = useComboboxChipsContext();
     const direction = useDirection();
-    const disabled2 = useStore(store4, selectors2.disabled);
-    const readOnly = useStore(store4, selectors2.readOnly);
-    const selectedValue = useStore(store4, selectors2.selectedValue);
+    const disabled2 = store4.useState("disabled");
+    const readOnly = store4.useState("readOnly");
+    const selectedValue = store4.useState("selectedValue");
     const {
       ref,
-      index: index2
+      index: index3
     } = useCompositeListItem();
     function handleKeyDown(event) {
-      let nextIndex = index2;
+      let nextIndex = index3;
       const [previousChipKey, nextChipKey] = getChipNavigationKeys(direction);
       if (event.key === previousChipKey) {
         event.preventDefault();
-        if (index2 > 0) {
-          nextIndex = index2 - 1;
+        if (index3 > 0) {
+          nextIndex = index3 - 1;
         } else {
           nextIndex = void 0;
         }
       } else if (event.key === nextChipKey) {
         event.preventDefault();
-        if (index2 < chipsRef.current.length - 1) {
-          nextIndex = index2 + 1;
+        if (index3 < chipsRef.current.length - 1) {
+          nextIndex = index3 + 1;
         } else {
           nextIndex = void 0;
         }
       } else if (event.key === "Backspace" || event.key === "Delete") {
-        nextIndex = getIndexAfterChipRemoval(index2, selectedValue.length);
+        nextIndex = getIndexAfterChipRemoval(index3, selectedValue.length);
         stopEvent(event);
-        store4.state.setIndices({
+        store4.context.setIndices({
           activeIndex: null,
           selectedIndex: null,
           type: reason_parts_exports.keyboard
         });
-        store4.state.setSelectedValue(selectedValue.filter((_, i2) => i2 !== index2), createChangeEventDetails(reason_parts_exports.none, event.nativeEvent));
+        store4.context.setSelectedValue(selectedValue.filter((_, i2) => i2 !== index3), createChangeEventDetails(reason_parts_exports.none, event.nativeEvent));
       } else if (event.key === "Enter" || event.key === " ") {
         stopEvent(event);
         nextIndex = void 0;
       } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
         stopEvent(event);
-        store4.state.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent));
+        store4.context.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent));
         nextIndex = void 0;
       } else if (
         // Check for printable characters (letters, numbers, symbols)
@@ -21916,7 +22213,7 @@ var wp;
             setHighlightedChipIndex(nextIndex);
           });
           if (nextIndex === void 0) {
-            store4.state.inputRef.current?.focus();
+            store4.context.inputRef.current?.focus();
           } else {
             chipsRef.current[nextIndex]?.focus();
           }
@@ -21924,8 +22221,8 @@ var wp;
       }, elementProps]
     });
     const contextValue = React99.useMemo(() => ({
-      index: index2
-    }), [index2]);
+      index: index3
+    }), [index3]);
     return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(ComboboxChipContext.Provider, {
       value: contextValue,
       children: element
@@ -21946,12 +22243,12 @@ var wp;
     } = componentProps;
     const store4 = useComboboxRootContext();
     const {
-      index: index2
+      index: index3
     } = useComboboxChipContext();
-    const comboboxDisabled = useStore(store4, selectors2.disabled);
-    const readOnly = useStore(store4, selectors2.readOnly);
-    const selectedValue = useStore(store4, selectors2.selectedValue);
-    const isItemEqualToValue = useStore(store4, selectors2.isItemEqualToValue);
+    const comboboxDisabled = store4.useState("disabled");
+    const readOnly = store4.useState("readOnly");
+    const selectedValue = store4.useState("selectedValue");
+    const isItemEqualToValue = store4.useState("isItemEqualToValue");
     const disabled2 = comboboxDisabled || disabledProp;
     const {
       buttonRef,
@@ -21969,20 +22266,20 @@ var wp;
       if (activeIndex == null) {
         return;
       }
-      const removedIndex = findItemIndex(store4.state.valuesRef.current, removedItem, isItemEqualToValue);
+      const removedIndex = findItemIndex(store4.context.valuesRef.current, removedItem, isItemEqualToValue);
       if (removedIndex !== -1 && activeIndex === removedIndex) {
-        store4.state.setIndices({
+        store4.context.setIndices({
           activeIndex: null,
-          type: store4.state.keyboardActiveRef.current ? reason_parts_exports.keyboard : reason_parts_exports.pointer
+          type: store4.context.keyboardActiveRef.current ? reason_parts_exports.keyboard : reason_parts_exports.pointer
         });
       }
     }
     function removeChip(event) {
       const eventDetails = createChangeEventDetails(reason_parts_exports.chipRemovePress, event.nativeEvent);
-      const removedItem = selectedValue[index2];
+      const removedItem = selectedValue[index3];
       clearActiveIndexForRemovedItem(removedItem);
-      store4.state.setSelectedValue(selectedValue.filter((_, i2) => i2 !== index2), eventDetails);
-      store4.state.inputRef.current?.focus();
+      store4.context.setSelectedValue(selectedValue.filter((_, i2) => i2 !== index3), eventDetails);
+      store4.context.inputRef.current?.focus();
       return eventDetails;
     }
     const element = useRenderElement("button", componentProps, {
@@ -22015,6 +22312,57 @@ var wp;
 
   // node_modules/@base-ui/react/combobox/separator/ComboboxSeparator.mjs
   var ComboboxSeparator = ListboxSeparator;
+
+  // node_modules/@base-ui/react/combobox/items/createItems.mjs
+  function createComboboxItems(data, options) {
+    const {
+      getValue: getValue3,
+      getLabel
+    } = options;
+    let valueToItem = null;
+    function ensureDerived() {
+      if (valueToItem === null) {
+        const derived = /* @__PURE__ */ new Map();
+        const leafItems = data ? flattenLeafItems(data) : EMPTY_ARRAY3;
+        for (const item of leafItems) {
+          if (item == null) {
+            continue;
+          }
+          const derivedValue = getValue3(item);
+          if (!derived.has(derivedValue)) {
+            derived.set(derivedValue, item);
+          } else if (true) {
+            error(`Two items passed to createItems() derived the value ${String(derivedValue)}, so selection and label resolution cannot tell them apart: the first item wins the label and every item carrying the value renders as selected. Return a unique value from \`getValue\`.`);
+          }
+        }
+        valueToItem = derived;
+      }
+      return valueToItem;
+    }
+    function value(item) {
+      if (item == null) {
+        return item;
+      }
+      return getValue3(item);
+    }
+    return {
+      // Passed through rather than defaulted: data that has not loaded must stay the absence of
+      // items rather than an empty list that filters everything away.
+      data,
+      value,
+      hasValue(itemValue, isEqual2) {
+        return findCollectionItem(ensureDerived(), itemValue, isEqual2) !== void 0;
+      },
+      itemLabel: getLabel,
+      label(itemValue, isEqual2, fallback) {
+        const item = findCollectionItem(ensureDerived(), itemValue, isEqual2);
+        if (item !== void 0) {
+          return getLabel(item);
+        }
+        return stringifyAsLabel(itemValue, fallback);
+      }
+    };
+  }
 
   // node_modules/@base-ui/react/context-menu/root/ContextMenuRootContext.mjs
   var React101 = __toESM(require_react(), 1);
@@ -22100,9 +22448,9 @@ var wp;
       arrowUncentered,
       arrowStyles
     } = useMenuPositionerContext();
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const state2 = {
-      open,
+      open: open3,
       side,
       align,
       uncentered: arrowUncentered
@@ -22132,13 +22480,13 @@ var wp;
     const {
       store: store4
     } = useMenuRootContext();
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const mounted = store4.useState("mounted");
     const transitionStatus = store4.useState("transitionStatus");
     const lastOpenChangeReason = store4.useState("lastOpenChangeReason");
     const contextMenuContext = useContextMenuRootContext();
     const state2 = {
-      open,
+      open: open3,
       transitionStatus
     };
     return useRenderElement("div", componentProps, {
@@ -22192,13 +22540,13 @@ var wp;
     const {
       events: menuEvents
     } = store4.useState("floatingTreeRoot");
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const contextMenuContext = useContextMenuRootContext(true);
     const isContextMenu = contextMenuContext !== void 0;
     return React107.useMemo(() => ({
       id,
       role: "menuitem",
-      tabIndex: open && highlighted ? 0 : -1,
+      tabIndex: open3 && highlighted ? 0 : -1,
       onKeyDown(event) {
         if (event.key === " " && typingRef?.current) {
           event.preventDefault();
@@ -22240,7 +22588,7 @@ var wp;
           }
         }
       }
-    }), [closeOnClick, highlighted, id, menuEvents, nodeId, open, store4, typingRef, itemRef, contextMenuContext, isContextMenu, itemMetadata]);
+    }), [closeOnClick, highlighted, id, menuEvents, nodeId, open3, store4, typingRef, itemRef, contextMenuContext, isContextMenu, itemMetadata]);
   }
 
   // node_modules/@base-ui/react/menu/item/useMenuItem.mjs
@@ -22297,24 +22645,19 @@ var wp;
   }
 
   // node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItemDataAttributes.mjs
-  var MenuCheckboxItemDataAttributes = /* @__PURE__ */ (function(MenuCheckboxItemDataAttributes2) {
-    MenuCheckboxItemDataAttributes2["checked"] = "data-checked";
-    MenuCheckboxItemDataAttributes2["unchecked"] = "data-unchecked";
-    MenuCheckboxItemDataAttributes2["disabled"] = "data-disabled";
-    MenuCheckboxItemDataAttributes2["highlighted"] = "data-highlighted";
-    return MenuCheckboxItemDataAttributes2;
-  })({});
+  var checked = "data-checked";
+  var unchecked = "data-unchecked";
 
   // node_modules/@base-ui/react/menu/utils/stateAttributesMapping.mjs
   var itemMapping = {
     checked(value) {
       if (value) {
         return {
-          [MenuCheckboxItemDataAttributes.checked]: ""
+          [checked]: ""
         };
       }
       return {
-        [MenuCheckboxItemDataAttributes.unchecked]: ""
+        [unchecked]: ""
       };
     },
     ...transitionStatusMapping
@@ -22350,7 +22693,7 @@ var wp;
     const disabled2 = disabledProp || rootDisabled;
     const highlighted = store4.useState("isActive", listItem.index);
     const itemProps = store4.useState("itemProps");
-    const [checked, setChecked] = useControlled({
+    const [checked2, setChecked] = useControlled({
       controlled: checkedProp,
       default: defaultChecked ?? false,
       name: "MenuCheckboxItem",
@@ -22372,13 +22715,13 @@ var wp;
     const state2 = React109.useMemo(() => ({
       disabled: disabled2,
       highlighted,
-      checked
-    }), [disabled2, highlighted, checked]);
+      checked: checked2
+    }), [disabled2, highlighted, checked2]);
     function handleClick(event) {
       const details = createChangeEventDetails(reason_parts_exports.itemPress, event.nativeEvent, void 0, {
         preventUnmountOnClose: NOOP
       });
-      onCheckedChange?.(!checked, details);
+      onCheckedChange?.(!checked2, details);
       if (details.isCanceled) {
         return;
       }
@@ -22389,7 +22732,7 @@ var wp;
       stateAttributesMapping: itemMapping,
       props: [itemProps, {
         role: "menuitemcheckbox",
-        "aria-checked": checked,
+        "aria-checked": checked2,
         onClick: handleClick
       }, elementProps, getItemProps],
       ref: [itemRef, forwardedRef, listItem.ref]
@@ -22419,6 +22762,8 @@ var wp;
       setMounted
     } = useTransitionStatus(item.checked);
     useOpenChangeComplete({
+      batch: true,
+      enabled: !item.checked,
       open: item.checked,
       ref: indicatorRef,
       onComplete() {
@@ -22509,7 +22854,7 @@ var wp;
       ref: forwardedRef,
       props: {
         id,
-        role: "presentation",
+        "aria-hidden": true,
         ...elementProps
       }
     });
@@ -22658,7 +23003,7 @@ var wp;
       align
     } = useMenuPositionerContext();
     const insideToolbar = useToolbarRootContext(true) != null;
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const transitionStatus = store4.useState("transitionStatus");
     const popupProps = store4.useState("popupProps");
     const mounted = store4.useState("mounted");
@@ -22675,10 +23020,10 @@ var wp;
     const openMethod = store4.useState("openMethod");
     const isContextMenu = parent.type === "context-menu";
     useOpenChangeComplete({
-      open,
+      open: open3,
       ref: store4.context.popupRef,
       onComplete() {
-        if (open) {
+        if (open3) {
           store4.context.onOpenChangeComplete?.(true);
         }
       }
@@ -22701,7 +23046,7 @@ var wp;
       transitionStatus,
       side,
       align,
-      open,
+      open: open3,
       nested: parent.type === "menu",
       instant: instantType
     };
@@ -22763,18 +23108,21 @@ var wp;
       ...portalProps
     } = props;
     const {
-      store: store4
+      store: store4,
+      parent
     } = useMenuRootContext();
     const mounted = store4.useState("mounted");
     const shouldRender = mounted || keepMounted;
     if (!shouldRender) {
       return null;
     }
+    const portalOwnerRole = parent.type === "menu" || parent.type === "menubar" ? "group" : void 0;
     return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(MenuPortalContext.Provider, {
       value: keepMounted,
       children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(FloatingPortal, {
         ref: forwardedRef,
-        ...portalProps
+        ...portalProps,
+        portalOwnerRole
       })
     });
   });
@@ -22811,7 +23159,7 @@ var wp;
     const floatingRootContext = store4.useState("floatingRootContext");
     const floatingTreeRoot = store4.useState("floatingTreeRoot");
     const mounted = store4.useState("mounted");
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const modal = store4.useState("modal");
     const openMethod = store4.useState("openMethod");
     const triggerElement = store4.useState("activeTriggerElement");
@@ -22907,13 +23255,13 @@ var wp;
     }, [floatingTreeRoot.events, store4]);
     const closeTimeout = useTimeout();
     React120.useEffect(() => {
-      if (!open) {
+      if (!open3) {
         closeTimeout.clear();
       }
-    }, [open, closeTimeout]);
+    }, [open3, closeTimeout]);
     React120.useEffect(() => {
       function onItemHover(event) {
-        if (!open || event.nodeId !== store4.select("floatingParentNodeId")) {
+        if (!open3 || event.nodeId !== store4.select("floatingParentNodeId")) {
           return;
         }
         if (event.target && triggerElement && triggerElement !== event.target) {
@@ -22935,16 +23283,16 @@ var wp;
       return () => {
         floatingTreeRoot.events.off("itemhover", onItemHover);
       };
-    }, [floatingTreeRoot.events, open, triggerElement, store4, closeTimeout]);
+    }, [floatingTreeRoot.events, open3, triggerElement, store4, closeTimeout]);
     React120.useEffect(() => {
       const eventDetails = {
-        open,
+        open: open3,
         nodeId: floatingNodeId,
         parentNodeId: floatingParentNodeId,
         reason: store4.select("lastOpenChangeReason")
       };
       floatingTreeRoot.events.emit("menuopenchange", eventDetails);
-    }, [floatingTreeRoot.events, open, store4, floatingNodeId, floatingParentNodeId]);
+    }, [floatingTreeRoot.events, open3, store4, floatingNodeId, floatingParentNodeId]);
     useIsoLayoutEffect(() => {
       const currentTrigger = domReference;
       const previousTrigger = previousTriggerRef.current;
@@ -22964,7 +23312,7 @@ var wp;
       return void 0;
     }, [domReference, runOnceAnimationsFinish, store4]);
     const state2 = {
-      open,
+      open: open3,
       side: positioner.side,
       align: positioner.align,
       anchorHidden: positioner.anchorHidden,
@@ -22973,14 +23321,14 @@ var wp;
     };
     const menubarModal = parent.type === "menubar" && parent.context.modal;
     const popupModal = modal && lastOpenChangeReason !== reason_parts_exports.triggerHover;
-    useAnchoredPopupScrollLock(open && (menubarModal || popupModal), openMethod === "touch", positionerElement, triggerElement);
+    useAnchoredPopupScrollLock(open3 && (menubarModal || popupModal), openMethod === "touch", positionerElement, triggerElement);
     const element = usePositioner(componentProps, state2, {
       styles: positioner.positionerStyles,
       transitionStatus,
       props: elementProps,
       refs: [forwardedRef, store4.useStateSetter("positionerElement")],
       hidden: !mounted,
-      inert: !open
+      inert: !open3
     });
     const shouldRenderBackdrop = mounted && parent.type !== "menu" && (parent.type !== "menubar" && modal && lastOpenChangeReason !== reason_parts_exports.triggerHover || parent.type === "menubar" && parent.context.modal);
     let backdropCutout = null;
@@ -22993,7 +23341,7 @@ var wp;
       value: positioner,
       children: [shouldRenderBackdrop && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(InternalBackdrop, {
         ref: parent.type === "context-menu" || parent.type === "nested-context-menu" ? parent.context.internalBackdropRef : null,
-        inert: inertValue(!open),
+        inert: inertValue(!open3),
         cutout: backdropCutout
       }), /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(FloatingNode, {
         id: floatingNodeId,
@@ -23125,7 +23473,7 @@ var wp;
     } = useMenuRadioGroupContext();
     const rootDisabled = store4.useState("disabled");
     const disabled2 = disabledProp || groupDisabled || rootDisabled;
-    const checked = selectedValue === value;
+    const checked2 = selectedValue === value;
     const {
       getItemProps,
       itemRef
@@ -23142,8 +23490,8 @@ var wp;
     const state2 = React124.useMemo(() => ({
       disabled: disabled2,
       highlighted,
-      checked
-    }), [disabled2, highlighted, checked]);
+      checked: checked2
+    }), [disabled2, highlighted, checked2]);
     function handleClick(event) {
       const details = createChangeEventDetails(reason_parts_exports.itemPress, event.nativeEvent, void 0, {
         preventUnmountOnClose: NOOP
@@ -23155,7 +23503,7 @@ var wp;
       stateAttributesMapping: itemMapping,
       props: [itemProps, {
         role: "menuitemradio",
-        "aria-checked": checked,
+        "aria-checked": checked2,
         onClick: handleClick
       }, elementProps, getItemProps],
       ref: [itemRef, forwardedRef, listItem.ref]
@@ -23185,6 +23533,8 @@ var wp;
       setMounted
     } = useTransitionStatus(item.checked);
     useOpenChangeComplete({
+      batch: true,
+      enabled: !item.checked,
       open: item.checked,
       ref: indicatorRef,
       onComplete() {
@@ -23271,11 +23621,10 @@ var wp;
     }
   };
   var MenuStore = class extends ReactStore {
-    constructor(initialState) {
-      super({
-        ...createInitialState(),
-        ...initialState
-      }, createInitialContext(), selectors3);
+    constructor(initialState, floatingId, nested = false) {
+      const triggerElements = new PopupTriggerMap();
+      const state2 = createInitialState(triggerElements, floatingId, nested, initialState);
+      super(state2, createInitialContext(triggerElements), selectors3);
       this.unsubscribeParentListener = this.observe("parent", (parent) => {
         this.unsubscribeParentListener?.();
         if (parent.type === "menu") {
@@ -23303,21 +23652,22 @@ var wp;
         this.unsubscribeParentListener = null;
       });
     }
-    setOpen(open, eventDetails) {
+    setOpen(open3, eventDetails) {
       this.state.floatingRootContext.context.events.emit("setOpen", {
-        open,
+        open: open3,
         eventDetails
       });
     }
     unsubscribeParentListener = null;
   };
   function createNullMenuStore() {
-    const store4 = new NullStore(Object.freeze(createInitialState()), Object.freeze(createInitialContext()), selectors3);
+    const triggerElements = new PopupTriggerMap();
+    const store4 = new NullStore(Object.freeze(createInitialState(triggerElements)), Object.freeze(createInitialContext(triggerElements)), selectors3);
     return Object.assign(store4, {
       setOpen: NOOP
     });
   }
-  function createInitialContext() {
+  function createInitialContext(triggerElements) {
     return {
       positionerRef: /* @__PURE__ */ React127.createRef(),
       popupRef: /* @__PURE__ */ React127.createRef(),
@@ -23336,12 +23686,12 @@ var wp;
       triggerFocusTargetRef: /* @__PURE__ */ React127.createRef(),
       beforeContentFocusGuardRef: /* @__PURE__ */ React127.createRef(),
       onOpenChangeComplete: void 0,
-      triggerElements: new PopupTriggerMap()
+      triggerElements
     };
   }
-  function createInitialState() {
+  function createInitialState(triggerElements, floatingId, nested = false, initialState) {
     return {
-      ...createInitialPopupStoreState(),
+      ...createInitialPopupStoreState(triggerElements, floatingId, nested),
       disabled: false,
       modal: true,
       openMethod: null,
@@ -23361,7 +23711,8 @@ var wp;
       itemProps: EMPTY_OBJECT2,
       keyboardEventRelay: void 0,
       closeDelay: 0,
-      adaptiveOrigin: void 0
+      adaptiveOrigin: void 0,
+      ...initialState
     };
   }
 
@@ -23420,22 +23771,30 @@ var wp;
         type: void 0
       };
     }, [contextMenuContext, parentMenuRootContext, menubarContext, isSubmenu]);
+    const rootId = useId();
+    const floatingId = useId();
+    const floatingParentNodeIdFromContext = useFloatingParentNodeId();
+    const parentMenuStore = parentFromContext.type === "menu" ? parentFromContext.store : void 0;
+    const animateInitialOpen = (openProp ?? defaultOpen) && parentMenuStore?.state.transitionStatus === "starting";
+    const seededInstantType = useRefWithInit(() => animateInitialOpen ? parentMenuStore?.state.instantType : void 0).current;
     const store4 = useMenuRootStore({
       open: defaultOpen,
       openProp,
       activeTriggerId: defaultTriggerIdProp,
       triggerIdProp,
-      parent: parentFromContext
-    });
+      parent: parentFromContext,
+      disabled: disabledProp,
+      highlightItemOnHover,
+      modal: parentFromContext.type === void 0 ? modalProp : void 0,
+      rootId,
+      instantType: seededInstantType
+    }, floatingId, floatingParentNodeIdFromContext != null);
     store4.useControlledProp("openProp", openProp);
     store4.useControlledProp("triggerIdProp", triggerIdProp);
     store4.useContextCallback("onOpenChangeComplete", onOpenChangeComplete);
-    const rootId = useId();
-    const floatingId = useId();
     const floatingTreeRoot = store4.useState("floatingTreeRoot");
     const floatingNodeIdFromContext = useFloatingNodeId(floatingTreeRoot);
-    const floatingParentNodeIdFromContext = useFloatingParentNodeId();
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const activeTriggerElement = store4.useState("activeTriggerElement");
     const positionerElement = store4.useState("positionerElement");
     const hoverEnabled = store4.useState("hoverEnabled");
@@ -23459,7 +23818,7 @@ var wp;
     const {
       openMethod,
       triggerProps: interactionTypeProps
-    } = useOpenInteractionType(open);
+    } = useOpenInteractionType(open3);
     store4.useSyncedValues({
       disabled: disabledProp,
       highlightItemOnHover,
@@ -23469,10 +23828,38 @@ var wp;
     });
     useImplicitActiveTrigger(store4);
     const {
-      forceUnmount
-    } = useOpenStateTransitions(open, store4, () => {
+      forceUnmount,
+      transitionStatus
+    } = useOpenStateTransitions(open3, store4, () => {
       store4.set("allowMouseEnter", false);
-    });
+    }, animateInitialOpen);
+    const runOnceAnimationsFinish = useAnimationsFinished(store4.context.popupRef);
+    React129.useEffect(() => {
+      if (seededInstantType === void 0) {
+        return void 0;
+      }
+      const clearSeededInstantType = () => {
+        if (store4.state.instantType === seededInstantType) {
+          store4.set("instantType", void 0);
+        }
+      };
+      if (!open3) {
+        clearSeededInstantType();
+        return void 0;
+      }
+      if (transitionStatus !== void 0) {
+        return void 0;
+      }
+      if (store4.context.popupRef.current == null) {
+        clearSeededInstantType();
+        return void 0;
+      }
+      const abortController = new AbortController();
+      runOnceAnimationsFinish(clearSeededInstantType, abortController.signal);
+      return () => {
+        abortController.abort();
+      };
+    }, [seededInstantType, open3, transitionStatus, runOnceAnimationsFinish, store4]);
     useIsoLayoutEffect(() => {
       if (contextMenuContext && !parentMenuRootContext) {
         store4.update({
@@ -23491,13 +23878,13 @@ var wp;
       }
     }, [contextMenuContext, parentMenuRootContext, floatingNodeIdFromContext, floatingParentNodeIdFromContext, store4]);
     React129.useEffect(() => {
-      if (!open) {
+      if (!open3) {
         openEventRef.current = null;
       }
       if (parent.type !== "context-menu") {
         return;
       }
-      if (!open) {
+      if (!open3) {
         allowOutsidePressDismissalTimeout.clear();
         allowOutsidePressDismissalRef.current = false;
         return;
@@ -23505,18 +23892,18 @@ var wp;
       allowOutsidePressDismissalTimeout.start(500, () => {
         allowOutsidePressDismissalRef.current = true;
       });
-    }, [allowOutsidePressDismissalTimeout, open, parent.type]);
+    }, [allowOutsidePressDismissalTimeout, open3, parent.type]);
     useIsoLayoutEffect(() => {
-      if (!open && !hoverEnabled) {
+      if (!open3 && !hoverEnabled) {
         store4.set("hoverEnabled", true);
       }
-    }, [open, hoverEnabled, store4]);
+    }, [open3, hoverEnabled, store4]);
     const setOpen = useStableCallback((nextOpen, eventDetails) => {
       const reason = eventDetails.reason;
       if (!nextOpen && !store4.select("open")) {
         return;
       }
-      if (open === nextOpen && eventDetails.trigger === activeTriggerElement && lastOpenChangeReason === reason) {
+      if (open3 === nextOpen && eventDetails.trigger === activeTriggerElement && lastOpenChangeReason === reason) {
         return;
       }
       const shouldPreventUnmountOnClose = attachPreventUnmountOnClose(eventDetails);
@@ -23543,23 +23930,21 @@ var wp;
       }
       const isKeyboardClick = (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.itemPress) && nativeEvent.detail === 0;
       const isDismissClose = !nextOpen && (reason === reason_parts_exports.escapeKey || reason == null);
-      const updatedState = {
-        open: nextOpen,
-        openChangeReason: reason
-      };
       openEventRef.current = eventDetails.event;
-      setPopupOpenState(updatedState, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
-      store4.update(updatedState);
+      const popupOpenState = createPopupOpenState(store4.state, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
+      popupOpenState.openChangeReason = reason;
       if (parent.type === "menubar" && (reason === reason_parts_exports.triggerFocus || reason === reason_parts_exports.focusOut || reason === reason_parts_exports.triggerHover || reason === reason_parts_exports.listNavigation || reason === reason_parts_exports.siblingOpen)) {
-        store4.set("instantType", "group");
+        popupOpenState.instantType = "group";
       } else if (isKeyboardClick || isDismissClose) {
-        store4.set("instantType", isKeyboardClick ? "click" : "dismiss");
+        popupOpenState.instantType = isKeyboardClick ? "click" : "dismiss";
       } else {
-        store4.set("instantType", void 0);
+        popupOpenState.instantType = void 0;
       }
+      store4.update(popupOpenState);
     });
     const floatingRootContext = useSyncedFloatingRootContext({
       popupStore: store4,
+      floatingRootContext: store4.state.floatingRootContext,
       floatingId,
       nested: floatingParentNodeIdFromContext != null,
       onOpenChange: setOpen
@@ -23604,11 +23989,11 @@ var wp;
       externalTree: nested ? floatingTreeRoot : void 0
     });
     const direction = useDirection();
-    const setActiveIndex = React129.useCallback((index2) => {
-      if (store4.select("activeIndex") === index2) {
+    const setActiveIndex = React129.useCallback((index3) => {
+      if (store4.select("activeIndex") === index3) {
         return;
       }
-      store4.set("activeIndex", index2);
+      store4.set("activeIndex", index3);
     }, [store4]);
     const listNavigation2 = useListNavigation(floatingRootContext, {
       enabled: !disabled2,
@@ -23634,9 +24019,9 @@ var wp;
       elementsRef: store4.context.itemDomElements,
       activeIndex,
       resetMs: TYPEAHEAD_RESET_MS,
-      onMatch: (index2) => {
-        if (open && index2 !== activeIndex) {
-          store4.set("activeIndex", index2);
+      onMatch: (index3) => {
+        if (open3 && index3 !== activeIndex) {
+          store4.set("activeIndex", index3);
         }
       },
       onTyping
@@ -23648,18 +24033,26 @@ var wp;
         }
       }, interactionTypeProps);
       mergedProps["aria-haspopup"] = "menu";
-      mergedProps["aria-expanded"] = open;
+      mergedProps["aria-expanded"] = open3;
       return mergedProps;
-    }, [store4, typeahead.reference, listNavigation2.reference, dismiss.reference, interactionTypeProps, open]);
+    }, [store4, typeahead.reference, listNavigation2.reference, dismiss.reference, interactionTypeProps, open3]);
     const inactiveTriggerProps = React129.useMemo(() => {
       const mergedProps = mergeProps(listNavigation2.trigger, dismiss.trigger, interactionTypeProps);
       mergedProps["aria-haspopup"] = "menu";
       mergedProps["aria-expanded"] = false;
       return mergedProps;
     }, [listNavigation2.trigger, dismiss.trigger, interactionTypeProps]);
+    useRefWithInit(() => {
+      store4.update({
+        inactiveTriggerProps
+      });
+      return null;
+    });
     const popupProps = React129.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, {
       id: floatingId,
       role: "menu",
+      // `menu` is implicitly vertical, so only the non-default value needs to be rendered.
+      "aria-orientation": orientation === "horizontal" ? "horizontal" : void 0,
       "aria-labelledby": activeTriggerElement?.id,
       onMouseMove() {
         store4.set("allowMouseEnter", true);
@@ -23678,7 +24071,7 @@ var wp;
           relay(event);
         }
       }
-    }, typeahead.floating, listNavigation2.floating, dismiss.floating), [activeTriggerElement, floatingId, parent.type, store4, typeahead.floating, listNavigation2.floating, dismiss.floating]);
+    }, typeahead.floating, listNavigation2.floating, dismiss.floating), [activeTriggerElement, floatingId, orientation, parent.type, store4, typeahead.floating, listNavigation2.floating, dismiss.floating]);
     const itemProps = listNavigation2.item ?? EMPTY_OBJECT2;
     usePopupInteractionProps(store4, {
       floatingRootContext,
@@ -23709,8 +24102,8 @@ var wp;
     return content;
   });
   if (true) MenuRoot.displayName = "MenuRoot";
-  function useMenuRootStore(initialState) {
-    const store4 = useRefWithInit(() => new MenuStore(initialState)).current;
+  function useMenuRootStore(initialState, floatingId, nested) {
+    const store4 = useRefWithInit(() => new MenuStore(initialState, floatingId, nested)).current;
     return store4;
   }
 
@@ -23743,15 +24136,15 @@ var wp;
     } = useCompositeRootContext();
     const {
       ref,
-      index: index2
+      index: index3
     } = useCompositeListItem(params);
-    const isHighlighted = highlightedIndex === index2;
+    const isHighlighted = highlightedIndex === index3;
     const itemRef = React131.useRef(null);
     const mergedRef = useMergedRefs(ref, itemRef);
     const compositeProps = {
       tabIndex: isHighlighted ? 0 : -1,
       onFocus() {
-        onHighlightedIndexChange(index2);
+        onHighlightedIndexChange(index3);
       },
       onMouseMove() {
         const item = itemRef.current;
@@ -23767,7 +24160,7 @@ var wp;
     return {
       compositeProps,
       compositeRef: mergedRef,
-      index: index2
+      index: index3
     };
   }
 
@@ -23855,7 +24248,7 @@ var wp;
     const {
       enabled = true,
       mouseDownAction,
-      open
+      open: open3
     } = params;
     const ignoreClickRef = React133.useRef(false);
     return React133.useMemo(() => {
@@ -23864,7 +24257,7 @@ var wp;
       }
       return {
         onMouseDown: (event) => {
-          if (mouseDownAction === "open" && !open || mouseDownAction === "close" && open) {
+          if (mouseDownAction === "open" && !open3 || mouseDownAction === "close" && open3) {
             ignoreClickRef.current = true;
             ownerDocument(event.currentTarget).addEventListener("click", () => {
               ignoreClickRef.current = false;
@@ -23880,7 +24273,7 @@ var wp;
           }
         }
       };
-    }, [enabled, mouseDownAction, open]);
+    }, [enabled, mouseDownAction, open3]);
   }
 
   // node_modules/@base-ui/react/menu/trigger/MenuTrigger.mjs
@@ -24080,20 +24473,20 @@ var wp;
     }, thisTriggerId);
   });
   if (true) MenuTrigger.displayName = "MenuTrigger";
-  function useStickIfOpen(open, openReason) {
+  function useStickIfOpen(open3, openReason) {
     const stickIfOpenTimeout = useTimeout();
     const [stickIfOpen, setStickIfOpen] = React134.useState(false);
     useIsoLayoutEffect(() => {
-      if (open && openReason === reason_parts_exports.triggerHover) {
+      if (open3 && openReason === reason_parts_exports.triggerHover) {
         setStickIfOpen(true);
         stickIfOpenTimeout.start(PATIENT_CLICK_THRESHOLD, () => {
           setStickIfOpen(false);
         });
-      } else if (!open) {
+      } else if (!open3) {
         stickIfOpenTimeout.clear();
         setStickIfOpen(false);
       }
-    }, [open, openReason, stickIfOpenTimeout]);
+    }, [open3, openReason, stickIfOpenTimeout]);
     return stickIfOpen;
   }
   function useMenuParent() {
@@ -24157,6 +24550,10 @@ var wp;
     };
   }
 
+  // node_modules/@base-ui/react/utils/CommonPopupCssVars.mjs
+  var popupWidth = "--popup-width";
+  var popupHeight = "--popup-height";
+
   // node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
   function usePopupAutoResize(parameters) {
     const {
@@ -24193,8 +24590,8 @@ var wp;
       const restorePopupTransform = overrideElementStyle(popupElement, "transform", "none");
       const restorePopupScale = overrideElementStyle(popupElement, "scale", "1");
       const restorePositionerAvailableSize = applyElementStyles(positionerElement, {
-        "--available-width": "max-content",
-        "--available-height": "max-content"
+        [availableWidth]: "max-content",
+        [availableHeight]: "max-content"
       });
       function restoreMeasurementOverrides() {
         restorePopupPosition();
@@ -24231,8 +24628,8 @@ var wp;
       animationFrame.request(() => {
         setPopupCssSize(popupElement, newDimensions);
         runOnceAnimationsFinish(() => {
-          popupElement.style.setProperty("--popup-width", "auto");
-          popupElement.style.setProperty("--popup-height", "auto");
+          popupElement.style.setProperty(popupWidth, "auto");
+          popupElement.style.setProperty(popupHeight, "auto");
         }, abortController.signal);
       });
       return () => {
@@ -24274,14 +24671,14 @@ var wp;
   function setPopupCssSize(popupElement, size4) {
     const width = size4 === "auto" ? "auto" : `${size4.width}px`;
     const height = size4 === "auto" ? "auto" : `${size4.height}px`;
-    popupElement.style.setProperty("--popup-width", width);
-    popupElement.style.setProperty("--popup-height", height);
+    popupElement.style.setProperty(popupWidth, width);
+    popupElement.style.setProperty(popupHeight, height);
   }
   function setPositionerCssSize(positionerElement, size4) {
     const width = size4 === "max-content" ? "max-content" : `${size4.width}px`;
     const height = size4 === "max-content" ? "max-content" : `${size4.height}px`;
-    positionerElement.style.setProperty("--positioner-width", width);
-    positionerElement.style.setProperty("--positioner-height", height);
+    positionerElement.style.setProperty(positionerWidth, width);
+    positionerElement.style.setProperty(positionerHeight, height);
   }
 
   // node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
@@ -24369,11 +24766,14 @@ var wp;
     }
   };
 
+  // node_modules/@base-ui/react/utils/CommonViewportDataAttributes.mjs
+  var activationDirection = "data-activation-direction";
+
   // node_modules/@base-ui/react/utils/usePopupViewport.mjs
   var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
   var popupViewportStateMapping = {
     activationDirection: (value) => value ? {
-      "data-activation-direction": value
+      [activationDirection]: value
     } : null
   };
   function usePopupViewport(parameters) {
@@ -24385,12 +24785,12 @@ var wp;
     const direction = useDirection();
     const activeTrigger = store4.useState("activeTriggerElement");
     const activeTriggerId = store4.useState("activeTriggerId");
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const payload = store4.useState("payload");
     const mounted = store4.useState("mounted");
     const popupElement = store4.useState("popupElement");
     const positionerElement = store4.useState("positionerElement");
-    const previousActiveTrigger = usePreviousValue(open ? activeTrigger : null);
+    const previousActiveTrigger = usePreviousValue(open3 ? activeTrigger : null);
     const currentContentKey = usePopupContentKey(activeTriggerId, payload);
     const capturedNodeRef = React138.useRef(null);
     const [previousContentNode, setPreviousContentNode] = React138.useState(null);
@@ -24433,10 +24833,10 @@ var wp;
     });
     const lastHandledTriggerRef = React138.useRef(null);
     useIsoLayoutEffect(() => {
-      if (!open || !mounted) {
+      if (!open3 || !mounted) {
         lastHandledTriggerRef.current = null;
       }
-    }, [open, mounted]);
+    }, [open3, mounted]);
     useIsoLayoutEffect(() => {
       if (activeTrigger && previousActiveTrigger && activeTrigger !== previousActiveTrigger && lastHandledTriggerRef.current !== activeTrigger && capturedNodeRef.current) {
         setPreviousContentNode(capturedNodeRef.current);
@@ -24486,8 +24886,8 @@ var wp;
           ref: previousContainerRef,
           style: {
             ...previousContentDimensions ? {
-              "--popup-width": `${previousContentDimensions.width}px`,
-              "--popup-height": `${previousContentDimensions.height}px`
+              [popupWidth]: `${previousContentDimensions.width}px`,
+              [popupHeight]: `${previousContentDimensions.height}px`
             } : null,
             position: "absolute"
           },
@@ -24684,27 +25084,30 @@ var wp;
       store: store4
     } = useMenuRootContext();
     const thisTriggerId = useBaseUiId(idProp);
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const floatingRootContext = store4.useState("floatingRootContext");
     const floatingTreeRoot = store4.useState("floatingTreeRoot");
     const popupId = store4.useState("triggerPopupId", thisTriggerId);
     const baseRegisterTrigger = useTriggerRegistration(thisTriggerId, store4);
-    const registerTrigger = React141.useCallback((element2) => {
-      const cleanup = baseRegisterTrigger(element2);
+    const registerTrigger = useStableCallback((element2) => {
+      baseRegisterTrigger(element2);
       if (element2 !== null && store4.select("open") && store4.select("activeTriggerId") == null) {
         store4.update({
-          activeTriggerId: thisTriggerId,
+          activeTriggerId: thisTriggerId ?? null,
           activeTriggerElement: element2,
           closeDelay
         });
       }
-      return cleanup;
-    }, [baseRegisterTrigger, closeDelay, store4, thisTriggerId]);
+    });
     const triggerElementRef = React141.useRef(null);
     const handleTriggerElementRef = React141.useCallback((el) => {
       triggerElementRef.current = el;
       store4.set("activeTriggerElement", el);
     }, [store4]);
+    useIsoLayoutEffect(() => {
+      registerTrigger(triggerElementRef.current);
+      return () => registerTrigger(null);
+    }, [registerTrigger, thisTriggerId, store4]);
     store4.useSyncedValue("closeDelay", closeDelay);
     const parentMenuStore = submenuRootContext.parentMenu;
     const rootDisabled = store4.useState("disabled");
@@ -24777,12 +25180,12 @@ var wp;
     const state2 = {
       disabled: disabled2,
       highlighted,
-      open
+      open: open3
     };
     const openMethod = store4.useState("openMethod");
     const lastOpenChangeReason = store4.useState("lastOpenChangeReason");
     const openedByKeyboard = lastOpenChangeReason === reason_parts_exports.listNavigation || openMethod === "keyboard";
-    const shouldOmitExpanded = open && openedByKeyboard && parts_exports.screenReader.voiceOver;
+    const shouldOmitExpanded = open3 && openedByKeyboard && parts_exports.screenReader.voiceOver;
     const element = useRenderElement("div", componentProps, {
       state: state2,
       stateAttributesMapping: triggerOpenStateMapping2,
@@ -24799,7 +25202,7 @@ var wp;
         shouldOmitExpanded ? VOICE_OVER_EXPANDED_PROPS : void 0,
         {
           "aria-controls": popupId,
-          tabIndex: open || highlighted ? 0 : -1,
+          tabIndex: open3 || highlighted ? 0 : -1,
           onBlur() {
             if (highlighted) {
               parentMenuStore.set("activeIndex", null);
@@ -24861,6 +25264,34 @@ var wp;
     return React142.useContext(CSPContext) ?? DEFAULT_CSP_CONTEXT_VALUE;
   }
 
+  // node_modules/@base-ui/react/utils/getElementTransform.mjs
+  function getElementTransform(element, computedStyle) {
+    const transform = (computedStyle ?? getWindow(element).getComputedStyle(element)).transform;
+    let translateX = 0;
+    let translateY = 0;
+    let scale3 = 1;
+    if (transform && transform !== "none") {
+      const matrix = transform.match(/matrix(?:3d)?\(([^)]+)\)/);
+      if (matrix) {
+        const values = matrix[1].split(", ").map(parseFloat);
+        if (values.length === 6) {
+          translateX = values[4];
+          translateY = values[5];
+          scale3 = Math.sqrt(values[0] * values[0] + values[1] * values[1]);
+        } else if (values.length === 16) {
+          translateX = values[12];
+          translateY = values[13];
+          scale3 = values[0];
+        }
+      }
+    }
+    return {
+      x: translateX,
+      y: translateY,
+      scale: scale3
+    };
+  }
+
   // node_modules/@base-ui/react/field/index.parts.mjs
   var index_parts_exports4 = {};
   __export(index_parts_exports4, {
@@ -24893,10 +25324,10 @@ var wp;
   var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
   var LabelableProvider = function LabelableProvider2(props) {
     const defaultId = useBaseUiId();
-    const initialControlId = props.controlId === void 0 ? defaultId : props.controlId;
-    const [controlId, setControlIdState] = React144.useState(initialControlId);
-    const [labelId, setLabelId] = React144.useState(props.labelId);
+    const [controlIdState, setControlIdState] = React144.useState(defaultId);
+    const [labelId, setLabelId] = React144.useState();
     const [messageIds, setMessageIds] = React144.useState([]);
+    const controlId = controlIdState === void 0 ? defaultId : controlIdState;
     const registrationsRef = useRefWithInit(() => /* @__PURE__ */ new Map());
     const {
       messageIds: parentMessageIds
@@ -24905,16 +25336,16 @@ var wp;
       const registrations = registrationsRef.current;
       if (nextId2 === void 0) {
         registrations.delete(source);
-        return;
+      } else {
+        registrations.set(source, nextId2);
       }
-      registrations.set(source, nextId2);
       setControlIdState((prev) => {
         if (registrations.size === 0) {
-          return void 0;
+          return prev;
         }
         let nextControlId;
         for (const id of registrations.values()) {
-          if (prev !== void 0 && id === prev) {
+          if (id === prev) {
             return prev;
           }
           if (nextControlId === void 0) {
@@ -24923,6 +25354,11 @@ var wp;
         }
         return nextControlId;
       });
+    });
+    const resetControlId = useStableCallback(() => {
+      if (registrationsRef.current.size === 0) {
+        setControlIdState(defaultId);
+      }
     });
     const getDescriptionProps = React144.useCallback((externalProps) => {
       const ids = externalProps["aria-describedby"] ? externalProps["aria-describedby"].split(" ") : [];
@@ -24935,12 +25371,13 @@ var wp;
     const contextValue = React144.useMemo(() => ({
       controlId,
       registerControlId,
+      resetControlId,
       labelId,
       setLabelId,
       messageIds,
       setMessageIds,
       getDescriptionProps
-    }), [controlId, registerControlId, labelId, setLabelId, messageIds, setMessageIds, getDescriptionProps]);
+    }), [controlId, registerControlId, resetControlId, labelId, setLabelId, messageIds, setMessageIds, getDescriptionProps]);
     return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(LabelableContext.Provider, {
       value: contextValue,
       children: props.children
@@ -24952,8 +25389,9 @@ var wp;
   var React145 = __toESM(require_react(), 1);
   function useFieldControlRegistration(params) {
     const {
+      change,
       commit,
-      invalid,
+      invalid: invalid2,
       markedDirtyRef,
       name: name2,
       setRegisteredFieldName,
@@ -24998,7 +25436,7 @@ var wp;
         getValue: getValueForForm,
         name: name2 ?? registration.name,
         controlRef: registration.controlRef,
-        validityData: getCombinedFieldValidityData(validityData, invalid),
+        validityData: getCombinedFieldValidityData(validityData, invalid2),
         validate
       });
     }
@@ -25028,10 +25466,10 @@ var wp;
         getValue: getValueForForm,
         name: name2 ?? registration.name,
         controlRef: registration.controlRef,
-        validityData: getCombinedFieldValidityData(validityData, invalid),
+        validityData: getCombinedFieldValidityData(validityData, invalid2),
         validate
       });
-    }, [formRef, getValueForForm, invalid, name2, setRegisteredFieldName, validate, validityData]);
+    }, [formRef, getValueForForm, invalid2, name2, setRegisteredFieldName, validate, validityData]);
     useIsoLayoutEffect(() => {
       const fields2 = formRef.current.fields;
       return () => {
@@ -25045,6 +25483,7 @@ var wp;
       if (!registration) {
         if (activeFieldControlSourceRef.current === source) {
           activeFieldControlSourceRef.current = null;
+          change(void 0, true);
           deleteRegistration();
           registrationRef.current = null;
           setRegisteredFieldName(void 0);
@@ -25053,6 +25492,10 @@ var wp;
         return;
       }
       const previousId = registrationRef.current?.id;
+      const previousSource = activeFieldControlSourceRef.current;
+      if (previousSource && previousSource !== source) {
+        change(void 0, true);
+      }
       activeFieldControlSourceRef.current = source;
       registrationRef.current = registration;
       if (!name2) {
@@ -25074,7 +25517,7 @@ var wp;
     const {
       errors,
       validationMode: formValidationMode,
-      submitAttemptedRef
+      submitCountRef
     } = useFormContext();
     const {
       render: render5,
@@ -25124,10 +25567,10 @@ var wp;
       }
       setTouchedUnwrapped(value);
     });
-    const shouldValidateOnChange = useStableCallback(() => validationMode === "onChange" || validationMode === "onSubmit" && submitAttemptedRef.current);
+    const shouldValidateOnChange = useStableCallback(() => validationMode === "onChange" || validationMode === "onSubmit" && submitCountRef.current > 0);
     const formError = effectiveName && Object.hasOwn(errors, effectiveName) ? errors[effectiveName] : null;
     const hasFormError = !!(Array.isArray(formError) ? formError.length : formError);
-    const invalid = invalidProp === true || hasFormError;
+    const invalid2 = invalidProp === true || hasFormError;
     const [validityData, setValidityData] = React146.useState({
       state: DEFAULT_VALIDITY_STATE,
       error: "",
@@ -25135,29 +25578,31 @@ var wp;
       value: null,
       initialValue: null
     });
-    const valid = !invalid && (disabled2 ? null : validityData.state.valid);
+    const valid2 = !invalid2 && (disabled2 ? null : validityData.state.valid);
     const state2 = React146.useMemo(() => ({
       disabled: disabled2,
       touched,
       dirty,
-      valid,
+      valid: valid2,
       filled,
       focused
-    }), [disabled2, touched, dirty, valid, filled, focused]);
+    }), [disabled2, touched, dirty, valid2, filled, focused]);
     const validation = useFieldValidation({
       setValidityData,
       validate,
       validityData,
       validationDebounceTime,
-      invalid,
+      invalid: invalid2,
       markedDirtyRef,
       state: state2,
       shouldValidateOnChange,
+      validationMode,
       registeredFieldIdRef
     });
     const [validateFieldControl, registerFieldControl] = useFieldControlRegistration({
+      change: validation.change,
       commit: validation.commit,
-      invalid,
+      invalid: invalid2,
       markedDirtyRef,
       name: name2,
       setRegisteredFieldName,
@@ -25169,7 +25614,7 @@ var wp;
       validate: validateFieldControl
     }), [validateFieldControl]);
     const contextValue = React146.useMemo(() => ({
-      invalid,
+      invalid: invalid2,
       name: effectiveName,
       validityData,
       setValidityData,
@@ -25183,7 +25628,7 @@ var wp;
       state: state2,
       registerFieldControl,
       validation
-    }), [invalid, effectiveName, validityData, disabled2, setTouched, setDirty, setFilled, setFocused, validationMode, shouldValidateOnChange, state2, registerFieldControl, validation]);
+    }), [invalid2, effectiveName, validityData, disabled2, setTouched, setDirty, setFilled, setFocused, validationMode, shouldValidateOnChange, state2, registerFieldControl, validation]);
     const element = useRenderElement("div", componentProps, {
       ref: forwardedRef,
       state: state2,
@@ -25437,7 +25882,9 @@ var wp;
       validation
     } = useFieldRootContext();
     const {
-      clearErrors
+      clearErrors,
+      elementRef: formElementRef,
+      submitCountRef
     } = useFormContext();
     const disabled2 = fieldDisabled || disabledProp;
     const name2 = fieldName ?? nameProp;
@@ -25451,20 +25898,6 @@ var wp;
     const id = useLabelableId({
       id: idProp
     });
-    useIsoLayoutEffect(() => {
-      const hasExternalValue = valueProp != null;
-      if (validation.inputRef.current?.value || hasExternalValue && valueProp !== "") {
-        setFilled(true);
-      } else if (hasExternalValue && valueProp === "") {
-        setFilled(false);
-      }
-    }, [validation.inputRef, setFilled, valueProp]);
-    const inputRef = React150.useRef(null);
-    useIsoLayoutEffect(() => {
-      if (autoFocus && inputRef.current === activeElement(ownerDocument(inputRef.current))) {
-        setFocused(true);
-      }
-    }, [autoFocus, setFocused]);
     const [valueUnwrapped] = useControlled({
       controlled: valueProp,
       default: defaultValue2,
@@ -25473,8 +25906,30 @@ var wp;
     });
     const isControlled = valueProp !== void 0;
     const value = isControlled ? valueUnwrapped : void 0;
+    const serializedValue = value == null ? void 0 : String(value);
     const getValueFromInput = useStableCallback(() => validation.inputRef.current?.value);
-    useRegisterFieldControl(validation.inputRef, id, value, getValueFromInput, !disabled2, nameProp);
+    useRegisterFieldControl(validation.inputRef, id, serializedValue, getValueFromInput, !disabled2, nameProp);
+    useIsoLayoutEffect(() => {
+      const currentValue = serializedValue ?? validation.inputRef.current?.value;
+      if (currentValue !== void 0) {
+        setFilled(currentValue !== "");
+      }
+    }, [serializedValue, validation.inputRef, setFilled]);
+    useValueChanged(serializedValue, () => {
+      if (serializedValue === void 0) {
+        return;
+      }
+      clearErrors(name2);
+      setDirty(serializedValue !== (validityData.initialValue ?? ""));
+      validation.change(serializedValue);
+    });
+    const inputRef = React150.useRef(null);
+    const enterValidationTimeout = useTimeout();
+    useIsoLayoutEffect(() => {
+      if (autoFocus && inputRef.current === activeElement(ownerDocument(inputRef.current))) {
+        setFocused(true);
+      }
+    }, [autoFocus, setFocused]);
     const element = useRenderElement("input", componentProps, {
       ref: [forwardedRef, inputRef],
       state: state2,
@@ -25492,10 +25947,14 @@ var wp;
         },
         onChange(event) {
           const inputValue = event.currentTarget.value;
-          onValueChange?.(inputValue, createChangeEventDetails(reason_parts_exports.none, event.nativeEvent));
+          const details = createChangeEventDetails(reason_parts_exports.none, event.nativeEvent);
+          onValueChange?.(inputValue, details);
+          if (isControlled) {
+            return;
+          }
           setDirty(inputValue !== (validityData.initialValue ?? ""));
           setFilled(inputValue !== "");
-          if (!event.nativeEvent.defaultPrevented) {
+          if (!event.nativeEvent.defaultPrevented && !details.isCanceled) {
             clearErrors(name2);
             validation.change(inputValue);
           }
@@ -25507,13 +25966,34 @@ var wp;
           setTouched(true);
           setFocused(false);
           if (validationMode === "onBlur") {
-            validation.commit(event.currentTarget.value);
+            const inputValue = event.currentTarget.value;
+            validation.commit(inputValue);
+            if (isControlled) {
+              queueMicrotask(() => {
+                const nextValue = validation.inputRef.current?.value;
+                if (nextValue !== void 0 && nextValue !== inputValue && nextValue !== (validityData.initialValue ?? "")) {
+                  validation.commit(nextValue);
+                }
+              });
+            }
           }
         },
         onKeyDown(event) {
           if (event.currentTarget.tagName === "INPUT" && event.key === "Enter") {
             setTouched(true);
-            validation.commit(event.currentTarget.value);
+            const value2 = event.currentTarget.value;
+            const form = event.currentTarget.form;
+            if (form && form === formElementRef.current && !event.defaultPrevented) {
+              const input = event.currentTarget;
+              const submitCount = submitCountRef.current;
+              enterValidationTimeout.start(0, () => {
+                if (submitCountRef.current === submitCount) {
+                  validation.commit(input.value);
+                }
+              });
+            } else {
+              validation.commit(value2);
+            }
           }
         }
       }, elementProps, (props) => validation.getValidationProps(disabled2, props)],
@@ -25532,9 +26012,9 @@ var wp;
     } = props;
     const {
       validityData,
-      invalid
+      invalid: invalid2
     } = useFieldRootContext(false);
-    const combinedFieldValidityData = React151.useMemo(() => getCombinedFieldValidityData(validityData, invalid), [validityData, invalid]);
+    const combinedFieldValidityData = React151.useMemo(() => getCombinedFieldValidityData(validityData, invalid2), [validityData, invalid2]);
     const isInvalid = combinedFieldValidityData.state.valid === false;
     const {
       transitionStatus
@@ -25611,7 +26091,6 @@ var wp;
   var ACTIVE_COMPOSITE_ITEM = "data-composite-item-active";
 
   // node_modules/@base-ui/react/internals/composite/root/useCompositeRoot.mjs
-  var EMPTY_ARRAY4 = [];
   function useCompositeRoot(params) {
     const {
       loopFocus = true,
@@ -25625,7 +26104,7 @@ var wp;
       enableHomeAndEndKeys = false,
       stopEventPropagation,
       disabledIndices,
-      modifierKeys = EMPTY_ARRAY4
+      modifierKeys = EMPTY_ARRAY3
     } = params;
     const [internalHighlightedIndex, internalSetHighlightedIndex] = React154.useState(0);
     const isGrid2 = grid != null;
@@ -25633,16 +26112,33 @@ var wp;
     const mergedRef = useMergedRefs(rootRef, externalRef);
     const elementsRef = React154.useRef([]);
     const hasSetDefaultIndexRef = React154.useRef(false);
+    const highlightedElementRef = React154.useRef(null);
     const highlightedIndex = externalHighlightedIndex ?? internalHighlightedIndex;
-    const onHighlightedIndexChange = useStableCallback((index2, shouldScrollIntoView = false) => {
-      (externalSetHighlightedIndex ?? internalSetHighlightedIndex)(index2);
+    const onHighlightedIndexChange = useStableCallback((index3, shouldScrollIntoView = false) => {
+      highlightedElementRef.current = elementsRef.current[index3] ?? null;
+      (externalSetHighlightedIndex ?? internalSetHighlightedIndex)(index3);
       if (shouldScrollIntoView) {
-        const newActiveItem = elementsRef.current[index2];
+        const newActiveItem = elementsRef.current[index3];
         scrollIntoViewIfNeeded(rootRef.current, newActiveItem, direction, orientation);
       }
     });
     const onMapChange = useStableCallback((map) => {
-      if (map.size === 0 || hasSetDefaultIndexRef.current) {
+      if (map.size === 0) {
+        return;
+      }
+      if (hasSetDefaultIndexRef.current) {
+        const elements2 = elementsRef.current;
+        const nextIndex = elements2.indexOf(highlightedElementRef.current);
+        if (nextIndex === -1) {
+          const replacement = elements2[highlightedIndex];
+          if (!replacement || isListIndexDisabled(elements2, highlightedIndex, disabledIndices)) {
+            onHighlightedIndexChange(getFallbackIndex(elements2, disabledIndices));
+          } else {
+            highlightedElementRef.current = replacement;
+          }
+        } else if (nextIndex !== highlightedIndex) {
+          onHighlightedIndexChange(nextIndex);
+        }
         return;
       }
       hasSetDefaultIndexRef.current = true;
@@ -25791,6 +26287,22 @@ var wp;
       onMapChange,
       relayKeyboardEvent: onKeyDown
     };
+  }
+  function getFallbackIndex(elements2, disabledIndices) {
+    let fallbackIndex = -1;
+    for (let index3 = 0; index3 < elements2.length; index3 += 1) {
+      const element = elements2[index3];
+      if (!element || isListIndexDisabled(elements2, index3, disabledIndices)) {
+        continue;
+      }
+      if (element.hasAttribute(ACTIVE_COMPOSITE_ITEM)) {
+        return index3;
+      }
+      if (fallbackIndex === -1) {
+        fallbackIndex = index3;
+      }
+    }
+    return Math.max(fallbackIndex, 0);
   }
   function isModifierKeySet(event, ignoredModifierKeys) {
     for (const key of MODIFIER_KEYS) {
@@ -25975,10 +26487,13 @@ var wp;
     return context;
   }
 
+  // node_modules/@base-ui/react/tabs/root/TabsRootDataAttributes.mjs
+  var activationDirection2 = "data-activation-direction";
+
   // node_modules/@base-ui/react/tabs/root/stateAttributesMapping.mjs
   var tabsStateAttributesMapping = {
     tabActivationDirection: (dir) => ({
-      "data-activation-direction": dir
+      [activationDirection2]: dir
     })
   };
 
@@ -26034,8 +26549,8 @@ var wp;
       });
     }, [nextPreviousValue, shouldSyncActivationDirectionState, tabActivationDirection]);
     const onValueChange = useStableCallback((newValue, eventDetails) => {
-      const activationDirection = computeActivationDirection(value, newValue, orientation, tabMap);
-      eventDetails.activationDirection = activationDirection;
+      const activationDirection3 = computeActivationDirection(value, newValue, orientation, tabMap);
+      eventDetails.activationDirection = activationDirection3;
       onValueChangeProp?.(newValue, eventDetails);
       if (eventDetails.isCanceled) {
         return;
@@ -26259,7 +26774,7 @@ var wp;
     const {
       compositeProps,
       compositeRef,
-      index: index2
+      index: index3
       // hook is used instead of the CompositeItem component
       // because the index is needed for Tab internals
     } = useCompositeItem({
@@ -26277,7 +26792,7 @@ var wp;
         isNavigatingRef.current = false;
         return;
       }
-      if (!(active && index2 > -1 && highlightedIndex !== index2)) {
+      if (!(active && index3 > -1 && highlightedIndex !== index3)) {
         return;
       }
       const listElement = tabsListElement;
@@ -26288,9 +26803,9 @@ var wp;
         }
       }
       if (!disabled2) {
-        onHighlightedIndexChange(index2);
+        onHighlightedIndexChange(index3);
       }
-    }, [active, index2, highlightedIndex, onHighlightedIndexChange, disabled2, tabsListElement]);
+    }, [active, index3, highlightedIndex, onHighlightedIndexChange, disabled2, tabsListElement]);
     const {
       getButtonProps,
       buttonRef
@@ -26368,6 +26883,16 @@ var wp;
 
   // node_modules/@base-ui/react/tabs/indicator/TabsIndicator.mjs
   var React162 = __toESM(require_react(), 1);
+
+  // node_modules/@base-ui/react/tabs/indicator/TabsIndicatorCssVars.mjs
+  var activeTabLeft = "--active-tab-left";
+  var activeTabRight = "--active-tab-right";
+  var activeTabTop = "--active-tab-top";
+  var activeTabBottom = "--active-tab-bottom";
+  var activeTabWidth = "--active-tab-width";
+  var activeTabHeight = "--active-tab-height";
+
+  // node_modules/@base-ui/react/tabs/indicator/TabsIndicator.mjs
   var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
   var _PrehydrationScript;
   var stateAttributesMapping6 = {
@@ -26375,6 +26900,7 @@ var wp;
     activeTabPosition: () => null,
     activeTabSize: () => null
   };
+  var MAX_LAYOUT_ROUNDING_ERROR = 2;
   var TabsIndicator = /* @__PURE__ */ React162.forwardRef(function TabsIndicator2(componentProps, forwardedRef) {
     const {
       className,
@@ -26420,15 +26946,15 @@ var wp;
         const tabsListRect = tabsListElement.getBoundingClientRect();
         const scaleX = tabListWidth > 0 ? tabsListRect.width / tabListWidth : 1;
         const scaleY = tabListHeight > 0 ? tabsListRect.height / tabListHeight : 1;
-        const hasNonZeroScale = scaleX > Number.EPSILON && scaleY > Number.EPSILON;
-        if (hasNonZeroScale) {
-          const tabLeftDelta = tabRect.left - tabsListRect.left;
-          const tabTopDelta = tabRect.top - tabsListRect.top;
-          left = tabLeftDelta / scaleX + tabsListElement.scrollLeft - tabsListElement.clientLeft;
-          top = tabTopDelta / scaleY + tabsListElement.scrollTop - tabsListElement.clientTop;
-        } else {
-          left = activeTab.offsetLeft;
-          top = activeTab.offsetTop;
+        const layoutOffset = getLayoutOffset(activeTab, tabsListElement);
+        left = layoutOffset.left;
+        top = layoutOffset.top;
+        const rectLeft = (tabRect.left - tabsListRect.left) / scaleX + tabsListElement.scrollLeft - tabsListElement.clientLeft;
+        const rectTop = (tabRect.top - tabsListRect.top) / scaleY + tabsListElement.scrollTop - tabsListElement.clientTop;
+        const tabTranslation = getActiveTabTranslation(activeTab);
+        if (Math.abs(rectLeft - tabTranslation.x - left) <= MAX_LAYOUT_ROUNDING_ERROR && Math.abs(rectTop - tabTranslation.y - top) <= MAX_LAYOUT_ROUNDING_ERROR) {
+          left = rectLeft;
+          top = rectTop;
         }
         width = computedWidth;
         height = computedHeight;
@@ -26447,12 +26973,12 @@ var wp;
       height
     } : null;
     const style = isTabSelected ? {
-      "--active-tab-left": `${left}px`,
-      "--active-tab-right": `${right}px`,
-      "--active-tab-top": `${top}px`,
-      "--active-tab-bottom": `${bottom}px`,
-      "--active-tab-width": `${width}px`,
-      "--active-tab-height": `${height}px`
+      [activeTabLeft]: `${left}px`,
+      [activeTabRight]: `${right}px`,
+      [activeTabTop]: `${top}px`,
+      [activeTabBottom]: `${bottom}px`,
+      [activeTabWidth]: `${width}px`,
+      [activeTabHeight]: `${height}px`
     } : void 0;
     const displayIndicator = isTabSelected && width > 0 && height > 0;
     const state2 = {
@@ -26484,9 +27010,82 @@ var wp;
     });
   });
   if (true) TabsIndicator.displayName = "TabsIndicator";
+  function getLayoutOffset(element, ancestor) {
+    const elementOffset = getCumulativeOffset(element);
+    const ancestorOffset = getCumulativeOffset(ancestor);
+    let left = elementOffset.left - ancestorOffset.left - ancestor.clientLeft;
+    let top = elementOffset.top - ancestorOffset.top - ancestor.clientTop;
+    let node = getParentNode(element);
+    while (isHTMLElement(node) && node !== ancestor && !isLastTraversableNode(node)) {
+      left -= node.scrollLeft;
+      top -= node.scrollTop;
+      node = getParentNode(node);
+    }
+    return {
+      left,
+      top
+    };
+  }
+  function getCumulativeOffset(element) {
+    let left = 0;
+    let top = 0;
+    let currentElement = element;
+    while (currentElement != null) {
+      left += currentElement.offsetLeft;
+      top += currentElement.offsetTop;
+      const offsetParent = currentElement.offsetParent;
+      if (offsetParent != null) {
+        left += offsetParent.clientLeft;
+        top += offsetParent.clientTop;
+      }
+      currentElement = offsetParent;
+    }
+    return {
+      left,
+      top
+    };
+  }
+  function getActiveTabTranslation(element) {
+    const computedStyle = getWindow(element).getComputedStyle(element);
+    const {
+      x: x2,
+      y: y3
+    } = getElementTransform(element, computedStyle);
+    let translateX = x2;
+    let translateY = y3;
+    const {
+      translate: translate2
+    } = computedStyle;
+    if (translate2 && translate2 !== "none") {
+      const parts = translate2.split(" ");
+      translateX += resolveTranslateLength(parts[0], element.offsetWidth);
+      translateY += resolveTranslateLength(parts[1], element.offsetHeight);
+    }
+    return {
+      x: translateX,
+      y: translateY
+    };
+  }
+  function resolveTranslateLength(value, referenceSize) {
+    if (!value) {
+      return 0;
+    }
+    const numeric = parseFloat(value);
+    if (!Number.isFinite(numeric)) {
+      return 0;
+    }
+    return value.endsWith("%") ? numeric / 100 * referenceSize : numeric;
+  }
 
   // node_modules/@base-ui/react/tabs/panel/TabsPanel.mjs
   var React163 = __toESM(require_react(), 1);
+
+  // node_modules/@base-ui/react/tabs/panel/TabsPanelDataAttributes.mjs
+  var index2 = "data-index";
+  var startingStyle3 = TransitionStatusDataAttributes_exports.startingStyle;
+  var endingStyle3 = TransitionStatusDataAttributes_exports.endingStyle;
+
+  // node_modules/@base-ui/react/tabs/panel/TabsPanel.mjs
   var stateAttributesMapping7 = {
     ...tabsStateAttributesMapping,
     ...transitionStatusMapping
@@ -26510,14 +27109,14 @@ var wp;
     const id = useBaseUiId();
     const {
       ref: listItemRef,
-      index: index2
+      index: index3
     } = useCompositeListItem();
-    const open = value === selectedValue;
+    const open3 = value === selectedValue;
     const {
       mounted,
       transitionStatus,
       setMounted
-    } = useTransitionStatus(open);
+    } = useTransitionStatus(open3);
     const hidden = !mounted;
     const correspondingTabId = getTabIdByPanelValue(value);
     const state2 = {
@@ -26535,18 +27134,18 @@ var wp;
         hidden,
         id,
         role: "tabpanel",
-        tabIndex: open ? 0 : -1,
-        inert: inertValue(!open),
+        tabIndex: open3 ? 0 : -1,
+        inert: inertValue(!open3),
         // Computed key: a plain literal key fails the DOM-props excess property check.
-        ["data-index"]: index2
+        [index2]: index3
       }, elementProps],
       stateAttributesMapping: stateAttributesMapping7
     });
     useOpenChangeComplete({
-      open,
+      open: open3,
       ref: panelRef,
       onComplete() {
-        if (!open) {
+        if (!open3) {
           setMounted(false);
         }
       }
@@ -26729,7 +27328,7 @@ var wp;
   }
   function createInitialState2(initialState, triggerElements, floatingId, nested = false) {
     const state2 = {
-      ...createInitialPopupStoreState(),
+      ...createInitialPopupStoreState(triggerElements, floatingId, nested),
       disabled: false,
       instantType: void 0,
       isInstantPhase: false,
@@ -26741,7 +27340,6 @@ var wp;
       adaptiveOrigin: void 0,
       ...initialState
     };
-    state2.floatingRootContext = createPopupFloatingRootContext(triggerElements, floatingId, nested);
     return state2;
   }
   function createInitialContext2(triggerElements) {
@@ -26781,7 +27379,7 @@ var wp;
     store4.useContextCallback("onOpenChange", onOpenChange);
     store4.useContextCallback("onOpenChangeComplete", onOpenChangeComplete);
     const openState = store4.useState("open");
-    const open = !disabled2 && openState;
+    const open3 = !disabled2 && openState;
     const activeTriggerId = store4.useState("activeTriggerId");
     const mounted = store4.useState("mounted");
     const payload = store4.useState("payload");
@@ -26796,7 +27394,7 @@ var wp;
     const {
       forceUnmount,
       transitionStatus
-    } = useOpenStateTransitions(open, store4);
+    } = useOpenStateTransitions(open3, store4);
     const isInstantPhase = store4.useState("isInstantPhase");
     const instantType = store4.useState("instantType");
     const lastOpenChangeReason = store4.useState("lastOpenChangeReason");
@@ -26818,17 +27416,17 @@ var wp;
       }
     }, [transitionStatus, isInstantPhase, lastOpenChangeReason, instantType, store4]);
     useIsoLayoutEffect(() => {
-      if (open) {
+      if (open3) {
         if (activeTriggerId == null) {
           store4.set("payload", void 0);
         }
       }
-    }, [store4, activeTriggerId, open]);
+    }, [store4, activeTriggerId, open3]);
     React167.useImperativeHandle(actionsRef, () => ({
       unmount: forceUnmount,
       close: () => store4.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction))
     }), [forceUnmount, store4]);
-    const shouldRenderInteractions = open || mounted || !disabled2 && trackCursorAxis !== "none";
+    const shouldRenderInteractions = open3 || mounted || !disabled2 && trackCursorAxis !== "none";
     return /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(TooltipRootContext.Provider, {
       value: store4,
       children: [handle && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(PopupHandleAttachment, {
@@ -26936,7 +27534,6 @@ var wp;
     const isOpenedByThisTrigger = store4.useState("isOpenedByTrigger", thisTriggerId);
     const floatingRootContext = store4.useState("floatingRootContext");
     const triggerElementRef = React169.useRef(null);
-    const delayWithDefault = delay ?? OPEN_DELAY;
     const closeDelayWithDefault = closeDelay ?? 0;
     const {
       registerTrigger,
@@ -26948,6 +27545,7 @@ var wp;
     });
     const providerDelay = useTooltipProviderContext();
     const {
+      activeIdRef,
       delayRef,
       isInstantPhase,
       hasProvider
@@ -26965,10 +27563,10 @@ var wp;
     const nestedTriggerOpenTimeout = useTimeout();
     const pointerTypeRef = React169.useRef(void 0);
     function getOpenDelay() {
-      if (!hasProvider) {
-        return delayWithDefault;
+      if (hasProvider && activeIdRef.current != null) {
+        return 0;
       }
-      return getDelay(delayRef.current, "open") === 0 ? 0 : delay ?? providerDelay ?? OPEN_DELAY;
+      return delay ?? providerDelay ?? OPEN_DELAY;
     }
     function isEnabledNestedTriggerTarget(target) {
       const triggerEl = triggerElementRef.current;
@@ -27027,7 +27625,7 @@ var wp;
       }
       if (wasNestedTriggerHovered && !nestedTriggerHovered && targetInsideTrigger && !disabledRef.current && !store4.select("open") && triggerEl && // Match the hover hook's non-strict mouse fallback for mouse-only event sequences.
       isMouseLikePointerType(pointerTypeRef.current)) {
-        const open = () => {
+        const open3 = () => {
           if (!isNestedTriggerHoveredRef.current && !disabledRef.current && !store4.select("open")) {
             store4.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerHover, event, triggerEl));
           }
@@ -27035,9 +27633,9 @@ var wp;
         const openDelay = getOpenDelay();
         if (openDelay === 0) {
           nestedTriggerOpenTimeout.clear();
-          open();
+          open3();
         } else {
-          nestedTriggerOpenTimeout.start(openDelay, open);
+          nestedTriggerOpenTimeout.start(openDelay, open3);
         }
       }
     };
@@ -27079,7 +27677,7 @@ var wp;
           }
         },
         id: thisTriggerId,
-        "data-trigger-disabled": disabled2 ? "" : void 0,
+        [triggerDisabled]: disabled2 ? "" : void 0,
         [TOOLTIP_TRIGGER_IDENTIFIER]: disabled2 ? void 0 : ""
       }, elementProps],
       stateAttributesMapping: triggerOpenStateMapping2
@@ -27164,7 +27762,7 @@ var wp;
     } = componentProps;
     const store4 = useTooltipRootContext();
     const keepMounted = useTooltipPortalContext();
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const mounted = store4.useState("mounted");
     const trackCursorAxis = store4.useState("trackCursorAxis");
     const disableHoverablePopup = store4.useState("disableHoverablePopup");
@@ -27191,19 +27789,19 @@ var wp;
       adaptiveOrigin: adaptiveOrigin2
     });
     const state2 = React173.useMemo(() => ({
-      open,
+      open: open3,
       side: positioning.side,
       align: positioning.align,
       anchorHidden: positioning.anchorHidden,
       instant: trackCursorAxis !== "none" ? "tracking-cursor" : instantType
-    }), [open, positioning.side, positioning.align, positioning.anchorHidden, trackCursorAxis, instantType]);
+    }), [open3, positioning.side, positioning.align, positioning.anchorHidden, trackCursorAxis, instantType]);
     const element = usePositioner(componentProps, state2, {
       styles: positioning.positionerStyles,
       transitionStatus,
       props: elementProps,
       refs: [forwardedRef, store4.useStateSetter("positionerElement")],
       hidden: !mounted,
-      inert: !open || trackCursorAxis === "both" || disableHoverablePopup
+      inert: !open3 || trackCursorAxis === "both" || disableHoverablePopup
     });
     return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(TooltipPositionerContext.Provider, {
       value: positioning,
@@ -27226,7 +27824,7 @@ var wp;
       side,
       align
     } = useTooltipPositionerContext();
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const instantType = store4.useState("instantType");
     const transitionStatus = store4.useState("transitionStatus");
     const popupProps = store4.useState("popupProps");
@@ -27234,10 +27832,10 @@ var wp;
     const disabled2 = store4.useState("disabled");
     const closeDelay = store4.useState("closeDelay");
     useOpenChangeComplete({
-      open,
+      open: open3,
       ref: store4.context.popupRef,
       onComplete() {
-        if (open) {
+        if (open3) {
           store4.context.onOpenChangeComplete?.(true);
         }
       }
@@ -27248,7 +27846,7 @@ var wp;
     });
     const setPopupElement = store4.useStateSetter("popupElement");
     const state2 = {
-      open,
+      open: open3,
       side,
       align,
       instant: instantType,
@@ -27281,10 +27879,10 @@ var wp;
       arrowUncentered,
       arrowStyles
     } = useTooltipPositionerContext();
-    const open = store4.useState("open");
+    const open3 = store4.useState("open");
     const instantType = store4.useState("instantType");
     const state2 = {
-      open,
+      open: open3,
       side,
       align,
       uncentered: arrowUncentered,
@@ -28444,7 +29042,7 @@ var wp;
     );
     const resolvedLabelId = hasLabel ? labelId ?? generatedLabelId : void 0;
     const resolvedDescriptionIds = descriptionIds.map(
-      (descriptionId, index2) => descriptionId ?? `${generatedDescriptionId}-${index2}`
+      (descriptionId, index3) => descriptionId ?? `${generatedDescriptionId}-${index3}`
     );
     const itemDescribedBy = Array.from(
       /* @__PURE__ */ new Set([
@@ -30186,7 +30784,7 @@ var wp;
       defaultOpen ?? false
     );
     const [trigger, setTrigger] = (0, import_element45.useState)(null);
-    const open = openProp ?? uncontrolledOpen;
+    const open3 = openProp ?? uncontrolledOpen;
     const handleIframePointerDown = (0, import_element45.useCallback)(
       (event) => {
         if (trigger && !isInsideCurrentMenu(event, trigger)) {
@@ -30196,7 +30794,7 @@ var wp;
       [resolvedActionsRef, trigger]
     );
     useCloseOnIframePointerDown({
-      enabled: open && modal === false && !disabled2 && trigger !== null,
+      enabled: open3 && modal === false && !disabled2 && trigger !== null,
       onPointerDown: handleIframePointerDown,
       ownerDocument: trigger?.ownerDocument ?? null
     });
@@ -31514,8 +32112,8 @@ var wp;
         const width = options?.width ? String(options.width) : args.defaultWidth;
         valuesArray = args.values[width] || args.values[defaultWidth];
       }
-      const index2 = args.argumentCallback ? args.argumentCallback(value) : value;
-      return valuesArray[index2];
+      const index3 = args.argumentCallback ? args.argumentCallback(value) : value;
+      return valuesArray[index3];
     };
   }
 
@@ -31835,7 +32433,7 @@ var wp;
       defaultMatchWidth: "wide",
       parsePatterns: parseQuarterPatterns,
       defaultParseWidth: "any",
-      valueCallback: (index2) => index2 + 1
+      valueCallback: (index3) => index3 + 1
     }),
     month: buildMatchFn({
       matchPatterns: matchMonthPatterns,
@@ -34532,7 +35130,7 @@ var wp;
     if (dateStr.length > 0 && notWhitespaceRegExp.test(dateStr)) {
       return invalidDate();
     }
-    const uniquePrioritySetters = setters.map((setter) => setter.priority).sort((a2, b2) => b2 - a2).filter((priority2, index2, array) => array.indexOf(priority2) === index2).map(
+    const uniquePrioritySetters = setters.map((setter) => setter.priority).sort((a2, b2) => b2 - a2).filter((priority2, index3, array) => array.indexOf(priority2) === index3).map(
       (priority2) => setters.filter((setter) => setter.priority === priority2).sort((a2, b2) => b2.subPriority - a2.subPriority)
     ).map((setterArray) => setterArray[0]);
     let date = toDate(referenceDate, options?.in);
@@ -36136,8 +36734,8 @@ var wp;
         if (navEl) {
           navEl.style.zIndex = "1";
         }
-        currentMonthEls.forEach((currentMonthEl, index2) => {
-          const previousMonthEl = previousMonthEls[index2];
+        currentMonthEls.forEach((currentMonthEl, index3) => {
+          const previousMonthEl = previousMonthEls[index3];
           if (!previousMonthEl) {
             return;
           }
@@ -38813,7 +39411,7 @@ var wp;
         ).map((element) => element.id).filter((id) => registeredDescriptionIds.has(id));
         setOrderedDescriptionIds((currentDescriptionIds) => {
           if (currentDescriptionIds.length === nextDescriptionIds.length && currentDescriptionIds.every(
-            (id, index2) => id === nextDescriptionIds[index2]
+            (id, index3) => id === nextDescriptionIds[index3]
           )) {
             return currentDescriptionIds;
           }
@@ -42263,7 +42861,7 @@ var wp;
     items,
     chipsContent,
     searchPlaceholder = (0, import_i18n19.__)("Search"),
-    popupWidth,
+    popupWidth: popupWidth2,
     showClearButton = true,
     clearButtonLabel = (0, import_i18n19.__)("Clear all"),
     "aria-label": ariaLabel,
@@ -42347,7 +42945,7 @@ var wp;
               ]
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(Popup3, { width: popupWidth, children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(Popup3, { width: popupWidth2, children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
             SearchableResults,
             {
               emptyContent,
@@ -44622,8 +45220,8 @@ var wp;
     return currentFrame.length > 0;
   }
   function findIndex2(arr, test) {
-    const index2 = arr.findIndex(test);
-    return index2 < 0 ? arr.length : index2;
+    const index3 = arr.findIndex(test);
+    return index3 < 0 ? arr.length : index3;
   }
   var colors = {
     transparent: 0,
@@ -47270,10 +47868,10 @@ var wp;
   var { MediaUploadModal } = unlock4(import_media_utils.privateApis);
   function AnimatedMediaItem({
     children,
-    index: index2,
+    index: index3,
     className
   }) {
-    const ref = useMovingAnimation(index2);
+    const ref = useMovingAnimation(index3);
     return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)("div", { ref, className, children });
   }
   function normalizeValue(value) {
@@ -47315,7 +47913,7 @@ var wp;
     );
   }
   function MediaPickerButton({
-    open,
+    open: open3,
     children,
     label,
     showTooltip = false,
@@ -47334,7 +47932,7 @@ var wp;
         tabIndex: 0,
         onClick: () => {
           if (!isUploading) {
-            open();
+            open3();
           }
         },
         onKeyDown: (event) => {
@@ -47343,7 +47941,7 @@ var wp;
           }
           if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
-            open();
+            open3();
           }
         },
         "aria-label": label,
@@ -47384,7 +47982,7 @@ var wp;
   }
   function MoveButtons({
     itemId,
-    index: index2,
+    index: index3,
     totalItems,
     isUploading,
     moveItem,
@@ -47399,7 +47997,7 @@ var wp;
           icon: isHorizontal ? chevron_left_default : chevron_up_default,
           label: isHorizontal ? (0, import_i18n28.__)("Move left") : (0, import_i18n28.__)("Move up"),
           size: "small",
-          disabled: isUploading || index2 === 0,
+          disabled: isUploading || index3 === 0,
           accessibleWhenDisabled: true,
           tooltipPosition: "top",
           onClick: (event) => {
@@ -47415,7 +48013,7 @@ var wp;
           icon: isHorizontal ? chevron_right_default : chevron_down_default,
           label: isHorizontal ? (0, import_i18n28.__)("Move right") : (0, import_i18n28.__)("Move down"),
           size: "small",
-          disabled: isUploading || index2 === totalItems - 1,
+          disabled: isUploading || index3 === totalItems - 1,
           accessibleWhenDisabled: true,
           tooltipPosition: "top",
           onClick: (event) => {
@@ -47453,7 +48051,7 @@ var wp;
     multiple,
     removeItem: removeItem2,
     moveItem,
-    open,
+    open: open3,
     onFilesDrop,
     isUploading,
     setTargetItemId
@@ -47467,14 +48065,14 @@ var wp;
           "is-empty": !allItems?.length
         }),
         children: [
-          allItems?.map((attachment, index2) => {
+          allItems?.map((attachment, index3) => {
             const hasPreviewImage = attachment.mime_type?.startsWith("image");
             const isBlob = (0, import_blob.isBlobURL)(attachment.source_url);
             const attachmentNumericId = attachment.id;
             return /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(
               AnimatedMediaItem,
               {
-                index: index2,
+                index: index3,
                 className: clsx_default("fields__media-edit-expanded-item", {
                   "has-preview-image": hasPreviewImage
                 }),
@@ -47484,7 +48082,7 @@ var wp;
                     {
                       open: () => {
                         setTargetItemId(attachmentNumericId);
-                        open();
+                        open3();
                       },
                       label: !isBlob ? (0, import_i18n28.sprintf)(
                         /* translators: %s: The title of the media item. */
@@ -47526,7 +48124,7 @@ var wp;
                           MoveButtons,
                           {
                             itemId: attachmentNumericId,
-                            index: index2,
+                            index: index3,
                             totalItems: allItems.length,
                             isUploading,
                             moveItem,
@@ -47562,7 +48160,7 @@ var wp;
             {
               open: () => {
                 setTargetItemId(void 0);
-                open();
+                open3();
               },
               label: addButtonLabel,
               onFilesDrop,
@@ -47579,7 +48177,7 @@ var wp;
     multiple,
     removeItem: removeItem2,
     moveItem,
-    open,
+    open: open3,
     onFilesDrop,
     isUploading,
     setTargetItemId
@@ -47591,14 +48189,14 @@ var wp;
           className: clsx_default("fields__media-edit-compact-group", {
             "is-single": allItems.length === 1
           }),
-          children: /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(import_components4.__experimentalVStack, { spacing: 0, children: allItems.map((attachment, index2) => {
+          children: /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(import_components4.__experimentalVStack, { spacing: 0, children: allItems.map((attachment, index3) => {
             const isBlob = (0, import_blob.isBlobURL)(attachment.source_url);
             const showMoveButtons = multiple && allItems.length > 1;
             const attachmentNumericId = attachment.id;
             return /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(
               AnimatedMediaItem,
               {
-                index: index2,
+                index: index3,
                 className: "fields__media-edit-compact",
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
@@ -47608,7 +48206,7 @@ var wp;
                         setTargetItemId(
                           attachmentNumericId
                         );
-                        open();
+                        open3();
                       },
                       label: (0, import_i18n28.__)("Replace"),
                       showTooltip: true,
@@ -47643,7 +48241,7 @@ var wp;
                           MoveButtons,
                           {
                             itemId: attachmentNumericId,
-                            index: index2,
+                            index: index3,
                             totalItems: allItems.length,
                             isUploading,
                             moveItem,
@@ -47683,7 +48281,7 @@ var wp;
         {
           open: () => {
             setTargetItemId(void 0);
-            open();
+            open3();
           },
           label: addButtonLabel,
           onFilesDrop,
@@ -47791,11 +48389,11 @@ var wp;
           return;
         }
         const currentIds = orderedAttachments.map((a2) => a2.id);
-        const index2 = currentIds.indexOf(itemId);
-        const newIndex = direction === "up" ? index2 - 1 : index2 + 1;
-        [currentIds[index2], currentIds[newIndex]] = [
+        const index3 = currentIds.indexOf(itemId);
+        const newIndex = direction === "up" ? index3 - 1 : index3 + 1;
+        [currentIds[index3], currentIds[newIndex]] = [
           currentIds[newIndex],
-          currentIds[index2]
+          currentIds[index3]
         ];
         onChangeControl(currentIds);
       },
@@ -47972,8 +48570,8 @@ var wp;
           value: targetItemId !== void 0 ? targetItemId : value,
           multiple: multiple && targetItemId === void 0,
           title: field.label,
-          render: ({ open }) => {
-            openModalRef.current = open;
+          render: ({ open: open3 }) => {
+            openModalRef.current = open3;
             const AttachmentsComponent = isExpanded ? ExpandedMediaEditAttachments : CompactMediaEditAttachments;
             return /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(import_components4.__experimentalVStack, { spacing: 2, children: [
               field.label && (hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime245.jsx)("legend", {}), children: field.label }) : /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
@@ -48183,7 +48781,7 @@ var wp;
 
   // packages/fields/build-module/fields/template/template-edit.mjs
   var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY5 = [];
+  var EMPTY_ARRAY4 = [];
   function ClassicTemplateEdit({
     data,
     field,
@@ -48241,7 +48839,7 @@ var wp;
             per_page: -1,
             post_type: postType2
           }
-        ) ?? EMPTY_ARRAY5;
+        ) ?? EMPTY_ARRAY4;
         const { getHomePage, getPostsPageId } = unlock4(
           select9(import_core_data9.store)
         );
@@ -51120,14 +51718,14 @@ var wp;
   // packages/fields/build-module/components/create-template-part-modal/utils.mjs
   var import_data26 = __toESM(require_data(), 1);
   var import_core_data26 = __toESM(require_core_data(), 1);
-  var EMPTY_ARRAY6 = [];
+  var EMPTY_ARRAY5 = [];
   function useExistingTemplateParts() {
     return (0, import_data26.useSelect)(
       (select9) => select9(import_core_data26.store).getEntityRecords(
         "postType",
         "wp_template_part",
         { per_page: -1 }
-      ) ?? EMPTY_ARRAY6,
+      ) ?? EMPTY_ARRAY5,
       []
     );
   }
@@ -52392,7 +52990,7 @@ var wp;
   }) {
     const id = getItemId2(item);
     const isInSelectionArray = selection.includes(id);
-    const checked = !disabled2 && isInSelectionArray;
+    const checked2 = !disabled2 && isInSelectionArray;
     const selectionLabel = titleField2?.getValue?.({ item }) || (0, import_i18n92.__)("(no title)");
     return /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
       import_components24.CheckboxControl,
@@ -52400,7 +52998,7 @@ var wp;
         className: SELECTION_CHECKBOX_CLASS,
         "aria-label": selectionLabel,
         "aria-disabled": disabled2,
-        checked,
+        checked: checked2,
         onChange: () => {
           if (disabled2) {
             return;
@@ -52847,7 +53445,7 @@ var wp;
       return header;
     }
     const visibleFieldIds = getTableColumns(view, fields2);
-    const index2 = visibleFieldIds.indexOf(fieldId);
+    const index3 = visibleFieldIds.indexOf(fieldId);
     const hiddenFields = getHideableFields(view, fields2).filter(
       (f2) => !visibleFieldIds.includes(f2.id)
     );
@@ -52927,13 +53525,13 @@ var wp;
             menu_exports.Item,
             {
               prefix: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_exports.PrefixIcon, { icon: arrow_left_default }),
-              disabled: isRtl ? index2 >= visibleFieldIds.length - 1 : index2 < 1,
+              disabled: isRtl ? index3 >= visibleFieldIds.length - 1 : index3 < 1,
               onClick: () => {
-                const targetIndex = isRtl ? index2 + 1 : index2 - 1;
+                const targetIndex = isRtl ? index3 + 1 : index3 - 1;
                 const newFields = [
                   ...visibleFieldIds
                 ];
-                newFields.splice(index2, 1);
+                newFields.splice(index3, 1);
                 newFields.splice(
                   targetIndex,
                   0,
@@ -52951,13 +53549,13 @@ var wp;
             menu_exports.Item,
             {
               prefix: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_exports.PrefixIcon, { icon: arrow_right_default }),
-              disabled: isRtl ? index2 < 1 : index2 >= visibleFieldIds.length - 1,
+              disabled: isRtl ? index3 < 1 : index3 >= visibleFieldIds.length - 1,
               onClick: () => {
-                const targetIndex = isRtl ? index2 - 1 : index2 + 1;
+                const targetIndex = isRtl ? index3 - 1 : index3 + 1;
                 const newFields = [
                   ...visibleFieldIds
                 ];
-                newFields.splice(index2, 1);
+                newFields.splice(index3, 1);
                 newFields.splice(
                   targetIndex,
                   0,
@@ -52974,7 +53572,7 @@ var wp;
           canInsertLeft && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(menu_exports.SubmenuRoot, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_exports.SubmenuTrigger, { children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n96.__)("Insert left") }) }),
             /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_exports.Popup, { children: hiddenFields.map((hiddenField) => {
-              const insertIndex = isRtl ? index2 + 1 : index2;
+              const insertIndex = isRtl ? index3 + 1 : index3;
               return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
                 menu_exports.Item,
                 {
@@ -53002,7 +53600,7 @@ var wp;
           canInsertRight && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(menu_exports.SubmenuRoot, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_exports.SubmenuTrigger, { children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n96.__)("Insert right") }) }),
             /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(menu_exports.Popup, { children: hiddenFields.map((hiddenField) => {
-              const insertIndex = isRtl ? index2 : index2 + 1;
+              const insertIndex = isRtl ? index3 : index3 + 1;
               return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
                 menu_exports.Item,
                 {
@@ -53302,11 +53900,11 @@ var wp;
     const selectedIds = new Set(selection);
     let closestId = null;
     let closestDistance = Infinity;
-    orderedIds.forEach((id, index2) => {
+    orderedIds.forEach((id, index3) => {
       if (!selectedIds.has(id)) {
         return;
       }
-      const distance2 = Math.abs(index2 - targetIndex);
+      const distance2 = Math.abs(index3 - targetIndex);
       if (distance2 < closestDistance) {
         closestDistance = distance2;
         closestId = id;
@@ -53789,11 +54387,11 @@ var wp;
     const { showTitle = true, showMedia = true, showDescription = true } = view;
     const hasPrimaryColumn = titleField2 && showTitle || mediaField && showMedia || descriptionField3 && showDescription;
     const columns = getTableColumns(view, fields2);
-    const headerMenuRef = (column, index2) => (node) => {
+    const headerMenuRef = (column, index3) => (node) => {
       if (node) {
         headerMenuRefs.current.set(column, {
           node,
-          fallback: columns[index2 > 0 ? index2 - 1 : 1]
+          fallback: columns[index3 > 0 ? index3 - 1 : 1]
         });
       } else {
         headerMenuRefs.current.delete(column);
@@ -53838,13 +54436,13 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)("colgroup", { children: [
               hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("col", { className: "dataviews-view-table__col-checkbox" }),
               hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("col", { className: "dataviews-view-table__col-first-data" }),
-              columns.map((column, index2) => /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+              columns.map((column, index3) => /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
                 "col",
                 {
                   className: clsx_default(
                     `dataviews-view-table__col-${column}`,
                     {
-                      "dataviews-view-table__col-expand": !hasPrimaryColumn && index2 === columns.length - 1
+                      "dataviews-view-table__col-expand": !hasPrimaryColumn && index3 === columns.length - 1
                     }
                   )
                 },
@@ -53905,7 +54503,7 @@ var wp;
                       canInsertRight: isRtl ? false : view.layout?.enableMoving ?? true
                     }
                   ) }),
-                  columns.map((column, index2) => {
+                  columns.map((column, index3) => {
                     const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
                     const field = fields2.find(
                       (f2) => f2.id === column
@@ -53929,7 +54527,7 @@ var wp;
                         children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
                           column_header_menu_default,
                           {
-                            ref: headerMenuRef(column, index2),
+                            ref: headerMenuRef(column, index3),
                             fieldId: column,
                             view,
                             fields: fields2,
@@ -53976,8 +54574,8 @@ var wp;
                     )
                   }
                 ) }),
-                groupItems.map((item, index2) => {
-                  const id = getItemId2(item) || index2.toString();
+                groupItems.map((item, index3) => {
+                  const id = getItemId2(item) || index3.toString();
                   return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
                     TableRow,
                     {
@@ -54005,8 +54603,8 @@ var wp;
                   );
                 })
               ] }, `group-${groupName}`)
-            ) : /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("tbody", { children: hasData && data.map((item, index2) => {
-              const id = getItemId2(item) || index2.toString();
+            ) : /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("tbody", { children: hasData && data.map((item, index3) => {
+              const id = getItemId2(item) || index3.toString();
               return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
                 TableRow,
                 {
@@ -54029,7 +54627,7 @@ var wp;
                   renderItemLink,
                   isItemClickable: isItemClickable2,
                   isActionsColumnSticky: !isHorizontalScrollEnd,
-                  posinset: isInfiniteScroll ? index2 + 1 : void 0
+                  posinset: isInfiniteScroll ? index3 + 1 : void 0
                 },
                 getItemId2(item)
               );
@@ -54464,7 +55062,7 @@ var wp;
             inert,
             children: [
               Array.from({ length: placeholdersNeeded }).map(
-                (_, index2) => /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
+                (_, index3) => /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
                   import_components31.Composite.Item,
                   {
                     render: (props) => /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
@@ -54479,7 +55077,7 @@ var wp;
                     "aria-hidden": true,
                     tabIndex: -1
                   },
-                  `placeholder-${index2}`
+                  `placeholder-${index3}`
                 )
               ),
               data.map((item) => {
@@ -55253,7 +55851,7 @@ var wp;
           ...compositeProps,
           className: listClassName,
           role: view.infiniteScrollEnabled ? "feed" : "grid",
-          children: data.map((item, index2) => {
+          children: data.map((item, index3) => {
             const id = generateCompositeItemIdPrefix(item);
             return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
               ListItem,
@@ -55271,7 +55869,7 @@ var wp;
                 descriptionField: descriptionField3,
                 otherFields,
                 onDropdownTriggerKeyDown,
-                posinset: view.infiniteScrollEnabled ? index2 + 1 : void 0
+                posinset: view.infiniteScrollEnabled ? index3 + 1 : void 0
               },
               id
             );
@@ -55517,7 +56115,7 @@ var wp;
       (field) => field.id === view.descriptionField
     );
     const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f2) => fieldId === f2.id)).filter(isDefined3);
-    return data.map((item, index2) => {
+    return data.map((item, index3) => {
       return /* @__PURE__ */ (0, import_react58.createElement)(
         activity_item_default,
         {
@@ -55528,7 +56126,7 @@ var wp;
           titleField: titleField2,
           descriptionField: descriptionField3,
           otherFields,
-          posinset: view.infiniteScrollEnabled ? index2 + 1 : void 0
+          posinset: view.infiniteScrollEnabled ? index3 + 1 : void 0
         }
       );
     });
@@ -55731,7 +56329,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
   var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY7 = [];
+  var EMPTY_ARRAY6 = [];
   function useIsMultiselectPicker(actions2) {
     return (0, import_element167.useMemo)(() => {
       return !!actions2?.length && actions2?.every((action) => action.supportsBulk);
@@ -55833,7 +56431,7 @@ var wp;
       selection,
       onChangeSelection,
       getItemId: getItemId2,
-      actions: actions2 = EMPTY_ARRAY7,
+      actions: actions2 = EMPTY_ARRAY6,
       paginationInfo,
       view
     } = (0, import_element167.useContext)(dataviews_context_default);
@@ -55880,7 +56478,7 @@ var wp;
       data,
       selection,
       getItemId: getItemId2,
-      actions: actions2 = EMPTY_ARRAY7
+      actions: actions2 = EMPTY_ARRAY6
     } = (0, import_element167.useContext)(dataviews_context_default);
     const selectedItems = (0, import_element167.useMemo)(
       () => data.filter((item) => selection.includes(getItemId2(item))),
@@ -55906,7 +56504,7 @@ var wp;
   }
   function DataViewsPickerFooter() {
     const {
-      actions: actions2 = EMPTY_ARRAY7,
+      actions: actions2 = EMPTY_ARRAY6,
       paginationInfo,
       view
     } = (0, import_element167.useContext)(dataviews_context_default);
@@ -56291,7 +56889,7 @@ var wp;
             "aria-label": itemListLabel,
             children: [
               Array.from({ length: placeholdersNeeded }).map(
-                (_, index2) => /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
+                (_, index3) => /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
                   import_components37.Composite.Item,
                   {
                     render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
@@ -56307,7 +56905,7 @@ var wp;
                     tabIndex: -1,
                     className: "dataviews-view-picker-grid__card dataviews-view-picker-grid__placeholder"
                   },
-                  `placeholder-${index2}`
+                  `placeholder-${index3}`
                 )
               ),
               data.map((item) => {
@@ -56566,11 +57164,11 @@ var wp;
     const { showTitle = true, showMedia = true, showDescription = true } = view;
     const hasPrimaryColumn = titleField2 && showTitle || mediaField && showMedia || descriptionField3 && showDescription;
     const columns = getTableColumns(view, fields2);
-    const headerMenuRef = (column, index2) => (node) => {
+    const headerMenuRef = (column, index3) => (node) => {
       if (node) {
         headerMenuRefs.current.set(column, {
           node,
-          fallback: columns[index2 > 0 ? index2 - 1 : 1]
+          fallback: columns[index3 > 0 ? index3 - 1 : 1]
         });
       } else {
         headerMenuRefs.current.delete(column);
@@ -56627,7 +57225,7 @@ var wp;
                       canMove: false
                     }
                   ) }),
-                  columns.map((column, index2) => {
+                  columns.map((column, index3) => {
                     const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
                     return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
                       "th",
@@ -56643,7 +57241,7 @@ var wp;
                         children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
                           column_header_menu_default,
                           {
-                            ref: headerMenuRef(column, index2),
+                            ref: headerMenuRef(column, index3),
                             fieldId: column,
                             view,
                             fields: fields2,
@@ -56689,8 +57287,8 @@ var wp;
                         )
                       }
                     ),
-                    groupItems.map((item, index2) => {
-                      const id = getItemId2(item) || index2.toString();
+                    groupItems.map((item, index3) => {
+                      const id = getItemId2(item) || index3.toString();
                       return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
                         TableRow2,
                         {
@@ -56721,9 +57319,9 @@ var wp;
                 render: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("tbody", { role: "presentation" }),
                 virtualFocus: true,
                 orientation: "vertical",
-                children: hasData && data.map((item, index2) => {
+                children: hasData && data.map((item, index3) => {
                   const itemId = getItemId2(item);
-                  const id = itemId || index2.toString();
+                  const id = itemId || index3.toString();
                   const posinset = item.position;
                   return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
                     TableRow2,
@@ -57162,10 +57760,10 @@ var wp;
       return context.containerWidth >= size4.breakpoint;
     });
     const layoutPreviewSize = view.layout?.previewSize ?? 230;
-    const previewSizeToUse = breakValues.map((size4, index2) => ({ ...size4, index: index2 })).filter((size4) => size4.value <= layoutPreviewSize).sort((a2, b2) => b2.value - a2.value)[0]?.index ?? 0;
-    const marks = breakValues.map((size4, index2) => {
+    const previewSizeToUse = breakValues.map((size4, index3) => ({ ...size4, index: index3 })).filter((size4) => size4.value <= layoutPreviewSize).sort((a2, b2) => b2.value - a2.value)[0]?.index ?? 0;
+    const marks = breakValues.map((size4, index3) => {
       return {
-        value: index2
+        value: index3
       };
     });
     return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(
@@ -57562,7 +58160,7 @@ var wp;
     if (/text|search|password|tel|url/i.test(element.type)) element.setSelectionRange(...args);
   }
   function sortBasedOnDOMPosition(items, getElement) {
-    const pairs = items.map((item, index2) => [index2, item]);
+    const pairs = items.map((item, index3) => [index3, item]);
     let isOrderDifferent = false;
     pairs.sort(([indexA, a2], [indexB, b2]) => {
       const elementA = getElement(a2);
@@ -59229,22 +59827,22 @@ If there's a particular need for this, please submit a feature request at https:
         let prevItem;
         privateStore.setState(key, (items2) => {
           const ids = !!cache.ids || items2.length >= itemIdCacheThreshold && !wasKnown ? getCachedItemIds(items2, cache) : void 0;
-          const index2 = ids && !ids.has(item.id) ? -1 : items2.findIndex(({ id }) => id === item.id);
+          const index3 = ids && !ids.has(item.id) ? -1 : items2.findIndex(({ id }) => id === item.id);
           const nextItems = items2.slice();
-          if (index2 !== -1) {
-            prevItem = items2[index2];
+          if (index3 !== -1) {
+            prevItem = items2[index3];
             const nextItem = {
               ...prevItem,
               ...item
             };
-            nextItems[index2] = nextItem;
+            nextItems[index3] = nextItem;
             registeredItems2?.set(item.id, nextItem);
           } else {
             nextItems.push(item);
             registeredItems2?.set(item.id, item);
             ids?.add(item.id);
           }
-          if (cache.ids || index2 === -1 && nextItems.length >= itemIdCacheThreshold) setCachedItemIds(nextItems, cache, ids);
+          if (cache.ids || index3 === -1 && nextItems.length >= itemIdCacheThreshold) setCachedItemIds(nextItems, cache, ids);
           return nextItems;
         });
         const unmergeItem = () => {
@@ -59260,10 +59858,10 @@ If there's a particular need for this, please submit a feature request at https:
               if (cache.ids) setCachedItemIds(nextItems2, cache, ids);
               return nextItems2;
             }
-            const index2 = items2.findIndex(({ id }) => id === item.id);
-            if (index2 === -1) return items2;
+            const index3 = items2.findIndex(({ id }) => id === item.id);
+            if (index3 === -1) return items2;
             const nextItems = items2.slice();
-            nextItems[index2] = prevItem;
+            nextItems[index3] = prevItem;
             if (cache.ids) setCachedItemIds(nextItems, cache, ids);
             return nextItems;
           });
@@ -59324,11 +59922,11 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
   function flipItems(items, activeId, shouldInsertNullItem = false) {
-    const index2 = items.findIndex((item) => item.id === activeId);
+    const index3 = items.findIndex((item) => item.id === activeId);
     return [
-      ...items.slice(index2 + 1),
+      ...items.slice(index3 + 1),
       ...shouldInsertNullItem ? [NULL_ITEM] : [],
-      ...items.slice(0, index2)
+      ...items.slice(0, index3)
     ];
   }
   var rowMapItemThreshold = 48;
@@ -59794,9 +60392,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function hasSameStoreKeys(keys, otherKeys) {
     if (keys?.length !== otherKeys.length) return false;
-    for (let index2 = 0; index2 < keys.length; index2 += 1) {
-      const key = keys[index2];
-      if (isSameValue2(key, otherKeys[index2])) continue;
+    for (let index3 = 0; index3 < keys.length; index3 += 1) {
+      const key = keys[index3];
+      if (isSameValue2(key, otherKeys[index3])) continue;
       return false;
     }
     return true;
@@ -60605,10 +61203,10 @@ If there's a particular need for this, please submit a feature request at https:
     const delayList = delays.split(",");
     const durationList = durations.split(",");
     let endTime = 0;
-    for (const [index2, name2] of nameList.entries()) {
+    for (const [index3, name2] of nameList.entries()) {
       if (name2.trim() === "none") continue;
-      const delay = parseCSSTime(delayList[index2 % delayList.length]);
-      const duration = parseCSSTime(durationList[index2 % durationList.length]);
+      const delay = parseCSSTime(delayList[index3 % delayList.length]);
+      const duration = parseCSSTime(durationList[index3 % durationList.length]);
       endTime = Math.max(endTime, delay + duration);
     }
     return endTime;
@@ -60627,7 +61225,7 @@ If there's a particular need for this, please submit a feature request at https:
     const ref = (0, import_react69.useRef)(null);
     const id = useId8(props.id);
     const [transition, setTransition] = (0, import_react69.useState)(null);
-    const { open, mounted, animated: animated2, contentElement } = useStoreStateObject(store4, {
+    const { open: open3, mounted, animated: animated2, contentElement } = useStoreStateObject(store4, {
       open: "open",
       mounted: "mounted",
       animated: "animated",
@@ -60652,7 +61250,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [store4]);
     useSafeLayoutEffect(() => {
       if (!animated2) {
-        if (!open) {
+        if (!open3) {
           hasClosedRef.current = true;
           setTransition(null);
         } else if (hasClosedRef.current) {
@@ -60666,12 +61264,12 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       return afterPaint(() => {
-        setTransition(open ? "enter" : mounted ? "leave" : null);
+        setTransition(open3 ? "enter" : mounted ? "leave" : null);
       });
     }, [
       animated2,
       contentElement,
-      open,
+      open3,
       mounted
     ]);
     useSafeLayoutEffect(() => {
@@ -60681,8 +61279,8 @@ If there's a particular need for this, please submit a feature request at https:
       if (!contentElement) return;
       const stopAnimation = () => store4?.setState("animating", false);
       const stopAnimationSync = () => (0, import_react_dom4.flushSync)(stopAnimation);
-      if (transition === "leave" && open) return;
-      if (transition === "enter" && !open) return;
+      if (transition === "leave" && open3) return;
+      if (transition === "enter" && !open3) return;
       if (typeof animated2 === "number") return afterTimeout(animated2, stopAnimationSync);
       const elements2 = [contentElement];
       if (otherElement) elements2.push(otherElement);
@@ -60701,7 +61299,7 @@ If there's a particular need for this, please submit a feature request at https:
       contentElement,
       otherElement,
       otherElementRef,
-      open,
+      open3,
       transition
     ]);
     props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(DialogScopedContextProvider, {
@@ -60718,7 +61316,7 @@ If there's a particular need for this, please submit a feature request at https:
       return styleProp;
     }, [hidden, styleProp]);
     props = {
-      "data-open": open || void 0,
+      "data-open": open3 || void 0,
       "data-enter": transition === "enter" || void 0,
       "data-leave": transition === "leave" || void 0,
       hidden,
@@ -60745,13 +61343,13 @@ If there's a particular need for this, please submit a feature request at https:
     const store4 = props.store || props.disclosure ? mergeStore(props.store, omit2(props.disclosure, ["contentElement", "disclosureElement"])) : void 0;
     throwOnConflictingProps(props, store4);
     const syncState = store4?.getState();
-    const open = defaultValue(props.open, syncState?.open, props.defaultOpen, false);
+    const open3 = defaultValue(props.open, syncState?.open, props.defaultOpen, false);
     const animated2 = defaultValue(props.animated, syncState?.animated, false);
     const initialState = {
-      open,
+      open: open3,
       animated: animated2,
-      animating: !!animated2 && open,
-      mounted: open,
+      animating: !!animated2 && open3,
+      mounted: open3,
       contentElement: defaultValue(syncState?.contentElement, null),
       disclosureElement: defaultValue(syncState?.disclosureElement, null)
     };
@@ -60773,7 +61371,7 @@ If there's a particular need for this, please submit a feature request at https:
       setOpen: (value) => disclosure.setState("open", value),
       show: () => disclosure.setState("open", true),
       hide: () => disclosure.setState("open", false),
-      toggle: () => disclosure.setState("open", (open2) => !open2),
+      toggle: () => disclosure.setState("open", (open4) => !open4),
       stopAnimation: () => disclosure.setState("animating", false),
       setContentElement: (value) => disclosure.setState("contentElement", value),
       setDisclosureElement: (value) => disclosure.setState("disclosureElement", value)
@@ -61119,7 +61717,7 @@ If there's a particular need for this, please submit a feature request at https:
       return state2.activeValue;
     });
     const items = useStoreState(store4, "renderedItems");
-    const open = useStoreState(store4, "open");
+    const open3 = useStoreState(store4, "open");
     const contentElement = useStoreState(store4, "contentElement");
     const placing = useStoreState(store4, "unstable_placing");
     const firstItemAutoSelected = isFirstItemAutoSelected(items, inlineActiveValue, autoSelect);
@@ -61187,7 +61785,7 @@ If there's a particular need for this, please submit a feature request at https:
     const userScrolledRef = (0, import_react72.useRef)(false);
     const isAutoScrollingRef = (0, import_react72.useRef)(false);
     (0, import_react72.useEffect)(() => {
-      if (!open) return;
+      if (!open3) return;
       if (!contentElement) return;
       const scrollingElement = getScrollingElement(contentElement);
       if (!scrollingElement) return;
@@ -61217,7 +61815,7 @@ If there's a particular need for this, please submit a feature request at https:
         scrollingElement.removeEventListener("scroll", onScroll, true);
       };
     }, [
-      open,
+      open3,
       contentElement,
       store4
     ]);
@@ -61228,18 +61826,18 @@ If there's a particular need for this, please submit a feature request at https:
       canAutoSelectRef.current = true;
     }, [storeInputValue]);
     useSafeLayoutEffect(() => {
-      if (autoSelect !== "always" && open) return;
-      canAutoSelectRef.current = open;
-    }, [autoSelect, open]);
+      if (autoSelect !== "always" && open3) return;
+      canAutoSelectRef.current = open3;
+    }, [autoSelect, open3]);
     useSafeLayoutEffect(() => {
-      if (open) return;
+      if (open3) return;
       autoSelectMovedRef.current = void 0;
-    }, [open]);
+    }, [open3]);
     const resetValueOnSelect = useStoreState(store4, "resetValueOnSelect");
     useUpdateEffect(() => {
       const canAutoSelect = canAutoSelectRef.current;
       if (!store4) return;
-      if (!open) return;
+      if (!open3) return;
       if (composingRef.current) return;
       if (!canAutoSelect && (!resetValueOnSelect || userScrolledRef.current)) return;
       const state2 = store4.getState();
@@ -61277,7 +61875,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }, [
       store4,
-      open,
+      open3,
       placing,
       valueUpdated,
       storeInputValue,
@@ -61383,8 +61981,8 @@ If there's a particular need for this, please submit a feature request at https:
       if (!event.repeat) canAutoSelectRef.current = false;
       if (event.defaultPrevented) return;
       if (!store4) return;
-      const { open: open2 } = store4.getState();
-      if (open2 && event.key === "Enter") {
+      const { open: open4 } = store4.getState();
+      if (open4 && event.key === "Enter") {
         event.preventDefault();
         return;
       }
@@ -61392,7 +61990,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (event.altKey) return;
       if (event.shiftKey) return;
       if (event.metaKey) return;
-      if (open2) return;
+      if (open4) return;
       if (event.key === "ArrowUp" || event.key === "ArrowDown") {
         if (showOnKeyPressProp(event)) {
           event.preventDefault();
@@ -61419,13 +62017,13 @@ If there's a particular need for this, please submit a feature request at https:
       if (!name2) return element;
       if (!Array.isArray(selectedValue)) return element;
       if (composite && !compositeElement) return element;
-      return /* @__PURE__ */ (0, import_jsx_runtime310.jsxs)(import_jsx_runtime310.Fragment, { children: [element, selectedValue.map((value, index2) => /* @__PURE__ */ (0, import_jsx_runtime310.jsx)("input", {
+      return /* @__PURE__ */ (0, import_jsx_runtime310.jsxs)(import_jsx_runtime310.Fragment, { children: [element, selectedValue.map((value, index3) => /* @__PURE__ */ (0, import_jsx_runtime310.jsx)("input", {
         type: "hidden",
         name: name2,
         form,
         disabled: formDisabled,
         value
-      }, index2))] });
+      }, index3))] });
     }, [
       name2,
       form,
@@ -61438,7 +62036,7 @@ If there's a particular need for this, please submit a feature request at https:
       role: "combobox",
       "aria-autocomplete": ariaAutoComplete,
       "aria-haspopup": getPopupRole(contentElement, "listbox"),
-      "aria-expanded": open,
+      "aria-expanded": open3,
       "aria-controls": contentElement?.id,
       "data-active-item": isActiveItem || void 0,
       value: inputValue,
@@ -61647,11 +62245,11 @@ If there's a particular need for this, please submit a feature request at https:
       if (!value) continue;
       let pos = 0;
       const length2 = value.length;
-      let index2 = string.indexOf(value, pos);
-      while (index2 !== -1) {
-        offsets.push([index2, length2]);
-        pos = index2 + 1;
-        index2 = string.indexOf(value, pos);
+      let index3 = string.indexOf(value, pos);
+      while (index3 !== -1) {
+        offsets.push([index3, length2]);
+        pos = index3 + 1;
+        index3 = string.indexOf(value, pos);
       }
     }
     return offsets;
@@ -61669,14 +62267,14 @@ If there's a particular need for this, please submit a feature request at https:
   function getNormalizedIndexes(itemValue) {
     const starts = [];
     const ends = [];
-    let index2 = 0;
+    let index3 = 0;
     for (const char of itemValue) {
       const normalizedLength = normalizeValue2(char).length;
       for (let i2 = 0; i2 < normalizedLength; i2 += 1) {
-        starts.push(i2 === 0 ? index2 : -1);
-        ends.push(index2);
+        starts.push(i2 === 0 ? index3 : -1);
+        ends.push(index3);
       }
-      index2 += char.length;
+      index3 += char.length;
     }
     starts.push(itemValue.length);
     ends.push(itemValue.length);
@@ -62073,9 +62671,9 @@ If there's a particular need for this, please submit a feature request at https:
       combobox.setState("activeId", item.id);
     }));
     setup(combobox, () => batch(combobox, ["selectOnMove", "moves"], (state2) => {
-      const { activeId: activeId2, open, selectedValue: selectedValue2, selectElement } = combobox.getState();
+      const { activeId: activeId2, open: open3, selectedValue: selectedValue2, selectElement } = combobox.getState();
       if (!selectElement) return;
-      if (!state2.selectOnMove && open) return;
+      if (!state2.selectOnMove && open3) return;
       if (Array.isArray(selectedValue2)) return;
       if (!state2.moves) return;
       if (!activeId2) return;
@@ -62157,7 +62755,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components43 = __toESM(require_components(), 1);
 
   // packages/dataviews/build-module/components/dataviews-filters/utils.mjs
-  var EMPTY_ARRAY8 = [];
+  var EMPTY_ARRAY7 = [];
   var getCurrentValue = (filterDefinition, currentFilter) => {
     if (filterDefinition.singleSelection) {
       return currentFilter?.value;
@@ -62168,17 +62766,17 @@ If there's a particular need for this, please submit a feature request at https:
     if (!Array.isArray(currentFilter?.value) && !!currentFilter?.value) {
       return [currentFilter.value];
     }
-    return EMPTY_ARRAY8;
+    return EMPTY_ARRAY7;
   };
 
   // packages/dataviews/build-module/hooks/use-elements.mjs
   var import_element174 = __toESM(require_element(), 1);
-  var EMPTY_ARRAY9 = [];
+  var EMPTY_ARRAY8 = [];
   function useElements({
     elements: elements2,
     getElements
   }) {
-    const staticElements = Array.isArray(elements2) && elements2.length > 0 ? elements2 : EMPTY_ARRAY9;
+    const staticElements = Array.isArray(elements2) && elements2.length > 0 ? elements2 : EMPTY_ARRAY8;
     const [records, setRecords] = (0, import_element174.useState)(staticElements);
     const [isLoading, setIsLoading] = (0, import_element174.useState)(false);
     (0, import_element174.useEffect)(() => {
@@ -67886,8 +68484,8 @@ If there's a particular need for this, please submit a feature request at https:
         positionMapRef.current.clear();
         scrollDirectionRef.current = void 0;
         const startPosition = view.search ? 1 : view.startPosition ?? 1;
-        const records = shownData.map((record, index2) => {
-          const position = startPosition + index2;
+        const records = shownData.map((record, index3) => {
+          const position = startPosition + index3;
           positionMapRef.current.set(getItemId2(record), position);
           return {
             ...record,
@@ -67901,9 +68499,9 @@ If there's a particular need for this, please submit a feature request at https:
       const shownDataIds = new Set(shownData.map(getItemId2));
       const scrollDirection = scrollDirectionRef.current;
       const basePosition = view.search ? 1 : view.startPosition ?? 1;
-      const newRecords = shownData.map((record, index2) => {
+      const newRecords = shownData.map((record, index3) => {
         const itemId = getItemId2(record);
-        const position = view.infiniteScrollEnabled ? basePosition + index2 : void 0;
+        const position = view.infiniteScrollEnabled ? basePosition + index3 : void 0;
         if (position !== void 0) {
           positionMapRef.current.set(itemId, position);
         }
@@ -68199,7 +68797,7 @@ If there's a particular need for this, please submit a feature request at https:
     (viewLayout) => viewLayout.isPicker
   );
   var defaultGetItemId = (item) => item.id;
-  var EMPTY_ARRAY10 = [];
+  var EMPTY_ARRAY9 = [];
   var DEFAULT_PICKER_LAYOUTS = {
     pickerGrid: true,
     pickerTable: true
@@ -68250,7 +68848,7 @@ If there's a particular need for this, please submit a feature request at https:
     fields: fields2,
     search = true,
     searchLabel = void 0,
-    actions: actions2 = EMPTY_ARRAY10,
+    actions: actions2 = EMPTY_ARRAY9,
     data,
     getItemId: getItemId2 = defaultGetItemId,
     isLoading = false,
@@ -69963,11 +70561,11 @@ If there's a particular need for this, please submit a feature request at https:
     (0, import_element224.useEffect)(() => {
       setIsOpen(isOpened);
     }, [isOpened]);
-    const handleOpenChange = (0, import_element224.useCallback)((open) => {
-      if (!open) {
+    const handleOpenChange = (0, import_element224.useCallback)((open3) => {
+      if (!open3) {
         setTouched(true);
       }
-      setIsOpen(open);
+      setIsOpen(open3);
     }, []);
     const revealValidity = useRevealValidity(
       contentRef,
@@ -70422,11 +71020,11 @@ If there's a particular need for this, please submit a feature request at https:
   function normalizeSearchInput2(input = "") {
     return (0, import_remove_accents4.default)(input.trim().toLowerCase());
   }
-  var EMPTY_ARRAY11 = [];
+  var EMPTY_ARRAY10 = [];
   function filterSortAndPaginate(data, view, fields2) {
     if (!data) {
       return {
-        data: EMPTY_ARRAY11,
+        data: EMPTY_ARRAY10,
         paginationInfo: { totalItems: 0, totalPages: 0 }
       };
     }
@@ -70786,7 +71384,7 @@ If there's a particular need for this, please submit a feature request at https:
     multiplyScalarAndAdd: () => multiplyScalarAndAdd,
     rotate: () => rotate,
     scale: () => scale,
-    set: () => set3,
+    set: () => set,
     str: () => str,
     sub: () => sub,
     subtract: () => subtract,
@@ -70842,7 +71440,7 @@ If there's a particular need for this, please submit a feature request at https:
     out[5] = ty;
     return out;
   }
-  function set3(out, a2, b2, c6, d2, tx, ty) {
+  function set(out, a2, b2, c6, d2, tx, ty) {
     out[0] = a2;
     out[1] = b2;
     out[2] = c6;
@@ -71031,7 +71629,7 @@ If there's a particular need for this, please submit a feature request at https:
     round: () => round3,
     scale: () => scale2,
     scaleAndAdd: () => scaleAndAdd,
-    set: () => set4,
+    set: () => set2,
     signedAngle: () => signedAngle,
     sqrDist: () => sqrDist,
     sqrLen: () => sqrLen,
@@ -71071,7 +71669,7 @@ If there's a particular need for this, please submit a feature request at https:
     out[1] = a2[1];
     return out;
   }
-  function set4(out, x2, y3) {
+  function set2(out, x2, y3) {
     out[0] = x2;
     out[1] = y3;
     return out;
@@ -76067,13 +76665,13 @@ If there's a particular need for this, please submit a feature request at https:
         className: "media-editor-keyboard-shortcuts-modal__shortcut-term",
         "aria-label": label,
         children: keys.map(
-          (key, index2) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(import_element244.Fragment, { children: key }, index2) : /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
+          (key, index3) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(import_element244.Fragment, { children: key }, index3) : /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
             "kbd",
             {
               className: "media-editor-keyboard-shortcuts-modal__shortcut-key",
               children: key
             },
-            index2
+            index3
           )
         )
       }
@@ -76097,7 +76695,7 @@ If there's a particular need for this, please submit a feature request at https:
             {
               className: "media-editor-keyboard-shortcuts-modal__shortcut-list",
               role: "list",
-              children: SHORTCUTS.map(({ description, keyCombination }, index2) => /* @__PURE__ */ (0, import_jsx_runtime390.jsxs)(
+              children: SHORTCUTS.map(({ description, keyCombination }, index3) => /* @__PURE__ */ (0, import_jsx_runtime390.jsxs)(
                 "li",
                 {
                   className: "media-editor-keyboard-shortcuts-modal__shortcut",
@@ -76111,7 +76709,7 @@ If there's a particular need for this, please submit a feature request at https:
                     )
                   ]
                 },
-                index2
+                index3
               ))
             }
           )
@@ -76593,7 +77191,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const togglePanel = (0, import_element246.useCallback)(() => {
       hasChosenPanelRef.current = true;
-      setActivePanel((open) => open ? null : lastPanelRef.current);
+      setActivePanel((open3) => open3 ? null : lastPanelRef.current);
     }, []);
     const layout = isWide ? "wide" : "narrow";
     const { media, hasEdits } = (0, import_data41.useSelect)(
@@ -77989,7 +78587,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     return [settingValue, setSettingValue];
   }
-  var EMPTY_ARRAY12 = [];
+  var EMPTY_ARRAY11 = [];
   function hasThemeVariation({
     title,
     settings,
@@ -78003,7 +78601,7 @@ If there's a particular need for this, please submit a feature request at https:
         import_core_data37.store
       ).__experimentalGetCurrentThemeGlobalStylesVariations?.();
       return {
-        variationsFromTheme: _variationsFromTheme || EMPTY_ARRAY12
+        variationsFromTheme: _variationsFromTheme || EMPTY_ARRAY11
       };
     }, []);
     const { user: userVariation } = (0, import_element250.useContext)(GlobalStylesContext);
@@ -78284,7 +78882,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { highlightedColors } = useStylesPreviewColors();
     const scaledSwatchSize = normalizedColorSwatchSize * ratio;
-    return highlightedColors.map(({ slug, color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(
+    return highlightedColors.map(({ slug, color }, index3) => /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(
       import_components89.__unstableMotion.div,
       {
         style: {
@@ -78302,10 +78900,10 @@ If there's a particular need for this, please submit a feature request at https:
           opacity: 0
         },
         transition: {
-          delay: index2 === 1 ? 0.2 : 0.1
+          delay: index3 === 1 ? 0.2 : 0.1
         }
       },
-      `${slug}-${index2}`
+      `${slug}-${index3}`
     ));
   }
 
@@ -78517,7 +79115,7 @@ If there's a particular need for this, please submit a feature request at https:
                     height: "100%",
                     overflow: "hidden"
                   },
-                  children: paletteColors.slice(0, 4).map(({ color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(
+                  children: paletteColors.slice(0, 4).map(({ color }, index3) => /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(
                     "div",
                     {
                       style: {
@@ -78526,7 +79124,7 @@ If there's a particular need for this, please submit a feature request at https:
                         flexGrow: 1
                       }
                     },
-                    index2
+                    index3
                   ))
                 }
               )
@@ -78672,7 +79270,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function VariationsPanel({ name: name2 }) {
     const coreBlockStyles = useBlockVariations(name2);
-    return /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(import_components93.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: coreBlockStyles.map((style, index2) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(import_components93.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: coreBlockStyles.map((style, index3) => {
       if (style?.isDefault) {
         return null;
       }
@@ -78682,7 +79280,7 @@ If there's a particular need for this, please submit a feature request at https:
           path: "/blocks/" + encodeURIComponent(name2) + "/variations/" + encodeURIComponent(style.name),
           children: style.label
         },
-        index2
+        index3
       );
     }) });
   }
@@ -79765,7 +80363,7 @@ If there's a particular need for this, please submit a feature request at https:
           gap,
           className: "global-styles-ui-style-variations-container",
           children: typographyVariations.map(
-            (variation, index2) => {
+            (variation, index3) => {
               return /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(
                 Variation,
                 {
@@ -79779,7 +80377,7 @@ If there's a particular need for this, please submit a feature request at https:
                     }
                   )
                 },
-                index2
+                index3
               );
             }
           )
@@ -80039,13 +80637,13 @@ If there's a particular need for this, please submit a feature request at https:
       errors: [],
       successes: []
     };
-    responses.forEach((result, index2) => {
+    responses.forEach((result, index3) => {
       if (result.status === "fulfilled" && result.value) {
         const response = result.value;
         results.successes.push(response);
       } else if (result.reason) {
         results.errors.push({
-          data: fontFacesData[index2],
+          data: fontFacesData[index3],
           message: result.reason.message
         });
       }
@@ -83887,19 +84485,19 @@ If there's a particular need for this, please submit a feature request at https:
               }
               return out;
             }
-            function ReadSymbol(table, index2, br) {
-              var start_index = index2;
+            function ReadSymbol(table, index3, br) {
+              var start_index = index3;
               var nbits;
               br.fillBitWindow();
-              index2 += br.val_ >>> br.bit_pos_ & HUFFMAN_TABLE_MASK;
-              nbits = table[index2].bits - HUFFMAN_TABLE_BITS;
+              index3 += br.val_ >>> br.bit_pos_ & HUFFMAN_TABLE_MASK;
+              nbits = table[index3].bits - HUFFMAN_TABLE_BITS;
               if (nbits > 0) {
                 br.bit_pos_ += HUFFMAN_TABLE_BITS;
-                index2 += table[index2].value;
-                index2 += br.val_ >>> br.bit_pos_ & (1 << nbits) - 1;
+                index3 += table[index3].value;
+                index3 += br.val_ >>> br.bit_pos_ & (1 << nbits) - 1;
               }
-              br.bit_pos_ += table[index2].bits;
-              return table[index2].value;
+              br.bit_pos_ += table[index3].bits;
+              return table[index3].value;
             }
             function ReadHuffmanCodeLengths(code_length_code_lengths, num_symbols, code_lengths, br) {
               var symbol3 = 0;
@@ -84089,27 +84687,27 @@ If there's a particular need for this, please submit a feature request at https:
               }
               return table_size;
             }
-            function ReadBlockLength(table, index2, br) {
+            function ReadBlockLength(table, index3, br) {
               var code;
               var nbits;
-              code = ReadSymbol(table, index2, br);
+              code = ReadSymbol(table, index3, br);
               nbits = Prefix.kBlockLengthPrefixCode[code].nbits;
               return Prefix.kBlockLengthPrefixCode[code].offset + br.readBits(nbits);
             }
-            function TranslateShortCodes(code, ringbuffer, index2) {
+            function TranslateShortCodes(code, ringbuffer, index3) {
               var val;
               if (code < NUM_DISTANCE_SHORT_CODES) {
-                index2 += kDistanceShortCodeIndexOffset[code];
-                index2 &= 3;
-                val = ringbuffer[index2] + kDistanceShortCodeValueOffset[code];
+                index3 += kDistanceShortCodeIndexOffset[code];
+                index3 &= 3;
+                val = ringbuffer[index3] + kDistanceShortCodeValueOffset[code];
               } else {
                 val = code - NUM_DISTANCE_SHORT_CODES + 1;
               }
               return val;
             }
-            function MoveToFront(v3, index2) {
-              var value = v3[index2];
-              var i2 = index2;
+            function MoveToFront(v3, index3) {
+              var value = v3[index3];
+              var i2 = index3;
               for (; i2; --i2) v3[i2] = v3[i2 - 1];
               v3[0] = value;
             }
@@ -84120,9 +84718,9 @@ If there's a particular need for this, please submit a feature request at https:
                 mtf[i2] = i2;
               }
               for (i2 = 0; i2 < v_len; ++i2) {
-                var index2 = v3[i2];
-                v3[i2] = mtf[index2];
-                if (index2) MoveToFront(mtf, index2);
+                var index3 = v3[i2];
+                v3[i2] = mtf[index3];
+                if (index3) MoveToFront(mtf, index3);
               }
             }
             function HuffmanTreeGroup(alphabet_size, num_htrees) {
@@ -84209,7 +84807,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
             function DecodeBlockType(max_block_type, trees, tree_type, block_types, ringbuffers, indexes, br) {
               var ringbuffer = tree_type * 2;
-              var index2 = tree_type;
+              var index3 = tree_type;
               var type_code = ReadSymbol(
                 trees,
                 tree_type * HUFFMAN_MAX_TABLE_SIZE,
@@ -84217,9 +84815,9 @@ If there's a particular need for this, please submit a feature request at https:
               );
               var block_type;
               if (type_code === 0) {
-                block_type = ringbuffers[ringbuffer + (indexes[index2] & 1)];
+                block_type = ringbuffers[ringbuffer + (indexes[index3] & 1)];
               } else if (type_code === 1) {
-                block_type = ringbuffers[ringbuffer + (indexes[index2] - 1 & 1)] + 1;
+                block_type = ringbuffers[ringbuffer + (indexes[index3] - 1 & 1)] + 1;
               } else {
                 block_type = type_code - 2;
               }
@@ -84227,8 +84825,8 @@ If there's a particular need for this, please submit a feature request at https:
                 block_type -= max_block_type;
               }
               block_types[tree_type] = block_type;
-              ringbuffers[ringbuffer + (indexes[index2] & 1)] = block_type;
-              ++indexes[index2];
+              ringbuffers[ringbuffer + (indexes[index3] & 1)] = block_type;
+              ++indexes[index3];
             }
             function CopyUncompressedBlockToOutput(output, len2, pos, ringbuffer, ringbuffer_mask, br) {
               var rb_size = ringbuffer_mask + 1;
@@ -89609,8 +90207,8 @@ If there's a particular need for this, please submit a feature request at https:
         this.namesOffset = p22.currentPosition;
         this.glyphNameOffsets = [1];
         for (let i2 = 0; i2 < this.numGlyphs; i2++) {
-          let index2 = this.glyphNameIndex[i2];
-          if (index2 < macStrings.length) {
+          let index3 = this.glyphNameIndex[i2];
+          if (index3 < macStrings.length) {
             this.glyphNameOffsets.push(this.glyphNameOffsets[i2]);
             continue;
           }
@@ -89634,8 +90232,8 @@ If there's a particular need for this, please submit a feature request at https:
         );
         return ``;
       }
-      let index2 = this.glyphNameIndex[glyphid];
-      if (index2 < 258) return macStrings[index2];
+      let index3 = this.glyphNameIndex[glyphid];
+      if (index3 < 258) return macStrings[index3];
       let offset4 = this.glyphNameOffsets[glyphid];
       let next = this.glyphNameOffsets[glyphid + 1];
       let len2 = next - offset4 - 1;
@@ -90418,9 +91016,9 @@ If there's a particular need for this, please submit a feature request at https:
         (_) => p22.Offset16
       );
     }
-    getSequence(index2) {
+    getSequence(index3) {
       let p22 = this.parser;
-      p22.currentPosition = this.start + this.sequenceOffsets[index2];
+      p22.currentPosition = this.start + this.sequenceOffsets[index3];
       return new SequenceTable(p22);
     }
   };
@@ -90440,9 +91038,9 @@ If there's a particular need for this, please submit a feature request at https:
         ...new Array(this.alternateSetCount)
       ].map((_) => p22.Offset16);
     }
-    getAlternateSet(index2) {
+    getAlternateSet(index3) {
       let p22 = this.parser;
-      p22.currentPosition = this.start + this.alternateSetOffsets[index2];
+      p22.currentPosition = this.start + this.alternateSetOffsets[index3];
       return new AlternateSetTable(p22);
     }
   };
@@ -90462,9 +91060,9 @@ If there's a particular need for this, please submit a feature request at https:
         (_) => p22.Offset16
       );
     }
-    getLigatureSet(index2) {
+    getLigatureSet(index3) {
       let p22 = this.parser;
-      p22.currentPosition = this.start + this.ligatureSetOffsets[index2];
+      p22.currentPosition = this.start + this.ligatureSetOffsets[index3];
       return new LigatureSetTable(p22);
     }
   };
@@ -90476,9 +91074,9 @@ If there's a particular need for this, please submit a feature request at https:
         (_) => p22.Offset16
       );
     }
-    getLigature(index2) {
+    getLigature(index3) {
       let p22 = this.parser;
-      p22.currentPosition = this.start + this.ligatureOffsets[index2];
+      p22.currentPosition = this.start + this.ligatureOffsets[index3];
       return new LigatureTable(p22);
     }
   };
@@ -90519,33 +91117,33 @@ If there's a particular need for this, please submit a feature request at https:
         ].map((_) => new SubstLookupRecord(p22));
       }
     }
-    getSubRuleSet(index2) {
+    getSubRuleSet(index3) {
       if (this.substFormat !== 1)
         throw new Error(
           `lookup type 5.${this.substFormat} has no subrule sets.`
         );
       let p22 = this.parser;
-      p22.currentPosition = this.start + this.subRuleSetOffsets[index2];
+      p22.currentPosition = this.start + this.subRuleSetOffsets[index3];
       return new SubRuleSetTable(p22);
     }
-    getSubClassSet(index2) {
+    getSubClassSet(index3) {
       if (this.substFormat !== 2)
         throw new Error(
           `lookup type 5.${this.substFormat} has no subclass sets.`
         );
       let p22 = this.parser;
-      p22.currentPosition = this.start + this.subClassSetOffsets[index2];
+      p22.currentPosition = this.start + this.subClassSetOffsets[index3];
       return new SubClassSetTable(p22);
     }
-    getCoverageTable(index2) {
-      if (this.substFormat !== 3 && !index2)
+    getCoverageTable(index3) {
+      if (this.substFormat !== 3 && !index3)
         return super.getCoverageTable();
-      if (!index2)
+      if (!index3)
         throw new Error(
           `lookup type 5.${this.substFormat} requires an coverage table index.`
         );
       let p22 = this.parser;
-      p22.currentPosition = this.start + this.coverageOffsets[index2];
+      p22.currentPosition = this.start + this.coverageOffsets[index3];
       return new CoverageTable(p22);
     }
   };
@@ -90557,9 +91155,9 @@ If there's a particular need for this, please submit a feature request at https:
         (_) => p22.Offset16
       );
     }
-    getSubRule(index2) {
+    getSubRule(index3) {
       let p22 = this.parser;
-      p22.currentPosition = this.start + this.subRuleOffsets[index2];
+      p22.currentPosition = this.start + this.subRuleOffsets[index3];
       return new SubRuleTable(p22);
     }
   };
@@ -90583,9 +91181,9 @@ If there's a particular need for this, please submit a feature request at https:
         ...new Array(this.subClassRuleCount)
       ].map((_) => p22.Offset16);
     }
-    getSubClass(index2) {
+    getSubClass(index3) {
       let p22 = this.parser;
-      p22.currentPosition = this.start + this.subClassRuleOffsets[index2];
+      p22.currentPosition = this.start + this.subClassRuleOffsets[index3];
       return new SubClassRuleTable(p22);
     }
   };
@@ -90632,22 +91230,22 @@ If there's a particular need for this, please submit a feature request at https:
         ].map((_) => new SequenceLookupRecord(p22));
       }
     }
-    getChainSubRuleSet(index2) {
+    getChainSubRuleSet(index3) {
       if (this.substFormat !== 1)
         throw new Error(
           `lookup type 6.${this.substFormat} has no chainsubrule sets.`
         );
       let p22 = this.parser;
-      p22.currentPosition = this.start + this.chainSubRuleSetOffsets[index2];
+      p22.currentPosition = this.start + this.chainSubRuleSetOffsets[index3];
       return new ChainSubRuleSetTable(p22);
     }
-    getChainSubClassSet(index2) {
+    getChainSubClassSet(index3) {
       if (this.substFormat !== 2)
         throw new Error(
           `lookup type 6.${this.substFormat} has no chainsubclass sets.`
         );
       let p22 = this.parser;
-      p22.currentPosition = this.start + this.chainSubClassSetOffsets[index2];
+      p22.currentPosition = this.start + this.chainSubClassSetOffsets[index3];
       return new ChainSubClassSetTable(p22);
     }
     getCoverageFromOffset(offset4) {
@@ -90668,9 +91266,9 @@ If there's a particular need for this, please submit a feature request at https:
         ...new Array(this.chainSubRuleCount)
       ].map((_) => p22.Offset16);
     }
-    getSubRule(index2) {
+    getSubRule(index3) {
       let p22 = this.parser;
-      p22.currentPosition = this.start + this.chainSubRuleOffsets[index2];
+      p22.currentPosition = this.start + this.chainSubRuleOffsets[index3];
       return new ChainSubRuleTable(p22);
     }
   };
@@ -90702,9 +91300,9 @@ If there's a particular need for this, please submit a feature request at https:
         ...new Array(this.chainSubClassRuleCount)
       ].map((_) => p22.Offset16);
     }
-    getSubClass(index2) {
+    getSubClass(index3) {
       let p22 = this.parser;
-      p22.currentPosition = this.start + this.chainSubRuleOffsets[index2];
+      p22.currentPosition = this.start + this.chainSubRuleOffsets[index3];
       return new ChainSubClassRuleTable(p22);
     }
   };
@@ -90894,9 +91492,9 @@ If there's a particular need for this, please submit a feature request at https:
     get markAttachmentType() {
       return this.lookupFlag & true;
     }
-    getSubTable(index2) {
+    getSubTable(index3) {
       const builder = this.ctType === `GSUB` ? GSUBtables : GPOStables;
-      this.parser.currentPosition = this.start + this.subtableOffsets[index2];
+      this.parser.currentPosition = this.start + this.subtableOffsets[index3];
       return builder.buildSubtable(this.lookupType, this.parser);
     }
   };
@@ -90987,7 +91585,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     getFeatures(langSysTable) {
       return langSysTable.featureIndices.map(
-        (index2) => this.getFeature(index2)
+        (index3) => this.getFeature(index3)
       );
     }
     getFeature(indexOrTag) {
@@ -91007,7 +91605,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     getLookups(featureTable) {
       return featureTable.lookupListIndices.map(
-        (index2) => this.getLookup(index2)
+        (index3) => this.getLookup(index3)
       );
     }
     getLookup(lookupIndex, type) {
@@ -91927,7 +92525,7 @@ If there's a particular need for this, please submit a feature request at https:
             onRemove: () => setNotice(null),
             children: [
               notice.message,
-              notice.errors && /* @__PURE__ */ (0, import_jsx_runtime421.jsx)("ul", { children: notice.errors.map((error2, index2) => /* @__PURE__ */ (0, import_jsx_runtime421.jsx)("li", { children: error2 }, index2)) })
+              notice.errors && /* @__PURE__ */ (0, import_jsx_runtime421.jsx)("ul", { children: notice.errors.map((error2, index3) => /* @__PURE__ */ (0, import_jsx_runtime421.jsx)("li", { children: error2 }, index3)) })
             ]
           }
         ),
@@ -92489,7 +93087,7 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(Subtitle, { level: 3, children: (0, import_i18n182.__)("Palette") }),
       /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components117.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(NavigationButtonAsItem, { path: screenPath, children: /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(import_components117.__experimentalHStack, { direction: "row", children: [
         colors2.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime432.jsxs)(import_jsx_runtime432.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components117.__experimentalZStack, { isLayered: false, offset: -8, children: colors2.slice(0, 5).map(({ color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components117.__experimentalZStack, { isLayered: false, offset: -8, children: colors2.slice(0, 5).map(({ color }, index3) => /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
             color_indicator_wrapper_default,
             {
               children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
@@ -92499,7 +93097,7 @@ If there's a particular need for this, please submit a feature request at https:
                 }
               )
             },
-            `${color}-${index2}`
+            `${color}-${index3}`
           )) }),
           /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components117.FlexItem, { isBlock: true, children: (0, import_i18n182.__)("Edit palette") })
         ] }) : /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components117.FlexItem, { children: (0, import_i18n182.__)("Add colors") }),
@@ -92588,7 +93186,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime434 = __toESM(require_jsx_runtime(), 1);
   function PresetColors() {
     const { paletteColors } = useStylesPreviewColors();
-    return paletteColors.slice(0, 4).map(({ slug, color }, index2) => /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
+    return paletteColors.slice(0, 4).map(({ slug, color }, index3) => /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
       "div",
       {
         style: {
@@ -92597,7 +93195,7 @@ If there's a particular need for this, please submit a feature request at https:
           background: color
         }
       },
-      `${slug}-${index2}`
+      `${slug}-${index3}`
     ));
   }
 
@@ -92665,7 +93263,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return /* @__PURE__ */ (0, import_jsx_runtime436.jsxs)(import_components120.__experimentalVStack, { spacing: 3, children: [
       title && /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(Subtitle, { level: 3, children: title }),
-      /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(import_components120.__experimentalGrid, { gap, children: colorVariations.map((variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(import_components120.__experimentalGrid, { gap, children: colorVariations.map((variation, index3) => /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(
         Variation,
         {
           variation,
@@ -92674,7 +93272,7 @@ If there's a particular need for this, please submit a feature request at https:
           showTooltip: true,
           children: () => /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(preview_colors_default, {})
         },
-        index2
+        index3
       )) })
     ] });
   }
@@ -93153,11 +93751,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/global-styles-ui/build-module/presets/use-presets.mjs
-  var EMPTY_ARRAY13 = [];
+  var EMPTY_ARRAY12 = [];
   function usePresets(settingsPath, origin) {
     const path = `${settingsPath}.${origin}`;
-    const [presets = EMPTY_ARRAY13, setPresets] = useSetting(path);
-    const [basePresets = EMPTY_ARRAY13] = useSetting(
+    const [presets = EMPTY_ARRAY12, setPresets] = useSetting(path);
+    const [basePresets = EMPTY_ARRAY12] = useSetting(
       path,
       void 0,
       "base"
@@ -93174,14 +93772,14 @@ If there's a particular need for this, please submit a feature request at https:
     const theme2 = usePresets("shadow.presets", "theme");
     const custom = usePresets("shadow.presets", "custom");
     const addCustomShadow = () => {
-      const index2 = getNewIndexFromPresets(custom.presets, "shadow-");
+      const index3 = getNewIndexFromPresets(custom.presets, "shadow-");
       custom.setPresets([
         ...custom.presets,
         {
           /* translators: %d: is an index for a preset */
-          name: (0, import_i18n191.sprintf)((0, import_i18n191.__)("Shadow %d"), index2),
+          name: (0, import_i18n191.sprintf)((0, import_i18n191.__)("Shadow %d"), index3),
           shadow: defaultShadow,
-          slug: `shadow-${index2}`
+          slug: `shadow-${index3}`
         }
       ]);
     };
@@ -93586,16 +94184,16 @@ If there's a particular need for this, please submit a feature request at https:
   function ShadowEditor({ shadow, onChange }) {
     const addShadowButtonRef = (0, import_element273.useRef)(null);
     const shadowParts = (0, import_element273.useMemo)(() => getShadowParts(shadow), [shadow]);
-    const onChangeShadowPart = (index2, part) => {
+    const onChangeShadowPart = (index3, part) => {
       const newShadowParts = [...shadowParts];
-      newShadowParts[index2] = part;
+      newShadowParts[index3] = part;
       onChange(newShadowParts.join(", "));
     };
     const onAddShadowPart = () => {
       onChange([...shadowParts, defaultShadow].join(", "));
     };
-    const onRemoveShadowPart = (index2) => {
-      onChange(shadowParts.filter((p4, i2) => i2 !== index2).join(", "));
+    const onRemoveShadowPart = (index3) => {
+      onChange(shadowParts.filter((p4, i2) => i2 !== index3).join(", "));
       addShadowButtonRef.current?.focus();
     };
     return /* @__PURE__ */ (0, import_jsx_runtime449.jsxs)(import_jsx_runtime449.Fragment, { children: [
@@ -93615,15 +94213,15 @@ If there's a particular need for this, please submit a feature request at https:
         ) })
       ] }) }),
       /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(import_components130.__experimentalSpacer, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(import_components130.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: shadowParts.map((part, index2) => /* @__PURE__ */ (0, import_jsx_runtime449.jsx)("div", { role: "listitem", children: /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(import_components130.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: shadowParts.map((part, index3) => /* @__PURE__ */ (0, import_jsx_runtime449.jsx)("div", { role: "listitem", children: /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
         ShadowItem,
         {
           shadow: part,
-          onChange: (value) => onChangeShadowPart(index2, value),
+          onChange: (value) => onChangeShadowPart(index3, value),
           canRemove: shadowParts.length > 1,
-          onRemove: () => onRemoveShadowPart(index2)
+          onRemove: () => onRemoveShadowPart(index3)
         }
-      ) }, index2)) })
+      ) }, index3)) })
     ] });
   }
   function ShadowItem({
@@ -93849,14 +94447,14 @@ If there's a particular need for this, please submit a feature request at https:
       "custom"
     );
     const addCustomTextShadow = () => {
-      const index2 = getNewIndexFromPresets(custom.presets, "text-shadow-");
+      const index3 = getNewIndexFromPresets(custom.presets, "text-shadow-");
       custom.setPresets([
         ...custom.presets,
         {
           /* translators: %d: is an index for a preset */
-          name: (0, import_i18n195.sprintf)((0, import_i18n195.__)("Text Shadow %d"), index2),
+          name: (0, import_i18n195.sprintf)((0, import_i18n195.__)("Text Shadow %d"), index3),
           textShadow: DEFAULT_TEXT_SHADOW,
-          slug: `text-shadow-${index2}`
+          slug: `text-shadow-${index3}`
         }
       ]);
     };
@@ -94055,17 +94653,17 @@ If there's a particular need for this, please submit a feature request at https:
       () => getShadowParts(textShadow),
       [textShadow]
     );
-    const onChangeTextShadowPart = (index2, part) => {
+    const onChangeTextShadowPart = (index3, part) => {
       const newTextShadowParts = [...textShadowParts];
-      newTextShadowParts[index2] = part;
+      newTextShadowParts[index3] = part;
       onChange(newTextShadowParts.join(", "));
     };
     const onAddTextShadowPart = () => {
       onChange([...textShadowParts, DEFAULT_TEXT_SHADOW].join(", "));
     };
-    const onRemoveTextShadowPart = (index2) => {
+    const onRemoveTextShadowPart = (index3) => {
       onChange(
-        textShadowParts.filter((p4, i2) => i2 !== index2).join(", ")
+        textShadowParts.filter((p4, i2) => i2 !== index3).join(", ")
       );
       addTextShadowButtonRef.current?.focus();
     };
@@ -94092,15 +94690,15 @@ If there's a particular need for this, please submit a feature request at https:
           ]
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(import_components131.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: textShadowParts.map((part, index2) => /* @__PURE__ */ (0, import_jsx_runtime452.jsx)("div", { role: "listitem", children: /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(import_components131.__experimentalItemGroup, { isBordered: true, isSeparated: true, children: textShadowParts.map((part, index3) => /* @__PURE__ */ (0, import_jsx_runtime452.jsx)("div", { role: "listitem", children: /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(
         TextShadowItem,
         {
           textShadow: part,
-          onChange: (value) => onChangeTextShadowPart(index2, value),
+          onChange: (value) => onChangeTextShadowPart(index3, value),
           canRemove: textShadowParts.length > 1,
-          onRemove: () => onRemoveTextShadowPart(index2)
+          onRemove: () => onRemoveTextShadowPart(index3)
         }
-      ) }, index2)) })
+      ) }, index3)) })
     ] });
   }
   function TextShadowItem({
@@ -94433,7 +95031,7 @@ If there's a particular need for this, please submit a feature request at https:
         className: "global-styles-ui-style-variations-container",
         gap,
         children: themeVariations.map(
-          (variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(Variation, { variation, children: (isFocused) => /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(
+          (variation, index3) => /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(Variation, { variation, children: (isFocused) => /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(
             preview_styles_default,
             {
               label: variation?.title,
@@ -94441,7 +95039,7 @@ If there's a particular need for this, please submit a feature request at https:
               isFocused,
               variation
             }
-          ) }, index2)
+          ) }, index3)
         )
       }
     );
@@ -94550,7 +95148,7 @@ If there's a particular need for this, please submit a feature request at https:
     capabilities: ["edit_theme_options"]
   };
   var DEFAULT_QUERY = { per_page: 100, page: 1 };
-  var EMPTY_ARRAY14 = [];
+  var EMPTY_ARRAY13 = [];
   function useGlobalStylesRevisions({
     query
   } = {}) {
@@ -94588,8 +95186,8 @@ If there's a particular need for this, please submit a feature request at https:
           "globalStyles",
           globalStylesId,
           _query
-        ) || EMPTY_ARRAY14 : EMPTY_ARRAY14;
-        const _authors = getUsers(SITE_EDITOR_AUTHORS_QUERY) || EMPTY_ARRAY14;
+        ) || EMPTY_ARRAY13 : EMPTY_ARRAY13;
+        const _authors = getUsers(SITE_EDITOR_AUTHORS_QUERY) || EMPTY_ARRAY13;
         const _isResolving = globalStylesId ? isResolving("getRevisions", [
           "root",
           "globalStyles",
@@ -94610,7 +95208,7 @@ If there's a particular need for this, please submit a feature request at https:
     return (0, import_element277.useMemo)(() => {
       if (!authors.length || isLoadingGlobalStylesRevisions) {
         return {
-          revisions: EMPTY_ARRAY14,
+          revisions: EMPTY_ARRAY13,
           hasUnsavedChanges: isDirty,
           isLoading: true,
           revisionsCount
@@ -94749,13 +95347,13 @@ If there's a particular need for this, please submit a feature request at https:
         className: "global-styles-ui-screen-revisions__revisions-list",
         "aria-label": (0, import_i18n202.__)("Global styles revisions list"),
         role: "listbox",
-        children: userRevisions.map((revision, index2) => {
+        children: userRevisions.map((revision, index3) => {
           const { id, author, modified } = revision;
           const isUnsaved = "unsaved" === id;
           const revisionAuthor = isUnsaved ? currentUser : author;
           const authorDisplayName = revisionAuthor?.name || (0, import_i18n202.__)("User");
           const authorAvatar = revisionAuthor?.avatar_urls?.["48"];
-          const isFirstItem = index2 === 0;
+          const isFirstItem = index3 === 0;
           const isSelected2 = selectedRevisionId ? selectedRevisionId === id : isFirstItem;
           const areStylesEqual = !canApplyRevision && isSelected2;
           const isReset = "parent" === id;
@@ -94817,7 +95415,7 @@ If there's a particular need for this, please submit a feature request at https:
                     ChangesSummary,
                     {
                       revision,
-                      previousRevision: index2 < userRevisions.length ? userRevisions[index2 + 1] : void 0
+                      previousRevision: index3 < userRevisions.length ? userRevisions[index3 + 1] : void 0
                     }
                   )
                 ] }) }),
@@ -95079,14 +95677,14 @@ If there's a particular need for this, please submit a feature request at https:
     const def = usePresets("typography.fontSizes", "default");
     const custom = usePresets("typography.fontSizes", "custom");
     const addFontSize = () => {
-      const index2 = getNewIndexFromPresets(custom.presets, "custom-");
+      const index3 = getNewIndexFromPresets(custom.presets, "custom-");
       custom.setPresets([
         ...custom.presets,
         {
           /* translators: %d: font size index */
-          name: (0, import_i18n205.sprintf)((0, import_i18n205.__)("New Font Size %d"), index2),
+          name: (0, import_i18n205.sprintf)((0, import_i18n205.__)("New Font Size %d"), index3),
           size: "16px",
-          slug: `custom-${index2}`
+          slug: `custom-${index3}`
         }
       ]);
     };
@@ -95269,25 +95867,25 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const isFluid = fontSize.fluid !== void 0 ? !!fontSize.fluid : !!globalFluid;
     const isCustomFluid = typeof fontSize.fluid === "object";
-    const set5 = (key, value) => setPresets(
+    const set3 = (key, value) => setPresets(
       presets.map(
         (p4) => p4.slug === slug ? { ...fontSize, [key]: value } : p4
       )
     );
     const handleCustomFluidValues = (value) => {
       if (value) {
-        set5("fluid", { min: fontSize.size, max: fontSize.size });
+        set3("fluid", { min: fontSize.size, max: fontSize.size });
       } else {
-        set5("fluid", true);
+        set3("fluid", true);
       }
     };
     const handleMinChange = (value) => {
       const fluid = typeof fontSize.fluid === "object" ? fontSize.fluid : {};
-      set5("fluid", { ...fluid, min: value });
+      set3("fluid", { ...fluid, min: value });
     };
     const handleMaxChange = (value) => {
       const fluid = typeof fontSize.fluid === "object" ? fontSize.fluid : {};
-      set5("fluid", { ...fluid, max: value });
+      set3("fluid", { ...fluid, max: value });
     };
     const menuItems2 = origin === "custom" ? [
       {
@@ -95327,7 +95925,7 @@ If there's a particular need for this, please submit a feature request at https:
                 {
                   label: (0, import_i18n207.__)("Size"),
                   value: !isCustomFluid && fontSize.size ? String(fontSize.size) : "",
-                  onChange: (value) => set5("size", value),
+                  onChange: (value) => set3("size", value),
                   disabled: isCustomFluid
                 }
               ),
@@ -95339,7 +95937,7 @@ If there's a particular need for this, please submit a feature request at https:
                     "Scale the font size dynamically to fit the screen or viewport."
                   ),
                   checked: isFluid,
-                  onChange: (value) => set5("fluid", value)
+                  onChange: (value) => set3("fluid", value)
                 }
               ),
               isFluid && /* @__PURE__ */ (0, import_jsx_runtime465.jsx)(
@@ -95422,7 +96020,7 @@ If there's a particular need for this, please submit a feature request at https:
     showResponsiveStateControls,
     showBlockStateControls
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(import_jsx_runtime466.Fragment, { children: blockStyles.map((style, index2) => /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(import_jsx_runtime466.Fragment, { children: blockStyles.map((style, index3) => /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(
       import_components142.Navigator.Screen,
       {
         path: parentMenu + "/variations/" + style.name,
@@ -95437,7 +96035,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         )
       },
-      index2
+      index3
     )) });
   }
   function ContextScreens({
@@ -96179,7 +96777,7 @@ If there's a particular need for this, please submit a feature request at https:
         ...settingsBlockPatternCategories || [],
         ...restBlockPatternCategories || []
       ].filter(
-        (x2, index2, arr) => index2 === arr.findIndex((y3) => x2.name === y3.name)
+        (x2, index3, arr) => index3 === arr.findIndex((y3) => x2.name === y3.name)
       ),
       [settingsBlockPatternCategories, restBlockPatternCategories]
     );
@@ -97187,12 +97785,12 @@ If there's a particular need for this, please submit a feature request at https:
   function pairSimilarBlocks(blocks) {
     const removed = [];
     const added = [];
-    blocks.forEach((block, index2) => {
+    blocks.forEach((block, index3) => {
       const status = block.__revisionDiffStatus?.status;
       if (status === "removed") {
-        removed.push({ block, index: index2 });
+        removed.push({ block, index: index3 });
       } else if (status === "added") {
-        added.push({ block, index: index2 });
+        added.push({ block, index: index3 });
       }
     });
     if (removed.length === 0 || added.length === 0) {
@@ -97280,12 +97878,12 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     }
-    return blocks.map((block, index2) => {
-      if (pairedRemoved.has(index2) || pairedAdded.has(index2)) {
+    return blocks.map((block, index3) => {
+      if (pairedRemoved.has(index3) || pairedAdded.has(index3)) {
         return null;
       }
-      if (modifications.has(index2)) {
-        return modifications.get(index2);
+      if (modifications.has(index3)) {
+        return modifications.get(index3);
       }
       return block;
     }).filter(Boolean);
@@ -99673,9 +100271,9 @@ If there's a particular need for this, please submit a feature request at https:
         className: "editor-keyboard-shortcut-help-modal__shortcut-key-combination",
         "aria-label": forceAriaLabel || ariaLabel,
         children: (Array.isArray(shortcut) ? shortcut : [shortcut]).map(
-          (character, index2) => {
+          (character, index3) => {
             if (character === "+") {
-              return /* @__PURE__ */ (0, import_jsx_runtime481.jsx)(import_element299.Fragment, { children: character }, index2);
+              return /* @__PURE__ */ (0, import_jsx_runtime481.jsx)(import_element299.Fragment, { children: character }, index3);
             }
             return /* @__PURE__ */ (0, import_jsx_runtime481.jsx)(
               "kbd",
@@ -99683,7 +100281,7 @@ If there's a particular need for this, please submit a feature request at https:
                 className: "editor-keyboard-shortcut-help-modal__shortcut-key",
                 children: character
               },
-              index2
+              index3
             );
           }
         )
@@ -99701,13 +100299,13 @@ If there's a particular need for this, please submit a feature request at https:
             forceAriaLabel: ariaLabel
           }
         ),
-        aliases.map((alias, index2) => /* @__PURE__ */ (0, import_jsx_runtime481.jsx)(
+        aliases.map((alias, index3) => /* @__PURE__ */ (0, import_jsx_runtime481.jsx)(
           KeyCombination,
           {
             keyCombination: alias,
             forceAriaLabel: ariaLabel
           },
-          index2
+          index3
         ))
       ] })
     ] });
@@ -99762,13 +100360,13 @@ If there's a particular need for this, please submit a feature request at https:
       {
         className: "editor-keyboard-shortcut-help-modal__shortcut-list",
         role: "list",
-        children: shortcuts.map((shortcut, index2) => /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
+        children: shortcuts.map((shortcut, index3) => /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(
           "li",
           {
             className: "editor-keyboard-shortcut-help-modal__shortcut",
             children: typeof shortcut === "string" ? /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(dynamic_shortcut_default, { name: shortcut }) : /* @__PURE__ */ (0, import_jsx_runtime483.jsx)(shortcut_default, { ...shortcut })
           },
-          index2
+          index3
         ))
       }
     )
@@ -101451,10 +102049,10 @@ If there's a particular need for this, please submit a feature request at https:
       createRevisionsLoadFailedNotice(registry);
       return;
     }
-    const index2 = revisions.findIndex(
+    const index3 = revisions.findIndex(
       (revision) => revision[revisionKey] === revisionId2
     );
-    if (index2 === -1) {
+    if (index3 === -1) {
       let revision;
       try {
         revision = await (0, import_api_fetch7.default)({
@@ -101490,7 +102088,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
       return;
     }
-    const page = Math.floor(index2 / select9.getRevisionsPerPage()) + 1;
+    const page = Math.floor(index3 / select9.getRevisionsPerPage()) + 1;
     if (page !== select9.getRevisionPage()) {
       dispatch9({ type: "SET_REVISION_PAGE", page });
     }
@@ -107415,7 +108013,7 @@ ${content}
             unstableFeaturedImageFlow: true,
             allowedTypes: ALLOWED_MEDIA_TYPES,
             modalClass: "editor-post-featured-image__media-modal",
-            render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime549.jsxs)("div", { className: "editor-post-featured-image__container", children: [
+            render: ({ open: open3 }) => /* @__PURE__ */ (0, import_jsx_runtime549.jsxs)("div", { className: "editor-post-featured-image__container", children: [
               isMissingMedia ? /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(
                 import_components189.Notice,
                 {
@@ -107431,7 +108029,7 @@ ${content}
                   __next40pxDefaultSize: true,
                   ref: returnFocus,
                   className: !featuredImageId ? "editor-post-featured-image__toggle" : "editor-post-featured-image__preview",
-                  onClick: open,
+                  onClick: open3,
                   "aria-label": !featuredImageId ? null : (0, import_i18n257.__)(
                     "Edit or replace the featured image"
                   ),
@@ -107471,7 +108069,7 @@ ${content}
                       {
                         __next40pxDefaultSize: true,
                         className: "editor-post-featured-image__action",
-                        onClick: open,
+                        onClick: open3,
                         "aria-haspopup": "dialog",
                         variant: isMissingMedia ? "secondary" : void 0,
                         children: (0, import_i18n257.__)("Replace")
@@ -108956,7 +109554,7 @@ ${content}
 
   // packages/editor/build-module/components/post-taxonomies/flat-term-selector.mjs
   var import_jsx_runtime563 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY15 = [];
+  var EMPTY_ARRAY14 = [];
   var MAX_TERMS_SUGGESTIONS = 100;
   var DEFAULT_QUERY3 = {
     per_page: MAX_TERMS_SUGGESTIONS,
@@ -108975,9 +109573,9 @@ ${content}
   var isSameTermName = (nameA, nameB) => nameA.toLowerCase() === nameB.toLowerCase();
   var isPendingTerm = (item) => item.value.startsWith(PENDING_TERM_PREFIX);
   function FlatTermSelector({ slug }) {
-    const [values, setValues] = (0, import_element343.useState)(EMPTY_ARRAY15);
+    const [values, setValues] = (0, import_element343.useState)(EMPTY_ARRAY14);
     const [inputValue, setInputValue] = (0, import_element343.useState)("");
-    const [suggestions, setSuggestions] = (0, import_element343.useState)(EMPTY_ARRAY15);
+    const [suggestions, setSuggestions] = (0, import_element343.useState)(EMPTY_ARRAY14);
     const [isSearching, setIsSearching] = (0, import_element343.useState)(false);
     const lastSearchRef = (0, import_element343.useRef)("");
     const pendingTermsRef = (0, import_element343.useRef)(/* @__PURE__ */ new Set());
@@ -108998,7 +109596,7 @@ ${content}
         const { getEntityRecords, getEntityRecord, hasFinishedResolution } = select9(import_core_data94.store);
         const post2 = getCurrentPost2();
         const _taxonomy = getEntityRecord("root", "taxonomy", slug);
-        const _termIds = _taxonomy ? getEditedPostAttribute2(_taxonomy.rest_base) : EMPTY_ARRAY15;
+        const _termIds = _taxonomy ? getEditedPostAttribute2(_taxonomy.rest_base) : EMPTY_ARRAY14;
         const canCreate = !!_taxonomy && !!post2._links?.["wp:action-create-" + _taxonomy.rest_base];
         const canAssign = !!_taxonomy && !!post2._links?.["wp:action-assign-" + _taxonomy.rest_base];
         if (!canAssign) {
@@ -109017,7 +109615,7 @@ ${content}
           hasAssignAction: canAssign,
           taxonomy: _taxonomy,
           termIds: _termIds,
-          terms: _termIds?.length ? getEntityRecords("taxonomy", slug, query) : EMPTY_ARRAY15,
+          terms: _termIds?.length ? getEntityRecords("taxonomy", slug, query) : EMPTY_ARRAY14,
           hasResolvedTerms: hasFinishedResolution("getEntityRecords", [
             "taxonomy",
             slug,
@@ -109096,7 +109694,7 @@ ${content}
     function assignTerm(termId) {
       const assignedTermIds = registry.select(store).getEditedPostAttribute(taxonomy.rest_base);
       if (!assignedTermIds?.includes(termId)) {
-        onUpdateTerms([...assignedTermIds ?? EMPTY_ARRAY15, termId]);
+        onUpdateTerms([...assignedTermIds ?? EMPTY_ARRAY14, termId]);
       }
     }
     async function createTerm(name2) {
@@ -109183,7 +109781,7 @@ ${content}
     function onInputValueChange(nextInputValue) {
       setInputValue(nextInputValue);
       lastSearchRef.current = nextInputValue;
-      setSuggestions(EMPTY_ARRAY15);
+      setSuggestions(EMPTY_ARRAY14);
       if (!nextInputValue) {
         debouncedSearch.cancel();
         setIsSearching(false);
@@ -109404,7 +110002,7 @@ ${content}
     [RECEIVE_INTERMEDIATE_RESULTS]: true
   };
   var MIN_TERMS_COUNT_FOR_FILTER = 8;
-  var EMPTY_ARRAY16 = [];
+  var EMPTY_ARRAY15 = [];
   var SPEAK_DEBOUNCE_MS = 500;
   function getResultCount(termsTree) {
     let count = 0;
@@ -109419,13 +110017,13 @@ ${content}
   var TermCheckbox = (0, import_element345.memo)(function Checkbox2({
     id,
     name: name2,
-    checked,
+    checked: checked2,
     onToggle
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
       import_components204.CheckboxControl,
       {
-        checked,
+        checked: checked2,
         onChange: () => onToggle(id),
         label: (0, import_html_entities25.decodeEntities)(name2)
       }
@@ -109520,13 +110118,13 @@ ${content}
         return {
           hasCreateAction: _taxonomy ? !!post2._links?.["wp:action-create-" + _taxonomy.rest_base] : false,
           hasAssignAction: _taxonomy ? !!post2._links?.["wp:action-assign-" + _taxonomy.rest_base] : false,
-          terms: _taxonomy ? getEditedPostAttribute2(_taxonomy.rest_base) : EMPTY_ARRAY16,
+          terms: _taxonomy ? getEditedPostAttribute2(_taxonomy.rest_base) : EMPTY_ARRAY15,
           loading: isResolving("getEntityRecords", [
             "taxonomy",
             slug,
             DEFAULT_QUERY4
           ]),
-          availableTerms: getEntityRecords("taxonomy", slug, DEFAULT_QUERY4) || EMPTY_ARRAY16,
+          availableTerms: getEntityRecords("taxonomy", slug, DEFAULT_QUERY4) || EMPTY_ARRAY15,
           taxonomy: _taxonomy
         };
       },
@@ -111080,13 +111678,13 @@ ${content}
     let cursorOffset;
     while (low <= high) {
       const length2 = Math.floor((low + high) / 2);
-      const index2 = newValue.indexOf(
+      const index3 = newValue.indexOf(
         oldValueBeforeCursor.slice(oldValueBeforeCursor.length - length2)
       );
-      if (index2 === -1) {
+      if (index3 === -1) {
         high = length2 - 1;
       } else {
-        cursorOffset = index2 + length2;
+        cursorOffset = index3 + length2;
         low = length2 + 1;
       }
     }
@@ -113153,8 +113751,8 @@ ${content}
       const sideStyles = targetSides.map(
         (targetSide) => userBorder?.[targetSide]?.style
       );
-      targetSides.forEach((targetSide, index2) => {
-        if (!sideStyles[index2]) {
+      targetSides.forEach((targetSide, index3) => {
+        if (!sideStyles[index3]) {
           paths.push({
             path: ["border", targetSide, "style"],
             value: "solid"
@@ -113834,7 +114432,7 @@ ${content}
       ) : /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(import_components230.Icon, { icon });
     }
     const itemShortcut = adaptShortcut(shortcut);
-    const checked = isSelected2 ?? (ariaChecked === true || ariaChecked === "true");
+    const checked2 = isSelected2 ?? (ariaChecked === true || ariaChecked === "true");
     const isMixed = isSelected2 === void 0 && ariaChecked === "mixed";
     if (role === "menuitemcheckbox" && !isMixed) {
       return /* @__PURE__ */ (0, import_jsx_runtime602.jsxs)(
@@ -113842,7 +114440,7 @@ ${content}
         {
           ref,
           "aria-label": itemAriaLabel,
-          checked,
+          checked: checked2,
           closeOnClick: true,
           disabled: disabled2,
           onClick,
@@ -113876,7 +114474,7 @@ ${content}
         }
       );
     }
-    const checkableProps = role === "menuitemradio" || role === "menuitemcheckbox" ? { role, "aria-checked": isMixed ? "mixed" : checked } : {};
+    const checkableProps = role === "menuitemradio" || role === "menuitemcheckbox" ? { role, "aria-checked": isMixed ? "mixed" : checked2 } : {};
     return /* @__PURE__ */ (0, import_jsx_runtime602.jsxs)(
       menu_exports.Item,
       {
@@ -114511,8 +115109,8 @@ ${content}
                 menu_exports.CheckboxItem,
                 {
                   checked: !isTemplateHidden,
-                  onCheckedChange: (checked) => {
-                    const newRenderingMode = checked ? "template-locked" : "post-only";
+                  onCheckedChange: (checked2) => {
+                    const newRenderingMode = checked2 ? "template-locked" : "post-only";
                     setRenderingMode2(newRenderingMode);
                     setDefaultRenderingMode2(newRenderingMode);
                     resetZoomLevel();
@@ -115071,10 +115669,10 @@ ${content}
     }
     const anchorRect = blockRects[anchorThread.id];
     const anchorTop = anchorRect.top || 0;
-    const anchorHeight = heights[anchorThread.id] || 0;
+    const anchorHeight2 = heights[anchorThread.id] || 0;
     offsets[anchorThread.id] = THREAD_ALIGN_OFFSET;
     let prevAdjustedTop = anchorTop + THREAD_ALIGN_OFFSET;
-    let prevHeight = anchorHeight;
+    let prevHeight = anchorHeight2;
     for (let i2 = anchorIndex + 1; i2 < orderedThreads.length; i2++) {
       const thread = orderedThreads[i2];
       const threadRect = blockRects[thread.id];
@@ -116586,7 +117184,7 @@ ${content}
     return /* @__PURE__ */ (0, import_jsx_runtime614.jsxs)("div", { className: "collaborators-overlay-full", ref: mergedRef, children: [
       /* @__PURE__ */ (0, import_jsx_runtime614.jsx)("style", { children: AVATAR_IFRAME_STYLES + OVERLAY_IFRAME_STYLES }),
       cursors.map((cursor) => /* @__PURE__ */ (0, import_jsx_runtime614.jsxs)("div", { children: [
-        !cursor.isMe && cursor.selectionRects?.map((rect, index2) => /* @__PURE__ */ (0, import_jsx_runtime614.jsx)(
+        !cursor.isMe && cursor.selectionRects?.map((rect, index3) => /* @__PURE__ */ (0, import_jsx_runtime614.jsx)(
           "div",
           {
             className: "collaborators-overlay-selection-rect",
@@ -116598,7 +117196,7 @@ ${content}
               backgroundColor: cursor.color
             }
           },
-          `${cursor.clientId}-sel-${index2}`
+          `${cursor.clientId}-sel-${index3}`
         )),
         cursor.x !== void 0 && /* @__PURE__ */ (0, import_jsx_runtime614.jsxs)(
           "div",
@@ -117201,17 +117799,17 @@ ${content}
     const selectedIndex = revisions?.findIndex(
       (r4) => r4[revisionKey] === currentRevisionId
     );
-    const handleSliderChange = (index2) => {
-      const revision = revisions?.[index2];
+    const handleSliderChange = (index3) => {
+      const revision = revisions?.[index3];
       if (revision) {
         setCurrentRevisionId2(revision[revisionKey]);
       }
     };
     const dateSettings = (0, import_date22.getSettings)();
-    const renderTooltipContent = (index2) => {
-      const revision = revisions?.[index2];
+    const renderTooltipContent = (index3) => {
+      const revision = revisions?.[index3];
       if (!revision) {
-        return index2;
+        return index3;
       }
       return (0, import_date22.dateI18n)(dateSettings.formats.datetime, revision.date);
     };
@@ -118735,7 +119333,7 @@ ${content}
             showDiff && /* @__PURE__ */ (0, import_jsx_runtime628.jsx)("th", { children: (0, import_i18n325._x)("Change", "noun") }),
             /* @__PURE__ */ (0, import_jsx_runtime628.jsx)("th", { children: (0, import_i18n325.__)("Code") })
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime628.jsx)("tbody", { children: rows.map((row, index2) => {
+          /* @__PURE__ */ (0, import_jsx_runtime628.jsx)("tbody", { children: rows.map((row, index3) => {
             let marker = "";
             let statusLabel = (0, import_i18n325.__)("Unchanged");
             if (row.status === "added") {
@@ -118759,7 +119357,7 @@ ${content}
                   /* @__PURE__ */ (0, import_jsx_runtime628.jsx)("td", { className: "editor-revisions-code-diff__code", children: /* @__PURE__ */ (0, import_jsx_runtime628.jsx)("code", { children: row.value }) })
                 ]
               },
-              index2
+              index3
             );
           }) })
         ] }) : /* @__PURE__ */ (0, import_jsx_runtime628.jsx)("p", { className: "editor-revisions-code-diff__empty", children: (0, import_i18n325.__)("This revision is empty.") })
@@ -120884,7 +121482,7 @@ ${content}
   var import_i18n345 = __toESM(require_i18n(), 1);
   var import_jsx_runtime649 = __toESM(require_jsx_runtime(), 1);
   var PAGE_SIZE2 = 10;
-  var EMPTY_ARRAY17 = [];
+  var EMPTY_ARRAY16 = [];
   var defaultLayouts = { pickerActivity: true };
   var baseView = {
     type: "pickerActivity",
@@ -120992,24 +121590,24 @@ ${content}
       [revisionKey, currentRevisionId]
     );
     const { data: shownRevisions, paginationInfo } = (0, import_element414.useMemo)(
-      () => filterSortAndPaginate(revisions || EMPTY_ARRAY17, view, fields2),
+      () => filterSortAndPaginate(revisions || EMPTY_ARRAY16, view, fields2),
       [revisions, view, fields2]
     );
     (0, import_element414.useEffect)(() => {
       if (!currentRevisionId || !revisions) {
         return;
       }
-      const index2 = revisions.findIndex(
+      const index3 = revisions.findIndex(
         (r4) => String(r4[revisionKey]) === String(currentRevisionId)
       );
-      if (index2 < 0) {
+      if (index3 < 0) {
         return;
       }
-      const page = Math.floor(index2 / view.perPage) + 1;
+      const page = Math.floor(index3 / view.perPage) + 1;
       setView((v3) => v3.page === page ? v3 : { ...v3, page });
     }, [currentRevisionId, revisions, revisionKey, view.perPage]);
     const selection = (0, import_element414.useMemo)(
-      () => currentRevisionId ? [String(currentRevisionId)] : EMPTY_ARRAY17,
+      () => currentRevisionId ? [String(currentRevisionId)] : EMPTY_ARRAY16,
       [currentRevisionId]
     );
     const onChangeSelection = (0, import_element414.useCallback)(
@@ -121064,7 +121662,7 @@ ${content}
     if (!entries) {
       return null;
     }
-    const fields2 = Object.entries(entries).map(([key, parts]) => /* @__PURE__ */ (0, import_jsx_runtime650.jsx)(post_panel_row_default, { label: key, children: /* @__PURE__ */ (0, import_jsx_runtime650.jsx)("span", { className: "editor-revision-fields-diff__value", children: parts.map((part, index2) => {
+    const fields2 = Object.entries(entries).map(([key, parts]) => /* @__PURE__ */ (0, import_jsx_runtime650.jsx)(post_panel_row_default, { label: key, children: /* @__PURE__ */ (0, import_jsx_runtime650.jsx)("span", { className: "editor-revision-fields-diff__value", children: parts.map((part, index3) => {
       if (part.added) {
         return /* @__PURE__ */ (0, import_jsx_runtime650.jsx)(
           "ins",
@@ -121072,7 +121670,7 @@ ${content}
             className: "editor-revision-fields-diff__added",
             children: part.value
           },
-          index2
+          index3
         );
       }
       if (part.removed) {
@@ -121082,10 +121680,10 @@ ${content}
             className: "editor-revision-fields-diff__removed",
             children: part.value
           },
-          index2
+          index3
         );
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime650.jsx)("span", { children: part.value }, index2);
+      return /* @__PURE__ */ (0, import_jsx_runtime650.jsx)("span", { children: part.value }, index3);
     }) }) }, key));
     return /* @__PURE__ */ (0, import_jsx_runtime650.jsx)(import_components261.PanelBody, { title, initialOpen, children: /* @__PURE__ */ (0, import_jsx_runtime650.jsx)("div", { className, children: fields2 }) });
   }
@@ -121210,7 +121808,7 @@ ${content}
     return block;
   }
   function filterPatterns(patterns2, template2) {
-    const filterOutDuplicatesByName = (currentItem, index2, items) => index2 === items.findIndex((item) => currentItem.name === item.name);
+    const filterOutDuplicatesByName = (currentItem, index3, items) => index3 === items.findIndex((item) => currentItem.name === item.name);
     const filterOutExcludedPatternSources = (pattern) => {
       if (template2.area === "navigation-overlay" && pattern.blockTypes?.includes(
         "core/template-part/navigation-overlay"
@@ -121220,8 +121818,8 @@ ${content}
       return !EXCLUDED_PATTERN_SOURCES.includes(pattern.source);
     };
     const filterCompatiblePatterns = (pattern) => pattern.templateTypes?.includes(template2.slug) || pattern.blockTypes?.includes("core/template-part/" + template2.area);
-    return patterns2.filter((pattern, index2, items) => {
-      return filterOutDuplicatesByName(pattern, index2, items) && filterOutExcludedPatternSources(pattern) && filterCompatiblePatterns(pattern);
+    return patterns2.filter((pattern, index3, items) => {
+      return filterOutDuplicatesByName(pattern, index3, items) && filterOutExcludedPatternSources(pattern) && filterCompatiblePatterns(pattern);
     });
   }
   function preparePatterns(patterns2, currentThemeStylesheet) {
@@ -122117,13 +122715,13 @@ ${content}
   var import_rich_text8 = __toESM(require_rich_text(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/rich-text-control/utils.mjs
-  var EMPTY_ARRAY18 = [];
+  var EMPTY_ARRAY17 = [];
   function getAllowedFormats({
     allowedFormats,
     disableFormats
   }) {
     if (disableFormats) {
-      return EMPTY_ARRAY18;
+      return EMPTY_ARRAY17;
     }
     return allowedFormats;
   }
@@ -123804,8 +124402,8 @@ ${content}
               sidebarRef
             }
           ),
-          threads.map((thread, index2) => /* @__PURE__ */ (0, import_jsx_runtime672.jsxs)(import_element428.Fragment, { children: [
-            index2 === firstResolvedIndex && /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(
+          threads.map((thread, index3) => /* @__PURE__ */ (0, import_jsx_runtime672.jsxs)(import_element428.Fragment, { children: [
+            index3 === firstResolvedIndex && /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(
               Stack,
               {
                 direction: "row",
@@ -124691,7 +125289,7 @@ ${content}
   var import_block_editor110 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime682 = __toESM(require_jsx_runtime(), 1);
   var { BlockManager } = unlock(import_block_editor110.privateApis);
-  var EMPTY_ARRAY19 = [];
+  var EMPTY_ARRAY18 = [];
   function BlockVisibility() {
     const { showBlockTypes: showBlockTypes2, hideBlockTypes: hideBlockTypes2 } = unlock(
       (0, import_data275.useDispatch)(store)
@@ -124704,7 +125302,7 @@ ${content}
       return {
         blockTypes: select9(import_blocks39.store).getBlockTypes(),
         allowedBlockTypes: select9(store).getEditorSettings().allowedBlockTypes,
-        hiddenBlockTypes: select9(import_preferences36.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY19
+        hiddenBlockTypes: select9(import_preferences36.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY18
       };
     }, []);
     const allowedBlockTypes = (0, import_element433.useMemo)(() => {

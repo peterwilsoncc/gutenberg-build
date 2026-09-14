@@ -110,7 +110,7 @@ var wp;
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         function useSyncExternalStore$2(subscribe2, getSnapshot2) {
-          didWarnOld18Alpha || void 0 === React50.startTransition || (didWarnOld18Alpha = true, console.error(
+          didWarnOld18Alpha || void 0 === React51.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
           var value = getSnapshot2();
@@ -132,7 +132,7 @@ var wp;
             },
             [subscribe2, value, getSnapshot2]
           );
-          useEffect15(
+          useEffect14(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe2(function() {
@@ -158,8 +158,8 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React50 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState21 = React50.useState, useEffect15 = React50.useEffect, useLayoutEffect3 = React50.useLayoutEffect, useDebugValue = React50.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-        exports.useSyncExternalStore = void 0 !== React50.useSyncExternalStore ? React50.useSyncExternalStore : shim;
+        var React51 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState21 = React51.useState, useEffect14 = React51.useEffect, useLayoutEffect3 = React51.useLayoutEffect, useDebugValue = React51.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        exports.useSyncExternalStore = void 0 !== React51.useSyncExternalStore ? React51.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
     }
@@ -476,20 +476,31 @@ var wp;
   // node_modules/@base-ui/utils/useControlled.mjs
   var React = __toESM(require_react(), 1);
 
-  // node_modules/@base-ui/utils/error.mjs
-  var set;
+  // node_modules/@base-ui/utils/createLogOnce.mjs
+  var loggedMessages;
   if (true) {
-    set = /* @__PURE__ */ new Set();
+    loggedMessages = /* @__PURE__ */ new Set();
   }
-  function error(...messages) {
-    if (true) {
-      const messageKey = messages.join(" ");
-      if (!set.has(messageKey)) {
-        set.add(messageKey);
-        console.error(`Base UI: ${messageKey}`);
+  function createLogOnce(severity, prefix) {
+    return function logOnce(...messages) {
+      if (true) {
+        const message = messages.join(" ");
+        const output = prefix ? `${prefix}: ${message}` : message;
+        const key = `${severity}:${output}`;
+        if (!loggedMessages.has(key)) {
+          loggedMessages.add(key);
+          if (severity === "warn") {
+            console.warn(output);
+          } else {
+            console.error(output);
+          }
+        }
       }
-    }
+    };
   }
+
+  // node_modules/@base-ui/utils/error.mjs
+  var error = createLogOnce("error", "Base UI");
 
   // node_modules/@base-ui/utils/useControlled.mjs
   function useControlled({
@@ -502,7 +513,7 @@ var wp;
       current: isControlled
     } = React.useRef(controlled !== void 0);
     const [valueState, setValue] = React.useState(defaultProp);
-    const value = isControlled ? controlled : valueState;
+    const value = isControlled && controlled !== void 0 ? controlled : valueState;
     if (true) {
       React.useEffect(() => {
         if (isControlled !== (controlled !== void 0)) {
@@ -603,19 +614,13 @@ var wp;
   }
 
   // node_modules/@base-ui/utils/warn.mjs
-  var set2;
-  if (true) {
-    set2 = /* @__PURE__ */ new Set();
+  var warn = createLogOnce("warn", "Base UI");
+
+  // node_modules/@base-ui/utils/empty.mjs
+  function NOOP() {
   }
-  function warn(...messages) {
-    if (true) {
-      const messageKey = messages.join(" ");
-      if (!set2.has(messageKey)) {
-        set2.add(messageKey);
-        console.warn(`Base UI: ${messageKey}`);
-      }
-    }
-  }
+  var EMPTY_ARRAY = Object.freeze([]);
+  var EMPTY_OBJECT = Object.freeze({});
 
   // node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
   var React6 = __toESM(require_react(), 1);
@@ -659,7 +664,7 @@ var wp;
     const map = useRefWithInit(createMap).current;
     const nextIndexRef = React6.useRef(0);
     const isDirtyRef = React6.useRef(true);
-    const itemsRef = React6.useRef([]);
+    const itemsRef = React6.useRef(null);
     const mutationObserverRef = React6.useRef(null);
     const scheduleMapUpdate = useStableCallback(() => {
       if (isDirtyRef.current) {
@@ -733,14 +738,22 @@ var wp;
     const flush = useStableCallback(() => {
       const [items, automaticNodes] = getCompositeListSnapshot(map);
       const nextMap = syncRefs(items);
+      const previousItems = itemsRef.current;
+      const changed = !previousItems || previousItems.length !== items.length || items.some((item, index2) => {
+        const previousItem = previousItems[index2];
+        return item.index !== previousItem.index || item.element !== previousItem.element || item.registration.index !== previousItem.registration.index || item.registration.metadata !== previousItem.registration.metadata;
+      });
       observe(automaticNodes);
       itemsRef.current = items;
       isDirtyRef.current = false;
+      if (!changed) {
+        return;
+      }
       listeners.forEach((listener) => listener(nextMap));
       onMapChange(nextMap);
     });
     useIsoLayoutEffect(() => {
-      if (!isDirtyRef.current) {
+      if (!isDirtyRef.current && itemsRef.current) {
         syncRefs(itemsRef.current);
       }
       return () => {
@@ -792,16 +805,16 @@ var wp;
       if (!node.isConnected) {
         return;
       }
-      const index = registration.index;
+      const index2 = registration.index;
       const item = {
-        index: index ?? -1,
+        index: index2 ?? -1,
         element: node,
         registration
       };
-      if (index === null) {
+      if (index2 === null) {
         automaticItems.push(item);
-      } else if (index >= 0) {
-        reservedIndices.add(index);
+      } else if (index2 >= 0) {
+        reservedIndices.add(index2);
         items.push(item);
       }
     });
@@ -870,7 +883,7 @@ var wp;
     return forkRef.refs[0] !== a || forkRef.refs[1] !== b || forkRef.refs[2] !== c || forkRef.refs[3] !== d;
   }
   function didChangeN(forkRef, newRefs) {
-    return forkRef.refs.length !== newRefs.length || forkRef.refs.some((ref, index) => ref !== newRefs[index]);
+    return forkRef.refs.length !== newRefs.length || forkRef.refs.some((ref, index2) => ref !== newRefs[index2]);
   }
   function update(forkRef, refs) {
     forkRef.refs = refs;
@@ -969,12 +982,6 @@ var wp;
     }
     return void 0;
   }
-
-  // node_modules/@base-ui/utils/empty.mjs
-  function NOOP() {
-  }
-  var EMPTY_ARRAY = Object.freeze([]);
-  var EMPTY_OBJECT = Object.freeze({});
 
   // node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
   function getStateAttributesProps(state, customMapping) {
@@ -1165,19 +1172,21 @@ var wp;
   // node_modules/@base-ui/react/internals/useRenderElement.mjs
   var import_react = __toESM(require_react(), 1);
   function useRenderElement(element, componentProps, params = {}) {
-    const renderProp = componentProps.render;
-    const outProps = useRenderElementProps(componentProps, params);
+    let renderProp = componentProps.render;
+    if (params.enabled !== false) {
+      renderProp = unwrapLazyRenderProp(renderProp);
+    }
+    const outProps = useRenderElementProps(componentProps, params, renderProp);
     if (params.enabled === false) {
       return null;
     }
     const state = params.state ?? EMPTY_OBJECT;
     return evaluateRenderProp(element, renderProp, outProps, state);
   }
-  function useRenderElementProps(componentProps, params = {}) {
+  function useRenderElementProps(componentProps, params, renderProp) {
     const {
       className: classNameProp,
-      style: styleProp,
-      render: renderProp
+      style: styleProp
     } = componentProps;
     const {
       state = EMPTY_OBJECT,
@@ -1220,6 +1229,13 @@ var wp;
   var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
   var COMPONENT_IDENTIFIER_PATTERN = /^[A-Z][A-Za-z0-9$]*$/;
   var LOWERCASE_CHARACTER_PATTERN = /[a-z]/;
+  function unwrapLazyRenderProp(render) {
+    if (render?.$$typeof !== REACT_LAZY_TYPE) {
+      return render;
+    }
+    const unwrapped = React9.Children.toArray(render)[0];
+    return /* @__PURE__ */ React9.isValidElement(unwrapped) ? unwrapped : render;
+  }
   function evaluateRenderProp(element, render, props, state) {
     if (render) {
       if (typeof render === "function") {
@@ -1230,17 +1246,12 @@ var wp;
       }
       const mergedProps = mergeProps(props, render.props);
       mergedProps.ref = props.ref;
-      let newElement = render;
-      if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-        const children = React9.Children.toArray(render);
-        newElement = children[0];
-      }
       if (true) {
-        if (!/* @__PURE__ */ React9.isValidElement(newElement)) {
+        if (!/* @__PURE__ */ React9.isValidElement(render)) {
           throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
         }
       }
-      return /* @__PURE__ */ React9.cloneElement(newElement, mergedProps);
+      return /* @__PURE__ */ React9.cloneElement(render, mergedProps);
     }
     if (element) {
       if (typeof element === "string") {
@@ -1460,11 +1471,14 @@ var wp;
       return id;
     }
     cancel(id) {
-      const index = id - this.startId;
-      if (index < 0 || index >= this.callbacks.length) {
+      const index2 = id - this.startId;
+      if (index2 < 0 || index2 >= this.callbacks.length) {
         return;
       }
-      this.callbacks[index] = null;
+      if (this.callbacks[index2] === null) {
+        return;
+      }
+      this.callbacks[index2] = null;
       this.callbacksCount -= 1;
     }
   };
@@ -1507,9 +1521,9 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-  function useTransitionStatus(open, enableIdleState = false, deferEndingState = false) {
+  function useTransitionStatus(open, enableIdleState = false, deferEndingState = false, animateInitialOpen = false) {
     const [transitionStatus, setTransitionStatus] = React12.useState(open && enableIdleState ? "idle" : void 0);
-    const [mounted, setMounted] = React12.useState(open);
+    const [mounted, setMounted] = React12.useState(open && !animateInitialOpen);
     if (open && !mounted) {
       setMounted(true);
       setTransitionStatus("starting");
@@ -1588,7 +1602,7 @@ var wp;
       }
       return indexRef.current;
     } : -1);
-    const index = externalIndex ?? internalIndex;
+    const index2 = externalIndex ?? internalIndex;
     const componentRef = React13.useRef(null);
     const ref = React13.useCallback((node) => {
       const previousNode = componentRef.current;
@@ -1618,16 +1632,25 @@ var wp;
     }, [externalIndex, subscribeMapChange]);
     return {
       ref,
-      index
+      index: index2
     };
   }
 
+  // node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
+  var TransitionStatusDataAttributes_exports = {};
+  __export(TransitionStatusDataAttributes_exports, {
+    endingStyle: () => endingStyle,
+    startingStyle: () => startingStyle
+  });
+  var startingStyle = "data-starting-style";
+  var endingStyle = "data-ending-style";
+
   // node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
   var STARTING_HOOK = {
-    "data-starting-style": ""
+    [startingStyle]: ""
   };
   var ENDING_HOOK = {
-    "data-ending-style": ""
+    [endingStyle]: ""
   };
   var transitionStatusMapping = {
     transitionStatus(value) {
@@ -1648,15 +1671,25 @@ var wp;
   function hasWindow() {
     return typeof window !== "undefined";
   }
+  function getNodeName(node) {
+    if (isNode(node)) {
+      return (node.nodeName || "").toLowerCase();
+    }
+    return "#document";
+  }
   function getWindow(node) {
     var _node$ownerDocument;
     return (node == null || (_node$ownerDocument = node.ownerDocument) == null ? void 0 : _node$ownerDocument.defaultView) || window;
   }
-  function isElement(value) {
+  function getDocumentElement(node) {
+    var _ref;
+    return (_ref = (isNode(node) ? node.ownerDocument : node.document) || window.document) == null ? void 0 : _ref.documentElement;
+  }
+  function isNode(value) {
     if (!hasWindow()) {
       return false;
     }
-    return value instanceof Element || value instanceof getWindow(value).Element;
+    return value instanceof Node || value instanceof getWindow(value).Node;
   }
   function isHTMLElement(value) {
     if (!hasWindow()) {
@@ -1670,8 +1703,24 @@ var wp;
     }
     return value instanceof ShadowRoot || value instanceof getWindow(value).ShadowRoot;
   }
+  function isLastTraversableNode(node) {
+    return /^(html|body|#document)$/.test(getNodeName(node));
+  }
   function getComputedStyle2(element) {
     return getWindow(element).getComputedStyle(element);
+  }
+  function getParentNode(node) {
+    if (getNodeName(node) === "html") {
+      return node;
+    }
+    const result = (
+      // Step into the shadow DOM of the parent of a slotted node.
+      node.assignedSlot || // DOM Element detected.
+      node.parentNode || // ShadowRoot detected.
+      isShadowRoot(node) && node.host || // Fallback.
+      getDocumentElement(node)
+    );
+    return isShadowRoot(result) ? result.host : result;
   }
 
   // node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
@@ -1925,7 +1974,23 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-  function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false) {
+  var pendingCallbacks = null;
+  function flushBeforePaint(fn) {
+    if (!pendingCallbacks) {
+      const callbacks = [];
+      pendingCallbacks = callbacks;
+      queueMicrotask(() => {
+        pendingCallbacks = null;
+        ReactDOM.flushSync(() => {
+          for (const callback of callbacks) {
+            callback();
+          }
+        });
+      });
+    }
+    pendingCallbacks.push(fn);
+  }
+  function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, batch = false) {
     const frame = useAnimationFrame();
     return useStableCallback((fnToExecute, signal = null) => {
       frame.cancel();
@@ -1935,7 +2000,15 @@ var wp;
       }
       const resolvedElement = element;
       const done = () => {
-        ReactDOM.flushSync(fnToExecute);
+        if (!batch) {
+          ReactDOM.flushSync(fnToExecute);
+          return;
+        }
+        flushBeforePaint(() => {
+          if (!signal?.aborted) {
+            fnToExecute();
+          }
+        });
       };
       if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
         fnToExecute();
@@ -1959,7 +2032,7 @@ var wp;
         });
       }
       if (waitForStartingStyleRemoved) {
-        const startingStyleAttribute = "data-starting-style";
+        const startingStyleAttribute = startingStyle;
         if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
           frame.request(exec);
           return;
@@ -1989,10 +2062,11 @@ var wp;
       enabled = true,
       open,
       ref,
+      batch = false,
       onComplete: onCompleteParam
     } = parameters;
     const onComplete = useStableCallback(onCompleteParam);
-    const runOnceAnimationsFinish = useAnimationsFinished(ref, open);
+    const runOnceAnimationsFinish = useAnimationsFinished(ref, open, batch);
     React17.useEffect(() => {
       if (!enabled) {
         return void 0;
@@ -2041,7 +2115,7 @@ var wp;
     return timeout;
   }
 
-  // node_modules/@base-ui/react/internals/shadowDom.mjs
+  // node_modules/@base-ui/utils/shadowDom.mjs
   function activeElement(doc) {
     let element = doc.activeElement;
     while (element?.shadowRoot?.activeElement != null) {
@@ -2070,7 +2144,7 @@ var wp;
   }
   function getTarget(event) {
     if ("composedPath" in event) {
-      return event.composedPath()[0];
+      return event.composedPath()[0] ?? event.target;
     }
     return event.target;
   }
@@ -2079,8 +2153,8 @@ var wp;
   var round = Math.round;
 
   // node_modules/@base-ui/react/floating-ui-react/utils/composite.mjs
-  function isIndexOutOfListBounds(list, index) {
-    return index < 0 || index >= list.length;
+  function isIndexOutOfListBounds(list, index2) {
+    return index2 < 0 || index2 >= list.length;
   }
   function getMinListIndex(listRef, disabledIndices) {
     return findNonDisabledListIndex(listRef.current, {
@@ -2100,18 +2174,18 @@ var wp;
     disabledIndices,
     amount = 1
   } = {}) {
-    let index = startingIndex;
+    let index2 = startingIndex;
     do {
-      index += decrement ? -amount : amount;
-    } while (index >= 0 && index <= list.length - 1 && isListIndexDisabled(list, index, disabledIndices));
-    return index;
+      index2 += decrement ? -amount : amount;
+    } while (index2 >= 0 && index2 <= list.length - 1 && isListIndexDisabled(list, index2, disabledIndices));
+    return index2;
   }
-  function isListIndexDisabled(list, index, disabledIndices) {
-    const isExplicitlyDisabled = typeof disabledIndices === "function" ? disabledIndices(index) : disabledIndices?.includes(index) ?? false;
+  function isListIndexDisabled(list, index2, disabledIndices) {
+    const isExplicitlyDisabled = typeof disabledIndices === "function" ? disabledIndices(index2) : disabledIndices?.includes(index2) ?? false;
     if (isExplicitlyDisabled) {
       return true;
     }
-    const element = list[index];
+    const element = list[index2];
     if (!element) {
       return false;
     }
@@ -2244,8 +2318,25 @@ var wp;
     return value ? "true" : void 0;
   }
 
-  // node_modules/@base-ui/react/internals/field-root-context/FieldRootContext.mjs
+  // node_modules/@base-ui/react/internals/useValueChanged.mjs
   var React19 = __toESM(require_react(), 1);
+  function useValueChanged(value, onChange) {
+    const valueRef = React19.useRef(value);
+    const onChangeCallback = useStableCallback(onChange);
+    useIsoLayoutEffect(() => {
+      if (valueRef.current !== value) {
+        onChangeCallback(valueRef.current);
+      }
+      valueRef.current = value;
+    }, [value, onChangeCallback]);
+  }
+
+  // node_modules/@base-ui/react/internals/field-root-context/FieldRootContext.mjs
+  var React20 = __toESM(require_react(), 1);
+
+  // node_modules/@base-ui/react/field/control/FieldControlDataAttributes.mjs
+  var valid = "data-valid";
+  var invalid = "data-invalid";
 
   // node_modules/@base-ui/react/internals/field-constants/constants.mjs
   var DEFAULT_VALIDITY_STATE = {
@@ -2279,11 +2370,11 @@ var wp;
       }
       if (value) {
         return {
-          "data-valid": ""
+          [valid]: ""
         };
       }
       return {
-        "data-invalid": ""
+        [invalid]: ""
       };
     }
   };
@@ -2322,10 +2413,10 @@ var wp;
       change: NOOP
     }
   };
-  var FieldRootContext = /* @__PURE__ */ React19.createContext(DEFAULT_FIELD_ROOT_CONTEXT);
+  var FieldRootContext = /* @__PURE__ */ React20.createContext(DEFAULT_FIELD_ROOT_CONTEXT);
   if (true) FieldRootContext.displayName = "FieldRootContext";
   function useFieldRootContext(optional = true) {
-    const context = React19.useContext(FieldRootContext);
+    const context = React20.useContext(FieldRootContext);
     if (context.setValidityData === NOOP && !optional) {
       throw new Error(true ? "Base UI: FieldRootContext is missing. Field parts must be placed within <Field.Root>." : formatErrorMessage_default(28));
     }
@@ -2362,8 +2453,8 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/form-context/FormContext.mjs
-  var React20 = __toESM(require_react(), 1);
-  var FormContext = /* @__PURE__ */ React20.createContext({
+  var React21 = __toESM(require_react(), 1);
+  var FormContext = /* @__PURE__ */ React21.createContext({
     elementRef: {
       current: null
     },
@@ -2375,23 +2466,24 @@ var wp;
     errors: {},
     clearErrors: NOOP,
     validationMode: "onSubmit",
-    submitAttemptedRef: {
-      current: false
+    submitCountRef: {
+      current: 0
     }
   });
   if (true) FormContext.displayName = "FormContext";
   function useFormContext() {
-    return React20.useContext(FormContext);
+    return React21.useContext(FormContext);
   }
 
   // node_modules/@base-ui/react/internals/labelable-provider/useLabelableId.mjs
-  var React22 = __toESM(require_react(), 1);
+  var React23 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/internals/labelable-provider/LabelableContext.mjs
-  var React21 = __toESM(require_react(), 1);
-  var LabelableContext = /* @__PURE__ */ React21.createContext({
+  var React22 = __toESM(require_react(), 1);
+  var LabelableContext = /* @__PURE__ */ React22.createContext({
     controlId: void 0,
     registerControlId: NOOP,
+    resetControlId: NOOP,
     labelId: void 0,
     setLabelId: NOOP,
     messageIds: [],
@@ -2400,25 +2492,24 @@ var wp;
   });
   if (true) LabelableContext.displayName = "LabelableContext";
   function useLabelableContext() {
-    return React21.useContext(LabelableContext);
+    return React22.useContext(LabelableContext);
   }
 
   // node_modules/@base-ui/react/internals/labelable-provider/useLabelableId.mjs
   function useLabelableId(params = {}) {
     const {
       id,
-      implicit = false,
-      controlRef
+      enabled = true
     } = params;
     const {
       controlId,
-      registerControlId
+      registerControlId,
+      resetControlId
     } = useLabelableContext();
-    const defaultId = useBaseUiId(id);
-    const controlIdForEffect = implicit ? controlId : void 0;
+    const defaultId = useBaseUiId();
     const controlSourceRef = useRefWithInit(() => /* @__PURE__ */ Symbol());
-    const hasRegisteredRef = React22.useRef(false);
-    const hadExplicitIdRef = React22.useRef(id != null);
+    const hasRegisteredRef = React23.useRef(false);
+    const hadExplicitIdRef = React23.useRef(false);
     const unregisterControlId = useStableCallback(() => {
       if (!hasRegisteredRef.current || registerControlId === NOOP) {
         return;
@@ -2427,24 +2518,18 @@ var wp;
       registerControlId(controlSourceRef.current, void 0);
     });
     useIsoLayoutEffect(() => {
-      if (registerControlId === NOOP) {
+      if (!enabled || registerControlId === NOOP) {
+        unregisterControlId();
         return void 0;
       }
       let nextId;
-      if (implicit) {
-        const elem = controlRef?.current;
-        if (isElement(elem) && elem.closest("label") != null) {
-          nextId = id ?? null;
-        } else {
-          nextId = controlIdForEffect ?? defaultId;
-        }
-      } else if (id != null) {
+      if (id !== void 0) {
         hadExplicitIdRef.current = true;
         nextId = id;
       } else if (hadExplicitIdRef.current) {
         nextId = defaultId;
       } else {
-        unregisterControlId();
+        resetControlId();
         return void 0;
       }
       if (nextId === void 0) {
@@ -2454,43 +2539,43 @@ var wp;
       hasRegisteredRef.current = true;
       registerControlId(controlSourceRef.current, nextId);
       return void 0;
-    }, [id, controlRef, controlIdForEffect, registerControlId, implicit, defaultId, controlSourceRef, unregisterControlId]);
-    React22.useEffect(() => {
+    }, [id, enabled, registerControlId, resetControlId, defaultId, controlSourceRef, unregisterControlId]);
+    useIsoLayoutEffect(() => {
       return unregisterControlId;
     }, [unregisterControlId]);
-    return controlId ?? defaultId;
+    return (enabled ? controlId : void 0) ?? id ?? defaultId;
   }
 
   // node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
-  var React23 = __toESM(require_react(), 1);
-  var DirectionContext = /* @__PURE__ */ React23.createContext(void 0);
+  var React24 = __toESM(require_react(), 1);
+  var DirectionContext = /* @__PURE__ */ React24.createContext(void 0);
   if (true) DirectionContext.displayName = "DirectionContext";
   function useDirection() {
-    const context = React23.useContext(DirectionContext);
+    const context = React24.useContext(DirectionContext);
     return context?.direction ?? "ltr";
   }
 
   // node_modules/@base-ui/react/field/item/FieldItemContext.mjs
-  var React24 = __toESM(require_react(), 1);
-  var FieldItemContext = /* @__PURE__ */ React24.createContext({
+  var React25 = __toESM(require_react(), 1);
+  var FieldItemContext = /* @__PURE__ */ React25.createContext({
     disabled: false
   });
   if (true) FieldItemContext.displayName = "FieldItemContext";
   function useFieldItemContext() {
-    const context = React24.useContext(FieldItemContext);
+    const context = React25.useContext(FieldItemContext);
     return context;
   }
 
   // node_modules/@base-ui/react/field/root/useFieldValidation.mjs
-  var React25 = __toESM(require_react(), 1);
+  var React26 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/field/utils/getCombinedFieldValidityData.mjs
-  function getCombinedFieldValidityData(validityData, invalid) {
+  function getCombinedFieldValidityData(validityData, invalid2) {
     return {
       ...validityData,
       state: {
         ...validityData.state,
-        valid: !invalid && validityData.state.valid
+        valid: !invalid2 && validityData.state.valid
       }
     };
   }
@@ -2519,11 +2604,15 @@ var wp;
     }
     return fallback;
   }
-  function clearCustomValidity(element, inputs) {
-    for (const input of inputs.keys()) {
-      input.setCustomValidity("");
-    }
-    element?.setCustomValidity("");
+  function makeState(customError) {
+    return {
+      ...DEFAULT_VALIDITY_STATE,
+      valid: !customError,
+      customError
+    };
+  }
+  function getNativeErrors(element) {
+    return element && element.validationMessage ? [element.validationMessage] : [];
   }
   function useFieldValidation(params) {
     const {
@@ -2535,10 +2624,11 @@ var wp;
       validate,
       validityData,
       validationDebounceTime,
-      invalid,
+      invalid: invalid2,
       markedDirtyRef,
       state,
       shouldValidateOnChange,
+      validationMode,
       registeredFieldIdRef
     } = params;
     const {
@@ -2546,10 +2636,11 @@ var wp;
       getDescriptionProps
     } = useLabelableContext();
     const timeout = useTimeout();
-    const inputRef = React25.useRef(null);
+    const inputRef = React26.useRef(null);
     const registeredInputs = useRefWithInit(() => /* @__PURE__ */ new Map()).current;
-    const validationCommitIdRef = React25.useRef(0);
-    const registerInput = React25.useCallback((element, registration) => {
+    const validationCommitIdRef = React26.useRef(0);
+    const customValidityRef = React26.useRef(null);
+    const registerInput = React26.useCallback((element, registration) => {
       registeredInputs.set(element, registration);
       return () => {
         registeredInputs.delete(element);
@@ -2562,7 +2653,7 @@ var wp;
     const commit = useStableCallback(async (value, revalidate = false) => {
       validationCommitIdRef.current += 1;
       const validationCommitId = validationCommitIdRef.current;
-      function updateRegisteredFieldValidity(nextValidityData2, externalInvalid = invalid) {
+      function updateRegisteredFieldValidity(nextValidityData, externalInvalid = invalid2) {
         const fieldId = registeredFieldIdRef.current ?? controlId;
         if (fieldId == null) {
           return;
@@ -2571,42 +2662,39 @@ var wp;
         if (!currentFieldData) {
           return;
         }
-        const validityDataWithFormErrors = getCombinedFieldValidityData(nextValidityData2, externalInvalid);
+        const validityDataWithFormErrors = getCombinedFieldValidityData(nextValidityData, externalInvalid);
         formRef.current.fields.set(fieldId, {
           ...currentFieldData,
           validityData: validityDataWithFormErrors
         });
       }
-      function publishAllValid(input, externalInvalid) {
-        const nextValidityData2 = {
+      function makeValidityData(validityState, errorMessages) {
+        const errors = validityState.valid === false ? errorMessages : [];
+        return {
           value,
-          state: {
-            ...DEFAULT_VALIDITY_STATE,
-            valid: true
-          },
-          error: "",
-          errors: [],
+          state: validityState,
+          error: errors[0] ?? "",
+          errors,
           initialValue: validityData.initialValue
         };
-        clearCustomValidity(input, registeredInputs);
-        updateRegisteredFieldValidity(nextValidityData2, externalInvalid);
-        setValidityData(nextValidityData2);
       }
-      const element = registeredInputs.size > 0 ? findRepresentativeInput(registeredInputs, elementRef.current) : inputRef.current;
-      if (revalidate) {
-        if (state.valid !== false || !element) {
-          return;
+      function setCustomValidity(element2, message) {
+        const displaced = element2.validity.customError ? element2.validationMessage : "";
+        const ownedMessage = message.replace(/\r\n?/g, "\n");
+        element2.setCustomValidity(ownedMessage);
+        customValidityRef.current = [element2, ownedMessage, displaced];
+      }
+      function clearCustomValidity() {
+        const record = customValidityRef.current;
+        customValidityRef.current = null;
+        if (record && (!record[0].willValidate || record[0].validationMessage === record[1])) {
+          record[0].setCustomValidity(record[2]);
         }
-        const currentNativeValidity = element.validity;
-        if (!currentNativeValidity.valueMissing) {
-          publishAllValid(element, false);
-          return;
-        }
-        for (const key of validityKeys) {
-          if (key !== "valid" && key !== "valueMissing" && key !== "customError" && currentNativeValidity[key]) {
-            return;
-          }
-        }
+      }
+      function publish(validityState, errorMessages, externalInvalid) {
+        const nextValidityData = makeValidityData(validityState, errorMessages);
+        updateRegisteredFieldValidity(nextValidityData, externalInvalid);
+        setValidityData(nextValidityData);
       }
       function getState(el) {
         const computedState = validityKeys.reduce((acc, key) => {
@@ -2630,19 +2718,37 @@ var wp;
         }
         return computedState;
       }
+      function resolveRepresentativeInput() {
+        return registeredInputs.size > 0 ? findRepresentativeInput(registeredInputs, elementRef.current) : inputRef.current;
+      }
+      let element = resolveRepresentativeInput();
+      function refreshState() {
+        element = resolveRepresentativeInput();
+        return element?.willValidate ? getState(element) : makeState(false);
+      }
+      if (revalidate) {
+        if (state.valid !== false || !element) {
+          return;
+        }
+        if (!element.validity.valueMissing) {
+          clearCustomValidity();
+          const currentElement = resolveRepresentativeInput();
+          const foreign = currentElement?.validity.customError ? getNativeErrors(currentElement) : [];
+          publish(makeState(foreign.length > 0), foreign, false);
+          return;
+        }
+        for (const key of validityKeys) {
+          if (key !== "valid" && key !== "valueMissing" && key !== "customError" && element.validity[key]) {
+            return;
+          }
+        }
+      }
       timeout.clear();
-      let result = null;
-      let validationErrors = [];
-      const nextState = element ? getState(element) : {
-        ...DEFAULT_VALIDITY_STATE,
-        valid: true
-      };
-      let defaultValidationMessage;
+      clearCustomValidity();
+      let nextState = refreshState();
+      let validationErrors = getNativeErrors(element);
       const isValidatingOnChange = shouldValidateOnChange();
-      if (element && element.validationMessage && !isValidatingOnChange) {
-        defaultValidationMessage = element.validationMessage;
-        validationErrors = [element.validationMessage];
-      } else {
+      if (validationErrors.length === 0 || isValidatingOnChange) {
         const formValues = Array.from(formRef.current.fields.values()).reduce((acc, field) => {
           if (field.name) {
             acc[field.name] = field.getValue();
@@ -2650,50 +2756,43 @@ var wp;
           return acc;
         }, {});
         const resultOrPromise = validate(value, formValues);
+        let result;
         if (typeof resultOrPromise === "object" && resultOrPromise !== null && "then" in resultOrPromise) {
+          if (nextState.valid === false) {
+            publish(nextState, validationErrors);
+          } else if (validationMode === "onSubmit" || !validityData.state.customError) {
+            nextState.valid = null;
+            publish(nextState, validationErrors);
+          }
           result = await resultOrPromise;
           if (validationCommitId !== validationCommitIdRef.current) {
             return;
           }
+          nextState = refreshState();
         } else {
           result = resultOrPromise;
         }
-        if (result !== null) {
+        validationErrors = result ? [].concat(result).filter(Boolean) : [];
+        if (validationErrors.length > 0) {
           nextState.valid = false;
           nextState.customError = true;
-          if (Array.isArray(result)) {
-            validationErrors = result;
-            element?.setCustomValidity(result.join("\n"));
-          } else if (result) {
-            validationErrors = [result];
-            element?.setCustomValidity(result);
+          if (element?.willValidate) {
+            setCustomValidity(element, validationErrors.join("\n"));
           }
-        } else if (isValidatingOnChange) {
-          clearCustomValidity(element, registeredInputs);
-          nextState.customError = false;
-          if (element && element.validationMessage) {
-            defaultValidationMessage = element.validationMessage;
-            validationErrors = [element.validationMessage];
-          } else if ((!element || element.validity.valid) && !nextState.valid) {
-            nextState.valid = true;
-          }
+        } else {
+          validationErrors = getNativeErrors(element);
         }
       }
-      const nextValidityData = {
-        value,
-        state: nextState,
-        error: defaultValidationMessage ?? (Array.isArray(result) ? result[0] : result ?? ""),
-        errors: validationErrors,
-        initialValue: validityData.initialValue
-      };
-      updateRegisteredFieldValidity(nextValidityData);
-      setValidityData(nextValidityData);
+      publish(nextState, validationErrors);
     });
-    const change = useStableCallback((value) => {
+    const change = useStableCallback((value, cancelPending = false) => {
       timeout.clear();
+      validationCommitIdRef.current += 1;
+      if (cancelPending) {
+        return;
+      }
       const validateOnChange = shouldValidateOnChange();
       if (validateOnChange && value !== "" && validationDebounceTime) {
-        validationCommitIdRef.current += 1;
         timeout.start(validationDebounceTime, () => {
           commit(value);
         });
@@ -2701,10 +2800,10 @@ var wp;
         commit(value, !validateOnChange);
       }
     });
-    const getValidationProps = React25.useCallback((disabled2, externalProps = {}) => mergeProps(getDescriptionProps(externalProps), state.valid === false && !state.disabled && !disabled2 ? {
+    const getValidationProps = React26.useCallback((disabled2, externalProps = {}) => mergeProps(getDescriptionProps(externalProps), state.valid === false && !state.disabled && !disabled2 ? {
       "aria-invalid": true
     } : EMPTY_OBJECT), [getDescriptionProps, state.disabled, state.valid]);
-    return React25.useMemo(() => ({
+    return React26.useMemo(() => ({
       getValidationProps,
       inputRef,
       registeredInputs,
@@ -2774,7 +2873,7 @@ var wp;
     }
     return native ? {
       id,
-      htmlFor: resolvedControlId ?? void 0,
+      htmlFor: resolvedControlId,
       onMouseDown: handleInteraction
     } : {
       id,
@@ -2793,7 +2892,7 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/composite/item/useCompositeItem.mjs
-  var React26 = __toESM(require_react(), 1);
+  var React27 = __toESM(require_react(), 1);
   function useCompositeItem(params = {}) {
     const {
       highlightItemOnHover,
@@ -2802,15 +2901,15 @@ var wp;
     } = useCompositeRootContext();
     const {
       ref,
-      index
+      index: index2
     } = useCompositeListItem(params);
-    const isHighlighted = highlightedIndex === index;
-    const itemRef = React26.useRef(null);
+    const isHighlighted = highlightedIndex === index2;
+    const itemRef = React27.useRef(null);
     const mergedRef = useMergedRefs(ref, itemRef);
     const compositeProps = {
       tabIndex: isHighlighted ? 0 : -1,
       onFocus() {
-        onHighlightedIndexChange(index);
+        onHighlightedIndexChange(index2);
       },
       onMouseMove() {
         const item = itemRef.current;
@@ -2826,7 +2925,7 @@ var wp;
     return {
       compositeProps,
       compositeRef: mergedRef,
-      index
+      index: index2
     };
   }
 
@@ -2850,13 +2949,13 @@ var wp;
   }
 
   // node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
-  var React27 = __toESM(require_react(), 1);
+  var React28 = __toESM(require_react(), 1);
   var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
   var DirectionProvider = function DirectionProvider2(props) {
     const {
       direction = "ltr"
     } = props;
-    const contextValue = React27.useMemo(() => ({
+    const contextValue = React28.useMemo(() => ({
       direction
     }), [direction]);
     return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(DirectionContext.Provider, {
@@ -2872,14 +2971,42 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/csp-context/CSPContext.mjs
-  var React28 = __toESM(require_react(), 1);
-  var CSPContext = /* @__PURE__ */ React28.createContext(void 0);
+  var React29 = __toESM(require_react(), 1);
+  var CSPContext = /* @__PURE__ */ React29.createContext(void 0);
   if (true) CSPContext.displayName = "CSPContext";
   var DEFAULT_CSP_CONTEXT_VALUE = {
     disableStyleElements: false
   };
   function useCSPContext() {
-    return React28.useContext(CSPContext) ?? DEFAULT_CSP_CONTEXT_VALUE;
+    return React29.useContext(CSPContext) ?? DEFAULT_CSP_CONTEXT_VALUE;
+  }
+
+  // node_modules/@base-ui/react/utils/getElementTransform.mjs
+  function getElementTransform(element, computedStyle) {
+    const transform = (computedStyle ?? getWindow(element).getComputedStyle(element)).transform;
+    let translateX = 0;
+    let translateY = 0;
+    let scale = 1;
+    if (transform && transform !== "none") {
+      const matrix = transform.match(/matrix(?:3d)?\(([^)]+)\)/);
+      if (matrix) {
+        const values = matrix[1].split(", ").map(parseFloat);
+        if (values.length === 6) {
+          translateX = values[4];
+          translateY = values[5];
+          scale = Math.sqrt(values[0] * values[0] + values[1] * values[1]);
+        } else if (values.length === 16) {
+          translateX = values[12];
+          translateY = values[13];
+          scale = values[0];
+        }
+      }
+    }
+    return {
+      x: translateX,
+      y: translateY,
+      scale
+    };
   }
 
   // node_modules/@base-ui/react/field/index.parts.mjs
@@ -2895,14 +3022,14 @@ var wp;
   });
 
   // node_modules/@base-ui/react/field/root/FieldRoot.mjs
-  var React32 = __toESM(require_react(), 1);
+  var React33 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/fieldset/root/FieldsetRootContext.mjs
-  var React29 = __toESM(require_react(), 1);
-  var FieldsetRootContext = /* @__PURE__ */ React29.createContext(void 0);
+  var React30 = __toESM(require_react(), 1);
+  var FieldsetRootContext = /* @__PURE__ */ React30.createContext(void 0);
   if (true) FieldsetRootContext.displayName = "FieldsetRootContext";
   function useFieldsetRootContext(optional = false) {
-    const context = React29.useContext(FieldsetRootContext);
+    const context = React30.useContext(FieldsetRootContext);
     if (!context && !optional) {
       throw new Error(true ? "Base UI: FieldsetRootContext is missing. Fieldset parts must be placed within <Fieldset.Root>." : formatErrorMessage_default(86));
     }
@@ -2910,14 +3037,14 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/labelable-provider/LabelableProvider.mjs
-  var React30 = __toESM(require_react(), 1);
+  var React31 = __toESM(require_react(), 1);
   var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
   var LabelableProvider = function LabelableProvider2(props) {
     const defaultId = useBaseUiId();
-    const initialControlId = props.controlId === void 0 ? defaultId : props.controlId;
-    const [controlId, setControlIdState] = React30.useState(initialControlId);
-    const [labelId, setLabelId] = React30.useState(props.labelId);
-    const [messageIds, setMessageIds] = React30.useState([]);
+    const [controlIdState, setControlIdState] = React31.useState(defaultId);
+    const [labelId, setLabelId] = React31.useState();
+    const [messageIds, setMessageIds] = React31.useState([]);
+    const controlId = controlIdState === void 0 ? defaultId : controlIdState;
     const registrationsRef = useRefWithInit(() => /* @__PURE__ */ new Map());
     const {
       messageIds: parentMessageIds
@@ -2926,16 +3053,16 @@ var wp;
       const registrations = registrationsRef.current;
       if (nextId === void 0) {
         registrations.delete(source);
-        return;
+      } else {
+        registrations.set(source, nextId);
       }
-      registrations.set(source, nextId);
       setControlIdState((prev) => {
         if (registrations.size === 0) {
-          return void 0;
+          return prev;
         }
         let nextControlId;
         for (const id of registrations.values()) {
-          if (prev !== void 0 && id === prev) {
+          if (id === prev) {
             return prev;
           }
           if (nextControlId === void 0) {
@@ -2945,7 +3072,12 @@ var wp;
         return nextControlId;
       });
     });
-    const getDescriptionProps = React30.useCallback((externalProps) => {
+    const resetControlId = useStableCallback(() => {
+      if (registrationsRef.current.size === 0) {
+        setControlIdState(defaultId);
+      }
+    });
+    const getDescriptionProps = React31.useCallback((externalProps) => {
       const ids = externalProps["aria-describedby"] ? externalProps["aria-describedby"].split(" ") : [];
       ids.push(...parentMessageIds, ...messageIds);
       return {
@@ -2953,15 +3085,16 @@ var wp;
         "aria-describedby": Array.from(new Set(ids)).join(" ") || void 0
       };
     }, [parentMessageIds, messageIds]);
-    const contextValue = React30.useMemo(() => ({
+    const contextValue = React31.useMemo(() => ({
       controlId,
       registerControlId,
+      resetControlId,
       labelId,
       setLabelId,
       messageIds,
       setMessageIds,
       getDescriptionProps
-    }), [controlId, registerControlId, labelId, setLabelId, messageIds, setMessageIds, getDescriptionProps]);
+    }), [controlId, registerControlId, resetControlId, labelId, setLabelId, messageIds, setMessageIds, getDescriptionProps]);
     return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(LabelableContext.Provider, {
       value: contextValue,
       children: props.children
@@ -2970,11 +3103,12 @@ var wp;
   if (true) LabelableProvider.displayName = "LabelableProvider";
 
   // node_modules/@base-ui/react/internals/field-register-control/useFieldControlRegistration.mjs
-  var React31 = __toESM(require_react(), 1);
+  var React32 = __toESM(require_react(), 1);
   function useFieldControlRegistration(params) {
     const {
+      change,
       commit,
-      invalid,
+      invalid: invalid2,
       markedDirtyRef,
       name: name16,
       setRegisteredFieldName,
@@ -2985,9 +3119,9 @@ var wp;
     const {
       formRef
     } = useFormContext();
-    const activeFieldControlSourceRef = React31.useRef(null);
-    const registrationRef = React31.useRef(null);
-    const initialValueCapturedRef = React31.useRef(false);
+    const activeFieldControlSourceRef = React32.useRef(null);
+    const registrationRef = React32.useRef(null);
+    const initialValueCapturedRef = React32.useRef(false);
     const getValueForForm = useStableCallback(() => {
       const registration = registrationRef.current;
       if (!registration) {
@@ -3019,7 +3153,7 @@ var wp;
         getValue: getValueForForm,
         name: name16 ?? registration.name,
         controlRef: registration.controlRef,
-        validityData: getCombinedFieldValidityData(validityData, invalid),
+        validityData: getCombinedFieldValidityData(validityData, invalid2),
         validate
       });
     }
@@ -3049,10 +3183,10 @@ var wp;
         getValue: getValueForForm,
         name: name16 ?? registration.name,
         controlRef: registration.controlRef,
-        validityData: getCombinedFieldValidityData(validityData, invalid),
+        validityData: getCombinedFieldValidityData(validityData, invalid2),
         validate
       });
-    }, [formRef, getValueForForm, invalid, name16, setRegisteredFieldName, validate, validityData]);
+    }, [formRef, getValueForForm, invalid2, name16, setRegisteredFieldName, validate, validityData]);
     useIsoLayoutEffect(() => {
       const fields = formRef.current.fields;
       return () => {
@@ -3066,6 +3200,7 @@ var wp;
       if (!registration) {
         if (activeFieldControlSourceRef.current === source) {
           activeFieldControlSourceRef.current = null;
+          change(void 0, true);
           deleteRegistration();
           registrationRef.current = null;
           setRegisteredFieldName(void 0);
@@ -3074,6 +3209,10 @@ var wp;
         return;
       }
       const previousId = registrationRef.current?.id;
+      const previousSource = activeFieldControlSourceRef.current;
+      if (previousSource && previousSource !== source) {
+        change(void 0, true);
+      }
       activeFieldControlSourceRef.current = source;
       registrationRef.current = registration;
       if (!name16) {
@@ -3091,11 +3230,11 @@ var wp;
 
   // node_modules/@base-ui/react/field/root/FieldRoot.mjs
   var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
-  var FieldRootInner = /* @__PURE__ */ React32.forwardRef(function FieldRootInner2(componentProps, forwardedRef) {
+  var FieldRootInner = /* @__PURE__ */ React33.forwardRef(function FieldRootInner2(componentProps, forwardedRef) {
     const {
       errors,
       validationMode: formValidationMode,
-      submitAttemptedRef
+      submitCountRef
     } = useFormContext();
     const {
       render,
@@ -3115,15 +3254,15 @@ var wp;
     const disabledFieldset = useFieldsetRootContext(true)?.disabled;
     const validate = useStableCallback(validateProp || (() => null));
     const disabled2 = disabledFieldset || disabledProp;
-    const [touchedState, setTouchedUnwrapped] = React32.useState(false);
-    const [dirtyState, setDirtyUnwrapped] = React32.useState(false);
-    const [filled, setFilled] = React32.useState(false);
-    const [focused, setFocused] = React32.useState(false);
+    const [touchedState, setTouchedUnwrapped] = React33.useState(false);
+    const [dirtyState, setDirtyUnwrapped] = React33.useState(false);
+    const [filled, setFilled] = React33.useState(false);
+    const [focused, setFocused] = React33.useState(false);
     const dirty = dirtyProp ?? dirtyState;
     const touched = touchedProp ?? touchedState;
-    const markedDirtyRef = React32.useRef(dirty);
-    const registeredFieldIdRef = React32.useRef(void 0);
-    const [registeredFieldName, setRegisteredFieldName] = React32.useState();
+    const markedDirtyRef = React33.useRef(dirty);
+    const registeredFieldIdRef = React33.useRef(void 0);
+    const [registeredFieldName, setRegisteredFieldName] = React33.useState();
     const effectiveName = name16 ?? registeredFieldName;
     useIsoLayoutEffect(() => {
       if (dirtyProp !== void 0) {
@@ -3145,40 +3284,42 @@ var wp;
       }
       setTouchedUnwrapped(value);
     });
-    const shouldValidateOnChange = useStableCallback(() => validationMode === "onChange" || validationMode === "onSubmit" && submitAttemptedRef.current);
+    const shouldValidateOnChange = useStableCallback(() => validationMode === "onChange" || validationMode === "onSubmit" && submitCountRef.current > 0);
     const formError = effectiveName && Object.hasOwn(errors, effectiveName) ? errors[effectiveName] : null;
     const hasFormError = !!(Array.isArray(formError) ? formError.length : formError);
-    const invalid = invalidProp === true || hasFormError;
-    const [validityData, setValidityData] = React32.useState({
+    const invalid2 = invalidProp === true || hasFormError;
+    const [validityData, setValidityData] = React33.useState({
       state: DEFAULT_VALIDITY_STATE,
       error: "",
       errors: [],
       value: null,
       initialValue: null
     });
-    const valid = !invalid && (disabled2 ? null : validityData.state.valid);
-    const state = React32.useMemo(() => ({
+    const valid2 = !invalid2 && (disabled2 ? null : validityData.state.valid);
+    const state = React33.useMemo(() => ({
       disabled: disabled2,
       touched,
       dirty,
-      valid,
+      valid: valid2,
       filled,
       focused
-    }), [disabled2, touched, dirty, valid, filled, focused]);
+    }), [disabled2, touched, dirty, valid2, filled, focused]);
     const validation = useFieldValidation({
       setValidityData,
       validate,
       validityData,
       validationDebounceTime,
-      invalid,
+      invalid: invalid2,
       markedDirtyRef,
       state,
       shouldValidateOnChange,
+      validationMode,
       registeredFieldIdRef
     });
     const [validateFieldControl, registerFieldControl] = useFieldControlRegistration({
+      change: validation.change,
       commit: validation.commit,
-      invalid,
+      invalid: invalid2,
       markedDirtyRef,
       name: name16,
       setRegisteredFieldName,
@@ -3186,11 +3327,11 @@ var wp;
       setValidityData,
       validityData
     });
-    React32.useImperativeHandle(actionsRef, () => ({
+    React33.useImperativeHandle(actionsRef, () => ({
       validate: validateFieldControl
     }), [validateFieldControl]);
-    const contextValue = React32.useMemo(() => ({
-      invalid,
+    const contextValue = React33.useMemo(() => ({
+      invalid: invalid2,
       name: effectiveName,
       validityData,
       setValidityData,
@@ -3204,7 +3345,7 @@ var wp;
       state,
       registerFieldControl,
       validation
-    }), [invalid, effectiveName, validityData, disabled2, setTouched, setDirty, setFilled, setFocused, validationMode, shouldValidateOnChange, state, registerFieldControl, validation]);
+    }), [invalid2, effectiveName, validityData, disabled2, setTouched, setDirty, setFilled, setFocused, validationMode, shouldValidateOnChange, state, registerFieldControl, validation]);
     const element = useRenderElement("div", componentProps, {
       ref: forwardedRef,
       state,
@@ -3217,7 +3358,7 @@ var wp;
     });
   });
   if (true) FieldRootInner.displayName = "FieldRootInner";
-  var FieldRoot = /* @__PURE__ */ React32.forwardRef(function FieldRoot2(componentProps, forwardedRef) {
+  var FieldRoot = /* @__PURE__ */ React33.forwardRef(function FieldRoot2(componentProps, forwardedRef) {
     return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(LabelableProvider, {
       children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(FieldRootInner, {
         ...componentProps,
@@ -3228,8 +3369,8 @@ var wp;
   if (true) FieldRoot.displayName = "FieldRoot";
 
   // node_modules/@base-ui/react/field/label/FieldLabel.mjs
-  var React33 = __toESM(require_react(), 1);
-  var FieldLabel = /* @__PURE__ */ React33.forwardRef(function FieldLabel2(componentProps, forwardedRef) {
+  var React34 = __toESM(require_react(), 1);
+  var FieldLabel = /* @__PURE__ */ React34.forwardRef(function FieldLabel2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -3247,13 +3388,13 @@ var wp;
       ...fieldRootContext.state,
       disabled: fieldRootContext.disabled || fieldItemContext.disabled
     };
-    const labelRef = React33.useRef(null);
+    const labelRef = React34.useRef(null);
     const labelProps = useLabel({
       id: labelId ?? idProp,
       native: nativeLabel
     });
     if (true) {
-      React33.useEffect(() => {
+      React34.useEffect(() => {
         if (!labelRef.current) {
           return;
         }
@@ -3282,13 +3423,13 @@ var wp;
   if (true) FieldLabel.displayName = "FieldLabel";
 
   // node_modules/@base-ui/react/field/error/FieldError.mjs
-  var React34 = __toESM(require_react(), 1);
+  var React35 = __toESM(require_react(), 1);
   var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
   var stateAttributesMapping = {
     ...fieldValidityMapping,
     ...transitionStatusMapping
   };
-  var FieldError = /* @__PURE__ */ React34.forwardRef(function FieldError2(componentProps, forwardedRef) {
+  var FieldError = /* @__PURE__ */ React35.forwardRef(function FieldError2(componentProps, forwardedRef) {
     const {
       render,
       id: idProp,
@@ -3336,9 +3477,9 @@ var wp;
         setMessageIds((v) => v.filter((item) => item !== id));
       };
     }, [rendered, id, setMessageIds]);
-    const errorRef = React34.useRef(null);
-    const [lastRenderedMessage, setLastRenderedMessage] = React34.useState(null);
-    const [lastRenderedMessageKey, setLastRenderedMessageKey] = React34.useState(null);
+    const errorRef = React35.useRef(null);
+    const [lastRenderedMessage, setLastRenderedMessage] = React35.useState(null);
+    const [lastRenderedMessageKey, setLastRenderedMessageKey] = React35.useState(null);
     let error2 = validityData.error;
     if (!hasSpecificMatch && hasFormError) {
       error2 = formError;
@@ -3389,8 +3530,8 @@ var wp;
   if (true) FieldError.displayName = "FieldError";
 
   // node_modules/@base-ui/react/field/description/FieldDescription.mjs
-  var React35 = __toESM(require_react(), 1);
-  var FieldDescription = /* @__PURE__ */ React35.forwardRef(function FieldDescription2(componentProps, forwardedRef) {
+  var React36 = __toESM(require_react(), 1);
+  var FieldDescription = /* @__PURE__ */ React36.forwardRef(function FieldDescription2(componentProps, forwardedRef) {
     const {
       render,
       id: idProp,
@@ -3430,8 +3571,8 @@ var wp;
   if (true) FieldDescription.displayName = "FieldDescription";
 
   // node_modules/@base-ui/react/field/control/FieldControl.mjs
-  var React36 = __toESM(require_react(), 1);
-  var FieldControl = /* @__PURE__ */ React36.forwardRef(function FieldControl2(componentProps, forwardedRef) {
+  var React37 = __toESM(require_react(), 1);
+  var FieldControl = /* @__PURE__ */ React37.forwardRef(function FieldControl2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -3458,7 +3599,9 @@ var wp;
       validation
     } = useFieldRootContext();
     const {
-      clearErrors
+      clearErrors,
+      elementRef: formElementRef,
+      submitCountRef
     } = useFormContext();
     const disabled2 = fieldDisabled || disabledProp;
     const name16 = fieldName ?? nameProp;
@@ -3472,20 +3615,6 @@ var wp;
     const id = useLabelableId({
       id: idProp
     });
-    useIsoLayoutEffect(() => {
-      const hasExternalValue = valueProp != null;
-      if (validation.inputRef.current?.value || hasExternalValue && valueProp !== "") {
-        setFilled(true);
-      } else if (hasExternalValue && valueProp === "") {
-        setFilled(false);
-      }
-    }, [validation.inputRef, setFilled, valueProp]);
-    const inputRef = React36.useRef(null);
-    useIsoLayoutEffect(() => {
-      if (autoFocus && inputRef.current === activeElement(ownerDocument(inputRef.current))) {
-        setFocused(true);
-      }
-    }, [autoFocus, setFocused]);
     const [valueUnwrapped] = useControlled({
       controlled: valueProp,
       default: defaultValue,
@@ -3494,8 +3623,30 @@ var wp;
     });
     const isControlled = valueProp !== void 0;
     const value = isControlled ? valueUnwrapped : void 0;
+    const serializedValue = value == null ? void 0 : String(value);
     const getValueFromInput = useStableCallback(() => validation.inputRef.current?.value);
-    useRegisterFieldControl(validation.inputRef, id, value, getValueFromInput, !disabled2, nameProp);
+    useRegisterFieldControl(validation.inputRef, id, serializedValue, getValueFromInput, !disabled2, nameProp);
+    useIsoLayoutEffect(() => {
+      const currentValue = serializedValue ?? validation.inputRef.current?.value;
+      if (currentValue !== void 0) {
+        setFilled(currentValue !== "");
+      }
+    }, [serializedValue, validation.inputRef, setFilled]);
+    useValueChanged(serializedValue, () => {
+      if (serializedValue === void 0) {
+        return;
+      }
+      clearErrors(name16);
+      setDirty(serializedValue !== (validityData.initialValue ?? ""));
+      validation.change(serializedValue);
+    });
+    const inputRef = React37.useRef(null);
+    const enterValidationTimeout = useTimeout();
+    useIsoLayoutEffect(() => {
+      if (autoFocus && inputRef.current === activeElement(ownerDocument(inputRef.current))) {
+        setFocused(true);
+      }
+    }, [autoFocus, setFocused]);
     const element = useRenderElement("input", componentProps, {
       ref: [forwardedRef, inputRef],
       state,
@@ -3513,10 +3664,14 @@ var wp;
         },
         onChange(event) {
           const inputValue = event.currentTarget.value;
-          onValueChange?.(inputValue, createChangeEventDetails(reason_parts_exports.none, event.nativeEvent));
+          const details = createChangeEventDetails(reason_parts_exports.none, event.nativeEvent);
+          onValueChange?.(inputValue, details);
+          if (isControlled) {
+            return;
+          }
           setDirty(inputValue !== (validityData.initialValue ?? ""));
           setFilled(inputValue !== "");
-          if (!event.nativeEvent.defaultPrevented) {
+          if (!event.nativeEvent.defaultPrevented && !details.isCanceled) {
             clearErrors(name16);
             validation.change(inputValue);
           }
@@ -3528,13 +3683,34 @@ var wp;
           setTouched(true);
           setFocused(false);
           if (validationMode === "onBlur") {
-            validation.commit(event.currentTarget.value);
+            const inputValue = event.currentTarget.value;
+            validation.commit(inputValue);
+            if (isControlled) {
+              queueMicrotask(() => {
+                const nextValue = validation.inputRef.current?.value;
+                if (nextValue !== void 0 && nextValue !== inputValue && nextValue !== (validityData.initialValue ?? "")) {
+                  validation.commit(nextValue);
+                }
+              });
+            }
           }
         },
         onKeyDown(event) {
           if (event.currentTarget.tagName === "INPUT" && event.key === "Enter") {
             setTouched(true);
-            validation.commit(event.currentTarget.value);
+            const value2 = event.currentTarget.value;
+            const form = event.currentTarget.form;
+            if (form && form === formElementRef.current && !event.defaultPrevented) {
+              const input = event.currentTarget;
+              const submitCount = submitCountRef.current;
+              enterValidationTimeout.start(0, () => {
+                if (submitCountRef.current === submitCount) {
+                  validation.commit(input.value);
+                }
+              });
+            } else {
+              validation.commit(value2);
+            }
           }
         }
       }, elementProps, (props) => validation.getValidationProps(disabled2, props)],
@@ -3545,7 +3721,7 @@ var wp;
   if (true) FieldControl.displayName = "FieldControl";
 
   // node_modules/@base-ui/react/field/validity/FieldValidity.mjs
-  var React37 = __toESM(require_react(), 1);
+  var React38 = __toESM(require_react(), 1);
   var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
   var FieldValidity = function FieldValidity2(props) {
     const {
@@ -3553,30 +3729,30 @@ var wp;
     } = props;
     const {
       validityData,
-      invalid
+      invalid: invalid2
     } = useFieldRootContext(false);
-    const combinedFieldValidityData = React37.useMemo(() => getCombinedFieldValidityData(validityData, invalid), [validityData, invalid]);
+    const combinedFieldValidityData = React38.useMemo(() => getCombinedFieldValidityData(validityData, invalid2), [validityData, invalid2]);
     const isInvalid = combinedFieldValidityData.state.valid === false;
     const {
       transitionStatus
     } = useTransitionStatus(isInvalid);
-    const fieldValidityState = React37.useMemo(() => {
+    const fieldValidityState = React38.useMemo(() => {
       return {
         ...combinedFieldValidityData,
         validity: combinedFieldValidityData.state,
         transitionStatus
       };
     }, [combinedFieldValidityData, transitionStatus]);
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(React37.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(React38.Fragment, {
       children: children(fieldValidityState)
     });
   };
   if (true) FieldValidity.displayName = "FieldValidity";
 
   // node_modules/@base-ui/react/field/item/FieldItem.mjs
-  var React38 = __toESM(require_react(), 1);
+  var React39 = __toESM(require_react(), 1);
   var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
-  var FieldItem = /* @__PURE__ */ React38.forwardRef(function FieldItem2(componentProps, forwardedRef) {
+  var FieldItem = /* @__PURE__ */ React39.forwardRef(function FieldItem2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -3593,7 +3769,7 @@ var wp;
       ...fieldState,
       disabled: disabled2
     };
-    const fieldItemContext = React38.useMemo(() => ({
+    const fieldItemContext = React39.useMemo(() => ({
       disabled: disabled2
     }), [disabled2]);
     const element = useRenderElement("div", componentProps, {
@@ -3612,9 +3788,9 @@ var wp;
   if (true) FieldItem.displayName = "FieldItem";
 
   // node_modules/@base-ui/react/input/Input.mjs
-  var React39 = __toESM(require_react(), 1);
+  var React40 = __toESM(require_react(), 1);
   var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
-  var Input = /* @__PURE__ */ React39.forwardRef(function Input2(props, forwardedRef) {
+  var Input = /* @__PURE__ */ React40.forwardRef(function Input2(props, forwardedRef) {
     return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(index_parts_exports.Control, {
       ref: forwardedRef,
       ...props
@@ -3623,16 +3799,15 @@ var wp;
   if (true) Input.displayName = "Input";
 
   // node_modules/@base-ui/react/internals/composite/root/CompositeRoot.mjs
-  var React41 = __toESM(require_react(), 1);
+  var React42 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/internals/composite/root/useCompositeRoot.mjs
-  var React40 = __toESM(require_react(), 1);
+  var React41 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/internals/composite/constants.mjs
   var ACTIVE_COMPOSITE_ITEM = "data-composite-item-active";
 
   // node_modules/@base-ui/react/internals/composite/root/useCompositeRoot.mjs
-  var EMPTY_ARRAY2 = [];
   function useCompositeRoot(params) {
     const {
       loopFocus = true,
@@ -3646,24 +3821,41 @@ var wp;
       enableHomeAndEndKeys = false,
       stopEventPropagation,
       disabledIndices,
-      modifierKeys = EMPTY_ARRAY2
+      modifierKeys = EMPTY_ARRAY
     } = params;
-    const [internalHighlightedIndex, internalSetHighlightedIndex] = React40.useState(0);
+    const [internalHighlightedIndex, internalSetHighlightedIndex] = React41.useState(0);
     const isGrid = grid != null;
-    const rootRef = React40.useRef(null);
+    const rootRef = React41.useRef(null);
     const mergedRef = useMergedRefs(rootRef, externalRef);
-    const elementsRef = React40.useRef([]);
-    const hasSetDefaultIndexRef = React40.useRef(false);
+    const elementsRef = React41.useRef([]);
+    const hasSetDefaultIndexRef = React41.useRef(false);
+    const highlightedElementRef = React41.useRef(null);
     const highlightedIndex = externalHighlightedIndex ?? internalHighlightedIndex;
-    const onHighlightedIndexChange = useStableCallback((index, shouldScrollIntoView = false) => {
-      (externalSetHighlightedIndex ?? internalSetHighlightedIndex)(index);
+    const onHighlightedIndexChange = useStableCallback((index2, shouldScrollIntoView = false) => {
+      highlightedElementRef.current = elementsRef.current[index2] ?? null;
+      (externalSetHighlightedIndex ?? internalSetHighlightedIndex)(index2);
       if (shouldScrollIntoView) {
-        const newActiveItem = elementsRef.current[index];
+        const newActiveItem = elementsRef.current[index2];
         scrollIntoViewIfNeeded(rootRef.current, newActiveItem, direction, orientation);
       }
     });
     const onMapChange = useStableCallback((map) => {
-      if (map.size === 0 || hasSetDefaultIndexRef.current) {
+      if (map.size === 0) {
+        return;
+      }
+      if (hasSetDefaultIndexRef.current) {
+        const elements = elementsRef.current;
+        const nextIndex = elements.indexOf(highlightedElementRef.current);
+        if (nextIndex === -1) {
+          const replacement = elements[highlightedIndex];
+          if (!replacement || isListIndexDisabled(elements, highlightedIndex, disabledIndices)) {
+            onHighlightedIndexChange(getFallbackIndex(elements, disabledIndices));
+          } else {
+            highlightedElementRef.current = replacement;
+          }
+        } else if (nextIndex !== highlightedIndex) {
+          onHighlightedIndexChange(nextIndex);
+        }
         return;
       }
       hasSetDefaultIndexRef.current = true;
@@ -3813,6 +4005,22 @@ var wp;
       relayKeyboardEvent: onKeyDown
     };
   }
+  function getFallbackIndex(elements, disabledIndices) {
+    let fallbackIndex = -1;
+    for (let index2 = 0; index2 < elements.length; index2 += 1) {
+      const element = elements[index2];
+      if (!element || isListIndexDisabled(elements, index2, disabledIndices)) {
+        continue;
+      }
+      if (element.hasAttribute(ACTIVE_COMPOSITE_ITEM)) {
+        return index2;
+      }
+      if (fallbackIndex === -1) {
+        fallbackIndex = index2;
+      }
+    }
+    return Math.max(fallbackIndex, 0);
+  }
   function isModifierKeySet(event, ignoredModifierKeys) {
     for (const key of MODIFIER_KEYS) {
       if (ignoredModifierKeys.includes(key)) {
@@ -3880,7 +4088,7 @@ var wp;
       props: [defaultProps, ...props, elementProps],
       stateAttributesMapping: stateAttributesMapping4
     });
-    const contextValue = React41.useMemo(() => ({
+    const contextValue = React42.useMemo(() => ({
       highlightedIndex,
       onHighlightedIndexChange,
       highlightItemOnHover,
@@ -3918,7 +4126,7 @@ var wp;
   }
 
   // node_modules/@base-ui/react/internals/PrehydrationScript.mjs
-  var React42 = __toESM(require_react(), 1);
+  var React43 = __toESM(require_react(), 1);
   var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
   function PrehydrationScript(props) {
     const {
@@ -3951,30 +4159,33 @@ var wp;
   });
 
   // node_modules/@base-ui/react/tabs/root/TabsRoot.mjs
-  var React44 = __toESM(require_react(), 1);
+  var React45 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/tabs/root/TabsRootContext.mjs
-  var React43 = __toESM(require_react(), 1);
-  var TabsRootContext = /* @__PURE__ */ React43.createContext(void 0);
+  var React44 = __toESM(require_react(), 1);
+  var TabsRootContext = /* @__PURE__ */ React44.createContext(void 0);
   if (true) TabsRootContext.displayName = "TabsRootContext";
   function useTabsRootContext() {
-    const context = React43.useContext(TabsRootContext);
+    const context = React44.useContext(TabsRootContext);
     if (context === void 0) {
       throw new Error(true ? "Base UI: TabsRootContext is missing. Tabs parts must be placed within <Tabs.Root>." : formatErrorMessage_default(64));
     }
     return context;
   }
 
+  // node_modules/@base-ui/react/tabs/root/TabsRootDataAttributes.mjs
+  var activationDirection = "data-activation-direction";
+
   // node_modules/@base-ui/react/tabs/root/stateAttributesMapping.mjs
   var tabsStateAttributesMapping = {
     tabActivationDirection: (dir) => ({
-      "data-activation-direction": dir
+      [activationDirection]: dir
     })
   };
 
   // node_modules/@base-ui/react/tabs/root/TabsRoot.mjs
   var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
-  var TabsRoot = /* @__PURE__ */ React44.forwardRef(function TabsRoot2(componentProps, forwardedRef) {
+  var TabsRoot = /* @__PURE__ */ React45.forwardRef(function TabsRoot2(componentProps, forwardedRef) {
     const {
       className,
       defaultValue: defaultValueProp = 0,
@@ -3986,8 +4197,8 @@ var wp;
       ...elementProps
     } = componentProps;
     const hasExplicitDefaultValueProp = componentProps.defaultValue !== void 0;
-    const tabPanelRefs = React44.useRef([]);
-    const [mountedTabPanels, setMountedTabPanels] = React44.useState(() => /* @__PURE__ */ new Map());
+    const tabPanelRefs = React45.useRef([]);
+    const [mountedTabPanels, setMountedTabPanels] = React45.useState(() => /* @__PURE__ */ new Map());
     const [value, setValue] = useControlled({
       controlled: valueProp,
       default: defaultValueProp,
@@ -3995,10 +4206,10 @@ var wp;
       state: "value"
     });
     const isControlled = valueProp !== void 0;
-    const [tabMap, setTabMap] = React44.useState(() => /* @__PURE__ */ new Map());
-    const lastKnownTabElementRef = React44.useRef(void 0);
-    const getTabElementBySelectedValue = React44.useCallback((selectedValue) => findTabElement(tabMap, selectedValue), [tabMap]);
-    const [activationDirectionState, setActivationDirectionState] = React44.useState(() => ({
+    const [tabMap, setTabMap] = React45.useState(() => /* @__PURE__ */ new Map());
+    const lastKnownTabElementRef = React45.useRef(void 0);
+    const getTabElementBySelectedValue = React45.useCallback((selectedValue) => findTabElement(tabMap, selectedValue), [tabMap]);
+    const [activationDirectionState, setActivationDirectionState] = React45.useState(() => ({
       previousValue: value,
       tabActivationDirection: "none"
     }));
@@ -4024,8 +4235,8 @@ var wp;
       });
     }, [nextPreviousValue, shouldSyncActivationDirectionState, tabActivationDirection]);
     const onValueChange = useStableCallback((newValue, eventDetails) => {
-      const activationDirection = computeActivationDirection(value, newValue, orientation, tabMap);
-      eventDetails.activationDirection = activationDirection;
+      const activationDirection2 = computeActivationDirection(value, newValue, orientation, tabMap);
+      eventDetails.activationDirection = activationDirection2;
       onValueChangeProp?.(newValue, eventDetails);
       if (eventDetails.isCanceled) {
         return;
@@ -4054,10 +4265,10 @@ var wp;
         });
       };
     });
-    const getTabPanelIdByValue = React44.useCallback((tabValue) => {
+    const getTabPanelIdByValue = React45.useCallback((tabValue) => {
       return mountedTabPanels.get(tabValue);
     }, [mountedTabPanels]);
-    const getTabIdByPanelValue = React44.useCallback((tabPanelValue) => {
+    const getTabIdByPanelValue = React45.useCallback((tabPanelValue) => {
       for (const tabMetadata of tabMap.values()) {
         if (tabPanelValue === tabMetadata.value) {
           return tabMetadata.id;
@@ -4065,7 +4276,7 @@ var wp;
       }
       return void 0;
     }, [tabMap]);
-    const tabsContextValue = React44.useMemo(() => ({
+    const tabsContextValue = React45.useMemo(() => ({
       getTabElementBySelectedValue,
       getTabIdByPanelValue,
       getTabPanelIdByValue,
@@ -4076,7 +4287,7 @@ var wp;
       tabActivationDirection,
       value
     }), [getTabElementBySelectedValue, getTabIdByPanelValue, getTabPanelIdByValue, onValueChange, orientation, registerMountedTabPanel, setTabMap, tabActivationDirection, value]);
-    const selectedTabMetadata = React44.useMemo(() => {
+    const selectedTabMetadata = React45.useMemo(() => {
       for (const tabMetadata of tabMap.values()) {
         if (tabMetadata.value === value) {
           return tabMetadata;
@@ -4084,7 +4295,7 @@ var wp;
       }
       return void 0;
     }, [tabMap, value]);
-    const firstEnabledTabValue = React44.useMemo(() => {
+    const firstEnabledTabValue = React45.useMemo(() => {
       for (const tabMetadata of tabMap.values()) {
         if (!tabMetadata.disabled) {
           return tabMetadata.value;
@@ -4092,10 +4303,10 @@ var wp;
       }
       return void 0;
     }, [tabMap]);
-    const shouldNotifyInitialValueChangeRef = React44.useRef(!hasExplicitDefaultValueProp);
-    const initialDefaultValueRef = React44.useRef(defaultValueProp);
-    const shouldHonorDisabledDefaultValueRef = React44.useRef(hasExplicitDefaultValueProp);
-    const didRegisterTabsRef = React44.useRef(false);
+    const shouldNotifyInitialValueChangeRef = React45.useRef(!hasExplicitDefaultValueProp);
+    const initialDefaultValueRef = React45.useRef(defaultValueProp);
+    const shouldHonorDisabledDefaultValueRef = React45.useRef(hasExplicitDefaultValueProp);
+    const didRegisterTabsRef = React45.useRef(false);
     useIsoLayoutEffect(() => {
       if (isControlled) {
         return;
@@ -4198,14 +4409,14 @@ var wp;
   }
 
   // node_modules/@base-ui/react/tabs/tab/TabsTab.mjs
-  var React46 = __toESM(require_react(), 1);
+  var React47 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/tabs/list/TabsListContext.mjs
-  var React45 = __toESM(require_react(), 1);
-  var TabsListContext = /* @__PURE__ */ React45.createContext(void 0);
+  var React46 = __toESM(require_react(), 1);
+  var TabsListContext = /* @__PURE__ */ React46.createContext(void 0);
   if (true) TabsListContext.displayName = "TabsListContext";
   function useTabsListContext() {
-    const context = React45.useContext(TabsListContext);
+    const context = React46.useContext(TabsListContext);
     if (context === void 0) {
       throw new Error(true ? "Base UI: TabsListContext is missing. TabsList parts must be placed within <Tabs.List>." : formatErrorMessage_default(65));
     }
@@ -4213,7 +4424,7 @@ var wp;
   }
 
   // node_modules/@base-ui/react/tabs/tab/TabsTab.mjs
-  var TabsTab = /* @__PURE__ */ React46.forwardRef(function TabsTab2(componentProps, forwardedRef) {
+  var TabsTab = /* @__PURE__ */ React47.forwardRef(function TabsTab2(componentProps, forwardedRef) {
     const {
       className,
       disabled: disabled2 = false,
@@ -4241,7 +4452,7 @@ var wp;
       onHighlightedIndexChange
     } = useCompositeRootContext();
     const id = useBaseUiId(idProp);
-    const tabMetadata = React46.useMemo(() => ({
+    const tabMetadata = React47.useMemo(() => ({
       disabled: disabled2,
       id,
       value
@@ -4249,15 +4460,15 @@ var wp;
     const {
       compositeProps,
       compositeRef,
-      index
+      index: index2
       // hook is used instead of the CompositeItem component
       // because the index is needed for Tab internals
     } = useCompositeItem({
       metadata: tabMetadata
     });
     const active = value === activeTabValue;
-    const isNavigatingRef = React46.useRef(false);
-    const unobserveTabElementRef = React46.useRef(null);
+    const isNavigatingRef = React47.useRef(false);
+    const unobserveTabElementRef = React47.useRef(null);
     const observeTabElement = useStableCallback((element2) => {
       unobserveTabElementRef.current?.();
       unobserveTabElementRef.current = element2 ? registerTabResizeObserverElement(element2) : null;
@@ -4267,7 +4478,7 @@ var wp;
         isNavigatingRef.current = false;
         return;
       }
-      if (!(active && index > -1 && highlightedIndex !== index)) {
+      if (!(active && index2 > -1 && highlightedIndex !== index2)) {
         return;
       }
       const listElement = tabsListElement;
@@ -4278,9 +4489,9 @@ var wp;
         }
       }
       if (!disabled2) {
-        onHighlightedIndexChange(index);
+        onHighlightedIndexChange(index2);
       }
-    }, [active, index, highlightedIndex, onHighlightedIndexChange, disabled2, tabsListElement]);
+    }, [active, index2, highlightedIndex, onHighlightedIndexChange, disabled2, tabsListElement]);
     const {
       getButtonProps,
       buttonRef
@@ -4290,8 +4501,8 @@ var wp;
       focusableWhenDisabled: true
     });
     const tabPanelId = getTabPanelIdByValue(value);
-    const isPressingRef = React46.useRef(false);
-    const isMainButtonRef = React46.useRef(false);
+    const isPressingRef = React47.useRef(false);
+    const isMainButtonRef = React47.useRef(false);
     function activate(event) {
       onValueChange(value, createChangeEventDetails(reason_parts_exports.none, event.nativeEvent, void 0, {
         activationDirection: "none"
@@ -4357,7 +4568,17 @@ var wp;
   if (true) TabsTab.displayName = "TabsTab";
 
   // node_modules/@base-ui/react/tabs/indicator/TabsIndicator.mjs
-  var React47 = __toESM(require_react(), 1);
+  var React48 = __toESM(require_react(), 1);
+
+  // node_modules/@base-ui/react/tabs/indicator/TabsIndicatorCssVars.mjs
+  var activeTabLeft = "--active-tab-left";
+  var activeTabRight = "--active-tab-right";
+  var activeTabTop = "--active-tab-top";
+  var activeTabBottom = "--active-tab-bottom";
+  var activeTabWidth = "--active-tab-width";
+  var activeTabHeight = "--active-tab-height";
+
+  // node_modules/@base-ui/react/tabs/indicator/TabsIndicator.mjs
   var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
   var _PrehydrationScript;
   var stateAttributesMapping2 = {
@@ -4365,7 +4586,8 @@ var wp;
     activeTabPosition: () => null,
     activeTabSize: () => null
   };
-  var TabsIndicator = /* @__PURE__ */ React47.forwardRef(function TabsIndicator2(componentProps, forwardedRef) {
+  var MAX_LAYOUT_ROUNDING_ERROR = 2;
+  var TabsIndicator = /* @__PURE__ */ React48.forwardRef(function TabsIndicator2(componentProps, forwardedRef) {
     const {
       className,
       render,
@@ -4384,7 +4606,7 @@ var wp;
       registerIndicatorUpdateListener
     } = useTabsListContext();
     const rerender = useForcedRerendering();
-    React47.useEffect(() => {
+    React48.useEffect(() => {
       return registerIndicatorUpdateListener(rerender);
     }, [registerIndicatorUpdateListener, rerender]);
     let left = 0;
@@ -4410,15 +4632,15 @@ var wp;
         const tabsListRect = tabsListElement.getBoundingClientRect();
         const scaleX = tabListWidth > 0 ? tabsListRect.width / tabListWidth : 1;
         const scaleY = tabListHeight > 0 ? tabsListRect.height / tabListHeight : 1;
-        const hasNonZeroScale = scaleX > Number.EPSILON && scaleY > Number.EPSILON;
-        if (hasNonZeroScale) {
-          const tabLeftDelta = tabRect.left - tabsListRect.left;
-          const tabTopDelta = tabRect.top - tabsListRect.top;
-          left = tabLeftDelta / scaleX + tabsListElement.scrollLeft - tabsListElement.clientLeft;
-          top = tabTopDelta / scaleY + tabsListElement.scrollTop - tabsListElement.clientTop;
-        } else {
-          left = activeTab.offsetLeft;
-          top = activeTab.offsetTop;
+        const layoutOffset = getLayoutOffset(activeTab, tabsListElement);
+        left = layoutOffset.left;
+        top = layoutOffset.top;
+        const rectLeft = (tabRect.left - tabsListRect.left) / scaleX + tabsListElement.scrollLeft - tabsListElement.clientLeft;
+        const rectTop = (tabRect.top - tabsListRect.top) / scaleY + tabsListElement.scrollTop - tabsListElement.clientTop;
+        const tabTranslation = getActiveTabTranslation(activeTab);
+        if (Math.abs(rectLeft - tabTranslation.x - left) <= MAX_LAYOUT_ROUNDING_ERROR && Math.abs(rectTop - tabTranslation.y - top) <= MAX_LAYOUT_ROUNDING_ERROR) {
+          left = rectLeft;
+          top = rectTop;
         }
         width = computedWidth;
         height = computedHeight;
@@ -4437,12 +4659,12 @@ var wp;
       height
     } : null;
     const style = isTabSelected ? {
-      "--active-tab-left": `${left}px`,
-      "--active-tab-right": `${right}px`,
-      "--active-tab-top": `${top}px`,
-      "--active-tab-bottom": `${bottom}px`,
-      "--active-tab-width": `${width}px`,
-      "--active-tab-height": `${height}px`
+      [activeTabLeft]: `${left}px`,
+      [activeTabRight]: `${right}px`,
+      [activeTabTop]: `${top}px`,
+      [activeTabBottom]: `${bottom}px`,
+      [activeTabWidth]: `${width}px`,
+      [activeTabHeight]: `${height}px`
     } : void 0;
     const displayIndicator = isTabSelected && width > 0 && height > 0;
     const state = {
@@ -4467,21 +4689,94 @@ var wp;
     if (value == null) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(React47.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(React48.Fragment, {
       children: [element, renderBeforeHydration && (_PrehydrationScript || (_PrehydrationScript = /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(PrehydrationScript, {
         script
       })))]
     });
   });
   if (true) TabsIndicator.displayName = "TabsIndicator";
+  function getLayoutOffset(element, ancestor) {
+    const elementOffset = getCumulativeOffset(element);
+    const ancestorOffset = getCumulativeOffset(ancestor);
+    let left = elementOffset.left - ancestorOffset.left - ancestor.clientLeft;
+    let top = elementOffset.top - ancestorOffset.top - ancestor.clientTop;
+    let node = getParentNode(element);
+    while (isHTMLElement(node) && node !== ancestor && !isLastTraversableNode(node)) {
+      left -= node.scrollLeft;
+      top -= node.scrollTop;
+      node = getParentNode(node);
+    }
+    return {
+      left,
+      top
+    };
+  }
+  function getCumulativeOffset(element) {
+    let left = 0;
+    let top = 0;
+    let currentElement = element;
+    while (currentElement != null) {
+      left += currentElement.offsetLeft;
+      top += currentElement.offsetTop;
+      const offsetParent = currentElement.offsetParent;
+      if (offsetParent != null) {
+        left += offsetParent.clientLeft;
+        top += offsetParent.clientTop;
+      }
+      currentElement = offsetParent;
+    }
+    return {
+      left,
+      top
+    };
+  }
+  function getActiveTabTranslation(element) {
+    const computedStyle = getWindow(element).getComputedStyle(element);
+    const {
+      x,
+      y
+    } = getElementTransform(element, computedStyle);
+    let translateX = x;
+    let translateY = y;
+    const {
+      translate
+    } = computedStyle;
+    if (translate && translate !== "none") {
+      const parts = translate.split(" ");
+      translateX += resolveTranslateLength(parts[0], element.offsetWidth);
+      translateY += resolveTranslateLength(parts[1], element.offsetHeight);
+    }
+    return {
+      x: translateX,
+      y: translateY
+    };
+  }
+  function resolveTranslateLength(value, referenceSize) {
+    if (!value) {
+      return 0;
+    }
+    const numeric = parseFloat(value);
+    if (!Number.isFinite(numeric)) {
+      return 0;
+    }
+    return value.endsWith("%") ? numeric / 100 * referenceSize : numeric;
+  }
 
   // node_modules/@base-ui/react/tabs/panel/TabsPanel.mjs
-  var React48 = __toESM(require_react(), 1);
+  var React49 = __toESM(require_react(), 1);
+
+  // node_modules/@base-ui/react/tabs/panel/TabsPanelDataAttributes.mjs
+  var index = "data-index";
+  var startingStyle2 = TransitionStatusDataAttributes_exports.startingStyle;
+  var endingStyle2 = TransitionStatusDataAttributes_exports.endingStyle;
+
+  // node_modules/@base-ui/react/tabs/panel/TabsPanel.mjs
   var stateAttributesMapping3 = {
     ...tabsStateAttributesMapping,
     ...transitionStatusMapping
   };
-  var TabsPanel = /* @__PURE__ */ React48.forwardRef(function TabsPanel2(componentProps, forwardedRef) {
+  var TabsPanel = /* @__PURE__ */ React49.forwardRef(function TabsPanel2(componentProps, forwardedRef) {
     const {
       className,
       value,
@@ -4500,7 +4795,7 @@ var wp;
     const id = useBaseUiId();
     const {
       ref: listItemRef,
-      index
+      index: index2
     } = useCompositeListItem();
     const open = value === selectedValue;
     const {
@@ -4516,7 +4811,7 @@ var wp;
       tabActivationDirection,
       transitionStatus
     };
-    const panelRef = React48.useRef(null);
+    const panelRef = React49.useRef(null);
     const element = useRenderElement("div", componentProps, {
       state,
       ref: [forwardedRef, listItemRef, panelRef],
@@ -4528,7 +4823,7 @@ var wp;
         tabIndex: open ? 0 : -1,
         inert: inertValue(!open),
         // Computed key: a plain literal key fails the DOM-props excess property check.
-        ["data-index"]: index
+        [index]: index2
       }, elementProps],
       stateAttributesMapping: stateAttributesMapping3
     });
@@ -4556,9 +4851,9 @@ var wp;
   if (true) TabsPanel.displayName = "TabsPanel";
 
   // node_modules/@base-ui/react/tabs/list/TabsList.mjs
-  var React49 = __toESM(require_react(), 1);
+  var React50 = __toESM(require_react(), 1);
   var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
-  var TabsList = /* @__PURE__ */ React49.forwardRef(function TabsList2(componentProps, forwardedRef) {
+  var TabsList = /* @__PURE__ */ React50.forwardRef(function TabsList2(componentProps, forwardedRef) {
     const {
       activateOnFocus = false,
       className,
@@ -4572,11 +4867,11 @@ var wp;
       setTabMap,
       tabActivationDirection
     } = useTabsRootContext();
-    const [highlightedTabIndex, setHighlightedTabIndex] = React49.useState(0);
-    const [tabsListElement, setTabsListElement] = React49.useState(null);
-    const indicatorUpdateListenersRef = React49.useRef(/* @__PURE__ */ new Set());
-    const tabResizeObserverElementsRef = React49.useRef(/* @__PURE__ */ new Set());
-    const resizeObserverRef = React49.useRef(null);
+    const [highlightedTabIndex, setHighlightedTabIndex] = React50.useState(0);
+    const [tabsListElement, setTabsListElement] = React50.useState(null);
+    const indicatorUpdateListenersRef = React50.useRef(/* @__PURE__ */ new Set());
+    const tabResizeObserverElementsRef = React50.useRef(/* @__PURE__ */ new Set());
+    const resizeObserverRef = React50.useRef(null);
     useIsoLayoutEffect(() => {
       if (typeof ResizeObserver === "undefined") {
         return void 0;
@@ -4620,7 +4915,7 @@ var wp;
       "aria-orientation": orientation === "vertical" ? "vertical" : void 0,
       role: "tablist"
     };
-    const tabsListContextValue = React49.useMemo(() => ({
+    const tabsListContextValue = React50.useMemo(() => ({
       activateOnFocus,
       registerIndicatorUpdateListener,
       registerTabResizeObserverElement,
@@ -7454,9 +7749,9 @@ var wp;
     } else {
       return EMPTY_BOUNDARIES;
     }
-    const index = newFormats[initialIndex].indexOf(targetFormat);
-    startIndex = walkToStart(newFormats, initialIndex, targetFormat, index);
-    endIndex = walkToEnd(newFormats, initialIndex, targetFormat, index);
+    const index2 = newFormats[initialIndex].indexOf(targetFormat);
+    startIndex = walkToStart(newFormats, initialIndex, targetFormat, index2);
+    endIndex = walkToEnd(newFormats, initialIndex, targetFormat, index2);
     startIndex = startIndex < 0 ? 0 : startIndex;
     return {
       start: startIndex,
@@ -7464,18 +7759,18 @@ var wp;
     };
   }
   function walkToBoundary(formats, initialIndex, targetFormatRef, formatIndex, direction) {
-    let index = initialIndex;
+    let index2 = initialIndex;
     const directions = {
       forwards: 1,
       backwards: -1
     };
     const directionIncrement = directions[direction] || 1;
     const inverseDirectionIncrement = directionIncrement * -1;
-    while (formats[index] && formats[index][formatIndex] === targetFormatRef) {
-      index = index + directionIncrement;
+    while (formats[index2] && formats[index2][formatIndex] === targetFormatRef) {
+      index2 = index2 + directionIncrement;
     }
-    index = index + inverseDirectionIncrement;
-    return index;
+    index2 = index2 + inverseDirectionIncrement;
+    return index2;
   }
   var walkToStart = (...args) => walkToBoundary(...args, "backwards");
   var walkToEnd = (...args) => walkToBoundary(...args, "forwards");
@@ -8212,7 +8507,7 @@ var wp;
   var transparentValue = "rgba(0, 0, 0, 0)";
   var name8 = "core/text-color";
   var title8 = (0, import_i18n15.__)("Highlight");
-  var EMPTY_ARRAY3 = [];
+  var EMPTY_ARRAY2 = [];
   function getComputedStyleProperty(element, property) {
     const { ownerDocument: ownerDocument2 } = element;
     const { defaultView } = ownerDocument2;
@@ -8239,7 +8534,7 @@ var wp;
     activeAttributes,
     contentRef
   }) {
-    const [allowCustomControl, colors = EMPTY_ARRAY3] = (0, import_block_editor10.useSettings)(
+    const [allowCustomControl, colors = EMPTY_ARRAY2] = (0, import_block_editor10.useSettings)(
       "color.custom",
       "color.palette"
     );
@@ -8794,18 +9089,18 @@ var wp;
       return (formats, text) => {
         const NBSP = "\xA0";
         let record = { formats, text };
-        let index = -1;
+        let index2 = -1;
         do {
-          index = text.indexOf(NBSP, index + 1);
-          if (index !== -1) {
+          index2 = text.indexOf(NBSP, index2 + 1);
+          if (index2 !== -1) {
             record = (0, import_rich_text17.applyFormat)(
               record,
               { type: name15 },
-              index,
-              index + 1
+              index2,
+              index2 + 1
             );
           }
-        } while (index !== -1);
+        } while (index2 !== -1);
         return record.formats;
       };
     }

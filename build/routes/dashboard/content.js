@@ -94,7 +94,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot]
         );
-        useEffect84(
+        useEffect83(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React236 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState95 = React236.useState, useEffect84 = React236.useEffect, useLayoutEffect13 = React236.useLayoutEffect, useDebugValue2 = React236.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React236 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState95 = React236.useState, useEffect83 = React236.useEffect, useLayoutEffect13 = React236.useLayoutEffect, useDebugValue2 = React236.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React236.useSyncExternalStore ? React236.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -148,14 +148,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React236 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore5 = shim.useSyncExternalStore, useRef131 = React236.useRef, useEffect84 = React236.useEffect, useMemo115 = React236.useMemo, useDebugValue2 = React236.useDebugValue;
+      var React236 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore5 = shim.useSyncExternalStore, useRef131 = React236.useRef, useEffect83 = React236.useEffect, useMemo114 = React236.useMemo, useDebugValue2 = React236.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef131(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo115(
+        instRef = useMemo114(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -191,7 +191,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector2, isEqual]
         );
         var value = useSyncExternalStore5(subscribe2, instRef[0], instRef[1]);
-        useEffect84(
+        useEffect83(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -997,20 +997,31 @@ var import_element17 = __toESM(require_element(), 1);
 // node_modules/@base-ui/utils/useControlled.mjs
 var React = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/error.mjs
-var set;
+// node_modules/@base-ui/utils/createLogOnce.mjs
+var loggedMessages;
 if (true) {
-  set = /* @__PURE__ */ new Set();
+  loggedMessages = /* @__PURE__ */ new Set();
 }
-function error(...messages) {
-  if (true) {
-    const messageKey = messages.join(" ");
-    if (!set.has(messageKey)) {
-      set.add(messageKey);
-      console.error(`Base UI: ${messageKey}`);
+function createLogOnce(severity, prefix) {
+  return function logOnce(...messages) {
+    if (true) {
+      const message2 = messages.join(" ");
+      const output = prefix ? `${prefix}: ${message2}` : message2;
+      const key2 = `${severity}:${output}`;
+      if (!loggedMessages.has(key2)) {
+        loggedMessages.add(key2);
+        if (severity === "warn") {
+          console.warn(output);
+        } else {
+          console.error(output);
+        }
+      }
     }
-  }
+  };
 }
+
+// node_modules/@base-ui/utils/error.mjs
+var error = createLogOnce("error", "Base UI");
 
 // node_modules/@base-ui/utils/useControlled.mjs
 function useControlled({
@@ -1023,7 +1034,7 @@ function useControlled({
     current: isControlled
   } = React.useRef(controlled !== void 0);
   const [valueState, setValue] = React.useState(defaultProp);
-  const value = isControlled ? controlled : valueState;
+  const value = isControlled && controlled !== void 0 ? controlled : valueState;
   if (true) {
     React.useEffect(() => {
       if (isControlled !== (controlled !== void 0)) {
@@ -1124,19 +1135,13 @@ function assertNotCalled() {
 }
 
 // node_modules/@base-ui/utils/warn.mjs
-var set2;
-if (true) {
-  set2 = /* @__PURE__ */ new Set();
+var warn = createLogOnce("warn", "Base UI");
+
+// node_modules/@base-ui/utils/empty.mjs
+function NOOP() {
 }
-function warn(...messages) {
-  if (true) {
-    const messageKey = messages.join(" ");
-    if (!set2.has(messageKey)) {
-      set2.add(messageKey);
-      console.warn(`Base UI: ${messageKey}`);
-    }
-  }
-}
+var EMPTY_ARRAY = Object.freeze([]);
+var EMPTY_OBJECT = Object.freeze({});
 
 // node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
 var React6 = __toESM(require_react(), 1);
@@ -1180,7 +1185,7 @@ function CompositeList(props) {
   const map = useRefWithInit(createMap).current;
   const nextIndexRef = React6.useRef(0);
   const isDirtyRef = React6.useRef(true);
-  const itemsRef = React6.useRef([]);
+  const itemsRef = React6.useRef(null);
   const mutationObserverRef = React6.useRef(null);
   const scheduleMapUpdate = useStableCallback(() => {
     if (isDirtyRef.current) {
@@ -1254,14 +1259,22 @@ function CompositeList(props) {
   const flush = useStableCallback(() => {
     const [items, automaticNodes] = getCompositeListSnapshot(map);
     const nextMap = syncRefs(items);
+    const previousItems = itemsRef.current;
+    const changed = !previousItems || previousItems.length !== items.length || items.some((item, index2) => {
+      const previousItem = previousItems[index2];
+      return item.index !== previousItem.index || item.element !== previousItem.element || item.registration.index !== previousItem.registration.index || item.registration.metadata !== previousItem.registration.metadata;
+    });
     observe(automaticNodes);
     itemsRef.current = items;
     isDirtyRef.current = false;
+    if (!changed) {
+      return;
+    }
     listeners.forEach((listener) => listener(nextMap));
     onMapChange(nextMap);
   });
   useIsoLayoutEffect(() => {
-    if (!isDirtyRef.current) {
+    if (!isDirtyRef.current && itemsRef.current) {
       syncRefs(itemsRef.current);
     }
     return () => {
@@ -1491,12 +1504,6 @@ function mergeObjects(a, b) {
   return void 0;
 }
 
-// node_modules/@base-ui/utils/empty.mjs
-function NOOP() {
-}
-var EMPTY_ARRAY = Object.freeze([]);
-var EMPTY_OBJECT = Object.freeze({});
-
 // node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
 function getStateAttributesProps(state, customMapping) {
   const props = {};
@@ -1686,19 +1693,21 @@ function isSyntheticEvent(event) {
 // node_modules/@base-ui/react/internals/useRenderElement.mjs
 var import_react = __toESM(require_react(), 1);
 function useRenderElement(element, componentProps, params = {}) {
-  const renderProp = componentProps.render;
-  const outProps = useRenderElementProps(componentProps, params);
+  let renderProp = componentProps.render;
+  if (params.enabled !== false) {
+    renderProp = unwrapLazyRenderProp(renderProp);
+  }
+  const outProps = useRenderElementProps(componentProps, params, renderProp);
   if (params.enabled === false) {
     return null;
   }
   const state = params.state ?? EMPTY_OBJECT;
   return evaluateRenderProp(element, renderProp, outProps, state);
 }
-function useRenderElementProps(componentProps, params = {}) {
+function useRenderElementProps(componentProps, params, renderProp) {
   const {
     className: classNameProp,
-    style: styleProp,
-    render: renderProp
+    style: styleProp
   } = componentProps;
   const {
     state = EMPTY_OBJECT,
@@ -1741,6 +1750,13 @@ function resolveRenderFunctionProps(props) {
 var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
 var COMPONENT_IDENTIFIER_PATTERN = /^[A-Z][A-Za-z0-9$]*$/;
 var LOWERCASE_CHARACTER_PATTERN = /[a-z]/;
+function unwrapLazyRenderProp(render4) {
+  if (render4?.$$typeof !== REACT_LAZY_TYPE) {
+    return render4;
+  }
+  const unwrapped = React9.Children.toArray(render4)[0];
+  return /* @__PURE__ */ React9.isValidElement(unwrapped) ? unwrapped : render4;
+}
 function evaluateRenderProp(element, render4, props, state) {
   if (render4) {
     if (typeof render4 === "function") {
@@ -1751,17 +1767,12 @@ function evaluateRenderProp(element, render4, props, state) {
     }
     const mergedProps = mergeProps(props, render4.props);
     mergedProps.ref = props.ref;
-    let newElement = render4;
-    if (newElement?.$$typeof === REACT_LAZY_TYPE) {
-      const children = React9.Children.toArray(render4);
-      newElement = children[0];
-    }
     if (true) {
-      if (!/* @__PURE__ */ React9.isValidElement(newElement)) {
+      if (!/* @__PURE__ */ React9.isValidElement(render4)) {
         throw new Error(["Base UI: The `render` prop was provided an invalid React element as `React.isValidElement(render)` is `false`.", "A valid React element must be provided to the `render` prop because it is cloned with props to replace the default element.", "https://base-ui.com/r/invalid-render-prop"].join("\n"));
       }
     }
-    return /* @__PURE__ */ React9.cloneElement(newElement, mergedProps);
+    return /* @__PURE__ */ React9.cloneElement(render4, mergedProps);
   }
   if (element) {
     if (typeof element === "string") {
@@ -1997,6 +2008,9 @@ var Scheduler = class {
     if (index2 < 0 || index2 >= this.callbacks.length) {
       return;
     }
+    if (this.callbacks[index2] === null) {
+      return;
+    }
     this.callbacks[index2] = null;
     this.callbacksCount -= 1;
   }
@@ -2040,21 +2054,21 @@ function useAnimationFrame() {
 }
 
 // node_modules/@base-ui/react/internals/useTransitionStatus.mjs
-function useTransitionStatus(open, enableIdleState = false, deferEndingState = false) {
-  const [transitionStatus, setTransitionStatus] = React12.useState(open && enableIdleState ? "idle" : void 0);
-  const [mounted, setMounted] = React12.useState(open);
-  if (open && !mounted) {
+function useTransitionStatus(open7, enableIdleState = false, deferEndingState = false, animateInitialOpen = false) {
+  const [transitionStatus, setTransitionStatus] = React12.useState(open7 && enableIdleState ? "idle" : void 0);
+  const [mounted, setMounted] = React12.useState(open7 && !animateInitialOpen);
+  if (open7 && !mounted) {
     setMounted(true);
     setTransitionStatus("starting");
   }
-  if (!open && mounted && transitionStatus !== "ending" && !deferEndingState) {
+  if (!open7 && mounted && transitionStatus !== "ending" && !deferEndingState) {
     setTransitionStatus("ending");
   }
-  if (!open && !mounted && transitionStatus === "ending") {
+  if (!open7 && !mounted && transitionStatus === "ending") {
     setTransitionStatus(void 0);
   }
   useIsoLayoutEffect(() => {
-    if (!open && mounted && transitionStatus !== "ending" && deferEndingState) {
+    if (!open7 && mounted && transitionStatus !== "ending" && deferEndingState) {
       const frame = AnimationFrame.request(() => {
         setTransitionStatus("ending");
       });
@@ -2063,9 +2077,9 @@ function useTransitionStatus(open, enableIdleState = false, deferEndingState = f
       };
     }
     return void 0;
-  }, [open, mounted, transitionStatus, deferEndingState]);
+  }, [open7, mounted, transitionStatus, deferEndingState]);
   useIsoLayoutEffect(() => {
-    if (!open || enableIdleState) {
+    if (!open7 || enableIdleState) {
       return void 0;
     }
     const frame = AnimationFrame.request(() => {
@@ -2074,12 +2088,12 @@ function useTransitionStatus(open, enableIdleState = false, deferEndingState = f
     return () => {
       AnimationFrame.cancel(frame);
     };
-  }, [enableIdleState, open]);
+  }, [enableIdleState, open7]);
   useIsoLayoutEffect(() => {
-    if (!open || !enableIdleState) {
+    if (!open7 || !enableIdleState) {
       return void 0;
     }
-    if (open && mounted && transitionStatus !== "idle") {
+    if (open7 && mounted && transitionStatus !== "idle") {
       setTransitionStatus("starting");
     }
     const frame = AnimationFrame.request(() => {
@@ -2088,7 +2102,7 @@ function useTransitionStatus(open, enableIdleState = false, deferEndingState = f
     return () => {
       AnimationFrame.cancel(frame);
     };
-  }, [enableIdleState, open, mounted, transitionStatus]);
+  }, [enableIdleState, open7, mounted, transitionStatus]);
   return {
     mounted,
     setMounted,
@@ -2100,11 +2114,11 @@ function useTransitionStatus(open, enableIdleState = false, deferEndingState = f
 function useCollapsibleRoot(parameters) {
   const {
     open: openParam,
-    defaultOpen,
+    defaultOpen = false,
     onOpenChange,
-    disabled: disabled2
+    disabled: disabled3
   } = parameters;
-  const [open, setOpen] = useControlled({
+  const [open7, setOpen] = useControlled({
     controlled: openParam,
     default: defaultOpen,
     name: "Collapsible",
@@ -2114,12 +2128,12 @@ function useCollapsibleRoot(parameters) {
     mounted,
     setMounted,
     transitionStatus
-  } = useTransitionStatus(open, true, true);
+  } = useTransitionStatus(open7, true, true);
   const defaultPanelId = useBaseUiId();
   const [registeredPanelId, setPanelIdState] = React13.useState();
   const panelId = registeredPanelId === null ? void 0 : registeredPanelId ?? defaultPanelId;
   const handleTrigger = useStableCallback((event) => {
-    const nextOpen = !open;
+    const nextOpen = !open7;
     const eventDetails = createChangeEventDetails(reason_parts_exports.triggerPress, event.nativeEvent);
     onOpenChange(nextOpen, eventDetails);
     if (eventDetails.isCanceled) {
@@ -2129,16 +2143,16 @@ function useCollapsibleRoot(parameters) {
   });
   return React13.useMemo(() => ({
     defaultPanelId,
-    disabled: disabled2,
+    disabled: disabled3,
     handleTrigger,
     mounted,
-    open,
+    open: open7,
     panelId,
     setMounted,
     setOpen,
     setPanelIdState,
     transitionStatus
-  }), [defaultPanelId, disabled2, handleTrigger, mounted, open, panelId, setMounted, setOpen, setPanelIdState, transitionStatus]);
+  }), [defaultPanelId, disabled3, handleTrigger, mounted, open7, panelId, setMounted, setOpen, setPanelIdState, transitionStatus]);
 }
 
 // node_modules/@base-ui/react/collapsible/root/CollapsibleRootContext.mjs
@@ -2212,17 +2226,21 @@ function useCompositeListItem(params = {}) {
   };
 }
 
+// node_modules/@base-ui/react/internals/TransitionStatusDataAttributes.mjs
+var TransitionStatusDataAttributes_exports = {};
+__export(TransitionStatusDataAttributes_exports, {
+  endingStyle: () => endingStyle,
+  startingStyle: () => startingStyle
+});
+var startingStyle = "data-starting-style";
+var endingStyle = "data-ending-style";
+
 // node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
-var TransitionStatusDataAttributes = /* @__PURE__ */ (function(TransitionStatusDataAttributes2) {
-  TransitionStatusDataAttributes2["startingStyle"] = "data-starting-style";
-  TransitionStatusDataAttributes2["endingStyle"] = "data-ending-style";
-  return TransitionStatusDataAttributes2;
-})({});
 var STARTING_HOOK = {
-  "data-starting-style": ""
+  [startingStyle]: ""
 };
 var ENDING_HOOK = {
-  "data-ending-style": ""
+  [endingStyle]: ""
 };
 var transitionStatusMapping = {
   transitionStatus(value) {
@@ -2237,32 +2255,26 @@ var transitionStatusMapping = {
 };
 
 // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanelDataAttributes.mjs
-var CollapsiblePanelDataAttributes = (function(CollapsiblePanelDataAttributes2) {
-  CollapsiblePanelDataAttributes2["open"] = "data-open";
-  CollapsiblePanelDataAttributes2["closed"] = "data-closed";
-  CollapsiblePanelDataAttributes2[CollapsiblePanelDataAttributes2["startingStyle"] = TransitionStatusDataAttributes.startingStyle] = "startingStyle";
-  CollapsiblePanelDataAttributes2[CollapsiblePanelDataAttributes2["endingStyle"] = TransitionStatusDataAttributes.endingStyle] = "endingStyle";
-  return CollapsiblePanelDataAttributes2;
-})({});
+var open = "data-open";
+var closed = "data-closed";
+var startingStyle2 = TransitionStatusDataAttributes_exports.startingStyle;
+var endingStyle2 = TransitionStatusDataAttributes_exports.endingStyle;
 
 // node_modules/@base-ui/react/collapsible/trigger/CollapsibleTriggerDataAttributes.mjs
-var CollapsibleTriggerDataAttributes = /* @__PURE__ */ (function(CollapsibleTriggerDataAttributes2) {
-  CollapsibleTriggerDataAttributes2["panelOpen"] = "data-panel-open";
-  return CollapsibleTriggerDataAttributes2;
-})({});
+var panelOpen = "data-panel-open";
 
 // node_modules/@base-ui/react/utils/collapsibleOpenStateMapping.mjs
 var PANEL_OPEN_HOOK = {
-  [CollapsiblePanelDataAttributes.open]: ""
+  [open]: ""
 };
 var PANEL_CLOSED_HOOK = {
-  [CollapsiblePanelDataAttributes.closed]: ""
+  [closed]: ""
 };
 var triggerOpenStateMapping = {
   open(value) {
     if (value) {
       return {
-        [CollapsibleTriggerDataAttributes.panelOpen]: ""
+        [panelOpen]: ""
       };
     }
     return null;
@@ -2453,7 +2465,7 @@ var React17 = __toESM(require_react(), 1);
 function useFocusableWhenDisabled(parameters) {
   const {
     focusableWhenDisabled,
-    disabled: disabled2,
+    disabled: disabled3,
     composite = false,
     tabIndex: tabIndexProp = 0,
     isNativeButton
@@ -2464,25 +2476,25 @@ function useFocusableWhenDisabled(parameters) {
     const additionalProps = {
       // allow Tabbing away from focusableWhenDisabled elements
       onKeyDown(event) {
-        if (disabled2 && focusableWhenDisabled && event.key !== "Tab") {
+        if (disabled3 && focusableWhenDisabled && event.key !== "Tab") {
           event.preventDefault();
         }
       }
     };
     if (!composite) {
       additionalProps.tabIndex = tabIndexProp;
-      if (!isNativeButton && disabled2) {
+      if (!isNativeButton && disabled3) {
         additionalProps.tabIndex = focusableWhenDisabled ? tabIndexProp : -1;
       }
     }
-    if (isNativeButton && (focusableWhenDisabled || isFocusableComposite) || !isNativeButton && disabled2) {
-      additionalProps["aria-disabled"] = disabled2;
+    if (isNativeButton && (focusableWhenDisabled || isFocusableComposite) || !isNativeButton && disabled3) {
+      additionalProps["aria-disabled"] = disabled3;
     }
     if (isNativeButton && (!focusableWhenDisabled || isNonFocusableComposite)) {
-      additionalProps.disabled = disabled2;
+      additionalProps.disabled = disabled3;
     }
     return additionalProps;
-  }, [composite, disabled2, focusableWhenDisabled, isFocusableComposite, isNonFocusableComposite, isNativeButton, tabIndexProp]);
+  }, [composite, disabled3, focusableWhenDisabled, isFocusableComposite, isNonFocusableComposite, isNativeButton, tabIndexProp]);
   return {
     props
   };
@@ -2512,7 +2524,7 @@ function dispatchClickWithModifiers(target, sourceEvent, {
 // node_modules/@base-ui/react/internals/use-button/useButton.mjs
 function useButton(parameters = {}) {
   const {
-    disabled: disabled2 = false,
+    disabled: disabled3 = false,
     focusableWhenDisabled,
     tabIndex = 0,
     native: isNativeButton = true,
@@ -2525,7 +2537,7 @@ function useButton(parameters = {}) {
     props: focusableWhenDisabledProps
   } = useFocusableWhenDisabled({
     focusableWhenDisabled,
-    disabled: disabled2,
+    disabled: disabled3,
     composite: isCompositeItem,
     tabIndex,
     isNativeButton
@@ -2554,10 +2566,10 @@ function useButton(parameters = {}) {
     if (!isButtonElement(element)) {
       return;
     }
-    if (isCompositeItem && disabled2 && focusableWhenDisabledProps.disabled === void 0 && element.disabled) {
+    if (isCompositeItem && disabled3 && focusableWhenDisabledProps.disabled === void 0 && element.disabled) {
       element.disabled = false;
     }
-  }, [disabled2, focusableWhenDisabledProps.disabled, isCompositeItem]);
+  }, [disabled3, focusableWhenDisabledProps.disabled, isCompositeItem]);
   useIsoLayoutEffect(updateDisabled, [updateDisabled]);
   const getButtonProps = React18.useCallback((externalProps = {}) => {
     const {
@@ -2570,19 +2582,19 @@ function useButton(parameters = {}) {
     } = externalProps;
     return mergeProps({
       onClick(event) {
-        if (disabled2) {
+        if (disabled3) {
           event.preventDefault();
           return;
         }
         externalOnClick?.(event);
       },
       onMouseDown(event) {
-        if (!disabled2) {
+        if (!disabled3) {
           externalOnMouseDown?.(event);
         }
       },
       onKeyDown(event) {
-        if (disabled2) {
+        if (disabled3) {
           return;
         }
         makeEventPreventable(event);
@@ -2626,7 +2638,7 @@ function useButton(parameters = {}) {
         }
       },
       onKeyUp(event) {
-        if (disabled2) {
+        if (disabled3) {
           return;
         }
         makeEventPreventable(event);
@@ -2644,7 +2656,7 @@ function useButton(parameters = {}) {
         }
       },
       onPointerDown(event) {
-        if (disabled2) {
+        if (disabled3) {
           event.preventDefault();
           return;
         }
@@ -2655,7 +2667,7 @@ function useButton(parameters = {}) {
     } : {
       role: "button"
     }, focusableWhenDisabledProps, otherExternalProps);
-  }, [disabled2, focusableWhenDisabledProps, isCompositeItem, isNativeButton]);
+  }, [disabled3, focusableWhenDisabledProps, isCompositeItem, isNativeButton]);
   const buttonRef = useStableCallback((element) => {
     elementRef.current = element;
     updateDisabled();
@@ -2716,7 +2728,23 @@ function resolveRef(maybeRef) {
 }
 
 // node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false) {
+var pendingCallbacks = null;
+function flushBeforePaint(fn) {
+  if (!pendingCallbacks) {
+    const callbacks = [];
+    pendingCallbacks = callbacks;
+    queueMicrotask(() => {
+      pendingCallbacks = null;
+      ReactDOM.flushSync(() => {
+        for (const callback of callbacks) {
+          callback();
+        }
+      });
+    });
+  }
+  pendingCallbacks.push(fn);
+}
+function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, batch2 = false) {
   const frame = useAnimationFrame();
   return useStableCallback((fnToExecute, signal = null) => {
     frame.cancel();
@@ -2726,7 +2754,15 @@ function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false
     }
     const resolvedElement = element;
     const done = () => {
-      ReactDOM.flushSync(fnToExecute);
+      if (!batch2) {
+        ReactDOM.flushSync(fnToExecute);
+        return;
+      }
+      flushBeforePaint(() => {
+        if (!signal?.aborted) {
+          fnToExecute();
+        }
+      });
     };
     if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
       fnToExecute();
@@ -2750,7 +2786,7 @@ function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false
       });
     }
     if (waitForStartingStyleRemoved) {
-      const startingStyleAttribute = "data-starting-style";
+      const startingStyleAttribute = startingStyle;
       if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
         frame.request(exec);
         return;
@@ -2778,12 +2814,13 @@ function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false
 function useOpenChangeComplete(parameters) {
   const {
     enabled = true,
-    open,
+    open: open7,
     ref,
+    batch: batch2 = false,
     onComplete: onCompleteParam
   } = parameters;
   const onComplete = useStableCallback(onCompleteParam);
-  const runOnceAnimationsFinish = useAnimationsFinished(ref, open);
+  const runOnceAnimationsFinish = useAnimationsFinished(ref, open7, batch2);
   React19.useEffect(() => {
     if (!enabled) {
       return void 0;
@@ -2793,7 +2830,7 @@ function useOpenChangeComplete(parameters) {
     return () => {
       abortController.abort();
     };
-  }, [enabled, open, onComplete, runOnceAnimationsFinish]);
+  }, [enabled, open7, onComplete, runOnceAnimationsFinish]);
 }
 
 // node_modules/@base-ui/react/collapsible/panel/useCollapsiblePanel.mjs
@@ -2809,7 +2846,7 @@ function useCollapsiblePanel(parameters) {
     keepMounted,
     mounted,
     onOpenChange,
-    open,
+    open: open7,
     setMounted,
     setOpen,
     transitionStatus
@@ -2819,20 +2856,20 @@ function useCollapsiblePanel(parameters) {
   const [dimensions, setDimensionsUnwrapped] = React20.useState(EMPTY_DIMENSIONS);
   const lastMeasuredDimensionsRef = React20.useRef(EMPTY_DIMENSIONS);
   const shouldSkipNextOpenRef = React20.useRef(false);
-  const shouldPreventMountAnimationRef = React20.useRef(open);
+  const shouldPreventMountAnimationRef = React20.useRef(open7);
   const shouldPreventActivityResumeAnimationRef = React20.useRef(false);
   const [forcePanelIdle, setForcePanelIdle] = React20.useState(false);
   const pendingTemporaryStyleRestoreRef = React20.useRef(null);
   const mergedPanelRef = useMergedRefs(externalRef, panelRef);
-  const latestOpenRef = useValueAsRef(open);
+  const latestOpenRef = useValueAsRef(open7);
   const runOnceCloseAnimationsFinish = useAnimationsFinished(panelRef);
-  const hidden = !open && !mounted;
+  const hidden = !open7 && !mounted;
   const panelTransitionStatus = forcePanelIdle ? "idle" : transitionStatus;
-  const shouldPreventOpenAnimation = open && // These 2 refs are safe to read in render, they are only written from committed
+  const shouldPreventOpenAnimation = open7 && // These 2 refs are safe to read in render, they are only written from committed
   // layout/effect paths and gate one-shot motion suppression for the next open
   // lifecycle. They intentionally expose the last committed motion snapshot.
   (shouldPreventMountAnimationRef.current || shouldPreventActivityResumeAnimationRef.current);
-  const renderedDimensions = !open && mounted && // These 2 refs are also safe to read in render, both hold the last committed
+  const renderedDimensions = !open7 && mounted && // These 2 refs are also safe to read in render, both hold the last committed
   // animation mode and measurement. This fallback only restores a previously
   // measured pixel size after the live dimensions state has been reset back to `auto`.
   animationTypeRef.current === "css-animation" && dimensions.height === void 0 && dimensions.width === void 0 ? lastMeasuredDimensionsRef.current : dimensions;
@@ -2855,7 +2892,7 @@ function useCollapsiblePanel(parameters) {
     };
   });
   const markActivityResumeAnimationSuppressed = useStableCallback(() => {
-    if (open && mounted && animationTypeRef.current === "css-animation") {
+    if (open7 && mounted && animationTypeRef.current === "css-animation") {
       shouldPreventActivityResumeAnimationRef.current = true;
     }
   });
@@ -2876,16 +2913,16 @@ function useCollapsiblePanel(parameters) {
     if (!panel) {
       return void 0;
     }
-    if (!open && pendingTemporaryStyleRestoreRef.current) {
+    if (!open7 && pendingTemporaryStyleRestoreRef.current) {
       restorePendingTemporaryStyle();
     }
     const animationType = getAnimationType(panel, shouldPreventOpenAnimation);
     animationTypeRef.current = animationType;
-    if (open && transitionStatus === "idle" && shouldPreventMountAnimationRef.current && animationType === "css-animation") {
+    if (open7 && transitionStatus === "idle" && shouldPreventMountAnimationRef.current && animationType === "css-animation") {
       lastMeasuredDimensionsRef.current = getDimensions(panel);
       return void 0;
     }
-    if (open && transitionStatus === "starting") {
+    if (open7 && transitionStatus === "starting") {
       const skipNextOpen = shouldSkipNextOpenRef.current;
       shouldSkipNextOpenRef.current = false;
       if (animationType === "none") {
@@ -2916,7 +2953,7 @@ function useCollapsiblePanel(parameters) {
       setForcePanelIdle(true);
       return void 0;
     }
-    if (!open && mounted && (transitionStatus === "idle" || transitionStatus === "starting")) {
+    if (!open7 && mounted && (transitionStatus === "idle" || transitionStatus === "starting")) {
       shouldPreventMountAnimationRef.current = false;
       shouldPreventActivityResumeAnimationRef.current = false;
       if (animationType === "none") {
@@ -2946,20 +2983,20 @@ function useCollapsiblePanel(parameters) {
       restoreAnimationName();
     }
     return void 0;
-  }, [mounted, open, restorePendingTemporaryStyle, setDimensions, setMounted, setPendingTemporaryStyleRestore, shouldPreventOpenAnimation, transitionStatus]);
+  }, [mounted, open7, restorePendingTemporaryStyle, setDimensions, setMounted, setPendingTemporaryStyleRestore, shouldPreventOpenAnimation, transitionStatus]);
   useOpenChangeComplete({
-    enabled: open && mounted && panelTransitionStatus === "idle",
+    enabled: open7 && mounted && panelTransitionStatus === "idle",
     open: true,
     ref: panelRef,
     onComplete() {
-      if (!open) {
+      if (!open7) {
         return;
       }
       setDimensions(EMPTY_DIMENSIONS, false);
     }
   });
   React20.useEffect(() => {
-    if (open || !mounted || panelTransitionStatus !== "ending") {
+    if (open7 || !mounted || panelTransitionStatus !== "ending") {
       return void 0;
     }
     const panel = panelRef.current;
@@ -2982,7 +3019,7 @@ function useCollapsiblePanel(parameters) {
       AnimationFrame.cancel(endingStyleFrame);
       abortController.abort();
     };
-  }, [latestOpenRef, mounted, open, panelTransitionStatus, runOnceCloseAnimationsFinish, setDimensions, setMounted]);
+  }, [latestOpenRef, mounted, open7, panelTransitionStatus, runOnceCloseAnimationsFinish, setDimensions, setMounted]);
   useIsoLayoutEffect(() => {
     const panel = panelRef.current;
     if (!panel || !hiddenUntilFound || !hidden) {
@@ -3006,12 +3043,12 @@ function useCollapsiblePanel(parameters) {
     }
     return addEventListener(panel, "beforematch", handleBeforeMatch);
   }, [onOpenChange, setOpen]);
-  const shouldRender = keepMounted || hiddenUntilFound || mounted || open;
+  const shouldRender = keepMounted || hiddenUntilFound || mounted || open7;
   return {
     height: renderedDimensions.height,
     props: {
       ...shouldPersistHiddenTransitionStyles ? {
-        [CollapsiblePanelDataAttributes.startingStyle]: ""
+        [startingStyle2]: ""
       } : void 0,
       hidden,
       id: idParam
@@ -3115,6 +3152,7 @@ var parts_exports = {};
 __export(parts_exports, {
   engine: () => engine_exports,
   env: () => env_exports,
+  mediaQuery: () => media_query_exports,
   os: () => os_exports,
   screenReader: () => screen_reader_exports
 });
@@ -3199,6 +3237,13 @@ __export(env_exports, {
   jsdom: () => jsdom
 });
 var jsdom = /jsdom|happydom/.test(lowerUserAgent);
+
+// node_modules/@base-ui/utils/platform/media-query.mjs
+var media_query_exports = {};
+__export(media_query_exports, {
+  iOS: () => iOS
+});
+var iOS = "@supports (-webkit-touch-callout: none)";
 
 // node_modules/@base-ui/utils/useTimeout.mjs
 var EMPTY2 = 0;
@@ -3495,15 +3540,7 @@ function isClickLikeEvent(event) {
   return type === "click" || type === "mousedown" || type === "keydown" || type === "keyup";
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
-var FOCUSABLE_ATTRIBUTE = "data-base-ui-focusable";
-var TYPEABLE_SELECTOR = "input:not([type='hidden']):not([disabled]),[contenteditable]:not([contenteditable='false']),textarea:not([disabled])";
-var ARROW_LEFT = "ArrowLeft";
-var ARROW_RIGHT = "ArrowRight";
-var ARROW_UP = "ArrowUp";
-var ARROW_DOWN = "ArrowDown";
-
-// node_modules/@base-ui/react/internals/shadowDom.mjs
+// node_modules/@base-ui/utils/shadowDom.mjs
 function activeElement(doc) {
   let element = doc.activeElement;
   while (element?.shadowRoot?.activeElement != null) {
@@ -3532,10 +3569,102 @@ function contains(parent, child) {
 }
 function getTarget(event) {
   if ("composedPath" in event) {
-    return event.composedPath()[0];
+    return event.composedPath()[0] ?? event.target;
   }
   return event.target;
 }
+
+// node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
+var FOCUSABLE_ATTRIBUTE = "data-base-ui-focusable";
+var TYPEABLE_SELECTOR = "input:not([type='hidden']):not([disabled]),[contenteditable]:not([contenteditable='false']),textarea:not([disabled])";
+var ARROW_LEFT = "ArrowLeft";
+var ARROW_RIGHT = "ArrowRight";
+var ARROW_UP = "ArrowUp";
+var ARROW_DOWN = "ArrowDown";
+
+// node_modules/@base-ui/react/utils/CommonPopupDataAttributes.mjs
+var CommonPopupDataAttributes_exports = {};
+__export(CommonPopupDataAttributes_exports, {
+  align: () => align,
+  anchorHidden: () => anchorHidden,
+  closed: () => closed2,
+  endingStyle: () => endingStyle3,
+  open: () => open2,
+  side: () => side,
+  startingStyle: () => startingStyle3
+});
+var open2 = "data-open";
+var closed2 = "data-closed";
+var startingStyle3 = startingStyle;
+var endingStyle3 = endingStyle;
+var anchorHidden = "data-anchor-hidden";
+var side = "data-side";
+var align = "data-align";
+
+// node_modules/@base-ui/react/utils/CommonTriggerDataAttributes.mjs
+var CommonTriggerDataAttributes_exports = {};
+__export(CommonTriggerDataAttributes_exports, {
+  popupOpen: () => popupOpen,
+  pressed: () => pressed
+});
+var popupOpen = "data-popup-open";
+var pressed = "data-pressed";
+
+// node_modules/@base-ui/react/utils/popupStateMapping.mjs
+var TRIGGER_HOOK = {
+  [popupOpen]: ""
+};
+var PRESSABLE_TRIGGER_HOOK = {
+  [popupOpen]: "",
+  [pressed]: ""
+};
+var POPUP_OPEN_HOOK = {
+  [open2]: ""
+};
+var POPUP_CLOSED_HOOK = {
+  [closed2]: ""
+};
+var ANCHOR_HIDDEN_HOOK = {
+  [anchorHidden]: ""
+};
+var triggerOpenStateMapping2 = {
+  open(value) {
+    if (value) {
+      return TRIGGER_HOOK;
+    }
+    return null;
+  }
+};
+var pressableTriggerOpenStateMapping = {
+  open(value) {
+    if (value) {
+      return PRESSABLE_TRIGGER_HOOK;
+    }
+    return null;
+  }
+};
+var popupStateMapping = {
+  open(value) {
+    if (value) {
+      return POPUP_OPEN_HOOK;
+    }
+    return POPUP_CLOSED_HOOK;
+  },
+  anchorHidden(value) {
+    if (value) {
+      return ANCHOR_HIDDEN_HOOK;
+    }
+    return null;
+  }
+};
+var popupTransitionStateMapping = {
+  ...popupStateMapping,
+  ...transitionStatusMapping
+};
+
+// node_modules/@base-ui/react/tooltip/trigger/TooltipTriggerDataAttributes.mjs
+var popupOpen2 = CommonTriggerDataAttributes_exports.popupOpen;
+var triggerDisabled = "data-trigger-disabled";
 
 // node_modules/@base-ui/react/floating-ui-react/utils/element.mjs
 function isTargetInsideEnabledTrigger(target, triggerElements) {
@@ -3544,11 +3673,11 @@ function isTargetInsideEnabledTrigger(target, triggerElements) {
   }
   const targetElement = target;
   if (triggerElements.hasElement(targetElement)) {
-    return !targetElement.hasAttribute("data-trigger-disabled");
+    return !targetElement.hasAttribute(triggerDisabled);
   }
   for (const [, trigger] of triggerElements.entries()) {
     if (contains(trigger, targetElement)) {
-      return !trigger.hasAttribute("data-trigger-disabled");
+      return !trigger.hasAttribute(triggerDisabled);
     }
   }
   return false;
@@ -3687,7 +3816,7 @@ function useDelayGroup(context, options = {
   open: false
 }) {
   const {
-    open
+    open: open7
   } = options;
   const store = "rootStore" in context ? context.rootStore : context;
   const floatingId = store.useState("floatingId");
@@ -3702,10 +3831,10 @@ function useDelayGroup(context, options = {
     timeout
   } = groupContext;
   const [isInstantPhase, setIsInstantPhase] = React21.useState(false);
-  const openRef = React21.useRef(open);
+  const openRef = React21.useRef(open7);
   useIsoLayoutEffect(() => {
-    openRef.current = open;
-  }, [open]);
+    openRef.current = open7;
+  }, [open7]);
   useIsoLayoutEffect(() => {
     function unset() {
       currentContextRef.current?.setIsInstantPhase(false);
@@ -3717,7 +3846,7 @@ function useDelayGroup(context, options = {
     if (!currentIdRef.current) {
       return void 0;
     }
-    if (!open && currentIdRef.current === floatingId) {
+    if (!open7 && currentIdRef.current === floatingId) {
       setIsInstantPhase(false);
       if (timeoutMs) {
         const closingId = floatingId;
@@ -3736,9 +3865,9 @@ function useDelayGroup(context, options = {
       unset();
     }
     return void 0;
-  }, [open, floatingId, currentIdRef, delayRef, timeoutMs, initialDelayRef, currentContextRef, timeout, store]);
+  }, [open7, floatingId, currentIdRef, delayRef, timeoutMs, initialDelayRef, currentContextRef, timeout, store]);
   useIsoLayoutEffect(() => {
-    if (!open) {
+    if (!open7) {
       return;
     }
     const prevContext = currentContextRef.current;
@@ -3761,7 +3890,7 @@ function useDelayGroup(context, options = {
       setIsInstantPhase(false);
       prevContext?.setIsInstantPhase(false);
     }
-  }, [open, floatingId, store, currentIdRef, delayRef, initialDelayRef, currentContextRef, timeout]);
+  }, [open7, floatingId, store, currentIdRef, delayRef, initialDelayRef, currentContextRef, timeout]);
   useIsoLayoutEffect(() => {
     return () => {
       if (currentIdRef.current === floatingId) {
@@ -3776,10 +3905,11 @@ function useDelayGroup(context, options = {
     };
   }, [currentContextRef, currentIdRef, delayRef, floatingId, initialDelayRef, timeout]);
   return React21.useMemo(() => ({
+    activeIdRef: currentIdRef,
     hasProvider,
     delayRef,
     isInstantPhase
-  }), [hasProvider, delayRef, isInstantPhase]);
+  }), [currentIdRef, hasProvider, delayRef, isInstantPhase]);
 }
 
 // node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
@@ -3911,8 +4041,8 @@ var lrPlacement = ["left", "right"];
 var rlPlacement = ["right", "left"];
 var tbPlacement = ["top", "bottom"];
 var btPlacement = ["bottom", "top"];
-function getSideList(side, isStart, rtl) {
-  switch (side) {
+function getSideList(side2, isStart, rtl) {
+  switch (side2) {
     case "top":
     case "bottom":
       if (rtl) return isStart ? rlPlacement : lrPlacement;
@@ -3928,7 +4058,7 @@ function getOppositeAxisPlacements(placement, flipAlignment, direction, rtl) {
   const alignment = getAlignment(placement);
   let list = getSideList(getSide(placement), direction === "start", rtl);
   if (alignment) {
-    list = list.map((side) => side + "-" + alignment);
+    list = list.map((side2) => side2 + "-" + alignment);
     if (flipAlignment) {
       list = list.concat(list.map(getOppositeAlignmentPlacement));
     }
@@ -3936,8 +4066,8 @@ function getOppositeAxisPlacements(placement, flipAlignment, direction, rtl) {
   return list;
 }
 function getOppositePlacement(placement) {
-  const side = getSide(placement);
-  return oppositeSideMap[side] + placement.slice(side.length);
+  const side2 = getSide(placement);
+  return oppositeSideMap[side2] + placement.slice(side2.length);
 }
 function expandPaddingObject(padding) {
   var _padding$top, _padding$right, _padding$bottom, _padding$left;
@@ -3961,15 +4091,15 @@ function rectToClientRect(rect) {
     x: x2,
     y: y2,
     width,
-    height
+    height: height2
   } = rect;
   return {
     width,
-    height,
+    height: height2,
     top: y2,
     left: x2,
     right: x2 + width,
-    bottom: y2 + height,
+    bottom: y2 + height2,
     x: x2,
     y: y2
   };
@@ -4786,6 +4916,7 @@ var FloatingPortal = /* @__PURE__ */ React23.forwardRef(function FloatingPortal2
     style,
     children,
     container,
+    portalOwnerRole,
     ...elementProps
   } = componentProps;
   const {
@@ -4805,7 +4936,7 @@ var FloatingPortal = /* @__PURE__ */ React23.forwardRef(function FloatingPortal2
   const [focusManagerState, setFocusManagerState] = React23.useState(null);
   const focusInsideDisabledRef = React23.useRef(false);
   const modal = focusManagerState?.modal;
-  const open = focusManagerState?.open;
+  const open7 = focusManagerState?.open;
   const shouldRenderGuards = !!focusManagerState && !focusManagerState.modal && focusManagerState.open && !!portalNode;
   React23.useEffect(() => {
     if (!portalNode || modal) {
@@ -4827,12 +4958,12 @@ var FloatingPortal = /* @__PURE__ */ React23.forwardRef(function FloatingPortal2
     return mergeCleanups(addEventListener(portalNode, "focusin", onFocus, true), addEventListener(portalNode, "focusout", onFocus, true));
   }, [portalNode, modal]);
   useIsoLayoutEffect(() => {
-    if (!portalNode || open !== true || !focusInsideDisabledRef.current) {
+    if (!portalNode || open7 !== true || !focusInsideDisabledRef.current) {
       return;
     }
     enableFocusInside(portalNode);
     focusInsideDisabledRef.current = false;
-  }, [open, portalNode]);
+  }, [open7, portalNode]);
   const portalContextValue = React23.useMemo(() => ({
     beforeOutsideRef,
     afterOutsideRef,
@@ -4857,6 +4988,7 @@ var FloatingPortal = /* @__PURE__ */ React23.forwardRef(function FloatingPortal2
           }
         }
       }), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", {
+        role: portalOwnerRole,
         "aria-owns": portalNodeId,
         style: ownerVisuallyHidden
       }), portalNode && /* @__PURE__ */ ReactDOM2.createPortal(children, portalNode), shouldRenderGuards && portalNode && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(FocusGuard, {
@@ -5052,7 +5184,7 @@ function FloatingFocusManager(props) {
   const {
     context,
     children,
-    disabled: disabled2 = false,
+    disabled: disabled3 = false,
     initialFocus = true,
     returnFocus = true,
     restoreFocus = false,
@@ -5066,7 +5198,7 @@ function FloatingFocusManager(props) {
     getInsideElements
   } = props;
   const store = "rootStore" in context ? context.rootStore : context;
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const domReference = store.useState("domReferenceElement");
   const floating = store.useState("floatingElement");
   const {
@@ -5079,7 +5211,7 @@ function FloatingFocusManager(props) {
   const initialFocusRef = useValueAsRef(initialFocus);
   const returnFocusRef = useValueAsRef(returnFocus);
   const openInteractionTypeRef = useValueAsRef(openInteractionType);
-  const openRef = useValueAsRef(open);
+  const openRef = useValueAsRef(open7);
   const tree = useFloatingTree(externalTree);
   const portalContext = usePortalContext();
   const preventReturnFocusRef = React25.useRef(false);
@@ -5102,7 +5234,7 @@ function FloatingFocusManager(props) {
   });
   const getResolvedInsideElements = useStableCallback(() => getInsideElements?.().filter((element) => element != null) ?? []);
   React25.useEffect(() => {
-    if (disabled2 || !modal) {
+    if (disabled3 || !modal) {
       return void 0;
     }
     function onKeyDown(event) {
@@ -5114,9 +5246,9 @@ function FloatingFocusManager(props) {
     }
     const doc = ownerDocument(floatingFocusElement);
     return addEventListener(doc, "keydown", onKeyDown);
-  }, [disabled2, floatingFocusElement, modal, isUntrappedTypeableCombobox, getTabbableContent]);
+  }, [disabled3, floatingFocusElement, modal, isUntrappedTypeableCombobox, getTabbableContent]);
   React25.useEffect(() => {
-    if (disabled2 || !open) {
+    if (disabled3 || !open7) {
       return void 0;
     }
     const doc = ownerDocument(floatingFocusElement);
@@ -5148,9 +5280,9 @@ function FloatingFocusManager(props) {
       // if the popup dismissed between pointerdown and pointerup.
       clearPointerDownOutside
     );
-  }, [disabled2, floating, domReference, floatingFocusElement, open, portalContext, pointerDownTimeout, getResolvedInsideElements]);
+  }, [disabled3, floating, domReference, floatingFocusElement, open7, portalContext, pointerDownTimeout, getResolvedInsideElements]);
   React25.useEffect(() => {
-    if (disabled2 || !closeOnFocusOut) {
+    if (disabled3 || !closeOnFocusOut) {
       return void 0;
     }
     const doc = ownerDocument(floatingFocusElement);
@@ -5230,9 +5362,9 @@ function FloatingFocusManager(props) {
       return void 0;
     }
     return mergeCleanups(domReferenceElement && addEventListener(domReferenceElement, "focusout", handleFocusOutside), domReferenceElement && addEventListener(domReferenceElement, "pointerdown", handlePointerDown), floating && addEventListener(floating, "focusin", handleFocusIn), floating && addEventListener(floating, "focusout", handleFocusOutside), floating && portalContext && addEventListener(floating, "focusout", markInsideReactTree, true));
-  }, [disabled2, domReference, floating, floatingFocusElement, modal, tree, portalContext, store, closeOnFocusOut, restoreFocus, getTabbableContent, isUntrappedTypeableCombobox, getNodeId, dataRef, blurTimeout, pointerDownTimeout, restoreFocusFrame, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
+  }, [disabled3, domReference, floating, floatingFocusElement, modal, tree, portalContext, store, closeOnFocusOut, restoreFocus, getTabbableContent, isUntrappedTypeableCombobox, getNodeId, dataRef, blurTimeout, pointerDownTimeout, restoreFocusFrame, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
   React25.useEffect(() => {
-    if (disabled2 || !floating || !open) {
+    if (disabled3 || !floating || !open7) {
       return void 0;
     }
     const portalNodes = Array.from(portalContext?.portalNode?.querySelectorAll(`[${createAttribute("portal")}]`) || []);
@@ -5250,9 +5382,9 @@ function FloatingFocusManager(props) {
       markerCleanup();
       ariaHiddenCleanup();
     };
-  }, [open, disabled2, domReference, floating, modal, portalContext, isUntrappedTypeableCombobox, tree, getNodeId, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
+  }, [open7, disabled3, domReference, floating, modal, portalContext, isUntrappedTypeableCombobox, tree, getNodeId, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
   useIsoLayoutEffect(() => {
-    if (!open || disabled2 || !isHTMLElement(floatingFocusElement)) {
+    if (!open7 || disabled3 || !isHTMLElement(floatingFocusElement)) {
       return;
     }
     closeTypeRef.current = "";
@@ -5299,9 +5431,9 @@ function FloatingFocusManager(props) {
         }
       });
     });
-  }, [disabled2, open, floatingFocusElement, getTabbableContent, initialFocusRef, openInteractionTypeRef, openRef]);
+  }, [disabled3, open7, floatingFocusElement, getTabbableContent, initialFocusRef, openInteractionTypeRef, openRef]);
   useIsoLayoutEffect(() => {
-    if (disabled2 || !floatingFocusElement) {
+    if (disabled3 || !floatingFocusElement) {
       return void 0;
     }
     const doc = ownerDocument(floatingFocusElement);
@@ -5384,9 +5516,9 @@ function FloatingFocusManager(props) {
         preventReturnFocusRef.current = false;
       });
     };
-  }, [disabled2, floating, floatingFocusElement, returnFocusRef, openInteractionTypeRef, events2, tree, domReference, getNodeId, getResolvedInsideElements]);
+  }, [disabled3, floating, floatingFocusElement, returnFocusRef, openInteractionTypeRef, events2, tree, domReference, getNodeId, getResolvedInsideElements]);
   useIsoLayoutEffect(() => {
-    if (!parts_exports.engine.webkit || open || !floating) {
+    if (!parts_exports.engine.webkit || open7 || !floating) {
       return;
     }
     const activeEl = activeElement(ownerDocument(floating));
@@ -5396,32 +5528,32 @@ function FloatingFocusManager(props) {
     if (contains(floating, activeEl)) {
       activeEl.blur();
     }
-  }, [open, floating]);
+  }, [open7, floating]);
   useIsoLayoutEffect(() => {
-    if (disabled2 || !portalContext) {
+    if (disabled3 || !portalContext) {
       return void 0;
     }
     portalContext.setFocusManagerState({
       modal,
       closeOnFocusOut,
-      open,
+      open: open7,
       onOpenChange: store.setOpen,
       domReference
     });
     return () => {
       portalContext.setFocusManagerState(null);
     };
-  }, [disabled2, portalContext, modal, open, store, closeOnFocusOut, domReference]);
+  }, [disabled3, portalContext, modal, open7, store, closeOnFocusOut, domReference]);
   useIsoLayoutEffect(() => {
-    if (disabled2 || !floatingFocusElement) {
+    if (disabled3 || !floatingFocusElement) {
       return void 0;
     }
     handleTabIndex(floatingFocusElement);
     return () => {
       queueMicrotask(clearDisconnectedPreviouslyFocusedElements);
     };
-  }, [disabled2, floatingFocusElement]);
-  const shouldRenderGuards = !disabled2 && (modal ? !isUntrappedTypeableCombobox : true) && (isInsidePortal || modal);
+  }, [disabled3, floatingFocusElement]);
+  const shouldRenderGuards = !disabled3 && (modal ? !isUntrappedTypeableCombobox : true) && (isInsidePortal || modal);
   return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(React25.Fragment, {
     children: [shouldRenderGuards && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(FocusGuard, {
       "data-type": "inside",
@@ -5490,13 +5622,13 @@ function useClick(context, props = {}) {
         store.setOpen(nextOpen, details);
       }
     }
-    function getNextOpen(open, currentTarget, isClickLikeOpenEvent2) {
+    function getNextOpen(open7, currentTarget, isClickLikeOpenEvent2) {
       const openEvent = dataRef.current.openEvent;
       const hasClickedOnInactiveTrigger = store.select("domReferenceElement") !== currentTarget;
-      if (open && hasClickedOnInactiveTrigger) {
+      if (open7 && hasClickedOnInactiveTrigger) {
         return true;
       }
-      if (!open) {
+      if (!open7) {
         return true;
       }
       if (!toggle) {
@@ -5514,11 +5646,11 @@ function useClick(context, props = {}) {
       onMouseDown(event) {
         const pointerType = pointerTypeRef.current;
         const nativeEvent = event.nativeEvent;
-        const open = store.select("open");
+        const open7 = store.select("open");
         if (event.button !== 0 || eventOption === "click" || isMouseLikePointerType(pointerType, true) && ignoreMouse) {
           return;
         }
-        const nextOpen = getNextOpen(open, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown");
+        const nextOpen = getNextOpen(open7, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown");
         const target = getTarget(nativeEvent);
         if (isTypeableElement(target)) {
           setOpenWithTouchDelay(nextOpen, nativeEvent, target, pointerType);
@@ -5541,8 +5673,8 @@ function useClick(context, props = {}) {
         if (isMouseLikePointerType(pointerType, true) && ignoreMouse) {
           return;
         }
-        const open = store.select("open");
-        const nextOpen = getNextOpen(open, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown" || openEventType === "keydown" || openEventType === "keyup");
+        const open7 = store.select("open");
+        const nextOpen = getNextOpen(open7, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown" || openEventType === "keydown" || openEventType === "keyup");
         setOpenWithTouchDelay(nextOpen, event.nativeEvent, event.currentTarget, pointerType);
       },
       onKeyDown() {
@@ -5574,7 +5706,7 @@ function createVirtualElement(domElement, data) {
       const isYAxis = data.axis === "y" || data.axis === "both";
       const canTrackCursorOnAutoUpdate = ["mouseenter", "mousemove"].includes(data.dataRef.current.openEvent?.type || "") && data.pointerType !== "touch";
       let width = domRect.width;
-      let height = domRect.height;
+      let height2 = domRect.height;
       let x2 = domRect.x;
       let y2 = domRect.y;
       if (offsetX == null && data.x && isXAxis) {
@@ -5586,25 +5718,25 @@ function createVirtualElement(domElement, data) {
       x2 -= offsetX || 0;
       y2 -= offsetY || 0;
       width = 0;
-      height = 0;
+      height2 = 0;
       if (!isAutoUpdateEvent || canTrackCursorOnAutoUpdate) {
         width = data.axis === "y" ? domRect.width : 0;
-        height = data.axis === "x" ? domRect.height : 0;
+        height2 = data.axis === "x" ? domRect.height : 0;
         x2 = isXAxis && data.x != null ? data.x : x2;
         y2 = isYAxis && data.y != null ? data.y : y2;
       } else if (isAutoUpdateEvent && !canTrackCursorOnAutoUpdate) {
-        height = data.axis === "x" ? domRect.height : height;
+        height2 = data.axis === "x" ? domRect.height : height2;
         width = data.axis === "y" ? domRect.width : width;
       }
       isAutoUpdateEvent = true;
       return {
         width,
-        height,
+        height: height2,
         x: x2,
         y: y2,
         top: y2,
         right: x2 + width,
-        bottom: y2 + height,
+        bottom: y2 + height2,
         left: x2
       };
     }
@@ -5619,7 +5751,7 @@ function useClientPoint(context, props = {}) {
     axis = "both"
   } = props;
   const store = "rootStore" in context ? context.rootStore : context;
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const floating = store.useState("floatingElement");
   const domReference = store.useState("domReferenceElement");
   const dataRef = store.context.dataRef;
@@ -5646,14 +5778,14 @@ function useClientPoint(context, props = {}) {
     }));
   });
   const handleReferenceEnterOrMove = useStableCallback((event) => {
-    if (!open) {
+    if (!open7) {
       setReference(event.clientX, event.clientY, event.currentTarget);
     } else if (!cleanupListenerRef.current) {
       setReference(event.clientX, event.clientY, event.currentTarget);
       setReactive([]);
     }
   });
-  const openCheck = isMouseLikePointerType(pointerType) ? floating : open;
+  const openCheck = isMouseLikePointerType(pointerType) ? floating : open7;
   React27.useEffect(() => {
     if (!enabled) {
       resetReference(domReference);
@@ -5691,10 +5823,10 @@ function useClientPoint(context, props = {}) {
     }
   }, [enabled, floating]);
   React27.useEffect(() => {
-    if (!enabled && open) {
+    if (!enabled && open7) {
       initialRef.current = true;
     }
-  }, [enabled, open]);
+  }, [enabled, open7]);
   const reference = React27.useMemo(() => {
     function setPointerTypeRef(event) {
       setPointerType(event.pointerType);
@@ -5734,10 +5866,11 @@ function useDismiss(context, props = {}) {
     externalTree
   } = props;
   const store = "rootStore" in context ? context.rootStore : context;
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const floatingElement = store.useState("floatingElement");
   const {
-    dataRef
+    dataRef,
+    events: events2
   } = store.context;
   const tree = useFloatingTree(externalTree);
   const outsidePressFn = useStableCallback(typeof outsidePressProp === "function" ? outsidePressProp : () => false);
@@ -5751,6 +5884,7 @@ function useDismiss(context, props = {}) {
   const pressStartedInsideRef = React28.useRef(false);
   const pressStartPreventedRef = React28.useRef(false);
   const suppressNextOutsideClickRef = React28.useRef(false);
+  const sawPressWhileOpenRef = React28.useRef(false);
   const isComposingRef = React28.useRef(false);
   const currentPointerTypeRef = React28.useRef("");
   const touchStateRef = React28.useRef(null);
@@ -5775,7 +5909,7 @@ function useDismiss(context, props = {}) {
     store.setOpen(false, createChangeEventDetails(reason_parts_exports.triggerPress, event.nativeEvent));
   });
   const closeOnEscapeKeyDown = useStableCallback((event) => {
-    if (!open || !enabled || !escapeKey2 || event.key !== "Escape") {
+    if (!open7 || !enabled || !escapeKey2 || event.key !== "Escape") {
       return;
     }
     if (isComposingRef.current) {
@@ -5799,7 +5933,7 @@ function useDismiss(context, props = {}) {
     clearInsideReactTreeTimeout.start(0, clearInsideReactTree);
   });
   const markPressStartedInsideReactTree = useStableCallback((event) => {
-    if (!open || !enabled || event.button !== 0) {
+    if (!open7 || !enabled || event.button !== 0) {
       return;
     }
     const target = getTarget(event.nativeEvent);
@@ -5812,7 +5946,7 @@ function useDismiss(context, props = {}) {
     }
   });
   const markInsidePressStartPrevented = useStableCallback((event) => {
-    if (!open || !enabled) {
+    if (!open7 || !enabled) {
       return;
     }
     if (!(event.defaultPrevented || event.nativeEvent.defaultPrevented)) {
@@ -5823,13 +5957,28 @@ function useDismiss(context, props = {}) {
     }
   });
   React28.useEffect(() => {
-    if (!open || !enabled) {
+    function handleOpenChange(details) {
+      if (!details.open) {
+        sawPressWhileOpenRef.current = false;
+      }
+    }
+    events2.on("openchange", handleOpenChange);
+    return () => {
+      events2.off("openchange", handleOpenChange);
+    };
+  }, [events2]);
+  React28.useEffect(() => {
+    if (!open7 || !enabled) {
+      if (!open7) {
+        sawPressWhileOpenRef.current = false;
+      }
       return clearInsideReactTree;
     }
     dataRef.current.__escapeKeyBubbles = escapeKeyBubbles;
     dataRef.current.__outsidePressBubbles = outsidePressBubbles;
     const compositionTimeout = new Timeout();
     const preventedPressSuppressionTimeout = new Timeout();
+    const doc = ownerDocument(floatingElement);
     function handleCompositionStart() {
       compositionTimeout.clear();
       isComposingRef.current = true;
@@ -5926,10 +6075,15 @@ function useDismiss(context, props = {}) {
       if (isEventWithinFloatingTree(event)) {
         return;
       }
-      if (getOutsidePressEvent() === "intentional" && suppressNextOutsideClickRef.current) {
-        preventedPressSuppressionTimeout.clear();
-        suppressNextOutsideClickRef.current = false;
-        return;
+      if (getOutsidePressEvent() === "intentional") {
+        if (event.detail !== 0 && !isVirtualClick(event) && !sawPressWhileOpenRef.current) {
+          return;
+        }
+        if (suppressNextOutsideClickRef.current) {
+          preventedPressSuppressionTimeout.clear();
+          suppressNextOutsideClickRef.current = false;
+          return;
+        }
       }
       if (typeof outsidePress2 === "function" && !outsidePress2(event)) {
         return;
@@ -5984,6 +6138,9 @@ function useDismiss(context, props = {}) {
     function closeOnPressOutsideCapture(event) {
       cancelDismissOnEndTimeout.clear();
       if (event.type === "pointerdown") {
+        if (event.button === 0) {
+          sawPressWhileOpenRef.current = true;
+        }
         currentPointerTypeRef.current = event.pointerType;
       }
       if (event.type === "mousedown" && touchStateRef.current && !touchStateRef.current.dismissOnMouseDown) {
@@ -5998,6 +6155,9 @@ function useDismiss(context, props = {}) {
       });
     }
     function handlePressEndCapture(event) {
+      if (event.type === "pointercancel") {
+        sawPressWhileOpenRef.current = false;
+      }
       if (!pressStartedInsideRef.current) {
         return;
       }
@@ -6062,8 +6222,16 @@ function useDismiss(context, props = {}) {
     function handleTouchEndCapture(event) {
       addTargetEventListenerOnce(event, handleTouchEnd);
     }
-    const doc = ownerDocument(floatingElement);
-    const unsubscribe = mergeCleanups(escapeKey2 && mergeCleanups(addEventListener(doc, "keydown", closeOnEscapeKeyDown), addEventListener(doc, "compositionstart", handleCompositionStart), addEventListener(doc, "compositionend", handleCompositionEnd)), outsidePressEnabled && mergeCleanups(addEventListener(doc, "click", closeOnPressOutsideCapture, true), addEventListener(doc, "pointerdown", closeOnPressOutsideCapture, true), addEventListener(doc, "pointerup", handlePressEndCapture, true), addEventListener(doc, "pointercancel", handlePressEndCapture, true), addEventListener(doc, "mousedown", closeOnPressOutsideCapture, true), addEventListener(doc, "mouseup", handlePressEndCapture, true), addEventListener(doc, "touchstart", handleTouchStartCapture, true), addEventListener(doc, "touchmove", handleTouchMoveCapture, true), addEventListener(doc, "touchend", handleTouchEndCapture, true)));
+    const unsubscribe = mergeCleanups(escapeKey2 && mergeCleanups(addEventListener(doc, "keydown", closeOnEscapeKeyDown), addEventListener(doc, "compositionstart", handleCompositionStart), addEventListener(doc, "compositionend", handleCompositionEnd)), outsidePressEnabled && mergeCleanups(addEventListener(doc, "click", closeOnPressOutsideCapture, true), addEventListener(doc, "pointerdown", closeOnPressOutsideCapture, true), addEventListener(doc, "pointerup", handlePressEndCapture, true), addEventListener(doc, "pointercancel", handlePressEndCapture, true), addEventListener(doc, "mousedown", closeOnPressOutsideCapture, true), addEventListener(doc, "mouseup", handlePressEndCapture, true), addEventListener(doc, "touchstart", handleTouchStartCapture, {
+      capture: true,
+      passive: true
+    }), addEventListener(doc, "touchmove", handleTouchMoveCapture, {
+      capture: true,
+      passive: true
+    }), addEventListener(doc, "touchend", handleTouchEndCapture, {
+      capture: true,
+      passive: true
+    })));
     return () => {
       unsubscribe();
       compositionTimeout.clear();
@@ -6072,7 +6240,7 @@ function useDismiss(context, props = {}) {
       suppressNextOutsideClickRef.current = false;
       clearInsideReactTree();
     };
-  }, [dataRef, floatingElement, escapeKey2, outsidePressEnabled, outsidePress2, open, enabled, escapeKeyBubbles, outsidePressBubbles, closeOnEscapeKeyDown, clearInsideReactTree, getOutsidePressEventProp, hasBlockingChild, isEventWithinOwnElements, tree, store, cancelDismissOnEndTimeout]);
+  }, [dataRef, floatingElement, escapeKey2, outsidePressEnabled, outsidePress2, open7, enabled, escapeKeyBubbles, outsidePressBubbles, closeOnEscapeKeyDown, clearInsideReactTree, getOutsidePressEventProp, hasBlockingChild, isEventWithinOwnElements, tree, store, cancelDismissOnEndTimeout]);
   const reference = React28.useMemo(() => ({
     onKeyDown: closeOnEscapeKeyDown,
     onPointerDown: closeOnReferencePress,
@@ -6117,13 +6285,13 @@ function computeCoordsFromPlacement(_ref, placement, rtl) {
   const sideAxis = getSideAxis(placement);
   const alignmentAxis = getAlignmentAxis(placement);
   const alignLength = getAxisLength(alignmentAxis);
-  const side = getSide(placement);
+  const side2 = getSide(placement);
   const isVertical = sideAxis === "y";
   const commonX = reference.x + reference.width / 2 - floating.width / 2;
   const commonY = reference.y + reference.height / 2 - floating.height / 2;
   const commonAlign = reference[alignLength] / 2 - floating[alignLength] / 2;
   let coords;
-  switch (side) {
+  switch (side2) {
     case "top":
       coords = {
         x: commonX,
@@ -6330,7 +6498,7 @@ var flip = function(options) {
       if ((_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
         return {};
       }
-      const side = getSide(placement);
+      const side2 = getSide(placement);
       const initialSideAxis = getSideAxis(initialPlacement);
       const isBasePlacement = getSide(initialPlacement) === initialPlacement;
       const rtl = await (platform3.isRTL == null ? void 0 : platform3.isRTL(elements.floating));
@@ -6344,7 +6512,7 @@ var flip = function(options) {
       const overflows = [];
       let overflowsData = ((_middlewareData$flip = middlewareData.flip) == null ? void 0 : _middlewareData$flip.overflows) || [];
       if (checkMainAxis) {
-        overflows.push(overflow[side]);
+        overflows.push(overflow[side2]);
       }
       if (checkCrossAxis) {
         const sides2 = getAlignmentSides(placement, rects, rtl);
@@ -6354,7 +6522,7 @@ var flip = function(options) {
         placement,
         overflows
       }];
-      if (!overflows.every((side2) => side2 <= 0)) {
+      if (!overflows.every((side3) => side3 <= 0)) {
         var _middlewareData$flip2, _overflowsData$filter;
         const nextIndex = (((_middlewareData$flip2 = middlewareData.flip) == null ? void 0 : _middlewareData$flip2.index) || 0) + 1;
         const nextPlacement = placements2[nextIndex];
@@ -6418,10 +6586,10 @@ async function convertValueToCoords(state, options) {
     elements
   } = state;
   const rtl = await (platform3.isRTL == null ? void 0 : platform3.isRTL(elements.floating));
-  const side = getSide(placement);
+  const side2 = getSide(placement);
   const alignment = getAlignment(placement);
   const isVertical = getSideAxis(placement) === "y";
-  const mainAxisMulti = originSides.has(side) ? -1 : 1;
+  const mainAxisMulti = originSides.has(side2) ? -1 : 1;
   const crossAxisMulti = rtl && isVertical ? -1 : 1;
   const rawValue = evaluate(options, state);
   let {
@@ -6629,50 +6797,50 @@ var size = function(options) {
         ...detectOverflowOptions
       } = evaluate(options, state);
       const overflow = await platform3.detectOverflow(state, detectOverflowOptions);
-      const side = getSide(placement);
+      const side2 = getSide(placement);
       const alignment = getAlignment(placement);
       const isYAxis = getSideAxis(placement) === "y";
       const {
         width,
-        height
+        height: height2
       } = rects.floating;
       let heightSide;
       let widthSide;
-      if (side === "top" || side === "bottom") {
-        heightSide = side;
+      if (side2 === "top" || side2 === "bottom") {
+        heightSide = side2;
         widthSide = alignment === (await (platform3.isRTL == null ? void 0 : platform3.isRTL(elements.floating)) ? "start" : "end") ? "left" : "right";
       } else {
-        widthSide = side;
+        widthSide = side2;
         heightSide = alignment === "end" ? "top" : "bottom";
       }
-      const maximumClippingHeight = height - overflow.top - overflow.bottom;
+      const maximumClippingHeight = height2 - overflow.top - overflow.bottom;
       const maximumClippingWidth = width - overflow.left - overflow.right;
-      const overflowAvailableHeight = min(height - overflow[heightSide], maximumClippingHeight);
+      const overflowAvailableHeight = min(height2 - overflow[heightSide], maximumClippingHeight);
       const overflowAvailableWidth = min(width - overflow[widthSide], maximumClippingWidth);
       const shiftData = state.middlewareData.shift;
       const noShift = !shiftData;
-      let availableHeight = overflowAvailableHeight;
-      let availableWidth = overflowAvailableWidth;
+      let availableHeight2 = overflowAvailableHeight;
+      let availableWidth2 = overflowAvailableWidth;
       if (shiftData != null && shiftData.enabled.x) {
-        availableWidth = maximumClippingWidth;
+        availableWidth2 = maximumClippingWidth;
       }
       if (shiftData != null && shiftData.enabled.y) {
-        availableHeight = maximumClippingHeight;
+        availableHeight2 = maximumClippingHeight;
       }
       if (noShift && !alignment) {
         if (isYAxis) {
-          availableWidth = width - 2 * max(overflow.left, overflow.right);
+          availableWidth2 = width - 2 * max(overflow.left, overflow.right);
         } else {
-          availableHeight = height - 2 * max(overflow.top, overflow.bottom);
+          availableHeight2 = height2 - 2 * max(overflow.top, overflow.bottom);
         }
       }
       await apply({
         ...state,
-        availableWidth,
-        availableHeight
+        availableWidth: availableWidth2,
+        availableHeight: availableHeight2
       });
       const nextDimensions = await platform3.getDimensions(elements.floating);
-      if (width !== nextDimensions.width || height !== nextDimensions.height) {
+      if (width !== nextDimensions.width || height2 !== nextDimensions.height) {
         return {
           reset: {
             rects: true
@@ -6688,18 +6856,18 @@ var size = function(options) {
 function getCssDimensions(element) {
   const css = getComputedStyle2(element);
   let width = parseFloat(css.width) || 0;
-  let height = parseFloat(css.height) || 0;
+  let height2 = parseFloat(css.height) || 0;
   const hasOffset = isHTMLElement(element);
   const offsetWidth = hasOffset ? element.offsetWidth : width;
-  const offsetHeight = hasOffset ? element.offsetHeight : height;
-  const shouldFallback = round(width) !== offsetWidth || round(height) !== offsetHeight;
+  const offsetHeight = hasOffset ? element.offsetHeight : height2;
+  const shouldFallback = round(width) !== offsetWidth || round(height2) !== offsetHeight;
   if (shouldFallback) {
     width = offsetWidth;
-    height = offsetHeight;
+    height2 = offsetHeight;
   }
   return {
     width,
-    height,
+    height: height2,
     $: shouldFallback
   };
 }
@@ -6714,11 +6882,11 @@ function getScale(element) {
   const rect = domElement.getBoundingClientRect();
   const {
     width,
-    height,
+    height: height2,
     $: $2
   } = getCssDimensions(domElement);
   let x2 = ($2 ? round(rect.width) : rect.width) / width;
-  let y2 = ($2 ? round(rect.height) : rect.height) / height;
+  let y2 = ($2 ? round(rect.height) : rect.height) / height2;
   if (!x2 || !Number.isFinite(x2)) {
     x2 = 1;
   }
@@ -6770,7 +6938,7 @@ function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetPar
   let x2 = (clientRect.left + visualOffsets.x) / scale.x;
   let y2 = (clientRect.top + visualOffsets.y) / scale.y;
   let width = clientRect.width / scale.x;
-  let height = clientRect.height / scale.y;
+  let height2 = clientRect.height / scale.y;
   if (domElement && offsetParent) {
     const win = getWindow(domElement);
     const offsetWin = isElement(offsetParent) ? getWindow(offsetParent) : offsetParent;
@@ -6785,7 +6953,7 @@ function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetPar
       x2 *= iframeScale.x;
       y2 *= iframeScale.y;
       width *= iframeScale.x;
-      height *= iframeScale.y;
+      height2 *= iframeScale.y;
       x2 += left;
       y2 += top;
       currentWin = getWindow(currentIFrame);
@@ -6794,7 +6962,7 @@ function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetPar
   }
   return rectToClientRect({
     width,
-    height,
+    height: height2,
     x: x2,
     y: y2
   });
@@ -6861,7 +7029,7 @@ function getDocumentRect(html) {
   const scroll = getNodeScroll(html);
   const body = html.ownerDocument.body;
   const width = max(html.scrollWidth, html.clientWidth, body.scrollWidth, body.clientWidth);
-  const height = max(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
+  const height2 = max(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
   let x2 = -scroll.scrollLeft + getWindowScrollBarX(html);
   const y2 = -scroll.scrollTop;
   if (getComputedStyle2(body).direction === "rtl") {
@@ -6869,7 +7037,7 @@ function getDocumentRect(html) {
   }
   return {
     width,
-    height,
+    height: height2,
     x: x2,
     y: y2
   };
@@ -6884,7 +7052,7 @@ function getViewportRect(element, strategy, rootBoundary) {
   const html = getDocumentElement(element);
   const visualViewport = win.visualViewport;
   let width = html.clientWidth;
-  let height = html.clientHeight;
+  let height2 = html.clientHeight;
   let x2 = 0;
   let y2 = 0;
   if (visualViewport) {
@@ -6896,7 +7064,7 @@ function getViewportRect(element, strategy, rootBoundary) {
       }
     } else {
       width = visualViewport.width;
-      height = visualViewport.height;
+      height2 = visualViewport.height;
       if (layoutRelativeClientCoords) {
         x2 = visualViewport.offsetLeft;
         y2 = visualViewport.offsetTop;
@@ -6917,7 +7085,7 @@ function getViewportRect(element, strategy, rootBoundary) {
   }
   return {
     width,
-    height,
+    height: height2,
     x: x2,
     y: y2
   };
@@ -6928,12 +7096,12 @@ function getInnerBoundingClientRect(element, strategy) {
   const left = clientRect.left + element.clientLeft;
   const scale = getScale(element);
   const width = element.clientWidth * scale.x;
-  const height = element.clientHeight * scale.y;
+  const height2 = element.clientHeight * scale.y;
   const x2 = left * scale.x;
   const y2 = top * scale.y;
   return {
     width,
-    height,
+    height: height2,
     x: x2,
     y: y2
   };
@@ -7012,11 +7180,11 @@ function getClippingRect(_ref) {
 function getDimensions2(element) {
   const {
     width,
-    height
+    height: height2
   } = getCssDimensions(element);
   return {
     width,
-    height
+    height: height2
   };
 }
 function getRectRelativeToOffsetParent(element, offsetParent, strategy) {
@@ -7147,17 +7315,17 @@ function observeMove(element, onMove, ancestorResize) {
       left,
       top,
       width,
-      height
+      height: height2
     } = elementRectForRootMargin;
     if (!skip) {
       onMove();
     }
-    if (!width || !height) {
+    if (!width || !height2) {
       return;
     }
     const insetTop = floor(top);
     const insetRight = floor(root.clientWidth - (left + width));
-    const insetBottom = floor(root.clientHeight - (top + height));
+    const insetBottom = floor(root.clientHeight - (top + height2));
     const insetLeft = floor(left);
     const rootMargin = -insetTop + "px " + -insetRight + "px " + -insetBottom + "px " + -insetLeft + "px";
     const options = {
@@ -7379,7 +7547,7 @@ function useFloating(options) {
     } = {},
     transform = true,
     whileElementsMounted,
-    open
+    open: open7
   } = options;
   const [data, setData] = React29.useState({
     x: 0,
@@ -7415,7 +7583,7 @@ function useFloating(options) {
   const hasWhileElementsMounted = whileElementsMounted != null;
   const whileElementsMountedRef = useLatestRef(whileElementsMounted);
   const platformRef = useLatestRef(platform3);
-  const openRef = useLatestRef(open);
+  const openRef = useLatestRef(open7);
   const update2 = React29.useCallback(() => {
     if (!referenceRef.current || !floatingRef.current) {
       return;
@@ -7446,14 +7614,14 @@ function useFloating(options) {
     });
   }, [latestMiddleware, placement, strategy, platformRef, openRef]);
   index(() => {
-    if (open === false && dataRef.current.isPositioned) {
+    if (open7 === false && dataRef.current.isPositioned) {
       dataRef.current.isPositioned = false;
       setData((data2) => ({
         ...data2,
         isPositioned: false
       }));
     }
-  }, [open]);
+  }, [open7]);
   const isMountedRef = React29.useRef(false);
   index(() => {
     isMountedRef.current = true;
@@ -7623,8 +7791,8 @@ var BasePopupHandle = class {
   }
   /**
    * Points the handle at a root's store and notifies subscribers so detached triggers re-render and
-   * re-register into it (their registration ref re-fires on the store-pointer change). Returns a
-   * cleanup function that detaches the store again.
+   * re-register into it (their registration effect migrates them when the store pointer changes).
+   * Returns a cleanup function that detaches the store again.
    * @internal
    */
   attachStore(newStore) {
@@ -7868,6 +8036,14 @@ function useStoreLegacy(store, selector2, a1, a2, a3) {
 // node_modules/@base-ui/utils/store/Store.mjs
 var Store = class {
   /**
+   * Creates a store with the given initial state, constructing the class it is called on.
+   * Calling it on a generic base class (e.g. `ReactStore.create(...)`) constructs that
+   * class but degrades the inferred instance type to `Store`; use `new` there instead.
+   */
+  static create(state) {
+    return new this(state);
+  }
+  /**
    * The current state of the store.
    * This property is updated immediately when the state changes as a result of calling {@link setState}, {@link update}, or {@link set}.
    * To subscribe to state changes, use the {@link useState} method. The value returned by {@link useState} is updated after the component renders (similarly to React's useState).
@@ -7920,6 +8096,8 @@ var Store = class {
   }
   /**
    * Merges the provided changes into the current state and notifies listeners if there are changes.
+   * Each value must match its state key. Pass an exact known subset rather than a broad
+   * `Partial<State>`, which may contain `undefined` for required state fields.
    *
    * @param changes An object containing the changes to apply to the current state.
    */
@@ -8015,9 +8193,13 @@ var ReactStore = class extends Store {
   }
   /**
    * Synchronizes multiple external values into the store.
+   * Each value must match its state key. Pass an exact known subset rather than a broad
+   * `Partial<State>`, which may contain `undefined` for required state fields.
    *
    * Note that the while the values in `state` are updated immediately, the values returned
    * by `useState` are updated before the next render (similarly to React's `useState`).
+   *
+   * @param statePart An exact subset of state fields to synchronize. Unknown keys are not accepted.
    */
   useSyncedValues(statePart) {
     const store = this;
@@ -8216,7 +8398,7 @@ function useSyncedFloatingRootContext(options) {
     nested,
     onOpenChange
   } = options;
-  const open = popupStore.useState("open");
+  const open7 = popupStore.useState("open");
   const referenceElement = popupStore.useState("activeTriggerElement");
   const floatingElement = popupStore.useState(treatPopupAsFloatingElement ? "popupElement" : "positionerElement");
   const triggerElements = popupStore.context.triggerElements;
@@ -8224,7 +8406,7 @@ function useSyncedFloatingRootContext(options) {
   const internalStoreRef = React33.useRef(null);
   if (floatingRootContextProp === void 0 && internalStoreRef.current === null) {
     internalStoreRef.current = new FloatingRootStore({
-      open,
+      open: open7,
       transitionStatus: void 0,
       referenceElement,
       floatingElement,
@@ -8239,7 +8421,7 @@ function useSyncedFloatingRootContext(options) {
   popupStore.useSyncedValue("floatingId", floatingId);
   useIsoLayoutEffect(() => {
     const valuesToSync = {
-      open,
+      open: open7,
       floatingId,
       referenceElement,
       floatingElement
@@ -8251,7 +8433,7 @@ function useSyncedFloatingRootContext(options) {
       valuesToSync.positionReference = referenceElement;
     }
     store.update(valuesToSync);
-  }, [open, floatingId, referenceElement, floatingElement, store]);
+  }, [open7, floatingId, referenceElement, floatingElement, store]);
   store.context.onOpenChange = handleOpenChange;
   store.context.nested = nested;
   return store;
@@ -8288,50 +8470,58 @@ function PopupHandleAttachment({
   }, [handle, store]);
   return null;
 }
-function useTriggerRegistration(id, store) {
-  const registeredElementIdRef = React34.useRef(null);
-  const registeredElementRef = React34.useRef(null);
-  return React34.useCallback((element) => {
-    if (id === void 0) {
-      return;
-    }
-    let shouldSyncTriggerCount = false;
-    if (registeredElementIdRef.current !== null) {
-      const registeredId = registeredElementIdRef.current;
-      const registeredElement = registeredElementRef.current;
-      const currentElement = store.context.triggerElements.getById(registeredId);
-      if (registeredElement && currentElement === registeredElement) {
-        store.context.triggerElements.delete(registeredId);
-        shouldSyncTriggerCount = true;
-      }
-      registeredElementIdRef.current = null;
-      registeredElementRef.current = null;
-    }
-    if (element !== null) {
-      registeredElementIdRef.current = id;
-      registeredElementRef.current = element;
-      store.context.triggerElements.add(id, element);
-      shouldSyncTriggerCount = true;
-    }
-    if (shouldSyncTriggerCount) {
-      const triggerCount = store.context.triggerElements.size;
-      if (store.select("open") && store.state.triggerCount !== triggerCount) {
-        store.set("triggerCount", triggerCount);
-      }
-    }
-  }, [store, id]);
+function syncTriggerCount(store) {
+  const triggerCount = store.context.triggerElements.size;
+  if (store.select("open") && store.state.triggerCount !== triggerCount) {
+    store.set("triggerCount", triggerCount);
+  }
 }
-function setPopupOpenState(state, open, trigger, preventUnmountOnClose = false) {
-  if (open) {
-    state.preventUnmountingOnClose = false;
+function useTriggerRegistration(id, store) {
+  const registrationRef = React34.useRef(null);
+  return useStableCallback((element) => {
+    const registration = registrationRef.current;
+    if (registration !== null) {
+      if (registration.element === element && registration.store === store && registration.id === id) {
+        return;
+      }
+      registrationRef.current = null;
+      const registeredStore = registration.store;
+      if (registeredStore.context.triggerElements.getById(registration.id) === registration.element) {
+        registeredStore.context.triggerElements.delete(registration.id);
+        syncTriggerCount(registeredStore);
+      }
+    }
+    if (element !== null && id !== void 0) {
+      registrationRef.current = {
+        store,
+        id,
+        element
+      };
+      store.context.triggerElements.add(id, element);
+      syncTriggerCount(store);
+    }
+  });
+}
+function createPopupOpenState(state, open7, trigger, preventUnmountOnClose = false) {
+  let preventUnmountingOnClose = state.preventUnmountingOnClose;
+  if (open7) {
+    preventUnmountingOnClose = false;
   } else if (preventUnmountOnClose) {
-    state.preventUnmountingOnClose = true;
+    preventUnmountingOnClose = true;
   }
   const triggerId = trigger?.id ?? null;
-  if (triggerId || open) {
-    state.activeTriggerId = triggerId;
-    state.activeTriggerElement = trigger ?? null;
+  let activeTriggerId = state.activeTriggerId;
+  let activeTriggerElement = state.activeTriggerElement;
+  if (triggerId || open7) {
+    activeTriggerId = triggerId;
+    activeTriggerElement = trigger ?? null;
   }
+  return {
+    open: open7,
+    preventUnmountingOnClose,
+    activeTriggerId,
+    activeTriggerElement
+  };
 }
 function attachPreventUnmountOnClose(eventDetails) {
   let preventUnmountOnClose = false;
@@ -8353,9 +8543,10 @@ function applyPopupOpenChange(store, nextOpen, eventDetails, options = {}) {
   options.onBeforeDispatch?.();
   store.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
   const changeState = () => {
+    const popupOpenState = createPopupOpenState(store.state, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
     const updatedState = {
       ...options.extraState,
-      open: nextOpen
+      ...popupOpenState
     };
     if (isFocusOpen) {
       updatedState.instantType = "focus";
@@ -8364,7 +8555,6 @@ function applyPopupOpenChange(store, nextOpen, eventDetails, options = {}) {
     } else if (isHover) {
       updatedState.instantType = void 0;
     }
-    setPopupOpenState(updatedState, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
     store.update(updatedState);
   };
   if (isHover) {
@@ -8377,35 +8567,42 @@ function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpda
   const isMountedByThisTrigger = store.useState("isMountedByTrigger", triggerId);
   const baseRegisterTrigger = useTriggerRegistration(triggerId, store);
   const applyTriggerData = useStableCallback((element) => {
-    const open = store.select("open");
+    const open7 = store.select("open");
     const activeTriggerId = store.select("activeTriggerId");
     if (activeTriggerId === triggerId) {
-      store.update({
+      const changes = {
         activeTriggerElement: element,
-        ...open ? stateUpdates : null
-      });
+        ...open7 ? stateUpdates : null
+      };
+      store.update(changes);
       return;
     }
-    if (activeTriggerId == null && open) {
-      store.update({
-        activeTriggerId: triggerId,
+    if (activeTriggerId == null && open7) {
+      const changes = {
+        activeTriggerId: triggerId ?? null,
         activeTriggerElement: element,
         ...stateUpdates
-      });
+      };
+      store.update(changes);
     }
   });
-  const registerTrigger = React34.useCallback((element) => {
+  const registerTrigger = useStableCallback((element) => {
     baseRegisterTrigger(element);
     if (element) {
       applyTriggerData(element);
     }
-  }, [baseRegisterTrigger, applyTriggerData]);
+  });
+  useIsoLayoutEffect(() => {
+    registerTrigger(triggerElementRef.current);
+    return () => registerTrigger(null);
+  }, [registerTrigger, triggerElementRef, store, triggerId]);
   useIsoLayoutEffect(() => {
     if (isMountedByThisTrigger) {
-      store.update({
+      const changes = {
         activeTriggerElement: triggerElementRef.current,
         ...stateUpdates
-      });
+      };
+      store.update(changes);
     }
   }, [isMountedByThisTrigger, store, triggerElementRef, ...Object.values(stateUpdates)]);
   return {
@@ -8418,12 +8615,12 @@ function useImplicitActiveTrigger(store, options = {}) {
     closeOnActiveTriggerUnmount = false
   } = options;
   const resolvedActiveTriggerIdRef = React34.useRef(null);
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const reactiveTriggerCount = store.useState("triggerCount");
   const activeTriggerId = store.useState("activeTriggerId");
   const reactiveActiveTriggerElement = store.useState("activeTriggerElement");
   useIsoLayoutEffect(() => {
-    if (!open) {
+    if (!open7) {
       resolvedActiveTriggerIdRef.current = null;
       if (store.state.triggerCount !== 0) {
         store.set("triggerCount", 0);
@@ -8492,16 +8689,16 @@ function useImplicitActiveTrigger(store, options = {}) {
         });
       }
     }
-  }, [open, store, reactiveTriggerCount, activeTriggerId, reactiveActiveTriggerElement, closeOnActiveTriggerUnmount]);
+  }, [open7, store, reactiveTriggerCount, activeTriggerId, reactiveActiveTriggerElement, closeOnActiveTriggerUnmount]);
 }
-function useOpenStateTransitions(open, store, onUnmount) {
+function useOpenStateTransitions(open7, store, onUnmount, animateInitialOpen) {
   const {
     mounted,
     setMounted,
     transitionStatus
-  } = useTransitionStatus(open);
+  } = useTransitionStatus(open7, false, false, animateInitialOpen);
   const preventUnmountingOnClose = store.useState("preventUnmountingOnClose");
-  const syncedPreventUnmountingOnClose = open ? false : preventUnmountingOnClose;
+  const syncedPreventUnmountingOnClose = open7 ? false : preventUnmountingOnClose;
   store.useSyncedValues({
     mounted,
     transitionStatus,
@@ -8519,11 +8716,11 @@ function useOpenStateTransitions(open, store, onUnmount) {
     store.context.onOpenChangeComplete?.(false);
   });
   useOpenChangeComplete({
-    enabled: mounted && !open && !syncedPreventUnmountingOnClose,
-    open,
+    enabled: mounted && !open7 && !syncedPreventUnmountingOnClose,
+    open: open7,
     ref: store.context.popupRef,
     onComplete() {
-      if (!open) {
+      if (!open7) {
         forceUnmount();
       }
     }
@@ -8543,12 +8740,12 @@ function usePopupInteractionProps(store, statePart) {
     });
   }, [store]);
 }
-function usePopupRootSync(store, open) {
+function usePopupRootSync(store, open7) {
   useIsoLayoutEffect(() => {
-    if (!open && store.state.openMethod !== null) {
+    if (!open7 && store.state.openMethod !== null) {
       store.set("openMethod", null);
     }
-  }, [open, store]);
+  }, [open7, store]);
   useIsoLayoutEffect(() => () => {
     if (store.state.openMethod !== null) {
       store.set("openMethod", null);
@@ -8651,30 +8848,25 @@ var PopupTriggerMap = class {
   }
 };
 
-// node_modules/@base-ui/react/floating-ui-react/utils/getEmptyRootContext.mjs
-function getEmptyRootContext() {
-  return new FloatingRootStore({
-    open: false,
-    transitionStatus: void 0,
-    floatingElement: null,
-    referenceElement: null,
-    triggerElements: new PopupTriggerMap(),
-    floatingId: void 0,
-    syncOnly: false,
-    nested: false,
-    onOpenChange: void 0
-  });
-}
-
 // node_modules/@base-ui/react/utils/popups/store.mjs
-function createInitialPopupStoreState() {
+function createInitialPopupStoreState(triggerElements, floatingId, nested = false) {
   return {
     open: false,
     openProp: void 0,
     mounted: false,
     transitionStatus: void 0,
-    floatingRootContext: getEmptyRootContext(),
-    floatingId: void 0,
+    floatingRootContext: new FloatingRootStore({
+      open: false,
+      transitionStatus: void 0,
+      floatingElement: null,
+      referenceElement: null,
+      triggerElements,
+      floatingId,
+      syncOnly: true,
+      nested,
+      onOpenChange: void 0
+    }),
+    floatingId,
     triggerCount: 0,
     preventUnmountingOnClose: false,
     payload: void 0,
@@ -8687,19 +8879,6 @@ function createInitialPopupStoreState() {
     inactiveTriggerProps: EMPTY_OBJECT,
     popupProps: EMPTY_OBJECT
   };
-}
-function createPopupFloatingRootContext(triggerElements, floatingId, nested = false) {
-  return new FloatingRootStore({
-    open: false,
-    transitionStatus: void 0,
-    floatingElement: null,
-    referenceElement: null,
-    triggerElements,
-    floatingId,
-    syncOnly: true,
-    nested,
-    onOpenChange: void 0
-  });
 }
 var activeTriggerIdSelector = (state) => state.triggerIdProp ?? state.activeTriggerId;
 var openSelector = (state) => state.openProp ?? state.open;
@@ -8768,7 +8947,7 @@ function usePopupHandleStore(handle) {
 // node_modules/@base-ui/react/floating-ui-react/hooks/useFloatingRootContext.mjs
 function useFloatingRootContext(options) {
   const {
-    open = false,
+    open: open7 = false,
     onOpenChange,
     elements = {}
   } = options;
@@ -8781,7 +8960,7 @@ function useFloatingRootContext(options) {
     }
   }
   const store = useRefWithInit(() => new FloatingRootStore({
-    open,
+    open: open7,
     transitionStatus: void 0,
     onOpenChange,
     referenceElement: elements.reference ?? null,
@@ -8793,7 +8972,7 @@ function useFloatingRootContext(options) {
   })).current;
   useIsoLayoutEffect(() => {
     const valuesToSync = {
-      open,
+      open: open7,
       floatingId
     };
     if (elements.reference !== void 0) {
@@ -8804,7 +8983,7 @@ function useFloatingRootContext(options) {
       valuesToSync.floatingElement = elements.floating;
     }
     store.update(valuesToSync);
-  }, [open, floatingId, elements.reference, elements.floating, store]);
+  }, [open7, floatingId, elements.reference, elements.floating, store]);
   store.context.onOpenChange = onOpenChange;
   store.context.nested = nested;
   return store;
@@ -8822,7 +9001,7 @@ function useFloatingWithStore(options, store) {
   const referenceElement = store.useState("referenceElement");
   const floatingElement = store.useState("floatingElement");
   const domReferenceElement = store.useState("domReferenceElement");
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const floatingId = store.useState("floatingId");
   const [positionReference, setPositionReferenceRaw] = React36.useState(null);
   const [localDomReference, setLocalDomReference] = React36.useState(void 0);
@@ -8887,7 +9066,7 @@ function useFloatingWithStore(options, store) {
   const context = React36.useMemo(() => ({
     ...position,
     dataRef: store.context.dataRef,
-    open,
+    open: open7,
     onOpenChange: store.setOpen,
     events: store.context.events,
     floatingId,
@@ -8895,7 +9074,7 @@ function useFloatingWithStore(options, store) {
     elements,
     nodeId,
     rootStore: store
-  }), [position, refs, elements, nodeId, store, open, floatingId]);
+  }), [position, refs, elements, nodeId, store, open7, floatingId]);
   useIsoLayoutEffect(() => {
     if (domReferenceElement) {
       domReferenceRef.current = domReferenceElement;
@@ -8944,6 +9123,7 @@ function useFocus(context, props = {}) {
       const currentDomReference = store.select("domReferenceElement");
       if (!store.select("open") && isHTMLElement(currentDomReference) && currentDomReference === activeElement(ownerDocument(currentDomReference))) {
         blockFocusRef.current = true;
+        blockedReferenceRef.current = currentDomReference;
       }
     }
     function onKeyDown() {
@@ -9130,7 +9310,7 @@ function useHoverFloatingInteraction(context, parameters = {}) {
     nodeId: nodeIdProp
   } = parameters;
   const store = "rootStore" in context ? context.rootStore : context;
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const floatingElement = store.useState("floatingElement");
   const domReferenceElement = store.useState("domReferenceElement");
   const {
@@ -9150,13 +9330,13 @@ function useHoverFloatingInteraction(context, parameters = {}) {
     clearSafePolygonPointerEventsMutation(instance);
   });
   useIsoLayoutEffect(() => {
-    if (!open) {
+    if (!open7) {
       instance.pointerType = void 0;
       instance.restTimeoutPending = false;
       instance.interactedInside = false;
       clearPointerEvents();
     }
-  }, [open, instance, clearPointerEvents]);
+  }, [open7, instance, clearPointerEvents]);
   React38.useEffect(() => {
     return clearPointerEvents;
   }, [clearPointerEvents]);
@@ -9164,7 +9344,7 @@ function useHoverFloatingInteraction(context, parameters = {}) {
     if (!enabled) {
       return void 0;
     }
-    if (open && instance.handleCloseOptions?.blockPointerEvents && isHoverOpen() && isElement(domReferenceElement) && floatingElement) {
+    if (open7 && instance.handleCloseOptions?.blockPointerEvents && isHoverOpen() && isElement(domReferenceElement) && floatingElement) {
       const ref = domReferenceElement;
       const floatingEl = floatingElement;
       const doc = ownerDocument(floatingElement);
@@ -9185,7 +9365,7 @@ function useHoverFloatingInteraction(context, parameters = {}) {
       };
     }
     return void 0;
-  }, [enabled, open, domReferenceElement, floatingElement, instance, isHoverOpen, tree, parentId, clearPointerEvents]);
+  }, [enabled, open7, domReferenceElement, floatingElement, instance, isHoverOpen, tree, parentId, clearPointerEvents]);
   React38.useEffect(() => {
     if (!enabled) {
       return void 0;
@@ -9325,7 +9505,7 @@ function useHoverReferenceInteraction(context, props = {}) {
     clearSafePolygonPointerEventsMutation(instance);
   });
   if (isActiveTrigger) {
-    instance.handleCloseOptions = handleCloseRef.current?.__options;
+    instance.handleCloseOptions = handleClose?.__options;
   }
   React39.useEffect(() => cleanupMouseMoveHandler, [cleanupMouseMoveHandler]);
   React39.useEffect(() => {
@@ -9622,7 +9802,7 @@ function useListNavigation(context, props) {
     }
   }
   const store = "rootStore" in context ? context.rootStore : context;
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const floatingElement = store.useState("floatingElement");
   const domReferenceElement = store.useState("domReferenceElement");
   const dataRef = store.context.dataRef;
@@ -9639,12 +9819,12 @@ function useListNavigation(context, props) {
     onNavigateProp(indexRef.current === -1 ? null : indexRef.current, event);
   });
   const previousMountedRef = React40.useRef(!!floatingElement);
-  const previousOpenRef = React40.useRef(open);
+  const previousOpenRef = React40.useRef(open7);
   const forceSyncFocusRef = React40.useRef(false);
   const forceScrollIntoViewRef = React40.useRef(false);
   const cancelQueuedFocusRef = React40.useRef(null);
   const disabledIndicesRef = useValueAsRef(disabledIndices);
-  const latestOpenRef = useValueAsRef(open);
+  const latestOpenRef = useValueAsRef(open7);
   const selectedIndexRef = useValueAsRef(selectedIndex);
   const resetOnPointerLeaveRef = useValueAsRef(resetOnPointerLeave);
   const focusFrame = useAnimationFrame();
@@ -9693,7 +9873,7 @@ function useListNavigation(context, props) {
     if (!enabled) {
       return;
     }
-    if (open && floatingElement) {
+    if (open7 && floatingElement) {
       indexRef.current = selectedIndex ?? -1;
       if (focusItemOnOpenRef.current && selectedIndex != null) {
         forceScrollIntoViewRef.current = true;
@@ -9703,12 +9883,12 @@ function useListNavigation(context, props) {
       indexRef.current = -1;
       onNavigate();
     }
-  }, [enabled, open, floatingElement, selectedIndex, onNavigate]);
+  }, [enabled, open7, floatingElement, selectedIndex, onNavigate]);
   useIsoLayoutEffect(() => {
     if (!enabled) {
       return;
     }
-    if (!open) {
+    if (!open7) {
       forceSyncFocusRef.current = false;
       return;
     }
@@ -9746,7 +9926,7 @@ function useListNavigation(context, props) {
       focusItem();
       forceScrollIntoViewRef.current = false;
     }
-  }, [enabled, open, floatingElement, activeIndex, selectedIndexRef, nested, listRef, orientation, rtl, onNavigate, focusItem, waitForListPopulatedFrame]);
+  }, [enabled, open7, floatingElement, activeIndex, selectedIndexRef, nested, listRef, orientation, rtl, onNavigate, focusItem, waitForListPopulatedFrame]);
   useIsoLayoutEffect(() => {
     if (!enabled || floatingElement || !tree || virtual || !previousMountedRef.current) {
       return;
@@ -9762,15 +9942,15 @@ function useListNavigation(context, props) {
     }
   }, [enabled, floatingElement, domReferenceElement, tree, parentId, virtual]);
   useIsoLayoutEffect(() => {
-    previousOpenRef.current = open;
+    previousOpenRef.current = open7;
     previousMountedRef.current = !!floatingElement;
   });
   useIsoLayoutEffect(() => {
-    if (!open) {
+    if (!open7) {
       keyRef.current = null;
       focusItemOnOpenRef.current = focusItemOnOpen;
     }
-  }, [open, focusItemOnOpen]);
+  }, [open7, focusItemOnOpen]);
   const hasActiveIndex = activeIndex != null;
   const syncCurrentTarget = useStableCallback((event) => {
     if (!latestOpenRef.current) {
@@ -9838,7 +10018,7 @@ function useListNavigation(context, props) {
     }
     if (isMainOrientationKey(event.key, orientation)) {
       stopEvent(event);
-      if (open && !virtual && activeElement(event.currentTarget.ownerDocument) === event.currentTarget) {
+      if (open7 && !virtual && activeElement(event.currentTarget.ownerDocument) === event.currentTarget) {
         indexRef.current = isMainOrientationToEndKey(event.key, orientation, rtl) ? minIndex : maxIndex;
         onNavigate(event);
         return;
@@ -9944,16 +10124,15 @@ function useListNavigation(context, props) {
     return itemProps;
   }, [syncCurrentTarget, latestOpenRef, floatingFocusElementRef, focusItemOnHover, listRef, onNavigate, resetOnPointerLeaveRef, virtual]);
   const ariaActiveDescendantProp = React40.useMemo(() => {
-    return virtual && open && hasActiveIndex && {
+    return virtual && open7 && hasActiveIndex && {
       "aria-activedescendant": `${id}-${activeIndex}`
     };
-  }, [virtual, open, hasActiveIndex, id, activeIndex]);
+  }, [virtual, open7, hasActiveIndex, id, activeIndex]);
   const floating = React40.useMemo(() => {
     return {
-      "aria-orientation": orientation === "both" ? void 0 : orientation,
       ...!typeableComboboxReference ? ariaActiveDescendantProp : {},
       onKeyDown(event) {
-        if (event.key === "Tab" && event.shiftKey && open && !virtual) {
+        if (event.key === "Tab" && event.shiftKey && open7 && !virtual) {
           const target = getTarget(event.nativeEvent);
           if (target && !contains(floatingFocusElementRef.current, target)) {
             return;
@@ -9974,7 +10153,7 @@ function useListNavigation(context, props) {
         isPointerModalityRef.current = true;
       }
     };
-  }, [ariaActiveDescendantProp, commonOnKeyDown, floatingFocusElementRef, orientation, typeableComboboxReference, store, open, virtual, domReferenceElement]);
+  }, [ariaActiveDescendantProp, commonOnKeyDown, floatingFocusElementRef, typeableComboboxReference, store, open7, virtual, domReferenceElement]);
   const trigger = React40.useMemo(() => {
     function openOnNavigationKeyDown(event) {
       store.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent, event.currentTarget));
@@ -10077,7 +10256,7 @@ function useTypeahead(context, props) {
     selectedIndex = null
   } = props;
   const store = "rootStore" in context ? context.rootStore : context;
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const timeout = useTimeout();
   const stringRef = React41.useRef("");
   const prevIndexRef = React41.useRef(selectedIndex ?? activeIndex ?? -1);
@@ -10124,7 +10303,7 @@ function useTypeahead(context, props) {
     event.ctrlKey || event.metaKey || event.altKey) {
       return;
     }
-    if (open && event.key !== " ") {
+    if (open7 && event.key !== " ") {
       stopEvent(event);
       onTyping?.(true);
     }
@@ -10168,7 +10347,7 @@ function useTypeahead(context, props) {
     onTyping?.(false);
   });
   useIsoLayoutEffect(() => {
-    if (!open && selectedIndex !== null) {
+    if (!open7 && selectedIndex !== null) {
       return;
     }
     timeout.clear();
@@ -10176,7 +10355,7 @@ function useTypeahead(context, props) {
     if (stringRef.current !== "") {
       stringRef.current = "";
     }
-  }, [open, selectedIndex, timeout]);
+  }, [open7, selectedIndex, timeout]);
   const sharedProps = React41.useMemo(() => ({
     onKeyDown,
     onBlur
@@ -10234,7 +10413,7 @@ function safePolygon(options = {}) {
     nodeId,
     tree
   }) => {
-    const side = placement?.split("-")[0];
+    const side2 = placement?.split("-")[0];
     let hasLanded = false;
     let lastX = null;
     let lastY = null;
@@ -10265,7 +10444,7 @@ function safePolygon(options = {}) {
       timeout.clear();
       const domReference = elements.domReference;
       const floating = elements.floating;
-      if (!domReference || !floating || side == null || x2 == null || y2 == null) {
+      if (!domReference || !floating || side2 == null || x2 == null || y2 == null) {
         return void 0;
       }
       const {
@@ -10313,12 +10492,12 @@ function safePolygon(options = {}) {
       const right = (isFloatingWider ? refRect : rect).right;
       const top = (isFloatingTaller ? refRect : rect).top;
       const bottom = (isFloatingTaller ? refRect : rect).bottom;
-      if (side === "top" && y2 >= refRect.bottom - 1 || side === "bottom" && y2 <= refRect.top + 1 || side === "left" && x2 >= refRect.right - 1 || side === "right" && x2 <= refRect.left + 1) {
+      if (side2 === "top" && y2 >= refRect.bottom - 1 || side2 === "bottom" && y2 <= refRect.top + 1 || side2 === "left" && x2 >= refRect.right - 1 || side2 === "right" && x2 <= refRect.left + 1) {
         closeIfNoOpenChild();
         return void 0;
       }
       let isInsideTroughRect = false;
-      switch (side) {
+      switch (side2) {
         case "top":
           isInsideTroughRect = isInsideAxisAlignedRect(clientX, clientY, left, refRect.top + 1, right, rect.bottom - 1);
           break;
@@ -10345,7 +10524,7 @@ function safePolygon(options = {}) {
         return void 0;
       }
       let isInsidePolygon = false;
-      switch (side) {
+      switch (side2) {
         case "top": {
           const cursorXOffset = isFloatingWider ? POLYGON_BUFFER / 2 : POLYGON_BUFFER * 4;
           const cursorPointOneX = isFloatingWider ? x2 + cursorXOffset : cursorLeaveFromRight ? x2 + cursorXOffset : x2 - cursorXOffset;
@@ -10409,7 +10588,7 @@ function DialogInteractions({
   parentContext,
   isDrawer
 }) {
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const disablePointerDismissal = store.useState("disablePointerDismissal");
   const modal = store.useState("modal");
   const popupElement = store.useState("popupElement");
@@ -10456,25 +10635,25 @@ function DialogInteractions({
     },
     escapeKey: isTopmost
   });
-  useScrollLock(open && modal === true, popupElement);
+  useScrollLock(open7 && modal === true, popupElement);
   store.useContextCallback("onNestedDialogOpen", (dialogCount, drawerCount) => {
     setOwnNestedOpenDialogs(dialogCount);
     setOwnNestedOpenDrawers(drawerCount);
   });
   useIsoLayoutEffect(() => {
     if (parentContext?.onNestedDialogOpen) {
-      if (open) {
+      if (open7) {
         parentContext.onNestedDialogOpen(ownNestedOpenDialogs + 1, ownNestedOpenDrawers + (isDrawer ? 1 : 0));
       } else {
         parentContext.onNestedDialogOpen(0, 0);
       }
     }
     return () => {
-      if (parentContext?.onNestedDialogOpen && open) {
+      if (parentContext?.onNestedDialogOpen && open7) {
         parentContext.onNestedDialogOpen(0, 0);
       }
     };
-  }, [isDrawer, open, ownNestedOpenDialogs, ownNestedOpenDrawers, parentContext]);
+  }, [isDrawer, open7, ownNestedOpenDialogs, ownNestedOpenDrawers, parentContext]);
   usePopupInteractionProps(store, {
     // `enabled` is not passed to `useDismiss`, so its props are always defined,
     // and `trigger` is the same object as `reference`.
@@ -10551,11 +10730,7 @@ var DialogStore = class extends ReactStore {
       return;
     }
     this.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
-    const updatedState = {
-      open: nextOpen
-    };
-    setPopupOpenState(updatedState, nextOpen, eventDetails.trigger);
-    this.update(updatedState);
+    this.update(createPopupOpenState(this.state, nextOpen, eventDetails.trigger));
   };
 };
 function createNullDialogStore() {
@@ -10564,7 +10739,7 @@ function createNullDialogStore() {
 }
 function createInitialState(initialState, triggerElements, floatingId, nested = false) {
   const state = {
-    ...createInitialPopupStoreState(),
+    ...createInitialPopupStoreState(triggerElements, floatingId, nested),
     modal: true,
     disablePointerDismissal: false,
     viewportElement: null,
@@ -10577,7 +10752,6 @@ function createInitialState(initialState, triggerElements, floatingId, nested = 
     role: "dialog",
     ...initialState
   };
-  state.floatingRootContext = createPopupFloatingRootContext(triggerElements, floatingId, nested);
   return state;
 }
 function createInitialContext(triggerElements) {
@@ -10635,19 +10809,19 @@ function useRenderDialogRoot(mode, props) {
   store.useSyncedValues(rootState);
   store.useContextCallback("onOpenChange", onOpenChange);
   store.useContextCallback("onOpenChangeComplete", onOpenChangeComplete);
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const mounted = store.useState("mounted");
   const payload = store.useState("payload");
-  usePopupRootSync(store, open);
+  usePopupRootSync(store, open7);
   useImplicitActiveTrigger(store);
   const {
     forceUnmount
-  } = useOpenStateTransitions(open, store);
+  } = useOpenStateTransitions(open7, store);
   React45.useImperativeHandle(actionsRef, () => ({
     unmount: forceUnmount,
     close: () => store.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction))
   }), [forceUnmount, store]);
-  const shouldRenderInteractions = open || mounted;
+  const shouldRenderInteractions = open7 || mounted;
   return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(DialogRootContext.Provider, {
     value: store,
     children: [handle && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(PopupHandleAttachment, {
@@ -10670,70 +10844,6 @@ function AlertDialogRoot(props) {
 
 // node_modules/@base-ui/react/dialog/backdrop/DialogBackdrop.mjs
 var React46 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/react/utils/popupStateMapping.mjs
-var CommonPopupDataAttributes = (function(CommonPopupDataAttributes2) {
-  CommonPopupDataAttributes2["open"] = "data-open";
-  CommonPopupDataAttributes2["closed"] = "data-closed";
-  CommonPopupDataAttributes2[CommonPopupDataAttributes2["startingStyle"] = TransitionStatusDataAttributes.startingStyle] = "startingStyle";
-  CommonPopupDataAttributes2[CommonPopupDataAttributes2["endingStyle"] = TransitionStatusDataAttributes.endingStyle] = "endingStyle";
-  CommonPopupDataAttributes2["anchorHidden"] = "data-anchor-hidden";
-  CommonPopupDataAttributes2["side"] = "data-side";
-  CommonPopupDataAttributes2["align"] = "data-align";
-  return CommonPopupDataAttributes2;
-})({});
-var TRIGGER_HOOK = {
-  "data-popup-open": ""
-};
-var PRESSABLE_TRIGGER_HOOK = {
-  "data-popup-open": "",
-  "data-pressed": ""
-};
-var POPUP_OPEN_HOOK = {
-  "data-open": ""
-};
-var POPUP_CLOSED_HOOK = {
-  "data-closed": ""
-};
-var ANCHOR_HIDDEN_HOOK = {
-  "data-anchor-hidden": ""
-};
-var triggerOpenStateMapping2 = {
-  open(value) {
-    if (value) {
-      return TRIGGER_HOOK;
-    }
-    return null;
-  }
-};
-var pressableTriggerOpenStateMapping = {
-  open(value) {
-    if (value) {
-      return PRESSABLE_TRIGGER_HOOK;
-    }
-    return null;
-  }
-};
-var popupStateMapping = {
-  open(value) {
-    if (value) {
-      return POPUP_OPEN_HOOK;
-    }
-    return POPUP_CLOSED_HOOK;
-  },
-  anchorHidden(value) {
-    if (value) {
-      return ANCHOR_HIDDEN_HOOK;
-    }
-    return null;
-  }
-};
-var popupTransitionStateMapping = {
-  ...popupStateMapping,
-  ...transitionStatusMapping
-};
-
-// node_modules/@base-ui/react/dialog/backdrop/DialogBackdrop.mjs
 var DialogBackdrop = /* @__PURE__ */ React46.forwardRef(function DialogBackdrop2(componentProps, forwardedRef) {
   const {
     render: render4,
@@ -10743,12 +10853,12 @@ var DialogBackdrop = /* @__PURE__ */ React46.forwardRef(function DialogBackdrop2
     ...elementProps
   } = componentProps;
   const store = useDialogRootContext();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const nested = store.useState("nested");
   const mounted = store.useState("mounted");
   const transitionStatus = store.useState("transitionStatus");
   const state = {
-    open,
+    open: open7,
     transitionStatus
   };
   return useRenderElement("div", componentProps, {
@@ -10775,24 +10885,24 @@ var DialogClose = /* @__PURE__ */ React47.forwardRef(function DialogClose2(compo
     render: render4,
     className,
     style,
-    disabled: disabled2 = false,
+    disabled: disabled3 = false,
     nativeButton = true,
     ...elementProps
   } = componentProps;
   const store = useDialogRootContext();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const {
     getButtonProps,
     buttonRef
   } = useButton({
-    disabled: disabled2,
+    disabled: disabled3,
     native: nativeButton
   });
   const state = {
-    disabled: disabled2
+    disabled: disabled3
   };
   function handleClick(event) {
-    if (open) {
+    if (open7) {
       store.setOpen(false, createChangeEventDetails(reason_parts_exports.closePress, event.nativeEvent));
     }
   }
@@ -10852,13 +10962,23 @@ var HOME = "Home";
 var END = "End";
 var COMPOSITE_KEYS = /* @__PURE__ */ new Set([ARROW_UP2, ARROW_DOWN2, ARROW_LEFT2, ARROW_RIGHT2, HOME, END]);
 
+// node_modules/@base-ui/react/dialog/popup/DialogPopupCssVars.mjs
+var nestedDialogs = "--nested-dialogs";
+
+// node_modules/@base-ui/react/dialog/popup/DialogPopupDataAttributes.mjs
+var open3 = CommonPopupDataAttributes_exports.open;
+var closed3 = CommonPopupDataAttributes_exports.closed;
+var startingStyle4 = CommonPopupDataAttributes_exports.startingStyle;
+var endingStyle4 = CommonPopupDataAttributes_exports.endingStyle;
+var nestedDialogOpen = "data-nested-dialog-open";
+
 // node_modules/@base-ui/react/dialog/utils/stateAttributesMapping.mjs
 var dialogStateAttributesMapping = {
   ...popupStateMapping,
   ...transitionStatusMapping,
   nestedDialogOpen(value) {
     return value ? {
-      "data-nested-dialog-open": ""
+      [nestedDialogOpen]: ""
     } : null;
   }
 };
@@ -10883,7 +11003,7 @@ var DialogPopup = /* @__PURE__ */ React50.forwardRef(function DialogPopup2(compo
   const mounted = store.useState("mounted");
   const nested = store.useState("nested");
   const nestedOpenDialogCount = store.useState("nestedOpenDialogCount");
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const openMethod = store.useState("openMethod");
   const titleElementId = store.useState("titleElementId");
   const transitionStatus = store.useState("transitionStatus");
@@ -10891,22 +11011,22 @@ var DialogPopup = /* @__PURE__ */ React50.forwardRef(function DialogPopup2(compo
   const floatingId = floatingRootContext.useState("floatingId");
   useDialogPortalContext();
   useOpenChangeComplete({
-    open,
+    open: open7,
     ref: store.context.popupRef,
     onComplete() {
-      if (open) {
+      if (open7) {
         store.context.onOpenChangeComplete?.(true);
       }
     }
   });
   const resolvedInitialFocus = initialFocus === void 0 ? createDefaultInitialFocus(store.context.popupRef) : initialFocus;
-  const nestedDialogOpen = nestedOpenDialogCount > 0;
+  const nestedDialogOpen3 = nestedOpenDialogCount > 0;
   const setPopupElement = store.useStateSetter("popupElement");
   const state = {
-    open,
+    open: open7,
     nested,
     transitionStatus,
-    nestedDialogOpen
+    nestedDialogOpen: nestedDialogOpen3
   };
   const element = useRenderElement("div", componentProps, {
     state,
@@ -10923,7 +11043,7 @@ var DialogPopup = /* @__PURE__ */ React50.forwardRef(function DialogPopup2(compo
         }
       },
       style: {
-        "--nested-dialogs": nestedOpenDialogCount
+        [nestedDialogs]: nestedOpenDialogCount
       }
     }, elementProps],
     ref: [forwardedRef, store.context.popupRef, setPopupElement],
@@ -10993,7 +11113,7 @@ var DialogPortal = /* @__PURE__ */ React52.forwardRef(function DialogPortal2(pro
   const store = useDialogRootContext();
   const mounted = store.useState("mounted");
   const modal = store.useState("modal");
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const shouldRender = mounted || keepMounted;
   if (!shouldRender) {
     return null;
@@ -11005,7 +11125,7 @@ var DialogPortal = /* @__PURE__ */ React52.forwardRef(function DialogPortal2(pro
       ...portalProps,
       children: [mounted && modal === true && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(InternalBackdrop, {
         ref: store.context.internalBackdropRef,
-        inert: inertValue(!open)
+        inert: inertValue(!open7)
       }), props.children]
     })
   });
@@ -11083,9 +11203,9 @@ function useValueChanged(value, onChange) {
 }
 
 // node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
-function useOpenMethodTriggerProps(open, setOpenMethod) {
+function useOpenMethodTriggerProps(open7, setOpenMethod) {
   const handleTriggerClick = useStableCallback((_, interactionType) => {
-    const isOpen = typeof open === "function" ? open() : open;
+    const isOpen = typeof open7 === "function" ? open7() : open7;
     if (!isOpen) {
       setOpenMethod(interactionType || // On iOS Safari, the hitslop around touch targets means tapping outside an element's
       // bounds does not fire `pointerdown` but does fire `mousedown`. The `interactionType`
@@ -11102,11 +11222,11 @@ function useOpenMethodTriggerProps(open, setOpenMethod) {
     onPointerDown
   }), [onClick, onPointerDown]);
 }
-function useOpenInteractionType(open) {
+function useOpenInteractionType(open7) {
   const [openMethod, setOpenMethod] = React56.useState(null);
-  const triggerProps = useOpenMethodTriggerProps(open, setOpenMethod);
-  useValueChanged(open, (previousOpen) => {
-    if (previousOpen && !open) {
+  const triggerProps = useOpenMethodTriggerProps(open7, setOpenMethod);
+  useValueChanged(open7, (previousOpen) => {
+    if (previousOpen && !open7) {
       setOpenMethod(null);
     }
   });
@@ -11117,12 +11237,12 @@ function useOpenInteractionType(open) {
 }
 
 // node_modules/@base-ui/react/dialog/trigger/DialogTrigger.mjs
-var DialogTrigger = /* @__PURE__ */ React57.forwardRef(function DialogTrigger2(componentProps, forwardedRef) {
+var DialogTrigger = fastComponentRef(function DialogTrigger2(componentProps, forwardedRef) {
   const {
     render: render4,
     className,
     style,
-    disabled: disabled2 = false,
+    disabled: disabled3 = false,
     nativeButton = true,
     id: idProp,
     payload,
@@ -11150,7 +11270,7 @@ var DialogTrigger = /* @__PURE__ */ React57.forwardRef(function DialogTrigger2(c
     getButtonProps,
     buttonRef
   } = useButton({
-    disabled: disabled2,
+    disabled: disabled3,
     native: nativeButton
   });
   const click = useClick(floatingContext);
@@ -11158,7 +11278,7 @@ var DialogTrigger = /* @__PURE__ */ React57.forwardRef(function DialogTrigger2(c
     store.set("openMethod", interactionType);
   });
   const state = {
-    disabled: disabled2,
+    disabled: disabled3,
     open: isOpenedByThisTrigger
   };
   const rootTriggerProps = store.useState("triggerProps", isMountedByThisTrigger);
@@ -11192,18 +11312,18 @@ var DialogViewport = /* @__PURE__ */ React58.forwardRef(function DialogViewport2
   } = componentProps;
   const keepMounted = useDialogPortalContext();
   const store = useDialogRootContext();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const nested = store.useState("nested");
   const transitionStatus = store.useState("transitionStatus");
   const nestedOpenDialogCount = store.useState("nestedOpenDialogCount");
   const mounted = store.useState("mounted");
   const setViewportElement = store.useStateSetter("viewportElement");
-  const nestedDialogOpen = nestedOpenDialogCount > 0;
+  const nestedDialogOpen3 = nestedOpenDialogCount > 0;
   const state = {
-    open,
+    open: open7,
     nested,
     transitionStatus,
-    nestedDialogOpen
+    nestedDialogOpen: nestedDialogOpen3
   };
   const shouldRender = keepMounted || mounted;
   return useRenderElement("div", componentProps, {
@@ -11215,7 +11335,7 @@ var DialogViewport = /* @__PURE__ */ React58.forwardRef(function DialogViewport2
       role: "presentation",
       hidden: !mounted,
       style: {
-        pointerEvents: !open ? "none" : void 0
+        pointerEvents: !open7 ? "none" : void 0
       },
       children
     }, elementProps]
@@ -11385,6 +11505,22 @@ function useComboboxHasItemsContext() {
   return React60.useContext(ComboboxHasItemsContext);
 }
 
+// node_modules/@base-ui/utils/areArraysEqual.mjs
+function areArraysEqual(array1, array2, itemComparer = Object.is) {
+  const {
+    length
+  } = array1;
+  if (length !== array2.length) {
+    return false;
+  }
+  for (let i = 0; i < length; i += 1) {
+    if (!itemComparer(array1[i], array2[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
 // node_modules/@base-ui/react/internals/itemEquality.mjs
 var defaultItemEquality = (itemValue, selectedValue) => Object.is(itemValue, selectedValue);
 function compareItemEquality(itemValue, selectedValue, comparer) {
@@ -11393,8 +11529,14 @@ function compareItemEquality(itemValue, selectedValue, comparer) {
   }
   return comparer(itemValue, selectedValue);
 }
+function isSelectedValueDirty(currentValue, initialValue, comparer) {
+  if (Array.isArray(currentValue) && Array.isArray(initialValue)) {
+    return !areArraysEqual(currentValue, initialValue, (itemValue, initialItemValue) => compareItemEquality(itemValue, initialItemValue, comparer));
+  }
+  return currentValue !== initialValue;
+}
 function selectedValueIncludes(selectedValues, itemValue, comparer) {
-  if (!selectedValues || selectedValues.length === 0) {
+  if (!selectedValues) {
     return false;
   }
   return selectedValues.some((selectedValue) => {
@@ -11405,7 +11547,7 @@ function selectedValueIncludes(selectedValues, itemValue, comparer) {
   });
 }
 function findItemIndex(itemValues, selectedValue, comparer) {
-  if (!itemValues || itemValues.length === 0) {
+  if (!itemValues) {
     return -1;
   }
   return itemValues.findIndex((itemValue) => {
@@ -11415,10 +11557,27 @@ function findItemIndex(itemValues, selectedValue, comparer) {
     return compareItemEquality(itemValue, selectedValue, comparer);
   });
 }
+function createSelectionMatcher(selectedValues, comparer) {
+  if (comparer !== defaultItemEquality) {
+    return (itemValue) => selectedValueIncludes(selectedValues, itemValue, comparer);
+  }
+  const index2 = new Set(selectedValues);
+  index2.delete(void 0);
+  return (itemValue) => index2.has(itemValue) && (itemValue !== 0 || selectedValues.some((v2) => Object.is(itemValue, v2)));
+}
 function findSelectionIndex(itemValues, selectedValue, comparer, multiple) {
-  const lastValue = multiple && Array.isArray(selectedValue) ? selectedValue[selectedValue.length - 1] : selectedValue;
-  const index2 = findItemIndex(itemValues, lastValue, comparer);
+  const index2 = multiple && Array.isArray(selectedValue) ? (
+    // Anchor to the first selected item in rendered order so the index does not depend
+    // on the order in which the values were added to the array.
+    itemValues.findIndex(createSelectionMatcher(selectedValue, comparer))
+  ) : findItemIndex(itemValues, selectedValue, comparer);
   return index2 === -1 ? null : index2;
+}
+function resolveSelectedIndex(index2, itemValue, registry, selectedValues, comparer, currentIndex) {
+  if (selectedValueIncludes(selectedValues, itemValue, comparer)) {
+    return currentIndex != null && index2 > currentIndex && selectedValueIncludes(selectedValues, registry[currentIndex], comparer) ? currentIndex : index2;
+  }
+  return index2 === currentIndex ? findSelectionIndex(registry, selectedValues, comparer, true) : currentIndex;
 }
 function removeItem(selectedValues, itemValue, comparer) {
   return selectedValues.filter((selectedValue) => !compareItemEquality(itemValue, selectedValue, comparer));
@@ -11444,8 +11603,14 @@ function serializeValue(value) {
 
 // node_modules/@base-ui/react/internals/resolveValueLabel.mjs
 var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+function isGroup(item) {
+  return typeof item === "object" && item != null && Array.isArray(item.items);
+}
 function isGroupedItems(items) {
-  return items != null && items.length > 0 && typeof items[0] === "object" && items[0] != null && "items" in items[0];
+  return isGroup(items?.[0]);
+}
+function flattenLeafItems(items) {
+  return isGroupedItems(items) ? items.flatMap((group) => group.items) : items;
 }
 function hasNullItemLabel(items) {
   if (!Array.isArray(items)) {
@@ -11567,6 +11732,10 @@ var selectors3 = {
 // node_modules/@base-ui/react/internals/field-root-context/FieldRootContext.mjs
 var React62 = __toESM(require_react(), 1);
 
+// node_modules/@base-ui/react/field/control/FieldControlDataAttributes.mjs
+var valid = "data-valid";
+var invalid = "data-invalid";
+
 // node_modules/@base-ui/react/internals/field-constants/constants.mjs
 var DEFAULT_VALIDITY_STATE = {
   badInput: false,
@@ -11599,11 +11768,11 @@ var fieldValidityMapping = {
     }
     if (value) {
       return {
-        "data-valid": ""
+        [valid]: ""
       };
     }
     return {
-      "data-invalid": ""
+      [invalid]: ""
     };
   }
 };
@@ -11695,8 +11864,8 @@ var FormContext = /* @__PURE__ */ React63.createContext({
   errors: {},
   clearErrors: NOOP,
   validationMode: "onSubmit",
-  submitAttemptedRef: {
-    current: false
+  submitCountRef: {
+    current: 0
   }
 });
 if (true) FormContext.displayName = "FormContext";
@@ -11712,6 +11881,7 @@ var React64 = __toESM(require_react(), 1);
 var LabelableContext = /* @__PURE__ */ React64.createContext({
   controlId: void 0,
   registerControlId: NOOP,
+  resetControlId: NOOP,
   labelId: void 0,
   setLabelId: NOOP,
   messageIds: [],
@@ -11727,18 +11897,17 @@ function useLabelableContext() {
 function useLabelableId(params = {}) {
   const {
     id,
-    implicit = false,
-    controlRef
+    enabled = true
   } = params;
   const {
     controlId,
-    registerControlId
+    registerControlId,
+    resetControlId
   } = useLabelableContext();
-  const defaultId = useBaseUiId(id);
-  const controlIdForEffect = implicit ? controlId : void 0;
+  const defaultId = useBaseUiId();
   const controlSourceRef = useRefWithInit(() => /* @__PURE__ */ Symbol());
   const hasRegisteredRef = React65.useRef(false);
-  const hadExplicitIdRef = React65.useRef(id != null);
+  const hadExplicitIdRef = React65.useRef(false);
   const unregisterControlId = useStableCallback(() => {
     if (!hasRegisteredRef.current || registerControlId === NOOP) {
       return;
@@ -11747,24 +11916,18 @@ function useLabelableId(params = {}) {
     registerControlId(controlSourceRef.current, void 0);
   });
   useIsoLayoutEffect(() => {
-    if (registerControlId === NOOP) {
+    if (!enabled || registerControlId === NOOP) {
+      unregisterControlId();
       return void 0;
     }
     let nextId;
-    if (implicit) {
-      const elem = controlRef?.current;
-      if (isElement(elem) && elem.closest("label") != null) {
-        nextId = id ?? null;
-      } else {
-        nextId = controlIdForEffect ?? defaultId;
-      }
-    } else if (id != null) {
+    if (id !== void 0) {
       hadExplicitIdRef.current = true;
       nextId = id;
     } else if (hadExplicitIdRef.current) {
       nextId = defaultId;
     } else {
-      unregisterControlId();
+      resetControlId();
       return void 0;
     }
     if (nextId === void 0) {
@@ -11774,11 +11937,11 @@ function useLabelableId(params = {}) {
     hasRegisteredRef.current = true;
     registerControlId(controlSourceRef.current, nextId);
     return void 0;
-  }, [id, controlRef, controlIdForEffect, registerControlId, implicit, defaultId, controlSourceRef, unregisterControlId]);
-  React65.useEffect(() => {
+  }, [id, enabled, registerControlId, resetControlId, defaultId, controlSourceRef, unregisterControlId]);
+  useIsoLayoutEffect(() => {
     return unregisterControlId;
   }, [unregisterControlId]);
-  return controlId ?? defaultId;
+  return (enabled ? controlId : void 0) ?? id ?? defaultId;
 }
 
 // node_modules/@base-ui/react/combobox/root/utils/index.mjs
@@ -11797,7 +11960,7 @@ function createCollatorItemFilter(collatorFilter, itemToStringLabel) {
 // node_modules/@base-ui/react/combobox/root/utils/useFilter.mjs
 var React66 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/utils/stringifyLocale.mjs
+// node_modules/@base-ui/utils/stringifyLocale.mjs
 function stringifyLocale(locale) {
   if (Array.isArray(locale)) {
     return locale.map((value) => stringifyLocale(value)).join(",");
@@ -11904,11 +12067,6 @@ function findScrollableTouchTarget(target, root, axis = "vertical", allowOverflo
   return isScrollable(root, axis, allowOverflowIntent) ? root : null;
 }
 
-// node_modules/@base-ui/react/internals/areArraysEqual.mjs
-function areArraysEqual(array1, array2, itemComparer = (a, b) => a === b) {
-  return array1.length === array2.length && array1.every((value, index2) => itemComparer(value, array2[index2]));
-}
-
 // node_modules/@base-ui/react/combobox/root/utils/constants.mjs
 var NO_ACTIVE_VALUE = /* @__PURE__ */ Symbol("none");
 var INITIAL_LAST_HIGHLIGHT = {
@@ -11925,6 +12083,20 @@ function useDirection() {
   return context?.direction ?? "ltr";
 }
 
+// node_modules/@base-ui/react/combobox/items/itemCollection.mjs
+function findCollectionItem(valueToItem, itemValue, isEqual) {
+  const exactItem = valueToItem.get(itemValue);
+  if (exactItem !== void 0 || isEqual === defaultItemEquality) {
+    return exactItem;
+  }
+  for (const [derivedValue, item] of valueToItem) {
+    if (compareItemEquality(derivedValue, itemValue, isEqual)) {
+      return item;
+    }
+  }
+  return void 0;
+}
+
 // node_modules/@base-ui/react/combobox/root/AriaCombobox.mjs
 var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
 function AriaCombobox(props) {
@@ -11934,7 +12106,7 @@ function AriaCombobox(props) {
     defaultSelectedValue = null,
     selectedValue: selectedValueProp,
     onSelectedValueChange,
-    defaultInputValue: defaultInputValueProp,
+    defaultInputValue,
     inputValue: inputValueProp,
     open: openProp,
     defaultOpen = false,
@@ -11947,15 +12119,16 @@ function AriaCombobox(props) {
     required = false,
     inputRef: inputRefProp,
     grid = false,
-    items,
+    items: itemsProp,
     filteredItems: filteredItemsProp,
     filter: filterProp,
+    filterQuery: filterQueryProp,
     openOnInputClick = true,
     autoHighlight = false,
     keepHighlight = false,
     highlightItemOnHover = true,
     loopFocus = true,
-    itemToStringLabel,
+    itemToStringLabel: itemToStringLabelProp,
     itemToStringValue,
     isItemEqualToValue = defaultItemEquality,
     virtualized = false,
@@ -11989,8 +12162,63 @@ function AriaCombobox(props) {
   const collatorFilter = useCoreFilter({
     locale
   });
+  const collection = Array.isArray(itemsProp) ? null : itemsProp;
+  if (collection && typeof collection.label !== "function") {
+    throw new Error(true ? "Base UI: the `items` prop received an object that is not a collection, so its items cannot be read. Pass an array of items, an array of groups with items, or the result of `createItems()`. See https://base-ui.com/react/components/combobox#createitems" : formatErrorMessage_default(100));
+  }
+  const items = collection ? collection.data : itemsProp;
+  const itemToValue = collection?.value;
+  const storeItems = itemToValue ? void 0 : items;
+  const externalWindow = React68.useMemo(() => {
+    if (!filteredItemsProp || !itemToValue) {
+      return void 0;
+    }
+    const flat = flattenLeafItems(filteredItemsProp);
+    const values = flat.map(itemToValue);
+    let valueToItem;
+    return {
+      values,
+      findItem(itemValue, isEqual) {
+        if (!valueToItem) {
+          valueToItem = /* @__PURE__ */ new Map();
+          for (let i = 0; i < values.length; i += 1) {
+            if (!valueToItem.has(values[i])) {
+              valueToItem.set(values[i], flat[i]);
+            }
+          }
+        }
+        return findCollectionItem(valueToItem, itemValue, isEqual);
+      }
+    };
+  }, [filteredItemsProp, itemToValue]);
+  const itemToStringLabel = React68.useMemo(() => {
+    if (!collection) {
+      return itemToStringLabelProp;
+    }
+    return (itemValue) => {
+      return collection.label(itemValue, isItemEqualToValue, (unresolvedValue) => {
+        const externalItem = externalWindow?.findItem(unresolvedValue, isItemEqualToValue);
+        if (externalItem != null) {
+          return collection.itemLabel(externalItem);
+        }
+        return stringifyAsLabel(unresolvedValue, itemToStringLabelProp);
+      });
+    };
+  }, [collection, itemToStringLabelProp, externalWindow, isItemEqualToValue]);
+  const filterItemToString = React68.useMemo(() => {
+    if (!collection) {
+      return itemToStringLabelProp;
+    }
+    return Object.assign((item) => collection.itemLabel(item), {
+      selected: (value) => stringifyAsLabel(value, itemToStringLabel)
+    });
+  }, [collection, itemToStringLabel, itemToStringLabelProp]);
+  function stringifyValueLabel(item) {
+    return stringifyAsLabel(item, itemToStringLabel);
+  }
   const [queryChangedAfterOpen, setQueryChangedAfterOpen] = React68.useState(false);
   const [closeQuery, setCloseQuery] = React68.useState(null);
+  const previousCloseQueryRef = React68.useRef(closeQuery);
   const listRef = React68.useRef([]);
   const labelsRef = React68.useRef([]);
   const popupRef = React68.useRef(null);
@@ -12007,11 +12235,11 @@ function AriaCombobox(props) {
   const pendingQueryHighlightRef = React68.useRef(null);
   const valuesRef = React68.useRef([]);
   const pointerDownItemRef = React68.useRef(null);
-  const disabled2 = fieldDisabled || disabledProp;
+  const disabled3 = fieldDisabled || disabledProp;
   const name = fieldName ?? nameProp;
   const multiple = selectionMode === "multiple";
   const single = selectionMode === "single";
-  const hasInputValue = inputValueProp !== void 0 || defaultInputValueProp !== void 0;
+  const hasInputValue = inputValueProp !== void 0 || defaultInputValue !== void 0;
   const hasItems = items !== void 0;
   const hasFilteredItemsProp = filteredItemsProp !== void 0;
   let autoHighlightMode;
@@ -12033,14 +12261,14 @@ function AriaCombobox(props) {
     if (filterProp !== void 0) {
       return filterProp;
     }
-    return createCollatorItemFilter(collatorFilter, itemToStringLabel);
-  }, [filterProp, collatorFilter, itemToStringLabel]);
+    return createCollatorItemFilter(collatorFilter, filterItemToString);
+  }, [filterProp, collatorFilter, filterItemToString]);
   const initialDefaultInputValue = useRefWithInit(() => {
     if (hasInputValue) {
-      return defaultInputValueProp ?? "";
+      return defaultInputValue ?? "";
     }
     if (single) {
-      return stringifyAsLabel(selectedValue, itemToStringLabel);
+      return stringifyValueLabel(selectedValue);
     }
     return "";
   }).current;
@@ -12050,27 +12278,19 @@ function AriaCombobox(props) {
     name: "Combobox",
     state: "inputValue"
   });
-  const [open, setOpenUnwrapped] = useControlled({
+  const [open7, setOpenUnwrapped] = useControlled({
     controlled: openProp,
     default: defaultOpen,
     name: "Combobox",
     state: "open"
   });
   const isGrouped = isGroupedItems(items);
-  const query = closeQuery ?? String(inputValue).trim();
-  const selectedLabelString = single ? stringifyAsLabel(selectedValue, itemToStringLabel) : "";
+  const query = !open7 && closeQuery !== null ? closeQuery : String(inputValue).trim();
+  const selectedLabelString = single ? stringifyValueLabel(selectedValue) : "";
   const shouldBypassFiltering = single && !queryChangedAfterOpen && query !== "" && selectedLabelString.length === query.length && collatorFilter.contains(selectedLabelString, query);
-  const filterQuery = shouldBypassFiltering ? "" : query;
-  const shouldIgnoreExternalFiltering = hasItems && hasFilteredItemsProp && shouldBypassFiltering;
-  const flatItems = React68.useMemo(() => {
-    if (!items) {
-      return EMPTY_ARRAY;
-    }
-    if (isGrouped) {
-      return items.flatMap((group) => group.items);
-    }
-    return items;
-  }, [items, isGrouped]);
+  const filterQuery = shouldBypassFiltering ? "" : filterQueryProp ?? query;
+  const shouldIgnoreExternalFiltering = hasItems && hasFilteredItemsProp && shouldBypassFiltering && (!collection || collection.hasValue(selectedValue, isItemEqualToValue));
+  const flatItems = React68.useMemo(() => items ? flattenLeafItems(items) : EMPTY_ARRAY, [items]);
   const filteredItems = React68.useMemo(() => {
     if (filteredItemsProp && !shouldIgnoreExternalFiltering) {
       return filteredItemsProp;
@@ -12093,7 +12313,7 @@ function AriaCombobox(props) {
             if (itemsToTake.length >= remainingLimit) {
               break;
             }
-            if (filter(item, filterQuery, itemToStringLabel)) {
+            if (filter(item, filterQuery, filterItemToString)) {
               itemsToTake.push(item);
             }
           }
@@ -12112,7 +12332,7 @@ function AriaCombobox(props) {
     if (filterQuery === "") {
       return limit > -1 ? flatItems.slice(0, limit) : (
         // The cast here is done as `flatItems` is readonly.
-        // valuesRef.current, a mutable ref, can be set to `flatFilteredItems`, which may
+        // valuesRef.current, a mutable ref, can be set to `flatFilteredValues`, which may
         // reference this exact readonly value, creating a mutation risk.
         // However, <Combobox.Item> can never mutate this value as the mutating effect
         // bails early when `items` is provided, and this is only ever returned
@@ -12125,47 +12345,34 @@ function AriaCombobox(props) {
       if (limit > -1 && limitedItems.length >= limit) {
         break;
       }
-      if (filter(item, filterQuery, itemToStringLabel)) {
+      if (filter(item, filterQuery, filterItemToString)) {
         limitedItems.push(item);
       }
     }
     return limitedItems;
-  }, [filteredItemsProp, shouldIgnoreExternalFiltering, items, isGrouped, filterQuery, limit, filter, itemToStringLabel, flatItems]);
-  const flatFilteredItems = React68.useMemo(() => {
-    if (isGrouped) {
-      const groups = filteredItems;
-      return groups.flatMap((g2) => g2.items);
+  }, [filteredItemsProp, shouldIgnoreExternalFiltering, items, isGrouped, filterQuery, limit, filter, filterItemToString, flatItems]);
+  const flatFilteredValues = React68.useMemo(() => {
+    if (externalWindow && filteredItems === filteredItemsProp) {
+      return externalWindow.values;
     }
-    return filteredItems;
-  }, [filteredItems, isGrouped]);
+    const flat = flattenLeafItems(filteredItems);
+    return itemToValue ? flat.map((item) => itemToValue(item)) : flat;
+  }, [filteredItems, filteredItemsProp, externalWindow, itemToValue]);
   const store = useRefWithInit(() => {
     let initialSelectedIndex = null;
-    if (inlineProp && open && hasItems && selectionMode !== "none") {
-      initialSelectedIndex = findSelectionIndex(flatFilteredItems, selectedValue, isItemEqualToValue, multiple);
+    if (inlineProp && open7 && hasItems && selectionMode !== "none") {
+      initialSelectedIndex = findSelectionIndex(flatFilteredValues, selectedValue, isItemEqualToValue, multiple);
     }
-    return new Store({
+    return new ReactStore({
       id,
       labelId: void 0,
       selectedValue,
-      open,
-      items,
+      open: open7,
+      items: storeItems,
       selectionMode,
-      listRef,
-      labelsRef,
-      popupRef,
-      emptyRef,
-      inputRef,
-      startDismissRef,
-      endDismissRef,
-      keyboardActiveRef,
-      chipsContainerRef,
-      clearRef,
-      valuesRef,
-      pointerDownItemRef,
-      selectionEventRef,
       name,
       form,
-      disabled: disabled2,
+      disabled: disabled3,
       readOnly,
       required,
       grid,
@@ -12199,7 +12406,8 @@ function AriaCombobox(props) {
       inputInsidePopup: true,
       // Avoid duplicate names in the server HTML. Popup inputs aren't rendered
       // until after hydration, so the hidden input takes over then if needed.
-      inputOwnsFormValue: selectionMode === "none",
+      inputOwnsFormValue: selectionMode === "none"
+    }, {
       // Placeholder callbacks replaced on first render
       onOpenChangeComplete: NOOP,
       setOpen: NOOP,
@@ -12208,8 +12416,21 @@ function AriaCombobox(props) {
       setIndices: NOOP,
       handleSelection: NOOP,
       forceMount: NOOP,
-      requestSubmit: NOOP
-    });
+      requestSubmit: NOOP,
+      listRef,
+      labelsRef,
+      popupRef,
+      emptyRef,
+      inputRef,
+      startDismissRef,
+      endDismissRef,
+      keyboardActiveRef,
+      chipsContainerRef,
+      clearRef,
+      valuesRef,
+      pointerDownItemRef,
+      selectionEventRef
+    }, selectors3);
   }).current;
   const fieldRawValue = selectionMode === "none" ? inputValue : selectedValue;
   const fieldStringValue = React68.useMemo(() => {
@@ -12223,31 +12444,32 @@ function AriaCombobox(props) {
   }, [fieldRawValue, itemToStringValue, selectionMode, selectedValue]);
   const onItemHighlighted = useStableCallback(onItemHighlightedProp);
   const onOpenChangeComplete = useStableCallback(onOpenChangeCompleteProp);
-  const activeIndex = useStore(store, selectors3.activeIndex);
-  const selectedIndex = useStore(store, selectors3.selectedIndex);
-  const positionerElement = useStore(store, selectors3.positionerElement);
-  const listElement = useStore(store, selectors3.listElement);
-  const triggerElement = useStore(store, selectors3.triggerElement);
-  const inputElement = useStore(store, selectors3.inputElement);
-  const inputGroupElement = useStore(store, selectors3.inputGroupElement);
-  const inline4 = useStore(store, selectors3.inline);
-  const inputInsidePopup = useStore(store, selectors3.inputInsidePopup);
-  const inputOwnsFormValue = useStore(store, selectors3.inputOwnsFormValue);
+  const activeIndex = store.useState("activeIndex");
+  const selectedIndex = store.useState("selectedIndex");
+  const positionerElement = store.useState("positionerElement");
+  const listElement = store.useState("listElement");
+  const triggerElement = store.useState("triggerElement");
+  const inputElement = store.useState("inputElement");
+  const inputGroupElement = store.useState("inputGroupElement");
+  const inline4 = store.useState("inline");
+  const inputInsidePopup = store.useState("inputInsidePopup");
+  const inputOwnsFormValue = store.useState("inputOwnsFormValue");
+  const inputMatchesSelectedValue = single && !inputInsidePopup && inputValue === selectedLabelString;
   const triggerRef = useValueAsRef(triggerElement);
   const {
     mounted,
     setMounted,
     transitionStatus
-  } = useTransitionStatus(open);
+  } = useTransitionStatus(open7);
   const {
     openMethod,
     triggerProps
-  } = useOpenInteractionType(open);
+  } = useOpenInteractionType(open7);
   const getStringifiedValueForForm = useStableCallback(() => fieldStringValue);
-  useRegisterFieldControl(inputInsidePopup ? triggerRef : inputRef, id, fieldRawValue, getStringifiedValueForForm, !disabled2, nameProp);
+  useRegisterFieldControl(inputInsidePopup ? triggerRef : inputRef, id, fieldRawValue, getStringifiedValueForForm, !disabled3, nameProp);
   const forceMount = useStableCallback(() => {
     if (items) {
-      labelsRef.current = flatFilteredItems.map((item) => stringifyAsLabel(item, itemToStringLabel));
+      labelsRef.current = flatFilteredValues.map(stringifyValueLabel);
     } else {
       store.set("forceMounted", true);
     }
@@ -12269,7 +12491,14 @@ function AriaCombobox(props) {
     }));
   });
   const setIndices = useStableCallback((options) => {
-    store.update(options);
+    const update2 = {};
+    if (options.activeIndex !== void 0) {
+      update2.activeIndex = options.activeIndex;
+    }
+    if (options.selectedIndex !== void 0) {
+      update2.selectedIndex = options.selectedIndex;
+    }
+    store.update(update2);
     const activeIndexOption = options.activeIndex;
     if (activeIndexOption === void 0) {
       return;
@@ -12282,13 +12511,13 @@ function AriaCombobox(props) {
     }
   });
   const setInputValue = useStableCallback((next, eventDetails) => {
-    hadInputClearRef.current = eventDetails.reason === reason_parts_exports.inputClear;
     props.onInputValueChange?.(next, eventDetails);
     if (eventDetails.isCanceled) {
       return;
     }
+    hadInputClearRef.current = eventDetails.reason === reason_parts_exports.inputClear;
     if (eventDetails.reason === reason_parts_exports.inputChange) {
-      if (open && closeQuery !== null) {
+      if (open7 && closeQuery !== null) {
         setCloseQuery(null);
       }
       const event = eventDetails.event;
@@ -12315,7 +12544,7 @@ function AriaCombobox(props) {
             }
           }
         }
-        if (hasQuery && autoHighlightMode && store.state.activeIndex == null && (open || inline4)) {
+        if (hasQuery && autoHighlightMode && store.state.activeIndex == null && (open7 || inline4)) {
           store.set("activeIndex", 0);
         }
       }
@@ -12327,23 +12556,29 @@ function AriaCombobox(props) {
     }
     setInputValueUnwrapped(next);
   });
+  const handleInterruptedReopen = useStableCallback((isInputChange) => {
+    const clearsPendingInput = !isInputChange && inputInsidePopup && !inline4 && inputValue !== "" && (String(inputValue).trim() === closeQuery || inputValue === selectedLabelString);
+    if (!isInputChange && (clearsPendingInput || inputValue === "" || inputMatchesSelectedValue)) {
+      setQueryChangedAfterOpen(false);
+    }
+    setCloseQuery(null);
+    if (clearsPendingInput) {
+      setInputValue("", createChangeEventDetails(reason_parts_exports.inputClear));
+    }
+  });
   const setOpen = useStableCallback((nextOpen, eventDetails) => {
-    if (open === nextOpen) {
+    if (open7 === nextOpen) {
       return;
     }
-    if (eventDetails.reason === reason_parts_exports.escapeKey && hasItems && flatFilteredItems.length === 0 && !emptyRef.current) {
+    if (eventDetails.reason === reason_parts_exports.escapeKey && hasItems && flatFilteredValues.length === 0 && !emptyRef.current) {
       eventDetails.allowPropagation();
     }
     props.onOpenChange?.(nextOpen, eventDetails);
     if (eventDetails.isCanceled) {
       return;
     }
-    if (nextOpen && inputInsidePopup && !inline4 && closeQuery !== null) {
-      setQueryChangedAfterOpen(false);
-      setCloseQuery(null);
-      if (inputValue !== "" && eventDetails.reason !== reason_parts_exports.inputChange) {
-        setInputValue("", createChangeEventDetails(reason_parts_exports.inputClear, eventDetails.event));
-      }
+    if (nextOpen && closeQuery !== null) {
+      handleInterruptedReopen(eventDetails.reason === reason_parts_exports.inputChange);
     }
     if (!nextOpen && queryChangedAfterOpen) {
       if (single) {
@@ -12363,7 +12598,9 @@ function AriaCombobox(props) {
           });
         }
         if (!inputInsidePopup || inline4) {
-          setInputValue("", createChangeEventDetails(reason_parts_exports.inputClear, eventDetails.event));
+          setInputValue("", createChangeEventDetails(reason_parts_exports.inputClear, eventDetails.event, void 0, {
+            isItemPress: eventDetails.reason === reason_parts_exports.itemPress
+          }));
         }
       }
     }
@@ -12385,7 +12622,7 @@ function AriaCombobox(props) {
     setSelectedValueUnwrapped(nextValue);
     const shouldFillInput = selectionMode === "none" && popupRef.current && fillInputOnItemPress || single && !store.state.inputInsidePopup;
     if (shouldFillInput) {
-      setInputValue(stringifyAsLabel(nextValue, itemToStringLabel), createChangeEventDetails(eventDetails.reason, eventDetails.event));
+      setInputValue(stringifyValueLabel(nextValue), createChangeEventDetails(eventDetails.reason, eventDetails.event));
     }
   });
   const handleSelection = useStableCallback((event, itemValue) => {
@@ -12413,7 +12650,13 @@ function AriaCombobox(props) {
         return;
       }
       if (store.state.inputInsidePopup) {
-        setInputValue("", createChangeEventDetails(reason_parts_exports.inputClear, eventDetails.event));
+        setInputValue("", createChangeEventDetails(reason_parts_exports.inputClear, eventDetails.event, void 0, {
+          isItemPress: true
+        }));
+        const pendingHighlight = pendingQueryHighlightRef.current;
+        if (pendingHighlight && !isCurrentlySelected) {
+          pendingHighlight.toggledValue = itemValue;
+        }
       } else {
         setOpen(false, eventDetails);
       }
@@ -12455,7 +12698,7 @@ function AriaCombobox(props) {
           setInputValue("", createChangeEventDetails(reason_parts_exports.inputClear));
         }
       } else {
-        const stringVal = stringifyAsLabel(selectedValue, itemToStringLabel);
+        const stringVal = stringifyValueLabel(selectedValue);
         if (inputRef.current && inputRef.current.value !== stringVal) {
           const reason = stringVal === "" ? reason_parts_exports.inputClear : reason_parts_exports.none;
           setInputValue(stringVal, createChangeEventDetails(reason));
@@ -12473,10 +12716,10 @@ function AriaCombobox(props) {
   }, [inline4, positionerElement]);
   useOpenChangeComplete({
     enabled: !props.actionsRef,
-    open,
+    open: open7,
     ref: resolvedPopupRef,
     onComplete() {
-      if (!open) {
+      if (!open7) {
         handleUnmount();
       }
     }
@@ -12484,29 +12727,33 @@ function AriaCombobox(props) {
   React68.useImperativeHandle(props.actionsRef, () => ({
     unmount: handleUnmount
   }), [handleUnmount]);
-  useIsoLayoutEffect(function syncClosedState() {
-    if (open) {
+  useIsoLayoutEffect(function syncSelectedIndex() {
+    const closeQueryReleased = previousCloseQueryRef.current !== null && closeQuery === null;
+    previousCloseQueryRef.current = closeQuery;
+    if (open7 && (!closeQueryReleased || !hasItems)) {
       return;
     }
-    pointerDownItemRef.current = null;
+    if (!open7) {
+      pointerDownItemRef.current = null;
+    }
     if (selectionMode === "none") {
       return;
     }
-    const registry = hasItems ? flatItems : valuesRef.current;
+    const registry = hasItems ? flatFilteredValues : valuesRef.current;
     setIndices({
       selectedIndex: findSelectionIndex(registry, selectedValue, isItemEqualToValue, multiple)
     });
-  }, [open, selectedValue, selectionMode, multiple, hasItems, flatItems, isItemEqualToValue, setIndices]);
+  }, [open7, closeQuery, selectedValue, selectionMode, multiple, hasItems, flatFilteredValues, isItemEqualToValue, setIndices]);
   useIsoLayoutEffect(() => {
     if (items) {
-      valuesRef.current = flatFilteredItems;
-      listRef.current.length = flatFilteredItems.length;
+      valuesRef.current = flatFilteredValues;
+      listRef.current.length = flatFilteredValues.length;
     }
-  }, [items, flatFilteredItems]);
+  }, [items, flatFilteredValues]);
   useIsoLayoutEffect(() => {
     const pendingHighlight = pendingQueryHighlightRef.current;
     if (pendingHighlight) {
-      const listIsNavigable = open || inline4 || store.state.positionerElement?.hidden === false;
+      const listIsNavigable = open7 || inline4 || store.state.positionerElement?.hidden === false;
       if (pendingHighlight.hasQuery) {
         if (autoHighlightMode && listIsNavigable) {
           store.set("activeIndex", 0);
@@ -12525,11 +12772,13 @@ function AriaCombobox(props) {
             }
             const currentSelectedValue = store.state.selectedValue;
             const isMultiple = store.state.selectionMode === "multiple";
-            const lastSelectedValue = isMultiple && Array.isArray(currentSelectedValue) ? currentSelectedValue[currentSelectedValue.length - 1] : currentSelectedValue;
-            const hasSelection = store.state.selectionMode !== "none" && lastSelectedValue != null;
-            if (hasSelection || clearedBySelection) {
-              const registry = hasItems || hasFilteredItemsProp ? flatFilteredItems : valuesRef.current;
-              store.set("activeIndex", hasSelection ? findSelectionIndex(registry, currentSelectedValue, store.state.isItemEqualToValue, isMultiple) : null);
+            const hasSelection = isMultiple && Array.isArray(currentSelectedValue) ? currentSelectedValue.length > 0 : store.state.selectionMode !== "none" && currentSelectedValue != null;
+            if (hasSelection) {
+              const registry = hasItems || hasFilteredItemsProp ? flatFilteredValues : valuesRef.current;
+              const toggledIndex = findItemIndex(registry, pendingHighlight.toggledValue, store.state.isItemEqualToValue);
+              store.set("activeIndex", toggledIndex !== -1 ? toggledIndex : findSelectionIndex(registry, currentSelectedValue, store.state.isItemEqualToValue, isMultiple));
+            } else if (clearedBySelection) {
+              store.set("activeIndex", null);
             } else if (autoHighlightMode === "always") {
               store.set("activeIndex", 0);
             }
@@ -12537,11 +12786,11 @@ function AriaCombobox(props) {
         }
       }
     }
-    if (!open && !inline4) {
+    if (!open7 && !inline4) {
       return;
     }
-    const shouldUseFlatFilteredItems = hasItems || hasFilteredItemsProp;
-    const candidateItems = shouldUseFlatFilteredItems ? flatFilteredItems : valuesRef.current;
+    const shouldUseFlatFilteredValues = hasItems || hasFilteredItemsProp;
+    const candidateItems = shouldUseFlatFilteredValues ? flatFilteredValues : valuesRef.current;
     const storeActiveIndex = store.state.activeIndex;
     if (storeActiveIndex == null) {
       if (autoHighlightMode === "always" && candidateItems.length > 0) {
@@ -12568,9 +12817,9 @@ function AriaCombobox(props) {
     emitHighlight,
     hasFilteredItemsProp,
     hasItems,
-    flatFilteredItems,
+    flatFilteredValues,
     inline4,
-    open,
+    open7,
     store,
     // Reruns the effect when the query changes without affecting the deps above, such as
     // clearing the input when no items are filtered out (individually rendered items).
@@ -12584,58 +12833,61 @@ function AriaCombobox(props) {
     setFilled(multiple ? Array.isArray(selectedValue) && selectedValue.length > 0 : selectedValue != null);
   }, [setFilled, selectionMode, inputValue, selectedValue, multiple]);
   React68.useEffect(() => {
-    if (hasItems && autoHighlightMode && flatFilteredItems.length === 0) {
+    if (hasItems && autoHighlightMode && flatFilteredValues.length === 0) {
       setIndices({
         activeIndex: null
       });
     }
-  }, [hasItems, autoHighlightMode, flatFilteredItems.length, setIndices]);
-  function isSelectedValueDirty(value) {
-    const initialValue = validityData.initialValue;
-    if (Array.isArray(value) && Array.isArray(initialValue)) {
-      return !areArraysEqual(value, initialValue, (itemValue, initialItemValue) => compareItemEquality(itemValue, initialItemValue, isItemEqualToValue));
+  }, [hasItems, autoHighlightMode, flatFilteredValues.length, setIndices]);
+  function handleQueryChanged() {
+    if (open7 && query !== "" && query !== String(initialDefaultInputValue) && !inputMatchesSelectedValue) {
+      setQueryChangedAfterOpen(true);
     }
-    return value !== initialValue;
   }
-  useValueChanged(query, () => {
-    if (!open || query === "" || query === String(initialDefaultInputValue)) {
-      return;
+  function handleOpenChanged() {
+    if (open7 && closeQuery !== null) {
+      handleInterruptedReopen(false);
     }
-    setQueryChangedAfterOpen(true);
-  });
+  }
+  let syncedSelectedLabel = false;
   function syncInputToSelectedLabel() {
-    const nextInputValue = stringifyAsLabel(selectedValue, itemToStringLabel);
-    if (inputValue !== nextInputValue) {
-      setInputValue(nextInputValue, createChangeEventDetails(reason_parts_exports.none));
+    if (!syncedSelectedLabel && inputValue !== selectedLabelString) {
+      syncedSelectedLabel = true;
+      setInputValue(selectedLabelString, createChangeEventDetails(reason_parts_exports.none));
     }
   }
-  useValueChanged(selectedValue, () => {
+  function handleSelectedValueChanged() {
     if (selectionMode === "none") {
       return;
     }
     clearErrors(name);
-    setDirty(isSelectedValueDirty(selectedValue));
+    setDirty(isSelectedValueDirty(selectedValue, validityData.initialValue, isItemEqualToValue));
     validation.change(selectedValue);
     if (single && !hasInputValue && !inputInsidePopup) {
       syncInputToSelectedLabel();
     }
-  });
-  useValueChanged(inputValue, () => {
+  }
+  function syncInputAfterItemsOrLabelChange() {
+    if (single && !hasInputValue && !inputInsidePopup && !queryChangedAfterOpen) {
+      syncInputToSelectedLabel();
+    }
+  }
+  function handleInputValueChanged() {
     if (selectionMode !== "none") {
       return;
     }
     clearErrors(name);
     setDirty(inputValue !== validityData.initialValue);
     validation.change(inputValue);
-  });
-  useValueChanged(items, () => {
-    if (!single || hasInputValue || inputInsidePopup || queryChangedAfterOpen) {
-      return;
-    }
-    syncInputToSelectedLabel();
-  });
+  }
+  useValueChanged(query, handleQueryChanged);
+  useValueChanged(open7, handleOpenChanged);
+  useValueChanged(selectedValue, handleSelectedValueChanged);
+  useValueChanged(selectedLabelString, syncInputAfterItemsOrLabelChange);
+  useValueChanged(items, syncInputAfterItemsOrLabelChange);
+  useValueChanged(inputValue, handleInputValueChanged);
   const floatingRootContext = useFloatingRootContext({
-    open: inline4 ? true : open,
+    open: inline4 ? true : open7,
     onOpenChange: setOpen,
     elements: {
       reference: inputInsidePopup ? triggerElement : inputElement,
@@ -12643,12 +12895,12 @@ function AriaCombobox(props) {
     }
   });
   const ariaHasPopup = grid ? "grid" : "listbox";
-  const expanded = open || inline4;
-  const ariaExpanded = expanded ? "true" : "false";
+  const expanded2 = open7 || inline4;
+  const ariaExpanded = expanded2 ? "true" : "false";
   const role = React68.useMemo(() => {
     const isPlainInput = inputElement?.tagName === "INPUT";
     const shouldTreatAsInput = inputElement == null || isPlainInput;
-    const shouldApplyAria = shouldTreatAsInput || expanded;
+    const shouldApplyAria = shouldTreatAsInput || expanded2;
     const reference = shouldTreatAsInput ? {
       autoComplete: "off",
       spellCheck: "false",
@@ -12659,8 +12911,8 @@ function AriaCombobox(props) {
       reference.role = "combobox";
       reference["aria-expanded"] = ariaExpanded;
       reference["aria-haspopup"] = ariaHasPopup;
-      reference["aria-controls"] = expanded ? listElement?.id : void 0;
-      reference["aria-autocomplete"] = autoComplete;
+      reference["aria-controls"] = expanded2 ? listElement?.id : void 0;
+      reference["aria-autocomplete"] = readOnly ? "none" : autoComplete;
     }
     return {
       reference,
@@ -12668,9 +12920,9 @@ function AriaCombobox(props) {
         role: "presentation"
       }
     };
-  }, [inputElement, expanded, ariaExpanded, ariaHasPopup, listElement?.id, autoComplete]);
+  }, [inputElement, expanded2, ariaExpanded, ariaHasPopup, listElement?.id, autoComplete, readOnly]);
   const click = useClick(floatingRootContext, {
-    enabled: !readOnly && !disabled2 && openOnInputClick,
+    enabled: !disabled3 && openOnInputClick,
     event: "mousedown-only",
     toggle: false,
     // Apply a small delay for touch to let mobile viewport/keyboard positioning settle.
@@ -12679,7 +12931,7 @@ function AriaCombobox(props) {
     reason: reason_parts_exports.inputPress
   });
   const dismiss = useDismiss(floatingRootContext, {
-    enabled: !readOnly && !disabled2 && !inline4,
+    enabled: !disabled3 && !inline4,
     outsidePressEvent: {
       mouse: "sloppy",
       // The visual viewport (affected by the mobile software keyboard) can be
@@ -12695,7 +12947,7 @@ function AriaCombobox(props) {
     }
   });
   const listNavigation2 = useListNavigation(floatingRootContext, {
-    enabled: !readOnly && !disabled2,
+    enabled: !disabled3,
     id,
     listRef,
     activeIndex,
@@ -12711,7 +12963,7 @@ function AriaCombobox(props) {
     disabledIndices: EMPTY_ARRAY,
     grid: grid ? gridNavigation : void 0,
     onNavigate(nextActiveIndex, event) {
-      if (!event && !open || transitionStatus === "ending") {
+      if (!event && !open7 || transitionStatus === "ending") {
         return;
       }
       if (!event) {
@@ -12745,6 +12997,14 @@ function AriaCombobox(props) {
       onFocus: void 0
     };
   }, [listNavigation2.item]);
+  store.useContextCallback("setOpen", setOpen);
+  store.useContextCallback("setInputValue", setInputValue);
+  store.useContextCallback("setSelectedValue", setSelectedValue);
+  store.useContextCallback("setIndices", setIndices);
+  store.useContextCallback("handleSelection", handleSelection);
+  store.useContextCallback("forceMount", forceMount);
+  store.useContextCallback("requestSubmit", requestSubmit);
+  store.useContextCallback("onOpenChangeComplete", onOpenChangeCompleteProp);
   useOnFirstRender(() => {
     store.update({
       inline: inlineProp,
@@ -12752,57 +13012,52 @@ function AriaCombobox(props) {
       listProps,
       inputProps,
       triggerProps,
-      itemProps,
-      setOpen,
-      setInputValue,
-      setSelectedValue,
-      setIndices,
-      handleSelection,
-      forceMount,
-      requestSubmit,
-      onOpenChangeComplete
+      itemProps
     });
   });
+  const syncedValues = {
+    id,
+    selectedValue,
+    open: open7,
+    mounted,
+    transitionStatus,
+    items: storeItems,
+    inline: inlineProp,
+    popupProps,
+    listProps,
+    inputProps,
+    triggerProps,
+    itemProps,
+    openMethod,
+    selectionMode,
+    name,
+    form,
+    disabled: disabled3,
+    readOnly,
+    required,
+    grid,
+    virtualized,
+    openOnInputClick,
+    itemToStringLabel,
+    modal,
+    autoHighlight: autoHighlightMode,
+    isItemEqualToValue,
+    submitOnItemClick,
+    hasInputValue
+  };
   useIsoLayoutEffect(() => {
     store.update({
-      id,
-      selectedValue,
-      open,
-      mounted,
-      transitionStatus,
-      items,
-      inline: inlineProp,
-      popupProps,
-      listProps,
-      inputProps,
-      triggerProps,
-      openMethod,
-      itemProps,
-      selectionMode,
-      name,
-      form,
-      disabled: disabled2,
-      readOnly,
-      required,
-      grid,
-      virtualized,
-      openOnInputClick,
-      itemToStringLabel,
-      modal,
-      autoHighlight: autoHighlightMode,
-      isItemEqualToValue,
-      submitOnItemClick,
-      hasInputValue,
+      ...syncedValues,
       inputOwnsFormValue: selectionMode === "none" && (inlineProp || !store.state.inputInsidePopup)
     });
-  }, [store, id, selectedValue, open, mounted, transitionStatus, items, popupProps, listProps, inputProps, itemProps, openMethod, triggerProps, selectionMode, name, disabled2, readOnly, required, grid, virtualized, openOnInputClick, itemToStringLabel, modal, isItemEqualToValue, submitOnItemClick, hasInputValue, inlineProp, autoHighlightMode, form]);
+  }, [store, ...Object.values(syncedValues)]);
   const hiddenInputRef = useMergedRefs(inputRefProp, validation.inputRef);
   const itemsContextValue = React68.useMemo(() => ({
     query,
     hasItems,
     filteredItems,
-    flatFilteredItems
-  }), [query, hasItems, filteredItems, flatFilteredItems]);
+    flatFilteredValues
+  }), [query, hasItems, filteredItems, flatFilteredValues]);
   const serializedValue = React68.useMemo(() => {
     if (Array.isArray(fieldRawValue)) {
       return "";
@@ -12822,13 +13077,13 @@ function AriaCombobox(props) {
         form,
         name,
         value: currentSerializedValue,
-        disabled: disabled2
+        disabled: disabled3
       }, currentSerializedValue);
     });
-  }, [multiple, selectedValue, form, name, itemToStringValue, disabled2]);
+  }, [multiple, selectedValue, form, name, itemToStringValue, disabled3]);
   const children = /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(React68.Fragment, {
     children: [props.children, /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("input", {
-      ...validation.getValidationProps(disabled2, {
+      ...validation.getValidationProps(disabled3, {
         // Move focus when the hidden input is focused.
         onFocus() {
           if (inputInsidePopup) {
@@ -12839,13 +13094,13 @@ function AriaCombobox(props) {
         },
         // Handle browser autofill.
         onChange(event) {
-          if (event.nativeEvent.defaultPrevented || disabled2 || readOnly) {
+          if (event.nativeEvent.defaultPrevented || disabled3 || readOnly) {
             return;
           }
           const nextValue = event.currentTarget.value;
           const nextValueLower = nextValue.toLowerCase();
           const details = createChangeEventDetails(reason_parts_exports.none, event.nativeEvent);
-          const findSerializedMatchIndex = () => valuesRef.current.findIndex((candidate) => stringifyAsValue(candidate, itemToStringValue).toLowerCase() === nextValueLower || stringifyAsLabel(candidate, itemToStringLabel).toLowerCase() === nextValueLower);
+          const findSerializedMatchIndex = () => valuesRef.current.findIndex((candidate) => stringifyAsValue(candidate, itemToStringValue).toLowerCase() === nextValueLower || stringifyValueLabel(candidate).toLowerCase() === nextValueLower);
           function handleChange() {
             if (multiple) {
               return;
@@ -12879,7 +13134,7 @@ function AriaCombobox(props) {
       form,
       name: hiddenInputName,
       autoComplete: formAutoComplete,
-      disabled: disabled2,
+      disabled: disabled3,
       required: required && !hasMultipleSelection,
       readOnly,
       value: serializedValue,
@@ -12920,16 +13175,16 @@ function AutocompleteRoot(props) {
     itemToStringValue,
     ...other
   } = props;
-  const enableInline = mode === "inline" || mode === "both";
+  const enableInline = (mode === "inline" || mode === "both") && !props.readOnly;
   const staticItems = mode === "inline" || mode === "none";
   const isControlled = value !== void 0;
   const [internalValue, setInternalValue] = React69.useState(defaultValue3 ?? "");
   const [inlineInputValue, setInlineInputValue] = React69.useState("");
   React69.useEffect(() => {
-    if (isControlled) {
+    if (isControlled || !enableInline) {
       setInlineInputValue("");
     }
-  }, [value, isControlled]);
+  }, [value, isControlled, enableInline]);
   let resolvedInputValue;
   if (enableInline && inlineInputValue !== "") {
     resolvedInputValue = inlineInputValue;
@@ -12941,24 +13196,8 @@ function AutocompleteRoot(props) {
   const collator = useCoreFilter({
     locale: other.locale
   });
-  const baseFilter = React69.useMemo(() => {
-    if (other.filter !== void 0) {
-      return other.filter;
-    }
-    return collator.contains;
-  }, [other.filter, collator]);
-  const resolvedQuery = String(isControlled ? value : internalValue).trim();
-  const resolvedFilter = React69.useMemo(() => {
-    if (mode !== "both") {
-      return staticItems ? null : baseFilter;
-    }
-    if (baseFilter === null) {
-      return null;
-    }
-    return (item, _query, toString) => {
-      return baseFilter(item, resolvedQuery, toString);
-    };
-  }, [baseFilter, mode, resolvedQuery, staticItems]);
+  const resolvedQuery = String((isControlled ? value : internalValue) ?? "").trim();
+  const resolvedFilter = staticItems || other.filter === null ? null : other.filter ?? collator.contains;
   function handleValueChange(nextValue, eventDetails) {
     setInlineInputValue("");
     if (!isControlled) {
@@ -12980,6 +13219,10 @@ function AutocompleteRoot(props) {
     selectionMode: "none",
     fillInputOnItemPress: true,
     filter: resolvedFilter,
+    filterQuery: (
+      // Inline completion temporarily changes the displayed input without changing this query.
+      mode === "both" ? resolvedQuery : void 0
+    ),
     autoComplete: mode,
     inputValue: resolvedInputValue,
     defaultInputValue: defaultValue3,
@@ -13012,15 +13255,21 @@ function AutocompleteValue(props) {
 // node_modules/@base-ui/react/combobox/trigger/ComboboxTrigger.mjs
 var React71 = __toESM(require_react(), 1);
 
+// node_modules/@base-ui/react/combobox/input/ComboboxInputDataAttributes.mjs
+var popupOpen3 = CommonTriggerDataAttributes_exports.popupOpen;
+var pressed2 = CommonTriggerDataAttributes_exports.pressed;
+var popupSide = "data-popup-side";
+var listEmpty = "data-list-empty";
+
 // node_modules/@base-ui/react/combobox/utils/stateAttributesMapping.mjs
 var triggerStateAttributesMapping = {
   ...pressableTriggerOpenStateMapping,
   ...fieldValidityMapping,
-  popupSide: (side) => side ? {
-    "data-popup-side": side
+  popupSide: (side2) => side2 ? {
+    [popupSide]: side2
   } : null,
   listEmpty: (empty) => empty ? {
-    "data-list-empty": ""
+    [listEmpty]: ""
   } : null
 };
 
@@ -13065,10 +13314,10 @@ function resolveAriaLabelledBy(fieldLabelId, localLabelId) {
 
 // node_modules/@base-ui/react/combobox/utils/parts.mjs
 function usePopupSide(store) {
-  const mounted = useStore(store, selectors3.mounted);
-  const popupSide = useStore(store, selectors3.popupSide);
-  const positionerElement = useStore(store, selectors3.positionerElement);
-  return mounted && positionerElement ? popupSide : null;
+  const mounted = store.useState("mounted");
+  const popupSide2 = store.useState("popupSide");
+  const positionerElement = store.useState("positionerElement");
+  return mounted && positionerElement ? popupSide2 : null;
 }
 function useListEmpty() {
   return useComboboxDerivedItemsContext().filteredItems.length === 0;
@@ -13081,11 +13330,11 @@ function getIndexAfterChipRemoval(index2, chipCount) {
   return nextIndex >= 0 ? nextIndex : void 0;
 }
 function clickHighlightedItem(store, activeIndex, nativeEvent) {
-  const listItem = store.state.listRef.current[activeIndex];
+  const listItem = store.context.listRef.current[activeIndex];
   if (listItem) {
-    store.state.selectionEventRef.current = nativeEvent;
+    store.context.selectionEventRef.current = nativeEvent;
     listItem.click();
-    store.state.selectionEventRef.current = null;
+    store.context.selectionEventRef.current = null;
   }
 }
 
@@ -13112,37 +13361,37 @@ var ComboboxTrigger = /* @__PURE__ */ React71.forwardRef(function ComboboxTrigge
     labelId: fieldLabelId
   } = useLabelableContext();
   const store = useComboboxRootContext();
-  const selectionMode = useStore(store, selectors3.selectionMode);
-  const comboboxDisabled = useStore(store, selectors3.disabled);
-  const readOnly = useStore(store, selectors3.readOnly);
-  const required = useStore(store, selectors3.required);
-  const positionerElement = useStore(store, selectors3.positionerElement);
-  const listElement = useStore(store, selectors3.listElement);
-  const storedPopupId = useStore(store, selectors3.popupId);
-  const triggerProps = useStore(store, selectors3.triggerProps);
-  const inputInsidePopup = useStore(store, selectors3.inputInsidePopup);
-  const rootId = useStore(store, selectors3.id);
-  const comboboxLabelId = useStore(store, selectors3.labelId);
-  const open = useStore(store, selectors3.open);
-  const selectedValue = useStore(store, selectors3.selectedValue);
-  const activeIndex = useStore(store, selectors3.activeIndex);
-  const selectedIndex = useStore(store, selectors3.selectedIndex);
-  const hasSelectedValue = useStore(store, selectors3.hasSelectedValue);
+  const selectionMode = store.useState("selectionMode");
+  const comboboxDisabled = store.useState("disabled");
+  const readOnly = store.useState("readOnly");
+  const required = store.useState("required");
+  const positionerElement = store.useState("positionerElement");
+  const listElement = store.useState("listElement");
+  const storedPopupId = store.useState("popupId");
+  const triggerProps = store.useState("triggerProps");
+  const inputInsidePopup = store.useState("inputInsidePopup");
+  const rootId = store.useState("id");
+  const comboboxLabelId = store.useState("labelId");
+  const open7 = store.useState("open");
+  const selectedValue = store.useState("selectedValue");
+  const activeIndex = store.useState("activeIndex");
+  const selectedIndex = store.useState("selectedIndex");
+  const hasSelectedValue = store.useState("hasSelectedValue");
   const floatingRootContext = useComboboxFloatingContext();
   const inputValue = useComboboxInputValueContext();
   const focusTimeout = useTimeout();
-  const disabled2 = fieldDisabled || comboboxDisabled || disabledProp;
-  const listEmpty = useListEmpty();
-  const popupSide = usePopupSide(store);
+  const disabled3 = fieldDisabled || comboboxDisabled || disabledProp;
+  const listEmpty2 = useListEmpty();
+  const popupSide2 = usePopupSide(store);
   useLabelableId({
     id: inputInsidePopup ? idProp : void 0
   });
   const id = inputInsidePopup ? idProp ?? rootId : idProp;
   const ariaLabelledBy = resolveAriaLabelledBy(fieldLabelId, comboboxLabelId);
   let ariaControls;
-  if (open && inputInsidePopup) {
+  if (open7 && inputInsidePopup) {
     ariaControls = storedPopupId ?? getComboboxPopupId(rootId);
-  } else if (open) {
+  } else if (open7) {
     ariaControls = listElement?.id;
   }
   const currentPointerTypeRef = React71.useRef("");
@@ -13152,21 +13401,23 @@ var ComboboxTrigger = /* @__PURE__ */ React71.forwardRef(function ComboboxTrigge
   const {
     reference: triggerTypeaheadProps
   } = useTypeahead(floatingRootContext, {
-    enabled: !open && !readOnly && !comboboxDisabled && selectionMode === "single",
-    listRef: store.state.labelsRef,
+    // Typeahead on a closed trigger commits a value rather than moving a highlight, so it stays
+    // gated on `readOnly`.
+    enabled: !open7 && !readOnly && !comboboxDisabled && selectionMode === "single",
+    listRef: store.context.labelsRef,
     activeIndex,
     selectedIndex,
     onMatch(index2) {
-      const nextSelectedValue = store.state.valuesRef.current[index2];
+      const nextSelectedValue = store.context.valuesRef.current[index2];
       if (nextSelectedValue !== void 0) {
-        store.state.setSelectedValue(nextSelectedValue, createChangeEventDetails(reason_parts_exports.none));
+        store.context.setSelectedValue(nextSelectedValue, createChangeEventDetails(reason_parts_exports.none));
       }
     }
   });
   const {
     reference: triggerClickProps
   } = useClick(floatingRootContext, {
-    enabled: !readOnly && !comboboxDisabled,
+    enabled: !comboboxDisabled,
     event: "mousedown"
   });
   const {
@@ -13174,14 +13425,15 @@ var ComboboxTrigger = /* @__PURE__ */ React71.forwardRef(function ComboboxTrigge
     getButtonProps
   } = useButton({
     native: nativeButton,
-    disabled: disabled2
+    disabled: disabled3
   });
   const state = {
     ...fieldState,
-    open,
-    disabled: disabled2,
-    popupSide,
-    listEmpty,
+    readOnly,
+    open: open7,
+    disabled: disabled3,
+    popupSide: popupSide2,
+    listEmpty: listEmpty2,
     placeholder: selectionMode === "none" ? false : !hasSelectedValue
   };
   const setTriggerElement = useStableCallback((element2) => {
@@ -13194,19 +13446,22 @@ var ComboboxTrigger = /* @__PURE__ */ React71.forwardRef(function ComboboxTrigge
       id,
       tabIndex: inputInsidePopup ? 0 : -1,
       role: inputInsidePopup ? "combobox" : void 0,
-      "aria-expanded": open,
+      "aria-expanded": open7,
       "aria-haspopup": inputInsidePopup ? "dialog" : "listbox",
       "aria-controls": ariaControls,
       "aria-required": inputInsidePopup ? required || void 0 : void 0,
+      // Only valid alongside the `combobox` role; without it the trigger is a plain button, and
+      // the `Combobox.Input` outside the popup already carries `aria-readonly`.
+      "aria-readonly": inputInsidePopup ? readOnly || void 0 : void 0,
       "aria-labelledby": ariaLabelledBy,
       onPointerDown: trackPointerType,
       onPointerEnter: trackPointerType,
       onFocus() {
         setFocused(true);
-        if (disabled2 || readOnly) {
+        if (disabled3) {
           return;
         }
-        focusTimeout.start(0, store.state.forceMount);
+        focusTimeout.start(0, store.context.forceMount);
       },
       onBlur(event) {
         if (contains(positionerElement, event.relatedTarget)) {
@@ -13220,20 +13475,20 @@ var ComboboxTrigger = /* @__PURE__ */ React71.forwardRef(function ComboboxTrigge
         }
       },
       onMouseDown(event) {
-        if (disabled2 || readOnly) {
+        if (disabled3) {
           return;
         }
         if (!inputInsidePopup) {
           floatingRootContext.set("domReferenceElement", event.currentTarget);
         }
-        store.state.forceMount();
+        store.context.forceMount();
         if (currentPointerTypeRef.current !== "touch") {
-          store.state.inputRef.current?.focus();
+          store.context.inputRef.current?.focus();
           if (!inputInsidePopup) {
             event.preventDefault();
           }
         }
-        if (open) {
+        if (open7) {
           return;
         }
         const doc = ownerDocument(event.currentTarget);
@@ -13251,7 +13506,7 @@ var ComboboxTrigger = /* @__PURE__ */ React71.forwardRef(function ComboboxTrigge
           if (isMouseWithinBounds(mouseEvent, currentTriggerElement)) {
             return;
           }
-          store.state.setOpen(false, createChangeEventDetails(reason_parts_exports.cancelOpen, mouseEvent));
+          store.context.setOpen(false, createChangeEventDetails(reason_parts_exports.cancelOpen, mouseEvent));
         }
         if (inputInsidePopup) {
           doc.addEventListener("mouseup", handleMouseUp, {
@@ -13260,16 +13515,13 @@ var ComboboxTrigger = /* @__PURE__ */ React71.forwardRef(function ComboboxTrigge
         }
       },
       onKeyDown(event) {
-        if (readOnly) {
-          return;
-        }
         if (event.key === "ArrowDown" || event.key === "ArrowUp") {
           stopEvent(event);
-          store.state.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent));
-          store.state.inputRef.current?.focus();
+          store.context.setOpen(true, createChangeEventDetails(reason_parts_exports.listNavigation, event.nativeEvent));
+          store.context.inputRef.current?.focus();
         }
       }
-    }, validation.getValidationProps(disabled2, elementProps), getButtonProps],
+    }, validation.getValidationProps(disabled3, elementProps), getButtonProps],
     stateAttributesMapping: triggerStateAttributesMapping
   });
   return element;
@@ -13315,7 +13567,7 @@ var ComboboxInternalDismissButton = /* @__PURE__ */ React74.forwardRef(function 
   });
   const mergedRef = useMergedRefs(forwardedRef, buttonRef);
   function handleDismiss(event) {
-    store.state.setOpen(false, createChangeEventDetails(reason_parts_exports.closePress, event.nativeEvent, event.currentTarget));
+    store.context.setOpen(false, createChangeEventDetails(reason_parts_exports.closePress, event.nativeEvent, event.currentTarget));
   }
   const dismissProps = getButtonProps({
     onClick: handleDismiss
@@ -13358,25 +13610,25 @@ var ComboboxInput = /* @__PURE__ */ React75.forwardRef(function ComboboxInput2(c
   const store = useComboboxRootContext();
   const inputValue = useComboboxInputValueContext();
   const direction = useDirection();
-  const required = useStore(store, selectors3.required);
-  const comboboxDisabled = useStore(store, selectors3.disabled);
-  const readOnly = useStore(store, selectors3.readOnly);
-  const name = useStore(store, selectors3.name);
-  const form = useStore(store, selectors3.form);
-  const selectionMode = useStore(store, selectors3.selectionMode);
-  const autoHighlightMode = useStore(store, selectors3.autoHighlight);
-  const inputProps = useStore(store, selectors3.inputProps);
-  const triggerProps = useStore(store, selectors3.triggerProps);
-  const open = useStore(store, selectors3.open);
-  const mounted = useStore(store, selectors3.mounted);
-  const selectedValue = useStore(store, selectors3.selectedValue);
-  const rootId = useStore(store, selectors3.id);
-  const inline4 = useStore(store, selectors3.inline);
-  const modal = useStore(store, selectors3.modal);
+  const required = store.useState("required");
+  const comboboxDisabled = store.useState("disabled");
+  const readOnly = store.useState("readOnly");
+  const name = store.useState("name");
+  const form = store.useState("form");
+  const selectionMode = store.useState("selectionMode");
+  const autoHighlightMode = store.useState("autoHighlight");
+  const inputProps = store.useState("inputProps");
+  const triggerProps = store.useState("triggerProps");
+  const open7 = store.useState("open");
+  const mounted = store.useState("mounted");
+  const selectedValue = store.useState("selectedValue");
+  const rootId = store.useState("id");
+  const inline4 = store.useState("inline");
+  const modal = store.useState("modal");
   const autoHighlightEnabled = Boolean(autoHighlightMode);
-  const popupSide = usePopupSide(store);
-  const disabled2 = fieldDisabled || comboboxDisabled || disabledProp;
-  const listEmpty = useListEmpty();
+  const popupSide2 = usePopupSide(store);
+  const disabled3 = fieldDisabled || comboboxDisabled || disabledProp;
+  const listEmpty2 = useListEmpty();
   const isInsidePopup = hasPositionerParent || inline4;
   const focusManagerModal = !isInsidePopup || modal;
   const id = useBaseUiId(idProp ?? (!isInsidePopup ? rootId : void 0));
@@ -13389,7 +13641,7 @@ var ComboboxInput = /* @__PURE__ */ React75.forwardRef(function ComboboxInput2(c
   const setInputElement = useStableCallback((element2) => {
     const nextIsInsidePopup = hasPositionerParent || store.state.inline;
     if (nextIsInsidePopup && !store.state.hasInputValue) {
-      store.state.setInputValue("", createChangeEventDetails(reason_parts_exports.none));
+      store.context.setInputValue("", createChangeEventDetails(reason_parts_exports.none));
     }
     store.update({
       inputElement: element2,
@@ -13397,24 +13649,24 @@ var ComboboxInput = /* @__PURE__ */ React75.forwardRef(function ComboboxInput2(c
       inputOwnsFormValue
     });
   });
-  const validationProps = hasPositionerParent ? elementProps : validation.getValidationProps(disabled2, elementProps);
+  const validationProps = hasPositionerParent ? elementProps : validation.getValidationProps(disabled3, elementProps);
   function clearHighlight() {
-    store.state.setIndices({
+    store.context.setIndices({
       activeIndex: null,
       selectedIndex: null,
-      type: store.state.keyboardActiveRef.current ? reason_parts_exports.keyboard : reason_parts_exports.pointer
+      type: store.context.keyboardActiveRef.current ? reason_parts_exports.keyboard : reason_parts_exports.pointer
     });
   }
   function markPointerActive() {
-    store.state.keyboardActiveRef.current = false;
+    store.context.keyboardActiveRef.current = false;
   }
   const state = {
     ...fieldStateForInput,
-    open,
-    disabled: disabled2,
+    open: open7,
+    disabled: disabled3,
     readOnly,
-    popupSide,
-    listEmpty
+    popupSide: popupSide2,
+    listEmpty: listEmpty2
   };
   function handleKeyDown(event) {
     if (!comboboxChipsContext) {
@@ -13456,13 +13708,13 @@ var ComboboxInput = /* @__PURE__ */ React75.forwardRef(function ComboboxInput2(c
   }
   const element = useRenderElement("input", componentProps, {
     state,
-    ref: [forwardedRef, store.state.inputRef, setInputElement],
+    ref: [forwardedRef, store.context.inputRef, setInputElement],
     props: [inputProps, triggerProps, {
       value: composingValue ?? inputValue,
       "aria-readonly": readOnly || void 0,
       "aria-required": required || void 0,
       "aria-labelledby": fieldLabelId,
-      disabled: disabled2,
+      disabled: disabled3,
       readOnly,
       required: selectionMode === "none" ? required : void 0,
       form,
@@ -13478,10 +13730,10 @@ var ComboboxInput = /* @__PURE__ */ React75.forwardRef(function ComboboxInput2(c
         shouldRestoreActiveIndexRef.current = false;
         const nextActiveIndex = lastActiveIndexRef.current;
         if (nextActiveIndex == null || // `valuesRef` can be sparse, so guard against restoring a removed slot.
-        !Object.hasOwn(store.state.valuesRef.current, nextActiveIndex)) {
+        !Object.hasOwn(store.context.valuesRef.current, nextActiveIndex)) {
           return;
         }
-        store.state.setIndices({
+        store.context.setIndices({
           activeIndex: nextActiveIndex
         });
       },
@@ -13492,7 +13744,7 @@ var ComboboxInput = /* @__PURE__ */ React75.forwardRef(function ComboboxInput2(c
         if (inline4 && activeIndex !== null && autoHighlightMode !== "always") {
           lastActiveIndexRef.current = activeIndex;
           shouldRestoreActiveIndexRef.current = true;
-          store.state.setIndices({
+          store.context.setIndices({
             activeIndex: null
           });
         }
@@ -13512,7 +13764,7 @@ var ComboboxInput = /* @__PURE__ */ React75.forwardRef(function ComboboxInput2(c
         isComposingRef.current = false;
         const next = event.currentTarget.value;
         setComposingValue(null);
-        store.state.setInputValue(next, createChangeEventDetails(reason_parts_exports.inputChange, event.nativeEvent));
+        store.context.setInputValue(next, createChangeEventDetails(reason_parts_exports.inputChange, event.nativeEvent));
       },
       onChange(event) {
         const nativeEvent = event.nativeEvent;
@@ -13520,10 +13772,10 @@ var ComboboxInput = /* @__PURE__ */ React75.forwardRef(function ComboboxInput2(c
         const autofillLikeInput = !inputType || inputType === "insertReplacementText";
         const shouldOpenOnInput = isComposingRef.current || !autofillLikeInput;
         function maybeOpenOnInput(trimmed) {
-          if (readOnly || disabled2 || !trimmed || !shouldOpenOnInput) {
+          if (readOnly || disabled3 || !trimmed || !shouldOpenOnInput) {
             return;
           }
-          store.state.setOpen(true, createChangeEventDetails(reason_parts_exports.inputChange, nativeEvent));
+          store.context.setOpen(true, createChangeEventDetails(reason_parts_exports.inputChange, nativeEvent));
           if (!autoHighlightEnabled) {
             clearHighlight();
           }
@@ -13532,18 +13784,18 @@ var ComboboxInput = /* @__PURE__ */ React75.forwardRef(function ComboboxInput2(c
           const nextVal = event.currentTarget.value;
           setComposingValue(nextVal);
           if (nextVal === "" && !store.state.openOnInputClick && !store.state.inputInsidePopup) {
-            store.state.setOpen(false, createChangeEventDetails(reason_parts_exports.inputClear, nativeEvent));
+            store.context.setOpen(false, createChangeEventDetails(reason_parts_exports.inputClear, nativeEvent));
           }
           const trimmed = nextVal.trim();
           const shouldMaintainHighlight = autoHighlightEnabled && trimmed !== "";
           maybeOpenOnInput(trimmed);
-          if (open && store.state.activeIndex !== null && !shouldMaintainHighlight) {
+          if (open7 && store.state.activeIndex !== null && !shouldMaintainHighlight) {
             clearHighlight();
           }
           return;
         }
         const inputChangeDetails = createChangeEventDetails(reason_parts_exports.inputChange, nativeEvent);
-        store.state.setInputValue(event.currentTarget.value, inputChangeDetails);
+        store.context.setInputValue(event.currentTarget.value, inputChangeDetails);
         if (inputChangeDetails.isCanceled) {
           return;
         }
@@ -13551,25 +13803,28 @@ var ComboboxInput = /* @__PURE__ */ React75.forwardRef(function ComboboxInput2(c
         const clearDetails = createChangeEventDetails(reason_parts_exports.inputClear, nativeEvent);
         if (empty && !store.state.inputInsidePopup) {
           if (selectionMode === "single") {
-            store.state.setSelectedValue(null, clearDetails);
+            store.context.setSelectedValue(null, clearDetails);
           }
           if (!store.state.openOnInputClick) {
-            store.state.setOpen(false, clearDetails);
+            store.context.setOpen(false, clearDetails);
           }
         }
         maybeOpenOnInput(event.currentTarget.value.trim());
-        if (open && store.state.activeIndex !== null && !autoHighlightEnabled) {
+        if (open7 && store.state.activeIndex !== null && !autoHighlightEnabled) {
           clearHighlight();
         }
       },
       onKeyDown(event) {
-        if (disabled2 || readOnly) {
-          return;
-        }
         if (event.ctrlKey || event.shiftKey || event.altKey || event.metaKey) {
           return;
         }
-        store.state.keyboardActiveRef.current = true;
+        store.context.keyboardActiveRef.current = true;
+        if (disabled3 || readOnly) {
+          if (readOnly && event.key === "Enter" && open7 && store.state.activeIndex !== null) {
+            stopEvent(event);
+          }
+          return;
+        }
         const input = event.currentTarget;
         const scrollAmount = input.scrollWidth - input.clientWidth;
         const isRTL11 = direction === "rtl";
@@ -13591,8 +13846,8 @@ var ComboboxInput = /* @__PURE__ */ React75.forwardRef(function ComboboxInput2(c
           const isClear = selectionMode === "multiple" && Array.isArray(selectedValue) ? selectedValue.length === 0 : selectedValue === null;
           const details = createChangeEventDetails(reason_parts_exports.escapeKey, event.nativeEvent);
           const value = selectionMode === "multiple" ? [] : null;
-          store.state.setInputValue("", details);
-          store.state.setSelectedValue(value, details);
+          store.context.setInputValue("", details);
+          store.context.setSelectedValue(value, details);
           if (!isClear && !store.state.inline && !details.isPropagationAllowed) {
             event.stopPropagation();
           }
@@ -13603,7 +13858,7 @@ var ComboboxInput = /* @__PURE__ */ React75.forwardRef(function ComboboxInput2(c
           const removalIndex = renderedChipsCount > 0 ? renderedChipsCount - 1 : selectedValue.length - 1;
           const newValue = selectedValue.filter((_, index2) => index2 !== removalIndex);
           clearHighlight();
-          store.state.setSelectedValue(newValue, createChangeEventDetails(reason_parts_exports.none, event.nativeEvent));
+          store.context.setSelectedValue(newValue, createChangeEventDetails(reason_parts_exports.none, event.nativeEvent));
           return;
         }
         const hadHighlightedChip = comboboxChipsContext?.highlightedChipIndex !== void 0;
@@ -13612,19 +13867,19 @@ var ComboboxInput = /* @__PURE__ */ React75.forwardRef(function ComboboxInput2(c
         if (nextIndex !== void 0) {
           comboboxChipsContext?.chipsRef.current[nextIndex]?.focus();
         } else if (hadHighlightedChip) {
-          store.state.inputRef.current?.focus();
+          store.context.inputRef.current?.focus();
         }
         if (event.which === 229) {
           return;
         }
-        if (event.key === "Enter" && open) {
+        if (event.key === "Enter" && open7) {
           const activeIndex = store.state.activeIndex;
           const nativeEvent = event.nativeEvent;
           if (activeIndex === null) {
             if (inline4) {
               return;
             }
-            store.state.setOpen(false, createChangeEventDetails(reason_parts_exports.none, nativeEvent));
+            store.context.setOpen(false, createChangeEventDetails(reason_parts_exports.none, nativeEvent));
             return;
           }
           stopEvent(event);
@@ -13641,8 +13896,8 @@ var ComboboxInput = /* @__PURE__ */ React75.forwardRef(function ComboboxInput2(c
     children: element
   }) : element;
   return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(React75.Fragment, {
-    children: [open && focusManagerModal && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(ComboboxInternalDismissButton, {
-      ref: store.state.startDismissRef
+    children: [open7 && focusManagerModal && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(ComboboxInternalDismissButton, {
+      ref: store.context.startDismissRef
     }), renderedInput]
   });
 });
@@ -13652,8 +13907,8 @@ if (true) ComboboxInput.displayName = "ComboboxInput";
 var React76 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/combobox/utils/handleInputPress.mjs
-function handleInputPress(event, store, disabled2, readOnly, shouldIgnoreTarget) {
-  if (event.baseUIHandlerPrevented || readOnly) {
+function handleInputPress(event, store, disabled3, shouldIgnoreTarget) {
+  if (event.baseUIHandlerPrevented) {
     return;
   }
   const target = getTarget(event.nativeEvent);
@@ -13662,12 +13917,12 @@ function handleInputPress(event, store, disabled2, readOnly, shouldIgnoreTarget)
     return;
   }
   event.preventDefault();
-  if (disabled2) {
+  if (disabled3) {
     return;
   }
-  store.state.inputRef.current?.focus();
+  store.context.inputRef.current?.focus();
   if (store.state.openOnInputClick) {
-    store.state.setOpen(true, createChangeEventDetails(reason_parts_exports.inputPress, event.nativeEvent));
+    store.context.setOpen(true, createChangeEventDetails(reason_parts_exports.inputPress, event.nativeEvent));
   }
 }
 
@@ -13683,22 +13938,22 @@ var ComboboxInputGroup = /* @__PURE__ */ React76.forwardRef(function ComboboxInp
     state: fieldState
   } = useFieldRootContext();
   const store = useComboboxRootContext();
-  const open = useStore(store, selectors3.open);
-  const comboboxDisabled = useStore(store, selectors3.disabled);
-  const readOnly = useStore(store, selectors3.readOnly);
-  const hasSelectedValue = useStore(store, selectors3.hasSelectedValue);
-  const selectionMode = useStore(store, selectors3.selectionMode);
-  const popupSide = usePopupSide(store);
-  const disabled2 = comboboxDisabled;
-  const listEmpty = useListEmpty();
+  const open7 = store.useState("open");
+  const comboboxDisabled = store.useState("disabled");
+  const readOnly = store.useState("readOnly");
+  const hasSelectedValue = store.useState("hasSelectedValue");
+  const selectionMode = store.useState("selectionMode");
+  const popupSide2 = usePopupSide(store);
+  const disabled3 = comboboxDisabled;
+  const listEmpty2 = useListEmpty();
   const placeholder = selectionMode === "none" ? false : !hasSelectedValue;
   const state = {
     ...fieldState,
-    open,
-    disabled: disabled2,
+    open: open7,
+    disabled: disabled3,
     readOnly,
-    popupSide,
-    listEmpty,
+    popupSide: popupSide2,
+    listEmpty: listEmpty2,
     placeholder
   };
   const setInputGroupElement = useStableCallback((element) => {
@@ -13709,8 +13964,8 @@ var ComboboxInputGroup = /* @__PURE__ */ React76.forwardRef(function ComboboxInp
     props: [{
       role: "group",
       onMouseDown(event) {
-        handleInputPress(event, store, disabled2, readOnly, (target) => {
-          return contains(store.state.chipsContainerRef.current, target);
+        handleInputPress(event, store, disabled3, (target) => {
+          return contains(store.context.chipsContainerRef.current, target);
         });
       }
     }, elementProps],
@@ -13763,12 +14018,12 @@ var ComboboxClear = /* @__PURE__ */ React78.forwardRef(function ComboboxClear2(c
     disabled: fieldDisabled
   } = useFieldRootContext();
   const store = useComboboxRootContext();
-  const selectionMode = useStore(store, selectors3.selectionMode);
-  const comboboxDisabled = useStore(store, selectors3.disabled);
-  const readOnly = useStore(store, selectors3.readOnly);
-  const open = useStore(store, selectors3.open);
-  const selectedValue = useStore(store, selectors3.selectedValue);
-  const hasSelectionChips = useStore(store, selectors3.hasSelectionChips);
+  const selectionMode = store.useState("selectionMode");
+  const comboboxDisabled = store.useState("disabled");
+  const readOnly = store.useState("readOnly");
+  const open7 = store.useState("open");
+  const selectedValue = store.useState("selectedValue");
+  const hasSelectionChips = store.useState("hasSelectionChips");
   const inputValue = useComboboxInputValueContext();
   let visible = false;
   if (selectionMode === "none") {
@@ -13778,13 +14033,13 @@ var ComboboxClear = /* @__PURE__ */ React78.forwardRef(function ComboboxClear2(c
   } else {
     visible = hasSelectionChips;
   }
-  const disabled2 = fieldDisabled || comboboxDisabled || disabledProp;
+  const disabled3 = fieldDisabled || comboboxDisabled || disabledProp;
   const {
     buttonRef,
     getButtonProps
   } = useButton({
     native: nativeButton,
-    disabled: disabled2
+    disabled: disabled3
   });
   const {
     mounted,
@@ -13792,14 +14047,14 @@ var ComboboxClear = /* @__PURE__ */ React78.forwardRef(function ComboboxClear2(c
     setMounted
   } = useTransitionStatus(visible);
   const state = {
-    disabled: disabled2,
+    disabled: disabled3,
     visible,
-    open,
+    open: open7,
     transitionStatus
   };
   useOpenChangeComplete({
     open: visible,
-    ref: store.state.clearRef,
+    ref: store.context.clearRef,
     onComplete() {
       if (!visible) {
         setMounted(false);
@@ -13808,7 +14063,7 @@ var ComboboxClear = /* @__PURE__ */ React78.forwardRef(function ComboboxClear2(c
   });
   const element = useRenderElement("button", componentProps, {
     state,
-    ref: [forwardedRef, buttonRef, store.state.clearRef],
+    ref: [forwardedRef, buttonRef, store.context.clearRef],
     props: [{
       tabIndex: -1,
       children: "x",
@@ -13817,25 +14072,25 @@ var ComboboxClear = /* @__PURE__ */ React78.forwardRef(function ComboboxClear2(c
         event.preventDefault();
       },
       onClick(event) {
-        if (disabled2 || readOnly) {
+        if (disabled3 || readOnly) {
           return;
         }
-        const type = store.state.keyboardActiveRef.current ? reason_parts_exports.keyboard : reason_parts_exports.pointer;
-        store.state.setInputValue("", createChangeEventDetails(reason_parts_exports.clearPress, event.nativeEvent));
+        const type = store.context.keyboardActiveRef.current ? reason_parts_exports.keyboard : reason_parts_exports.pointer;
+        store.context.setInputValue("", createChangeEventDetails(reason_parts_exports.clearPress, event.nativeEvent));
         if (selectionMode !== "none") {
-          store.state.setSelectedValue(Array.isArray(selectedValue) ? [] : null, createChangeEventDetails(reason_parts_exports.clearPress, event.nativeEvent));
-          store.state.setIndices({
+          store.context.setSelectedValue(Array.isArray(selectedValue) ? [] : null, createChangeEventDetails(reason_parts_exports.clearPress, event.nativeEvent));
+          store.context.setIndices({
             activeIndex: null,
             selectedIndex: null,
             type
           });
         } else {
-          store.state.setIndices({
+          store.context.setIndices({
             activeIndex: null,
             type
           });
         }
-        store.state.inputRef.current?.focus();
+        store.context.inputRef.current?.focus();
       }
     }, elementProps, getButtonProps],
     stateAttributesMapping
@@ -13910,11 +14165,12 @@ var ComboboxList = /* @__PURE__ */ React81.forwardRef(function ComboboxList2(com
     filteredItems,
     hasItems
   } = useComboboxDerivedItemsContext();
-  const selectionMode = useStore(store, selectors3.selectionMode);
-  const grid = useStore(store, selectors3.grid);
-  const listProps = useStore(store, selectors3.listProps);
-  const virtualized = useStore(store, selectors3.virtualized);
-  const forceMounted = useStore(store, selectors3.forceMounted);
+  const selectionMode = store.useState("selectionMode");
+  const grid = store.useState("grid");
+  const readOnly = store.useState("readOnly");
+  const listProps = store.useState("listProps");
+  const virtualized = store.useState("virtualized");
+  const forceMounted = store.useState("forceMounted");
   const multiple = selectionMode === "multiple";
   const empty = filteredItems.length === 0;
   const setPositionerElement = useStableCallback((element2) => {
@@ -13944,6 +14200,9 @@ var ComboboxList = /* @__PURE__ */ React81.forwardRef(function ComboboxList2(com
       id: floatingId,
       role: grid ? "grid" : "listbox",
       "aria-multiselectable": multiple ? "true" : void 0,
+      // On a grid the attribute describes cell editability, not selection, so it's left to the
+      // combobox element in that mode.
+      "aria-readonly": !grid && readOnly ? true : void 0,
       onKeyDown(event) {
         if (store.state.disabled || store.state.readOnly) {
           return;
@@ -13958,19 +14217,19 @@ var ComboboxList = /* @__PURE__ */ React81.forwardRef(function ComboboxList2(com
         }
       },
       onKeyDownCapture() {
-        store.state.keyboardActiveRef.current = true;
+        store.context.keyboardActiveRef.current = true;
       },
       onPointerMoveCapture() {
-        store.state.keyboardActiveRef.current = false;
+        store.context.keyboardActiveRef.current = false;
       }
     }, elementProps]
   });
   if (virtualized) {
     return element;
   }
-  const labelsRef = hasItems && !forceMounted ? void 0 : store.state.labelsRef;
+  const labelsRef = hasItems && !forceMounted ? void 0 : store.context.labelsRef;
   return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(CompositeList, {
-    elementsRef: store.state.listRef,
+    elementsRef: store.context.listRef,
     labelsRef,
     children: element
   });
@@ -14073,8 +14332,8 @@ var ComboboxPortal = /* @__PURE__ */ React85.forwardRef(function ComboboxPortal2
     ...portalProps
   } = props;
   const store = useComboboxRootContext();
-  const mounted = useStore(store, selectors3.mounted);
-  const forceMounted = useStore(store, selectors3.forceMounted);
+  const mounted = store.useState("mounted");
+  const forceMounted = store.useState("forceMounted");
   const shouldRender = mounted || keepMounted || forceMounted;
   if (!shouldRender) {
     return null;
@@ -14103,11 +14362,11 @@ var ComboboxBackdrop = /* @__PURE__ */ React86.forwardRef(function ComboboxBackd
     ...elementProps
   } = componentProps;
   const store = useComboboxRootContext();
-  const open = useStore(store, selectors3.open);
-  const mounted = useStore(store, selectors3.mounted);
-  const transitionStatus = useStore(store, selectors3.transitionStatus);
+  const open7 = store.useState("open");
+  const mounted = store.useState("mounted");
+  const transitionStatus = store.useState("transitionStatus");
   const state = {
-    open,
+    open: open7,
     transitionStatus
   };
   return useRenderElement("div", componentProps, {
@@ -14196,10 +14455,17 @@ var baseArrow = (options) => ({
     };
   }
 });
-var arrow4 = (options, deps) => ({
-  ...baseArrow(options),
-  options: [options, deps]
-});
+var arrow4 = (options, deps) => {
+  const {
+    name,
+    fn
+  } = baseArrow(options);
+  return {
+    name,
+    fn,
+    options: [options, deps]
+  };
+};
 
 // node_modules/@base-ui/react/utils/hideMiddleware.mjs
 var hide4 = {
@@ -14207,18 +14473,18 @@ var hide4 = {
   async fn(state) {
     const {
       width,
-      height,
+      height: height2,
       x: x2,
       y: y2
     } = state.rects.reference;
-    const anchorHidden = width === 0 && height === 0 && x2 === 0 && y2 === 0;
+    const anchorHidden2 = width === 0 && height2 === 0 && x2 === 0 && y2 === 0;
     const overflow = await state.platform.detectOverflow(state, {
       elementContext: "reference"
     });
-    const referenceHidden = overflow.top - height >= 0 || overflow.right - width >= 0 || overflow.bottom - height >= 0 || overflow.left - width >= 0;
+    const referenceHidden = overflow.top - height2 >= 0 || overflow.right - width >= 0 || overflow.bottom - height2 >= 0 || overflow.left - width >= 0;
     return {
       data: {
-        referenceHidden: referenceHidden || anchorHidden
+        referenceHidden: referenceHidden || anchorHidden2
       }
     };
   }
@@ -14230,9 +14496,18 @@ var DEFAULT_SIDES = {
   sideY: "top"
 };
 
+// node_modules/@base-ui/react/utils/CommonPositionerCssVars.mjs
+var availableWidth = "--available-width";
+var availableHeight = "--available-height";
+var anchorWidth = "--anchor-width";
+var anchorHeight = "--anchor-height";
+var transformOrigin = "--transform-origin";
+var positionerWidth = "--positioner-width";
+var positionerHeight = "--positioner-height";
+
 // node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
-var AVAILABLE_WIDTH_VAR = "--available-width";
-var AVAILABLE_HEIGHT_VAR = "--available-height";
+var AVAILABLE_WIDTH_VAR = availableWidth;
+var AVAILABLE_HEIGHT_VAR = availableHeight;
 function getLogicalSide(sideParam, renderedSide, isRtl) {
   const isLogicalSideParam = sideParam === "inline-start" || sideParam === "inline-end";
   const logicalRight = isRtl ? "inline-start" : "inline-end";
@@ -14273,7 +14548,7 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
     positionMethod = "absolute",
     side: sideParam = "bottom",
     sideOffset = 0,
-    align = "center",
+    align: align2 = "center",
     alignOffset = 0,
     collisionBoundary,
     collisionPadding: collisionPaddingParam = 5,
@@ -14308,7 +14583,7 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
   const mountedRef = useValueAsRef(mounted);
   const direction = useDirection();
   const isRtl = direction === "rtl";
-  const side = mountSide || {
+  const side2 = mountSide || {
     top: "top",
     right: "right",
     bottom: "bottom",
@@ -14316,7 +14591,7 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
     "inline-end": isRtl ? "left" : "right",
     "inline-start": isRtl ? "right" : "left"
   }[sideParam];
-  const placement = align === "center" ? side : `${side}-${align}`;
+  const placement = align2 === "center" ? side2 : `${side2}-${align2}`;
   let collisionPadding = collisionPaddingParam;
   if (typeof collisionPadding === "number") {
     collisionPadding = {
@@ -14389,17 +14664,17 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
       }
       const {
         width,
-        height
+        height: height2
       } = arrowRef.current.getBoundingClientRect();
       const sideAxis = getSideAxis(getSide(limitData.placement));
-      const arrowSize = sideAxis === "y" ? width : height;
+      const arrowSize = sideAxis === "y" ? width : height2;
       const offsetAmount = sideAxis === "y" ? collisionPadding.left + collisionPadding.right : collisionPadding.top + collisionPadding.bottom;
       return {
         offset: arrowSize / 2 + offsetAmount / 2
       };
     })
   }, [commonCollisionProps, sticky, shiftCrossAxis, shiftRootBoundary, collisionPadding, collisionAvoidanceAlign]);
-  if (collisionAvoidanceSide === "shift" || collisionAvoidanceAlign === "shift" || align === "center") {
+  if (collisionAvoidanceSide === "shift" || collisionAvoidanceAlign === "shift" || align2 === "center") {
     middleware.push(shiftMiddleware, flipMiddleware);
   } else {
     middleware.push(flipMiddleware, shiftMiddleware);
@@ -14410,65 +14685,66 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
       elements: {
         floating
       },
-      availableWidth,
-      availableHeight,
+      availableWidth: availableWidth2,
+      availableHeight: availableHeight2,
       rects
     }) {
       if (!mountedRef.current) {
         return;
       }
       const floatingStyle = floating.style;
-      floatingStyle.setProperty(AVAILABLE_WIDTH_VAR, `${availableWidth}px`);
-      floatingStyle.setProperty(AVAILABLE_HEIGHT_VAR, `${availableHeight}px`);
+      floatingStyle.setProperty(AVAILABLE_WIDTH_VAR, `${availableWidth2}px`);
+      floatingStyle.setProperty(AVAILABLE_HEIGHT_VAR, `${availableHeight2}px`);
       const dpr = getWindow(floating).devicePixelRatio || 1;
       const {
         x: x3,
         y: y3,
         width,
-        height
+        height: height2
       } = rects.reference;
-      const anchorWidth = (Math.round((x3 + width) * dpr) - Math.round(x3 * dpr)) / dpr;
-      const anchorHeight = (Math.round((y3 + height) * dpr) - Math.round(y3 * dpr)) / dpr;
-      floatingStyle.setProperty("--anchor-width", `${anchorWidth}px`);
-      floatingStyle.setProperty("--anchor-height", `${anchorHeight}px`);
+      const anchorWidth2 = (Math.round((x3 + width) * dpr) - Math.round(x3 * dpr)) / dpr;
+      const anchorHeight2 = (Math.round((y3 + height2) * dpr) - Math.round(y3 * dpr)) / dpr;
+      floatingStyle.setProperty(anchorWidth, `${anchorWidth2}px`);
+      floatingStyle.setProperty(anchorHeight, `${anchorHeight2}px`);
     }
   }), arrow4((state) => ({
     // `transform-origin` calculations rely on an element existing. If the arrow hasn't been set,
     // we'll create a fake element.
     element: arrowRef.current || ownerDocument(state.elements.floating).createElement("div"),
-    padding: arrowPadding,
+    // No padding for the fake arrow: it would displace aligned popups on narrow anchors.
+    padding: arrowRef.current ? arrowPadding : 0,
     offsetParent: "floating"
   }), [arrowPadding]), {
     name: "transformOrigin",
     fn(state) {
       const {
-        elements: elements2,
+        elements: {
+          floating
+        },
         middlewareData: middlewareData2,
         placement: renderedPlacement2,
+        platform: platform3,
         rects,
         y: y3
       } = state;
-      const currentRenderedSide = getSide(renderedPlacement2);
-      const currentRenderedAxis = getSideAxis(currentRenderedSide);
+      const renderedSide2 = getSide(renderedPlacement2);
+      const renderedAlign2 = getAlignment(renderedPlacement2);
+      const isVertical = getSideAxis(renderedSide2) === "y";
       const arrowEl = arrowRef.current;
-      const arrowX = middlewareData2.arrow?.x || 0;
-      const arrowY = middlewareData2.arrow?.y || 0;
-      const arrowWidth = arrowEl?.clientWidth || 0;
-      const arrowHeight = arrowEl?.clientHeight || 0;
-      const transformX = arrowX + arrowWidth / 2;
-      const transformY = arrowY + arrowHeight / 2;
-      const shiftY = Math.abs(middlewareData2.shift?.y || 0);
-      const halfAnchorHeight = rects.reference.height / 2;
       const sideOffsetValue = typeof sideOffset === "function" ? sideOffset(getOffsetData(state, sideParam, isRtl)) : sideOffset;
-      const isOverlappingAnchor = shiftY > sideOffsetValue;
-      const adjacentTransformOrigin = {
-        top: `${transformX}px calc(100% + ${sideOffsetValue}px)`,
-        bottom: `${transformX}px ${-sideOffsetValue}px`,
-        left: `calc(100% + ${sideOffsetValue}px) ${transformY}px`,
-        right: `${-sideOffsetValue}px ${transformY}px`
-      }[currentRenderedSide];
-      const overlapTransformOrigin = `${transformX}px ${rects.reference.y + halfAnchorHeight - y3}px`;
-      elements2.floating.style.setProperty("--transform-origin", crossAxisShiftEnabled && currentRenderedAxis === "y" && isOverlappingAnchor ? overlapTransformOrigin : adjacentTransformOrigin);
+      let crossOrigin;
+      if (!arrowEl && renderedAlign2 && Math.abs(isVertical ? middlewareData2.shift?.x || 0 : middlewareData2.shift?.y || 0) <= 1) {
+        crossOrigin = renderedAlign2 === "start" === (isVertical && platform3.isRTL?.(floating) === true) ? "100%" : "0%";
+      } else {
+        const arrowOffset = isVertical ? middlewareData2.arrow?.x || 0 : middlewareData2.arrow?.y || 0;
+        const arrowSize = isVertical ? arrowEl?.clientWidth || 0 : arrowEl?.clientHeight || 0;
+        crossOrigin = `${arrowOffset + arrowSize / 2}px`;
+      }
+      let sideOrigin = renderedSide2 === "top" || renderedSide2 === "left" ? `calc(100% + ${sideOffsetValue}px)` : `${-sideOffsetValue}px`;
+      if (crossAxisShiftEnabled && isVertical && Math.abs(middlewareData2.shift?.y || 0) > sideOffsetValue) {
+        sideOrigin = `${rects.reference.y + rects.reference.height / 2 - y3}px`;
+      }
+      floating.style.setProperty(transformOrigin, isVertical ? `${crossOrigin} ${sideOrigin}` : `${sideOrigin} ${crossOrigin}`);
       return {};
     }
   }, hide4, adaptiveOrigin2);
@@ -14483,6 +14759,7 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
     }
   }, [mounted, floatingRootContext]);
   const autoUpdateOptions = React87.useMemo(() => ({
+    ancestorScroll: !disableAnchorTracking,
     elementResize: !disableAnchorTracking && typeof ResizeObserver !== "undefined",
     layoutShift: !disableAnchorTracking && typeof IntersectionObserver !== "undefined"
   }), [disableAnchorTracking]);
@@ -14575,12 +14852,12 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
   const renderedSide = getSide(renderedPlacement);
   const logicalRenderedSide = getLogicalSide(sideParam, renderedSide, isRtl);
   const renderedAlign = getAlignment(renderedPlacement) || "center";
-  const anchorHidden = Boolean(middlewareData.hide?.referenceHidden);
+  const anchorHidden2 = Boolean(middlewareData.hide?.referenceHidden);
   useIsoLayoutEffect(() => {
-    if (lazyFlip && mounted && isPositioned && renderedSide !== side) {
+    if (lazyFlip && mounted && isPositioned && renderedSide !== side2) {
       setMountSide(renderedSide);
     }
-  }, [lazyFlip, mounted, isPositioned, renderedSide, side]);
+  }, [lazyFlip, mounted, isPositioned, renderedSide, side2]);
   const arrowStyles = React87.useMemo(() => ({
     position: "absolute",
     top: middlewareData.arrow?.y,
@@ -14595,12 +14872,12 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
     side: logicalRenderedSide,
     align: renderedAlign,
     physicalSide: renderedSide,
-    anchorHidden,
+    anchorHidden: anchorHidden2,
     refs,
     context,
     isPositioned,
     update: update2
-  }), [floatingStyles, arrowStyles, arrowRef, arrowUncentered, logicalRenderedSide, renderedAlign, renderedSide, anchorHidden, refs, context, isPositioned, update2]);
+  }), [floatingStyles, arrowStyles, arrowRef, arrowUncentered, logicalRenderedSide, renderedAlign, renderedSide, anchorHidden2, refs, context, isPositioned, update2]);
 }
 function isRef(param) {
   return param != null && "current" in param;
@@ -14649,8 +14926,8 @@ function useAnchoredPopupScrollLock(enabled, touchOpen, positionerElement, refer
       return;
     }
     const viewportWidth = ownerDocument(positionerElement).documentElement.clientWidth;
-    const popupWidth = positionerElement.offsetWidth;
-    setTouchOpenShouldLockScroll(viewportWidth > 0 && popupWidth > 0 && popupWidth >= viewportWidth - VIEWPORT_WIDTH_TOLERANCE_PX);
+    const popupWidth2 = positionerElement.offsetWidth;
+    setTouchOpenShouldLockScroll(viewportWidth > 0 && popupWidth2 > 0 && popupWidth2 >= viewportWidth - VIEWPORT_WIDTH_TOLERANCE_PX);
   }, [enabled, touchOpen, positionerElement]);
   useScrollLock(enabled && (!touchOpen || touchOpenShouldLockScroll), referenceElement);
 }
@@ -14665,8 +14942,8 @@ var ComboboxPositioner = /* @__PURE__ */ React89.forwardRef(function ComboboxPos
     // `useAnchorPositioning` applies the same defaults to the undefined values; the names
     // remain destructured to exclude the props from `elementProps`.
     positionMethod,
-    side,
-    align,
+    side: side2,
+    align: align2,
     sideOffset,
     alignOffset,
     collisionBoundary = "clipping-ancestors",
@@ -14681,16 +14958,16 @@ var ComboboxPositioner = /* @__PURE__ */ React89.forwardRef(function ComboboxPos
   const store = useComboboxRootContext();
   const floatingRootContext = useComboboxFloatingContext();
   const keepMounted = useComboboxPortalContext();
-  const modal = useStore(store, selectors3.modal);
-  const open = useStore(store, selectors3.open);
-  const mounted = useStore(store, selectors3.mounted);
-  const openMethod = useStore(store, selectors3.openMethod);
-  const positionerElement = useStore(store, selectors3.positionerElement);
-  const triggerElement = useStore(store, selectors3.triggerElement);
-  const inputElement = useStore(store, selectors3.inputElement);
-  const inputGroupElement = useStore(store, selectors3.inputGroupElement);
-  const inputInsidePopup = useStore(store, selectors3.inputInsidePopup);
-  const transitionStatus = useStore(store, selectors3.transitionStatus);
+  const modal = store.useState("modal");
+  const open7 = store.useState("open");
+  const mounted = store.useState("mounted");
+  const openMethod = store.useState("openMethod");
+  const positionerElement = store.useState("positionerElement");
+  const triggerElement = store.useState("triggerElement");
+  const inputElement = store.useState("inputElement");
+  const inputGroupElement = store.useState("inputGroupElement");
+  const inputInsidePopup = store.useState("inputInsidePopup");
+  const transitionStatus = store.useState("transitionStatus");
   const empty = useListEmpty();
   const resolvedAnchor = anchor ?? (inputInsidePopup ? triggerElement : inputGroupElement ?? inputElement);
   const positioning = useAnchorPositioning({
@@ -14698,9 +14975,9 @@ var ComboboxPositioner = /* @__PURE__ */ React89.forwardRef(function ComboboxPos
     floatingRootContext,
     positionMethod,
     mounted,
-    side,
+    side: side2,
     sideOffset,
-    align,
+    align: align2,
     alignOffset,
     arrowPadding,
     collisionBoundary,
@@ -14711,9 +14988,9 @@ var ComboboxPositioner = /* @__PURE__ */ React89.forwardRef(function ComboboxPos
     collisionAvoidance,
     lazyFlip: true
   });
-  useAnchoredPopupScrollLock(open && modal, openMethod === "touch", positionerElement, triggerElement);
+  useAnchoredPopupScrollLock(open7 && modal, openMethod === "touch", positionerElement, triggerElement);
   const state = {
-    open,
+    open: open7,
     side: positioning.side,
     align: positioning.align,
     anchorHidden: positioning.anchorHidden,
@@ -14731,12 +15008,12 @@ var ComboboxPositioner = /* @__PURE__ */ React89.forwardRef(function ComboboxPos
     props: elementProps,
     refs: [forwardedRef, setPositionerElement],
     hidden: !mounted,
-    inert: !open
+    inert: !open7
   });
   return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(ComboboxPositionerContext.Provider, {
     value: positioning,
     children: [mounted && modal && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(InternalBackdrop, {
-      inert: inertValue(!open),
+      inert: inertValue(!open7),
       cutout: inputGroupElement ?? inputElement ?? triggerElement
     }), element]
   });
@@ -14762,34 +15039,34 @@ var ComboboxPopup = /* @__PURE__ */ React90.forwardRef(function ComboboxPopup2(c
   const store = useComboboxRootContext();
   const positioning = useComboboxPositionerContext();
   const floatingRootContext = useComboboxFloatingContext();
-  const mounted = useStore(store, selectors3.mounted);
-  const open = useStore(store, selectors3.open);
-  const openMethod = useStore(store, selectors3.openMethod);
-  const popupProps = useStore(store, selectors3.popupProps);
-  const transitionStatus = useStore(store, selectors3.transitionStatus);
-  const inputInsidePopup = useStore(store, selectors3.inputInsidePopup);
-  const inputElement = useStore(store, selectors3.inputElement);
-  const modal = useStore(store, selectors3.modal);
-  const rootId = useStore(store, selectors3.id);
+  const mounted = store.useState("mounted");
+  const open7 = store.useState("open");
+  const openMethod = store.useState("openMethod");
+  const popupProps = store.useState("popupProps");
+  const transitionStatus = store.useState("transitionStatus");
+  const inputInsidePopup = store.useState("inputInsidePopup");
+  const inputElement = store.useState("inputElement");
+  const modal = store.useState("modal");
+  const rootId = store.useState("id");
   const empty = useListEmpty();
   const popupId = elementProps.id ?? (inputInsidePopup ? getComboboxPopupId(rootId) : void 0);
   useIsoLayoutEffect(() => {
-    store.set("popupId", store.state.popupRef.current?.id || popupId);
+    store.set("popupId", store.context.popupRef.current?.id || popupId);
     return () => {
       store.set("popupId", void 0);
     };
   }, [store, popupId]);
   useOpenChangeComplete({
-    open,
-    ref: store.state.popupRef,
+    open: open7,
+    ref: store.context.popupRef,
     onComplete() {
-      if (open) {
-        store.state.onOpenChangeComplete(true);
+      if (open7) {
+        store.context.onOpenChangeComplete(true);
       }
     }
   });
   const state = {
-    open,
+    open: open7,
     side: positioning.side,
     align: positioning.align,
     anchorHidden: positioning.anchorHidden,
@@ -14798,20 +15075,20 @@ var ComboboxPopup = /* @__PURE__ */ React90.forwardRef(function ComboboxPopup2(c
   };
   const element = useRenderElement("div", componentProps, {
     state,
-    ref: [forwardedRef, store.state.popupRef],
+    ref: [forwardedRef, store.context.popupRef],
     props: [popupProps, {
       id: popupId,
       role: inputInsidePopup ? "dialog" : "presentation",
       onFocus(event) {
         const target = getTarget(event.nativeEvent);
         if (openMethod !== "touch" && (contains(store.state.listElement, target) || target === event.currentTarget)) {
-          store.state.inputRef.current?.focus();
+          store.context.inputRef.current?.focus();
         }
       }
     }, getDisabledMountTransitionStyles(transitionStatus), elementProps],
     stateAttributesMapping: stateAttributesMapping3
   });
-  const computedDefaultInitialFocus = inputInsidePopup ? (interactionType) => interactionType === "touch" ? store.state.popupRef.current : inputElement : false;
+  const computedDefaultInitialFocus = inputInsidePopup ? (interactionType) => interactionType === "touch" ? store.context.popupRef.current : inputElement : false;
   const resolvedInitialFocus = initialFocus === void 0 ? computedDefaultInitialFocus : initialFocus;
   let resolvedFinalFocus;
   if (finalFocus != null) {
@@ -14827,10 +15104,10 @@ var ComboboxPopup = /* @__PURE__ */ React90.forwardRef(function ComboboxPopup2(c
     openInteractionType: openMethod,
     initialFocus: resolvedInitialFocus,
     returnFocus: resolvedFinalFocus,
-    getInsideElements: () => [store.state.startDismissRef.current, store.state.endDismissRef.current],
+    getInsideElements: () => [store.context.startDismissRef.current, store.context.endDismissRef.current],
     children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(React90.Fragment, {
       children: [element, focusManagerModal && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(ComboboxInternalDismissButton, {
-        ref: store.state.endDismissRef
+        ref: store.context.endDismissRef
       })]
     })
   });
@@ -14849,16 +15126,16 @@ var ComboboxArrow = /* @__PURE__ */ React91.forwardRef(function ComboboxArrow2(c
   const store = useComboboxRootContext();
   const {
     arrowRef,
-    side,
-    align,
+    side: side2,
+    align: align2,
     arrowUncentered,
     arrowStyles
   } = useComboboxPositionerContext();
-  const open = useStore(store, selectors3.open);
+  const open7 = store.useState("open");
   const state = {
-    open,
-    side,
-    align,
+    open: open7,
+    side: side2,
+    align: align2,
     uncentered: arrowUncentered
   };
   return useRenderElement("div", componentProps, {
@@ -14899,6 +15176,8 @@ var ComboboxGroup = /* @__PURE__ */ React93.forwardRef(function ComboboxGroup2(c
     items,
     ...elementProps
   } = componentProps;
+  const store = useComboboxRootContext();
+  const grid = store.useState("grid");
   const [labelId, setLabelId] = React93.useState();
   const contextValue = React93.useMemo(() => ({
     labelId,
@@ -14908,7 +15187,9 @@ var ComboboxGroup = /* @__PURE__ */ React93.forwardRef(function ComboboxGroup2(c
   const element = useRenderElement("div", componentProps, {
     ref: forwardedRef,
     props: [{
-      role: "group",
+      // `group` is not a valid owned element of `grid`, and `row` must be owned
+      // by `grid`, `rowgroup`, or `treegrid`.
+      role: grid ? "rowgroup" : "group",
       "aria-labelledby": labelId
     }, elementProps]
   });
@@ -14949,7 +15230,8 @@ var ComboboxGroupLabel = /* @__PURE__ */ React94.forwardRef(function ComboboxGro
   const element = useRenderElement("div", componentProps, {
     ref: forwardedRef,
     props: [{
-      id
+      id,
+      "aria-hidden": true
     }, elementProps]
   });
   return element;
@@ -15001,18 +15283,18 @@ function ComboboxItemInner(props) {
   const store = useComboboxRootContext();
   const isRow = useComboboxRowContext();
   const hasItems = useComboboxHasItemsContext();
-  const selectionMode = useStore(store, selectors3.selectionMode);
-  const rootDisabled = useStore(store, selectors3.disabled);
-  const readOnly = useStore(store, selectors3.readOnly);
-  const isItemEqualToValue = useStore(store, selectors3.isItemEqualToValue);
-  const disabled2 = rootDisabled || disabledProp;
+  const selectionMode = store.useState("selectionMode");
+  const rootDisabled = store.useState("disabled");
+  const readOnly = store.useState("readOnly");
+  const isItemEqualToValue = store.useState("isItemEqualToValue");
+  const disabled3 = rootDisabled || disabledProp;
   const selectable = selectionMode !== "none";
   const index2 = indexProp ?? indexFromFilter ?? listItem.index;
   const hasRegistered = index2 !== -1;
-  const rootId = useStore(store, selectors3.id);
-  const highlighted = useStore(store, selectors3.isActive, index2);
-  const matchesSelectedValue = useStore(store, selectors3.isSelected, itemValue);
-  const itemProps = useStore(store, selectors3.itemProps);
+  const rootId = store.useState("id");
+  const highlighted = store.useState("isActive", index2);
+  const matchesSelectedValue = store.useState("isSelected", itemValue);
+  const itemProps = store.useState("itemProps");
   const itemRef = React97.useRef(null);
   const id = rootId != null && hasRegistered ? `${rootId}-${index2}` : void 0;
   const selected = matchesSelectedValue && selectable;
@@ -15021,7 +15303,7 @@ function ComboboxItemInner(props) {
     if (!shouldRun) {
       return void 0;
     }
-    const list = store.state.listRef.current;
+    const list = store.context.listRef.current;
     list[index2] = itemRef.current;
     return () => {
       delete list[index2];
@@ -15031,10 +15313,10 @@ function ComboboxItemInner(props) {
     if (!hasRegistered || hasItems) {
       return void 0;
     }
-    const visibleMap = store.state.valuesRef.current;
-    visibleMap[index2] = itemValue;
+    const visibleValues = store.context.valuesRef.current;
+    visibleValues[index2] = itemValue;
     return () => {
-      delete visibleMap[index2];
+      delete visibleValues[index2];
     };
   }, [hasRegistered, hasItems, index2, itemValue, store]);
   useIsoLayoutEffect(() => {
@@ -15042,32 +15324,35 @@ function ComboboxItemInner(props) {
       return;
     }
     const selectedValue = store.state.selectedValue;
-    const lastSelectedValue = Array.isArray(selectedValue) ? selectedValue[selectedValue.length - 1] : selectedValue;
-    if (compareItemEquality(itemValue, lastSelectedValue, isItemEqualToValue)) {
-      store.set("selectedIndex", index2);
+    let nextIndex = store.state.selectedIndex;
+    if (store.state.selectionMode === "multiple" && Array.isArray(selectedValue)) {
+      nextIndex = resolveSelectedIndex(index2, itemValue, store.context.valuesRef.current, selectedValue, isItemEqualToValue, nextIndex);
+    } else if (compareItemEquality(itemValue, selectedValue, isItemEqualToValue)) {
+      nextIndex = index2;
     }
+    store.set("selectedIndex", nextIndex);
   }, [hasRegistered, hasItems, store, index2, itemValue, isItemEqualToValue]);
   const {
     getButtonProps,
     buttonRef
   } = useButton({
-    disabled: disabled2,
+    disabled: disabled3,
     focusableWhenDisabled: true,
     native: nativeButton,
     composite: true
   });
   const state = {
-    disabled: disabled2,
+    disabled: disabled3,
     selected,
     highlighted
   };
   function commitSelection(nativeEvent) {
     function selectItem() {
-      store.state.handleSelection(nativeEvent, itemValue);
+      store.context.handleSelection(nativeEvent, itemValue);
     }
     if (store.state.submitOnItemClick) {
       ReactDOM6.flushSync(selectItem);
-      store.state.requestSubmit();
+      store.context.requestSubmit();
     } else {
       selectItem();
     }
@@ -15082,7 +15367,7 @@ function ComboboxItemInner(props) {
     tabIndex: void 0,
     onPointerDownCapture(event) {
       if (event.isPrimary) {
-        store.state.pointerDownItemRef.current = event.currentTarget;
+        store.context.pointerDownItemRef.current = event.currentTarget;
       }
       event.preventDefault();
     },
@@ -15090,15 +15375,15 @@ function ComboboxItemInner(props) {
       event.preventDefault();
     },
     onClick(event) {
-      if (disabled2 || readOnly) {
+      if (disabled3 || readOnly) {
         return;
       }
       commitSelection(event.nativeEvent);
     },
     onMouseUp(event) {
-      const pointerStartedOnItem = store.state.pointerDownItemRef.current === event.currentTarget;
-      store.state.pointerDownItemRef.current = null;
-      if (disabled2 || readOnly || event.button !== 0 || pointerStartedOnItem || !highlighted) {
+      const pointerStartedOnItem = store.context.pointerDownItemRef.current === event.currentTarget;
+      store.context.pointerDownItemRef.current = null;
+      if (disabled3 || readOnly || event.button !== 0 || pointerStartedOnItem || !highlighted) {
         return;
       }
       commitSelection(event.nativeEvent);
@@ -15124,11 +15409,12 @@ function ComboboxItemVirtualizedIndex(props) {
     forwardedRef
   } = props;
   const store = useComboboxRootContext();
-  const isItemEqualToValue = useStore(store, selectors3.isItemEqualToValue);
+  const isItemEqualToValue = store.useState("isItemEqualToValue");
   const {
-    flatFilteredItems
+    flatFilteredValues
   } = useComboboxDerivedItemsContext();
-  const indexFromFilter = findItemIndex(flatFilteredItems, componentProps.value ?? null, isItemEqualToValue);
+  const lookupValue = componentProps.value ?? null;
+  const indexFromFilter = findItemIndex(flatFilteredValues, lookupValue, isItemEqualToValue);
   return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ComboboxItemInner, {
     componentProps,
     forwardedRef,
@@ -15138,7 +15424,7 @@ function ComboboxItemVirtualizedIndex(props) {
 }
 var ComboboxItem = /* @__PURE__ */ React97.memo(/* @__PURE__ */ React97.forwardRef(function ComboboxItem2(componentProps, forwardedRef) {
   const store = useComboboxRootContext();
-  const virtualized = useStore(store, selectors3.virtualized);
+  const virtualized = store.useState("virtualized");
   if (virtualized && componentProps.index == null) {
     return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ComboboxItemVirtualizedIndex, {
       componentProps,
@@ -15197,7 +15483,7 @@ var ComboboxEmpty = /* @__PURE__ */ React99.forwardRef(function ComboboxEmpty2(c
   const emptyRef = useInitialLiveRegionTextMutation();
   const children = filteredItems.length === 0 ? childrenProp : null;
   return useRenderElement("div", componentProps, {
-    ref: [forwardedRef, store.state.emptyRef, emptyRef],
+    ref: [forwardedRef, store.context.emptyRef, emptyRef],
     props: [{
       children,
       role: "status",
@@ -15246,7 +15532,7 @@ var Button = /* @__PURE__ */ React101.forwardRef(function Button2(componentProps
   const {
     render: render4,
     className,
-    disabled: disabled2 = false,
+    disabled: disabled3 = false,
     focusableWhenDisabled = false,
     nativeButton = true,
     style,
@@ -15256,12 +15542,12 @@ var Button = /* @__PURE__ */ React101.forwardRef(function Button2(componentProps
     getButtonProps,
     buttonRef
   } = useButton({
-    disabled: disabled2,
+    disabled: disabled3,
     focusableWhenDisabled,
     native: nativeButton
   });
   const state = {
-    disabled: disabled2
+    disabled: disabled3
   };
   return useRenderElement("button", componentProps, {
     state,
@@ -15286,12 +15572,12 @@ function useFieldItemContext() {
 var React103 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/field/utils/getCombinedFieldValidityData.mjs
-function getCombinedFieldValidityData(validityData, invalid) {
+function getCombinedFieldValidityData(validityData, invalid2) {
   return {
     ...validityData,
     state: {
       ...validityData.state,
-      valid: !invalid && validityData.state.valid
+      valid: !invalid2 && validityData.state.valid
     }
   };
 }
@@ -15320,11 +15606,15 @@ function findRepresentativeInput(inputs, formElement) {
   }
   return fallback;
 }
-function clearCustomValidity(element, inputs) {
-  for (const input of inputs.keys()) {
-    input.setCustomValidity("");
-  }
-  element?.setCustomValidity("");
+function makeState(customError) {
+  return {
+    ...DEFAULT_VALIDITY_STATE,
+    valid: !customError,
+    customError
+  };
+}
+function getNativeErrors(element) {
+  return element && element.validationMessage ? [element.validationMessage] : [];
 }
 function useFieldValidation(params) {
   const {
@@ -15336,10 +15626,11 @@ function useFieldValidation(params) {
     validate,
     validityData,
     validationDebounceTime,
-    invalid,
+    invalid: invalid2,
     markedDirtyRef,
     state,
     shouldValidateOnChange,
+    validationMode,
     registeredFieldIdRef
   } = params;
   const {
@@ -15350,6 +15641,7 @@ function useFieldValidation(params) {
   const inputRef = React103.useRef(null);
   const registeredInputs = useRefWithInit(() => /* @__PURE__ */ new Map()).current;
   const validationCommitIdRef = React103.useRef(0);
+  const customValidityRef = React103.useRef(null);
   const registerInput = React103.useCallback((element, registration) => {
     registeredInputs.set(element, registration);
     return () => {
@@ -15363,7 +15655,7 @@ function useFieldValidation(params) {
   const commit = useStableCallback(async (value, revalidate = false) => {
     validationCommitIdRef.current += 1;
     const validationCommitId = validationCommitIdRef.current;
-    function updateRegisteredFieldValidity(nextValidityData2, externalInvalid = invalid) {
+    function updateRegisteredFieldValidity(nextValidityData, externalInvalid = invalid2) {
       const fieldId = registeredFieldIdRef.current ?? controlId;
       if (fieldId == null) {
         return;
@@ -15372,42 +15664,39 @@ function useFieldValidation(params) {
       if (!currentFieldData) {
         return;
       }
-      const validityDataWithFormErrors = getCombinedFieldValidityData(nextValidityData2, externalInvalid);
+      const validityDataWithFormErrors = getCombinedFieldValidityData(nextValidityData, externalInvalid);
       formRef.current.fields.set(fieldId, {
         ...currentFieldData,
         validityData: validityDataWithFormErrors
       });
     }
-    function publishAllValid(input, externalInvalid) {
-      const nextValidityData2 = {
+    function makeValidityData(validityState, errorMessages) {
+      const errors = validityState.valid === false ? errorMessages : [];
+      return {
         value,
-        state: {
-          ...DEFAULT_VALIDITY_STATE,
-          valid: true
-        },
-        error: "",
-        errors: [],
+        state: validityState,
+        error: errors[0] ?? "",
+        errors,
         initialValue: validityData.initialValue
       };
-      clearCustomValidity(input, registeredInputs);
-      updateRegisteredFieldValidity(nextValidityData2, externalInvalid);
-      setValidityData(nextValidityData2);
     }
-    const element = registeredInputs.size > 0 ? findRepresentativeInput(registeredInputs, elementRef.current) : inputRef.current;
-    if (revalidate) {
-      if (state.valid !== false || !element) {
-        return;
+    function setCustomValidity(element2, message2) {
+      const displaced = element2.validity.customError ? element2.validationMessage : "";
+      const ownedMessage = message2.replace(/\r\n?/g, "\n");
+      element2.setCustomValidity(ownedMessage);
+      customValidityRef.current = [element2, ownedMessage, displaced];
+    }
+    function clearCustomValidity() {
+      const record = customValidityRef.current;
+      customValidityRef.current = null;
+      if (record && (!record[0].willValidate || record[0].validationMessage === record[1])) {
+        record[0].setCustomValidity(record[2]);
       }
-      const currentNativeValidity = element.validity;
-      if (!currentNativeValidity.valueMissing) {
-        publishAllValid(element, false);
-        return;
-      }
-      for (const key2 of validityKeys) {
-        if (key2 !== "valid" && key2 !== "valueMissing" && key2 !== "customError" && currentNativeValidity[key2]) {
-          return;
-        }
-      }
+    }
+    function publish(validityState, errorMessages, externalInvalid) {
+      const nextValidityData = makeValidityData(validityState, errorMessages);
+      updateRegisteredFieldValidity(nextValidityData, externalInvalid);
+      setValidityData(nextValidityData);
     }
     function getState(el) {
       const computedState = validityKeys.reduce((acc, key2) => {
@@ -15431,19 +15720,37 @@ function useFieldValidation(params) {
       }
       return computedState;
     }
+    function resolveRepresentativeInput() {
+      return registeredInputs.size > 0 ? findRepresentativeInput(registeredInputs, elementRef.current) : inputRef.current;
+    }
+    let element = resolveRepresentativeInput();
+    function refreshState() {
+      element = resolveRepresentativeInput();
+      return element?.willValidate ? getState(element) : makeState(false);
+    }
+    if (revalidate) {
+      if (state.valid !== false || !element) {
+        return;
+      }
+      if (!element.validity.valueMissing) {
+        clearCustomValidity();
+        const currentElement = resolveRepresentativeInput();
+        const foreign = currentElement?.validity.customError ? getNativeErrors(currentElement) : [];
+        publish(makeState(foreign.length > 0), foreign, false);
+        return;
+      }
+      for (const key2 of validityKeys) {
+        if (key2 !== "valid" && key2 !== "valueMissing" && key2 !== "customError" && element.validity[key2]) {
+          return;
+        }
+      }
+    }
     timeout.clear();
-    let result = null;
-    let validationErrors = [];
-    const nextState = element ? getState(element) : {
-      ...DEFAULT_VALIDITY_STATE,
-      valid: true
-    };
-    let defaultValidationMessage;
+    clearCustomValidity();
+    let nextState = refreshState();
+    let validationErrors = getNativeErrors(element);
     const isValidatingOnChange = shouldValidateOnChange();
-    if (element && element.validationMessage && !isValidatingOnChange) {
-      defaultValidationMessage = element.validationMessage;
-      validationErrors = [element.validationMessage];
-    } else {
+    if (validationErrors.length === 0 || isValidatingOnChange) {
       const formValues = Array.from(formRef.current.fields.values()).reduce((acc, field) => {
         if (field.name) {
           acc[field.name] = field.getValue();
@@ -15451,50 +15758,43 @@ function useFieldValidation(params) {
         return acc;
       }, {});
       const resultOrPromise = validate(value, formValues);
+      let result;
       if (typeof resultOrPromise === "object" && resultOrPromise !== null && "then" in resultOrPromise) {
+        if (nextState.valid === false) {
+          publish(nextState, validationErrors);
+        } else if (validationMode === "onSubmit" || !validityData.state.customError) {
+          nextState.valid = null;
+          publish(nextState, validationErrors);
+        }
         result = await resultOrPromise;
         if (validationCommitId !== validationCommitIdRef.current) {
           return;
         }
+        nextState = refreshState();
       } else {
         result = resultOrPromise;
       }
-      if (result !== null) {
+      validationErrors = result ? [].concat(result).filter(Boolean) : [];
+      if (validationErrors.length > 0) {
         nextState.valid = false;
         nextState.customError = true;
-        if (Array.isArray(result)) {
-          validationErrors = result;
-          element?.setCustomValidity(result.join("\n"));
-        } else if (result) {
-          validationErrors = [result];
-          element?.setCustomValidity(result);
+        if (element?.willValidate) {
+          setCustomValidity(element, validationErrors.join("\n"));
         }
-      } else if (isValidatingOnChange) {
-        clearCustomValidity(element, registeredInputs);
-        nextState.customError = false;
-        if (element && element.validationMessage) {
-          defaultValidationMessage = element.validationMessage;
-          validationErrors = [element.validationMessage];
-        } else if ((!element || element.validity.valid) && !nextState.valid) {
-          nextState.valid = true;
-        }
+      } else {
+        validationErrors = getNativeErrors(element);
       }
     }
-    const nextValidityData = {
-      value,
-      state: nextState,
-      error: defaultValidationMessage ?? (Array.isArray(result) ? result[0] : result ?? ""),
-      errors: validationErrors,
-      initialValue: validityData.initialValue
-    };
-    updateRegisteredFieldValidity(nextValidityData);
-    setValidityData(nextValidityData);
+    publish(nextState, validationErrors);
   });
-  const change = useStableCallback((value) => {
+  const change = useStableCallback((value, cancelPending = false) => {
     timeout.clear();
+    validationCommitIdRef.current += 1;
+    if (cancelPending) {
+      return;
+    }
     const validateOnChange = shouldValidateOnChange();
     if (validateOnChange && value !== "" && validationDebounceTime) {
-      validationCommitIdRef.current += 1;
       timeout.start(validationDebounceTime, () => {
         commit(value);
       });
@@ -15502,7 +15802,7 @@ function useFieldValidation(params) {
       commit(value, !validateOnChange);
     }
   });
-  const getValidationProps = React103.useCallback((disabled2, externalProps = {}) => mergeProps(getDescriptionProps(externalProps), state.valid === false && !state.disabled && !disabled2 ? {
+  const getValidationProps = React103.useCallback((disabled3, externalProps = {}) => mergeProps(getDescriptionProps(externalProps), state.valid === false && !state.disabled && !disabled3 ? {
     "aria-invalid": true
   } : EMPTY_OBJECT), [getDescriptionProps, state.disabled, state.valid]);
   return React103.useMemo(() => ({
@@ -15540,18 +15840,18 @@ var CollapsibleRoot = /* @__PURE__ */ React104.forwardRef(function CollapsibleRo
     render: render4,
     className,
     defaultOpen = false,
-    disabled: disabled2 = false,
+    disabled: disabled3 = false,
     onOpenChange: onOpenChangeProp,
-    open,
+    open: open7,
     style,
     ...elementProps
   } = componentProps;
   const onOpenChange = useStableCallback(onOpenChangeProp);
   const collapsible = useCollapsibleRoot({
-    open,
+    open: open7,
     defaultOpen,
     onOpenChange,
-    disabled: disabled2
+    disabled: disabled3
   });
   const state = React104.useMemo(() => ({
     open: collapsible.open,
@@ -15585,14 +15885,14 @@ var stateAttributesMapping4 = {
 var CollapsibleTrigger = /* @__PURE__ */ React105.forwardRef(function CollapsibleTrigger2(componentProps, forwardedRef) {
   const {
     panelId,
-    open,
+    open: open7,
     handleTrigger,
     state,
     disabled: contextDisabled
   } = useCollapsibleRootContext();
   const {
     className,
-    disabled: disabled2 = contextDisabled,
+    disabled: disabled3 = contextDisabled,
     render: render4,
     nativeButton = true,
     style,
@@ -15602,7 +15902,7 @@ var CollapsibleTrigger = /* @__PURE__ */ React105.forwardRef(function Collapsibl
     getButtonProps,
     buttonRef
   } = useButton({
-    disabled: disabled2,
+    disabled: disabled3,
     focusableWhenDisabled: true,
     native: nativeButton
   });
@@ -15610,8 +15910,8 @@ var CollapsibleTrigger = /* @__PURE__ */ React105.forwardRef(function Collapsibl
     state,
     ref: [forwardedRef, buttonRef],
     props: [{
-      "aria-controls": open ? panelId : void 0,
-      "aria-expanded": open,
+      "aria-controls": open7 ? panelId : void 0,
+      "aria-expanded": open7,
       onClick: handleTrigger
     }, elementProps, getButtonProps],
     stateAttributesMapping: stateAttributesMapping4
@@ -15624,11 +15924,8 @@ if (true) CollapsibleTrigger.displayName = "CollapsibleTrigger";
 var React106 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanelCssVars.mjs
-var CollapsiblePanelCssVars = /* @__PURE__ */ (function(CollapsiblePanelCssVars2) {
-  CollapsiblePanelCssVars2["collapsiblePanelHeight"] = "--collapsible-panel-height";
-  CollapsiblePanelCssVars2["collapsiblePanelWidth"] = "--collapsible-panel-width";
-  return CollapsiblePanelCssVars2;
-})({});
+var collapsiblePanelHeight = "--collapsible-panel-height";
+var collapsiblePanelWidth = "--collapsible-panel-width";
 
 // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanel.mjs
 var CollapsiblePanel = /* @__PURE__ */ React106.forwardRef(function CollapsiblePanel2(componentProps, forwardedRef) {
@@ -15652,7 +15949,7 @@ var CollapsiblePanel = /* @__PURE__ */ React106.forwardRef(function CollapsibleP
     defaultPanelId,
     mounted,
     onOpenChange,
-    open,
+    open: open7,
     setMounted,
     setPanelIdState,
     setOpen,
@@ -15670,7 +15967,7 @@ var CollapsiblePanel = /* @__PURE__ */ React106.forwardRef(function CollapsibleP
     };
   }, [registeredId, setPanelIdState]);
   const {
-    height,
+    height: height2,
     props,
     ref,
     shouldPreventOpenAnimation,
@@ -15684,7 +15981,7 @@ var CollapsiblePanel = /* @__PURE__ */ React106.forwardRef(function CollapsibleP
     keepMounted,
     mounted,
     onOpenChange,
-    open,
+    open: open7,
     setMounted,
     setOpen,
     transitionStatus
@@ -15704,8 +16001,8 @@ var CollapsiblePanel = /* @__PURE__ */ React106.forwardRef(function CollapsibleP
       props,
       {
         style: {
-          [CollapsiblePanelCssVars.collapsiblePanelHeight]: height === void 0 ? "auto" : `${height}px`,
-          [CollapsiblePanelCssVars.collapsiblePanelWidth]: width === void 0 ? "auto" : `${width}px`
+          [collapsiblePanelHeight]: height2 === void 0 ? "auto" : `${height2}px`,
+          [collapsiblePanelWidth]: width === void 0 ? "auto" : `${width}px`
         }
       },
       elementProps,
@@ -15788,7 +16085,7 @@ function useLabel(params = {}) {
   }
   return native ? {
     id,
-    htmlFor: resolvedControlId ?? void 0,
+    htmlFor: resolvedControlId,
     onMouseDown: handleInteraction
   } : {
     id,
@@ -15885,16 +16182,16 @@ var MenuArrow = /* @__PURE__ */ React110.forwardRef(function MenuArrow2(componen
   } = useMenuRootContext();
   const {
     arrowRef,
-    side,
-    align,
+    side: side2,
+    align: align2,
     arrowUncentered,
     arrowStyles
   } = useMenuPositionerContext();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const state = {
-    open,
-    side,
-    align,
+    open: open7,
+    side: side2,
+    align: align2,
     uncentered: arrowUncentered
   };
   return useRenderElement("div", componentProps, {
@@ -15922,13 +16219,13 @@ var MenuBackdrop = /* @__PURE__ */ React111.forwardRef(function MenuBackdrop2(co
   const {
     store
   } = useMenuRootContext();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const mounted = store.useState("mounted");
   const transitionStatus = store.useState("transitionStatus");
   const lastOpenChangeReason = store.useState("lastOpenChangeReason");
   const contextMenuContext = useContextMenuRootContext();
   const state = {
-    open,
+    open: open7,
     transitionStatus
   };
   return useRenderElement("div", componentProps, {
@@ -15982,13 +16279,13 @@ function useMenuItemCommonProps(params) {
   const {
     events: menuEvents
   } = store.useState("floatingTreeRoot");
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const contextMenuContext = useContextMenuRootContext(true);
   const isContextMenu = contextMenuContext !== void 0;
   return React113.useMemo(() => ({
     id,
     role: "menuitem",
-    tabIndex: open && highlighted ? 0 : -1,
+    tabIndex: open7 && highlighted ? 0 : -1,
     onKeyDown(event) {
       if (event.key === " " && typingRef?.current) {
         event.preventDefault();
@@ -16030,7 +16327,7 @@ function useMenuItemCommonProps(params) {
         }
       }
     }
-  }), [closeOnClick, highlighted, id, menuEvents, nodeId, open, store, typingRef, itemRef, contextMenuContext, isContextMenu, itemMetadata]);
+  }), [closeOnClick, highlighted, id, menuEvents, nodeId, open7, store, typingRef, itemRef, contextMenuContext, isContextMenu, itemMetadata]);
 }
 
 // node_modules/@base-ui/react/menu/item/useMenuItem.mjs
@@ -16040,7 +16337,7 @@ var REGULAR_ITEM = {
 function useMenuItem(params) {
   const {
     closeOnClick,
-    disabled: disabled2,
+    disabled: disabled3,
     highlighted,
     id,
     store,
@@ -16054,7 +16351,7 @@ function useMenuItem(params) {
     getButtonProps,
     buttonRef
   } = useButton({
-    disabled: disabled2,
+    disabled: disabled3,
     focusableWhenDisabled: true,
     native: nativeButton,
     composite: true
@@ -16087,24 +16384,19 @@ function useMenuItem(params) {
 }
 
 // node_modules/@base-ui/react/menu/checkbox-item/MenuCheckboxItemDataAttributes.mjs
-var MenuCheckboxItemDataAttributes = /* @__PURE__ */ (function(MenuCheckboxItemDataAttributes2) {
-  MenuCheckboxItemDataAttributes2["checked"] = "data-checked";
-  MenuCheckboxItemDataAttributes2["unchecked"] = "data-unchecked";
-  MenuCheckboxItemDataAttributes2["disabled"] = "data-disabled";
-  MenuCheckboxItemDataAttributes2["highlighted"] = "data-highlighted";
-  return MenuCheckboxItemDataAttributes2;
-})({});
+var checked = "data-checked";
+var unchecked = "data-unchecked";
 
 // node_modules/@base-ui/react/menu/utils/stateAttributesMapping.mjs
 var itemMapping = {
   checked(value) {
     if (value) {
       return {
-        [MenuCheckboxItemDataAttributes.checked]: ""
+        [checked]: ""
       };
     }
     return {
-      [MenuCheckboxItemDataAttributes.unchecked]: ""
+      [unchecked]: ""
     };
   },
   ...transitionStatusMapping
@@ -16137,10 +16429,10 @@ var MenuCheckboxItem = /* @__PURE__ */ React115.forwardRef(function MenuCheckbox
     store
   } = useMenuRootContext();
   const rootDisabled = store.useState("disabled");
-  const disabled2 = disabledProp || rootDisabled;
+  const disabled3 = disabledProp || rootDisabled;
   const highlighted = store.useState("isActive", listItem.index);
   const itemProps = store.useState("itemProps");
-  const [checked, setChecked] = useControlled({
+  const [checked2, setChecked] = useControlled({
     controlled: checkedProp,
     default: defaultChecked ?? false,
     name: "MenuCheckboxItem",
@@ -16151,7 +16443,7 @@ var MenuCheckboxItem = /* @__PURE__ */ React115.forwardRef(function MenuCheckbox
     itemRef
   } = useMenuItem({
     closeOnClick,
-    disabled: disabled2,
+    disabled: disabled3,
     highlighted,
     id,
     store,
@@ -16160,15 +16452,15 @@ var MenuCheckboxItem = /* @__PURE__ */ React115.forwardRef(function MenuCheckbox
     itemMetadata: REGULAR_ITEM
   });
   const state = React115.useMemo(() => ({
-    disabled: disabled2,
+    disabled: disabled3,
     highlighted,
-    checked
-  }), [disabled2, highlighted, checked]);
+    checked: checked2
+  }), [disabled3, highlighted, checked2]);
   function handleClick(event) {
     const details = createChangeEventDetails(reason_parts_exports.itemPress, event.nativeEvent, void 0, {
       preventUnmountOnClose: NOOP
     });
-    onCheckedChange?.(!checked, details);
+    onCheckedChange?.(!checked2, details);
     if (details.isCanceled) {
       return;
     }
@@ -16179,7 +16471,7 @@ var MenuCheckboxItem = /* @__PURE__ */ React115.forwardRef(function MenuCheckbox
     stateAttributesMapping: itemMapping,
     props: [itemProps, {
       role: "menuitemcheckbox",
-      "aria-checked": checked,
+      "aria-checked": checked2,
       onClick: handleClick
     }, elementProps, getItemProps],
     ref: [itemRef, forwardedRef, listItem.ref]
@@ -16209,6 +16501,8 @@ var MenuCheckboxItemIndicator = /* @__PURE__ */ React116.forwardRef(function Men
     setMounted
   } = useTransitionStatus(item.checked);
   useOpenChangeComplete({
+    batch: true,
+    enabled: !item.checked,
     open: item.checked,
     ref: indicatorRef,
     onComplete() {
@@ -16299,7 +16593,7 @@ var MenuGroupLabel = /* @__PURE__ */ React119.forwardRef(function MenuGroupLabel
     ref: forwardedRef,
     props: {
       id,
-      role: "presentation",
+      "aria-hidden": true,
       ...elementProps
     }
   });
@@ -16330,7 +16624,7 @@ var MenuItem = /* @__PURE__ */ React120.forwardRef(function MenuItem2(componentP
     store
   } = useMenuRootContext();
   const rootDisabled = store.useState("disabled");
-  const disabled2 = disabledProp || rootDisabled;
+  const disabled3 = disabledProp || rootDisabled;
   const highlighted = store.useState("isActive", listItem.index);
   const itemProps = store.useState("itemProps");
   const {
@@ -16338,7 +16632,7 @@ var MenuItem = /* @__PURE__ */ React120.forwardRef(function MenuItem2(componentP
     itemRef
   } = useMenuItem({
     closeOnClick,
-    disabled: disabled2,
+    disabled: disabled3,
     highlighted,
     id,
     store,
@@ -16347,7 +16641,7 @@ var MenuItem = /* @__PURE__ */ React120.forwardRef(function MenuItem2(componentP
     itemMetadata: REGULAR_ITEM
   });
   const state = {
-    disabled: disabled2,
+    disabled: disabled3,
     highlighted
   };
   return useRenderElement("div", componentProps, {
@@ -16444,11 +16738,11 @@ var MenuPopup = /* @__PURE__ */ React123.forwardRef(function MenuPopup2(componen
     store
   } = useMenuRootContext();
   const {
-    side,
-    align
+    side: side2,
+    align: align2
   } = useMenuPositionerContext();
   const insideToolbar = useToolbarRootContext(true) != null;
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const transitionStatus = store.useState("transitionStatus");
   const popupProps = store.useState("popupProps");
   const mounted = store.useState("mounted");
@@ -16461,14 +16755,14 @@ var MenuPopup = /* @__PURE__ */ React123.forwardRef(function MenuPopup2(componen
   const floatingTreeRoot = store.useState("floatingTreeRoot");
   const closeDelay = store.useState("closeDelay");
   const hoverEnabled = store.useState("hoverEnabled");
-  const disabled2 = store.useState("disabled");
+  const disabled3 = store.useState("disabled");
   const openMethod = store.useState("openMethod");
   const isContextMenu = parent.type === "context-menu";
   useOpenChangeComplete({
-    open,
+    open: open7,
     ref: store.context.popupRef,
     onComplete() {
-      if (open) {
+      if (open7) {
         store.context.onOpenChangeComplete?.(true);
       }
     }
@@ -16483,15 +16777,15 @@ var MenuPopup = /* @__PURE__ */ React123.forwardRef(function MenuPopup2(componen
     };
   }, [floatingTreeRoot.events, store]);
   useHoverFloatingInteraction(floatingContext, {
-    enabled: hoverEnabled && !disabled2 && !isContextMenu && parent.type !== "menubar",
+    enabled: hoverEnabled && !disabled3 && !isContextMenu && parent.type !== "menubar",
     closeDelay
   });
   const setPopupElement = store.useStateSetter("popupElement");
   const state = {
     transitionStatus,
-    side,
-    align,
-    open,
+    side: side2,
+    align: align2,
+    open: open7,
     nested: parent.type === "menu",
     instant: instantType
   };
@@ -16553,18 +16847,21 @@ var MenuPortal = /* @__PURE__ */ React125.forwardRef(function MenuPortal2(props,
     ...portalProps
   } = props;
   const {
-    store
+    store,
+    parent
   } = useMenuRootContext();
   const mounted = store.useState("mounted");
   const shouldRender = mounted || keepMounted;
   if (!shouldRender) {
     return null;
   }
+  const portalOwnerRole = parent.type === "menu" || parent.type === "menubar" ? "group" : void 0;
   return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(MenuPortalContext.Provider, {
     value: keepMounted,
     children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(FloatingPortal, {
       ref: forwardedRef,
-      ...portalProps
+      ...portalProps,
+      portalOwnerRole
     })
   });
 });
@@ -16579,7 +16876,7 @@ var MenuPositioner = /* @__PURE__ */ React126.forwardRef(function MenuPositioner
     positionMethod: positionMethodProp = "absolute",
     className,
     render: render4,
-    side,
+    side: side2,
     align: alignProp,
     sideOffset: sideOffsetProp = 0,
     alignOffset: alignOffsetProp = 0,
@@ -16601,7 +16898,7 @@ var MenuPositioner = /* @__PURE__ */ React126.forwardRef(function MenuPositioner
   const floatingRootContext = store.useState("floatingRootContext");
   const floatingTreeRoot = store.useState("floatingTreeRoot");
   const mounted = store.useState("mounted");
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const modal = store.useState("modal");
   const openMethod = store.useState("openMethod");
   const triggerElement = store.useState("activeTriggerElement");
@@ -16618,18 +16915,18 @@ var MenuPositioner = /* @__PURE__ */ React126.forwardRef(function MenuPositioner
   let anchor = anchorProp;
   let sideOffset = sideOffsetProp;
   let alignOffset = alignOffsetProp;
-  let align = alignProp;
+  let align2 = alignProp;
   let collisionAvoidance = collisionAvoidanceProp;
   if (parent.type === "context-menu") {
     anchor = anchorProp ?? parent.context?.anchor;
-    align = align ?? "start";
-    if (!side && align !== "center") {
+    align2 = align2 ?? "start";
+    if (!side2 && align2 !== "center") {
       alignOffset = componentProps.alignOffset ?? 2;
       sideOffset = componentProps.sideOffset ?? -5;
     }
   }
-  let computedSide = side;
-  let computedAlign = align;
+  let computedSide = side2;
+  let computedAlign = align2;
   if (parent.type === "menu") {
     computedSide = computedSide ?? "inline-end";
     computedAlign = computedAlign ?? "start";
@@ -16697,13 +16994,13 @@ var MenuPositioner = /* @__PURE__ */ React126.forwardRef(function MenuPositioner
   }, [floatingTreeRoot.events, store]);
   const closeTimeout = useTimeout();
   React126.useEffect(() => {
-    if (!open) {
+    if (!open7) {
       closeTimeout.clear();
     }
-  }, [open, closeTimeout]);
+  }, [open7, closeTimeout]);
   React126.useEffect(() => {
     function onItemHover(event) {
-      if (!open || event.nodeId !== store.select("floatingParentNodeId")) {
+      if (!open7 || event.nodeId !== store.select("floatingParentNodeId")) {
         return;
       }
       if (event.target && triggerElement && triggerElement !== event.target) {
@@ -16725,16 +17022,16 @@ var MenuPositioner = /* @__PURE__ */ React126.forwardRef(function MenuPositioner
     return () => {
       floatingTreeRoot.events.off("itemhover", onItemHover);
     };
-  }, [floatingTreeRoot.events, open, triggerElement, store, closeTimeout]);
+  }, [floatingTreeRoot.events, open7, triggerElement, store, closeTimeout]);
   React126.useEffect(() => {
     const eventDetails = {
-      open,
+      open: open7,
       nodeId: floatingNodeId,
       parentNodeId: floatingParentNodeId,
       reason: store.select("lastOpenChangeReason")
     };
     floatingTreeRoot.events.emit("menuopenchange", eventDetails);
-  }, [floatingTreeRoot.events, open, store, floatingNodeId, floatingParentNodeId]);
+  }, [floatingTreeRoot.events, open7, store, floatingNodeId, floatingParentNodeId]);
   useIsoLayoutEffect(() => {
     const currentTrigger = domReference;
     const previousTrigger = previousTriggerRef.current;
@@ -16754,7 +17051,7 @@ var MenuPositioner = /* @__PURE__ */ React126.forwardRef(function MenuPositioner
     return void 0;
   }, [domReference, runOnceAnimationsFinish, store]);
   const state = {
-    open,
+    open: open7,
     side: positioner.side,
     align: positioner.align,
     anchorHidden: positioner.anchorHidden,
@@ -16763,14 +17060,14 @@ var MenuPositioner = /* @__PURE__ */ React126.forwardRef(function MenuPositioner
   };
   const menubarModal = parent.type === "menubar" && parent.context.modal;
   const popupModal = modal && lastOpenChangeReason !== reason_parts_exports.triggerHover;
-  useAnchoredPopupScrollLock(open && (menubarModal || popupModal), openMethod === "touch", positionerElement, triggerElement);
+  useAnchoredPopupScrollLock(open7 && (menubarModal || popupModal), openMethod === "touch", positionerElement, triggerElement);
   const element = usePositioner(componentProps, state, {
     styles: positioner.positionerStyles,
     transitionStatus,
     props: elementProps,
     refs: [forwardedRef, store.useStateSetter("positionerElement")],
     hidden: !mounted,
-    inert: !open
+    inert: !open7
   });
   const shouldRenderBackdrop = mounted && parent.type !== "menu" && (parent.type !== "menubar" && modal && lastOpenChangeReason !== reason_parts_exports.triggerHover || parent.type === "menubar" && parent.context.modal);
   let backdropCutout = null;
@@ -16783,7 +17080,7 @@ var MenuPositioner = /* @__PURE__ */ React126.forwardRef(function MenuPositioner
     value: positioner,
     children: [shouldRenderBackdrop && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(InternalBackdrop, {
       ref: parent.type === "context-menu" || parent.type === "nested-context-menu" ? parent.context.internalBackdropRef : null,
-      inert: inertValue(!open),
+      inert: inertValue(!open7),
       cutout: backdropCutout
     }), /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(FloatingNode, {
       id: floatingNodeId,
@@ -16821,7 +17118,7 @@ var MenuRadioGroup = /* @__PURE__ */ React128.memo(/* @__PURE__ */ React128.forw
     value: valueProp,
     defaultValue: defaultValue3,
     onValueChange: onValueChangeProp,
-    disabled: disabled2 = false,
+    disabled: disabled3 = false,
     style,
     "aria-labelledby": ariaLabelledByProp,
     ...elementProps
@@ -16840,7 +17137,7 @@ var MenuRadioGroup = /* @__PURE__ */ React128.memo(/* @__PURE__ */ React128.forw
     setValueUnwrapped(newValue);
   });
   const state = {
-    disabled: disabled2
+    disabled: disabled3
   };
   const element = useRenderElement("div", componentProps, {
     state,
@@ -16848,15 +17145,15 @@ var MenuRadioGroup = /* @__PURE__ */ React128.memo(/* @__PURE__ */ React128.forw
     props: {
       role: "group",
       "aria-labelledby": ariaLabelledByProp ?? labelId,
-      "aria-disabled": disabled2 || void 0,
+      "aria-disabled": disabled3 || void 0,
       ...elementProps
     }
   });
   const context = React128.useMemo(() => ({
     value,
     setValue,
-    disabled: disabled2
-  }), [value, setValue, disabled2]);
+    disabled: disabled3
+  }), [value, setValue, disabled3]);
   return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(MenuGroupContext.Provider, {
     value: setLabelId,
     children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(MenuRadioGroupContext.Provider, {
@@ -16914,14 +17211,14 @@ var MenuRadioItem = /* @__PURE__ */ React130.forwardRef(function MenuRadioItem2(
     disabled: groupDisabled
   } = useMenuRadioGroupContext();
   const rootDisabled = store.useState("disabled");
-  const disabled2 = disabledProp || groupDisabled || rootDisabled;
-  const checked = selectedValue === value;
+  const disabled3 = disabledProp || groupDisabled || rootDisabled;
+  const checked2 = selectedValue === value;
   const {
     getItemProps,
     itemRef
   } = useMenuItem({
     closeOnClick,
-    disabled: disabled2,
+    disabled: disabled3,
     highlighted,
     id,
     store,
@@ -16930,10 +17227,10 @@ var MenuRadioItem = /* @__PURE__ */ React130.forwardRef(function MenuRadioItem2(
     itemMetadata: REGULAR_ITEM
   });
   const state = React130.useMemo(() => ({
-    disabled: disabled2,
+    disabled: disabled3,
     highlighted,
-    checked
-  }), [disabled2, highlighted, checked]);
+    checked: checked2
+  }), [disabled3, highlighted, checked2]);
   function handleClick(event) {
     const details = createChangeEventDetails(reason_parts_exports.itemPress, event.nativeEvent, void 0, {
       preventUnmountOnClose: NOOP
@@ -16945,7 +17242,7 @@ var MenuRadioItem = /* @__PURE__ */ React130.forwardRef(function MenuRadioItem2(
     stateAttributesMapping: itemMapping,
     props: [itemProps, {
       role: "menuitemradio",
-      "aria-checked": checked,
+      "aria-checked": checked2,
       onClick: handleClick
     }, elementProps, getItemProps],
     ref: [itemRef, forwardedRef, listItem.ref]
@@ -16975,6 +17272,8 @@ var MenuRadioItemIndicator = /* @__PURE__ */ React131.forwardRef(function MenuRa
     setMounted
   } = useTransitionStatus(item.checked);
   useOpenChangeComplete({
+    batch: true,
+    enabled: !item.checked,
     open: item.checked,
     ref: indicatorRef,
     onComplete() {
@@ -17061,11 +17360,10 @@ var selectors4 = {
   }
 };
 var MenuStore = class extends ReactStore {
-  constructor(initialState) {
-    super({
-      ...createInitialState2(),
-      ...initialState
-    }, createInitialContext2(), selectors4);
+  constructor(initialState, floatingId, nested = false) {
+    const triggerElements = new PopupTriggerMap();
+    const state = createInitialState2(triggerElements, floatingId, nested, initialState);
+    super(state, createInitialContext2(triggerElements), selectors4);
     this.unsubscribeParentListener = this.observe("parent", (parent) => {
       this.unsubscribeParentListener?.();
       if (parent.type === "menu") {
@@ -17093,21 +17391,22 @@ var MenuStore = class extends ReactStore {
       this.unsubscribeParentListener = null;
     });
   }
-  setOpen(open, eventDetails) {
+  setOpen(open7, eventDetails) {
     this.state.floatingRootContext.context.events.emit("setOpen", {
-      open,
+      open: open7,
       eventDetails
     });
   }
   unsubscribeParentListener = null;
 };
 function createNullMenuStore() {
-  const store = new NullStore(Object.freeze(createInitialState2()), Object.freeze(createInitialContext2()), selectors4);
+  const triggerElements = new PopupTriggerMap();
+  const store = new NullStore(Object.freeze(createInitialState2(triggerElements)), Object.freeze(createInitialContext2(triggerElements)), selectors4);
   return Object.assign(store, {
     setOpen: NOOP
   });
 }
-function createInitialContext2() {
+function createInitialContext2(triggerElements) {
   return {
     positionerRef: /* @__PURE__ */ React133.createRef(),
     popupRef: /* @__PURE__ */ React133.createRef(),
@@ -17126,12 +17425,12 @@ function createInitialContext2() {
     triggerFocusTargetRef: /* @__PURE__ */ React133.createRef(),
     beforeContentFocusGuardRef: /* @__PURE__ */ React133.createRef(),
     onOpenChangeComplete: void 0,
-    triggerElements: new PopupTriggerMap()
+    triggerElements
   };
 }
-function createInitialState2() {
+function createInitialState2(triggerElements, floatingId, nested = false, initialState) {
   return {
-    ...createInitialPopupStoreState(),
+    ...createInitialPopupStoreState(triggerElements, floatingId, nested),
     disabled: false,
     modal: true,
     openMethod: null,
@@ -17151,7 +17450,8 @@ function createInitialState2() {
     itemProps: EMPTY_OBJECT,
     keyboardEventRelay: void 0,
     closeDelay: 0,
-    adaptiveOrigin: void 0
+    adaptiveOrigin: void 0,
+    ...initialState
   };
 }
 
@@ -17210,26 +17510,34 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
       type: void 0
     };
   }, [contextMenuContext, parentMenuRootContext, menubarContext, isSubmenu]);
+  const rootId = useId();
+  const floatingId = useId();
+  const floatingParentNodeIdFromContext = useFloatingParentNodeId();
+  const parentMenuStore = parentFromContext.type === "menu" ? parentFromContext.store : void 0;
+  const animateInitialOpen = (openProp ?? defaultOpen) && parentMenuStore?.state.transitionStatus === "starting";
+  const seededInstantType = useRefWithInit(() => animateInitialOpen ? parentMenuStore?.state.instantType : void 0).current;
   const store = useMenuRootStore({
     open: defaultOpen,
     openProp,
     activeTriggerId: defaultTriggerIdProp,
     triggerIdProp,
-    parent: parentFromContext
-  });
+    parent: parentFromContext,
+    disabled: disabledProp,
+    highlightItemOnHover,
+    modal: parentFromContext.type === void 0 ? modalProp : void 0,
+    rootId,
+    instantType: seededInstantType
+  }, floatingId, floatingParentNodeIdFromContext != null);
   store.useControlledProp("openProp", openProp);
   store.useControlledProp("triggerIdProp", triggerIdProp);
   store.useContextCallback("onOpenChangeComplete", onOpenChangeComplete);
-  const rootId = useId();
-  const floatingId = useId();
   const floatingTreeRoot = store.useState("floatingTreeRoot");
   const floatingNodeIdFromContext = useFloatingNodeId(floatingTreeRoot);
-  const floatingParentNodeIdFromContext = useFloatingParentNodeId();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const activeTriggerElement = store.useState("activeTriggerElement");
   const positionerElement = store.useState("positionerElement");
   const hoverEnabled = store.useState("hoverEnabled");
-  const disabled2 = store.useState("disabled");
+  const disabled3 = store.useState("disabled");
   const lastOpenChangeReason = store.useState("lastOpenChangeReason");
   const parent = store.useState("parent");
   const activeIndex = store.useState("activeIndex");
@@ -17249,7 +17557,7 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
   const {
     openMethod,
     triggerProps: interactionTypeProps
-  } = useOpenInteractionType(open);
+  } = useOpenInteractionType(open7);
   store.useSyncedValues({
     disabled: disabledProp,
     highlightItemOnHover,
@@ -17259,10 +17567,38 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
   });
   useImplicitActiveTrigger(store);
   const {
-    forceUnmount
-  } = useOpenStateTransitions(open, store, () => {
+    forceUnmount,
+    transitionStatus
+  } = useOpenStateTransitions(open7, store, () => {
     store.set("allowMouseEnter", false);
-  });
+  }, animateInitialOpen);
+  const runOnceAnimationsFinish = useAnimationsFinished(store.context.popupRef);
+  React135.useEffect(() => {
+    if (seededInstantType === void 0) {
+      return void 0;
+    }
+    const clearSeededInstantType = () => {
+      if (store.state.instantType === seededInstantType) {
+        store.set("instantType", void 0);
+      }
+    };
+    if (!open7) {
+      clearSeededInstantType();
+      return void 0;
+    }
+    if (transitionStatus !== void 0) {
+      return void 0;
+    }
+    if (store.context.popupRef.current == null) {
+      clearSeededInstantType();
+      return void 0;
+    }
+    const abortController = new AbortController();
+    runOnceAnimationsFinish(clearSeededInstantType, abortController.signal);
+    return () => {
+      abortController.abort();
+    };
+  }, [seededInstantType, open7, transitionStatus, runOnceAnimationsFinish, store]);
   useIsoLayoutEffect(() => {
     if (contextMenuContext && !parentMenuRootContext) {
       store.update({
@@ -17281,13 +17617,13 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
     }
   }, [contextMenuContext, parentMenuRootContext, floatingNodeIdFromContext, floatingParentNodeIdFromContext, store]);
   React135.useEffect(() => {
-    if (!open) {
+    if (!open7) {
       openEventRef.current = null;
     }
     if (parent.type !== "context-menu") {
       return;
     }
-    if (!open) {
+    if (!open7) {
       allowOutsidePressDismissalTimeout.clear();
       allowOutsidePressDismissalRef.current = false;
       return;
@@ -17295,18 +17631,18 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
     allowOutsidePressDismissalTimeout.start(500, () => {
       allowOutsidePressDismissalRef.current = true;
     });
-  }, [allowOutsidePressDismissalTimeout, open, parent.type]);
+  }, [allowOutsidePressDismissalTimeout, open7, parent.type]);
   useIsoLayoutEffect(() => {
-    if (!open && !hoverEnabled) {
+    if (!open7 && !hoverEnabled) {
       store.set("hoverEnabled", true);
     }
-  }, [open, hoverEnabled, store]);
+  }, [open7, hoverEnabled, store]);
   const setOpen = useStableCallback((nextOpen, eventDetails) => {
     const reason = eventDetails.reason;
     if (!nextOpen && !store.select("open")) {
       return;
     }
-    if (open === nextOpen && eventDetails.trigger === activeTriggerElement && lastOpenChangeReason === reason) {
+    if (open7 === nextOpen && eventDetails.trigger === activeTriggerElement && lastOpenChangeReason === reason) {
       return;
     }
     const shouldPreventUnmountOnClose = attachPreventUnmountOnClose(eventDetails);
@@ -17333,23 +17669,21 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
     }
     const isKeyboardClick = (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.itemPress) && nativeEvent.detail === 0;
     const isDismissClose = !nextOpen && (reason === reason_parts_exports.escapeKey || reason == null);
-    const updatedState = {
-      open: nextOpen,
-      openChangeReason: reason
-    };
     openEventRef.current = eventDetails.event;
-    setPopupOpenState(updatedState, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
-    store.update(updatedState);
+    const popupOpenState = createPopupOpenState(store.state, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
+    popupOpenState.openChangeReason = reason;
     if (parent.type === "menubar" && (reason === reason_parts_exports.triggerFocus || reason === reason_parts_exports.focusOut || reason === reason_parts_exports.triggerHover || reason === reason_parts_exports.listNavigation || reason === reason_parts_exports.siblingOpen)) {
-      store.set("instantType", "group");
+      popupOpenState.instantType = "group";
     } else if (isKeyboardClick || isDismissClose) {
-      store.set("instantType", isKeyboardClick ? "click" : "dismiss");
+      popupOpenState.instantType = isKeyboardClick ? "click" : "dismiss";
     } else {
-      store.set("instantType", void 0);
+      popupOpenState.instantType = void 0;
     }
+    store.update(popupOpenState);
   });
   const floatingRootContext = useSyncedFloatingRootContext({
     popupStore: store,
+    floatingRootContext: store.state.floatingRootContext,
     floatingId,
     nested: floatingParentNodeIdFromContext != null,
     onOpenChange: setOpen
@@ -17381,7 +17715,7 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
     setOpen
   }), [setOpen]);
   const dismiss = useDismiss(floatingRootContext, {
-    enabled: !disabled2,
+    enabled: !disabled3,
     bubbles: {
       escapeKey: closeParentOnEsc && parent.type === "menu"
     },
@@ -17401,7 +17735,7 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
     store.set("activeIndex", index2);
   }, [store]);
   const listNavigation2 = useListNavigation(floatingRootContext, {
-    enabled: !disabled2,
+    enabled: !disabled3,
     listRef: store.context.itemDomElements,
     activeIndex,
     nested: parent.type !== void 0,
@@ -17419,13 +17753,13 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
     store.context.typingRef.current = nextTyping;
   }, [store]);
   const typeahead = useTypeahead(floatingRootContext, {
-    enabled: !disabled2,
+    enabled: !disabled3,
     listRef: store.context.itemLabels,
     elementsRef: store.context.itemDomElements,
     activeIndex,
     resetMs: TYPEAHEAD_RESET_MS,
     onMatch: (index2) => {
-      if (open && index2 !== activeIndex) {
+      if (open7 && index2 !== activeIndex) {
         store.set("activeIndex", index2);
       }
     },
@@ -17438,18 +17772,26 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
       }
     }, interactionTypeProps);
     mergedProps["aria-haspopup"] = "menu";
-    mergedProps["aria-expanded"] = open;
+    mergedProps["aria-expanded"] = open7;
     return mergedProps;
-  }, [store, typeahead.reference, listNavigation2.reference, dismiss.reference, interactionTypeProps, open]);
+  }, [store, typeahead.reference, listNavigation2.reference, dismiss.reference, interactionTypeProps, open7]);
   const inactiveTriggerProps = React135.useMemo(() => {
     const mergedProps = mergeProps(listNavigation2.trigger, dismiss.trigger, interactionTypeProps);
     mergedProps["aria-haspopup"] = "menu";
     mergedProps["aria-expanded"] = false;
     return mergedProps;
   }, [listNavigation2.trigger, dismiss.trigger, interactionTypeProps]);
+  useRefWithInit(() => {
+    store.update({
+      inactiveTriggerProps
+    });
+    return null;
+  });
   const popupProps = React135.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, {
     id: floatingId,
     role: "menu",
+    // `menu` is implicitly vertical, so only the non-default value needs to be rendered.
+    "aria-orientation": orientation === "horizontal" ? "horizontal" : void 0,
     "aria-labelledby": activeTriggerElement?.id,
     onMouseMove() {
       store.set("allowMouseEnter", true);
@@ -17468,7 +17810,7 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
         relay(event);
       }
     }
-  }, typeahead.floating, listNavigation2.floating, dismiss.floating), [activeTriggerElement, floatingId, parent.type, store, typeahead.floating, listNavigation2.floating, dismiss.floating]);
+  }, typeahead.floating, listNavigation2.floating, dismiss.floating), [activeTriggerElement, floatingId, orientation, parent.type, store, typeahead.floating, listNavigation2.floating, dismiss.floating]);
   const itemProps = listNavigation2.item ?? EMPTY_OBJECT;
   usePopupInteractionProps(store, {
     floatingRootContext,
@@ -17499,8 +17841,8 @@ var MenuRoot = fastComponent(function MenuRoot2(props) {
   return content;
 });
 if (true) MenuRoot.displayName = "MenuRoot";
-function useMenuRootStore(initialState) {
-  const store = useRefWithInit(() => new MenuStore(initialState)).current;
+function useMenuRootStore(initialState, floatingId, nested) {
+  const store = useRefWithInit(() => new MenuStore(initialState, floatingId, nested)).current;
   return store;
 }
 
@@ -17548,8 +17890,8 @@ function useCompositeItem(params = {}) {
       if (!highlightItemOnHover || !item) {
         return;
       }
-      const disabled2 = item.hasAttribute("disabled") || item.ariaDisabled === "true";
-      if (!isHighlighted && !disabled2) {
+      const disabled3 = item.hasAttribute("disabled") || item.ariaDisabled === "true";
+      if (!isHighlighted && !disabled3) {
         item.focus();
       }
     }
@@ -17645,7 +17987,7 @@ function useMixedToggleClickHandler(params) {
   const {
     enabled = true,
     mouseDownAction,
-    open
+    open: open7
   } = params;
   const ignoreClickRef = React139.useRef(false);
   return React139.useMemo(() => {
@@ -17654,7 +17996,7 @@ function useMixedToggleClickHandler(params) {
     }
     return {
       onMouseDown: (event) => {
-        if (mouseDownAction === "open" && !open || mouseDownAction === "close" && open) {
+        if (mouseDownAction === "open" && !open7 || mouseDownAction === "close" && open7) {
           ignoreClickRef.current = true;
           ownerDocument(event.currentTarget).addEventListener("click", () => {
             ignoreClickRef.current = false;
@@ -17670,7 +18012,7 @@ function useMixedToggleClickHandler(params) {
         }
       }
     };
-  }, [enabled, mouseDownAction, open]);
+  }, [enabled, mouseDownAction, open7]);
 }
 
 // node_modules/@base-ui/react/menu/trigger/MenuTrigger.mjs
@@ -17724,12 +18066,12 @@ var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forward
   });
   const isInMenubar = parent.type === "menubar";
   const rootDisabled = store.useState("disabled");
-  const disabled2 = disabledProp || rootDisabled || isInMenubar && parent.context.disabled;
+  const disabled3 = disabledProp || rootDisabled || isInMenubar && parent.context.disabled;
   const {
     getButtonProps,
     buttonRef
   } = useButton({
-    disabled: disabled2,
+    disabled: disabled3,
     native: nativeButton
   });
   React140.useEffect(() => {
@@ -17771,7 +18113,7 @@ var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forward
   const parentMenubarHasSubmenuOpen = isInMenubar && parent.context.hasSubmenuOpen;
   const openOnHover = openOnHoverProp ?? parentMenubarHasSubmenuOpen;
   const hoverProps = useHoverReferenceInteraction(floatingRootContext, {
-    enabled: openOnHover && !disabled2 && (!isInMenubar || parentMenubarHasSubmenuOpen && !isMountedByThisTrigger),
+    enabled: openOnHover && !disabled3 && (!isInMenubar || parentMenubarHasSubmenuOpen && !isMountedByThisTrigger),
     handleClose: safePolygon({
       blockPointerEvents: !isInMenubar
     }),
@@ -17788,14 +18130,14 @@ var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forward
   });
   const stickIfOpen = useStickIfOpen(isOpenedByThisTrigger, store.select("lastOpenChangeReason"));
   const click = useClick(floatingRootContext, {
-    enabled: !disabled2,
+    enabled: !disabled3,
     event: isOpenedByThisTrigger && isInMenubar ? "click" : "mousedown",
     toggle: true,
     ignoreMouse: false,
     stickIfOpen: parent.type === void 0 ? stickIfOpen : false
   });
   const focus = useFocus(floatingRootContext, {
-    enabled: !disabled2 && parentMenubarHasSubmenuOpen
+    enabled: !disabled3 && parentMenubarHasSubmenuOpen
   });
   const mixedToggleHandlers = useMixedToggleClickHandler({
     open: isOpenedByThisTrigger,
@@ -17810,7 +18152,7 @@ var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forward
     handleFocusTargetFocus
   } = useTriggerFocusGuards(store, triggerElementRef);
   const state = {
-    disabled: disabled2,
+    disabled: disabled3,
     open: isOpenedByThisTrigger
   };
   const ref = [triggerRef, forwardedRef, buttonRef, registerTrigger, triggerElementRef];
@@ -17870,20 +18212,20 @@ var MenuTrigger = fastComponentRef(function MenuTrigger2(componentProps, forward
   }, thisTriggerId);
 });
 if (true) MenuTrigger.displayName = "MenuTrigger";
-function useStickIfOpen(open, openReason) {
+function useStickIfOpen(open7, openReason) {
   const stickIfOpenTimeout = useTimeout();
   const [stickIfOpen, setStickIfOpen] = React140.useState(false);
   useIsoLayoutEffect(() => {
-    if (open && openReason === reason_parts_exports.triggerHover) {
+    if (open7 && openReason === reason_parts_exports.triggerHover) {
       setStickIfOpen(true);
       stickIfOpenTimeout.start(PATIENT_CLICK_THRESHOLD, () => {
         setStickIfOpen(false);
       });
-    } else if (!open) {
+    } else if (!open7) {
       stickIfOpenTimeout.clear();
       setStickIfOpen(false);
     }
-  }, [open, openReason, stickIfOpenTimeout]);
+  }, [open7, openReason, stickIfOpenTimeout]);
   return stickIfOpen;
 }
 function useMenuParent() {
@@ -17932,20 +18274,24 @@ var React142 = __toESM(require_react(), 1);
 function getCssDimensions2(element) {
   const css = getComputedStyle2(element);
   let width = parseFloat(css.width) || 0;
-  let height = parseFloat(css.height) || 0;
+  let height2 = parseFloat(css.height) || 0;
   const hasOffset = isHTMLElement(element);
   const offsetWidth = hasOffset ? element.offsetWidth : width;
-  const offsetHeight = hasOffset ? element.offsetHeight : height;
-  const shouldFallback = round(width) !== offsetWidth || round(height) !== offsetHeight;
+  const offsetHeight = hasOffset ? element.offsetHeight : height2;
+  const shouldFallback = round(width) !== offsetWidth || round(height2) !== offsetHeight;
   if (shouldFallback) {
     width = offsetWidth;
-    height = offsetHeight;
+    height2 = offsetHeight;
   }
   return {
     width,
-    height
+    height: height2
   };
 }
+
+// node_modules/@base-ui/react/utils/CommonPopupCssVars.mjs
+var popupWidth = "--popup-width";
+var popupHeight = "--popup-height";
 
 // node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
 function usePopupAutoResize(parameters) {
@@ -17956,7 +18302,7 @@ function usePopupAutoResize(parameters) {
     mounted,
     onMeasureLayout: onMeasureLayoutParam,
     onMeasureLayoutComplete: onMeasureLayoutCompleteParam,
-    side,
+    side: side2,
     direction
   } = parameters;
   const runOnceAnimationsFinish = useAnimationsFinished(popupElement, true);
@@ -17966,7 +18312,7 @@ function usePopupAutoResize(parameters) {
   const restoreAnchoringStylesRef = React142.useRef(NOOP);
   const onMeasureLayout = useStableCallback(onMeasureLayoutParam);
   const onMeasureLayoutComplete = useStableCallback(onMeasureLayoutCompleteParam);
-  const anchoringStyles = React142.useMemo(() => getPopupAnchoringStyles(side, direction), [side, direction]);
+  const anchoringStyles = React142.useMemo(() => getPopupAnchoringStyles(side2, direction), [side2, direction]);
   useIsoLayoutEffect(() => {
     if (!mounted) {
       restoreAnchoringStylesRef.current = NOOP;
@@ -17983,8 +18329,8 @@ function usePopupAutoResize(parameters) {
     const restorePopupTransform = overrideElementStyle(popupElement, "transform", "none");
     const restorePopupScale = overrideElementStyle(popupElement, "scale", "1");
     const restorePositionerAvailableSize = applyElementStyles(positionerElement, {
-      "--available-width": "max-content",
-      "--available-height": "max-content"
+      [availableWidth]: "max-content",
+      [availableHeight]: "max-content"
     });
     function restoreMeasurementOverrides() {
       restorePopupPosition();
@@ -18021,8 +18367,8 @@ function usePopupAutoResize(parameters) {
     animationFrame.request(() => {
       setPopupCssSize(popupElement, newDimensions);
       runOnceAnimationsFinish(() => {
-        popupElement.style.setProperty("--popup-width", "auto");
-        popupElement.style.setProperty("--popup-height", "auto");
+        popupElement.style.setProperty(popupWidth, "auto");
+        popupElement.style.setProperty(popupHeight, "auto");
       }, abortController.signal);
     });
     return () => {
@@ -18033,9 +18379,9 @@ function usePopupAutoResize(parameters) {
     };
   }, [content, popupElement, positionerElement, runOnceAnimationsFinish, animationFrame, mounted, onMeasureLayout, onMeasureLayoutComplete, anchoringStyles]);
 }
-function getPopupAnchoringStyles(side, direction) {
-  const isPhysicalTop = side === "top";
-  const isPhysicalLeft = side === "left" || side === (direction === "rtl" ? "inline-end" : "inline-start");
+function getPopupAnchoringStyles(side2, direction) {
+  const isPhysicalTop = side2 === "top";
+  const isPhysicalLeft = side2 === "left" || side2 === (direction === "rtl" ? "inline-end" : "inline-start");
   if (!isPhysicalTop && !isPhysicalLeft) {
     return EMPTY_OBJECT;
   }
@@ -18063,15 +18409,15 @@ function applyElementStyles(element, styles) {
 }
 function setPopupCssSize(popupElement, size4) {
   const width = size4 === "auto" ? "auto" : `${size4.width}px`;
-  const height = size4 === "auto" ? "auto" : `${size4.height}px`;
-  popupElement.style.setProperty("--popup-width", width);
-  popupElement.style.setProperty("--popup-height", height);
+  const height2 = size4 === "auto" ? "auto" : `${size4.height}px`;
+  popupElement.style.setProperty(popupWidth, width);
+  popupElement.style.setProperty(popupHeight, height2);
 }
 function setPositionerCssSize(positionerElement, size4) {
   const width = size4 === "max-content" ? "max-content" : `${size4.width}px`;
-  const height = size4 === "max-content" ? "max-content" : `${size4.height}px`;
-  positionerElement.style.setProperty("--positioner-width", width);
-  positionerElement.style.setProperty("--positioner-height", height);
+  const height2 = size4 === "max-content" ? "max-content" : `${size4.height}px`;
+  positionerElement.style.setProperty(positionerWidth, width);
+  positionerElement.style.setProperty(positionerHeight, height2);
 }
 
 // node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
@@ -18159,28 +18505,31 @@ var adaptiveOrigin = {
   }
 };
 
+// node_modules/@base-ui/react/utils/CommonViewportDataAttributes.mjs
+var activationDirection = "data-activation-direction";
+
 // node_modules/@base-ui/react/utils/usePopupViewport.mjs
 var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
 var popupViewportStateMapping = {
   activationDirection: (value) => value ? {
-    "data-activation-direction": value
+    [activationDirection]: value
   } : null
 };
 function usePopupViewport(parameters) {
   const {
     store,
-    side,
+    side: side2,
     children
   } = parameters;
   const direction = useDirection();
   const activeTrigger = store.useState("activeTriggerElement");
   const activeTriggerId = store.useState("activeTriggerId");
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const payload = store.useState("payload");
   const mounted = store.useState("mounted");
   const popupElement = store.useState("popupElement");
   const positionerElement = store.useState("positionerElement");
-  const previousActiveTrigger = usePreviousValue(open ? activeTrigger : null);
+  const previousActiveTrigger = usePreviousValue(open7 ? activeTrigger : null);
   const currentContentKey = usePopupContentKey(activeTriggerId, payload);
   const capturedNodeRef = React144.useRef(null);
   const [previousContentNode, setPreviousContentNode] = React144.useState(null);
@@ -18223,10 +18572,10 @@ function usePopupViewport(parameters) {
   });
   const lastHandledTriggerRef = React144.useRef(null);
   useIsoLayoutEffect(() => {
-    if (!open || !mounted) {
+    if (!open7 || !mounted) {
       lastHandledTriggerRef.current = null;
     }
-  }, [open, mounted]);
+  }, [open7, mounted]);
   useIsoLayoutEffect(() => {
     if (activeTrigger && previousActiveTrigger && activeTrigger !== previousActiveTrigger && lastHandledTriggerRef.current !== activeTrigger && capturedNodeRef.current) {
       setPreviousContentNode(capturedNodeRef.current);
@@ -18276,8 +18625,8 @@ function usePopupViewport(parameters) {
         ref: previousContainerRef,
         style: {
           ...previousContentDimensions ? {
-            "--popup-width": `${previousContentDimensions.width}px`,
-            "--popup-height": `${previousContentDimensions.height}px`
+            [popupWidth]: `${previousContentDimensions.width}px`,
+            [popupHeight]: `${previousContentDimensions.height}px`
           } : null,
           position: "absolute"
         },
@@ -18304,7 +18653,7 @@ function usePopupViewport(parameters) {
     content: payload,
     onMeasureLayout: handleMeasureLayout,
     onMeasureLayoutComplete: handleMeasureLayoutComplete,
-    side,
+    side: side2,
     direction
   });
   const state = {
@@ -18383,7 +18732,7 @@ var MenuViewport = /* @__PURE__ */ React145.forwardRef(function MenuViewport2(co
     store
   } = useMenuRootContext();
   const {
-    side
+    side: side2
   } = useMenuPositionerContext();
   const instantType = store.useState("instantType");
   const {
@@ -18391,7 +18740,7 @@ var MenuViewport = /* @__PURE__ */ React145.forwardRef(function MenuViewport2(co
     state: viewportState
   } = usePopupViewport({
     store,
-    side,
+    side: side2,
     children
   });
   const state = {
@@ -18474,36 +18823,39 @@ var MenuSubmenuTrigger = /* @__PURE__ */ React147.forwardRef(function MenuSubmen
     store
   } = useMenuRootContext();
   const thisTriggerId = useBaseUiId(idProp);
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const floatingRootContext = store.useState("floatingRootContext");
   const floatingTreeRoot = store.useState("floatingTreeRoot");
   const popupId = store.useState("triggerPopupId", thisTriggerId);
   const baseRegisterTrigger = useTriggerRegistration(thisTriggerId, store);
-  const registerTrigger = React147.useCallback((element2) => {
-    const cleanup = baseRegisterTrigger(element2);
+  const registerTrigger = useStableCallback((element2) => {
+    baseRegisterTrigger(element2);
     if (element2 !== null && store.select("open") && store.select("activeTriggerId") == null) {
       store.update({
-        activeTriggerId: thisTriggerId,
+        activeTriggerId: thisTriggerId ?? null,
         activeTriggerElement: element2,
         closeDelay
       });
     }
-    return cleanup;
-  }, [baseRegisterTrigger, closeDelay, store, thisTriggerId]);
+  });
   const triggerElementRef = React147.useRef(null);
   const handleTriggerElementRef = React147.useCallback((el) => {
     triggerElementRef.current = el;
     store.set("activeTriggerElement", el);
   }, [store]);
+  useIsoLayoutEffect(() => {
+    registerTrigger(triggerElementRef.current);
+    return () => registerTrigger(null);
+  }, [registerTrigger, thisTriggerId, store]);
   store.useSyncedValue("closeDelay", closeDelay);
   const parentMenuStore = submenuRootContext.parentMenu;
   const rootDisabled = store.useState("disabled");
   const parentDisabled = parentMenuStore.useState("disabled");
-  const disabled2 = disabledProp || rootDisabled || parentDisabled;
+  const disabled3 = disabledProp || rootDisabled || parentDisabled;
   if (true) {
     React147.useEffect(() => {
       const element2 = triggerElementRef.current;
-      if (element2 && isElementDisabled(element2) && !disabled2) {
+      if (element2 && isElementDisabled(element2) && !disabled3) {
         const ownerStackMessage = SafeReact.captureOwnerStack?.() || "";
         warn(`A disabled element was detected on <Menu.SubmenuTrigger>. To properly disable the trigger, use the \`disabled\` prop on the component instead of setting it on the rendered element.${ownerStackMessage}`);
       }
@@ -18524,7 +18876,7 @@ var MenuSubmenuTrigger = /* @__PURE__ */ React147.forwardRef(function MenuSubmen
     itemRef
   } = useMenuItem({
     closeOnClick: false,
-    disabled: disabled2,
+    disabled: disabled3,
     highlighted,
     id: thisTriggerId,
     store,
@@ -18535,7 +18887,7 @@ var MenuSubmenuTrigger = /* @__PURE__ */ React147.forwardRef(function MenuSubmen
   });
   const hoverEnabled = store.useState("hoverEnabled");
   const hoverProps = useHoverReferenceInteraction(floatingRootContext, {
-    enabled: hoverEnabled && openOnHover && !disabled2,
+    enabled: hoverEnabled && openOnHover && !disabled3,
     handleClose: safePolygon({
       blockPointerEvents: true
     }),
@@ -18555,7 +18907,7 @@ var MenuSubmenuTrigger = /* @__PURE__ */ React147.forwardRef(function MenuSubmen
     guardStaleOpen: true
   });
   const click = useClick(floatingRootContext, {
-    enabled: !disabled2,
+    enabled: !disabled3,
     event: "mousedown",
     toggle: !openOnHover,
     ignoreMouse: openOnHover,
@@ -18565,14 +18917,14 @@ var MenuSubmenuTrigger = /* @__PURE__ */ React147.forwardRef(function MenuSubmen
   const rootTriggerProps = store.useState("triggerProps", true);
   delete rootTriggerProps.id;
   const state = {
-    disabled: disabled2,
+    disabled: disabled3,
     highlighted,
-    open
+    open: open7
   };
   const openMethod = store.useState("openMethod");
   const lastOpenChangeReason = store.useState("lastOpenChangeReason");
   const openedByKeyboard = lastOpenChangeReason === reason_parts_exports.listNavigation || openMethod === "keyboard";
-  const shouldOmitExpanded = open && openedByKeyboard && parts_exports.screenReader.voiceOver;
+  const shouldOmitExpanded = open7 && openedByKeyboard && parts_exports.screenReader.voiceOver;
   const element = useRenderElement("div", componentProps, {
     state,
     stateAttributesMapping: triggerOpenStateMapping2,
@@ -18589,7 +18941,7 @@ var MenuSubmenuTrigger = /* @__PURE__ */ React147.forwardRef(function MenuSubmen
       shouldOmitExpanded ? VOICE_OVER_EXPANDED_PROPS : void 0,
       {
         "aria-controls": popupId,
-        tabIndex: open || highlighted ? 0 : -1,
+        tabIndex: open7 || highlighted ? 0 : -1,
         onBlur() {
           if (highlighted) {
             parentMenuStore.set("activeIndex", null);
@@ -18657,9 +19009,10 @@ __export(index_parts_exports5, {
 });
 
 // node_modules/@base-ui/react/dialog/root/DialogRoot.mjs
-function DialogRoot(props) {
+var DialogRoot = fastComponent(function DialogRoot2(props) {
   return useRenderDialogRoot("dialog", props);
-}
+});
+if (true) DialogRoot.displayName = "DialogRoot";
 
 // node_modules/@base-ui/react/drawer/index.parts.mjs
 var index_parts_exports6 = {};
@@ -18687,22 +19040,16 @@ __export(index_parts_exports6, {
 var React148 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/drawer/popup/DrawerPopupCssVars.mjs
-var DrawerPopupCssVars = /* @__PURE__ */ (function(DrawerPopupCssVars2) {
-  DrawerPopupCssVars2["nestedDrawers"] = "--nested-drawers";
-  DrawerPopupCssVars2["height"] = "--drawer-height";
-  DrawerPopupCssVars2["frontmostHeight"] = "--drawer-frontmost-height";
-  DrawerPopupCssVars2["swipeMovementX"] = "--drawer-swipe-movement-x";
-  DrawerPopupCssVars2["swipeMovementY"] = "--drawer-swipe-movement-y";
-  DrawerPopupCssVars2["snapPointOffset"] = "--drawer-snap-point-offset";
-  DrawerPopupCssVars2["swipeStrength"] = "--drawer-swipe-strength";
-  return DrawerPopupCssVars2;
-})({});
+var nestedDrawers = "--nested-drawers";
+var height = "--drawer-height";
+var frontmostHeight = "--drawer-frontmost-height";
+var swipeMovementX = "--drawer-swipe-movement-x";
+var swipeMovementY = "--drawer-swipe-movement-y";
+var snapPointOffset = "--drawer-snap-point-offset";
+var swipeStrength = "--drawer-swipe-strength";
 
 // node_modules/@base-ui/react/drawer/backdrop/DrawerBackdropCssVars.mjs
-var DrawerBackdropCssVars = /* @__PURE__ */ (function(DrawerBackdropCssVars2) {
-  DrawerBackdropCssVars2["swipeProgress"] = "--drawer-swipe-progress";
-  return DrawerBackdropCssVars2;
-})({});
+var swipeProgress = "--drawer-swipe-progress";
 
 // node_modules/@base-ui/react/drawer/backdrop/DrawerBackdrop.mjs
 var DrawerBackdrop = /* @__PURE__ */ React148.forwardRef(function DrawerBackdrop2(componentProps, forwardedRef) {
@@ -18714,12 +19061,12 @@ var DrawerBackdrop = /* @__PURE__ */ React148.forwardRef(function DrawerBackdrop
     ...elementProps
   } = componentProps;
   const store = useDialogRootContext();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const nested = store.useState("nested");
   const mounted = store.useState("mounted");
   const transitionStatus = store.useState("transitionStatus");
   const state = {
-    open,
+    open: open7,
     transitionStatus
   };
   return useRenderElement("div", componentProps, {
@@ -18730,11 +19077,11 @@ var DrawerBackdrop = /* @__PURE__ */ React148.forwardRef(function DrawerBackdrop
       role: "presentation",
       hidden: !mounted,
       style: {
-        pointerEvents: !open ? "none" : void 0,
+        pointerEvents: !open7 ? "none" : void 0,
         userSelect: "none",
         WebkitUserSelect: "none",
-        [DrawerBackdropCssVars.swipeProgress]: "0",
-        [DrawerPopupCssVars.swipeStrength]: "1"
+        [swipeProgress]: "0",
+        [swipeStrength]: "1"
       }
     }, elementProps],
     enabled: forceRender || !nested
@@ -18748,7 +19095,7 @@ var DrawerClose = DialogClose;
 // node_modules/@base-ui/react/drawer/content/DrawerContent.mjs
 var React149 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/drawer/content/DrawerContentDataAttributes.mjs
+// node_modules/@base-ui/react/drawer/content/drawerContentAttribute.mjs
 var DRAWER_CONTENT_ATTRIBUTE = "data-drawer-content";
 
 // node_modules/@base-ui/react/drawer/content/DrawerContent.mjs
@@ -18814,26 +19161,26 @@ var DrawerIndent = /* @__PURE__ */ React151.forwardRef(function DrawerIndent2(co
     }
     const syncVisualState = () => {
       const {
-        swipeProgress,
-        frontmostHeight
+        swipeProgress: swipeProgress2,
+        frontmostHeight: frontmostHeight2
       } = visualStateStore.getSnapshot();
-      if (swipeProgress <= 0) {
-        element.style.setProperty(DrawerBackdropCssVars.swipeProgress, "0");
+      if (swipeProgress2 <= 0) {
+        element.style.setProperty(swipeProgress, "0");
       } else {
-        element.style.setProperty(DrawerBackdropCssVars.swipeProgress, `${swipeProgress}`);
+        element.style.setProperty(swipeProgress, `${swipeProgress2}`);
       }
-      if (frontmostHeight <= 0) {
-        element.style.removeProperty(DrawerPopupCssVars.height);
+      if (frontmostHeight2 <= 0) {
+        element.style.removeProperty(height);
       } else {
-        element.style.setProperty(DrawerPopupCssVars.height, `${frontmostHeight}px`);
+        element.style.setProperty(height, `${frontmostHeight2}px`);
       }
     };
     syncVisualState();
     const unsubscribe = visualStateStore.subscribe(syncVisualState);
     return () => {
       unsubscribe();
-      element.style.setProperty(DrawerBackdropCssVars.swipeProgress, "0");
-      element.style.removeProperty(DrawerPopupCssVars.height);
+      element.style.setProperty(swipeProgress, "0");
+      element.style.removeProperty(height);
     };
   }, [visualStateStore]);
   const state = {
@@ -18844,7 +19191,7 @@ var DrawerIndent = /* @__PURE__ */ React151.forwardRef(function DrawerIndent2(co
     state,
     props: [{
       style: {
-        [DrawerBackdropCssVars.swipeProgress]: "0"
+        [swipeProgress]: "0"
       }
     }, elementProps],
     stateAttributesMapping: stateAttributesMapping5
@@ -18891,19 +19238,16 @@ if (true) DrawerIndentBackground.displayName = "DrawerIndentBackground";
 var React156 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/drawer/popup/DrawerPopupDataAttributes.mjs
-var DrawerPopupDataAttributes = (function(DrawerPopupDataAttributes2) {
-  DrawerPopupDataAttributes2[DrawerPopupDataAttributes2["open"] = CommonPopupDataAttributes.open] = "open";
-  DrawerPopupDataAttributes2[DrawerPopupDataAttributes2["closed"] = CommonPopupDataAttributes.closed] = "closed";
-  DrawerPopupDataAttributes2[DrawerPopupDataAttributes2["startingStyle"] = CommonPopupDataAttributes.startingStyle] = "startingStyle";
-  DrawerPopupDataAttributes2[DrawerPopupDataAttributes2["endingStyle"] = CommonPopupDataAttributes.endingStyle] = "endingStyle";
-  DrawerPopupDataAttributes2["expanded"] = "data-expanded";
-  DrawerPopupDataAttributes2["nestedDrawerOpen"] = "data-nested-drawer-open";
-  DrawerPopupDataAttributes2["nestedDrawerSwiping"] = "data-nested-drawer-swiping";
-  DrawerPopupDataAttributes2["swipeDismiss"] = "data-swipe-dismiss";
-  DrawerPopupDataAttributes2["swipeDirection"] = "data-swipe-direction";
-  DrawerPopupDataAttributes2["swiping"] = "data-swiping";
-  return DrawerPopupDataAttributes2;
-})({});
+var open4 = CommonPopupDataAttributes_exports.open;
+var closed4 = CommonPopupDataAttributes_exports.closed;
+var startingStyle5 = CommonPopupDataAttributes_exports.startingStyle;
+var endingStyle5 = CommonPopupDataAttributes_exports.endingStyle;
+var expanded = "data-expanded";
+var nestedDrawerOpen = "data-nested-drawer-open";
+var nestedDrawerSwiping = "data-nested-drawer-swiping";
+var swipeDismiss = "data-swipe-dismiss";
+var swipeDirection = "data-swipe-direction";
+var swiping = "data-swiping";
 
 // node_modules/@base-ui/react/drawer/root/DrawerRootContext.mjs
 var React153 = __toESM(require_react(), 1);
@@ -18920,7 +19264,7 @@ function useDrawerRootContext(optional) {
 // node_modules/@base-ui/react/drawer/root/useDrawerSnapPoints.mjs
 var React154 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/internals/clamp.mjs
+// node_modules/@base-ui/utils/clamp.mjs
 function clamp2(val, min3 = Number.MIN_SAFE_INTEGER, max3 = Number.MAX_SAFE_INTEGER) {
   return Math.max(min3, Math.min(val, max3));
 }
@@ -18975,7 +19319,7 @@ function useDrawerSnapPoints() {
     snapPoints,
     activeSnapPoint,
     setActiveSnapPoint,
-    popupHeight
+    popupHeight: popupHeight2
   } = useDrawerRootContext();
   const viewportElement = store.useState("viewportElement");
   const [viewportHeight, setViewportHeight] = React154.useState(0);
@@ -19001,10 +19345,10 @@ function useDrawerSnapPoints() {
     };
   }, [measureViewportHeight, viewportElement]);
   const resolvedSnapPoints = React154.useMemo(() => {
-    if (!snapPoints || snapPoints.length === 0 || viewportHeight <= 0 || popupHeight <= 0) {
+    if (!snapPoints || snapPoints.length === 0 || viewportHeight <= 0 || popupHeight2 <= 0) {
       return [];
     }
-    const maxHeight = Math.min(popupHeight, viewportHeight);
+    const maxHeight = Math.min(popupHeight2, viewportHeight);
     const resolved = snapPoints.map((value) => {
       const resolvedHeight = resolveSnapPointValue(value, viewportHeight, rootFontSize);
       if (resolvedHeight === null) {
@@ -19014,7 +19358,7 @@ function useDrawerSnapPoints() {
       return {
         value,
         height: clampedHeight,
-        offset: Math.max(0, popupHeight - clampedHeight)
+        offset: Math.max(0, popupHeight2 - clampedHeight)
       };
     }).filter((point) => Boolean(point));
     if (resolved.length <= 1) {
@@ -19024,7 +19368,7 @@ function useDrawerSnapPoints() {
     const seenHeights = [];
     for (let index2 = resolved.length - 1; index2 >= 0; index2 -= 1) {
       const point = resolved[index2];
-      const isDuplicate = seenHeights.some((height) => Math.abs(height - point.height) <= 1);
+      const isDuplicate = seenHeights.some((height2) => Math.abs(height2 - point.height) <= 1);
       if (isDuplicate) {
         continue;
       }
@@ -19033,7 +19377,7 @@ function useDrawerSnapPoints() {
     }
     deduped.reverse();
     return deduped;
-  }, [popupHeight, rootFontSize, snapPoints, viewportHeight]);
+  }, [popupHeight2, rootFontSize, snapPoints, viewportHeight]);
   const resolvedActiveSnapPoint = React154.useMemo(() => {
     if (activeSnapPoint === null) {
       return void 0;
@@ -19042,19 +19386,19 @@ function useDrawerSnapPoints() {
     if (exactMatch) {
       return exactMatch;
     }
-    const maxHeight = Math.min(popupHeight, viewportHeight);
+    const maxHeight = Math.min(popupHeight2, viewportHeight);
     const resolvedHeight = resolveSnapPointValue(activeSnapPoint, viewportHeight, rootFontSize);
     if (resolvedHeight === null) {
       return void 0;
     }
     const clampedHeight = clamp2(resolvedHeight, 0, maxHeight);
     return resolvedSnapPoints[closestSnapPointIndex(resolvedSnapPoints.map((point) => point.height), clampedHeight)];
-  }, [activeSnapPoint, popupHeight, resolvedSnapPoints, rootFontSize, viewportHeight]);
+  }, [activeSnapPoint, popupHeight2, resolvedSnapPoints, rootFontSize, viewportHeight]);
   return {
     snapPoints,
     activeSnapPoint,
     setActiveSnapPoint,
-    popupHeight,
+    popupHeight: popupHeight2,
     viewportHeight,
     resolvedSnapPoints,
     activeSnapPointOffset: resolvedActiveSnapPoint?.offset ?? null
@@ -19077,7 +19421,7 @@ function removeCSSVariableInheritance() {
     return;
   }
   if (typeof CSS !== "undefined" && "registerProperty" in CSS) {
-    [DrawerPopupCssVars.swipeMovementX, DrawerPopupCssVars.swipeMovementY, DrawerPopupCssVars.snapPointOffset].forEach((name) => {
+    [swipeMovementX, swipeMovementY, snapPointOffset].forEach((name) => {
       try {
         CSS.registerProperty({
           name,
@@ -19089,10 +19433,10 @@ function removeCSSVariableInheritance() {
       }
     });
     [{
-      name: DrawerBackdropCssVars.swipeProgress,
+      name: swipeProgress,
       initialValue: "0"
     }, {
-      name: DrawerPopupCssVars.swipeStrength,
+      name: swipeStrength,
       initialValue: "1"
     }].forEach(({
       name,
@@ -19115,27 +19459,27 @@ var stateAttributesMapping7 = {
   ...popupTransitionStateMapping,
   expanded(value) {
     return value ? {
-      [DrawerPopupDataAttributes.expanded]: ""
+      [expanded]: ""
     } : null;
   },
   nestedDrawerOpen(value) {
     return value ? {
-      [DrawerPopupDataAttributes.nestedDrawerOpen]: ""
+      [nestedDrawerOpen]: ""
     } : null;
   },
   nestedDrawerSwiping(value) {
     return value ? {
-      [DrawerPopupDataAttributes.nestedDrawerSwiping]: ""
+      [nestedDrawerSwiping]: ""
     } : null;
   },
   swipeDirection(value) {
     return {
-      [DrawerPopupDataAttributes.swipeDirection]: value
+      [swipeDirection]: value
     };
   },
   swiping(value) {
     return value ? {
-      [DrawerPopupDataAttributes.swiping]: ""
+      [swiping]: ""
     } : null;
   }
 };
@@ -19151,8 +19495,8 @@ var DrawerPopup = /* @__PURE__ */ React156.forwardRef(function DrawerPopup2(comp
   const store = useDialogRootContext();
   const popupRef = store.context.popupRef;
   const {
-    swipeDirection,
-    frontmostHeight,
+    swipeDirection: swipeDirection3,
+    frontmostHeight: frontmostHeight2,
     hasNestedDrawer,
     nestedSwiping,
     nestedSwipeProgressStore,
@@ -19169,7 +19513,7 @@ var DrawerPopup = /* @__PURE__ */ React156.forwardRef(function DrawerPopup2(comp
   const nested = store.useState("nested");
   const nestedOpenDrawerCount = store.useState("nestedOpenDrawerCount");
   const transitionStatus = store.useState("transitionStatus");
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const openMethod = store.useState("openMethod");
   const titleElementId = store.useState("titleElementId");
   const role = store.useState("role");
@@ -19182,10 +19526,10 @@ var DrawerPopup = /* @__PURE__ */ React156.forwardRef(function DrawerPopup2(comp
     activeSnapPoint,
     activeSnapPointOffset
   } = useDrawerSnapPoints();
-  const nestedDrawerOpen = nestedOpenDrawerCount > 0;
-  const swiping = swipe2?.swiping ?? false;
-  const swipeStrength = swipe2?.swipeStrength ?? null;
-  const [popupHeight, setPopupHeight] = React156.useState(0);
+  const nestedDrawerOpen2 = nestedOpenDrawerCount > 0;
+  const swiping3 = swipe2?.swiping ?? false;
+  const swipeStrength2 = swipe2?.swipeStrength ?? null;
+  const [popupHeight2, setPopupHeight] = React156.useState(0);
   const popupHeightRef = React156.useRef(0);
   if (true) {
     React156.useEffect(() => {
@@ -19203,7 +19547,7 @@ var DrawerPopup = /* @__PURE__ */ React156.forwardRef(function DrawerPopup2(comp
       return;
     }
     const offsetHeight = popupElement.offsetHeight;
-    if (popupHeightRef.current > 0 && frontmostHeight > popupHeightRef.current && offsetHeight > popupHeightRef.current) {
+    if (popupHeightRef.current > 0 && frontmostHeight2 > popupHeightRef.current && offsetHeight > popupHeightRef.current) {
       return;
     }
     const keepHeightWhileNested = popupHeightRef.current > 0 && hasNestedDrawer;
@@ -19242,7 +19586,7 @@ var DrawerPopup = /* @__PURE__ */ React156.forwardRef(function DrawerPopup2(comp
     return () => {
       resizeObserver.disconnect();
     };
-  }, [measureHeight, mounted, nestedDrawerOpen, onPopupHeightChange, popupRef]);
+  }, [measureHeight, mounted, nestedDrawerOpen2, onPopupHeightChange, popupRef]);
   useIsoLayoutEffect(() => {
     const syncNestedSwipeProgress = () => {
       const popupElement2 = popupRef.current;
@@ -19251,9 +19595,9 @@ var DrawerPopup = /* @__PURE__ */ React156.forwardRef(function DrawerPopup2(comp
       }
       const progress = nestedSwipeProgressStore.getSnapshot();
       if (progress > 0) {
-        popupElement2.style.setProperty(DrawerBackdropCssVars.swipeProgress, `${progress}`);
+        popupElement2.style.setProperty(swipeProgress, `${progress}`);
       } else {
-        popupElement2.style.setProperty(DrawerBackdropCssVars.swipeProgress, "0");
+        popupElement2.style.setProperty(swipeProgress, "0");
       }
     };
     syncNestedSwipeProgress();
@@ -19262,34 +19606,34 @@ var DrawerPopup = /* @__PURE__ */ React156.forwardRef(function DrawerPopup2(comp
     return () => {
       unsubscribe();
       if (popupElement) {
-        popupElement.style.setProperty(DrawerBackdropCssVars.swipeProgress, "0");
+        popupElement.style.setProperty(swipeProgress, "0");
       }
     };
   }, [nestedSwipeProgressStore, popupRef]);
   useIsoLayoutEffect(() => {
-    if (!open) {
+    if (!open7) {
       return void 0;
     }
-    notifyParentFrontmostHeight?.(frontmostHeight);
+    notifyParentFrontmostHeight?.(frontmostHeight2);
     return () => {
       notifyParentFrontmostHeight?.(0);
     };
-  }, [frontmostHeight, open, notifyParentFrontmostHeight]);
+  }, [frontmostHeight2, open7, notifyParentFrontmostHeight]);
   useIsoLayoutEffect(() => {
     if (!notifyParentHasNestedDrawer) {
       return void 0;
     }
-    const present = open || transitionStatus === "ending";
+    const present = open7 || transitionStatus === "ending";
     notifyParentHasNestedDrawer(present);
     return () => {
       notifyParentHasNestedDrawer(false);
     };
-  }, [notifyParentHasNestedDrawer, open, transitionStatus]);
+  }, [notifyParentHasNestedDrawer, open7, transitionStatus]);
   useOpenChangeComplete({
-    open,
+    open: open7,
     ref: popupRef,
     onComplete() {
-      if (open) {
+      if (open7) {
         store.context.onOpenChangeComplete?.(true);
       }
     }
@@ -19297,34 +19641,34 @@ var DrawerPopup = /* @__PURE__ */ React156.forwardRef(function DrawerPopup2(comp
   const resolvedInitialFocus = initialFocus === void 0 ? popupRef : initialFocus;
   const setPopupElement = store.useStateSetter("popupElement");
   const state = {
-    open,
+    open: open7,
     nested,
     transitionStatus,
     expanded: activeSnapPoint === 1,
-    nestedDrawerOpen,
+    nestedDrawerOpen: nestedDrawerOpen2,
     nestedDrawerSwiping: nestedSwiping,
-    swipeDirection,
-    swiping
+    swipeDirection: swipeDirection3,
+    swiping: swiping3
   };
   let popupHeightCssVarValue;
   const shouldUseAutoHeight = !hasNestedDrawer && transitionStatus !== "ending";
-  if (popupHeight && !shouldUseAutoHeight) {
-    popupHeightCssVarValue = `${popupHeight}px`;
+  if (popupHeight2 && !shouldUseAutoHeight) {
+    popupHeightCssVarValue = `${popupHeight2}px`;
   }
-  const shouldApplySnapPoints = snapPoints && snapPoints.length > 0 && (swipeDirection === "down" || swipeDirection === "up");
+  const shouldApplySnapPoints = snapPoints && snapPoints.length > 0 && (swipeDirection3 === "down" || swipeDirection3 === "up");
   let snapPointOffsetValue = null;
   if (shouldApplySnapPoints && activeSnapPointOffset !== null) {
-    snapPointOffsetValue = swipeDirection === "up" ? -activeSnapPointOffset : activeSnapPointOffset;
+    snapPointOffsetValue = swipeDirection3 === "up" ? -activeSnapPointOffset : activeSnapPointOffset;
   }
   let dragStyles = swipe2 ? swipe2.getDragStyles() : EMPTY_OBJECT;
-  if (shouldApplySnapPoints && swipeDirection === "down") {
+  if (shouldApplySnapPoints && swipeDirection3 === "down") {
     const baseOffset = activeSnapPointOffset ?? 0;
-    const movementValue = Number.parseFloat(String(dragStyles[DrawerPopupCssVars.swipeMovementY]));
-    if (swiping && Number.isFinite(movementValue)) {
+    const movementValue = Number.parseFloat(String(dragStyles[swipeMovementY]));
+    if (swiping3 && Number.isFinite(movementValue)) {
       dragStyles = {
         ...dragStyles,
         transform: void 0,
-        [DrawerPopupCssVars.swipeMovementY]: `${getSnapPointSwipeMovement(baseOffset, movementValue)}px`
+        [swipeMovementY]: `${getSnapPointSwipeMovement(baseOffset, movementValue)}px`
       };
     } else {
       dragStyles = {
@@ -19349,12 +19693,12 @@ var DrawerPopup = /* @__PURE__ */ React156.forwardRef(function DrawerPopup2(comp
       },
       style: {
         ...dragStyles,
-        [DrawerBackdropCssVars.swipeProgress]: "0",
-        [DrawerPopupCssVars.nestedDrawers]: nestedOpenDrawerCount,
-        [DrawerPopupCssVars.height]: popupHeightCssVarValue,
-        [DrawerPopupCssVars.snapPointOffset]: typeof snapPointOffsetValue === "number" ? `${snapPointOffsetValue}px` : "0px",
-        [DrawerPopupCssVars.frontmostHeight]: frontmostHeight ? `${frontmostHeight}px` : void 0,
-        [DrawerPopupCssVars.swipeStrength]: typeof swipeStrength === "number" && Number.isFinite(swipeStrength) && swipeStrength > 0 ? `${swipeStrength}` : "1"
+        [swipeProgress]: "0",
+        [nestedDrawers]: nestedOpenDrawerCount,
+        [height]: popupHeightCssVarValue,
+        [snapPointOffset]: typeof snapPointOffsetValue === "number" ? `${snapPointOffsetValue}px` : "0px",
+        [frontmostHeight]: frontmostHeight2 ? `${frontmostHeight2}px` : void 0,
+        [swipeStrength]: typeof swipeStrength2 === "number" && Number.isFinite(swipeStrength2) && swipeStrength2 > 0 ? `${swipeStrength2}` : "1"
       }
     }, elementProps],
     ref: [forwardedRef, popupRef, setPopupElement],
@@ -19386,13 +19730,13 @@ function DrawerProvider(props) {
   } = props;
   const [openDrawers, setOpenDrawers] = React157.useState(() => /* @__PURE__ */ new Set());
   const [visualStateStore] = React157.useState(createVisualStateStore);
-  const setDrawerOpen = useStableCallback((drawer, open) => {
+  const setDrawerOpen = useStableCallback((drawer, open7) => {
     setOpenDrawers((prev) => {
-      if (prev.has(drawer) === open) {
+      if (prev.has(drawer) === open7) {
         return prev;
       }
       const next = new Set(prev);
-      if (open) {
+      if (open7) {
         next.add(drawer);
       } else {
         next.delete(drawer);
@@ -19470,7 +19814,7 @@ function DrawerRoot(props) {
     handle,
     triggerId: triggerIdProp,
     defaultTriggerId: defaultTriggerIdProp = null,
-    swipeDirection = "down",
+    swipeDirection: swipeDirection3 = "down",
     snapToSequentialPoints = false,
     snapPoints,
     snapPoint: snapPointProp,
@@ -19482,8 +19826,8 @@ function DrawerRoot(props) {
   const notifyParentFrontmostHeight = parentDrawerRootContext?.onNestedFrontmostHeightChange;
   const notifyParentSwipingChange = parentDrawerRootContext?.onNestedSwipingChange;
   const notifyParentHasNestedDrawer = parentDrawerRootContext?.onNestedDrawerPresenceChange;
-  const [popupHeight, setPopupHeight] = React158.useState(0);
-  const [frontmostHeight, setFrontmostHeight] = React158.useState(0);
+  const [popupHeight2, setPopupHeight] = React158.useState(0);
+  const [frontmostHeight2, setFrontmostHeight] = React158.useState(0);
   const [hasNestedDrawer, setHasNestedDrawer] = React158.useState(false);
   const [nestedSwiping, setNestedSwiping] = React158.useState(false);
   const [nestedSwipeProgressStore] = React158.useState(createNestedSwipeProgressStore);
@@ -19517,21 +19861,21 @@ function DrawerRoot(props) {
     }
     return activeSnapPoint;
   }, [activeSnapPoint, isSnapPointControlled, resolvedDefaultSnapPoint, snapPoints]);
-  const onPopupHeightChange = useStableCallback((height) => {
-    setPopupHeight(height);
-    if (!isNestedDrawerOpenRef.current && height > 0) {
-      setFrontmostHeight(height);
+  const onPopupHeightChange = useStableCallback((height2) => {
+    setPopupHeight(height2);
+    if (!isNestedDrawerOpenRef.current && height2 > 0) {
+      setFrontmostHeight(height2);
     }
   });
-  const onNestedFrontmostHeightChange = useStableCallback((height) => {
-    if (height > 0) {
+  const onNestedFrontmostHeightChange = useStableCallback((height2) => {
+    if (height2 > 0) {
       isNestedDrawerOpenRef.current = true;
-      setFrontmostHeight(height);
+      setFrontmostHeight(height2);
       return;
     }
     isNestedDrawerOpenRef.current = false;
-    if (popupHeight > 0) {
-      setFrontmostHeight(popupHeight);
+    if (popupHeight2 > 0) {
+      setFrontmostHeight(popupHeight2);
     }
   });
   const onNestedDrawerPresenceChange = useStableCallback((present) => {
@@ -19541,9 +19885,9 @@ function DrawerRoot(props) {
     nestedSwipeProgressStore.set(progress);
     notifyParentSwipeProgressChange?.(progress);
   });
-  const onNestedSwipingChange = useStableCallback((swiping) => {
-    setNestedSwiping(swiping);
-    notifyParentSwipingChange?.(swiping);
+  const onNestedSwipingChange = useStableCallback((swiping3) => {
+    setNestedSwiping(swiping3);
+    notifyParentSwipingChange?.(swiping3);
   });
   const handleOpenChange = useStableCallback((nextOpen, eventDetails) => {
     onOpenChange?.(nextOpen, eventDetails);
@@ -19555,14 +19899,14 @@ function DrawerRoot(props) {
     }
   });
   const contextValue = React158.useMemo(() => ({
-    swipeDirection,
+    swipeDirection: swipeDirection3,
     swipeAreaActiveRef,
     snapToSequentialPoints,
     snapPoints,
     activeSnapPoint: resolvedActiveSnapPoint,
     setActiveSnapPoint,
-    frontmostHeight,
-    popupHeight,
+    frontmostHeight: frontmostHeight2,
+    popupHeight: popupHeight2,
     hasNestedDrawer,
     nestedSwiping,
     nestedSwipeProgressStore,
@@ -19575,7 +19919,7 @@ function DrawerRoot(props) {
     notifyParentSwipingChange,
     notifyParentSwipeProgressChange,
     notifyParentHasNestedDrawer
-  }), [resolvedActiveSnapPoint, frontmostHeight, hasNestedDrawer, nestedSwiping, nestedSwipeProgressStore, notifyParentHasNestedDrawer, notifyParentSwipeProgressChange, notifyParentSwipingChange, notifyParentFrontmostHeight, onNestedDrawerPresenceChange, onNestedFrontmostHeightChange, onNestedSwipeProgressChange, onNestedSwipingChange, onPopupHeightChange, popupHeight, setActiveSnapPoint, snapPoints, snapToSequentialPoints, swipeAreaActiveRef, swipeDirection]);
+  }), [resolvedActiveSnapPoint, frontmostHeight2, hasNestedDrawer, nestedSwiping, nestedSwipeProgressStore, notifyParentHasNestedDrawer, notifyParentSwipeProgressChange, notifyParentSwipingChange, notifyParentFrontmostHeight, onNestedDrawerPresenceChange, onNestedFrontmostHeightChange, onNestedSwipeProgressChange, onNestedSwipingChange, onPopupHeightChange, popupHeight2, setActiveSnapPoint, snapPoints, snapToSequentialPoints, swipeAreaActiveRef, swipeDirection3]);
   const resolvedChildren = typeof children === "function" ? (payload) => /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(React158.Fragment, {
     children: [_DrawerProviderReport || (_DrawerProviderReport = /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(DrawerProviderReporter, {})), children(payload)]
   }) : /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(React158.Fragment, {
@@ -19627,7 +19971,7 @@ function DrawerProviderReporter() {
   const store = useDialogRootContext(false);
   const setDrawerOpen = providerContext?.setDrawerOpen;
   const removeDrawer = providerContext?.removeDrawer;
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const nestedOpenDialogCount = store.useState("nestedOpenDialogCount");
   const popupElement = store.useState("popupElement");
   const isTopmost = nestedOpenDialogCount === 0;
@@ -19640,10 +19984,10 @@ function DrawerProviderReporter() {
     };
   }, [removeDrawer, store]);
   useIsoLayoutEffect(() => {
-    setDrawerOpen?.(store, open);
-  }, [open, setDrawerOpen, store]);
+    setDrawerOpen?.(store, open7);
+  }, [open7, setDrawerOpen, store]);
   React158.useEffect(() => {
-    if (!open || !isTopmost || !parts_exports.os.android) {
+    if (!open7 || !isTopmost || !parts_exports.os.android) {
       return void 0;
     }
     const win = getWindow(popupElement);
@@ -19663,7 +20007,7 @@ function DrawerProviderReporter() {
       unsubscribe();
       closeWatcher2.destroy();
     };
-  }, [store, isTopmost, open, popupElement]);
+  }, [store, isTopmost, open7, popupElement]);
   return null;
 }
 
@@ -19678,31 +20022,9 @@ function getElementAtPoint(root, x2, y2) {
   return typeof root?.elementFromPoint === "function" ? root.elementFromPoint(x2, y2) : null;
 }
 
-// node_modules/@base-ui/react/utils/useSwipeDismiss.mjs
-var DEFAULT_SWIPE_THRESHOLD = 40;
-var REVERSE_CANCEL_THRESHOLD = 10;
-var MIN_DRAG_THRESHOLD = 1;
-var MIN_VELOCITY_DURATION_MS = 50;
-var MIN_RELEASE_VELOCITY_DURATION_MS = 16;
-var MAX_RELEASE_VELOCITY_AGE_MS = 80;
-var DEFAULT_IGNORE_SELECTOR = 'button,a,input,select,textarea,label,[role="button"]';
-function getDisplacement(direction, deltaX, deltaY) {
-  switch (direction) {
-    case "up":
-      return -deltaY;
-    case "down":
-      return deltaY;
-    case "left":
-      return -deltaX;
-    case "right":
-      return deltaX;
-    default:
-      return 0;
-  }
-}
-function getElementTransform(element) {
-  const computedStyle = getWindow(element).getComputedStyle(element);
-  const transform = computedStyle.transform;
+// node_modules/@base-ui/react/utils/getElementTransform.mjs
+function getElementTransform(element, computedStyle) {
+  const transform = (computedStyle ?? getWindow(element).getComputedStyle(element)).transform;
   let translateX = 0;
   let translateY = 0;
   let scale = 1;
@@ -19726,6 +20048,29 @@ function getElementTransform(element) {
     y: translateY,
     scale
   };
+}
+
+// node_modules/@base-ui/react/utils/useSwipeDismiss.mjs
+var DEFAULT_SWIPE_THRESHOLD = 40;
+var REVERSE_CANCEL_THRESHOLD = 10;
+var MIN_DRAG_THRESHOLD = 1;
+var MIN_VELOCITY_DURATION_MS = 50;
+var MIN_RELEASE_VELOCITY_DURATION_MS = 16;
+var MAX_RELEASE_VELOCITY_AGE_MS = 80;
+var DEFAULT_IGNORE_SELECTOR = 'button,a,input,select,textarea,label,[role="button"]';
+function getDisplacement(direction, deltaX, deltaY) {
+  switch (direction) {
+    case "up":
+      return -deltaY;
+    case "down":
+      return deltaY;
+    case "left":
+      return -deltaX;
+    case "right":
+      return deltaX;
+    default:
+      return 0;
+  }
 }
 function getValidTimeStamp(timeStamp) {
   return Number.isFinite(timeStamp) && timeStamp > 0 ? timeStamp : null;
@@ -19875,17 +20220,17 @@ function useSwipeDismiss(options) {
     }
     onProgress?.(nextProgress, details);
   });
-  const syncDragStyles = useStableCallback((swiping) => {
+  const syncDragStyles = useStableCallback((swiping3) => {
     const element = elementRef.current;
     if (!trackDrag || !element) {
-      if (!swiping) {
+      if (!swiping3) {
         dragStyleSnapshotRef.current = null;
       }
       return;
     }
     const style = element.style;
     const dragStyleSnapshot = dragStyleSnapshotRef.current;
-    if (swiping) {
+    if (swiping3) {
       if (!dragStyleSnapshot) {
         dragStyleSnapshotRef.current = [style.transition, style.transform];
       }
@@ -19898,7 +20243,7 @@ function useSwipeDismiss(options) {
     const initialTransform = initialTransformRef.current;
     const deltaX = dragOffset.x - initialTransform.x;
     const deltaY = dragOffset.y - initialTransform.y;
-    if (swiping) {
+    if (swiping3) {
       style.transform = getDragTransform(dragOffset, initialTransform.scale);
     }
     style.setProperty(movementCssVars.x, `${deltaX}px`);
@@ -19995,13 +20340,18 @@ function useSwipeDismiss(options) {
     return target;
   }
   function findGestureScrollableTouchTarget(target, root) {
+    const find = (axis) => {
+      const scrollTarget = findScrollableTouchTarget(target, root, axis);
+      const doc = ownerDocument(scrollTarget);
+      return scrollTarget === doc.body || scrollTarget === doc.documentElement ? null : scrollTarget;
+    };
     if (hasHorizontal && !hasVertical) {
-      return findScrollableTouchTarget(target, root, "horizontal");
+      return find("horizontal");
     }
     if (hasVertical && !hasHorizontal) {
-      return findScrollableTouchTarget(target, root, "vertical");
+      return find("vertical");
     }
-    return findScrollableTouchTarget(target, root, "vertical") ?? findScrollableTouchTarget(target, root, "horizontal");
+    return find("vertical") ?? find("horizontal");
   }
   function startSwipeAtPosition(event, position, startOptions) {
     swipeFromScrollableRef.current = false;
@@ -20502,22 +20852,22 @@ function useSwipeDismiss(options) {
     });
   });
   const getDragStyles = React159.useCallback(() => {
-    const swiping = isSwipingRef.current;
+    const swiping3 = isSwipingRef.current;
     const dragOffset = dragOffsetRef.current;
     const initialTransform = initialTransformRef.current;
     const deltaX = dragOffset.x - initialTransform.x;
     const deltaY = dragOffset.y - initialTransform.y;
-    if (!swiping && deltaX === 0 && deltaY === 0 && !dragDismissed) {
+    if (!swiping3 && deltaX === 0 && deltaY === 0 && !dragDismissed) {
       return {
         [movementCssVars.x]: "0px",
         [movementCssVars.y]: "0px"
       };
     }
     return {
-      transition: swiping ? "none" : void 0,
+      transition: swiping3 ? "none" : void 0,
       // While swiping, freeze the element at its current visual transform so it doesn't snap to the
       // end position.
-      transform: swiping ? getDragTransform(dragOffset, initialTransform.scale) : void 0,
+      transform: swiping3 ? getDragTransform(dragOffset, initialTransform.scale) : void 0,
       [movementCssVars.x]: `${deltaX}px`,
       [movementCssVars.y]: `${deltaY}px`
     };
@@ -20557,14 +20907,11 @@ function useSwipeDismiss(options) {
 }
 
 // node_modules/@base-ui/react/drawer/swipe-area/DrawerSwipeAreaDataAttributes.mjs
-var DrawerSwipeAreaDataAttributes = (function(DrawerSwipeAreaDataAttributes2) {
-  DrawerSwipeAreaDataAttributes2[DrawerSwipeAreaDataAttributes2["open"] = CommonPopupDataAttributes.open] = "open";
-  DrawerSwipeAreaDataAttributes2[DrawerSwipeAreaDataAttributes2["closed"] = CommonPopupDataAttributes.closed] = "closed";
-  DrawerSwipeAreaDataAttributes2["disabled"] = "data-disabled";
-  DrawerSwipeAreaDataAttributes2["swipeDirection"] = "data-swipe-direction";
-  DrawerSwipeAreaDataAttributes2["swiping"] = "data-swiping";
-  return DrawerSwipeAreaDataAttributes2;
-})({});
+var open5 = CommonPopupDataAttributes_exports.open;
+var closed5 = CommonPopupDataAttributes_exports.closed;
+var disabled2 = "data-disabled";
+var swipeDirection2 = "data-swipe-direction";
+var swiping2 = "data-swiping";
 
 // node_modules/@base-ui/react/drawer/swipe-area/DrawerSwipeArea.mjs
 var DEFAULT_SWIPE_OPEN_RATIO = 0.5;
@@ -20572,16 +20919,16 @@ var MIN_SWIPE_START_DISTANCE = 1;
 var VELOCITY_THRESHOLD = 0.1;
 var FALLBACK_SWIPE_OPEN_THRESHOLD = 40;
 var SWIPE_AREA_OPEN_HOOK = {
-  [DrawerSwipeAreaDataAttributes.open]: ""
+  [open5]: ""
 };
 var SWIPE_AREA_CLOSED_HOOK = {
-  [DrawerSwipeAreaDataAttributes.closed]: ""
+  [closed5]: ""
 };
 var SWIPE_AREA_SWIPING_HOOK = {
-  [DrawerSwipeAreaDataAttributes.swiping]: ""
+  [swiping2]: ""
 };
 var SWIPE_AREA_DISABLED_HOOK = {
-  [DrawerSwipeAreaDataAttributes.disabled]: ""
+  [disabled2]: ""
 };
 var stateAttributesMapping8 = {
   open(value) {
@@ -20592,7 +20939,7 @@ var stateAttributesMapping8 = {
   },
   swipeDirection(value) {
     return {
-      [DrawerSwipeAreaDataAttributes.swipeDirection]: value
+      [swipeDirection2]: value
     };
   },
   disabled(value) {
@@ -20613,14 +20960,14 @@ var DrawerSwipeArea = /* @__PURE__ */ React160.forwardRef(function DrawerSwipeAr
     render: render4,
     className,
     style,
-    disabled: disabled2 = false,
+    disabled: disabled3 = false,
     swipeDirection: swipeDirectionProp,
     ...elementProps
   } = componentProps;
   const store = useDialogRootContext();
   const {
-    swipeDirection,
-    frontmostHeight,
+    swipeDirection: swipeDirection3,
+    frontmostHeight: frontmostHeight2,
     swipeAreaActiveRef
   } = useDrawerRootContext();
   const providerContext = useDrawerProviderContext();
@@ -20640,14 +20987,18 @@ var DrawerSwipeArea = /* @__PURE__ */ React160.forwardRef(function DrawerSwipeAr
   const releaseGuardCleanupRef = React160.useRef(NOOP);
   const swipeAreaId = useBaseUiId(componentProps.id);
   const registerTrigger = useTriggerRegistration(swipeAreaId, store);
-  const open = store.useState("open");
+  useIsoLayoutEffect(() => {
+    registerTrigger(swipeAreaRef.current);
+    return () => registerTrigger(null);
+  }, [registerTrigger, swipeAreaId, store]);
+  const open7 = store.useState("open");
   const resetDragDelta = useStableCallback(() => {
     dragDeltaRef.current.x = 0;
     dragDeltaRef.current.y = 0;
   });
-  const resolvedSwipeDirection = swipeDirectionProp ?? oppositeSwipeDirection[swipeDirection];
+  const resolvedSwipeDirection = swipeDirectionProp ?? oppositeSwipeDirection[swipeDirection3];
   const dismissDirection = oppositeSwipeDirection[resolvedSwipeDirection];
-  const enabled = !disabled2 && (!open || swipeActive);
+  const enabled = !disabled3 && (!open7 || swipeActive);
   function disableDismissForSwipe() {
     releaseGuardCleanupRef.current();
     store.context.outsidePressEnabledRef.current = false;
@@ -20730,9 +21081,9 @@ var DrawerSwipeArea = /* @__PURE__ */ React160.forwardRef(function DrawerSwipeAr
     const movementY = isHorizontal ? 0 : movement;
     const openProgress = Math.max(0, Math.min(1, clampedDisplacement / closedOffset));
     const backdropProgress = Math.max(0, Math.min(1, 1 - openProgress));
-    popupElement.style.setProperty(DrawerPopupCssVars.swipeMovementX, `${movementX}px`);
-    popupElement.style.setProperty(DrawerPopupCssVars.swipeMovementY, `${movementY}px`);
-    popupElement.setAttribute(DrawerPopupDataAttributes.swiping, "");
+    popupElement.style.setProperty(swipeMovementX, `${movementX}px`);
+    popupElement.style.setProperty(swipeMovementY, `${movementY}px`);
+    popupElement.setAttribute(swiping, "");
     swipePopupElementRef.current = popupElement;
     if (popupTransitionRef.current === null) {
       popupTransitionRef.current = popupElement.style.transition;
@@ -20740,18 +21091,18 @@ var DrawerSwipeArea = /* @__PURE__ */ React160.forwardRef(function DrawerSwipeAr
     popupElement.style.transition = "none";
     const backdropElement = store.context.backdropRef.current;
     if (backdropElement) {
-      backdropElement.setAttribute(DrawerPopupDataAttributes.swiping, "");
+      backdropElement.setAttribute(swiping, "");
       swipeBackdropElementRef.current = backdropElement;
-      backdropElement.style.setProperty(DrawerBackdropCssVars.swipeProgress, `${backdropProgress}`);
-      if (openProgress > 0 && frontmostHeight > 0) {
-        backdropElement.style.setProperty(DrawerPopupCssVars.height, `${frontmostHeight}px`);
+      backdropElement.style.setProperty(swipeProgress, `${backdropProgress}`);
+      if (openProgress > 0 && frontmostHeight2 > 0) {
+        backdropElement.style.setProperty(height, `${frontmostHeight2}px`);
       } else {
-        backdropElement.style.removeProperty(DrawerPopupCssVars.height);
+        backdropElement.style.removeProperty(height);
       }
     }
     providerContext?.visualStateStore.set({
       swipeProgress: openProgress,
-      frontmostHeight: openProgress > 0 ? frontmostHeight : 0
+      frontmostHeight: openProgress > 0 ? frontmostHeight2 : 0
     });
     appliedSwipeStylesRef.current = true;
     swipeAreaActiveRef.current = true;
@@ -20759,9 +21110,9 @@ var DrawerSwipeArea = /* @__PURE__ */ React160.forwardRef(function DrawerSwipeAr
   const clearSwipeStyles = useStableCallback(() => {
     const popupElement = swipePopupElementRef.current;
     if (popupElement) {
-      popupElement.style.removeProperty(DrawerPopupCssVars.swipeMovementX);
-      popupElement.style.removeProperty(DrawerPopupCssVars.swipeMovementY);
-      popupElement.removeAttribute(DrawerPopupDataAttributes.swiping);
+      popupElement.style.removeProperty(swipeMovementX);
+      popupElement.style.removeProperty(swipeMovementY);
+      popupElement.removeAttribute(swiping);
     }
     if (popupElement && popupTransitionRef.current !== null) {
       popupElement.style.transition = popupTransitionRef.current;
@@ -20769,9 +21120,9 @@ var DrawerSwipeArea = /* @__PURE__ */ React160.forwardRef(function DrawerSwipeAr
     }
     const backdropElement = swipeBackdropElementRef.current;
     if (backdropElement) {
-      backdropElement.removeAttribute(DrawerPopupDataAttributes.swiping);
-      backdropElement.style.setProperty(DrawerBackdropCssVars.swipeProgress, "0");
-      backdropElement.style.removeProperty(DrawerPopupCssVars.height);
+      backdropElement.removeAttribute(swiping);
+      backdropElement.style.setProperty(swipeProgress, "0");
+      backdropElement.style.removeProperty(height);
     }
     providerContext?.visualStateStore.set({
       swipeProgress: 0,
@@ -20807,8 +21158,8 @@ var DrawerSwipeArea = /* @__PURE__ */ React160.forwardRef(function DrawerSwipeAr
     elementRef: swipeAreaRef,
     trackDrag: false,
     movementCssVars: {
-      x: DrawerPopupCssVars.swipeMovementX,
-      y: DrawerPopupCssVars.swipeMovementY
+      x: swipeMovementX,
+      y: swipeMovementY
     },
     onSwipeStart(event) {
       disableDismissForSwipe();
@@ -20851,7 +21202,7 @@ var DrawerSwipeArea = /* @__PURE__ */ React160.forwardRef(function DrawerSwipeAr
       const threshold = resolveSwipeOpenThreshold();
       const hasEnoughDistance = displacement >= threshold;
       const hasEnoughVelocity = releaseVelocity >= VELOCITY_THRESHOLD;
-      const shouldOpen = direction === resolvedSwipeDirection && (hasEnoughDistance || hasEnoughVelocity) && !disabled2;
+      const shouldOpen = direction === resolvedSwipeDirection && (hasEnoughDistance || hasEnoughVelocity) && !disabled3;
       if (shouldOpen) {
         if (!store.select("open")) {
           openDrawer(event);
@@ -20890,10 +21241,10 @@ var DrawerSwipeArea = /* @__PURE__ */ React160.forwardRef(function DrawerSwipeAr
     };
   }, [store]);
   const state = {
-    open,
+    open: open7,
     swiping: swipe2.swiping,
     swipeDirection: resolvedSwipeDirection,
-    disabled: disabled2
+    disabled: disabled3
   };
   return useRenderElement("div", componentProps, {
     state,
@@ -20950,6 +21301,13 @@ var DrawerTrigger = DialogTrigger;
 var React162 = __toESM(require_react(), 1);
 var ReactDOM9 = __toESM(require_react_dom(), 1);
 
+// node_modules/@base-ui/react/dialog/viewport/DialogViewportDataAttributes.mjs
+var open6 = CommonPopupDataAttributes_exports.open;
+var closed6 = CommonPopupDataAttributes_exports.closed;
+var startingStyle6 = CommonPopupDataAttributes_exports.startingStyle;
+var endingStyle6 = CommonPopupDataAttributes_exports.endingStyle;
+var nestedDialogOpen2 = "data-nested-dialog-open";
+
 // node_modules/@base-ui/react/drawer/virtual-keyboard-provider/DrawerVirtualKeyboardContext.mjs
 var React161 = __toESM(require_react(), 1);
 var DrawerVirtualKeyboardContext = /* @__PURE__ */ React161.createContext(void 0);
@@ -20986,10 +21344,10 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
   const popupRef = store.context.popupRef;
   const backdropRef = store.context.backdropRef;
   const {
-    swipeDirection,
+    swipeDirection: swipeDirection3,
     notifyParentSwipingChange,
     notifyParentSwipeProgressChange,
-    frontmostHeight,
+    frontmostHeight: frontmostHeight2,
     snapToSequentialPoints,
     swipeAreaActiveRef
   } = useDrawerRootContext();
@@ -21000,17 +21358,17 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
     activeSnapPoint,
     activeSnapPointOffset,
     setActiveSnapPoint,
-    popupHeight
+    popupHeight: popupHeight2
   } = useDrawerSnapPoints();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const mounted = store.useState("mounted");
   const nested = store.useState("nested");
   const nestedOpenDrawerCount = store.useState("nestedOpenDrawerCount");
   const viewportElement = store.useState("viewportElement");
   const popupElementState = store.useState("popupElement");
   const visualStateStore = providerContext?.visualStateStore;
-  const nestedDrawerOpen = nestedOpenDrawerCount > 0;
-  const scrollAxis = swipeDirection === "left" || swipeDirection === "right" ? "horizontal" : "vertical";
+  const nestedDrawerOpen2 = nestedOpenDrawerCount > 0;
+  const scrollAxis = swipeDirection3 === "left" || swipeDirection3 === "right" ? "horizontal" : "vertical";
   const isVerticalScrollAxis = scrollAxis === "vertical";
   const crossScrollAxis = isVerticalScrollAxis ? "horizontal" : "vertical";
   const [swipeRelease, setSwipeRelease] = React162.useState(null);
@@ -21025,7 +21383,7 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
   const touchScrollStateRef = React162.useRef(null);
   const virtualKeyboard = useDrawerVirtualKeyboardContext();
   const snapPointRange = React162.useMemo(() => {
-    if (!snapPoints || snapPoints.length < 2 || resolvedSnapPoints.length < 2 || swipeDirection !== "down" && swipeDirection !== "up") {
+    if (!snapPoints || snapPoints.length < 2 || resolvedSnapPoints.length < 2 || swipeDirection3 !== "down" && swipeDirection3 !== "up") {
       return null;
     }
     const offsets = resolvedSnapPoints.map((point) => point.offset).sort((a, b) => a - b);
@@ -21036,7 +21394,7 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
       minOffset,
       range
     };
-  }, [resolvedSnapPoints, snapPoints, swipeDirection]);
+  }, [resolvedSnapPoints, snapPoints, swipeDirection3]);
   const snapPointProgress = React162.useMemo(() => {
     if (!snapPointRange || activeSnapPointOffset === null) {
       return null;
@@ -21044,18 +21402,18 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
     return clamp2((activeSnapPointOffset - snapPointRange.minOffset) / snapPointRange.range, 0, 1);
   }, [activeSnapPointOffset, snapPointRange]);
   const swipeDirections = React162.useMemo(() => {
-    if (snapPoints && snapPoints.length > 0 && (swipeDirection === "down" || swipeDirection === "up")) {
-      return swipeDirection === "down" ? ["down", "up"] : ["up", "down"];
+    if (snapPoints && snapPoints.length > 0 && (swipeDirection3 === "down" || swipeDirection3 === "up")) {
+      return swipeDirection3 === "down" ? ["down", "up"] : ["up", "down"];
     }
-    return [swipeDirection];
-  }, [snapPoints, swipeDirection]);
+    return [swipeDirection3];
+  }, [snapPoints, swipeDirection3]);
   const setSwipeDismissed = useStableCallback((dismissed) => {
-    popupRef.current?.toggleAttribute(DrawerPopupDataAttributes.swipeDismiss, dismissed);
-    backdropRef.current?.toggleAttribute(DrawerPopupDataAttributes.swipeDismiss, dismissed);
+    popupRef.current?.toggleAttribute(swipeDismiss, dismissed);
+    backdropRef.current?.toggleAttribute(swipeDismiss, dismissed);
   });
   const clearSwipeRelease = useStableCallback(() => {
     setSwipeDismissed(false);
-    popupRef.current?.removeAttribute(TransitionStatusDataAttributes.endingStyle);
+    popupRef.current?.removeAttribute(TransitionStatusDataAttributes_exports.endingStyle);
     setSwipeRelease(null);
   });
   const finishNestedSwipe = useStableCallback(() => {
@@ -21066,9 +21424,9 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
     notifyParentSwipingChange?.(false);
   });
   const applySwipeProgress = useStableCallback((resolvedProgress, shouldTrackProgress, notifyParent) => {
-    const isActive = open && !nested && shouldTrackProgress;
-    const swipeProgress = isActive ? resolvedProgress : 0;
-    const nestedSwipeProgress = open && shouldTrackProgress ? resolvedProgress : 0;
+    const isActive = open7 && !nested && shouldTrackProgress;
+    const swipeProgress2 = isActive ? resolvedProgress : 0;
+    const nestedSwipeProgress = open7 && shouldTrackProgress ? resolvedProgress : 0;
     if (notifyParent && notifyParentSwipeProgressChange) {
       notifyParentSwipeProgressChange(nestedSwipeProgress);
       if (nestedSwipeProgress <= 0) {
@@ -21076,19 +21434,19 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
       }
     }
     visualStateStore?.set({
-      swipeProgress,
-      frontmostHeight: swipeProgress > 0 ? frontmostHeight : 0
+      swipeProgress: swipeProgress2,
+      frontmostHeight: swipeProgress2 > 0 ? frontmostHeight2 : 0
     });
     const backdropElement = backdropRef.current;
     if (!backdropElement) {
       return;
     }
-    const showProgress = isActive && swipeProgress > 0;
-    backdropElement.style.setProperty(DrawerBackdropCssVars.swipeProgress, showProgress ? `${swipeProgress}` : "0");
-    if (showProgress && frontmostHeight > 0) {
-      backdropElement.style.setProperty(DrawerPopupCssVars.height, `${frontmostHeight}px`);
+    const showProgress = isActive && swipeProgress2 > 0;
+    backdropElement.style.setProperty(swipeProgress, showProgress ? `${swipeProgress2}` : "0");
+    if (showProgress && frontmostHeight2 > 0) {
+      backdropElement.style.setProperty(height, `${frontmostHeight2}px`);
     } else {
-      backdropElement.style.removeProperty(DrawerPopupCssVars.height);
+      backdropElement.style.removeProperty(height);
     }
   });
   function resolveSwipeRelease(popupElement, direction, deltaX, deltaY, velocityX, velocityY, releaseVelocityX, releaseVelocityY) {
@@ -21116,7 +21474,7 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
     if (nestedSwipeActiveRef.current || !details) {
       return;
     }
-    const direction = details.direction ?? swipeDirection;
+    const direction = details.direction ?? swipeDirection3;
     const delta = getDisplacement(direction, details.deltaX, details.deltaY);
     if (Math.abs(delta) < MIN_SWIPE_THRESHOLD) {
       return;
@@ -21125,14 +21483,14 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
     notifyParentSwipingChange?.(true);
   }
   const swipe2 = useSwipeDismiss({
-    enabled: mounted && !nestedDrawerOpen,
+    enabled: mounted && !nestedDrawerOpen2,
     directions: swipeDirections,
     elementRef: store.context.popupRef,
     ignoreSelectorWhenTouch: false,
     ignoreScrollableAncestors: true,
     movementCssVars: {
-      x: DrawerPopupCssVars.swipeMovementX,
-      y: DrawerPopupCssVars.swipeMovementY
+      x: swipeMovementX,
+      y: swipeMovementY
     },
     onSwipeStart(event) {
       if ("touches" in event || event.pointerType === "touch") {
@@ -21151,10 +21509,10 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
       }
       selection.removeAllRanges();
     },
-    onSwipingChange(swiping) {
-      swipingRef.current = swiping;
-      setBackdropSwipingAttribute(store.context.backdropRef.current, swiping);
-      if (!swiping && !notifyParentSwipeProgressChange) {
+    onSwipingChange(swiping3) {
+      swipingRef.current = swiping3;
+      setBackdropSwipingAttribute(store.context.backdropRef.current, swiping3);
+      if (!swiping3 && !notifyParentSwipeProgressChange) {
         finishNestedSwipe();
       }
     },
@@ -21182,26 +21540,33 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
       return true;
     },
     onProgress(progress, details) {
-      updateNestedSwipeActive(details);
+      const swiping3 = swipingRef.current;
+      if (swiping3) {
+        updateNestedSwipeActive(details);
+      }
       const hasSnapPoints = Boolean(snapPoints && snapPoints.length > 0);
-      if (swipingRef.current && swipeDirection === "down" && hasSnapPoints && details) {
+      if (swiping3 && swipeDirection3 === "down" && hasSnapPoints && details) {
         const popupElement = store.context.popupRef.current;
         if (popupElement) {
           popupElement.style.removeProperty("transform");
-          popupElement.style.setProperty(DrawerPopupCssVars.swipeMovementY, `${getSnapPointSwipeMovement(activeSnapPointOffset ?? 0, details.deltaY)}px`);
+          popupElement.style.setProperty(swipeMovementY, `${getSnapPointSwipeMovement(activeSnapPointOffset ?? 0, details.deltaY)}px`);
         }
       }
       let resolvedProgress = progress;
-      if (snapPointRange && popupHeight > 0) {
+      if (snapPointRange && popupHeight2 > 0) {
         const baseOffset = activeSnapPointOffset ?? snapPointRange.minOffset;
         const offsetToProgress = (nextOffset) => clamp2((nextOffset - snapPointRange.minOffset) / snapPointRange.range, 0, 1);
-        if (details && Number.isFinite(details.deltaY)) {
-          resolvedProgress = offsetToProgress(clamp2(baseOffset + details.deltaY, 0, popupHeight));
+        if (swiping3 && details && Number.isFinite(details.deltaY)) {
+          resolvedProgress = offsetToProgress(clamp2(baseOffset + details.deltaY, 0, popupHeight2));
         } else if (snapPointProgress !== null) {
           resolvedProgress = snapPointProgress;
         }
       }
-      applySwipeProgress(resolvedProgress, true, true);
+      if (!swiping3) {
+        notifyParentSwipeProgressChange?.(0);
+        finishNestedSwipe();
+      }
+      applySwipeProgress(resolvedProgress, true, swiping3);
     },
     onRelease({
       event,
@@ -21223,7 +21588,7 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
         finishNestedSwipe();
         setSwipeDismissed(true);
         releasePopupElement.style.removeProperty("transition");
-        releasePopupElement.setAttribute(TransitionStatusDataAttributes.endingStyle, "");
+        releasePopupElement.setAttribute(TransitionStatusDataAttributes_exports.endingStyle, "");
         ReactDOM9.flushSync(() => {
           setSwipeRelease(resolveSwipeRelease(releasePopupElement, resolvedDirection, deltaX, deltaY, velocityX, velocityY, releaseVelocityX, releaseVelocityY));
         });
@@ -21250,11 +21615,11 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
         }
         return shouldClose;
       }
-      if (swipeDirection !== "down" && swipeDirection !== "up") {
+      if (swipeDirection3 !== "down" && swipeDirection3 !== "up") {
         clearSwipeRelease();
         return void 0;
       }
-      if (!popupHeight) {
+      if (!popupHeight2) {
         clearSwipeRelease();
         return false;
       }
@@ -21262,10 +21627,10 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
         clearSwipeRelease();
         return void 0;
       }
-      const dragDelta = swipeDirection === "down" ? deltaY : -deltaY;
+      const dragDelta = swipeDirection3 === "down" ? deltaY : -deltaY;
       const dragDirection = Math.sign(dragDelta);
-      const releaseDirectionalVelocity = swipeDirection === "down" ? releaseVelocityY : -releaseVelocityY;
-      const fallbackDirectionalVelocity = swipeDirection === "down" ? velocityY : -velocityY;
+      const releaseDirectionalVelocity = swipeDirection3 === "down" ? releaseVelocityY : -releaseVelocityY;
+      const fallbackDirectionalVelocity = swipeDirection3 === "down" ? velocityY : -velocityY;
       let resolvedDirectionalVelocity = releaseDirectionalVelocity;
       if (dragDirection !== 0 && Math.abs(dragDelta) >= MIN_SWIPE_THRESHOLD) {
         const velocityDirection = Math.sign(resolvedDirectionalVelocity);
@@ -21274,14 +21639,29 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
         }
       }
       const currentOffset = activeSnapPointOffset ?? 0;
-      const dragTargetOffset = clamp2(currentOffset + dragDelta, 0, popupHeight);
+      const dragTargetOffset = clamp2(currentOffset + dragDelta, 0, popupHeight2);
       const velocityOffset = Math.abs(resolvedDirectionalVelocity) >= SNAP_VELOCITY_THRESHOLD ? clamp2(resolvedDirectionalVelocity, -MAX_SNAP_VELOCITY, MAX_SNAP_VELOCITY) * SNAP_VELOCITY_MULTIPLIER : 0;
-      const targetOffset = snapToSequentialPoints ? dragTargetOffset : clamp2(dragTargetOffset + velocityOffset, 0, popupHeight);
+      const targetOffset = snapToSequentialPoints ? dragTargetOffset : clamp2(dragTargetOffset + velocityOffset, 0, popupHeight2);
       const snapPointEventDetails = createChangeEventDetails(reason_parts_exports.swipe, event);
-      const closeFromSnapPoints = () => {
-        pendingSwipeCloseSnapPointRef.current = activeSnapPoint;
+      const settleInPlace = () => {
+        applySwipeProgress(0, true, true);
+        clearSwipeRelease();
+        return false;
+      };
+      const settleOnSnapPoint = (snapPoint) => {
+        setActiveSnapPoint(snapPoint.value, snapPointEventDetails);
+        return settleInPlace();
+      };
+      const closeFromSnapPoints = (fallbackSnapPoint) => {
+        if (!direction) {
+          return settleOnSnapPoint(fallbackSnapPoint);
+        }
         setActiveSnapPoint(null, snapPointEventDetails);
-        startSwipeRelease(swipeDirection);
+        if (snapPointEventDetails.isCanceled) {
+          return settleInPlace();
+        }
+        pendingSwipeCloseSnapPointRef.current = activeSnapPoint;
+        startSwipeRelease(swipeDirection3);
         return true;
       };
       if (snapToSequentialPoints) {
@@ -21302,29 +21682,25 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
               effectiveTargetOffset = adjacentPoint.offset;
             }
           } else if (dragDirection > 0) {
-            return closeFromSnapPoints();
+            return closeFromSnapPoints(targetSnapPoint);
           }
         }
-        const closeDistance2 = Math.abs(effectiveTargetOffset - popupHeight);
+        const closeDistance2 = Math.abs(effectiveTargetOffset - popupHeight2);
         const snapDistance = Math.abs(effectiveTargetOffset - targetSnapPoint.offset);
         if (closeDistance2 < snapDistance) {
-          return closeFromSnapPoints();
+          return closeFromSnapPoints(targetSnapPoint);
         }
-        setActiveSnapPoint(targetSnapPoint.value, snapPointEventDetails);
-        clearSwipeRelease();
-        return false;
-      }
-      if (resolvedDirectionalVelocity >= FAST_SWIPE_VELOCITY && dragDelta > 0) {
-        return closeFromSnapPoints();
+        return settleOnSnapPoint(targetSnapPoint);
       }
       const closestSnapPoint = resolvedSnapPoints[closestSnapPointIndex(resolvedSnapPoints.map((point) => point.offset), targetOffset)];
-      const closeDistance = Math.abs(targetOffset - popupHeight);
-      if (closeDistance < Math.abs(targetOffset - closestSnapPoint.offset)) {
-        return closeFromSnapPoints();
+      if (resolvedDirectionalVelocity >= FAST_SWIPE_VELOCITY && dragDelta > 0) {
+        return closeFromSnapPoints(closestSnapPoint);
       }
-      setActiveSnapPoint(closestSnapPoint.value, snapPointEventDetails);
-      clearSwipeRelease();
-      return false;
+      const closeDistance = Math.abs(targetOffset - popupHeight2);
+      if (closeDistance < Math.abs(targetOffset - closestSnapPoint.offset)) {
+        return closeFromSnapPoints(closestSnapPoint);
+      }
+      return settleOnSnapPoint(closestSnapPoint);
     },
     onDismiss(event) {
       visualStateStore?.set({
@@ -21333,8 +21709,8 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
       });
       const backdropElement = store.context.backdropRef.current;
       if (backdropElement) {
-        backdropElement.style.setProperty(DrawerBackdropCssVars.swipeProgress, "0");
-        backdropElement.style.removeProperty(DrawerPopupCssVars.height);
+        backdropElement.style.setProperty(swipeProgress, "0");
+        backdropElement.style.removeProperty(height);
       }
       const dismissEventDetails = createChangeEventDetails(reason_parts_exports.swipe, event);
       store.setOpen(false, dismissEventDetails);
@@ -21389,7 +21765,7 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
         return;
       }
       const allowTouchMove = shouldIgnoreSwipeForTextSelection(doc, resolvedRootElement);
-      if (allowTouchMove || !open || !mounted || nestedDrawerOpen) {
+      if (allowTouchMove || !open7 || !mounted || nestedDrawerOpen2) {
         return;
       }
       if (shouldYieldTouchMove(touchState, event, touch, isVerticalScrollAxis)) {
@@ -21412,7 +21788,7 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
         return;
       }
       if (drawerAxisDelta !== 0) {
-        const canSwipeFromScrollEdge = canSwipeFromScrollEdgeOnMove(scrollTarget, scrollAxis, swipeDirection, drawerAxisDelta);
+        const canSwipeFromScrollEdge = canSwipeFromScrollEdgeOnMove(scrollTarget, scrollAxis, swipeDirection3, drawerAxisDelta);
         if (!touchState.allowSwipe) {
           if (event.cancelable && canSwipeFromScrollEdge) {
             touchState.allowSwipe = true;
@@ -21446,32 +21822,32 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
       passive: false,
       capture: true
     });
-  }, [mounted, nestedDrawerOpen, open, popupElementState, isVerticalScrollAxis, scrollAxis, swipeDirection, moveSwipeNative, viewportElement, virtualKeyboard]);
+  }, [mounted, nestedDrawerOpen2, open7, popupElementState, isVerticalScrollAxis, scrollAxis, swipeDirection3, moveSwipeNative, viewportElement, virtualKeyboard]);
   useIsoLayoutEffect(() => {
     if (!snapPointRange || swipe2.swiping) {
       return;
     }
-    applySwipeProgress(!open || nested ? 0 : snapPointProgress ?? 0, true, false);
-  }, [applySwipeProgress, frontmostHeight, nested, notifyParentSwipeProgressChange, open, snapPointProgress, snapPointRange, swipe2.swiping, store, visualStateStore]);
+    applySwipeProgress(!open7 || nested ? 0 : snapPointProgress ?? 0, true, false);
+  }, [applySwipeProgress, frontmostHeight2, nested, notifyParentSwipeProgressChange, open7, snapPointProgress, snapPointRange, swipe2.swiping, store, visualStateStore]);
   useIsoLayoutEffect(() => {
     if (!notifyParentSwipeProgressChange) {
       return void 0;
     }
-    if (!open) {
+    if (!open7) {
       notifyParentSwipeProgressChange(0);
     }
     return () => {
       notifyParentSwipeProgressChange(0);
     };
-  }, [notifyParentSwipeProgressChange, open]);
+  }, [notifyParentSwipeProgressChange, open7]);
   useIsoLayoutEffect(() => {
-    if (open) {
+    if (open7) {
       if (!swipeAreaActiveRef.current) {
         resetSwipe();
       }
       clearSwipeRelease();
     }
-  }, [clearSwipeRelease, open, resetSwipe, swipeAreaActiveRef]);
+  }, [clearSwipeRelease, open7, resetSwipe, swipeAreaActiveRef]);
   useIsoLayoutEffect(() => {
     const backdropElement = backdropRef.current;
     return () => {
@@ -21515,7 +21891,7 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
       onPointerDown(event) {
         lastPointerTypeRef.current = event.pointerType;
         ignoreNextTouchStartFromPenRef.current = event.pointerType === "pen";
-        if (!open || !mounted || nestedDrawerOpen) {
+        if (!open7 || !mounted || nestedDrawerOpen2) {
           return;
         }
         const elementAtPoint = getElementAtPoint(event.currentTarget.getRootNode(), event.clientX, event.clientY);
@@ -21550,7 +21926,7 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
           resetTouchSwipeState(false);
           return;
         }
-        if (!open || !mounted || nestedDrawerOpen) {
+        if (!open7 || !mounted || nestedDrawerOpen2) {
           resetTouchSwipeState(false);
           return;
         }
@@ -21580,7 +21956,7 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
         const hasCrossAxisScrollableContent = findScrollableTouchTarget(target, rootElement, crossScrollAxis) != null;
         let allowSwipe = null;
         if (scrollTarget) {
-          const canSwipeFromEdge = isAtSwipeStartEdge(scrollTarget, scrollAxis, swipeDirection);
+          const canSwipeFromEdge = isAtSwipeStartEdge(scrollTarget, scrollAxis, swipeDirection3);
           allowSwipe = canSwipeFromEdge ? null : false;
         }
         touchScrollStateRef.current = {
@@ -21608,7 +21984,7 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
       },
       // Drawer popups use drawer-specific nested state attributes.
       // Suppress DialogViewport's generic nested dialog attribute.
-      ["data-nested-dialog-open"]: void 0
+      [nestedDialogOpen2]: void 0
     }),
     children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(DrawerViewportContext.Provider, {
       value: swipeProviderValue,
@@ -21617,8 +21993,8 @@ var DrawerViewport = /* @__PURE__ */ React162.forwardRef(function DrawerViewport
   });
 });
 if (true) DrawerViewport.displayName = "DrawerViewport";
-function setBackdropSwipingAttribute(backdropElement, swiping) {
-  backdropElement?.toggleAttribute(DrawerPopupDataAttributes.swiping, swiping);
+function setBackdropSwipingAttribute(backdropElement, swiping3) {
+  backdropElement?.toggleAttribute(swiping, swiping3);
 }
 function isSwipeIgnoredTarget(target) {
   return Boolean(target?.closest(BASE_UI_SWIPE_IGNORE_SELECTOR));
@@ -21736,10 +22112,7 @@ function shouldDismissFromStartEdge(direction, axis) {
 var React163 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/drawer/viewport/DrawerViewportCssVars.mjs
-var DrawerViewportCssVars = /* @__PURE__ */ (function(DrawerViewportCssVars2) {
-  DrawerViewportCssVars2["keyboardInset"] = "--drawer-keyboard-inset";
-  return DrawerViewportCssVars2;
-})({});
+var keyboardInset = "--drawer-keyboard-inset";
 
 // node_modules/@base-ui/react/drawer/virtual-keyboard-provider/DrawerVirtualKeyboardProvider.mjs
 var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
@@ -21758,13 +22131,13 @@ function DrawerVirtualKeyboardProvider(props) {
     children
   } = props;
   const store = useDialogRootContext();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const mounted = store.useState("mounted");
   const modal = store.useState("modal");
   const nestedOpenDialogCount = store.useState("nestedOpenDialogCount");
   const viewportElement = store.useState("viewportElement");
   const rootElement = viewportElement;
-  const nestedDrawerOpen = nestedOpenDialogCount > 0;
+  const nestedDrawerOpen2 = nestedOpenDialogCount > 0;
   const pendingKeyboardFocusMovedRef = React163.useRef(false);
   const keyboardTouchStartRef = React163.useRef(null);
   const focusedKeyboardTargetRef = React163.useRef(null);
@@ -21826,7 +22199,7 @@ function DrawerVirtualKeyboardProvider(props) {
     keyboardTouchStartRef.current = null;
   });
   React163.useEffect(() => {
-    if (!mounted || !open) {
+    if (!mounted || !open7) {
       focusedKeyboardTargetRef.current = null;
       restoreKeyboardScrollAdjustment();
       keyboardFocusFrame.cancel();
@@ -21844,7 +22217,7 @@ function DrawerVirtualKeyboardProvider(props) {
     let keyboardScrollChecks = 0;
     let keyboardScrollObserved = -1;
     const setDrawerKeyboardInset = (inset) => {
-      rootElement.style.setProperty(DrawerViewportCssVars.keyboardInset, `${Math.max(0, Math.ceil(inset))}px`);
+      rootElement.style.setProperty(keyboardInset, `${Math.max(0, Math.ceil(inset))}px`);
     };
     const clearFocusedKeyboardTarget = () => {
       focusedKeyboardTargetRef.current = null;
@@ -21857,7 +22230,7 @@ function DrawerVirtualKeyboardProvider(props) {
     const baseScrollX = win.scrollX;
     const baseScrollY = win.scrollY;
     const restoreWindowScroll = () => {
-      if (modal !== true || nestedDrawerOpen || !focusedKeyboardTargetRef.current || getKeyboardVisualViewport(win) == null) {
+      if (modal !== true || nestedDrawerOpen2 || !focusedKeyboardTargetRef.current || getKeyboardVisualViewport(win) == null) {
         return false;
       }
       if (win.scrollX !== baseScrollX || win.scrollY !== baseScrollY) {
@@ -21883,7 +22256,7 @@ function DrawerVirtualKeyboardProvider(props) {
     const alignFocusedKeyboardTarget = () => {
       consumePreemptedFocus();
       const target = focusedKeyboardTargetRef.current;
-      if (nestedDrawerOpen || !target || !contains(rootElement, target)) {
+      if (nestedDrawerOpen2 || !target || !contains(rootElement, target)) {
         setDrawerKeyboardInset(0);
         restoreKeyboardScrollAdjustment();
         return;
@@ -21960,7 +22333,7 @@ function DrawerVirtualKeyboardProvider(props) {
       keyboardRealignTimeout.start(KEYBOARD_REALIGN_INTERVAL, realign);
     };
     const captureFocusedKeyboardTarget = (eventTarget) => {
-      if (nestedDrawerOpen) {
+      if (nestedDrawerOpen2) {
         return false;
       }
       const target = resolveKeyboardInputTarget(eventTarget);
@@ -22027,9 +22400,9 @@ function DrawerVirtualKeyboardProvider(props) {
       cleanupListeners.forEach((cleanup) => cleanup());
       consumePreemptedFocus();
       clearFocusedKeyboardTarget();
-      rootElement.style.removeProperty(DrawerViewportCssVars.keyboardInset);
+      rootElement.style.removeProperty(keyboardInset);
     };
-  }, [animateKeyboardScroll, keyboardFocusFrame, keyboardRealignTimeout, modal, mounted, nestedDrawerOpen, open, restoreKeyboardScrollAdjustment, rootElement, setKeyboardScrollSlack]);
+  }, [animateKeyboardScroll, keyboardFocusFrame, keyboardRealignTimeout, modal, mounted, nestedDrawerOpen2, open7, restoreKeyboardScrollAdjustment, rootElement, setKeyboardScrollSlack]);
   const onTouchStart = useStableCallback((event) => {
     const touch = event.touches[0];
     pendingKeyboardFocusMovedRef.current = false;
@@ -22049,7 +22422,7 @@ function DrawerVirtualKeyboardProvider(props) {
     }
   });
   const onTouchEnd = useStableCallback((event) => {
-    if (!open || !mounted || nestedDrawerOpen || !rootElement || !keyboardTouchStartRef.current || pendingKeyboardFocusMovedRef.current) {
+    if (!open7 || !mounted || nestedDrawerOpen2 || !rootElement || !keyboardTouchStartRef.current || pendingKeyboardFocusMovedRef.current) {
       resetTouchTrackingState();
       return;
     }
@@ -22268,10 +22641,10 @@ var React165 = __toESM(require_react(), 1);
 var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
 var LabelableProvider = function LabelableProvider2(props) {
   const defaultId = useBaseUiId();
-  const initialControlId = props.controlId === void 0 ? defaultId : props.controlId;
-  const [controlId, setControlIdState] = React165.useState(initialControlId);
-  const [labelId, setLabelId] = React165.useState(props.labelId);
+  const [controlIdState, setControlIdState] = React165.useState(defaultId);
+  const [labelId, setLabelId] = React165.useState();
   const [messageIds, setMessageIds] = React165.useState([]);
+  const controlId = controlIdState === void 0 ? defaultId : controlIdState;
   const registrationsRef = useRefWithInit(() => /* @__PURE__ */ new Map());
   const {
     messageIds: parentMessageIds
@@ -22280,16 +22653,16 @@ var LabelableProvider = function LabelableProvider2(props) {
     const registrations = registrationsRef.current;
     if (nextId === void 0) {
       registrations.delete(source);
-      return;
+    } else {
+      registrations.set(source, nextId);
     }
-    registrations.set(source, nextId);
     setControlIdState((prev) => {
       if (registrations.size === 0) {
-        return void 0;
+        return prev;
       }
       let nextControlId;
       for (const id of registrations.values()) {
-        if (prev !== void 0 && id === prev) {
+        if (id === prev) {
           return prev;
         }
         if (nextControlId === void 0) {
@@ -22298,6 +22671,11 @@ var LabelableProvider = function LabelableProvider2(props) {
       }
       return nextControlId;
     });
+  });
+  const resetControlId = useStableCallback(() => {
+    if (registrationsRef.current.size === 0) {
+      setControlIdState(defaultId);
+    }
   });
   const getDescriptionProps = React165.useCallback((externalProps) => {
     const ids2 = externalProps["aria-describedby"] ? externalProps["aria-describedby"].split(" ") : [];
@@ -22310,12 +22688,13 @@ var LabelableProvider = function LabelableProvider2(props) {
   const contextValue = React165.useMemo(() => ({
     controlId,
     registerControlId,
+    resetControlId,
     labelId,
     setLabelId,
     messageIds,
     setMessageIds,
     getDescriptionProps
-  }), [controlId, registerControlId, labelId, setLabelId, messageIds, setMessageIds, getDescriptionProps]);
+  }), [controlId, registerControlId, resetControlId, labelId, setLabelId, messageIds, setMessageIds, getDescriptionProps]);
   return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(LabelableContext.Provider, {
     value: contextValue,
     children: props.children
@@ -22327,8 +22706,9 @@ if (true) LabelableProvider.displayName = "LabelableProvider";
 var React166 = __toESM(require_react(), 1);
 function useFieldControlRegistration(params) {
   const {
+    change,
     commit,
-    invalid,
+    invalid: invalid2,
     markedDirtyRef,
     name,
     setRegisteredFieldName,
@@ -22373,7 +22753,7 @@ function useFieldControlRegistration(params) {
       getValue: getValueForForm,
       name: name ?? registration.name,
       controlRef: registration.controlRef,
-      validityData: getCombinedFieldValidityData(validityData, invalid),
+      validityData: getCombinedFieldValidityData(validityData, invalid2),
       validate
     });
   }
@@ -22403,10 +22783,10 @@ function useFieldControlRegistration(params) {
       getValue: getValueForForm,
       name: name ?? registration.name,
       controlRef: registration.controlRef,
-      validityData: getCombinedFieldValidityData(validityData, invalid),
+      validityData: getCombinedFieldValidityData(validityData, invalid2),
       validate
     });
-  }, [formRef, getValueForForm, invalid, name, setRegisteredFieldName, validate, validityData]);
+  }, [formRef, getValueForForm, invalid2, name, setRegisteredFieldName, validate, validityData]);
   useIsoLayoutEffect(() => {
     const fields2 = formRef.current.fields;
     return () => {
@@ -22420,6 +22800,7 @@ function useFieldControlRegistration(params) {
     if (!registration) {
       if (activeFieldControlSourceRef.current === source) {
         activeFieldControlSourceRef.current = null;
+        change(void 0, true);
         deleteRegistration();
         registrationRef.current = null;
         setRegisteredFieldName(void 0);
@@ -22428,6 +22809,10 @@ function useFieldControlRegistration(params) {
       return;
     }
     const previousId = registrationRef.current?.id;
+    const previousSource = activeFieldControlSourceRef.current;
+    if (previousSource && previousSource !== source) {
+      change(void 0, true);
+    }
     activeFieldControlSourceRef.current = source;
     registrationRef.current = registration;
     if (!name) {
@@ -22449,7 +22834,7 @@ var FieldRootInner = /* @__PURE__ */ React167.forwardRef(function FieldRootInner
   const {
     errors,
     validationMode: formValidationMode,
-    submitAttemptedRef
+    submitCountRef
   } = useFormContext();
   const {
     render: render4,
@@ -22468,7 +22853,7 @@ var FieldRootInner = /* @__PURE__ */ React167.forwardRef(function FieldRootInner
   } = componentProps;
   const disabledFieldset = useFieldsetRootContext(true)?.disabled;
   const validate = useStableCallback(validateProp || (() => null));
-  const disabled2 = disabledFieldset || disabledProp;
+  const disabled3 = disabledFieldset || disabledProp;
   const [touchedState, setTouchedUnwrapped] = React167.useState(false);
   const [dirtyState, setDirtyUnwrapped] = React167.useState(false);
   const [filled, setFilled] = React167.useState(false);
@@ -22499,10 +22884,10 @@ var FieldRootInner = /* @__PURE__ */ React167.forwardRef(function FieldRootInner
     }
     setTouchedUnwrapped(value);
   });
-  const shouldValidateOnChange = useStableCallback(() => validationMode === "onChange" || validationMode === "onSubmit" && submitAttemptedRef.current);
+  const shouldValidateOnChange = useStableCallback(() => validationMode === "onChange" || validationMode === "onSubmit" && submitCountRef.current > 0);
   const formError = effectiveName && Object.hasOwn(errors, effectiveName) ? errors[effectiveName] : null;
   const hasFormError = !!(Array.isArray(formError) ? formError.length : formError);
-  const invalid = invalidProp === true || hasFormError;
+  const invalid2 = invalidProp === true || hasFormError;
   const [validityData, setValidityData] = React167.useState({
     state: DEFAULT_VALIDITY_STATE,
     error: "",
@@ -22510,29 +22895,31 @@ var FieldRootInner = /* @__PURE__ */ React167.forwardRef(function FieldRootInner
     value: null,
     initialValue: null
   });
-  const valid = !invalid && (disabled2 ? null : validityData.state.valid);
+  const valid2 = !invalid2 && (disabled3 ? null : validityData.state.valid);
   const state = React167.useMemo(() => ({
-    disabled: disabled2,
+    disabled: disabled3,
     touched,
     dirty,
-    valid,
+    valid: valid2,
     filled,
     focused
-  }), [disabled2, touched, dirty, valid, filled, focused]);
+  }), [disabled3, touched, dirty, valid2, filled, focused]);
   const validation = useFieldValidation({
     setValidityData,
     validate,
     validityData,
     validationDebounceTime,
-    invalid,
+    invalid: invalid2,
     markedDirtyRef,
     state,
     shouldValidateOnChange,
+    validationMode,
     registeredFieldIdRef
   });
   const [validateFieldControl, registerFieldControl] = useFieldControlRegistration({
+    change: validation.change,
     commit: validation.commit,
-    invalid,
+    invalid: invalid2,
     markedDirtyRef,
     name,
     setRegisteredFieldName,
@@ -22544,11 +22931,11 @@ var FieldRootInner = /* @__PURE__ */ React167.forwardRef(function FieldRootInner
     validate: validateFieldControl
   }), [validateFieldControl]);
   const contextValue = React167.useMemo(() => ({
-    invalid,
+    invalid: invalid2,
     name: effectiveName,
     validityData,
     setValidityData,
-    disabled: disabled2,
+    disabled: disabled3,
     setTouched,
     setDirty,
     setFilled,
@@ -22558,7 +22945,7 @@ var FieldRootInner = /* @__PURE__ */ React167.forwardRef(function FieldRootInner
     state,
     registerFieldControl,
     validation
-  }), [invalid, effectiveName, validityData, disabled2, setTouched, setDirty, setFilled, setFocused, validationMode, shouldValidateOnChange, state, registerFieldControl, validation]);
+  }), [invalid2, effectiveName, validityData, disabled3, setTouched, setDirty, setFilled, setFocused, validationMode, shouldValidateOnChange, state, registerFieldControl, validation]);
   const element = useRenderElement("div", componentProps, {
     ref: forwardedRef,
     state,
@@ -22812,13 +23199,15 @@ var FieldControl = /* @__PURE__ */ React171.forwardRef(function FieldControl2(co
     validation
   } = useFieldRootContext();
   const {
-    clearErrors
+    clearErrors,
+    elementRef: formElementRef,
+    submitCountRef
   } = useFormContext();
-  const disabled2 = fieldDisabled || disabledProp;
+  const disabled3 = fieldDisabled || disabledProp;
   const name = fieldName ?? nameProp;
   const state = {
     ...fieldState,
-    disabled: disabled2
+    disabled: disabled3
   };
   const {
     labelId
@@ -22826,20 +23215,6 @@ var FieldControl = /* @__PURE__ */ React171.forwardRef(function FieldControl2(co
   const id = useLabelableId({
     id: idProp
   });
-  useIsoLayoutEffect(() => {
-    const hasExternalValue = valueProp != null;
-    if (validation.inputRef.current?.value || hasExternalValue && valueProp !== "") {
-      setFilled(true);
-    } else if (hasExternalValue && valueProp === "") {
-      setFilled(false);
-    }
-  }, [validation.inputRef, setFilled, valueProp]);
-  const inputRef = React171.useRef(null);
-  useIsoLayoutEffect(() => {
-    if (autoFocus && inputRef.current === activeElement(ownerDocument(inputRef.current))) {
-      setFocused(true);
-    }
-  }, [autoFocus, setFocused]);
   const [valueUnwrapped] = useControlled({
     controlled: valueProp,
     default: defaultValue3,
@@ -22848,14 +23223,36 @@ var FieldControl = /* @__PURE__ */ React171.forwardRef(function FieldControl2(co
   });
   const isControlled = valueProp !== void 0;
   const value = isControlled ? valueUnwrapped : void 0;
+  const serializedValue = value == null ? void 0 : String(value);
   const getValueFromInput = useStableCallback(() => validation.inputRef.current?.value);
-  useRegisterFieldControl(validation.inputRef, id, value, getValueFromInput, !disabled2, nameProp);
+  useRegisterFieldControl(validation.inputRef, id, serializedValue, getValueFromInput, !disabled3, nameProp);
+  useIsoLayoutEffect(() => {
+    const currentValue = serializedValue ?? validation.inputRef.current?.value;
+    if (currentValue !== void 0) {
+      setFilled(currentValue !== "");
+    }
+  }, [serializedValue, validation.inputRef, setFilled]);
+  useValueChanged(serializedValue, () => {
+    if (serializedValue === void 0) {
+      return;
+    }
+    clearErrors(name);
+    setDirty(serializedValue !== (validityData.initialValue ?? ""));
+    validation.change(serializedValue);
+  });
+  const inputRef = React171.useRef(null);
+  const enterValidationTimeout = useTimeout();
+  useIsoLayoutEffect(() => {
+    if (autoFocus && inputRef.current === activeElement(ownerDocument(inputRef.current))) {
+      setFocused(true);
+    }
+  }, [autoFocus, setFocused]);
   const element = useRenderElement("input", componentProps, {
     ref: [forwardedRef, inputRef],
     state,
     props: [{
       id,
-      disabled: disabled2,
+      disabled: disabled3,
       name,
       ref: validation.inputRef,
       "aria-labelledby": labelId,
@@ -22867,10 +23264,14 @@ var FieldControl = /* @__PURE__ */ React171.forwardRef(function FieldControl2(co
       },
       onChange(event) {
         const inputValue = event.currentTarget.value;
-        onValueChange?.(inputValue, createChangeEventDetails(reason_parts_exports.none, event.nativeEvent));
+        const details = createChangeEventDetails(reason_parts_exports.none, event.nativeEvent);
+        onValueChange?.(inputValue, details);
+        if (isControlled) {
+          return;
+        }
         setDirty(inputValue !== (validityData.initialValue ?? ""));
         setFilled(inputValue !== "");
-        if (!event.nativeEvent.defaultPrevented) {
+        if (!event.nativeEvent.defaultPrevented && !details.isCanceled) {
           clearErrors(name);
           validation.change(inputValue);
         }
@@ -22882,16 +23283,37 @@ var FieldControl = /* @__PURE__ */ React171.forwardRef(function FieldControl2(co
         setTouched(true);
         setFocused(false);
         if (validationMode === "onBlur") {
-          validation.commit(event.currentTarget.value);
+          const inputValue = event.currentTarget.value;
+          validation.commit(inputValue);
+          if (isControlled) {
+            queueMicrotask(() => {
+              const nextValue = validation.inputRef.current?.value;
+              if (nextValue !== void 0 && nextValue !== inputValue && nextValue !== (validityData.initialValue ?? "")) {
+                validation.commit(nextValue);
+              }
+            });
+          }
         }
       },
       onKeyDown(event) {
         if (event.currentTarget.tagName === "INPUT" && event.key === "Enter") {
           setTouched(true);
-          validation.commit(event.currentTarget.value);
+          const value2 = event.currentTarget.value;
+          const form = event.currentTarget.form;
+          if (form && form === formElementRef.current && !event.defaultPrevented) {
+            const input = event.currentTarget;
+            const submitCount = submitCountRef.current;
+            enterValidationTimeout.start(0, () => {
+              if (submitCountRef.current === submitCount) {
+                validation.commit(input.value);
+              }
+            });
+          } else {
+            validation.commit(value2);
+          }
         }
       }
-    }, elementProps, (props) => validation.getValidationProps(disabled2, props)],
+    }, elementProps, (props) => validation.getValidationProps(disabled3, props)],
     stateAttributesMapping: fieldValidityMapping
   });
   return element;
@@ -22907,9 +23329,9 @@ var FieldValidity = function FieldValidity2(props) {
   } = props;
   const {
     validityData,
-    invalid
+    invalid: invalid2
   } = useFieldRootContext(false);
-  const combinedFieldValidityData = React172.useMemo(() => getCombinedFieldValidityData(validityData, invalid), [validityData, invalid]);
+  const combinedFieldValidityData = React172.useMemo(() => getCombinedFieldValidityData(validityData, invalid2), [validityData, invalid2]);
   const isInvalid = combinedFieldValidityData.state.valid === false;
   const {
     transitionStatus
@@ -22942,14 +23364,14 @@ var FieldItem = /* @__PURE__ */ React173.forwardRef(function FieldItem2(componen
     state: fieldState,
     disabled: rootDisabled
   } = useFieldRootContext(false);
-  const disabled2 = rootDisabled || disabledProp;
+  const disabled3 = rootDisabled || disabledProp;
   const state = {
     ...fieldState,
-    disabled: disabled2
+    disabled: disabled3
   };
   const fieldItemContext = React173.useMemo(() => ({
-    disabled: disabled2
-  }), [disabled2]);
+    disabled: disabled3
+  }), [disabled3]);
   const element = useRenderElement("div", componentProps, {
     ref: forwardedRef,
     state,
@@ -23047,12 +23469,9 @@ var PopoverStore = class extends ReactStore {
     }
     this.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
     const changeState = () => {
-      const updatedState = {
-        open: nextOpen,
-        openChangeReason: eventDetails.reason
-      };
-      setPopupOpenState(updatedState, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
-      this.update(updatedState);
+      const popupOpenState = createPopupOpenState(this.state, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
+      popupOpenState.openChangeReason = eventDetails.reason;
+      this.update(popupOpenState);
     };
     if (isHover) {
       this.set("stickIfOpen", true);
@@ -23083,7 +23502,7 @@ function createNullPopoverStore() {
 }
 function createInitialState3(initialState, triggerElements, floatingId, nested = false) {
   const state = {
-    ...createInitialPopupStoreState(),
+    ...createInitialPopupStoreState(triggerElements, floatingId, nested),
     disabled: false,
     modal: false,
     focusManagerModal: false,
@@ -23101,7 +23520,6 @@ function createInitialState3(initialState, triggerElements, floatingId, nested =
   if (state.open && initialState?.mounted === void 0) {
     state.mounted = true;
   }
-  state.floatingRootContext = createPopupFloatingRootContext(triggerElements, floatingId, nested);
   return state;
 }
 function createInitialContext3(triggerElements) {
@@ -23118,7 +23536,7 @@ function createInitialContext3(triggerElements) {
 
 // node_modules/@base-ui/react/popover/root/PopoverRoot.mjs
 var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
-function PopoverRootComponent({
+var PopoverRootComponent = fastComponent(function PopoverRootComponent2({
   props
 }) {
   const {
@@ -23141,16 +23559,16 @@ function PopoverRootComponent({
   });
   store.useControlledProp("openProp", openProp);
   store.useControlledProp("triggerIdProp", triggerIdProp);
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const mounted = store.useState("mounted");
   const payload = store.useState("payload");
   store.useContextCallback("onOpenChange", onOpenChange);
   store.useContextCallback("onOpenChangeComplete", onOpenChangeComplete);
-  usePopupRootSync(store, open);
+  usePopupRootSync(store, open7);
   useImplicitActiveTrigger(store);
   const {
     forceUnmount
-  } = useOpenStateTransitions(open, store, () => {
+  } = useOpenStateTransitions(open7, store, () => {
     store.update({
       stickIfOpen: true,
       openChangeReason: null
@@ -23160,15 +23578,15 @@ function PopoverRootComponent({
     modal
   });
   React177.useEffect(() => {
-    if (!open) {
+    if (!open7) {
       store.context.stickIfOpenTimeout.clear();
     }
-  }, [store, open]);
+  }, [store, open7]);
   React177.useImperativeHandle(props.actionsRef, () => ({
     unmount: forceUnmount,
     close: () => store.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction))
   }), [forceUnmount, store]);
-  const shouldRenderInteractions = open || mounted;
+  const shouldRenderInteractions = open7 || mounted;
   return /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(PopoverRootContext.Provider, {
     value: store,
     children: [handle && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(PopupHandleAttachment, {
@@ -23181,7 +23599,8 @@ function PopoverRootComponent({
       payload
     }) : children]
   });
-}
+});
+if (true) PopoverRootComponent.displayName = "PopoverRootComponent";
 function PopoverRoot(props) {
   if (usePopoverRootContext(true)) {
     return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(PopoverRootComponent, {
@@ -23230,12 +23649,12 @@ var OPEN_DELAY = 300;
 
 // node_modules/@base-ui/react/popover/trigger/PopoverTrigger.mjs
 var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
-var PopoverTrigger = /* @__PURE__ */ React178.forwardRef(function PopoverTrigger2(componentProps, forwardedRef) {
+var PopoverTrigger = fastComponentRef(function PopoverTrigger2(componentProps, forwardedRef) {
   const {
     render: render4,
     className,
     style,
-    disabled: disabled2 = false,
+    disabled: disabled3 = false,
     nativeButton = true,
     handle,
     payload,
@@ -23262,7 +23681,7 @@ var PopoverTrigger = /* @__PURE__ */ React178.forwardRef(function PopoverTrigger
     isMountedByThisTrigger
   } = useTriggerDataForwarding(thisTriggerId, triggerElementRef, store, {
     payload,
-    disabled: disabled2,
+    disabled: disabled3,
     openOnHover,
     closeDelay
   });
@@ -23271,7 +23690,7 @@ var PopoverTrigger = /* @__PURE__ */ React178.forwardRef(function PopoverTrigger
   const openMethod = store.useState("openMethod");
   const focusManagerModal = store.useState("focusManagerModal");
   const hoverProps = useHoverReferenceInteraction(floatingContext, {
-    enabled: !disabled2 && openOnHover && (openMethod !== "touch" || openReason !== reason_parts_exports.triggerPress),
+    enabled: !disabled3 && openOnHover && (openMethod !== "touch" || openReason !== reason_parts_exports.triggerPress),
     mouseOnly: true,
     move: false,
     handleClose: safePolygon(),
@@ -23294,7 +23713,7 @@ var PopoverTrigger = /* @__PURE__ */ React178.forwardRef(function PopoverTrigger
     getButtonProps,
     buttonRef
   } = useButton({
-    disabled: disabled2,
+    disabled: disabled3,
     native: nativeButton
   });
   const stateAttributesMapping10 = {
@@ -23311,7 +23730,7 @@ var PopoverTrigger = /* @__PURE__ */ React178.forwardRef(function PopoverTrigger
     handleFocusTargetFocus
   } = useTriggerFocusGuards(store, triggerElementRef);
   const state = {
-    disabled: disabled2,
+    disabled: disabled3,
     open: isOpenedByThisTrigger
   };
   const element = useRenderElement("button", componentProps, {
@@ -23408,8 +23827,8 @@ var PopoverPositioner = /* @__PURE__ */ React182.forwardRef(function PopoverPosi
     // `useAnchorPositioning` applies the same defaults to the undefined values; the names
     // remain destructured to exclude the props from `elementProps`.
     positionMethod,
-    side,
-    align,
+    side: side2,
+    align: align2,
     sideOffset,
     alignOffset,
     collisionBoundary = "clipping-ancestors",
@@ -23425,7 +23844,7 @@ var PopoverPositioner = /* @__PURE__ */ React182.forwardRef(function PopoverPosi
   const nodeId = useFloatingNodeId();
   const floatingRootContext = store.useState("floatingRootContext");
   const mounted = store.useState("mounted");
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const openReason = store.useState("openChangeReason");
   const triggerElement = store.useState("activeTriggerElement");
   const modal = store.useState("modal");
@@ -23441,9 +23860,9 @@ var PopoverPositioner = /* @__PURE__ */ React182.forwardRef(function PopoverPosi
     floatingRootContext,
     positionMethod,
     mounted,
-    side,
+    side: side2,
     sideOffset,
-    align,
+    align: align2,
     alignOffset,
     arrowPadding,
     collisionBoundary,
@@ -23475,10 +23894,10 @@ var PopoverPositioner = /* @__PURE__ */ React182.forwardRef(function PopoverPosi
     return void 0;
   }, [domReference, runOnceAnimationsFinish, store]);
   const trueModalNonHover = modal === true && openReason !== reason_parts_exports.triggerHover;
-  useAnchoredPopupScrollLock(open && trueModalNonHover, openMethod === "touch", positionerElement, triggerElement);
+  useAnchoredPopupScrollLock(open7 && trueModalNonHover, openMethod === "touch", positionerElement, triggerElement);
   const setPositionerElement = store.useStateSetter("positionerElement");
   const state = {
-    open,
+    open: open7,
     side: positioning.side,
     align: positioning.align,
     anchorHidden: positioning.anchorHidden,
@@ -23490,12 +23909,12 @@ var PopoverPositioner = /* @__PURE__ */ React182.forwardRef(function PopoverPosi
     props: elementProps,
     refs: [forwardedRef, setPositionerElement],
     hidden: !mounted,
-    inert: !open
+    inert: !open7
   });
   return /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(PopoverPositionerContext.Provider, {
     value: positioning,
     children: [mounted && trueModalNonHover && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(InternalBackdrop, {
-      inert: inertValue(!open),
+      inert: inertValue(!open7),
       cutout: triggerElement
     }), /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(FloatingNode, {
       id: nodeId,
@@ -23553,7 +23972,7 @@ var PopoverPopup = /* @__PURE__ */ React184.forwardRef(function PopoverPopup2(co
     context: closePartContext,
     hasClosePart
   } = useClosePartCount();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const openMethod = store.useState("openMethod");
   const instantType = store.useState("instantType");
   const transitionStatus = store.useState("transitionStatus");
@@ -23566,20 +23985,20 @@ var PopoverPopup = /* @__PURE__ */ React184.forwardRef(function PopoverPopup2(co
   const activeTriggerElement = store.useState("activeTriggerElement");
   const floatingContext = store.useState("floatingRootContext");
   const floatingId = floatingContext.useState("floatingId");
-  const disabled2 = store.useState("disabled");
+  const disabled3 = store.useState("disabled");
   const openOnHover = store.useState("openOnHover");
   const closeDelay = store.useState("closeDelay");
   useOpenChangeComplete({
-    open,
+    open: open7,
     ref: store.context.popupRef,
     onComplete() {
-      if (open) {
+      if (open7) {
         store.context.onOpenChangeComplete?.(true);
       }
     }
   });
   useHoverFloatingInteraction(floatingContext, {
-    enabled: openOnHover && !disabled2,
+    enabled: openOnHover && !disabled3,
     closeDelay
   });
   const resolvedInitialFocus = initialFocus === void 0 ? createDefaultInitialFocus(store.context.popupRef) : initialFocus;
@@ -23587,7 +24006,7 @@ var PopoverPopup = /* @__PURE__ */ React184.forwardRef(function PopoverPopup2(co
   store.useSyncedValue("focusManagerModal", focusManagerModal);
   const setPopupElement = store.useStateSetter("popupElement");
   const state = {
-    open,
+    open: open7,
     side: positioner.side,
     align: positioner.align,
     instant: instantType,
@@ -23639,18 +24058,18 @@ var PopoverArrow = /* @__PURE__ */ React185.forwardRef(function PopoverArrow2(co
     ...elementProps
   } = componentProps;
   const store = usePopoverRootContext();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const {
     arrowRef,
-    side,
-    align,
+    side: side2,
+    align: align2,
     arrowUncentered,
     arrowStyles
   } = usePopoverPositionerContext();
   const state = {
-    open,
-    side,
-    align,
+    open: open7,
+    side: side2,
+    align: align2,
     uncentered: arrowUncentered
   };
   const element = useRenderElement("div", componentProps, {
@@ -23676,12 +24095,12 @@ var PopoverBackdrop = /* @__PURE__ */ React186.forwardRef(function PopoverBackdr
     ...elementProps
   } = props;
   const store = usePopoverRootContext();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const mounted = store.useState("mounted");
   const transitionStatus = store.useState("transitionStatus");
   const openReason = store.useState("openChangeReason");
   const state = {
-    open,
+    open: open7,
     transitionStatus
   };
   const element = useRenderElement("div", props, {
@@ -23753,7 +24172,7 @@ var PopoverClose = /* @__PURE__ */ React189.forwardRef(function PopoverClose2(co
     render: render4,
     className,
     style,
-    disabled: disabled2 = false,
+    disabled: disabled3 = false,
     nativeButton = true,
     ...elementProps
   } = componentProps;
@@ -23761,7 +24180,7 @@ var PopoverClose = /* @__PURE__ */ React189.forwardRef(function PopoverClose2(co
     buttonRef,
     getButtonProps
   } = useButton({
-    disabled: disabled2,
+    disabled: disabled3,
     focusableWhenDisabled: false,
     native: nativeButton
   });
@@ -23791,7 +24210,7 @@ var PopoverViewport = /* @__PURE__ */ React190.forwardRef(function PopoverViewpo
   } = componentProps;
   const store = usePopoverRootContext();
   const {
-    side
+    side: side2
   } = usePopoverPositionerContext();
   const instantType = store.useState("instantType");
   const {
@@ -23799,7 +24218,7 @@ var PopoverViewport = /* @__PURE__ */ React190.forwardRef(function PopoverViewpo
     state: viewportState
   } = usePopupViewport({
     store,
-    side,
+    side: side2,
     children
   });
   const state = {
@@ -23955,7 +24374,7 @@ function createNullTooltipStore() {
 }
 function createInitialState4(initialState, triggerElements, floatingId, nested = false) {
   const state = {
-    ...createInitialPopupStoreState(),
+    ...createInitialPopupStoreState(triggerElements, floatingId, nested),
     disabled: false,
     instantType: void 0,
     isInstantPhase: false,
@@ -23967,7 +24386,6 @@ function createInitialState4(initialState, triggerElements, floatingId, nested =
     adaptiveOrigin: void 0,
     ...initialState
   };
-  state.floatingRootContext = createPopupFloatingRootContext(triggerElements, floatingId, nested);
   return state;
 }
 function createInitialContext4(triggerElements) {
@@ -23983,7 +24401,7 @@ function createInitialContext4(triggerElements) {
 var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
 var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const {
-    disabled: disabled2 = false,
+    disabled: disabled3 = false,
     defaultOpen = false,
     open: openProp,
     disableHoverablePopup = false,
@@ -24007,14 +24425,14 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   store.useContextCallback("onOpenChange", onOpenChange);
   store.useContextCallback("onOpenChangeComplete", onOpenChangeComplete);
   const openState = store.useState("open");
-  const open = !disabled2 && openState;
+  const open7 = !disabled3 && openState;
   const activeTriggerId = store.useState("activeTriggerId");
   const mounted = store.useState("mounted");
   const payload = store.useState("payload");
   store.useSyncedValues({
     trackCursorAxis,
     disableHoverablePopup,
-    disabled: disabled2
+    disabled: disabled3
   });
   useImplicitActiveTrigger(store, {
     closeOnActiveTriggerUnmount: true
@@ -24022,16 +24440,16 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const {
     forceUnmount,
     transitionStatus
-  } = useOpenStateTransitions(open, store);
+  } = useOpenStateTransitions(open7, store);
   const isInstantPhase = store.useState("isInstantPhase");
   const instantType = store.useState("instantType");
   const lastOpenChangeReason = store.useState("lastOpenChangeReason");
   const previousInstantTypeRef = React194.useRef(null);
   useIsoLayoutEffect(() => {
-    if (openState && disabled2) {
+    if (openState && disabled3) {
       store.setOpen(false, createChangeEventDetails(reason_parts_exports.disabled));
     }
-  }, [openState, disabled2, store]);
+  }, [openState, disabled3, store]);
   useIsoLayoutEffect(() => {
     if (transitionStatus === "ending" && lastOpenChangeReason === reason_parts_exports.none || transitionStatus !== "ending" && isInstantPhase) {
       if (instantType !== "delay") {
@@ -24044,17 +24462,17 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
     }
   }, [transitionStatus, isInstantPhase, lastOpenChangeReason, instantType, store]);
   useIsoLayoutEffect(() => {
-    if (open) {
+    if (open7) {
       if (activeTriggerId == null) {
         store.set("payload", void 0);
       }
     }
-  }, [store, activeTriggerId, open]);
+  }, [store, activeTriggerId, open7]);
   React194.useImperativeHandle(actionsRef, () => ({
     unmount: forceUnmount,
     close: () => store.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction))
   }), [forceUnmount, store]);
-  const shouldRenderInteractions = open || mounted || !disabled2 && trackCursorAxis !== "none";
+  const shouldRenderInteractions = open7 || mounted || !disabled3 && trackCursorAxis !== "none";
   return /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)(TooltipRootContext.Provider, {
     value: store,
     children: [handle && /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(PopupHandleAttachment, {
@@ -24062,7 +24480,7 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
       store
     }), shouldRenderInteractions && /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(TooltipInteractions, {
       store,
-      disabled: disabled2,
+      disabled: disabled3,
       trackCursorAxis
     }), typeof children === "function" ? children({
       payload
@@ -24072,16 +24490,16 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
 if (true) TooltipRoot.displayName = "TooltipRoot";
 function TooltipInteractions({
   store,
-  disabled: disabled2,
+  disabled: disabled3,
   trackCursorAxis
 }) {
   const floatingRootContext = store.useState("floatingRootContext");
   const dismiss = useDismiss(floatingRootContext, {
-    enabled: !disabled2,
+    enabled: !disabled3,
     referencePress: () => store.select("closeOnClick")
   });
   const clientPoint = useClientPoint(floatingRootContext, {
-    enabled: !disabled2 && trackCursorAxis !== "none",
+    enabled: !disabled3 && trackCursorAxis !== "none",
     axis: trackCursorAxis === "none" ? void 0 : trackCursorAxis
   });
   const triggerProps = React194.useMemo(() => mergeProps(clientPoint.reference, dismiss.reference), [clientPoint.reference, dismiss.reference]);
@@ -24162,7 +24580,6 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
   const isOpenedByThisTrigger = store.useState("isOpenedByTrigger", thisTriggerId);
   const floatingRootContext = store.useState("floatingRootContext");
   const triggerElementRef = React196.useRef(null);
-  const delayWithDefault = delay ?? OPEN_DELAY2;
   const closeDelayWithDefault = closeDelay ?? 0;
   const {
     registerTrigger,
@@ -24174,6 +24591,7 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
   });
   const providerDelay = useTooltipProviderContext();
   const {
+    activeIdRef,
     delayRef,
     isInstantPhase,
     hasProvider
@@ -24183,18 +24601,18 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
   const hoverInteraction = useHoverInteractionSharedState(floatingRootContext);
   store.useSyncedValue("isInstantPhase", isInstantPhase);
   const rootDisabled = store.useState("disabled");
-  const disabled2 = disabledProp ?? rootDisabled;
-  const disabledRef = useValueAsRef(disabled2);
+  const disabled3 = disabledProp ?? rootDisabled;
+  const disabledRef = useValueAsRef(disabled3);
   const trackCursorAxis = store.useState("trackCursorAxis");
   const disableHoverablePopup = store.useState("disableHoverablePopup");
   const isNestedTriggerHoveredRef = React196.useRef(false);
   const nestedTriggerOpenTimeout = useTimeout();
   const pointerTypeRef = React196.useRef(void 0);
   function getOpenDelay() {
-    if (!hasProvider) {
-      return delayWithDefault;
+    if (hasProvider && activeIdRef.current != null) {
+      return 0;
     }
-    return getDelay(delayRef.current, "open") === 0 ? 0 : delay ?? providerDelay ?? OPEN_DELAY2;
+    return delay ?? providerDelay ?? OPEN_DELAY2;
   }
   function isEnabledNestedTriggerTarget(target) {
     const triggerEl = triggerElementRef.current;
@@ -24216,7 +24634,7 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
     return nestedTriggerHovered;
   }
   const hoverProps = useHoverReferenceInteraction(floatingRootContext, {
-    enabled: !disabled2,
+    enabled: !disabled3,
     mouseOnly: true,
     move: false,
     handleClose: !disableHoverablePopup && trackCursorAxis !== "both" ? safePolygon() : null,
@@ -24239,7 +24657,7 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
     }
   });
   const focusProps = useFocus(floatingRootContext, {
-    enabled: !disabled2
+    enabled: !disabled3
   }).reference;
   const handleNestedTriggerHover = (event) => {
     const wasNestedTriggerHovered = isNestedTriggerHoveredRef.current;
@@ -24253,7 +24671,7 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
     }
     if (wasNestedTriggerHovered && !nestedTriggerHovered && targetInsideTrigger && !disabledRef.current && !store.select("open") && triggerEl && // Match the hover hook's non-strict mouse fallback for mouse-only event sequences.
     isMouseLikePointerType(pointerTypeRef.current)) {
-      const open = () => {
+      const open7 = () => {
         if (!isNestedTriggerHoveredRef.current && !disabledRef.current && !store.select("open")) {
           store.setOpen(true, createChangeEventDetails(reason_parts_exports.triggerHover, event, triggerEl));
         }
@@ -24261,9 +24679,9 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
       const openDelay = getOpenDelay();
       if (openDelay === 0) {
         nestedTriggerOpenTimeout.clear();
-        open();
+        open7();
       } else {
-        nestedTriggerOpenTimeout.start(openDelay, open);
+        nestedTriggerOpenTimeout.start(openDelay, open7);
       }
     }
   };
@@ -24305,8 +24723,8 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
         }
       },
       id: thisTriggerId,
-      "data-trigger-disabled": disabled2 ? "" : void 0,
-      [TOOLTIP_TRIGGER_IDENTIFIER]: disabled2 ? void 0 : ""
+      [triggerDisabled]: disabled3 ? "" : void 0,
+      [TOOLTIP_TRIGGER_IDENTIFIER]: disabled3 ? void 0 : ""
     }, elementProps],
     stateAttributesMapping: triggerOpenStateMapping2
   });
@@ -24375,8 +24793,8 @@ var TooltipPositioner = /* @__PURE__ */ React200.forwardRef(function TooltipPosi
     className,
     anchor,
     positionMethod = "absolute",
-    side = "top",
-    align = "center",
+    side: side2 = "top",
+    align: align2 = "center",
     sideOffset = 0,
     alignOffset = 0,
     collisionBoundary = "clipping-ancestors",
@@ -24390,7 +24808,7 @@ var TooltipPositioner = /* @__PURE__ */ React200.forwardRef(function TooltipPosi
   } = componentProps;
   const store = useTooltipRootContext();
   const keepMounted = useTooltipPortalContext();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const mounted = store.useState("mounted");
   const trackCursorAxis = store.useState("trackCursorAxis");
   const disableHoverablePopup = store.useState("disableHoverablePopup");
@@ -24403,9 +24821,9 @@ var TooltipPositioner = /* @__PURE__ */ React200.forwardRef(function TooltipPosi
     positionMethod,
     floatingRootContext,
     mounted,
-    side,
+    side: side2,
     sideOffset,
-    align,
+    align: align2,
     alignOffset,
     collisionBoundary,
     collisionPadding,
@@ -24417,19 +24835,19 @@ var TooltipPositioner = /* @__PURE__ */ React200.forwardRef(function TooltipPosi
     adaptiveOrigin: adaptiveOrigin2
   });
   const state = React200.useMemo(() => ({
-    open,
+    open: open7,
     side: positioning.side,
     align: positioning.align,
     anchorHidden: positioning.anchorHidden,
     instant: trackCursorAxis !== "none" ? "tracking-cursor" : instantType
-  }), [open, positioning.side, positioning.align, positioning.anchorHidden, trackCursorAxis, instantType]);
+  }), [open7, positioning.side, positioning.align, positioning.anchorHidden, trackCursorAxis, instantType]);
   const element = usePositioner(componentProps, state, {
     styles: positioning.positionerStyles,
     transitionStatus,
     props: elementProps,
     refs: [forwardedRef, store.useStateSetter("positionerElement")],
     hidden: !mounted,
-    inert: !open || trackCursorAxis === "both" || disableHoverablePopup
+    inert: !open7 || trackCursorAxis === "both" || disableHoverablePopup
   });
   return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(TooltipPositionerContext.Provider, {
     value: positioning,
@@ -24449,34 +24867,34 @@ var TooltipPopup = /* @__PURE__ */ React201.forwardRef(function TooltipPopup2(co
   } = componentProps;
   const store = useTooltipRootContext();
   const {
-    side,
-    align
+    side: side2,
+    align: align2
   } = useTooltipPositionerContext();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const instantType = store.useState("instantType");
   const transitionStatus = store.useState("transitionStatus");
   const popupProps = store.useState("popupProps");
   const floatingContext = store.useState("floatingRootContext");
-  const disabled2 = store.useState("disabled");
+  const disabled3 = store.useState("disabled");
   const closeDelay = store.useState("closeDelay");
   useOpenChangeComplete({
-    open,
+    open: open7,
     ref: store.context.popupRef,
     onComplete() {
-      if (open) {
+      if (open7) {
         store.context.onOpenChangeComplete?.(true);
       }
     }
   });
   useHoverFloatingInteraction(floatingContext, {
-    enabled: !disabled2,
+    enabled: !disabled3,
     closeDelay
   });
   const setPopupElement = store.useStateSetter("popupElement");
   const state = {
-    open,
-    side,
-    align,
+    open: open7,
+    side: side2,
+    align: align2,
     instant: instantType,
     transitionStatus
   };
@@ -24502,17 +24920,17 @@ var TooltipArrow = /* @__PURE__ */ React202.forwardRef(function TooltipArrow2(co
   const store = useTooltipRootContext();
   const {
     arrowRef,
-    side,
-    align,
+    side: side2,
+    align: align2,
     arrowUncentered,
     arrowStyles
   } = useTooltipPositionerContext();
-  const open = store.useState("open");
+  const open7 = store.useState("open");
   const instantType = store.useState("instantType");
   const state = {
-    open,
-    side,
-    align,
+    open: open7,
+    side: side2,
+    align: align2,
     uncentered: arrowUncentered,
     instant: instantType
   };
@@ -25104,13 +25522,13 @@ if (typeof process === "undefined" || true) {
 }
 var style_default3 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
 var Positioner = (0, import_element19.forwardRef)(
-  function TooltipPositioner3({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
+  function TooltipPositioner3({ align: align2 = "center", className, side: side2 = "top", sideOffset = 4, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
       index_parts_exports9.Positioner,
       {
         ref,
-        align,
-        side,
+        align: align2,
+        side: side2,
         sideOffset,
         ...props,
         className: clsx_default(
@@ -27630,7 +28048,7 @@ function useCloseOnIframePointerDown({
 function useIframeDismissalBridge({
   actionsRef,
   defaultOpen,
-  disabled: disabled2,
+  disabled: disabled3,
   modal,
   onOpenChange,
   open: openProp
@@ -27641,7 +28059,7 @@ function useIframeDismissalBridge({
     defaultOpen ?? false
   );
   const [trigger, setTrigger] = (0, import_element42.useState)(null);
-  const open = openProp ?? uncontrolledOpen;
+  const open7 = openProp ?? uncontrolledOpen;
   const handleIframePointerDown = (0, import_element42.useCallback)(
     (event) => {
       if (trigger && !isInsideCurrentMenu(event, trigger)) {
@@ -27651,7 +28069,7 @@ function useIframeDismissalBridge({
     [resolvedActionsRef, trigger]
   );
   useCloseOnIframePointerDown({
-    enabled: open && modal === false && !disabled2 && trigger !== null,
+    enabled: open7 && modal === false && !disabled3 && trigger !== null,
     onPointerDown: handleIframePointerDown,
     ownerDocument: trigger?.ownerDocument ?? null
   });
@@ -28070,7 +28488,7 @@ var Button3 = (0, import_element46.forwardRef)(
     size: size4 = "default",
     className,
     focusableWhenDisabled = true,
-    disabled: disabled2,
+    disabled: disabled3,
     loading,
     loadingAnnouncement = (0, import_i18n5.__)("Loading"),
     children,
@@ -28098,7 +28516,7 @@ var Button3 = (0, import_element46.forwardRef)(
         ref,
         className: mergedClassName,
         focusableWhenDisabled,
-        disabled: disabled2 ?? loading,
+        disabled: disabled3 ?? loading,
         ...props,
         children
       }
@@ -32767,7 +33185,7 @@ function Dropdown(props) {
   return import_react11.default.createElement(
     "span",
     { "data-disabled": selectProps.disabled, className: classNames[UI.DropdownRoot], style: styles?.[UI.DropdownRoot] },
-    import_react11.default.createElement(components.Select, { className: cssClassSelect, ...selectProps }, options?.map(({ value, label, disabled: disabled2 }) => import_react11.default.createElement(components.Option, { key: value, value, disabled: disabled2 }, label))),
+    import_react11.default.createElement(components.Select, { className: cssClassSelect, ...selectProps }, options?.map(({ value, label, disabled: disabled3 }) => import_react11.default.createElement(components.Option, { key: value, value, disabled: disabled3 }, label))),
     import_react11.default.createElement(
       "span",
       { className: classNames[UI.CaptionLabel], style: styles?.[UI.CaptionLabel], "aria-hidden": true },
@@ -33027,7 +33445,7 @@ function dateMatchModifiers(date, matchers, dateLib = defaultDateLib) {
 
 // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/createGetModifiers.js
 function createGetModifiers(days, props, navStart, navEnd, dateLib) {
-  const { disabled: disabled2, hidden, modifiers, showOutsideDays, broadcastCalendar, today = dateLib.today() } = props;
+  const { disabled: disabled3, hidden, modifiers, showOutsideDays, broadcastCalendar, today = dateLib.today() } = props;
   const { isSameDay: isSameDay2, isSameMonth: isSameMonth2, startOfMonth: startOfMonth2, isBefore: isBefore2, endOfMonth: endOfMonth2, isAfter: isAfter3 } = dateLib;
   const computedNavStart = navStart && startOfMonth2(navStart);
   const computedNavEnd = navEnd && endOfMonth2(navEnd);
@@ -33044,7 +33462,7 @@ function createGetModifiers(days, props, navStart, navEnd, dateLib) {
     const isOutside = Boolean(displayMonth && !isSameMonth2(date, displayMonth));
     const isBeforeNavStart = Boolean(computedNavStart && isBefore2(date, computedNavStart));
     const isAfterNavEnd = Boolean(computedNavEnd && isAfter3(date, computedNavEnd));
-    const isDisabled = Boolean(disabled2 && dateMatchModifiers(date, disabled2, dateLib));
+    const isDisabled = Boolean(disabled3 && dateMatchModifiers(date, disabled3, dateLib));
     const isHidden4 = Boolean(hidden && dateMatchModifiers(date, hidden, dateLib)) || isBeforeNavStart || isAfterNavEnd || // Broadcast calendar will show outside days as default
     !broadcastCalendar && !showOutsideDays && isOutside || broadcastCalendar && showOutsideDays === false && isOutside;
     const isToday = isSameDay2(date, today);
@@ -33332,8 +33750,8 @@ function getMonthOptions(displayMonth, navStart, navEnd, formatters2, dateLib) {
   const options = months.map((month) => {
     const label = formatters2.formatMonthDropdown(month, dateLib);
     const value = getMonth2(month);
-    const disabled2 = navStart && month < startOfMonth2(navStart) || navEnd && month > startOfMonth2(navEnd) || false;
-    return { value, label, disabled: disabled2 };
+    const disabled3 = navStart && month < startOfMonth2(navStart) || navEnd && month > startOfMonth2(navEnd) || false;
+    return { value, label, disabled: disabled3 };
   });
   return options;
 }
@@ -34209,7 +34627,7 @@ function rangeContainsModifiers(range, modifiers, dateLib = defaultDateLib) {
 
 // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/selection/useRange.js
 function useRange(props, dateLib) {
-  const { disabled: disabled2, excludeDisabled, resetOnSelect, selected: initiallySelected, required, onSelect } = props;
+  const { disabled: disabled3, excludeDisabled, resetOnSelect, selected: initiallySelected, required, onSelect } = props;
   const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
   const selected = !onSelect ? internallySelected : initiallySelected;
   const isSelected2 = (date) => selected && rangeIncludesDate(selected, date, false, dateLib);
@@ -34231,8 +34649,8 @@ function useRange(props, dateLib) {
         newRange = addToRange(triggerDate, selected, min3, max3, required, dateLib);
       }
     }
-    if (excludeDisabled && disabled2 && newRange?.from && newRange.to) {
-      if (rangeContainsModifiers({ from: newRange.from, to: newRange.to }, disabled2, dateLib)) {
+    if (excludeDisabled && disabled3 && newRange?.from && newRange.to) {
+      if (rangeContainsModifiers({ from: newRange.from, to: newRange.to }, disabled3, dateLib)) {
         newRange.from = triggerDate;
         newRange.to = void 0;
       }
@@ -34771,7 +35189,7 @@ var IconButton = (0, import_element48.forwardRef)(
     className,
     // Prevent accidental forwarding of `children`
     children: _children,
-    disabled: disabled2,
+    disabled: disabled3,
     focusableWhenDisabled = true,
     icon,
     size: size4,
@@ -34793,14 +35211,14 @@ var IconButton = (0, import_element48.forwardRef)(
         {
           ref,
           ...targetProps,
-          disabled: disabled2 && !focusableWhenDisabled,
+          disabled: disabled3 && !focusableWhenDisabled,
           render: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
             Button4,
             {
               ...restProps,
               size: size4,
               "aria-label": label,
-              disabled: disabled2,
+              disabled: disabled3,
               focusableWhenDisabled
             }
           ),
@@ -35468,7 +35886,7 @@ function usePreviewRange({
   resetOnSelect,
   min: min3,
   max: max3,
-  disabled: disabled2
+  disabled: disabled3
 }) {
   return (0, import_element55.useMemo)(() => {
     if (!hoveredDate || !value?.from) {
@@ -35528,7 +35946,7 @@ function usePreviewRange({
         to: hoveredDate
       };
     }
-    if (excludeDisabled && disabled2 && potentialNewRange && rangeContainsModifiers(potentialNewRange, disabled2)) {
+    if (excludeDisabled && disabled3 && potentialNewRange && rangeContainsModifiers(potentialNewRange, disabled3)) {
       previewHighlight = {
         from: hoveredDate,
         to: hoveredDate
@@ -35542,7 +35960,7 @@ function usePreviewRange({
     resetOnSelect,
     min3,
     max3,
-    disabled2
+    disabled3
   ]);
 }
 var RangeCalendar = (0, import_element55.forwardRef)(
@@ -35555,7 +35973,7 @@ var RangeCalendar = (0, import_element55.forwardRef)(
     resetOnSelect = true,
     min: min3,
     max: max3,
-    disabled: disabled2,
+    disabled: disabled3,
     locale,
     timeZone,
     month,
@@ -35601,7 +36019,7 @@ var RangeCalendar = (0, import_element55.forwardRef)(
       resetOnSelect,
       min: min3,
       max: max3,
-      disabled: disabled2
+      disabled: disabled3
     });
     const modifiers = (0, import_element55.useMemo)(() => {
       return {
@@ -35629,7 +36047,7 @@ var RangeCalendar = (0, import_element55.forwardRef)(
         mode: "range",
         month,
         numberOfMonths: clampNumberOfMonths(numberOfMonths),
-        disabled: disabled2,
+        disabled: disabled3,
         excludeDisabled,
         resetOnSelect,
         min: min3,
@@ -36698,8 +37116,8 @@ function Root7({
     }
   }, [lifecycle, onConfirmEvent]);
   const handleOpenChangeComplete = (0, import_element70.useCallback)(
-    (open) => {
-      if (!open) {
+    (open7) => {
+      if (!open7) {
         confirmIdRef.current++;
         lifecycle.update({
           phase: "idle",
@@ -36894,8 +37312,8 @@ var isTabbableRadio2 = function isTabbableRadio3(node) {
       return false;
     }
   }
-  var checked = getCheckedRadio(radioSet, node.form);
-  return !checked || checked === node;
+  var checked2 = getCheckedRadio(radioSet, node.form);
+  return !checked2 || checked2 === node;
 };
 var isRadio = function isRadio2(node) {
   return isInput(node) && node.type === "radio";
@@ -36921,8 +37339,8 @@ var isNodeAttached = function isNodeAttached2(node) {
   return attached;
 };
 var isZeroArea = function isZeroArea2(node) {
-  var _node$getBoundingClie = node.getBoundingClientRect(), width = _node$getBoundingClie.width, height = _node$getBoundingClie.height;
-  return width === 0 && height === 0;
+  var _node$getBoundingClie = node.getBoundingClientRect(), width = _node$getBoundingClie.width, height2 = _node$getBoundingClie.height;
+  return width === 0 && height2 === 0;
 };
 var isHidden = function isHidden2(node, _ref) {
   var displayCheck = _ref.displayCheck, getShadowRoot = _ref.getShadowRoot;
@@ -37302,10 +37720,10 @@ var gapTokens = {
   "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
   "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
 };
-var Stack = (0, import_element74.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
+var Stack = (0, import_element74.forwardRef)(function Stack2({ direction, gap, align: align2, justify, wrap, render: render4, ...props }, ref) {
   const style = {
     gap: gap && gapTokens[gap],
-    alignItems: align,
+    alignItems: align2,
     justifyContent: justify,
     flexDirection: direction,
     flexWrap: wrap
@@ -37570,8 +37988,8 @@ __export(dialog_exports, {
 var import_element77 = __toESM(require_element(), 1);
 var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
 var Action = (0, import_element77.forwardRef)(
-  function DialogAction({ render: render4, disabled: disabled2, loading, ...props }, ref) {
-    const resolvedDisabled = disabled2 ?? loading;
+  function DialogAction({ render: render4, disabled: disabled3, loading, ...props }, ref) {
+    const resolvedDisabled = disabled3 ?? loading;
     return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
       index_parts_exports5.Close,
       {
@@ -38436,8 +38854,8 @@ __export(drawer_exports, {
 var import_element90 = __toESM(require_element(), 1);
 var import_jsx_runtime157 = __toESM(require_jsx_runtime(), 1);
 var Action2 = (0, import_element90.forwardRef)(
-  function DrawerAction({ render: render4, disabled: disabled2, loading, ...props }, ref) {
-    const resolvedDisabled = disabled2 ?? loading;
+  function DrawerAction({ render: render4, disabled: disabled3, loading, ...props }, ref) {
+    const resolvedDisabled = disabled3 ?? loading;
     return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
       index_parts_exports6.Close,
       {
@@ -38961,7 +39379,7 @@ var Popup5 = (0, import_element97.forwardRef)(function DrawerPopup3({ className,
 var import_jsx_runtime163 = __toESM(require_jsx_runtime(), 1);
 function Root9({
   modal = true,
-  swipeDirection = "left",
+  swipeDirection: swipeDirection3 = "left",
   children,
   ...props
 }) {
@@ -38969,7 +39387,7 @@ function Root9({
     index_parts_exports6.Root,
     {
       modal,
-      swipeDirection,
+      swipeDirection: swipeDirection3,
       ...props,
       children: /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(DrawerModalProvider, { modal, children })
     }
@@ -39742,13 +40160,13 @@ var import_jsx_runtime169 = __toESM(require_jsx_runtime(), 1);
 var DEFAULT_RENDER = ({
   "aria-label": ariaLabel = (0, import_i18n11.__)("Clear"),
   ...props
-}, { disabled: disabled2 }) => /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+}, { disabled: disabled3 }) => /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
   IconButton,
   {
     icon: close_small_default,
     focusableWhenDisabled: false,
-    disabled: disabled2,
-    "aria-hidden": disabled2 || void 0,
+    disabled: disabled3,
+    "aria-hidden": disabled3 || void 0,
     size: "small",
     variant: "minimal",
     tone: "neutral",
@@ -40681,8 +41099,7 @@ var List = (0, import_element116.forwardRef)(
       {
         className: clsx_default(item_popup_default5.list, className),
         ref,
-        ...restProps,
-        "aria-orientation": void 0
+        ...restProps
       }
     );
   }
@@ -42381,7 +42798,7 @@ var Textarea = (0, import_element133.forwardRef)(
   function Textarea2({
     className,
     defaultValue: defaultValue3,
-    disabled: disabled2,
+    disabled: disabled3,
     onValueChange,
     render: render4,
     rows = 4,
@@ -42409,7 +42826,7 @@ var Textarea = (0, import_element133.forwardRef)(
         value,
         defaultValue: defaultValue3,
         onValueChange,
-        disabled: disabled2
+        disabled: disabled3
       }
     );
   }
@@ -43805,11 +44222,11 @@ if (typeof process === "undefined" || true) {
 var style_default68 = { "positioner": "_10450722b9676f78__positioner", "popup": "_84e8f597bcf683b8__popup _380b81b8f79fb10f__dropdown-motion", "surface": "_972134b6cd5808d8__surface", "backdrop": "e4d544aa033f05c6__backdrop", "arrow": "ca05d3eb89321fcd__arrow", "arrow-fill": "_12d8edd9eb946b5f__arrow-fill", "arrow-stroke": "_6ddab482bd929dad__arrow-stroke", "title": "_6d7e4729cd96960e__title" };
 var Positioner4 = (0, import_element151.forwardRef)(
   function PopoverPositioner3({
-    align = "center",
+    align: align2 = "center",
     // Matches the popup's border-radius (--wpds-border-radius-md).
     arrowPadding = 8,
     className,
-    side = "bottom",
+    side: side2 = "bottom",
     sideOffset = 8,
     ...props
   }, ref) {
@@ -43817,9 +44234,9 @@ var Positioner4 = (0, import_element151.forwardRef)(
       index_parts_exports8.Positioner,
       {
         ref,
-        align,
+        align: align2,
         arrowPadding,
-        side,
+        side: side2,
         sideOffset,
         ...props,
         className: clsx_default(
@@ -46889,22 +47306,22 @@ function DataViewsSelectionCheckbox({
   item,
   getItemId: getItemId2,
   titleField,
-  disabled: disabled2,
+  disabled: disabled3,
   ...extraProps
 }) {
   const id = getItemId2(item);
   const isInSelectionArray = selection.includes(id);
-  const checked = !disabled2 && isInSelectionArray;
+  const checked2 = !disabled3 && isInSelectionArray;
   const selectionLabel = titleField?.getValue?.({ item }) || (0, import_i18n27.__)("(no title)");
   return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
     import_components5.CheckboxControl,
     {
       className: SELECTION_CHECKBOX_CLASS,
       "aria-label": selectionLabel,
-      "aria-disabled": disabled2,
-      checked,
+      "aria-disabled": disabled3,
+      checked: checked2,
       onChange: () => {
-        if (disabled2) {
+        if (disabled3) {
           return;
         }
         onChangeSelection(
@@ -48127,15 +48544,15 @@ function TableColumnField({
   item,
   fields: fields2,
   column,
-  align
+  align: align2
 }) {
   const field = fields2.find((f) => f.id === column);
   if (!field) {
     return null;
   }
   const className = clsx_default("dataviews-view-table__cell-content-wrapper", {
-    "dataviews-view-table__cell-align-end": align === "end",
-    "dataviews-view-table__cell-align-center": align === "center"
+    "dataviews-view-table__cell-align-end": align2 === "end",
+    "dataviews-view-table__cell-align-center": align2 === "center"
   });
   return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)("div", { className, children: /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(field.render, { item, field }) });
 }
@@ -48218,9 +48635,9 @@ function TableRow({
           }
         ) }),
         columns.map((column) => {
-          const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
+          const { width, maxWidth, minWidth, align: align2 } = view.layout?.styles?.[column] ?? {};
           const field = fields2.find((f) => f.id === column);
-          const effectiveAlign = getEffectiveAlign(align, field?.type);
+          const effectiveAlign = getEffectiveAlign(align2, field?.type);
           return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
             "td",
             {
@@ -48466,12 +48883,12 @@ function ViewTable({
                   }
                 ) }),
                 columns.map((column, index2) => {
-                  const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
+                  const { width, maxWidth, minWidth, align: align2 } = view.layout?.styles?.[column] ?? {};
                   const field = fields2.find(
                     (f) => f.id === column
                   );
                   const effectiveAlign = getEffectiveAlign(
-                    align,
+                    align2,
                     field?.type
                   );
                   const canInsertOrMove = view.layout?.enableMoving ?? true;
@@ -50926,15 +51343,15 @@ function TableColumnField2({
   item,
   fields: fields2,
   column,
-  align
+  align: align2
 }) {
   const field = fields2.find((f) => f.id === column);
   if (!field) {
     return null;
   }
   const className = clsx_default("dataviews-view-table__cell-content-wrapper", {
-    "dataviews-view-table__cell-align-end": align === "end",
-    "dataviews-view-table__cell-align-center": align === "center"
+    "dataviews-view-table__cell-align-end": align2 === "end",
+    "dataviews-view-table__cell-align-center": align2 === "center"
   });
   return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)("div", { className, children: /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(field.render, { item, field }) });
 }
@@ -51041,7 +51458,7 @@ function TableRow2({
           }
         ),
         columns.map((column) => {
-          const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
+          const { width, maxWidth, minWidth, align: align2 } = view.layout?.styles?.[column] ?? {};
           return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(
             "td",
             {
@@ -51057,7 +51474,7 @@ function TableRow2({
                   fields: fields2,
                   item,
                   column,
-                  align
+                  align: align2
                 }
               )
             },
@@ -51188,7 +51605,7 @@ function ViewPickerTable({
                   }
                 ) }),
                 columns.map((column, index2) => {
-                  const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
+                  const { width, maxWidth, minWidth, align: align2 } = view.layout?.styles?.[column] ?? {};
                   return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(
                     "th",
                     {
@@ -51196,7 +51613,7 @@ function ViewPickerTable({
                         width,
                         maxWidth,
                         minWidth,
-                        textAlign: align
+                        textAlign: align2
                       },
                       "aria-sort": view.sort?.direction && view.sort?.field === column ? sortValues[view.sort.direction] : void 0,
                       scope: "col",
@@ -52596,7 +53013,7 @@ function setMouseMoving(event) {
 function resetMouseMoving() {
   mouseMoving = false;
 }
-function forwardRef210(render4) {
+function forwardRef208(render4) {
   const Role = React231.forwardRef((props, ref) => render4(removeUndefinedValues({
     ...props,
     ref
@@ -52752,11 +53169,11 @@ function getTabIndex4({ focusable: focusable2, trulyDisabled, nativeTabbable, su
   }
   return tabIndexProp ?? 0;
 }
-function useDisableEvent(onEvent, disabled2) {
+function useDisableEvent(onEvent, disabled3) {
   return useEvent4((event) => {
     onEvent?.(event);
     if (event.defaultPrevented) return;
-    if (disabled2) {
+    if (disabled3) {
       event.stopPropagation();
       event.preventDefault();
     }
@@ -52792,8 +53209,8 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
     addGlobalEventListener("keydown", onGlobalKeyDown, true);
     hasInstalledGlobalEventListeners2 = true;
   }, [focusable2]);
-  const disabled2 = focusable2 && disabledFromProps(props);
-  const trulyDisabled = disabled2 && !accessibleWhenDisabled;
+  const disabled3 = focusable2 && disabledFromProps(props);
+  const trulyDisabled = disabled3 && !accessibleWhenDisabled;
   const [focusVisible, setFocusVisible] = (0, import_react65.useState)(false);
   const focusVisibleRef = (0, import_react65.useRef)(false);
   const nativeSubmitObserverCleanupRef = (0, import_react65.useRef)(null);
@@ -52831,10 +53248,10 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
   (0, import_react65.useEffect)(() => {
     return () => nativeSubmitObserverCleanupRef.current?.();
   }, []);
-  const onKeyPressCapture = useDisableEvent(props.onKeyPressCapture, disabled2);
-  const onMouseDownCapture = useDisableEvent(props.onMouseDownCapture, disabled2);
-  const onClickCapture = useDisableEvent(props.onClickCapture, disabled2);
-  const onAuxClickCapture = useDisableEvent(props.onAuxClickCapture, disabled2);
+  const onKeyPressCapture = useDisableEvent(props.onKeyPressCapture, disabled3);
+  const onMouseDownCapture = useDisableEvent(props.onMouseDownCapture, disabled3);
+  const onClickCapture = useDisableEvent(props.onClickCapture, disabled3);
+  const onAuxClickCapture = useDisableEvent(props.onAuxClickCapture, disabled3);
   const handleFocusVisible = (event, currentTarget) => {
     if (currentTarget) event.currentTarget = currentTarget;
     if (!focusable2) return;
@@ -52937,7 +53354,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
   props = {
     "data-focus-visible": focusable2 && focusVisible || void 0,
     "data-autofocus": autoFocus || void 0,
-    "aria-disabled": disabled2 || void 0,
+    "aria-disabled": disabled3 || void 0,
     ...props,
     ...metadataProps,
     ref: useMergeRefs14(ref, autoFocusRef, props.ref),
@@ -52951,8 +53368,8 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
       tabIndexProp: props.tabIndex
     }),
     disabled: supportsDisabled && trulyDisabled ? true : void 0,
-    [trulyDisabledAttribute]: disabled2 ? trulyDisabled : void 0,
-    contentEditable: disabled2 ? void 0 : props.contentEditable,
+    [trulyDisabledAttribute]: disabled3 ? trulyDisabled : void 0,
+    contentEditable: disabled3 ? void 0 : props.contentEditable,
     onKeyPressCapture,
     onClickCapture,
     onAuxClickCapture,
@@ -52963,7 +53380,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
   };
   return removeUndefinedValues(props);
 });
-var Focusable = forwardRef210(function Focusable2(props) {
+var Focusable = forwardRef208(function Focusable2(props) {
   const htmlProps = useFocusable(props);
   return createElement3(TagName, htmlProps);
 });
@@ -52992,20 +53409,20 @@ var useCommand = createHook(function useCommand2({ clickOnEnter = true, clickOnS
   }, [type]);
   const [active, setActive] = (0, import_react66.useState)(false);
   const activeRef = (0, import_react66.useRef)(false);
-  const disabled2 = disabledFromProps(props);
+  const disabled3 = disabledFromProps(props);
   const [isDuplicate, metadataProps] = useMetadataProps(props, symbol, true);
   useSafeLayoutEffect(() => {
-    if (!disabled2) return;
+    if (!disabled3) return;
     activeRef.current = false;
     setActive(false);
-  }, [disabled2]);
+  }, [disabled3]);
   const onKeyDownProp = props.onKeyDown;
   const onKeyDown = useEvent4((event) => {
     onKeyDownProp?.(event);
     const element = event.currentTarget;
     if (event.defaultPrevented) return;
     if (isDuplicate) return;
-    if (disabled2) return;
+    if (disabled3) return;
     if (!isSelfTarget(event)) return;
     if (isTextField(element)) return;
     if (element.isContentEditable) return;
@@ -53047,7 +53464,7 @@ var useCommand = createHook(function useCommand2({ clickOnEnter = true, clickOnS
     if (!nativeClick) setActive(false);
     if (event.defaultPrevented) return;
     if (!isSelfTarget(event)) return;
-    if (disabled2) return;
+    if (disabled3) return;
     if (event.metaKey) return;
     if (nativeClick) return;
     event.preventDefault();
@@ -53075,7 +53492,7 @@ var useCommand = createHook(function useCommand2({ clickOnEnter = true, clickOnS
   props = useFocusable(props);
   return props;
 });
-var Command = forwardRef210(function Command2(props) {
+var Command = forwardRef208(function Command2(props) {
   const htmlProps = useCommand(withDefaultButtonType(props));
   return createElement3(TagName2, htmlProps);
 });
@@ -53118,7 +53535,7 @@ var useCollectionItem = createHook(function useCollectionItem2({ store, shouldRe
   };
   return props;
 });
-var CollectionItem = forwardRef210(function CollectionItem2(props) {
+var CollectionItem = forwardRef208(function CollectionItem2(props) {
   const htmlProps = useCollectionItem(props);
   return createElement3(TagName3, htmlProps);
 });
@@ -54500,10 +54917,10 @@ function isEditableElement(element) {
   return element.tagName === "INPUT" && !isButton(element);
 }
 function getNextPageOffset(scrollingElement, pageUp = false) {
-  const height = scrollingElement.clientHeight;
+  const height2 = scrollingElement.clientHeight;
   const { top } = scrollingElement.getBoundingClientRect();
-  const pageSize = Math.max(height * 0.875, height - 40) * 1.5;
-  const pageOffset = pageUp ? height - pageSize + top : pageSize + top;
+  const pageSize = Math.max(height2 * 0.875, height2 - 40) * 1.5;
+  const pageOffset = pageUp ? height2 - pageSize + top : pageSize + top;
   if (scrollingElement.tagName === "HTML") return pageOffset + scrollingElement.scrollTop;
   return pageOffset;
 }
@@ -54556,9 +54973,9 @@ var useCompositeItem2 = createHook(function useCompositeItem3({ store, rowId: ro
     mountedElementRef.current = element;
   }, []);
   const row = (0, import_react70.useContext)(CompositeRowContext);
-  const disabled2 = disabledFromProps(props);
-  const trulyDisabled = disabled2 && !accessibleWhenDisabled;
-  const inactiveDisabled = disabled2 && props.focusable === false;
+  const disabled3 = disabledFromProps(props);
+  const trulyDisabled = disabled3 && !accessibleWhenDisabled;
+  const inactiveDisabled = disabled3 && props.focusable === false;
   const shouldRegisterItem = props.shouldRegisterItem;
   const getRowId = (state) => {
     if (rowIdProp) return rowIdProp;
@@ -54800,7 +55217,7 @@ var useCompositeItem2 = createHook(function useCompositeItem3({ store, rowId: ro
     "aria-posinset": ariaPosInSet
   };
 });
-var CompositeItem2 = memo5(forwardRef210(function CompositeItem3(props) {
+var CompositeItem2 = memo5(forwardRef208(function CompositeItem3(props) {
   const htmlProps = useCompositeItem2(withDefaultButtonType(props));
   return createElement3(TagName4, htmlProps);
 }));
@@ -55121,7 +55538,7 @@ var useComposite = createHook(function useComposite2({ store, composite = true, 
   });
   return props;
 });
-var Composite6 = forwardRef210(function Composite7(props) {
+var Composite6 = forwardRef208(function Composite7(props) {
   const htmlProps = useComposite(props);
   return createElement3(TagName5, htmlProps);
 });
@@ -55187,7 +55604,7 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
   const ref = (0, import_react73.useRef)(null);
   const id = useId9(props.id);
   const [transition, setTransition] = (0, import_react73.useState)(null);
-  const { open, mounted, animated, contentElement } = useStoreStateObject(store, {
+  const { open: open7, mounted, animated, contentElement } = useStoreStateObject(store, {
     open: "open",
     mounted: "mounted",
     animated: "animated",
@@ -55212,7 +55629,7 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
   }, [store]);
   useSafeLayoutEffect(() => {
     if (!animated) {
-      if (!open) {
+      if (!open7) {
         hasClosedRef.current = true;
         setTransition(null);
       } else if (hasClosedRef.current) {
@@ -55226,12 +55643,12 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
       return;
     }
     return afterPaint(() => {
-      setTransition(open ? "enter" : mounted ? "leave" : null);
+      setTransition(open7 ? "enter" : mounted ? "leave" : null);
     });
   }, [
     animated,
     contentElement,
-    open,
+    open7,
     mounted
   ]);
   useSafeLayoutEffect(() => {
@@ -55241,8 +55658,8 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
     if (!contentElement) return;
     const stopAnimation = () => store?.setState("animating", false);
     const stopAnimationSync = () => (0, import_react_dom3.flushSync)(stopAnimation);
-    if (transition === "leave" && open) return;
-    if (transition === "enter" && !open) return;
+    if (transition === "leave" && open7) return;
+    if (transition === "enter" && !open7) return;
     if (typeof animated === "number") return afterTimeout(animated, stopAnimationSync);
     const elements = [contentElement];
     if (otherElement) elements.push(otherElement);
@@ -55261,7 +55678,7 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
     contentElement,
     otherElement,
     otherElementRef,
-    open,
+    open7,
     transition
   ]);
   props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(DialogScopedContextProvider, {
@@ -55278,7 +55695,7 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
     return styleProp;
   }, [hidden, styleProp]);
   props = {
-    "data-open": open || void 0,
+    "data-open": open7 || void 0,
     "data-enter": transition === "enter" || void 0,
     "data-leave": transition === "leave" || void 0,
     hidden,
@@ -55289,11 +55706,11 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
   };
   return removeUndefinedValues(props);
 });
-var DisclosureContentImpl = forwardRef210(function DisclosureContentImpl2(props) {
+var DisclosureContentImpl = forwardRef208(function DisclosureContentImpl2(props) {
   const htmlProps = useDisclosureContent(props);
   return createElement3(TagName6, htmlProps);
 });
-var DisclosureContent = forwardRef210(function DisclosureContent2({ unmountOnHide, ...props }) {
+var DisclosureContent = forwardRef208(function DisclosureContent2({ unmountOnHide, ...props }) {
   const context = useDisclosureProviderContext();
   const store = props.store || context;
   if (useStoreState(store, ["mounted"], (state) => !unmountOnHide || state?.mounted) === false) return null;
@@ -55305,13 +55722,13 @@ function createDisclosureStore(props = {}) {
   const store = props.store || props.disclosure ? mergeStore(props.store, omit2(props.disclosure, ["contentElement", "disclosureElement"])) : void 0;
   throwOnConflictingProps(props, store);
   const syncState = store?.getState();
-  const open = defaultValue(props.open, syncState?.open, props.defaultOpen, false);
+  const open7 = defaultValue(props.open, syncState?.open, props.defaultOpen, false);
   const animated = defaultValue(props.animated, syncState?.animated, false);
   const initialState = {
-    open,
+    open: open7,
     animated,
-    animating: !!animated && open,
-    mounted: open,
+    animating: !!animated && open7,
+    mounted: open7,
     contentElement: defaultValue(syncState?.contentElement, null),
     disclosureElement: defaultValue(syncState?.disclosureElement, null)
   };
@@ -55333,7 +55750,7 @@ function createDisclosureStore(props = {}) {
     setOpen: (value) => disclosure.setState("open", value),
     show: () => disclosure.setState("open", true),
     hide: () => disclosure.setState("open", false),
-    toggle: () => disclosure.setState("open", (open2) => !open2),
+    toggle: () => disclosure.setState("open", (open8) => !open8),
     stopAnimation: () => disclosure.setState("animating", false),
     setContentElement: (value) => disclosure.setState("contentElement", value),
     setDisclosureElement: (value) => disclosure.setState("disclosureElement", value)
@@ -55529,7 +55946,7 @@ var useCompositeHover = createHook(function useCompositeHover2({ store, focusOnH
   };
   return props;
 });
-var CompositeHover = memo5(forwardRef210(function CompositeHover2(props) {
+var CompositeHover = memo5(forwardRef208(function CompositeHover2(props) {
   const htmlProps = useCompositeHover(props);
   return createElement3(TagName7, htmlProps);
 }));
@@ -55629,7 +56046,7 @@ function getDefaultAutoSelectId(items) {
     return item.element?.getAttribute("role") !== "tab";
   })?.id;
 }
-var useCombobox = createHook(function useCombobox2({ store, focusable: focusable2 = true, autoSelect: autoSelectProp = false, getAutoSelectId, setValueOnChange, showMinLength = 0, showOnChange, showOnMouseDown, showOnClick = showOnMouseDown, showOnKeyDown, showOnKeyPress = showOnKeyDown, blurActiveItemOnClick, setValueOnClick = true, moveOnKeyPress = true, autoComplete = "list", name, form, disabled: disabled2, ...props }) {
+var useCombobox = createHook(function useCombobox2({ store, focusable: focusable2 = true, autoSelect: autoSelectProp = false, getAutoSelectId, setValueOnChange, showMinLength = 0, showOnChange, showOnMouseDown, showOnClick = showOnMouseDown, showOnKeyDown, showOnKeyPress = showOnKeyDown, blurActiveItemOnClick, setValueOnClick = true, moveOnKeyPress = true, autoComplete = "list", name, form, disabled: disabled3, ...props }) {
   const scopedContext = useComboboxScopedContext(true);
   const context = useComboboxProviderContext();
   store = store || context || scopedContext;
@@ -55679,7 +56096,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     return state.activeValue;
   });
   const items = useStoreState(store, "renderedItems");
-  const open = useStoreState(store, "open");
+  const open7 = useStoreState(store, "open");
   const contentElement = useStoreState(store, "contentElement");
   const placing = useStoreState(store, "unstable_placing");
   const firstItemAutoSelected = isFirstItemAutoSelected(items, inlineActiveValue, autoSelect);
@@ -55747,7 +56164,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
   const userScrolledRef = (0, import_react76.useRef)(false);
   const isAutoScrollingRef = (0, import_react76.useRef)(false);
   (0, import_react76.useEffect)(() => {
-    if (!open) return;
+    if (!open7) return;
     if (!contentElement) return;
     const scrollingElement = getScrollingElement(contentElement);
     if (!scrollingElement) return;
@@ -55777,7 +56194,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
       scrollingElement.removeEventListener("scroll", onScroll, true);
     };
   }, [
-    open,
+    open7,
     contentElement,
     store
   ]);
@@ -55788,18 +56205,18 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     canAutoSelectRef.current = true;
   }, [storeInputValue]);
   useSafeLayoutEffect(() => {
-    if (autoSelect !== "always" && open) return;
-    canAutoSelectRef.current = open;
-  }, [autoSelect, open]);
+    if (autoSelect !== "always" && open7) return;
+    canAutoSelectRef.current = open7;
+  }, [autoSelect, open7]);
   useSafeLayoutEffect(() => {
-    if (open) return;
+    if (open7) return;
     autoSelectMovedRef.current = void 0;
-  }, [open]);
+  }, [open7]);
   const resetValueOnSelect = useStoreState(store, "resetValueOnSelect");
   useUpdateEffect(() => {
     const canAutoSelect = canAutoSelectRef.current;
     if (!store) return;
-    if (!open) return;
+    if (!open7) return;
     if (composingRef.current) return;
     if (!canAutoSelect && (!resetValueOnSelect || userScrolledRef.current)) return;
     const state = store.getState();
@@ -55837,7 +56254,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     }
   }, [
     store,
-    open,
+    open7,
     placing,
     valueUpdated,
     storeInputValue,
@@ -55943,8 +56360,8 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     if (!event.repeat) canAutoSelectRef.current = false;
     if (event.defaultPrevented) return;
     if (!store) return;
-    const { open: open2 } = store.getState();
-    if (open2 && event.key === "Enter") {
+    const { open: open8 } = store.getState();
+    if (open8 && event.key === "Enter") {
       event.preventDefault();
       return;
     }
@@ -55952,7 +56369,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     if (event.altKey) return;
     if (event.shiftKey) return;
     if (event.metaKey) return;
-    if (open2) return;
+    if (open8) return;
     if (event.key === "ArrowUp" || event.key === "ArrowDown") {
       if (showOnKeyPressProp(event)) {
         event.preventDefault();
@@ -55969,7 +56386,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
   const ariaAutoComplete = isAriaAutoCompleteValue(autoComplete) ? autoComplete : void 0;
   const isActiveItem = useStoreState(store, ["activeId"], (state) => state.activeId === null);
   const formDisabled = disabledFromProps({
-    disabled: disabled2,
+    disabled: disabled3,
     "aria-disabled": props["aria-disabled"]
   });
   const composite = props.composite !== false;
@@ -55998,7 +56415,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     role: "combobox",
     "aria-autocomplete": ariaAutoComplete,
     "aria-haspopup": getPopupRole(contentElement, "listbox"),
-    "aria-expanded": open,
+    "aria-expanded": open7,
     "aria-controls": contentElement?.id,
     "data-active-item": isActiveItem || void 0,
     value: inputValue,
@@ -56006,7 +56423,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     id,
     name: multiSelectable ? void 0 : name,
     form,
-    disabled: disabled2,
+    disabled: disabled3,
     ref: useMergeRefs14(ref, store.setInputElement, composite ? void 0 : setCompositeElement, props.ref),
     onChange,
     onCompositionStart,
@@ -56032,7 +56449,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     ...props
   };
 });
-var Combobox = forwardRef210(function Combobox2(props) {
+var Combobox = forwardRef208(function Combobox2(props) {
   const htmlProps = useCombobox(props);
   return createElement3(TagName8, htmlProps);
 });
@@ -56075,17 +56492,17 @@ var useComboboxItem = createHook(function useComboboxItem2({ store, value, hideO
   });
   const autoFocusSelectedItem = !!selectElement;
   const selectMode = !!selectElement;
-  const disabled2 = disabledFromProps(props);
+  const disabled3 = disabledFromProps(props);
   const getItem = (0, import_react77.useCallback)((item) => {
     const nextItem = {
       ...item,
-      value: selectMode && disabled2 ? void 0 : value
+      value: selectMode && disabled3 ? void 0 : value
     };
     if (getItemProp) return getItemProp(nextItem);
     return nextItem;
   }, [
     selectMode,
-    disabled2,
+    disabled3,
     value,
     getItemProp
   ]);
@@ -56189,7 +56606,7 @@ var useComboboxItem = createHook(function useComboboxItem2({ store, value, hideO
   });
   return props;
 });
-var ComboboxItem3 = memo5(forwardRef210(function ComboboxItem4(props) {
+var ComboboxItem3 = memo5(forwardRef208(function ComboboxItem4(props) {
   const htmlProps = useComboboxItem(props);
   return createElement3(TagName9, htmlProps);
 }));
@@ -56308,7 +56725,7 @@ var useComboboxItemValue = createHook(function useComboboxItemValue2({ store, va
   };
   return props;
 });
-var ComboboxItemValue = forwardRef210(function ComboboxItemValue2(props) {
+var ComboboxItemValue = forwardRef208(function ComboboxItemValue2(props) {
   const htmlProps = useComboboxItemValue(props);
   return createElement3(TagName10, htmlProps);
 });
@@ -56332,7 +56749,7 @@ var useComboboxLabel = createHook(function useComboboxLabel2({ store, ...props }
   };
   return props;
 });
-var ComboboxLabel = memo5(forwardRef210(function ComboboxLabel2(props) {
+var ComboboxLabel = memo5(forwardRef208(function ComboboxLabel2(props) {
   const htmlProps = useComboboxLabel(props);
   return createElement3(TagName11, htmlProps);
 }));
@@ -56440,7 +56857,7 @@ var useComboboxList = createHook(function useComboboxList2({ store, alwaysVisibl
   };
   return props;
 });
-var ComboboxList3 = forwardRef210(function ComboboxList4(props) {
+var ComboboxList3 = forwardRef208(function ComboboxList4(props) {
   const htmlProps = useComboboxList(props);
   return createElement3(TagName12, htmlProps);
 });
@@ -56633,9 +57050,9 @@ function createComboboxStore({ tag, ...props } = {}) {
     combobox.setState("activeId", item.id);
   }));
   setup(combobox, () => batch(combobox, ["selectOnMove", "moves"], (state) => {
-    const { activeId: activeId2, open, selectedValue: selectedValue2, selectElement } = combobox.getState();
+    const { activeId: activeId2, open: open7, selectedValue: selectedValue2, selectElement } = combobox.getState();
     if (!selectElement) return;
-    if (!state.selectOnMove && open) return;
+    if (!state.selectOnMove && open7) return;
     if (Array.isArray(selectedValue2)) return;
     if (!state.moves) return;
     if (!activeId2) return;
@@ -59158,7 +59575,7 @@ function Checkbox({
   validity
 }) {
   const { getValue, setValue, label, description, isValid: isValid2 } = field;
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const onChangeControl = (0, import_element215.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
@@ -59175,7 +59592,7 @@ function Checkbox({
       help: description,
       checked: getValue({ item: data }),
       onChange: onChangeControl,
-      disabled: disabled2
+      disabled: disabled3
     }
   );
 }
@@ -59258,7 +59675,7 @@ function RelativeDateControl({
 }) {
   const options = TIME_UNITS_OPTIONS[operator === OPERATOR_IN_THE_PAST ? "inThePast" : "over"];
   const { id, label, description, getValue, setValue } = field;
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
   const onChangeValue = (0, import_element217.useCallback)(
@@ -59297,7 +59714,7 @@ function RelativeDateControl({
             step: 1,
             value: relValue,
             onChange: onChangeValue,
-            disabled: disabled2
+            disabled: disabled3
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
@@ -59309,7 +59726,7 @@ function RelativeDateControl({
             options,
             onChange: onChangeUnit,
             hideLabelFromVision: true,
-            disabled: disabled2
+            disabled: disabled3
           }
         )
       ] })
@@ -59422,7 +59839,7 @@ function CalendarDateTimeControl({
 }) {
   const { compact } = config || {};
   const { id, label, description, setValue, getValue, isValid: isValid2 } = field;
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
   const { timezone } = (0, import_date5.getSettings)();
@@ -59522,7 +59939,7 @@ function CalendarDateTimeControl({
             hideLabelFromVision: true,
             value: formatDateTime(value),
             onValueChange: handleManualDateTimeChange,
-            disabled: disabled2,
+            disabled: disabled3,
             description: getTimezoneDescription(),
             min: minConstraint ? formatDateTime(minConstraint) : void 0,
             max: maxConstraint ? formatDateTime(maxConstraint) : void 0
@@ -59540,7 +59957,7 @@ function CalendarDateTimeControl({
             locale,
             dir: (0, import_i18n60.isRTL)() ? "rtl" : "ltr",
             weekStartsOn,
-            disabled: disabled2 || disabledMatchers
+            disabled: disabled3 || disabledMatchers
           }
         )
       ] })
@@ -59780,7 +60197,7 @@ function CalendarDateControl({
     isValid: isValid2,
     format: fieldFormat
   } = field;
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const [selectedPresetId, setSelectedPresetId] = (0, import_element220.useState)(
     null
   );
@@ -59881,7 +60298,7 @@ function CalendarDateControl({
                         variant: "tertiary",
                         isPressed: isSelected2,
                         size: "small",
-                        disabled: disabled2,
+                        disabled: disabled3,
                         accessibleWhenDisabled: true,
                         onClick: () => handlePresetClick(preset),
                         children: preset.label
@@ -59896,7 +60313,7 @@ function CalendarDateControl({
                       variant: "tertiary",
                       isPressed: !selectedPresetId,
                       size: "small",
-                      disabled: !!selectedPresetId || disabled2,
+                      disabled: !!selectedPresetId || disabled3,
                       accessibleWhenDisabled: true,
                       children: (0, import_i18n61.__)("Custom")
                     }
@@ -59914,7 +60331,7 @@ function CalendarDateControl({
                 value,
                 onChange: handleManualDateChange,
                 required: !!field.isValid?.required,
-                disabled: disabled2,
+                disabled: disabled3,
                 min: minConstraint,
                 max: maxConstraint
               }
@@ -59930,8 +60347,8 @@ function CalendarDateControl({
                 locale,
                 dir: (0, import_i18n61.isRTL)() ? "rtl" : "ltr",
                 weekStartsOn,
-                disabled: disabled2 || disabledMatchers,
-                disableNavigation: disabled2
+                disabled: disabled3 || disabledMatchers,
+                disableNavigation: disabled3
               }
             )
           ] })
@@ -59957,7 +60374,7 @@ function CalendarDateRangeControl({
     isValid: isValid2,
     format: fieldFormat
   } = field;
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   let value;
   const fieldValue = getValue({ item: data });
   if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
@@ -60106,7 +60523,7 @@ function CalendarDateRangeControl({
                         variant: "tertiary",
                         isPressed: isSelected2,
                         size: "small",
-                        disabled: disabled2,
+                        disabled: disabled3,
                         accessibleWhenDisabled: true,
                         onClick: () => handlePresetClick(preset),
                         children: preset.label
@@ -60122,7 +60539,7 @@ function CalendarDateRangeControl({
                       isPressed: !selectedPresetId,
                       size: "small",
                       accessibleWhenDisabled: true,
-                      disabled: !!selectedPresetId || disabled2,
+                      disabled: !!selectedPresetId || disabled3,
                       children: (0, import_i18n61.__)("Custom")
                     }
                   )
@@ -60147,7 +60564,7 @@ function CalendarDateRangeControl({
                       value: value?.[0],
                       onChange: (newValue) => handleManualDateChange("from", newValue),
                       required: !!field.isValid?.required,
-                      disabled: disabled2,
+                      disabled: disabled3,
                       min: minConstraint,
                       max: maxConstraint
                     }
@@ -60162,7 +60579,7 @@ function CalendarDateRangeControl({
                       value: value?.[1],
                       onChange: (newValue) => handleManualDateChange("to", newValue),
                       required: !!field.isValid?.required,
-                      disabled: disabled2,
+                      disabled: disabled3,
                       min: minConstraint,
                       max: maxConstraint
                     }
@@ -60181,7 +60598,7 @@ function CalendarDateRangeControl({
                 locale,
                 dir: (0, import_i18n61.isRTL)() ? "rtl" : "ltr",
                 weekStartsOn,
-                disabled: disabled2 || disabledMatchers
+                disabled: disabled3 || disabledMatchers
               }
             )
           ] })
@@ -60251,7 +60668,7 @@ function Select2({
   validity
 }) {
   const { type, label, description, getValue, setValue, isValid: isValid2 } = field;
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const isMultiple = type === "array";
   const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
   const onChangeControl = (0, import_element221.useCallback)(
@@ -60278,7 +60695,7 @@ function Select2({
       onChange: onChangeControl,
       hideLabelFromVision,
       multiple: isMultiple,
-      disabled: disabled2
+      disabled: disabled3
     }
   );
 }
@@ -60314,7 +60731,7 @@ function ValidatedText({
 }) {
   const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data });
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const onValueChangeControl = (0, import_element222.useCallback)(
     (newValue) => onChange(
       setValue({
@@ -60340,7 +60757,7 @@ function ValidatedText({
       type,
       prefix,
       suffix,
-      disabled: disabled2,
+      disabled: disabled3,
       pattern: isValid2.pattern ? isValid2.pattern.constraint : void 0,
       minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
       maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0
@@ -60500,7 +60917,7 @@ function ValidatedNumber({
   const step = Math.pow(10, Math.abs(decimals) * -1);
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data }) ?? "";
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const onChangeControl = (0, import_element223.useCallback)(
     (newValue) => {
       onChange(
@@ -60557,7 +60974,7 @@ function ValidatedNumber({
       step,
       min: typeof isValid2.min?.constraint === "number" ? isValid2.min.constraint : void 0,
       max: typeof isValid2.max?.constraint === "number" ? isValid2.max.constraint : void 0,
-      disabled: disabled2
+      disabled: disabled3
     }
   );
 }
@@ -60587,7 +61004,7 @@ function Radio({
   validity
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const { elements, isLoading } = useElements({
     elements: field.elements,
     getElements: field.getElements
@@ -60612,7 +61029,7 @@ function Radio({
       options: elements,
       selected: value,
       hideLabelFromVision,
-      disabled: disabled2
+      disabled: disabled3
     }
   );
 }
@@ -60675,7 +61092,7 @@ function BetweenControls2({
   value,
   onChange,
   hideLabelFromVision,
-  disabled: disabled2,
+  disabled: disabled3,
   step,
   min: min3,
   max: max3
@@ -60702,7 +61119,7 @@ function BetweenControls2({
             value: from,
             onValueChange: onChangeFrom,
             hideLabelFromVision,
-            disabled: disabled2,
+            disabled: disabled3,
             step,
             min: min3,
             max: to || max3
@@ -60716,7 +61133,7 @@ function BetweenControls2({
             value: to,
             onValueChange: onChangeTo,
             hideLabelFromVision,
-            disabled: disabled2,
+            disabled: disabled3,
             step,
             min: from || min3,
             max: max3
@@ -60737,7 +61154,7 @@ function Time({
 }) {
   const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data });
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const timeFormat = field.format?.time;
   const min3 = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
   const max3 = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
@@ -60775,7 +61192,7 @@ function Time({
         value: valueBetween,
         onChange: onChangeBetweenControls,
         hideLabelFromVision,
-        disabled: disabled2,
+        disabled: disabled3,
         step: getStep(timeFormat, valueBetween),
         min: min3,
         max: max3
@@ -60796,7 +61213,7 @@ function Time({
       value: toInputValue(value),
       onValueChange: onChangeControl,
       hideLabelFromVision,
-      disabled: disabled2,
+      disabled: disabled3,
       step: getStep(timeFormat, [value]),
       min: min3,
       max: max3
@@ -60816,7 +61233,7 @@ function Toggle({
   validity
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const onChangeControl = (0, import_element227.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
@@ -60833,7 +61250,7 @@ function Toggle({
       help: description,
       checked: getValue({ item: data }),
       onChange: onChangeControl,
-      disabled: disabled2
+      disabled: disabled3
     }
   );
 }
@@ -60851,7 +61268,7 @@ function Textarea3({
   validity
 }) {
   const { rows = 4 } = config || {};
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const value = field.getValue({ item: data });
   const onValueChangeControl = (0, import_element228.useCallback)(
@@ -60871,7 +61288,7 @@ function Textarea3({
       details: typeof description === "string" ? void 0 : description,
       onValueChange: onValueChangeControl,
       rows,
-      disabled: disabled2,
+      disabled: disabled3,
       minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
       maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
       hideLabelFromVision
@@ -60892,7 +61309,7 @@ function ToggleGroup({
   validity
 }) {
   const { getValue, setValue, isValid: isValid2 } = field;
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const value = getValue({ item: data });
   const onChangeControl = (0, import_element229.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
@@ -60926,7 +61343,7 @@ function ToggleGroup({
         {
           label: el.label,
           value: el.value,
-          disabled: disabled2
+          disabled: disabled3
         },
         el.value
       ))
@@ -60948,7 +61365,7 @@ function ArrayControl({
 }) {
   const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data });
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const { elements, isLoading } = useElements({
     elements: field.elements,
     getElements: field.getElements
@@ -60988,7 +61405,7 @@ function ArrayControl({
       onChange: onChangeControl,
       placeholder,
       suggestions: elements?.map((element) => element.value),
-      disabled: disabled2,
+      disabled: disabled3,
       __experimentalValidateInput: (token) => {
         if (field.isValid?.elements && elements) {
           return elements.some(
@@ -61203,7 +61620,7 @@ var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
 var ColorPickerDropdown = ({
   color,
   onColorChange,
-  disabled: disabled2
+  disabled: disabled3
 }) => {
   const validColor = color && A(color).isValid() ? color : "#ffffff";
   return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
@@ -61217,7 +61634,7 @@ var ColorPickerDropdown = ({
           onClick: onToggle,
           "aria-label": (0, import_i18n64.__)("Open color picker"),
           size: "small",
-          disabled: disabled2,
+          disabled: disabled3,
           accessibleWhenDisabled: true,
           icon: () => /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(import_components51.ColorIndicator, { colorValue: validColor })
         }
@@ -61242,7 +61659,7 @@ function Color({
   validity
 }) {
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const value = field.getValue({ item: data }) || "";
   const handleColorChange = (0, import_element231.useCallback)(
     (newColor) => {
@@ -61270,13 +61687,13 @@ function Color({
       onValueChange: handleInputChange,
       hideLabelFromVision,
       type: "text",
-      disabled: disabled2,
+      disabled: disabled3,
       prefix: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(InputLayout3.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
         ColorPickerDropdown,
         {
           color: value,
           onColorChange: handleColorChange,
-          disabled: disabled2
+          disabled: disabled3
         }
       ) })
     }
@@ -61297,7 +61714,7 @@ function Password({
   validity
 }) {
   const [isVisible2, setIsVisible] = (0, import_element232.useState)(false);
-  const disabled2 = field.isDisabled({ item: data, field });
+  const disabled3 = field.isDisabled({ item: data, field });
   const toggleVisibility = (0, import_element232.useCallback)(() => {
     setIsVisible((prev) => !prev);
   }, []);
@@ -61319,7 +61736,7 @@ function Password({
             onClick: toggleVisibility,
             size: "small",
             label: isVisible2 ? (0, import_i18n65.__)("Hide password") : (0, import_i18n65.__)("Show password"),
-            disabled: disabled2,
+            disabled: disabled3,
             accessibleWhenDisabled: true
           }
         ) })
@@ -63470,7 +63887,7 @@ function SummaryButton({
   summaryFields,
   validity,
   touched,
-  disabled: disabled2,
+  disabled: disabled3,
   isOpen,
   onClick
 }) {
@@ -63482,7 +63899,7 @@ function SummaryButton({
     "dataforms-layouts-panel__field-trigger",
     `dataforms-layouts-panel__field-trigger--label-${labelPosition}`,
     {
-      "is-disabled": disabled2,
+      "is-disabled": disabled3,
       "dataforms-layouts-panel__field-trigger--edit-always": editVisibility === "always"
     }
   );
@@ -63560,7 +63977,7 @@ function SummaryButton({
         ))
       }
     ),
-    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
+    !disabled3 && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
       import_components55.Button,
       {
         className: "dataforms-layouts-panel__field-trigger-icon",
@@ -64694,11 +65111,11 @@ function FormCardField({
   (0, import_element244.useEffect)(() => {
     setIsOpen(isOpened);
   }, [isOpened]);
-  const handleOpenChange = (0, import_element244.useCallback)((open) => {
-    if (!open) {
+  const handleOpenChange = (0, import_element244.useCallback)((open7) => {
+    if (!open7) {
       setTouched(true);
     }
-    setIsOpen(open);
+    setIsOpen(open7);
   }, []);
   const revealValidity = useRevealValidity(
     contentRef,
@@ -65614,7 +66031,7 @@ function WidgetSettings() {
   } = useDashboardInternalContext();
   const { settingsWidgetUuid, setSettingsWidgetUuid } = useDashboardUIContext();
   const requestedWidget = settingsWidgetUuid ? layout.find((instance) => instance.uuid === settingsWidgetUuid) : void 0;
-  const open = !!requestedWidget && canPerform({
+  const open7 = !!requestedWidget && canPerform({
     operation: "edit",
     widget: requestedWidget,
     widgetType: widgetTypes.find(
@@ -65680,11 +66097,11 @@ function WidgetSettings() {
     [cancelStaging, close]
   );
   (0, import_element251.useEffect)(() => {
-    if (requestedWidget && !open) {
+    if (requestedWidget && !open7) {
       cancelStaging();
       close();
     }
-  }, [requestedWidget, open, cancelStaging, close]);
+  }, [requestedWidget, open7, cancelStaging, close]);
   const hasForm = !!widget && !!widgetType && fields2.length > 0;
   if (!hasForm) {
     return null;
@@ -65694,7 +66111,7 @@ function WidgetSettings() {
   return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(
     drawer_exports.Root,
     {
-      open,
+      open: open7,
       onOpenChange: handleOpenChange,
       swipeDirection: "right",
       modal: false,
@@ -65750,7 +66167,7 @@ function useWidgetSettingsToggle(widget) {
   const { settingsWidgetUuid, setSettingsWidgetUuid } = useDashboardUIContext();
   const { cancel, flushAutoSave } = useDashboardInternalContext();
   const isOpen = settingsWidgetUuid === widget.uuid;
-  const open = (0, import_element252.useCallback)(() => {
+  const open7 = (0, import_element252.useCallback)(() => {
     flushAutoSave();
     setSettingsWidgetUuid(widget.uuid);
   }, [flushAutoSave, setSettingsWidgetUuid, widget.uuid]);
@@ -65760,9 +66177,9 @@ function useWidgetSettingsToggle(widget) {
       setSettingsWidgetUuid(null);
       return;
     }
-    open();
-  }, [isOpen, cancel, setSettingsWidgetUuid, open]);
-  return { isOpen, open, toggle };
+    open7();
+  }, [isOpen, cancel, setSettingsWidgetUuid, open7]);
+  return { isOpen, open: open7, toggle };
 }
 
 // packages/widget-dashboard/build-module/components/widget-settings/widget-settings-trigger.mjs
@@ -65882,7 +66299,7 @@ function useEvent7(handler) {
 }
 function useInterval() {
   const intervalRef = (0, import_react81.useRef)(null);
-  const set3 = (0, import_react81.useCallback)((listener, duration) => {
+  const set = (0, import_react81.useCallback)((listener, duration) => {
     intervalRef.current = setInterval(listener, duration);
   }, []);
   const clear = (0, import_react81.useCallback)(() => {
@@ -65891,7 +66308,7 @@ function useInterval() {
       intervalRef.current = null;
     }
   }, []);
-  return [set3, clear];
+  return [set, clear];
 }
 function useLatestValue(value, dependencies) {
   if (dependencies === void 0) {
@@ -66322,11 +66739,11 @@ function getRelativeTransformOrigin(event, rect) {
   if (!eventCoordinates) {
     return "0 0";
   }
-  const transformOrigin = {
+  const transformOrigin2 = {
     x: (eventCoordinates.x - rect.left) / rect.width * 100,
     y: (eventCoordinates.y - rect.top) / rect.height * 100
   };
-  return transformOrigin.x + "% " + transformOrigin.y + "%";
+  return transformOrigin2.x + "% " + transformOrigin2.y + "%";
 }
 function sortCollisionsAsc(_ref, _ref2) {
   let {
@@ -66358,7 +66775,7 @@ function cornersOfRectangle(_ref5) {
   let {
     left,
     top,
-    height,
+    height: height2,
     width
   } = _ref5;
   return [{
@@ -66369,10 +66786,10 @@ function cornersOfRectangle(_ref5) {
     y: top
   }, {
     x: left,
-    y: top + height
+    y: top + height2
   }, {
     x: left + width,
-    y: top + height
+    y: top + height2
   }];
 }
 function getFirstCollision(collisions, property) {
@@ -66418,11 +66835,11 @@ function getIntersectionRatio(entry, target) {
   const right = Math.min(target.left + target.width, entry.left + entry.width);
   const bottom = Math.min(target.top + target.height, entry.top + entry.height);
   const width = right - left;
-  const height = bottom - top;
+  const height2 = bottom - top;
   if (left < right && top < bottom) {
     const targetArea = target.width * target.height;
     const entryArea = entry.width * entry.height;
-    const intersectionArea = width * height;
+    const intersectionArea = width * height2;
     const intersectionRatio = intersectionArea / (targetArea + entryArea - intersectionArea);
     return Number(intersectionRatio.toFixed(4));
   }
@@ -66505,7 +66922,7 @@ function parseTransform(transform) {
   }
   return null;
 }
-function inverseTransform(rect, transform, transformOrigin) {
+function inverseTransform(rect, transform, transformOrigin2) {
   const parsedTransform = parseTransform(transform);
   if (!parsedTransform) {
     return rect;
@@ -66516,8 +66933,8 @@ function inverseTransform(rect, transform, transformOrigin) {
     x: translateX,
     y: translateY
   } = parsedTransform;
-  const x2 = rect.left - translateX - (1 - scaleX) * parseFloat(transformOrigin);
-  const y2 = rect.top - translateY - (1 - scaleY) * parseFloat(transformOrigin.slice(transformOrigin.indexOf(" ") + 1));
+  const x2 = rect.left - translateX - (1 - scaleX) * parseFloat(transformOrigin2);
+  const y2 = rect.top - translateY - (1 - scaleY) * parseFloat(transformOrigin2.slice(transformOrigin2.indexOf(" ") + 1));
   const w2 = scaleX ? rect.width / scaleX : rect.width;
   const h = scaleY ? rect.height / scaleY : rect.height;
   return {
@@ -66540,17 +66957,17 @@ function getClientRect(element, options) {
   if (options.ignoreTransform) {
     const {
       transform,
-      transformOrigin
+      transformOrigin: transformOrigin2
     } = getWindow3(element).getComputedStyle(element);
     if (transform) {
-      rect = inverseTransform(rect, transform, transformOrigin);
+      rect = inverseTransform(rect, transform, transformOrigin2);
     }
   }
   const {
     top,
     left,
     width,
-    height,
+    height: height2,
     bottom,
     right
   } = rect;
@@ -66558,7 +66975,7 @@ function getClientRect(element, options) {
     top,
     left,
     width,
-    height,
+    height: height2,
     bottom,
     right
   };
@@ -66570,14 +66987,14 @@ function getTransformAgnosticClientRect(element) {
 }
 function getWindowClientRect(element) {
   const width = element.innerWidth;
-  const height = element.innerHeight;
+  const height2 = element.innerHeight;
   return {
     top: 0,
     left: 0,
     right: width,
-    bottom: height,
+    bottom: height2,
     width,
-    height
+    height: height2
   };
 }
 function isFixed(node, computedStyle) {
@@ -67629,11 +68046,11 @@ var defaultScrollIntent = {
 function useScrollIntent(_ref2) {
   let {
     delta,
-    disabled: disabled2
+    disabled: disabled3
   } = _ref2;
   const previousDelta = usePrevious2(delta);
   return useLazyMemo((previousIntent) => {
-    if (disabled2 || !previousDelta || !previousIntent) {
+    if (disabled3 || !previousDelta || !previousIntent) {
       return defaultScrollIntent;
     }
     const direction = {
@@ -67650,7 +68067,7 @@ function useScrollIntent(_ref2) {
         [Direction.Forward]: previousIntent.y[Direction.Forward] || direction.y === 1
       }
     };
-  }, [disabled2, delta, previousDelta]);
+  }, [disabled3, delta, previousDelta]);
 }
 function useCachedNode(draggableNodes, id) {
   const draggableNode = id != null ? draggableNodes.get(id) : void 0;
@@ -67699,8 +68116,8 @@ function useDroppableMeasuring(containers, _ref) {
     strategy
   } = config;
   const containersRef = (0, import_react83.useRef)(containers);
-  const disabled2 = isDisabled();
-  const disabledRef = useLatestValue(disabled2);
+  const disabled3 = isDisabled();
+  const disabledRef = useLatestValue(disabled3);
   const measureDroppableContainers = (0, import_react83.useCallback)(function(ids2) {
     if (ids2 === void 0) {
       ids2 = [];
@@ -67717,7 +68134,7 @@ function useDroppableMeasuring(containers, _ref) {
   }, [disabledRef]);
   const timeoutId = (0, import_react83.useRef)(null);
   const droppableRects = useLazyMemo((previousValue) => {
-    if (disabled2 && !dragging) {
+    if (disabled3 && !dragging) {
       return defaultValue2;
     }
     if (!previousValue || previousValue === defaultValue2 || containersRef.current !== containers || queue != null) {
@@ -67740,19 +68157,19 @@ function useDroppableMeasuring(containers, _ref) {
       return map;
     }
     return previousValue;
-  }, [containers, queue, dragging, disabled2, measure]);
+  }, [containers, queue, dragging, disabled3, measure]);
   (0, import_react83.useEffect)(() => {
     containersRef.current = containers;
   }, [containers]);
   (0, import_react83.useEffect)(
     () => {
-      if (disabled2) {
+      if (disabled3) {
         return;
       }
       measureDroppableContainers();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dragging, disabled2]
+    [dragging, disabled3]
   );
   (0, import_react83.useEffect)(
     () => {
@@ -67765,7 +68182,7 @@ function useDroppableMeasuring(containers, _ref) {
   );
   (0, import_react83.useEffect)(
     () => {
-      if (disabled2 || typeof frequency !== "number" || timeoutId.current !== null) {
+      if (disabled3 || typeof frequency !== "number" || timeoutId.current !== null) {
         return;
       }
       timeoutId.current = setTimeout(() => {
@@ -67774,7 +68191,7 @@ function useDroppableMeasuring(containers, _ref) {
       }, frequency);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [frequency, disabled2, measureDroppableContainers, ...dependencies]
+    [frequency, disabled3, measureDroppableContainers, ...dependencies]
   );
   return {
     droppableRects,
@@ -67809,18 +68226,18 @@ function useInitialRect(node, measure) {
 function useMutationObserver(_ref) {
   let {
     callback,
-    disabled: disabled2
+    disabled: disabled3
   } = _ref;
   const handleMutations = useEvent7(callback);
   const mutationObserver = (0, import_react83.useMemo)(() => {
-    if (disabled2 || typeof window === "undefined" || typeof window.MutationObserver === "undefined") {
+    if (disabled3 || typeof window === "undefined" || typeof window.MutationObserver === "undefined") {
       return void 0;
     }
     const {
       MutationObserver: MutationObserver2
     } = window;
     return new MutationObserver2(handleMutations);
-  }, [handleMutations, disabled2]);
+  }, [handleMutations, disabled3]);
   (0, import_react83.useEffect)(() => {
     return () => mutationObserver == null ? void 0 : mutationObserver.disconnect();
   }, [mutationObserver]);
@@ -67829,12 +68246,12 @@ function useMutationObserver(_ref) {
 function useResizeObserver4(_ref) {
   let {
     callback,
-    disabled: disabled2
+    disabled: disabled3
   } = _ref;
   const handleResize = useEvent7(callback);
   const resizeObserver = (0, import_react83.useMemo)(
     () => {
-      if (disabled2 || typeof window === "undefined" || typeof window.ResizeObserver === "undefined") {
+      if (disabled3 || typeof window === "undefined" || typeof window.ResizeObserver === "undefined") {
         return void 0;
       }
       const {
@@ -67843,7 +68260,7 @@ function useResizeObserver4(_ref) {
       return new ResizeObserver2(handleResize);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [disabled2]
+    [disabled3]
   );
   (0, import_react83.useEffect)(() => {
     return () => resizeObserver == null ? void 0 : resizeObserver.disconnect();
@@ -68159,9 +68576,9 @@ var DroppableContainersMap = class extends Map {
   getEnabled() {
     return this.toArray().filter((_ref) => {
       let {
-        disabled: disabled2
+        disabled: disabled3
       } = _ref;
-      return !disabled2;
+      return !disabled3;
     });
   }
   getNodeFor(id) {
@@ -68291,7 +68708,7 @@ function reducer(state, action) {
       const {
         id,
         key: key2,
-        disabled: disabled2
+        disabled: disabled3
       } = action;
       const element = state.droppable.containers.get(id);
       if (!element || key2 !== element.key) {
@@ -68300,7 +68717,7 @@ function reducer(state, action) {
       const containers = new DroppableContainersMap(state.droppable.containers);
       containers.set(id, {
         ...element,
-        disabled: disabled2
+        disabled: disabled3
       });
       return {
         ...state,
@@ -68336,7 +68753,7 @@ function reducer(state, action) {
 }
 function RestoreFocus(_ref) {
   let {
-    disabled: disabled2
+    disabled: disabled3
   } = _ref;
   const {
     active,
@@ -68346,7 +68763,7 @@ function RestoreFocus(_ref) {
   const previousActivatorEvent = usePrevious2(activatorEvent);
   const previousActiveId = usePrevious2(active == null ? void 0 : active.id);
   (0, import_react83.useEffect)(() => {
-    if (disabled2) {
+    if (disabled3) {
       return;
     }
     if (!activatorEvent && previousActivatorEvent && previousActiveId != null) {
@@ -68380,7 +68797,7 @@ function RestoreFocus(_ref) {
         }
       });
     }
-  }, [activatorEvent, disabled2, draggableNodes, previousActiveId, previousActivatorEvent]);
+  }, [activatorEvent, disabled3, draggableNodes, previousActiveId, previousActivatorEvent]);
   return null;
 }
 function applyModifiers(modifiers, _ref) {
@@ -68431,8 +68848,8 @@ function useLayoutShiftScrollCompensation(_ref) {
     y: config
   } : config;
   useIsomorphicLayoutEffect3(() => {
-    const disabled2 = !x2 && !y2;
-    if (disabled2 || !activeNode) {
+    const disabled3 = !x2 && !y2;
+    if (disabled3 || !activeNode) {
       initialized.current = false;
       return;
     }
@@ -68978,7 +69395,7 @@ function useDraggable(_ref) {
   let {
     id,
     data,
-    disabled: disabled2 = false,
+    disabled: disabled3 = false,
     attributes
   } = _ref;
   const key2 = useUniqueId(ID_PREFIX);
@@ -69024,18 +69441,18 @@ function useDraggable(_ref) {
   const memoizedAttributes = (0, import_react83.useMemo)(() => ({
     role,
     tabIndex,
-    "aria-disabled": disabled2,
+    "aria-disabled": disabled3,
     "aria-pressed": isDragging && role === defaultRole ? true : void 0,
     "aria-roledescription": roleDescription,
     "aria-describedby": ariaDescribedById.draggable
-  }), [disabled2, role, tabIndex, isDragging, roleDescription, ariaDescribedById.draggable]);
+  }), [disabled3, role, tabIndex, isDragging, roleDescription, ariaDescribedById.draggable]);
   return {
     active,
     activatorEvent,
     activeNodeRect,
     attributes: memoizedAttributes,
     isDragging,
-    listeners: disabled2 ? void 0 : listeners,
+    listeners: disabled3 ? void 0 : listeners,
     node,
     over,
     setNodeRef,
@@ -69053,7 +69470,7 @@ var defaultResizeObserverConfig = {
 function useDroppable(_ref) {
   let {
     data,
-    disabled: disabled2 = false,
+    disabled: disabled3 = false,
     id,
     resizeObserverConfig
   } = _ref;
@@ -69065,7 +69482,7 @@ function useDroppable(_ref) {
     measureDroppableContainers
   } = (0, import_react83.useContext)(InternalContext);
   const previous = (0, import_react83.useRef)({
-    disabled: disabled2
+    disabled: disabled3
   });
   const resizeObserverConnected = (0, import_react83.useRef)(false);
   const rect = (0, import_react83.useRef)(null);
@@ -69129,7 +69546,7 @@ function useDroppable(_ref) {
         element: {
           id,
           key: key2,
-          disabled: disabled2,
+          disabled: disabled3,
           node: nodeRef,
           rect,
           data: dataRef
@@ -69145,16 +69562,16 @@ function useDroppable(_ref) {
     [id]
   );
   (0, import_react83.useEffect)(() => {
-    if (disabled2 !== previous.current.disabled) {
+    if (disabled3 !== previous.current.disabled) {
       dispatch({
         type: Action3.SetDroppableDisabled,
         id,
         key: key2,
-        disabled: disabled2
+        disabled: disabled3
       });
-      previous.current.disabled = disabled2;
+      previous.current.disabled = disabled3;
     }
-  }, [id, key2, disabled2, dispatch]);
+  }, [id, key2, disabled3, dispatch]);
   return {
     active,
     rect,
@@ -69548,14 +69965,14 @@ function itemsEqual(a, b) {
   }
   return true;
 }
-function normalizeDisabled(disabled2) {
-  if (typeof disabled2 === "boolean") {
+function normalizeDisabled(disabled3) {
+  if (typeof disabled3 === "boolean") {
     return {
-      draggable: disabled2,
-      droppable: disabled2
+      draggable: disabled3,
+      droppable: disabled3
     };
   }
-  return disabled2;
+  return disabled3;
 }
 var rectSortingStrategy = (_ref) => {
   let {
@@ -69616,7 +70033,7 @@ function SortableContext(_ref) {
   const previousItemsRef = (0, import_react84.useRef)(items);
   const itemsHaveChanged = !itemsEqual(items, previousItemsRef.current);
   const disableTransforms = overIndex !== -1 && activeIndex === -1 || itemsHaveChanged;
-  const disabled2 = normalizeDisabled(disabledProp);
+  const disabled3 = normalizeDisabled(disabledProp);
   useIsomorphicLayoutEffect3(() => {
     if (itemsHaveChanged && isDragging) {
       measureDroppableContainers(items);
@@ -69629,7 +70046,7 @@ function SortableContext(_ref) {
     () => ({
       activeIndex,
       containerId,
-      disabled: disabled2,
+      disabled: disabled3,
       disableTransforms,
       items,
       overIndex,
@@ -69638,7 +70055,7 @@ function SortableContext(_ref) {
       strategy
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [activeIndex, containerId, disabled2.draggable, disabled2.droppable, disableTransforms, items, overIndex, droppableRects, useDragOverlay, strategy]
+    [activeIndex, containerId, disabled3.draggable, disabled3.droppable, disableTransforms, items, overIndex, droppableRects, useDragOverlay, strategy]
   );
   return import_react84.default.createElement(Context3.Provider, {
     value: contextValue
@@ -69691,7 +70108,7 @@ var defaultAttributes = {
 };
 function useDerivedTransform(_ref) {
   let {
-    disabled: disabled2,
+    disabled: disabled3,
     index: index2,
     node,
     rect
@@ -69699,7 +70116,7 @@ function useDerivedTransform(_ref) {
   const [derivedTransform, setDerivedtransform] = (0, import_react84.useState)(null);
   const previousIndex = (0, import_react84.useRef)(index2);
   useIsomorphicLayoutEffect3(() => {
-    if (!disabled2 && index2 !== previousIndex.current && node.current) {
+    if (!disabled3 && index2 !== previousIndex.current && node.current) {
       const initial2 = rect.current;
       if (initial2) {
         const current = getClientRect(node.current, {
@@ -69719,7 +70136,7 @@ function useDerivedTransform(_ref) {
     if (index2 !== previousIndex.current) {
       previousIndex.current = index2;
     }
-  }, [disabled2, index2, node, rect]);
+  }, [disabled3, index2, node, rect]);
   (0, import_react84.useEffect)(() => {
     if (derivedTransform) {
       setDerivedtransform(null);
@@ -69750,7 +70167,7 @@ function useSortable(_ref) {
     useDragOverlay,
     strategy: globalStrategy
   } = (0, import_react84.useContext)(Context3);
-  const disabled2 = normalizeLocalDisabled(localDisabled, globalDisabled);
+  const disabled3 = normalizeLocalDisabled(localDisabled, globalDisabled);
   const index2 = items.indexOf(id);
   const data = (0, import_react84.useMemo)(() => ({
     sortable: {
@@ -69769,7 +70186,7 @@ function useSortable(_ref) {
   } = useDroppable({
     id,
     data,
-    disabled: disabled2.droppable,
+    disabled: disabled3.droppable,
     resizeObserverConfig: {
       updateMeasurementsFor: itemsAfterCurrentSortable,
       ...resizeObserverConfig
@@ -69793,7 +70210,7 @@ function useSortable(_ref) {
       ...defaultAttributes,
       ...userDefinedAttributes
     },
-    disabled: disabled2.draggable
+    disabled: disabled3.draggable
   });
   const setNodeRef = useCombinedRefs(setDroppableNodeRef, setDraggableNodeRef);
   const isSorting = Boolean(active);
@@ -70241,11 +70658,11 @@ function clampResizeDelta(delta, initialSize, minSize, maxSize) {
     return { ...delta, width };
   }
   const maxShrinkHeight = initialSize.height - minSize.height;
-  let height = Math.max(delta.height, -maxShrinkHeight);
+  let height2 = Math.max(delta.height, -maxShrinkHeight);
   if (maxSize?.height !== void 0) {
-    height = Math.min(height, maxSize.height - initialSize.height);
+    height2 = Math.min(height2, maxSize.height - initialSize.height);
   }
-  return { width, height };
+  return { width, height: height2 };
 }
 function gridSpanToPixelSize(columnSpan, rowSpan, columnWidth, gapPx, rowHeightPx) {
   const widthPx = columnSpan * columnWidth + (columnSpan - 1) * gapPx;
@@ -70417,8 +70834,8 @@ if (typeof process === "undefined" || true) {
   registerStyle100("62860ded21", "._5d1abcb332a18701__item{position:relative}._54de57c12d3ce67e__item-content{height:100%;position:relative}._3e086aa073b9bbd9__is-resizing{overflow:visible;z-index:1}._3e086aa073b9bbd9__is-resizing ._54de57c12d3ce67e__item-content{overflow:visible;position:relative;z-index:2}._81d4e1a6c979f1e4__is-dragging{pointer-events:none}[data-wp-grid-dragging] ._81d4e1a6c979f1e4__is-dragging{border-radius:var(--wp-grid-placeholder-radius,0)}@media not (prefers-reduced-motion:reduce){[data-wp-grid-dragging] ._81d4e1a6c979f1e4__is-dragging{animation:_0447be8a7068a873__wp-grid-item-placeholder-in 0ms linear var(--wpds-motion-duration-sm,.1s) forwards;opacity:1;outline-color:transparent;outline-style:var(--wp-grid-placeholder-outline-style,dashed);outline-width:0}@keyframes _0447be8a7068a873__wp-grid-item-placeholder-in{to{opacity:var(--wp-grid-placeholder-opacity,.4);outline-color:var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));outline-width:var(--wpds-border-width-sm,2px)}}}@media (prefers-reduced-motion:reduce){[data-wp-grid-dragging] ._81d4e1a6c979f1e4__is-dragging{opacity:var(--wp-grid-placeholder-opacity,.4);outline:var(--wpds-border-width-sm,2px) var(--wp-grid-placeholder-outline-style,dashed) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)))}}@media (forced-colors:active){[data-wp-grid-dragging] ._81d4e1a6c979f1e4__is-dragging{--wp-grid-placeholder-outline-color:Highlight}}._2028fc095dbc5cb2__preview-overlay{background:transparent;border:var(--wpds-border-width-sm,2px) var(--wp-grid-resize-preview-outline-style,solid) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));border-radius:var(--wp-grid-placeholder-radius,0);box-sizing:border-box;inset-inline-start:0;pointer-events:none;position:absolute;top:0;z-index:0}@media (forced-colors:active){._2028fc095dbc5cb2__preview-overlay{border-color:Highlight}}");
 }
 var grid_item_default = { "item": "_5d1abcb332a18701__item", "item-content": "_54de57c12d3ce67e__item-content", "is-resizing": "_3e086aa073b9bbd9__is-resizing", "is-dragging": "_81d4e1a6c979f1e4__is-dragging", "wp-grid-item-placeholder-in": "_0447be8a7068a873__wp-grid-item-placeholder-in", "preview-overlay": "_2028fc095dbc5cb2__preview-overlay" };
-function getItemCursor(disabled2, interacting) {
-  if (disabled2) {
+function getItemCursor(disabled3, interacting) {
+  if (disabled3) {
     return "default";
   }
   if (interacting) {
@@ -70429,7 +70846,7 @@ function getItemCursor(disabled2, interacting) {
 function GridItem4({
   item,
   maxColumns,
-  disabled: disabled2 = false,
+  disabled: disabled3 = false,
   draggable = true,
   resizable = true,
   verticalResizable = true,
@@ -70452,8 +70869,8 @@ function GridItem4({
   const [initialContentSize, setInitialContentSize] = (0, import_element254.useState)(null);
   const itemRef = (0, import_element254.useRef)(null);
   const contentRef = (0, import_element254.useRef)(null);
-  const dragDisabled = disabled2 || !draggable;
-  const resizeDisabled = disabled2 || !resizable;
+  const dragDisabled = disabled3 || !draggable;
+  const resizeDisabled = disabled3 || !resizable;
   const {
     attributes,
     listeners,
@@ -70483,8 +70900,8 @@ function GridItem4({
     const contentNode = contentRef.current;
     let baselineSize = initialContentSize;
     if (contentNode && !baselineSize) {
-      const { width, height } = contentNode.getBoundingClientRect();
-      baselineSize = { width, height };
+      const { width, height: height2 } = contentNode.getBoundingClientRect();
+      baselineSize = { width, height: height2 };
       setInitialContentSize(baselineSize);
     }
     let clamped = {
@@ -70945,12 +71362,12 @@ function snapshotPositions(container) {
     if (!key2) {
       continue;
     }
-    const { left, top, width, height } = element.getBoundingClientRect();
+    const { left, top, width, height: height2 } = element.getBoundingClientRect();
     positions.set(key2, {
       left: left - base.left,
       top: top - base.top,
       width,
-      height
+      height: height2
     });
   }
   return positions;
@@ -71546,12 +71963,12 @@ var DashboardGrid = (0, import_element259.forwardRef)(
       if (!gridRoot) {
         return;
       }
-      const { width, height } = gridRoot.getBoundingClientRect();
+      const { width, height: height2 } = gridRoot.getBoundingClientRect();
       if (width > 0) {
         setContainerWidth(width);
       }
-      if (height > 0) {
-        setContainerHeight(height);
+      if (height2 > 0) {
+        setContainerHeight(height2);
       }
       const parsed = Number.parseFloat(
         window.getComputedStyle(gridRoot).columnGap
@@ -71610,16 +72027,16 @@ var DashboardGrid = (0, import_element259.forwardRef)(
           bounds.minWidth,
           bounds.maxWidth
         ) : item.width;
-        const height = clampSpan(
+        const height2 = clampSpan(
           item.height ?? 1,
           bounds.minHeight,
           bounds.maxHeight
         );
-        if (width === item.width && height === (item.height ?? 1)) {
+        if (width === item.width && height2 === (item.height ?? 1)) {
           return item;
         }
         changed = true;
-        return { ...item, width, height };
+        return { ...item, width, height: height2 };
       });
       return changed ? bounded : sourceLayout;
     }, [sourceLayout, spanBoundsByKey]);
@@ -72083,8 +72500,8 @@ if (typeof process === "undefined" || true) {
   registerStyle104("97a2a51c0b", "._0a62d9f1dff8c7d8__item{position:relative}._20c43fcd930d828a__item-content{height:100%;position:relative}._11928ee35f1a9519__is-resizing{overflow:visible;z-index:1}._11928ee35f1a9519__is-resizing ._20c43fcd930d828a__item-content{overflow:visible;position:relative;z-index:2}.b7fc83c8b16e9ee5__is-dragging{pointer-events:none}[data-wp-grid-dragging] .b7fc83c8b16e9ee5__is-dragging{border-radius:var(--wp-grid-placeholder-radius,0)}@media not (prefers-reduced-motion:reduce){[data-wp-grid-dragging] .b7fc83c8b16e9ee5__is-dragging{animation:b026dda570d0eea0__wp-grid-item-placeholder-in 0ms linear var(--wpds-motion-duration-sm,.1s) forwards;opacity:1;outline-color:transparent;outline-style:var(--wp-grid-placeholder-outline-style,dashed);outline-width:0}@keyframes b026dda570d0eea0__wp-grid-item-placeholder-in{to{opacity:var(--wp-grid-placeholder-opacity,.4);outline-color:var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));outline-width:var(--wpds-border-width-sm,2px)}}}@media (prefers-reduced-motion:reduce){[data-wp-grid-dragging] .b7fc83c8b16e9ee5__is-dragging{opacity:var(--wp-grid-placeholder-opacity,.4);outline:var(--wpds-border-width-sm,2px) var(--wp-grid-placeholder-outline-style,dashed) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)))}}@media (forced-colors:active){[data-wp-grid-dragging] .b7fc83c8b16e9ee5__is-dragging{--wp-grid-placeholder-outline-color:Highlight}}.cd44faab32c27168__preview-overlay{background:transparent;border:var(--wpds-border-width-sm,2px) var(--wp-grid-resize-preview-outline-style,solid) var(--wp-grid-placeholder-outline-color,var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9)));box-sizing:border-box;inset-inline-start:0;pointer-events:none;position:absolute;top:0;z-index:0}@media (forced-colors:active){.cd44faab32c27168__preview-overlay{border-color:Highlight}}");
 }
 var lanes_item_default = { "item": "_0a62d9f1dff8c7d8__item", "item-content": "_20c43fcd930d828a__item-content", "is-resizing": "_11928ee35f1a9519__is-resizing", "is-dragging": "b7fc83c8b16e9ee5__is-dragging", "wp-grid-item-placeholder-in": "b026dda570d0eea0__wp-grid-item-placeholder-in", "preview-overlay": "cd44faab32c27168__preview-overlay" };
-function getItemCursor2(disabled2, interacting) {
-  if (disabled2) {
+function getItemCursor2(disabled3, interacting) {
+  if (disabled3) {
     return "default";
   }
   if (interacting) {
@@ -72095,7 +72512,7 @@ function getItemCursor2(disabled2, interacting) {
 function LanesItem({
   itemKey,
   placementStyle,
-  disabled: disabled2 = false,
+  disabled: disabled3 = false,
   draggable = true,
   resizable = true,
   interacting = false,
@@ -72115,8 +72532,8 @@ function LanesItem({
   const [initialContentSize, setInitialContentSize] = (0, import_element260.useState)(null);
   const itemRef = (0, import_element260.useRef)(null);
   const contentRef = (0, import_element260.useRef)(null);
-  const dragDisabled = disabled2 || !draggable;
-  const resizeDisabled = disabled2 || !resizable;
+  const dragDisabled = disabled3 || !draggable;
+  const resizeDisabled = disabled3 || !resizable;
   const {
     attributes,
     listeners,
@@ -72143,8 +72560,8 @@ function LanesItem({
     const contentNode = contentRef.current;
     let baselineSize = initialContentSize;
     if (contentNode && !baselineSize) {
-      const { width, height } = contentNode.getBoundingClientRect();
-      baselineSize = { width, height };
+      const { width, height: height2 } = contentNode.getBoundingClientRect();
+      baselineSize = { width, height: height2 };
       setInitialContentSize(baselineSize);
     }
     let clamped = { width: delta.width, height: 0 };
@@ -72286,9 +72703,9 @@ function computeLanePlacements(input) {
     const lane = clampLane(item.lane, span, lanes);
     const baseline = maxBaselineAcross(laneBottoms, lane, span);
     const top = baseline === 0 ? 0 : baseline + gap;
-    const height = Math.max(0, item.height);
+    const height2 = Math.max(0, item.height);
     placements2.set(item.key, { key: item.key, lane, top, span });
-    const newBottom = top + height;
+    const newBottom = top + height2;
     for (let i = lane; i < lane + span; i++) {
       laneBottoms[i] = newBottom;
     }
@@ -72305,14 +72722,14 @@ function computeLanePlacements(input) {
       }
     }
     const top = bestBaseline === 0 ? 0 : bestBaseline + gap;
-    const height = Math.max(0, item.height);
+    const height2 = Math.max(0, item.height);
     placements2.set(item.key, {
       key: item.key,
       lane: bestLane,
       top,
       span
     });
-    const newBottom = top + height;
+    const newBottom = top + height2;
     for (let i = bestLane; i < bestLane + span; i++) {
       laneBottoms[i] = newBottom;
     }
@@ -72401,11 +72818,11 @@ function useLanePlacement(container, input) {
           if (!placement) {
             continue;
           }
-          const height = heights.get(item.key) ?? 0;
+          const height2 = heights.get(item.key) ?? 0;
           const rowStart = Math.floor(placement.top / effectiveRowUnit) + 1;
           const rowSpan = Math.max(
             1,
-            Math.ceil(height / effectiveRowUnit)
+            Math.ceil(height2 / effectiveRowUnit)
           );
           next.set(item.key, {
             gridColumnStart: placement.lane + 1,
@@ -74573,15 +74990,15 @@ function useDashboardLayout(dashboardName) {
     (select) => select(import_preferences.store).get(SCOPE, KEY) ?? [],
     []
   );
-  const { set: set3 } = (0, import_data7.useDispatch)(import_preferences.store);
+  const { set } = (0, import_data7.useDispatch)(import_preferences.store);
   function setLayout(newLayout) {
-    void set3(SCOPE, KEY, newLayout);
+    void set(SCOPE, KEY, newLayout);
   }
   async function resetLayout() {
     const fresh = await (0, import_api_fetch.default)({
       path: `/wp/v2/dashboards/${dashboardName}/default-layout`
     });
-    void set3(SCOPE, KEY, fresh);
+    void set(SCOPE, KEY, fresh);
   }
   return [layout, setLayout, resetLayout];
 }
