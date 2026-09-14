@@ -92014,7 +92014,8 @@ var wp;
     onChangeViewport,
     onChangePseudoState,
     showText = true,
-    popoverProps: popoverProps3 = {}
+    popoverProps: popoverProps3 = {},
+    children
   }) {
     if (!viewportStates.length && !pseudoStates.length) {
       return null;
@@ -92090,7 +92091,7 @@ var wp;
                 {
                   onClick: () => {
                     onChangeViewport?.(option.value);
-                    if (!hasPseudoStateOptions) {
+                    if (!hasPseudoStateOptions && !children) {
                       onClose();
                     }
                   },
@@ -92106,7 +92107,7 @@ var wp;
                     onChangePseudoState?.(
                       option.value
                     );
-                    if (!hasViewportOptions) {
+                    if (!hasViewportOptions && !children) {
                       onClose();
                     }
                   },
@@ -92114,7 +92115,8 @@ var wp;
                   children: option.label
                 },
                 `pseudo-${option.value}`
-              )) })
+              )) }),
+              children
             ] })
           }
         )
@@ -92176,7 +92178,6 @@ var wp;
             WCBadge3,
             {
               className: "block-editor-global-styles-state-control__badge",
-              intent: "info",
               children: [
                 state.label,
                 !!state.tooltipText && /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime472.jsx)("span", {}), children: state.tooltipText })
@@ -92239,7 +92240,7 @@ var wp;
   }
   var DEFAULT_STATE_VALUE3 = "default";
   var EMPTY_STATE_OPTIONS = [];
-  function BlockStatesControl({ name, value, onChange }) {
+  function BlockStatesControl({ name, value, onChange, children }) {
     const pseudoStateOptions = (0, import_element291.useMemo)(
       () => getPseudoStateOptions(name),
       [name]
@@ -92255,7 +92256,8 @@ var wp;
         pseudoStateValue: value?.pseudo ?? DEFAULT_STATE_VALUE3,
         onChangePseudoState: (pseudo) => onChange({ pseudo }),
         popoverProps: dropdownMenuProps.popoverProps,
-        showText: false
+        showText: false,
+        children
       }
     );
   }
@@ -92619,8 +92621,8 @@ var wp;
   }) => {
     const listViewRef = (0, import_element292.useRef)(null);
     const hasMultipleTabs = availableTabs?.length > 1;
-    const hasPseudoState = hasPseudoBlockStyleState(selectedBlockStyleState2);
     const isEditingStyleState = hasViewportBlockStyleState(selectedBlockStyleState2) && isResponsiveEditing3 || hasPseudoBlockStyleState(selectedBlockStyleState2);
+    const showStateBadges = blockEditingMode === "default" && isEditingStyleState;
     const hasParentChildBlockCards = editedContentOnlySection2 && editedContentOnlySection2 !== renderedBlockClientId;
     const parentBlockInformation = useBlockDisplayInformation(
       editedContentOnlySection2
@@ -92652,6 +92654,7 @@ var wp;
         block_card_default,
         {
           ...blockInformation,
+          description: showStateBadges ? void 0 : blockInformation.description,
           allowParentNavigation: true,
           className: isBlockSynced && "is-synced",
           isChild: hasParentChildBlockCards,
@@ -92661,18 +92664,34 @@ var wp;
             {
               name: blockName,
               value: selectedBlockStyleState2,
-              onChange: onBlockStyleStateChange
+              onChange: onBlockStyleStateChange,
+              children: /* @__PURE__ */ (0, import_jsx_runtime474.jsx)(import_components210.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime474.jsx)(
+                import_components210.MenuItem,
+                {
+                  role: "menuitemcheckbox",
+                  isSelected: showStateOnCanvas,
+                  icon: showStateOnCanvas ? check_default : null,
+                  disabled: !hasPseudoBlockStyleState(
+                    selectedBlockStyleState2
+                  ),
+                  onClick: () => onShowStateOnCanvasChange(
+                    !showStateOnCanvas
+                  ),
+                  children: (0, import_i18n213.__)("Preview on canvas")
+                }
+              ) })
             }
           )
         }
       ),
-      blockEditingMode === "default" && isEditingStyleState && /* @__PURE__ */ (0, import_jsx_runtime474.jsxs)(import_components210.__experimentalSpacer, { paddingX: 4, paddingY: 2, children: [
-        hasPseudoState && /* @__PURE__ */ (0, import_jsx_runtime474.jsx)(
-          import_components210.ToggleControl,
+      showStateBadges && /* @__PURE__ */ (0, import_jsx_runtime474.jsxs)("div", { className: "block-editor-block-inspector__state-badges", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime474.jsx)(
+          Text,
           {
-            label: (0, import_i18n213.__)("Show state on canvas"),
-            checked: showStateOnCanvas,
-            onChange: onShowStateOnCanvasChange
+            variant: "body-sm",
+            className: "block-editor-block-inspector__state-badges-text",
+            /* translators: Instructive text shown before the style state badges in the block inspector; the badges indicate the style states the user is currently editing. */
+            children: (0, import_i18n213.__)("Editing:")
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime474.jsx)(

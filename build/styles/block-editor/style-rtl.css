@@ -340,6 +340,19 @@ iframe[name=editor-canvas] {
   text-align: center;
 }
 
+.block-editor-block-inspector__state-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 16px;
+  margin-top: -16px;
+}
+
+.block-editor-block-inspector__state-badges-text {
+  white-space: nowrap;
+}
+
 .block-editor-block-inspector__no-block-tools {
   border-top: 1px solid #ddd;
 }
