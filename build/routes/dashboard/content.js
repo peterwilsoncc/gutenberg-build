@@ -51941,15 +51941,60 @@ var canUseDOM = checkIsBrowser();
 function checkIsBrowser() {
   return typeof window !== "undefined" && !!window.document?.createElement;
 }
+function lookupGetter(prototype, name) {
+  let target = prototype;
+  while (target) {
+    const descriptor = Object.getOwnPropertyDescriptor(target, name);
+    if (descriptor?.get) return descriptor.get;
+    target = Object.getPrototypeOf(target);
+  }
+}
+var nodeTypeGetter = canUseDOM ? lookupGetter(Object.getPrototypeOf(window.document), "nodeType") : void 0;
+var activeElementGetter = canUseDOM ? lookupGetter(Object.getPrototypeOf(window.document), "activeElement") : void 0;
+function isWindow(value) {
+  if (!value) return false;
+  return value.window === value;
+}
+function isDocument(value) {
+  if (!value) return false;
+  if (!nodeTypeGetter) return value.nodeType === 9;
+  try {
+    return nodeTypeGetter.call(value) === 9;
+  } catch {
+    return false;
+  }
+}
+function ownsDocument(view, ownerDocument2) {
+  try {
+    return view.document === ownerDocument2;
+  } catch {
+    return false;
+  }
+}
 function getDocument(node) {
   if (!node) return document;
-  if ("self" in node) return node.document;
-  return node.ownerDocument || document;
+  if (isDocument(node)) return node;
+  if (isWindow(node)) return node.document;
+  const nodeDocument = node.ownerDocument;
+  if (isDocument(nodeDocument)) return nodeDocument;
+  return document;
 }
-function getActiveElement(node, activeDescendant = false) {
-  const { activeElement: activeElement2 } = getDocument(node);
+function getWindow2(node) {
+  if (!node) return self;
+  if (isWindow(node)) return node;
+  const nodeDocument = getDocument(node);
+  const { defaultView } = nodeDocument;
+  if (isWindow(defaultView) && ownsDocument(defaultView, nodeDocument)) return defaultView;
+  return window;
+}
+function getActiveElement(node, { frame = true, activeDescendant = false } = {}) {
+  const ownerDocument2 = getDocument(node);
+  const activeElement2 = activeElementGetter ? activeElementGetter.call(ownerDocument2) : ownerDocument2.activeElement;
   if (!activeElement2?.nodeName) return null;
-  if (isFrame(activeElement2) && activeElement2.contentDocument?.body) return getActiveElement(activeElement2.contentDocument.body, activeDescendant);
+  if (frame && isFrame(activeElement2) && activeElement2.contentDocument?.body) return getActiveElement(activeElement2.contentDocument.body, {
+    frame,
+    activeDescendant
+  });
   if (activeDescendant) {
     const id = activeElement2.getAttribute("aria-activedescendant");
     if (id) {
@@ -52139,6 +52184,7 @@ function isDownloading(event) {
   return isActivatableNavigationTarget(event.currentTarget);
 }
 function fireBlurEvent(element, eventInit) {
+  const { FocusEvent } = getWindow2(element);
   const event = new FocusEvent("blur", eventInit);
   const defaultAllowed = element.dispatchEvent(event);
   const bubbleInit = {
@@ -52149,11 +52195,39 @@ function fireBlurEvent(element, eventInit) {
   return defaultAllowed;
 }
 function fireKeyboardEvent(element, type, eventInit) {
+  const { KeyboardEvent } = getWindow2(element);
   const event = new KeyboardEvent(type, eventInit);
   return element.dispatchEvent(event);
 }
+var resetAttributes = {
+  width: true,
+  height: true,
+  pressure: true,
+  tangentialPressure: true,
+  tiltX: true,
+  tiltY: true,
+  twist: true,
+  altitudeAngle: true,
+  azimuthAngle: true,
+  isPrimary: true,
+  coalescedEvents: true,
+  predictedEvents: true,
+  persistentDeviceId: true
+};
+function getClickEventInit(view, eventInit) {
+  const init2 = eventInit ?? {};
+  return new Proxy({}, { get(_target, key2) {
+    if (key2 === "view") return view;
+    if (key2 === "composed") return true;
+    if (key2 === "pointerId") return init2.pointerId ?? -1;
+    if (key2 === "pointerType") return init2.pointerType ?? "";
+    if (hasOwnProperty(resetAttributes, key2)) return void 0;
+    return Reflect.get(init2, key2);
+  } });
+}
 function fireClickEvent(element, eventInit) {
-  const event = new MouseEvent("click", eventInit);
+  const view = getWindow2(element);
+  const event = new (view.PointerEvent ?? view.MouseEvent)("click", getClickEventInit(view, eventInit));
   return element.dispatchEvent(event);
 }
 function isFocusEventOutside(event, container) {
@@ -52347,7 +52421,7 @@ function mergeProps2(base, overrides) {
 var _React = { ...React231 };
 var useReactId = _React.useId;
 var useReactDeferredValue = _React.useDeferredValue;
-var useReactInsertionEffect = _React.useInsertionEffect;
+var useEventUpdate = _React.useInsertionEffect ?? ((callback) => callback());
 var useSafeLayoutEffect = canUseDOM ? import_react64.useLayoutEffect : import_react64.useEffect;
 function useInitialValue(value) {
   const [initialValue] = (0, import_react64.useState)(value);
@@ -52364,10 +52438,9 @@ function useEvent4(callback) {
   const ref = (0, import_react64.useRef)(() => {
     throw new Error("Cannot call an event handler while rendering.");
   });
-  if (useReactInsertionEffect) useReactInsertionEffect(() => {
+  useEventUpdate(() => {
     ref.current = callback;
   });
-  else ref.current = callback;
   return (0, import_react64.useCallback)((...args) => ref.current?.(...args), []);
 }
 function useTransactionState(callback) {
@@ -52407,12 +52480,7 @@ function useMergeRefs14(...refs) {
     };
   }, refs);
 }
-function useId9(defaultId) {
-  if (useReactId) {
-    const reactId = useReactId();
-    if (defaultId) return defaultId;
-    return reactId;
-  }
+function useIdPolyfill(defaultId) {
   const [id, setId] = (0, import_react64.useState)(defaultId);
   useSafeLayoutEffect(() => {
     if (defaultId || id) return;
@@ -52420,6 +52488,14 @@ function useId9(defaultId) {
     setId(`id-${random}`);
   }, [defaultId, id]);
   return defaultId || id;
+}
+function useReactIdWithDefault(defaultId) {
+  const id = useReactId();
+  return defaultId || id;
+}
+var useCompatibleId = useReactId ? useReactIdWithDefault : useIdPolyfill;
+function useId9(defaultId) {
+  return useCompatibleId(defaultId);
 }
 function useAttribute(refOrElement, attributeName, defaultValue3) {
   const initialValue = useInitialValue(defaultValue3);
@@ -52595,13 +52671,22 @@ function createStoreContext(providers = [], scopedProviders = []) {
   };
 }
 
-// node_modules/@ariakit/react-components/dist/__chunks/CKgCZrim.js
+// node_modules/@ariakit/react-components/dist/__chunks/CcVRFmzE.js
 var import_react65 = __toESM(require_react(), 1);
+var accessibleWhenDisabledSymbol = /* @__PURE__ */ Symbol("accessibleWhenDisabled");
+function accessibleWhenDisabledFromProps(props) {
+  return props.accessibleWhenDisabled ?? props.onLoadedMetadataCapture?.[accessibleWhenDisabledSymbol];
+}
+var trulyDisabledAttribute = "data-truly-disabled";
+function resolvedTrulyDisabledFromElement(element) {
+  const value = element.getAttribute(trulyDisabledAttribute);
+  if (value === "true") return true;
+  if (value === "false") return false;
+}
 function isCompositeMoveKey(key2) {
   return key2 === "ArrowUp" || key2 === "ArrowRight" || key2 === "ArrowDown" || key2 === "ArrowLeft" || key2 === "Home" || key2 === "End" || key2 === "PageUp" || key2 === "PageDown";
 }
 var TagName = "div";
-var accessibleWhenDisabledSymbol = /* @__PURE__ */ Symbol("accessibleWhenDisabled");
 var isSafariBrowser = isSafari();
 var nativeTabbableMask = 1;
 var supportsDisabledMask = 2;
@@ -52749,6 +52834,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
   const onKeyPressCapture = useDisableEvent(props.onKeyPressCapture, disabled2);
   const onMouseDownCapture = useDisableEvent(props.onMouseDownCapture, disabled2);
   const onClickCapture = useDisableEvent(props.onClickCapture, disabled2);
+  const onAuxClickCapture = useDisableEvent(props.onAuxClickCapture, disabled2);
   const handleFocusVisible = (event, currentTarget) => {
     if (currentTarget) event.currentTarget = currentTarget;
     if (!focusable2) return;
@@ -52865,9 +52951,11 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
       tabIndexProp: props.tabIndex
     }),
     disabled: supportsDisabled && trulyDisabled ? true : void 0,
+    [trulyDisabledAttribute]: disabled2 ? trulyDisabled : void 0,
     contentEditable: disabled2 ? void 0 : props.contentEditable,
     onKeyPressCapture,
     onClickCapture,
+    onAuxClickCapture,
     onMouseDownCapture,
     onKeyDownCapture,
     onFocusCapture,
@@ -53668,13 +53756,10 @@ function createCollectionStore(props = {}) {
   }
   setup(privateStore, () => {
     return batch(privateStore, ["renderedItems"], (state) => {
+      if (state.renderedItems !== collection.getState().renderedItems) sortItems(state.renderedItems);
+      if (typeof IntersectionObserver !== "function") return;
       let firstRun = true;
-      let raf = requestAnimationFrame(() => {
-        const { renderedItems } = collection.getState();
-        if (state.renderedItems === renderedItems) return;
-        sortItems(state.renderedItems);
-      });
-      if (typeof IntersectionObserver !== "function") return () => cancelAnimationFrame(raf);
+      let raf = 0;
       const ioCallback = () => {
         if (firstRun) {
           firstRun = false;
@@ -54060,7 +54145,7 @@ function ownsFocus(store) {
   if (isItem(store, activeElement2)) return true;
   return !!getPopupElement(store)?.contains(activeElement2);
 }
-function presentItem({ store, id, focus, markedOnly, requireFocus, scrollIntoView }) {
+function presentItem({ store, id, focus, markedOnly, requireFocus, scrollIntoView, onConsume }) {
   let element = null;
   let resolvedId;
   let focused = false;
@@ -54113,10 +54198,21 @@ function presentItem({ store, id, focus, markedOnly, requireFocus, scrollIntoVie
     removeFocusListeners?.();
     unsubscribe?.();
   };
+  let consumed = false;
+  const consume = () => {
+    if (consumed) return;
+    consumed = true;
+    onConsume?.();
+  };
+  const settle = () => {
+    if (done) return;
+    consume();
+    return cancel();
+  };
   const present = () => {
     if (done) return;
     const state = store.getState();
-    if (abandonedByState(state)) return cancel();
+    if (abandonedByState(state)) return settle();
     let restoreFocus = false;
     if (!element) {
       element = resolveElement(state);
@@ -54124,17 +54220,18 @@ function presentItem({ store, id, focus, markedOnly, requireFocus, scrollIntoVie
     } else if (!element.isConnected) {
       restoreFocus = focused && !focusLeftElement && getActiveElement(element) === getDocument(element).body;
       element = resolveElement(state);
-      if (!element) return cancel();
+      if (!element) return settle();
     }
     if (restoreFocus) focused = false;
-    else if (!stillOwnsFocus(element)) return cancel();
+    else if (!stillOwnsFocus(element)) return settle();
     const focusWithheld = focus && startedOnComposite && entersClosedPopup(state, element);
     if (focusWithheld) {
       const { activeId } = state;
-      if (activeId != null && activeId !== resolvedId) return cancel();
+      if (activeId != null && activeId !== resolvedId) return settle();
     }
     if (focus && !focused && !focusWithheld) {
       focused = true;
+      consume();
       focusLeftElement = false;
       const itemElement = element;
       removeFocusListeners?.();
@@ -54157,11 +54254,11 @@ function presentItem({ store, id, focus, markedOnly, requireFocus, scrollIntoVie
     }
     if (markedOnly && !element.hasAttribute("data-autofocus")) {
       if (focusWithheld) return;
-      return cancel();
+      return settle();
     }
     if (!isVisible(element)) return;
     if ("unstable_placing" in state && state.unstable_placing) return;
-    if (!focusWithheld) cancel();
+    if (!focusWithheld) settle();
     if (scrollIntoView) {
       scrollIntoView(element);
       return;
@@ -54179,7 +54276,7 @@ function presentItem({ store, id, focus, markedOnly, requireFocus, scrollIntoVie
     "unstable_placing"
   ], present);
   present();
-  return cancel;
+  return Object.assign(cancel, { settle });
 }
 function usePresentItem(store) {
   const cancelRef = (0, import_react69.useRef)(null);
@@ -54191,14 +54288,15 @@ function usePresentItem(store) {
   const present = (0, import_react69.useCallback)((params) => {
     if (!store) return;
     if (ownerRef.current !== store) return;
-    cancel();
+    cancelRef.current?.settle();
+    cancelRef.current = null;
     const cancelCurrent = presentItem({
       store,
       ...params
     });
     cancelRef.current = cancelCurrent;
     return cancelCurrent;
-  }, [store, cancel]);
+  }, [store]);
   useSafeLayoutEffect(() => {
     ownerRef.current = store;
     return () => {
@@ -54258,22 +54356,20 @@ function hasSameStoreKeys(keys, otherKeys) {
   if (keys?.length !== otherKeys.length) return false;
   for (let index2 = 0; index2 < keys.length; index2 += 1) {
     const key2 = keys[index2];
-    if (key2 === void 0) return false;
     if (isSameValue2(key2, otherKeys[index2])) continue;
     return false;
   }
   return true;
 }
 function useStableStoreKeys(keys) {
-  const keysRef = React232.useRef(null);
-  const currentKeys = keysRef.current;
+  const [stableKeys, setStableKeys] = React232.useState(() => keys === null ? null : [...keys]);
   if (keys === null) {
-    keysRef.current = null;
+    if (stableKeys !== null) setStableKeys(null);
     return null;
   }
-  if (hasSameStoreKeys(currentKeys, keys)) return currentKeys;
+  if (hasSameStoreKeys(stableKeys, keys)) return stableKeys;
   const nextKeys = [...keys];
-  keysRef.current = nextKeys;
+  setStableKeys(nextKeys);
   return nextKeys;
 }
 function useStoreState(store, keyOrKeysOrSelector = identity, selector2) {
@@ -54370,7 +54466,8 @@ function useStoreProps(store, props, key2, setKey) {
   }, [
     store,
     key2,
-    hasSetValue
+    hasSetValue,
+    propsRef
   ]);
   useSafeLayoutEffect(() => {
     if (value === void 0) return;
@@ -54448,6 +54545,7 @@ function targetIsAnotherItem(event, store) {
 var useCompositeItem2 = createHook(function useCompositeItem3({ store, rowId: rowIdProp, preventScrollOnKeyDown = false, moveOnKeyPress = true, tabbable: tabbable4 = false, getItem: getItemProp, typeaheadText, "aria-setsize": ariaSetSizeProp, "aria-posinset": ariaPosInSetProp, unstable_scrollIntoView: scrollIntoView, ...props }) {
   const context = useCompositeScopedContext();
   store = store || context;
+  const accessibleWhenDisabled = accessibleWhenDisabledFromProps(props);
   const id = useId9(props.id);
   const ref = (0, import_react70.useRef)(null);
   const mountedElementRef = (0, import_react70.useRef)(null);
@@ -54458,7 +54556,9 @@ var useCompositeItem2 = createHook(function useCompositeItem3({ store, rowId: ro
     mountedElementRef.current = element;
   }, []);
   const row = (0, import_react70.useContext)(CompositeRowContext);
-  const trulyDisabled = disabledFromProps(props) && !props.accessibleWhenDisabled;
+  const disabled2 = disabledFromProps(props);
+  const trulyDisabled = disabled2 && !accessibleWhenDisabled;
+  const inactiveDisabled = disabled2 && props.focusable === false;
   const shouldRegisterItem = props.shouldRegisterItem;
   const getRowId = (state) => {
     if (rowIdProp) return rowIdProp;
@@ -54513,11 +54613,12 @@ var useCompositeItem2 = createHook(function useCompositeItem3({ store, rowId: ro
     }
   });
   const getItem = (0, import_react70.useCallback)((item) => {
+    const itemDisabled = (item.element ? resolvedTrulyDisabledFromElement(item.element) : void 0) ?? (inactiveDisabled || trulyDisabled);
     const nextItem = {
       ...item,
       id: id || item.id,
       rowId,
-      disabled: trulyDisabled,
+      disabled: itemDisabled,
       children: item.element?.textContent,
       typeaheadText
     };
@@ -54526,6 +54627,7 @@ var useCompositeItem2 = createHook(function useCompositeItem3({ store, rowId: ro
   }, [
     id,
     rowId,
+    inactiveDisabled,
     trulyDisabled,
     typeaheadText,
     getItemProp
@@ -54703,6 +54805,29 @@ var CompositeItem2 = memo5(forwardRef210(function CompositeItem3(props) {
   return createElement3(TagName4, htmlProps);
 }));
 
+// node_modules/@ariakit/react-components/dist/__chunks/C5dZ32Pk.js
+var cancelled = /* @__PURE__ */ Symbol("cancelled");
+var moveRequests = /* @__PURE__ */ new WeakMap();
+function getMoveRequest(store) {
+  const key2 = store.item;
+  const cached = moveRequests.get(key2);
+  if (cached) return cached;
+  const request = {
+    consumedBy: null,
+    targetId: store.getState().activeId
+  };
+  moveRequests.set(key2, request);
+  sync(store, ["moves", "activeId"], (state, prevState) => {
+    if (state.moves !== prevState.moves) {
+      request.consumedBy = null;
+      request.targetId = state.activeId;
+      return;
+    }
+    if (state.activeId !== prevState.activeId) request.targetId = cancelled;
+  });
+  return request;
+}
+
 // node_modules/@ariakit/react-components/dist/composite/composite.js
 var import_react71 = __toESM(require_react(), 1);
 var import_jsx_runtime265 = __toESM(require_jsx_runtime(), 1);
@@ -54738,19 +54863,33 @@ function useKeyboardEventProxy(store, onKeyboardEvent, previousElementRef) {
 function findFirstEnabledItemInTheLastRow(items) {
   return findFirstEnabledItem2(flatten2DArray(reverseArray(groupItemsByRows2(items))));
 }
+function mayActOnMove(store, instance) {
+  const { consumedBy } = getMoveRequest(store);
+  return !consumedBy || consumedBy === instance;
+}
+function consumeMove(store, instance, moves) {
+  if (store.getState().moves !== moves) return;
+  getMoveRequest(store).consumedBy = instance;
+}
 var CompositeFocusOnMove = memo5(function CompositeFocusOnMove2({ store, focusOnMove, previousElementRef, present, scrollIntoView }) {
   const moves = useStoreState(store, "moves");
   const compositeElement = useStoreState(store, "compositeElement");
+  const instanceRef = (0, import_react71.useRef)({});
   (0, import_react71.useEffect)(() => {
+    const moveRequest = getMoveRequest(store);
     if (!moves) return;
     if (!focusOnMove) return;
+    const instance = instanceRef.current;
+    if (!mayActOnMove(store, instance)) return;
     const { activeId } = store.getState();
     if (activeId == null) return;
+    if (activeId !== moveRequest.targetId) return;
     return present({
       id: activeId,
       requireFocus: ownsFocus(store),
       focus: true,
-      scrollIntoView
+      scrollIntoView,
+      onConsume: () => consumeMove(store, instance, moves)
     });
   }, [
     store,
@@ -54761,10 +54900,15 @@ var CompositeFocusOnMove = memo5(function CompositeFocusOnMove2({ store, focusOn
     scrollIntoView
   ]);
   useSafeLayoutEffect(() => {
+    const moveRequest = getMoveRequest(store);
     if (!moves) return;
     if (!compositeElement) return;
+    const instance = instanceRef.current;
+    if (!mayActOnMove(store, instance)) return;
     const { activeId } = store.getState();
     if (!(activeId === null)) return;
+    if (activeId !== moveRequest.targetId) return;
+    consumeMove(store, instance, moves);
     const previousElement = previousElementRef.current;
     previousElementRef.current = null;
     if (previousElement) fireBlurEvent(previousElement, { relatedTarget: compositeElement });
@@ -54778,7 +54922,8 @@ var CompositeFocusOnMove = memo5(function CompositeFocusOnMove2({ store, focusOn
   }, [
     store,
     moves,
-    compositeElement
+    compositeElement,
+    previousElementRef
   ]);
   return null;
 });
@@ -55197,7 +55342,11 @@ function createDisclosureStore(props = {}) {
 
 // node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
 function useDisclosureStoreProps(store, update2, props) {
-  useUpdateEffect(update2, [props.store, props.disclosure]);
+  useUpdateEffect(update2, [
+    props.store,
+    props.disclosure,
+    update2
+  ]);
   useStoreProps(store, props, "open", "setOpen");
   useStoreProps(store, props, "mounted", "setMounted");
   useStoreProps(store, props, "animated");
@@ -55214,7 +55363,7 @@ var PopoverScopedContextProvider = ctx5.ScopedContextProvider;
 
 // node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
 var import_react74 = __toESM(require_react(), 1);
-var ComboboxListRoleContext = (0, import_react74.createContext)(void 0);
+var ComboboxListRoleContext = (0, import_react74.createContext)(null);
 var ctx6 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
 var useComboboxContext = ctx6.useContext;
 var useComboboxScopedContext = ctx6.useScopedContext;
@@ -55227,7 +55376,7 @@ var ComboboxHeadingContext = (0, import_react74.createContext)(null);
 
 // node_modules/@ariakit/react-components/dist/collection/collection-store.js
 function useCollectionStoreProps(store, update2, props) {
-  useUpdateEffect(update2, [props.store]);
+  useUpdateEffect(update2, [props.store, update2]);
   useStoreProps(store, props, "items", "setItems");
   return store;
 }
@@ -55241,6 +55390,7 @@ function useCompositeStoreOptions(props) {
 }
 function useCompositeStoreProps(store, update2, props) {
   store = useCollectionStoreProps(store, update2, props);
+  getMoveRequest(store);
   useStoreProps(store, props, "activeId", "setActiveId");
   const focusOrderProps = { compositeElementInFocusOrder: props.compositeElementInFocusOrder ?? props.includesBaseElement };
   useStoreProps(store, focusOrderProps, "compositeElementInFocusOrder");
@@ -55312,7 +55462,7 @@ function createPopoverStore({ popover: otherPopover, ...props } = {}) {
 
 // node_modules/@ariakit/react-components/dist/popover/popover-store.js
 function usePopoverStoreProps(store, update2, props) {
-  useUpdateEffect(update2, [props.popover]);
+  useUpdateEffect(update2, [props.popover, update2]);
   useStoreProps(store, props, "placement");
   return useDialogStoreProps(store, update2, props);
 }
@@ -55384,7 +55534,7 @@ var CompositeHover = memo5(forwardRef210(function CompositeHover2(props) {
   return createElement3(TagName7, htmlProps);
 }));
 
-// node_modules/@ariakit/react-components/dist/__chunks/DSBYX_BC.js
+// node_modules/@ariakit/react-components/dist/__chunks/DAieEu03.js
 var openingMovesByStore = /* @__PURE__ */ new WeakMap();
 var scrollItemIntoViewByStore = /* @__PURE__ */ new WeakMap();
 function scrollIntoViewNearest(element) {
@@ -55394,8 +55544,7 @@ function scrollIntoViewNearest(element) {
   });
 }
 function getSingleVerticalScrollport(element, popup) {
-  const view = element.ownerDocument.defaultView;
-  if (!view) return null;
+  const view = getWindow2(element);
   if (!view.getComputedStyle(popup).writingMode.startsWith("horizontal")) return null;
   let scrollport = null;
   let inlineScrollport = null;
@@ -55906,7 +56055,9 @@ var useComboboxItem = createHook(function useComboboxItem2({ store, value, hideO
   store = store || context;
   invariant(store, "ComboboxItem must be wrapped in a ComboboxList or ComboboxPopover component.");
   const id = useId9(props.id);
-  const { resetValueOnSelectState, multiSelectable, selected, autoFocusSelected, selectElement } = useStoreStateObject(store, ["selectedValue"], {
+  const listRole = (0, import_react77.useContext)(ComboboxListRoleContext);
+  const listRoleMatchesStore = listRole?.store === store;
+  const { resetValueOnSelectState, multiSelectable, selected, autoFocusSelected, selectElement, contentElement } = useStoreStateObject(store, ["selectedValue"], {
     resetValueOnSelectState: "resetValueOnSelect",
     multiSelectable(state) {
       return Array.isArray(state.selectedValue);
@@ -55919,7 +56070,8 @@ var useComboboxItem = createHook(function useComboboxItem2({ store, value, hideO
       if (!Array.isArray(state.selectedValue)) return state.selectedValue === value;
       return state.selectedValue[state.selectedValue.length - 1] === value;
     },
-    selectElement: "selectElement"
+    selectElement: "selectElement",
+    contentElement: "contentElement"
   });
   const autoFocusSelectedItem = !!selectElement;
   const selectMode = !!selectElement;
@@ -55940,7 +56092,8 @@ var useComboboxItem = createHook(function useComboboxItem2({ store, value, hideO
   setValueOnClick = setValueOnClick ?? (!selectMode && !multiSelectable);
   hideOnClick = hideOnClick ?? (value != null && !multiSelectable);
   preventScrollOnKeyDown = preventScrollOnKeyDown ?? selectMode;
-  const role = getItemRole((0, import_react77.useContext)(ComboboxListRoleContext));
+  const popupRole = listRoleMatchesStore ? listRole?.role : getPopupRole(contentElement);
+  const role = getItemRole(typeof popupRole === "string" ? popupRole : void 0);
   const onClickProp = props.onClick;
   const setValueOnClickProp = useBooleanEvent(setValueOnClick);
   const selectValueOnClickProp = useBooleanEvent(selectValueOnClick);
@@ -56024,13 +56177,14 @@ var useComboboxItem = createHook(function useComboboxItem2({ store, value, hideO
       return true;
     }
   });
-  const focusOnHoverProp = useBooleanEvent(focusOnHover ?? false);
+  const focusOnHoverProp = useBooleanEvent(focusOnHover ?? selectMode);
   props = useCompositeHover({
     store,
     ...props,
     focusOnHover(event) {
-      if (focusOnHover !== void 0) return focusOnHoverProp(event);
-      return selectMode && store.getState().open;
+      if (!store.getState().open) return false;
+      if (!focusOnHoverProp(event)) return false;
+      return store.getState().open;
     }
   });
   return props;
@@ -56203,7 +56357,7 @@ var useComboboxList = createHook(function useComboboxList2({ store, alwaysVisibl
     if (!isFocusable(compositeElement)) return;
     const list = event.currentTarget;
     queueMicrotask(() => {
-      if (getDocument(list).activeElement !== list) return;
+      if (getActiveElement(list) !== list) return;
       compositeElement.focus();
     });
   });
@@ -56217,8 +56371,12 @@ var useComboboxList = createHook(function useComboboxList2({ store, alwaysVisibl
   } : props.style;
   const multiSelectable = useStoreState(store, ["selectedValue"], (state) => Array.isArray(state.selectedValue));
   const role = useAttribute(ref, "role", props.role);
+  const listRole = (0, import_react79.useMemo)(() => ({
+    store,
+    role
+  }), [store, role]);
   const ariaMultiSelectable = role === "listbox" || role === "tree" || role === "grid" ? multiSelectable || void 0 : void 0;
-  const [hasListboxInside, setHasListboxInside] = (0, import_react79.useState)(false);
+  const [hasNestedList, setHasNestedList] = (0, import_react79.useState)(false);
   const contentElement = useStoreState(store, "contentElement");
   const parentHeadingContext = (0, import_react79.useContext)(ComboboxHeadingContext);
   const headingState = (0, import_react79.useState)();
@@ -56229,19 +56387,18 @@ var useComboboxList = createHook(function useComboboxList2({ store, alwaysVisibl
     const element = ref.current;
     if (!element) return;
     if (contentElement !== element) return;
-    const callback = () => {
-      setHasListboxInside(!!element.querySelector("[role='listbox']"));
+    const update2 = () => {
+      setHasNestedList(!!element.querySelector("[data-combobox-list]"));
     };
-    const observer = new MutationObserver(callback);
+    const observer = new MutationObserver(update2);
     observer.observe(element, {
       subtree: true,
-      childList: true,
-      attributeFilter: ["role"]
+      childList: true
     });
-    callback();
+    update2();
     return () => observer.disconnect();
   }, [mounted, contentElement]);
-  if (!hasListboxInside) props = {
+  if (!hasNestedList) props = {
     role: "listbox",
     "aria-multiselectable": ariaMultiSelectable,
     ...props
@@ -56253,14 +56410,14 @@ var useComboboxList = createHook(function useComboboxList2({ store, alwaysVisibl
       children: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(DialogHeadingContext.Provider, {
         value: setHeadingId,
         children: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(ComboboxListRoleContext.Provider, {
-          value: role,
+          value: listRole,
           children: element
         })
       })
     })
   }), [
     store,
-    role,
+    listRole,
     headingContext
   ]);
   const setContentElement = id && (!scopedContext || !scopedContextSameStore) ? store.setContentElement : null;
@@ -56271,6 +56428,7 @@ var useComboboxList = createHook(function useComboboxList2({ store, alwaysVisibl
   useAttribute(labelElement, "id");
   const labelId = headingId || labelElement?.id;
   props = {
+    "data-combobox-list": "",
     "aria-labelledby": props["aria-label"] != null ? void 0 : labelId,
     hidden,
     ...props,
@@ -56523,7 +56681,7 @@ function useComboboxStoreOptions(props) {
   return useCompositeStoreOptions(props);
 }
 function useComboboxStoreProps(store, update2, props) {
-  useUpdateEffect(update2, [props.tag]);
+  useUpdateEffect(update2, [props.tag, update2]);
   const inputValueProps = {
     inputValue: props.inputValue ?? props.value,
     setInputValue: props.setInputValue ?? props.setValue
@@ -56588,24 +56746,24 @@ function useElements({
       setRecords(staticElements);
       return;
     }
-    let cancelled = false;
+    let cancelled2 = false;
     setIsLoading(true);
     getElements().then((fetchedElements) => {
-      if (!cancelled) {
+      if (!cancelled2) {
         const dynamicElements = Array.isArray(fetchedElements) && fetchedElements.length > 0 ? fetchedElements : staticElements;
         setRecords(dynamicElements);
       }
     }).catch(() => {
-      if (!cancelled) {
+      if (!cancelled2) {
         setRecords(staticElements);
       }
     }).finally(() => {
-      if (!cancelled) {
+      if (!cancelled2) {
         setIsLoading(false);
       }
     });
     return () => {
-      cancelled = true;
+      cancelled2 = true;
     };
   }, [getElements, staticElements]);
   return {
@@ -65655,7 +65813,7 @@ function useCombinedRefs() {
   );
 }
 var canUseDOM2 = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
-function isWindow(element) {
+function isWindow2(element) {
   const elementString = Object.prototype.toString.call(element);
   return elementString === "[object Window]" || // In Electron context the Window object serializes to [object global]
   elementString === "[object global]";
@@ -65663,12 +65821,12 @@ function isWindow(element) {
 function isNode3(node) {
   return "nodeType" in node;
 }
-function getWindow2(target) {
+function getWindow3(target) {
   var _target$ownerDocument, _target$ownerDocument2;
   if (!target) {
     return window;
   }
-  if (isWindow(target)) {
+  if (isWindow2(target)) {
     return target;
   }
   if (!isNode3(target)) {
@@ -65676,32 +65834,32 @@ function getWindow2(target) {
   }
   return (_target$ownerDocument = (_target$ownerDocument2 = target.ownerDocument) == null ? void 0 : _target$ownerDocument2.defaultView) != null ? _target$ownerDocument : window;
 }
-function isDocument(node) {
+function isDocument2(node) {
   const {
     Document
-  } = getWindow2(node);
+  } = getWindow3(node);
   return node instanceof Document;
 }
 function isHTMLElement2(node) {
-  if (isWindow(node)) {
+  if (isWindow2(node)) {
     return false;
   }
-  return node instanceof getWindow2(node).HTMLElement;
+  return node instanceof getWindow3(node).HTMLElement;
 }
 function isSVGElement(node) {
-  return node instanceof getWindow2(node).SVGElement;
+  return node instanceof getWindow3(node).SVGElement;
 }
 function getOwnerDocument(target) {
   if (!target) {
     return document;
   }
-  if (isWindow(target)) {
+  if (isWindow2(target)) {
     return target.document;
   }
   if (!isNode3(target)) {
     return document;
   }
-  if (isDocument(target)) {
+  if (isDocument2(target)) {
     return target;
   }
   if (isHTMLElement2(target) || isSVGElement(target)) {
@@ -65821,9 +65979,9 @@ function isKeyboardEvent(event) {
     return false;
   }
   const {
-    KeyboardEvent: KeyboardEvent2
-  } = getWindow2(event.target);
-  return KeyboardEvent2 && event instanceof KeyboardEvent2;
+    KeyboardEvent
+  } = getWindow3(event.target);
+  return KeyboardEvent && event instanceof KeyboardEvent;
 }
 function isTouchEvent(event) {
   if (!event) {
@@ -65831,7 +65989,7 @@ function isTouchEvent(event) {
   }
   const {
     TouchEvent
-  } = getWindow2(event.target);
+  } = getWindow3(event.target);
   return TouchEvent && event instanceof TouchEvent;
 }
 function getEventCoordinates(event) {
@@ -66383,7 +66541,7 @@ function getClientRect(element, options) {
     const {
       transform,
       transformOrigin
-    } = getWindow2(element).getComputedStyle(element);
+    } = getWindow3(element).getComputedStyle(element);
     if (transform) {
       rect = inverseTransform(rect, transform, transformOrigin);
     }
@@ -66424,13 +66582,13 @@ function getWindowClientRect(element) {
 }
 function isFixed(node, computedStyle) {
   if (computedStyle === void 0) {
-    computedStyle = getWindow2(node).getComputedStyle(node);
+    computedStyle = getWindow3(node).getComputedStyle(node);
   }
   return computedStyle.position === "fixed";
 }
 function isScrollable2(element, computedStyle) {
   if (computedStyle === void 0) {
-    computedStyle = getWindow2(element).getComputedStyle(element);
+    computedStyle = getWindow3(element).getComputedStyle(element);
   }
   const overflowRegex = /(auto|scroll|overlay)/;
   const properties2 = ["overflow", "overflowX", "overflowY"];
@@ -66448,7 +66606,7 @@ function getScrollableAncestors(element, limit) {
     if (!node) {
       return scrollParents;
     }
-    if (isDocument(node) && node.scrollingElement != null && !scrollParents.includes(node.scrollingElement)) {
+    if (isDocument2(node) && node.scrollingElement != null && !scrollParents.includes(node.scrollingElement)) {
       scrollParents.push(node.scrollingElement);
       return scrollParents;
     }
@@ -66458,7 +66616,7 @@ function getScrollableAncestors(element, limit) {
     if (scrollParents.includes(node)) {
       return scrollParents;
     }
-    const computedStyle = getWindow2(element).getComputedStyle(node);
+    const computedStyle = getWindow3(element).getComputedStyle(node);
     if (node !== element) {
       if (isScrollable2(node, computedStyle)) {
         scrollParents.push(node);
@@ -66482,13 +66640,13 @@ function getScrollableElement(element) {
   if (!canUseDOM2 || !element) {
     return null;
   }
-  if (isWindow(element)) {
+  if (isWindow2(element)) {
     return element;
   }
   if (!isNode3(element)) {
     return null;
   }
-  if (isDocument(element) || element === getOwnerDocument(element).scrollingElement) {
+  if (isDocument2(element) || element === getOwnerDocument(element).scrollingElement) {
     return window;
   }
   if (isHTMLElement2(element)) {
@@ -66497,13 +66655,13 @@ function getScrollableElement(element) {
   return null;
 }
 function getScrollXCoordinate(element) {
-  if (isWindow(element)) {
+  if (isWindow2(element)) {
     return element.scrollX;
   }
   return element.scrollLeft;
 }
 function getScrollYCoordinate(element) {
-  if (isWindow(element)) {
+  if (isWindow2(element)) {
     return element.scrollY;
   }
   return element.scrollTop;
@@ -66732,7 +66890,7 @@ var Listeners = class {
 function getEventListenerTarget(target) {
   const {
     EventTarget
-  } = getWindow2(target);
+  } = getWindow3(target);
   return target instanceof EventTarget ? target : getOwnerDocument(target);
 }
 function hasExceededDistance(delta, measurement) {
@@ -66827,7 +66985,7 @@ var KeyboardSensor = class {
     } = props;
     this.props = props;
     this.listeners = new Listeners(getOwnerDocument(target));
-    this.windowListeners = new Listeners(getWindow2(target));
+    this.windowListeners = new Listeners(getWindow3(target));
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.attach();
@@ -67053,7 +67211,7 @@ var AbstractPointerSensor = class {
     this.document = getOwnerDocument(target);
     this.documentListeners = new Listeners(this.document);
     this.listeners = new Listeners(listenerTarget);
-    this.windowListeners = new Listeners(getWindow2(target));
+    this.windowListeners = new Listeners(getWindow3(target));
     this.initialCoordinates = (_getEventCoordinates = getEventCoordinates(event)) != null ? _getEventCoordinates : defaultCoordinates;
     this.handleStart = this.handleStart.bind(this);
     this.handleMove = this.handleMove.bind(this);
@@ -67897,7 +68055,7 @@ function useRects(elements, measure) {
     measure = getClientRect;
   }
   const [firstElement] = elements;
-  const windowRect = useWindowRect(firstElement ? getWindow2(firstElement) : null);
+  const windowRect = useWindowRect(firstElement ? getWindow3(firstElement) : null);
   const [rects, setRects] = (0, import_react83.useState)(defaultValue$2);
   function measureRects() {
     setRects(() => {
@@ -68409,7 +68567,7 @@ var DndContext = /* @__PURE__ */ (0, import_react83.memo)(function DndContext2(_
   const draggingNodeRect = isInitialized ? (_dragOverlay$rect = dragOverlay.rect) != null ? _dragOverlay$rect : activeNodeRect : null;
   const usesDragOverlay = Boolean(dragOverlay.nodeRef.current && dragOverlay.rect);
   const nodeRectDelta = useRectDelta(usesDragOverlay ? null : activeNodeRect);
-  const windowRect = useWindowRect(draggingNode ? getWindow2(draggingNode) : null);
+  const windowRect = useWindowRect(draggingNode ? getWindow3(draggingNode) : null);
   const scrollableAncestors = useScrollableAncestors(isInitialized ? overNode != null ? overNode : activeNode : null);
   const scrollableAncestorRects = useRects(scrollableAncestors);
   const modifiedTranslate = applyModifiers(modifiers, {
@@ -69188,7 +69346,7 @@ function useDropAnimation(_ref3) {
     }
     const {
       transform
-    } = getWindow2(node).getComputedStyle(node);
+    } = getWindow3(node).getComputedStyle(node);
     const parsedTransform = parseTransform(transform);
     if (!parsedTransform) {
       return;
@@ -72210,15 +72368,15 @@ function useLanePlacement(container, input) {
     }
     const heights = /* @__PURE__ */ new Map();
     const observed = /* @__PURE__ */ new Set();
-    let cancelled = false;
+    let cancelled2 = false;
     let rafId2 = null;
     const recompute = () => {
-      if (rafId2 !== null || cancelled) {
+      if (rafId2 !== null || cancelled2) {
         return;
       }
       rafId2 = requestAnimationFrame(() => {
         rafId2 = null;
-        if (cancelled) {
+        if (cancelled2) {
           return;
         }
         const itemsWithHeight = itemsForPlacement.map((item) => ({
@@ -72315,7 +72473,7 @@ function useLanePlacement(container, input) {
     refreshObserved();
     recompute();
     return () => {
-      cancelled = true;
+      cancelled2 = true;
       if (rafId2 !== null) {
         cancelAnimationFrame(rafId2);
       }

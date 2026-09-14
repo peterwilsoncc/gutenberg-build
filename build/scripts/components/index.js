@@ -2389,20 +2389,60 @@ var wp;
   function checkIsBrowser() {
     return typeof window !== "undefined" && !!window.document?.createElement;
   }
+  function lookupGetter(prototype, name) {
+    let target = prototype;
+    while (target) {
+      const descriptor = Object.getOwnPropertyDescriptor(target, name);
+      if (descriptor?.get) return descriptor.get;
+      target = Object.getPrototypeOf(target);
+    }
+  }
+  var nodeTypeGetter = canUseDOM ? lookupGetter(Object.getPrototypeOf(window.document), "nodeType") : void 0;
+  var activeElementGetter = canUseDOM ? lookupGetter(Object.getPrototypeOf(window.document), "activeElement") : void 0;
+  function isWindow(value) {
+    if (!value) return false;
+    return value.window === value;
+  }
+  function isDocument(value) {
+    if (!value) return false;
+    if (!nodeTypeGetter) return value.nodeType === 9;
+    try {
+      return nodeTypeGetter.call(value) === 9;
+    } catch {
+      return false;
+    }
+  }
+  function ownsDocument(view2, ownerDocument2) {
+    try {
+      return view2.document === ownerDocument2;
+    } catch {
+      return false;
+    }
+  }
   function getDocument(node2) {
     if (!node2) return document;
-    if ("self" in node2) return node2.document;
-    return node2.ownerDocument || document;
+    if (isDocument(node2)) return node2;
+    if (isWindow(node2)) return node2.document;
+    const nodeDocument = node2.ownerDocument;
+    if (isDocument(nodeDocument)) return nodeDocument;
+    return document;
   }
   function getWindow(node2) {
     if (!node2) return self;
-    if ("self" in node2) return node2.self;
-    return getDocument(node2).defaultView || window;
+    if (isWindow(node2)) return node2;
+    const nodeDocument = getDocument(node2);
+    const { defaultView } = nodeDocument;
+    if (isWindow(defaultView) && ownsDocument(defaultView, nodeDocument)) return defaultView;
+    return window;
   }
-  function getActiveElement(node2, activeDescendant = false) {
-    const { activeElement: activeElement2 } = getDocument(node2);
+  function getActiveElement(node2, { frame: frame2 = true, activeDescendant = false } = {}) {
+    const ownerDocument2 = getDocument(node2);
+    const activeElement2 = activeElementGetter ? activeElementGetter.call(ownerDocument2) : ownerDocument2.activeElement;
     if (!activeElement2?.nodeName) return null;
-    if (isFrame(activeElement2) && activeElement2.contentDocument?.body) return getActiveElement(activeElement2.contentDocument.body, activeDescendant);
+    if (frame2 && isFrame(activeElement2) && activeElement2.contentDocument?.body) return getActiveElement(activeElement2.contentDocument.body, {
+      frame: frame2,
+      activeDescendant
+    });
     if (activeDescendant) {
       const id3 = activeElement2.getAttribute("aria-activedescendant");
       if (id3) {
@@ -2597,10 +2637,12 @@ var wp;
     return isActivatableNavigationTarget(event.currentTarget);
   }
   function fireEvent(element, type, eventInit) {
-    const event = new Event(type, eventInit);
+    const { Event: Event2 } = getWindow(element);
+    const event = new Event2(type, eventInit);
     return element.dispatchEvent(event);
   }
   function fireBlurEvent(element, eventInit) {
+    const { FocusEvent } = getWindow(element);
     const event = new FocusEvent("blur", eventInit);
     const defaultAllowed = element.dispatchEvent(event);
     const bubbleInit = {
@@ -2611,11 +2653,39 @@ var wp;
     return defaultAllowed;
   }
   function fireKeyboardEvent(element, type, eventInit) {
+    const { KeyboardEvent } = getWindow(element);
     const event = new KeyboardEvent(type, eventInit);
     return element.dispatchEvent(event);
   }
+  var resetAttributes = {
+    width: true,
+    height: true,
+    pressure: true,
+    tangentialPressure: true,
+    tiltX: true,
+    tiltY: true,
+    twist: true,
+    altitudeAngle: true,
+    azimuthAngle: true,
+    isPrimary: true,
+    coalescedEvents: true,
+    predictedEvents: true,
+    persistentDeviceId: true
+  };
+  function getClickEventInit(view2, eventInit) {
+    const init2 = eventInit ?? {};
+    return new Proxy({}, { get(_target, key) {
+      if (key === "view") return view2;
+      if (key === "composed") return true;
+      if (key === "pointerId") return init2.pointerId ?? -1;
+      if (key === "pointerType") return init2.pointerType ?? "";
+      if (hasOwnProperty(resetAttributes, key)) return void 0;
+      return Reflect.get(init2, key);
+    } });
+  }
   function fireClickEvent(element, eventInit) {
-    const event = new MouseEvent("click", eventInit);
+    const view2 = getWindow(element);
+    const event = new (view2.PointerEvent ?? view2.MouseEvent)("click", getClickEventInit(view2, eventInit));
     return element.dispatchEvent(event);
   }
   function isFocusEventOutside(event, container) {
@@ -2931,7 +3001,7 @@ var wp;
   var _React = { ...React };
   var useReactId = _React.useId;
   var useReactDeferredValue = _React.useDeferredValue;
-  var useReactInsertionEffect = _React.useInsertionEffect;
+  var useEventUpdate = _React.useInsertionEffect ?? ((callback) => callback());
   var useSafeLayoutEffect = canUseDOM ? import_react2.useLayoutEffect : import_react2.useEffect;
   function useInitialValue(value) {
     const [initialValue2] = (0, import_react2.useState)(value);
@@ -2948,10 +3018,9 @@ var wp;
     const ref = (0, import_react2.useRef)(() => {
       throw new Error("Cannot call an event handler while rendering.");
     });
-    if (useReactInsertionEffect) useReactInsertionEffect(() => {
+    useEventUpdate(() => {
       ref.current = callback;
     });
-    else ref.current = callback;
     return (0, import_react2.useCallback)((...args) => ref.current?.(...args), []);
   }
   function useTransactionState(callback) {
@@ -2991,12 +3060,7 @@ var wp;
       };
     }, refs);
   }
-  function useId(defaultId) {
-    if (useReactId) {
-      const reactId = useReactId();
-      if (defaultId) return defaultId;
-      return reactId;
-    }
+  function useIdPolyfill(defaultId) {
     const [id3, setId] = (0, import_react2.useState)(defaultId);
     useSafeLayoutEffect(() => {
       if (defaultId || id3) return;
@@ -3004,6 +3068,14 @@ var wp;
       setId(`id-${random}`);
     }, [defaultId, id3]);
     return defaultId || id3;
+  }
+  function useReactIdWithDefault(defaultId) {
+    const id3 = useReactId();
+    return defaultId || id3;
+  }
+  var useCompatibleId = useReactId ? useReactIdWithDefault : useIdPolyfill;
+  function useId(defaultId) {
+    return useCompatibleId(defaultId);
   }
   function useTagName(refOrElement, type) {
     const stringOrUndefined = (type2) => {
@@ -3189,13 +3261,25 @@ var wp;
     };
   }
 
-  // node_modules/@ariakit/react-components/dist/__chunks/CKgCZrim.js
+  // node_modules/@ariakit/react-components/dist/__chunks/CcVRFmzE.js
   var import_react3 = __toESM(require_react(), 1);
+  var accessibleWhenDisabledSymbol = /* @__PURE__ */ Symbol("accessibleWhenDisabled");
+  function accessibleWhenDisabledFromProps(props) {
+    return props.accessibleWhenDisabled ?? props.onLoadedMetadataCapture?.[accessibleWhenDisabledSymbol];
+  }
+  var trulyDisabledAttribute = "data-truly-disabled";
+  function trulyDisabledFromElement(element) {
+    return element.getAttribute(trulyDisabledAttribute) === "true";
+  }
+  function resolvedTrulyDisabledFromElement(element) {
+    const value = element.getAttribute(trulyDisabledAttribute);
+    if (value === "true") return true;
+    if (value === "false") return false;
+  }
   function isCompositeMoveKey(key) {
     return key === "ArrowUp" || key === "ArrowRight" || key === "ArrowDown" || key === "ArrowLeft" || key === "Home" || key === "End" || key === "PageUp" || key === "PageDown";
   }
   var TagName = "div";
-  var accessibleWhenDisabledSymbol = /* @__PURE__ */ Symbol("accessibleWhenDisabled");
   var isSafariBrowser = isSafari();
   var nativeTabbableMask = 1;
   var supportsDisabledMask = 2;
@@ -3343,6 +3427,7 @@ var wp;
     const onKeyPressCapture = useDisableEvent(props.onKeyPressCapture, disabled2);
     const onMouseDownCapture = useDisableEvent(props.onMouseDownCapture, disabled2);
     const onClickCapture = useDisableEvent(props.onClickCapture, disabled2);
+    const onAuxClickCapture = useDisableEvent(props.onAuxClickCapture, disabled2);
     const handleFocusVisible = (event, currentTarget) => {
       if (currentTarget) event.currentTarget = currentTarget;
       if (!focusable2) return;
@@ -3459,9 +3544,11 @@ var wp;
         tabIndexProp: props.tabIndex
       }),
       disabled: supportsDisabled && trulyDisabled ? true : void 0,
+      [trulyDisabledAttribute]: disabled2 ? trulyDisabled : void 0,
       contentEditable: disabled2 ? void 0 : props.contentEditable,
       onKeyPressCapture,
       onClickCapture,
+      onAuxClickCapture,
       onMouseDownCapture,
       onKeyDownCapture,
       onFocusCapture,
@@ -4262,13 +4349,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     setup(privateStore, () => {
       return batch(privateStore, ["renderedItems"], (state) => {
+        if (state.renderedItems !== collection.getState().renderedItems) sortItems(state.renderedItems);
+        if (typeof IntersectionObserver !== "function") return;
         let firstRun = true;
-        let raf = requestAnimationFrame(() => {
-          const { renderedItems } = collection.getState();
-          if (state.renderedItems === renderedItems) return;
-          sortItems(state.renderedItems);
-        });
-        if (typeof IntersectionObserver !== "function") return () => cancelAnimationFrame(raf);
+        let raf = 0;
         const ioCallback = () => {
           if (firstRun) {
             firstRun = false;
@@ -4655,7 +4739,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (isItem(store, activeElement2)) return true;
     return !!getPopupElement(store)?.contains(activeElement2);
   }
-  function presentItem({ store, id: id3, focus: focus4, markedOnly, requireFocus, scrollIntoView }) {
+  function presentItem({ store, id: id3, focus: focus4, markedOnly, requireFocus, scrollIntoView, onConsume }) {
     let element = null;
     let resolvedId;
     let focused = false;
@@ -4708,10 +4792,21 @@ If there's a particular need for this, please submit a feature request at https:
       removeFocusListeners?.();
       unsubscribe?.();
     };
+    let consumed = false;
+    const consume = () => {
+      if (consumed) return;
+      consumed = true;
+      onConsume?.();
+    };
+    const settle = () => {
+      if (done) return;
+      consume();
+      return cancel();
+    };
     const present = () => {
       if (done) return;
       const state = store.getState();
-      if (abandonedByState(state)) return cancel();
+      if (abandonedByState(state)) return settle();
       let restoreFocus = false;
       if (!element) {
         element = resolveElement(state);
@@ -4719,17 +4814,18 @@ If there's a particular need for this, please submit a feature request at https:
       } else if (!element.isConnected) {
         restoreFocus = focused && !focusLeftElement && getActiveElement(element) === getDocument(element).body;
         element = resolveElement(state);
-        if (!element) return cancel();
+        if (!element) return settle();
       }
       if (restoreFocus) focused = false;
-      else if (!stillOwnsFocus(element)) return cancel();
+      else if (!stillOwnsFocus(element)) return settle();
       const focusWithheld = focus4 && startedOnComposite && entersClosedPopup(state, element);
       if (focusWithheld) {
         const { activeId } = state;
-        if (activeId != null && activeId !== resolvedId) return cancel();
+        if (activeId != null && activeId !== resolvedId) return settle();
       }
       if (focus4 && !focused && !focusWithheld) {
         focused = true;
+        consume();
         focusLeftElement = false;
         const itemElement = element;
         removeFocusListeners?.();
@@ -4752,11 +4848,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
       if (markedOnly && !element.hasAttribute("data-autofocus")) {
         if (focusWithheld) return;
-        return cancel();
+        return settle();
       }
       if (!isVisible(element)) return;
       if ("unstable_placing" in state && state.unstable_placing) return;
-      if (!focusWithheld) cancel();
+      if (!focusWithheld) settle();
       if (scrollIntoView) {
         scrollIntoView(element);
         return;
@@ -4774,7 +4870,7 @@ If there's a particular need for this, please submit a feature request at https:
       "unstable_placing"
     ], present);
     present();
-    return cancel;
+    return Object.assign(cancel, { settle });
   }
   function usePresentItem(store) {
     const cancelRef = (0, import_react7.useRef)(null);
@@ -4786,14 +4882,15 @@ If there's a particular need for this, please submit a feature request at https:
     const present = (0, import_react7.useCallback)((params) => {
       if (!store) return;
       if (ownerRef.current !== store) return;
-      cancel();
+      cancelRef.current?.settle();
+      cancelRef.current = null;
       const cancelCurrent = presentItem({
         store,
         ...params
       });
       cancelRef.current = cancelCurrent;
       return cancelCurrent;
-    }, [store, cancel]);
+    }, [store]);
     useSafeLayoutEffect(() => {
       ownerRef.current = store;
       return () => {
@@ -4853,22 +4950,20 @@ If there's a particular need for this, please submit a feature request at https:
     if (keys?.length !== otherKeys.length) return false;
     for (let index2 = 0; index2 < keys.length; index2 += 1) {
       const key = keys[index2];
-      if (key === void 0) return false;
       if (isSameValue2(key, otherKeys[index2])) continue;
       return false;
     }
     return true;
   }
   function useStableStoreKeys(keys) {
-    const keysRef = React2.useRef(null);
-    const currentKeys = keysRef.current;
+    const [stableKeys, setStableKeys] = React2.useState(() => keys === null ? null : [...keys]);
     if (keys === null) {
-      keysRef.current = null;
+      if (stableKeys !== null) setStableKeys(null);
       return null;
     }
-    if (hasSameStoreKeys(currentKeys, keys)) return currentKeys;
+    if (hasSameStoreKeys(stableKeys, keys)) return stableKeys;
     const nextKeys = [...keys];
-    keysRef.current = nextKeys;
+    setStableKeys(nextKeys);
     return nextKeys;
   }
   function useStoreState(store, keyOrKeysOrSelector = identity, selector2) {
@@ -4965,7 +5060,8 @@ If there's a particular need for this, please submit a feature request at https:
     }, [
       store,
       key,
-      hasSetValue
+      hasSetValue,
+      propsRef
     ]);
     useSafeLayoutEffect(() => {
       if (value === void 0) return;
@@ -5043,6 +5139,7 @@ If there's a particular need for this, please submit a feature request at https:
   var useCompositeItem = createHook(function useCompositeItem2({ store, rowId: rowIdProp, preventScrollOnKeyDown = false, moveOnKeyPress = true, tabbable: tabbable2 = false, getItem: getItemProp, typeaheadText, "aria-setsize": ariaSetSizeProp, "aria-posinset": ariaPosInSetProp, unstable_scrollIntoView: scrollIntoView, ...props }) {
     const context = useCompositeScopedContext();
     store = store || context;
+    const accessibleWhenDisabled = accessibleWhenDisabledFromProps(props);
     const id3 = useId(props.id);
     const ref = (0, import_react8.useRef)(null);
     const mountedElementRef = (0, import_react8.useRef)(null);
@@ -5053,7 +5150,9 @@ If there's a particular need for this, please submit a feature request at https:
       mountedElementRef.current = element;
     }, []);
     const row = (0, import_react8.useContext)(CompositeRowContext);
-    const trulyDisabled = disabledFromProps(props) && !props.accessibleWhenDisabled;
+    const disabled2 = disabledFromProps(props);
+    const trulyDisabled = disabled2 && !accessibleWhenDisabled;
+    const inactiveDisabled = disabled2 && props.focusable === false;
     const shouldRegisterItem = props.shouldRegisterItem;
     const getRowId = (state) => {
       if (rowIdProp) return rowIdProp;
@@ -5108,11 +5207,12 @@ If there's a particular need for this, please submit a feature request at https:
       }
     });
     const getItem = (0, import_react8.useCallback)((item) => {
+      const itemDisabled = (item.element ? resolvedTrulyDisabledFromElement(item.element) : void 0) ?? (inactiveDisabled || trulyDisabled);
       const nextItem = {
         ...item,
         id: id3 || item.id,
         rowId,
-        disabled: trulyDisabled,
+        disabled: itemDisabled,
         children: item.element?.textContent,
         typeaheadText
       };
@@ -5121,6 +5221,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [
       id3,
       rowId,
+      inactiveDisabled,
       trulyDisabled,
       typeaheadText,
       getItemProp
@@ -5392,6 +5493,29 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName5, htmlProps);
   }));
 
+  // node_modules/@ariakit/react-components/dist/__chunks/C5dZ32Pk.js
+  var cancelled = /* @__PURE__ */ Symbol("cancelled");
+  var moveRequests = /* @__PURE__ */ new WeakMap();
+  function getMoveRequest(store) {
+    const key = store.item;
+    const cached = moveRequests.get(key);
+    if (cached) return cached;
+    const request = {
+      consumedBy: null,
+      targetId: store.getState().activeId
+    };
+    moveRequests.set(key, request);
+    sync(store, ["moves", "activeId"], (state, prevState) => {
+      if (state.moves !== prevState.moves) {
+        request.consumedBy = null;
+        request.targetId = state.activeId;
+        return;
+      }
+      if (state.activeId !== prevState.activeId) request.targetId = cancelled;
+    });
+    return request;
+  }
+
   // node_modules/@ariakit/react-components/dist/composite/composite.js
   var import_react10 = __toESM(require_react(), 1);
   var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
@@ -5427,19 +5551,33 @@ If there's a particular need for this, please submit a feature request at https:
   function findFirstEnabledItemInTheLastRow(items) {
     return findFirstEnabledItem2(flatten2DArray(reverseArray(groupItemsByRows2(items))));
   }
+  function mayActOnMove(store, instance) {
+    const { consumedBy } = getMoveRequest(store);
+    return !consumedBy || consumedBy === instance;
+  }
+  function consumeMove(store, instance, moves) {
+    if (store.getState().moves !== moves) return;
+    getMoveRequest(store).consumedBy = instance;
+  }
   var CompositeFocusOnMove = memo2(function CompositeFocusOnMove2({ store, focusOnMove, previousElementRef, present, scrollIntoView }) {
     const moves = useStoreState(store, "moves");
     const compositeElement = useStoreState(store, "compositeElement");
+    const instanceRef = (0, import_react10.useRef)({});
     (0, import_react10.useEffect)(() => {
+      const moveRequest = getMoveRequest(store);
       if (!moves) return;
       if (!focusOnMove) return;
+      const instance = instanceRef.current;
+      if (!mayActOnMove(store, instance)) return;
       const { activeId } = store.getState();
       if (activeId == null) return;
+      if (activeId !== moveRequest.targetId) return;
       return present({
         id: activeId,
         requireFocus: ownsFocus(store),
         focus: true,
-        scrollIntoView
+        scrollIntoView,
+        onConsume: () => consumeMove(store, instance, moves)
       });
     }, [
       store,
@@ -5450,10 +5588,15 @@ If there's a particular need for this, please submit a feature request at https:
       scrollIntoView
     ]);
     useSafeLayoutEffect(() => {
+      const moveRequest = getMoveRequest(store);
       if (!moves) return;
       if (!compositeElement) return;
+      const instance = instanceRef.current;
+      if (!mayActOnMove(store, instance)) return;
       const { activeId } = store.getState();
       if (!(activeId === null)) return;
+      if (activeId !== moveRequest.targetId) return;
+      consumeMove(store, instance, moves);
       const previousElement = previousElementRef.current;
       previousElementRef.current = null;
       if (previousElement) fireBlurEvent(previousElement, { relatedTarget: compositeElement });
@@ -5467,7 +5610,8 @@ If there's a particular need for this, please submit a feature request at https:
     }, [
       store,
       moves,
-      compositeElement
+      compositeElement,
+      previousElementRef
     ]);
     return null;
   });
@@ -5918,7 +6062,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
   function useDisclosureStoreProps(store, update2, props) {
-    useUpdateEffect(update2, [props.store, props.disclosure]);
+    useUpdateEffect(update2, [
+      props.store,
+      props.disclosure,
+      update2
+    ]);
     useStoreProps(store, props, "open", "setOpen");
     useStoreProps(store, props, "mounted", "setMounted");
     useStoreProps(store, props, "animated");
@@ -6066,7 +6214,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
   var import_react14 = __toESM(require_react(), 1);
-  var ComboboxListRoleContext = (0, import_react14.createContext)(void 0);
+  var ComboboxListRoleContext = (0, import_react14.createContext)(null);
   var ctx7 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
   var useComboboxContext = ctx7.useContext;
   var useComboboxScopedContext = ctx7.useScopedContext;
@@ -6079,7 +6227,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/@ariakit/react-components/dist/collection/collection-store.js
   function useCollectionStoreProps(store, update2, props) {
-    useUpdateEffect(update2, [props.store]);
+    useUpdateEffect(update2, [props.store, update2]);
     useStoreProps(store, props, "items", "setItems");
     return store;
   }
@@ -6093,6 +6241,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useCompositeStoreProps(store, update2, props) {
     store = useCollectionStoreProps(store, update2, props);
+    getMoveRequest(store);
     useStoreProps(store, props, "activeId", "setActiveId");
     const focusOrderProps = { compositeElementInFocusOrder: props.compositeElementInFocusOrder ?? props.includesBaseElement };
     useStoreProps(store, focusOrderProps, "compositeElementInFocusOrder");
@@ -6126,7 +6275,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/@ariakit/components/dist/tab/tab-store.js
   function getFocusedTab(items) {
-    const activeElement2 = items[0]?.element?.ownerDocument.activeElement;
+    const element = items[0]?.element;
+    if (!element) return;
+    const activeElement2 = getActiveElement(element);
     if (!activeElement2) return;
     return items.find((item) => item.element === activeElement2);
   }
@@ -6281,7 +6432,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/@ariakit/react-components/dist/tab/tab-store.js
   function useTabStoreProps(store, update2, props) {
-    useUpdateEffect(update2, [props.composite, props.combobox]);
+    useUpdateEffect(update2, [
+      props.composite,
+      props.combobox,
+      update2
+    ]);
     const compositeStore = useCompositeStoreProps(store, update2, props);
     useStoreProps(compositeStore, props, "selectedId", "setSelectedId");
     useStoreProps(compositeStore, props, "selectOnMove");
@@ -6511,7 +6666,7 @@ If there's a particular need for this, please submit a feature request at https:
   function getRootElement(element) {
     const doc = getDocument(element);
     const { fullscreenElement } = doc;
-    const HTMLElementClass = doc.defaultView?.HTMLElement;
+    const HTMLElementClass = getWindow(element).HTMLElement;
     if (HTMLElementClass && fullscreenElement instanceof HTMLElementClass) return fullscreenElement;
     return doc.body;
   }
@@ -6578,7 +6733,8 @@ If there's a particular need for this, please submit a feature request at https:
     }, [
       portal,
       portalElement,
-      context
+      context,
+      portalRefProp
     ]);
     useSafeLayoutEffect(() => {
       const attached = attachedPortalRefRef.current;
@@ -7024,7 +7180,7 @@ If there's a particular need for this, please submit a feature request at https:
       role: "presentation",
       "data-backdrop": contentElement?.id || "",
       alwaysVisible,
-      hidden: hidden != null ? hidden : void 0,
+      ...hidden != null && { hidden },
       style: {
         position: "fixed",
         top: 0,
@@ -7057,6 +7213,16 @@ If there's a particular need for this, please submit a feature request at https:
   function useDialogStore(props = {}) {
     const [store, update2] = useStore(createDialogStore, props);
     return useDialogStoreProps(store, update2, props);
+  }
+
+  // node_modules/@ariakit/react-components/dist/__chunks/DztuoDGI.js
+  function isHiddenDismiss(element, ...ids) {
+    if (!element) return false;
+    const dismiss = element.getAttribute("data-dialog-hidden-dismiss");
+    if (dismiss == null) return false;
+    if (dismiss === "") return true;
+    if (!ids.length) return true;
+    return ids.some((id3) => dismiss === id3);
   }
 
   // node_modules/@ariakit/react-components/dist/dialog/utils/supports-inert.js
@@ -7102,6 +7268,7 @@ If there's a particular need for this, please submit a feature request at https:
   function addDisabledElementCleanup({ cleanups: cleanups2, element, elements: elements2, ids }) {
     if (isBackdrop(element, ...ids)) return;
     if (isFocusTrap(element, ...ids)) return;
+    if (isHiddenDismiss(element, ...ids)) return;
     cleanups2.push(disableTree(element, elements2));
   }
   function addRoleNoneCleanup(cleanups2, ancestor, elements2) {
@@ -7138,22 +7305,6 @@ If there's a particular need for this, please submit a feature request at https:
       restoreCleanups(cleanups2);
     };
     return restoreTreeOutside;
-  }
-
-  // node_modules/@ariakit/react-components/dist/dialog/utils/prepend-hidden-dismiss.js
-  function prependHiddenDismiss(container, onClick) {
-    const button = getDocument(container).createElement("button");
-    button.type = "button";
-    button.tabIndex = -1;
-    button.textContent = "Dismiss popup";
-    Object.assign(button.style, getVisuallyHiddenStyle());
-    button.addEventListener("click", onClick);
-    container.prepend(button);
-    const removeHiddenDismiss = () => {
-      button.removeEventListener("click", onClick);
-      button.remove();
-    };
-    return removeHiddenDismiss;
   }
 
   // node_modules/@ariakit/react-components/dist/dialog/utils/use-previous-mouse-down-ref.js
@@ -7233,6 +7384,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (contains(contentElement, target)) return true;
     if (isDisclosure(disclosureElement, target)) return true;
     if (target.hasAttribute("data-focus-trap")) return true;
+    if (isHiddenDismiss(target, contentElement.id)) return true;
     return isElementInside(target, contentElement);
   }
   function isEventInsideDialog(targets, contentElement, disclosureElement) {
@@ -7298,7 +7450,8 @@ If there's a particular need for this, please submit a feature request at https:
       open,
       domReady,
       contentElement,
-      store
+      store,
+      focusedStoreRef
     ]);
     const props = {
       store,
@@ -7417,7 +7570,8 @@ If there's a particular need for this, please submit a feature request at https:
       contentId,
       contentElement,
       isRootDialog,
-      attribute
+      attribute,
+      retry
     ]);
     return isRootDialog;
   }
@@ -7425,6 +7579,7 @@ If there's a particular need for this, please submit a feature request at https:
   // node_modules/@ariakit/react-components/dist/dialog/utils/use-prevent-body-scroll.js
   var import_react26 = __toESM(require_react(), 1);
   var isIOS = isApple() && !isMac();
+  var useLockEffect = isIOS ? import_react26.useEffect : useSafeLayoutEffect;
   function supportsScrollbarGutter(win) {
     const { CSS: CSS2 } = win;
     return !!CSS2?.supports("scrollbar-gutter", "stable");
@@ -7440,7 +7595,7 @@ If there's a particular need for this, please submit a feature request at https:
       contentId,
       enabled
     });
-    (isIOS ? import_react26.useEffect : useSafeLayoutEffect)(() => {
+    useLockEffect(() => {
       if (!isRootDialog()) return;
       if (!contentElement) return;
       const doc = getDocument(contentElement);
@@ -7495,17 +7650,24 @@ If there's a particular need for this, please submit a feature request at https:
     }, [isRootDialog, contentElement]);
   }
 
-  // node_modules/@ariakit/react-components/dist/dialog/dialog.js
+  // node_modules/@ariakit/react-components/dist/__chunks/B2qojkwB.js
   var import_react27 = __toESM(require_react(), 1);
   var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+  var capturedDisclosures = /* @__PURE__ */ new WeakSet();
+  function captureDisclosure(element) {
+    capturedDisclosures.add(element);
+  }
+  function isCapturedDisclosure(element) {
+    return capturedDisclosures.has(element);
+  }
   var TagName19 = "div";
   var isSafariBrowser2 = isSafari();
   var openModalPortals = /* @__PURE__ */ new WeakSet();
-  var capturedDisclosures = /* @__PURE__ */ new WeakSet();
   function isAlreadyFocusingAnotherElement(dialog) {
     const activeElement2 = getActiveElement(dialog);
     if (!activeElement2) return false;
     if (dialog && contains(dialog, activeElement2)) return false;
+    if (isHiddenDismiss(activeElement2, dialog?.id)) return false;
     if (isFocusable(activeElement2)) return true;
     return false;
   }
@@ -7522,6 +7684,11 @@ If there's a particular need for this, please submit a feature request at https:
     if (contains(dialog, element)) return true;
     if (disclosureElement && contains(disclosureElement, element)) return true;
     return isElementInside(element, dialog);
+  }
+  function hasOwnDismiss(dialog) {
+    const dismisses = dialog.querySelectorAll("[data-dialog-dismiss]");
+    for (const dismiss of dismisses) if (dismiss.closest("[data-dialog]") === dialog) return true;
+    return false;
   }
   function getElementFromProp(prop, focusable2 = false) {
     if (!prop) return null;
@@ -7625,17 +7792,17 @@ If there's a particular need for this, please submit a feature request at https:
       const hasNamedDisclosure = () => {
         const { disclosureElement } = store.getState();
         if (!disclosureElement) return false;
-        if (capturedDisclosures.has(disclosureElement)) return false;
+        if (isCapturedDisclosure(disclosureElement)) return false;
         if (!disclosureElement.isConnected) return false;
         if (dialog && contains(dialog, disclosureElement)) return false;
         return true;
       };
       if (hasNamedDisclosure()) return;
-      const captureDisclosure = (element) => {
-        capturedDisclosures.add(element);
+      const setCapturedDisclosure = (element) => {
+        captureDisclosure(element);
         store.setDisclosureElement(element);
       };
-      const activeElement2 = getActiveElement(dialog, true);
+      const activeElement2 = getActiveElement(dialog, { activeDescendant: true });
       if (!activeElement2) return;
       if (activeElement2.tagName === "BODY") {
         const fallback = lastMousedownRef.current;
@@ -7643,11 +7810,11 @@ If there's a particular need for this, please submit a feature request at https:
         if (!fallback?.isConnected) return;
         if (!isFocusable(fallback)) return;
         if (dialog && contains(dialog, fallback)) return;
-        captureDisclosure(fallback);
+        setCapturedDisclosure(fallback);
         return;
       }
       if (dialog && contains(dialog, activeElement2)) return;
-      captureDisclosure(activeElement2);
+      setCapturedDisclosure(activeElement2);
     }, [store, open]);
     (0, import_react27.useEffect)(() => {
       if (!mounted) return;
@@ -7666,19 +7833,28 @@ If there's a particular need for this, please submit a feature request at https:
         viewport.removeEventListener("resize", setViewportHeight);
       };
     }, [mounted, domReady]);
-    (0, import_react27.useEffect)(() => {
-      if (!modal) return;
-      if (!mounted) return;
-      if (!domReady) return;
-      const dialog = ref.current;
-      if (!dialog) return;
-      if (dialog.querySelector("[data-dialog-dismiss]")) return;
-      return prependHiddenDismiss(dialog, store.hide);
+    const [needsHiddenDismiss, setNeedsHiddenDismiss] = (0, import_react27.useState)(false);
+    useSafeLayoutEffect(() => {
+      if (!(modal && open && domReady) || !contentElement) {
+        setNeedsHiddenDismiss(false);
+        return;
+      }
+      const update2 = () => {
+        setNeedsHiddenDismiss(!hasOwnDismiss(contentElement));
+      };
+      update2();
+      const { MutationObserver: MutationObserver2 } = getWindow(contentElement);
+      const observer = new MutationObserver2(update2);
+      observer.observe(contentElement, {
+        childList: true,
+        subtree: true
+      });
+      return () => observer.disconnect();
     }, [
-      store,
       modal,
-      mounted,
-      domReady
+      open,
+      domReady,
+      contentElement
     ]);
     useSafeLayoutEffect(() => {
       if (!supportsInert()) return;
@@ -7771,8 +7947,7 @@ If there's a particular need for this, please submit a feature request at https:
       queueMicrotask(() => {
         const { open: open2, disclosureElement } = store.getState();
         if (!open2) return;
-        const documentActiveElement = getDocument(contentElement).activeElement;
-        const activeElement2 = isElement(documentActiveElement) ? documentActiveElement : null;
+        const activeElement2 = getActiveElement(contentElement, { frame: false });
         const deepestActiveElement = activeElement2 && getDeepestActiveElement(activeElement2);
         if (focusedStoreRef.current === store && activeElement2 && deepestActiveElement && isFocusable(deepestActiveElement) && !isElementInDialog(activeElement2, contentElement, disclosureElement) && !isElementInDialog(deepestActiveElement, contentElement, disclosureElement)) return;
         if (isFocusable(element)) element.scrollIntoView({
@@ -7949,6 +8124,7 @@ If there's a particular need for this, please submit a feature request at https:
           if (!disclosureElement) return true;
           if (contains(disclosureElement, target)) return true;
           if (isElement(target) && isElementMarked(target, dialog.id)) return true;
+          if (isElement(target) && isHiddenDismiss(target, dialog.id)) return true;
           return false;
         };
         if (!isValidTarget()) return;
@@ -7982,16 +8158,25 @@ If there's a particular need for this, please submit a feature request at https:
     }), [modal]);
     const hiddenProp = props.hidden;
     const alwaysVisible = props.alwaysVisible;
-    props = useWrapElement(props, (element) => {
-      if (!backdrop) return element;
-      return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime14.jsx)(DialogBackdrop, {
-        store,
-        backdrop,
-        backdropRef,
-        hidden: hiddenProp,
-        alwaysVisible
-      }), element] });
-    }, [
+    props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [needsHiddenDismiss && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", {
+      type: "button",
+      tabIndex: -1,
+      "data-dialog-hidden-dismiss": id3 || "",
+      style: getVisuallyHiddenStyle(),
+      onClick: store.hide,
+      children: "Dismiss popup"
+    }), element] }), [
+      needsHiddenDismiss,
+      id3,
+      store
+    ]);
+    props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [!!backdrop && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(DialogBackdrop, {
+      store,
+      backdrop,
+      backdropRef,
+      hidden: hiddenProp,
+      alwaysVisible
+    }), element] }), [
       store,
       backdrop,
       hiddenProp,
@@ -10187,7 +10372,8 @@ If there's a particular need for this, please submit a feature request at https:
       modal,
       portal,
       mounted,
-      domReady
+      domReady,
+      registerOnParent
     ]);
     const registerNestedHovercard = (0, import_react29.useCallback)((element) => {
       clearHideTimeout();
@@ -10290,12 +10476,17 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName22, htmlProps);
   }), useTooltipProviderContext);
 
-  // node_modules/@ariakit/react-components/dist/__chunks/BnO18VWs.js
+  // node_modules/@ariakit/react-components/dist/__chunks/CfSEQD-r.js
   var import_react30 = __toESM(require_react(), 1);
-  var useHovercardTrigger = createHook(function useHovercardTrigger2({ store, showOnHover = true, setAnchorElement = false, ...props }) {
+  var useHovercardTrigger = createHook(function useHovercardTrigger2({ store, showOnHover = true, unstable_showOnHoverWhenDisabled: showOnHoverWhenDisabled = true, setAnchorElement = false, ...props }) {
     const disabled2 = disabledFromProps(props);
+    const focusable2 = props.focusable !== false;
     const triggerRef = (0, import_react30.useRef)(null);
     const showTimeoutRef = (0, import_react30.useRef)(0);
+    const isTrulyDisabled = useEvent((element) => {
+      if (disabled2 && !focusable2) return true;
+      return trulyDisabledFromElement(element);
+    });
     (0, import_react30.useEffect)(() => () => window.clearTimeout(showTimeoutRef.current), []);
     (0, import_react30.useEffect)(() => {
       const onMouseLeave = (event) => {
@@ -10309,21 +10500,26 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const onMouseMoveProp = props.onMouseMove;
     const showOnHoverProp = useBooleanEvent(showOnHover);
+    const showOnHoverWhenDisabledProp = useBooleanEvent(showOnHoverWhenDisabled);
     const isMouseMoving = useIsMouseMoving();
     const onMouseMove = useEvent((event) => {
       onMouseMoveProp?.(event);
-      if (disabled2) return;
       if (event.defaultPrevented) return;
       if (showTimeoutRef.current) return;
       if (!isMouseMoving()) return;
-      if (!showOnHoverProp(event)) return;
       const element = event.currentTarget;
+      if (isTrulyDisabled(element)) return;
+      if (disabled2 || disabledFromElement(element)) {
+        if (!showOnHoverWhenDisabledProp(event)) return;
+      }
+      if (!showOnHoverProp(event)) return;
       if (setAnchorElement) store.setAnchorElement(element);
       store.setDisclosureElement(element);
       const { showTimeout, timeout } = store.getState();
       const showHovercard = () => {
         showTimeoutRef.current = 0;
         if (!isMouseMoving()) return;
+        if (isTrulyDisabled(element)) return;
         if (setAnchorElement) store.setAnchorElement(element);
         store.show();
         queueMicrotask(() => {
@@ -10519,7 +10715,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/@ariakit/react-components/dist/popover/popover-store.js
   function usePopoverStoreProps(store, update2, props) {
-    useUpdateEffect(update2, [props.popover]);
+    useUpdateEffect(update2, [props.popover, update2]);
     useStoreProps(store, props, "placement");
     return useDialogStoreProps(store, update2, props);
   }
@@ -11177,39 +11373,36 @@ If there's a particular need for this, please submit a feature request at https:
       const itemValues = items?.flatMap((item) => item.value ?? []);
       return [...new Set(itemValues)];
     }, [items]);
-    props = useWrapElement(props, (element) => {
-      if (!name) return element;
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("select", {
-        style: getVisuallyHiddenStyle(),
-        tabIndex: -1,
-        "aria-hidden": true,
-        "aria-label": label,
-        "aria-labelledby": label != null ? void 0 : labelledBy,
-        name,
-        form,
-        required,
-        disabled: disabledProp,
-        value,
-        multiple: multiSelectable,
-        onFocus: () => store?.getState().selectElement?.focus(),
-        onChange: (event) => {
-          nativeSelectChangedRef.current = true;
-          setAutofill(true);
-          store?.setValue(multiSelectable ? getSelectedValues(event.target) : event.target.value);
-        },
-        children: [toArray(value).map((value2) => {
-          if (value2 == null) return null;
-          if (values.includes(value2)) return null;
-          return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("option", {
-            value: value2,
-            children: value2
-          }, value2);
-        }), values.map((value2) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("option", {
+    props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [!!name && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("select", {
+      style: getVisuallyHiddenStyle(),
+      tabIndex: -1,
+      "aria-hidden": true,
+      "aria-label": label,
+      "aria-labelledby": label != null ? void 0 : labelledBy,
+      name,
+      form,
+      required,
+      disabled: disabledProp,
+      value,
+      multiple: multiSelectable,
+      onFocus: () => store?.getState().selectElement?.focus(),
+      onChange: (event) => {
+        nativeSelectChangedRef.current = true;
+        setAutofill(true);
+        store?.setValue(multiSelectable ? getSelectedValues(event.target) : event.target.value);
+      },
+      children: [toArray(value).map((value2) => {
+        if (value2 == null) return null;
+        if (values.includes(value2)) return null;
+        return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("option", {
           value: value2,
           children: value2
-        }, value2))]
-      }), element] });
-    }, [
+        }, value2);
+      }), values.map((value2) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("option", {
+        value: value2,
+        children: value2
+      }, value2))]
+    }), element] }), [
       store,
       label,
       labelledBy,
@@ -11479,6 +11672,7 @@ If there's a particular need for this, please submit a feature request at https:
       store,
       ...props,
       focusOnHover(event) {
+        if (!store.getState().open) return false;
         if (!focusOnHoverProp(event)) return false;
         return store.getState().open;
       }
@@ -11810,7 +12004,7 @@ If there's a particular need for this, please submit a feature request at https:
     return useCompositeStoreOptions(props);
   }
   function useSelectStoreProps(store, update2, props) {
-    useUpdateEffect(update2, [props.combobox]);
+    useUpdateEffect(update2, [props.combobox, update2]);
     useStoreProps(store, props, "value", "setValue");
     useStoreProps(store, props, "setValueOnMove");
     return Object.assign(usePopoverStoreProps(useCompositeStoreProps(store, update2, props), update2, props), { combobox: props.combobox });
@@ -11871,7 +12065,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // node_modules/@ariakit/react-components/dist/checkbox/checkbox-store.js
   function useCheckboxStoreProps(store, update2, props) {
-    useUpdateEffect(update2, [props.store]);
+    useUpdateEffect(update2, [props.store, update2]);
     useStoreProps(store, props, "value", "setValue");
     return store;
   }
@@ -12027,12 +12221,10 @@ If there's a particular need for this, please submit a feature request at https:
     const disclosureElement = useStoreState(store, "disclosureElement");
     const contentElement = useStoreState(store, "contentElement");
     (0, import_react51.useEffect)(() => {
-      const disclosure = disclosureElement;
-      if (!disclosure) return;
       const menu2 = contentElement;
       if (!menu2) return;
-      if (label || menu2.hasAttribute("aria-label")) setId(void 0);
-      else if (disclosure.id) setId(disclosure.id);
+      const nextId = label || menu2.hasAttribute("aria-label") ? void 0 : disclosureElement?.id || void 0;
+      setId(nextId);
     }, [
       label,
       disclosureElement,
@@ -12150,7 +12342,7 @@ If there's a particular need for this, please submit a feature request at https:
   // node_modules/@ariakit/react-components/dist/menu/menu.js
   var import_react52 = __toESM(require_react(), 1);
   var TagName49 = "div";
-  var useMenu = createHook(function useMenu2({ store, modal: modalProp = false, portal = modalProp, hideOnEscape = true, autoFocusOnShow = true, hideOnHoverOutside, alwaysVisible, ...props }) {
+  var useMenu = createHook(function useMenu2({ store, modal: modalProp = false, portal = modalProp, hideOnEscape = true, autoFocusOnShow = true, hideOnHoverOutside, alwaysVisible, getPersistentElements, unstable_treeSnapshotKey, ...props }) {
     const context = useMenuProviderContext();
     store = store || context;
     invariant(store, "Menu must receive a `store` prop or be wrapped in a MenuProvider component.");
@@ -12210,6 +12402,15 @@ If there's a particular need for this, please submit a feature request at https:
     const canAutoFocusOnShow = !!initialFocusRef || !!props.initialFocus || modal;
     const autoFocusOnShowProp = autoFocusOnShow === false ? false : canAutoFocusOnShow && autoFocusOnShow;
     const finalFocusElement = useStoreState(store, ["disclosureElement", "anchorElement"], (state) => state.disclosureElement || state.anchorElement);
+    const persistentDisclosure = useStoreState(store, ["disclosureElement", "contentElement"], (state) => {
+      const { disclosureElement, contentElement: contentElement2 } = state;
+      if (!disclosureElement?.isConnected) return null;
+      if (isCapturedDisclosure(disclosureElement)) return null;
+      if (contentElement2?.contains(disclosureElement)) return null;
+      return disclosureElement;
+    });
+    const disclosureKey = modal ? persistentDisclosure : null;
+    const treeSnapshotKey = (0, import_react52.useMemo)(() => [unstable_treeSnapshotKey, disclosureKey], [unstable_treeSnapshotKey, disclosureKey]);
     const contentElement = useStoreState(store.combobox || store, "contentElement");
     const parentContentElement = useStoreState(parentMenu?.combobox || parentMenu, "contentElement");
     const preserveTabOrderAnchor = (0, import_react52.useMemo)(() => {
@@ -12259,6 +12460,13 @@ If there's a particular need for this, please submit a feature request at https:
         });
         return false;
       },
+      getPersistentElements() {
+        const elements2 = getPersistentElements?.() || [];
+        if (!modal) return elements2;
+        if (!persistentDisclosure) return elements2;
+        return [...elements2, persistentDisclosure];
+      },
+      unstable_treeSnapshotKey: treeSnapshotKey,
       modal,
       portal,
       backdrop: hasParentMenu ? false : props.backdrop
@@ -12293,7 +12501,7 @@ If there's a particular need for this, please submit a feature request at https:
       return item.element.getAttribute("aria-expanded") === "true";
     });
   }
-  var useMenuButton = createHook(function useMenuButton2({ store, focusable: focusable2, accessibleWhenDisabled, showOnHover, ...props }) {
+  var useMenuButton = createHook(function useMenuButton2({ store, focusable: focusable2, accessibleWhenDisabled, showOnHover, unstable_showOnHoverWhenDisabled: showOnHoverWhenDisabled = false, ...props }) {
     const context = useMenuProviderContext();
     store = store || context;
     invariant(store, "MenuButton must receive a `store` prop or be wrapped in a MenuProvider component.");
@@ -12383,6 +12591,7 @@ If there's a particular need for this, please submit a feature request at https:
       focusable: focusable2,
       accessibleWhenDisabled,
       ...props,
+      unstable_showOnHoverWhenDisabled: showOnHoverWhenDisabled,
       showOnHover: (event) => {
         const getShowOnHover = () => {
           if (typeof showOnHover === "function") return showOnHover(event);
@@ -12766,7 +12975,8 @@ If there's a particular need for this, please submit a feature request at https:
     useUpdateEffect(update2, [
       props.combobox,
       props.parent,
-      props.menubar
+      props.menubar,
+      update2
     ]);
     useStoreProps(store, props, "values", "setValues");
     return Object.assign(useHovercardStoreProps(useCompositeStoreProps(store, update2, props), update2, props), {
