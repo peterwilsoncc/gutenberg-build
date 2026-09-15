@@ -96,6 +96,7 @@
 .wp-block-image > a,
 .wp-block-image > figure > a {
   display: inline-block;
+  color: inherit;
 }
 .wp-block-image img {
   height: auto;

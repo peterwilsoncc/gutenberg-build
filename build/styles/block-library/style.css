@@ -1766,6 +1766,7 @@ h6.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]) {
 .wp-block-image > a,
 .wp-block-image > figure > a {
   display: inline-block;
+  color: inherit;
 }
 .wp-block-image img {
   height: auto;
