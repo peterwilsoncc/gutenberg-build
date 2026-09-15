@@ -91345,7 +91345,7 @@ var wp;
   var import_components190 = __toESM(require_components(), 1);
   var import_i18n193 = __toESM(require_i18n(), 1);
   var import_jsx_runtime478 = __toESM(require_jsx_runtime(), 1);
-  var isGlobalStylesInheritanceEnabled = () => !!window.__experimentalGlobalStylesInheritanceUI;
+  var isGlobalStylesInheritanceIndicatorUIEnabled = () => !!window.__experimentalGlobalStylesInheritanceUI;
   function getInheritanceProps(isInherited, hasLocalOverride, baseClassName) {
     const inheritedOnly = !!isInherited && !hasLocalOverride;
     const className = clsx_default(baseClassName, {
@@ -91550,7 +91550,7 @@ var wp;
     className = "block-editor-tools-panel-color-gradient-settings__item",
     isPlaceholder = false,
     hasInheritedValue = false,
-    showInheritanceLabelIndicators = isGlobalStylesInheritanceEnabled()
+    showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled()
   }) {
     const colorGradientDropdownButtonRef = (0, import_element293.useRef)(void 0);
     const itemClassName = clsx_default("block-editor-color-gradient-item", className);
@@ -92022,7 +92022,7 @@ var wp;
     children,
     contrastWarning,
     additionalElements,
-    showInheritanceLabelIndicators = isGlobalStylesInheritanceEnabled()
+    showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled()
   }) {
     const {
       colors: colors2,
@@ -92610,7 +92610,6 @@ var wp;
 
   // packages/block-editor/build-module/components/global-styles/inherited-value-context.mjs
   var { resolveStyle: resolveStyle3 } = unlock(privateApis);
-  var NO_RESOLVED_STYLE = { value: void 0, sources: void 0 };
   function useRawGlobalStyles() {
     const { rawGlobalStylesData, links } = (0, import_data166.useSelect)((select3) => {
       const settings2 = select3(store).getSettings();
@@ -92710,9 +92709,6 @@ var wp;
     );
     const globalStyles = useRawGlobalStyles();
     return (0, import_element297.useMemo)(() => {
-      if (!isGlobalStylesInheritanceEnabled()) {
-        return NO_RESOLVED_STYLE;
-      }
       if (!blockName) {
         return { value: {}, sources: {} };
       }
@@ -93368,7 +93364,7 @@ var wp;
     inheritedValue = value,
     settings: settings2,
     defaultValues = {},
-    showInheritanceLabelIndicators = isGlobalStylesInheritanceEnabled()
+    showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled()
   }) {
     const { globalStyles, _links } = (0, import_data168.useSelect)((select3) => {
       const { getSettings: getSettings9 } = select3(store);
@@ -93548,7 +93544,7 @@ var wp;
     defaultValues = {},
     headerLabel = (0, import_i18n198.__)("Background"),
     contrastWarning,
-    showInheritanceLabelIndicators = isGlobalStylesInheritanceEnabled()
+    showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled()
   }) {
     const {
       colors: colors2,
@@ -94943,7 +94939,7 @@ var wp;
     panelId,
     defaultControls = DEFAULT_CONTROLS5,
     isGlobalStyles = false,
-    showInheritanceLabelIndicators = isGlobalStylesInheritanceEnabled(),
+    showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled(),
     contrastWarning
   }) {
     const { colors: colors2, allColors, areCustomSolidsEnabled, decodeValue } = useColorGradientSettings(settings2);
@@ -94963,8 +94959,7 @@ var wp;
         newSlug
       );
       let changedObject = setImmutably2(value, ["color", "text"], encoded);
-      const syncLinkColor = isGlobalStylesInheritanceEnabled() ? shouldSyncLinkColor(value, inheritedValue) : inheritedValue?.color?.text === inheritedValue?.elements?.link?.color?.text;
-      if (syncLinkColor) {
+      if (shouldSyncLinkColor(value, inheritedValue)) {
         changedObject = setImmutably2(
           changedObject,
           ["elements", "link", "color", "text"],
@@ -100549,7 +100544,7 @@ var wp;
     includeLayoutControls = false,
     allowAxialBlockGap = true,
     styleState = DEFAULT_BLOCK_STYLE_STATE2,
-    showInheritanceLabelIndicators = isGlobalStylesInheritanceEnabled()
+    showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled()
   }) {
     const { dimensions, spacing } = settings2;
     const decodeValue = (rawValue) => {
@@ -101494,7 +101489,7 @@ var wp;
     settings: settings2,
     panelId,
     defaultControls = DEFAULT_CONTROLS7,
-    showInheritanceLabelIndicators = isGlobalStylesInheritanceEnabled()
+    showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled()
   }) {
     const colors2 = useColorsPerOrigin(settings2);
     const areCustomSolidsEnabled = settings2?.color?.custom;
@@ -101885,7 +101880,7 @@ var wp;
     settings: settings2,
     panelId,
     defaultControls = DEFAULT_CONTROLS8,
-    showInheritanceLabelIndicators = isGlobalStylesInheritanceEnabled()
+    showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled()
   }) {
     const decodeValue = (rawValue) => getValueFromVariable({ settings: settings2 }, "", rawValue);
     const inheritanceProps = (isInherited, hasLocalOverride, className) => getInheritanceProps(
