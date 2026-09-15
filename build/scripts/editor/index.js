@@ -48686,34 +48686,24 @@ var wp;
   var import_data9 = __toESM(require_data(), 1);
   var import_core_data8 = __toESM(require_core_data(), 1);
   function useTemplateFieldMode(record) {
-    const postType2 = record.type;
+    const { type: postType2, id: postId2 } = record;
     const availableTemplates = record?.available_templates ?? {};
     const hasAvailableTemplates = Object.keys(availableTemplates).length > 0;
     return (0, import_data9.useSelect)(
       (select9) => {
-        const isBlockTheme = !!select9(import_core_data8.store).getCurrentTheme()?.is_block_theme;
-        const postTypeObj = select9(import_core_data8.store).getPostType(postType2);
-        if (!postTypeObj?.viewable) {
+        if (!select9(import_core_data8.store).getPostType(postType2)?.viewable) {
           return null;
         }
-        const canCreateTemplates = isBlockTheme && (select9(import_core_data8.store).canUser("create", {
-          kind: "postType",
-          name: "wp_template"
-        }) ?? false);
-        const isVisible2 = hasAvailableTemplates || canCreateTemplates;
-        const canViewTemplates = isVisible2 ? !!select9(import_core_data8.store).canUser("read", {
-          kind: "postType",
-          name: "wp_template"
-        }) : false;
-        if ((!isBlockTheme || !canViewTemplates) && isVisible2) {
-          return "classic";
+        if (!select9(import_core_data8.store).getCurrentTheme()?.is_block_theme) {
+          return hasAvailableTemplates ? "classic" : null;
         }
-        if (isBlockTheme && canViewTemplates) {
-          return "block-theme";
-        }
-        return null;
+        const templateId2 = postId2 ? unlock4(select9(import_core_data8.store)).getTemplateId(
+          postType2,
+          postId2
+        ) : void 0;
+        return templateId2 ? "block-theme" : null;
       },
-      [postType2, hasAvailableTemplates]
+      [postType2, postId2, hasAvailableTemplates]
     );
   }
   function getTemplateSlugToCheck(postType2, slug) {
