@@ -123086,7 +123086,8 @@ ${content}
               onChange: setInputComment,
               placeholder: labels?.placeholder,
               allowedFormats: ALLOWED_NOTE_FORMATS,
-              completers: NOTE_COMPLETERS
+              completers: NOTE_COMPLETERS,
+              focusOnMount: !!note
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime667.jsxs)(
@@ -123240,33 +123241,39 @@ ${content}
   var import_components270 = __toESM(require_components(), 1);
   var import_i18n359 = __toESM(require_i18n(), 1);
   var import_jsx_runtime670 = __toESM(require_jsx_runtime(), 1);
-  var { Menu } = unlock(import_components270.privateApis);
   function NoteActionsMenu({ items, buttonRef }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime670.jsxs)(Menu, { placement: "bottom-end", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(
-        Menu.TriggerButton,
-        {
-          render: /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(
-            import_components270.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime670.jsxs)(
+      menu_exports.Root,
+      {
+        modal: false,
+        disabled: !items.length,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(
+            menu_exports.Trigger,
             {
-              ref: buttonRef,
-              size: "small",
-              icon: more_vertical_default,
-              label: (0, import_i18n359.__)("Actions"),
-              disabled: !items.length,
-              accessibleWhenDisabled: true
+              render: /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(
+                import_components270.Button,
+                {
+                  ref: buttonRef,
+                  size: "small",
+                  icon: more_vertical_default,
+                  label: (0, import_i18n359.__)("Actions"),
+                  disabled: !items.length,
+                  accessibleWhenDisabled: true
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(
+            menu_exports.Popup,
+            {
+              positioner: /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(menu_exports.Positioner, { side: "bottom", align: "end" }),
+              children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(menu_exports.Item, { onClick: item.onClick, children: /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(menu_exports.ItemLabel, { children: item.title }) }, item.id))
             }
           )
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(
-        Menu.Popover,
-        {
-          modal: false,
-          children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(Menu.Item, { onClick: item.onClick, children: /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(Menu.ItemLabel, { children: item.title }) }, item.id))
-        }
-      )
-    ] });
+        ]
+      }
+    );
   }
   function Note({
     note,
