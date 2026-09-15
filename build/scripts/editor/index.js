@@ -122086,7 +122086,7 @@ ${content}
           initialOpen: false,
           children: /* @__PURE__ */ (0, import_jsx_runtime655.jsxs)(import_components264.__experimentalVStack, { children: [
             renderPreview(),
-            /* @__PURE__ */ (0, import_jsx_runtime655.jsxs)(import_components264.__experimentalHStack, { children: [
+            canCreateTemplate && /* @__PURE__ */ (0, import_jsx_runtime655.jsxs)(import_components264.__experimentalHStack, { children: [
               onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime655.jsx)(
                 import_components264.Button,
                 {
@@ -122103,7 +122103,7 @@ ${content}
                   children: (0, import_i18n350.__)("Edit")
                 }
               ),
-              canCreateTemplate && /* @__PURE__ */ (0, import_jsx_runtime655.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime655.jsx)(
                 import_components264.Button,
                 {
                   className: "editor-template-actions-panel__action",
