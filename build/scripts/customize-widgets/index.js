@@ -13559,30 +13559,35 @@ ${content}
               "aria-label": (0, import_i18n12.__)("Document tools"),
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
-                  import_components5.ToolbarButton,
+                  import_components5.ToolbarItem,
                   {
+                    as: import_components5.Button,
                     icon: !(0, import_i18n12.isRTL)() ? undo_default : redo_default,
                     label: (0, import_i18n12.__)("Undo"),
                     shortcut: import_keycodes3.displayShortcut.primary("z"),
-                    disabled: !hasUndo,
-                    onClick: sidebar.undo,
+                    "aria-disabled": !hasUndo,
+                    onClick: hasUndo ? sidebar.undo : void 0,
+                    size: "compact",
                     className: "customize-widgets-editor-history-button undo-button"
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
-                  import_components5.ToolbarButton,
+                  import_components5.ToolbarItem,
                   {
+                    as: import_components5.Button,
                     icon: !(0, import_i18n12.isRTL)() ? redo_default : undo_default,
                     label: (0, import_i18n12.__)("Redo"),
                     shortcut,
-                    disabled: !hasRedo,
-                    onClick: sidebar.redo,
+                    "aria-disabled": !hasRedo,
+                    onClick: hasRedo ? sidebar.redo : void 0,
+                    size: "compact",
                     className: "customize-widgets-editor-history-button redo-button"
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
-                  import_components5.ToolbarButton,
+                  import_components5.ToolbarItem,
                   {
+                    as: import_components5.Button,
                     className: "customize-widgets-header-toolbar__inserter-toggle",
                     isPressed: isInserterOpened2,
                     variant: "primary",
@@ -13593,7 +13598,8 @@ ${content}
                     ),
                     onClick: () => {
                       setIsInserterOpened2((isOpen) => !isOpen);
-                    }
+                    },
+                    size: "compact"
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(MoreMenu, {})
