@@ -665,7 +665,7 @@ var wp;
         onEndIndex(tree, pointer);
       }
       if (shouldInsertPadding && i === text.length) {
-        append3(getParent3(pointer), ZWNBSP);
+        appendText3(pointer, ZWNBSP);
         if (placeholder && text.length === 0) {
           append3(getParent3(pointer), {
             type: "span",

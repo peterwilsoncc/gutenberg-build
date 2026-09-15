@@ -262,19 +262,54 @@ var wp;
         furthestBottom - furthestTop
       );
     }
-    const { startContainer } = range;
+    const { startContainer, startOffset } = range;
     const { ownerDocument } = startContainer;
-    if (startContainer.nodeName === "BR") {
-      const { parentNode } = startContainer;
-      assertIsDefined(parentNode, "parentNode");
-      const index = (
-        /** @type {Node[]} */
-        Array.from(parentNode.childNodes).indexOf(startContainer)
-      );
-      assertIsDefined(ownerDocument, "ownerDocument");
+    assertIsDefined(ownerDocument, "ownerDocument");
+    if (startContainer.nodeType !== startContainer.TEXT_NODE && !startContainer.childNodes.length && startContainer.parentNode) {
       range = ownerDocument.createRange();
-      range.setStart(parentNode, index);
-      range.setEnd(parentNode, index);
+      range.setStartBefore(startContainer);
+      range.collapse(true);
+      return getRectangleFromRange(range);
+    }
+    if (startContainer.nodeType !== startContainer.TEXT_NODE) {
+      let before = startContainer.childNodes[startOffset - 1];
+      while (before?.lastChild) {
+        before = before.lastChild;
+      }
+      let after = startContainer.childNodes[startOffset];
+      while (after?.firstChild) {
+        after = after.firstChild;
+      }
+      let beforeRange;
+      if (before && before.nodeType === before.TEXT_NODE) {
+        beforeRange = ownerDocument.createRange();
+        beforeRange.setStart(
+          before,
+          /** @type {Text} */
+          before.length
+        );
+        beforeRange.collapse(true);
+      }
+      let afterRange;
+      if (after && after.nodeType === after.TEXT_NODE) {
+        afterRange = ownerDocument.createRange();
+        afterRange.setStart(after, 0);
+        afterRange.collapse(true);
+      }
+      if (beforeRange && afterRange) {
+        const beforeRect = beforeRange.getClientRects()[0];
+        const afterRect = afterRange.getClientRects()[0];
+        if (beforeRect && afterRect && beforeRect.bottom <= afterRect.top) {
+          return null;
+        }
+      }
+      if (afterRange) {
+        range = afterRange;
+      } else if (beforeRange) {
+        range = beforeRange;
+      } else {
+        return null;
+      }
     }
     const rects = range.getClientRects();
     if (rects.length > 1) {
@@ -295,17 +330,7 @@ var wp;
         return null;
       }
     }
-    let rect = rects[0];
-    if (!rect || rect.height === 0) {
-      assertIsDefined(ownerDocument, "ownerDocument");
-      const padNode = ownerDocument.createTextNode("\u200B");
-      range = range.cloneRange();
-      range.insertNode(padNode);
-      rect = range.getClientRects()[0];
-      assertIsDefined(padNode.parentNode, "padNode.parentNode");
-      padNode.parentNode.removeChild(padNode);
-    }
-    return rect;
+    return rects[0] ?? null;
   }
 
   // packages/dom/build-module/dom/compute-caret-rect.mjs
