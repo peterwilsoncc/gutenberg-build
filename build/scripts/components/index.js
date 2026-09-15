@@ -49394,7 +49394,7 @@ This message will only show in development mode. It won't appear in production. 
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle29("fa606a57ae", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f37b9e2e191ebd66__visually-hidden{word-wrap:normal;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal}}}");
+    registerStyle29("f4df7461e9", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f37b9e2e191ebd66__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}}}");
   }
   var style_default2 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
   var VisuallyHidden4 = (0, import_element113.forwardRef)(
