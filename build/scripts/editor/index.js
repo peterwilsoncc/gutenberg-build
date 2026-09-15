@@ -49246,6 +49246,14 @@ var wp;
   // packages/fields/build-module/fields/password/index.mjs
   var import_i18n38 = __toESM(require_i18n(), 1);
 
+  // packages/fields/build-module/fields/utils.mjs
+  function hasActionLink(item, action) {
+    if (!item._links) {
+      return true;
+    }
+    return !!item._links[action];
+  }
+
   // packages/fields/build-module/fields/password/edit.mjs
   var import_components7 = __toESM(require_components(), 1);
   var import_element126 = __toESM(require_element(), 1);
@@ -49308,7 +49316,7 @@ var wp;
     Edit: edit_default,
     enableSorting: false,
     enableHiding: false,
-    isVisible: (item) => item.status !== "private",
+    isVisible: (item) => item.status !== "private" && hasActionLink(item, "wp:action-publish"),
     filterBy: false
   };
   var password_default = passwordField;
@@ -49553,6 +49561,7 @@ var wp;
     type: "datetime",
     label: (0, import_i18n45.__)("Date"),
     render: date_view_default,
+    isVisible: (item) => hasActionLink(item, "wp:action-publish"),
     filterBy: {
       operators: ["before", "after"]
     }
@@ -49688,6 +49697,7 @@ var wp;
     },
     setValue: ({ value }) => ({ author: Number(value) }),
     render: author_view_default,
+    isVisible: (item) => hasActionLink(item, "wp:action-assign-author"),
     filterBy: {
       operators: ["isAny", "isNone"]
     }
@@ -50017,7 +50027,7 @@ var wp;
     description: (0, import_i18n58.__)("Pin this post to the top of the blog."),
     enableSorting: false,
     enableHiding: false,
-    isVisible: (item) => !!item._links?.["wp:action-sticky"],
+    isVisible: (item) => hasActionLink(item, "wp:action-sticky"),
     filterBy: false
   };
   var sticky_default = stickyField;
