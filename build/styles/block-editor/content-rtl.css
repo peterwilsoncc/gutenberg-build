@@ -456,7 +456,7 @@ _::-webkit-full-page-media, _:future, :root [data-has-multi-selection=true] .blo
   font-size: 13px;
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   color: #000;
-  font-weight: normal;
+  font-weight: 400;
 }
 .is-zoomed-out .block-editor-block-list__zoom-out-separator {
   font-size: calc(13px / var(--wp-block-editor-iframe-zoom-out-scale));

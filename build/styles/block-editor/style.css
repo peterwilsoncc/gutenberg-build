@@ -2594,7 +2594,7 @@ iframe[name=editor-canvas] {
   background-color: transparent;
 }
 .block-editor-link-control__preview .block-editor-link-control__preview-title span {
-  font-weight: normal;
+  font-weight: 400;
 }
 .block-editor-link-control__preview .block-editor-link-control__preview-title .components-external-link__icon {
   position: absolute;

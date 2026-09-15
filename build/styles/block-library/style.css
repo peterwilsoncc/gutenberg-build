@@ -589,7 +589,7 @@
   line-height: 1.5;
 }
 .wp-block-post-comments .comment-meta b {
-  font-weight: normal;
+  font-weight: 400;
 }
 .wp-block-post-comments .comment-meta .comment-awaiting-moderation {
   margin-top: 1em;
@@ -2994,7 +2994,7 @@ button.wp-block-navigation-item__content {
 
 .wp-block-navigation__toggle_button_label {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .wp-block-navigation__responsive-container-open,

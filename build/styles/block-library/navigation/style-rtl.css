@@ -613,7 +613,7 @@ button.wp-block-navigation-item__content {
 
 .wp-block-navigation__toggle_button_label {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .wp-block-navigation__responsive-container-open,
