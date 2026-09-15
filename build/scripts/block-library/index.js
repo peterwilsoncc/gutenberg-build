@@ -31863,7 +31863,7 @@ ${url}
     );
   }
 
-  // packages/block-library/build-module/gallery/flex-styles.mjs
+  // packages/block-library/build-module/gallery/gallery-styles.mjs
   var import_block_editor85 = __toESM(require_block_editor(), 1);
   var import_data35 = __toESM(require_data(), 1);
 
@@ -32443,6 +32443,10 @@ ${url}
   function isValidGalleryColumns(value) {
     return Number.isInteger(value) && value >= 1 && value <= MAX_COLUMNS;
   }
+  var ASPECT_RATIO_PATTERN = /^(auto|\d+(\.\d+)?(\s*\/\s*\d+(\.\d+)?)?)$/;
+  function isValidGalleryAspectRatio(value) {
+    return typeof value === "string" && ASPECT_RATIO_PATTERN.test(value.trim());
+  }
   function getViewportGalleryStyle(style2, viewport) {
     if (!isObject2(style2) || !isObject2(style2[viewport])) {
       return {};
@@ -32485,10 +32489,13 @@ ${url}
     return cleanObject(nextStyle);
   }
   function getGallerySelector(selector) {
-    return `${selector}.wp-block-gallery.has-nested-images:where(.is-layout-flex)`;
+    return `${selector}.wp-block-gallery.has-nested-images`;
+  }
+  function getFlexGallerySelector(selector) {
+    return `${getGallerySelector(selector)}:where(.is-layout-flex)`;
   }
   function getImageSelector(selector) {
-    return `${getGallerySelector(
+    return `${getFlexGallerySelector(
       selector
     )} figure.wp-block-image:not(#individual-image)`;
   }
@@ -32506,7 +32513,17 @@ ${url}
     }
     return `${imageSelector}{align-self:auto !important;margin-top:0 !important;margin-bottom:auto !important;}${wrapperSelector}{display:block !important;}${linkSelector}{display:inline-block !important;}${mediaSelector}{width:auto !important;flex:0 1 auto !important;height:auto !important;object-fit:fill !important;}`;
   }
-  function getGalleryResponsiveFlexCSS(selector, style2, mediaQueries) {
+  function getAspectRatioCSS(selector, aspectRatio) {
+    const imageSelector = `${getGallerySelector(
+      selector
+    )} figure.wp-block-image:not(#individual-image) img`;
+    const ratio = aspectRatio.trim();
+    if (ratio === "auto") {
+      return `${imageSelector}{aspect-ratio:revert-layer !important;}`;
+    }
+    return `${imageSelector}{aspect-ratio:${ratio} !important;object-fit:cover !important;}`;
+  }
+  function getGalleryResponsiveCSS(selector, style2, mediaQueries) {
     if (!isObject2(mediaQueries)) {
       return "";
     }
@@ -32522,11 +32539,14 @@ ${url}
       if (typeof viewportStyle.imageCrop === "boolean") {
         css += getImageCropCSS(selector, viewportStyle.imageCrop);
       }
+      if (isValidGalleryAspectRatio(viewportStyle.aspectRatio)) {
+        css += getAspectRatioCSS(selector, viewportStyle.aspectRatio);
+      }
       return css ? `${mediaQuery}{${css}}` : "";
     }).join("");
   }
 
-  // packages/block-library/build-module/gallery/flex-styles.mjs
+  // packages/block-library/build-module/gallery/gallery-styles.mjs
   var { getResponsiveMediaQueries: getResponsiveMediaQueries2 } = unlock(privateApis);
   var { globalStylesDataKey } = unlock(import_block_editor85.privateApis);
   var GALLERY_BLOCK_NAME = "core/gallery";
@@ -32546,40 +32566,39 @@ ${url}
     }
     return style2.spacing.blockGap;
   }
-  function GalleryFlexStyles({ style: style2, clientId }) {
+  function GalleryStyles({ style: style2, clientId, isFlexLayout }) {
     const selector = `.wp-block-gallery-${clientId}`;
     const [viewportSettings] = (0, import_block_editor85.useSettings)("viewport");
     const globalStyles = (0, import_data35.useSelect)(
       (select10) => select10(import_block_editor85.store).getSettings()?.[globalStylesDataKey],
       []
     );
-    const globalGalleryStyles = globalStyles?.blocks?.[GALLERY_BLOCK_NAME] || {};
-    const styleBlockGap = getBlockGapValue(style2);
-    const globalGalleryBlockGap = globalGalleryStyles?.spacing?.blockGap ?? FALLBACK_VALUE;
-    const blockGap = styleBlockGap === void 0 ? globalGalleryBlockGap : styleBlockGap;
-    let css = getGalleryGapCustomPropertyStyle(selector, blockGap);
     const responsiveMediaQueries = getResponsiveMediaQueries2(viewportSettings);
-    Object.entries(responsiveMediaQueries).forEach(
-      ([viewport, mediaQuery]) => {
-        const styleViewportBlockGap = getBlockGapValue(
-          style2?.[viewport]
-        );
-        const globalViewportBlockGap = styleBlockGap === void 0 ? globalGalleryStyles?.[viewport]?.spacing?.blockGap : void 0;
-        const viewportBlockGap = styleViewportBlockGap === void 0 ? globalViewportBlockGap : styleViewportBlockGap;
-        if (viewportBlockGap === void 0 || viewportBlockGap === null) {
-          return;
+    let css = "";
+    if (isFlexLayout) {
+      const globalGalleryStyles = globalStyles?.blocks?.[GALLERY_BLOCK_NAME] || {};
+      const styleBlockGap = getBlockGapValue(style2);
+      const globalGalleryBlockGap = globalGalleryStyles?.spacing?.blockGap ?? FALLBACK_VALUE;
+      const blockGap = styleBlockGap === void 0 ? globalGalleryBlockGap : styleBlockGap;
+      css += getGalleryGapCustomPropertyStyle(selector, blockGap);
+      Object.entries(responsiveMediaQueries).forEach(
+        ([viewport, mediaQuery]) => {
+          const styleViewportBlockGap = getBlockGapValue(
+            style2?.[viewport]
+          );
+          const globalViewportBlockGap = styleBlockGap === void 0 ? globalGalleryStyles?.[viewport]?.spacing?.blockGap : void 0;
+          const viewportBlockGap = styleViewportBlockGap === void 0 ? globalViewportBlockGap : styleViewportBlockGap;
+          if (viewportBlockGap === void 0 || viewportBlockGap === null) {
+            return;
+          }
+          css += `${mediaQuery}{${getGalleryGapCustomPropertyStyle(
+            selector,
+            viewportBlockGap
+          )}}`;
         }
-        css += `${mediaQuery}{${getGalleryGapCustomPropertyStyle(
-          selector,
-          viewportBlockGap
-        )}}`;
-      }
-    );
-    css += getGalleryResponsiveFlexCSS(
-      selector,
-      style2,
-      responsiveMediaQueries
-    );
+      );
+    }
+    css += getGalleryResponsiveCSS(selector, style2, responsiveMediaQueries);
     (0, import_block_editor85.useStyleOverride)({ css });
     return null;
   }
@@ -33226,10 +33245,13 @@ ${url}
     ) : {};
     const baseColumns = isValidGalleryColumns(columns) ? columns : void 0;
     const baseImageCrop = typeof imageCrop === "boolean" ? imageCrop : true;
+    const baseAspectRatio = aspectRatio || "auto";
     const hasViewportColumns = isViewportStyleState && Object.hasOwn(viewportStyle, "columns") && isValidGalleryColumns(viewportStyle.columns);
     const hasViewportImageCrop = isViewportStyleState && Object.hasOwn(viewportStyle, "imageCrop") && typeof viewportStyle.imageCrop === "boolean";
+    const hasViewportAspectRatio = isViewportStyleState && Object.hasOwn(viewportStyle, "aspectRatio") && typeof viewportStyle.aspectRatio === "string" && !!viewportStyle.aspectRatio;
     const activeColumns = hasViewportColumns ? viewportStyle.columns : baseColumns;
     const activeImageCrop = hasViewportImageCrop ? viewportStyle.imageCrop : baseImageCrop;
+    const activeAspectRatio = hasViewportAspectRatio ? viewportStyle.aspectRatio : baseAspectRatio;
     const images = (0, import_element61.useMemo)(
       () => innerBlockImages?.map((block) => ({
         clientId: block.clientId,
@@ -33326,7 +33348,8 @@ ${url}
         sizeSlug,
         caption: imageAttributes.caption.length > 0 ? imageAttributes.caption : image.caption?.raw,
         alt: imageAttributes.alt || image.alt_text,
-        aspectRatio: aspectRatio === "auto" ? void 0 : aspectRatio
+        aspectRatio: aspectRatio === "auto" ? void 0 : aspectRatio,
+        scale: aspectRatio && aspectRatio !== "auto" ? "cover" : void 0
       };
     }
     function isValidFileType2(file) {
@@ -33430,7 +33453,7 @@ ${url}
         }
       );
     }
-    function setGalleryFlexSettings(settings117) {
+    function setGallerySettings(settings117) {
       if (!isViewportStyleState) {
         setAttributes(settings117);
         return;
@@ -33441,17 +33464,18 @@ ${url}
           viewport: selectedStyleState.viewport,
           baseSettings: {
             columns: baseColumns,
-            imageCrop: baseImageCrop
+            imageCrop: baseImageCrop,
+            aspectRatio: baseAspectRatio
           },
           settings: settings117
         })
       });
     }
     function setColumnsNumber(value) {
-      setGalleryFlexSettings({ columns: value });
+      setGallerySettings({ columns: value });
     }
     function toggleImageCrop() {
-      setGalleryFlexSettings({ imageCrop: !activeImageCrop });
+      setGallerySettings({ imageCrop: !activeImageCrop });
     }
     function toggleRandomOrder() {
       setAttributes({ randomOrder: !randomOrder });
@@ -33508,30 +33532,42 @@ ${url}
       );
     }
     function setAspectRatio(value) {
-      setAttributes({ aspectRatio: value });
-      const changedAttributes = {};
-      const blocks = [];
-      getBlock(clientId).innerBlocks.forEach((block) => {
-        blocks.push(block.clientId);
-        changedAttributes[block.clientId] = {
-          aspectRatio: value === "auto" ? void 0 : value
-        };
-      });
-      updateBlockAttributes(blocks, changedAttributes, true);
+      if (isViewportStyleState) {
+        setGallerySettings({ aspectRatio: value });
+      } else {
+        const cleanValue = !value || value === "auto" ? void 0 : value;
+        setAttributes({ aspectRatio: value ?? "auto" });
+        const changedAttributes = {};
+        const blocks = [];
+        getBlock(clientId).innerBlocks.forEach((block) => {
+          blocks.push(block.clientId);
+          changedAttributes[block.clientId] = {
+            aspectRatio: cleanValue,
+            scale: cleanValue ? "cover" : void 0
+          };
+        });
+        updateBlockAttributes(blocks, changedAttributes, true);
+      }
+      const noticeValue = value ?? baseAspectRatio;
       const aspectRatioText = aspectRatioOptions.find(
-        (option) => option.value === value
+        (option) => option.value === noticeValue
       );
-      createSuccessNotice(
-        (0, import_i18n74.sprintf)(
-          /* translators: %s: aspect ratio setting */
-          (0, import_i18n74.__)("All gallery images updated to aspect ratio: %s"),
-          aspectRatioText?.label || value
+      const noticeText = isViewportStyleState ? (0, import_i18n74.sprintf)(
+        /* translators: 1: viewport name, 2: aspect ratio setting */
+        (0, import_i18n74.__)(
+          "Gallery images in the %1$s viewport updated to aspect ratio: %2$s"
         ),
-        {
-          id: "gallery-attributes-aspectRatio",
-          type: "snackbar"
-        }
+        selectedStyleState.viewport.replace("@", ""),
+        aspectRatioText?.label || noticeValue
+      ) : (0, import_i18n74.sprintf)(
+        /* translators: %s: aspect ratio setting */
+        (0, import_i18n74.__)("All gallery images updated to aspect ratio: %s"),
+        aspectRatioText?.label || noticeValue
       );
+      createSuccessNotice(noticeText, {
+        id: "gallery-attributes-aspectRatio",
+        type: "snackbar"
+      });
     }
     (0, import_element61.useEffect)(() => {
       if (!linkTo) {
@@ -33621,11 +33657,12 @@ ${url}
       ] });
     }
     const hasLinkTo = linkTo && linkTo !== "none";
+    const hasViewportSettings = isFlexLayout || aspectRatioOptions.length > 1;
     return /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)(import_jsx_runtime290.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime290.jsxs)(
         import_block_editor88.InspectorControls,
         {
-          group: isViewportStyleState && isFlexLayout ? "viewport" : "default",
+          group: isViewportStyleState && hasViewportSettings ? "viewport" : "default",
           children: [
             !isViewportStyleState && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
               GallerySourcePanel,
@@ -33641,9 +33678,10 @@ ${url}
                 label: (0, import_i18n74.__)("Settings"),
                 resetAll: () => {
                   if (isViewportStyleState) {
-                    setGalleryFlexSettings({
+                    setGallerySettings({
                       columns: void 0,
-                      imageCrop: void 0
+                      imageCrop: void 0,
+                      aspectRatio: void 0
                     });
                     return;
                   }
@@ -33718,7 +33756,7 @@ ${url}
                       isShownByDefault: true,
                       label: (0, import_i18n74.__)("Crop images to fit"),
                       hasValue: () => isViewportStyleState ? hasViewportImageCrop : !activeImageCrop,
-                      onDeselect: () => setGalleryFlexSettings({
+                      onDeselect: () => setGallerySettings({
                         imageCrop: isViewportStyleState ? void 0 : true
                       }),
                       children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
@@ -33765,12 +33803,19 @@ ${url}
                       )
                     }
                   ),
-                  !isViewportStyleState && aspectRatioOptions.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
+                  aspectRatioOptions.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
                     import_components43.__experimentalToolsPanelItem,
                     {
-                      hasValue: () => !!aspectRatio && aspectRatio !== "auto",
+                      hasValue: () => isViewportStyleState ? hasViewportAspectRatio : activeAspectRatio !== "auto",
                       label: (0, import_i18n74.__)("Aspect ratio"),
-                      onDeselect: () => setAspectRatio("auto"),
+                      onDeselect: () => (
+                        // In a viewport state this clears the override
+                        // so the base ratio applies again, rather than
+                        // overriding it with Original.
+                        setAspectRatio(
+                          isViewportStyleState ? void 0 : "auto"
+                        )
+                      ),
                       isShownByDefault: true,
                       children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
                         import_components43.SelectControl,
@@ -33779,7 +33824,7 @@ ${url}
                           help: (0, import_i18n74.__)(
                             "Set a consistent aspect ratio for all images in the gallery."
                           ),
-                          value: aspectRatio,
+                          value: activeAspectRatio,
                           options: aspectRatioOptions,
                           onChange: setAspectRatio
                         }
@@ -33866,11 +33911,12 @@ ${url}
             variant: "toolbar"
           }
         ) }),
-        isFlexLayout && /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-          GalleryFlexStyles,
+        /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
+          GalleryStyles,
           {
             style: attributes2.style,
-            clientId
+            clientId,
+            isFlexLayout
           }
         )
       ] }),
