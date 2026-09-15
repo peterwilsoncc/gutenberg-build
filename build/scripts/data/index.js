@@ -1758,19 +1758,25 @@ var wp;
     let isPaused = false;
     let isPending = false;
     const listeners = /* @__PURE__ */ new Set();
-    const notifyListeners = () => (
-      // We use Array.from to clone the listeners Set
-      // This ensures that we don't run a listener
-      // that was added as a response to another listener.
-      Array.from(listeners).forEach((listener) => listener())
-    );
+    let clonedListeners = null;
+    const notifyListeners = () => {
+      clonedListeners ??= Array.from(listeners);
+      const currentListeners = clonedListeners;
+      for (let i = 0; i < currentListeners.length; i++) {
+        currentListeners[i]();
+      }
+    };
     return {
       get isPaused() {
         return isPaused;
       },
       subscribe(listener) {
         listeners.add(listener);
-        return () => listeners.delete(listener);
+        clonedListeners = null;
+        return () => {
+          listeners.delete(listener);
+          clonedListeners = null;
+        };
       },
       pause() {
         isPaused = true;
@@ -1892,21 +1898,8 @@ var wp;
         throw new TypeError("store.subscribe must be a function");
       }
       store.emitter = createEmitter();
-      const currentSubscribe = store.subscribe;
-      store.subscribe = (listener) => {
-        const unsubscribeFromEmitter = store.emitter.subscribe(listener);
-        const unsubscribeFromStore = currentSubscribe(() => {
-          if (store.emitter.isPaused) {
-            store.emitter.emit();
-            return;
-          }
-          listener();
-        });
-        return () => {
-          unsubscribeFromStore?.();
-          unsubscribeFromEmitter?.();
-        };
-      };
+      store.subscribe(() => store.emitter.emit());
+      store.subscribe = (listener) => store.emitter.subscribe(listener);
       stores[name] = store;
       store.subscribe(globalListener);
       if (parent) {
