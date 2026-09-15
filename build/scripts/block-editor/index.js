@@ -15633,6 +15633,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/store/actions.mjs
+  var { editableRootKey: editableRootKey2 } = unlock(import_blocks10.privateApis);
   var castArray2 = (maybeArray) => Array.isArray(maybeArray) ? maybeArray : [maybeArray];
   var resetBlocks = (blocks2) => ({ dispatch }) => {
     dispatch({ type: "RESET_BLOCKS", blocks: blocks2 });
@@ -15955,6 +15956,19 @@ var wp;
           blocksWithTemplates,
           initialPosition2
         );
+        if (updateSelection && initialPosition2 === 0) {
+          const clientId = select3.getSelectedBlockClientId();
+          const blockType = clientId && (0, import_blocks10.getBlockType)(select3.getBlockName(clientId));
+          const attributeKey = blockType?.[editableRootKey2] && findRichTextAttributeKey(blockType);
+          if (attributeKey) {
+            dispatch.selectionChange(
+              clientId,
+              attributeKey,
+              0,
+              0
+            );
+          }
+        }
       });
     }
   };
@@ -16240,10 +16254,17 @@ var wp;
       }
     }
     if (!blocks2.length) {
-      dispatch.replaceBlocks(select3.getSelectedBlockClientIds(), [
-        head,
-        tail
-      ]);
+      registry.batch(() => {
+        dispatch.replaceBlocks(select3.getSelectedBlockClientIds(), [
+          head,
+          tail
+        ]);
+        const tailType2 = (0, import_blocks10.getBlockType)(tail.name);
+        const tailKey = tailType2?.[editableRootKey2] && findRichTextAttributeKey(tailType2);
+        if (tailKey) {
+          dispatch.selectionChange(tail.clientId, tailKey, 0, 0);
+        }
+      });
       return;
     }
     let selection2;
@@ -89132,14 +89153,14 @@ var wp;
   };
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/enter.mjs
-  var import_keycodes25 = __toESM(require_keycodes(), 1);
   var import_rich_text14 = __toESM(require_rich_text(), 1);
   var import_compose100 = __toESM(require_compose(), 1);
   var { subscribeOwnedListener: subscribeOwnedListener8, ownsSelection: ownsSelection3 } = unlock(import_rich_text14.privateApis);
   var { subscribeDelegatedListener: subscribeDelegatedListener4 } = unlock(import_compose100.privateApis);
   var enter_default = (props) => (element) => {
-    function onKeyDown(event) {
-      if (event.keyCode !== import_keycodes25.ENTER) {
+    function onBeforeInput(event) {
+      const { inputType } = event;
+      if (inputType !== "insertParagraph" && inputType !== "insertLineBreak") {
         return;
       }
       const {
@@ -89155,7 +89176,10 @@ var wp;
       } = props.current;
       const value = getValue();
       const { text, start: start2, end } = value;
-      if (event.shiftKey) {
+      if (inputType === "insertParagraph" && onReplace && onSplit) {
+        event.__deprecatedOnSplit = true;
+      }
+      if (inputType === "insertLineBreak") {
         if (!disableLineBreaks) {
           event.preventDefault();
           onChange((0, import_rich_text14.insert)(value, "\n"));
@@ -89163,8 +89187,7 @@ var wp;
       } else if (onSplitAtEnd && start2 === end && end === text.length) {
         event.preventDefault();
         onSplitAtEnd();
-      } else if (!supportsSplitting && // The deprecated onSplit is flagged on the beforeinput event.
-      !(onReplace && onSplit) && !disableLineBreaks && !event.defaultPrevented) {
+      } else if (!supportsSplitting && !(onReplace && onSplit) && !disableLineBreaks && !event.defaultPrevented) {
         event.preventDefault();
         if (
           // For some blocks it's desirable to split at the end of the
@@ -89183,15 +89206,6 @@ var wp;
         }
       }
     }
-    function onBeforeInput(event) {
-      if (event.inputType !== "insertParagraph") {
-        return;
-      }
-      const { onReplace, onSplit } = props.current;
-      if (onReplace && onSplit) {
-        event.__deprecatedOnSplit = true;
-      }
-    }
     function onDefaultBeforeInput(event) {
       if (event.defaultPrevented || event.inputType !== "insertParagraph" && event.inputType !== "insertLineBreak") {
         return;
@@ -89207,12 +89221,6 @@ var wp;
       "beforeinput",
       onDefaultBeforeInput
     );
-    const unsubscribeKeyDown = subscribeOwnedListener8(
-      element,
-      "keydown",
-      onKeyDown,
-      true
-    );
     const unsubscribeBeforeInput = subscribeOwnedListener8(
       element,
       "beforeinput",
@@ -89221,7 +89229,6 @@ var wp;
     );
     return () => {
       unsubscribeDefaultBeforeInput();
-      unsubscribeKeyDown();
       unsubscribeBeforeInput();
     };
   };
@@ -89383,7 +89390,7 @@ var wp;
   var import_element281 = __toESM(require_element(), 1);
   var import_deprecated26 = __toESM(require_deprecated(), 1);
   var import_data157 = __toESM(require_data(), 1);
-  var import_keycodes26 = __toESM(require_keycodes(), 1);
+  var import_keycodes25 = __toESM(require_keycodes(), 1);
   var import_rich_text16 = __toESM(require_rich_text(), 1);
   var import_compose102 = __toESM(require_compose(), 1);
   var import_jsx_runtime455 = __toESM(require_jsx_runtime(), 1);
@@ -89394,7 +89401,7 @@ var wp;
     const { selectionChange: selectionChange2 } = (0, import_data157.useDispatch)(store);
     return (0, import_compose102.useRefEffect)((element) => {
       function onKeyDown(event) {
-        if (event.keyCode !== import_keycodes26.ENTER) {
+        if (event.keyCode !== import_keycodes25.ENTER) {
           return;
         }
         event.preventDefault();
@@ -89575,7 +89582,7 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/toolbar-button.mjs
   var import_components175 = __toESM(require_components(), 1);
-  var import_keycodes27 = __toESM(require_keycodes(), 1);
+  var import_keycodes26 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime457 = __toESM(require_jsx_runtime(), 1);
   function RichTextToolbarButton({
     name,
@@ -89589,7 +89596,7 @@ var wp;
       fillName += `.${name}`;
     }
     if (shortcutType && shortcutCharacter) {
-      shortcut = import_keycodes27.displayShortcut[shortcutType](shortcutCharacter);
+      shortcut = import_keycodes26.displayShortcut[shortcutType](shortcutCharacter);
     }
     return /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(import_components175.Fill, { name: fillName, children: /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(import_components175.ToolbarButton, { ...props, shortcut }) });
   }
@@ -98113,10 +98120,10 @@ var wp;
   // packages/block-editor/build-module/components/typewriter/index.mjs
   var import_compose106 = __toESM(require_compose(), 1);
   var import_dom75 = __toESM(require_dom(), 1);
-  var import_keycodes28 = __toESM(require_keycodes(), 1);
+  var import_keycodes27 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
   var isIE = window.navigator.userAgent.indexOf("Trident") !== -1;
-  var arrowKeyCodes = /* @__PURE__ */ new Set([import_keycodes28.UP, import_keycodes28.DOWN, import_keycodes28.LEFT, import_keycodes28.RIGHT]);
+  var arrowKeyCodes = /* @__PURE__ */ new Set([import_keycodes27.UP, import_keycodes27.DOWN, import_keycodes27.LEFT, import_keycodes27.RIGHT]);
   var initialTriggerPercentage = 0.75;
   function useTypewriter() {
     return (0, import_compose106.useRefEffect)((node) => {
