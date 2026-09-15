@@ -7077,9 +7077,13 @@ mark.wp-note {
 .editor-editor-interface.is-distraction-free .interface-interface-skeleton__header:focus-within div {
   transform: translateX(0) translateZ(0) !important;
 }
-.editor-editor-interface.is-distraction-free .components-editor-notices__dismissible {
+.editor-editor-interface.is-distraction-free .editor-notices__dismissible {
   position: absolute;
   z-index: 35;
+}
+.editor-editor-interface.is-distraction-free .interface-interface-skeleton__header:hover,
+.editor-editor-interface.is-distraction-free .interface-interface-skeleton__header:focus-within {
+  z-index: 36;
 }
 
 .editor-inserter-sidebar {
