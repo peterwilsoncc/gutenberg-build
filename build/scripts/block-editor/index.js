@@ -87383,7 +87383,10 @@ var wp;
               import_components166.MenuItem,
               {
                 icon: post_featured_image_default,
-                onClick: onToggleFeaturedImage,
+                onClick: () => {
+                  onToggleFeaturedImage();
+                  onClose();
+                },
                 isPressed: useFeaturedImage,
                 children: (0, import_i18n170.__)("Use featured image")
               }

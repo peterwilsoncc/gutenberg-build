@@ -38606,7 +38606,9 @@ ${text}
     onError,
     onReset,
     isUploading = false,
-    emptyLabel = (0, import_i18n93.__)("Media")
+    emptyLabel = (0, import_i18n93.__)("Media"),
+    useFeaturedImage,
+    onToggleFeaturedImage
   }) {
     const { getSettings: getSettings2 } = (0, import_data47.useSelect)(import_block_editor104.store);
     const onFilesDrop = (filesList) => {
@@ -38641,6 +38643,8 @@ ${text}
               onSelect,
               onSelectURL,
               onError,
+              useFeaturedImage,
+              onToggleFeaturedImage,
               name: /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(
                 MediaControlPreview,
                 {
@@ -44153,6 +44157,7 @@ ${text}
 
   // packages/block-library/build-module/media-text/constants.mjs
   var import_i18n105 = __toESM(require_i18n(), 1);
+  var ALLOWED_MEDIA_TYPES5 = ["image", "video"];
   var DEFAULT_MEDIA_SIZE_SLUG4 = "full";
   var WIDTH_CONSTRAINT_PERCENTAGE = 15;
   var LINK_DESTINATION_NONE3 = "none";
@@ -45094,6 +45099,8 @@ ${text}
   var import_components65 = __toESM(require_components(), 1);
   var import_blob15 = __toESM(require_blob(), 1);
   var import_core_data29 = __toESM(require_core_data(), 1);
+  var import_notices11 = __toESM(require_notices(), 1);
+  var import_url13 = __toESM(require_url(), 1);
 
   // packages/block-library/build-module/media-text/media-container.mjs
   var import_components64 = __toESM(require_components(), 1);
@@ -45116,7 +45123,6 @@ ${text}
 
   // packages/block-library/build-module/media-text/media-container.mjs
   var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
-  var ALLOWED_MEDIA_TYPES5 = ["image", "video"];
   var noop3 = () => {
   };
   var ResizableBoxContainer = (0, import_element80.forwardRef)(
@@ -45537,6 +45543,42 @@ ${text}
       });
     };
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+    const { createErrorNotice } = (0, import_data61.useDispatch)(import_notices11.store);
+    const onUploadError = (message) => {
+      createErrorNotice(message, { type: "snackbar" });
+    };
+    const mediaInspectorPanel = isSelected ? /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(import_block_editor129.InspectorControls, { group: "content", children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
+      import_components65.__experimentalToolsPanel,
+      {
+        label: (0, import_i18n107.__)("Media"),
+        resetAll: () => onSelectMedia(void 0),
+        dropdownMenuProps,
+        children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
+          import_components65.__experimentalToolsPanelItem,
+          {
+            label: (0, import_i18n107.__)("Media"),
+            hasValue: () => !!mediaUrl || !!useFeaturedImage,
+            onDeselect: () => onSelectMedia(void 0),
+            isShownByDefault: true,
+            children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
+              MediaControl,
+              {
+                mediaId,
+                mediaUrl: mediaUrl || featuredImageURL,
+                filename: image?.media_details?.sizes?.full?.file || image?.slug || (0, import_url13.getFilename)(mediaUrl),
+                allowedTypes: ALLOWED_MEDIA_TYPES5,
+                onSelect: onSelectMedia,
+                onError: onUploadError,
+                onReset: () => onSelectMedia(void 0),
+                useFeaturedImage,
+                onToggleFeaturedImage: toggleUseFeaturedImage,
+                emptyLabel: (0, import_i18n107.__)("Add media")
+              }
+            )
+          }
+        )
+      }
+    ) }) : null;
     const mediaTextGeneralSettings = /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(
       import_components65.__experimentalToolsPanel,
       {
@@ -45686,6 +45728,7 @@ ${text}
     );
     const blockEditingMode = (0, import_block_editor129.useBlockEditingMode)();
     return /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(import_jsx_runtime329.Fragment, { children: [
+      mediaInspectorPanel,
       /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(import_block_editor129.InspectorControls, { children: mediaTextGeneralSettings }),
       /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(import_block_editor129.BlockControls, { group: "block", children: [
         blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(import_jsx_runtime329.Fragment, { children: [
@@ -47487,10 +47530,10 @@ ${text}
   // packages/block-library/build-module/navigation/edit/use-navigation-notice.mjs
   var import_element90 = __toESM(require_element(), 1);
   var import_data68 = __toESM(require_data(), 1);
-  var import_notices11 = __toESM(require_notices(), 1);
+  var import_notices12 = __toESM(require_notices(), 1);
   function useNavigationNotice({ name: name118, message = "" } = {}) {
     const noticeRef = (0, import_element90.useRef)();
-    const { createWarningNotice, removeNotice } = (0, import_data68.useDispatch)(import_notices11.store);
+    const { createWarningNotice, removeNotice } = (0, import_data68.useDispatch)(import_notices12.store);
     const showNotice = (0, import_element90.useCallback)(
       (customMsg) => {
         if (noticeRef.current) {
@@ -47594,7 +47637,7 @@ ${text}
   var import_components76 = __toESM(require_components(), 1);
   var import_i18n120 = __toESM(require_i18n(), 1);
   var import_html_entities4 = __toESM(require_html_entities(), 1);
-  var import_notices12 = __toESM(require_notices(), 1);
+  var import_notices13 = __toESM(require_notices(), 1);
 
   // packages/block-library/build-module/navigation/edit/use-create-overlay.mjs
   var import_element91 = __toESM(require_element(), 1);
@@ -47800,7 +47843,7 @@ ${text}
     } = (0, import_core_data39.useEntityRecords)("postType", "wp_template_part", {
       per_page: -1
     });
-    const { createErrorNotice } = (0, import_data70.useDispatch)(import_notices12.store);
+    const { createErrorNotice } = (0, import_data70.useDispatch)(import_notices13.store);
     const currentTheme = (0, import_data70.useSelect)(
       (select10) => select10(import_core_data39.store).getCurrentTheme()?.stylesheet,
       []
@@ -48904,7 +48947,7 @@ ${text}
   }
 
   // packages/block-library/build-module/navigation/edit/manage-menus-button.mjs
-  var import_url13 = __toESM(require_url(), 1);
+  var import_url14 = __toESM(require_url(), 1);
   var import_components83 = __toESM(require_components(), 1);
   var import_i18n128 = __toESM(require_i18n(), 1);
   var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
@@ -48923,7 +48966,7 @@ ${text}
         variant: "link",
         disabled: disabled2,
         className,
-        href: (0, import_url13.addQueryArgs)("edit.php", {
+        href: (0, import_url14.addQueryArgs)("edit.php", {
           post_type: "wp_navigation"
         }),
         children: (0, import_i18n128.__)("Manage menus")
@@ -49208,7 +49251,7 @@ ${text}
 
   // packages/block-library/build-module/navigation-link/shared/update-attributes.mjs
   var import_escape_html = __toESM(require_escape_html(), 1);
-  var import_url14 = __toESM(require_url(), 1);
+  var import_url15 = __toESM(require_url(), 1);
   var shouldSeverEntityLink = (originalUrl, newUrl) => {
     if (!originalUrl || !newUrl) {
       return false;
@@ -49237,8 +49280,8 @@ ${text}
     }
     const originalHostname = originalUrlObj.hostname;
     const newHostname = newUrlObj.hostname;
-    const originalPath = normalizePath((0, import_url14.getPath)(originalUrlObj.toString()));
-    const newPath = normalizePath((0, import_url14.getPath)(newUrlObj.toString()));
+    const originalPath = normalizePath((0, import_url15.getPath)(originalUrlObj.toString()));
+    const newPath = normalizePath((0, import_url15.getPath)(newUrlObj.toString()));
     if (originalHostname !== newHostname || originalPath !== newPath) {
       return true;
     }
@@ -49291,7 +49334,7 @@ ${text}
     const kind = isCustomLink ? "custom" : newKind;
     const attributes2 = {
       // Passed `url` may already be encoded. To prevent double encoding, decodeURI is executed to revert to the original string.
-      ...newUrl !== void 0 ? { url: newUrl ? encodeURI((0, import_url14.safeDecodeURI)(newUrl)) : newUrl } : {},
+      ...newUrl !== void 0 ? { url: newUrl ? encodeURI((0, import_url15.safeDecodeURI)(newUrl)) : newUrl } : {},
       ...label && { label },
       ...void 0 !== opensInNewTab && { opensInNewTab },
       ...kind && { kind },
@@ -49396,14 +49439,14 @@ ${text}
   var import_element103 = __toESM(require_element(), 1);
   var import_core_data47 = __toESM(require_core_data(), 1);
   var import_compose39 = __toESM(require_compose(), 1);
-  var import_url15 = __toESM(require_url(), 1);
+  var import_url16 = __toESM(require_url(), 1);
 
   // packages/block-library/build-module/navigation-link/link-ui/page-creator.mjs
   var import_components87 = __toESM(require_components(), 1);
   var import_i18n132 = __toESM(require_i18n(), 1);
   var import_data80 = __toESM(require_data(), 1);
   var import_core_data46 = __toESM(require_core_data(), 1);
-  var import_notices13 = __toESM(require_notices(), 1);
+  var import_notices14 = __toESM(require_notices(), 1);
   var import_html_entities5 = __toESM(require_html_entities(), 1);
   var import_element102 = __toESM(require_element(), 1);
 
@@ -49484,7 +49527,7 @@ ${text}
       [postType]
     );
     const { saveEntityRecord } = (0, import_data80.useDispatch)(import_core_data46.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data80.useDispatch)(import_notices13.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data80.useDispatch)(import_notices14.store);
     async function createPage(event) {
       event.preventDefault();
       if (isSaving || !isTitleValid) {
@@ -49842,7 +49885,7 @@ ${text}
                 updateSearchValue(searchInputValueRef.current);
               },
               onPageCreated: handlePageCreated,
-              initialTitle: searchInputValueRef.current && !(0, import_url15.isURL)(searchInputValueRef.current) ? searchInputValueRef.current : ""
+              initialTitle: searchInputValueRef.current && !(0, import_url16.isURL)(searchInputValueRef.current) ? searchInputValueRef.current : ""
             }
           )
         ]
@@ -49896,7 +49939,7 @@ ${text}
 
   // packages/block-library/build-module/navigation-link/shared/use-link-preview.mjs
   var import_i18n135 = __toESM(require_i18n(), 1);
-  var import_url16 = __toESM(require_url(), 1);
+  var import_url17 = __toESM(require_url(), 1);
   var import_block_editor146 = __toESM(require_block_editor(), 1);
   var import_data82 = __toESM(require_data(), 1);
   var import_core_data48 = __toESM(require_core_data(), 1);
@@ -49930,7 +49973,7 @@ ${text}
     if (!linkUrl) {
       return { displayUrl: "", isExternal: false };
     }
-    let displayUrl = (0, import_url16.safeDecodeURI)(linkUrl);
+    let displayUrl = (0, import_url17.safeDecodeURI)(linkUrl);
     let isExternal = false;
     if (isRelativePath(linkUrl) || isHashLink(linkUrl)) {
       return { displayUrl, isExternal: false };
@@ -50067,7 +50110,7 @@ ${text}
       hasBinding,
       isEntityAvailable
     });
-    const displayTitle = url ? title || richData?.title || (0, import_url16.safeDecodeURI)(url) : (0, import_i18n135.__)("Add link");
+    const displayTitle = url ? title || richData?.title || (0, import_url17.safeDecodeURI)(url) : (0, import_i18n135.__)("Add link");
     return {
       title: displayTitle,
       url: displayUrl,
@@ -52581,7 +52624,7 @@ ${text}
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_i18n143 = __toESM(require_i18n(), 1);
   var import_block_editor158 = __toESM(require_block_editor(), 1);
-  var import_url17 = __toESM(require_url(), 1);
+  var import_url18 = __toESM(require_url(), 1);
   var import_element107 = __toESM(require_element(), 1);
   var import_compose42 = __toESM(require_compose(), 1);
   var import_jsx_runtime370 = __toESM(require_jsx_runtime(), 1);
@@ -52725,7 +52768,7 @@ ${text}
         return;
       }
       isNewLink.current = false;
-      if ((0, import_url17.isURL)((0, import_url17.prependHTTP)(label)) && /^.+\.[a-z]+/.test(label)) {
+      if ((0, import_url18.isURL)((0, import_url18.prependHTTP)(label)) && /^.+\.[a-z]+/.test(label)) {
         selectLabelText(ref);
       } else {
         selectBlock(clientId, null);
@@ -53270,7 +53313,7 @@ ${text}
   var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_i18n146 = __toESM(require_i18n(), 1);
   var import_block_editor160 = __toESM(require_block_editor(), 1);
-  var import_url18 = __toESM(require_url(), 1);
+  var import_url19 = __toESM(require_url(), 1);
   var import_element108 = __toESM(require_element(), 1);
   var import_a11y3 = __toESM(require_a11y(), 1);
   var import_blocks56 = __toESM(require_blocks(), 1);
@@ -53393,7 +53436,7 @@ ${text}
     }, [isSelected]);
     (0, import_element108.useEffect)(() => {
       if (isLinkOpen && url) {
-        if ((0, import_url18.isURL)((0, import_url18.prependHTTP)(label)) && /^.+\.[a-z]+/.test(label)) {
+        if ((0, import_url19.isURL)((0, import_url19.prependHTTP)(label)) && /^.+\.[a-z]+/.test(label)) {
           selectLabelText(ref);
         }
       }
@@ -55772,7 +55815,7 @@ ${text}
   var import_block_editor173 = __toESM(require_block_editor(), 1);
   var import_components100 = __toESM(require_components(), 1);
   var import_data101 = __toESM(require_data(), 1);
-  var import_notices14 = __toESM(require_notices(), 1);
+  var import_notices15 = __toESM(require_notices(), 1);
   var import_i18n158 = __toESM(require_i18n(), 1);
   var import_blocks66 = __toESM(require_blocks(), 1);
   var import_blob16 = __toESM(require_blob(), 1);
@@ -57637,7 +57680,7 @@ ${text}
       selectBlock,
       __unstableMarkNextChangeAsNotPersistent
     } = (0, import_data101.useDispatch)(import_block_editor173.store);
-    const { createErrorNotice } = (0, import_data101.useDispatch)(import_notices14.store);
+    const { createErrorNotice } = (0, import_data101.useDispatch)(import_notices15.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const colorGradientSettings = (0, import_block_editor173.__experimentalUseMultipleOriginColorsAndGradients)();
     const colors = (0, import_element117.useMemo)(
@@ -58281,7 +58324,7 @@ ${text}
 
   // packages/block-library/build-module/playlist/transforms.mjs
   var import_blocks67 = __toESM(require_blocks(), 1);
-  var import_url19 = __toESM(require_url(), 1);
+  var import_url20 = __toESM(require_url(), 1);
   var transforms22 = {
     from: [
       {
@@ -58296,7 +58339,7 @@ ${text}
               blob,
               id,
               src,
-              title: (0, import_url19.getFilename)(src)
+              title: (0, import_url20.getFilename)(src)
             })
           )
         )
@@ -58410,7 +58453,7 @@ ${text}
   var import_block_editor175 = __toESM(require_block_editor(), 1);
   var import_components101 = __toESM(require_components(), 1);
   var import_data102 = __toESM(require_data(), 1);
-  var import_notices15 = __toESM(require_notices(), 1);
+  var import_notices16 = __toESM(require_notices(), 1);
   var import_i18n159 = __toESM(require_i18n(), 1);
   var import_dom20 = __toESM(require_dom(), 1);
   var import_jsx_runtime389 = __toESM(require_jsx_runtime(), 1);
@@ -58430,7 +58473,7 @@ ${text}
     const imageButton = (0, import_element118.useRef)();
     const blockProps = (0, import_block_editor175.useBlockProps)();
     const { currentTrackClientId, setCurrentTrackClientId, removeTrack } = (0, import_element118.useContext)(PlaylistContext);
-    const { createErrorNotice } = (0, import_data102.useDispatch)(import_notices15.store);
+    const { createErrorNotice } = (0, import_data102.useDispatch)(import_notices16.store);
     function onUploadError(message, { removeTrackOnError = false } = {}) {
       createErrorNotice(message, { type: "snackbar" });
       if (removeTrackOnError) {
@@ -59914,7 +59957,7 @@ ${text}
   var import_block_editor182 = __toESM(require_block_editor(), 1);
   var import_element121 = __toESM(require_element(), 1);
   var import_api_fetch3 = __toESM(require_api_fetch(), 1);
-  var import_url20 = __toESM(require_url(), 1);
+  var import_url21 = __toESM(require_url(), 1);
   var import_jsx_runtime395 = __toESM(require_jsx_runtime(), 1);
   function PostCommentsCountEdit({ context }) {
     const { postId } = context;
@@ -59926,7 +59969,7 @@ ${text}
       }
       const currentPostId = postId;
       (0, import_api_fetch3.default)({
-        path: (0, import_url20.addQueryArgs)("/wp/v2/comments", {
+        path: (0, import_url21.addQueryArgs)("/wp/v2/comments", {
           post: postId
         }),
         parse: false
@@ -60273,7 +60316,7 @@ ${text}
   var import_element122 = __toESM(require_element(), 1);
   var import_data106 = __toESM(require_data(), 1);
   var import_api_fetch4 = __toESM(require_api_fetch(), 1);
-  var import_url21 = __toESM(require_url(), 1);
+  var import_url22 = __toESM(require_url(), 1);
   var import_i18n167 = __toESM(require_i18n(), 1);
   var import_core_data61 = __toESM(require_core_data(), 1);
   var import_jsx_runtime397 = __toESM(require_jsx_runtime(), 1);
@@ -60287,7 +60330,7 @@ ${text}
       }
       const currentPostId = postId;
       (0, import_api_fetch4.default)({
-        path: (0, import_url21.addQueryArgs)("/wp/v2/comments", {
+        path: (0, import_url22.addQueryArgs)("/wp/v2/comments", {
           post: postId
         }),
         parse: false
@@ -61823,7 +61866,7 @@ ${text}
   var import_block_editor191 = __toESM(require_block_editor(), 1);
   var import_element126 = __toESM(require_element(), 1);
   var import_i18n174 = __toESM(require_i18n(), 1);
-  var import_notices16 = __toESM(require_notices(), 1);
+  var import_notices17 = __toESM(require_notices(), 1);
 
   // packages/block-library/build-module/post-featured-image/dimension-controls.mjs
   var import_i18n172 = __toESM(require_i18n(), 1);
@@ -62205,7 +62248,7 @@ ${text}
         setTemporaryURL();
       }
     }, [mediaUrl, temporaryURL]);
-    const { createErrorNotice } = (0, import_data110.useDispatch)(import_notices16.store);
+    const { createErrorNotice } = (0, import_data110.useDispatch)(import_notices17.store);
     const onUploadError = (message) => {
       createErrorNotice(message, { type: "snackbar" });
       setTemporaryURL();
@@ -65583,7 +65626,7 @@ ${text}
   var import_block_editor206 = __toESM(require_block_editor(), 1);
   var import_i18n201 = __toESM(require_i18n(), 1);
   var import_core_data78 = __toESM(require_core_data(), 1);
-  var import_notices17 = __toESM(require_notices(), 1);
+  var import_notices18 = __toESM(require_notices(), 1);
 
   // packages/block-library/build-module/query/edit/inspector-controls/enhanced-pagination-control.mjs
   var import_components115 = __toESM(require_components(), 1);
@@ -67143,7 +67186,7 @@ ${text}
     const { templateSlug, postType } = context;
     const { isSingular, templateType } = getQueryContextFromTemplate(templateSlug);
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data125.useDispatch)(import_block_editor206.store);
-    const { createNotice } = (0, import_data125.useDispatch)(import_notices17.store);
+    const { createNotice } = (0, import_data125.useDispatch)(import_notices18.store);
     const unsupportedBlocks = useUnsupportedBlocks(clientId);
     const instanceId = (0, import_compose54.useInstanceId)(QueryContent);
     const blockProps = (0, import_block_editor206.useBlockProps)();
@@ -70889,7 +70932,7 @@ ${text}
   var import_components140 = __toESM(require_components(), 1);
   var import_element141 = __toESM(require_element(), 1);
   var import_i18n219 = __toESM(require_i18n(), 1);
-  var import_url22 = __toESM(require_url(), 1);
+  var import_url23 = __toESM(require_url(), 1);
   var import_server_side_render5 = __toESM(require_server_side_render(), 1);
   var import_compose56 = __toESM(require_compose(), 1);
   var import_jsx_runtime453 = __toESM(require_jsx_runtime(), 1);
@@ -70919,7 +70962,7 @@ ${text}
     function onSubmitURL(event) {
       event.preventDefault();
       if (feedURL) {
-        setAttributes({ feedURL: (0, import_url22.prependHTTPS)(feedURL) });
+        setAttributes({ feedURL: (0, import_url23.prependHTTPS)(feedURL) });
         setIsEditing(false);
       }
     }
@@ -72328,7 +72371,7 @@ ${text}
   var import_block_editor233 = __toESM(require_block_editor(), 1);
   var import_data135 = __toESM(require_data(), 1);
   var import_core_data83 = __toESM(require_core_data(), 1);
-  var import_notices18 = __toESM(require_notices(), 1);
+  var import_notices19 = __toESM(require_notices(), 1);
   var import_jsx_runtime460 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES9 = ["image"];
   var { mediaEditKey: mediaEditKey2, openMediaEditorModalKey: openMediaEditorModalKey3 } = unlock(
@@ -72704,7 +72747,7 @@ ${text}
       setLogo(null);
       setAttributes({ width: void 0 });
     };
-    const { createErrorNotice } = (0, import_data135.useDispatch)(import_notices18.store);
+    const { createErrorNotice } = (0, import_data135.useDispatch)(import_notices19.store);
     const onUploadError = (message) => {
       createErrorNotice(message, { type: "snackbar" });
       setTemporaryURL();
@@ -77945,7 +77988,7 @@ ${text}
   var import_element152 = __toESM(require_element(), 1);
   var import_i18n238 = __toESM(require_i18n(), 1);
   var import_compose63 = __toESM(require_compose(), 1);
-  var import_notices19 = __toESM(require_notices(), 1);
+  var import_notices20 = __toESM(require_notices(), 1);
 
   // packages/block-library/build-module/table-of-contents/list.mjs
   var import_jsx_runtime530 = __toESM(require_jsx_runtime(), 1);
@@ -78045,7 +78088,7 @@ ${text}
   var import_data146 = __toESM(require_data(), 1);
   var import_dom22 = __toESM(require_dom(), 1);
   var import_element151 = __toESM(require_element(), 1);
-  var import_url23 = __toESM(require_url(), 1);
+  var import_url24 = __toESM(require_url(), 1);
   var import_block_editor255 = __toESM(require_block_editor(), 1);
   function getLatestHeadings(select10, clientId) {
     const {
@@ -78078,7 +78121,7 @@ ${text}
     let headingPage = 1;
     let headingPageLink = null;
     if (typeof permalink === "string") {
-      headingPageLink = isPaginated ? (0, import_url23.addQueryArgs)(permalink, { page: headingPage }) : permalink;
+      headingPageLink = isPaginated ? (0, import_url24.addQueryArgs)(permalink, { page: headingPage }) : permalink;
     }
     for (const blockClientId of allBlockClientIds) {
       const blockName = getBlockName(blockClientId);
@@ -78088,8 +78131,8 @@ ${text}
           break;
         }
         if (typeof permalink === "string") {
-          headingPageLink = (0, import_url23.addQueryArgs)(
-            (0, import_url23.removeQueryArgs)(permalink, ["page"]),
+          headingPageLink = (0, import_url24.addQueryArgs)(
+            (0, import_url24.removeQueryArgs)(permalink, ["page"]),
             { page: headingPage }
           );
         }
@@ -78233,7 +78276,7 @@ ${text}
       TableOfContentsEdit,
       "table-of-contents"
     );
-    const { createWarningNotice } = (0, import_data147.useDispatch)(import_notices19.store);
+    const { createWarningNotice } = (0, import_data147.useDispatch)(import_notices20.store);
     const showRedirectionPreventedNotice = (event) => {
       event.preventDefault();
       createWarningNotice((0, import_i18n238.__)("Links are disabled in the editor."), {
@@ -79329,7 +79372,7 @@ ${text}
   var import_i18n250 = __toESM(require_i18n(), 1);
   var import_core_data92 = __toESM(require_core_data(), 1);
   var import_element161 = __toESM(require_element(), 1);
-  var import_notices22 = __toESM(require_notices(), 1);
+  var import_notices23 = __toESM(require_notices(), 1);
 
   // packages/block-library/build-module/template-part/edit/placeholder.mjs
   var import_i18n246 = __toESM(require_i18n(), 1);
@@ -79582,7 +79625,7 @@ ${text}
   // packages/block-library/build-module/template-part/edit/selection-modal.mjs
   var import_element158 = __toESM(require_element(), 1);
   var import_i18n247 = __toESM(require_i18n(), 1);
-  var import_notices20 = __toESM(require_notices(), 1);
+  var import_notices21 = __toESM(require_notices(), 1);
   var import_data154 = __toESM(require_data(), 1);
   var import_block_editor265 = __toESM(require_block_editor(), 1);
   var import_components160 = __toESM(require_components(), 1);
@@ -79622,7 +79665,7 @@ ${text}
     const filteredBlockPatterns = (0, import_element158.useMemo)(() => {
       return searchPatterns(blockPatterns, searchValue);
     }, [blockPatterns, searchValue]);
-    const { createSuccessNotice } = (0, import_data154.useDispatch)(import_notices20.store);
+    const { createSuccessNotice } = (0, import_data154.useDispatch)(import_notices21.store);
     const onTemplatePartSelect = (templatePart) => {
       setAttributes({
         slug: templatePart.slug,
@@ -79682,7 +79725,7 @@ ${text}
   var import_data155 = __toESM(require_data(), 1);
   var import_components161 = __toESM(require_components(), 1);
   var import_core_data89 = __toESM(require_core_data(), 1);
-  var import_notices21 = __toESM(require_notices(), 1);
+  var import_notices22 = __toESM(require_notices(), 1);
 
   // packages/block-library/build-module/template-part/edit/utils/transformers.mjs
   var import_blocks103 = __toESM(require_blocks(), 1);
@@ -79778,7 +79821,7 @@ ${text}
         ])
       };
     }, []);
-    const { createErrorNotice } = (0, import_data155.useDispatch)(import_notices21.store);
+    const { createErrorNotice } = (0, import_data155.useDispatch)(import_notices22.store);
     const createFromBlocks = useCreateTemplatePartFromBlocks(
       area,
       setAttributes
@@ -80174,7 +80217,7 @@ ${text}
     setAttributes,
     clientId
   }) {
-    const { createSuccessNotice } = (0, import_data158.useDispatch)(import_notices22.store);
+    const { createSuccessNotice } = (0, import_data158.useDispatch)(import_notices23.store);
     const { editEntityRecord } = (0, import_data158.useDispatch)(import_core_data92.store);
     const currentTheme = (0, import_data158.useSelect)(
       (select10) => select10(import_core_data92.store).getCurrentTheme()?.stylesheet,
@@ -82899,8 +82942,8 @@ ${text}
   var import_element168 = __toESM(require_element(), 1);
   var import_i18n267 = __toESM(require_i18n(), 1);
   var import_data170 = __toESM(require_data(), 1);
-  var import_notices23 = __toESM(require_notices(), 1);
-  var import_url25 = __toESM(require_url(), 1);
+  var import_notices24 = __toESM(require_notices(), 1);
+  var import_url26 = __toESM(require_url(), 1);
 
   // packages/block-library/build-module/video/edit-common-settings.mjs
   var import_i18n264 = __toESM(require_i18n(), 1);
@@ -83079,7 +83122,7 @@ ${text}
   var import_block_editor286 = __toESM(require_block_editor(), 1);
   var import_data169 = __toESM(require_data(), 1);
   var import_element167 = __toESM(require_element(), 1);
-  var import_url24 = __toESM(require_url(), 1);
+  var import_url25 = __toESM(require_url(), 1);
   var import_jsx_runtime573 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_TYPES = ["text/vtt"];
   var DEFAULT_KIND = "subtitles";
@@ -83148,7 +83191,7 @@ ${text}
       ...track
     });
     const { src, label, srcLang, kind, default: isDefaultTrack } = trackState;
-    const fileName = src.startsWith("blob:") ? "" : (0, import_url24.getFilename)(src) || "";
+    const fileName = src.startsWith("blob:") ? "" : (0, import_url25.getFilename)(src) || "";
     return /* @__PURE__ */ (0, import_jsx_runtime573.jsxs)(
       import_components179.__experimentalVStack,
       {
@@ -83516,7 +83559,7 @@ ${text}
     }
     function onSelectURL(newSrc) {
       if (newSrc !== src) {
-        const url = (0, import_url25.prependHTTPS)(newSrc);
+        const url = (0, import_url26.prependHTTPS)(newSrc);
         const embedBlock = createUpgradedEmbedBlock({
           attributes: { url }
         });
@@ -83533,7 +83576,7 @@ ${text}
         setTemporaryURL();
       }
     }
-    const { createErrorNotice } = (0, import_data170.useDispatch)(import_notices23.store);
+    const { createErrorNotice } = (0, import_data170.useDispatch)(import_notices24.store);
     function onUploadError(message) {
       createErrorNotice(message, { type: "snackbar" });
     }
