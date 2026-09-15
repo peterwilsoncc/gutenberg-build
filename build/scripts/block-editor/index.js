@@ -19923,7 +19923,7 @@ var wp;
   function LayoutStyle({ layout = {}, css, ...props }) {
     const layoutType = getLayoutType(layout.type);
     const [blockGapSupport] = useSettings("spacing.blockGap");
-    const hasBlockGapSupport = blockGapSupport !== null;
+    const hasBlockGapSupport = blockGapSupport !== null && blockGapSupport !== void 0;
     if (layoutType) {
       if (css) {
         return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("style", { children: css });
@@ -103919,7 +103919,7 @@ var wp;
     const usedLayout = normalizeLegacyLayout(layout) || {};
     const fullLayoutType = getLayoutType(usedLayout?.type || "default");
     const [blockGapSupport] = useSettings("spacing.blockGap");
-    const hasBlockGapSupport = blockGapSupport !== null;
+    const hasBlockGapSupport = blockGapSupport !== null && blockGapSupport !== void 0;
     return fullLayoutType?.getLayoutStyle?.({
       blockName,
       selector: selector3,
@@ -104270,7 +104270,7 @@ var wp;
     const usedLayout = normalizeLegacyLayout(layout) || defaultBlockLayout || {};
     const selectorPrefix = `wp-container-${kebabCase(name)}-is-layout-`;
     const selector3 = `.${selectorPrefix}${id}`;
-    const hasBlockGapSupport = blockGapSupport !== null;
+    const hasBlockGapSupport = blockGapSupport !== null && blockGapSupport !== void 0;
     const fullLayoutType = getLayoutType(usedLayout?.type || "default");
     const baseLayoutCSS = fullLayoutType?.getLayoutStyle?.({
       blockName: name,

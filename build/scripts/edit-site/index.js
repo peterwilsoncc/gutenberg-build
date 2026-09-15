@@ -38971,7 +38971,7 @@ var wp;
     } = options;
     const blocks = blockTypes.length > 0 ? blockTypes : (0, import_blocks3.getBlockTypes)();
     const blockGap = getSetting(config2, "spacing.blockGap");
-    const hasBlockGapSupport = hasBlockGapSupportOption ?? blockGap !== null;
+    const hasBlockGapSupport = hasBlockGapSupportOption ?? (blockGap !== null && blockGap !== void 0);
     const hasFallbackGapSupport = hasFallbackGapSupportOption ?? !hasBlockGapSupport;
     if (!config2?.styles || !config2?.settings) {
       return [[], {}];

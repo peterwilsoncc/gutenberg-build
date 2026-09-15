@@ -2472,7 +2472,7 @@ function generateGlobalStyles(config = {}, blockTypes = [], options = {}) {
   } = options;
   const blocks = blockTypes.length > 0 ? blockTypes : (0, import_blocks.getBlockTypes)();
   const blockGap = getSetting(config, "spacing.blockGap");
-  const hasBlockGapSupport = hasBlockGapSupportOption ?? blockGap !== null;
+  const hasBlockGapSupport = hasBlockGapSupportOption ?? (blockGap !== null && blockGap !== void 0);
   const hasFallbackGapSupport = hasFallbackGapSupportOption ?? !hasBlockGapSupport;
   if (!config?.styles || !config?.settings) {
     return [[], {}];

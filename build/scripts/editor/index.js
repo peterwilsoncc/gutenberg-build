@@ -4637,7 +4637,7 @@ var wp;
     } = options;
     const blocks = blockTypes.length > 0 ? blockTypes : (0, import_blocks2.getBlockTypes)();
     const blockGap = getSetting(config2, "spacing.blockGap");
-    const hasBlockGapSupport = hasBlockGapSupportOption ?? blockGap !== null;
+    const hasBlockGapSupport = hasBlockGapSupportOption ?? (blockGap !== null && blockGap !== void 0);
     const hasFallbackGapSupport = hasFallbackGapSupportOption ?? !hasBlockGapSupport;
     if (!config2?.styles || !config2?.settings) {
       return [[], {}];
@@ -96511,13 +96511,6 @@ If there's a particular need for this, please submit a feature request at https:
       [merged, path, blockName]
     );
   }
-  function useSetting2(path, blockName) {
-    const { merged } = useGlobalStyles();
-    return (0, import_element282.useMemo)(
-      () => getSetting(merged, path, blockName),
-      [merged, path, blockName]
-    );
-  }
 
   // packages/editor/build-module/components/global-styles/index.mjs
   var import_jsx_runtime469 = __toESM(require_jsx_runtime(), 1);
@@ -103705,9 +103698,6 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data96 = __toESM(require_data(), 1);
   var import_element310 = __toESM(require_element(), 1);
   function useGlobalStylesOutputWithConfig(mergedConfig = {}, disableRootPadding = false) {
-    const blockGap = useSetting2("spacing.blockGap");
-    const hasBlockGapSupport = blockGap !== null;
-    const hasFallbackGapSupport = !hasBlockGapSupport;
     const { disableLayoutStyles, getBlockStyles } = (0, import_data96.useSelect)((select9) => {
       const { getEditorSettings: getEditorSettings2 } = select9(store);
       const { getBlockStyles: getBlockStylesSelector } = select9(import_blocks23.store);
@@ -103723,15 +103713,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const blockTypes = (0, import_blocks23.getBlockTypes)();
       return generateGlobalStyles(mergedConfig, blockTypes, {
-        hasBlockGapSupport,
-        hasFallbackGapSupport,
         disableLayoutStyles,
         disableRootPadding,
         getBlockStyles
       });
     }, [
-      hasBlockGapSupport,
-      hasFallbackGapSupport,
       mergedConfig,
       disableLayoutStyles,
       disableRootPadding,
