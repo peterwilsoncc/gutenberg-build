@@ -11892,7 +11892,10 @@ var mobile_default = /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primit
 // packages/icons/build-module/library/pencil.mjs
 var import_primitives13 = __toESM(require_primitives(), 1);
 var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
-var pencil_default = /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives13.Path, { d: "m19 7-3-3-8.5 8.5-1 4 4-1L19 7Zm-7 11.5H5V20h7v-1.5Z" }) });
+var pencil_default = /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+  /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives13.Path, { d: "M5 19.25H12", vectorEffect: "non-scaling-stroke" }),
+  /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives13.Path, { d: "M10 15L7.5 15.5L8 13L16 5L18 7L10 15Z", fill: "currentColor", vectorEffect: "non-scaling-stroke" })
+] });
 
 // packages/icons/build-module/library/published.mjs
 var import_primitives14 = __toESM(require_primitives(), 1);

@@ -649,7 +649,7 @@ iframe[name=editor-canvas] {
 .block-editor-block-lock-modal__checklist-item .block-editor-block-lock-modal__lock-icon {
   flex-shrink: 0;
   margin-right: 12px;
-  fill: #1e1e1e;
+  color: #1e1e1e;
 }
 .block-editor-block-lock-modal__checklist-item:hover {
   background-color: #f0f0f0;

@@ -24994,7 +24994,14 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/library/more-vertical.mjs
   var import_primitives21 = __toESM(require_primitives(), 1);
   var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
-  var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives21.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives21.Path, { d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z" }) });
+  var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(import_primitives21.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives21.Path, { d: "M11.75 18.25L12.25 18.25L12.25 17.75L11.75 17.75L11.75 18.25Z", fill: "currentColor", stroke: "none" }),
+    /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives21.Path, { d: "M11.75 12.25L12.25 12.25L12.25 11.75L11.75 11.75L11.75 12.25Z", fill: "currentColor", stroke: "none" }),
+    /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives21.Path, { d: "M11.75 6.25L12.25 6.25L12.25 5.75L11.75 5.75L11.75 6.25Z", fill: "currentColor", stroke: "none" }),
+    /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives21.Path, { d: "M11.75 18.25L12.25 18.25L12.25 17.75L11.75 17.75L11.75 18.25Z", vectorEffect: "non-scaling-stroke" }),
+    /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives21.Path, { d: "M11.75 12.25L12.25 12.25L12.25 11.75L11.75 11.75L11.75 12.25Z", vectorEffect: "non-scaling-stroke" }),
+    /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_primitives21.Path, { d: "M11.75 6.25L12.25 6.25L12.25 5.75L11.75 5.75L11.75 6.25Z", vectorEffect: "non-scaling-stroke" })
+  ] });
 
   // packages/icons/build-module/library/plus.mjs
   var import_primitives22 = __toESM(require_primitives(), 1);
@@ -25027,7 +25034,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/icons/build-module/library/swatch.mjs
   var import_primitives27 = __toESM(require_primitives(), 1);
   var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
-  var swatch_default = /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_primitives27.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_primitives27.Path, { d: "M7.1 5.7 8 6.9c.4-.3.9-.6 1.5-.8l-.6-1.4c-.7.3-1.3.6-1.8 1ZM4.6 8.9l1.4.6c.2-.5.5-1 .8-1.5l-1.2-.9c-.4.6-.8 1.2-1 1.8Zm14.8 0c-.3-.7-.6-1.3-1-1.8l-1.2.9c.3.4.6.9.8 1.5l1.4-.6ZM7.1 18.3c.6.4 1.2.8 1.8 1l.6-1.4c-.5-.2-1-.5-1.5-.8l-.9 1.2ZM5.5 12v-.9h-.7l-.7-.2v2l1.5-.2v-.9Zm-.7 3h-.2c.3.7.6 1.3 1 1.9l1.2-.9c-.3-.4-.6-.9-.8-1.5l-1.2.5Zm9.7 3 .5 1.2v.2c.7-.3 1.3-.6 1.9-1l-.9-1.2c-.4.3-.9.6-1.5.8Zm-2.5.5h-.9l-.2 1.3v.2h2l-.2-1.5h-.9Zm7.9-7.5-1.5.2V13h.7l.7.2v-2ZM18 14.5c-.2.5-.5 1-.8 1.5l1.2.9c.4-.6.8-1.2 1-1.8h-.2l-1.2-.6ZM11 4.1l.2 1.5H13V4.2h-1.9ZM14.5 6c.5.2 1 .5 1.5.8l.9-1.2c-.6-.4-1.2-.8-1.8-1L14.5 6Z" }) });
+  var swatch_default = /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_primitives27.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_primitives27.Path, { d: "M11.0537 4.81202C11.6819 4.72933 12.3181 4.72933 12.9463 4.81202M14.7744 5.30187C15.3598 5.54434 15.9109 5.86249 16.4135 6.24819M17.7518 7.58648C18.1375 8.08914 18.4557 8.64019 18.6981 9.22555M19.188 11.0537C19.2707 11.6819 19.2707 12.3181 19.188 12.9463M18.6981 14.7744C18.4557 15.3598 18.1375 15.9109 17.7518 16.4135M16.4135 17.7518C15.9109 18.1375 15.3598 18.4557 14.7744 18.6981M12.9463 19.188C12.3181 19.2707 11.6819 19.2707 11.0537 19.188M9.22555 18.6981C8.64019 18.4557 8.08914 18.1375 7.58648 17.7518M6.24819 16.4135C5.86249 15.9109 5.54434 15.3598 5.30187 14.7744M4.81202 12.9463C4.72933 12.3181 4.72933 11.6819 4.81202 11.0537M5.30187 9.22555C5.54434 8.64019 5.86249 8.08914 6.24819 7.58648M7.58648 6.24819C8.08914 5.86249 8.64019 5.54434 9.22555 5.30187", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/icons/build-module/library/tip.mjs
   var import_primitives28 = __toESM(require_primitives(), 1);

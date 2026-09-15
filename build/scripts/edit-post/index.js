@@ -9152,7 +9152,7 @@ var wp;
   // packages/icons/build-module/library/fullscreen.mjs
   var import_primitives5 = __toESM(require_primitives(), 1);
   var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
-  var fullscreen_default = /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives5.Path, { d: "M6 4a2 2 0 0 0-2 2v3h1.5V6a.5.5 0 0 1 .5-.5h3V4H6Zm3 14.5H6a.5.5 0 0 1-.5-.5v-3H4v3a2 2 0 0 0 2 2h3v-1.5Zm6 1.5v-1.5h3a.5.5 0 0 0 .5-.5v-3H20v3a2 2 0 0 1-2 2h-3Zm3-16a2 2 0 0 1 2 2v3h-1.5V6a.5.5 0 0 0-.5-.5h-3V4h3Z" }) });
+  var fullscreen_default = /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives5.Path, { d: "M4.75 10V4.75H10M4.75 4.75L10 10M14 19.25H19.25V14M19.25 19.25L14 14", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/ui/build-module/visually-hidden/visually-hidden.mjs
   var import_element15 = __toESM(require_element(), 1);

@@ -55,7 +55,7 @@ var require_preferences = __commonJS({
 // packages/icons/build-module/library/home.mjs
 var import_primitives = __toESM(require_primitives(), 1);
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-var home_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M12 4L4 7.9V20h16V7.9L12 4zm6.5 14.5H14V13h-4v5.5H5.5V8.8L12 5.7l6.5 3.1v9.7z" }) });
+var home_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M13.75 19.25H19.25V8.5L12 5L4.75 8.5V19.25H10.25M13.75 19.25V13.7H10.25V19.25M13.75 19.25H10.25", vectorEffect: "non-scaling-stroke" }) });
 
 // packages/icons/build-module/library/layout.mjs
 var import_primitives2 = __toESM(require_primitives(), 1);
