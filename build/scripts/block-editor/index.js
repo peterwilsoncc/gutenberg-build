@@ -111795,6 +111795,7 @@ var wp;
     if (!fieldDefinition) {
       return null;
     }
+    const isDisabled = fieldDefinition.readOnly === true || fieldDefinition.isDisabled({ item: data, field: fieldDefinition });
     const handleClose = () => {
       setIsOpen(false);
       setTouched(true);
@@ -111809,7 +111810,7 @@ var wp;
           summaryFields,
           validity,
           touched,
-          disabled: fieldDefinition.readOnly === true,
+          disabled: isDisabled,
           onClick: () => setIsOpen(true),
           isOpen
         }
@@ -111916,6 +111917,7 @@ var wp;
     if (!fieldDefinition) {
       return null;
     }
+    const isDisabled = fieldDefinition.readOnly === true || fieldDefinition.isDisabled({ item: data, field: fieldDefinition });
     return /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(
       "div",
       {
@@ -111941,7 +111943,7 @@ var wp;
                 summaryFields,
                 validity,
                 touched,
-                disabled: fieldDefinition.readOnly === true,
+                disabled: isDisabled,
                 isOpen,
                 onClick: onToggle
               }

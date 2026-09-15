@@ -57792,6 +57792,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!fieldDefinition) {
       return null;
     }
+    const isDisabled = fieldDefinition.readOnly === true || fieldDefinition.isDisabled({ item: data, field: fieldDefinition });
     const handleClose = () => {
       setIsOpen(false);
       setTouched(true);
@@ -57806,7 +57807,7 @@ If there's a particular need for this, please submit a feature request at https:
           summaryFields,
           validity,
           touched,
-          disabled: fieldDefinition.readOnly === true,
+          disabled: isDisabled,
           onClick: () => setIsOpen(true),
           isOpen
         }
@@ -57913,6 +57914,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!fieldDefinition) {
       return null;
     }
+    const isDisabled = fieldDefinition.readOnly === true || fieldDefinition.isDisabled({ item: data, field: fieldDefinition });
     return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
       "div",
       {
@@ -57938,7 +57940,7 @@ If there's a particular need for this, please submit a feature request at https:
                 summaryFields,
                 validity,
                 touched,
-                disabled: fieldDefinition.readOnly === true,
+                disabled: isDisabled,
                 isOpen,
                 onClick: onToggle
               }

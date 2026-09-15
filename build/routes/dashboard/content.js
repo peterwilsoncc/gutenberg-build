@@ -64736,6 +64736,7 @@ function PanelModal({
   if (!fieldDefinition) {
     return null;
   }
+  const isDisabled = fieldDefinition.readOnly === true || fieldDefinition.isDisabled({ item: data, field: fieldDefinition });
   const handleClose = () => {
     setIsOpen(false);
     setTouched(true);
@@ -64750,7 +64751,7 @@ function PanelModal({
         summaryFields,
         validity,
         touched,
-        disabled: fieldDefinition.readOnly === true,
+        disabled: isDisabled,
         onClick: () => setIsOpen(true),
         isOpen
       }
@@ -64857,6 +64858,7 @@ function PanelDropdown({
   if (!fieldDefinition) {
     return null;
   }
+  const isDisabled = fieldDefinition.readOnly === true || fieldDefinition.isDisabled({ item: data, field: fieldDefinition });
   return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(
     "div",
     {
@@ -64882,7 +64884,7 @@ function PanelDropdown({
               summaryFields,
               validity,
               touched,
-              disabled: fieldDefinition.readOnly === true,
+              disabled: isDisabled,
               isOpen,
               onClick: onToggle
             }
