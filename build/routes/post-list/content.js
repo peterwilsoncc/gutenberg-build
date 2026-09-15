@@ -49380,7 +49380,8 @@ var fieldsWithBulkEditSupport = ["status", "date", "author", "discussion"];
 function QuickEditModal({
   postType,
   postId,
-  closeModal
+  closeModal,
+  quickEditForm
 }) {
   const isBulk = postId.length > 1;
   const [localEdits, setLocalEdits] = (0, import_element167.useState)(
@@ -49443,62 +49444,21 @@ function QuickEditModal({
     [_fields, canSwitchTemplate]
   );
   const form = (0, import_element167.useMemo)(() => {
-    const allFields = [
-      {
-        id: "featured_media",
-        layout: {
-          type: "regular",
-          labelPosition: "none"
-        }
-      },
-      {
-        id: "status",
-        label: (0, import_i18n63.__)("Status"),
-        layout: {
-          type: "panel",
-          summary: "status"
-        },
-        children: [
-          {
-            id: "status",
-            layout: { type: "regular", labelPosition: "none" }
-          },
-          "scheduled_date",
-          "password"
-        ]
-      },
-      "author",
-      "date",
-      "slug",
-      "parent",
-      {
-        id: "discussion",
-        label: (0, import_i18n63.__)("Discussion"),
-        layout: {
-          type: "panel",
-          summary: "discussion"
-        },
-        children: [
-          {
-            id: "comment_status",
-            layout: { type: "regular", labelPosition: "none" }
-          },
-          "ping_status"
-        ]
-      },
-      "template"
-    ];
+    if (!quickEditForm) {
+      return { layout: { type: "panel" }, fields: [] };
+    }
+    if (!isBulk) {
+      return quickEditForm;
+    }
     return {
-      layout: {
-        type: "panel"
-      },
-      fields: isBulk ? allFields.filter(
+      ...quickEditForm,
+      fields: (quickEditForm.fields ?? []).filter(
         (field) => fieldsWithBulkEditSupport.includes(
           typeof field === "string" ? field : field.id
         )
-      ) : allFields
+      )
     };
-  }, [isBulk]);
+  }, [isBulk, quickEditForm]);
   const onChange = (edits) => {
     const currentData = {
       ...record,
@@ -49607,7 +49567,8 @@ function PostList() {
   const {
     default_view: defaultView,
     default_layouts: defaultLayouts,
-    view_list: viewList
+    view_list: viewList,
+    form: quickEditForm
   } = useViewConfig({
     kind: "postType",
     name: postType
@@ -49627,7 +49588,8 @@ function PostList() {
       defaultView,
       defaultLayouts,
       viewList,
-      activeViewOverrides
+      activeViewOverrides,
+      quickEditForm
     }
   );
 }
@@ -49637,7 +49599,8 @@ function PostListView({
   defaultView,
   defaultLayouts,
   viewList,
-  activeViewOverrides
+  activeViewOverrides,
+  quickEditForm
 }) {
   const invalidate = useInvalidate();
   const navigate = useNavigate();
@@ -49920,7 +49883,8 @@ function PostListView({
           {
             postType,
             postId: selection,
-            closeModal: closeQuickEditModal
+            closeModal: closeQuickEditModal,
+            quickEditForm
           }
         )
       ]
