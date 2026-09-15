@@ -113012,7 +113012,7 @@ var wp;
       cover_default,
       {
         clientId,
-        __unstablePopoverSlot: "block-toolbar",
+        __unstablePopoverSlot: "__unstable-block-tools-after",
         ...props,
         children: /* @__PURE__ */ (0, import_jsx_runtime595.jsx)(import_components268.ResizableBox, { ...resizableBoxProps })
       }
