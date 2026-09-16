@@ -6318,17 +6318,11 @@ mark.wp-note {
   margin-right: 8px;
 }
 
-.editor-collaborators-presence__button.editor-collaborators-presence__button.components-button {
-  display: flex;
-  align-items: center;
-  cursor: var(--wpds-cursor-control, pointer);
+.editor-collaborators-presence__button.editor-collaborators-presence__button {
   position: relative;
   padding: 4px;
-  border-radius: 4px;
-  height: 100%;
-  box-sizing: border-box;
 }
-.editor-collaborators-presence__button.editor-collaborators-presence__button.components-button, .editor-collaborators-presence__button.editor-collaborators-presence__button.components-button:hover, .editor-collaborators-presence__button.editor-collaborators-presence__button.components-button.is-pressed, .editor-collaborators-presence__button.editor-collaborators-presence__button.components-button.is-pressed:hover {
+.editor-collaborators-presence__button.editor-collaborators-presence__button, .editor-collaborators-presence__button.editor-collaborators-presence__button:hover, .editor-collaborators-presence__button.editor-collaborators-presence__button.is-pressed, .editor-collaborators-presence__button.editor-collaborators-presence__button.is-pressed:hover {
   background: transparent;
   color: #2f2f2f;
 }
@@ -6427,9 +6421,6 @@ mark.wp-note {
 }
 .editor-document-bar:hover {
   background-color: #e0e0e0;
-}
-.editor-document-bar .components-button {
-  border-radius: 4px;
 }
 @media not (prefers-reduced-motion) {
   .editor-document-bar .components-button {

@@ -117366,7 +117366,7 @@ ${content}
         /* @__PURE__ */ (0, import_jsx_runtime616.jsx)(
           import_components239.Button,
           {
-            __next40pxDefaultSize: true,
+            size: "compact",
             className: "editor-collaborators-presence__button",
             onClick: () => setIsPopoverVisible(!isPopoverVisible),
             isPressed: isPopoverVisible,
