@@ -73067,6 +73067,7 @@ var wp;
           getBlockParents: getBlockParents2,
           getSelectedBlockClientIds: getSelectedBlockClientIds2,
           getParentSectionBlock: getParentSectionBlock2,
+          getEnabledBlockParents: getEnabledBlockParents2,
           getBlockName: getBlockName2,
           getNextBlockClientId: getNextBlockClientId2
         } = unlock(select3(store));
@@ -73076,7 +73077,10 @@ var wp;
         );
         const parents = getBlockParents2(selectedBlockClientId);
         const immediateParentClientId = parents[parents.length - 1];
-        const _parentClientId = parentSection ?? immediateParentClientId;
+        const _parentClientId = getEnabledBlockParents2(
+          selectedBlockClientId,
+          true
+        )[0];
         const parentBlockType = (0, import_blocks55.getBlockType)(
           getBlockName2(_parentClientId)
         );
@@ -73086,10 +73090,9 @@ var wp;
           nextSiblingClientId: getNextBlockClientId2(
             selectedBlockClientId
           ),
-          // When the shown parent is a section further up the tree
-          // rather than the direct parent, its content is locked and
-          // nothing can be inserted, so no button.
-          showInserter: !!_parentClientId && _parentClientId === immediateParentClientId && !isTextFlowWrapper
+          // No button when the parent shown is not the direct parent, nor
+          // within a section, where the structure is locked.
+          showInserter: !!_parentClientId && _parentClientId === immediateParentClientId && !parentSection && !isTextFlowWrapper
         };
       },
       []
@@ -76543,7 +76546,6 @@ var wp;
       const {
         getBlockName: getBlockName2,
         getBlockMode: getBlockMode2,
-        getBlockParents: getBlockParents2,
         getSelectedBlockClientIds: getSelectedBlockClientIds2,
         isBlockValid: isBlockValid2,
         getBlockEditingMode: getBlockEditingMode2,
@@ -76551,6 +76553,7 @@ var wp;
         getSettings: getSettings9,
         getTemplateLock: getTemplateLock2,
         getParentSectionBlock: getParentSectionBlock2,
+        getEnabledBlockParents: getEnabledBlockParents2,
         isZoomOut: isZoomOut2,
         isSectionBlock: isSectionBlock2,
         isBlockHiddenAtViewport: isBlockHiddenAtViewport2,
@@ -76559,9 +76562,11 @@ var wp;
       } = unlock(select3(store));
       const selectedBlockClientIds = getSelectedBlockClientIds2();
       const selectedBlockClientId = selectedBlockClientIds[0];
-      const parents = getBlockParents2(selectedBlockClientId);
       const parentSection = getParentSectionBlock2(selectedBlockClientId);
-      const parentClientId = parentSection ?? parents[parents.length - 1];
+      const parentClientId = getEnabledBlockParents2(
+        selectedBlockClientId,
+        true
+      )[0];
       const parentBlockName = getBlockName2(parentClientId);
       const parentBlockType = (0, import_blocks78.getBlockType)(parentBlockName);
       const editingMode = getBlockEditingMode2(selectedBlockClientId);
@@ -76597,7 +76602,7 @@ var wp;
         blockType: selectedBlockClientId && (0, import_blocks78.getBlockType)(_blockName),
         shouldShowVisualToolbar: isValid2 && isVisual,
         toolbarKey: `${selectedBlockClientId}${parentClientId}`,
-        showParentSelector: !_isZoomOut && parentBlockType && editingMode !== "contentOnly" && getBlockEditingMode2(parentClientId) !== "disabled" && (0, import_blocks78.hasBlockSupport)(
+        showParentSelector: !_isZoomOut && parentBlockType && (editingMode !== "contentOnly" || !!parentSection) && getBlockEditingMode2(parentClientId) !== "disabled" && (0, import_blocks78.hasBlockSupport)(
           parentBlockType,
           "__experimentalParentSelector",
           true
