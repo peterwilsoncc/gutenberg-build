@@ -49985,9 +49985,7 @@ var wp;
     getElements: async () => {
       const themeSupports = await (0, import_data18.resolveSelect)(import_core_data17.store).getThemeSupports();
       return POST_FORMATS.filter(
-        (f2) => themeSupports?.formats?.includes(
-          f2.id
-        )
+        (f2) => themeSupports?.formats?.includes(f2.id)
       ).map((f2) => ({ value: f2.id, label: f2.caption }));
     }
   };
@@ -68495,9 +68493,7 @@ If there's a particular need for this, please submit a feature request at https:
     selection
   }) {
     const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-    const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element213.useState)(
-      !isLoading
-    );
+    const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element213.useState)(!isLoading);
     (0, import_element213.useEffect)(() => {
       if (!isLoading) {
         setHasInitiallyLoaded(true);
@@ -71018,7 +71014,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const Wrapper = as ?? getFormFieldLayout(form.layout.type)?.wrapper ?? DEFAULT_WRAPPER;
     return /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
-      const FieldLayout = getFormFieldLayout(formField.layout.type)?.component;
+      const FieldLayout = getFormFieldLayout(
+        formField.layout.type
+      )?.component;
       if (!FieldLayout) {
         return null;
       }

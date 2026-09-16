@@ -46352,9 +46352,7 @@ function useData({
   selection
 }) {
   const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element151.useState)(
-    !isLoading
-  );
+  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element151.useState)(!isLoading);
   (0, import_element151.useEffect)(() => {
     if (!isLoading) {
       setHasInitiallyLoaded(true);
@@ -48907,7 +48905,9 @@ function DataFormLayout({
   }
   const Wrapper = as ?? getFormFieldLayout(form.layout.type)?.wrapper ?? DEFAULT_WRAPPER;
   return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
-    const FieldLayout = getFormFieldLayout(formField.layout.type)?.component;
+    const FieldLayout = getFormFieldLayout(
+      formField.layout.type
+    )?.component;
     if (!FieldLayout) {
       return null;
     }

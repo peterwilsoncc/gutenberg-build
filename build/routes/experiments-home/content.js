@@ -29317,7 +29317,9 @@ function DataFormLayout({
   }
   const Wrapper = as ?? getFormFieldLayout(form.layout.type)?.wrapper ?? DEFAULT_WRAPPER;
   return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
-    const FieldLayout = getFormFieldLayout(formField.layout.type)?.component;
+    const FieldLayout = getFormFieldLayout(
+      formField.layout.type
+    )?.component;
     if (!FieldLayout) {
       return null;
     }

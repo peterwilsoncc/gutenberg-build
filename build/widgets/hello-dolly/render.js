@@ -1003,7 +1003,9 @@ function HelloDolly() {
   }, []);
   return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stack, { align: "center", justify: "center", className: style_default4.root, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Text, { variant: "body-xl", render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {}), className: style_default4.quote, children: [
     /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {}), children: [
-      (0, import_i18n.__)("Quote from Hello Dolly song, by Jerry Herman:"),
+      (0, import_i18n.__)(
+        "Quote from Hello Dolly song, by Jerry Herman:"
+      ),
       " "
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { dir: "ltr", lang: "en", children: quote })

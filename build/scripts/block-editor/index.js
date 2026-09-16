@@ -61433,7 +61433,9 @@ var wp;
         onSuccess?.(attachments);
       },
       onBatchSuccess,
-      onError: (error2) => onError(typeof error2 === "string" ? error2 : error2?.message ?? ""),
+      onError: (error2) => onError(
+        typeof error2 === "string" ? error2 : error2?.message ?? ""
+      ),
       additionalData,
       allowedTypes
     });
@@ -73962,9 +73964,7 @@ var wp;
       },
       [clientId]
     );
-    const [applyTemplateLock, setApplyTemplateLock] = (0, import_element208.useState)(
-      !!templateLock
-    );
+    const [applyTemplateLock, setApplyTemplateLock] = (0, import_element208.useState)(!!templateLock);
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data103.useDispatch)(store);
     const blockInformation = useBlockDisplayInformation(clientId);
     (0, import_element208.useEffect)(() => {
@@ -112609,7 +112609,9 @@ var wp;
     }
     const Wrapper = as ?? getFormFieldLayout(form.layout.type)?.wrapper ?? DEFAULT_WRAPPER;
     return /* @__PURE__ */ (0, import_jsx_runtime591.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
-      const FieldLayout = getFormFieldLayout(formField.layout.type)?.component;
+      const FieldLayout = getFormFieldLayout(
+        formField.layout.type
+      )?.component;
       if (!FieldLayout) {
         return null;
       }

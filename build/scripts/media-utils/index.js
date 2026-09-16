@@ -44902,9 +44902,7 @@ If there's a particular need for this, please submit a feature request at https:
     selection
   }) {
     const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-    const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element137.useState)(
-      !isLoading
-    );
+    const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element137.useState)(!isLoading);
     (0, import_element137.useEffect)(() => {
       if (!isLoading) {
         setHasInitiallyLoaded(true);

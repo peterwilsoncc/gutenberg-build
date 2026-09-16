@@ -44557,9 +44557,7 @@ function useData({
   selection
 }) {
   const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element138.useState)(
-    !isLoading
-  );
+  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element138.useState)(!isLoading);
   (0, import_element138.useEffect)(() => {
     if (!isLoading) {
       setHasInitiallyLoaded(true);
