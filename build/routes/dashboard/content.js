@@ -46195,19 +46195,8 @@ function splitWidgetActions(widgetType) {
 
 // packages/widget-dashboard/build-module/components/widget-footer/widget-footer.mjs
 var import_i18n22 = __toESM(require_i18n(), 1);
-import { useWidgetHost } from "@wordpress/widget-primitives";
-
-// packages/widget-dashboard/build-module/components/widget-actions/get-action-route.mjs
-function getActionRoute(links, action) {
-  const isDownload = action.download !== void 0 && action.download !== false;
-  if (!links || isDownload || action.openInNewTab) {
-    return null;
-  }
-  return links.match(action.href);
-}
-
-// packages/widget-dashboard/build-module/components/widget-footer/widget-footer.mjs
 var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
+import { HostLink } from "@wordpress/widget-primitives";
 var STYLE_HASH_ATTRIBUTE92 = "data-wp-hash";
 function getRuntime92() {
   const globalScope = globalThis;
@@ -46292,10 +46281,7 @@ if (typeof process === "undefined" || true) {
   registerStyle92("57b3a79a04", ".a3e067538ad701bf__widget-footer{border-block-start-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-block-start-style:solid;border-block-start-width:var(--wpds-border-width-xs,1px);padding-block:var(--wpds-dimension-padding-md,12px);padding-inline:var(--wp-ui-card-padding)}.b7d8b6ddfcf30003__compact-actions{margin-inline-start:auto}._767e14b4bc49e9b5__prefixed-action{align-items:center;display:inline-flex;gap:var(--wpds-dimension-gap-xs,4px)}._031b4fd8e77c13ce__icon-action{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}");
 }
 var widget_footer_default = { "widget-footer": "a3e067538ad701bf__widget-footer", "compact-actions": "b7d8b6ddfcf30003__compact-actions", "prefixed-action": "_767e14b4bc49e9b5__prefixed-action", "icon-action": "_031b4fd8e77c13ce__icon-action" };
-function IconAction({
-  action,
-  routeRender
-}) {
+function IconAction({ action }) {
   const label = action.openInNewTab ? (0, import_i18n22.sprintf)(
     /* translators: %s: action label. */
     (0, import_i18n22.__)("%s (opens in a new tab)"),
@@ -46313,15 +46299,17 @@ function IconAction({
             size: "compact",
             className: widget_footer_default["icon-action"],
             "aria-label": label,
-            ...routeRender ? {} : {
-              href: action.href,
-              download: action.download
-            },
-            render: routeRender ?? (action.openInNewTab ? (
-              /* href and content merge in at runtime. */
-              // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-              /* @__PURE__ */ (0, import_jsx_runtime232.jsx)("a", { target: "_blank", rel: "noopener noreferrer" })
-            ) : void 0)
+            render: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
+              HostLink,
+              {
+                href: action.href,
+                download: action.download,
+                ...action.openInNewTab ? {
+                  target: "_blank",
+                  rel: "noopener noreferrer"
+                } : {}
+              }
+            )
           }
         ),
         children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(LinkButton3.Icon, { icon: action.icon })
@@ -46334,8 +46322,6 @@ function WidgetFooter({
   actions,
   editMode = false
 }) {
-  const { links } = useWidgetHost();
-  const HostLink = links?.Link;
   if (actions.length === 0) {
     return null;
   }
@@ -46354,33 +46340,20 @@ function WidgetFooter({
       className: widget_footer_default["widget-footer"],
       ...editMode ? { inert: "true" } : {},
       children: [
-        highActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(Stack, { direction: "row", align: "center", gap: "lg", wrap: "wrap", children: highActions.map((action) => {
-          const path = getActionRoute(links, action);
-          const className = action.icon ? widget_footer_default["prefixed-action"] : void 0;
-          const children = /* @__PURE__ */ (0, import_jsx_runtime232.jsxs)(import_jsx_runtime232.Fragment, { children: [
-            action.icon && /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(Icon, { icon: action.icon }),
-            action.label
-          ] });
-          return path !== null && HostLink ? /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
-            Link,
-            {
-              className,
-              render: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(HostLink, { path }),
-              children
-            },
-            action.id
-          ) : /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
-            Link,
-            {
-              href: action.href,
-              download: action.download,
-              openInNewTab: action.openInNewTab,
-              className,
-              children
-            },
-            action.id
-          );
-        }) }),
+        highActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(Stack, { direction: "row", align: "center", gap: "lg", wrap: "wrap", children: highActions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime232.jsxs)(
+          Link,
+          {
+            className: action.icon ? widget_footer_default["prefixed-action"] : void 0,
+            download: action.download,
+            openInNewTab: action.openInNewTab,
+            render: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(HostLink, { href: action.href }),
+            children: [
+              action.icon && /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(Icon, { icon: action.icon }),
+              action.label
+            ]
+          },
+          action.id
+        )) }),
         mediumActions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
           Stack,
           {
@@ -46388,33 +46361,24 @@ function WidgetFooter({
             align: "center",
             gap: "xs",
             className: widget_footer_default["compact-actions"],
-            children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(tooltip_exports.Provider, { children: mediumActions.map((action) => {
-              const path = getActionRoute(links, action);
-              const routeRender = path !== null && HostLink ? /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(HostLink, { path }) : void 0;
-              if (action.icon) {
-                return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
-                  IconAction,
-                  {
-                    action: {
-                      ...action,
-                      icon: action.icon
-                    },
-                    routeRender
-                  },
-                  action.id
-                );
-              }
-              return routeRender ? /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(Link, { render: routeRender, children: action.label }, action.id) : /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(tooltip_exports.Provider, { children: mediumActions.map(
+              (action) => action.icon ? /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
+                IconAction,
+                {
+                  action: { ...action, icon: action.icon }
+                },
+                action.id
+              ) : /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
                 Link,
                 {
-                  href: action.href,
                   download: action.download,
                   openInNewTab: action.openInNewTab,
+                  render: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(HostLink, { href: action.href }),
                   children: action.label
                 },
                 action.id
-              );
-            }) })
+              )
+            ) })
           }
         )
       ]
@@ -73521,7 +73485,7 @@ function useDashboardContainerColumnCount(forwardedRef, maxColumns) {
 
 // packages/widget-dashboard/build-module/components/widget-actions/widget-actions.mjs
 var import_i18n83 = __toESM(require_i18n(), 1);
-import { useWidgetHost as useWidgetHost2 } from "@wordpress/widget-primitives";
+import { HostLink as HostLink2 } from "@wordpress/widget-primitives";
 var import_jsx_runtime345 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE106 = "data-wp-hash";
 function getRuntime106() {
@@ -73611,7 +73575,6 @@ function WidgetActions({
   actions
 }) {
   const reserveRef = useReserveHeaderSpace("actions");
-  const { links } = useWidgetHost2();
   if (actions.length === 0) {
     return null;
   }
@@ -73631,30 +73594,18 @@ function WidgetActions({
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(menu_exports.Popup, { children: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(menu_exports.Group, { children: actions.map((action) => {
-      const path = getActionRoute(links, action);
-      const HostLink = links?.Link;
-      const linkProps = path !== null && HostLink ? { render: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(HostLink, { path }) } : {
-        href: action.href,
+    /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(menu_exports.Popup, { children: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(menu_exports.Group, { children: actions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
+      menu_exports.LinkItem,
+      {
         download: action.download,
-        openInNewTab: action.openInNewTab
-      };
-      return /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
-        menu_exports.LinkItem,
-        {
-          ...linkProps,
-          closeOnClick: true,
-          prefix: action.icon ? /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(
-            menu_exports.PrefixIcon,
-            {
-              icon: action.icon
-            }
-          ) : void 0,
-          children: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(menu_exports.ItemLabel, { children: action.label })
-        },
-        action.id
-      );
-    }) }) })
+        openInNewTab: action.openInNewTab,
+        render: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(HostLink2, { href: action.href }),
+        closeOnClick: true,
+        prefix: action.icon ? /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(menu_exports.PrefixIcon, { icon: action.icon }) : void 0,
+        children: /* @__PURE__ */ (0, import_jsx_runtime345.jsx)(menu_exports.ItemLabel, { children: action.label })
+      },
+      action.id
+    )) }) })
   ] }) });
 }
 

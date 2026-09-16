@@ -358,7 +358,24 @@ function WidgetHostProvider({
 function useWidgetHost() {
   return (0, import_element3.useContext)(WidgetHostContext);
 }
+
+// packages/widget-primitives/build-module/widget-host/host-link.mjs
+var import_element4 = __toESM(require_element(), 1);
+var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+var HostLink = (0, import_element4.forwardRef)(
+  function HostLink2({ href, children, ...props }, ref) {
+    const { links } = useWidgetHost();
+    const { download, target } = props;
+    const opensNewDocument = download !== void 0 && download !== false || /^_blank$/i.test(target ?? "");
+    const path = links && !opensNewDocument ? links.match(href) : null;
+    if (links && path !== null) {
+      return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(links.Link, { ref, path, ...props, children });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("a", { ref, href, ...props, children });
+  }
+);
 export {
+  HostLink,
   WidgetHostProvider,
   WidgetRender,
   registerFieldType,
