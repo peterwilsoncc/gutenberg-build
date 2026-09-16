@@ -4065,7 +4065,6 @@ p.has-text-align-left[style*="writing-mode:vertical-lr"] {
   box-sizing: border-box;
 }
 .wp-block-post-title :where(a) {
-  display: inline-block;
   font-family: inherit;
   font-size: inherit;
   font-style: inherit;
