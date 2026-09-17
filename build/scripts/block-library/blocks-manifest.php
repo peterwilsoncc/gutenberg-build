@@ -1175,6 +1175,7 @@ return array(
 					'text' => true
 				)
 			),
+			'shadow' => true,
 			'interactivity' => array(
 				'clientNavigation' => true
 			)

@@ -18652,6 +18652,7 @@ var wp;
           text: true
         }
       },
+      shadow: true,
       interactivity: {
         clientNavigation: true
       }
