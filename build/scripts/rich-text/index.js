@@ -2526,14 +2526,21 @@ var wp;
         if (!event.target.contains(element)) {
           return;
         }
+        if (!event.target.closest("[data-block]")) {
+          return;
+        }
         value = element.getAttribute("contenteditable");
-        element.setAttribute("contenteditable", "false");
         defaultView.getSelection().removeAllRanges();
+        element.setAttribute("contenteditable", "false");
       }
       function onPointerUp() {
         if (value !== null) {
           element.setAttribute("contenteditable", value);
           value = null;
+          const selection = defaultView.getSelection();
+          if (selection.isCollapsed && element.contains(selection.anchorNode)) {
+            selection.removeAllRanges();
+          }
         }
       }
       const unsubscribePointerDown = subscribeDelegatedListener6(
