@@ -2418,6 +2418,7 @@ return array(
 				'style' => true
 			),
 			'html' => false,
+			'shadow' => true,
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true,

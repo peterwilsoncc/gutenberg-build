@@ -28156,6 +28156,7 @@ var wp;
         style: true
       },
       html: false,
+      shadow: true,
       spacing: {
         margin: true,
         padding: true,
