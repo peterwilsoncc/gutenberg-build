@@ -1423,6 +1423,13 @@ var wp;
                   selectorArgs
                 );
               }
+              const resolver = resolvers[selectorName];
+              if (resolver && selectorArgs) {
+                selectorArgs = normalizeResolutionArgs(
+                  resolver,
+                  selectorArgs
+                );
+              }
             }
             const state = store.__unstableOriginalGetState();
             return metaDataSelector(
@@ -1582,11 +1589,18 @@ var wp;
       }
       return (...args) => new Promise((resolve, reject) => {
         const resolver = resolvers[selectorName];
+        const resolutionArgs = normalizeResolutionArgs(
+          resolver,
+          normalize(selector, args)
+        );
         const hasFinished = () => {
           return boundMetadataSelectors.hasFinishedResolution(
             selectorName,
             args
-          ) || typeof resolver.isFulfilled === "function" && resolver.isFulfilled(store.getState(), ...args);
+          ) || typeof resolver.isFulfilled === "function" && resolver.isFulfilled(
+            store.getState(),
+            ...resolutionArgs
+          );
         };
         const finalize = (result2) => {
           const hasFailed = boundMetadataSelectors.hasResolutionFailed(
@@ -1665,8 +1679,12 @@ var wp;
     };
   }
   function mapSelectorWithResolver(selector, selectorName, resolver, store, resolversCache, boundMetadataSelectors) {
-    function fulfillSelector(args) {
-      if (resolversCache.isRunning(selectorName, args) || boundMetadataSelectors.hasStartedResolution(selectorName, args) || typeof resolver.isFulfilled === "function" && resolver.isFulfilled(store.getState(), ...args)) {
+    function fulfillSelector(selectorArgs) {
+      const args = normalizeResolutionArgs(resolver, selectorArgs);
+      if (resolversCache.isRunning(selectorName, args) || boundMetadataSelectors.hasStartedResolution(
+        selectorName,
+        selectorArgs
+      ) || typeof resolver.isFulfilled === "function" && resolver.isFulfilled(store.getState(), ...args)) {
         return;
       }
       resolversCache.markAsRunning(selectorName, args);
@@ -1696,11 +1714,18 @@ var wp;
       return selector(...args);
     };
     selectorResolver.hasResolver = true;
+    selectorResolver.__unstableNormalizeArgs = selector.__unstableNormalizeArgs;
     return selectorResolver;
   }
   function normalize(selector, args) {
     if (selector.__unstableNormalizeArgs && typeof selector.__unstableNormalizeArgs === "function" && args?.length) {
       return selector.__unstableNormalizeArgs(args);
+    }
+    return args;
+  }
+  function normalizeResolutionArgs(resolver, args) {
+    if (typeof resolver.getResolutionArgs === "function") {
+      return resolver.getResolutionArgs(...args);
     }
     return args;
   }

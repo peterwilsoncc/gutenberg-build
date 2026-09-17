@@ -6610,7 +6610,6 @@ var wp;
       const permissions = getUserPermissionsFromAllowHeader(
         response.headers?.get("allow")
       );
-      const canUserResolutionsArgs = [];
       const receiveUserPermissionArgs = {};
       for (const action of ALLOWED_RESOURCE_ACTIONS) {
         receiveUserPermissionArgs[getUserPermissionCacheKey(action, {
@@ -6618,11 +6617,8 @@ var wp;
           name,
           id: key
         })] = permissions[action];
-        canUserResolutionsArgs.push([
-          action,
-          { kind, name, id: key }
-        ]);
       }
+      const canUserResolutionsArgs = [[{ kind, name, id: key }]];
       if (entityConfig.syncConfig && isNumericID(key) && !query) {
         const objectType = `${kind}/${name}`;
         const objectId = key;
@@ -6898,11 +6894,10 @@ var wp;
         const canUserResolutionsArgs = [];
         const receiveUserPermissionArgs = {};
         for (const targetHint of targetHints) {
+          canUserResolutionsArgs.push([
+            { kind, name, id: targetHint.id }
+          ]);
           for (const action of ALLOWED_RESOURCE_ACTIONS) {
-            canUserResolutionsArgs.push([
-              action,
-              { kind, name, id: targetHint.id }
-            ]);
             receiveUserPermissionArgs[getUserPermissionCacheKey(action, {
               kind,
               name,
@@ -6953,24 +6948,7 @@ var wp;
       dispatch3.receiveEmbedPreview(url, false);
     }
   };
-  var canUser2 = (requestedAction, resource, id) => async ({ dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
-    if (!ALLOWED_RESOURCE_ACTIONS.includes(requestedAction)) {
-      throw new Error(`'${requestedAction}' is not a valid action.`);
-    }
-    const { hasStartedResolution } = registry.select(STORE_NAME);
-    for (const relatedAction of ALLOWED_RESOURCE_ACTIONS) {
-      if (relatedAction === requestedAction) {
-        continue;
-      }
-      const isAlreadyResolving = hasStartedResolution("canUser", [
-        relatedAction,
-        resource,
-        id
-      ]);
-      if (isAlreadyResolving) {
-        return;
-      }
-    }
+  var canUser2 = (resource, id) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     let resourcePath = null;
     if (typeof resource === "object") {
       if (!resource.kind || !resource.name) {
@@ -7003,20 +6981,14 @@ var wp;
       response.headers?.get("allow")
     );
     const receiveUserPermissionArgs = {};
-    const canUserResolutionsArgs = [];
     for (const action of ALLOWED_RESOURCE_ACTIONS) {
       receiveUserPermissionArgs[getUserPermissionCacheKey(action, resource, id)] = permissions[action];
-      if (action !== requestedAction) {
-        canUserResolutionsArgs.push([action, resource, id]);
-      }
     }
-    registry.batch(() => {
-      dispatch3.receiveUserPermissions(receiveUserPermissionArgs);
-      dispatch3.finishResolutions("canUser", canUserResolutionsArgs);
-    });
+    dispatch3.receiveUserPermissions(receiveUserPermissionArgs);
   };
-  var canUserEditEntityRecord2 = (kind, name, recordId) => async ({ dispatch: dispatch3 }) => {
-    await dispatch3(canUser2("update", { kind, name, id: recordId }));
+  canUser2.getResolutionArgs = (action, resource, id) => [resource, id];
+  var canUserEditEntityRecord2 = (kind, name, recordId) => async ({ resolveSelect: resolveSelect2 }) => {
+    await resolveSelect2.canUser("update", { kind, name, id: recordId });
   };
   var getAutosaves2 = (postType, postId) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     const {
