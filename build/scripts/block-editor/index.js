@@ -86114,6 +86114,9 @@ var wp;
     const { isInitialSuggestions } = suggestionsQuery;
     const results = await fetchSearchSuggestions(val, suggestionsQuery);
     results.map((result) => {
+      if (result.type !== "page") {
+        return result;
+      }
       if (Number(result.id) === pageOnFront) {
         result.isFrontPage = true;
         return result;
