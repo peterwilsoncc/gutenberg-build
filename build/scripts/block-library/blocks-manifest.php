@@ -9072,6 +9072,7 @@ return array(
 					'fontSize' => true
 				)
 			),
+			'shadow' => true,
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true,
