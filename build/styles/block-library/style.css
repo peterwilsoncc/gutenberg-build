@@ -2550,6 +2550,13 @@ ul {
   --navigation-layout-direction: column;
   --navigation-layout-justify: initial;
   --navigation-layout-align: flex-start;
+  text-align: var(--navigation-layout-text-align, inherit);
+}
+.wp-block-navigation.is-vertical .wp-block-navigation-item__content {
+  text-align: inherit;
+}
+.wp-block-navigation.is-vertical .wp-block-navigation-item:not(.open-always) > .wp-block-navigation__submenu-container {
+  text-align: initial;
 }
 .wp-block-navigation.no-wrap {
   --navigation-layout-wrap: nowrap;
@@ -2557,6 +2564,7 @@ ul {
 .wp-block-navigation.items-justified-center {
   --navigation-layout-justification-setting: center;
   --navigation-layout-justify: center;
+  --navigation-layout-text-align: center;
 }
 .wp-block-navigation.items-justified-center.is-vertical {
   --navigation-layout-align: center;
@@ -2564,6 +2572,7 @@ ul {
 .wp-block-navigation.items-justified-right {
   --navigation-layout-justification-setting: flex-end;
   --navigation-layout-justify: flex-end;
+  --navigation-layout-text-align: end;
 }
 .wp-block-navigation.items-justified-right.is-vertical {
   --navigation-layout-align: flex-end;
@@ -2903,6 +2912,7 @@ button.wp-block-navigation-item__content {
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: var(--navigation-layout-justification-setting, inherit);
+  text-align: var(--navigation-layout-text-align, inherit);
 }
 .wp-block-navigation__responsive-container.is-menu-open:where(:not(.disable-default-overlay)) .wp-block-navigation__responsive-container-content,
 .wp-block-navigation__responsive-container.is-menu-open:where(:not(.disable-default-overlay)) .wp-block-navigation__responsive-container-content .wp-block-page-list,
@@ -2930,9 +2940,11 @@ button.wp-block-navigation-item__content {
 }
 .wp-block-navigation__responsive-container.is-menu-open:where(:not(.disable-default-overlay)) .wp-block-navigation__responsive-container-content .wp-block-navigation__submenu-container {
   padding-top: var(--wp--style--block-gap, 2em);
+  text-align: inherit;
 }
 .wp-block-navigation__responsive-container.is-menu-open:where(:not(.disable-default-overlay)) .wp-block-navigation__responsive-container-content .wp-block-navigation-item__content {
   padding: 0;
+  text-align: inherit;
 }
 .wp-block-navigation__responsive-container.is-menu-open:where(:not(.disable-default-overlay)) .wp-block-navigation__responsive-container-content .wp-block-navigation__container,
 .wp-block-navigation__responsive-container.is-menu-open:where(:not(.disable-default-overlay)) .wp-block-navigation__responsive-container-content .wp-block-navigation-item,
