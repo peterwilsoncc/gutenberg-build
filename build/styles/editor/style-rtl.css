@@ -8397,19 +8397,45 @@ textarea.editor-post-text-editor::placeholder {
 .editor-start-page-options__modal .block-editor-block-patterns-list {
   padding-bottom: 72px;
 }
+.editor-start-page-options__modal .editor-start-page-options__sidebar {
+  display: none;
+}
+@media (min-width: 782px) {
+  .editor-start-page-options__modal .editor-start-page-options__sidebar {
+    display: flex;
+    position: absolute;
+    top: 72px;
+    right: 0;
+    bottom: 72px;
+    width: 280px;
+    padding: 24px;
+    overflow-x: visible;
+    overflow-y: auto;
+  }
+}
+
+.editor-start-page-options__modal-content {
+  container-type: inline-size;
+}
+
+@media (min-width: 782px) {
+  .editor-start-page-options__modal-content.has-pattern-categories {
+    margin-right: 280px;
+  }
+}
+
+.editor-start-page-options__no-results {
+  padding: 32px;
+  text-align: center;
+}
 
 .editor-start-page-options__modal-content .block-editor-block-patterns-list {
   column-count: 2;
   column-gap: 24px;
 }
-@media (min-width: 782px) {
+@container (min-width: 464px) {
   .editor-start-page-options__modal-content .block-editor-block-patterns-list {
-    column-count: 3;
-  }
-}
-@media (min-width: 1280px) {
-  .editor-start-page-options__modal-content .block-editor-block-patterns-list {
-    column-count: 4;
+    columns: 4 220px;
   }
 }
 .editor-start-page-options__modal-content .block-editor-block-patterns-list .block-editor-block-patterns-list__list-item {
@@ -8446,12 +8472,7 @@ textarea.editor-post-text-editor::placeholder {
 }
 @media (min-width: 782px) {
   .editor-start-template-options__modal-content .block-editor-block-patterns-list {
-    column-count: 3;
-  }
-}
-@media (min-width: 1280px) {
-  .editor-start-template-options__modal-content .block-editor-block-patterns-list {
-    column-count: 4;
+    columns: 4 220px;
   }
 }
 .editor-start-template-options__modal-content .block-editor-block-patterns-list .block-editor-block-patterns-list__list-item {

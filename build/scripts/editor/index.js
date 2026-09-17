@@ -85335,8 +85335,8 @@ If there's a particular need for this, please submit a feature request at https:
                             ringbuffer,
                             ringbuffer_size
                           );
-                          for (var _x52 = 0; _x52 < copy_dst - ringbuffer_end; _x52++)
-                            ringbuffer[_x52] = ringbuffer[ringbuffer_end + _x52];
+                          for (var _x53 = 0; _x53 < copy_dst - ringbuffer_end; _x53++)
+                            ringbuffer[_x53] = ringbuffer[ringbuffer_end + _x53];
                         }
                       } else {
                         throw new Error(
@@ -100096,6 +100096,13 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks15 = __toESM(require_blocks(), 1);
   var import_preferences8 = __toESM(require_preferences(), 1);
   var import_jsx_runtime480 = __toESM(require_jsx_runtime(), 1);
+  var { getPopulatedCategories, searchItems } = unlock(
+    import_block_editor26.privateApis
+  );
+  var ALL_PATTERNS_CATEGORY = {
+    name: "allPatterns",
+    label: (0, import_i18n215._x)("All", "patterns")
+  };
   function useStartPatterns() {
     const { blockPatternsWithPostContentBlockType, postType: postType2 } = (0, import_data78.useSelect)(
       (select9) => {
@@ -100120,6 +100127,34 @@ If there's a particular need for this, please submit a feature request at https:
         return postType2 === "page" && !pattern.postTypes || Array.isArray(pattern.postTypes) && pattern.postTypes.includes(postType2);
       });
     }, [postType2, blockPatternsWithPostContentBlockType]);
+  }
+  function useStartPatternCategories(startPatterns) {
+    const { registeredCategories, userCategories } = (0, import_data78.useSelect)((select9) => {
+      return {
+        // The block editor settings already merge the categories from the
+        // REST API with the ones added through `block_editor_settings_all`.
+        registeredCategories: select9(import_block_editor26.store).getSettings().__experimentalBlockPatternCategories,
+        userCategories: select9(import_core_data54.store).getUserPatternCategories()
+      };
+    }, []);
+    return (0, import_element298.useMemo)(() => {
+      const allCategories = [...registeredCategories ?? []];
+      userCategories?.forEach((userCategory) => {
+        if (!allCategories.some(
+          ({ name: name2 }) => name2 === userCategory.name
+        )) {
+          allCategories.push(userCategory);
+        }
+      });
+      const categories = getPopulatedCategories(
+        startPatterns,
+        allCategories
+      );
+      if (categories.every(({ name: name2 }) => name2 === "uncategorized")) {
+        return [];
+      }
+      return [ALL_PATTERNS_CATEGORY, ...categories];
+    }, [startPatterns, registeredCategories, userCategories]);
   }
   function PatternSelection({ blockPatterns, onChoosePattern }) {
     const { editEntityRecord } = (0, import_data78.useDispatch)(import_core_data54.store);
@@ -100146,9 +100181,34 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function StartPageOptionsModal({ onClose }) {
     const [showStartPatterns, setShowStartPatterns] = (0, import_element298.useState)(true);
+    const [selectedCategory, setSelectedCategory] = (0, import_element298.useState)(
+      ALL_PATTERNS_CATEGORY.name
+    );
+    const [searchValue, setSearchValue] = (0, import_element298.useState)("");
     const { set: setPreference } = (0, import_data78.useDispatch)(import_preferences8.store);
     const startPatterns = useStartPatterns();
+    const patternCategories = useStartPatternCategories(startPatterns);
+    const hasCategories = patternCategories.length > 0;
     const hasStartPattern = startPatterns.length > 0;
+    const activeCategory = patternCategories.some(
+      ({ name: name2 }) => name2 === selectedCategory
+    ) ? selectedCategory : ALL_PATTERNS_CATEGORY.name;
+    const filteredStartPatterns = (0, import_element298.useMemo)(() => {
+      let patterns2 = startPatterns;
+      if (activeCategory !== ALL_PATTERNS_CATEGORY.name) {
+        patterns2 = patterns2.filter(
+          (pattern) => activeCategory === "uncategorized" ? !pattern.categories?.some(
+            (patternCategory) => patternCategories.some(
+              ({ name: name2 }) => name2 === patternCategory
+            )
+          ) : pattern.categories?.includes(activeCategory)
+        );
+      }
+      if (searchValue) {
+        patterns2 = searchItems(patterns2, searchValue);
+      }
+      return patterns2;
+    }, [startPatterns, activeCategory, patternCategories, searchValue]);
     if (!hasStartPattern) {
       return null;
     }
@@ -100164,10 +100224,62 @@ If there's a particular need for this, please submit a feature request at https:
         isFullScreen: true,
         onRequestClose: handleClose,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime480.jsx)("div", { className: "editor-start-page-options__modal-content", children: /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
+          hasCategories ? /* @__PURE__ */ (0, import_jsx_runtime480.jsxs)(
+            tabs_exports.Root,
+            {
+              orientation: "vertical",
+              value: activeCategory,
+              onValueChange: setSelectedCategory,
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime480.jsxs)(
+                  Stack,
+                  {
+                    direction: "column",
+                    gap: "lg",
+                    className: "editor-start-page-options__sidebar",
+                    children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
+                        import_components148.SearchControl,
+                        {
+                          onChange: setSearchValue,
+                          value: searchValue,
+                          label: (0, import_i18n215.__)("Search"),
+                          placeholder: (0, import_i18n215.__)("Search")
+                        }
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(tabs_exports.List, { children: patternCategories.map(({ name: name2, label }) => /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(tabs_exports.Tab, { value: name2, children: label }, name2)) })
+                    ]
+                  }
+                ),
+                patternCategories.map(({ name: name2 }) => /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
+                  tabs_exports.Panel,
+                  {
+                    value: name2,
+                    tabIndex: -1,
+                    className: "editor-start-page-options__modal-content has-pattern-categories",
+                    children: filteredStartPatterns.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
+                      PatternSelection,
+                      {
+                        blockPatterns: filteredStartPatterns,
+                        onChoosePattern: handleClose
+                      }
+                    ) : /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
+                      Text,
+                      {
+                        render: /* @__PURE__ */ (0, import_jsx_runtime480.jsx)("p", {}),
+                        className: "editor-start-page-options__no-results",
+                        children: (0, import_i18n215.__)("No results found.")
+                      }
+                    )
+                  },
+                  name2
+                ))
+              ]
+            }
+          ) : /* @__PURE__ */ (0, import_jsx_runtime480.jsx)("div", { className: "editor-start-page-options__modal-content", children: /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
             PatternSelection,
             {
-              blockPatterns: startPatterns,
+              blockPatterns: filteredStartPatterns,
               onChoosePattern: handleClose
             }
           ) }),

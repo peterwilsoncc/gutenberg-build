@@ -13356,6 +13356,30 @@ var wp;
     name: "core/starter-content",
     label: (0, import_i18n3.__)("Starter content")
   };
+  function hasRegisteredCategory(pattern, allCategories) {
+    if (!pattern.categories || !pattern.categories.length) {
+      return false;
+    }
+    return pattern.categories.some(
+      (cat) => allCategories.some((category) => category.name === cat)
+    );
+  }
+  function getPopulatedCategories(patterns2, allCategories) {
+    const categories = allCategories.filter(
+      (category) => patterns2.some(
+        (pattern) => pattern.categories?.includes(category.name)
+      )
+    ).sort((a, b) => a.label.localeCompare(b.label));
+    if (patterns2.some(
+      (pattern) => !hasRegisteredCategory(pattern, allCategories)
+    ) && !categories.find((category) => category.name === "uncategorized")) {
+      categories.push({
+        name: "uncategorized",
+        label: (0, import_i18n3.__)("Uncategorized")
+      });
+    }
+    return categories;
+  }
   function isPatternFiltered(pattern, sourceFilter, syncFilter) {
     const isUserPattern = pattern.name.startsWith("core/block");
     const isDirectoryPattern = pattern.source === "core" || pattern.source?.startsWith("pattern-directory");
@@ -66211,14 +66235,6 @@ var wp;
   var import_element164 = __toESM(require_element(), 1);
   var import_i18n60 = __toESM(require_i18n(), 1);
   var import_a11y9 = __toESM(require_a11y(), 1);
-  function hasRegisteredCategory(pattern, allCategories) {
-    if (!pattern.categories || !pattern.categories.length) {
-      return false;
-    }
-    return pattern.categories.some(
-      (cat) => allCategories.some((category) => category.name === cat)
-    );
-  }
   function usePatternCategories(rootClientId, sourceFilter = "all") {
     const [patterns2, allCategories] = use_patterns_state_default(
       void 0,
@@ -66231,21 +66247,10 @@ var wp;
       [sourceFilter, patterns2]
     );
     const populatedCategories = (0, import_element164.useMemo)(() => {
-      const categories = allCategories.filter(
-        (category) => filteredPatterns.some(
-          (pattern) => pattern.categories?.includes(category.name)
-        )
-      ).sort((a, b) => a.label.localeCompare(b.label));
-      if (filteredPatterns.some(
-        (pattern) => !hasRegisteredCategory(pattern, allCategories)
-      ) && !categories.find(
-        (category) => category.name === "uncategorized"
-      )) {
-        categories.push({
-          name: "uncategorized",
-          label: (0, import_i18n60._x)("Uncategorized")
-        });
-      }
+      const categories = getPopulatedCategories(
+        filteredPatterns,
+        allCategories
+      );
       if (filteredPatterns.some(
         (pattern) => pattern.blockTypes?.includes("core/post-content")
       )) {
@@ -113948,7 +113953,9 @@ var wp;
     InnerContent,
     useNativeUndo,
     usesNativeUndo,
-    isElementVisible: isElementVisible2
+    isElementVisible: isElementVisible2,
+    getPopulatedCategories,
+    searchItems
   });
   return __toCommonJS(index_exports);
 })();
