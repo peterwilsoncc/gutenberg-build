@@ -35778,6 +35778,7 @@ ${url}
           text: true
         }
       },
+      shadow: true,
       spacing: {
         margin: true,
         padding: true,
