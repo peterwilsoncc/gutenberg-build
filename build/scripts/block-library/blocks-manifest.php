@@ -2649,6 +2649,7 @@ return array(
 			'multiple' => false,
 			'reusable' => false,
 			'inserter' => false,
+			'shadow' => true,
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true,

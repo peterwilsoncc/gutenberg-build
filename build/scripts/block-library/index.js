@@ -84143,6 +84143,7 @@ ${text}
       multiple: false,
       reusable: false,
       inserter: false,
+      shadow: true,
       spacing: {
         margin: true,
         padding: true,
