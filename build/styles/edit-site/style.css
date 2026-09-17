@@ -3770,7 +3770,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 }
 
 .font-library__font-card .font-library__font-card__count {
-  color: #757575;
+  color: var(--wpds-color-foreground-content-neutral-weak, #707070);
 }
 
 .font-library__font-card .font-library__font-variant_demo-image {
@@ -3832,7 +3832,7 @@ button.font-library__upload-area {
 }
 
 .font-library__local-fonts .font-library__upload-area__text {
-  color: #757575;
+  color: var(--wpds-color-foreground-content-neutral-weak, #707070);
 }
 
 .font-library__google-fonts-confirm {
