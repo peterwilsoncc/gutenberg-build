@@ -5619,6 +5619,7 @@ return array(
 			'dimensions' => array(
 				'minHeight' => true
 			),
+			'shadow' => true,
 			'spacing' => array(
 				'blockGap' => true,
 				'padding' => true,
