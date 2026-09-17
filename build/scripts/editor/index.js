@@ -106395,11 +106395,7 @@ ${content}
           name: "wp_template"
         }) ?? false;
       }
-      const canViewTemplates = isVisible2 ? !!canUser("read", {
-        kind: "postType",
-        name: "wp_template"
-      }) : false;
-      if ((!isBlockTheme || !canViewTemplates) && isVisible2) {
+      if (!isBlockTheme && isVisible2) {
         return "classic";
       }
       if (isBlockTheme && !!getCurrentTemplateId2()) {
