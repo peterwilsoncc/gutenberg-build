@@ -3678,6 +3678,7 @@ return array(
 					'style' => true
 				)
 			),
+			'shadow' => true,
 			'interactivity' => array(
 				'clientNavigation' => true
 			)
