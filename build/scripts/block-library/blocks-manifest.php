@@ -5045,6 +5045,7 @@ return array(
 				)
 			),
 			'interactivity' => true,
+			'shadow' => true,
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true
