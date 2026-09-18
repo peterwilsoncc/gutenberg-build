@@ -3169,6 +3169,7 @@ return array(
 					'fontSize' => true
 				)
 			),
+			'shadow' => true,
 			'interactivity' => array(
 				'clientNavigation' => true
 			)

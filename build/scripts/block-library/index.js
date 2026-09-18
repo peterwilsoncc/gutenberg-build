@@ -36144,6 +36144,7 @@ ${url}
           fontSize: true
         }
       },
+      shadow: true,
       interactivity: {
         clientNavigation: true
       }
