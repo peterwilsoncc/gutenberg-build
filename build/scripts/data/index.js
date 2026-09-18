@@ -1398,7 +1398,7 @@ var wp;
             }
             return selector(state.root, ...args);
           };
-          boundSelector.__unstableNormalizeArgs = selector.__unstableNormalizeArgs;
+          boundSelector.normalizeArgs = getNormalizeArgs(selector);
           const resolver = resolvers[selectorName];
           if (!resolver) {
             boundSelector.hasResolver = false;
@@ -1714,12 +1714,16 @@ var wp;
       return selector(...args);
     };
     selectorResolver.hasResolver = true;
-    selectorResolver.__unstableNormalizeArgs = selector.__unstableNormalizeArgs;
+    selectorResolver.normalizeArgs = selector.normalizeArgs;
     return selectorResolver;
   }
+  function getNormalizeArgs(selector) {
+    return selector.normalizeArgs ?? selector.__unstableNormalizeArgs;
+  }
   function normalize(selector, args) {
-    if (selector.__unstableNormalizeArgs && typeof selector.__unstableNormalizeArgs === "function" && args?.length) {
-      return selector.__unstableNormalizeArgs(args);
+    const normalizeArgs = getNormalizeArgs(selector);
+    if (typeof normalizeArgs === "function" && args?.length) {
+      return normalizeArgs(args);
     }
     return args;
   }

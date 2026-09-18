@@ -4702,7 +4702,7 @@ var wp;
     }
     return getFilteredItem(item, query._fields);
   });
-  getEntityRecord.__unstableNormalizeArgs = (args) => {
+  getEntityRecord.normalizeArgs = (args) => {
     const newArgs = [...args];
     const recordKey = newArgs?.[2];
     newArgs[2] = isNumericID(recordKey) ? Number(recordKey) : recordKey;
