@@ -49891,13 +49891,8 @@ var wp;
       }
     ),
     render: ({ item }) => {
-      let excerpt;
-      if (typeof item.excerpt === "string") {
-        excerpt = !!item.excerpt ? (0, import_html_entities6.decodeEntities)(item.excerpt) : (0, import_i18n53.__)("Add an excerpt");
-      } else {
-        excerpt = (0, import_html_entities6.decodeEntities)(item.excerpt?.raw || "");
-      }
-      return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(import_components11.__experimentalText, { align: "left", numberOfLines: 3, truncate: true, children: excerpt });
+      const excerpt = typeof item.excerpt === "string" ? item.excerpt : item.excerpt?.raw;
+      return excerpt ? /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(import_components11.__experimentalText, { align: "left", numberOfLines: 3, truncate: true, children: (0, import_html_entities6.decodeEntities)(excerpt) }) : null;
     },
     Edit: {
       control: "textarea",
