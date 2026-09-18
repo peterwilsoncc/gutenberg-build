@@ -50155,24 +50155,24 @@ ${text}
       if (isExternal) {
         badges.push({
           label: (0, import_i18n135.__)("External link"),
-          intent: "default"
+          intent: "none"
         });
       } else if (isHashLink(url)) {
         badges.push({
           label: (0, import_i18n135.__)("Internal link"),
-          intent: "default"
+          intent: "none"
         });
       } else if (isHomepage(url, homeUrl)) {
         badges.push({
           label: (0, import_i18n135.__)("Homepage"),
-          intent: "default"
+          intent: "none"
         });
       } else if (type && type !== "custom") {
-        badges.push({ label: capitalize(type), intent: "default" });
+        badges.push({ label: capitalize(type), intent: "none" });
       } else {
         badges.push({
           label: (0, import_i18n135.__)("Page"),
-          intent: "default"
+          intent: "none"
         });
       }
     }
@@ -50183,18 +50183,18 @@ ${text}
           (0, import_i18n135.__)("Missing %s"),
           type
         ),
-        intent: "error"
+        intent: "high"
       });
     } else if (!url) {
-      badges.push({ label: (0, import_i18n135.__)("No link selected"), intent: "error" });
+      badges.push({ label: (0, import_i18n135.__)("No link selected"), intent: "high" });
     } else if (entityStatus) {
       const statusMap = {
-        publish: { label: (0, import_i18n135.__)("Published"), intent: "success" },
-        future: { label: (0, import_i18n135.__)("Scheduled"), intent: "warning" },
-        draft: { label: (0, import_i18n135.__)("Draft"), intent: "warning" },
-        pending: { label: (0, import_i18n135.__)("Pending"), intent: "warning" },
-        private: { label: (0, import_i18n135.__)("Private"), intent: "default" },
-        trash: { label: (0, import_i18n135.__)("Trash"), intent: "error" }
+        publish: { label: (0, import_i18n135.__)("Published"), intent: "stable" },
+        future: { label: (0, import_i18n135.__)("Scheduled"), intent: "informational" },
+        draft: { label: (0, import_i18n135.__)("Draft"), intent: "low" },
+        pending: { label: (0, import_i18n135.__)("Pending"), intent: "low" },
+        private: { label: (0, import_i18n135.__)("Private"), intent: "informational" },
+        trash: { label: (0, import_i18n135.__)("Trashed"), intent: "high" }
       };
       const badge = statusMap[entityStatus];
       if (badge) {

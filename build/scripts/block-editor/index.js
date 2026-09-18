@@ -86382,7 +86382,6 @@ var wp;
 
   // packages/block-editor/build-module/components/link-control/link-preview.mjs
   var import_jsx_runtime438 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge2 } = unlock(import_components162.privateApis);
   function LinkPreview({
     value,
     onEditClick,
@@ -86487,7 +86486,7 @@ var wp;
                           gap: 1,
                           children: value.badges.map(
                             (badge, index3) => /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(
-                              WCBadge2,
+                              Badge,
                               {
                                 intent: badge.intent,
                                 children: badge.label
@@ -97413,7 +97412,7 @@ var wp;
   var import_components208 = __toESM(require_components(), 1);
   var import_i18n212 = __toESM(require_i18n(), 1);
   var import_jsx_runtime502 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge3 } = unlock(import_components208.privateApis);
+  var { Badge: WCBadge2 } = unlock(import_components208.privateApis);
   function StateControlBadges({
     viewportStates = [],
     pseudoStates = [],
@@ -97460,7 +97459,7 @@ var wp;
         wrap: "wrap",
         children: activeStates.map((state) => {
           const badge = /* @__PURE__ */ (0, import_jsx_runtime502.jsxs)(
-            WCBadge3,
+            WCBadge2,
             {
               className: "block-editor-global-styles-state-control__badge",
               children: [
@@ -113655,7 +113654,6 @@ var wp;
   var import_components274 = __toESM(require_components(), 1);
   var import_dom76 = __toESM(require_dom(), 1);
   var import_jsx_runtime602 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge4 } = unlock(import_components274.privateApis);
   function LinkPreview2({ title, url, image, badges }) {
     return /* @__PURE__ */ (0, import_jsx_runtime602.jsxs)(import_components274.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
       /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(import_components274.FlexItem, { className: "link-preview-button__content", children: /* @__PURE__ */ (0, import_jsx_runtime602.jsxs)(import_components274.__experimentalHStack, { alignment: "top", children: [
@@ -113695,7 +113693,7 @@ var wp;
                   className: "link-preview-button__badges",
                   alignment: "left",
                   children: badges.map((badge) => /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(
-                    WCBadge4,
+                    Badge,
                     {
                       intent: badge.intent,
                       children: badge.label
