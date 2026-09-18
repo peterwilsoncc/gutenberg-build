@@ -6636,7 +6636,8 @@ return array(
 				'color' => true,
 				'width' => true,
 				'style' => true
-			)
+			),
+			'shadow' => true
 		),
 		'style' => 'wp-block-query-no-results'
 	),
