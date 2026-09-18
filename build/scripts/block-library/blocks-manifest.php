@@ -3956,6 +3956,7 @@ return array(
 					'text' => true
 				)
 			),
+			'shadow' => true,
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true,
