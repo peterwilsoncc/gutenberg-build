@@ -54376,6 +54376,7 @@ ${text}
           margin: false
         }
       },
+      shadow: true,
       contentRole: true
     },
     editorStyle: "wp-block-page-list-editor",
