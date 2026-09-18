@@ -6449,6 +6449,7 @@ var wp;
   }
   function sortResults(results, search) {
     const searchTokens = tokenize(search);
+    const scoreKey = (result) => `${result.kind}:${result.type}:${result.id}`;
     const scores = {};
     for (const result of results) {
       if (result.title) {
@@ -6465,12 +6466,14 @@ var wp;
         );
         const exactMatchScore = exactMatchingTokens.length / titleTokens.length * 10;
         const subMatchScore = subMatchingTokens.length / titleTokens.length;
-        scores[result.id] = exactMatchScore + subMatchScore;
+        scores[scoreKey(result)] = exactMatchScore + subMatchScore;
       } else {
-        scores[result.id] = 0;
+        scores[scoreKey(result)] = 0;
       }
     }
-    return results.sort((a, b) => scores[b.id] - scores[a.id]);
+    return results.sort(
+      (a, b) => scores[scoreKey(b)] - scores[scoreKey(a)]
+    );
   }
   function tokenize(text) {
     return text.toLowerCase().match(/[\p{L}\p{N}]+/gu) || [];
