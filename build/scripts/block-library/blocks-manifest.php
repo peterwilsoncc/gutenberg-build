@@ -6086,7 +6086,8 @@ return array(
 				'color' => true,
 				'width' => true,
 				'style' => true
-			)
+			),
+			'shadow' => true
 		),
 		'style' => 'wp-block-post-template',
 		'editorStyle' => 'wp-block-post-template-editor'
