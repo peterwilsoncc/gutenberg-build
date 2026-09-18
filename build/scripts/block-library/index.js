@@ -44275,6 +44275,7 @@ ${text}
         width: true,
         style: true
       },
+      shadow: true,
       interactivity: {
         clientNavigation: true
       }
