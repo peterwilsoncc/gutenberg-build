@@ -4211,6 +4211,16 @@ button.font-library__upload-area {
 .global-styles-ui__color-indicator-wrapper {
   height: 24px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.global-styles-ui__palette-preview {
+  display: inline-flex;
+}
+
+.global-styles-ui__palette-preview > * + * {
+  margin-inline-start: -8px;
 }
 
 .global-styles-ui__shadows-panel__options-container,
