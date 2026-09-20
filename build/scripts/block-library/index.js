@@ -132,10 +132,10 @@ var wp;
           if (typeof b !== "function" && b !== null)
             throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
           extendStatics(d, b);
-          function __258() {
+          function __257() {
             this.constructor = d;
           }
-          d.prototype = b === null ? Object.create(b) : (__258.prototype = b.prototype, new __258());
+          d.prototype = b === null ? Object.create(b) : (__257.prototype = b.prototype, new __257());
         };
       })();
       var __assign2 = exports && exports.__assign || function() {
@@ -3252,7 +3252,7 @@ var wp;
   var import_data172 = __toESM(require_data(), 1);
   var import_block_editor291 = __toESM(require_block_editor(), 1);
   var import_server_side_render7 = __toESM(require_server_side_render(), 1);
-  var import_i18n271 = __toESM(require_i18n(), 1);
+  var import_i18n270 = __toESM(require_i18n(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
   function r(e3) {
@@ -19474,7 +19474,7 @@ var wp;
     ] });
   }
   function Placeholder4({ clientId, name: name118, setAttributes }) {
-    const { blockType, variations: variations20 } = (0, import_data18.useSelect)(
+    const { blockType, variations: variations19 } = (0, import_data18.useSelect)(
       (select10) => {
         const { getBlockVariations: getBlockVariations4, getBlockType: getBlockType6 } = select10(import_blocks14.store);
         return {
@@ -19491,7 +19491,7 @@ var wp;
       {
         icon: blockType?.icon?.src,
         label: blockType?.title,
-        variations: variations20,
+        variations: variations19,
         instructions: (0, import_i18n28.__)("Divide into columns. Select a layout:"),
         onSelect: (nextVariation) => {
           if (nextVariation.attributes) {
@@ -34847,7 +34847,7 @@ ${url}
     return [showPlaceholder, setShowPlaceholder];
   }
   function GroupPlaceHolder({ name: name118, onSelect }) {
-    const variations20 = (0, import_data38.useSelect)(
+    const variations19 = (0, import_data38.useSelect)(
       (select10) => select10(import_blocks27.store).getBlockVariations(name118, "block"),
       [name118]
     );
@@ -34855,10 +34855,10 @@ ${url}
       className: "wp-block-group__placeholder"
     });
     (0, import_element62.useEffect)(() => {
-      if (variations20 && variations20.length === 1) {
-        onSelect(variations20[0]);
+      if (variations19 && variations19.length === 1) {
+        onSelect(variations19[0]);
       }
-    }, [onSelect, variations20]);
+    }, [onSelect, variations19]);
     return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
       import_components44.Placeholder,
       {
@@ -34869,7 +34869,7 @@ ${url}
             role: "list",
             className: "wp-block-group-placeholder__variations",
             "aria-label": (0, import_i18n76.__)("Block variations"),
-            children: variations20.map((variation) => /* @__PURE__ */ (0, import_jsx_runtime293.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+            children: variations19.map((variation) => /* @__PURE__ */ (0, import_jsx_runtime293.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
               import_components44.Button,
               {
                 __next40pxDefaultSize: true,
@@ -53138,7 +53138,7 @@ ${text}
       const isActive = (blockAttributes8, variationAttributes) => {
         return blockAttributes8.type === variationAttributes.type;
       };
-      const variations20 = settings117.variations.map((variation) => {
+      const variations19 = settings117.variations.map((variation) => {
         return {
           ...variation,
           ...!variation.icon && {
@@ -53151,7 +53151,7 @@ ${text}
       });
       return {
         ...settings117,
-        variations: variations20
+        variations: variations19
       };
     }
     return settings117;
@@ -63748,7 +63748,7 @@ ${text}
     if (name118 !== "core/post-terms") {
       return settings117;
     }
-    const variations20 = settings117.variations.map((variation) => ({
+    const variations19 = settings117.variations.map((variation) => ({
       ...variation,
       ...{
         icon: variationIconMap[variation.name] ?? post_categories_default
@@ -63756,7 +63756,7 @@ ${text}
     }));
     return {
       ...settings117,
-      variations: variations20
+      variations: variations19
     };
   }
 
@@ -66020,7 +66020,7 @@ ${text}
       },
       [attributes2]
     );
-    const variations20 = (0, import_element130.useMemo)(() => {
+    const variations19 = (0, import_element130.useMemo)(() => {
       const isNotConnected = (variation) => !variation.attributes?.namespace;
       if (!activeVariationName) {
         return blockVariations.filter(isNotConnected);
@@ -66033,7 +66033,7 @@ ${text}
       }
       return blockVariations.filter(isNotConnected);
     }, [activeVariationName, blockVariations]);
-    return variations20;
+    return variations19;
   }
   var usePatterns = (clientId, name118) => {
     return (0, import_data117.useSelect)(
@@ -80595,7 +80595,7 @@ ${text}
         }
         return entity?.area === variationAttributes.area;
       };
-      const variations20 = settings117.variations.map((variation) => {
+      const variations19 = settings117.variations.map((variation) => {
         return {
           ...variation,
           ...!variation.isActive && { isActive },
@@ -80606,7 +80606,7 @@ ${text}
       });
       return {
         ...settings117,
-        variations: variations20
+        variations: variations19
       };
     }
     return settings117;
@@ -82932,7 +82932,7 @@ ${text}
     name: () => name116,
     settings: () => settings115
   });
-  var import_i18n268 = __toESM(require_i18n(), 1);
+  var import_i18n267 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/video/deprecated.mjs
   var import_block_editor285 = __toESM(require_block_editor(), 1);
@@ -83101,7 +83101,7 @@ ${text}
   var import_components180 = __toESM(require_components(), 1);
   var import_block_editor287 = __toESM(require_block_editor(), 1);
   var import_element168 = __toESM(require_element(), 1);
-  var import_i18n267 = __toESM(require_i18n(), 1);
+  var import_i18n266 = __toESM(require_i18n(), 1);
   var import_data170 = __toESM(require_data(), 1);
   var import_notices24 = __toESM(require_notices(), 1);
   var import_url26 = __toESM(require_url(), 1);
@@ -83612,51 +83612,6 @@ ${text}
     );
   }
 
-  // packages/block-library/build-module/video/variations.mjs
-  var import_i18n266 = __toESM(require_i18n(), 1);
-  var isGifVariation = ({
-    controls,
-    loop,
-    autoplay,
-    muted,
-    playsInline
-  } = {}) => !controls && !!loop && !!autoplay && !!muted && !!playsInline;
-  var variations19 = [
-    {
-      name: "video",
-      title: (0, import_i18n266.__)("Video"),
-      description: (0, import_i18n266.__)(
-        "A video with customizable playback and interaction controls."
-      ),
-      icon: video_default,
-      attributes: { controls: true },
-      isActive: (blockAttributes8) => !isGifVariation(blockAttributes8),
-      // Not offered in the inserter; used to label a regular video and to
-      // switch a GIF back to a standard video.
-      scope: ["block", "transform"]
-    },
-    {
-      name: "gif",
-      title: (0, import_i18n266.__)("GIF"),
-      description: (0, import_i18n266.__)(
-        "A muted, looping video that plays automatically like an animated GIF."
-      ),
-      icon: video_default,
-      keywords: [(0, import_i18n266.__)("animated"), "gif"],
-      attributes: {
-        controls: false,
-        loop: true,
-        autoplay: true,
-        muted: true,
-        playsInline: true
-      },
-      isActive: (blockAttributes8) => isGifVariation(blockAttributes8),
-      // Created by converting an uploaded GIF, not inserted directly.
-      scope: ["block", "transform"]
-    }
-  ];
-  var variations_default19 = variations19;
-
   // packages/block-library/build-module/video/edit.mjs
   var import_jsx_runtime574 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES10 = ["video"];
@@ -83669,8 +83624,19 @@ ${text}
     onReplace
   }) {
     const videoPlayer = (0, import_element168.useRef)();
-    const { id, controls, poster, src, tracks, width, height } = attributes2;
-    const isGif = isGifVariation(attributes2);
+    const {
+      id,
+      controls,
+      poster,
+      src,
+      tracks,
+      width,
+      height,
+      autoplay,
+      loop,
+      muted,
+      playsInline
+    } = attributes2;
     const aspectRatio = width && height ? `${width} / ${height}` : void 0;
     const [temporaryURL, setTemporaryURL] = (0, import_element168.useState)(attributes2.blob);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
@@ -83687,12 +83653,6 @@ ${text}
         videoPlayer.current.load();
       }
     }, [poster]);
-    (0, import_element168.useEffect)(() => {
-      if (isGif) {
-        videoPlayer.current?.play().catch(() => {
-        });
-      }
-    }, [isGif, src, poster]);
     function onSelectVideo(media) {
       if (!media || !media.url) {
         setAttributes({
@@ -83748,8 +83708,8 @@ ${text}
           className: "block-editor-media-placeholder",
           withIllustration: !isSingleSelected,
           icon: video_default,
-          label: (0, import_i18n267.__)("Video"),
-          instructions: (0, import_i18n267.__)(
+          label: (0, import_i18n266.__)("Video"),
+          instructions: (0, import_i18n266.__)(
             "Drag and drop a video, upload, or choose from your library."
           ),
           children: content
@@ -83803,10 +83763,10 @@ ${text}
           }
         ) })
       ] }),
-      !isGif && /* @__PURE__ */ (0, import_jsx_runtime574.jsx)(import_block_editor287.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime574.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime574.jsx)(import_block_editor287.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime574.jsxs)(
         import_components180.__experimentalToolsPanel,
         {
-          label: (0, import_i18n267.__)("Settings"),
+          label: (0, import_i18n266.__)("Settings"),
           resetAll: () => {
             setAttributes({
               autoplay: false,
@@ -83848,10 +83808,10 @@ ${text}
             poster,
             src: src || temporaryURL,
             ref: videoPlayer,
-            autoPlay: isGif,
-            loop: isGif,
-            muted: isGif,
-            playsInline: isGif,
+            autoPlay: autoplay,
+            loop,
+            muted,
+            playsInline,
             width,
             height,
             style: aspectRatio ? { aspectRatio } : void 0,
@@ -83866,7 +83826,7 @@ ${text}
             setAttributes,
             isSelected: isSingleSelected,
             insertBlocksAfter,
-            label: (0, import_i18n267.__)("Video caption text"),
+            label: (0, import_i18n266.__)("Video caption text"),
             showToolbarButton: isSingleSelected && hasNonContentControls
           }
         )
@@ -84013,11 +83973,10 @@ ${text}
       attributes: {
         src: "https://upload.wikimedia.org/wikipedia/commons/c/ca/Wood_thrush_in_Central_Park_switch_sides_%2816510%29.webm",
         // translators: Caption accompanying a video of the wood thrush singing, which serves as an example for the Video block.
-        caption: (0, import_i18n268.__)("Wood thrush singing in Central Park, NYC.")
+        caption: (0, import_i18n267.__)("Wood thrush singing in Central Park, NYC.")
       }
     },
     transforms: transforms_default40,
-    variations: variations_default19,
     deprecated: deprecated_default56,
     edit: edit_default36,
     save: save52
@@ -84037,7 +83996,7 @@ ${text}
   // packages/block-library/build-module/footnotes/edit.mjs
   var import_block_editor289 = __toESM(require_block_editor(), 1);
   var import_core_data101 = __toESM(require_core_data(), 1);
-  var import_i18n269 = __toESM(require_i18n(), 1);
+  var import_i18n268 = __toESM(require_i18n(), 1);
   var import_components181 = __toESM(require_components(), 1);
   var import_jsx_runtime576 = __toESM(require_jsx_runtime(), 1);
   function FootnotesEdit({ context: { postType, postId } }) {
@@ -84060,8 +84019,8 @@ ${text}
         import_components181.Placeholder,
         {
           icon: /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(import_block_editor289.BlockIcon, { icon: format_list_numbered_default }),
-          label: (0, import_i18n269.__)("Footnotes"),
-          instructions: (0, import_i18n269.__)(
+          label: (0, import_i18n268.__)("Footnotes"),
+          instructions: (0, import_i18n268.__)(
             "Footnotes are not supported here. Add this block to post or page content."
           )
         }
@@ -84072,8 +84031,8 @@ ${text}
         import_components181.Placeholder,
         {
           icon: /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(import_block_editor289.BlockIcon, { icon: format_list_numbered_default }),
-          label: (0, import_i18n269.__)("Footnotes"),
-          instructions: (0, import_i18n269.__)(
+          label: (0, import_i18n268.__)("Footnotes"),
+          instructions: (0, import_i18n268.__)(
             "Footnotes found in blocks within this document will be displayed here."
           )
         }
@@ -84240,7 +84199,7 @@ ${text}
   var v4_default = v412;
 
   // packages/block-library/build-module/footnotes/format.mjs
-  var import_i18n270 = __toESM(require_i18n(), 1);
+  var import_i18n269 = __toESM(require_i18n(), 1);
   var import_rich_text9 = __toESM(require_rich_text(), 1);
   var import_block_editor290 = __toESM(require_block_editor(), 1);
   var import_data171 = __toESM(require_data(), 1);
@@ -84252,7 +84211,7 @@ ${text}
   var POST_CONTENT_BLOCK_NAME = "core/post-content";
   var SYNCED_PATTERN_BLOCK_NAME = "core/block";
   var format2 = {
-    title: (0, import_i18n270.__)("Footnote"),
+    title: (0, import_i18n269.__)("Footnote"),
     tagName: "sup",
     className: "fn",
     attributes: {
@@ -84372,7 +84331,7 @@ ${text}
         import_block_editor290.RichTextToolbarButton,
         {
           icon: format_list_numbered_default,
-          title: (0, import_i18n270.__)("Footnote"),
+          title: (0, import_i18n269.__)("Footnote"),
           onClick,
           isActive: isObjectActive
         }
@@ -84571,12 +84530,12 @@ ${text}
               urlQueryArgs: { post_id: context?.postId }
             });
             if (status === "loading") {
-              return /* @__PURE__ */ (0, import_jsx_runtime578.jsx)("div", { ...blockProps, children: (0, import_i18n271.__)("Loading\u2026") });
+              return /* @__PURE__ */ (0, import_jsx_runtime578.jsx)("div", { ...blockProps, children: (0, import_i18n270.__)("Loading\u2026") });
             }
             if (status === "error") {
-              return /* @__PURE__ */ (0, import_jsx_runtime578.jsx)("div", { ...blockProps, children: (0, import_i18n271.sprintf)(
+              return /* @__PURE__ */ (0, import_jsx_runtime578.jsx)("div", { ...blockProps, children: (0, import_i18n270.sprintf)(
                 /* translators: %s: error message describing the problem */
-                (0, import_i18n271.__)("Error loading block: %s"),
+                (0, import_i18n270.__)("Error loading block: %s"),
                 error2
               ) });
             }
