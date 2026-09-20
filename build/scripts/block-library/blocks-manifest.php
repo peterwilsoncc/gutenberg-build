@@ -4533,6 +4533,7 @@ return array(
 					'text' => true
 				)
 			),
+			'shadow' => true,
 			'spacing' => array(
 				'padding' => true,
 				'__experimentalDefaultControls' => array(
