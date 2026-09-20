@@ -62716,9 +62716,15 @@ ${text}
           fontSize: true
         }
       },
+      shadow: {
+        __experimentalSkipSerialization: true
+      },
       interactivity: {
         clientNavigation: true
       }
+    },
+    selectors: {
+      shadow: ".wp-block-post-navigation-link:not(:empty)"
     },
     style: "wp-block-post-navigation-link"
   };
@@ -62732,9 +62738,10 @@ ${text}
   var import_jsx_runtime405 = __toESM(require_jsx_runtime(), 1);
   function PostNavigationLinkEdit({
     context: { postType },
-    attributes: { type, label, showTitle, linkLabel, arrow, taxonomy },
+    attributes: attributes2,
     setAttributes
   }) {
+    const { type, label, showTitle, linkLabel, arrow, taxonomy } = attributes2;
     const isNext = type === "next";
     let placeholder2 = isNext ? (0, import_i18n175.__)("Next") : (0, import_i18n175.__)("Previous");
     const arrowMap5 = {
@@ -62753,7 +62760,8 @@ ${text}
       );
     }
     const ariaLabel = isNext ? (0, import_i18n175.__)("Next post") : (0, import_i18n175.__)("Previous post");
-    const blockProps = (0, import_block_editor192.useBlockProps)();
+    const shadowProps = (0, import_block_editor192.__experimentalGetShadowClassesAndStyles)(attributes2);
+    const blockProps = (0, import_block_editor192.useBlockProps)({ style: shadowProps.style });
     const taxonomies = (0, import_data111.useSelect)(
       (select10) => {
         const { getTaxonomies } = select10(import_core_data66.store);

@@ -6016,9 +6016,15 @@ return array(
 					'fontSize' => true
 				)
 			),
+			'shadow' => array(
+				'__experimentalSkipSerialization' => true
+			),
 			'interactivity' => array(
 				'clientNavigation' => true
 			)
+		),
+		'selectors' => array(
+			'shadow' => '.wp-block-post-navigation-link:not(:empty)'
 		),
 		'style' => 'wp-block-post-navigation-link'
 	),
