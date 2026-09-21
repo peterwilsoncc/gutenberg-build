@@ -8565,6 +8565,7 @@ return array(
 				'margin' => true,
 				'padding' => true
 			),
+			'shadow' => true,
 			'typography' => array(
 				'fontSize' => true,
 				'__experimentalFontFamily' => true
