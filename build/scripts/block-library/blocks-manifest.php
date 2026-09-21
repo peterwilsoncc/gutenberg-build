@@ -218,6 +218,9 @@ return array(
 		),
 		'supports' => array(
 			'html' => false,
+			'background' => array(
+				'gradient' => true
+			),
 			'color' => array(
 				'background' => true,
 				'gradients' => true

@@ -4932,6 +4932,9 @@ var wp;
     allowedBlocks: ["core/accordion-heading", "core/accordion-panel"],
     supports: {
       html: false,
+      background: {
+        gradient: true
+      },
       color: {
         background: true,
         gradients: true
