@@ -35808,6 +35808,15 @@ ${url}
       anchor: true,
       className: true,
       splitting: true,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalDefaultControls: {
+          backgroundImage: true,
+          gradient: true
+        }
+      },
       __experimentalBorder: {
         color: true,
         radius: true,

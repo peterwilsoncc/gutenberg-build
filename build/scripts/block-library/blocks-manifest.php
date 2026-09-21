@@ -3122,6 +3122,15 @@ return array(
 			'anchor' => true,
 			'className' => true,
 			'splitting' => true,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true,
+				'__experimentalDefaultControls' => array(
+					'backgroundImage' => true,
+					'gradient' => true
+				)
+			),
 			'__experimentalBorder' => array(
 				'color' => true,
 				'radius' => true,
