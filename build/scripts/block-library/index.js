@@ -69697,6 +69697,7 @@ ${text}
           style: true
         }
       },
+      shadow: true,
       interactivity: {
         clientNavigation: true
       }
