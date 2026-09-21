@@ -80978,6 +80978,7 @@ ${text}
       interactivity: {
         clientNavigation: true
       },
+      shadow: true,
       __experimentalBorder: {
         radius: true,
         color: true,

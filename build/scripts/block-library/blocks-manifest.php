@@ -8803,6 +8803,7 @@ return array(
 			'interactivity' => array(
 				'clientNavigation' => true
 			),
+			'shadow' => true,
 			'__experimentalBorder' => array(
 				'radius' => true,
 				'color' => true,
