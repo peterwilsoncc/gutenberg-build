@@ -8798,6 +8798,15 @@ return array(
 			'anchor' => true,
 			'html' => false,
 			'align' => true,
+			'color' => array(
+				'background' => true,
+				'link' => true,
+				'text' => false,
+				'__experimentalDefaultControls' => array(
+					'background' => true,
+					'link' => true
+				)
+			),
 			'shadow' => true,
 			'spacing' => array(
 				'margin' => true,

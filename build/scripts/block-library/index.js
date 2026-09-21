@@ -79449,6 +79449,15 @@ ${text}
       anchor: true,
       html: false,
       align: true,
+      color: {
+        background: true,
+        link: true,
+        text: false,
+        __experimentalDefaultControls: {
+          background: true,
+          link: true
+        }
+      },
       shadow: true,
       spacing: {
         margin: true,
