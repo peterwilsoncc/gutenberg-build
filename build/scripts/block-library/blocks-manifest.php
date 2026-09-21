@@ -658,6 +658,9 @@ return array(
 				'margin' => true,
 				'padding' => true
 			),
+			'background' => array(
+				'gradient' => true
+			),
 			'color' => array(
 				'gradients' => true,
 				'link' => true,

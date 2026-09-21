@@ -14611,6 +14611,9 @@ var wp;
         margin: true,
         padding: true
       },
+      background: {
+        gradient: true
+      },
       color: {
         gradients: true,
         link: true,
