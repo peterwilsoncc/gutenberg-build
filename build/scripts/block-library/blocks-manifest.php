@@ -6176,6 +6176,7 @@ return array(
 					'link' => true
 				)
 			),
+			'shadow' => true,
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true
