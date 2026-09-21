@@ -70282,6 +70282,7 @@ ${text}
           text: true
         }
       },
+      shadow: true,
       layout: {
         allowEditing: false
       },
