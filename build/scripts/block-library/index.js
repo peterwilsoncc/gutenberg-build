@@ -82301,7 +82301,8 @@ ${text}
         color: true,
         width: true,
         style: true
-      }
+      },
+      shadow: true
     },
     style: "wp-block-term-template",
     editorStyle: "wp-block-term-template-editor"
