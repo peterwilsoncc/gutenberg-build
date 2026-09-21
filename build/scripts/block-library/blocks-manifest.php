@@ -8623,6 +8623,7 @@ return array(
 			'anchor' => true,
 			'html' => false,
 			'align' => true,
+			'shadow' => true,
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true
