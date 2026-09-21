@@ -8486,6 +8486,7 @@ return array(
 				'gradients' => true,
 				'link' => true
 			),
+			'shadow' => true,
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true
