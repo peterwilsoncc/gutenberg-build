@@ -21317,6 +21317,9 @@ var wp;
     supports: {
       anchor: true,
       html: false,
+      background: {
+        gradient: true
+      },
       color: {
         gradients: true,
         link: true,
