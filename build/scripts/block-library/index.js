@@ -73231,7 +73231,8 @@ ${text}
         color: true,
         width: true,
         style: true
-      }
+      },
+      shadow: true
     },
     editorStyle: "wp-block-site-tagline-editor",
     style: "wp-block-site-tagline"
