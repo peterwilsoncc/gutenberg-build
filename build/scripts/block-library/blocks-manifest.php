@@ -6403,6 +6403,7 @@ return array(
 					'text' => true
 				)
 			),
+			'shadow' => true,
 			'spacing' => array(
 				'padding' => true,
 				'margin' => true
