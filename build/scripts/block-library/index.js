@@ -22270,6 +22270,12 @@ var wp;
       anchor: true,
       reusable: false,
       html: false,
+      background: {
+        gradient: true,
+        __experimentalDefaultControls: {
+          gradient: true
+        }
+      },
       color: {
         gradients: true,
         text: false,
