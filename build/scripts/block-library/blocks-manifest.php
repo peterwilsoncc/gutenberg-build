@@ -398,6 +398,15 @@ return array(
 				'width' => true,
 				'style' => true
 			),
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true,
+				'__experimentalDefaultControls' => array(
+					'backgroundImage' => true,
+					'gradient' => true
+				)
+			),
 			'html' => false,
 			'spacing' => array(
 				'margin' => true,
