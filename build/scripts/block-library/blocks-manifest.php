@@ -6377,6 +6377,11 @@ return array(
 		),
 		'supports' => array(
 			'anchor' => true,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true
+			),
 			'color' => array(
 				'gradients' => true,
 				'__experimentalDefaultControls' => array(

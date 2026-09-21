@@ -64052,6 +64052,11 @@ ${text}
     },
     supports: {
       anchor: true,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true
+      },
       color: {
         gradients: true,
         __experimentalDefaultControls: {
