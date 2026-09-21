@@ -7241,6 +7241,7 @@ return array(
 					'width' => true
 				)
 			),
+			'shadow' => true,
 			'interactivity' => array(
 				'clientNavigation' => true
 			)

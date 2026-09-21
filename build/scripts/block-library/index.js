@@ -70952,6 +70952,7 @@ ${text}
           width: true
         }
       },
+      shadow: true,
       interactivity: {
         clientNavigation: true
       }
