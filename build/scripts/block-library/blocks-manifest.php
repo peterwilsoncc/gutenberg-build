@@ -293,6 +293,11 @@ return array(
 		'supports' => array(
 			'__experimentalOnEnter' => true,
 			'html' => false,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true
+			),
 			'color' => array(
 				'background' => true,
 				'gradients' => true

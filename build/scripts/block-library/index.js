@@ -5686,6 +5686,11 @@ var wp;
     supports: {
       __experimentalOnEnter: true,
       html: false,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true
+      },
       color: {
         background: true,
         gradients: true
