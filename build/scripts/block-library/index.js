@@ -21155,6 +21155,9 @@ var wp;
     usesContext: ["commentId"],
     supports: {
       anchor: true,
+      background: {
+        gradient: true
+      },
       color: {
         gradients: true,
         link: true,
