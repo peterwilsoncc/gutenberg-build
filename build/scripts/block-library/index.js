@@ -84206,6 +84206,15 @@ ${text}
     usesContext: ["postId", "postType"],
     supports: {
       anchor: true,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalDefaultControls: {
+          backgroundImage: true,
+          gradient: true
+        }
+      },
       __experimentalBorder: {
         radius: true,
         color: true,
