@@ -76003,6 +76003,7 @@ ${text}
         }
       },
       layout: true,
+      shadow: true,
       spacing: {
         blockGap: true,
         padding: true

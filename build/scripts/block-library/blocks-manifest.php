@@ -8140,6 +8140,7 @@ return array(
 				)
 			),
 			'layout' => true,
+			'shadow' => true,
 			'spacing' => array(
 				'blockGap' => true,
 				'padding' => true
