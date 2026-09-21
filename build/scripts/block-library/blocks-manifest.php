@@ -6249,6 +6249,7 @@ return array(
 				)
 			),
 			'html' => false,
+			'shadow' => true,
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true,

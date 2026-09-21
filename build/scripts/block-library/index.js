@@ -63933,6 +63933,7 @@ ${text}
         }
       },
       html: false,
+      shadow: true,
       spacing: {
         margin: true,
         padding: true,
