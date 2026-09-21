@@ -9247,7 +9247,13 @@ return array(
 			),
 			'interactivity' => array(
 				'clientNavigation' => true
+			),
+			'shadow' => array(
+				'__experimentalSkipSerialization' => true
 			)
+		),
+		'selectors' => array(
+			'shadow' => '.wp-block-video video'
 		),
 		'editorStyle' => 'wp-block-video-editor',
 		'style' => 'wp-block-video'

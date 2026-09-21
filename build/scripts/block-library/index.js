@@ -83081,7 +83081,13 @@ ${text}
       },
       interactivity: {
         clientNavigation: true
+      },
+      shadow: {
+        __experimentalSkipSerialization: true
       }
+    },
+    selectors: {
+      shadow: ".wp-block-video video"
     },
     editorStyle: "wp-block-video-editor",
     style: "wp-block-video"
@@ -83678,6 +83684,10 @@ ${text}
       playsInline
     } = attributes2;
     const aspectRatio = width && height ? `${width} / ${height}` : void 0;
+    const videoStyle = {
+      ...aspectRatio && { aspectRatio },
+      ...(0, import_block_editor287.__experimentalGetShadowClassesAndStyles)(attributes2).style
+    };
     const [temporaryURL, setTemporaryURL] = (0, import_element168.useState)(attributes2.blob);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockEditingMode = (0, import_block_editor287.useBlockEditingMode)();
@@ -83854,7 +83864,7 @@ ${text}
             playsInline,
             width,
             height,
-            style: aspectRatio ? { aspectRatio } : void 0,
+            style: Object.keys(videoStyle).length ? videoStyle : void 0,
             children: /* @__PURE__ */ (0, import_jsx_runtime574.jsx)(Tracks, { tracks })
           }
         ),
@@ -83894,6 +83904,10 @@ ${text}
       height
     } = attributes2;
     const aspectRatio = width && height ? `${width} / ${height}` : void 0;
+    const videoStyle = {
+      ...aspectRatio && { aspectRatio },
+      ...(0, import_block_editor288.__experimentalGetShadowClassesAndStyles)(attributes2).style
+    };
     return /* @__PURE__ */ (0, import_jsx_runtime575.jsxs)("figure", { ...import_block_editor288.useBlockProps.save(), children: [
       src && /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
         "video",
@@ -83908,7 +83922,7 @@ ${text}
           playsInline,
           width,
           height,
-          style: aspectRatio ? { aspectRatio } : void 0,
+          style: Object.keys(videoStyle).length ? videoStyle : void 0,
           children: /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(Tracks, { tracks })
         }
       ),
