@@ -80748,6 +80748,7 @@ ${text}
           text: true
         }
       },
+      shadow: true,
       spacing: {
         padding: true
       },
