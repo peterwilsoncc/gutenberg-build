@@ -7098,6 +7098,9 @@ return array(
 				'full'
 			),
 			'html' => false,
+			'background' => array(
+				'gradient' => true
+			),
 			'color' => array(
 				'gradients' => true,
 				'__experimentalDefaultControls' => array(

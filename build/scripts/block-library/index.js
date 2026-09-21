@@ -69280,6 +69280,9 @@ ${text}
       anchor: true,
       align: ["wide", "full"],
       html: false,
+      background: {
+        gradient: true
+      },
       color: {
         gradients: true,
         __experimentalDefaultControls: {
