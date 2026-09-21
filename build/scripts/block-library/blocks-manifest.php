@@ -1339,6 +1339,15 @@ return array(
 					'text' => true
 				)
 			),
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true,
+				'__experimentalDefaultControls' => array(
+					'backgroundImage' => true,
+					'gradient' => true
+				)
+			),
 			'spacing' => array(
 				'blockGap' => array(
 					'__experimentalDefault' => '2em',
