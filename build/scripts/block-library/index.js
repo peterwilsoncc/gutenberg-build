@@ -75068,6 +75068,9 @@ ${text}
           type: "flex"
         }
       },
+      background: {
+        gradient: true
+      },
       color: {
         enableContrastChecker: false,
         background: true,

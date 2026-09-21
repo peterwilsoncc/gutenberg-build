@@ -7927,6 +7927,9 @@ return array(
 					'type' => 'flex'
 				)
 			),
+			'background' => array(
+				'gradient' => true
+			),
 			'color' => array(
 				'enableContrastChecker' => false,
 				'background' => true,
