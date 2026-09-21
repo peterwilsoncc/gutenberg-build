@@ -71117,6 +71117,7 @@ ${text}
           margin: false
         }
       },
+      shadow: true,
       color: {
         background: true,
         text: true,

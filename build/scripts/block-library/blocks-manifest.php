@@ -7325,6 +7325,7 @@ return array(
 					'margin' => false
 				)
 			),
+			'shadow' => true,
 			'color' => array(
 				'background' => true,
 				'text' => true,
