@@ -20880,6 +20880,9 @@ var wp;
     supports: {
       anchor: true,
       html: false,
+      background: {
+        gradient: true
+      },
       spacing: {
         margin: true,
         padding: true
