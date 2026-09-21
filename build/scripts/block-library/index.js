@@ -17920,6 +17920,15 @@ var wp;
     supports: {
       anchor: true,
       align: true,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalDefaultControls: {
+          backgroundImage: true,
+          gradient: true
+        }
+      },
       html: false,
       spacing: {
         margin: true,
