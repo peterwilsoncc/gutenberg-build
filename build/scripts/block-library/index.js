@@ -60144,6 +60144,9 @@ ${text}
     supports: {
       anchor: true,
       html: false,
+      background: {
+        gradient: true
+      },
       color: {
         gradients: true,
         __experimentalDefaultControls: {
