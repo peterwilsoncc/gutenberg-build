@@ -1105,7 +1105,8 @@ return array(
 					'width' => true,
 					'style' => true
 				)
-			)
+			),
+			'shadow' => true
 		),
 		'editorStyle' => 'wp-block-categories-editor',
 		'style' => 'wp-block-categories'
