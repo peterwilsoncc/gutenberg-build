@@ -73490,7 +73490,8 @@ ${text}
         color: true,
         width: true,
         style: true
-      }
+      },
+      shadow: true
     },
     editorStyle: "wp-block-site-title-editor",
     style: "wp-block-site-title"
