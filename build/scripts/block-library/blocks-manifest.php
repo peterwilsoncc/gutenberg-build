@@ -3735,6 +3735,15 @@ return array(
 			'align' => true,
 			'html' => false,
 			'layout' => true,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true,
+				'__experimentalDefaultControls' => array(
+					'backgroundImage' => true,
+					'gradient' => true
+				)
+			),
 			'color' => array(
 				'gradients' => true,
 				'link' => true,
