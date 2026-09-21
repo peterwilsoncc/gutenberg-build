@@ -17589,6 +17589,15 @@ var wp;
       align: ["wide", "full"],
       html: false,
       __experimentalExposeControlsToChildren: true,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalDefaultControls: {
+          backgroundImage: true,
+          gradient: true
+        }
+      },
       color: {
         gradients: true,
         text: false,
