@@ -101914,17 +101914,27 @@ var wp;
     className: "block-editor-duotone-control__popover",
     headerTitle: (0, import_i18n227.__)("Duotone")
   };
-  var LabeledColorIndicator2 = ({ indicator, label }) => /* @__PURE__ */ (0, import_jsx_runtime526.jsxs)(import_components228.__experimentalHStack, { justify: "flex-start", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(import_components228.__experimentalZStack, { isLayered: false, offset: -8, children: /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(import_components228.Flex, { expanded: false, children: indicator === "unset" || !indicator ? /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(import_components228.ColorIndicator, { className: "block-editor-duotone-control__unset-indicator" }) : /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(import_components228.DuotoneSwatch, { values: indicator }) }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(
-      import_components228.FlexItem,
-      {
-        className: "block-editor-panel-duotone-settings__label",
-        title: label,
-        children: label
-      }
-    )
-  ] });
+  var LabeledColorIndicator2 = ({ indicator, label }) => /* @__PURE__ */ (0, import_jsx_runtime526.jsxs)(
+    Stack,
+    {
+      className: "block-editor-panel-duotone-settings__label-row",
+      direction: "row",
+      align: "center",
+      justify: "flex-start",
+      gap: "sm",
+      children: [
+        indicator === "unset" || !indicator ? /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(import_components228.ColorIndicator, { className: "block-editor-duotone-control__unset-indicator" }) : /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(import_components228.DuotoneSwatch, { values: indicator }),
+        /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(
+          "span",
+          {
+            className: "block-editor-panel-duotone-settings__label",
+            title: label,
+            children: label
+          }
+        )
+      ]
+    }
+  );
   var renderToggle2 = (duotone, resetConfig) => function Toggle2({ onToggle, isOpen }) {
     const { hasLocalValue, hasLocalOverride, onReset } = resetConfig;
     const duotoneButtonRef = (0, import_element328.useRef)(void 0);
