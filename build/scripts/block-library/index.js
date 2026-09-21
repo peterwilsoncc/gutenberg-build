@@ -65566,6 +65566,7 @@ ${text}
       dimensions: {
         minHeight: true
       },
+      shadow: true,
       spacing: {
         margin: true,
         padding: true

@@ -6490,6 +6490,7 @@ return array(
 			'dimensions' => array(
 				'minHeight' => true
 			),
+			'shadow' => true,
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true
