@@ -81257,6 +81257,7 @@ ${text}
           link: true
         }
       },
+      shadow: true,
       spacing: {
         padding: true
       },

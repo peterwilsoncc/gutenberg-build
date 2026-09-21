@@ -8936,6 +8936,7 @@ return array(
 					'link' => true
 				)
 			),
+			'shadow' => true,
 			'spacing' => array(
 				'padding' => true
 			),
