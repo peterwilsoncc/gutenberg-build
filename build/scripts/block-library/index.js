@@ -59515,6 +59515,11 @@ ${text}
     supports: {
       anchor: true,
       html: false,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true
+      },
       spacing: {
         margin: true,
         padding: true
