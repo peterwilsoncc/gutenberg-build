@@ -62722,10 +62722,34 @@ ${text}
       },
       interactivity: {
         clientNavigation: true
+      },
+      spacing: {
+        __experimentalSkipSerialization: true,
+        margin: true,
+        padding: true,
+        __experimentalDefaultControls: {
+          margin: false,
+          padding: false
+        }
+      },
+      __experimentalBorder: {
+        __experimentalSkipSerialization: true,
+        color: true,
+        radius: true,
+        style: true,
+        width: true,
+        __experimentalDefaultControls: {
+          color: false,
+          radius: false,
+          style: false,
+          width: false
+        }
       }
     },
     selectors: {
-      shadow: ".wp-block-post-navigation-link:not(:empty)"
+      border: ".wp-block-post-navigation-link:not(:empty)",
+      shadow: ".wp-block-post-navigation-link:not(:empty)",
+      spacing: ".wp-block-post-navigation-link:not(:empty)"
     },
     style: "wp-block-post-navigation-link"
   };
@@ -62761,8 +62785,17 @@ ${text}
       );
     }
     const ariaLabel = isNext ? (0, import_i18n175.__)("Next post") : (0, import_i18n175.__)("Previous post");
+    const borderProps = (0, import_block_editor192.__experimentalUseBorderProps)(attributes2);
     const shadowProps = (0, import_block_editor192.__experimentalGetShadowClassesAndStyles)(attributes2);
-    const blockProps = (0, import_block_editor192.useBlockProps)({ style: shadowProps.style });
+    const spacingProps = (0, import_block_editor192.__experimentalGetSpacingClassesAndStyles)(attributes2);
+    const blockProps = (0, import_block_editor192.useBlockProps)({
+      className: borderProps.className,
+      style: {
+        ...borderProps.style,
+        ...shadowProps.style,
+        ...spacingProps.style
+      }
+    });
     const taxonomies = (0, import_data111.useSelect)(
       (select10) => {
         const { getTaxonomies } = select10(import_core_data66.store);

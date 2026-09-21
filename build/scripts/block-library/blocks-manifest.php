@@ -6022,10 +6022,34 @@ return array(
 			),
 			'interactivity' => array(
 				'clientNavigation' => true
+			),
+			'spacing' => array(
+				'__experimentalSkipSerialization' => true,
+				'margin' => true,
+				'padding' => true,
+				'__experimentalDefaultControls' => array(
+					'margin' => false,
+					'padding' => false
+				)
+			),
+			'__experimentalBorder' => array(
+				'__experimentalSkipSerialization' => true,
+				'color' => true,
+				'radius' => true,
+				'style' => true,
+				'width' => true,
+				'__experimentalDefaultControls' => array(
+					'color' => false,
+					'radius' => false,
+					'style' => false,
+					'width' => false
+				)
 			)
 		),
 		'selectors' => array(
-			'shadow' => '.wp-block-post-navigation-link:not(:empty)'
+			'border' => '.wp-block-post-navigation-link:not(:empty)',
+			'shadow' => '.wp-block-post-navigation-link:not(:empty)',
+			'spacing' => '.wp-block-post-navigation-link:not(:empty)'
 		),
 		'style' => 'wp-block-post-navigation-link'
 	),
