@@ -71216,6 +71216,11 @@ ${text}
         }
       },
       shadow: true,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true
+      },
       color: {
         background: true,
         text: true,

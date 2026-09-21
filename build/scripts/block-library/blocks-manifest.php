@@ -7433,6 +7433,11 @@ return array(
 				)
 			),
 			'shadow' => true,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true
+			),
 			'color' => array(
 				'background' => true,
 				'text' => true,
