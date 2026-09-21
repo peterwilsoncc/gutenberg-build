@@ -59848,6 +59848,9 @@ ${text}
         margin: true,
         padding: true
       },
+      background: {
+        gradient: true
+      },
       color: {
         gradients: true,
         link: true,
