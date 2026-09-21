@@ -22790,6 +22790,9 @@ var wp;
       anchor: true,
       align: true,
       html: false,
+      background: {
+        gradient: true
+      },
       __experimentalBorder: {
         radius: true,
         color: true,
