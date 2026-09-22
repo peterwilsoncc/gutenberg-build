@@ -9046,6 +9046,14 @@ return array(
 				'full'
 			),
 			'html' => false,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true,
+				'__experimentalDefaultControls' => array(
+					'backgroundImage' => true
+				)
+			),
 			'color' => array(
 				'link' => true,
 				'__experimentalDefaultControls' => array(
