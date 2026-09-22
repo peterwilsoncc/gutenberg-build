@@ -68600,6 +68600,11 @@ ${text}
       align: true,
       reusable: false,
       html: false,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true
+      },
       color: {
         gradients: true,
         link: true
