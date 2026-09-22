@@ -8832,6 +8832,14 @@ return array(
 		'supports' => array(
 			'align' => true,
 			'anchor' => true,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true,
+				'__experimentalDefaultControls' => array(
+					'backgroundImage' => true
+				)
+			),
 			'color' => array(
 				'text' => true,
 				'background' => true,

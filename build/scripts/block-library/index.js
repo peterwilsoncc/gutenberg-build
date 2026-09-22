@@ -79411,6 +79411,14 @@ ${text}
     supports: {
       align: true,
       anchor: true,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalDefaultControls: {
+          backgroundImage: true
+        }
+      },
       color: {
         text: true,
         background: true,
