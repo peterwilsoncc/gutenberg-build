@@ -1629,6 +1629,7 @@ iframe[name=editor-canvas] {
   color: var(--wp-admin-theme-color);
 }
 .block-editor-tools-panel-color-gradient-settings__dropdown .block-editor-panel-color-gradient-settings__color-name {
+  min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1643,6 +1644,19 @@ iframe[name=editor-canvas] {
 }
 .block-editor-panel-color-gradient-settings__dropdown .component-color-indicator {
   flex-shrink: 0;
+}
+
+.block-editor-panel-color-gradient-settings__labeled-indicators {
+  width: 100%;
+  min-width: 0;
+}
+
+.block-editor-panel-color-gradient-settings__color-indicators {
+  display: flex;
+  flex-shrink: 0;
+}
+.block-editor-panel-color-gradient-settings__color-indicators > * + * {
+  margin-inline-start: -8px;
 }
 
 .block-editor-panel-color-gradient-settings__reset {

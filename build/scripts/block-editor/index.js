@@ -91527,7 +91527,6 @@ var wp;
 
   // packages/block-editor/build-module/components/global-styles/color-gradient-dropdown-item.mjs
   var import_jsx_runtime479 = __toESM(require_jsx_runtime(), 1);
-  var { Tabs: Tabs4 } = unlock(import_components191.privateApis);
   function DropdownContent({
     tabs,
     colorGradientControlSettings,
@@ -91547,15 +91546,15 @@ var wp;
         },
         firstTabKey
       ),
-      tabs.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime479.jsxs)(Tabs4, { defaultTabId, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(Tabs4.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(Tabs4.Tab, { tabId: tab.key, children: tab.label }, tab.key)) }),
+      tabs.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime479.jsxs)(tabs_exports.Root, { defaultValue: defaultTabId, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(tabs_exports.List, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(tabs_exports.Tab, { value: tab.key, children: tab.label }, tab.key)) }),
         tabs.map((tab) => {
           const { key: tabKey, ...restTabProps } = tab;
           return /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(
-            Tabs4.TabPanel,
+            tabs_exports.Panel,
             {
-              tabId: tabKey,
-              focusable: false,
+              value: tabKey,
+              tabIndex: -1,
               children: /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(
                 ColorGradientTab,
                 {
@@ -91577,10 +91576,20 @@ var wp;
     offset: 36,
     shift: true
   };
-  var LabeledColorIndicators = ({ indicators, label }) => /* @__PURE__ */ (0, import_jsx_runtime479.jsxs)(import_components191.__experimentalHStack, { justify: "flex-start", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(import_components191.__experimentalZStack, { isLayered: false, offset: -8, children: indicators.map((indicator, index3) => /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(import_components191.Flex, { expanded: false, children: /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(import_components191.ColorIndicator, { colorValue: indicator }) }, index3)) }),
-    /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(import_components191.FlexItem, { className: "block-editor-panel-color-gradient-settings__color-name", children: label })
-  ] });
+  var LabeledColorIndicators = ({ indicators, label }) => /* @__PURE__ */ (0, import_jsx_runtime479.jsxs)(
+    Stack,
+    {
+      className: "block-editor-panel-color-gradient-settings__labeled-indicators",
+      direction: "row",
+      align: "center",
+      justify: "flex-start",
+      gap: "sm",
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime479.jsx)("div", { className: "block-editor-panel-color-gradient-settings__color-indicators", children: indicators.map((indicator, index3) => /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(import_components191.ColorIndicator, { colorValue: indicator }, index3)) }),
+        /* @__PURE__ */ (0, import_jsx_runtime479.jsx)("span", { className: "block-editor-panel-color-gradient-settings__color-name", children: label })
+      ]
+    }
+  );
   function ColorGradientTab({
     isGradient,
     inheritedValue,
@@ -97032,7 +97041,7 @@ var wp;
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/index.mjs
   var import_jsx_runtime499 = __toESM(require_jsx_runtime(), 1);
-  var { Tabs: Tabs5 } = unlock(import_components204.privateApis);
+  var { Tabs: Tabs4 } = unlock(import_components204.privateApis);
   function InspectorControlsTabs({
     blockName,
     clientId,
@@ -97125,15 +97134,15 @@ var wp;
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("div", { className: "block-editor-block-inspector__tabs", children: /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(
-      Tabs5,
+      Tabs4,
       {
         selectedTabId,
         onSelect: handleTabSelect,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Tabs5.TabList, { children: tabs.map(
-            (tab) => showIconLabels ? /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Tabs5.Tab, { tabId: tab.name, children: tab.title }, tab.name) : /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(tooltip_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Tabs4.TabList, { children: tabs.map(
+            (tab) => showIconLabels ? /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Tabs4.Tab, { tabId: tab.name, children: tab.title }, tab.name) : /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(tooltip_exports.Root, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
-                Tabs5.Tab,
+                Tabs4.Tab,
                 {
                   tabId: tab.name,
                   "aria-label": tab.title,
@@ -97144,7 +97153,7 @@ var wp;
               /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(tooltip_exports.Popup, { children: tab.title })
             ] }, tab.name)
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(Tabs5.TabPanel, { tabId: TAB_CONTENT.name, focusable: false, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(Tabs4.TabPanel, { tabId: TAB_CONTENT.name, focusable: false, children: [
             /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
               content_tab_default,
               {
@@ -97155,12 +97164,12 @@ var wp;
             ),
             /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(inspector_controls_default.Slot, { group: "content" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(Tabs5.TabPanel, { tabId: TAB_LIST_VIEW.name, focusable: false, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime499.jsxs)(Tabs4.TabPanel, { tabId: TAB_LIST_VIEW.name, focusable: false, children: [
             /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(inspector_controls_default.Slot, { group: "list", ref: listViewRef }),
             /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(ListViewContentPopover, { listViewRef })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Tabs5.TabPanel, { tabId: TAB_SETTINGS.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(settings_tab_default, { showAdvancedControls: !!blockName }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Tabs5.TabPanel, { tabId: TAB_STYLES.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Tabs4.TabPanel, { tabId: TAB_SETTINGS.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(settings_tab_default, { showAdvancedControls: !!blockName }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(Tabs4.TabPanel, { tabId: TAB_STYLES.name, focusable: false, children: /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(
             styles_tab_default,
             {
               blockName,
