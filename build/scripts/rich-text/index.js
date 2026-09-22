@@ -1957,7 +1957,7 @@ var wp;
       const { defaultView } = ownerDocument;
       const computedStyle = defaultView.getComputedStyle(element);
       const newColor = A(computedStyle.color).alpha(0.2).toRgbString();
-      const selector = `.rich-text:focus ${boundarySelector}`;
+      const selector = `[contenteditable="true"]:focus ${boundarySelector}`;
       const rule = `background-color: ${newColor}`;
       const style = `${selector} {${rule}}`;
       const globalStyleId = "rich-text-boundary-style";
