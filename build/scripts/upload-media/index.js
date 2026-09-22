@@ -108,6 +108,7 @@ var wp;
     getHeicUnsupportedMessage: () => getHeicUnsupportedMessage,
     isClientSideMediaSupported: () => isClientSideMediaSupported,
     isHeicCanvasSupported: () => isHeicCanvasSupported,
+    isHeicFile: () => isHeicFile,
     store: () => store
   });
 
@@ -676,6 +677,54 @@ var wp;
       }
     }
     return false;
+  }
+  var FILE_TYPE_BOX_BYTES = 64;
+  var HEIC_BRANDS = [
+    "heic",
+    "heix",
+    "heim",
+    "heis",
+    "hevc",
+    "hevx",
+    "hevm",
+    "hevs",
+    "mif1",
+    "msf1"
+  ];
+  var AVIF_BRANDS = ["avif", "avis"];
+  function isHeicBuffer(buffer) {
+    const view = new Uint8Array(buffer);
+    const readBrand = (offset) => String.fromCharCode(...view.subarray(offset, offset + 4));
+    if (view.length < 12 || readBrand(4) !== "ftyp") {
+      return false;
+    }
+    const boxEnd = Math.min(
+      view.length,
+      new DataView(buffer).getUint32(0)
+    );
+    const brands = [readBrand(8)];
+    for (let offset = 16; offset + 4 <= boxEnd; offset += 4) {
+      brands.push(readBrand(offset));
+    }
+    if (brands.some((brand) => AVIF_BRANDS.includes(brand))) {
+      return false;
+    }
+    return brands.some((brand) => HEIC_BRANDS.includes(brand));
+  }
+  async function isHeicFile(file) {
+    if (HEIC_MIME_TYPES.includes(file.type)) {
+      return true;
+    }
+    if (file.type && !file.type.startsWith("image/")) {
+      return false;
+    }
+    try {
+      return isHeicBuffer(
+        await file.slice(0, FILE_TYPE_BOX_BYTES).arrayBuffer()
+      );
+    } catch {
+      return false;
+    }
   }
 
   // packages/upload-media/build-module/store/utils/index.mjs
@@ -2085,6 +2134,7 @@ var wp;
   }
 
   // packages/upload-media/build-module/canvas-utils.mjs
+  var IMAGE_DECODER_TIMEOUT = 15e3;
   var HeicUnsupportedError = class extends Error {
   };
   async function canvasConvertToJpeg(file, quality = 0.82) {
@@ -2117,8 +2167,34 @@ var wp;
           type: file.type,
           data: file.stream()
         });
+        let videoFrame;
+        let timeoutId;
+        let timedOut = false;
         try {
-          const { image: videoFrame } = await decoder.decode();
+          const decoded = await Promise.race([
+            decoder.decode(),
+            new Promise((_resolve, reject) => {
+              timeoutId = setTimeout(() => {
+                timedOut = true;
+                decoder.close();
+                reject(
+                  new Error("ImageDecoder decode timed out")
+                );
+              }, IMAGE_DECODER_TIMEOUT);
+            })
+          ]);
+          videoFrame = decoded.image;
+        } catch (error) {
+          if (!timedOut) {
+            throw error;
+          }
+        } finally {
+          clearTimeout(timeoutId);
+          if (!timedOut) {
+            decoder.close();
+          }
+        }
+        if (videoFrame) {
           try {
             const canvas = new OffscreenCanvas(
               videoFrame.displayWidth,
@@ -2139,8 +2215,6 @@ var wp;
           } finally {
             videoFrame.close();
           }
-        } finally {
-          decoder.close();
         }
       }
     }
@@ -2848,11 +2922,14 @@ var wp;
         }
       }
       let heicJpeg = null;
-      const isImage = file.type.startsWith("image/");
-      const isVipsSupported = CLIENT_SIDE_SUPPORTED_MIME_TYPES.includes(
-        file.type
-      );
-      const isHeic = HEIC_MIME_TYPES.includes(file.type);
+      const isHeic = await isHeicFile(file);
+      const isMisnamedHeic = isHeic && !HEIC_MIME_TYPES.includes(file.type);
+      const isImage = file.type.startsWith("image/") || isHeic;
+      const isVipsSupported = !isHeic && CLIENT_SIDE_SUPPORTED_MIME_TYPES.includes(file.type);
+      const heicFile = isMisnamedHeic ? new File([file], `${getFileBasename(file.name)}.heic`, {
+        type: HEIC_MIME_TYPES[0],
+        lastModified: file.lastModified
+      }) : file;
       let tooLargeForClient = false;
       if (isImage && isVipsSupported) {
         const dimensions = await getImageDimensions(file);
@@ -2860,7 +2937,7 @@ var wp;
           tooLargeForClient = true;
         }
       }
-      if (file.type === "image/jpeg" && !tooLargeForClient) {
+      if (file.type === "image/jpeg" && !isHeic && !tooLargeForClient) {
         operations.push(OperationType.DetectUltraHdr);
       }
       if (isImage && isVipsSupported && !tooLargeForClient) {
@@ -2872,7 +2949,7 @@ var wp;
       } else if (isImage && isHeic) {
         try {
           heicJpeg = await canvasConvertToJpeg(
-            file,
+            heicFile,
             settings.imageQuality ?? DEFAULT_OUTPUT_QUALITY
           );
         } catch (error) {
@@ -2909,7 +2986,7 @@ var wp;
         updates = {
           file: heicJpeg,
           sourceFile: heicJpeg,
-          originalHeicFile: item.file,
+          originalHeicFile: heicFile,
           additionalData: {
             ...item.additionalData,
             generate_sub_sizes: !vipsAvailable,

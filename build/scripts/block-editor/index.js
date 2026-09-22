@@ -61470,7 +61470,6 @@ var wp;
   var hasLoggedFallback = false;
   var isClientSideMediaEnabledCache = null;
   var isHeicCanvasEnabledCache = null;
-  var HEIC_MIME_TYPES = ["image/heic", "image/heif"];
   function refuseExtraFiles(filesList, multiple, onError) {
     if (!multiple && filesList.length > 1) {
       onError((0, import_i18n43.__)("Only one file can be used here."));
@@ -61551,7 +61550,7 @@ var wp;
       allowedTypes
     });
   }
-  function heicMediaUpload(registry, settings2, {
+  async function heicMediaUpload(registry, settings2, {
     allowedTypes,
     additionalData = {},
     filesList,
@@ -61565,12 +61564,11 @@ var wp;
       return;
     }
     const files = Array.from(filesList);
-    const heicFiles = files.filter(
-      (file) => HEIC_MIME_TYPES.includes(file.type)
-    );
-    const otherFiles = files.filter(
-      (file) => !HEIC_MIME_TYPES.includes(file.type)
-    );
+    const heicFiles = [];
+    const otherFiles = [];
+    for (const file of files) {
+      (await (0, import_upload_media.isHeicFile)(file) ? heicFiles : otherFiles).push(file);
+    }
     const hasBothPaths = heicFiles.length > 0 && otherFiles.length > 0 && settings2?.mediaUpload;
     let pathsRemaining = hasBothPaths ? 2 : 1;
     const coordinatedBatchSuccess = hasBothPaths ? () => {
