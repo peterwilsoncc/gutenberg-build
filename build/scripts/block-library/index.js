@@ -68658,6 +68658,9 @@ ${text}
       align: true,
       reusable: false,
       html: false,
+      background: {
+        gradient: true
+      },
       color: {
         gradients: true,
         link: true,

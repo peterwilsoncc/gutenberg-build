@@ -6895,6 +6895,9 @@ return array(
 			'align' => true,
 			'reusable' => false,
 			'html' => false,
+			'background' => array(
+				'gradient' => true
+			),
 			'color' => array(
 				'gradients' => true,
 				'link' => true,
