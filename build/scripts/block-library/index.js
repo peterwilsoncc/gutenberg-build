@@ -81511,6 +81511,15 @@ ${text}
       anchor: true,
       align: ["wide", "full"],
       html: false,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalDefaultControls: {
+          backgroundImage: true,
+          gradient: true
+        }
+      },
       color: {
         gradients: true,
         link: true,
