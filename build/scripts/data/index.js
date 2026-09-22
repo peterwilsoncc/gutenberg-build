@@ -1835,8 +1835,38 @@ var wp;
     const stores = {};
     const emitter = createEmitter();
     let listeningStores = null;
+    const pendingListeners = /* @__PURE__ */ new Map();
     function globalListener() {
       emitter.emit();
+    }
+    function subscribePending(storeName, listener) {
+      const pending = { listener };
+      let listeners = pendingListeners.get(storeName);
+      if (!listeners) {
+        listeners = /* @__PURE__ */ new Set();
+        pendingListeners.set(storeName, listeners);
+      }
+      listeners.add(pending);
+      return () => {
+        pending.unsubscribe?.();
+        const stillPending = pendingListeners.get(storeName);
+        if (stillPending) {
+          stillPending.delete(pending);
+          if (stillPending.size === 0) {
+            pendingListeners.delete(storeName);
+          }
+        }
+      };
+    }
+    function connectPendingListeners(name, store) {
+      const listeners = pendingListeners.get(name);
+      if (!listeners) {
+        return;
+      }
+      pendingListeners.delete(name);
+      for (const pending of listeners) {
+        pending.unsubscribe = store.subscribe(pending.listener);
+      }
     }
     const subscribe2 = (listener, storeNameOrDescriptor) => {
       if (!storeNameOrDescriptor) {
@@ -1848,7 +1878,7 @@ var wp;
         return store.subscribe(listener);
       }
       if (!parent) {
-        return emitter.subscribe(listener);
+        return subscribePending(storeName, listener);
       }
       return parent.subscribe(listener, storeNameOrDescriptor);
     };
@@ -1931,6 +1961,7 @@ var wp;
       store.subscribe = (listener) => store.emitter.subscribe(listener);
       stores[name] = store;
       store.subscribe(globalListener);
+      connectPendingListeners(name, store);
       if (parent) {
         try {
           unlock(store.store).registerPrivateActions(
