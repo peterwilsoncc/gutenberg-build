@@ -73330,99 +73330,44 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-patterns/search-items.mjs
   var import_block_editor23 = __toESM(require_block_editor(), 1);
-  var { extractWords, getNormalizedSearchTerms, normalizeString: normalizeString2 } = unlock(
+  var { SEARCH_RANK, searchItems: searchAndRankItems } = unlock(
     import_block_editor23.privateApis
   );
-  var defaultGetName = (item) => {
+  var getName = (item) => {
     if (item.type === PATTERN_TYPES.user) {
       return item.slug;
     }
     if (item.type === TEMPLATE_PART_POST_TYPE) {
       return "";
     }
-    return item.name || "";
+    return item.name;
   };
-  var defaultGetTitle = (item) => {
+  var getTitle = (item) => {
     if (typeof item.title === "string") {
       return item.title;
     }
-    if (item.title && item.title.rendered) {
-      return item.title.rendered;
-    }
-    if (item.title && item.title.raw) {
-      return item.title.raw;
-    }
-    return "";
+    return item.title?.rendered || item.title?.raw;
   };
-  var defaultGetDescription = (item) => {
+  var getDescription = (item) => {
     if (item.type === PATTERN_TYPES.user) {
-      return item.excerpt.raw;
+      return item.excerpt?.raw;
     }
-    return item.description || "";
+    return item.description;
   };
-  var defaultGetKeywords = (item) => item.keywords || [];
-  var defaultHasCategory = () => false;
-  var removeMatchingTerms = (unmatchedTerms, unprocessedTerms) => {
-    return unmatchedTerms.filter(
-      (term) => !getNormalizedSearchTerms(unprocessedTerms).some(
-        (unprocessedTerm) => unprocessedTerm.includes(term)
-      )
-    );
-  };
+  var PATTERN_FIELDS = [
+    { get: getTitle },
+    { get: getName, maxRank: SEARCH_RANK.WORD_STARTS_WITH },
+    { get: (item) => item.keywords, maxRank: SEARCH_RANK.WORD_STARTS_WITH },
+    { get: getDescription, maxRank: SEARCH_RANK.CONTAINS }
+  ];
   var searchItems = (items = [], searchInput = "", config2 = {}) => {
-    const normalizedSearchTerms = getNormalizedSearchTerms(searchInput);
-    const onlyFilterByCategory = config2.categoryId !== PATTERN_DEFAULT_CATEGORY && !normalizedSearchTerms.length;
-    const searchRankConfig = { ...config2, onlyFilterByCategory };
-    const threshold = onlyFilterByCategory ? 0 : 1;
-    const rankedItems = items.map((item) => {
-      return [
-        item,
-        getItemSearchRank(item, searchInput, searchRankConfig)
-      ];
-    }).filter(([, rank]) => rank > threshold);
-    if (normalizedSearchTerms.length === 0) {
-      return rankedItems.map(([item]) => item);
-    }
-    rankedItems.sort(([, rank1], [, rank2]) => rank2 - rank1);
-    return rankedItems.map(([item]) => item);
+    const { categoryId, hasCategory = () => false } = config2;
+    const filter = (item) => categoryId === PATTERN_DEFAULT_CATEGORY || categoryId === TEMPLATE_PART_ALL_AREAS_CATEGORY || categoryId === PATTERN_USER_CATEGORY && item.type === PATTERN_TYPES.user || hasCategory(item, categoryId);
+    return searchAndRankItems(items, searchInput, {
+      fields: PATTERN_FIELDS,
+      filter
+    });
   };
-  function getItemSearchRank(item, searchTerm, config2) {
-    const {
-      categoryId,
-      getName = defaultGetName,
-      getTitle = defaultGetTitle,
-      getDescription = defaultGetDescription,
-      getKeywords = defaultGetKeywords,
-      hasCategory = defaultHasCategory,
-      onlyFilterByCategory
-    } = config2;
-    let rank = categoryId === PATTERN_DEFAULT_CATEGORY || categoryId === TEMPLATE_PART_ALL_AREAS_CATEGORY || categoryId === PATTERN_USER_CATEGORY && item.type === PATTERN_TYPES.user || hasCategory(item, categoryId) ? 1 : 0;
-    if (!rank || onlyFilterByCategory) {
-      return rank;
-    }
-    const name2 = getName(item);
-    const title = getTitle(item);
-    const description = getDescription(item);
-    const keywords = getKeywords(item);
-    const normalizedSearchInput = normalizeString2(searchTerm);
-    const normalizedTitle = normalizeString2(title);
-    if (normalizedSearchInput === normalizedTitle) {
-      rank += 30;
-    } else if (normalizedTitle.startsWith(normalizedSearchInput)) {
-      rank += 20;
-    } else {
-      const terms = [name2, title, description, ...keywords].join(" ");
-      const normalizedSearchTerms = extractWords(normalizedSearchInput);
-      const unmatchedTerms = removeMatchingTerms(
-        normalizedSearchTerms,
-        terms
-      );
-      if (unmatchedTerms.length === 0) {
-        rank += 10;
-      }
-    }
-    return rank;
-  }
 
   // packages/edit-site/build-module/components/page-patterns/use-patterns.mjs
   var EMPTY_PATTERN_LIST = [];

@@ -17705,14 +17705,8 @@ var wp;
   var import_blocks14 = __toESM(require_blocks(), 1);
   var import_element12 = __toESM(require_element(), 1);
 
-  // packages/block-editor/build-module/components/inserter/search-items.mjs
+  // packages/block-editor/build-module/utils/search-ranking.mjs
   var import_remove_accents = __toESM(require_remove_accents(), 1);
-  var defaultGetName = (item) => item.name || "";
-  var defaultGetTitle = (item) => item.title;
-  var defaultGetDescription = (item) => item.description || "";
-  var defaultGetKeywords = (item) => item.keywords || [];
-  var defaultGetCategory = (item) => item.category;
-  var defaultGetCollection = () => null;
   var splitRegexp = [
     /([\p{Ll}\p{Lo}\p{N}])([\p{Lu}\p{Lt}])/gu,
     // One lowercase or digit, followed by one uppercase.
@@ -17720,107 +17714,196 @@ var wp;
     // One uppercase followed by one uppercase and one lowercase.
   ];
   var stripRegexp = new RegExp("(\\p{C}|\\p{P}|\\p{S})+", "giu");
-  var extractedWords = /* @__PURE__ */ new Map();
-  var normalizedStrings = /* @__PURE__ */ new Map();
-  function extractWords(input = "") {
-    if (extractedWords.has(input)) {
-      return extractedWords.get(input);
-    }
-    const result = noCase(input, {
-      splitRegexp,
-      stripRegexp
-    }).split(" ").filter(Boolean);
-    extractedWords.set(input, result);
-    return result;
-  }
+  var SEARCH_RANK = {
+    NO_MATCH: 0,
+    /** Every search term appears somewhere across the item's fields. */
+    MATCHES: 1,
+    /** The value contains the search phrase. */
+    CONTAINS: 2,
+    /** A word inside the value starts with the search phrase. */
+    WORD_STARTS_WITH: 3,
+    /** The value starts with the search phrase. */
+    STARTS_WITH: 4,
+    /** The value is the search phrase. */
+    EQUAL: 5
+  };
+  var readDefaultField = (key) => (item) => item[key];
+  var DEFAULT_FIELDS = [
+    { get: readDefaultField("title") },
+    {
+      get: readDefaultField("name"),
+      maxRank: SEARCH_RANK.WORD_STARTS_WITH
+    },
+    {
+      get: readDefaultField("keywords"),
+      maxRank: SEARCH_RANK.WORD_STARTS_WITH
+    },
+    { get: readDefaultField("category"), maxRank: SEARCH_RANK.CONTAINS },
+    { get: readDefaultField("description"), maxRank: SEARCH_RANK.CONTAINS }
+  ];
+  var fieldValueCache = /* @__PURE__ */ new WeakMap();
   function normalizeString(input = "") {
-    if (normalizedStrings.has(input)) {
-      return normalizedStrings.get(input);
-    }
-    let result = (0, import_remove_accents.default)(input);
-    result = result.replace(/^\//, "");
-    result = result.toLowerCase();
-    normalizedStrings.set(input, result);
-    return result;
+    return (0, import_remove_accents.default)(input).replace(/^\//, "").toLowerCase();
   }
-  var getNormalizedSearchTerms = (input = "") => {
+  function extractWords(input) {
+    return noCase(input, { splitRegexp, stripRegexp }).split(" ").filter(Boolean);
+  }
+  function getNormalizedSearchTerms(input = "") {
     return extractWords(normalizeString(input));
-  };
-  var removeMatchingTerms = (unmatchedTerms, unprocessedTerms) => {
-    return unmatchedTerms.filter(
-      (term) => !getNormalizedSearchTerms(unprocessedTerms).some(
-        (unprocessedTerm) => unprocessedTerm.includes(term)
-      )
-    );
-  };
-  var searchBlockItems = (items, categories, collections, searchInput) => {
-    const normalizedSearchTerms = getNormalizedSearchTerms(searchInput);
-    if (normalizedSearchTerms.length === 0) {
-      return items;
+  }
+  function parseQuery(searchInput) {
+    const terms = getNormalizedSearchTerms(searchInput);
+    return terms.length > 0 ? { terms, phrase: normalizeString(searchInput).trim() } : null;
+  }
+  function getCloseness(index3) {
+    return 1 / (2 + index3);
+  }
+  function toValues(value) {
+    if (Array.isArray(value)) {
+      return value;
     }
-    const config2 = {
-      getCategory: (item) => categories.find(({ slug }) => slug === item.category)?.title,
-      getCollection: (item) => collections[item.name.split("/")[0]]?.title
-    };
-    return searchItems(items, searchInput, config2);
-  };
-  var searchItems = (items = [], searchInput = "", config2 = {}) => {
-    const normalizedSearchTerms = getNormalizedSearchTerms(searchInput);
-    if (normalizedSearchTerms.length === 0) {
-      return items;
+    return value === void 0 || value === null ? [] : [value];
+  }
+  function getFieldValues(item, field) {
+    let cache = fieldValueCache.get(item);
+    if (!cache) {
+      cache = /* @__PURE__ */ new Map();
+      fieldValueCache.set(item, cache);
     }
-    const rankedItems = items.map((item) => {
-      return [item, getItemSearchRank(item, searchInput, config2)];
-    }).filter(([, rank]) => rank > 0);
-    rankedItems.sort(([, rank1], [, rank2]) => rank2 - rank1);
-    return rankedItems.map(([item]) => item);
-  };
-  function getItemSearchRank(item, searchTerm, config2 = {}) {
-    const {
-      getName = defaultGetName,
-      getTitle = defaultGetTitle,
-      getDescription = defaultGetDescription,
-      getKeywords = defaultGetKeywords,
-      getCategory = defaultGetCategory,
-      getCollection = defaultGetCollection
-    } = config2;
-    const name = getName(item);
-    const title = getTitle(item);
-    const description = getDescription(item);
-    const keywords = getKeywords(item);
-    const category = getCategory(item);
-    const collection = getCollection(item);
-    const normalizedSearchInput = normalizeString(searchTerm);
-    const normalizedTitle = normalizeString(title);
-    let rank = 0;
-    if (normalizedSearchInput === normalizedTitle) {
-      rank += 30;
-    } else if (normalizedTitle.startsWith(normalizedSearchInput)) {
-      rank += 20;
-    } else {
-      const terms = [
-        name,
-        title,
-        description,
-        ...keywords,
-        category,
-        collection
-      ].join(" ");
-      const normalizedSearchTerms = extractWords(normalizedSearchInput);
-      const unmatchedTerms = removeMatchingTerms(
-        normalizedSearchTerms,
-        terms
-      );
-      if (unmatchedTerms.length === 0) {
-        rank += 10;
+    const derived = [];
+    for (const value of toValues(field.get(item))) {
+      let entry = cache.get(value);
+      if (!entry) {
+        const normalized = normalizeString(String(value));
+        entry = { normalized, words: extractWords(normalized) };
+        cache.set(value, entry);
+      }
+      if (entry.normalized) {
+        derived.push(entry);
       }
     }
-    if (rank !== 0 && name.startsWith("core/")) {
-      const isCoreBlockVariation = name !== item.id;
-      rank += isCoreBlockVariation ? 1 : 2;
-    }
-    return rank;
+    return derived;
   }
+  function getValueMatch({ normalized, words }, phrase) {
+    if (normalized === phrase) {
+      return { rank: SEARCH_RANK.EQUAL, closeness: getCloseness(0) };
+    }
+    if (normalized.startsWith(phrase)) {
+      return { rank: SEARCH_RANK.STARTS_WITH, closeness: getCloseness(0) };
+    }
+    const wordIndex = words.findIndex((word) => word.startsWith(phrase));
+    if (wordIndex !== -1) {
+      return {
+        rank: SEARCH_RANK.WORD_STARTS_WITH,
+        closeness: getCloseness(wordIndex)
+      };
+    }
+    const index3 = normalized.indexOf(phrase);
+    if (index3 !== -1) {
+      return {
+        rank: SEARCH_RANK.CONTAINS,
+        closeness: getCloseness(index3)
+      };
+    }
+    return null;
+  }
+  function getFieldMatch(field, values, phrase) {
+    let best = null;
+    for (const value of values) {
+      const match2 = getValueMatch(value, phrase);
+      if (match2 && (!best || match2.rank > best.rank || match2.rank === best.rank && match2.closeness > best.closeness)) {
+        best = match2;
+      }
+    }
+    if (!best) {
+      return null;
+    }
+    const maxRank = field.maxRank ?? SEARCH_RANK.EQUAL;
+    return best.rank > maxRank ? { ...best, rank: maxRank } : best;
+  }
+  function hasEveryTerm(valuesByField, terms) {
+    return terms.every(
+      (term) => valuesByField.some(
+        (values) => values.some(
+          (value) => value.words.some((word) => word.includes(term))
+        )
+      )
+    );
+  }
+  function matchItem(item, { terms, phrase }, fields) {
+    let best = null;
+    const valuesByField = [];
+    for (let fieldIndex = 0; fieldIndex < fields.length; fieldIndex++) {
+      const field = fields[fieldIndex];
+      const values = getFieldValues(item, field);
+      valuesByField.push(values);
+      const match2 = getFieldMatch(field, values, phrase);
+      if (match2 && (!best || match2.rank > best.rank)) {
+        best = { ...match2, fieldIndex };
+      }
+    }
+    if (best) {
+      return best;
+    }
+    if (hasEveryTerm(valuesByField, terms)) {
+      return {
+        rank: SEARCH_RANK.MATCHES,
+        closeness: 0,
+        fieldIndex: fields.length
+      };
+    }
+    return null;
+  }
+  function searchItems(items = [], searchInput = "", { fields = DEFAULT_FIELDS, filter, tiebreak } = {}) {
+    const candidates = filter ? items.filter(filter) : items;
+    const query = parseQuery(searchInput);
+    if (!query) {
+      return candidates;
+    }
+    const matches = [];
+    for (const item of candidates) {
+      const match2 = matchItem(item, query, fields);
+      if (match2) {
+        matches.push({ item, ...match2 });
+      }
+    }
+    matches.sort(
+      (a, b) => b.rank - a.rank || a.fieldIndex - b.fieldIndex || b.closeness - a.closeness || (tiebreak ? tiebreak(a.item, b.item) : 0)
+    );
+    return matches.map(({ item }) => item);
+  }
+
+  // packages/block-editor/build-module/components/inserter/search-items.mjs
+  function getCorePriority(item) {
+    const name = item.name || "";
+    if (!name.startsWith("core/")) {
+      return 0;
+    }
+    return name === item.id ? 2 : 1;
+  }
+  var searchBlockItems = (items, categories, collections, searchInput) => {
+    const fields = [
+      { get: (item) => item.title },
+      { get: (item) => item.name, maxRank: SEARCH_RANK.WORD_STARTS_WITH },
+      {
+        get: (item) => item.keywords,
+        maxRank: SEARCH_RANK.WORD_STARTS_WITH
+      },
+      {
+        get: (item) => categories.find(({ slug }) => slug === item.category)?.title,
+        maxRank: SEARCH_RANK.CONTAINS
+      },
+      {
+        get: (item) => collections[(item.name || "").split("/")[0]]?.title,
+        maxRank: SEARCH_RANK.CONTAINS
+      },
+      { get: (item) => item.description, maxRank: SEARCH_RANK.CONTAINS }
+    ];
+    return searchItems(items, searchInput, {
+      fields,
+      tiebreak: (a, b) => getCorePriority(b) - getCorePriority(a)
+    });
+  };
 
   // packages/block-editor/build-module/components/inserter/hooks/use-block-types-state.mjs
   var import_blocks13 = __toESM(require_blocks(), 1);
@@ -56960,15 +57043,15 @@ var wp;
       const anim = this.animation;
       let {
         config: config2,
-        toValues
+        toValues: toValues2
       } = anim;
       const payload = getPayload(anim.to);
       if (!payload && hasFluidValue(anim.to)) {
-        toValues = toArray(getFluidValue(anim.to));
+        toValues2 = toArray(getFluidValue(anim.to));
       }
       anim.values.forEach((node2, i) => {
         if (node2.done) return;
-        const to2 = node2.constructor == AnimatedString ? 1 : payload ? payload[i].lastPosition : toValues[i];
+        const to2 = node2.constructor == AnimatedString ? 1 : payload ? payload[i].lastPosition : toValues2[i];
         let finished = anim.immediate;
         let position = to2;
         if (!finished) {
@@ -113923,8 +114006,7 @@ var wp;
     getDuotoneFilter: getDuotoneFilter3,
     getRichTextValues,
     PrivateQuickInserter: QuickInserter,
-    extractWords,
-    getNormalizedSearchTerms,
+    SEARCH_RANK,
     normalizeString,
     PrivateListView,
     ResizableBoxPopover,

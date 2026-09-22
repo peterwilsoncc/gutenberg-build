@@ -45840,7 +45840,7 @@ var {
   EXCLUDED_PATTERN_SOURCES,
   PATTERN_DEFAULT_CATEGORY
 } = unlock3(import_patterns.privateApis);
-var { extractWords, getNormalizedSearchTerms, normalizeString: normalizeString2 } = unlock3(
+var { SEARCH_RANK, searchItems: searchAndRankItems } = unlock3(
   import_block_editor.privateApis
 );
 function normalizeThemePattern(pattern) {
@@ -45889,59 +45889,28 @@ function normalizeUserPattern(pattern, userPatternCategories) {
     blocks: pattern.blocks
   };
 }
-var removeMatchingTerms = (unmatchedTerms, unprocessedTerms) => {
-  return unmatchedTerms.filter(
-    (term) => !getNormalizedSearchTerms(unprocessedTerms).some(
-      (unprocessedTerm) => unprocessedTerm.includes(term)
-    )
-  );
-};
-function getItemSearchRank(item, searchTerm, config) {
-  const { categoryId, hasCategory, onlyFilterByCategory } = config;
-  let rank = categoryId === PATTERN_DEFAULT_CATEGORY || categoryId === "my-patterns" && item.type === PATTERN_TYPES.user || hasCategory && hasCategory(item, categoryId || "") ? 1 : 0;
-  if (!rank || onlyFilterByCategory) {
-    return rank;
+var PATTERN_FIELDS = [
+  { get: (item) => item.title },
+  {
+    get: (item) => item.id,
+    maxRank: SEARCH_RANK.WORD_STARTS_WITH
+  },
+  {
+    get: (item) => item.keywords,
+    maxRank: SEARCH_RANK.WORD_STARTS_WITH
+  },
+  {
+    get: (item) => item.description,
+    maxRank: SEARCH_RANK.CONTAINS
   }
-  const normalizedSearchInput = normalizeString2(searchTerm);
-  const normalizedTitle = normalizeString2(item.title);
-  if (normalizedSearchInput === normalizedTitle) {
-    rank += 30;
-  } else if (normalizedTitle.startsWith(normalizedSearchInput)) {
-    rank += 20;
-  } else {
-    const terms = [
-      item.id,
-      item.title,
-      item.description,
-      ...item.keywords
-    ].join(" ");
-    const normalizedSearchTerms = extractWords(normalizedSearchInput);
-    const unmatchedTerms = removeMatchingTerms(
-      normalizedSearchTerms,
-      terms
-    );
-    if (unmatchedTerms.length === 0) {
-      rank += 10;
-    }
-  }
-  return rank;
-}
+];
 function searchItems(items = [], searchInput = "", config = {}) {
-  const normalizedSearchTerms = getNormalizedSearchTerms(searchInput);
-  const onlyFilterByCategory = config.categoryId !== PATTERN_DEFAULT_CATEGORY && !normalizedSearchTerms.length;
-  const searchRankConfig = { ...config, onlyFilterByCategory };
-  const threshold = onlyFilterByCategory ? 0 : 1;
-  const rankedItems = items.map((item) => {
-    return [
-      item,
-      getItemSearchRank(item, searchInput, searchRankConfig)
-    ];
-  }).filter(([, rank]) => rank > threshold);
-  if (normalizedSearchTerms.length === 0) {
-    return rankedItems.map(([item]) => item);
-  }
-  rankedItems.sort(([, rank1], [, rank2]) => rank2 - rank1);
-  return rankedItems.map(([item]) => item);
+  const { categoryId, hasCategory } = config;
+  const filter = (item) => categoryId === PATTERN_DEFAULT_CATEGORY || categoryId === "my-patterns" && item.type === PATTERN_TYPES.user || !!hasCategory?.(item, categoryId || "");
+  return searchAndRankItems(items, searchInput, {
+    fields: PATTERN_FIELDS,
+    filter
+  });
 }
 var selectThemePatterns = (0, import_data10.createSelector)(
   (select2) => {
