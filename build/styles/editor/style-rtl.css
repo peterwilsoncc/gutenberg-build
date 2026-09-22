@@ -863,111 +863,20 @@ button.font-library__upload-area {
   padding-right: 16px;
 }
 
-.global-styles-ui-pagination .components-button.is-tertiary {
-  width: 32px;
-  height: 32px;
-  justify-content: center;
-}
-
-.global-styles-ui-screen-revisions__revisions-list {
-  list-style: none;
-  margin: 0 16px 16px 16px;
-  flex-grow: 1;
-}
-
-.global-styles-ui-screen-revisions__revisions-list li {
-  margin-bottom: 0;
-}
-
-.global-styles-ui-screen-revisions__revision-item {
-  position: relative;
-  cursor: var(--wpds-cursor-control, pointer);
+.global-styles-ui-screen-revisions {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  min-height: 0;
 }
 
-.global-styles-ui-screen-revisions__revision-item[role=option]:active, .global-styles-ui-screen-revisions__revision-item[role=option]:focus {
-  box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
-  outline: 2px solid transparent;
+.global-styles-ui-screen-revisions__actions {
+  margin-inline-start: auto;
 }
 
-.global-styles-ui-screen-revisions__revision-item:hover {
-  background: rgba(var(--wp-admin-theme-color--rgb), 0.04);
-}
-
-.global-styles-ui-screen-revisions__revision-item:hover .global-styles-ui-screen-revisions__date {
-  color: var(--wp-admin-theme-color);
-}
-
-.global-styles-ui-screen-revisions__revision-item::before, .global-styles-ui-screen-revisions__revision-item::after {
-  position: absolute;
-  content: "\a";
-  display: block;
-}
-
-.global-styles-ui-screen-revisions__revision-item::before {
-  background: #ddd;
-  border-radius: 50%;
-  height: 8px;
-  width: 8px;
-  top: 18px;
-  right: 17px;
-  transform: translate(50%, -50%);
-  z-index: 1;
-  border: 4px solid transparent;
-}
-
-.global-styles-ui-screen-revisions__revision-item[aria-selected=true] {
-  border-radius: 2px;
-  outline: 3px solid transparent;
-  outline-offset: -2px;
-  color: var(--wp-admin-theme-color);
-  background: rgba(var(--wp-admin-theme-color--rgb), 0.04);
-}
-
-.global-styles-ui-screen-revisions__revision-item[aria-selected=true] .global-styles-ui-screen-revisions__date {
-  color: var(--wp-admin-theme-color);
-}
-
-.global-styles-ui-screen-revisions__revision-item[aria-selected=true]::before {
-  background: var(--wp-admin-theme-color);
-}
-
-.global-styles-ui-screen-revisions__revision-item[aria-selected=true] .global-styles-ui-screen-revisions__changes > li,
-.global-styles-ui-screen-revisions__revision-item[aria-selected=true] .global-styles-ui-screen-revisions__meta {
-  color: #1e1e1e;
-}
-
-.global-styles-ui-screen-revisions__revision-item::after {
-  height: 100%;
-  right: 16px;
-  top: 0;
-  width: 0;
-  border: 0.5px solid var(--wpds-color-stroke-surface-neutral, #dbdbdb);
-}
-
-.global-styles-ui-screen-revisions__revision-item:first-child::after {
-  top: 18px;
-}
-
-.global-styles-ui-screen-revisions__revision-item:last-child::after {
-  height: 18px;
-}
-
-.global-styles-ui-screen-revisions__revision-item-wrapper {
-  display: block;
-  padding: 12px 40px 4px 12px;
-}
-
-.global-styles-ui-screen-revisions__apply-button.is-primary,
-.global-styles-ui-screen-revisions__active-badge {
-  align-self: flex-start;
-  margin: 0 40px 12px 12px;
-}
-
-.global-styles-ui-screen-revisions__changes,
-.global-styles-ui-screen-revisions__meta {
-  color: #757575;
+.global-styles-ui-screen-revisions__date {
+  text-transform: uppercase;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   font-size: 12px;
 }
 
@@ -978,9 +887,9 @@ button.font-library__upload-area {
   gap: 8px;
 }
 
-.global-styles-ui-screen-revisions__description .global-styles-ui-screen-revisions__date {
-  text-transform: uppercase;
-  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
+.global-styles-ui-screen-revisions__changes,
+.global-styles-ui-screen-revisions__meta {
+  color: #2f2f2f;
   font-size: 12px;
 }
 
@@ -988,9 +897,8 @@ button.font-library__upload-area {
   display: flex;
   justify-content: start;
   width: 100%;
-  align-items: flex-start;
+  align-items: center;
   text-align: right;
-  margin-bottom: 4px;
 }
 
 .global-styles-ui-screen-revisions__meta img {
@@ -1000,58 +908,15 @@ button.font-library__upload-area {
   margin-left: 8px;
 }
 
-.global-styles-ui-screen-revisions__loading {
-  margin: 24px auto !important;
-}
-
 .global-styles-ui-screen-revisions__changes {
   text-align: right;
   line-height: 1.4;
-  margin-right: 12px;
+  margin: 0 12px 0 0;
   list-style: disc;
 }
 
 .global-styles-ui-screen-revisions__changes li {
   margin-bottom: 4px;
-}
-
-.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination {
-  justify-content: space-between;
-  gap: 2px;
-}
-
-.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .edit-site-pagination__total {
-  position: absolute;
-  right: -1000px;
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-}
-
-.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .components-text {
-  font-size: 12px;
-  will-change: opacity;
-}
-
-.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .components-button.is-tertiary {
-  color: #1e1e1e;
-}
-
-.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .components-button.is-tertiary:disabled,
-.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .components-button.is-tertiary[aria-disabled=true] {
-  color: #949494;
-}
-
-.global-styles-ui-screen-revisions__footer {
-  height: 56px;
-  z-index: 1;
-  position: sticky;
-  min-width: 100%;
-  bottom: 0;
-  background: #fff;
-  padding: 12px;
-  border-top: 1px solid var(--wpds-color-stroke-surface-neutral, #dbdbdb);
-  box-sizing: border-box;
 }
 
 .global-styles-ui-variations_item {
@@ -6740,6 +6605,21 @@ mark.wp-note {
 
 .editor-global-styles-sidebar .editor-global-styles-sidebar__header {
   flex-grow: 1;
+}
+
+.editor-global-styles-sidebar:has(.global-styles-ui-screen-revisions) {
+  overflow: hidden;
+}
+
+.editor-global-styles-sidebar__panel:has(.global-styles-ui-screen-revisions) {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.editor-global-styles-sidebar .global-styles-ui-sidebar__navigator-provider:has(.global-styles-ui-screen-revisions) {
+  flex: 1;
+  min-height: 0;
 }
 
 .editor-global-styles-sidebar .editor-global-styles-sidebar__header-title {

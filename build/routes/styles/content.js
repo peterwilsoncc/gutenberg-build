@@ -154,14 +154,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React48 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef23 = React48.useRef, useEffect22 = React48.useEffect, useMemo33 = React48.useMemo, useDebugValue2 = React48.useDebugValue;
+      var React48 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef23 = React48.useRef, useEffect22 = React48.useEffect, useMemo34 = React48.useMemo, useDebugValue2 = React48.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef23(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo33(
+        instRef = useMemo34(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -3137,8 +3137,8 @@ function useDismiss(context, props = {}) {
         const isScrollableY = lastTraversableNode || scrollRe.test(style.overflowY);
         const canScrollX = isScrollableX && target.clientWidth > 0 && target.scrollWidth > target.clientWidth;
         const canScrollY = isScrollableY && target.clientHeight > 0 && target.scrollHeight > target.clientHeight;
-        const isRTL13 = style.direction === "rtl";
-        const pressedVerticalScrollbar = canScrollY && (isRTL13 ? event.offsetX <= target.offsetWidth - target.clientWidth : event.offsetX > target.clientWidth);
+        const isRTL12 = style.direction === "rtl";
+        const pressedVerticalScrollbar = canScrollY && (isRTL12 ? event.offsetX <= target.offsetWidth - target.clientWidth : event.offsetX > target.clientWidth);
         const pressedHorizontalScrollbar = canScrollX && event.offsetY > target.clientHeight;
         if (pressedVerticalScrollbar || pressedHorizontalScrollbar) {
           return;
@@ -10577,18 +10577,18 @@ var stage = Stage;
 
 // routes/styles/canvas.tsx
 var import_editor2 = __toESM(require_editor());
-var import_components59 = __toESM(require_components());
+var import_components57 = __toESM(require_components());
 var import_data14 = __toESM(require_data());
 var import_core_data14 = __toESM(require_core_data());
 import { useNavigate as useNavigate2, useSearch as useSearch2 } from "@wordpress/route";
 import { useEditorAssets, useEditorSettings as useEditorSettings2 } from "@wordpress/lazy-editor";
 
 // packages/global-styles-ui/build-module/global-styles-ui.mjs
-var import_components58 = __toESM(require_components(), 1);
+var import_components56 = __toESM(require_components(), 1);
 var import_blocks5 = __toESM(require_blocks(), 1);
 var import_data13 = __toESM(require_data(), 1);
 var import_block_editor14 = __toESM(require_block_editor(), 1);
-var import_element56 = __toESM(require_element(), 1);
+var import_element57 = __toESM(require_element(), 1);
 var import_compose8 = __toESM(require_compose(), 1);
 
 // packages/global-styles-engine/build-module/utils/object.mjs
@@ -16300,8 +16300,8 @@ var unbrotli_default = (function() {
                           ringbuffer,
                           ringbuffer_size
                         );
-                        for (var _x9 = 0; _x9 < copy_dst - ringbuffer_end; _x9++)
-                          ringbuffer[_x9] = ringbuffer[ringbuffer_end + _x9];
+                        for (var _x8 = 0; _x8 < copy_dst - ringbuffer_end; _x8++)
+                          ringbuffer[_x8] = ringbuffer[ringbuffer_end + _x8];
                       }
                     } else {
                       throw new Error(
@@ -17180,12 +17180,12 @@ var inflate_default = (function() {
           var STR_APPLY_UIA_OK = true;
           try {
             String.fromCharCode.apply(null, [0]);
-          } catch (__50) {
+          } catch (__49) {
             STR_APPLY_OK = false;
           }
           try {
             String.fromCharCode.apply(null, new Uint8Array(1));
-          } catch (__50) {
+          } catch (__49) {
             STR_APPLY_UIA_OK = false;
           }
           var _utf8len = new utils.Buf8(256);
@@ -23841,9 +23841,9 @@ var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
 var { AdvancedPanel: StylesAdvancedPanel2 } = unlock4(import_block_editor12.privateApis);
 
 // packages/global-styles-ui/build-module/screen-revisions/index.mjs
-var import_i18n53 = __toESM(require_i18n(), 1);
-var import_components54 = __toESM(require_components(), 1);
-var import_element54 = __toESM(require_element(), 1);
+var import_i18n52 = __toESM(require_i18n(), 1);
+var import_components52 = __toESM(require_components(), 1);
+var import_element55 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.mjs
 var import_data11 = __toESM(require_data(), 1);
@@ -23977,51 +23977,45 @@ function useGlobalStylesRevisions({
   ]);
 }
 
-// packages/global-styles-ui/build-module/screen-revisions/revisions-buttons.mjs
+// packages/global-styles-ui/build-module/screen-revisions/revisions-list.mjs
 var import_i18n51 = __toESM(require_i18n(), 1);
-var import_components52 = __toESM(require_components(), 1);
 var import_date = __toESM(require_date(), 1);
 var import_core_data13 = __toESM(require_core_data(), 1);
 var import_data12 = __toESM(require_data(), 1);
-var import_keycodes2 = __toESM(require_keycodes(), 1);
+var import_element54 = __toESM(require_element(), 1);
 var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
 var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
-// packages/global-styles-ui/build-module/pagination/index.mjs
-var import_components53 = __toESM(require_components(), 1);
-var import_i18n52 = __toESM(require_i18n(), 1);
+// packages/global-styles-ui/build-module/screen-revisions/index.mjs
 var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/screen-revisions/index.mjs
+// packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
+var import_i18n53 = __toESM(require_i18n(), 1);
+var import_components53 = __toESM(require_components(), 1);
 var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
-var import_i18n54 = __toESM(require_i18n(), 1);
-var import_components55 = __toESM(require_components(), 1);
-var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
-
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
-var import_i18n56 = __toESM(require_i18n(), 1);
-var import_components57 = __toESM(require_components(), 1);
-var import_element55 = __toESM(require_element(), 1);
+var import_i18n55 = __toESM(require_i18n(), 1);
+var import_components55 = __toESM(require_components(), 1);
+var import_element56 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
 var import_block_editor13 = __toESM(require_block_editor(), 1);
-var import_i18n55 = __toESM(require_i18n(), 1);
-var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+var import_i18n54 = __toESM(require_i18n(), 1);
+var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/size-control/index.mjs
-var import_components56 = __toESM(require_components(), 1);
-var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+var import_components54 = __toESM(require_components(), 1);
+var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
-var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/global-styles-ui.mjs
-var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/with-global-styles-provider.mjs
-var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
 function withGlobalStylesProvider(Component) {
   return function WrappedComponent({
     value,
@@ -24029,13 +24023,13 @@ function withGlobalStylesProvider(Component) {
     onChange,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
       GlobalStylesProvider,
       {
         value,
         baseValue,
         onChange,
-        children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(Component, { ...props })
+        children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(Component, { ...props })
       }
     );
   };
@@ -24051,10 +24045,10 @@ var ColorVariations2 = withGlobalStylesProvider(ColorVariations);
 var TypographyVariations2 = withGlobalStylesProvider(TypographyVariations);
 
 // packages/global-styles-ui/build-module/font-library/font-library.mjs
-var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
 
 // routes/styles/canvas.tsx
-var import_jsx_runtime104 = __toESM(require_jsx_runtime());
+var import_jsx_runtime103 = __toESM(require_jsx_runtime());
 var { StyleBookPreview } = unlock2(import_editor2.privateApis);
 function RevisionStyleBookPreview({
   revisionId,
@@ -24069,7 +24063,7 @@ function RevisionStyleBookPreview({
   const selectedRevision = revisions.find(
     (revision) => String(revision.id) === revisionId
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
     StyleBookPreview,
     {
       path: section,
@@ -24103,7 +24097,7 @@ function Canvas() {
     });
   };
   if (!assetsReady || !settingsReady) {
-    return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
       "div",
       {
         style: {
@@ -24112,16 +24106,16 @@ function Canvas() {
           alignItems: "center",
           height: "100%"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components59.Spinner, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components57.Spinner, {})
       }
     );
   }
   if (!isBlockTheme) {
-    return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(StyleBookPreview, { isStatic: true, settings: editorSettings });
+    return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(StyleBookPreview, { isStatic: true, settings: editorSettings });
   }
   const revisionId = section.match(/^\/revisions\/(.+)$/)?.[1];
   if (revisionId) {
-    return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
       RevisionStyleBookPreview,
       {
         revisionId,
@@ -24131,7 +24125,7 @@ function Canvas() {
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
     StyleBookPreview,
     {
       path: section,
