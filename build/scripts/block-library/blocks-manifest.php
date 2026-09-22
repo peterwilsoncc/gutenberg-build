@@ -2050,6 +2050,9 @@ return array(
 			'anchor' => true,
 			'reusable' => false,
 			'html' => false,
+			'background' => array(
+				'gradient' => true
+			),
 			'color' => array(
 				'gradients' => true,
 				'text' => false,
