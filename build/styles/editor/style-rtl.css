@@ -5680,6 +5680,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   padding: 16px 16px 24px;
   height: 100%;
   overflow: hidden;
+  border-right: 1px solid color-mix(in srgb, currentColor 10%, transparent);
 }
 
 .editor-collab-sidebar-panel__thread,
