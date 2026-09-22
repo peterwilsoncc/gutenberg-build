@@ -78419,6 +78419,11 @@ ${text}
       anchor: true,
       ariaLabel: true,
       html: false,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true
+      },
       color: {
         text: true,
         background: true,

@@ -8765,6 +8765,11 @@ return array(
 			'anchor' => true,
 			'ariaLabel' => true,
 			'html' => false,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true
+			),
 			'color' => array(
 				'text' => true,
 				'background' => true,
