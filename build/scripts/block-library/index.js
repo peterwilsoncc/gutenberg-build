@@ -54529,6 +54529,15 @@ ${text}
       interactivity: {
         clientNavigation: true
       },
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalDefaultControls: {
+          backgroundImage: true,
+          gradient: true
+        }
+      },
       color: {
         text: true,
         background: true,
