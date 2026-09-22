@@ -4066,6 +4066,15 @@ return array(
 		'supports' => array(
 			'anchor' => true,
 			'className' => true,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true,
+				'__experimentalDefaultControls' => array(
+					'backgroundImage' => true,
+					'gradient' => true
+				)
+			),
 			'color' => array(
 				'background' => true,
 				'text' => false,

@@ -44417,6 +44417,15 @@ ${text}
     supports: {
       anchor: true,
       className: true,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalDefaultControls: {
+          backgroundImage: true,
+          gradient: true
+        }
+      },
       color: {
         background: true,
         text: false,
