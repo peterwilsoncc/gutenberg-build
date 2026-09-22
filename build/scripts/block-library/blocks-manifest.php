@@ -7260,6 +7260,11 @@ return array(
 				'full'
 			),
 			'html' => false,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true
+			),
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true
