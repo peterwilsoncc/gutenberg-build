@@ -69669,6 +69669,7 @@ var wp;
   // packages/block-editor/build-module/components/block-list/use-in-between-inserter.mjs
   function useInBetweenInserter() {
     const openRef = (0, import_element185.useContext)(InsertionPointOpenRef);
+    const { refsMap } = (0, import_element185.useContext)(BlockRefs);
     const isInBetweenInserterDisabled = (0, import_data75.useSelect)((select3) => {
       const settings2 = select3(store).getSettings();
       return settings2.isDistractionFree || settings2.isPreviewMode || unlock(select3(store)).isZoomOut();
@@ -69676,6 +69677,7 @@ var wp;
     const {
       getBlockListSettings: getBlockListSettings2,
       getBlockIndex: getBlockIndex2,
+      getBlockOrder: getBlockOrder2,
       isMultiSelecting: isMultiSelecting3,
       getSelectedBlockClientIds: getSelectedBlockClientIds2,
       getSettings: getSettings9,
@@ -69723,38 +69725,33 @@ var wp;
           const captureToolbars = !!blockListSettings2?.__experimentalCaptureToolbars;
           const offsetTop = event.clientY;
           const offsetLeft = event.clientX;
-          const children = Array.from(event.target.children);
-          let element = children.find((blockEl) => {
-            if (!blockEl.classList.contains("wp-block")) {
-              return false;
+          const clientId = getBlockOrder2(rootClientId).find(
+            (childClientId) => {
+              const blockEl = refsMap.get(childClientId);
+              if (!blockEl) {
+                return false;
+              }
+              const blockElRect = blockEl.getBoundingClientRect();
+              if (orientation === "vertical") {
+                return blockElRect.top > offsetTop;
+              }
+              if (offsetTop < blockElRect.top || offsetTop > blockElRect.bottom) {
+                return false;
+              }
+              return (0, import_i18n77.isRTL)() ? blockElRect.right < offsetLeft : blockElRect.left > offsetLeft;
             }
-            const blockElRect = blockEl.getBoundingClientRect();
-            if (orientation === "vertical") {
-              return blockElRect.top > offsetTop;
-            }
-            if (offsetTop < blockElRect.top || offsetTop > blockElRect.bottom) {
-              return false;
-            }
-            return (0, import_i18n77.isRTL)() ? blockElRect.right < offsetLeft : blockElRect.left > offsetLeft;
-          });
-          if (!element) {
+          );
+          if (!clientId) {
             hideInsertionPoint2();
             return;
           }
-          if (!element.id) {
-            element = element.firstElementChild;
-            if (!element) {
-              hideInsertionPoint2();
-              return;
-            }
-          }
-          const clientId = element.id.slice("block-".length);
-          if (!clientId || __unstableIsWithinBlockOverlay2(clientId) || !!getParentSectionBlock2(clientId)) {
+          if (__unstableIsWithinBlockOverlay2(clientId) || !!getParentSectionBlock2(clientId)) {
             return;
           }
           if (getSelectedBlockClientIds2().includes(clientId) && orientation === "vertical" && !captureToolbars && !getSettings9().hasFixedToolbar) {
             return;
           }
+          const element = refsMap.get(clientId);
           if (orientation === "vertical") {
             const elementRect = element.getBoundingClientRect();
             if (event.clientX > elementRect.right || event.clientX < elementRect.left) {
@@ -69778,8 +69775,10 @@ var wp;
       },
       [
         openRef,
+        refsMap,
         getBlockListSettings2,
         getBlockIndex2,
+        getBlockOrder2,
         isMultiSelecting3,
         showInsertionPoint2,
         hideInsertionPoint2,
