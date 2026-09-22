@@ -6407,6 +6407,11 @@ return array(
 		'supports' => array(
 			'anchor' => true,
 			'html' => false,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true
+			),
 			'color' => array(
 				'gradients' => true,
 				'link' => true,
