@@ -69725,8 +69725,17 @@ var wp;
           const offsetLeft = event.clientX;
           const children = Array.from(event.target.children);
           let element = children.find((blockEl) => {
+            if (!blockEl.classList.contains("wp-block")) {
+              return false;
+            }
             const blockElRect = blockEl.getBoundingClientRect();
-            return blockEl.classList.contains("wp-block") && orientation === "vertical" && blockElRect.top > offsetTop || blockEl.classList.contains("wp-block") && orientation === "horizontal" && ((0, import_i18n77.isRTL)() ? blockElRect.right < offsetLeft : blockElRect.left > offsetLeft);
+            if (orientation === "vertical") {
+              return blockElRect.top > offsetTop;
+            }
+            if (offsetTop < blockElRect.top || offsetTop > blockElRect.bottom) {
+              return false;
+            }
+            return (0, import_i18n77.isRTL)() ? blockElRect.right < offsetLeft : blockElRect.left > offsetLeft;
           });
           if (!element) {
             hideInsertionPoint2();
@@ -69746,10 +69755,12 @@ var wp;
           if (getSelectedBlockClientIds2().includes(clientId) && orientation === "vertical" && !captureToolbars && !getSettings9().hasFixedToolbar) {
             return;
           }
-          const elementRect = element.getBoundingClientRect();
-          if (orientation === "horizontal" && (event.clientY > elementRect.bottom || event.clientY < elementRect.top) || orientation === "vertical" && (event.clientX > elementRect.right || event.clientX < elementRect.left)) {
-            hideInsertionPoint2();
-            return;
+          if (orientation === "vertical") {
+            const elementRect = element.getBoundingClientRect();
+            if (event.clientX > elementRect.right || event.clientX < elementRect.left) {
+              hideInsertionPoint2();
+              return;
+            }
           }
           const index3 = getBlockIndex2(clientId);
           if (index3 === 0) {
