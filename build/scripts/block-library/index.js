@@ -22742,6 +22742,9 @@ var wp;
       anchor: true,
       reusable: false,
       html: false,
+      background: {
+        gradient: true
+      },
       color: {
         gradients: true,
         text: false,
