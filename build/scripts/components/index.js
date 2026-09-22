@@ -63481,6 +63481,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var resizable_box_default = ResizableBox;
 
   // packages/components/build-module/responsive-wrapper/index.mjs
+  var import_deprecated27 = __toESM(require_deprecated(), 1);
   var import_element203 = __toESM(require_element(), 1);
   var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
   function ResponsiveWrapper({
@@ -63489,6 +63490,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     children,
     isInline = false
   }) {
+    (0, import_deprecated27.default)("wp.components.ResponsiveWrapper", {
+      since: "7.2",
+      version: "7.4",
+      alternative: "the CSS aspect-ratio property"
+    });
     if (import_element203.Children.count(children) !== 1) {
       return null;
     }
@@ -63841,7 +63847,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_compose69 = __toESM(require_compose(), 1);
   var import_i18n70 = __toESM(require_i18n(), 1);
   var import_element205 = __toESM(require_element(), 1);
-  var import_deprecated27 = __toESM(require_deprecated(), 1);
+  var import_deprecated28 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE60 = "data-wp-hash";
   function getRuntime60() {
@@ -63928,7 +63934,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     onClose
   }) {
     if (onClose) {
-      (0, import_deprecated27.default)("`onClose` prop in wp.components.SearchControl", {
+      (0, import_deprecated28.default)("`onClose` prop in wp.components.SearchControl", {
         since: "6.8"
       });
     }
@@ -64205,9 +64211,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var list_default2 = SnackbarList;
 
   // packages/components/build-module/scrollable/deprecated.mjs
-  var import_deprecated28 = __toESM(require_deprecated(), 1);
+  var import_deprecated29 = __toESM(require_deprecated(), 1);
   function UnconnectedDeprecatedScrollable(props, forwardedRef) {
-    (0, import_deprecated28.default)("wp.components.__experimentalScrollable", {
+    (0, import_deprecated29.default)("wp.components.__experimentalScrollable", {
       since: "7.2",
       version: "7.4"
     });
@@ -64611,7 +64617,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/toolbar/toolbar/index.mjs
   var import_element219 = __toESM(require_element(), 1);
-  var import_deprecated29 = __toESM(require_deprecated(), 1);
+  var import_deprecated30 = __toESM(require_deprecated(), 1);
 
   // packages/components/build-module/toolbar/toolbar-group/index.mjs
   var import_element217 = __toESM(require_element(), 1);
@@ -64894,7 +64900,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       };
     }, [isVariantDefined]);
     if (!label) {
-      (0, import_deprecated29.default)("Using Toolbar without label prop", {
+      (0, import_deprecated30.default)("Using Toolbar without label prop", {
         since: "5.6",
         alternative: "ToolbarGroup component",
         link: "https://developer.wordpress.org/block-editor/components/toolbar/"
@@ -66288,13 +66294,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/isolated-event-container/index.mjs
   var import_element232 = __toESM(require_element(), 1);
-  var import_deprecated30 = __toESM(require_deprecated(), 1);
+  var import_deprecated31 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
   function stopPropagation(event) {
     event.stopPropagation();
   }
   var IsolatedEventContainer = (0, import_element232.forwardRef)((props, ref) => {
-    (0, import_deprecated30.default)("wp.components.IsolatedEventContainer", {
+    (0, import_deprecated31.default)("wp.components.IsolatedEventContainer", {
       since: "5.7"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("div", {
@@ -66612,7 +66618,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/with-focus-return/index.mjs
   var import_element237 = __toESM(require_element(), 1);
   var import_compose81 = __toESM(require_compose(), 1);
-  var import_deprecated31 = __toESM(require_deprecated(), 1);
+  var import_deprecated32 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
   function isComponentLike(object) {
     return object instanceof import_element237.Component || typeof object === "function";
@@ -66645,7 +66651,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var Provider3 = ({
     children
   }) => {
-    (0, import_deprecated31.default)("wp.components.FocusReturnProvider component", {
+    (0, import_deprecated32.default)("wp.components.FocusReturnProvider component", {
       since: "5.7",
       hint: "This provider is not used anymore. You can just remove it from your codebase"
     });
@@ -67756,7 +67762,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/input-control.mjs
   var import_element259 = __toESM(require_element(), 1);
   var import_compose87 = __toESM(require_compose(), 1);
-  var import_deprecated32 = __toESM(require_deprecated(), 1);
+  var import_deprecated33 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime350 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedInputControl = ({
     required,
@@ -67764,7 +67770,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    (0, import_deprecated32.default)("wp.components.privateApis.ValidatedInputControl", {
+    (0, import_deprecated33.default)("wp.components.privateApis.ValidatedInputControl", {
       since: "7.2",
       alternative: "ValidatedInputControl from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
@@ -67968,7 +67974,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
   var import_element262 = __toESM(require_element(), 1);
   var import_compose89 = __toESM(require_compose(), 1);
-  var import_deprecated33 = __toESM(require_deprecated(), 1);
+  var import_deprecated34 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime353 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
     required,
@@ -67976,7 +67982,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    (0, import_deprecated33.default)("wp.components.privateApis.ValidatedTextareaControl", {
+    (0, import_deprecated34.default)("wp.components.privateApis.ValidatedTextareaControl", {
       since: "7.2",
       alternative: "ValidatedTextareaControl from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
