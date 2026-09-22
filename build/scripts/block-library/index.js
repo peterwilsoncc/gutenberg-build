@@ -76374,6 +76374,15 @@ ${text}
           text: true
         }
       },
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalDefaultControls: {
+          backgroundImage: true,
+          gradient: true
+        }
+      },
       shadow: true,
       spacing: {
         padding: true
