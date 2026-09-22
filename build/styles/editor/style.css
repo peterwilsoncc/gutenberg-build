@@ -4987,6 +4987,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   margin-top: 8px;
 }
 
+/*!rtl:begin:ignore*/
 .wp-media-editor-image-editor {
   position: relative;
   overflow: hidden;
@@ -5205,6 +5206,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   cursor: nwse-resize;
 }
 
+/*!rtl:end:ignore*/
 /**
  * Breakpoints & Media Queries
  */
@@ -5620,6 +5622,8 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   user-select: none;
   touch-action: none;
   cursor: ew-resize;
+  /*rtl:ignore*/
+  direction: ltr;
   container-type: inline-size;
 }
 
@@ -5732,12 +5736,14 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 .rotation-ruler__active-label-sign {
   position: absolute;
   top: 0;
+  /*rtl:ignore*/
   right: 100%;
 }
 
 .rotation-ruler__active-label-unit {
   position: absolute;
   top: 0;
+  /*rtl:ignore*/
   left: 100%;
 }
 
