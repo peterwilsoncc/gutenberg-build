@@ -45842,7 +45842,6 @@ var import_html_entities3 = __toESM(require_html_entities());
 var import_element146 = __toESM(require_element());
 var import_data10 = __toESM(require_data());
 var import_core_data4 = __toESM(require_core_data());
-var import_compose26 = __toESM(require_compose());
 var import_i18n61 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_dom28 = __toESM(require_dom());
@@ -46786,12 +46785,10 @@ var TEMPLATE_ICONS = {
 };
 function TemplateListItem({
   title,
-  direction,
   className,
   description,
   icon,
-  onClick,
-  children
+  onClick
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
     import_components53.Button,
@@ -46799,41 +46796,29 @@ function TemplateListItem({
       __next40pxDefaultSize: true,
       className,
       onClick,
-      label: description,
-      showTooltip: !!description,
-      children: /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(
-        import_components53.Flex,
-        {
-          as: "span",
-          align: "center",
-          justify: "center",
-          style: { width: "100%" },
-          direction,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("div", { className: "template-list-add-new-template__template-icon", children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(import_components53.Icon, { icon }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(
-              import_components53.__experimentalVStack,
-              {
-                className: "template-list-add-new-template__template-name",
-                alignment: "center",
-                spacing: 0,
-                children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
-                    import_components53.__experimentalText,
-                    {
-                      align: "center",
-                      weight: "var(--wpds-typography-font-weight-emphasis)",
-                      lineHeight: 1.53846153846,
-                      children: title
-                    }
-                  ),
-                  children
-                ]
-              }
-            )
-          ]
-        }
-      )
+      children: /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(Stack, { render: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("span", {}), direction: "column", gap: "sm", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(
+          Stack,
+          {
+            render: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("span", {}),
+            direction: "row",
+            align: "center",
+            gap: "sm",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("div", { className: "template-list-add-new-template__template-icon", children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(import_components53.Icon, { icon }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("span", { className: "template-list-add-new-template__template-name", children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
+                import_components53.__experimentalText,
+                {
+                  weight: "var(--wpds-typography-font-weight-emphasis)",
+                  lineHeight: 1.53846153846,
+                  children: title
+                }
+              ) })
+            ]
+          }
+        ),
+        description && /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(Text, { variant: "body-sm", children: description })
+      ] })
     }
   );
 }
@@ -46855,21 +46840,6 @@ function NewTemplateModal({ onClose }) {
   const { saveEntityRecord } = (0, import_data10.useDispatch)(import_core_data4.store);
   const { createErrorNotice, createSuccessNotice } = (0, import_data10.useDispatch)(import_notices.store);
   const containerRef = (0, import_element146.useRef)(null);
-  const isMobile = (0, import_compose26.useViewportMatch)("medium", "<");
-  const homeUrl = (0, import_data10.useSelect)((select2) => {
-    return select2(import_core_data4.store).getEntityRecord(
-      "root",
-      "__unstableBase"
-    )?.home;
-  }, []);
-  const TEMPLATE_SHORT_DESCRIPTIONS = {
-    "front-page": homeUrl ?? "",
-    date: (0, import_i18n61.sprintf)(
-      // translators: %s: The homepage url.
-      (0, import_i18n61.__)("E.g. %s"),
-      homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
-    )
-  };
   (0, import_element146.useEffect)(() => {
     if (containerRef.current && modalContent === modalContentMap.templatesList) {
       const [firstFocusable] = import_dom28.focus.focusable.find(
@@ -46953,7 +46923,7 @@ function NewTemplateModal({ onClose }) {
         modalContent === modalContentMap.templatesList && /* @__PURE__ */ (0, import_jsx_runtime214.jsxs)(
           import_components53.__experimentalGrid,
           {
-            columns: isMobile ? 2 : 3,
+            templateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
             gap: 4,
             align: "flex-start",
             justify: "center",
@@ -46963,14 +46933,13 @@ function NewTemplateModal({ onClose }) {
                 "Select what the new template should apply to:"
               ) }),
               missingTemplates.map((template) => {
-                const { title, slug, onClick } = template;
+                const { title, description, slug, onClick } = template;
                 return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
                   TemplateListItem,
                   {
                     title,
-                    direction: "column",
                     className: "template-list-add-new-template__template-button",
-                    description: TEMPLATE_SHORT_DESCRIPTIONS[slug],
+                    description,
                     icon: TEMPLATE_ICONS[slug] || layout_default,
                     onClick: () => onClick ? onClick(template) : createTemplate(template)
                   },
@@ -46981,20 +46950,13 @@ function NewTemplateModal({ onClose }) {
                 TemplateListItem,
                 {
                   title: (0, import_i18n61.__)("Custom template"),
-                  direction: "row",
                   className: "template-list-add-new-template__custom-template-button",
+                  description: (0, import_i18n61.__)(
+                    "A custom template can be manually applied to any post or page."
+                  ),
                   icon: pencil_default,
                   onClick: () => setModalContent(
                     modalContentMap.customGenericTemplate
-                  ),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
-                    import_components53.__experimentalText,
-                    {
-                      lineHeight: 1.53846153846,
-                      children: (0, import_i18n61.__)(
-                        "A custom template can be manually applied to any post or page."
-                      )
-                    }
                   )
                 }
               )
@@ -47100,10 +47062,10 @@ if (typeof document !== "undefined" && (typeof process === "undefined" || true) 
 }
 
 // routes/template-list/add-new-template/style.scss
-if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='cc71877c60']")) {
+if (typeof document !== "undefined" && (typeof process === "undefined" || true) && !document.head.querySelector("style[data-wp-hash='802746ec15']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "cc71877c60");
-  style.appendChild(document.createTextNode(".template-list-custom-template-modal__contents-wrapper{height:100%;justify-content:flex-start!important}.template-list-custom-template-modal__contents-wrapper>*{width:100%}.template-list-custom-template-modal__contents>.components-button{height:auto;justify-content:center}@media (min-width:782px){.template-list-custom-template-modal{width:456px}}@media (min-width:600px){.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list{margin-inline:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*-2);max-height:calc(224px + var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*4);overflow-y:auto;padding:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*2);scroll-padding-block:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*2);width:calc(100% + var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*4)}}.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item{display:block;height:auto;overflow-wrap:break-word;padding:8px 12px;text-align:left;white-space:pre-wrap;width:100%}.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item mark{background:none;font-weight:700}.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item:hover{background:rgba(var(--wp-admin-theme-color--rgb),.04)}.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item:hover *,.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item:hover mark{color:var(--wp-admin-theme-color)}.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item:focus{background-color:#f0f0f0}.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item__info,.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item__title{display:block;overflow:hidden;text-overflow:ellipsis}.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item__info{color:#757575;word-break:break-all}.template-list-custom-template-modal__no-results{border:1px solid #ccc;border-radius:2px;padding:16px}.template-list-custom-generic-template__modal .components-modal__header{border-bottom:none}.template-list-custom-generic-template__modal .components-modal__content:before{margin-bottom:4px}@media (min-width:960px){.template-list-add-new-template__modal{margin-top:64px;max-height:calc(100% - 128px);max-width:832px;width:calc(100% - 128px)}}.template-list-add-new-template__modal .template-list-add-new-template__custom-template-button svg,.template-list-add-new-template__modal .template-list-add-new-template__template-button svg{color:var(--wp-admin-theme-color)}.template-list-add-new-template__modal .template-list-add-new-template__custom-template-button .template-list-add-new-template__template-name{align-items:flex-start;flex-grow:1}.template-list-add-new-template__modal .template-list-add-new-template__template-icon{background:rgba(var(--wp-admin-theme-color--rgb),.04);border-radius:100%;max-height:40px;max-width:40px;padding:8px}.template-list-add-new-template__template-list__contents>.components-button,.template-list-custom-template-modal__contents>.components-button{border:1px solid #ddd;display:flex;flex-direction:column;justify-content:center;padding:32px}.template-list-add-new-template__template-list__contents>.components-button span:first-child,.template-list-custom-template-modal__contents>.components-button span:first-child{color:#1e1e1e}.template-list-add-new-template__template-list__contents>.components-button span,.template-list-custom-template-modal__contents>.components-button span{color:#757575}.template-list-add-new-template__template-list__contents>.components-button:hover,.template-list-custom-template-modal__contents>.components-button:hover{background:rgba(var(--wp-admin-theme-color--rgb),.04);border-color:transparent;color:var(--wp-admin-theme-color-darker-10)}.template-list-add-new-template__template-list__contents>.components-button:focus span:first-child,.template-list-add-new-template__template-list__contents>.components-button:hover span,.template-list-custom-template-modal__contents>.components-button:focus span:first-child,.template-list-custom-template-modal__contents>.components-button:hover span{color:var(--wp-admin-theme-color)}.template-list-add-new-template__template-list__contents .template-list-add-new-template__custom-template-button,.template-list-add-new-template__template-list__contents .template-list-add-new-template__template-list__prompt,.template-list-custom-template-modal__contents .template-list-add-new-template__custom-template-button,.template-list-custom-template-modal__contents .template-list-add-new-template__template-list__prompt{grid-column:1/-1}.template-list-add-new-template__template-list__contents>.components-button{align-items:flex-start;height:100%;text-align:start}"));
+  style.setAttribute("data-wp-hash", "802746ec15");
+  style.appendChild(document.createTextNode(".template-list-custom-template-modal__contents-wrapper{height:100%;justify-content:flex-start!important}.template-list-custom-template-modal__contents-wrapper>*{width:100%}.template-list-custom-template-modal__contents>.components-button{height:auto;justify-content:center}@media (min-width:782px){.template-list-custom-template-modal{width:456px}}@media (min-width:600px){.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list{margin-inline:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*-2);max-height:calc(224px + var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*4);overflow-y:auto;padding:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*2);scroll-padding-block:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*2);width:calc(100% + var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*4)}}.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item{display:block;height:auto;overflow-wrap:break-word;padding:8px 12px;text-align:left;white-space:pre-wrap;width:100%}.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item mark{background:none;font-weight:700}.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item:hover{background:rgba(var(--wp-admin-theme-color--rgb),.04)}.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item:hover *,.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item:hover mark{color:var(--wp-admin-theme-color)}.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item:focus{background-color:#f0f0f0}.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item__info,.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item__title{display:block;overflow:hidden;text-overflow:ellipsis}.template-list-custom-template-modal .template-list-custom-template-modal__suggestions_list__list-item__info{color:#757575;word-break:break-all}.template-list-custom-template-modal__no-results{border:1px solid #ccc;border-radius:2px;padding:16px}.template-list-custom-generic-template__modal .components-modal__header{border-bottom:none}.template-list-custom-generic-template__modal .components-modal__content:before{margin-bottom:4px}@media (min-width:960px){.template-list-add-new-template__modal{margin-top:64px;max-height:calc(100% - 128px);max-width:832px;width:calc(100% - 128px)}}.template-list-add-new-template__modal .template-list-add-new-template__custom-template-button svg,.template-list-add-new-template__modal .template-list-add-new-template__template-button svg{color:var(--wp-admin-theme-color)}.template-list-add-new-template__modal .template-list-add-new-template__template-icon{background:rgba(var(--wp-admin-theme-color--rgb),.04);border-radius:100%;max-height:40px;max-width:40px;padding:8px}.template-list-add-new-template__template-list__contents>.components-button,.template-list-custom-template-modal__contents>.components-button{border:1px solid #ddd;display:flex;flex-direction:column;justify-content:center;padding:32px}.template-list-add-new-template__template-list__contents>.components-button span:first-child,.template-list-custom-template-modal__contents>.components-button span:first-child{color:#1e1e1e}.template-list-add-new-template__template-list__contents>.components-button span,.template-list-custom-template-modal__contents>.components-button span{color:#757575}.template-list-add-new-template__template-list__contents>.components-button:hover,.template-list-custom-template-modal__contents>.components-button:hover{background:rgba(var(--wp-admin-theme-color--rgb),.04);border-color:transparent;color:var(--wp-admin-theme-color-darker-10)}.template-list-add-new-template__template-list__contents>.components-button:focus span:first-child,.template-list-add-new-template__template-list__contents>.components-button:hover span,.template-list-custom-template-modal__contents>.components-button:focus span:first-child,.template-list-custom-template-modal__contents>.components-button:hover span{color:var(--wp-admin-theme-color)}.template-list-add-new-template__template-list__contents .template-list-add-new-template__custom-template-button,.template-list-add-new-template__template-list__contents .template-list-add-new-template__template-list__prompt,.template-list-custom-template-modal__contents .template-list-add-new-template__custom-template-button,.template-list-custom-template-modal__contents .template-list-add-new-template__template-list__prompt{grid-column:1/-1}.template-list-add-new-template__template-list__contents>.components-button{align-items:flex-start;height:100%;justify-content:flex-start;padding:16px;text-align:start}"));
   document.head.appendChild(style);
 }
 

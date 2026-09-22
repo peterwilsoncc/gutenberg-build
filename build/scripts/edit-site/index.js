@@ -74750,7 +74750,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_router32 = __toESM(require_router(), 1);
   var import_editor33 = __toESM(require_editor(), 1);
   var import_url21 = __toESM(require_url(), 1);
-  var import_compose45 = __toESM(require_compose(), 1);
+  var import_compose44 = __toESM(require_compose(), 1);
 
   // packages/edit-site/build-module/components/add-new-template/index.mjs
   var import_components146 = __toESM(require_components(), 1);
@@ -74758,7 +74758,6 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element246 = __toESM(require_element(), 1);
   var import_data74 = __toESM(require_data(), 1);
   var import_core_data53 = __toESM(require_core_data(), 1);
-  var import_compose44 = __toESM(require_compose(), 1);
   var import_i18n162 = __toESM(require_i18n(), 1);
   var import_notices7 = __toESM(require_notices(), 1);
   var import_router31 = __toESM(require_router(), 1);
@@ -75764,57 +75763,36 @@ If there's a particular need for this, please submit a feature request at https:
     tag: tag_default,
     attachment: media_default
   };
-  function TemplateListItem({
-    title,
-    direction,
-    className,
-    description,
-    icon,
-    onClick,
-    children
-  }) {
+  function TemplateListItem({ title, className, description, icon, onClick }) {
     return /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
       import_components146.Button,
       {
         __next40pxDefaultSize: true,
         className,
         onClick,
-        label: description,
-        showTooltip: !!description,
-        children: /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(
-          import_components146.Flex,
-          {
-            as: "span",
-            spacing: 2,
-            align: "center",
-            justify: "center",
-            style: { width: "100%" },
-            direction,
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime393.jsx)("div", { className: "edit-site-add-new-template__template-icon", children: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(import_components146.Icon, { icon }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(
-                import_components146.__experimentalVStack,
-                {
-                  className: "edit-site-add-new-template__template-name",
-                  alignment: "center",
-                  spacing: 0,
-                  children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-                      import_components146.__experimentalText,
-                      {
-                        align: "center",
-                        weight: "var(--wpds-typography-font-weight-emphasis, 600)",
-                        lineHeight: 1.53846153846,
-                        children: title
-                      }
-                    ),
-                    children
-                  ]
-                }
-              )
-            ]
-          }
-        )
+        children: /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(Stack, { direction: "column", gap: "sm", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(
+            Stack,
+            {
+              render: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)("span", {}),
+              direction: "row",
+              align: "center",
+              gap: "sm",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime393.jsx)("div", { className: "edit-site-add-new-template__template-icon", children: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(import_components146.Icon, { icon }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime393.jsx)("span", { className: "edit-site-add-new-template__template-name", children: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
+                  import_components146.__experimentalText,
+                  {
+                    weight: "var(--wpds-typography-font-weight-emphasis, 600)",
+                    lineHeight: 1.53846153846,
+                    children: title
+                  }
+                ) })
+              ]
+            }
+          ),
+          description && /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(Text, { variant: "body-sm", children: description })
+        ] })
       }
     );
   }
@@ -75837,18 +75815,6 @@ If there's a particular need for this, please submit a feature request at https:
     const { saveEntityRecord } = (0, import_data74.useDispatch)(import_core_data53.store);
     const { createErrorNotice, createSuccessNotice } = (0, import_data74.useDispatch)(import_notices7.store);
     const containerRef = (0, import_element246.useRef)(null);
-    const isMobile = (0, import_compose44.useViewportMatch)("medium", "<");
-    const homeUrl = (0, import_data74.useSelect)((select4) => {
-      return select4(import_core_data53.store).getEntityRecord("root", "__unstableBase")?.home;
-    }, []);
-    const TEMPLATE_SHORT_DESCRIPTIONS = {
-      "front-page": homeUrl,
-      date: (0, import_i18n162.sprintf)(
-        // translators: %s: The homepage url.
-        (0, import_i18n162.__)("E.g. %s"),
-        homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
-      )
-    };
     (0, import_element246.useEffect)(() => {
       if (containerRef.current && modalContent === modalContentMap.templatesList) {
         const [firstFocusable] = import_dom31.focus.focusable.find(
@@ -75929,7 +75895,7 @@ If there's a particular need for this, please submit a feature request at https:
           modalContent === modalContentMap.templatesList && /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(
             import_components146.__experimentalGrid,
             {
-              columns: isMobile ? 2 : 3,
+              templateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
               gap: 4,
               align: "flex-start",
               justify: "center",
@@ -75939,14 +75905,13 @@ If there's a particular need for this, please submit a feature request at https:
                   "Select what the new template should apply to:"
                 ) }),
                 missingTemplates.map((template) => {
-                  const { title, slug, onClick } = template;
+                  const { title, description, slug, onClick } = template;
                   return /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
                     TemplateListItem,
                     {
                       title,
-                      direction: "column",
                       className: "edit-site-add-new-template__template-button",
-                      description: TEMPLATE_SHORT_DESCRIPTIONS[slug],
+                      description,
                       icon: TEMPLATE_ICONS[slug] || layout_default,
                       onClick: () => onClick ? onClick(template) : createTemplate(template)
                     },
@@ -75957,20 +75922,13 @@ If there's a particular need for this, please submit a feature request at https:
                   TemplateListItem,
                   {
                     title: (0, import_i18n162.__)("Custom template"),
-                    direction: "row",
                     className: "edit-site-add-new-template__custom-template-button",
+                    description: (0, import_i18n162.__)(
+                      "A custom template can be manually applied to any post or page."
+                    ),
                     icon: pencil_default,
                     onClick: () => setModalContent(
                       modalContentMap.customGenericTemplate
-                    ),
-                    children: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-                      import_components146.__experimentalText,
-                      {
-                        lineHeight: 1.53846153846,
-                        children: (0, import_i18n162.__)(
-                          "A custom template can be manually applied to any post or page."
-                        )
-                      }
                     )
                   }
                 )
@@ -76181,7 +76139,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => [editAction, ...postTypeActions],
       [postTypeActions, editAction]
     );
-    const onChangeView = (0, import_compose45.useEvent)((newView) => {
+    const onChangeView = (0, import_compose44.useEvent)((newView) => {
       updateView(newView);
       if (newView.type !== view.type) {
         history.invalidate();
@@ -76326,7 +76284,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_router33 = __toESM(require_router(), 1);
   var import_data78 = __toESM(require_data(), 1);
   var import_editor37 = __toESM(require_editor(), 1);
-  var import_compose46 = __toESM(require_compose(), 1);
+  var import_compose45 = __toESM(require_compose(), 1);
   var import_url22 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/add-new-post/index.mjs
@@ -76685,7 +76643,7 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     });
-    const onChangeView = (0, import_compose46.useEvent)((newView) => {
+    const onChangeView = (0, import_compose45.useEvent)((newView) => {
       updateView(newView);
       if (newView.type !== view.type) {
         history.invalidate();
@@ -76766,7 +76724,7 @@ If there's a particular need for this, please submit a feature request at https:
       [records, notesCount]
     );
     const ids = data?.map((record) => getItemId(record)) ?? [];
-    const prevIds = (0, import_compose46.usePrevious)(ids) ?? [];
+    const prevIds = (0, import_compose45.usePrevious)(ids) ?? [];
     const deletedIds = prevIds.filter((id) => !ids.includes(id));
     const postIdWasDeleted = deletedIds.includes(postId);
     (0, import_element252.useEffect)(() => {
