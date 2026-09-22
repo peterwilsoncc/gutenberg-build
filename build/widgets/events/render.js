@@ -32552,7 +32552,7 @@ var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
 function hasPaginationControls(view, paginationInfo) {
   return !view.infiniteScrollEnabled && paginationInfo.totalItems > 0 && paginationInfo.totalPages > 1;
 }
-function DataViewsPagination() {
+function DataViewsPageSelect({ className }) {
   const { view, onChangeView, paginationInfo } = (0, import_element95.useContext)(dataviews_context_default);
   if (!hasPaginationControls(view, paginationInfo)) {
     return null;
@@ -32574,85 +32574,118 @@ function DataViewsPagination() {
       };
     }
   );
+  return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+    Stack,
+    {
+      direction: "row",
+      justify: "flex-start",
+      align: "center",
+      gap: "xs",
+      className: clsx_default("dataviews-pagination__page-select", className),
+      children: (0, import_element95.createInterpolateElement)(
+        (0, import_i18n24.sprintf)(
+          // translators: 1: Current page number, 2: Total number of pages.
+          (0, import_i18n24._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"),
+          "<CurrentPage />",
+          totalPages
+        ),
+        {
+          div: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", { "aria-hidden": true }),
+          // @ts-expect-error — Tag injected via sprintf argument, not visible in format string.
+          CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+            import_components13.SelectControl,
+            {
+              "aria-label": (0, import_i18n24.__)("Current page"),
+              value: currentPage.toString(),
+              options: pageSelectOptions,
+              onChange: (newValue) => {
+                onChangeView({
+                  ...view,
+                  page: +newValue
+                });
+              },
+              size: "small",
+              variant: "minimal"
+            }
+          )
+        }
+      )
+    }
+  );
+}
+function DataViewsPageNavigation({
+  className
+}) {
+  const { view, onChangeView, paginationInfo } = (0, import_element95.useContext)(dataviews_context_default);
+  if (!hasPaginationControls(view, paginationInfo)) {
+    return null;
+  }
+  const { totalPages } = paginationInfo;
+  const currentPage = view.page ?? 1;
   return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
     Stack,
     {
       direction: "row",
-      className: "dataviews-pagination",
+      gap: "xs",
+      align: "center",
+      className: clsx_default(
+        "dataviews-pagination__page-navigation",
+        className
+      ),
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+          import_components13.Button,
+          {
+            onClick: () => onChangeView({
+              ...view,
+              page: currentPage - 1
+            }),
+            disabled: currentPage === 1,
+            accessibleWhenDisabled: true,
+            label: (0, import_i18n24.__)("Previous page"),
+            icon: (0, import_i18n24.isRTL)() ? next_default : previous_default,
+            showTooltip: true,
+            size: "compact",
+            tooltipPosition: "top"
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+          import_components13.Button,
+          {
+            onClick: () => onChangeView({ ...view, page: currentPage + 1 }),
+            disabled: currentPage >= totalPages,
+            accessibleWhenDisabled: true,
+            label: (0, import_i18n24.__)("Next page"),
+            icon: (0, import_i18n24.isRTL)() ? previous_default : next_default,
+            showTooltip: true,
+            size: "compact",
+            tooltipPosition: "top"
+          }
+        )
+      ]
+    }
+  );
+}
+function DataViewsPagination({
+  children,
+  className
+}) {
+  const { view, paginationInfo } = (0, import_element95.useContext)(dataviews_context_default);
+  if (!hasPaginationControls(view, paginationInfo)) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+    Stack,
+    {
+      direction: "row",
+      className: clsx_default("dataviews-pagination", className),
       justify: "end",
       align: "center",
       gap: "xl",
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
-          Stack,
-          {
-            direction: "row",
-            justify: "flex-start",
-            align: "center",
-            gap: "xs",
-            className: "dataviews-pagination__page-select",
-            children: (0, import_element95.createInterpolateElement)(
-              (0, import_i18n24.sprintf)(
-                // translators: 1: Current page number, 2: Total number of pages.
-                (0, import_i18n24._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"),
-                "<CurrentPage />",
-                totalPages
-              ),
-              {
-                div: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", { "aria-hidden": true }),
-                // @ts-expect-error — Tag injected via sprintf argument, not visible in format string.
-                CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
-                  import_components13.SelectControl,
-                  {
-                    "aria-label": (0, import_i18n24.__)("Current page"),
-                    value: currentPage.toString(),
-                    options: pageSelectOptions,
-                    onChange: (newValue) => {
-                      onChangeView({
-                        ...view,
-                        page: +newValue
-                      });
-                    },
-                    size: "small",
-                    variant: "minimal"
-                  }
-                )
-              }
-            )
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(Stack, { direction: "row", gap: "xs", align: "center", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
-            import_components13.Button,
-            {
-              onClick: () => onChangeView({
-                ...view,
-                page: currentPage - 1
-              }),
-              disabled: currentPage === 1,
-              accessibleWhenDisabled: true,
-              label: (0, import_i18n24.__)("Previous page"),
-              icon: (0, import_i18n24.isRTL)() ? next_default : previous_default,
-              showTooltip: true,
-              size: "compact",
-              tooltipPosition: "top"
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
-            import_components13.Button,
-            {
-              onClick: () => onChangeView({ ...view, page: currentPage + 1 }),
-              disabled: currentPage >= totalPages,
-              accessibleWhenDisabled: true,
-              label: (0, import_i18n24.__)("Next page"),
-              icon: (0, import_i18n24.isRTL)() ? previous_default : next_default,
-              showTooltip: true,
-              size: "compact",
-              tooltipPosition: "top"
-            }
-          )
-        ] })
-      ]
+      children: children ?? /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(import_jsx_runtime133.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(DataViewsPageSelect, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(DataViewsPageNavigation, {})
+      ] })
     }
   );
 }
