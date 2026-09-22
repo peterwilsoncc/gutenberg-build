@@ -24816,7 +24816,7 @@ var Breadcrumbs = ({ items }) => {
       );
     }
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("nav", { "aria-label": (0, import_i18n9.__)("Breadcrumbs"), children: /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("nav", { "aria-label": (0, import_i18n9._x)("Breadcrumbs", "area label"), children: /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(
     Stack,
     {
       render: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("ul", {}),
