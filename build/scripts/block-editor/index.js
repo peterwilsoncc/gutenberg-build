@@ -6016,9 +6016,11 @@ var wp;
     getGradientValueBySlug: () => getGradientValueBySlug,
     getPxFromCssUnit: () => get_px_from_css_unit_default,
     getSpacingPresetCssVar: () => getSpacingPresetCssVar2,
+    getStyleForState: () => getStyleForState2,
     getTypographyClassesAndStyles: () => getTypographyClassesAndStyles,
     isValueSpacingPreset: () => isValueSpacingPreset,
     privateApis: () => privateApis3,
+    setStyleForState: () => setStyleForState,
     store: () => store,
     storeConfig: () => storeConfig,
     transformStyles: () => transform_styles_default,
@@ -9167,6 +9169,7 @@ var wp;
     getSelectedBlockClientId: () => getSelectedBlockClientId,
     getSelectedBlockClientIds: () => getSelectedBlockClientIds,
     getSelectedBlockCount: () => getSelectedBlockCount,
+    getSelectedBlockStyleState: () => getSelectedBlockStyleState,
     getSelectedBlocksInitialCaretPosition: () => getSelectedBlocksInitialCaretPosition,
     getSelectionEnd: () => getSelectionEnd,
     getSelectionStart: () => getSelectionStart,
@@ -9178,6 +9181,7 @@ var wp;
     hasInserterItems: () => hasInserterItems,
     hasMultiSelection: () => hasMultiSelection,
     hasSelectedBlock: () => hasSelectedBlock,
+    hasSelectedBlockStyleState: () => hasSelectedBlockStyleState,
     hasSelectedInnerBlock: () => hasSelectedInnerBlock,
     isAncestorBeingDragged: () => isAncestorBeingDragged,
     isAncestorMultiSelected: () => isAncestorMultiSelected,
@@ -10011,6 +10015,7 @@ var wp;
   // packages/block-editor/build-module/store/private-selectors.mjs
   var private_selectors_exports = {};
   __export(private_selectors_exports, {
+    DEFAULT_BLOCK_STYLE_STATE: () => DEFAULT_BLOCK_STYLE_STATE,
     canHostEditableRoot: () => canHostEditableRoot,
     getAllPatterns: () => getAllPatterns,
     getBlockRemovalRules: () => getBlockRemovalRules,
@@ -10039,14 +10044,12 @@ var wp;
     getRequestedInspectorTab: () => getRequestedInspectorTab,
     getReusableBlocks: () => getReusableBlocks,
     getSectionRootClientId: () => getSectionRootClientId,
-    getSelectedBlockStyleState: () => getSelectedBlockStyleState,
     getStyleOverrides: () => getStyleOverrides,
     getStyleStateViewport: () => getStyleStateViewport,
     getViewportModalClientIds: () => getViewportModalClientIds,
     getZoomLevel: () => getZoomLevel,
     hasAllowedPatterns: () => hasAllowedPatterns,
     hasBlockSpotlight: () => hasBlockSpotlight2,
-    hasSelectedStyleState: () => hasSelectedStyleState,
     isBlockHiddenAnywhere: () => isBlockHiddenAnywhere,
     isBlockHiddenAtViewport: () => isBlockHiddenAtViewport,
     isBlockHiddenEverywhere: () => isBlockHiddenEverywhere,
@@ -13308,24 +13311,6 @@ var wp;
   function isResponsiveEditing2(state) {
     return state.isResponsiveEditing;
   }
-  var getSelectedBlockStyleState = (0, import_data4.createSelector)(
-    (state, clientId) => {
-      const perBlockState = state.selectedBlockStyleState?.clientId === clientId ? state.selectedBlockStyleState.value ?? DEFAULT_BLOCK_STYLE_STATE : DEFAULT_BLOCK_STYLE_STATE;
-      return {
-        ...perBlockState,
-        // The viewport is tracked globally, so inject it here. This way
-        // consumers receive a single combined state object instead of
-        // merging the global viewport themselves, and selectors derived
-        // from this stay consistent.
-        viewport: getStyleStateViewport(state)
-      };
-    },
-    (state) => [state.styleStateViewport, state.selectedBlockStyleState]
-  );
-  function hasSelectedStyleState(state, clientId) {
-    const selectedState = getSelectedBlockStyleState(state, clientId);
-    return selectedState.viewport !== DEFAULT_BLOCK_STYLE_STATE.viewport || selectedState.pseudo !== DEFAULT_BLOCK_STYLE_STATE.pseudo;
-  }
   function isSelectedBlockStyleStateShownOnCanvas(state, clientId) {
     if (state.selectedBlockStyleState?.clientId !== clientId) {
       return true;
@@ -15205,6 +15190,24 @@ var wp;
       }
     );
     return getEditedContentOnlySection(state);
+  }
+  var getSelectedBlockStyleState = (0, import_data5.createSelector)(
+    (state, clientId) => {
+      const perBlockState = state.selectedBlockStyleState?.clientId === clientId ? state.selectedBlockStyleState.value ?? DEFAULT_BLOCK_STYLE_STATE : DEFAULT_BLOCK_STYLE_STATE;
+      return {
+        ...perBlockState,
+        // The viewport is tracked globally, so inject it here. This way
+        // consumers receive a single combined state object instead of
+        // merging the global viewport themselves, and selectors derived
+        // from this stay consistent.
+        viewport: getStyleStateViewport(state)
+      };
+    },
+    (state) => [state.styleStateViewport, state.selectedBlockStyleState]
+  );
+  function hasSelectedBlockStyleState(state, clientId) {
+    const selectedState = getSelectedBlockStyleState(state, clientId);
+    return selectedState.viewport !== DEFAULT_BLOCK_STYLE_STATE.viewport || selectedState.pseudo !== DEFAULT_BLOCK_STYLE_STATE.pseudo;
   }
 
   // packages/block-editor/build-module/store/private-actions.mjs
@@ -96365,17 +96368,19 @@ var wp;
     fontSize,
     style
   }) {
-    const hasSelectedStyleState2 = (0, import_data173.useSelect)(
+    const hasSelectedBlockStyleState2 = (0, import_data173.useSelect)(
       (select3) => {
-        const { hasSelectedStyleState: hasSelectedBlockStyleState } = unlock(select3(store));
-        return hasSelectedBlockStyleState(clientId);
+        const {
+          hasSelectedBlockStyleState: hasSelectedBlockStyleStateSelector
+        } = select3(store);
+        return hasSelectedBlockStyleStateSelector(clientId);
       },
       [clientId]
     );
     if (!(0, import_blocks105.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY)) {
       return null;
     }
-    if (hasSelectedStyleState2) {
+    if (hasSelectedBlockStyleState2) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
@@ -113907,9 +113912,7 @@ var wp;
     InspectorControlsLastItem: last_item_default,
     useHasBlockToolbar,
     cleanEmptyObject,
-    getStyleForState: getStyleForState2,
     isDefaultBlockStyleState: isDefaultBlockStyleState2,
-    setStyleForState,
     usePrivateStyleOverride,
     BlockQuickNavigation,
     LayoutStyle,

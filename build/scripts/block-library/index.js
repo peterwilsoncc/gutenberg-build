@@ -25073,11 +25073,9 @@ var wp;
 
   // packages/block-library/build-module/utils/style-state.mjs
   var import_block_editor62 = __toESM(require_block_editor(), 1);
-  var { cleanEmptyObject: cleanEmptyObject2, getStyleForState, setStyleForState } = unlock(
-    import_block_editor62.privateApis
-  );
+  var { cleanEmptyObject: cleanEmptyObject2 } = unlock(import_block_editor62.privateApis);
   function getStateStyle(style2, selectedState) {
-    return getStyleForState(style2, selectedState) || {};
+    return (0, import_block_editor62.getStyleForState)(style2, selectedState) || {};
   }
   function getMappedDimensions(dimensions, dimensionKeyMap = {}) {
     return Object.fromEntries(
@@ -25124,7 +25122,7 @@ var wp;
   }
   function setStateDimensions(style2, selectedState, nextDimensions) {
     const stateStyle = getStateStyle(style2, selectedState);
-    return setStyleForState(
+    return (0, import_block_editor62.setStyleForState)(
       style2,
       selectedState,
       cleanEmptyObject2({
@@ -25172,7 +25170,7 @@ var wp;
     });
   }
   function resetStateDimensions(style2, selectedState, keys) {
-    return setStyleForState(
+    return (0, import_block_editor62.setStyleForState)(
       style2,
       selectedState,
       resetDimensions(getStateStyle(style2, selectedState), keys)
@@ -25349,12 +25347,9 @@ var wp;
 
   // packages/block-library/build-module/cover/edit/inspector-controls.mjs
   var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
-  var {
-    cleanEmptyObject: cleanEmptyObject3,
-    isDefaultBlockStyleState,
-    ResolutionTool,
-    HTMLElementControl: HTMLElementControl3
-  } = unlock(import_block_editor64.privateApis);
+  var { cleanEmptyObject: cleanEmptyObject3, ResolutionTool, HTMLElementControl: HTMLElementControl3 } = unlock(
+    import_block_editor64.privateApis
+  );
   function CoverHeightInput({
     onChange,
     onUnitChange,
@@ -25427,19 +25422,21 @@ var wp;
     } = currentSettings;
     const sizeSlug = attributes2.sizeSlug || DEFAULT_MEDIA_SIZE_SLUG;
     const { gradientValue, setGradient } = (0, import_block_editor64.__experimentalUseGradient)();
-    const { imageSizes, selectedStyleState } = (0, import_data28.useSelect)(
+    const { imageSizes, selectedStyleState, hasSelectedStyleState } = (0, import_data28.useSelect)(
       (select10) => {
-        const { getSettings: getSettings2, getSelectedBlockStyleState } = unlock(
-          select10(import_block_editor64.store)
-        );
+        const {
+          getSettings: getSettings2,
+          getSelectedBlockStyleState,
+          hasSelectedBlockStyleState
+        } = select10(import_block_editor64.store);
         return {
           imageSizes: getSettings2()?.imageSizes,
-          selectedStyleState: getSelectedBlockStyleState(clientId)
+          selectedStyleState: getSelectedBlockStyleState(clientId),
+          hasSelectedStyleState: hasSelectedBlockStyleState(clientId)
         };
       },
       [clientId]
     );
-    const hasSelectedStyleState = !isDefaultBlockStyleState(selectedStyleState);
     const selectedStyleStateKey = getStyleStateKey(selectedStyleState);
     const stateMinHeight = getActiveDimensionValue({
       attributes: attributes2,
@@ -32205,13 +32202,13 @@ ${url}
 
   // packages/global-styles-engine/build-module/resolve-style.mjs
   var DEFAULT_STATE_VALUE = "default";
-  function isDefaultBlockStyleState2(selectedState) {
+  function isDefaultBlockStyleState(selectedState) {
     const viewport = selectedState?.viewport;
     const pseudoState = selectedState?.pseudoState;
     return (!viewport || viewport === DEFAULT_STATE_VALUE) && (!pseudoState || pseudoState === DEFAULT_STATE_VALUE);
   }
   function getStyleStatePath(selectedState) {
-    if (isDefaultBlockStyleState2(selectedState)) {
+    if (isDefaultBlockStyleState(selectedState)) {
       return [];
     }
     return [selectedState.viewport, selectedState.pseudoState].filter(
@@ -32434,7 +32431,7 @@ ${url}
         createSourceDescriptor("blockVariation")
       ) : null
     ];
-    if (!isDefaultBlockStyleState2(selectedState)) {
+    if (!isDefaultBlockStyleState(selectedState)) {
       contributions.push(
         createContribution(
           pickLayerRootContribution(
@@ -33325,7 +33322,7 @@ ${url}
           getSettings: _getSettings,
           getBlock: _getBlock,
           getSelectedBlockStyleState
-        } = unlock(select10(import_block_editor88.store));
+        } = select10(import_block_editor88.store);
         const multiSelectedClientIds = getMultiSelectedBlockClientIds();
         return {
           getBlock: _getBlock,
@@ -39191,7 +39188,6 @@ ${text}
   var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
   var {
     DimensionsTool,
-    isDefaultBlockStyleState: isDefaultBlockStyleState3,
     ResolutionTool: ResolutionTool2,
     mediaEditKey,
     mediaSideloadFromUrlKey
@@ -39641,19 +39637,22 @@ ${text}
     );
     const lightboxChecked = !!lightbox?.enabled || !lightbox && !!lightboxSetting?.enabled;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    const selectedStyleState = (0, import_data49.useSelect)(
+    const { selectedStyleState, hasSelectedStyleState } = (0, import_data49.useSelect)(
       (select10) => {
         if (!isSingleSelected) {
-          return void 0;
+          return {
+            selectedStyleState: void 0,
+            hasSelectedStyleState: false
+          };
         }
-        const { getSelectedBlockStyleState } = unlock(
-          select10(import_block_editor106.store)
-        );
-        return getSelectedBlockStyleState(clientId);
+        const { getSelectedBlockStyleState, hasSelectedBlockStyleState } = select10(import_block_editor106.store);
+        return {
+          selectedStyleState: getSelectedBlockStyleState(clientId),
+          hasSelectedStyleState: hasSelectedBlockStyleState(clientId)
+        };
       },
       [clientId, isSingleSelected]
     );
-    const hasSelectedStyleState = !isDefaultBlockStyleState3(selectedStyleState);
     const selectedStyleStateKey = getStyleStateKey(selectedStyleState);
     const activeWidth = getActiveDimensionValue({
       attributes: attributes2,
@@ -51321,10 +51320,7 @@ ${text}
       hasSelectedStyleState
     } = (0, import_data89.useSelect)(
       (select10) => {
-        const {
-          getSettings: getSettings2,
-          hasSelectedStyleState: hasSelectedBlockStyleState
-        } = unlock(select10(import_block_editor154.store));
+        const { getSettings: getSettings2, hasSelectedBlockStyleState } = select10(import_block_editor154.store);
         const settings117 = getSettings2();
         return {
           isPreviewMode: settings117.isPreviewMode,
@@ -55682,7 +55678,7 @@ ${text}
     const [isDropCapFeatureEnabled] = (0, import_block_editor171.useSettings)("typography.dropCap");
     const hasSelectedStyleState = (0, import_data100.useSelect)(
       (select10) => {
-        const { hasSelectedStyleState: hasSelectedBlockStyleState } = unlock(select10(import_block_editor171.store));
+        const { hasSelectedBlockStyleState } = select10(import_block_editor171.store);
         return hasSelectedBlockStyleState(clientId);
       },
       [clientId]
@@ -62398,9 +62394,7 @@ ${text}
   // packages/block-library/build-module/post-featured-image/edit.mjs
   var import_jsx_runtime404 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES8 = ["image"];
-  var { isDefaultBlockStyleState: isDefaultBlockStyleState4, ResolutionTool: ResolutionTool4 } = unlock(
-    import_block_editor191.privateApis
-  );
+  var { ResolutionTool: ResolutionTool4 } = unlock(import_block_editor191.privateApis);
   var hasDimensionValue = (value) => value !== void 0 && value !== null && value !== "";
   var DEFAULT_MEDIA_SIZE_SLUG5 = "full";
   function FeaturedImageResolutionTool({ image, value, onChange }) {
@@ -62470,12 +62464,16 @@ ${text}
       const imageId = imageOpener?.groups?.attrs && JSON.parse(imageOpener.groups.attrs)?.id;
       return imageId;
     }, [storedFeaturedImage, useFirstImageFromPost, postContent]);
-    const { media, postType, postPermalink, selectedStyleState } = (0, import_data110.useSelect)(
+    const {
+      media,
+      postType,
+      postPermalink,
+      selectedStyleState,
+      hasSelectedStyleState
+    } = (0, import_data110.useSelect)(
       (select10) => {
         const { getEntityRecord, getPostType, getEditedEntityRecord } = select10(import_core_data65.store);
-        const { getSelectedBlockStyleState } = unlock(
-          select10(import_block_editor191.store)
-        );
+        const { getSelectedBlockStyleState, hasSelectedBlockStyleState } = select10(import_block_editor191.store);
         return {
           media: featuredImage && getEntityRecord("postType", "attachment", featuredImage, {
             context: "view"
@@ -62486,12 +62484,12 @@ ${text}
             postTypeSlug,
             postId
           )?.link,
-          selectedStyleState: getSelectedBlockStyleState(clientId)
+          selectedStyleState: getSelectedBlockStyleState(clientId),
+          hasSelectedStyleState: hasSelectedBlockStyleState(clientId)
         };
       },
       [clientId, featuredImage, postTypeSlug, postId]
     );
-    const hasSelectedStyleState = !isDefaultBlockStyleState4(selectedStyleState);
     const mediaUrl = media?.media_details?.sizes?.[sizeSlug]?.source_url || media?.source_url;
     const blockProps = (0, import_block_editor191.useBlockProps)({
       className: clsx_default({
@@ -74981,8 +74979,8 @@ ${text}
         const {
           getBlockCount,
           hasSelectedInnerBlock,
-          hasSelectedStyleState: hasSelectedBlockStyleState
-        } = unlock(select10(import_block_editor238.store));
+          hasSelectedBlockStyleState
+        } = select10(import_block_editor238.store);
         return {
           hasSocialIcons: getBlockCount(clientId) > 0,
           hasSelectedChild: hasSelectedInnerBlock(clientId),
