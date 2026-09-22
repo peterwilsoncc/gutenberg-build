@@ -526,11 +526,6 @@ _::-webkit-full-page-media, _:future, :root [data-has-multi-selection=true] .blo
   content: none !important;
 }
 
-.wp-block img:not([draggable]),
-.wp-block svg:not([draggable]) {
-  pointer-events: none;
-}
-
 .block-editor-block-preview__content-iframe .block-list-appender {
   display: none;
 }

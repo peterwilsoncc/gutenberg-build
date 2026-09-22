@@ -58794,7 +58794,8 @@ var wp;
           }
         }
         function onDragStart(event) {
-          if (node !== event.target || node.isContentEditable || node.ownerDocument.activeElement !== node || hasMultiSelection2()) {
+          const { target } = event;
+          if (node.isContentEditable || node.ownerDocument.activeElement !== node || hasMultiSelection2() || target.nodeType !== target.ELEMENT_NODE || target.closest('[draggable="true"]') !== node) {
             event.preventDefault();
             return;
           }
@@ -89416,7 +89417,7 @@ var wp;
         contentRef: forwardedRef,
         context
       },
-      name
+      isObjectActive ? `${name}-${value.start}` : name
     );
   }
   function FormatEdit({ formatTypes, ...props }) {
