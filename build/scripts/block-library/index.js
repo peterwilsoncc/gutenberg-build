@@ -76259,6 +76259,15 @@ ${text}
     usesContext: ["core/tabs-id"],
     supports: {
       anchor: true,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalDefaultControls: {
+          backgroundImage: true,
+          gradient: true
+        }
+      },
       html: false,
       color: {
         background: true,
