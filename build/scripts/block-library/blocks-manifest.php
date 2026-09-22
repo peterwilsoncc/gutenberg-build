@@ -3309,6 +3309,11 @@ return array(
 			'anchor' => true,
 			'reusable' => false,
 			'html' => false,
+			'background' => array(
+				'backgroundImage' => true,
+				'backgroundSize' => true,
+				'gradient' => true
+			),
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,

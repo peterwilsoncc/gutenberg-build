@@ -36272,6 +36272,11 @@ ${url}
       anchor: true,
       reusable: false,
       html: false,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true
+      },
       typography: {
         fontSize: true,
         lineHeight: true,
