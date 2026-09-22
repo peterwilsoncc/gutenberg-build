@@ -79468,6 +79468,15 @@ ${text}
     ],
     supports: {
       anchor: true,
+      background: {
+        backgroundImage: true,
+        backgroundSize: true,
+        gradient: true,
+        __experimentalDefaultControls: {
+          backgroundImage: true,
+          gradient: true
+        }
+      },
       html: false,
       align: true,
       color: {
