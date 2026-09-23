@@ -20206,10 +20206,10 @@ var wp;
     description
   }) {
     const { enabled: enabledControls, unavailable: unavailableControls } = useAlignmentMenu(controls);
-    if (!enabledControls.length && !unavailableControls.length) {
+    if (!enabledControls.length) {
       return null;
     }
-    const menuControls = enabledControls.length ? [...enabledControls] : [{ name: "none" }];
+    const menuControls = [...enabledControls];
     const enabledNames = menuControls.map(({ name }) => name);
     menuControls.splice(
       enabledNames.indexOf("none") + 1,
@@ -99339,9 +99339,9 @@ var wp;
       (0, import_blocks111.getBlockSupport)(blockName, "align"),
       (0, import_blocks111.hasBlockSupport)(blockName, "alignWide", true)
     );
-    const { enabled, unavailable } = useAlignmentMenu(blockAllowedAlignments);
+    const { enabled } = useAlignmentMenu(blockAllowedAlignments);
     const blockEditingMode = useBlockEditingMode();
-    if (!enabled.length && !unavailable.length || blockEditingMode !== "default") {
+    if (!enabled.length || blockEditingMode !== "default") {
       return null;
     }
     const updateAlignment = (nextAlign) => {
