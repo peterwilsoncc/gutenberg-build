@@ -8589,7 +8589,13 @@ return array(
 			),
 			'typography' => array(
 				'fontSize' => true,
-				'__experimentalFontFamily' => true
+				'lineHeight' => true,
+				'__experimentalFontFamily' => true,
+				'__experimentalFontWeight' => true,
+				'__experimentalFontStyle' => true,
+				'__experimentalTextTransform' => true,
+				'__experimentalTextDecoration' => true,
+				'__experimentalLetterSpacing' => true
 			),
 			'__experimentalBorder' => array(
 				'radius' => true,
