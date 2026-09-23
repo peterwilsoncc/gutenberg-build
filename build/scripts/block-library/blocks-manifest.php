@@ -6680,6 +6680,7 @@ return array(
 			),
 			'color' => array(
 				'gradients' => true,
+				'link' => true,
 				'__experimentalDefaultControls' => array(
 					'background' => true,
 					'text' => true
