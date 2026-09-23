@@ -20266,6 +20266,7 @@ var wp;
       },
       color: {
         gradients: true,
+        button: true,
         heading: true,
         link: true,
         __experimentalDefaultControls: {
