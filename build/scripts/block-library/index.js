@@ -46272,6 +46272,7 @@ ${text}
         gradients: true,
         heading: true,
         link: true,
+        button: true,
         __experimentalDefaultControls: {
           background: true,
           text: true
