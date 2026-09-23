@@ -60022,6 +60022,7 @@ ${text}
         fontSize: true,
         lineHeight: true,
         textAlign: true,
+        textColumns: true,
         __experimentalFontFamily: true,
         __experimentalFontWeight: true,
         __experimentalFontStyle: true,
