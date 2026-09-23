@@ -79467,6 +79467,12 @@ ${text}
           background: true
         }
       },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      },
       layout: {
         allowEditing: false
       },

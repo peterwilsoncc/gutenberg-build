@@ -8905,6 +8905,12 @@ return array(
 					'background' => true
 				)
 			),
+			'__experimentalBorder' => array(
+				'color' => true,
+				'radius' => true,
+				'style' => true,
+				'width' => true
+			),
 			'layout' => array(
 				'allowEditing' => false
 			),
