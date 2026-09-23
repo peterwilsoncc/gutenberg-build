@@ -76351,6 +76351,9 @@ ${text}
       html: false,
       color: {
         background: true,
+        button: true,
+        heading: true,
+        link: true,
         text: true,
         __experimentalDefaultControls: {
           background: true,

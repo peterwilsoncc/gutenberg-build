@@ -8496,6 +8496,9 @@ return array(
 			'html' => false,
 			'color' => array(
 				'background' => true,
+				'button' => true,
+				'heading' => true,
+				'link' => true,
 				'text' => true,
 				'__experimentalDefaultControls' => array(
 					'background' => true,
