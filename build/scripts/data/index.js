@@ -2293,6 +2293,39 @@ var wp;
       keys.join(", ")
     );
   }
+  var deferredBuckets = /* @__PURE__ */ new WeakMap();
+  function subscribeDeferred(registry, storeName, listener) {
+    let buckets = deferredBuckets.get(registry);
+    if (!buckets) {
+      buckets = /* @__PURE__ */ new Map();
+      deferredBuckets.set(registry, buckets);
+    }
+    let addToBucket = buckets.get(storeName);
+    if (!addToBucket) {
+      const listeners = /* @__PURE__ */ new Set();
+      const flush = () => {
+        for (const { context, callback } of listeners) {
+          renderQueue.add(context, callback);
+        }
+      };
+      const unsubscribe = registry.subscribe(
+        () => renderQueue.add(listeners, flush),
+        storeName
+      );
+      addToBucket = (newListener) => {
+        listeners.add(newListener);
+        return () => {
+          if (listeners.delete(newListener) && listeners.size === 0) {
+            buckets.delete(storeName);
+            renderQueue.cancel(listeners);
+            unsubscribe();
+          }
+        };
+      };
+      buckets.set(storeName, addToBucket);
+    }
+    return addToBucket(listener);
+  }
   function Store(registry, suspense) {
     const select3 = suspense ? registry.suspendSelect : registry.select;
     const queueContext = {};
@@ -2322,23 +2355,32 @@ var wp;
           lastMapResultValid = false;
           listener();
         };
-        const onChange = () => {
+        function listenToStore(storeName) {
           if (lastIsAsync) {
-            renderQueue.add(queueContext, onStoreChange);
-          } else {
-            onStoreChange();
+            return subscribeDeferred(registry, storeName, {
+              context: queueContext,
+              callback: onStoreChange
+            });
           }
-        };
-        const unsubs = [];
+          return registry.subscribe(onStoreChange, storeName);
+        }
+        const unsubs = /* @__PURE__ */ new Map();
         function subscribeStore(storeName) {
-          unsubs.push(registry.subscribe(onChange, storeName));
+          unsubs.set(storeName, listenToStore(storeName));
+        }
+        function resubscribeStores() {
+          for (const [storeName, unsub] of unsubs) {
+            unsub?.();
+            unsubs.set(storeName, listenToStore(storeName));
+          }
         }
         for (const storeName of activeStores) {
           subscribeStore(storeName);
         }
-        activeSubscriptions.add(subscribeStore);
+        const subscription = { subscribeStore, resubscribeStores };
+        activeSubscriptions.add(subscription);
         return () => {
-          activeSubscriptions.delete(subscribeStore);
+          activeSubscriptions.delete(subscription);
           for (const unsub of unsubs.values()) {
             unsub?.();
           }
@@ -2352,11 +2394,16 @@ var wp;
           }
           activeStores.push(newStore);
           for (const subscription of activeSubscriptions) {
-            subscription(newStore);
+            subscription.subscribeStore(newStore);
           }
         }
       }
-      return { subscribe: subscribe2, updateStores };
+      function switchMode() {
+        for (const subscription of activeSubscriptions) {
+          subscription.resubscribeStores();
+        }
+      }
+      return { subscribe: subscribe2, updateStores, switchMode };
     };
     return (mapSelect, isAsync) => {
       function updateValue() {
@@ -2395,12 +2442,16 @@ var wp;
         updateValue();
         return lastMapResult;
       }
-      if (lastIsAsync && !isAsync) {
+      const wasAsync = lastIsAsync;
+      lastIsAsync = isAsync;
+      if (wasAsync && !isAsync) {
         lastMapResultValid = false;
         renderQueue.cancel(queueContext);
       }
       updateValue();
-      lastIsAsync = isAsync;
+      if (wasAsync !== isAsync) {
+        subscriber.switchMode();
+      }
       return { subscribe: subscriber.subscribe, getValue };
     };
   }

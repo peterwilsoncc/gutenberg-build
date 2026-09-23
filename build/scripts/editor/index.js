@@ -458,9 +458,9 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React208 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef166 = React208.useRef, useEffect138 = React208.useEffect, useMemo192 = React208.useMemo, useDebugValue2 = React208.useDebugValue;
+        var React208 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef167 = React208.useRef, useEffect138 = React208.useEffect, useMemo192 = React208.useMemo, useDebugValue2 = React208.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe5, getSnapshot2, getServerSnapshot2, selector2, isEqual2) {
-          var instRef = useRef166(null);
+          var instRef = useRef167(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -97153,40 +97153,54 @@ If there's a particular need for this, please submit a feature request at https:
         });
       };
     }, [templateParts, registry]);
+    const appliedModesRef = (0, import_element288.useRef)(/* @__PURE__ */ new Map());
     (0, import_element288.useEffect)(() => {
       const {
         setBlockEditingMode,
         unsetBlockEditingMode,
         __unstableMarkNextChangeAsNotPersistent
       } = registry.dispatch(import_block_editor22.store);
-      const contentOnlySet = new Set(contentOnlyIds);
+      const nextModes = /* @__PURE__ */ new Map();
+      for (const clientId of contentOnlyIds) {
+        nextModes.set(clientId, "contentOnly");
+      }
+      for (const clientId of templatePartChildren) {
+        if (!nextModes.has(clientId)) {
+          nextModes.set(clientId, "disabled");
+        }
+      }
+      const previousModes = appliedModesRef.current;
+      appliedModesRef.current = nextModes;
       registry.batch(() => {
-        for (const clientId of contentOnlyIds) {
-          __unstableMarkNextChangeAsNotPersistent();
-          setBlockEditingMode(clientId, "contentOnly");
-        }
-        for (const clientId of templatePartChildren) {
-          if (!contentOnlySet.has(clientId)) {
-            __unstableMarkNextChangeAsNotPersistent();
-            setBlockEditingMode(clientId, "disabled");
-          }
-        }
-      });
-      return () => {
-        registry.batch(() => {
-          for (const clientId of contentOnlyIds) {
+        for (const clientId of previousModes.keys()) {
+          if (!nextModes.has(clientId)) {
             __unstableMarkNextChangeAsNotPersistent();
             unsetBlockEditingMode(clientId);
           }
-          for (const clientId of templatePartChildren) {
-            if (!contentOnlySet.has(clientId)) {
-              __unstableMarkNextChangeAsNotPersistent();
-              unsetBlockEditingMode(clientId);
-            }
+        }
+        for (const [clientId, mode] of nextModes) {
+          if (previousModes.get(clientId) !== mode) {
+            __unstableMarkNextChangeAsNotPersistent();
+            setBlockEditingMode(clientId, mode);
+          }
+        }
+      });
+    }, [contentOnlyIds, templatePartChildren, registry]);
+    (0, import_element288.useEffect)(() => {
+      return () => {
+        const {
+          unsetBlockEditingMode,
+          __unstableMarkNextChangeAsNotPersistent
+        } = registry.dispatch(import_block_editor22.store);
+        registry.batch(() => {
+          for (const clientId of appliedModesRef.current.keys()) {
+            __unstableMarkNextChangeAsNotPersistent();
+            unsetBlockEditingMode(clientId);
           }
         });
+        appliedModesRef.current = /* @__PURE__ */ new Map();
       };
-    }, [contentOnlyIds, templatePartChildren, registry]);
+    }, [registry]);
     return null;
   }
 
