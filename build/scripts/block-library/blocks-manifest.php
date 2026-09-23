@@ -8547,6 +8547,7 @@ return array(
 				'background' => true,
 				'text' => true,
 				'heading' => true,
+				'button' => true,
 				'link' => true,
 				'__experimentalDefaultControls' => array(
 					'background' => true,
