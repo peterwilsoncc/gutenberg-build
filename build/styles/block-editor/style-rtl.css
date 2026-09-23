@@ -4842,12 +4842,7 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
 }
 
 .block-editor-block-visibility-info {
-  padding-top: 4px;
-  padding-bottom: 4px;
   margin: 0 16px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: start;
 }
 
 /* The stop element is invisible, so its focus indication is drawn around the
