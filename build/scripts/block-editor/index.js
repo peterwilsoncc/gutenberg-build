@@ -113885,7 +113885,12 @@ var wp;
       // This mapping will be unnecessary once #74105 lands.
       type: type === "string" ? "text" : type
     };
-    if (def.enum && Array.isArray(def.enum)) {
+    if (type === "array" && Array.isArray(def.items?.enum)) {
+      field.elements = def.items.enum.map((value) => ({
+        value,
+        label: String(value)
+      }));
+    } else if (def.enum && Array.isArray(def.enum)) {
       field.elements = def.enum.map((value) => ({
         value,
         label: String(value)
