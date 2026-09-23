@@ -28,7 +28,10 @@ return array(
 			),
 			'color' => array(
 				'background' => true,
-				'gradients' => true
+				'gradients' => true,
+				'link' => true,
+				'heading' => true,
+				'button' => true
 			),
 			'__experimentalBorder' => array(
 				'color' => true,
