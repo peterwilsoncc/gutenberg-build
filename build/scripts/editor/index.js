@@ -47954,7 +47954,7 @@ var wp;
           MediaUploadModal,
           {
             ...props,
-            multiple,
+            multiple: !!multiple,
             isOpen: isModalOpen,
             onClose: () => {
               setIsModalOpen(false);
@@ -47968,15 +47968,11 @@ var wp;
         )
       ] });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
-      import_media_utils.MediaUpload,
-      {
-        ...props,
-        render: render5,
-        multiple: multiple ? "add" : void 0
-      }
-    );
+    return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(import_media_utils.MediaUpload, { ...props, render: render5, multiple });
   }
+  var FilteredMediaUpload = (0, import_components4.withFilters)("editor.MediaUpload")(
+    ConditionalMediaUpload
+  );
   function MediaPickerButton({
     open: open3,
     children,
@@ -48355,7 +48351,25 @@ var wp;
       )
     ] });
   }
-  function MediaEdit({
+  function MediaEdit(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+      MediaEditControl,
+      {
+        ...props,
+        MediaUploadComponent: ConditionalMediaUpload
+      }
+    );
+  }
+  function MediaEditWithFilteredPicker(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
+      MediaEditControl,
+      {
+        ...props,
+        MediaUploadComponent: FilteredMediaUpload
+      }
+    );
+  }
+  function MediaEditControl({
     data,
     field,
     onChange,
@@ -48363,7 +48377,9 @@ var wp;
     allowedTypes = ["image"],
     multiple,
     isExpanded,
-    validity
+    validity,
+    mediaUploadProps: mediaUploadProps2,
+    MediaUploadComponent
   }) {
     const value = field.getValue({ item: data });
     const canUpload = (0, import_data8.useSelect)(
@@ -48595,8 +48611,9 @@ var wp;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(Stack, { direction: "column", gap: "sm", onBlur, children: [
       /* @__PURE__ */ (0, import_jsx_runtime245.jsx)("fieldset", { className: "fields__media-edit", "data-field-id": field.id, children: /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(
-        ConditionalMediaUpload,
+        MediaUploadComponent,
         {
+          ...mediaUploadProps2,
           onSelect: (selectedMedia) => {
             if (!multiple) {
               onChangeControl(selectedMedia.id);
@@ -48633,7 +48650,7 @@ var wp;
           onClose: () => setTargetItemId(void 0),
           allowedTypes,
           value: targetItemId !== void 0 ? targetItemId : value,
-          multiple: multiple && targetItemId === void 0,
+          multiple: multiple && targetItemId === void 0 ? "add" : false,
           title: field.label,
           render: ({ open: open3 }) => {
             openModalRef.current = open3;
@@ -48697,9 +48714,17 @@ var wp;
 
   // packages/fields/build-module/fields/featured-image/edit.mjs
   var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
+  var mediaUploadProps = { unstableFeaturedImageFlow: true };
   var FilteredMediaEdit = (0, import_components5.withFilters)("editor.PostFeaturedImage")(
     function PostFeaturedImage(props) {
-      return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(MediaEdit, { ...props, isExpanded: true });
+      return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+        MediaEditWithFilteredPicker,
+        {
+          ...props,
+          isExpanded: true,
+          mediaUploadProps
+        }
+      );
     }
   );
   function FilteredFeaturedImageEdit(props) {
@@ -48734,7 +48759,14 @@ var wp;
     const { data } = props;
     const contextId = (0, import_core_data8.useEntityId)("postType", data.type);
     if (contextId === void 0 || String(contextId) !== String(data.id)) {
-      return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(MediaEdit, { ...props, isExpanded: true });
+      return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+        MediaEdit,
+        {
+          ...props,
+          isExpanded: true,
+          mediaUploadProps
+        }
+      );
     }
     return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(FilteredFeaturedImageEdit, { ...props });
   }

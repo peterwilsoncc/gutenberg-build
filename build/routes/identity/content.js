@@ -32483,7 +32483,7 @@ function ConditionalMediaUpload({ render: render4, multiple, ...props }) {
         MediaUploadModal,
         {
           ...props,
-          multiple,
+          multiple: !!multiple,
           isOpen: isModalOpen,
           onClose: () => {
             setIsModalOpen(false);
@@ -32497,15 +32497,11 @@ function ConditionalMediaUpload({ render: render4, multiple, ...props }) {
       )
     ] });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-    import_media_utils.MediaUpload,
-    {
-      ...props,
-      render: render4,
-      multiple: multiple ? "add" : void 0
-    }
-  );
+  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_media_utils.MediaUpload, { ...props, render: render4, multiple });
 }
+var FilteredMediaUpload = (0, import_components29.withFilters)("editor.MediaUpload")(
+  ConditionalMediaUpload
+);
 function MediaPickerButton({
   open: open3,
   children,
@@ -32884,7 +32880,16 @@ function CompactMediaEditAttachments({
     )
   ] });
 }
-function MediaEdit({
+function MediaEdit(props) {
+  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+    MediaEditControl,
+    {
+      ...props,
+      MediaUploadComponent: ConditionalMediaUpload
+    }
+  );
+}
+function MediaEditControl({
   data,
   field,
   onChange,
@@ -32892,7 +32897,9 @@ function MediaEdit({
   allowedTypes = ["image"],
   multiple,
   isExpanded,
-  validity
+  validity,
+  mediaUploadProps,
+  MediaUploadComponent
 }) {
   const value = field.getValue({ item: data });
   const canUpload = (0, import_data4.useSelect)(
@@ -33124,8 +33131,9 @@ function MediaEdit({
   }
   return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(Stack, { direction: "column", gap: "sm", onBlur, children: [
     /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("fieldset", { className: "fields__media-edit", "data-field-id": field.id, children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-      ConditionalMediaUpload,
+      MediaUploadComponent,
       {
+        ...mediaUploadProps,
         onSelect: (selectedMedia) => {
           if (!multiple) {
             onChangeControl(selectedMedia.id);
@@ -33162,7 +33170,7 @@ function MediaEdit({
         onClose: () => setTargetItemId(void 0),
         allowedTypes,
         value: targetItemId !== void 0 ? targetItemId : value,
-        multiple: multiple && targetItemId === void 0,
+        multiple: multiple && targetItemId === void 0 ? "add" : false,
         title: field.label,
         render: ({ open: open3 }) => {
           openModalRef.current = open3;

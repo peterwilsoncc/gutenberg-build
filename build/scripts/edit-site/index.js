@@ -58876,7 +58876,7 @@ If there's a particular need for this, please submit a feature request at https:
           MediaUploadModal,
           {
             ...props,
-            multiple,
+            multiple: !!multiple,
             isOpen: isModalOpen,
             onClose: () => {
               setIsModalOpen(false);
@@ -58890,15 +58890,11 @@ If there's a particular need for this, please submit a feature request at https:
         )
       ] });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-      import_media_utils.MediaUpload,
-      {
-        ...props,
-        render: render4,
-        multiple: multiple ? "add" : void 0
-      }
-    );
+    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(import_media_utils.MediaUpload, { ...props, render: render4, multiple });
   }
+  var FilteredMediaUpload = (0, import_components73.withFilters)("editor.MediaUpload")(
+    ConditionalMediaUpload
+  );
   function MediaPickerButton({
     open: open3,
     children,
@@ -59277,7 +59273,16 @@ If there's a particular need for this, please submit a feature request at https:
       )
     ] });
   }
-  function MediaEdit({
+  function MediaEdit(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
+      MediaEditControl,
+      {
+        ...props,
+        MediaUploadComponent: ConditionalMediaUpload
+      }
+    );
+  }
+  function MediaEditControl({
     data,
     field,
     onChange,
@@ -59285,7 +59290,9 @@ If there's a particular need for this, please submit a feature request at https:
     allowedTypes = ["image"],
     multiple,
     isExpanded,
-    validity
+    validity,
+    mediaUploadProps,
+    MediaUploadComponent
   }) {
     const value = field.getValue({ item: data });
     const canUpload = (0, import_data39.useSelect)(
@@ -59517,8 +59524,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)(Stack, { direction: "column", gap: "sm", onBlur, children: [
       /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("fieldset", { className: "fields__media-edit", "data-field-id": field.id, children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-        ConditionalMediaUpload,
+        MediaUploadComponent,
         {
+          ...mediaUploadProps,
           onSelect: (selectedMedia) => {
             if (!multiple) {
               onChangeControl(selectedMedia.id);
@@ -59555,7 +59563,7 @@ If there's a particular need for this, please submit a feature request at https:
           onClose: () => setTargetItemId(void 0),
           allowedTypes,
           value: targetItemId !== void 0 ? targetItemId : value,
-          multiple: multiple && targetItemId === void 0,
+          multiple: multiple && targetItemId === void 0 ? "add" : false,
           title: field.label,
           render: ({ open: open3 }) => {
             openModalRef.current = open3;
