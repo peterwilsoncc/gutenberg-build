@@ -53601,9 +53601,15 @@ ${text}
           fontSize: true
         }
       },
+      shadow: {
+        __experimentalSkipSerialization: true
+      },
       interactivity: {
         clientNavigation: true
       }
+    },
+    selectors: {
+      shadow: ".wp-block-navigation-submenu > .wp-block-navigation__submenu-container"
     },
     editorStyle: "wp-block-navigation-submenu-editor",
     style: "wp-block-navigation-submenu"
@@ -53780,8 +53786,16 @@ ${text}
     const allowedBlocks = parentCount >= maxNestingLevel ? ALLOWED_BLOCKS.filter(
       (blockName) => blockName !== "core/navigation-submenu"
     ) : ALLOWED_BLOCKS;
+    const shadowProps = (0, import_block_editor161.__experimentalGetShadowClassesAndStyles)(attributes2);
     const navigationChildBlockProps = getNavigationChildBlockProps(innerBlocksColors);
-    const innerBlocksProps = (0, import_block_editor161.useInnerBlocksProps)(navigationChildBlockProps, {
+    const submenuBlockProps = {
+      ...navigationChildBlockProps,
+      style: {
+        ...navigationChildBlockProps.style,
+        ...shadowProps.style
+      }
+    };
+    const innerBlocksProps = (0, import_block_editor161.useInnerBlocksProps)(submenuBlockProps, {
       allowedBlocks,
       defaultBlock: DEFAULT_BLOCK5,
       directInsert: true,
