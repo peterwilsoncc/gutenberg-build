@@ -79548,7 +79548,12 @@ ${text}
       shadow: true,
       typography: {
         fontSize: true,
-        __experimentalFontFamily: true
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalLetterSpacing: true
       }
     },
     usesContext: ["core/tabs-list", "core/tabs-id"],
