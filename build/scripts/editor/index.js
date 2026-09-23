@@ -48714,7 +48714,13 @@ var wp;
 
   // packages/fields/build-module/fields/featured-image/edit.mjs
   var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
-  var mediaUploadProps = { unstableFeaturedImageFlow: true };
+  var mediaUploadProps = {
+    featuredImageFlow: true,
+    // The deprecated name is passed too, because those callbacks read it from
+    // the props and would otherwise stop recognizing the featured image. It
+    // will be removed in the near future, and passing both raises no warning.
+    unstableFeaturedImageFlow: true
+  };
   var FilteredMediaEdit = (0, import_components5.withFilters)("editor.PostFeaturedImage")(
     function PostFeaturedImage(props) {
       return /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
@@ -108225,6 +108231,7 @@ ${content}
           {
             title: postType2?.labels?.featured_image || DEFAULT_FEATURE_IMAGE_LABEL,
             onSelect: onUpdateImage,
+            featuredImageFlow: true,
             unstableFeaturedImageFlow: true,
             allowedTypes: ALLOWED_MEDIA_TYPES,
             modalClass: "editor-post-featured-image__media-modal",

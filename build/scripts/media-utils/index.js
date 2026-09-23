@@ -47,6 +47,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/deprecated
+  var require_deprecated = __commonJS({
+    "package-external:@wordpress/deprecated"(exports, module) {
+      module.exports = window.wp.deprecated;
+    }
+  });
+
   // package-external:@wordpress/data
   var require_data = __commonJS({
     "package-external:@wordpress/data"(exports, module) {
@@ -888,6 +895,7 @@ var wp;
   // packages/media-utils/build-module/components/media-upload/index.mjs
   var import_element = __toESM(require_element(), 1);
   var import_i18n = __toESM(require_i18n(), 1);
+  var import_deprecated = __toESM(require_deprecated(), 1);
   var import_data = __toESM(require_data(), 1);
 
   // packages/media-utils/build-module/utils/invalidate-attachment-resolutions.mjs
@@ -1323,9 +1331,20 @@ var wp;
     openModal() {
       const {
         gallery = false,
-        unstableFeaturedImageFlow = false,
+        featuredImageFlow,
+        unstableFeaturedImageFlow,
         modalClass
       } = this.props;
+      if (unstableFeaturedImageFlow !== void 0 && featuredImageFlow === void 0) {
+        (0, import_deprecated.default)(
+          "wp.mediaUtils.MediaUpload unstableFeaturedImageFlow prop",
+          {
+            since: "7.2",
+            alternative: "featuredImageFlow",
+            version: "7.4"
+          }
+        );
+      }
       if (gallery) {
         this.buildAndSetGalleryFrame();
       } else {
@@ -1334,7 +1353,7 @@ var wp;
       if (modalClass) {
         this.frame.$el.addClass(modalClass);
       }
-      if (unstableFeaturedImageFlow) {
+      if (featuredImageFlow ?? unstableFeaturedImageFlow) {
         this.buildAndSetFeatureImageFrame();
       }
       this.initializeListeners();
