@@ -76359,6 +76359,12 @@ ${text}
           __experimentalFontFamily: true
         }
       },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      },
       visibility: false
     },
     providesContext: {

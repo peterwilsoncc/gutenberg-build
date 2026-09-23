@@ -8504,6 +8504,12 @@ return array(
 					'__experimentalFontFamily' => true
 				)
 			),
+			'__experimentalBorder' => array(
+				'color' => true,
+				'radius' => true,
+				'style' => true,
+				'width' => true
+			),
 			'visibility' => false
 		),
 		'providesContext' => array(

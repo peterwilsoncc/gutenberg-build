@@ -5003,6 +5003,7 @@ ul.wp-block-rss.is-grid li {
 }
 .wp-block-tab-panel[hidden] {
   box-shadow: none !important;
+  border: none !important;
   margin-block-start: 0;
   padding: 0 !important;
 }
