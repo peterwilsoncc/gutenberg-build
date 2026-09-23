@@ -97,7 +97,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState91({
+          cachedValue = useState92({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -135,7 +135,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React96 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState91 = React96.useState, useEffect91 = React96.useEffect, useLayoutEffect25 = React96.useLayoutEffect, useDebugValue2 = React96.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React96 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState92 = React96.useState, useEffect91 = React96.useEffect, useLayoutEffect25 = React96.useLayoutEffect, useDebugValue2 = React96.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React96.useSyncExternalStore ? React96.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -5075,11 +5075,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore(createStore2, props) {
     const [store, setStore] = React2.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store), [store]);
-    const useState91 = React2.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+    const useState92 = React2.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
     return [React2.useMemo(() => ({
       ...store,
-      useState: useState91
-    }), [store, useState91]), useEvent(() => {
+      useState: useState92
+    }), [store, useState92]), useEvent(() => {
       setStore((store2) => createStore2({
         ...props,
         ...store2.getState()
@@ -22554,10 +22554,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return React7.createElement.apply(null, createElementArgArray);
   };
-  (function(_jsx266) {
+  (function(_jsx265) {
     var JSX;
     /* @__PURE__ */ (function(_JSX) {
-    })(JSX || (JSX = _jsx266.JSX || (_jsx266.JSX = {})));
+    })(JSX || (JSX = _jsx265.JSX || (_jsx265.JSX = {})));
   })(jsx36 || (jsx36 = {}));
   function css2() {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -24348,7 +24348,8 @@ If there's a particular need for this, please submit a feature request at https:
   var breakpoints = ["40em", "52em", "64em"];
   var useBreakpointIndex = (options2 = {}) => {
     const {
-      defaultIndex = 0
+      defaultIndex = 0,
+      enabled = true
     } = options2;
     if (typeof defaultIndex !== "number") {
       throw new TypeError(`Default breakpoint index should be a number. Got: ${defaultIndex}, ${typeof defaultIndex}`);
@@ -24357,6 +24358,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const [value, setValue] = (0, import_element20.useState)(defaultIndex);
     (0, import_element20.useEffect)(() => {
+      if (!enabled) {
+        return;
+      }
       const getIndex = () => breakpoints.filter((bp) => {
         return typeof window !== "undefined" ? window.matchMedia(`screen and (min-width: ${bp})`).matches : false;
       }).length;
@@ -24375,11 +24379,15 @@ If there's a particular need for this, please submit a feature request at https:
           window.removeEventListener("resize", onResize);
         }
       };
-    }, [value]);
+    }, [value, enabled]);
     return value;
   };
   function useResponsiveValue(values, options2 = {}) {
-    const index2 = useBreakpointIndex(options2);
+    const isResponsive = Array.isArray(values) && values.length > 1;
+    const index2 = useBreakpointIndex({
+      ...options2,
+      enabled: isResponsive
+    });
     if (!Array.isArray(values) && typeof values !== "function") {
       return values;
     }
@@ -57591,15 +57599,13 @@ This message will only show in development mode. It won't appear in production. 
     __experimentalTransferDataType: transferDataType = "text",
     __experimentalDragComponent: dragComponent
   }) {
-    const dragComponentRef = (0, import_element163.useRef)(null);
     const cleanupRef = (0, import_element163.useRef)(() => {
     });
+    const [dragComponentContainer, setDragComponentContainer] = (0, import_element163.useState)(null);
     function end(event) {
       event.preventDefault();
       cleanupRef.current();
-      if (onDragEnd) {
-        onDragEnd(event);
-      }
+      onDragEnd?.(event);
     }
     function start(event) {
       const {
@@ -57627,14 +57633,12 @@ This message will only show in development mode. It won't appear in production. 
       }
       let x2 = 0;
       let y3 = 0;
-      if (dragComponentRef.current) {
+      if (dragComponent) {
         x2 = event.clientX;
         y3 = event.clientY;
         cloneWrapper.style.transform = `translate( ${x2}px, ${y3}px )`;
-        const clonedDragComponent = ownerDocument2.createElement("div");
-        clonedDragComponent.innerHTML = dragComponentRef.current.innerHTML;
-        cloneWrapper.appendChild(clonedDragComponent);
         (compatSlot ?? ownerDocument2.body).appendChild(cloneWrapper);
+        setDragComponentContainer(cloneWrapper);
       } else {
         const element = ownerDocument2.getElementById(elementId);
         const elementRect = element.getBoundingClientRect();
@@ -57670,42 +57674,28 @@ This message will only show in development mode. It won't appear in production. 
         cursorTop = e3.clientY;
         x2 = nextX;
         y3 = nextY;
-        if (onDragOver) {
-          onDragOver(e3);
-        }
+        onDragOver?.(e3);
       }
       const throttledDragOver = (0, import_compose52.throttle)(over, 16);
       ownerDocument2.addEventListener("dragover", throttledDragOver);
       ownerDocument2.body.classList.add(bodyClass);
-      if (onDragStart) {
-        onDragStart(event);
-      }
+      onDragStart?.(event);
       cleanupRef.current = () => {
-        if (cloneWrapper && cloneWrapper.parentNode) {
-          cloneWrapper.parentNode.removeChild(cloneWrapper);
-        }
-        if (dragImage && dragImage.parentNode) {
-          dragImage.parentNode.removeChild(dragImage);
-        }
+        cloneWrapper.remove();
+        dragImage.remove();
+        setDragComponentContainer(null);
         ownerDocument2.body.classList.remove(bodyClass);
         ownerDocument2.removeEventListener("dragover", throttledDragOver);
+        cleanupRef.current = () => {
+        };
       };
     }
-    (0, import_element163.useEffect)(() => () => {
-      cleanupRef.current();
-    }, []);
+    (0, import_element163.useEffect)(() => () => cleanupRef.current(), []);
     return /* @__PURE__ */ (0, import_jsx_runtime243.jsxs)(import_jsx_runtime243.Fragment, {
       children: [children({
         onDraggableStart: start,
         onDraggableEnd: end
-      }), dragComponent && /* @__PURE__ */ (0, import_jsx_runtime243.jsx)("div", {
-        className: "components-draggable-drag-component-root",
-        style: {
-          display: "none"
-        },
-        ref: dragComponentRef,
-        children: dragComponent
-      })]
+      }), dragComponentContainer && (0, import_element163.createPortal)(dragComponent, dragComponentContainer)]
     });
   }
   var draggable_default = Draggable;
