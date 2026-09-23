@@ -8974,6 +8974,9 @@ return array(
 			'color' => array(
 				'text' => true,
 				'background' => true,
+				'heading' => true,
+				'button' => true,
+				'link' => true,
 				'__experimentalDefaultControls' => array(
 					'text' => true,
 					'background' => true

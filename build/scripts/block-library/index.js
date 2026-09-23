@@ -79598,6 +79598,9 @@ ${text}
       color: {
         text: true,
         background: true,
+        heading: true,
+        button: true,
+        link: true,
         __experimentalDefaultControls: {
           text: true,
           background: true
