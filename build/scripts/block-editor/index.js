@@ -13507,7 +13507,7 @@ var wp;
     }
     return Number(a) > Number(b);
   }
-  var comparator = (field, items, order) => {
+  var comparator = (field, order) => {
     return (a, b) => {
       let cmpA, cmpB;
       if (typeof field === "function") {
@@ -13522,18 +13522,11 @@ var wp;
       } else if (isGreater(cmpB, cmpA)) {
         return order === "asc" ? -1 : 1;
       }
-      const orderA = items.findIndex((item) => item === a);
-      const orderB = items.findIndex((item) => item === b);
-      if (orderA > orderB) {
-        return 1;
-      } else if (orderB > orderA) {
-        return -1;
-      }
       return 0;
     };
   };
   function orderBy(items, field, order = "asc") {
-    return items.concat().sort(comparator(field, items, order));
+    return items.concat().sort(comparator(field, order));
   }
 
   // packages/block-editor/build-module/store/selectors.mjs
