@@ -71902,6 +71902,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/position.mjs
   var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
+  var { getResponsiveMediaQueries: getResponsiveMediaQueries2 } = unlock(privateApis);
   var POSITION_SUPPORT_KEY = "position";
   var DEFAULT_OPTION = {
     value: "",
@@ -71940,6 +71941,53 @@ var wp;
     output += `}`;
     return output;
   }
+  function getResponsivePositionCSS({
+    selector: selector3,
+    style,
+    viewportSettings
+  }) {
+    return Object.entries(getResponsiveMediaQueries2(viewportSettings)).map(([viewport, mediaQuery]) => {
+      const viewportPosition = getStyleForState2(style, {
+        viewport,
+        pseudo: DEFAULT_BLOCK_STYLE_STATE2.pseudo
+      })?.position;
+      if (!viewportPosition) {
+        return "";
+      }
+      const css = getPositionCSS({
+        selector: selector3,
+        style: {
+          position: { ...style?.position, ...viewportPosition }
+        }
+      });
+      if (css) {
+        return `${mediaQuery}{${css}}`;
+      }
+      if (VALID_POSITION_TYPES.includes(style?.position?.type)) {
+        return `${mediaQuery}{${selector3}{position: static;}}`;
+      }
+      return "";
+    }).filter(Boolean).join("");
+  }
+  function getPositionTypes(style, viewportSettings) {
+    const types = /* @__PURE__ */ new Set();
+    if (VALID_POSITION_TYPES.includes(style?.position?.type)) {
+      types.add(style.position.type);
+    }
+    Object.keys(getResponsiveMediaQueries2(viewportSettings)).forEach(
+      (viewport) => {
+        const viewportPosition = getStyleForState2(style, {
+          viewport,
+          pseudo: DEFAULT_BLOCK_STYLE_STATE2.pseudo
+        })?.position;
+        const type = viewportPosition ? { ...style?.position, ...viewportPosition }.type : void 0;
+        if (VALID_POSITION_TYPES.includes(type)) {
+          types.add(type);
+        }
+      }
+    );
+    return [...types];
+  }
   function hasStickyPositionSupport(blockType) {
     const support = (0, import_blocks52.getBlockSupport)(blockType, POSITION_SUPPORT_KEY);
     return !!(true === support || support?.sticky);
@@ -71972,15 +72020,23 @@ var wp;
   }) {
     const allowFixed = hasFixedPositionSupport(blockName);
     const allowSticky = hasStickyPositionSupport(blockName);
-    const value = style?.position?.type;
-    const { firstParentClientId } = (0, import_data88.useSelect)(
+    const { firstParentClientId, selectedState } = (0, import_data88.useSelect)(
       (select3) => {
         const { getBlockParents: getBlockParents2 } = select3(store);
+        const { getSelectedBlockStyleState: getSelectedBlockStyleState2 } = unlock(
+          select3(store)
+        );
         const parents = getBlockParents2(clientId);
-        return { firstParentClientId: parents[parents.length - 1] };
+        return {
+          firstParentClientId: parents[parents.length - 1],
+          selectedState: getSelectedBlockStyleState2(clientId)
+        };
       },
       [clientId]
     );
+    const isViewportState = selectedState?.viewport && selectedState.viewport !== DEFAULT_BLOCK_STYLE_STATE2.viewport && (!selectedState.pseudo || selectedState.pseudo === DEFAULT_BLOCK_STYLE_STATE2.pseudo);
+    const stateStyle = isViewportState ? getStyleForState2(style, selectedState) : void 0;
+    const value = isViewportState ? stateStyle?.position?.type ?? style?.position?.type : style?.position?.type;
     const blockInformation = useBlockDisplayInformation(firstParentClientId);
     const stickyHelpText = allowSticky && value === STICKY_OPTION.value && blockInformation ? (0, import_i18n81.sprintf)(
       /* translators: %s: the name of the parent block. */
@@ -72001,6 +72057,20 @@ var wp;
     }, [allowFixed, allowSticky, value]);
     const onChangeType = (next) => {
       const placementValue = "0px";
+      if (isViewportState) {
+        const newStateStyle = {
+          ...stateStyle,
+          position: {
+            ...stateStyle?.position,
+            type: next,
+            top: next === "sticky" || next === "fixed" ? placementValue : void 0
+          }
+        };
+        setAttributes({
+          style: setStyleForState(style, selectedState, newStateStyle)
+        });
+        return;
+      }
       const newStyle = {
         ...style,
         position: {
@@ -72051,20 +72121,29 @@ var wp;
     );
     const isPositionDisabled = useIsPositionDisabled({ name });
     const allowPositionStyles = hasPositionBlockSupport && !isPositionDisabled;
+    const [viewportSettings] = useSettings("viewport");
     const id = (0, import_compose69.useInstanceId)(POSITION_BLOCK_PROPS_REFERENCE);
     const positionSelector = `.wp-container-${id}.wp-container-${id}`;
     let css;
     if (allowPositionStyles) {
-      css = getPositionCSS({
-        selector: positionSelector,
-        style
-      }) || "";
+      css = [
+        getPositionCSS({
+          selector: positionSelector,
+          style
+        }) || "",
+        getResponsivePositionCSS({
+          selector: positionSelector,
+          style,
+          viewportSettings
+        })
+      ].join("");
     }
-    const className = clsx_default({
-      [`wp-container-${id}`]: allowPositionStyles && !!css,
-      // Only attach a container class if there is generated CSS to be attached.
-      [`is-position-${style?.position?.type}`]: allowPositionStyles && !!css && !!style?.position?.type
-    });
+    const className = clsx_default(
+      allowPositionStyles && !!css ? `wp-container-${id}` : void 0,
+      allowPositionStyles && !!css ? getPositionTypes(style, viewportSettings).map(
+        (type) => `is-position-${type}`
+      ) : void 0
+    );
     useStyleOverride({ css });
     return { className };
   }
@@ -91426,18 +91505,43 @@ var wp;
   var import_data163 = __toESM(require_data(), 1);
   var import_i18n192 = __toESM(require_i18n(), 1);
   var import_jsx_runtime477 = __toESM(require_jsx_runtime(), 1);
+  var DEFAULT_STATE_VALUE3 = "default";
+  var getPositionStateViewport = (selectedState) => selectedState?.viewport && selectedState.viewport !== DEFAULT_STATE_VALUE3 && (!selectedState.pseudo || selectedState.pseudo === DEFAULT_STATE_VALUE3) ? selectedState.viewport : null;
+  var hasAnyPositionValue = (style) => {
+    if (style?.position?.type) {
+      return true;
+    }
+    return Object.entries(style ?? {}).some(
+      ([key, stateStyle]) => key.startsWith("@") && !!stateStyle?.position?.type
+    );
+  };
   var PositionControlsPanel = () => {
-    const { selectedClientIds, selectedBlocks, hasPositionAttribute } = (0, import_data163.useSelect)((select3) => {
-      const { getBlocksByClientId: getBlocksByClientId2, getSelectedBlockClientIds: getSelectedBlockClientIds2 } = select3(store);
+    const {
+      selectedClientIds,
+      selectedBlocks,
+      selectedStateViewports,
+      hasPositionAttribute
+    } = (0, import_data163.useSelect)((select3) => {
+      const {
+        getBlocksByClientId: getBlocksByClientId2,
+        getSelectedBlockClientIds: getSelectedBlockClientIds2,
+        getSelectedBlockStyleState: getSelectedBlockStyleState2
+      } = unlock(select3(store));
       const selectedBlockClientIds = getSelectedBlockClientIds2();
-      const _selectedBlocks = getBlocksByClientId2(
-        selectedBlockClientIds
-      );
+      const _selectedBlocks = getBlocksByClientId2(selectedBlockClientIds);
       return {
         selectedClientIds: selectedBlockClientIds,
         selectedBlocks: _selectedBlocks,
+        selectedStateViewports: Object.fromEntries(
+          selectedBlockClientIds.map((clientId) => [
+            clientId,
+            getPositionStateViewport(
+              getSelectedBlockStyleState2(clientId)
+            )
+          ])
+        ),
         hasPositionAttribute: _selectedBlocks?.some(
-          ({ attributes }) => !!attributes?.style?.position?.type
+          ({ attributes }) => hasAnyPositionValue(attributes?.style)
         )
       };
     }, []);
@@ -91448,22 +91552,32 @@ var wp;
         return;
       }
       const attributesByClientId = Object.fromEntries(
-        selectedBlocks?.map(({ clientId, attributes }) => [
-          clientId,
-          {
-            style: cleanEmptyObject({
-              ...attributes?.style,
+        selectedBlocks?.map(({ clientId, attributes }) => {
+          const viewport = selectedStateViewports[clientId];
+          const style = { ...attributes?.style };
+          if (viewport) {
+            style[viewport] = {
+              ...style[viewport],
               position: {
-                ...attributes?.style?.position,
-                type: void 0,
+                type: "",
                 top: void 0,
                 right: void 0,
                 bottom: void 0,
                 left: void 0
               }
-            })
+            };
+          } else {
+            style.position = {
+              ...style.position,
+              type: void 0,
+              top: void 0,
+              right: void 0,
+              bottom: void 0,
+              left: void 0
+            };
           }
-        ])
+          return [clientId, { style: cleanEmptyObject(style) }];
+        })
       );
       updateBlockAttributes2(selectedClientIds, attributesByClientId, true);
     }
@@ -97629,7 +97743,7 @@ var wp;
       label: PSEUDO_STATE_LABELS[state]
     }));
   }
-  var DEFAULT_STATE_VALUE3 = "default";
+  var DEFAULT_STATE_VALUE4 = "default";
   var EMPTY_STATE_OPTIONS = [];
   function BlockStatesControl({ name, value, onChange, children }) {
     const pseudoStateOptions = (0, import_element313.useMemo)(
@@ -97644,7 +97758,7 @@ var wp;
       StateControl,
       {
         pseudoStates: pseudoStateOptions,
-        pseudoStateValue: value?.pseudo ?? DEFAULT_STATE_VALUE3,
+        pseudoStateValue: value?.pseudo ?? DEFAULT_STATE_VALUE4,
         onChangePseudoState: (pseudo) => onChange({ pseudo }),
         popoverProps: dropdownMenuProps.popoverProps,
         showText: false,
@@ -97670,8 +97784,8 @@ var wp;
       {
         viewportStates: isResponsiveEditing3 ? deviceStateOptions : EMPTY_STATE_OPTIONS,
         pseudoStates: pseudoStateOptions,
-        viewportValue: value?.viewport ?? DEFAULT_STATE_VALUE3,
-        pseudoStateValue: value?.pseudo ?? DEFAULT_STATE_VALUE3
+        viewportValue: value?.viewport ?? DEFAULT_STATE_VALUE4,
+        pseudoStateValue: value?.pseudo ?? DEFAULT_STATE_VALUE4
       }
     );
   }
@@ -97801,7 +97915,8 @@ var wp;
             label: (0, import_i18n214.__)("Elements"),
             className: "elements-block-support-panel__inner-wrapper"
           }
-        )
+        ),
+        isViewportStyleState && /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(position_controls_panel_default, {})
       ] }),
       isViewportStyleState && /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(inspector_controls_default.Slot, { group: "viewport" })
     ] });
@@ -102906,7 +103021,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/style.mjs
   var import_jsx_runtime532 = __toESM(require_jsx_runtime(), 1);
-  var { getResponsiveMediaQueries: getResponsiveMediaQueries2 } = unlock(privateApis);
+  var { getResponsiveMediaQueries: getResponsiveMediaQueries3 } = unlock(privateApis);
   var BORDER_SIDES = ["Top", "Right", "Bottom", "Left"];
   var styleSupportKeys2 = [
     ...TYPOGRAPHY_SUPPORT_KEYS2,
@@ -103115,7 +103230,7 @@ var wp;
     const cssRules = [];
     const validPseudoStates = VALID_BLOCK_PSEUDO_STATES[name] ?? [];
     const nestedStateKeys = ["elements", ...validPseudoStates];
-    const responsiveMediaQueries = getResponsiveMediaQueries2(viewportSettings);
+    const responsiveMediaQueries = getResponsiveMediaQueries3(viewportSettings);
     Object.entries(responsiveMediaQueries).forEach(
       ([viewport, mediaQuery]) => {
         const viewportStyles = getStyleForState2(style, {
@@ -103961,7 +104076,7 @@ var wp;
     "rowStart",
     "rowSpan"
   ];
-  var { getResponsiveMediaQueries: getResponsiveMediaQueries3 } = unlock(privateApis);
+  var { getResponsiveMediaQueries: getResponsiveMediaQueries4 } = unlock(privateApis);
   function getDefaultLayout(layoutBlockSupport = {}, blockVariation) {
     const defaultBlockLayout = layoutBlockSupport?.default;
     return blockVariation?.attributes?.layout ?? defaultBlockLayout;
@@ -104073,7 +104188,7 @@ var wp;
     globalBlockGapValue,
     viewportSettings
   }) {
-    return Object.entries(getResponsiveMediaQueries3(viewportSettings)).map(([viewport, mediaQuery]) => {
+    return Object.entries(getResponsiveMediaQueries4(viewportSettings)).map(([viewport, mediaQuery]) => {
       const viewportStyle = getStyleForState2(attributes?.style, {
         viewport,
         pseudo: DEFAULT_BLOCK_STYLE_STATE2.pseudo
@@ -105565,7 +105680,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/layout-child.mjs
   var import_jsx_runtime539 = __toESM(require_jsx_runtime(), 1);
-  var { getResponsiveMediaQueries: getResponsiveMediaQueries4 } = unlock(privateApis);
+  var { getResponsiveMediaQueries: getResponsiveMediaQueries5 } = unlock(privateApis);
   var LAYOUT_CHILD_BLOCK_PROPS_REFERENCE = {};
   var FLEX_CHILD_LAYOUT_VALUES2 = {
     fit: "fit",
@@ -105715,7 +105830,7 @@ var wp;
     viewportSettings
   }) {
     const baseLayout = style?.layout ?? {};
-    return Object.entries(getResponsiveMediaQueries4(viewportSettings)).map(([viewport, mediaQuery]) => {
+    return Object.entries(getResponsiveMediaQueries5(viewportSettings)).map(([viewport, mediaQuery]) => {
       const viewportLayout = getStyleForState2(style, {
         viewport,
         pseudo: DEFAULT_BLOCK_STYLE_STATE2.pseudo
