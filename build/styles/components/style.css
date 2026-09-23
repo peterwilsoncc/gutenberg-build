@@ -553,6 +553,7 @@ p + .components-button.is-tertiary {
 
 .components-checkbox-control__label {
   line-height: var(--checkbox-input-size);
+  color: var(--wpds-color-foreground-content-neutral, #1e1e1e);
 }
 .components-checkbox-control:not(:has(:disabled)) .components-checkbox-control__label {
   cursor: var(--wpds-cursor-control, pointer);
@@ -2764,6 +2765,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
 .components-radio-control__label {
   grid-column: 2;
   grid-row: 1;
+  color: var(--wpds-color-foreground-content-neutral, #1e1e1e);
 }
 .components-radio-control__input:not(:disabled) + .components-radio-control__label {
   cursor: var(--wpds-cursor-control, pointer);
@@ -3291,6 +3293,7 @@ body.lockscroll {
 
 .components-toggle-control__label {
   line-height: 16px;
+  color: var(--wpds-color-foreground-content-neutral, #1e1e1e);
 }
 .components-toggle-control__label:not(.is-disabled) {
   cursor: var(--wpds-cursor-control, pointer);
