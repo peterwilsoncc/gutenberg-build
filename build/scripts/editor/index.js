@@ -6487,7 +6487,7 @@ var wp;
   // packages/icons/build-module/library/comment.mjs
   var import_primitives30 = __toESM(require_primitives(), 1);
   var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
-  var comment_default = /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives30.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives30.Path, { d: "M18 4.75H6C5.30964 4.75 4.75 5.30964 4.75 6V16.25V18.6596C4.75 19.1225 5.32471 19.3369 5.62784 18.9871L8 16.25H18C18.6904 16.25 19.25 15.6904 19.25 15V6C19.25 5.30964 18.6904 4.75 18 4.75Z", vectorEffect: "non-scaling-stroke" }) });
+  var comment_default = /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives30.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives30.Path, { d: "M18 5.5H6C5.30964 5.5 4.75 6.05964 4.75 6.75V16V18.4096C4.75 18.8725 5.32471 19.0869 5.62784 18.7371L8 16H18C18.6904 16 19.25 15.4404 19.25 14.75V6.75C19.25 6.05964 18.6904 5.5 18 5.5Z", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/icons/build-module/library/copy-small.mjs
   var import_primitives31 = __toESM(require_primitives(), 1);
@@ -6705,7 +6705,7 @@ var wp;
   // packages/icons/build-module/library/plugins.mjs
   var import_primitives65 = __toESM(require_primitives(), 1);
   var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
-  var plugins_default = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives65.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives65.Path, { d: "M9.75 8.75H7.75C7.47386 8.75 7.25 8.97386 7.25 9.25V12.75L10.25 16.75V18.75C10.25 19.0261 10.4739 19.25 10.75 19.25H13.25C13.5261 19.25 13.75 19.0261 13.75 18.75V16.75L16.75 12.75V9.25C16.75 8.97386 16.5261 8.75 16.25 8.75H14.25M9.75 8.75V4M9.75 8.75H14.25M14.25 8.75V4", vectorEffect: "non-scaling-stroke" }) });
+  var plugins_default = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives65.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives65.Path, { d: "M15.3995 11.5711L12.2175 8.38909L10.273 6.44454L7.67678 9.04074C7.3017 9.41581 7.09099 9.92452 7.09099 10.455L7.09099 13.455C7.09099 13.7202 6.98563 13.9745 6.7981 14.1621L5.14645 15.8137C4.95118 16.009 4.95118 16.3256 5.14645 16.5208L7.26777 18.6421C7.46303 18.8374 7.77961 18.8374 7.97487 18.6421L9.62652 16.9905C9.81406 16.8029 10.0684 16.6976 10.3336 16.6976H13.3336C13.8641 16.6976 14.3728 16.4869 14.7478 16.1118L17.344 13.5156L15.3995 11.5711ZM12.2175 8.38909L16.1066 4.5M15.3995 11.5711L19.2886 7.68198", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/icons/build-module/library/plus.mjs
   var import_primitives66 = __toESM(require_primitives(), 1);

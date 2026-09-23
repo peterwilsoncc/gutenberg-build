@@ -18033,8 +18033,12 @@ var wp;
   var import_primitives36 = __toESM(require_primitives(), 1);
   var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
   var media_default = /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(import_primitives36.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives36.Path, { d: "M11 9L7 6.5V11.5L11 9Z", fill: "currentColor", stroke: "none" }),
-    /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives36.Path, { d: "M19.25 14.2513L16.0707 11.0707C16.0317 11.0317 15.9683 11.0317 15.9293 11.0707L12.0584 14.9416C12.0245 14.9755 11.9713 14.9806 11.9316 14.9537L8.65791 12.7392C8.62313 12.7156 8.57736 12.7163 8.54332 12.7409L4.75 15.4808M19.25 14.2513V6C19.25 5.30964 18.6904 4.75 18 4.75H6C5.30964 4.75 4.75 5.30964 4.75 6V15.4808M19.25 14.2513V18C19.25 18.6904 18.6904 19.25 18 19.25H6C5.30964 19.25 4.75 18.6904 4.75 18V15.4808", vectorEffect: "non-scaling-stroke" })
+    /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives36.Path, { d: "M14 12.375V6.51534C14 6.21609 13.7879 5.95882 13.4941 5.9018L11.8239 5.57758C11.5677 5.52784 11.341 5.37988 11.1924 5.1653L10.3985 4.01913C10.2818 3.85057 10.0898 3.75 9.88474 3.75H8.11526C7.91022 3.75 7.71822 3.85057 7.60147 4.01913L6.80758 5.1653C6.65896 5.37988 6.43232 5.52784 6.17608 5.57758L4.5059 5.9018C4.21213 5.95882 4 6.21609 4 6.51534V12.375C4 12.7202 4.27982 13 4.625 13H13.375C13.7202 13 14 12.7202 14 12.375Z", vectorEffect: "non-scaling-stroke" }),
+    /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives36.Circle, { cx: "9", cy: "9", r: "1", fill: "currentColor", vectorEffect: "non-scaling-stroke" }),
+    /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives36.Path, { d: "M20 17.25V9", vectorEffect: "non-scaling-stroke" }),
+    /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives36.Path, { d: "M17 10H20V9H17V10Z", fill: "currentColor", vectorEffect: "non-scaling-stroke" }),
+    /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives36.Path, { d: "M11.75 18.5C12.4404 18.5 13 17.9404 13 17.25V16H11.75C11.0596 16 10.5 16.5596 10.5 17.25C10.5 17.9404 11.0596 18.5 11.75 18.5Z", fill: "currentColor", vectorEffect: "non-scaling-stroke" }),
+    /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(import_primitives36.Path, { d: "M18.75 18.5C19.4404 18.5 20 17.9404 20 17.25V16H18.75C18.0596 16 17.5 16.5596 17.5 17.25C17.5 17.9404 18.0596 18.5 18.75 18.5Z", fill: "currentColor", vectorEffect: "non-scaling-stroke" })
   ] });
 
   // packages/icons/build-module/library/mobile.mjs
@@ -18118,7 +18122,7 @@ var wp;
   // packages/icons/build-module/library/plugins.mjs
   var import_primitives48 = __toESM(require_primitives(), 1);
   var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
-  var plugins_default = /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_primitives48.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_primitives48.Path, { d: "M9.75 8.75H7.75C7.47386 8.75 7.25 8.97386 7.25 9.25V12.75L10.25 16.75V18.75C10.25 19.0261 10.4739 19.25 10.75 19.25H13.25C13.5261 19.25 13.75 19.0261 13.75 18.75V16.75L16.75 12.75V9.25C16.75 8.97386 16.5261 8.75 16.25 8.75H14.25M9.75 8.75V4M9.75 8.75H14.25M14.25 8.75V4", vectorEffect: "non-scaling-stroke" }) });
+  var plugins_default = /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_primitives48.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_primitives48.Path, { d: "M15.3995 11.5711L12.2175 8.38909L10.273 6.44454L7.67678 9.04074C7.3017 9.41581 7.09099 9.92452 7.09099 10.455L7.09099 13.455C7.09099 13.7202 6.98563 13.9745 6.7981 14.1621L5.14645 15.8137C4.95118 16.009 4.95118 16.3256 5.14645 16.5208L7.26777 18.6421C7.46303 18.8374 7.77961 18.8374 7.97487 18.6421L9.62652 16.9905C9.81406 16.8029 10.0684 16.6976 10.3336 16.6976H13.3336C13.8641 16.6976 14.3728 16.4869 14.7478 16.1118L17.344 13.5156L15.3995 11.5711ZM12.2175 8.38909L16.1066 4.5M15.3995 11.5711L19.2886 7.68198", vectorEffect: "non-scaling-stroke" }) });
 
   // packages/icons/build-module/library/post.mjs
   var import_primitives49 = __toESM(require_primitives(), 1);
