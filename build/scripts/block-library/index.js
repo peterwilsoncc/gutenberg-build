@@ -39047,6 +39047,7 @@ ${text}
     });
     const mediaEditorMetadataBaselineRef = (0, import_element72.useRef)();
     const mediaEditorMetadataSyncRequestRef = (0, import_element72.useRef)(0);
+    const mediaEditorUndoMetadataRef = (0, import_element72.useRef)();
     (0, import_element72.useEffect)(() => {
       blockAttributesRef.current = {
         id,
@@ -39099,6 +39100,8 @@ ${text}
         }
         const originalAttachment = mediaEditorMetadataBaselineRef.current;
         mediaEditorMetadataBaselineRef.current = void 0;
+        const undoMetadata = mediaEditorUndoMetadataRef.current;
+        mediaEditorUndoMetadataRef.current = void 0;
         const syncRequest = ++mediaEditorMetadataSyncRequestRef.current;
         const nextAttributes = {};
         const currentBlockAttributes = blockAttributesRef.current;
@@ -39133,6 +39136,19 @@ ${text}
                 nextAttributes,
                 resolvedMetadataAttributes
               );
+              if (isNewAttachment) {
+                mediaEditorUndoMetadataRef.current = {
+                  id: currentBlockAttributes.id,
+                  attributes: Object.fromEntries(
+                    Object.keys(
+                      resolvedMetadataAttributes
+                    ).map((key) => [
+                      key,
+                      latestBlockAttributes[key]
+                    ])
+                  )
+                };
+              }
             }
           }
           if (isNewAttachment) {
@@ -39147,6 +39163,9 @@ ${text}
               }
             }
           }
+        }
+        if (undoMetadata?.id === newId) {
+          Object.assign(nextAttributes, undoMetadata.attributes);
         }
         if (Object.keys(nextAttributes).length) {
           blockAttributesRef.current = {
@@ -39167,6 +39186,7 @@ ${text}
       if (!id || !openMediaEditorModal) {
         return;
       }
+      mediaEditorUndoMetadataRef.current = void 0;
       const cachedAttachmentRecord = getCachedAttachmentRecord(id);
       const fallbackAttachmentRecord = getAttachmentFallbackForEmptyBlockMetadata(
         blockAttributesRef.current
