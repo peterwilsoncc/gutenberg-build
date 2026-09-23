@@ -819,6 +819,7 @@ iframe[name=editor-canvas] {
   border-bottom: 1px solid #ddd;
   padding-bottom: 15px;
   line-height: 1.7;
+  white-space: pre-wrap;
 }
 .block-editor-block-compare__wrapper .block-editor-block-compare__html span {
   background-color: #e6ffed;
@@ -830,6 +831,10 @@ iframe[name=editor-canvas] {
 }
 .block-editor-block-compare__wrapper .block-editor-block-compare__html span.block-editor-block-compare__removed {
   background-color: #cc1818;
+}
+.block-editor-block-compare__wrapper .block-editor-block-compare__html span.block-editor-block-compare__newline {
+  background: none;
+  padding: 0;
 }
 .block-editor-block-compare__wrapper .block-editor-block-compare__preview {
   padding: 0;
