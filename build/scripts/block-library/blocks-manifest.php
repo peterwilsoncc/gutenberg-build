@@ -3348,6 +3348,18 @@ return array(
 				)
 			),
 			'shadow' => true,
+			'__experimentalBorder' => array(
+				'color' => true,
+				'radius' => true,
+				'style' => true,
+				'width' => true,
+				'__experimentalDefaultControls' => array(
+					'color' => false,
+					'radius' => false,
+					'style' => false,
+					'width' => false
+				)
+			),
 			'interactivity' => array(
 				'clientNavigation' => true
 			)

@@ -36311,6 +36311,18 @@ ${url}
         }
       },
       shadow: true,
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true,
+        __experimentalDefaultControls: {
+          color: false,
+          radius: false,
+          style: false,
+          width: false
+        }
+      },
       interactivity: {
         clientNavigation: true
       }
