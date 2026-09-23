@@ -73242,7 +73242,8 @@ var wp;
           getParentSectionBlock: getParentSectionBlock2,
           getEnabledBlockParents: getEnabledBlockParents2,
           getBlockName: getBlockName2,
-          getNextBlockClientId: getNextBlockClientId2
+          getNextBlockClientId: getNextBlockClientId2,
+          hasInserterItems: hasInserterItems2
         } = unlock(select3(store));
         const [selectedBlockClientId] = getSelectedBlockClientIds2();
         const parentSection = getParentSectionBlock2(
@@ -73264,8 +73265,10 @@ var wp;
             selectedBlockClientId
           ),
           // No button when the parent shown is not the direct parent, nor
-          // within a section, where the structure is locked.
-          showInserter: !!_parentClientId && _parentClientId === immediateParentClientId && !parentSection && !isTextFlowWrapper
+          // within a section, nor when the parent is locked against
+          // adding blocks (e.g. templateLock: 'all') — the Inserter would
+          // render nothing and leave an empty toolbar group behind.
+          showInserter: !!_parentClientId && _parentClientId === immediateParentClientId && !parentSection && !isTextFlowWrapper && hasInserterItems2(_parentClientId)
         };
       },
       []
