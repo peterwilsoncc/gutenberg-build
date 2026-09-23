@@ -65084,19 +65084,23 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter-draggable-blocks/index.mjs
   var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
-  var InserterDraggableBlocks = ({
+  function InserterDraggableBlocks({
     isEnabled,
     blocks: blocks2,
     icon,
     children,
     pattern
-  }) => {
+  }) {
     const blockName = blocks2.length === 1 ? blocks2[0].name : void 0;
+    const isPattern = !!pattern;
     const blockTypeIcon = (0, import_data58.useSelect)(
       (select3) => {
-        return blockName && select3(import_blocks35.store).getBlockType(blockName)?.icon;
+        if (icon || isPattern || !blockName) {
+          return;
+        }
+        return select3(import_blocks35.store).getBlockType(blockName)?.icon;
       },
-      [blockName]
+      [icon, isPattern, blockName]
     );
     const { startDragging: startDragging2, stopDragging: stopDragging2 } = unlock(
       (0, import_data58.useDispatch)(store)
@@ -65135,8 +65139,8 @@ var wp;
           BlockDraggableChip,
           {
             count: blocks2.length,
-            icon: icon || !pattern && blockTypeIcon,
-            isPattern: !!pattern
+            icon: icon || blockTypeIcon,
+            isPattern
           }
         ),
         children: ({ onDraggableStart, onDraggableEnd }) => {
@@ -65148,8 +65152,7 @@ var wp;
         }
       }
     );
-  };
-  var inserter_draggable_blocks_default = InserterDraggableBlocks;
+  }
 
   // packages/block-editor/build-module/components/inserter-list-item/index.mjs
   var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
@@ -65185,7 +65188,7 @@ var wp;
     );
     const isSynced = (0, import_blocks36.isReusableBlock)(item) && item.syncStatus !== "unsynced" || (0, import_blocks36.isTemplatePart)(item);
     return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
-      inserter_draggable_blocks_default,
+      InserterDraggableBlocks,
       {
         isEnabled: isDraggable && !item.isDisabled,
         blocks: blocks2,
@@ -65713,7 +65716,7 @@ var wp;
       });
     }, [blocks2, isDraggable, category]);
     return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
-      inserter_draggable_blocks_default,
+      InserterDraggableBlocks,
       {
         isEnabled: isDraggable,
         blocks: patternBlocks,
@@ -67192,7 +67195,7 @@ var wp;
     const onMouseEnter = (0, import_element170.useCallback)(() => setIsHovered(true), []);
     const onMouseLeave = (0, import_element170.useCallback)(() => setIsHovered(false), []);
     return /* @__PURE__ */ (0, import_jsx_runtime308.jsxs)(import_jsx_runtime308.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(inserter_draggable_blocks_default, { isEnabled: true, blocks: [block], children: ({ draggable, onDragStart, onDragEnd }) => /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(InserterDraggableBlocks, { isEnabled: true, blocks: [block], children: ({ draggable, onDragStart, onDragEnd }) => /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(
         "div",
         {
           className: clsx_default(
