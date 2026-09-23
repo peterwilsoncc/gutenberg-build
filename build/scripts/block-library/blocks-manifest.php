@@ -8526,7 +8526,13 @@ return array(
 			),
 			'typography' => array(
 				'fontSize' => true,
+				'lineHeight' => true,
 				'__experimentalFontFamily' => true,
+				'__experimentalFontWeight' => true,
+				'__experimentalFontStyle' => true,
+				'__experimentalTextTransform' => true,
+				'__experimentalTextDecoration' => true,
+				'__experimentalLetterSpacing' => true,
 				'__experimentalDefaultControls' => array(
 					'fontSize' => true,
 					'__experimentalFontFamily' => true
