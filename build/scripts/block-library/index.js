@@ -5699,7 +5699,10 @@ var wp;
       },
       color: {
         background: true,
-        gradients: true
+        gradients: true,
+        link: true,
+        heading: true,
+        button: true
       },
       interactivity: true,
       spacing: {
