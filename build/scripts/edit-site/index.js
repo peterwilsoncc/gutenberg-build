@@ -59274,13 +59274,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
   function MediaEdit(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
-      MediaEditControl,
-      {
-        ...props,
-        MediaUploadComponent: ConditionalMediaUpload
-      }
-    );
+    return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(MediaEditControl, { ...props });
   }
   function MediaEditControl({
     data,
@@ -59291,9 +59285,11 @@ If there's a particular need for this, please submit a feature request at https:
     multiple,
     isExpanded,
     validity,
-    mediaUploadProps,
-    MediaUploadComponent
+    isPickerFiltered,
+    featuredImageFlow,
+    pickerTitle
   }) {
+    const MediaUploadComponent = isPickerFiltered ? FilteredMediaUpload : ConditionalMediaUpload;
     const value = field.getValue({ item: data });
     const canUpload = (0, import_data39.useSelect)(
       (select4) => select4(import_core_data22.store).canUser("create", {
@@ -59526,7 +59522,9 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime283.jsx)("fieldset", { className: "fields__media-edit", "data-field-id": field.id, children: /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
         MediaUploadComponent,
         {
-          ...mediaUploadProps,
+          title: pickerTitle ?? field.label,
+          featuredImageFlow,
+          unstableFeaturedImageFlow: featuredImageFlow,
           onSelect: (selectedMedia) => {
             if (!multiple) {
               onChangeControl(selectedMedia.id);
@@ -59564,7 +59562,6 @@ If there's a particular need for this, please submit a feature request at https:
           allowedTypes,
           value: targetItemId !== void 0 ? targetItemId : value,
           multiple: multiple && targetItemId === void 0 ? "add" : false,
-          title: field.label,
           render: ({ open: open3 }) => {
             openModalRef.current = open3;
             const AttachmentsComponent = isExpanded ? ExpandedMediaEditAttachments : CompactMediaEditAttachments;

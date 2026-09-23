@@ -32881,13 +32881,7 @@ function CompactMediaEditAttachments({
   ] });
 }
 function MediaEdit(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-    MediaEditControl,
-    {
-      ...props,
-      MediaUploadComponent: ConditionalMediaUpload
-    }
-  );
+  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(MediaEditControl, { ...props });
 }
 function MediaEditControl({
   data,
@@ -32898,9 +32892,11 @@ function MediaEditControl({
   multiple,
   isExpanded,
   validity,
-  mediaUploadProps,
-  MediaUploadComponent
+  isPickerFiltered,
+  featuredImageFlow,
+  pickerTitle
 }) {
+  const MediaUploadComponent = isPickerFiltered ? FilteredMediaUpload : ConditionalMediaUpload;
   const value = field.getValue({ item: data });
   const canUpload = (0, import_data4.useSelect)(
     (select2) => select2(import_core_data2.store).canUser("create", {
@@ -33133,7 +33129,9 @@ function MediaEditControl({
     /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("fieldset", { className: "fields__media-edit", "data-field-id": field.id, children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
       MediaUploadComponent,
       {
-        ...mediaUploadProps,
+        title: pickerTitle ?? field.label,
+        featuredImageFlow,
+        unstableFeaturedImageFlow: featuredImageFlow,
         onSelect: (selectedMedia) => {
           if (!multiple) {
             onChangeControl(selectedMedia.id);
@@ -33171,7 +33169,6 @@ function MediaEditControl({
         allowedTypes,
         value: targetItemId !== void 0 ? targetItemId : value,
         multiple: multiple && targetItemId === void 0 ? "add" : false,
-        title: field.label,
         render: ({ open: open3 }) => {
           openModalRef.current = open3;
           const AttachmentsComponent = isExpanded ? ExpandedMediaEditAttachments : CompactMediaEditAttachments;
