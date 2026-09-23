@@ -14463,6 +14463,14 @@ var wp;
     supports: {
       anchor: true,
       align: true,
+      color: {
+        background: false,
+        link: true,
+        text: false,
+        __experimentalDefaultControls: {
+          link: true
+        }
+      },
       spacing: {
         margin: true,
         padding: true,
