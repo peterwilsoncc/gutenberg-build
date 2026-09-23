@@ -4731,6 +4731,12 @@ return array(
 				)
 			),
 			'shadow' => true,
+			'__experimentalBorder' => array(
+				'color' => true,
+				'radius' => true,
+				'style' => true,
+				'width' => true
+			),
 			'spacing' => array(
 				'padding' => true,
 				'__experimentalDefaultControls' => array(

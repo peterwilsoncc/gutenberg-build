@@ -54236,6 +54236,12 @@ ${text}
         }
       },
       shadow: true,
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      },
       spacing: {
         padding: true,
         __experimentalDefaultControls: {
