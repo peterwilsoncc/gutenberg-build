@@ -6934,7 +6934,9 @@ return array(
 			),
 			'color' => array(
 				'gradients' => true,
-				'link' => true
+				'link' => true,
+				'heading' => true,
+				'button' => true
 			),
 			'spacing' => array(
 				'padding' => true,

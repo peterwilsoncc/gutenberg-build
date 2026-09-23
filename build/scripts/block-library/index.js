@@ -68648,7 +68648,9 @@ ${text}
       },
       color: {
         gradients: true,
-        link: true
+        link: true,
+        heading: true,
+        button: true
       },
       spacing: {
         padding: true,
