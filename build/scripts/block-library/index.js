@@ -60492,6 +60492,7 @@ ${text}
         }
       },
       color: {
+        button: true,
         gradients: true,
         heading: true,
         link: true,
