@@ -1602,6 +1602,8 @@ return array(
 			),
 			'color' => array(
 				'gradients' => true,
+				'heading' => true,
+				'button' => true,
 				'link' => true,
 				'__experimentalDefaultControls' => array(
 					'background' => true,

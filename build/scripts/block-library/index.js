@@ -21233,6 +21233,8 @@ var wp;
       },
       color: {
         gradients: true,
+        heading: true,
+        button: true,
         link: true,
         __experimentalDefaultControls: {
           background: true,
