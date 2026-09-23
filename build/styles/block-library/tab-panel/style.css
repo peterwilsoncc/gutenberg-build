@@ -2,6 +2,7 @@
   display: none !important;
 }
 .wp-block-tab-panel[hidden] {
+  box-shadow: none !important;
   margin-block-start: 0;
   padding: 0 !important;
 }
