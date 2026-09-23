@@ -79551,7 +79551,8 @@ If there's a particular need for this, please submit a feature request at https:
     useHasBorderPanel,
     useSettingsForBlockElement: useSettingsForBlockElement2,
     useHasColorPanel: useHasColorPanel2,
-    useHasBackgroundPanel: useHasBackgroundPanel2
+    useHasBackgroundPanel: useHasBackgroundPanel2,
+    searchItems
   } = unlock6(import_block_editor7.privateApis);
   function hasAnyValue(value) {
     if (value === void 0 || value === null) {
@@ -79648,7 +79649,6 @@ If there's a particular need for this, please submit a feature request at https:
   function BlockList({ filterValue, styleFilter }) {
     const sortedBlockTypes = useSortedBlockTypes();
     const debouncedSpeak = (0, import_compose40.useDebounce)(import_a11y9.speak, 500);
-    const { isMatchingSearchTerm } = (0, import_data52.useSelect)(import_blocks8.store);
     const { user } = (0, import_element253.useContext)(GlobalStylesContext);
     const customizedBlockNames = (0, import_element253.useMemo)(() => {
       const names = /* @__PURE__ */ new Set();
@@ -79663,8 +79663,9 @@ If there's a particular need for this, please submit a feature request at https:
       });
       return names;
     }, [user]);
-    const searchedBlockTypes = !filterValue ? sortedBlockTypes : sortedBlockTypes.filter(
-      (blockType) => isMatchingSearchTerm(blockType, filterValue)
+    const searchedBlockTypes = searchItems(
+      sortedBlockTypes,
+      filterValue
     );
     const filteredBlockTypes = styleFilter === "customized" ? searchedBlockTypes.filter(
       (blockType) => customizedBlockNames.has(blockType.name)
@@ -100184,7 +100185,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks15 = __toESM(require_blocks(), 1);
   var import_preferences8 = __toESM(require_preferences(), 1);
   var import_jsx_runtime479 = __toESM(require_jsx_runtime(), 1);
-  var { getPopulatedCategories, searchItems } = unlock(
+  var { getPopulatedCategories, searchItems: searchItems2 } = unlock(
     import_block_editor26.privateApis
   );
   var ALL_PATTERNS_CATEGORY = {
@@ -100293,7 +100294,7 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
       if (searchValue) {
-        patterns2 = searchItems(patterns2, searchValue);
+        patterns2 = searchItems2(patterns2, searchValue);
       }
       return patterns2;
     }, [startPatterns, activeCategory, patternCategories, searchValue]);
@@ -107087,9 +107088,9 @@ ${content}
 
   // packages/editor/build-module/utils/search-templates.mjs
   var import_block_editor50 = __toESM(require_block_editor(), 1);
-  var { searchItems: searchItems2 } = unlock(import_block_editor50.privateApis);
+  var { searchItems: searchItems3 } = unlock(import_block_editor50.privateApis);
   function searchTemplates(templates = [], searchValue = "") {
-    return searchItems2(templates, searchValue, {
+    return searchItems3(templates, searchValue, {
       fields: [{ get: (template2) => template2.title }]
     });
   }

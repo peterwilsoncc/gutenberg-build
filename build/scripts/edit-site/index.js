@@ -60971,7 +60971,8 @@ If there's a particular need for this, please submit a feature request at https:
     useHasBorderPanel,
     useSettingsForBlockElement: useSettingsForBlockElement2,
     useHasColorPanel: useHasColorPanel2,
-    useHasBackgroundPanel: useHasBackgroundPanel2
+    useHasBackgroundPanel: useHasBackgroundPanel2,
+    searchItems
   } = unlock6(import_block_editor8.privateApis);
   function hasAnyValue(value) {
     if (value === void 0 || value === null) {
@@ -61068,7 +61069,6 @@ If there's a particular need for this, please submit a feature request at https:
   function BlockList({ filterValue, styleFilter }) {
     const sortedBlockTypes = useSortedBlockTypes();
     const debouncedSpeak = (0, import_compose36.useDebounce)(import_a11y8.speak, 500);
-    const { isMatchingSearchTerm } = (0, import_data47.useSelect)(import_blocks5.store);
     const { user } = (0, import_element197.useContext)(GlobalStylesContext);
     const customizedBlockNames = (0, import_element197.useMemo)(() => {
       const names = /* @__PURE__ */ new Set();
@@ -61083,8 +61083,9 @@ If there's a particular need for this, please submit a feature request at https:
       });
       return names;
     }, [user]);
-    const searchedBlockTypes = !filterValue ? sortedBlockTypes : sortedBlockTypes.filter(
-      (blockType) => isMatchingSearchTerm(blockType, filterValue)
+    const searchedBlockTypes = searchItems(
+      sortedBlockTypes,
+      filterValue
     );
     const filteredBlockTypes = styleFilter === "customized" ? searchedBlockTypes.filter(
       (blockType) => customizedBlockNames.has(blockType.name)
@@ -73395,7 +73396,7 @@ If there's a particular need for this, please submit a feature request at https:
     { get: (item) => item.keywords, maxRank: SEARCH_RANK.WORD_STARTS_WITH },
     { get: getDescription, maxRank: SEARCH_RANK.CONTAINS }
   ];
-  var searchItems = (items = [], searchInput = "", config2 = {}) => {
+  var searchItems2 = (items = [], searchInput = "", config2 = {}) => {
     const { categoryId, hasCategory = () => false } = config2;
     const filter = (item) => categoryId === PATTERN_DEFAULT_CATEGORY || categoryId === TEMPLATE_PART_ALL_AREAS_CATEGORY || categoryId === PATTERN_USER_CATEGORY && item.type === PATTERN_TYPES.user || hasCategory(item, categoryId);
     return searchAndRankItems(items, searchInput, {
@@ -73428,7 +73429,7 @@ If there's a particular need for this, please submit a feature request at https:
         TEMPLATE_PART_POST_TYPE,
         query
       ]);
-      const patterns2 = searchItems(templateParts, search, {
+      const patterns2 = searchItems2(templateParts, search, {
         categoryId,
         hasCategory: templatePartHasCategory
       });
@@ -73502,7 +73503,7 @@ If there's a particular need for this, please submit a feature request at https:
         });
       }
       if (categoryId) {
-        patterns2 = searchItems(patterns2, search, {
+        patterns2 = searchItems2(patterns2, search, {
           categoryId,
           hasCategory: (item, currentCategory) => {
             if (item.type === PATTERN_TYPES.user) {
@@ -73516,7 +73517,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         });
       } else {
-        patterns2 = searchItems(patterns2, search, {
+        patterns2 = searchItems2(patterns2, search, {
           hasCategory: (item) => {
             if (item.type === PATTERN_TYPES.user) {
               return userPatternCategories?.length && (!item.wp_pattern_category?.length || !item.wp_pattern_category?.some(
@@ -73568,7 +73569,7 @@ If there's a particular need for this, please submit a feature request at https:
           (pattern) => pattern.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full === syncStatus
         );
       }
-      patterns2 = searchItems(patterns2, search, {
+      patterns2 = searchItems2(patterns2, search, {
         // We exit user pattern retrieval early if we aren't in the
         // catch-all category for user created patterns, so it has
         // to be in the category.

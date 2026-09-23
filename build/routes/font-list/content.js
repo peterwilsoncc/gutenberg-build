@@ -12640,7 +12640,8 @@ var {
   useHasBorderPanel,
   useSettingsForBlockElement: useSettingsForBlockElement2,
   useHasColorPanel: useHasColorPanel2,
-  useHasBackgroundPanel: useHasBackgroundPanel2
+  useHasBackgroundPanel: useHasBackgroundPanel2,
+  searchItems
 } = unlock3(import_block_editor3.privateApis);
 function hasAnyValue(value) {
   if (value === void 0 || value === null) {
@@ -12737,7 +12738,6 @@ function EmptyBlockList({
 function BlockList({ filterValue, styleFilter }) {
   const sortedBlockTypes = useSortedBlockTypes();
   const debouncedSpeak = (0, import_compose2.useDebounce)(speak, 500);
-  const { isMatchingSearchTerm } = (0, import_data4.useSelect)(import_blocks2.store);
   const { user } = (0, import_element27.useContext)(GlobalStylesContext);
   const customizedBlockNames = (0, import_element27.useMemo)(() => {
     const names = /* @__PURE__ */ new Set();
@@ -12752,8 +12752,9 @@ function BlockList({ filterValue, styleFilter }) {
     });
     return names;
   }, [user]);
-  const searchedBlockTypes = !filterValue ? sortedBlockTypes : sortedBlockTypes.filter(
-    (blockType) => isMatchingSearchTerm(blockType, filterValue)
+  const searchedBlockTypes = searchItems(
+    sortedBlockTypes,
+    filterValue
   );
   const filteredBlockTypes = styleFilter === "customized" ? searchedBlockTypes.filter(
     (blockType) => customizedBlockNames.has(blockType.name)
