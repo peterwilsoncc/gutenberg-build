@@ -94,7 +94,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot]
         );
-        useEffect84(
+        useEffect83(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React236 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState96 = React236.useState, useEffect84 = React236.useEffect, useLayoutEffect13 = React236.useLayoutEffect, useDebugValue2 = React236.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React236 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState96 = React236.useState, useEffect83 = React236.useEffect, useLayoutEffect13 = React236.useLayoutEffect, useDebugValue2 = React236.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React236.useSyncExternalStore ? React236.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -148,7 +148,7 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React236 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore5 = shim.useSyncExternalStore, useRef132 = React236.useRef, useEffect84 = React236.useEffect, useMemo114 = React236.useMemo, useDebugValue2 = React236.useDebugValue;
+      var React236 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore5 = shim.useSyncExternalStore, useRef132 = React236.useRef, useEffect83 = React236.useEffect, useMemo114 = React236.useMemo, useDebugValue2 = React236.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef132(null);
         if (null === instRef.current) {
@@ -191,7 +191,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector2, isEqual]
         );
         var value = useSyncExternalStore5(subscribe2, instRef[0], instRef[1]);
-        useEffect84(
+        useEffect83(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -43194,7 +43194,6 @@ __export(notice_exports, {
 
 // packages/ui/build-module/notice/root.mjs
 var import_element140 = __toESM(require_element(), 1);
-import { speak as speak3 } from "@wordpress/a11y";
 var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE75 = "data-wp-hash";
 function getRuntime75() {
@@ -43291,40 +43290,7 @@ var icons = {
   success: published_default,
   error: error_default
 };
-function getDefaultPoliteness(intent) {
-  return intent === "error" ? "assertive" : "polite";
-}
-function safeRenderToString(message2) {
-  if (!message2) {
-    return void 0;
-  }
-  if (typeof message2 === "string") {
-    return message2;
-  }
-  try {
-    return (0, import_element140.renderToString)(message2);
-  } catch {
-    return void 0;
-  }
-}
-function useSpokenMessage(message2, politeness) {
-  const spokenMessage = safeRenderToString(message2);
-  (0, import_element140.useEffect)(() => {
-    if (spokenMessage) {
-      speak3(spokenMessage, politeness);
-    }
-  }, [spokenMessage, politeness]);
-}
-var Root13 = (0, import_element140.forwardRef)(function Notice({
-  intent = "neutral",
-  children,
-  icon,
-  spokenMessage = children,
-  politeness = getDefaultPoliteness(intent),
-  render: render4,
-  ...restProps
-}, ref) {
-  useSpokenMessage(spokenMessage, politeness);
+var Root13 = (0, import_element140.forwardRef)(function Notice({ intent = "neutral", children, icon, render: render4, ...restProps }, ref) {
   const iconElement = icon === null ? null : icon ?? icons[intent];
   const mergedClassName = clsx_default(
     style_default60.notice,
@@ -46179,6 +46145,7 @@ function WidgetContextProvider({
 // packages/widget-dashboard/build-module/components/widget-frame/widget-frame.mjs
 var import_element168 = __toESM(require_element(), 1);
 var import_i18n24 = __toESM(require_i18n(), 1);
+import { speak as speak3 } from "@wordpress/a11y";
 
 // packages/widget-dashboard/build-module/utils/split-widget-actions.mjs
 function splitWidgetActions(widgetType) {
@@ -46964,6 +46931,9 @@ var WidgetErrorBoundary = class extends import_element168.Component {
   state = { hasError: false };
   static getDerivedStateFromError() {
     return { hasError: true };
+  }
+  componentDidCatch() {
+    speak3((0, import_i18n24.__)("This widget encountered an error."), "polite");
   }
   render() {
     if (this.state.hasError) {

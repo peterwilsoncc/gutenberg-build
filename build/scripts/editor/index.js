@@ -404,7 +404,7 @@ var wp;
             },
             [subscribe5, value, getSnapshot2]
           );
-          useEffect138(
+          useEffect137(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe5(function() {
@@ -430,7 +430,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React208 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState178 = React208.useState, useEffect138 = React208.useEffect, useLayoutEffect21 = React208.useLayoutEffect, useDebugValue2 = React208.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React208 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState178 = React208.useState, useEffect137 = React208.useEffect, useLayoutEffect21 = React208.useLayoutEffect, useDebugValue2 = React208.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React208.useSyncExternalStore ? React208.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -458,7 +458,7 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React208 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef167 = React208.useRef, useEffect138 = React208.useEffect, useMemo192 = React208.useMemo, useDebugValue2 = React208.useDebugValue;
+        var React208 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef167 = React208.useRef, useEffect137 = React208.useEffect, useMemo192 = React208.useMemo, useDebugValue2 = React208.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe5, getSnapshot2, getServerSnapshot2, selector2, isEqual2) {
           var instRef = useRef167(null);
           if (null === instRef.current) {
@@ -501,7 +501,7 @@ var wp;
             [getSnapshot2, getServerSnapshot2, selector2, isEqual2]
           );
           var value = useSyncExternalStore7(subscribe5, instRef[0], instRef[1]);
-          useEffect138(
+          useEffect137(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -5950,7 +5950,7 @@ var wp;
     updatePost: () => updatePost,
     updatePostLock: () => updatePostLock
   });
-  var import_a11y10 = __toESM(require_a11y(), 1);
+  var import_a11y9 = __toESM(require_a11y(), 1);
   var import_api_fetch8 = __toESM(require_api_fetch(), 1);
   var import_escape_html = __toESM(require_escape_html(), 1);
   var import_deprecated9 = __toESM(require_deprecated(), 1);
@@ -43729,7 +43729,6 @@ var wp;
   });
 
   // packages/ui/build-module/notice/root.mjs
-  var import_a11y2 = __toESM(require_a11y(), 1);
   var import_element112 = __toESM(require_element(), 1);
   var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE61 = "data-wp-hash";
@@ -43827,40 +43826,7 @@ var wp;
     success: published_default,
     error: error_default
   };
-  function getDefaultPoliteness(intent) {
-    return intent === "error" ? "assertive" : "polite";
-  }
-  function safeRenderToString(message2) {
-    if (!message2) {
-      return void 0;
-    }
-    if (typeof message2 === "string") {
-      return message2;
-    }
-    try {
-      return (0, import_element112.renderToString)(message2);
-    } catch {
-      return void 0;
-    }
-  }
-  function useSpokenMessage(message2, politeness) {
-    const spokenMessage = safeRenderToString(message2);
-    (0, import_element112.useEffect)(() => {
-      if (spokenMessage) {
-        (0, import_a11y2.speak)(spokenMessage, politeness);
-      }
-    }, [spokenMessage, politeness]);
-  }
-  var Root9 = (0, import_element112.forwardRef)(function Notice({
-    intent = "neutral",
-    children,
-    icon,
-    spokenMessage = children,
-    politeness = getDefaultPoliteness(intent),
-    render: render5,
-    ...restProps
-  }, ref) {
-    useSpokenMessage(spokenMessage, politeness);
+  var Root9 = (0, import_element112.forwardRef)(function Notice({ intent = "neutral", children, icon, render: render5, ...restProps }, ref) {
     const iconElement = icon === null ? null : icon ?? icons[intent];
     const mergedClassName = clsx_default(
       style_default44.notice,
@@ -45331,7 +45297,7 @@ var wp;
   var import_element126 = __toESM(require_element(), 1);
   var import_i18n30 = __toESM(require_i18n(), 1);
   var import_html_entities3 = __toESM(require_html_entities(), 1);
-  var import_a11y3 = __toESM(require_a11y(), 1);
+  var import_a11y2 = __toESM(require_a11y(), 1);
   var import_media_utils = __toESM(require_media_utils(), 1);
   var import_notices2 = __toESM(require_notices(), 1);
 
@@ -48927,7 +48893,7 @@ var wp;
     }, [isTouched, field.isValid, validity]);
     (0, import_element126.useEffect)(() => {
       if (isTouched && customValidity?.message) {
-        (0, import_a11y3.speak)(customValidity.message);
+        (0, import_a11y2.speak)(customValidity.message);
       }
     }, [isTouched, customValidity?.message]);
     const onBlur = (0, import_element126.useCallback)(
@@ -65799,7 +65765,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components63 = __toESM(require_components(), 1);
   var import_element203 = __toESM(require_element(), 1);
   var import_i18n127 = __toESM(require_i18n(), 1);
-  var import_a11y4 = __toESM(require_a11y(), 1);
+  var import_a11y3 = __toESM(require_a11y(), 1);
   var import_date10 = __toESM(require_date(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
@@ -66046,7 +66012,7 @@ If there's a particular need for this, please submit a feature request at https:
             new Event("invalid", { cancelable: true })
           );
           if (input.validationMessage) {
-            (0, import_a11y4.speak)(input.validationMessage);
+            (0, import_a11y3.speak)(input.validationMessage);
           }
         }, 0);
       },
@@ -66159,7 +66125,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/date.mjs
   var import_components64 = __toESM(require_components(), 1);
-  var import_a11y5 = __toESM(require_a11y(), 1);
+  var import_a11y4 = __toESM(require_a11y(), 1);
   var import_element204 = __toESM(require_element(), 1);
   var import_i18n128 = __toESM(require_i18n(), 1);
   var import_date11 = __toESM(require_date(), 1);
@@ -66314,7 +66280,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [isTouched, isValid2, validity, validateRefs]);
     (0, import_element204.useEffect)(() => {
       if (isTouched && customValidity?.message) {
-        (0, import_a11y5.speak)(customValidity.message);
+        (0, import_a11y4.speak)(customValidity.message);
       }
     }, [isTouched, customValidity?.message]);
     const onBlur = (event) => {
@@ -70915,7 +70881,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
   var import_element228 = __toESM(require_element(), 1);
-  var import_a11y6 = __toESM(require_a11y(), 1);
+  var import_a11y5 = __toESM(require_a11y(), 1);
   var import_compose36 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
@@ -71123,7 +71089,7 @@ If there's a particular need for this, please submit a feature request at https:
       const revealedCount = revealValidity();
       const message2 = getValidationMessage(validity);
       if (revealedCount > 0 && message2) {
-        (0, import_a11y6.speak)(message2, "polite");
+        (0, import_a11y5.speak)(message2, "polite");
       }
     }, [isCollapsible, isOpen2, revealValidity, validity]);
     const focusOutsideProps = (0, import_compose36.__experimentalUseFocusOutside)(handleFocusOutside);
@@ -71282,7 +71248,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
   var import_element229 = __toESM(require_element(), 1);
   var import_i18n144 = __toESM(require_i18n(), 1);
-  var import_a11y7 = __toESM(require_a11y(), 1);
+  var import_a11y6 = __toESM(require_a11y(), 1);
   var import_compose37 = __toESM(require_compose(), 1);
   var import_jsx_runtime375 = __toESM(require_jsx_runtime(), 1);
   function FormDetailsField({
@@ -71336,7 +71302,7 @@ If there's a particular need for this, please submit a feature request at https:
       const revealedCount = revealValidity();
       const message2 = getValidationMessage(validity);
       if (revealedCount > 0 && message2) {
-        (0, import_a11y7.speak)(message2, "polite");
+        (0, import_a11y6.speak)(message2, "polite");
       }
     }, [revealValidity, validity]);
     const focusOutsideProps = (0, import_compose37.__experimentalUseFocusOutside)(handleFocusOutside);
@@ -74313,7 +74279,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
-  var import_a11y8 = __toESM(require_a11y(), 1);
+  var import_a11y7 = __toESM(require_a11y(), 1);
   var import_element235 = __toESM(require_element(), 1);
   var import_i18n147 = __toESM(require_i18n(), 1);
 
@@ -74583,7 +74549,7 @@ If there's a particular need for this, please submit a feature request at https:
         prevStateRef.current = current;
         if (msg !== prevMessageRef.current) {
           prevMessageRef.current = msg;
-          (0, import_a11y8.speak)(msg);
+          (0, import_a11y7.speak)(msg);
         }
       }, ARIA_DEBOUNCE_MS);
       return () => {
@@ -79784,7 +79750,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element257 = __toESM(require_element(), 1);
   var import_block_editor7 = __toESM(require_block_editor(), 1);
   var import_compose40 = __toESM(require_compose(), 1);
-  var import_a11y9 = __toESM(require_a11y(), 1);
+  var import_a11y8 = __toESM(require_a11y(), 1);
 
   // packages/global-styles-ui/build-module/variations/variations-panel.mjs
   var import_blocks7 = __toESM(require_blocks(), 1);
@@ -80004,7 +79970,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function BlockList({ filterValue, styleFilter }) {
     const sortedBlockTypes = useSortedBlockTypes();
-    const debouncedSpeak = (0, import_compose40.useDebounce)(import_a11y9.speak, 500);
+    const debouncedSpeak = (0, import_compose40.useDebounce)(import_a11y8.speak, 500);
     const { user } = (0, import_element257.useContext)(GlobalStylesContext);
     const customizedBlockNames = (0, import_element257.useMemo)(() => {
       const names = /* @__PURE__ */ new Set();
@@ -102955,7 +102921,7 @@ If there's a particular need for this, please submit a feature request at https:
             __unstableHTML: true,
             speak: false
           };
-          (0, import_a11y10.speak)(noticeMessage, "assertive");
+          (0, import_a11y9.speak)(noticeMessage, "assertive");
         }
         registry.dispatch(import_notices20.store).createErrorNotice(...args);
       }
@@ -103278,13 +103244,13 @@ If there's a particular need for this, please submit a feature request at https:
       unlock(registry.dispatch(import_block_editor37.store)).resetZoomLevel();
     }
     if (mode === "visual") {
-      (0, import_a11y10.speak)((0, import_i18n226.__)("Visual editor selected"), "assertive");
+      (0, import_a11y9.speak)((0, import_i18n226.__)("Visual editor selected"), "assertive");
     } else if (mode === "text") {
       const isDistractionFree = registry.select(import_preferences10.store).get("core", "distractionFree");
       if (isDistractionFree) {
         dispatch9.toggleDistractionFree();
       }
-      (0, import_a11y10.speak)((0, import_i18n226.__)("Code editor selected"), "assertive");
+      (0, import_a11y9.speak)((0, import_i18n226.__)("Code editor selected"), "assertive");
     }
   };
   function openPublishSidebar() {
@@ -105988,6 +105954,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/error-boundary/index.mjs
   var import_element326 = __toESM(require_element(), 1);
+  var import_a11y10 = __toESM(require_a11y(), 1);
   var import_i18n238 = __toESM(require_i18n(), 1);
   var import_data111 = __toESM(require_data(), 1);
   var import_compose55 = __toESM(require_compose(), 1);
@@ -105998,6 +105965,14 @@ If there's a particular need for this, please submit a feature request at https:
       return (0, import_data111.select)(store).getEditedPostContent();
     } catch {
     }
+  }
+  function getErrorNotice() {
+    return {
+      title: (0, import_i18n238.__)("The editor has crashed"),
+      description: (0, import_i18n238.__)(
+        "An unknown error occurred. Reload your browser to try again, or copy the error to report the problem or search."
+      )
+    };
   }
   function getErrorName(error2) {
     return error2 instanceof Error && error2.name || "Error";
@@ -106087,6 +106062,8 @@ ${content}
       };
     }
     componentDidCatch(error2, errorInfo) {
+      const { title, description } = getErrorNotice();
+      (0, import_a11y10.speak)(`${title}. ${description}`, "assertive");
       this.setState({ componentStack: errorInfo?.componentStack });
       (0, import_hooks46.doAction)("editor.ErrorBoundary.errorLogged", error2, errorInfo);
     }
@@ -106099,6 +106076,7 @@ ${content}
       if (!error2) {
         return this.props.children;
       }
+      const { title, description } = getErrorNotice();
       return /* @__PURE__ */ (0, import_jsx_runtime514.jsxs)(
         Stack,
         {
@@ -106107,10 +106085,8 @@ ${content}
           gap: "lg",
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime514.jsxs)(notice_exports.Root, { intent: "error", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(notice_exports.Title, { children: (0, import_i18n238.__)("The editor has crashed") }),
-              /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(notice_exports.Description, { children: (0, import_i18n238.__)(
-                "An unknown error occurred. Reload your browser to try again, or copy the error to report the problem or search."
-              ) }),
+              /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(notice_exports.Title, { children: title }),
+              /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(notice_exports.Description, { children: description }),
               /* @__PURE__ */ (0, import_jsx_runtime514.jsxs)(notice_exports.Actions, { children: [
                 canCopyContent && /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(CopyButton, { text: getContent, children: (0, import_i18n238.__)("Copy contents") }),
                 /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(

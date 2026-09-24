@@ -196,7 +196,7 @@ var wp;
             },
             [subscribe, value, getSnapshot]
           );
-          useEffect26(
+          useEffect25(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe(function() {
@@ -222,7 +222,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React59 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState21 = React59.useState, useEffect26 = React59.useEffect, useLayoutEffect4 = React59.useLayoutEffect, useDebugValue2 = React59.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React59 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState21 = React59.useState, useEffect25 = React59.useEffect, useLayoutEffect4 = React59.useLayoutEffect, useDebugValue2 = React59.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React59.useSyncExternalStore ? React59.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -250,7 +250,7 @@ var wp;
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React59 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef27 = React59.useRef, useEffect26 = React59.useEffect, useMemo24 = React59.useMemo, useDebugValue2 = React59.useDebugValue;
+        var React59 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef27 = React59.useRef, useEffect25 = React59.useEffect, useMemo24 = React59.useMemo, useDebugValue2 = React59.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
           var instRef = useRef27(null);
           if (null === instRef.current) {
@@ -293,7 +293,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector, isEqual]
           );
           var value = useSyncExternalStore3(subscribe, instRef[0], instRef[1]);
-          useEffect26(
+          useEffect25(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -12830,7 +12830,6 @@ var wp;
   });
 
   // packages/ui/build-module/notice/root.mjs
-  var import_a11y2 = __toESM(require_a11y(), 1);
   var import_element40 = __toESM(require_element(), 1);
   var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
@@ -12928,40 +12927,7 @@ var wp;
     success: published_default,
     error: error_default
   };
-  function getDefaultPoliteness(intent) {
-    return intent === "error" ? "assertive" : "polite";
-  }
-  function safeRenderToString(message) {
-    if (!message) {
-      return void 0;
-    }
-    if (typeof message === "string") {
-      return message;
-    }
-    try {
-      return (0, import_element40.renderToString)(message);
-    } catch {
-      return void 0;
-    }
-  }
-  function useSpokenMessage(message, politeness) {
-    const spokenMessage = safeRenderToString(message);
-    (0, import_element40.useEffect)(() => {
-      if (spokenMessage) {
-        (0, import_a11y2.speak)(spokenMessage, politeness);
-      }
-    }, [spokenMessage, politeness]);
-  }
-  var Root4 = (0, import_element40.forwardRef)(function Notice({
-    intent = "neutral",
-    children,
-    icon,
-    spokenMessage = children,
-    politeness = getDefaultPoliteness(intent),
-    render,
-    ...restProps
-  }, ref) {
-    useSpokenMessage(spokenMessage, politeness);
+  var Root4 = (0, import_element40.forwardRef)(function Notice({ intent = "neutral", children, icon, render, ...restProps }, ref) {
     const iconElement = icon === null ? null : icon ?? icons[intent];
     const mergedClassName = clsx_default(
       style_default17.notice,
@@ -14764,10 +14730,19 @@ var wp;
 
   // packages/edit-widgets/build-module/components/error-boundary/index.mjs
   var import_element52 = __toESM(require_element(), 1);
+  var import_a11y2 = __toESM(require_a11y(), 1);
   var import_i18n10 = __toESM(require_i18n(), 1);
   var import_compose6 = __toESM(require_compose(), 1);
   var import_hooks3 = __toESM(require_hooks(), 1);
   var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
+  function getErrorNotice() {
+    return {
+      title: (0, import_i18n10.__)("The editor has crashed"),
+      description: (0, import_i18n10.__)(
+        "An unknown error occurred. Reload your browser to try again, or copy the error to report the problem or search."
+      )
+    };
+  }
   function getErrorName(error2) {
     return error2 instanceof Error && error2.name || "Error";
   }
@@ -14856,6 +14831,8 @@ ${content}
       };
     }
     componentDidCatch(error2, errorInfo) {
+      const { title, description } = getErrorNotice();
+      (0, import_a11y2.speak)(`${title}. ${description}`, "assertive");
       this.setState({ componentStack: errorInfo?.componentStack });
       (0, import_hooks3.doAction)("editor.ErrorBoundary.errorLogged", error2, errorInfo);
     }
@@ -14867,6 +14844,7 @@ ${content}
       if (!error2) {
         return this.props.children;
       }
+      const { title, description } = getErrorNotice();
       return /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(
         Stack,
         {
@@ -14875,10 +14853,8 @@ ${content}
           gap: "lg",
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(notice_exports.Root, { intent: "error", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(notice_exports.Title, { children: (0, import_i18n10.__)("The editor has crashed") }),
-              /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(notice_exports.Description, { children: (0, import_i18n10.__)(
-                "An unknown error occurred. Reload your browser to try again, or copy the error to report the problem or search."
-              ) }),
+              /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(notice_exports.Title, { children: title }),
+              /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(notice_exports.Description, { children: description }),
               /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(notice_exports.Actions, { children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
                 CopyButton,
                 {
