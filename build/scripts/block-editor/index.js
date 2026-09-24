@@ -65960,11 +65960,13 @@ var wp;
         ref,
         role: "option",
         accessibleWhenDisabled: true,
+        tabbable: true,
+        type: "button",
         ...props,
         render: (htmlProps) => {
           const propsWithTabIndex = {
             ...htmlProps,
-            tabIndex: isFirst ? 0 : htmlProps.tabIndex
+            tabIndex: isFirst || htmlProps["data-active-item"] ? 0 : -1
           };
           if (Component4) {
             return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(Component4, { ...propsWithTabIndex, children });
