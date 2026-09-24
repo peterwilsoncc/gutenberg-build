@@ -13159,22 +13159,12 @@ var wp;
     const areBlockNamesAllowedInClientId = (id) => blockNames.every(
       (currentName) => canInsertBlockType(state, currentName, id)
     );
-    if (!clientId) {
-      if (areBlockNamesAllowedInClientId(clientId)) {
-        return clientId;
-      }
-      const sectionRootClientId = getSectionRootClientId(state);
-      if (sectionRootClientId && areBlockNamesAllowedInClientId(sectionRootClientId)) {
-        return sectionRootClientId;
-      }
-      return null;
+    if (areBlockNamesAllowedInClientId(clientId)) {
+      return clientId;
     }
-    let current = clientId;
-    while (current !== null && !areBlockNamesAllowedInClientId(current)) {
-      const parentClientId = getBlockRootClientId(state, current);
-      current = parentClientId;
-    }
-    return current;
+    return getFallbackInsertionRoots(state, clientId).find(
+      areBlockNamesAllowedInClientId
+    ) ?? null;
   }
   function getClosestAllowedInsertionPointForPattern(state, pattern, clientId) {
     const { allowedBlockTypes } = getSettings(state);
@@ -13503,6 +13493,19 @@ var wp;
       getParentSectionBlock(state, rootClientId)
     ];
   };
+  function getFallbackInsertionRoots(state, rootClientId) {
+    if (!rootClientId) {
+      const sectionRootClientId = getSectionRootClientId(state);
+      return sectionRootClientId ? [sectionRootClientId] : [];
+    }
+    const roots = [];
+    let current = getBlockRootClientId(state, rootClientId);
+    while (current !== null) {
+      roots.push(current);
+      current = getBlockRootClientId(state, current);
+    }
+    return roots;
+  }
 
   // packages/block-editor/build-module/utils/sorting.mjs
   function isGreater(a, b) {
@@ -14645,26 +14648,39 @@ var wp;
             )
           );
         } else {
-          const { getClosestAllowedInsertionPoint: getClosestAllowedInsertionPoint2 } = unlock(
-            select3(STORE_NAME)
+          const fallbackRoots = getFallbackInsertionRoots(
+            state,
+            rootClientId
           );
-          blockTypeInserterItems = blockTypeInserterItems.filter(
-            (blockType) => isBlockVisibleInTheInserter(
+          const allowedItems = [];
+          for (const blockType of blockTypeInserterItems) {
+            if (!isBlockVisibleInTheInserter(
               state,
               blockType,
               rootClientId
-            ) && getClosestAllowedInsertionPoint2(
-              blockType.name,
-              rootClientId
-            ) !== null
-          ).map((blockType) => ({
-            ...blockType,
-            isAllowedInCurrentRoot: canIncludeBlockTypeInInserter(
+            )) {
+              continue;
+            }
+            const isAllowedInCurrentRoot = canIncludeBlockTypeInInserter(
               state,
               blockType,
               rootClientId
-            )
-          }));
+            );
+            if (!isAllowedInCurrentRoot && !fallbackRoots.some(
+              (id) => canInsertBlockTypeUnmemoized(
+                state,
+                blockType.name,
+                id
+              )
+            )) {
+              continue;
+            }
+            allowedItems.push({
+              ...blockType,
+              isAllowedInCurrentRoot
+            });
+          }
+          blockTypeInserterItems = allowedItems;
         }
         const items = blockTypeInserterItems.reduce(
           (accumulator, item) => {
