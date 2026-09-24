@@ -12552,8 +12552,8 @@ var wp;
           const isScrollableY2 = lastTraversableNode || scrollRe.test(style.overflowY);
           const canScrollX = isScrollableX && target.clientWidth > 0 && target.scrollWidth > target.clientWidth;
           const canScrollY = isScrollableY2 && target.clientHeight > 0 && target.scrollHeight > target.clientHeight;
-          const isRTL27 = style.direction === "rtl";
-          const pressedVerticalScrollbar = canScrollY && (isRTL27 ? event.offsetX <= target.offsetWidth - target.clientWidth : event.offsetX > target.clientWidth);
+          const isRTL28 = style.direction === "rtl";
+          const pressedVerticalScrollbar = canScrollY && (isRTL28 ? event.offsetX <= target.offsetWidth - target.clientWidth : event.offsetX > target.clientWidth);
           const pressedHorizontalScrollbar = canScrollX && event.offsetY > target.clientHeight;
           if (pressedVerticalScrollbar || pressedHorizontalScrollbar) {
             return;
@@ -19633,19 +19633,19 @@ var wp;
           }
           const input = event.currentTarget;
           const scrollAmount = input.scrollWidth - input.clientWidth;
-          const isRTL27 = direction === "rtl";
+          const isRTL28 = direction === "rtl";
           if (event.key === "Home") {
             stopEvent(event);
-            const cursor = parts_exports.engine.gecko && isRTL27 ? input.value.length : 0;
+            const cursor = parts_exports.engine.gecko && isRTL28 ? input.value.length : 0;
             input.setSelectionRange(cursor, cursor);
             input.scrollLeft = 0;
             return;
           }
           if (event.key === "End") {
             stopEvent(event);
-            const cursor = parts_exports.engine.gecko && isRTL27 ? 0 : input.value.length;
+            const cursor = parts_exports.engine.gecko && isRTL28 ? 0 : input.value.length;
             input.setSelectionRange(cursor, cursor);
-            input.scrollLeft = isRTL27 ? -scrollAmount : scrollAmount;
+            input.scrollLeft = isRTL28 ? -scrollAmount : scrollAmount;
             return;
           }
           if (!mounted && event.key === "Escape") {
@@ -40950,16 +40950,48 @@ var wp;
     registerStyle40("fb14a04e1a", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f3acce91cfa4ddb0__positioner{z-index:var(--wp-ui-combobox-z-index,initial)}._215088f110703fb9__chip{--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-sm,8px);align-items:center;background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:1px solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:12px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:default;display:flex;font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-xs,16px);max-width:100%;min-height:var(--wpds-dimension-size-sm,24px);overflow:hidden;&:not([data-disabled]):focus,&:not([data-disabled]):has(button:not(:disabled,[aria-disabled=true]):hover){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);outline:none;@media (forced-colors:active){background-color:SelectedItem}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:has(.a07649e544b312b5__chip-prefix){--wp-ui-combobox-chip-content-padding-inline-start:var(--wpds-dimension-padding-xs,4px)}}.a07649e544b312b5__chip-prefix{align-items:center;border-radius:50%;display:flex;flex-shrink:0;height:var(--wpds-dimension-size-xs,20px);justify-content:center;margin-inline-start:1px;overflow:hidden;width:var(--wpds-dimension-size-xs,20px)}.d10525babc99f435__chip-content{min-width:0;overflow-wrap:anywhere;padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline-start:var(--wp-ui-combobox-chip-content-padding-inline-start)}.edd3e6dc8e42005f__chip-remove{border:none}}}");
   }
   var style_default38 = { "positioner": "f3acce91cfa4ddb0__positioner", "chip": "_215088f110703fb9__chip", "chip-prefix": "a07649e544b312b5__chip-prefix", "chip-content": "d10525babc99f435__chip-content", "chip-remove": "edd3e6dc8e42005f__chip-remove" };
-  var ChipWithRemove = (0, import_element80.forwardRef)(function ChipWithRemove2({ className, children, prefix: prefix2, removeLabel = (0, import_i18n16.__)("Remove"), ...restProps }, ref) {
+  var ChipWithRemove = (0, import_element80.forwardRef)(function ChipWithRemove2({
+    className,
+    children,
+    prefix: prefix2,
+    removeLabel = (0, import_i18n16.__)("Remove"),
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledby,
+    "aria-describedby": ariaDescribedby,
+    ...restProps
+  }, ref) {
+    const labelId = (0, import_element80.useId)();
+    const hintId = (0, import_element80.useId)();
+    const chipNameFrom = ariaLabelledby || labelId;
+    const nameFromAriaLabel = Boolean(ariaLabel && !ariaLabelledby);
     return /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)(
       index_parts_exports2.Chip,
       {
         ref,
         className: clsx_default(style_default38.chip, className),
         ...restProps,
+        "aria-labelledby": chipNameFrom,
+        "aria-describedby": clsx_default(ariaDescribedby, hintId) || void 0,
         children: [
-          prefix2 && /* @__PURE__ */ (0, import_jsx_runtime200.jsx)("span", { className: style_default38["chip-prefix"], children: prefix2 }),
-          /* @__PURE__ */ (0, import_jsx_runtime200.jsx)("span", { className: style_default38["chip-content"], children }),
+          prefix2 && /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+            "span",
+            {
+              className: style_default38["chip-prefix"],
+              "aria-hidden": nameFromAriaLabel ? true : void 0,
+              children: prefix2
+            }
+          ),
+          nameFromAriaLabel && /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(VisuallyHidden, { id: labelId, "aria-hidden": "true", children: ariaLabel }),
+          /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+            "span",
+            {
+              id: nameFromAriaLabel ? void 0 : labelId,
+              className: style_default38["chip-content"],
+              "aria-hidden": nameFromAriaLabel ? true : void 0,
+              children
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(VisuallyHidden, { id: hintId, "aria-hidden": "true", children: (0, import_i18n16.__)("Press Backspace or Delete to remove.") }),
           /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
             index_parts_exports2.ChipRemove,
             {
@@ -40974,8 +41006,8 @@ var wp;
                   tone: "neutral",
                   focusableWhenDisabled: false,
                   disabled: disabled2,
-                  "aria-hidden": disabled2 || void 0,
-                  ...props
+                  ...props,
+                  "aria-describedby": clsx_default(props["aria-describedby"], chipNameFrom) || void 0
                 }
               )
             }
@@ -43047,6 +43079,27 @@ var wp;
     registerStyle57("90495f88e8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d3d19f845e1c0aee__chips-edit-area{padding:var(--wpds-dimension-padding-sm,8px) var(--wpds-dimension-padding-md,12px) 0}._461441519be582c7__chips-list{flex-grow:1;min-width:0}._196058edad3167fa__input{--_gcd-input-padding:var(--wpds-dimension-padding-md,12px);--_gcd-input-min-height:var(--wpds-dimension-size-lg,40px);background-color:transparent;border:none;font-family:inherit;font-size:inherit;line-height:inherit;min-height:var(--wpds-dimension-size-lg,40px);outline:none;padding:var(--wpds-dimension-padding-md,12px);&:disabled,&[aria-disabled=true]{--_gcd-input-placeholder-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}}}}@layer compositions{._87e236f6a08fba82__input-layout{display:flex;flex-direction:column;height:auto;width:100%}}}");
   }
   var style_default40 = { "chips-edit-area": "d3d19f845e1c0aee__chips-edit-area", "chips-list": "_461441519be582c7__chips-list", "input": "_196058edad3167fa__input", "input-layout": "_87e236f6a08fba82__input-layout" };
+  function getChipsToolbarLabel(selectedCount) {
+    if (selectedCount === 0) {
+      return void 0;
+    }
+    return (0, import_i18n20._n)("Selected item", "Selected items", selectedCount);
+  }
+  function getInputSelectionHint(selectedCount) {
+    if (selectedCount === 0) {
+      return void 0;
+    }
+    return (0, import_i18n20.sprintf)(
+      /* translators: 1: number of selected items. 2: arrow key name ("Left Arrow" or "Right Arrow"). */
+      (0, import_i18n20._n)(
+        "%1$d item selected. From the start of the input, press %2$s to move to the selected item.",
+        "%1$d items selected. From the start of the input, press %2$s to move to the selected items.",
+        selectedCount
+      ),
+      selectedCount,
+      (0, import_i18n20.isRTL)() ? (0, import_i18n20.__)("Right Arrow") : (0, import_i18n20.__)("Left Arrow")
+    );
+  }
   var SearchableChipSelect = (0, import_element103.forwardRef)(function SearchableChipSelect2({
     children,
     disabled: disabled2,
@@ -43063,6 +43116,7 @@ var wp;
     "aria-describedby": ariaDescribedby,
     ...restProps
   }, ref) {
+    const inputHintId = (0, import_element103.useId)();
     warnSearchableChipSelectProps(items, children);
     return /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(
       Root7,
@@ -43071,74 +43125,96 @@ var wp;
         multiple: true,
         disabled: disabled2,
         ...restProps,
+        readOnly: void 0,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(InputGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(
-            Chips,
-            {
-              render: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
-                InputLayout3,
+          /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(InputGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(Value, { children: (value) => {
+            const selectedCount = value.length;
+            const selectionHint = getInputSelectionHint(selectedCount);
+            return /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(import_jsx_runtime224.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(
+                Chips,
                 {
-                  className: clsx_default(
-                    focus_module_default7["outset-ring--focus-within"],
-                    style_default40["input-layout"]
-                  ),
-                  visuallyDisabled: disabled2
-                }
-              ),
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(Value, { children: (value) => /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(import_jsx_runtime224.Fragment, { children: value.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(
-                  Stack,
-                  {
-                    align: "start",
-                    className: style_default40["chips-edit-area"],
-                    children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
-                        Stack,
-                        {
-                          gap: "xs",
-                          wrap: "wrap",
-                          className: style_default40["chips-list"],
-                          children: chipsContent ? chipsContent(value) : value.map((item) => /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
-                            ChipWithRemove,
-                            {
-                              children: item.label
-                            },
-                            item.value
-                          ))
-                        }
+                  render: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+                    InputLayout3,
+                    {
+                      className: clsx_default(
+                        focus_module_default7["outset-ring--focus-within"],
+                        style_default40["input-layout"]
                       ),
-                      showClearButton && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
-                        Clear,
-                        {
-                          "aria-label": clearButtonLabel
-                        }
-                      )
-                    ]
-                  }
-                ) }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
-                  Input4,
-                  {
-                    ref,
-                    render: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
-                      "input",
+                      visuallyDisabled: disabled2
+                    }
+                  ),
+                  "aria-label": getChipsToolbarLabel(
+                    selectedCount
+                  ),
+                  children: [
+                    selectedCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(
+                      Stack,
                       {
-                        type: "text",
-                        className: clsx_default(
-                          global_css_defense_default16.input,
-                          style_default40.input
-                        )
+                        align: "start",
+                        className: style_default40["chips-edit-area"],
+                        children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+                            Stack,
+                            {
+                              gap: "xs",
+                              wrap: "wrap",
+                              className: style_default40["chips-list"],
+                              children: chipsContent ? chipsContent(value) : value.map((item) => /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+                                ChipWithRemove,
+                                {
+                                  children: item.label
+                                },
+                                item.value
+                              ))
+                            }
+                          ),
+                          showClearButton && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+                            Clear,
+                            {
+                              "aria-label": clearButtonLabel
+                            }
+                          )
+                        ]
                       }
                     ),
-                    placeholder: searchPlaceholder,
-                    "aria-label": ariaLabel,
-                    "aria-labelledby": ariaLabelledby,
-                    "aria-describedby": ariaDescribedby
-                  }
-                )
-              ]
-            }
-          ) }),
+                    /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+                      Input4,
+                      {
+                        ref,
+                        render: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+                          "input",
+                          {
+                            type: "text",
+                            className: clsx_default(
+                              global_css_defense_default16.input,
+                              style_default40.input
+                            )
+                          }
+                        ),
+                        placeholder: searchPlaceholder,
+                        "aria-label": ariaLabel,
+                        "aria-labelledby": ariaLabelledby,
+                        "aria-describedby": clsx_default(
+                          ariaDescribedby,
+                          selectionHint && inputHintId
+                        ) || void 0
+                      },
+                      "searchable-chip-select-input"
+                    )
+                  ]
+                }
+              ),
+              selectionHint && /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+                VisuallyHidden,
+                {
+                  id: inputHintId,
+                  "aria-hidden": "true",
+                  children: selectionHint
+                }
+              )
+            ] });
+          } }) }),
           /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(Popup3, { width: popupWidth2, children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
             SearchableResults,
             {
@@ -43336,44 +43412,52 @@ var wp;
     ...restProps
   }, ref) {
     warnSearchableSelectProps(items, children);
-    return /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(Root7, { items, ...restProps, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
-        Trigger4,
-        {
-          ref,
-          placeholder,
-          "aria-label": ariaLabel,
-          "aria-labelledby": ariaLabelledby,
-          "aria-describedby": ariaDescribedby,
-          children: triggerContent
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(
-        Popup3,
-        {
-          width: popupWidth2,
-          "aria-label": ariaLabel,
-          "aria-labelledby": ariaLabelledby,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("div", { className: style_default41["input-wrapper"], children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
-              Input4,
-              {
-                placeholder: searchPlaceholder,
-                "aria-label": searchPlaceholder
-              }
-            ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
-              SearchableResults,
-              {
-                emptyContent,
-                statusContent,
-                children
-              }
-            )
-          ]
-        }
-      )
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(
+      Root7,
+      {
+        items,
+        ...restProps,
+        grid: void 0,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
+            Trigger4,
+            {
+              ref,
+              placeholder,
+              "aria-label": ariaLabel,
+              "aria-labelledby": ariaLabelledby,
+              "aria-describedby": ariaDescribedby,
+              children: triggerContent
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(
+            Popup3,
+            {
+              width: popupWidth2,
+              "aria-label": ariaLabel,
+              "aria-labelledby": ariaLabelledby,
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("div", { className: style_default41["input-wrapper"], children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
+                  Input4,
+                  {
+                    placeholder: searchPlaceholder,
+                    "aria-label": searchPlaceholder
+                  }
+                ) }),
+                /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
+                  SearchableResults,
+                  {
+                    emptyContent,
+                    statusContent,
+                    children
+                  }
+                )
+              ]
+            }
+          )
+        ]
+      }
+    );
   });
 
   // packages/ui/build-module/form/primitives/searchable-select/index.mjs
@@ -59033,7 +59117,7 @@ var wp;
     return defaultId || id;
   }
   var useCompatibleId = useReactId ? useReactIdWithDefault : useIdPolyfill;
-  function useId8(defaultId) {
+  function useId10(defaultId) {
     return useCompatibleId(defaultId);
   }
   function useAttribute(refOrElement, attributeName, defaultValue2) {
@@ -59633,7 +59717,7 @@ var wp;
   var useCollectionItem = createHook(function useCollectionItem2({ store: store4, shouldRegisterItem = true, getItem = identity, element, ...props }) {
     const context = useCollectionContext();
     store4 = store4 || context;
-    const id = useId8(props.id);
+    const id = useId10(props.id);
     const ref = (0, import_react63.useRef)(element);
     (0, import_react63.useEffect)(() => {
       const element2 = ref.current;
@@ -61085,7 +61169,7 @@ If there's a particular need for this, please submit a feature request at https:
     const context = useCompositeScopedContext();
     store4 = store4 || context;
     const accessibleWhenDisabled = accessibleWhenDisabledFromProps(props);
-    const id = useId8(props.id);
+    const id = useId10(props.id);
     const ref = (0, import_react66.useRef)(null);
     const mountedElementRef = (0, import_react66.useRef)(null);
     const markUnmountingRef = (0, import_react66.useCallback)((element) => {
@@ -61724,7 +61808,7 @@ If there's a particular need for this, please submit a feature request at https:
     store4 = store4 || context;
     invariant(store4, "DisclosureContent must receive a `store` prop or be wrapped in a DisclosureProvider component.");
     const ref = (0, import_react69.useRef)(null);
-    const id = useId8(props.id);
+    const id = useId10(props.id);
     const [transition, setTransition] = (0, import_react69.useState)(null);
     const { open: open3, mounted, animated: animated2, contentElement } = useStoreStateObject(store4, {
       open: "open",
@@ -61923,7 +62007,7 @@ If there's a particular need for this, please submit a feature request at https:
   // node_modules/@ariakit/react-components/dist/composite/composite-store.js
   function useCompositeStoreOptions(props) {
     return {
-      id: useId8(props.id),
+      id: useId10(props.id),
       ...props
     };
   }
@@ -62504,7 +62588,7 @@ If there's a particular need for this, please submit a feature request at https:
       canAutoSelectRef.current = false;
       onBlurProp?.(event);
     });
-    const id = useId8(props.id);
+    const id = useId10(props.id);
     const ariaAutoComplete = isAriaAutoCompleteValue(autoComplete) ? autoComplete : void 0;
     const isActiveItem = useStoreState(store4, ["activeId"], (state2) => state2.activeId === null);
     const formDisabled = disabledFromProps({
@@ -62593,7 +62677,7 @@ If there's a particular need for this, please submit a feature request at https:
     const context = useComboboxScopedContext();
     store4 = store4 || context;
     invariant(store4, "ComboboxItem must be wrapped in a ComboboxList or ComboboxPopover component.");
-    const id = useId8(props.id);
+    const id = useId10(props.id);
     const listRole = (0, import_react73.useContext)(ComboboxListRoleContext);
     const listRoleMatchesStore = listRole?.store === store4;
     const { resetValueOnSelectState, multiSelectable, selected, autoFocusSelected, selectElement, contentElement } = useStoreStateObject(store4, ["selectedValue"], {
@@ -62862,7 +62946,7 @@ If there's a particular need for this, please submit a feature request at https:
     const inputElement = useStoreState(store4, "inputElement");
     useAttribute(inputElement, "id");
     const comboboxId = inputElement?.id;
-    const id = useId8(props.id);
+    const id = useId10(props.id);
     props = {
       htmlFor: comboboxId,
       ...props,
@@ -62901,7 +62985,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
     });
     const ref = (0, import_react75.useRef)(null);
-    const id = useId8(props.id);
+    const id = useId10(props.id);
     const mounted = useStoreState(store4, "mounted");
     const hidden = isHidden(mounted, props.hidden, alwaysVisible);
     const style = hidden ? {
@@ -110351,19 +110435,7 @@ ${content}
             suggestions.length
           ) }),
           emptyContent: isSearching ? null : notFoundLabel,
-          showClearButton: false,
-          chipsContent: (selectedTerms) => selectedTerms.map((term) => /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(
-            SearchableChipSelectControl3.ChipWithRemove,
-            {
-              removeLabel: (0, import_i18n269.sprintf)(
-                /* translators: %s: term name. */
-                (0, import_i18n269._x)("Remove %s", "term"),
-                term.label
-              ),
-              children: term.label
-            },
-            term.value
-          ))
+          showClearButton: false
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(MostUsedTerms, { taxonomy, onSelect: appendTerm })
