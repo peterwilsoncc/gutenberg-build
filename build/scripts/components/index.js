@@ -2674,8 +2674,10 @@ var wp;
   };
   function getClickEventInit(view2, eventInit) {
     const init2 = eventInit ?? {};
+    const WindowConstructor = view2.Window;
+    const eventView = typeof WindowConstructor === "function" && view2 instanceof WindowConstructor ? view2 : null;
     return new Proxy({}, { get(_target, key) {
-      if (key === "view") return view2;
+      if (key === "view") return eventView;
       if (key === "composed") return true;
       if (key === "pointerId") return init2.pointerId ?? -1;
       if (key === "pointerType") return init2.pointerType ?? "";
@@ -5493,7 +5495,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement(TagName5, htmlProps);
   }));
 
-  // node_modules/@ariakit/react-components/dist/__chunks/C5dZ32Pk.js
+  // node_modules/@ariakit/react-components/dist/__chunks/BLQmamO1.js
   var cancelled = /* @__PURE__ */ Symbol("cancelled");
   var moveRequests = /* @__PURE__ */ new WeakMap();
   function getMoveRequest(store) {
@@ -7109,14 +7111,45 @@ If there's a particular need for this, please submit a feature request at https:
     return restoreAccessibilityTree;
   }
 
-  // node_modules/@ariakit/react-components/dist/role/role.js
-  var TagName18 = "div";
+  // node_modules/@ariakit/components/dist/role/role.js
   var elements = [
     "a",
+    "abbr",
+    "address",
+    "area",
+    "article",
+    "aside",
+    "audio",
+    "b",
+    "base",
+    "bdi",
+    "bdo",
+    "blockquote",
+    "body",
+    "br",
     "button",
+    "canvas",
+    "caption",
+    "cite",
+    "code",
+    "col",
+    "colgroup",
+    "data",
+    "datalist",
+    "dd",
+    "del",
     "details",
+    "dfn",
     "dialog",
     "div",
+    "dl",
+    "dt",
+    "em",
+    "embed",
+    "fieldset",
+    "figcaption",
+    "figure",
+    "footer",
     "form",
     "h1",
     "h2",
@@ -7124,22 +7157,78 @@ If there's a particular need for this, please submit a feature request at https:
     "h4",
     "h5",
     "h6",
+    "head",
     "header",
+    "hgroup",
+    "hr",
+    "html",
+    "i",
+    "iframe",
     "img",
     "input",
+    "ins",
+    "kbd",
     "label",
+    "legend",
     "li",
+    "link",
+    "main",
+    "map",
+    "mark",
+    "menu",
+    "meta",
+    "meter",
     "nav",
+    "noscript",
+    "object",
     "ol",
+    "optgroup",
+    "option",
+    "output",
     "p",
+    "picture",
+    "pre",
+    "progress",
+    "q",
+    "rp",
+    "rt",
+    "ruby",
+    "s",
+    "samp",
+    "script",
     "section",
     "select",
+    "slot",
+    "small",
+    "source",
     "span",
+    "strong",
+    "style",
+    "sub",
     "summary",
+    "sup",
+    "table",
+    "tbody",
+    "td",
+    "template",
     "textarea",
+    "tfoot",
+    "th",
+    "thead",
+    "time",
+    "title",
+    "tr",
+    "track",
+    "u",
     "ul",
+    "var",
+    "video",
+    "wbr",
     "svg"
   ];
+
+  // node_modules/@ariakit/react-components/dist/role/role.js
+  var TagName18 = "div";
   var useRole = createHook(function useRole2(props) {
     return props;
   });
@@ -12248,6 +12337,15 @@ If there's a particular need for this, please submit a feature request at https:
     const onKeyDown = useEvent((event) => {
       onKeyDownProp?.(event);
       if (event.defaultPrevented) return;
+      const target = event.target;
+      if (!isSelfTarget(event) && !isItem(store, target)) return;
+      if (isTextbox(target)) {
+        const selection = getTextboxSelection(target);
+        const isPrevious = event.key === "ArrowLeft" || event.key === "ArrowUp";
+        const isNext = event.key === "ArrowRight" || event.key === "ArrowDown";
+        if (isPrevious && selection.start !== 0) return;
+        if (isNext && selection.end !== getTextboxValue(target).length) return;
+      }
       if (hasParentMenu || parentMenubar && !isHorizontal) {
         const action = {
           ArrowRight: () => dir === "left" && !isHorizontal,
@@ -12273,11 +12371,11 @@ If there's a particular need for this, please submit a feature request at https:
           },
           ArrowDown: () => {
             if (isMenubarHorizontal) return;
-            return parentMenubar.next();
+            return parentMenubar.down();
           },
           ArrowUp: () => {
             if (isMenubarHorizontal) return;
-            return parentMenubar.previous();
+            return parentMenubar.up();
           }
         }[event.key];
         const id4 = action?.();
@@ -12910,10 +13008,13 @@ If there's a particular need for this, please submit a feature request at https:
       "anchorElement",
       "contentElement",
       "popoverElement",
-      "disclosureElement"
+      "disclosureElement",
+      "placement",
+      "currentPlacement"
     ]));
     throwOnConflictingProps(props, store);
     const syncState = store.getState();
+    const orientedPlacement = (parent || menubar2)?.getState().orientation === "vertical" ? "right-start" : "bottom-start";
     const composite = createCompositeStore({
       ...props,
       store,
@@ -12922,7 +13023,7 @@ If there's a particular need for this, please submit a feature request at https:
     const hovercard = createHovercardStore({
       ...props,
       store,
-      placement: defaultValue(props.placement, syncState.placement, "bottom-start"),
+      placement: defaultValue(props.placement, syncState.placement, orientedPlacement),
       timeout: defaultValue(props.timeout, syncState.timeout, parentIsMenubar ? 0 : 150),
       hideTimeout: defaultValue(props.hideTimeout, syncState.hideTimeout, 0)
     });
@@ -12936,9 +13037,6 @@ If there's a particular need for this, please submit a feature request at https:
     setup(menu2, () => sync(menu2, ["mounted"], (state) => {
       if (state.mounted) return;
       menu2.setState("activeId", null);
-    }));
-    setup(menu2, () => sync(parent, ["orientation"], (state) => {
-      menu2.setState("placement", state.orientation === "vertical" ? "right-start" : "bottom-start");
     }));
     return {
       ...composite,

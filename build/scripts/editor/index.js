@@ -58787,8 +58787,10 @@ var wp;
   };
   function getClickEventInit(view, eventInit) {
     const init2 = eventInit ?? {};
+    const WindowConstructor = view.Window;
+    const eventView = typeof WindowConstructor === "function" && view instanceof WindowConstructor ? view : null;
     return new Proxy({}, { get(_target, key) {
-      if (key === "view") return view;
+      if (key === "view") return eventView;
       if (key === "composed") return true;
       if (key === "pointerId") return init2.pointerId ?? -1;
       if (key === "pointerType") return init2.pointerType ?? "";
@@ -61376,7 +61378,7 @@ If there's a particular need for this, please submit a feature request at https:
     return createElement5(TagName4, htmlProps);
   }));
 
-  // node_modules/@ariakit/react-components/dist/__chunks/C5dZ32Pk.js
+  // node_modules/@ariakit/react-components/dist/__chunks/BLQmamO1.js
   var cancelled = /* @__PURE__ */ Symbol("cancelled");
   var moveRequests = /* @__PURE__ */ new WeakMap();
   function getMoveRequest(store4) {
