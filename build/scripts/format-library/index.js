@@ -7397,7 +7397,7 @@ var wp;
   var name3 = "core/image";
   var title3 = (0, import_i18n7.__)("Inline image");
   function getCurrentImageId(activeObjectAttributes) {
-    if (!activeObjectAttributes?.className) {
+    if (!activeObjectAttributes.className) {
       return void 0;
     }
     const [, id] = activeObjectAttributes.className.match(/wp-image-(\d+)/) ?? [];
@@ -7424,8 +7424,8 @@ var wp;
     activeObjectAttributes,
     contentRef
   }) {
-    const style = activeObjectAttributes?.style;
-    const alt = activeObjectAttributes?.alt;
+    const style = activeObjectAttributes.style;
+    const alt = activeObjectAttributes.alt;
     const width = style?.replace(/\D/g, "");
     const [editedWidth, setEditedWidth] = (0, import_element26.useState)(width);
     const [editedAlt, setEditedAlt] = (0, import_element26.useState)(alt);
@@ -8897,12 +8897,12 @@ var wp;
   function InlineUI2({
     value,
     onChange,
-    activeAttributes,
+    activeObjectAttributes,
     contentRef,
     latexToMathML
   }) {
     const [latex, setLatex] = (0, import_element33.useState)(
-      activeAttributes?.["data-latex"] || ""
+      activeObjectAttributes["data-latex"] || ""
     );
     const [error2, setError] = (0, import_element33.useState)(null);
     const formRef = (0, import_element33.useRef)(null);
@@ -9001,7 +9001,7 @@ var wp;
     function onClick() {
       let newValue;
       if (isObjectActive) {
-        const latex = activeObjectAttributes?.["data-latex"] || "";
+        const latex = activeObjectAttributes["data-latex"] || "";
         newValue = (0, import_rich_text16.insert)(value, latex);
         newValue.start = newValue.end - latex.length;
       } else {
@@ -9040,7 +9040,7 @@ var wp;
         {
           value,
           onChange,
-          activeAttributes: activeObjectAttributes,
+          activeObjectAttributes,
           contentRef,
           latexToMathML
         }
@@ -9067,7 +9067,9 @@ var wp;
   var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
   var name15 = "core/non-breaking-space";
   var title15 = (0, import_i18n22.__)("Non breaking space");
-  function PopoverAnchor({ contentRef }) {
+  function PopoverAnchor({
+    contentRef
+  }) {
     const popoverAnchor = (0, import_rich_text17.useAnchor)({
       // eslint-disable-next-line react-hooks/refs
       editableContentElement: contentRef.current,
