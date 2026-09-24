@@ -3700,11 +3700,20 @@ var wp;
         `Unsupported seed color "${seed}": expected a fully opaque hex value, an \`rgb()\`/\`rgba()\` string, or a CSS named color.`
       );
     }
-    const { alpha = 1, spaceId } = parsedColor;
+    const { alpha = 1, coords, spaceId } = parsedColor;
     if (!ALLOWED_SEED_COLOR_SPACES.some((space) => space.id === spaceId)) {
       throw new Error(
         `Unsupported seed color "${seed}": expected a fully opaque hex value, an \`rgb()\`/\`rgba()\` string, or a CSS named color, but received a \`${spaceId}\` color.`
       );
+    }
+    for (const [index, coordinate] of coords.entries()) {
+      if (coordinate === null) {
+        coords[index] = 0;
+      } else if (typeof coordinate !== "number" || !Number.isFinite(coordinate)) {
+        throw new Error(
+          `Unsupported seed color "${seed}": expected every RGB channel to be a finite number.`
+        );
+      }
     }
     if (alpha !== 1) {
       throw new Error(
@@ -5062,7 +5071,15 @@ var wp;
         }
         rootProviderCountByDocument.set(doc, active + 1);
       }
-      const previous = /* @__PURE__ */ new Map();
+      const previous = new Map(
+        Array.from(root.style, (key) => [
+          key,
+          {
+            value: root.style.getPropertyValue(key),
+            priority: root.style.getPropertyPriority(key)
+          }
+        ])
+      );
       const applied = [];
       const previousRootProvider = root.getAttribute(
         "data-wpds-root-provider"
@@ -5078,7 +5095,6 @@ var wp;
         if (!rawKey.startsWith("--") || rawValue === null || rawValue === void 0) {
           continue;
         }
-        previous.set(rawKey, root.style.getPropertyValue(rawKey));
         root.style.setProperty(rawKey, String(rawValue));
         applied.push(rawKey);
       }
@@ -5092,9 +5108,13 @@ var wp;
           }
         }
         for (const key of applied) {
-          const prev = previous.get(key);
-          if (prev) {
-            root.style.setProperty(key, prev);
+          const previousProperty = previous.get(key);
+          if (previousProperty) {
+            root.style.setProperty(
+              key,
+              previousProperty.value || " ",
+              previousProperty.priority
+            );
           } else {
             root.style.removeProperty(key);
           }
