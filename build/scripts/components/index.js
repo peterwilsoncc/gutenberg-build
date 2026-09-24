@@ -67337,6 +67337,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
   }, "withSpokenMessages");
 
+  // packages/components/build-module/private-apis.mjs
+  var import_deprecated36 = __toESM(require_deprecated(), 1);
+
   // packages/components/build-module/menu/index.mjs
   var import_element246 = __toESM(require_element(), 1);
   var import_i18n75 = __toESM(require_i18n(), 1);
@@ -68619,7 +68622,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     __experimentalPopoverLegacyPositionToPlacement: positionToPlacement,
     ComponentsContext,
     Tabs,
-    Menu: Menu3,
+    // Retained for older bundled consumers. Check compatibility before removal.
+    get Menu() {
+      (0, import_deprecated36.default)("`privateApis.Menu` from `@wordpress/components`", {
+        since: "7.2",
+        version: "7.3",
+        alternative: "`DropdownMenu` from `@wordpress/components`",
+        hint: "When building for the Gutenberg repo, use `Menu` from `@wordpress/ui` instead."
+      });
+      return Menu3;
+    },
     Badge: badge_default,
     useDrag,
     ValidatedInputControl,
