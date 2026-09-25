@@ -51742,7 +51742,7 @@ This message will only show in development mode. It won't appear in production. 
     }
   );
 
-  // packages/ui/build-module/menu/use-iframe-dismissal-bridge.mjs
+  // packages/ui/build-module/utils/use-iframe-dismissal-bridge.mjs
   var import_element123 = __toESM(require_element(), 1);
   function getIframeDocument(iframe) {
     try {
@@ -51761,7 +51761,7 @@ This message will only show in development mode. It won't appear in production. 
     }
     element.querySelectorAll("iframe").forEach(callback);
   }
-  function isInsideCurrentMenu(event, trigger) {
+  function isInsideCurrentPopup(event, trigger) {
     const target = event.target;
     const targetElement = target?.nodeType === Node.ELEMENT_NODE ? target : target?.parentElement;
     const popupId = trigger.getAttribute("aria-controls");
@@ -51866,7 +51866,7 @@ This message will only show in development mode. It won't appear in production. 
     const open2 = openProp ?? uncontrolledOpen;
     const handleIframePointerDown = (0, import_element123.useCallback)(
       (event) => {
-        if (trigger && !isInsideCurrentMenu(event, trigger)) {
+        if (trigger && !isInsideCurrentPopup(event, trigger)) {
           resolvedActionsRef.current?.close();
         }
       },

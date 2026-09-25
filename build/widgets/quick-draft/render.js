@@ -19078,7 +19078,7 @@ var RadioItem = (0, import_element39.forwardRef)(
   }
 );
 
-// packages/ui/build-module/menu/use-iframe-dismissal-bridge.mjs
+// packages/ui/build-module/utils/use-iframe-dismissal-bridge.mjs
 var import_element40 = __toESM(require_element(), 1);
 function getIframeDocument(iframe) {
   try {
@@ -19097,7 +19097,7 @@ function forEachIframe(node, callback) {
   }
   element.querySelectorAll("iframe").forEach(callback);
 }
-function isInsideCurrentMenu(event, trigger) {
+function isInsideCurrentPopup(event, trigger) {
   const target = event.target;
   const targetElement = target?.nodeType === Node.ELEMENT_NODE ? target : target?.parentElement;
   const popupId = trigger.getAttribute("aria-controls");
@@ -19202,7 +19202,7 @@ function useIframeDismissalBridge({
   const open3 = openProp ?? uncontrolledOpen;
   const handleIframePointerDown = (0, import_element40.useCallback)(
     (event) => {
-      if (trigger && !isInsideCurrentMenu(event, trigger)) {
+      if (trigger && !isInsideCurrentPopup(event, trigger)) {
         resolvedActionsRef.current?.close();
       }
     },
