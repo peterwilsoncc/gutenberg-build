@@ -1146,7 +1146,8 @@ var wp;
         multiple = false,
         value = DEFAULT_EMPTY_GALLERY
       } = this.props;
-      if (value === this.lastGalleryValue) {
+      const isFrameAttached = !!this.frame?.el?.isConnected;
+      if (value === this.lastGalleryValue && isFrameAttached) {
         return;
       }
       const { wp } = window;
