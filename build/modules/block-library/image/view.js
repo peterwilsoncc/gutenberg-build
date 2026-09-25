@@ -19,6 +19,7 @@ var touchStartEvent = {
   startY: 0,
   startTime: 0
 };
+var inertElements = [];
 var focusableSelectors = [
   ".wp-lightbox-close-button",
   ".wp-lightbox-navigation-button"
@@ -443,13 +444,24 @@ var { state, actions, callbacks } = store(
         }
       },
       setInertElements() {
-        document.querySelectorAll("body > :not(.wp-lightbox-overlay)").forEach((el) => {
-          if (state.overlayEnabled) {
-            el.setAttribute("inert", "");
-          } else {
-            el.removeAttribute("inert");
+        if (!state.overlayEnabled) {
+          inertElements.forEach(
+            (el) => el.removeAttribute("inert")
+          );
+          inertElements = [];
+          return;
+        }
+        const { ref } = getElement();
+        let node = ref;
+        while (node && node !== document.body && node.parentElement) {
+          for (const sibling of node.parentElement.children) {
+            if (sibling !== node && !sibling.hasAttribute("inert")) {
+              sibling.setAttribute("inert", "");
+              inertElements.push(sibling);
+            }
           }
-        });
+          node = node.parentElement;
+        }
       },
       initTriggerButton() {
         const { imageId } = getContext();
