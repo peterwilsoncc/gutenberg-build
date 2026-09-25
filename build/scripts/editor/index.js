@@ -50176,8 +50176,12 @@ var wp;
         if (!shouldFetch) {
           return null;
         }
-        const { getEntityRecord } = select9(import_core_data14.store);
-        return authorId ? getEntityRecord("root", "user", authorId) : null;
+        const { getEntityRecords } = select9(import_core_data14.store);
+        return getEntityRecords("root", "user", {
+          include: [authorId],
+          who: "authors",
+          context: "view"
+        })?.[0] ?? null;
       },
       [authorId, shouldFetch]
     );
