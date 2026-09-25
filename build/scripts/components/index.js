@@ -35630,7 +35630,8 @@ This message will only show in development mode. It won't appear in production. 
         onChangeProp?.("", changeProps);
         return;
       }
-      const onChangeValue = getValidParsedQuantityAndUnit(nextQuantityValue, units, parsedQuantity, unit).join("");
+      const fallbackUnit = units.some((option) => option.value === unit) ? unit : void 0;
+      const onChangeValue = getValidParsedQuantityAndUnit(nextQuantityValue, units, parsedQuantity, fallbackUnit).join("");
       onChangeProp?.(onChangeValue, changeProps);
     };
     const handleOnUnitChange = (nextUnitValue, changeProps) => {
@@ -35869,6 +35870,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/border-control/border-control/component.mjs
   var import_jsx_runtime151 = __toESM(require_jsx_runtime(), 1);
+  var BORDER_WIDTH_UNITS = CSS_UNITS.filter((unit) => unit.value !== "%");
   var BorderLabel = (props) => {
     const {
       label,
@@ -35945,6 +35947,7 @@ This message will only show in development mode. It won't appear in production. 
           onChange: onWidthChange,
           value: border?.width || "",
           placeholder,
+          units: BORDER_WIDTH_UNITS,
           disableUnits,
           __unstableInputWidth: inputWidth
         }), withSlider && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(range_control_default, {
@@ -35955,7 +35958,7 @@ This message will only show in development mode. It won't appear in production. 
           max: 100,
           min: 0,
           onChange: onSliderChange,
-          step: ["px", "%"].includes(widthUnit) ? 1 : 0.1,
+          step: widthUnit === "px" ? 1 : 0.1,
           value: widthValue || void 0,
           withInputField: false
         })]
