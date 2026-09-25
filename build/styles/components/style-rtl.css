@@ -3258,6 +3258,98 @@ body.lockscroll {
 .components-text-control__input[type=number]::placeholder {
   color: color-mix(in srgb, var(--wp-components-color-foreground, var(--wpds-color-foreground-content-neutral, #1e1e1e)), transparent 38%);
 }
+.components-text-control__input:disabled, .components-text-control__input[aria-disabled=true],
+.components-text-control__input[type=text]:disabled,
+.components-text-control__input[type=text][aria-disabled=true],
+.components-text-control__input[type=tel]:disabled,
+.components-text-control__input[type=tel][aria-disabled=true],
+.components-text-control__input[type=time]:disabled,
+.components-text-control__input[type=time][aria-disabled=true],
+.components-text-control__input[type=url]:disabled,
+.components-text-control__input[type=url][aria-disabled=true],
+.components-text-control__input[type=week]:disabled,
+.components-text-control__input[type=week][aria-disabled=true],
+.components-text-control__input[type=password]:disabled,
+.components-text-control__input[type=password][aria-disabled=true],
+.components-text-control__input[type=color]:disabled,
+.components-text-control__input[type=color][aria-disabled=true],
+.components-text-control__input[type=date]:disabled,
+.components-text-control__input[type=date][aria-disabled=true],
+.components-text-control__input[type=datetime]:disabled,
+.components-text-control__input[type=datetime][aria-disabled=true],
+.components-text-control__input[type=datetime-local]:disabled,
+.components-text-control__input[type=datetime-local][aria-disabled=true],
+.components-text-control__input[type=email]:disabled,
+.components-text-control__input[type=email][aria-disabled=true],
+.components-text-control__input[type=month]:disabled,
+.components-text-control__input[type=month][aria-disabled=true],
+.components-text-control__input[type=number]:disabled,
+.components-text-control__input[type=number][aria-disabled=true] {
+  border-color: var(--wpds-color-stroke-interactive-neutral-disabled, #dbdbdb);
+  color: var(--wpds-color-foreground-interactive-neutral-disabled, #8d8d8d);
+  background: var(--wpds-color-background-interactive-neutral-disabled, #fff);
+}
+@media (forced-colors: active) {
+  .components-text-control__input:disabled, .components-text-control__input[aria-disabled=true],
+  .components-text-control__input[type=text]:disabled,
+  .components-text-control__input[type=text][aria-disabled=true],
+  .components-text-control__input[type=tel]:disabled,
+  .components-text-control__input[type=tel][aria-disabled=true],
+  .components-text-control__input[type=time]:disabled,
+  .components-text-control__input[type=time][aria-disabled=true],
+  .components-text-control__input[type=url]:disabled,
+  .components-text-control__input[type=url][aria-disabled=true],
+  .components-text-control__input[type=week]:disabled,
+  .components-text-control__input[type=week][aria-disabled=true],
+  .components-text-control__input[type=password]:disabled,
+  .components-text-control__input[type=password][aria-disabled=true],
+  .components-text-control__input[type=color]:disabled,
+  .components-text-control__input[type=color][aria-disabled=true],
+  .components-text-control__input[type=date]:disabled,
+  .components-text-control__input[type=date][aria-disabled=true],
+  .components-text-control__input[type=datetime]:disabled,
+  .components-text-control__input[type=datetime][aria-disabled=true],
+  .components-text-control__input[type=datetime-local]:disabled,
+  .components-text-control__input[type=datetime-local][aria-disabled=true],
+  .components-text-control__input[type=email]:disabled,
+  .components-text-control__input[type=email][aria-disabled=true],
+  .components-text-control__input[type=month]:disabled,
+  .components-text-control__input[type=month][aria-disabled=true],
+  .components-text-control__input[type=number]:disabled,
+  .components-text-control__input[type=number][aria-disabled=true] {
+    border-color: GrayText;
+    color: GrayText;
+  }
+}
+.components-text-control__input:disabled::placeholder, .components-text-control__input[aria-disabled=true]::placeholder,
+.components-text-control__input[type=text]:disabled::placeholder,
+.components-text-control__input[type=text][aria-disabled=true]::placeholder,
+.components-text-control__input[type=tel]:disabled::placeholder,
+.components-text-control__input[type=tel][aria-disabled=true]::placeholder,
+.components-text-control__input[type=time]:disabled::placeholder,
+.components-text-control__input[type=time][aria-disabled=true]::placeholder,
+.components-text-control__input[type=url]:disabled::placeholder,
+.components-text-control__input[type=url][aria-disabled=true]::placeholder,
+.components-text-control__input[type=week]:disabled::placeholder,
+.components-text-control__input[type=week][aria-disabled=true]::placeholder,
+.components-text-control__input[type=password]:disabled::placeholder,
+.components-text-control__input[type=password][aria-disabled=true]::placeholder,
+.components-text-control__input[type=color]:disabled::placeholder,
+.components-text-control__input[type=color][aria-disabled=true]::placeholder,
+.components-text-control__input[type=date]:disabled::placeholder,
+.components-text-control__input[type=date][aria-disabled=true]::placeholder,
+.components-text-control__input[type=datetime]:disabled::placeholder,
+.components-text-control__input[type=datetime][aria-disabled=true]::placeholder,
+.components-text-control__input[type=datetime-local]:disabled::placeholder,
+.components-text-control__input[type=datetime-local][aria-disabled=true]::placeholder,
+.components-text-control__input[type=email]:disabled::placeholder,
+.components-text-control__input[type=email][aria-disabled=true]::placeholder,
+.components-text-control__input[type=month]:disabled::placeholder,
+.components-text-control__input[type=month][aria-disabled=true]::placeholder,
+.components-text-control__input[type=number]:disabled::placeholder,
+.components-text-control__input[type=number][aria-disabled=true]::placeholder {
+  color: var(--wpds-color-foreground-interactive-neutral-disabled, #8d8d8d);
+}
 
 .components-text-control__input[type=email],
 .components-text-control__input[type=url] {
