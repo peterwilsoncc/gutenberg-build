@@ -7150,7 +7150,7 @@ mark.wp-note {
 
 .editor-more-menu__popup {
   max-height: var(--available-height);
-  max-width: var(--wpds-dimension-surface-width-sm, 320px);
+  width: var(--wpds-dimension-surface-width-sm, 320px);
 }
 
 .editor-post-parent__panel,

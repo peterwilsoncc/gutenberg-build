@@ -115187,38 +115187,12 @@ ${content}
   }
   var mode_switcher_default = ModeSwitcher;
 
-  // packages/editor/build-module/components/more-menu/more-menu-group.mjs
-  var import_element382 = __toESM(require_element(), 1);
-  var import_jsx_runtime604 = __toESM(require_jsx_runtime(), 1);
-  function MoreMenuGroup({
-    label,
-    children
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime604.jsxs)(import_jsx_runtime604.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime604.jsx)(menu_exports.Separator, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime604.jsxs)(menu_exports.Group, { children: [
-        label && /* @__PURE__ */ (0, import_jsx_runtime604.jsx)(menu_exports.GroupLabel, { children: label }),
-        toMenuItems(children)
-      ] })
-    ] });
-  }
-  function toMenuItems(fills) {
-    return import_element382.Children.map(fills, (fill) => {
-      if (!(0, import_element382.isValidElement)(fill) || fill.type === more_menu_item_default) {
-        return fill;
-      }
-      const label = /* @__PURE__ */ (0, import_jsx_runtime604.jsx)(menu_exports.ItemLabel, { children: null });
-      const render5 = fill;
-      return fill.props.href !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime604.jsx)(menu_exports.LinkItem, { "aria-labelledby": "", render: render5, children: label }) : /* @__PURE__ */ (0, import_jsx_runtime604.jsx)(menu_exports.Item, { nativeButton: true, "aria-labelledby": "", render: render5, children: label });
-    });
-  }
-
   // packages/editor/build-module/components/more-menu/more-menu-preference-item.mjs
   var import_a11y14 = __toESM(require_a11y(), 1);
   var import_data202 = __toESM(require_data(), 1);
   var import_i18n305 = __toESM(require_i18n(), 1);
   var import_preferences16 = __toESM(require_preferences(), 1);
-  var import_jsx_runtime605 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime604 = __toESM(require_jsx_runtime(), 1);
   function MoreMenuPreferenceItem({
     scope,
     name: name2,
@@ -115254,7 +115228,7 @@ ${content}
         );
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime605.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime604.jsxs)(
       menu_exports.CheckboxItem,
       {
         checked: isActive,
@@ -115267,11 +115241,34 @@ ${content}
         },
         shortcut,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(menu_exports.ItemLabel, { children: label }),
-          info ? /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(menu_exports.ItemDescription, { children: info }) : null
+          /* @__PURE__ */ (0, import_jsx_runtime604.jsx)(menu_exports.ItemLabel, { children: label }),
+          info ? /* @__PURE__ */ (0, import_jsx_runtime604.jsx)(menu_exports.ItemDescription, { children: info }) : null
         ]
       }
     );
+  }
+
+  // packages/editor/build-module/components/more-menu/more-menu-submenu.mjs
+  var import_element382 = __toESM(require_element(), 1);
+  var import_jsx_runtime605 = __toESM(require_jsx_runtime(), 1);
+  function toMenuItems(fills) {
+    return import_element382.Children.map(fills, (fill) => {
+      if (!(0, import_element382.isValidElement)(fill) || fill.type === more_menu_item_default) {
+        return fill;
+      }
+      const label = /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(menu_exports.ItemLabel, { children: null });
+      const render5 = fill;
+      return fill.props.href !== void 0 ? /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(menu_exports.LinkItem, { "aria-labelledby": "", render: render5, children: label }) : /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(menu_exports.Item, { nativeButton: true, "aria-labelledby": "", render: render5, children: label });
+    });
+  }
+  function MoreMenuSubmenu({
+    label,
+    children
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime605.jsxs)(menu_exports.SubmenuRoot, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(menu_exports.SubmenuTrigger, { children: /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(menu_exports.ItemLabel, { children: label }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(menu_exports.Popup, { children })
+    ] });
   }
 
   // packages/editor/build-module/components/more-menu/tools-more-menu-group.mjs
@@ -115343,63 +115340,69 @@ ${content}
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime606.jsxs)(menu_exports.Group, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(menu_exports.GroupLabel, { children: (0, import_i18n306._x)("View", "noun") }),
+              /* @__PURE__ */ (0, import_jsx_runtime606.jsxs)(MoreMenuSubmenu, { label: (0, import_i18n306.__)("Appearance"), children: [
+                /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(
+                  MoreMenuPreferenceItem,
+                  {
+                    scope: "core",
+                    name: "fixedToolbar",
+                    onToggle: turnOffDistractionFree,
+                    label: (0, import_i18n306.__)("Top toolbar"),
+                    info: (0, import_i18n306.__)(
+                      "Access all block and document tools in a single place"
+                    ),
+                    messageActivated: (0, import_i18n306.__)("Top toolbar activated."),
+                    messageDeactivated: (0, import_i18n306.__)(
+                      "Top toolbar deactivated."
+                    )
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(
+                  MoreMenuPreferenceItem,
+                  {
+                    scope: "core",
+                    name: "distractionFree",
+                    label: (0, import_i18n306.__)("Distraction free"),
+                    info: (0, import_i18n306.__)("Write with calmness"),
+                    handleToggling: false,
+                    onToggle: () => toggleDistractionFree2({ createNotice: false }),
+                    messageActivated: (0, import_i18n306.__)(
+                      "Distraction free mode activated."
+                    ),
+                    messageDeactivated: (0, import_i18n306.__)(
+                      "Distraction free mode deactivated."
+                    ),
+                    shortcut: import_keycodes14.keyboardShortcut.primaryShift("\\")
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(
+                  MoreMenuPreferenceItem,
+                  {
+                    scope: "core",
+                    name: "focusMode",
+                    label: (0, import_i18n306.__)("Spotlight mode"),
+                    info: (0, import_i18n306.__)("Focus on one block at a time"),
+                    messageActivated: (0, import_i18n306.__)(
+                      "Spotlight mode activated."
+                    ),
+                    messageDeactivated: (0, import_i18n306.__)(
+                      "Spotlight mode deactivated."
+                    )
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(view_more_menu_group_default.Slot, {})
+              ] }),
               /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(
-                MoreMenuPreferenceItem,
+                action_item_default.Slot,
                 {
-                  scope: "core",
-                  name: "fixedToolbar",
-                  onToggle: turnOffDistractionFree,
-                  label: (0, import_i18n306.__)("Top toolbar"),
-                  info: (0, import_i18n306.__)(
-                    "Access all block and document tools in a single place"
-                  ),
-                  messageActivated: (0, import_i18n306.__)("Top toolbar activated."),
-                  messageDeactivated: (0, import_i18n306.__)("Top toolbar deactivated.")
+                  name: "core/plugin-more-menu",
+                  fillProps: { as: more_menu_item_default },
+                  children: (items) => /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(MoreMenuSubmenu, { label: (0, import_i18n306.__)("Panels"), children: toMenuItems(items) })
                 }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(
-                MoreMenuPreferenceItem,
-                {
-                  scope: "core",
-                  name: "distractionFree",
-                  label: (0, import_i18n306.__)("Distraction free"),
-                  info: (0, import_i18n306.__)("Write with calmness"),
-                  handleToggling: false,
-                  onToggle: () => toggleDistractionFree2({ createNotice: false }),
-                  messageActivated: (0, import_i18n306.__)(
-                    "Distraction free mode activated."
-                  ),
-                  messageDeactivated: (0, import_i18n306.__)(
-                    "Distraction free mode deactivated."
-                  ),
-                  shortcut: import_keycodes14.keyboardShortcut.primaryShift("\\")
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(
-                MoreMenuPreferenceItem,
-                {
-                  scope: "core",
-                  name: "focusMode",
-                  label: (0, import_i18n306.__)("Spotlight mode"),
-                  info: (0, import_i18n306.__)("Focus on one block at a time"),
-                  messageActivated: (0, import_i18n306.__)("Spotlight mode activated."),
-                  messageDeactivated: (0, import_i18n306.__)(
-                    "Spotlight mode deactivated."
-                  )
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(view_more_menu_group_default.Slot, {})
+              )
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(menu_exports.Separator, {}),
             /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(mode_switcher_default, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(
-              action_item_default.Slot,
-              {
-                name: "core/plugin-more-menu",
-                fillProps: { as: more_menu_item_default },
-                children: (items) => /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(MoreMenuGroup, { label: (0, import_i18n306.__)("Panels"), children: items })
-              }
-            ),
             /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(menu_exports.Separator, {}),
             /* @__PURE__ */ (0, import_jsx_runtime606.jsxs)(menu_exports.Group, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(menu_exports.GroupLabel, { children: (0, import_i18n306.__)("Tools") }),
@@ -115743,7 +115746,10 @@ ${content}
               {
                 name: "core/plugin-preview-menu",
                 fillProps: { as: more_menu_item_default },
-                children: (items) => /* @__PURE__ */ (0, import_jsx_runtime609.jsx)(MoreMenuGroup, { children: items })
+                children: (items) => /* @__PURE__ */ (0, import_jsx_runtime609.jsxs)(import_jsx_runtime609.Fragment, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime609.jsx)(menu_exports.Separator, {}),
+                  /* @__PURE__ */ (0, import_jsx_runtime609.jsx)(menu_exports.Group, { children: toMenuItems(items) })
+                ] })
               }
             )
           ]
