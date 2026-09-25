@@ -404,7 +404,7 @@ var wp;
             },
             [subscribe5, value, getSnapshot2]
           );
-          useEffect137(
+          useEffect136(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe5(function() {
@@ -430,7 +430,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React208 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState178 = React208.useState, useEffect137 = React208.useEffect, useLayoutEffect21 = React208.useLayoutEffect, useDebugValue2 = React208.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React208 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState178 = React208.useState, useEffect136 = React208.useEffect, useLayoutEffect21 = React208.useLayoutEffect, useDebugValue2 = React208.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React208.useSyncExternalStore ? React208.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -458,7 +458,7 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React208 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef167 = React208.useRef, useEffect137 = React208.useEffect, useMemo192 = React208.useMemo, useDebugValue2 = React208.useDebugValue;
+        var React208 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef167 = React208.useRef, useEffect136 = React208.useEffect, useMemo192 = React208.useMemo, useDebugValue2 = React208.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe5, getSnapshot2, getServerSnapshot2, selector2, isEqual2) {
           var instRef = useRef167(null);
           if (null === instRef.current) {
@@ -501,7 +501,7 @@ var wp;
             [getSnapshot2, getServerSnapshot2, selector2, isEqual2]
           );
           var value = useSyncExternalStore7(subscribe5, instRef[0], instRef[1]);
-          useEffect137(
+          useEffect136(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -123130,7 +123130,7 @@ ${content}
   var import_i18n364 = __toESM(require_i18n(), 1);
   var import_data268 = __toESM(require_data(), 1);
   var import_element436 = __toESM(require_element(), 1);
-  var import_compose100 = __toESM(require_compose(), 1);
+  var import_compose101 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts13 = __toESM(require_keyboard_shortcuts(), 1);
   var import_block_editor109 = __toESM(require_block_editor(), 1);
   var import_preferences31 = __toESM(require_preferences(), 1);
@@ -124343,6 +124343,7 @@ ${content}
   var import_a11y17 = __toESM(require_a11y(), 1);
   var import_i18n360 = __toESM(require_i18n(), 1);
   var import_element432 = __toESM(require_element(), 1);
+  var import_compose100 = __toESM(require_compose(), 1);
   var import_core_data148 = __toESM(require_core_data(), 1);
   var import_data264 = __toESM(require_data(), 1);
   var import_block_editor104 = __toESM(require_block_editor(), 1);
@@ -124782,6 +124783,56 @@ ${content}
       };
     }, [enabled, registry]);
   }
+  function useNoteSelection({ notes, sidebarRef }) {
+    const registry = (0, import_data264.useRegistry)();
+    const { selectNote: selectNote2 } = unlock((0, import_data264.useDispatch)(store));
+    const selectedBlockClientId = (0, import_data264.useSelect)(
+      (select9) => select9(import_block_editor104.store).getSelectedBlockClientId(),
+      []
+    );
+    const { selectedNote: selectedNote2, noteFocused } = (0, import_data264.useSelect)((select9) => {
+      const { getSelectedNote: getSelectedNote2, isNoteFocused: isNoteFocused2 } = unlock(
+        select9(store)
+      );
+      return {
+        selectedNote: getSelectedNote2(),
+        noteFocused: isNoteFocused2()
+      };
+    }, []);
+    const syncWithBlock = (0, import_compose100.useEvent)((clientId) => {
+      const { getSelectedNote: getSelectedNote2, isNoteFocused: isNoteFocused2 } = unlock(
+        registry.select(store)
+      );
+      if (isNoteFocused2()) {
+        return;
+      }
+      const blockThreads = clientId ? notes.filter((thread) => thread.blockClientId === clientId) : [];
+      const currentNoteId = getSelectedNote2();
+      if (blockThreads.some((thread) => thread.id === currentNoteId)) {
+        return;
+      }
+      selectNote2(pickPrimaryNote(blockThreads)?.id);
+    });
+    const prevBlockIdRef = (0, import_element432.useRef)(selectedBlockClientId);
+    (0, import_element432.useEffect)(() => {
+      if (prevBlockIdRef.current === selectedBlockClientId) {
+        return;
+      }
+      prevBlockIdRef.current = selectedBlockClientId;
+      syncWithBlock(selectedBlockClientId);
+    }, [selectedBlockClientId, syncWithBlock]);
+    (0, import_element432.useEffect)(() => {
+      if (!noteFocused || !selectedNote2) {
+        return;
+      }
+      focusNoteThread(
+        selectedNote2,
+        sidebarRef.current,
+        selectedNote2 === "new" ? '[role="textbox"]' : void 0
+      );
+      selectNote2(selectedNote2);
+    }, [noteFocused, selectedNote2, selectNote2, sidebarRef]);
+  }
   function useFloatingBoard({
     threads,
     selectedNoteId,
@@ -124854,31 +124905,21 @@ ${content}
     const { selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
       (0, import_data265.useDispatch)(import_block_editor105.store)
     );
-    const { noteId, selectedBlockClientId, orderedBlockIds } = (0, import_data265.useSelect)(
+    const { selectedBlockClientId, orderedBlockIds } = (0, import_data265.useSelect)(
       (select9) => {
-        const {
-          getBlockAttributes: getBlockAttributes2,
-          getSelectedBlockClientId: getSelectedBlockClientId2,
-          getClientIdsWithDescendants: getClientIdsWithDescendants2
-        } = select9(import_block_editor105.store);
-        const clientId = getSelectedBlockClientId2();
+        const { getSelectedBlockClientId: getSelectedBlockClientId2, getClientIdsWithDescendants: getClientIdsWithDescendants2 } = select9(import_block_editor105.store);
         return {
-          noteId: clientId ? getBlockAttributes2(clientId)?.metadata?.noteId : null,
-          selectedBlockClientId: clientId,
+          selectedBlockClientId: getSelectedBlockClientId2(),
           orderedBlockIds: getClientIdsWithDescendants2()
         };
       },
       []
     );
-    const { selectedNote: selectedNote2, noteFocused } = (0, import_data265.useSelect)((select9) => {
-      const { getSelectedNote: getSelectedNote2, isNoteFocused: isNoteFocused2 } = unlock(
-        select9(store)
-      );
-      return {
-        selectedNote: getSelectedNote2(),
-        noteFocused: isNoteFocused2()
-      };
-    }, []);
+    const selectedNote2 = (0, import_data265.useSelect)(
+      (select9) => unlock(select9(store)).getSelectedNote(),
+      []
+    );
+    useNoteSelection({ notes, sidebarRef });
     const relatedBlockElement = useBlockElement3(selectedBlockClientId);
     const threads = (0, import_element433.useMemo)(() => {
       if (!isFloating || selectedNote2 !== "new") {
@@ -124934,31 +124975,6 @@ ${content}
         relatedBlockElement?.focus();
       }
     };
-    const targetNoteId = (0, import_element433.useMemo)(() => {
-      const blockNoteIds = getNoteIdsFromMetadata({ noteId });
-      const blockThreads = notes.filter(
-        (t3) => blockNoteIds.includes(t3.id)
-      );
-      return pickPrimaryNote(blockThreads)?.id;
-    }, [noteId, notes]);
-    const prevBlockIdRef = (0, import_element433.useRef)(selectedBlockClientId);
-    (0, import_element433.useEffect)(() => {
-      if (prevBlockIdRef.current === selectedBlockClientId) {
-        return;
-      }
-      prevBlockIdRef.current = selectedBlockClientId;
-      selectNote2(targetNoteId);
-    }, [selectedBlockClientId, targetNoteId, selectNote2]);
-    (0, import_element433.useEffect)(() => {
-      if (noteFocused && selectedNote2) {
-        focusNoteThread(
-          selectedNote2,
-          sidebarRef.current,
-          selectedNote2 === "new" ? '[role="textbox"]' : void 0
-        );
-        selectNote2(selectedNote2);
-      }
-    }, [noteFocused, selectedNote2, selectNote2, sidebarRef]);
     const { notePositions, registerThread, unregisterThread } = useFloatingBoard({
       threads,
       selectedNoteId: selectedNote2,
@@ -125249,7 +125265,7 @@ ${content}
       (0, import_data268.useDispatch)(import_block_editor109.store)
     );
     const { selectNote: selectNote2 } = unlock((0, import_data268.useDispatch)(store));
-    const isLargeViewport = (0, import_compose100.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose101.useViewportMatch)("medium");
     const sidebarRef = (0, import_element436.useRef)(null);
     const { clientId, noteId, isClassicBlock } = (0, import_data268.useSelect)((select9) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select9(import_block_editor109.store);
@@ -125418,7 +125434,7 @@ ${content}
   var import_data271 = __toESM(require_data(), 1);
   var import_element437 = __toESM(require_element(), 1);
   var import_preferences34 = __toESM(require_preferences(), 1);
-  var import_compose101 = __toESM(require_compose(), 1);
+  var import_compose102 = __toESM(require_compose(), 1);
   var import_core_data150 = __toESM(require_core_data(), 1);
   var import_block_editor110 = __toESM(require_block_editor(), 1);
 
@@ -125658,10 +125674,10 @@ ${content}
     const { setStylesPath: setStylesPath2, setShowStylebook: setShowStylebook2, resetStylesNavigation: resetStylesNavigation2 } = unlock(
       (0, import_data271.useDispatch)(store)
     );
-    const isMobileViewport = (0, import_compose101.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose102.useViewportMatch)("medium", "<");
     const isRevisionsOpened = stylesPath2.startsWith("/revisions") && !showStylebook2;
     const isRevisionsStyleBookOpened = stylesPath2.startsWith("/revisions") && showStylebook2;
-    const previousActiveArea = (0, import_compose101.usePrevious)(activeComplementaryArea);
+    const previousActiveArea = (0, import_compose102.usePrevious)(activeComplementaryArea);
     const hasRequestedPath = stylesPath2 !== "/" && !shouldResetNavigation;
     (0, import_element437.useEffect)(() => {
       if (activeComplementaryArea === "edit-site/global-styles" && previousActiveArea !== "edit-site/global-styles" && !hasRequestedPath) {
@@ -125881,7 +125897,7 @@ ${content}
 
   // packages/editor/build-module/components/preferences-modal/index.mjs
   var import_i18n370 = __toESM(require_i18n(), 1);
-  var import_compose102 = __toESM(require_compose(), 1);
+  var import_compose103 = __toESM(require_compose(), 1);
   var import_data275 = __toESM(require_data(), 1);
   var import_element439 = __toESM(require_element(), 1);
   var import_preferences37 = __toESM(require_preferences(), 1);
@@ -126024,7 +126040,7 @@ ${content}
     return /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(PreferencesModal, { closeModal: closeModal2, children: /* @__PURE__ */ (0, import_jsx_runtime683.jsx)(PreferencesModalContents, { extraSections }) });
   }
   function PreferencesModalContents({ extraSections = {} }) {
-    const isLargeViewport = (0, import_compose102.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose103.useViewportMatch)("medium");
     const { showBlockBreadcrumbsOption, showCollaborationOptions } = (0, import_data275.useSelect)(
       (select9) => {
         const { getEditorSettings: getEditorSettings2, isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2 } = unlock(select9(store));
