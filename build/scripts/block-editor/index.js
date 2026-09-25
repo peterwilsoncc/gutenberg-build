@@ -83587,6 +83587,18 @@ var wp;
   }
 
   // packages/block-editor/build-module/utils/get-font-styles-and-weights.mjs
+  var FONT_WEIGHT_KEYWORDS = {
+    normal: 400,
+    bold: 700
+  };
+  function isValidWeight(weight) {
+    return weight !== void 0 && Number.isFinite(weight) && weight >= 1 && weight <= 1e3;
+  }
+  function parseWeightValue(value) {
+    const token = value.trim().toLowerCase();
+    const weight = FONT_WEIGHT_KEYWORDS[token] ?? Number(token);
+    return isValidWeight(weight) ? weight : void 0;
+  }
   var FONT_STYLES = [
     {
       name: (0, import_i18n143._x)("Regular", "font style"),
@@ -83647,16 +83659,20 @@ var wp;
     let isVariableFont = false;
     fontFamilyFaces?.forEach((face) => {
       if ("string" === typeof face.fontWeight && /\s/.test(face.fontWeight.trim())) {
-        isVariableFont = true;
-        const [startStr, endStr] = face.fontWeight.split(" ");
-        const startValue = parseInt(startStr.slice(0, 1));
-        const endValue = endStr === "1000" ? 10 : parseInt(endStr.slice(0, 1));
-        for (let i = startValue; i <= endValue; i++) {
-          const fontWeightValue = `${i.toString()}00`;
-          if (!fontWeights.some(
-            (weight) => weight.value === fontWeightValue
-          )) {
-            fontWeights.push(formatFontWeight(fontWeightValue));
+        const [startStr, endStr] = face.fontWeight.trim().split(/\s+/);
+        const start2 = parseWeightValue(startStr);
+        const end = parseWeightValue(endStr);
+        if (start2 !== void 0 && end !== void 0) {
+          isVariableFont = true;
+          const startValue = Math.ceil(start2 / 100);
+          const endValue = Math.floor(end / 100);
+          for (let i = startValue; i <= endValue; i++) {
+            const fontWeightValue = `${i.toString()}00`;
+            if (!fontWeights.some(
+              (weight) => weight.value === fontWeightValue
+            )) {
+              fontWeights.push(formatFontWeight(fontWeightValue));
+            }
           }
         }
       }
