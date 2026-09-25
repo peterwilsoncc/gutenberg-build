@@ -79805,7 +79805,7 @@ If there's a particular need for this, please submit a feature request at https:
                 paddingX: "13px",
                 marginBottom: 4,
                 children: (0, import_i18n164.__)(
-                  "Customize the appearance of specific blocks for the whole site."
+                  "Customize how a block looks everywhere it's used."
                 )
               }
             ),
@@ -80123,7 +80123,7 @@ If there's a particular need for this, please submit a feature request at https:
         {
           title: (0, import_i18n166.__)("Blocks"),
           description: (0, import_i18n166.__)(
-            "Customize the appearance of specific blocks and for the whole site."
+            "Customize how a block looks everywhere it's used."
           )
         }
       ),
