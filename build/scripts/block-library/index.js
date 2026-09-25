@@ -19324,137 +19324,13 @@ var wp;
   var import_block_editor37 = __toESM(require_block_editor(), 1);
   var import_data18 = __toESM(require_data(), 1);
   var import_blocks14 = __toESM(require_blocks(), 1);
-
-  // packages/block-library/build-module/columns/utils.mjs
-  var toWidthPrecision = (value) => {
-    const unitlessValue = parseFloat(value);
-    return Number.isFinite(unitlessValue) ? parseFloat(unitlessValue.toFixed(2)) : void 0;
-  };
-  function getEffectiveColumnWidth(block, totalBlockCount) {
-    const { width = 100 / totalBlockCount } = block.attributes;
-    return toWidthPrecision(width);
-  }
-  function getTotalColumnsWidth(blocks, totalBlockCount = blocks.length) {
-    return blocks.reduce(
-      (sum, block) => sum + getEffectiveColumnWidth(block, totalBlockCount),
-      0
-    );
-  }
-  function getColumnWidths(blocks, totalBlockCount = blocks.length) {
-    return blocks.reduce((accumulator, block) => {
-      const width = getEffectiveColumnWidth(block, totalBlockCount);
-      return Object.assign(accumulator, { [block.clientId]: width });
-    }, {});
-  }
-  function getRedistributedColumnWidths(blocks, availableWidth, totalBlockCount = blocks.length) {
-    const totalWidth = getTotalColumnsWidth(blocks, totalBlockCount);
-    return Object.fromEntries(
-      Object.entries(getColumnWidths(blocks, totalBlockCount)).map(
-        ([clientId, width]) => {
-          const newWidth = availableWidth * width / totalWidth;
-          return [clientId, toWidthPrecision(newWidth)];
-        }
-      )
-    );
-  }
-  function hasExplicitPercentColumnWidths(blocks) {
-    return blocks.every((block) => {
-      const blockWidth = block.attributes.width;
-      return Number.isFinite(
-        blockWidth?.endsWith?.("%") ? parseFloat(blockWidth) : blockWidth
-      );
-    });
-  }
-  function getMappedColumnWidths(blocks, widths) {
-    return blocks.map((block) => ({
-      ...block,
-      attributes: {
-        ...block.attributes,
-        width: `${widths[block.clientId]}%`
-      }
-    }));
-  }
-
-  // packages/block-library/build-module/columns/edit.mjs
   var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_BLOCK2 = {
     name: "core/column"
   };
-  function ColumnInspectorControls2({
-    clientId,
-    setAttributes,
-    isStackedOnMobile
-  }) {
-    const { count, canInsertColumnBlock, minCount } = (0, import_data18.useSelect)(
-      (select10) => {
-        const { canInsertBlockType, canRemoveBlock, getBlockOrder } = select10(import_block_editor37.store);
-        const blockOrder = getBlockOrder(clientId);
-        const preventRemovalBlockIndexes = blockOrder.reduce(
-          (acc, blockId, index2) => {
-            if (!canRemoveBlock(blockId)) {
-              acc.push(index2);
-            }
-            return acc;
-          },
-          []
-        );
-        return {
-          count: blockOrder.length,
-          canInsertColumnBlock: canInsertBlockType(
-            "core/column",
-            clientId
-          ),
-          minCount: Math.max(...preventRemovalBlockIndexes) + 1
-        };
-      },
-      [clientId]
-    );
-    const { getBlocks } = (0, import_data18.useSelect)(import_block_editor37.store);
-    const { replaceInnerBlocks } = (0, import_data18.useDispatch)(import_block_editor37.store);
-    function updateColumns(previousColumns, newColumns) {
-      let innerBlocks = getBlocks(clientId);
-      const hasExplicitWidths = hasExplicitPercentColumnWidths(innerBlocks);
-      const isAddingColumn = newColumns > previousColumns;
-      if (isAddingColumn && hasExplicitWidths) {
-        const newColumnWidth = toWidthPrecision(100 / newColumns);
-        const newlyAddedColumns = newColumns - previousColumns;
-        const widths = getRedistributedColumnWidths(
-          innerBlocks,
-          100 - newColumnWidth * newlyAddedColumns
-        );
-        innerBlocks = [
-          ...getMappedColumnWidths(innerBlocks, widths),
-          ...Array.from({
-            length: newlyAddedColumns
-          }).map(() => {
-            return (0, import_blocks14.createBlock)("core/column", {
-              width: `${newColumnWidth}%`
-            });
-          })
-        ];
-      } else if (isAddingColumn) {
-        innerBlocks = [
-          ...innerBlocks,
-          ...Array.from({
-            length: newColumns - previousColumns
-          }).map(() => {
-            return (0, import_blocks14.createBlock)("core/column");
-          })
-        ];
-      } else if (newColumns < previousColumns) {
-        innerBlocks = innerBlocks.slice(
-          0,
-          -(previousColumns - newColumns)
-        );
-        if (hasExplicitWidths) {
-          const widths = getRedistributedColumnWidths(innerBlocks, 100);
-          innerBlocks = getMappedColumnWidths(innerBlocks, widths);
-        }
-      }
-      replaceInnerBlocks(clientId, innerBlocks);
-    }
+  function ColumnInspectorControls2({ setAttributes, isStackedOnMobile }) {
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    return /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
       import_components16.__experimentalToolsPanel,
       {
         label: (0, import_i18n28.__)("Settings"),
@@ -19464,44 +19340,27 @@ var wp;
           });
         },
         dropdownMenuProps,
-        children: [
-          canInsertColumnBlock && /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)(import_components16.__experimentalVStack, { spacing: 4, style: { gridColumn: "1 / -1" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-              import_components16.RangeControl,
+        children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
+          import_components16.__experimentalToolsPanelItem,
+          {
+            label: (0, import_i18n28.__)("Stack on mobile"),
+            isShownByDefault: true,
+            hasValue: () => isStackedOnMobile !== true,
+            onDeselect: () => setAttributes({
+              isStackedOnMobile: true
+            }),
+            children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
+              import_components16.ToggleControl,
               {
-                label: (0, import_i18n28.__)("Columns"),
-                value: count,
-                onChange: (value) => updateColumns(count, Math.max(minCount, value)),
-                min: Math.max(1, minCount),
-                max: Math.max(6, count)
+                label: (0, import_i18n28.__)("Stack on mobile"),
+                checked: isStackedOnMobile,
+                onChange: () => setAttributes({
+                  isStackedOnMobile: !isStackedOnMobile
+                })
               }
-            ),
-            count > 6 && /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(import_components16.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n28.__)(
-              "This column count exceeds the recommended amount and may cause visual breakage."
-            ) })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-            import_components16.__experimentalToolsPanelItem,
-            {
-              label: (0, import_i18n28.__)("Stack on mobile"),
-              isShownByDefault: true,
-              hasValue: () => isStackedOnMobile !== true,
-              onDeselect: () => setAttributes({
-                isStackedOnMobile: true
-              }),
-              children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-                import_components16.ToggleControl,
-                {
-                  label: (0, import_i18n28.__)("Stack on mobile"),
-                  checked: isStackedOnMobile,
-                  onChange: () => setAttributes({
-                    isStackedOnMobile: !isStackedOnMobile
-                  })
-                }
-              )
-            }
-          )
-        ]
+            )
+          }
+        )
       }
     );
   }
@@ -19544,7 +19403,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(import_block_editor37.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
         ColumnInspectorControls2,
         {
-          clientId,
           setAttributes,
           isStackedOnMobile
         }
