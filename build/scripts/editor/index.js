@@ -112806,6 +112806,7 @@ ${content}
     const {
       isEditable,
       postSlug,
+      hasSlug,
       postLink,
       permalinkPrefix,
       permalinkSuffix,
@@ -112821,6 +112822,7 @@ ${content}
         postSlug: (0, import_url21.safeDecodeURIComponent)(
           select9(store).getEditedPostSlug()
         ),
+        hasSlug: !!select9(store).getEditedPostAttribute("slug"),
         viewPostLabel: postType2?.labels?.view_item,
         postLink: post2.link,
         permalinkPrefix: permalinkParts?.prefix,
@@ -112900,11 +112902,13 @@ ${content}
                   }
                 },
                 onBlur: (event) => {
-                  editPost2({
-                    slug: (0, import_url21.cleanForSlug)(
-                      event.target.value
-                    )
-                  });
+                  if (hasSlug) {
+                    editPost2({
+                      slug: (0, import_url21.cleanForSlug)(
+                        event.target.value
+                      )
+                    });
+                  }
                   if (forceEmptyField) {
                     setForceEmptyField(false);
                   }
