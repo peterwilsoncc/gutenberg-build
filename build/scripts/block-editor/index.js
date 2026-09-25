@@ -9637,8 +9637,10 @@ var wp;
   var import_primitives61 = __toESM(require_primitives(), 1);
   var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
   var justify_space_between_default = /* @__PURE__ */ (0, import_jsx_runtime63.jsxs)(import_primitives61.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", style: { fill: "none" }, stroke: "currentColor", strokeWidth: "1.5", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives61.Rect, { x: "9", y: "9", width: "6", height: "6", fill: "currentColor", stroke: "none" }),
-    /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives61.Path, { d: "M19.25 4V20M4.75 20V4", vectorEffect: "non-scaling-stroke" })
+    /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives61.Rect, { x: "5", y: "8", width: "3", height: "8", fill: "currentColor", stroke: "none" }),
+    /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives61.Rect, { x: "16", y: "8", width: "3", height: "8", fill: "currentColor", stroke: "none" }),
+    /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives61.Path, { d: "M4.25 4V20", vectorEffect: "non-scaling-stroke" }),
+    /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives61.Path, { d: "M19.75 4V20", vectorEffect: "non-scaling-stroke" })
   ] });
 
   // packages/icons/build-module/library/justify-stretch-vertical.mjs
