@@ -1870,7 +1870,7 @@ h6.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]) {
 .wp-lightbox-container img {
   cursor: zoom-in;
 }
-.wp-lightbox-container img:hover + button {
+.wp-lightbox-container:has(img:hover) button {
   opacity: 1;
 }
 .wp-lightbox-container button {
