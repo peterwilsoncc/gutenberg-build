@@ -8002,6 +8002,21 @@ ${p3}`
     }
   }
 
+  // packages/blocks/build-module/api/raw-handling/non-breaking-space-corrector.mjs
+  function nonBreakingSpaceCorrector(node) {
+    if (node.nodeType !== node.TEXT_NODE) {
+      return;
+    }
+    if (node.parentElement?.closest("pre")) {
+      return;
+    }
+    const text2 = node;
+    if (/^\u00a0+$/.test(text2.data) && !getSibling(node, "previous") && !getSibling(node, "next")) {
+      return;
+    }
+    text2.data = text2.data.replace(/^\u00a0+|\u00a0+$/g, " ");
+  }
+
   // packages/blocks/build-module/api/raw-handling/html-formatting-remover.mjs
   function isFormattingSpace(character) {
     return character === " " || character === "\r" || character === "\n" || character === "	";
@@ -8175,6 +8190,7 @@ ${p3}`
       true
     );
     HTML = deepFilterHTML(HTML, [
+      nonBreakingSpaceCorrector,
       htmlFormattingRemover,
       formatSpaceCorrector,
       brRemover
@@ -8266,6 +8282,7 @@ ${p3}`
       piece = deepFilterHTML(
         piece,
         [
+          nonBreakingSpaceCorrector,
           htmlFormattingRemover,
           formatSpaceCorrector,
           brRemover,
