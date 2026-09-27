@@ -98584,10 +98584,49 @@ If there's a particular need for this, please submit a feature request at https:
       description: parts.join(", ") || (0, import_i18n211.__)("Formatting changed")
     };
   }
+  function mergeTextDiffParts(parts) {
+    const result = [];
+    let index3 = 0;
+    while (index3 < parts.length) {
+      const part = parts[index3];
+      if (!part.removed && !part.added) {
+        result.push(part);
+        index3++;
+        continue;
+      }
+      let removed = "";
+      let added = "";
+      while (index3 < parts.length) {
+        const current = parts[index3];
+        if (current.removed) {
+          removed += current.value;
+          index3++;
+        } else if (current.added) {
+          added += current.value;
+          index3++;
+        } else if (current.value.trim() === "" && index3 + 1 < parts.length && (parts[index3 + 1].removed || parts[index3 + 1].added)) {
+          removed += current.value;
+          added += current.value;
+          index3++;
+        } else {
+          break;
+        }
+      }
+      if (removed) {
+        result.push({ removed: true, value: removed });
+      }
+      if (added) {
+        result.push({ added: true, value: added });
+      }
+    }
+    return result;
+  }
   function applyRichTextDiff(currentRichText, previousRichText) {
     const currentText = currentRichText.toPlainText();
     const previousText = previousRichText.toPlainText();
-    const textDiff = diffWordsWithSpace(previousText, currentText);
+    const textDiff = mergeTextDiffParts(
+      diffWordsWithSpace(previousText, currentText)
+    );
     let result = (0, import_rich_text2.create)({ text: "" });
     let currentIdx = 0;
     let previousIdx = 0;
