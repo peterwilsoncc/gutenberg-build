@@ -1956,7 +1956,9 @@ var wp;
       char = dateFormat[i];
       if ("\\" === char) {
         i++;
-        newFormat.push("[" + dateFormat[i] + "]");
+        if (i < dateFormat.length) {
+          newFormat.push("[" + dateFormat[i] + "]");
+        }
         continue;
       }
       if (char in formatMap) {
