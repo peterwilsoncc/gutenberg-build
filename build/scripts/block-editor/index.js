@@ -1166,6 +1166,11 @@ var wp;
         }
         return name + afterName + params;
       }
+      function isCustomProperty(node) {
+        if (!node.prop.startsWith("--")) return false;
+        let before = node.raws.before;
+        return typeof before === "undefined" || !/\S$/.test(before);
+      }
       function pushBody(str, stack, node) {
         let nodes = node.nodes;
         let last = nodes.length - 1;
@@ -1178,7 +1183,7 @@ var wp;
         for (let i = nodes.length - 1; i >= 0; i--) {
           let child = nodes[i];
           let childSemicolon = last !== i || semicolon;
-          if (!childSemicolon && i < nodes.length - 1 && (child.type === "atrule" && !child.nodes || child.type === "decl" && child.prop.startsWith("--"))) {
+          if (!childSemicolon && i < nodes.length - 1 && (child.type === "atrule" && !child.nodes || child.type === "decl" && isCustomProperty(child))) {
             childSemicolon = true;
           }
           stack.push({
@@ -2928,9 +2933,10 @@ var wp;
               }
             }
           } else if (this.css) {
+            let annotation = "/*# sourceMappingURL=";
             let startIndex;
-            while ((startIndex = this.css.lastIndexOf("/*#")) !== -1) {
-              let endIndex = this.css.indexOf("*/", startIndex + 3);
+            while ((startIndex = this.css.lastIndexOf(annotation)) !== -1) {
+              let endIndex = this.css.indexOf("*/", startIndex + annotation.length);
               if (endIndex === -1) break;
               while (startIndex > 0 && this.css[startIndex - 1] === "\n") {
                 startIndex--;
@@ -3315,14 +3321,16 @@ var wp;
               if (separators.includes(letter)) split2 = true;
             }
             if (split2) {
-              if (current !== "") array.push(current.trim());
+              let value2 = current.trim();
+              if (last || value2 !== "") array.push(value2);
               current = "";
               split2 = false;
             } else {
               current += letter;
             }
           }
-          if (last || current !== "") array.push(current.trim());
+          let value = current.trim();
+          if (last || value !== "") array.push(value);
           return array;
         }
       };
@@ -3888,7 +3896,7 @@ var wp;
               prev.raws.ownSemicolon = this.spaces;
               this.spaces = "";
               prev.source.end = this.getPosition(token[2]);
-              prev.source.end.offset += prev.raws.ownSemicolon.length;
+              prev.source.end.offset++;
             }
           }
         }
@@ -4898,7 +4906,7 @@ var wp;
       var Root13 = require_root();
       var Processor2 = class {
         constructor(plugins = []) {
-          this.version = "8.5.26";
+          this.version = "8.5.28";
           this.plugins = this.normalize(plugins);
         }
         normalize(plugins) {
