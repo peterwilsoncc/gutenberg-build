@@ -37704,7 +37704,8 @@ function useSaveMediaEditor({
         saved = await saveEditedEntityRecord(
           "postType",
           "attachment",
-          id
+          id,
+          { throwOnError: true }
         );
       }
       const next = saved ?? media;

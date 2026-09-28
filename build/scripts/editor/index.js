@@ -77463,7 +77463,8 @@ If there's a particular need for this, please submit a feature request at https:
           saved = await saveEditedEntityRecord(
             "postType",
             "attachment",
-            id
+            id,
+            { throwOnError: true }
           );
         }
         const next = saved ?? media;
