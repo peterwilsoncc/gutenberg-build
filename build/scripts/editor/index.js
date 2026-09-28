@@ -82650,24 +82650,36 @@ If there's a particular need for this, please submit a feature request at https:
                     /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(import_components109.__experimentalHeading, { level: 2, size: 13, children: selectedCollection.name }),
                     /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(import_components109.__experimentalText, { children: selectedCollection.description })
                   ] }),
-                  showActions && /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
-                    import_components109.DropdownMenu,
-                    {
-                      icon: more_vertical_default,
-                      label: (0, import_i18n175.__)("Actions"),
-                      popoverProps: {
-                        position: "bottom left"
-                      },
-                      controls: [
-                        {
-                          title: (0, import_i18n175.__)(
-                            "Revoke access to Google Fonts"
-                          ),
-                          onClick: revokeAccess
-                        }
-                      ]
-                    }
-                  )
+                  showActions && /* @__PURE__ */ (0, import_jsx_runtime423.jsxs)(menu_exports.Root, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
+                      menu_exports.Trigger,
+                      {
+                        render: /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
+                          import_components109.Button,
+                          {
+                            size: "small",
+                            icon: more_vertical_default,
+                            label: (0, import_i18n175.__)("Actions")
+                          }
+                        )
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
+                      menu_exports.Popup,
+                      {
+                        positioner: /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
+                          menu_exports.Positioner,
+                          {
+                            side: "bottom",
+                            align: "end"
+                          }
+                        ),
+                        children: /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(menu_exports.Item, { onClick: revokeAccess, children: /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n175.__)(
+                          "Revoke access to Google Fonts"
+                        ) }) })
+                      }
+                    )
+                  ] })
                 ] }),
                 /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(import_components109.__experimentalSpacer, { margin: 4 }),
                 /* @__PURE__ */ (0, import_jsx_runtime423.jsxs)(import_components109.__experimentalHStack, { spacing: 4, justify: "space-between", children: [
