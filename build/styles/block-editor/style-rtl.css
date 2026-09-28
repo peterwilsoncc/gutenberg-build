@@ -4199,7 +4199,6 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
   align-items: center;
   cursor: var(--wpds-cursor-control, pointer);
   border: none;
-  outline: none;
   padding: 0;
 }
 @media not (prefers-reduced-motion) {
@@ -4673,10 +4672,6 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
 .block-editor-inserter__media-list__list-item .block-editor-inserter__media-list__item-preview-options > button.is-opened, .block-editor-inserter__media-list__list-item .block-editor-inserter__media-list__item-preview-options > button:focus {
   display: block;
 }
-.block-editor-inserter__media-list__list-item .block-editor-inserter__media-list__item-preview-options > button:hover {
-  box-shadow: inset 0 0 0 2px #fff, 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
-  outline: 2px solid transparent;
-}
 
 .block-editor-inserter__media-list__item {
   height: 100%;
@@ -4704,14 +4699,9 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
   pointer-events: none;
 }
 .block-editor-inserter__media-list__item:focus .block-editor-inserter__media-list__item-preview > * {
-  outline-color: var(--wp-admin-theme-color);
-  outline-width: var(--wp-admin-border-width-focus);
-  outline-offset: calc(-1 * var(--wp-admin-border-width-focus));
-}
-@media not (prefers-reduced-motion) {
-  .block-editor-inserter__media-list__item:focus .block-editor-inserter__media-list__item-preview > * {
-    transition: outline 0.1s linear;
-  }
+  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--focus-color, var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9)));
+  outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
+  outline-offset: calc(-1 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
 }
 
 .block-editor-inserter__media-list__item-preview-options__popover .components-menu-item__button .components-menu-item__item {
