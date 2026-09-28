@@ -747,7 +747,6 @@ html :where(.wp-block-column) {
 }
 
 .wp-block-gallery__source-settings {
-  grid-column: 1/-1;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -763,8 +762,7 @@ html :where(.wp-block-column) {
 }
 
 .wp-block-gallery__source-notice {
-  grid-column: 1/-1;
-  margin: 0;
+  margin: 16px 0 0;
 }
 
 /**
