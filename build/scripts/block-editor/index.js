@@ -94471,44 +94471,35 @@ var wp;
     );
   };
   var PositionControlsPanel = () => {
-    const {
-      selectedClientIds,
-      selectedBlocks,
-      selectedStateViewports,
-      hasPositionAttribute
-    } = (0, import_data162.useSelect)((select3) => {
-      const {
-        getBlocksByClientId: getBlocksByClientId2,
-        getSelectedBlockClientIds: getSelectedBlockClientIds2,
-        getSelectedBlockStyleState: getSelectedBlockStyleState2
-      } = unlock(select3(store));
+    const { selectedClientIds, selectedBlocks, hasPositionAttribute } = (0, import_data162.useSelect)((select3) => {
+      const { getBlocksByClientId: getBlocksByClientId2, getSelectedBlockClientIds: getSelectedBlockClientIds2 } = select3(store);
       const selectedBlockClientIds = getSelectedBlockClientIds2();
-      const _selectedBlocks = getBlocksByClientId2(selectedBlockClientIds);
+      const _selectedBlocks = getBlocksByClientId2(
+        selectedBlockClientIds
+      );
       return {
         selectedClientIds: selectedBlockClientIds,
         selectedBlocks: _selectedBlocks,
-        selectedStateViewports: Object.fromEntries(
-          selectedBlockClientIds.map((clientId) => [
-            clientId,
-            getPositionStateViewport(
-              getSelectedBlockStyleState2(clientId)
-            )
-          ])
-        ),
         hasPositionAttribute: _selectedBlocks?.some(
           ({ attributes }) => hasAnyPositionValue(attributes?.style)
         )
       };
     }, []);
+    const registry = (0, import_data162.useRegistry)();
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data162.useDispatch)(store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     function resetPosition() {
       if (!selectedClientIds?.length || !selectedBlocks?.length) {
         return;
       }
+      const { getSelectedBlockStyleState: getSelectedBlockStyleState2 } = unlock(
+        registry.select(store)
+      );
       const attributesByClientId = Object.fromEntries(
         selectedBlocks?.map(({ clientId, attributes }) => {
-          const viewport = selectedStateViewports[clientId];
+          const viewport = getPositionStateViewport(
+            getSelectedBlockStyleState2(clientId)
+          );
           const style = { ...attributes?.style };
           if (viewport) {
             style[viewport] = {
