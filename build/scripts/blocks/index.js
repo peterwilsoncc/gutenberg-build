@@ -2497,6 +2497,7 @@ var wp;
     getBlockBindingsSource: () => getBlockBindingsSource2,
     getBlockBindingsSourceFieldsList: () => getBlockBindingsSourceFieldsList,
     getBlockKeyboardShortcuts: () => getBlockKeyboardShortcuts,
+    getBlockVariationsRaw: () => getBlockVariationsRaw,
     getBootstrappedBlockType: () => getBootstrappedBlockType,
     getSupportedStyles: () => getSupportedStyles,
     getUnprocessedBlockTypes: () => getUnprocessedBlockTypes,
@@ -2609,6 +2610,9 @@ var wp;
   }
   function getUnprocessedBlockTypes(state) {
     return state.unprocessedBlockTypes;
+  }
+  function getBlockVariationsRaw(state) {
+    return state.blockVariations;
   }
   function getAllBlockBindingsSources(state) {
     return state.blockBindingsSources;
