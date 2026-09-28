@@ -232,6 +232,7 @@ function useWidgetTypes(records) {
         try {
           const module = await import(
             /* webpackIgnore: true */
+            /* @vite-ignore */
             record.widget_module
           );
           if (!module?.default) {
