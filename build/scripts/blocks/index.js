@@ -6596,7 +6596,8 @@ var wp;
       for (let i = 0; i < uint8Array.length; i++) {
         uint8Array[i] = decoded.charCodeAt(i);
       }
-      const name = type.replace("/", ".");
+      const subtype = type.slice(type.indexOf("/") + 1);
+      const name = `image-${v4_default().slice(0, 8)}.${subtype}`;
       const file = new window.File([uint8Array], name, { type });
       node.src = (0, import_blob.createBlobURL)(file);
     }
