@@ -66928,7 +66928,7 @@ var wp;
         }
         const blockLength = Array.isArray(blocks2) ? blocks2.length : 1;
         const message2 = (0, import_i18n59.sprintf)(
-          // translators: %d: the name of the block that has been added
+          // translators: %d: Number of blocks added.
           (0, import_i18n59._n)("%d block added.", "%d blocks added.", blockLength),
           blockLength
         );
@@ -78136,7 +78136,7 @@ var wp;
           }
           const blockLength = Array.isArray(clientIds) ? clientIds.length : 1;
           const message2 = (0, import_i18n114.sprintf)(
-            // translators: %d: the name of the block that has been moved
+            // translators: %d: Number of blocks moved.
             (0, import_i18n114._n)(
               "%d block moved.",
               "%d blocks moved.",
