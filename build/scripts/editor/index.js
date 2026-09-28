@@ -396,7 +396,7 @@ var wp;
             inst: { value, getSnapshot: getSnapshot2 }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-          useLayoutEffect21(
+          useLayoutEffect22(
             function() {
               inst.value = value;
               inst.getSnapshot = getSnapshot2;
@@ -430,7 +430,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React208 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState178 = React208.useState, useEffect136 = React208.useEffect, useLayoutEffect21 = React208.useLayoutEffect, useDebugValue2 = React208.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React208 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState178 = React208.useState, useEffect136 = React208.useEffect, useLayoutEffect22 = React208.useLayoutEffect, useDebugValue2 = React208.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React208.useSyncExternalStore ? React208.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -47915,10 +47915,10 @@ var wp;
     }
     return spring;
   }
-  function prepareSprings(springs, props, create8) {
+  function prepareSprings(springs, props, create7) {
     if (props.keys) {
       each(props.keys, (key) => {
-        const spring = springs[key] || (springs[key] = create8(key));
+        const spring = springs[key] || (springs[key] = create7(key));
         spring["_prepareNode"](props);
       });
     }
@@ -114657,18 +114657,16 @@ ${content}
   // packages/editor/build-module/hooks/note-format.mjs
   var import_rich_text5 = __toESM(require_rich_text(), 1);
 
-  // packages/editor/build-module/components/collab-sidebar/format.mjs
-  var import_i18n300 = __toESM(require_i18n(), 1);
-  var import_element378 = __toESM(require_element(), 1);
-  var import_data197 = __toESM(require_data(), 1);
-
   // packages/editor/build-module/components/collab-sidebar/constants.mjs
   var ALL_NOTES_SIDEBAR = "edit-post/collab-history-sidebar";
   var FLOATING_NOTES_SIDEBAR = "edit-post/collab-sidebar";
   var SIDEBARS = [ALL_NOTES_SIDEBAR, FLOATING_NOTES_SIDEBAR];
+  var NOTE_FORMAT_NAME = "core/note";
 
   // packages/editor/build-module/components/collab-sidebar/format.mjs
-  var NOTE_FORMAT_NAME = "core/note";
+  var import_i18n300 = __toESM(require_i18n(), 1);
+  var import_element378 = __toESM(require_element(), 1);
+  var import_data197 = __toESM(require_data(), 1);
   var noteFormat = {
     title: (0, import_i18n300.__)("Note"),
     tagName: "mark",
@@ -116144,7 +116142,6 @@ ${content}
     ids.add(id);
     return { ...metadata, noteId: [...ids] };
   }
-  var NOTE_FORMAT_TYPE = "core/note";
   function findNoteRange(value, noteId) {
     if (noteId === void 0 || noteId === null) {
       return null;
@@ -116165,7 +116162,7 @@ ${content}
     for (let i2 = 0; i2 < formats.length; i2++) {
       const stack = formats[i2];
       const hit = stack?.find(
-        (f2) => f2.type === NOTE_FORMAT_TYPE && f2.attributes && f2.attributes["data-id"] === target
+        (f2) => f2.type === NOTE_FORMAT_NAME && f2.attributes && f2.attributes["data-id"] === target
       );
       if (hit) {
         if (start2 === -1) {
@@ -116217,6 +116214,20 @@ ${content}
     }
     return rect;
   }
+  function getNoteAnchorRect(noteId, blockEl) {
+    if (noteId === "new") {
+      return getSelectionRect(blockEl) ?? blockEl.getBoundingClientRect();
+    }
+    let anchor = blockEl.querySelector(getNoteMarkerSelector(noteId)) ?? blockEl;
+    while (anchor.checkVisibility?.() === false) {
+      const parentBlock = anchor.parentElement?.closest("[data-block]");
+      if (!parentBlock) {
+        break;
+      }
+      anchor = parentBlock;
+    }
+    return anchor.getBoundingClientRect();
+  }
   var BLOCK_LEVEL_NOTE_START = -1;
   function getInlineMarkerStart(thread, attributes) {
     const found = findNoteInBlock(attributes, thread?.id);
@@ -116236,7 +116247,7 @@ ${content}
         continue;
       }
       for (const fmt of stack) {
-        if (fmt.type !== NOTE_FORMAT_TYPE) {
+        if (fmt.type !== NOTE_FORMAT_NAME) {
           continue;
         }
         const id = fmt.attributes?.["data-id"];
@@ -116257,7 +116268,7 @@ ${content}
       if (!stack || stack.length < 2) {
         continue;
       }
-      const notes = stack.filter((fmt) => fmt.type === NOTE_FORMAT_TYPE);
+      const notes = stack.filter((fmt) => fmt.type === NOTE_FORMAT_NAME);
       if (notes.length === 0) {
         continue;
       }
@@ -116266,10 +116277,38 @@ ${content}
           (a2, b2) => sizeOf(b2.attributes?.["data-id"]) - sizeOf(a2.attributes?.["data-id"])
         );
       }
-      const others = stack.filter((fmt) => fmt.type !== NOTE_FORMAT_TYPE);
+      const others = stack.filter((fmt) => fmt.type !== NOTE_FORMAT_NAME);
       formats[i2] = [...notes, ...others];
     }
     return { ...record, formats };
+  }
+  function readInlineSelection(getSelectionStart, getSelectionEnd) {
+    const start2 = getSelectionStart();
+    const end = getSelectionEnd();
+    if (!start2?.clientId || start2.clientId !== end.clientId || !start2.attributeKey || start2.offset === void 0 || end.offset === void 0 || start2.offset === end.offset) {
+      return null;
+    }
+    const [startOffset, endOffset] = start2.offset < end.offset ? [start2.offset, end.offset] : [end.offset, start2.offset];
+    return {
+      clientId: start2.clientId,
+      attributeKey: start2.attributeKey,
+      start: startOffset,
+      end: endOffset
+    };
+  }
+  function wrapInlineNote(value, id, start2, end) {
+    if (!(value instanceof import_rich_text6.RichTextData)) {
+      return null;
+    }
+    const record = applyNoteFormat(
+      (0, import_rich_text6.create)({ html: value.toHTMLString() }),
+      { type: NOTE_FORMAT_NAME, attributes: { "data-id": String(id) } },
+      start2,
+      end
+    );
+    return import_rich_text6.RichTextData.fromHTMLString(
+      new import_rich_text6.RichTextData(record).toHTMLString()
+    );
   }
   function removeNoteFormat(value, noteId) {
     if (!(value instanceof import_rich_text6.RichTextData)) {
@@ -116283,7 +116322,7 @@ ${content}
         return stack;
       }
       const filtered = stack.filter(
-        (format7) => !(format7.type === NOTE_FORMAT_TYPE && format7.attributes?.["data-id"] === target)
+        (format7) => !(format7.type === NOTE_FORMAT_NAME && format7.attributes?.["data-id"] === target)
       );
       if (filtered.length === stack.length) {
         return stack;
@@ -116294,6 +116333,23 @@ ${content}
     return changed ? import_rich_text6.RichTextData.fromHTMLString(
       new import_rich_text6.RichTextData({ ...record, formats }).toHTMLString()
     ) : null;
+  }
+  function clearInlineNoteMarker(noteId, getClientIdsWithDescendants2, getBlockAttributes2, updateBlockAttributes2) {
+    for (const clientId of getClientIdsWithDescendants2()) {
+      const attributes = getBlockAttributes2(clientId);
+      const found = findNoteInBlock(attributes, noteId);
+      if (!found) {
+        continue;
+      }
+      const next = removeNoteFormat(
+        attributes[found.attributeKey],
+        noteId
+      );
+      if (next) {
+        updateBlockAttributes2(clientId, { [found.attributeKey]: next });
+      }
+      return;
+    }
   }
   function pickPrimaryNote(threads) {
     return threads.find((thread) => thread.status === "hold") ?? threads[0] ?? null;
@@ -123803,7 +123859,13 @@ ${content}
         direction: "column",
         className: clsx_default(className, { "is-floating": isFloating }),
         ref: isFloating ? floating.ref : void 0,
-        style: isFloating ? { top: floating.y, ...style } : style,
+        style: isFloating ? {
+          top: floating.y,
+          // Threads mount before the first measurement. Not
+          // `visibility`, which would block focusing the new note form.
+          opacity: floating.y === void 0 ? 0 : void 0,
+          ...style
+        } : style,
         ...props,
         children
       }
@@ -123860,7 +123922,6 @@ ${content}
         tabIndex: 0,
         "aria-label": (0, import_i18n357.__)("New note"),
         role: "treeitem",
-        style: floating ? { opacity: !floating.y ? 0 : void 0 } : void 0,
         ...focusOutside,
         children: /* @__PURE__ */ (0, import_jsx_runtime669.jsx)(NoteCard, { children: /* @__PURE__ */ (0, import_jsx_runtime669.jsx)(
           NoteForm,
@@ -124386,92 +124447,171 @@ ${content}
   var import_data264 = __toESM(require_data(), 1);
   var import_block_editor104 = __toESM(require_block_editor(), 1);
   var import_notices37 = __toESM(require_notices(), 1);
-  var import_dom41 = __toESM(require_dom(), 1);
   var import_html_entities36 = __toESM(require_html_entities(), 1);
-  var import_rich_text9 = __toESM(require_rich_text(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/board-store.mjs
+  var import_dom41 = __toESM(require_dom(), 1);
+  var EMPTY_SNAPSHOT = {
+    heights: {},
+    anchorRects: {},
+    canvas: null,
+    frameOffset: 0
+  };
+  function isSameTops(a2, b2) {
+    const keys = Object.keys(a2);
+    return keys.length === Object.keys(b2).length && keys.every((key) => a2[key]?.top === b2[key]?.top);
+  }
+  function isSameHeights(a2, b2) {
+    const keys = Object.keys(a2);
+    return keys.length === Object.keys(b2).length && keys.every((key) => a2[key] === b2[key]);
+  }
   function createBoardStore() {
     const listeners2 = /* @__PURE__ */ new Set();
     const blockRefs = /* @__PURE__ */ new Map();
     const floatingRefs = /* @__PURE__ */ new Map();
     const idByElement = /* @__PURE__ */ new WeakMap();
     const heights = {};
-    let snapshot = {};
-    function emit() {
-      snapshot = { ...heights };
+    let rootEl = null;
+    let canvas = null;
+    let frameEl = null;
+    let observer = null;
+    let styleObserver = null;
+    let snapshot = EMPTY_SNAPSHOT;
+    function measure() {
+      const scrollTop = canvas?.scrollTop ?? 0;
+      const anchorRects = {};
+      for (const [id, blockEl] of blockRefs) {
+        if (blockEl) {
+          const rect = getNoteAnchorRect(id, blockEl);
+          anchorRects[id] = { top: rect.top + scrollTop };
+        }
+      }
+      const containerEl = [...floatingRefs.values()][0]?.offsetParent;
+      const frameOffset = frameEl && containerEl ? frameEl.getBoundingClientRect().top - containerEl.getBoundingClientRect().top : 0;
+      if (canvas === snapshot.canvas && frameOffset === snapshot.frameOffset && isSameHeights(heights, snapshot.heights) && isSameTops(anchorRects, snapshot.anchorRects)) {
+        return;
+      }
+      snapshot = {
+        heights: { ...heights },
+        anchorRects,
+        canvas,
+        frameOffset
+      };
       for (const listener of listeners2) {
         listener();
       }
     }
-    const observer = new window.ResizeObserver((entries) => {
-      let changed = false;
+    function onResize(entries) {
       for (const entry of entries) {
         const id = idByElement.get(entry.target);
-        const newHeight = entry.borderBoxSize[0].blockSize;
-        if (heights[id] !== newHeight) {
-          heights[id] = newHeight;
-          changed = true;
+        if (id !== void 0) {
+          heights[id] = entry.borderBoxSize[0].blockSize;
         }
       }
-      if (changed) {
-        emit();
+      measure();
+    }
+    function requestMeasure() {
+      if (!observer) {
+        return;
       }
-    });
+      if (rootEl) {
+        observer.unobserve(rootEl);
+        observer.observe(rootEl);
+      } else {
+        measure();
+      }
+    }
+    function onStyleChange(records) {
+      if (records.some(({ target }) => !target.style.transform)) {
+        requestMeasure();
+      }
+    }
+    function syncRoot() {
+      const blockEl = [...blockRefs.values()].find(Boolean);
+      const nextRootEl = blockEl?.closest(".is-root-container") ?? blockEl ?? null;
+      if (nextRootEl === rootEl) {
+        return;
+      }
+      rootEl = nextRootEl;
+      canvas = rootEl ? (0, import_dom41.getScrollContainer)(rootEl) : null;
+      frameEl = rootEl?.ownerDocument.defaultView?.frameElement ?? null;
+      if (observer) {
+        disconnect();
+        connect();
+      }
+    }
+    function connect() {
+      observer = new window.ResizeObserver(onResize);
+      styleObserver = new window.MutationObserver(onStyleChange);
+      const targets = [
+        ...floatingRefs.values(),
+        rootEl,
+        // Content above the root (e.g. the post title) moves it without
+        // resizing it, but grows its parent.
+        rootEl?.parentElement,
+        // Content above the canvas moves the frame and shrinks it.
+        frameEl
+      ];
+      for (const target of targets) {
+        if (target) {
+          observer.observe(target);
+        }
+      }
+      if (rootEl) {
+        styleObserver.observe(rootEl, {
+          subtree: true,
+          attributeFilter: ["style"]
+        });
+      }
+    }
+    function disconnect() {
+      observer.disconnect();
+      styleObserver.disconnect();
+      observer = null;
+      styleObserver = null;
+    }
+    function untrackFloating(id) {
+      const floatingEl = floatingRefs.get(id);
+      if (floatingEl) {
+        observer?.unobserve(floatingEl);
+        idByElement.delete(floatingEl);
+        floatingRefs.delete(id);
+      }
+    }
     return {
       subscribe(listener) {
         listeners2.add(listener);
+        if (!observer) {
+          connect();
+        }
         return () => {
           listeners2.delete(listener);
           if (listeners2.size === 0) {
-            observer.disconnect();
+            disconnect();
           }
         };
       },
       getSnapshot() {
         return snapshot;
       },
+      requestMeasure,
       registerThread(id, blockEl, floatingEl) {
         blockRefs.set(id, blockEl);
-        const prev = floatingRefs.get(id);
-        if (prev && prev !== floatingEl) {
-          observer.unobserve(prev);
-          idByElement.delete(prev);
-        }
-        if (floatingEl) {
+        if (floatingRefs.get(id) !== floatingEl) {
+          untrackFloating(id);
           floatingRefs.set(id, floatingEl);
           idByElement.set(floatingEl, id);
-          observer.observe(floatingEl);
+          observer?.observe(floatingEl);
         }
-        emit();
+        syncRoot();
+        requestMeasure();
       },
       unregisterThread(id) {
         blockRefs.delete(id);
-        const prev = floatingRefs.get(id);
-        if (prev) {
-          observer.unobserve(prev);
-          idByElement.delete(prev);
-          floatingRefs.delete(id);
-        }
+        untrackFloating(id);
         delete heights[id];
-      },
-      getAnchorRects() {
-        return Object.fromEntries(
-          Array.from(blockRefs).flatMap(([id, el]) => {
-            if (!el) {
-              return [];
-            }
-            if (id === "new") {
-              const rect = getSelectionRect(el) ?? el.getBoundingClientRect();
-              return [[id, rect]];
-            }
-            const anchor = el.querySelector(getNoteMarkerSelector(id)) ?? el;
-            return [[id, anchor.getBoundingClientRect()]];
-          })
-        );
-      },
-      getFirstBlockElement() {
-        return blockRefs.values().next().value ?? null;
+        syncRoot();
+        requestMeasure();
       }
     };
   }
@@ -124576,51 +124716,6 @@ ${content}
       notes,
       unresolvedNotes
     };
-  }
-  function readInlineSelection(getSelectionStart, getSelectionEnd) {
-    const start2 = getSelectionStart();
-    const end = getSelectionEnd();
-    if (!start2?.clientId || start2.clientId !== end.clientId || !start2.attributeKey || start2.offset === void 0 || end.offset === void 0 || start2.offset === end.offset) {
-      return null;
-    }
-    const [startOffset, endOffset] = start2.offset < end.offset ? [start2.offset, end.offset] : [end.offset, start2.offset];
-    return {
-      clientId: start2.clientId,
-      attributeKey: start2.attributeKey,
-      start: startOffset,
-      end: endOffset
-    };
-  }
-  function wrapInlineNote(value, id, start2, end) {
-    if (!(value instanceof import_rich_text9.RichTextData)) {
-      return null;
-    }
-    const record = applyNoteFormat(
-      (0, import_rich_text9.create)({ html: value.toHTMLString() }),
-      { type: NOTE_FORMAT_NAME, attributes: { "data-id": String(id) } },
-      start2,
-      end
-    );
-    return import_rich_text9.RichTextData.fromHTMLString(
-      new import_rich_text9.RichTextData(record).toHTMLString()
-    );
-  }
-  function clearInlineNoteMarker(noteId, getClientIdsWithDescendants2, getBlockAttributes2, updateBlockAttributes2) {
-    for (const clientId of getClientIdsWithDescendants2()) {
-      const attributes = getBlockAttributes2(clientId);
-      const found = findNoteInBlock(attributes, noteId);
-      if (!found) {
-        continue;
-      }
-      const next = removeNoteFormat(
-        attributes[found.attributeKey],
-        noteId
-      );
-      if (next) {
-        updateBlockAttributes2(clientId, { [found.attributeKey]: next });
-      }
-      return;
-    }
   }
   function useNoteActions() {
     const { createNotice } = (0, import_data264.useDispatch)(import_notices37.store);
@@ -124871,58 +124966,59 @@ ${content}
       selectNote2(selectedNote2);
     }, [noteFocused, selectedNote2, selectNote2, sidebarRef]);
   }
+  var subscribeNoop = () => () => {
+  };
   function useFloatingBoard({
     threads,
     selectedNoteId,
     isFloating,
     sidebarRef
   }) {
-    const [notePositions, setNotePositions] = (0, import_element432.useState)({});
     const [store4] = (0, import_element432.useState)(createBoardStore);
-    const heights = (0, import_element432.useSyncExternalStore)(store4.subscribe, store4.getSnapshot);
-    (0, import_element432.useEffect)(() => {
-      if (!isFloating || !sidebarRef?.current) {
+    const { heights, anchorRects, canvas, frameOffset } = (0, import_element432.useSyncExternalStore)(
+      isFloating ? store4.subscribe : subscribeNoop,
+      store4.getSnapshot
+    );
+    (0, import_element432.useLayoutEffect)(() => {
+      store4.requestMeasure();
+    }, [store4, threads]);
+    const notePositions = (0, import_element432.useMemo)(
+      () => calculateNotePositions({
+        threads,
+        selectedNoteId,
+        blockRects: anchorRects,
+        heights
+      }).positions,
+      [threads, selectedNoteId, anchorRects, heights]
+    );
+    (0, import_element432.useLayoutEffect)(() => {
+      const panel = sidebarRef?.current;
+      if (!isFloating || !panel || !canvas) {
         return;
       }
-      const panel = sidebarRef.current;
-      const blockEl = store4.getFirstBlockElement();
-      const rootEl = blockEl?.closest(".is-root-container") ?? blockEl;
-      const canvas = rootEl ? (0, import_dom41.getScrollContainer)(rootEl) : null;
       const applyScroll = () => {
         panel.style.setProperty(
           "--canvas-scroll",
-          `${-(canvas?.scrollTop ?? 0)}px`
+          `${-canvas.scrollTop}px`
         );
       };
-      let rafId2;
-      const schedule2 = () => {
-        window.cancelAnimationFrame(rafId2);
-        rafId2 = window.requestAnimationFrame(() => {
-          const result = calculateNotePositions({
-            threads,
-            selectedNoteId,
-            blockRects: store4.getAnchorRects(),
-            heights,
-            scrollTop: canvas?.scrollTop ?? 0
-          });
-          setNotePositions(result.positions);
-          applyScroll();
-        });
-      };
-      schedule2();
-      const contentObserver = new window.ResizeObserver(schedule2);
-      if (rootEl) {
-        contentObserver.observe(rootEl);
-      }
-      const view = canvas?.ownerDocument?.defaultView;
+      applyScroll();
+      const view = canvas.ownerDocument.defaultView;
       const listenerOptions = { passive: true, capture: true };
-      view?.addEventListener("scroll", applyScroll, listenerOptions);
+      view.addEventListener("scroll", applyScroll, listenerOptions);
       return () => {
-        window.cancelAnimationFrame(rafId2);
-        contentObserver.disconnect();
-        view?.removeEventListener("scroll", applyScroll, listenerOptions);
+        view.removeEventListener("scroll", applyScroll, listenerOptions);
+        panel.style.removeProperty("--canvas-scroll");
       };
-    }, [sidebarRef, heights, isFloating, selectedNoteId, store4, threads]);
+    }, [sidebarRef, isFloating, canvas]);
+    (0, import_element432.useLayoutEffect)(() => {
+      const panel = sidebarRef?.current;
+      if (!isFloating || !panel) {
+        return;
+      }
+      panel.style.setProperty("--canvas-offset", `${frameOffset}px`);
+      return () => panel.style.removeProperty("--canvas-offset");
+    }, [sidebarRef, isFloating, frameOffset]);
     return {
       notePositions,
       registerThread: store4.registerThread,

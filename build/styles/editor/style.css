@@ -5720,10 +5720,16 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   right: 16px;
   position: absolute;
   margin-top: 16px;
-  transform: translateY(var(--canvas-scroll, 0));
+  transform: translateY(calc(var(--canvas-offset, 0px) + var(--canvas-scroll, 0px)));
   will-change: transform;
   max-height: calc(100dvh - var(--wp-admin--admin-bar--height, 0px) - 128px);
   overflow-y: auto;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .editor-collab-sidebar-panel__thread.is-floating,
+  .editor-collab-sidebar-panel__add-note.is-floating {
+    transition: top var(--wpds-motion-duration-md, 200ms) var(--wpds-motion-easing-balanced, cubic-bezier(0.4, 0, 0.2, 1));
+  }
 }
 
 .editor-collab-sidebar-panel__user-info {
