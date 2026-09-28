@@ -1813,6 +1813,7 @@ var wp;
   var VALID_SETTINGS = [
     "appearanceTools",
     "useRootPaddingAwareAlignments",
+    "background.backgroundClip",
     "background.backgroundImage",
     "background.backgroundRepeat",
     "background.backgroundSize",
@@ -3768,7 +3769,7 @@ var wp;
       if (isRoot && (useRootPaddingAlign || disableRootPadding) && rule.key.startsWith("padding")) {
         return;
       }
-      const cssProperty = rule.key.startsWith("--") ? rule.key : kebabCase(rule.key);
+      const cssProperty = rule.key.startsWith("-") ? rule.key : kebabCase(rule.key);
       let ruleValue = getResolvedValue(rule.value, tree);
       if (cssProperty === "font-size") {
         ruleValue = getTypographyFontSizeValue(

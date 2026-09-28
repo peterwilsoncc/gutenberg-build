@@ -425,12 +425,56 @@ var wp;
       );
     }
   };
+  var VALID_BACKGROUND_CLIP_VALUES = [
+    "border-box",
+    "padding-box",
+    "content-box",
+    "text"
+  ];
+  var backgroundClip = {
+    name: "backgroundClip",
+    generate: (style, options) => {
+      const value = style?.background?.backgroundClip;
+      if (!value || !VALID_BACKGROUND_CLIP_VALUES.includes(value)) {
+        return [];
+      }
+      const rules = [
+        {
+          selector: options.selector,
+          key: "backgroundClip",
+          value
+        }
+      ];
+      if (value === "text") {
+        rules.push(
+          {
+            selector: options.selector,
+            key: "-webkit-background-clip",
+            value: "text"
+          },
+          {
+            selector: options.selector,
+            key: "-webkit-text-fill-color",
+            value: "transparent"
+          }
+        );
+      } else {
+        rules.push({
+          selector: options.selector,
+          key: "-webkit-text-fill-color",
+          value: "currentColor"
+        });
+      }
+      return rules;
+    }
+  };
   var background_default2 = [
     backgroundImage,
     backgroundPosition,
     backgroundRepeat,
     backgroundSize,
-    backgroundAttachment
+    backgroundAttachment,
+    backgroundClip
   ];
 
   // packages/style-engine/build-module/styles/shadow/index.mjs
@@ -662,7 +706,9 @@ var wp;
     if (!options?.selector) {
       const inlineRules = [];
       rules.forEach((rule) => {
-        inlineRules.push(`${paramCase(rule.key)}: ${rule.value};`);
+        inlineRules.push(
+          `${rule.key.startsWith("-") ? rule.key : paramCase(rule.key)}: ${rule.value};`
+        );
       });
       return inlineRules.join(" ");
     }
@@ -684,7 +730,7 @@ var wp;
       (acc, subSelector) => {
         acc.push(
           `${subSelector} { ${groupedRules[subSelector].map(
-            (rule) => `${paramCase(rule.key)}: ${rule.value};`
+            (rule) => `${rule.key.startsWith("-") ? rule.key : paramCase(rule.key)}: ${rule.value};`
           ).join(" ")} }`
         );
         return acc;

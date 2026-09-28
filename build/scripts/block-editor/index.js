@@ -11421,7 +11421,7 @@ var wp;
       if (isRoot && (useRootPaddingAlign || disableRootPadding) && rule.key.startsWith("padding")) {
         return;
       }
-      const cssProperty = rule.key.startsWith("--") ? rule.key : kebabCase2(rule.key);
+      const cssProperty = rule.key.startsWith("-") ? rule.key : kebabCase2(rule.key);
       let ruleValue = getResolvedValue(rule.value, tree);
       if (cssProperty === "font-size") {
         ruleValue = getTypographyFontSizeValue(
@@ -93049,7 +93049,8 @@ var wp;
       [
         ["backgroundImage", "backgroundImage"],
         ["backgroundSize", "backgroundSize"],
-        ["backgroundGradient", "gradient"]
+        ["backgroundGradient", "gradient"],
+        ["backgroundClip", "backgroundClip"]
       ].forEach(([styleKey, settingKey]) => {
         if (!supportedStyles.includes(styleKey)) {
           updatedSettings.background = {
@@ -95107,7 +95108,7 @@ var wp;
       return true;
     }
     if (feature === "any") {
-      return !!support?.backgroundImage || !!support?.backgroundSize || !!support?.backgroundRepeat || !!support?.gradient;
+      return !!support?.backgroundImage || !!support?.backgroundSize || !!support?.backgroundRepeat || !!support?.gradient || !!support?.backgroundClip;
     }
     return !!support?.[feature];
   }
@@ -99764,6 +99765,7 @@ var wp;
       backgroundImage,
       backgroundSize,
       gradient,
+      backgroundClip,
       customFontFamilies,
       defaultFontFamilies,
       themeFontFamilies,
@@ -99833,6 +99835,7 @@ var wp;
       "background.backgroundImage",
       "background.backgroundSize",
       "background.gradient",
+      "background.backgroundClip",
       "typography.fontFamilies.custom",
       "typography.fontFamilies.default",
       "typography.fontFamilies.theme",
@@ -99904,7 +99907,8 @@ var wp;
         background: {
           backgroundImage,
           backgroundSize,
-          gradient
+          gradient,
+          backgroundClip
         },
         color: {
           palette: {
@@ -100001,6 +100005,7 @@ var wp;
       backgroundImage,
       backgroundSize,
       gradient,
+      backgroundClip,
       customFontFamilies,
       defaultFontFamilies,
       themeFontFamilies,
@@ -104002,10 +104007,20 @@ var wp;
     SHADOW_SUPPORT_KEY
   ];
   var hasStyleSupport2 = (nameOrType) => styleSupportKeys2.some((key) => (0, import_blocks121.hasBlockSupport)(nameOrType, key));
+  function getReactStyleKey(key) {
+    if (!key.startsWith("-") || key.startsWith("--")) {
+      return key;
+    }
+    const camelCased = key.slice(1).replace(/-([a-z])/g, (_, character) => character.toUpperCase());
+    return key.startsWith("-ms-") ? camelCased : camelCased.replace(
+      /^[a-z]/,
+      (character) => character.toUpperCase()
+    );
+  }
   function getInlineStyles(styles = {}) {
     const output = {};
     (0, import_style_engine5.getCSSRules)(styles).forEach((rule) => {
-      output[rule.key] = rule.value;
+      output[getReactStyleKey(rule.key)] = rule.value;
     });
     return output;
   }

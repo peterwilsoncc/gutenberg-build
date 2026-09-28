@@ -10360,6 +10360,7 @@ var getValueFromObjectPath = (object, path, defaultValue) => {
 var VALID_SETTINGS = [
   "appearanceTools",
   "useRootPaddingAwareAlignments",
+  "background.backgroundClip",
   "background.backgroundImage",
   "background.backgroundRepeat",
   "background.backgroundSize",
