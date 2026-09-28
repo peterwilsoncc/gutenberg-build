@@ -5556,3 +5556,21 @@ html :where(.is-position-sticky) {
     --wp-admin--admin-bar--position-offset: 0px;
   }
 }
+/*!rtl:begin:ignore*/
+@supports (not (-webkit-backdrop-filter: blur(1px))) and (not (-moz-appearance: none)) {
+  mtd[columnalign=right] {
+    text-align: -webkit-right;
+  }
+  mtd[columnalign=left] {
+    text-align: -webkit-left;
+  }
+  menclose[notation~=top] {
+    padding-top: 0.1em;
+    border-top: 0.065em solid;
+  }
+  menclose[notation~=bottom] {
+    padding-bottom: 0.1em;
+    border-bottom: 0.065em solid;
+  }
+}
+/*!rtl:end:ignore*/
