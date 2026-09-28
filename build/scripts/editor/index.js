@@ -73641,6 +73641,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
       el.focus();
       el.setPointerCapture(e2.pointerId);
+      if (this.wheelGestureActive) {
+        clearTimeout(this.wheelGestureTimer);
+        this.wheelGestureActive = false;
+        this.options.onGestureEnd?.();
+      }
       this.setStatus({ isDragging: true });
       this.options.onGestureStart?.();
       const currentState = this.options.getState();

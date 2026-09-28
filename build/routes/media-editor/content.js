@@ -33882,6 +33882,11 @@ var InteractionController = class {
     }
     el.focus();
     el.setPointerCapture(e.pointerId);
+    if (this.wheelGestureActive) {
+      clearTimeout(this.wheelGestureTimer);
+      this.wheelGestureActive = false;
+      this.options.onGestureEnd?.();
+    }
     this.setStatus({ isDragging: true });
     this.options.onGestureStart?.();
     const currentState = this.options.getState();
