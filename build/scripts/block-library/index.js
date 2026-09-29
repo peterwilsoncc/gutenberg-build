@@ -84775,6 +84775,10 @@ ${text}
           padding: false
         }
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       typography: {
         fontSize: true,
         lineHeight: true,
