@@ -18685,6 +18685,10 @@ var wp;
           gradient: true
         }
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       typography: {
         fontSize: true,
         lineHeight: true,
