@@ -39258,24 +39258,6 @@ This message will only show in development mode. It won't appear in production. 
   var import_i18n41 = __toESM(require_i18n(), 1);
   var import_compose44 = __toESM(require_compose(), 1);
 
-  // packages/kebab-case/build-module/index.mjs
-  function kebabCase(str) {
-    let input = str?.toString?.() ?? "";
-    input = input.replace(/['\u2019]/, "");
-    return paramCase(input, {
-      splitRegexp: [
-        /(?!(?:1ST|2ND|3RD|[4-9]TH)(?![a-z]))([a-z0-9])([A-Z])/g,
-        // fooBar => foo-bar, 3Bar => 3-bar
-        /(?!(?:1st|2nd|3rd|[4-9]th)(?![a-z]))([0-9])([a-z])/g,
-        // 3bar => 3-bar
-        /([A-Za-z])([0-9])/g,
-        // Foo3 => foo-3, foo3 => foo-3
-        /([A-Z])([A-Z][a-z])/g
-        // FOOBar => foo-bar
-      ]
-    });
-  }
-
   // node_modules/@base-ui/utils/useControlled.mjs
   var React11 = __toESM(require_react(), 1);
 
@@ -55119,7 +55101,6 @@ This message will only show in development mode. It won't appear in production. 
     onChange,
     onRemove,
     popoverProps: receivedPopoverProps,
-    slugPrefix,
     variant,
     colorPalette
   }) {
@@ -55158,8 +55139,7 @@ This message will only show in development mode. It won't appear in production. 
             value: element.name,
             onChange: (nextName) => onChange({
               ...element,
-              name: nextName,
-              slug: slugPrefix + kebabCase(nextName ?? "")
+              name: nextName
             })
           }) : /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(NameContainer, {
             children: element.name.trim().length ? element.name : (
@@ -55189,7 +55169,6 @@ This message will only show in development mode. It won't appear in production. 
     elements: elements2,
     onChange,
     canOnlyChangeValues,
-    slugPrefix,
     variant,
     colorPalette,
     popoverProps,
@@ -55229,7 +55208,6 @@ This message will only show in development mode. It won't appear in production. 
             onChange(newElements.length ? newElements : void 0);
             addColorRef.current?.focus();
           },
-          slugPrefix,
           popoverProps
         }, index2))
       })
@@ -55376,7 +55354,6 @@ This message will only show in development mode. It won't appear in production. 
           canOnlyChangeValues,
           elements: elements2,
           onChange,
-          slugPrefix,
           variant,
           colorPalette: duotoneColorPalette,
           popoverProps,
