@@ -6100,6 +6100,10 @@ return array(
 				'margin' => true,
 				'padding' => true
 			),
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,

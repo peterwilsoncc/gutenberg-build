@@ -61936,6 +61936,10 @@ ${text}
         margin: true,
         padding: true
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       typography: {
         fontSize: true,
         lineHeight: true,
