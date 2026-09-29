@@ -12599,6 +12599,9 @@ var wp;
     });
     return value ?? defaultValue;
   };
+  function isPlainObject2(value) {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
+  }
 
   // packages/block-editor/build-module/store/get-block-settings.mjs
   var blockedPaths = [
@@ -62749,6 +62752,73 @@ var wp;
   }
   useBlockProps.save = import_blocks24.__unstableGetBlockProps;
 
+  // packages/block-editor/build-module/utils/multi-selection-attributes.mjs
+  function diffValues(previousValues, nextValues) {
+    const changes = {};
+    const keys = /* @__PURE__ */ new Set([
+      ...Object.keys(previousValues),
+      ...Object.keys(nextValues)
+    ]);
+    for (const key of keys) {
+      const previousValue = previousValues[key];
+      const nextValue = nextValues[key];
+      if (previousValue === nextValue) {
+        continue;
+      }
+      if (isPlainObject2(nextValue)) {
+        const nestedChanges = diffValues(
+          isPlainObject2(previousValue) ? previousValue : {},
+          nextValue
+        );
+        if (nestedChanges) {
+          changes[key] = nestedChanges;
+        }
+      } else if (nextValue === void 0 && isPlainObject2(previousValue)) {
+        changes[key] = diffValues(previousValue, {});
+      } else {
+        changes[key] = nextValue;
+      }
+    }
+    return Object.keys(changes).length > 0 ? changes : void 0;
+  }
+  function getAttributeChanges(attributes, attributeUpdates) {
+    const previousAttributes = Object.fromEntries(
+      Object.keys(attributeUpdates).map((key) => [
+        key,
+        attributes[key]
+      ])
+    );
+    return diffValues(previousAttributes, attributeUpdates);
+  }
+  function applyValueChange(blockValue, change) {
+    if (!isPlainObject2(change)) {
+      return change;
+    }
+    const newBlockValue = isPlainObject2(blockValue) ? { ...blockValue } : {};
+    for (const key of Object.keys(change)) {
+      const newValue = applyValueChange(
+        newBlockValue[key],
+        change[key]
+      );
+      if (newValue === void 0) {
+        delete newBlockValue[key];
+      } else {
+        newBlockValue[key] = newValue;
+      }
+    }
+    return Object.keys(newBlockValue).length > 0 ? newBlockValue : void 0;
+  }
+  function applyAttributeChanges(attributes, changes) {
+    const attributeUpdates = {};
+    for (const key of Object.keys(changes)) {
+      attributeUpdates[key] = applyValueChange(
+        attributes[key],
+        changes[key]
+      );
+    }
+    return attributeUpdates;
+  }
+
   // packages/block-editor/build-module/components/block-list/block.mjs
   var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
   function mergeWrapperProps(propsA, propsB) {
@@ -62897,12 +62967,33 @@ var wp;
     } = dispatch(store);
     return {
       setAttributes(nextAttributes) {
-        const { getMultiSelectedBlockClientIds: getMultiSelectedBlockClientIds2 } = registry.select(store);
+        const { getMultiSelectedBlockClientIds: getMultiSelectedBlockClientIds2, getBlockAttributes: getBlockAttributes3 } = registry.select(store);
         const multiSelectedBlockClientIds = getMultiSelectedBlockClientIds2();
         const { clientId, attributes } = ownProps;
-        const clientIds = multiSelectedBlockClientIds.length ? multiSelectedBlockClientIds : [clientId];
         const newAttributes = typeof nextAttributes === "function" ? nextAttributes(attributes) : nextAttributes;
-        updateBlockAttributes2(clientIds, newAttributes);
+        if (!multiSelectedBlockClientIds.length) {
+          updateBlockAttributes2(clientId, newAttributes);
+          return;
+        }
+        const changes = getAttributeChanges(
+          attributes ?? {},
+          newAttributes ?? {}
+        );
+        if (!changes) {
+          return;
+        }
+        const updatesByClientId = {};
+        for (const selectedClientId of multiSelectedBlockClientIds) {
+          updatesByClientId[selectedClientId] = applyAttributeChanges(
+            getBlockAttributes3(selectedClientId) ?? {},
+            changes
+          );
+        }
+        updateBlockAttributes2(
+          multiSelectedBlockClientIds,
+          updatesByClientId,
+          { uniqueByBlock: true }
+        );
       },
       onInsertBlocks(blocks2, index3) {
         const { rootClientId } = ownProps;
@@ -101688,7 +101779,7 @@ var wp;
   // packages/block-editor/build-module/hooks/utils.mjs
   var import_jsx_runtime532 = __toESM(require_jsx_runtime(), 1);
   var cleanEmptyObject = (object) => {
-    if (object === null || typeof object !== "object" || Array.isArray(object)) {
+    if (!isPlainObject2(object)) {
       return object;
     }
     const cleanedNestedObjects = Object.entries(object).map(([key, value]) => [key, cleanEmptyObject(value)]).filter(([, value]) => value !== void 0);
@@ -106155,9 +106246,6 @@ var wp;
       selector3
     );
     return [importantCSS, textAlignCSS, fallbackCSS, backgroundResetCSS].filter(Boolean).join("\n");
-  }
-  function isPlainObject2(value) {
-    return !!value && typeof value === "object" && !Array.isArray(value);
   }
   function mergeStyleObjects(target = {}, source = {}) {
     const merged = { ...target };
