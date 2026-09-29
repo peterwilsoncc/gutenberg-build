@@ -78993,6 +78993,12 @@ If there's a particular need for this, please submit a feature request at https:
       { value: ":focus", label: (0, import_i18n160.__)("Focus") },
       { value: ":focus-visible", label: (0, import_i18n160.__)("Focus-visible") },
       { value: ":active", label: (0, import_i18n160.__)("Active") }
+    ],
+    "core/navigation-link": [
+      { value: ":hover", label: (0, import_i18n160.__)("Hover") },
+      { value: ":focus", label: (0, import_i18n160.__)("Focus") },
+      { value: ":focus-visible", label: (0, import_i18n160.__)("Focus-visible") },
+      { value: ":active", label: (0, import_i18n160.__)("Active") }
     ]
   };
   var RESPONSIVE_STATES = [

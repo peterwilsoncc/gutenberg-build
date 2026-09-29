@@ -12143,6 +12143,12 @@ var VALID_BLOCK_STATES = {
     { value: ":focus", label: (0, import_i18n7.__)("Focus") },
     { value: ":focus-visible", label: (0, import_i18n7.__)("Focus-visible") },
     { value: ":active", label: (0, import_i18n7.__)("Active") }
+  ],
+  "core/navigation-link": [
+    { value: ":hover", label: (0, import_i18n7.__)("Hover") },
+    { value: ":focus", label: (0, import_i18n7.__)("Focus") },
+    { value: ":focus-visible", label: (0, import_i18n7.__)("Focus-visible") },
+    { value: ":active", label: (0, import_i18n7.__)("Active") }
   ]
 };
 var RESPONSIVE_STATES = [
