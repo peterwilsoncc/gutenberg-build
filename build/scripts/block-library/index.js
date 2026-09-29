@@ -68798,6 +68798,10 @@ ${text}
         heading: true,
         button: true
       },
+      dimensions: {
+        minHeight: true,
+        minWidth: true
+      },
       spacing: {
         padding: true,
         margin: true,

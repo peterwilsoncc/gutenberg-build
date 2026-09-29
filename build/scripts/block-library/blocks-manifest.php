@@ -7008,6 +7008,10 @@ return array(
 				'heading' => true,
 				'button' => true
 			),
+			'dimensions' => array(
+				'minHeight' => true,
+				'minWidth' => true
+			),
 			'spacing' => array(
 				'padding' => true,
 				'margin' => true,
