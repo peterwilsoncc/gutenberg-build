@@ -6439,8 +6439,11 @@ mark.wp-note {
   color: #757575;
 }
 .document-outline__button:focus {
-  box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
-  outline: 2px solid transparent;
+  box-shadow: none;
+}
+.document-outline__button:focus:not(:active) {
+  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--focus-color, var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9)));
+  outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
 }
 
 .document-outline__level {
