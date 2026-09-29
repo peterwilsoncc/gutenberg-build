@@ -36201,6 +36201,7 @@ ${url}
         fontSize: true,
         lineHeight: true,
         textAlign: true,
+        textIndent: true,
         __experimentalFontFamily: true,
         __experimentalFontStyle: true,
         __experimentalFontWeight: true,
