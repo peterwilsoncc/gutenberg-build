@@ -3248,7 +3248,7 @@ var wp;
     registerCoreBlocks: () => registerCoreBlocks
   });
   var import_blocks112 = __toESM(require_blocks(), 1);
-  var import_compose67 = __toESM(require_compose(), 1);
+  var import_compose68 = __toESM(require_compose(), 1);
   var import_data172 = __toESM(require_data(), 1);
   var import_block_editor292 = __toESM(require_block_editor(), 1);
   var import_server_side_render7 = __toESM(require_server_side_render(), 1);
@@ -25538,6 +25538,7 @@ var wp;
       });
     };
     const showFocalPointPicker = isVideoBackground || isImageBackground;
+    const prefersReducedMotion = (0, import_compose19.useReducedMotion)();
     const imperativeFocalPointPreview = (value) => {
       const [styleOfRef, property] = mediaElement.current ? [mediaElement.current.style, "objectPosition"] : [coverRef.current.style, "backgroundPosition"];
       styleOfRef[property] = mediaPosition(value);
@@ -25689,13 +25690,15 @@ var wp;
                   {
                     label: (0, import_i18n52.__)("Focal point"),
                     url,
+                    autoPlay: !prefersReducedMotion,
                     value: focalPoint,
                     onDragStart: imperativeFocalPointPreview,
                     onDrag: imperativeFocalPointPreview,
                     onChange: (newFocalPoint) => setAttributes({
                       focalPoint: newFocalPoint
                     })
-                  }
+                  },
+                  prefersReducedMotion
                 )
               }
             ),
@@ -25917,13 +25920,13 @@ var wp;
     }
     return matchingVariation;
   }
-  function getBackgroundEmbedHtml(html) {
+  function getBackgroundEmbedHtml(html, { autoplay = true } = {}) {
     const srcMatch = html?.match(/src=["']([^"']+)["']/);
     if (!srcMatch) {
       return null;
     }
     const iframeSrc = srcMatch[1];
-    const backgroundSrc = getBackgroundVideoSrc(iframeSrc);
+    const backgroundSrc = getBackgroundVideoSrc(iframeSrc, { autoplay });
     return html.replace(iframeSrc, backgroundSrc);
   }
   function detectProviderFromSrc(src) {
@@ -25951,16 +25954,18 @@ var wp;
     }
     return null;
   }
-  function getBackgroundVideoSrc(src) {
+  function getBackgroundVideoSrc(src, { autoplay = true } = {}) {
     if (!src) {
       return src;
     }
     try {
       const url = new URL(src);
       const provider = detectProviderFromSrc(src);
+      if (autoplay) {
+        url.searchParams.set("autoplay", "1");
+      }
       switch (provider) {
         case "youtube":
-          url.searchParams.set("autoplay", "1");
           url.searchParams.set("mute", "1");
           url.searchParams.set("loop", "1");
           url.searchParams.set("controls", "0");
@@ -25974,20 +25979,19 @@ var wp;
           }
           break;
         case "vimeo":
-          url.searchParams.set("autoplay", "1");
           url.searchParams.set("muted", "1");
           url.searchParams.set("loop", "1");
-          url.searchParams.set("background", "1");
+          if (autoplay) {
+            url.searchParams.set("background", "1");
+          }
           url.searchParams.set("controls", "0");
           break;
         case "videopress":
         case "wordpress-tv":
-          url.searchParams.set("autoplay", "1");
           url.searchParams.set("loop", "1");
           url.searchParams.set("muted", "1");
           break;
         default:
-          url.searchParams.set("autoplay", "1");
           url.searchParams.set("muted", "1");
           url.searchParams.set("loop", "1");
           break;
@@ -27283,12 +27287,15 @@ var wp;
       },
       [url, backgroundType]
     );
+    const prefersReducedMotion = (0, import_compose20.useReducedMotion)();
     const embedHtml = (0, import_element53.useMemo)(() => {
       if (backgroundType !== EMBED_VIDEO_BACKGROUND_TYPE || !embedPreview?.html) {
         return null;
       }
-      return getBackgroundEmbedHtml(embedPreview.html);
-    }, [embedPreview, backgroundType]);
+      return getBackgroundEmbedHtml(embedPreview.html, {
+        autoplay: !prefersReducedMotion
+      });
+    }, [embedPreview, backgroundType, prefersReducedMotion]);
     const [isSwappingMedia, setIsSwappingMedia] = (0, import_element53.useState)(false);
     const isUploadingMedia = isTemporaryMedia(id, url);
     const isImageBackground = IMAGE_BACKGROUND_TYPE === backgroundType;
@@ -27333,6 +27340,11 @@ var wp;
     );
     const mediaElement = (0, import_element53.useRef)();
     const editMediaButtonRef = (0, import_element53.useRef)();
+    (0, import_element53.useEffect)(() => {
+      if (prefersReducedMotion && isVideoBackground) {
+        mediaElement.current?.pause();
+      }
+    }, [prefersReducedMotion, isVideoBackground]);
     const currentSettings = {
       isVideoBackground,
       isImageBackground,
@@ -27590,7 +27602,7 @@ var wp;
               {
                 ref: mediaElement,
                 className: "wp-block-cover__video-background",
-                autoPlay: true,
+                autoPlay: !prefersReducedMotion,
                 muted: true,
                 loop: true,
                 src: url,
@@ -83744,6 +83756,7 @@ ${text}
   var import_components181 = __toESM(require_components(), 1);
   var import_block_editor288 = __toESM(require_block_editor(), 1);
   var import_element169 = __toESM(require_element(), 1);
+  var import_compose67 = __toESM(require_compose(), 1);
   var import_i18n268 = __toESM(require_i18n(), 1);
   var import_data170 = __toESM(require_data(), 1);
   var import_notices24 = __toESM(require_notices(), 1);
@@ -84289,6 +84302,7 @@ ${text}
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockEditingMode = (0, import_block_editor288.useBlockEditingMode)();
     const hasNonContentControls = blockEditingMode === "default";
+    const prefersReducedMotion = (0, import_compose67.useReducedMotion)();
     useUploadMediaFromBlobURL({
       url: temporaryURL,
       allowedTypes: ALLOWED_MEDIA_TYPES10,
@@ -84300,6 +84314,11 @@ ${text}
         videoPlayer.current.load();
       }
     }, [poster]);
+    (0, import_element169.useEffect)(() => {
+      if (prefersReducedMotion) {
+        videoPlayer.current?.pause();
+      }
+    }, [prefersReducedMotion]);
     function onSelectVideo(media) {
       if (!media || !media.url) {
         setAttributes({
@@ -84455,7 +84474,7 @@ ${text}
             poster,
             src: src || temporaryURL,
             ref: videoPlayer,
-            autoPlay: autoplay,
+            autoPlay: autoplay && !prefersReducedMotion,
             loop,
             muted,
             playsInline,
@@ -85186,7 +85205,7 @@ ${text}
           ),
           // Inspector controls are rendered by the auto-register hook in block-editor
           edit: function Edit21({ attributes: attributes2, context }) {
-            const disabledRef = (0, import_compose67.useDisabled)();
+            const disabledRef = (0, import_compose68.useDisabled)();
             const blockProps = (0, import_block_editor292.useBlockProps)({ ref: disabledRef });
             const { content, status, error: error2 } = (0, import_server_side_render7.useServerSideRender)({
               block: blockName,
