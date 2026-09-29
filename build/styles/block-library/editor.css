@@ -176,6 +176,10 @@
   margin: 0 auto;
 }
 
+.wp-block-avatar__help-text {
+  grid-column: 1/-1;
+}
+
 .wp-block[data-align=center] > .wp-block-button {
   text-align: center;
   margin-left: auto;
