@@ -2532,7 +2532,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState93({
+          cachedValue = useState94({
             inst: { value, getSnapshot: getSnapshot2 }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -2570,7 +2570,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React51 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState93 = React51.useState, useEffect69 = React51.useEffect, useLayoutEffect5 = React51.useLayoutEffect, useDebugValue = React51.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React51 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState94 = React51.useState, useEffect69 = React51.useEffect, useLayoutEffect5 = React51.useLayoutEffect, useDebugValue = React51.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React51.useSyncExternalStore ? React51.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -27357,7 +27357,10 @@ var wp;
       [clientId]
     );
     const ref = (0, import_element53.useRef)();
-    const blockProps = (0, import_block_editor69.useBlockProps)({ ref });
+    const [dropZoneElement, setDropZoneElement] = (0, import_element53.useState)(null);
+    const blockProps = (0, import_block_editor69.useBlockProps)({
+      ref: (0, import_compose20.useMergeRefs)([ref, setDropZoneElement])
+    });
     const innerBlocksProps = (0, import_block_editor69.useInnerBlocksProps)(
       {
         className: "wp-block-cover__inner-container"
@@ -27365,7 +27368,7 @@ var wp;
       {
         allowedBlocks,
         templateLock,
-        dropZoneElement: ref.current
+        dropZoneElement
       }
     );
     const mediaElement = (0, import_element53.useRef)();
@@ -35327,8 +35330,8 @@ ${url}
     } = attributes2;
     const { type = "default" } = layout;
     const layoutSupportEnabled = themeSupportsLayout || type === "flex" || type === "grid";
-    const ref = (0, import_element65.useRef)();
-    const blockProps = (0, import_block_editor93.useBlockProps)({ ref });
+    const [dropZoneElement, setDropZoneElement] = (0, import_element65.useState)(null);
+    const blockProps = (0, import_block_editor93.useBlockProps)({ ref: setDropZoneElement });
     const [showPlaceholder, setShowPlaceholder] = useShouldShowPlaceHolder({
       attributes: attributes2,
       usedLayoutType: type,
@@ -35343,7 +35346,7 @@ ${url}
     const innerBlocksProps = (0, import_block_editor93.useInnerBlocksProps)(
       layoutSupportEnabled ? blockProps : { className: "wp-block-group__inner-container" },
       {
-        dropZoneElement: ref.current,
+        dropZoneElement,
         templateLock,
         allowedBlocks,
         renderAppender
