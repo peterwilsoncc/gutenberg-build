@@ -79731,6 +79731,9 @@ ${text}
         margin: true,
         padding: true
       },
+      dimensions: {
+        minWidth: true
+      },
       shadow: true,
       typography: {
         fontSize: true,

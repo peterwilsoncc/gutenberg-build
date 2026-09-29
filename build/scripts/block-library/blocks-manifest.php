@@ -9048,6 +9048,9 @@ return array(
 				'margin' => true,
 				'padding' => true
 			),
+			'dimensions' => array(
+				'minWidth' => true
+			),
 			'shadow' => true,
 			'typography' => array(
 				'fontSize' => true,
