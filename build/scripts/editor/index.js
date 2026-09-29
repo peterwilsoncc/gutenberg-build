@@ -75648,14 +75648,14 @@ If there's a particular need for this, please submit a feature request at https:
       if (Math.abs(currentCropRect.x - snappedCropRect.x) < CROP_RECT_EPSILON && Math.abs(currentCropRect.y - snappedCropRect.y) < CROP_RECT_EPSILON && Math.abs(currentCropRect.width - snappedCropRect.width) < CROP_RECT_EPSILON && Math.abs(currentCropRect.height - snappedCropRect.height) < CROP_RECT_EPSILON) {
         return;
       }
-      setCropRect(snappedCropRect);
+      adjustCropRectForViewport(snappedCropRect);
     }, [
+      adjustCropRectForViewport,
       aspectRatio,
       displayScale,
       freeformCrop,
       naturalWidth,
       naturalHeight,
-      setCropRect,
       state2
     ]);
     const {
