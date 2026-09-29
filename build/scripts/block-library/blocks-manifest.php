@@ -9349,7 +9349,8 @@ return array(
 			),
 			'shadow' => true,
 			'spacing' => array(
-				'padding' => true
+				'padding' => true,
+				'margin' => true
 			),
 			'typography' => array(
 				'fontSize' => true,

@@ -81734,7 +81734,8 @@ ${text}
       },
       shadow: true,
       spacing: {
-        padding: true
+        padding: true,
+        margin: true
       },
       typography: {
         fontSize: true,
