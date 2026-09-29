@@ -67394,7 +67394,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }, "withSpokenMessages");
 
   // packages/components/build-module/private-apis.mjs
-  var import_deprecated36 = __toESM(require_deprecated(), 1);
+  var import_deprecated37 = __toESM(require_deprecated(), 1);
 
   // packages/components/build-module/menu/index.mjs
   var import_element246 = __toESM(require_element(), 1);
@@ -68381,6 +68381,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/badge/index.mjs
+  var import_deprecated34 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime351 = __toESM(require_jsx_runtime(), 1);
   function contextBasedIcon(intent = "default") {
     switch (intent) {
@@ -68402,6 +68403,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     children,
     ...props
   }) {
+    (0, import_deprecated34.default)("wp.components.privateApis.Badge", {
+      since: "7.2",
+      alternative: "Badge from @wordpress/ui",
+      hint: "This private API will be completely removed within a few Gutenberg plugin releases."
+    });
     const icon = contextBasedIcon(intent);
     const hasIcon = !!icon;
     return /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("span", {
@@ -68429,7 +68435,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/input-control.mjs
   var import_element253 = __toESM(require_element(), 1);
   var import_compose87 = __toESM(require_compose(), 1);
-  var import_deprecated34 = __toESM(require_deprecated(), 1);
+  var import_deprecated35 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime352 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedInputControl = ({
     required,
@@ -68437,7 +68443,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    (0, import_deprecated34.default)("wp.components.privateApis.ValidatedInputControl", {
+    (0, import_deprecated35.default)("wp.components.privateApis.ValidatedInputControl", {
       since: "7.2",
       alternative: "ValidatedInputControl from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
@@ -68641,7 +68647,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
   var import_element256 = __toESM(require_element(), 1);
   var import_compose89 = __toESM(require_compose(), 1);
-  var import_deprecated35 = __toESM(require_deprecated(), 1);
+  var import_deprecated36 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime355 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
     required,
@@ -68649,7 +68655,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    (0, import_deprecated35.default)("wp.components.privateApis.ValidatedTextareaControl", {
+    (0, import_deprecated36.default)("wp.components.privateApis.ValidatedTextareaControl", {
       since: "7.2",
       alternative: "ValidatedTextareaControl from @wordpress/ui",
       hint: "This private API will be completely removed within a few Gutenberg plugin releases."
@@ -68680,7 +68686,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     Tabs,
     // Retained for older bundled consumers. Check compatibility before removal.
     get Menu() {
-      (0, import_deprecated36.default)("`privateApis.Menu` from `@wordpress/components`", {
+      (0, import_deprecated37.default)("`privateApis.Menu` from `@wordpress/components`", {
         since: "7.2",
         version: "7.3",
         alternative: "`DropdownMenu` from `@wordpress/components`",
