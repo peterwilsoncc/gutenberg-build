@@ -71412,6 +71412,7 @@ ${text}
       __experimentalBorder: {
         color: true,
         radius: true,
+        style: true,
         width: true,
         __experimentalDefaultControls: {
           width: true
