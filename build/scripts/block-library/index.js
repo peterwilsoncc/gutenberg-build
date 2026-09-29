@@ -70720,6 +70720,7 @@ ${text}
       },
       dimensions: {
         minHeight: true,
+        minWidth: true,
         __experimentalDefaultControls: {
           minHeight: false
         }
