@@ -77300,37 +77300,53 @@ If there's a particular need for this, please submit a feature request at https:
         }
       )
     ] });
-    const aspectRatioDropdown = hasAspectRatioControl ? /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-      import_components82.DropdownMenu,
-      {
-        icon: aspect_ratio_default,
-        label: (0, import_i18n152.__)("Aspect ratio"),
-        popoverProps: { placement: "top" },
-        toggleProps: { size: "compact", disabled: disabled2 },
-        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(import_components82.MenuGroup, { label: (0, import_i18n152.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
-          const value = preset.value.toString();
-          const isSelected2 = value === aspectRatioValue;
-          return /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-            import_components82.MenuItem,
+    const aspectRatioDropdown = hasAspectRatioControl ? /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(menu_exports.Root, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
+        menu_exports.Trigger,
+        {
+          disabled: disabled2,
+          render: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
+            import_components82.Button,
             {
-              role: "menuitemradio",
-              isSelected: isSelected2,
-              icon: isSelected2 ? check_default : void 0,
-              disabled: disabled2,
-              onClick: () => {
-                if (disabled2) {
-                  return;
+              size: "compact",
+              icon: aspect_ratio_default,
+              label: (0, import_i18n152.__)("Aspect ratio"),
+              accessibleWhenDisabled: true
+            }
+          )
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
+        menu_exports.Popup,
+        {
+          positioner: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(menu_exports.Positioner, { side: "top", align: "center" }),
+          children: /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(
+            menu_exports.RadioGroup,
+            {
+              value: aspectRatioValue,
+              onValueChange: (value) => {
+                if (!disabled2) {
+                  setAspectRatioValue(value);
                 }
-                setAspectRatioValue(value);
-                onClose();
               },
-              children: preset.label
-            },
-            value
-          );
-        }) })
-      }
-    ) : null;
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(menu_exports.GroupLabel, { children: (0, import_i18n152.__)("Aspect ratio") }),
+                aspectRatioOptions.map((preset) => /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
+                  menu_exports.RadioItem,
+                  {
+                    value: preset.value.toString(),
+                    closeOnClick: true,
+                    disabled: disabled2,
+                    children: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(menu_exports.ItemLabel, { children: preset.label })
+                  },
+                  preset.value
+                ))
+              ]
+            }
+          )
+        }
+      )
+    ] }) : null;
     if (withLabels) {
       return /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)("div", { className: "media-editor-image-controls is-stacked", children: [
         /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)("div", { className: "media-editor-image-controls__transforms", children: [
