@@ -392,7 +392,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState178({
+          cachedValue = useState177({
             inst: { value, getSnapshot: getSnapshot2 }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -430,7 +430,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React208 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState178 = React208.useState, useEffect136 = React208.useEffect, useLayoutEffect22 = React208.useLayoutEffect, useDebugValue2 = React208.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React208 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState177 = React208.useState, useEffect136 = React208.useEffect, useLayoutEffect22 = React208.useLayoutEffect, useDebugValue2 = React208.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React208.useSyncExternalStore ? React208.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -458,14 +458,14 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React208 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef167 = React208.useRef, useEffect136 = React208.useEffect, useMemo192 = React208.useMemo, useDebugValue2 = React208.useDebugValue;
+        var React208 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore7 = shim.useSyncExternalStore, useRef167 = React208.useRef, useEffect136 = React208.useEffect, useMemo191 = React208.useMemo, useDebugValue2 = React208.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe5, getSnapshot2, getServerSnapshot2, selector2, isEqual2) {
           var instRef = useRef167(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo192(
+          instRef = useMemo191(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -61100,11 +61100,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore2(createStore2, props) {
     const [store4, setStore] = React207.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store4), [store4]);
-    const useState178 = React207.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
+    const useState177 = React207.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
     return [React207.useMemo(() => ({
       ...store4,
-      useState: useState178
-    }), [store4, useState178]), useEvent3(() => {
+      useState: useState177
+    }), [store4, useState177]), useEvent3(() => {
       setStore((store5) => createStore2({
         ...props,
         ...store5.getState()
@@ -107552,8 +107552,8 @@ ${content}
   // packages/editor/build-module/components/post-template/block-theme.mjs
   var import_data126 = __toESM(require_data(), 1);
   var import_html_entities20 = __toESM(require_html_entities(), 1);
-  var import_components177 = __toESM(require_components(), 1);
-  var import_element336 = __toESM(require_element(), 1);
+  var import_components175 = __toESM(require_components(), 1);
+  var import_element335 = __toESM(require_element(), 1);
   var import_i18n248 = __toESM(require_i18n(), 1);
   var import_core_data81 = __toESM(require_core_data(), 1);
   var import_notices25 = __toESM(require_notices(), 1);
@@ -107608,26 +107608,15 @@ ${content}
     );
   }
   function SwapTemplateButton({ onClick }) {
-    const [showModal, setShowModal] = (0, import_element334.useState)(false);
     const availableTemplates = useAvailableTemplates();
-    return /* @__PURE__ */ (0, import_jsx_runtime533.jsxs)(import_jsx_runtime533.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime533.jsx)(
-        import_components174.MenuItem,
-        {
-          disabled: !availableTemplates?.length,
-          accessibleWhenDisabled: true,
-          onClick: () => setShowModal(true),
-          children: (0, import_i18n245.__)("Change template")
-        }
-      ),
-      showModal && /* @__PURE__ */ (0, import_jsx_runtime533.jsx)(
-        SwapTemplateModal,
-        {
-          onRequestClose: () => setShowModal(false),
-          onSelect: onClick
-        }
-      )
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime533.jsx)(
+      menu_exports.Item,
+      {
+        disabled: !availableTemplates?.length,
+        onClick,
+        children: /* @__PURE__ */ (0, import_jsx_runtime533.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n245.__)("Change template") })
+      }
+    );
   }
   function TemplatesList({ onSelect }) {
     const [searchValue, setSearchValue] = (0, import_element334.useState)("");
@@ -107668,12 +107657,11 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-template/reset-default-template.mjs
-  var import_components175 = __toESM(require_components(), 1);
   var import_i18n246 = __toESM(require_i18n(), 1);
   var import_data124 = __toESM(require_data(), 1);
   var import_core_data79 = __toESM(require_core_data(), 1);
   var import_jsx_runtime534 = __toESM(require_jsx_runtime(), 1);
-  function ResetDefaultTemplate({ onClick }) {
+  function ResetDefaultTemplate() {
     const currentTemplateSlug = useCurrentTemplateSlug();
     const allowSwitchingTemplate = useAllowSwitchingTemplates();
     const { postType: postType2, postId: postId2 } = useEditedPostContext();
@@ -107682,7 +107670,7 @@ ${content}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(
-      import_components175.MenuItem,
+      menu_exports.Item,
       {
         onClick: () => {
           editEntityRecord(
@@ -107692,21 +107680,18 @@ ${content}
             { template: "" },
             { undoIgnore: true }
           );
-          onClick();
         },
-        children: (0, import_i18n246.__)("Use default template")
+        children: /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n246.__)("Use default template") })
       }
     );
   }
 
   // packages/editor/build-module/components/post-template/create-new-template.mjs
-  var import_components176 = __toESM(require_components(), 1);
   var import_i18n247 = __toESM(require_i18n(), 1);
   var import_data125 = __toESM(require_data(), 1);
   var import_core_data80 = __toESM(require_core_data(), 1);
-  var import_element335 = __toESM(require_element(), 1);
   var import_jsx_runtime535 = __toESM(require_jsx_runtime(), 1);
-  function CreateNewTemplate() {
+  function CreateNewTemplate({ onClick }) {
     const { canCreateTemplates } = (0, import_data125.useSelect)((select9) => {
       const { canUser } = select9(import_core_data80.store);
       return {
@@ -107716,30 +107701,11 @@ ${content}
         })
       };
     }, []);
-    const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element335.useState)(false);
     const allowSwitchingTemplate = useAllowSwitchingTemplates();
     if (!canCreateTemplates || !allowSwitchingTemplate) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime535.jsxs)(import_jsx_runtime535.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime535.jsx)(
-        import_components176.MenuItem,
-        {
-          onClick: () => {
-            setIsCreateModalOpen(true);
-          },
-          children: (0, import_i18n247.__)("Create new template")
-        }
-      ),
-      isCreateModalOpen && /* @__PURE__ */ (0, import_jsx_runtime535.jsx)(
-        CreateNewTemplateModal,
-        {
-          onClose: () => {
-            setIsCreateModalOpen(false);
-          }
-        }
-      )
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime535.jsx)(menu_exports.Item, { onClick, children: /* @__PURE__ */ (0, import_jsx_runtime535.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n247.__)("Create new template") }) });
   }
 
   // packages/editor/build-module/components/post-template/block-theme.mjs
@@ -107787,19 +107753,8 @@ ${content}
       }),
       []
     );
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element336.useState)(null);
-    const popoverProps = (0, import_element336.useMemo)(
-      () => ({
-        // Anchor the popover to the middle of the entire row so that it doesn't
-        // move around when the label changes.
-        anchor: popoverAnchor,
-        className: "editor-post-template__dropdown",
-        placement: "left-start",
-        offset: 36,
-        shift: true
-      }),
-      [popoverAnchor]
-    );
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element335.useState)(null);
+    const [activeModal2, setActiveModal] = (0, import_element335.useState)(null);
     if (!hasResolved) {
       return null;
     }
@@ -107819,58 +107774,102 @@ ${content}
         );
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(post_panel_row_default, { label: (0, import_i18n248.__)("Template"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
-      import_components177.DropdownMenu,
-      {
-        popoverProps,
-        focusOnMount: true,
-        toggleProps: {
-          size: "compact",
-          variant: "tertiary",
-          tooltipPosition: "middle left"
-        },
-        label: (0, import_i18n248.__)("Template options"),
-        text: (0, import_html_entities20.decodeEntities)(template2.title),
-        icon: null,
-        children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime536.jsxs)(import_jsx_runtime536.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime536.jsxs)(import_components177.MenuGroup, { children: [
-            canCreateTemplate && /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
-              import_components177.MenuItem,
+    return /* @__PURE__ */ (0, import_jsx_runtime536.jsxs)(import_jsx_runtime536.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(post_panel_row_default, { label: (0, import_i18n248.__)("Template"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime536.jsxs)(menu_exports.Root, { modal: false, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
+          menu_exports.Trigger,
+          {
+            render: /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
+              import_components175.Button,
               {
-                onClick: () => {
-                  onNavigateToEntityRecord({
-                    postId: template2.id,
-                    postType: "wp_template"
-                  });
-                  onClose();
-                  mayShowTemplateEditNotice();
-                },
-                children: (0, import_i18n248.__)("Edit template")
+                size: "compact",
+                variant: "tertiary",
+                tooltipPosition: "middle left",
+                label: (0, import_i18n248.__)("Template options")
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(SwapTemplateButton, { onClick: onClose }),
-            /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(ResetDefaultTemplate, { onClick: onClose }),
-            canCreateTemplate && /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(CreateNewTemplate, {})
-          ] }),
-          !hasRenderingMode && /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(import_components177.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
-            import_components177.MenuItem,
-            {
-              icon: !isTemplateHidden ? check_default : void 0,
-              isSelected: !isTemplateHidden,
-              role: "menuitemcheckbox",
-              onClick: () => {
-                const newRenderingMode = isTemplateHidden ? "template-locked" : "post-only";
-                setRenderingMode2(newRenderingMode);
-                setDefaultRenderingMode2(
-                  newRenderingMode
-                );
-              },
-              children: (0, import_i18n248.__)("Show template")
-            }
-          ) })
-        ] })
-      }
-    ) });
+            children: (0, import_html_entities20.decodeEntities)(template2.title)
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime536.jsxs)(
+          menu_exports.Popup,
+          {
+            className: "editor-post-template__dropdown",
+            positioner: /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
+              menu_exports.Positioner,
+              {
+                anchor: popoverAnchor,
+                side: "left",
+                align: "start",
+                sideOffset: 36
+              }
+            ),
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime536.jsxs)(menu_exports.Group, { children: [
+                canCreateTemplate && /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
+                  menu_exports.Item,
+                  {
+                    onClick: () => {
+                      onNavigateToEntityRecord({
+                        postId: template2.id,
+                        postType: "wp_template"
+                      });
+                      mayShowTemplateEditNotice();
+                    },
+                    children: /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n248.__)("Edit template") })
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
+                  SwapTemplateButton,
+                  {
+                    onClick: () => setActiveModal("swap")
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(ResetDefaultTemplate, {}),
+                canCreateTemplate && /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
+                  CreateNewTemplate,
+                  {
+                    onClick: () => setActiveModal("create")
+                  }
+                )
+              ] }),
+              !hasRenderingMode && /* @__PURE__ */ (0, import_jsx_runtime536.jsxs)(import_jsx_runtime536.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(menu_exports.Separator, {}),
+                /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(menu_exports.Group, { children: /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
+                  menu_exports.CheckboxItem,
+                  {
+                    checked: !isTemplateHidden,
+                    closeOnClick: false,
+                    onCheckedChange: (checked2) => {
+                      const newRenderingMode = checked2 ? "template-locked" : "post-only";
+                      setRenderingMode2(
+                        newRenderingMode
+                      );
+                      setDefaultRenderingMode2(
+                        newRenderingMode
+                      );
+                    },
+                    children: /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(menu_exports.ItemLabel, { children: (0, import_i18n248.__)("Show template") })
+                  }
+                ) })
+              ] })
+            ]
+          }
+        )
+      ] }) }),
+      activeModal2 === "swap" && /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
+        SwapTemplateModal,
+        {
+          onRequestClose: () => setActiveModal(null)
+        }
+      ),
+      activeModal2 === "create" && /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
+        CreateNewTemplateModal,
+        {
+          onClose: () => setActiveModal(null)
+        }
+      )
+    ] });
   }
 
   // packages/editor/build-module/components/post-template/panel.mjs
@@ -107888,12 +107887,12 @@ ${content}
 
   // packages/editor/build-module/components/post-author/index.mjs
   var import_i18n249 = __toESM(require_i18n(), 1);
-  var import_element338 = __toESM(require_element(), 1);
+  var import_element337 = __toESM(require_element(), 1);
   var import_data128 = __toESM(require_data(), 1);
   var import_compose59 = __toESM(require_compose(), 1);
 
   // packages/editor/build-module/components/post-author/hook.mjs
-  var import_element337 = __toESM(require_element(), 1);
+  var import_element336 = __toESM(require_element(), 1);
   var import_data127 = __toESM(require_data(), 1);
   var import_html_entities21 = __toESM(require_html_entities(), 1);
   var import_core_data82 = __toESM(require_core_data(), 1);
@@ -107934,7 +107933,7 @@ ${content}
       },
       [search]
     );
-    const items = (0, import_element337.useMemo)(() => {
+    const items = (0, import_element336.useMemo)(() => {
       const fetchedAuthors = (authors ?? []).map(authorToItem);
       if (!search && postAuthor && !fetchedAuthors.some(
         ({ value: value2 }) => value2 === String(postAuthor.id)
@@ -107943,7 +107942,7 @@ ${content}
       }
       return fetchedAuthors;
     }, [authors, postAuthor, search]);
-    const value = (0, import_element337.useMemo)(
+    const value = (0, import_element336.useMemo)(
       () => postAuthor ? authorToItem(postAuthor) : null,
       [postAuthor]
     );
@@ -107956,8 +107955,8 @@ ${content}
   var SEARCH_DEBOUNCE_MS = 300;
   var isSameAuthor = (authorA, authorB) => authorA.value === authorB.value;
   function PostAuthorControl() {
-    const [inputValue, setInputValue] = (0, import_element338.useState)("");
-    const [search, setSearch] = (0, import_element338.useState)("");
+    const [inputValue, setInputValue] = (0, import_element337.useState)("");
+    const [search, setSearch] = (0, import_element337.useState)("");
     const debouncedSetSearch = (0, import_compose59.useDebounce)(setSearch, SEARCH_DEBOUNCE_MS);
     const { editPost: editPost2 } = (0, import_data128.useDispatch)(store);
     const { items, value, isLoading } = useAuthorsQuery(search);
@@ -108027,8 +108026,8 @@ ${content}
 
   // packages/editor/build-module/components/post-author/panel.mjs
   var import_i18n250 = __toESM(require_i18n(), 1);
-  var import_components178 = __toESM(require_components(), 1);
-  var import_element339 = __toESM(require_element(), 1);
+  var import_components176 = __toESM(require_components(), 1);
+  var import_element338 = __toESM(require_element(), 1);
   var import_html_entities22 = __toESM(require_html_entities(), 1);
   var import_block_editor52 = __toESM(require_block_editor(), 1);
   var import_data130 = __toESM(require_data(), 1);
@@ -108043,7 +108042,7 @@ ${content}
     }, []);
     const authorName = (0, import_html_entities22.decodeEntities)(postAuthor?.name) || (0, import_i18n250.__)("(No author)");
     return /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(
-      import_components178.Button,
+      import_components176.Button,
       {
         size: "compact",
         variant: "tertiary",
@@ -108058,8 +108057,8 @@ ${content}
     );
   }
   function PostAuthor() {
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element339.useState)(null);
-    const popoverProps = (0, import_element339.useMemo)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element338.useState)(null);
+    const popoverProps = (0, import_element338.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -108071,7 +108070,7 @@ ${content}
       [popoverAnchor]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(PostAuthorCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(post_panel_row_default, { label: (0, import_i18n250.__)("Author"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(
-      import_components178.Dropdown,
+      import_components176.Dropdown,
       {
         popoverProps,
         contentClassName: "editor-post-author__panel-dialog",
@@ -108100,7 +108099,7 @@ ${content}
 
   // packages/editor/build-module/components/post-comments/index.mjs
   var import_i18n251 = __toESM(require_i18n(), 1);
-  var import_components179 = __toESM(require_components(), 1);
+  var import_components177 = __toESM(require_components(), 1);
   var import_data131 = __toESM(require_data(), 1);
   var import_jsx_runtime541 = __toESM(require_jsx_runtime(), 1);
   var COMMENT_OPTIONS = [
@@ -108127,8 +108126,8 @@ ${content}
     const handleStatus = (newCommentStatus) => editPost2({
       comment_status: newCommentStatus
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime541.jsx)("form", { children: /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(import_components179.__experimentalVStack, { spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(
-      import_components179.RadioControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime541.jsx)("form", { children: /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(import_components177.__experimentalVStack, { spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(
+      import_components177.RadioControl,
       {
         className: "editor-change-status__options",
         hideLabelFromVision: true,
@@ -108143,15 +108142,15 @@ ${content}
 
   // packages/editor/build-module/components/post-discussion/panel.mjs
   var import_i18n253 = __toESM(require_i18n(), 1);
-  var import_components181 = __toESM(require_components(), 1);
+  var import_components179 = __toESM(require_components(), 1);
   var import_data133 = __toESM(require_data(), 1);
-  var import_element340 = __toESM(require_element(), 1);
+  var import_element339 = __toESM(require_element(), 1);
   var import_block_editor53 = __toESM(require_block_editor(), 1);
   var import_core_data84 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-pingbacks/index.mjs
   var import_i18n252 = __toESM(require_i18n(), 1);
-  var import_components180 = __toESM(require_components(), 1);
+  var import_components178 = __toESM(require_components(), 1);
   var import_data132 = __toESM(require_data(), 1);
   var import_jsx_runtime542 = __toESM(require_jsx_runtime(), 1);
   function PostPingbacks() {
@@ -108164,13 +108163,13 @@ ${content}
       ping_status: pingStatus === "open" ? "closed" : "open"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(
-      import_components180.CheckboxControl,
+      import_components178.CheckboxControl,
       {
         label: (0, import_i18n252.__)("Enable pingbacks & trackbacks"),
         checked: pingStatus === "open",
         onChange: onTogglePingback,
         help: /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(
-          import_components180.ExternalLink,
+          import_components178.ExternalLink,
           {
             href: (0, import_i18n252.__)(
               "https://wordpress.org/documentation/article/trackbacks-and-pingbacks/"
@@ -108195,7 +108194,7 @@ ${content}
           onClose
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime543.jsxs)(import_components181.__experimentalVStack, { spacing: 4, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime543.jsxs)(import_components179.__experimentalVStack, { spacing: 4, children: [
         /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(post_type_support_check_default, { supportKeys: "comments", children: /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(post_comments_default, {}) }),
         /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(post_type_support_check_default, { supportKeys: "trackbacks", children: /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(post_pingbacks_default, {}) })
       ] })
@@ -108231,7 +108230,7 @@ ${content}
       label = (0, import_i18n253.__)("Closed");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(
-      import_components181.Button,
+      import_components179.Button,
       {
         size: "compact",
         className: "editor-post-discussion__panel-toggle",
@@ -108250,8 +108249,8 @@ ${content}
         isEnabled: isEditorPanelEnabled2(PANEL_NAME2)
       };
     }, []);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element340.useState)(null);
-    const popoverProps = (0, import_element340.useMemo)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element339.useState)(null);
+    const popoverProps = (0, import_element339.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -108266,7 +108265,7 @@ ${content}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(post_type_support_check_default, { supportKeys: ["comments", "trackbacks"], children: /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(post_panel_row_default, { label: (0, import_i18n253.__)("Discussion"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(
-      import_components181.Dropdown,
+      import_components179.Dropdown,
       {
         popoverProps,
         className: "editor-post-discussion__panel-dropdown",
@@ -108286,9 +108285,9 @@ ${content}
 
   // packages/editor/build-module/components/post-excerpt/index.mjs
   var import_i18n254 = __toESM(require_i18n(), 1);
-  var import_components182 = __toESM(require_components(), 1);
+  var import_components180 = __toESM(require_components(), 1);
   var import_data134 = __toESM(require_data(), 1);
-  var import_element341 = __toESM(require_element(), 1);
+  var import_element340 = __toESM(require_element(), 1);
   var import_html_entities23 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime544 = __toESM(require_jsx_runtime(), 1);
   function PostExcerpt({
@@ -108317,7 +108316,7 @@ ${content}
       []
     );
     const { editPost: editPost2 } = (0, import_data134.useDispatch)(store);
-    const [localExcerpt, setLocalExcerpt] = (0, import_element341.useState)(
+    const [localExcerpt, setLocalExcerpt] = (0, import_element340.useState)(
       (0, import_html_entities23.decodeEntities)(excerpt)
     );
     const updatePost2 = (value) => {
@@ -108325,7 +108324,7 @@ ${content}
     };
     const label = shouldUseDescriptionLabel ? (0, import_i18n254.__)("Write a description (optional)") : (0, import_i18n254.__)("Write an excerpt (optional)");
     return /* @__PURE__ */ (0, import_jsx_runtime544.jsx)("div", { className: "editor-post-excerpt", children: /* @__PURE__ */ (0, import_jsx_runtime544.jsx)(
-      import_components182.TextareaControl,
+      import_components180.TextareaControl,
       {
         label,
         hideLabelFromVision,
@@ -108334,7 +108333,7 @@ ${content}
         onBlur: updateOnBlur ? () => updatePost2(localExcerpt) : void 0,
         value: updateOnBlur ? localExcerpt : excerpt,
         help: !shouldUseDescriptionLabel ? /* @__PURE__ */ (0, import_jsx_runtime544.jsx)(
-          import_components182.ExternalLink,
+          import_components180.ExternalLink,
           {
             href: (0, import_i18n254.__)(
               "https://wordpress.org/documentation/article/page-post-settings-sidebar/#excerpt"
@@ -108355,19 +108354,19 @@ ${content}
 
   // packages/editor/build-module/components/post-excerpt/panel.mjs
   var import_i18n255 = __toESM(require_i18n(), 1);
-  var import_components184 = __toESM(require_components(), 1);
+  var import_components182 = __toESM(require_components(), 1);
   var import_data135 = __toESM(require_data(), 1);
-  var import_element342 = __toESM(require_element(), 1);
+  var import_element341 = __toESM(require_element(), 1);
   var import_block_editor54 = __toESM(require_block_editor(), 1);
   var import_core_data85 = __toESM(require_core_data(), 1);
   var import_html_entities24 = __toESM(require_html_entities(), 1);
 
   // packages/editor/build-module/components/post-excerpt/plugin.mjs
-  var import_components183 = __toESM(require_components(), 1);
+  var import_components181 = __toESM(require_components(), 1);
   var import_jsx_runtime546 = __toESM(require_jsx_runtime(), 1);
-  var { Fill: Fill9, Slot: Slot9 } = (0, import_components183.createSlotFill)("PluginPostExcerpt");
+  var { Fill: Fill9, Slot: Slot9 } = (0, import_components181.createSlotFill)("PluginPostExcerpt");
   var PluginPostExcerpt = ({ children, className }) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(Fill9, { children: /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(import_components183.PanelRow, { className, children }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(Fill9, { children: /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(import_components181.PanelRow, { className, children }) });
   };
   PluginPostExcerpt.Slot = Slot9;
   var plugin_default = PluginPostExcerpt;
@@ -108400,7 +108399,7 @@ ${content}
       "wp_block"
     ].includes(postType2);
     return /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
-      import_components184.PanelBody,
+      import_components182.PanelBody,
       {
         title: shouldUseDescriptionLabel ? (0, import_i18n255.__)("Description") : (0, import_i18n255.__)("Excerpt"),
         opened: isOpened,
@@ -108454,9 +108453,9 @@ ${content}
         allowEditing: _shouldRender && (!_shouldBeUsedAsDescription || isPattern || template2 && template2.source === TEMPLATE_ORIGINS.custom && !template2.has_theme_file && template2.is_custom)
       };
     }, []);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element342.useState)(null);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element341.useState)(null);
     const label = shouldBeUsedAsDescription ? (0, import_i18n255.__)("Description") : (0, import_i18n255.__)("Excerpt");
-    const popoverProps = (0, import_element342.useMemo)(
+    const popoverProps = (0, import_element341.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -108472,16 +108471,16 @@ ${content}
     if (!shouldRender) {
       return false;
     }
-    const excerptText = !!excerpt && /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(import_components184.__experimentalText, { align: "left", numberOfLines: 4, truncate: allowEditing, children: (0, import_html_entities24.decodeEntities)(excerpt) });
+    const excerptText = !!excerpt && /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(import_components182.__experimentalText, { align: "left", numberOfLines: 4, truncate: allowEditing, children: (0, import_html_entities24.decodeEntities)(excerpt) });
     if (!allowEditing) {
       return excerptText;
     }
     const excerptPlaceholder = shouldBeUsedAsDescription ? (0, import_i18n255.__)("Add a description\u2026") : (0, import_i18n255.__)("Add an excerpt\u2026");
     const triggerEditLabel = shouldBeUsedAsDescription ? (0, import_i18n255.__)("Edit description") : (0, import_i18n255.__)("Edit excerpt");
-    return /* @__PURE__ */ (0, import_jsx_runtime547.jsxs)(import_components184.__experimentalVStack, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime547.jsxs)(import_components182.__experimentalVStack, { children: [
       excerptText,
       /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
-        import_components184.Dropdown,
+        import_components182.Dropdown,
         {
           className: "editor-post-excerpt__dropdown",
           contentClassName: "editor-post-excerpt__dropdown__content",
@@ -108489,7 +108488,7 @@ ${content}
           focusOnMount: true,
           ref: setPopoverAnchor,
           renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
-            import_components184.Button,
+            import_components182.Button,
             {
               __next40pxDefaultSize: true,
               onClick: onToggle,
@@ -108505,7 +108504,7 @@ ${content}
                 onClose
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(import_components184.__experimentalVStack, { spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(plugin_default.Slot, { children: (fills) => /* @__PURE__ */ (0, import_jsx_runtime547.jsxs)(import_jsx_runtime547.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(import_components182.__experimentalVStack, { spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(plugin_default.Slot, { children: (fills) => /* @__PURE__ */ (0, import_jsx_runtime547.jsxs)(import_jsx_runtime547.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
                 PostExcerpt,
                 {
@@ -108524,9 +108523,9 @@ ${content}
   // packages/editor/build-module/components/post-featured-image/index.mjs
   var import_i18n256 = __toESM(require_i18n(), 1);
   var import_hooks52 = __toESM(require_hooks(), 1);
-  var import_components185 = __toESM(require_components(), 1);
+  var import_components183 = __toESM(require_components(), 1);
   var import_blob3 = __toESM(require_blob(), 1);
-  var import_element343 = __toESM(require_element(), 1);
+  var import_element342 = __toESM(require_element(), 1);
   var import_compose60 = __toESM(require_compose(), 1);
   var import_data137 = __toESM(require_data(), 1);
   var import_block_editor55 = __toESM(require_block_editor(), 1);
@@ -108617,8 +108616,8 @@ ${content}
     noticeOperations,
     isRequestingFeaturedImageMedia
   }) {
-    const returnsFocusRef = (0, import_element343.useRef)(false);
-    const [isLoading, setIsLoading] = (0, import_element343.useState)(false);
+    const returnsFocusRef = (0, import_element342.useRef)(false);
+    const [isLoading, setIsLoading] = (0, import_element342.useState)(false);
     const { getSettings: getSettings12 } = (0, import_data137.useSelect)(import_block_editor55.store);
     const { mediaSourceUrl } = getMediaDetails(media, currentPostId);
     function onDropFiles(filesList) {
@@ -108687,7 +108686,7 @@ ${content}
             modalClass: "editor-post-featured-image__media-modal",
             render: ({ open: open3 }) => /* @__PURE__ */ (0, import_jsx_runtime549.jsxs)("div", { className: "editor-post-featured-image__container", children: [
               isMissingMedia ? /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(
-                import_components185.Notice,
+                import_components183.Notice,
                 {
                   status: "warning",
                   isDismissible: false,
@@ -108696,7 +108695,7 @@ ${content}
                   )
                 }
               ) : /* @__PURE__ */ (0, import_jsx_runtime549.jsxs)(
-                import_components185.Button,
+                import_components183.Button,
                 {
                   __next40pxDefaultSize: true,
                   ref: returnFocus,
@@ -108720,13 +108719,13 @@ ${content}
                         )
                       }
                     ),
-                    (isLoading || isRequestingFeaturedImageMedia) && /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(import_components185.Spinner, {}),
+                    (isLoading || isRequestingFeaturedImageMedia) && /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(import_components183.Spinner, {}),
                     !featuredImageId && !isLoading && (postType2?.labels?.set_featured_image || DEFAULT_SET_FEATURE_IMAGE_LABEL)
                   ]
                 }
               ),
               !!featuredImageId && /* @__PURE__ */ (0, import_jsx_runtime549.jsxs)(
-                import_components185.__experimentalHStack,
+                import_components183.__experimentalHStack,
                 {
                   className: clsx_default(
                     "editor-post-featured-image__actions",
@@ -108737,7 +108736,7 @@ ${content}
                   ),
                   children: [
                     /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(
-                      import_components185.Button,
+                      import_components183.Button,
                       {
                         __next40pxDefaultSize: true,
                         className: "editor-post-featured-image__action",
@@ -108748,7 +108747,7 @@ ${content}
                       }
                     ),
                     /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(
-                      import_components185.Button,
+                      import_components183.Button,
                       {
                         __next40pxDefaultSize: true,
                         className: "editor-post-featured-image__action",
@@ -108764,7 +108763,7 @@ ${content}
                   ]
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(import_components185.DropZone, { onFilesDrop: onDropFiles })
+              /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(import_components183.DropZone, { onFilesDrop: onDropFiles })
             ] }),
             value: featuredImageId
           }
@@ -108819,15 +108818,15 @@ ${content}
     }
   );
   var post_featured_image_default = (0, import_compose60.compose)(
-    import_components185.withNotices,
+    import_components183.withNotices,
     applyWithSelect,
     applyWithDispatch,
-    (0, import_components185.withFilters)("editor.PostFeaturedImage")
+    (0, import_components183.withFilters)("editor.PostFeaturedImage")
   )(PostFeaturedImage2);
 
   // packages/editor/build-module/components/post-featured-image/panel.mjs
   var import_i18n257 = __toESM(require_i18n(), 1);
-  var import_components186 = __toESM(require_components(), 1);
+  var import_components184 = __toESM(require_components(), 1);
   var import_data138 = __toESM(require_data(), 1);
   var import_core_data88 = __toESM(require_core_data(), 1);
   var import_jsx_runtime550 = __toESM(require_jsx_runtime(), 1);
@@ -108854,7 +108853,7 @@ ${content}
       return /* @__PURE__ */ (0, import_jsx_runtime550.jsx)(check_default4, { children: /* @__PURE__ */ (0, import_jsx_runtime550.jsx)(post_featured_image_default, {}) });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime550.jsx)(check_default4, { children: /* @__PURE__ */ (0, import_jsx_runtime550.jsx)(
-      import_components186.PanelBody,
+      import_components184.PanelBody,
       {
         title: postType2?.labels?.featured_image ?? (0, import_i18n257.__)("Featured image"),
         opened: isOpened,
@@ -108866,7 +108865,7 @@ ${content}
 
   // packages/editor/build-module/components/post-format/index.mjs
   var import_i18n258 = __toESM(require_i18n(), 1);
-  var import_components187 = __toESM(require_components(), 1);
+  var import_components185 = __toESM(require_components(), 1);
   var import_data140 = __toESM(require_data(), 1);
   var import_compose61 = __toESM(require_compose(), 1);
   var import_core_data89 = __toESM(require_core_data(), 1);
@@ -108935,7 +108934,7 @@ ${content}
     const onUpdatePostFormat = (format7) => editPost2({ format: format7 });
     return /* @__PURE__ */ (0, import_jsx_runtime552.jsx)(PostFormatCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime552.jsxs)("div", { className: "editor-post-format", children: [
       /* @__PURE__ */ (0, import_jsx_runtime552.jsx)(
-        import_components187.RadioControl,
+        import_components185.RadioControl,
         {
           className: "editor-post-format__options",
           label: (0, import_i18n258.__)("Post Format"),
@@ -108950,7 +108949,7 @@ ${content}
         }
       ),
       suggestion && suggestion.id !== postFormat && /* @__PURE__ */ (0, import_jsx_runtime552.jsx)("p", { className: "editor-post-format__suggestion", children: /* @__PURE__ */ (0, import_jsx_runtime552.jsx)(
-        import_components187.Button,
+        import_components185.Button,
         {
           __next40pxDefaultSize: true,
           variant: "link",
@@ -108967,7 +108966,7 @@ ${content}
 
   // packages/editor/build-module/components/post-last-revision/index.mjs
   var import_i18n259 = __toESM(require_i18n(), 1);
-  var import_components188 = __toESM(require_components(), 1);
+  var import_components186 = __toESM(require_components(), 1);
   var import_data142 = __toESM(require_data(), 1);
   var import_url17 = __toESM(require_url(), 1);
 
@@ -109014,7 +109013,7 @@ ${content}
       })
     } : { onClick: () => setCurrentRevisionId2(lastRevisionId) };
     return /* @__PURE__ */ (0, import_jsx_runtime554.jsx)(check_default5, { children: /* @__PURE__ */ (0, import_jsx_runtime554.jsx)(
-      import_components188.Button,
+      import_components186.Button,
       {
         __next40pxDefaultSize: true,
         ...buttonProps,
@@ -109038,7 +109037,7 @@ ${content}
       })
     } : { onClick: () => setCurrentRevisionId2(lastRevisionId) };
     return /* @__PURE__ */ (0, import_jsx_runtime554.jsx)(check_default5, { children: /* @__PURE__ */ (0, import_jsx_runtime554.jsx)(post_panel_row_default, { label: (0, import_i18n259.__)("Revisions"), children: /* @__PURE__ */ (0, import_jsx_runtime554.jsx)(
-      import_components188.Button,
+      import_components186.Button,
       {
         ...buttonProps,
         className: "editor-private-post-last-revision__button",
@@ -109060,19 +109059,19 @@ ${content}
   var post_last_revision_default = PostLastRevision;
 
   // packages/editor/build-module/components/post-last-revision/panel.mjs
-  var import_components189 = __toESM(require_components(), 1);
+  var import_components187 = __toESM(require_components(), 1);
   var import_jsx_runtime555 = __toESM(require_jsx_runtime(), 1);
   function PostLastRevisionPanel() {
-    return /* @__PURE__ */ (0, import_jsx_runtime555.jsx)(check_default5, { children: /* @__PURE__ */ (0, import_jsx_runtime555.jsx)(import_components189.PanelBody, { className: "editor-post-last-revision__panel", children: /* @__PURE__ */ (0, import_jsx_runtime555.jsx)(post_last_revision_default, {}) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime555.jsx)(check_default5, { children: /* @__PURE__ */ (0, import_jsx_runtime555.jsx)(import_components187.PanelBody, { className: "editor-post-last-revision__panel", children: /* @__PURE__ */ (0, import_jsx_runtime555.jsx)(post_last_revision_default, {}) }) });
   }
   var panel_default2 = PostLastRevisionPanel;
 
   // packages/editor/build-module/components/post-locked-modal/index.mjs
   var import_i18n261 = __toESM(require_i18n(), 1);
-  var import_components190 = __toESM(require_components(), 1);
+  var import_components188 = __toESM(require_components(), 1);
   var import_data143 = __toESM(require_data(), 1);
   var import_url18 = __toESM(require_url(), 1);
-  var import_element344 = __toESM(require_element(), 1);
+  var import_element343 = __toESM(require_element(), 1);
   var import_hooks53 = __toESM(require_hooks(), 1);
   var import_compose62 = __toESM(require_compose(), 1);
   var import_core_data90 = __toESM(require_core_data(), 1);
@@ -109193,7 +109192,7 @@ ${content}
         previewLink: getEditedPostPreviewLink2()
       };
     }, []);
-    (0, import_element344.useEffect)(() => {
+    (0, import_element343.useEffect)(() => {
       function sendPostLock(data) {
         if (isLocked) {
           return;
@@ -109279,7 +109278,7 @@ ${content}
     });
     const allPostsLabel = (0, import_i18n261.__)("Exit editor");
     return /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(
-      import_components190.Modal,
+      import_components188.Modal,
       {
         title: isTakeover ? (0, import_i18n261.__)("Someone else has taken over this post") : (0, import_i18n261.__)("This post is already being edited"),
         focusOnMount: true,
@@ -109288,7 +109287,7 @@ ${content}
         isDismissible: false,
         className: "editor-post-locked-modal",
         size: "medium",
-        children: /* @__PURE__ */ (0, import_jsx_runtime556.jsxs)(import_components190.__experimentalHStack, { alignment: "top", spacing: 6, children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime556.jsxs)(import_components188.__experimentalHStack, { alignment: "top", spacing: 6, children: [
           !!userAvatar && /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(
             "img",
             {
@@ -109301,7 +109300,7 @@ ${content}
           ),
           /* @__PURE__ */ (0, import_jsx_runtime556.jsxs)("div", { children: [
             !!isTakeover && /* @__PURE__ */ (0, import_jsx_runtime556.jsxs)(import_jsx_runtime556.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime556.jsx)("p", { children: (0, import_element344.createInterpolateElement)(
+              /* @__PURE__ */ (0, import_jsx_runtime556.jsx)("p", { children: (0, import_element343.createInterpolateElement)(
                 userDisplayName ? (0, import_i18n261.sprintf)(
                   /* translators: %s: user's display name */
                   (0, import_i18n261.__)(
@@ -109313,13 +109312,13 @@ ${content}
                 ),
                 {
                   strong: /* @__PURE__ */ (0, import_jsx_runtime556.jsx)("strong", {}),
-                  PreviewLink: /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(import_components190.ExternalLink, { href: previewLink, children: (0, import_i18n261.__)("preview") })
+                  PreviewLink: /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(import_components188.ExternalLink, { href: previewLink, children: (0, import_i18n261.__)("preview") })
                 }
               ) }),
               /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(CollaborationContext, {})
             ] }),
             !isTakeover && /* @__PURE__ */ (0, import_jsx_runtime556.jsxs)(import_jsx_runtime556.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime556.jsx)("p", { children: (0, import_element344.createInterpolateElement)(
+              /* @__PURE__ */ (0, import_jsx_runtime556.jsx)("p", { children: (0, import_element343.createInterpolateElement)(
                 userDisplayName ? (0, import_i18n261.sprintf)(
                   /* translators: %s: user's display name */
                   (0, import_i18n261.__)(
@@ -109331,7 +109330,7 @@ ${content}
                 ),
                 {
                   strong: /* @__PURE__ */ (0, import_jsx_runtime556.jsx)("strong", {}),
-                  PreviewLink: /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(import_components190.ExternalLink, { href: previewLink, children: (0, import_i18n261.__)("preview") })
+                  PreviewLink: /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(import_components188.ExternalLink, { href: previewLink, children: (0, import_i18n261.__)("preview") })
                 }
               ) }),
               /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(CollaborationContext, {}),
@@ -109340,13 +109339,13 @@ ${content}
               ) })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime556.jsxs)(
-              import_components190.__experimentalHStack,
+              import_components188.__experimentalHStack,
               {
                 className: "editor-post-locked-modal__buttons",
                 justify: "flex-end",
                 children: [
                   !isTakeover && /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(
-                    import_components190.Button,
+                    import_components188.Button,
                     {
                       __next40pxDefaultSize: true,
                       variant: "tertiary",
@@ -109355,7 +109354,7 @@ ${content}
                     }
                   ),
                   /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(
-                    import_components190.Button,
+                    import_components188.Button,
                     {
                       __next40pxDefaultSize: true,
                       variant: "primary",
@@ -109371,11 +109370,11 @@ ${content}
       }
     );
   }
-  var post_locked_modal_default = true ? (0, import_components190.withFilters)("editor.PostLockedModal")(PostLockedModal) : PostLockedModal;
+  var post_locked_modal_default = true ? (0, import_components188.withFilters)("editor.PostLockedModal")(PostLockedModal) : PostLockedModal;
 
   // packages/editor/build-module/components/post-pending-status/index.mjs
   var import_i18n262 = __toESM(require_i18n(), 1);
-  var import_components191 = __toESM(require_components(), 1);
+  var import_components189 = __toESM(require_components(), 1);
   var import_data145 = __toESM(require_data(), 1);
 
   // packages/editor/build-module/components/post-pending-status/check.mjs
@@ -109408,7 +109407,7 @@ ${content}
       editPost2({ status: updatedStatus });
     };
     return /* @__PURE__ */ (0, import_jsx_runtime557.jsx)(check_default6, { children: /* @__PURE__ */ (0, import_jsx_runtime557.jsx)(
-      import_components191.CheckboxControl,
+      import_components189.CheckboxControl,
       {
         label: (0, import_i18n262.__)("Pending review"),
         checked: status === "pending",
@@ -109419,19 +109418,19 @@ ${content}
   var post_pending_status_default = PostPendingStatus;
 
   // packages/editor/build-module/components/post-preview-button/index.mjs
-  var import_element345 = __toESM(require_element(), 1);
-  var import_components192 = __toESM(require_components(), 1);
+  var import_element344 = __toESM(require_element(), 1);
+  var import_components190 = __toESM(require_components(), 1);
   var import_i18n263 = __toESM(require_i18n(), 1);
   var import_data146 = __toESM(require_data(), 1);
   var import_hooks54 = __toESM(require_hooks(), 1);
   var import_core_data91 = __toESM(require_core_data(), 1);
   var import_jsx_runtime558 = __toESM(require_jsx_runtime(), 1);
   function buildInterstitialMarkup() {
-    let markup = (0, import_element345.renderToString)(
+    let markup = (0, import_element344.renderToString)(
       /* @__PURE__ */ (0, import_jsx_runtime558.jsxs)("div", { className: "editor-post-preview-button__interstitial-message", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime558.jsxs)(import_components192.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 96 96", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime558.jsxs)(import_components190.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 96 96", children: [
           /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-            import_components192.Path,
+            import_components190.Path,
             {
               className: "outer",
               d: "M48 12c19.9 0 36 16.1 36 36S67.9 84 48 84 12 67.9 12 48s16.1-36 36-36",
@@ -109439,7 +109438,7 @@ ${content}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-            import_components192.Path,
+            import_components190.Path,
             {
               className: "inner",
               d: "M69.5 46.4c0-3.9-1.4-6.7-2.6-8.8-1.6-2.6-3.1-4.9-3.1-7.5 0-2.9 2.2-5.7 5.4-5.7h.4C63.9 19.2 56.4 16 48 16c-11.2 0-21 5.7-26.7 14.4h2.1c3.3 0 8.5-.4 8.5-.4 1.7-.1 1.9 2.4.2 2.6 0 0-1.7.2-3.7.3L40 67.5l7-20.9L42 33c-1.7-.1-3.3-.3-3.3-.3-1.7-.1-1.5-2.7.2-2.6 0 0 5.3.4 8.4.4 3.3 0 8.5-.4 8.5-.4 1.7-.1 1.9 2.4.2 2.6 0 0-1.7.2-3.7.3l11.5 34.3 3.3-10.4c1.6-4.5 2.4-7.8 2.4-10.5zM16.1 48c0 12.6 7.3 23.5 18 28.7L18.8 35c-1.7 4-2.7 8.4-2.7 13zm32.5 2.8L39 78.6c2.9.8 5.9 1.3 9 1.3 3.7 0 7.3-.6 10.6-1.8-.1-.1-.2-.3-.2-.4l-9.8-26.9zM76.2 36c0 3.2-.6 6.9-2.4 11.4L64 75.6c9.5-5.5 15.9-15.8 15.9-27.6 0-5.5-1.4-10.8-3.9-15.3.1 1 .2 2.1.2 3.3z",
@@ -109617,7 +109616,7 @@ ${content}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-      import_components192.Button,
+      import_components190.Button,
       {
         variant: !className ? "tertiary" : void 0,
         className: className || "editor-post-preview",
@@ -109638,7 +109637,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-publish-button/index.mjs
-  var import_components193 = __toESM(require_components(), 1);
+  var import_components191 = __toESM(require_components(), 1);
   var import_data148 = __toESM(require_data(), 1);
 
   // packages/editor/build-module/components/post-publish-button/label.mjs
@@ -109812,7 +109811,7 @@ ${content}
     };
     const componentProps = isToggle ? toggleProps : buttonProps;
     return /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-      import_components193.Button,
+      import_components191.Button,
       {
         ...componentProps,
         className: `${componentProps.className} editor-post-publish-button__button`,
@@ -109825,15 +109824,15 @@ ${content}
 
   // packages/editor/build-module/components/post-publish-panel/index.mjs
   var import_i18n277 = __toESM(require_i18n(), 1);
-  var import_element354 = __toESM(require_element(), 1);
-  var import_components205 = __toESM(require_components(), 1);
+  var import_element353 = __toESM(require_element(), 1);
+  var import_components203 = __toESM(require_components(), 1);
   var import_data162 = __toESM(require_data(), 1);
   var import_compose68 = __toESM(require_compose(), 1);
   var import_core_data101 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-publish-panel/prepublish.mjs
   var import_i18n275 = __toESM(require_i18n(), 1);
-  var import_components203 = __toESM(require_components(), 1);
+  var import_components201 = __toESM(require_components(), 1);
   var import_data160 = __toESM(require_data(), 1);
   var import_url19 = __toESM(require_url(), 1);
   var import_core_data99 = __toESM(require_core_data(), 1);
@@ -109841,8 +109840,8 @@ ${content}
 
   // packages/editor/build-module/components/post-visibility/index.mjs
   var import_i18n266 = __toESM(require_i18n(), 1);
-  var import_element346 = __toESM(require_element(), 1);
-  var import_components194 = __toESM(require_components(), 1);
+  var import_element345 = __toESM(require_element(), 1);
+  var import_components192 = __toESM(require_components(), 1);
   var import_compose64 = __toESM(require_compose(), 1);
   var import_data149 = __toESM(require_data(), 1);
   var import_block_editor56 = __toESM(require_block_editor(), 1);
@@ -109880,7 +109879,7 @@ ${content}
       password: select9(store).getEditedPostAttribute("password")
     }));
     const { editPost: editPost2 } = (0, import_data149.useDispatch)(store);
-    const [hasPassword, setHasPassword] = (0, import_element346.useState)(!!password);
+    const [hasPassword, setHasPassword] = (0, import_element345.useState)(!!password);
     function updateVisibility(value) {
       const nextValues = {
         public: {
@@ -109909,10 +109908,10 @@ ${content}
           onClose
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime560.jsxs)(import_components194.__experimentalVStack, { spacing: 4, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime560.jsxs)(import_components192.__experimentalVStack, { spacing: 4, children: [
         !showPopoverHeader && /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(Text, { render: /* @__PURE__ */ (0, import_jsx_runtime560.jsx)("p", {}), children: help }),
         /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(
-          import_components194.RadioControl,
+          import_components192.RadioControl,
           {
             label: (0, import_i18n266.__)("Visibility"),
             hideLabelFromVision: true,
@@ -109922,7 +109921,7 @@ ${content}
           }
         ),
         hasPassword && /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(
-          import_components194.TextControl,
+          import_components192.TextControl,
           {
             label: (0, import_i18n266.__)("Password"),
             onChange: updatePassword,
@@ -109954,10 +109953,10 @@ ${content}
   var import_a11y11 = __toESM(require_a11y(), 1);
   var import_date21 = __toESM(require_date(), 1);
   var import_i18n268 = __toESM(require_i18n(), 1);
-  var import_components195 = __toESM(require_components(), 1);
+  var import_components193 = __toESM(require_components(), 1);
   var import_data152 = __toESM(require_data(), 1);
   var import_block_editor57 = __toESM(require_block_editor(), 1);
-  var import_element347 = __toESM(require_element(), 1);
+  var import_element346 = __toESM(require_element(), 1);
   var import_core_data92 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-schedule/label.mjs
@@ -110083,7 +110082,7 @@ ${content}
         "assertive"
       );
     };
-    const [previewedMonth, setPreviewedMonth] = (0, import_element347.useState)(
+    const [previewedMonth, setPreviewedMonth] = (0, import_element346.useState)(
       startOfMonth(new Date(postDate))
     );
     const eventsByPostType = (0, import_data152.useSelect)(
@@ -110097,7 +110096,7 @@ ${content}
       }),
       [previewedMonth, postType2]
     );
-    const events = (0, import_element347.useMemo)(
+    const events = (0, import_element346.useMemo)(
       () => (eventsByPostType || []).map(({ date: eventDate }) => ({
         date: new Date(eventDate)
       })),
@@ -110132,7 +110131,7 @@ ${content}
     return /* @__PURE__ */ (0, import_jsx_runtime561.jsxs)(import_jsx_runtime561.Fragment, { children: [
       picker,
       /* @__PURE__ */ (0, import_jsx_runtime561.jsx)(
-        import_components195.Button,
+        import_components193.Button,
         {
           className: "editor-post-schedule__reset",
           variant: "secondary",
@@ -110148,15 +110147,15 @@ ${content}
 
   // packages/editor/build-module/components/post-publish-panel/maybe-tags-panel.mjs
   var import_i18n270 = __toESM(require_i18n(), 1);
-  var import_element349 = __toESM(require_element(), 1);
+  var import_element348 = __toESM(require_element(), 1);
   var import_data155 = __toESM(require_data(), 1);
-  var import_components198 = __toESM(require_components(), 1);
+  var import_components196 = __toESM(require_components(), 1);
   var import_core_data95 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/flat-term-selector.mjs
   var import_i18n269 = __toESM(require_i18n(), 1);
-  var import_element348 = __toESM(require_element(), 1);
-  var import_components197 = __toESM(require_components(), 1);
+  var import_element347 = __toESM(require_element(), 1);
+  var import_components195 = __toESM(require_components(), 1);
   var import_data154 = __toESM(require_data(), 1);
   var import_core_data94 = __toESM(require_core_data(), 1);
   var import_compose65 = __toESM(require_compose(), 1);
@@ -110164,7 +110163,7 @@ ${content}
   var import_notices26 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/most-used-terms.mjs
-  var import_components196 = __toESM(require_components(), 1);
+  var import_components194 = __toESM(require_components(), 1);
   var import_data153 = __toESM(require_data(), 1);
   var import_core_data93 = __toESM(require_core_data(), 1);
   var import_jsx_runtime562 = __toESM(require_jsx_runtime(), 1);
@@ -110198,7 +110197,7 @@ ${content}
     const terms = unescapeTerms(_terms);
     return /* @__PURE__ */ (0, import_jsx_runtime562.jsxs)("div", { className: "editor-post-taxonomies__flat-term-most-used", children: [
       /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(
-        import_components196.BaseControl.VisualLabel,
+        import_components194.BaseControl.VisualLabel,
         {
           as: "h3",
           className: "editor-post-taxonomies__flat-term-most-used-label",
@@ -110211,7 +110210,7 @@ ${content}
           role: "list",
           className: "editor-post-taxonomies__flat-term-most-used-list",
           children: terms.map((term) => /* @__PURE__ */ (0, import_jsx_runtime562.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(
-            import_components196.Button,
+            import_components194.Button,
             {
               __next40pxDefaultSize: true,
               variant: "link",
@@ -110245,12 +110244,12 @@ ${content}
   var isSameTermName = (nameA, nameB) => nameA.toLowerCase() === nameB.toLowerCase();
   var isPendingTerm = (item) => item.value.startsWith(PENDING_TERM_PREFIX);
   function FlatTermSelector({ slug }) {
-    const [values, setValues] = (0, import_element348.useState)(EMPTY_ARRAY16);
-    const [inputValue, setInputValue] = (0, import_element348.useState)("");
-    const [suggestions, setSuggestions] = (0, import_element348.useState)(EMPTY_ARRAY16);
-    const [isSearching, setIsSearching] = (0, import_element348.useState)(false);
-    const lastSearchRef = (0, import_element348.useRef)("");
-    const pendingTermsRef = (0, import_element348.useRef)(/* @__PURE__ */ new Set());
+    const [values, setValues] = (0, import_element347.useState)(EMPTY_ARRAY16);
+    const [inputValue, setInputValue] = (0, import_element347.useState)("");
+    const [suggestions, setSuggestions] = (0, import_element347.useState)(EMPTY_ARRAY16);
+    const [isSearching, setIsSearching] = (0, import_element347.useState)(false);
+    const lastSearchRef = (0, import_element347.useRef)("");
+    const pendingTermsRef = (0, import_element347.useRef)(/* @__PURE__ */ new Set());
     const registry = (0, import_data154.useRegistry)();
     const { editPost: editPost2 } = (0, import_data154.useDispatch)(store);
     const { saveEntityRecord } = (0, import_data154.useDispatch)(import_core_data94.store);
@@ -110297,7 +110296,7 @@ ${content}
       },
       [slug]
     );
-    (0, import_element348.useEffect)(() => {
+    (0, import_element347.useEffect)(() => {
       if (hasResolvedTerms) {
         setValues((currentValues) => [
           ...(terms ?? []).map(termToItem),
@@ -110306,7 +110305,7 @@ ${content}
         ]);
       }
     }, [terms, hasResolvedTerms]);
-    const searchTerms = (0, import_element348.useCallback)(
+    const searchTerms = (0, import_element347.useCallback)(
       async (search) => {
         const records = await registry.resolveSelect(import_core_data94.store).getEntityRecords("taxonomy", slug, {
           ...DEFAULT_QUERY3,
@@ -110325,7 +110324,7 @@ ${content}
       (term) => isSameTermName(term.label, newTermName)
     );
     const showCreatableItem = hasCreateAction && !!newTermName && !hasExactMatch && !isSearching;
-    const creatableItem = (0, import_element348.useMemo)(
+    const creatableItem = (0, import_element347.useMemo)(
       () => showCreatableItem ? {
         value: CREATE_TERM_VALUE,
         label: (0, import_i18n269.sprintf)(
@@ -110337,7 +110336,7 @@ ${content}
       } : void 0,
       [newTermName, showCreatableItem]
     );
-    const items = (0, import_element348.useMemo)(
+    const items = (0, import_element347.useMemo)(
       () => creatableItem ? [...suggestions, creatableItem] : suggestions,
       [suggestions, creatableItem]
     );
@@ -110494,7 +110493,7 @@ ${content}
       /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(MostUsedTerms, { taxonomy, onSelect: appendTerm })
     ] });
   }
-  var flat_term_selector_default = (0, import_components197.withFilters)("editor.PostTaxonomyType")(FlatTermSelector);
+  var flat_term_selector_default = (0, import_components195.withFilters)("editor.PostTaxonomyType")(FlatTermSelector);
 
   // packages/editor/build-module/components/post-publish-panel/maybe-tags-panel.mjs
   var import_jsx_runtime564 = __toESM(require_jsx_runtime(), 1);
@@ -110509,7 +110508,7 @@ ${content}
       (0, import_i18n270.__)("Suggestion:"),
       /* @__PURE__ */ (0, import_jsx_runtime564.jsx)("span", { className: "editor-post-publish-panel__link", children: addNewItem }, "label")
     ];
-    return /* @__PURE__ */ (0, import_jsx_runtime564.jsxs)(import_components198.PanelBody, { initialOpen: false, title: panelBodyTitle, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime564.jsxs)(import_components196.PanelBody, { initialOpen: false, title: panelBodyTitle, children: [
       /* @__PURE__ */ (0, import_jsx_runtime564.jsx)("p", { children: (0, import_i18n270.sprintf)(
         // translators: %s is the taxonomy name (e.g., "Tags").
         (0, import_i18n270.__)(
@@ -110547,7 +110546,7 @@ ${content}
       },
       []
     );
-    const [hadTagsWhenOpeningThePanel] = (0, import_element349.useState)(postHasTags);
+    const [hadTagsWhenOpeningThePanel] = (0, import_element348.useState)(postHasTags);
     if (!isPostTypeSupported || !siteHasTags) {
       return null;
     }
@@ -110559,7 +110558,7 @@ ${content}
   var maybe_tags_panel_default = MaybeTagsPanel;
 
   // packages/editor/build-module/components/post-publish-panel/maybe-post-format-panel.mjs
-  var import_components199 = __toESM(require_components(), 1);
+  var import_components197 = __toESM(require_components(), 1);
   var import_data156 = __toESM(require_data(), 1);
   var import_i18n271 = __toESM(require_i18n(), 1);
   var import_core_data96 = __toESM(require_core_data(), 1);
@@ -110575,7 +110574,7 @@ ${content}
     suggestionText,
     onUpdatePostFormat
   }) => /* @__PURE__ */ (0, import_jsx_runtime565.jsx)(
-    import_components199.Button,
+    import_components197.Button,
     {
       __next40pxDefaultSize: true,
       variant: "link",
@@ -110604,7 +110603,7 @@ ${content}
     if (!suggestion || suggestion.id === currentPostFormat) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime565.jsxs)(import_components199.PanelBody, { initialOpen: false, title: panelBodyTitle, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime565.jsxs)(import_components197.PanelBody, { initialOpen: false, title: panelBodyTitle, children: [
       /* @__PURE__ */ (0, import_jsx_runtime565.jsx)("p", { children: (0, import_i18n271.__)(
         "Your theme uses post formats to highlight different kinds of content, like images or videos. Apply a post format to see this special styling."
       ) }),
@@ -110626,15 +110625,15 @@ ${content}
   // packages/editor/build-module/components/post-publish-panel/maybe-category-panel.mjs
   var import_i18n273 = __toESM(require_i18n(), 1);
   var import_data158 = __toESM(require_data(), 1);
-  var import_components201 = __toESM(require_components(), 1);
+  var import_components199 = __toESM(require_components(), 1);
   var import_core_data98 = __toESM(require_core_data(), 1);
-  var import_element351 = __toESM(require_element(), 1);
+  var import_element350 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/hierarchical-term-selector.mjs
   var import_i18n272 = __toESM(require_i18n(), 1);
-  var import_element350 = __toESM(require_element(), 1);
+  var import_element349 = __toESM(require_element(), 1);
   var import_notices27 = __toESM(require_notices(), 1);
-  var import_components200 = __toESM(require_components(), 1);
+  var import_components198 = __toESM(require_components(), 1);
   var import_data157 = __toESM(require_data(), 1);
   var import_compose66 = __toESM(require_compose(), 1);
   var import_core_data97 = __toESM(require_core_data(), 1);
@@ -110674,14 +110673,14 @@ ${content}
     }
     return count;
   }
-  var TermCheckbox = (0, import_element350.memo)(function Checkbox2({
+  var TermCheckbox = (0, import_element349.memo)(function Checkbox2({
     id,
     name: name2,
     checked: checked2,
     onToggle
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
-      import_components200.CheckboxControl,
+      import_components198.CheckboxControl,
       {
         checked: checked2,
         onChange: () => onToggle(id),
@@ -110755,12 +110754,12 @@ ${content}
     return matchTermsForFilter;
   }
   function HierarchicalTermSelector({ slug }) {
-    const [adding, setAdding] = (0, import_element350.useState)(false);
-    const [formName, setFormName] = (0, import_element350.useState)("");
-    const [formParent, setFormParent] = (0, import_element350.useState)("");
-    const [showForm, setShowForm] = (0, import_element350.useState)(false);
-    const [filterValue, setFilterValue] = (0, import_element350.useState)("");
-    const deferredFilterValue = (0, import_element350.useDeferredValue)(filterValue);
+    const [adding, setAdding] = (0, import_element349.useState)(false);
+    const [formName, setFormName] = (0, import_element349.useState)("");
+    const [formParent, setFormParent] = (0, import_element349.useState)("");
+    const [showForm, setShowForm] = (0, import_element349.useState)(false);
+    const [filterValue, setFilterValue] = (0, import_element349.useState)("");
+    const deferredFilterValue = (0, import_element349.useDeferredValue)(filterValue);
     const debouncedSpeak = (0, import_compose66.useDebounce)(import_a11y13.speak, SPEAK_DEBOUNCE_MS);
     const {
       hasCreateAction,
@@ -110793,21 +110792,21 @@ ${content}
     const { editPost: editPost2 } = (0, import_data157.useDispatch)(store);
     const { saveEntityRecord } = (0, import_data157.useDispatch)(import_core_data97.store);
     const { createErrorNotice } = (0, import_data157.useDispatch)(import_notices27.store);
-    const selectedTerms = (0, import_element350.useMemo)(() => new Set(terms), [terms]);
-    const availableTermsTree = (0, import_element350.useMemo)(
+    const selectedTerms = (0, import_element349.useMemo)(() => new Set(terms), [terms]);
+    const availableTermsTree = (0, import_element349.useMemo)(
       () => sortBySelected(buildTermsTree2(availableTerms), terms),
       // Remove `terms` from the dependency list to avoid reordering every time
       // checking or unchecking a term.
       [availableTerms]
     );
-    const shownTerms = (0, import_element350.useMemo)(() => {
+    const shownTerms = (0, import_element349.useMemo)(() => {
       if ("" === deferredFilterValue) {
         return availableTermsTree;
       }
       return availableTermsTree.map(getFilterMatcher(deferredFilterValue)).filter((term) => term);
     }, [availableTermsTree, deferredFilterValue]);
     const resultCount = getResultCount(shownTerms);
-    (0, import_element350.useEffect)(() => {
+    (0, import_element349.useEffect)(() => {
       if ("" === deferredFilterValue) {
         return;
       }
@@ -110909,7 +110908,7 @@ ${content}
     const showFilter = availableTerms.length >= MIN_TERMS_COUNT_FOR_FILTER;
     return /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(Stack, { direction: "column", gap: "lg", children: [
       showFilter && !loading && /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
-        import_components200.SearchControl,
+        import_components198.SearchControl,
         {
           label: filterLabel,
           placeholder: filterLabel,
@@ -110947,7 +110946,7 @@ ${content}
         }
       ),
       !loading && hasCreateAction && /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
-        import_components200.Button,
+        import_components198.Button,
         {
           __next40pxDefaultSize: true,
           onClick: onToggleForm,
@@ -110969,7 +110968,7 @@ ${content}
           }
         ),
         !!availableTerms.length && /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
-          import_components200.TreeSelect,
+          import_components198.TreeSelect,
           {
             label: parentSelectLabel,
             noOptionLabel: noParentOption,
@@ -110979,7 +110978,7 @@ ${content}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
-          import_components200.Button,
+          import_components198.Button,
           {
             __next40pxDefaultSize: true,
             variant: "secondary",
@@ -110991,7 +110990,7 @@ ${content}
       ] }) })
     ] });
   }
-  var hierarchical_term_selector_default = (0, import_components200.withFilters)("editor.PostTaxonomyType")(
+  var hierarchical_term_selector_default = (0, import_components198.withFilters)("editor.PostTaxonomyType")(
     HierarchicalTermSelector
   );
 
@@ -111025,8 +111024,8 @@ ${content}
         hasSiteCategories: siteCategories
       };
     }, []);
-    const [shouldShowPanel, setShouldShowPanel] = (0, import_element351.useState)(false);
-    (0, import_element351.useEffect)(() => {
+    const [shouldShowPanel, setShouldShowPanel] = (0, import_element350.useState)(false);
+    (0, import_element350.useEffect)(() => {
       if (hasNoCategory) {
         setShouldShowPanel(true);
       }
@@ -111038,7 +111037,7 @@ ${content}
       (0, import_i18n273.__)("Suggestion:"),
       /* @__PURE__ */ (0, import_jsx_runtime567.jsx)("span", { className: "editor-post-publish-panel__link", children: (0, import_i18n273.__)("Assign a category") }, "label")
     ];
-    return /* @__PURE__ */ (0, import_jsx_runtime567.jsxs)(import_components201.PanelBody, { initialOpen: false, title: panelBodyTitle, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime567.jsxs)(import_components199.PanelBody, { initialOpen: false, title: panelBodyTitle, children: [
       /* @__PURE__ */ (0, import_jsx_runtime567.jsx)("p", { children: (0, import_i18n273.__)(
         "Categories provide a helpful way to group related posts together and to quickly tell readers what a post is about."
       ) }),
@@ -111048,11 +111047,11 @@ ${content}
   var maybe_category_panel_default = MaybeCategoryPanel;
 
   // packages/editor/build-module/components/post-publish-panel/maybe-upload-media.mjs
-  var import_components202 = __toESM(require_components(), 1);
+  var import_components200 = __toESM(require_components(), 1);
   var import_data159 = __toESM(require_data(), 1);
   var import_i18n274 = __toESM(require_i18n(), 1);
   var import_block_editor58 = __toESM(require_block_editor(), 1);
-  var import_element352 = __toESM(require_element(), 1);
+  var import_element351 = __toESM(require_element(), 1);
   var import_jsx_runtime568 = __toESM(require_jsx_runtime(), 1);
   var { mediaSideloadFromUrlKey: mediaSideloadFromUrlKey2 } = unlock(import_block_editor58.privateApis);
   function flattenBlocks2(blocks) {
@@ -111086,7 +111085,7 @@ ${content}
   function Image2({ clientId, alt, url }) {
     const { selectBlock: selectBlock2 } = (0, import_data159.useDispatch)(import_block_editor58.store);
     return /* @__PURE__ */ (0, import_jsx_runtime568.jsx)(
-      import_components202.__unstableMotion.img,
+      import_components200.__unstableMotion.img,
       {
         tabIndex: 0,
         role: "button",
@@ -111117,9 +111116,9 @@ ${content}
     );
   }
   function MaybeUploadMediaPanel() {
-    const [isUploading, setIsUploading] = (0, import_element352.useState)(false);
-    const [isAnimating2, setIsAnimating] = (0, import_element352.useState)(false);
-    const [hadUploadError, setHadUploadError] = (0, import_element352.useState)(false);
+    const [isUploading, setIsUploading] = (0, import_element351.useState)(false);
+    const [isAnimating2, setIsAnimating] = (0, import_element351.useState)(false);
+    const [hadUploadError, setHadUploadError] = (0, import_element351.useState)(false);
     const { editorBlocks, mediaSideloadFromUrl: mediaSideloadFromUrl2 } = (0, import_data159.useSelect)(
       (select9) => ({
         editorBlocks: select9(import_block_editor58.store).getBlocks(),
@@ -111184,7 +111183,7 @@ ${content}
         setIsUploading(false);
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime568.jsxs)(import_components202.PanelBody, { initialOpen: true, title: panelBodyTitle, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime568.jsxs)(import_components200.PanelBody, { initialOpen: true, title: panelBodyTitle, children: [
       /* @__PURE__ */ (0, import_jsx_runtime568.jsx)("p", { children: (0, import_i18n274.__)(
         "Upload external images to the Media Library. Images from different domains may load slowly, display incorrectly, or be removed unexpectedly."
       ) }),
@@ -111198,7 +111197,7 @@ ${content}
           },
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime568.jsx)(
-              import_components202.__unstableAnimatePresence,
+              import_components200.__unstableAnimatePresence,
               {
                 onExitComplete: () => setIsAnimating(false),
                 children: blocksWithExternalMedia.map((block) => {
@@ -111215,8 +111214,8 @@ ${content}
                 })
               }
             ),
-            isUploading || isAnimating2 ? /* @__PURE__ */ (0, import_jsx_runtime568.jsx)(import_components202.Spinner, {}) : /* @__PURE__ */ (0, import_jsx_runtime568.jsx)(
-              import_components202.Button,
+            isUploading || isAnimating2 ? /* @__PURE__ */ (0, import_jsx_runtime568.jsx)(import_components200.Spinner, {}) : /* @__PURE__ */ (0, import_jsx_runtime568.jsx)(
+              import_components200.Button,
               {
                 size: "compact",
                 variant: "primary",
@@ -111259,7 +111258,7 @@ ${content}
       };
     }, []);
     let siteIcon = /* @__PURE__ */ (0, import_jsx_runtime569.jsx)(
-      import_components203.Icon,
+      import_components201.Icon,
       {
         className: "components-site-icon",
         size: "36px",
@@ -111309,7 +111308,7 @@ ${content}
       /* @__PURE__ */ (0, import_jsx_runtime569.jsx)(MaybeUploadMediaPanel, {}),
       hasPublishAction && /* @__PURE__ */ (0, import_jsx_runtime569.jsxs)(import_jsx_runtime569.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime569.jsx)(
-          import_components203.PanelBody,
+          import_components201.PanelBody,
           {
             initialOpen: false,
             title: [
@@ -111327,7 +111326,7 @@ ${content}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime569.jsx)(
-          import_components203.PanelBody,
+          import_components201.PanelBody,
           {
             initialOpen: false,
             title: [
@@ -111360,9 +111359,9 @@ ${content}
   var prepublish_default = PostPublishPanelPrepublish;
 
   // packages/editor/build-module/components/post-publish-panel/postpublish.mjs
-  var import_components204 = __toESM(require_components(), 1);
+  var import_components202 = __toESM(require_components(), 1);
   var import_i18n276 = __toESM(require_i18n(), 1);
-  var import_element353 = __toESM(require_element(), 1);
+  var import_element352 = __toESM(require_element(), 1);
   var import_data161 = __toESM(require_data(), 1);
   var import_url20 = __toESM(require_url(), 1);
   var import_html_entities27 = __toESM(require_html_entities(), 1);
@@ -111382,8 +111381,8 @@ ${content}
     return post2.permalink_template;
   };
   function CopyButton2({ text }) {
-    const [showCopyConfirmation, setShowCopyConfirmation] = (0, import_element353.useState)(false);
-    const timeoutIdRef = (0, import_element353.useRef)();
+    const [showCopyConfirmation, setShowCopyConfirmation] = (0, import_element352.useState)(false);
+    const timeoutIdRef = (0, import_element352.useRef)();
     const ref = (0, import_compose67.useCopyToClipboard)(text, () => {
       setShowCopyConfirmation(true);
       if (timeoutIdRef.current) {
@@ -111393,14 +111392,14 @@ ${content}
         setShowCopyConfirmation(false);
       }, 4e3);
     });
-    (0, import_element353.useEffect)(() => {
+    (0, import_element352.useEffect)(() => {
       return () => {
         if (timeoutIdRef.current) {
           clearTimeout(timeoutIdRef.current);
         }
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(import_components204.Button, { __next40pxDefaultSize: true, variant: "secondary", ref, children: showCopyConfirmation ? (0, import_i18n276.__)("Copied!") : (0, import_i18n276.__)("Copy") });
+    return /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(import_components202.Button, { __next40pxDefaultSize: true, variant: "secondary", ref, children: showCopyConfirmation ? (0, import_i18n276.__)("Copied!") : (0, import_i18n276.__)("Copy") });
   }
   function PostPublishPanelPostpublish({
     focusOnMount,
@@ -111426,7 +111425,7 @@ ${content}
     const addLink = (0, import_url20.addQueryArgs)("post-new.php", {
       post_type: post2.type
     });
-    const postLinkRef = (0, import_element353.useCallback)(
+    const postLinkRef = (0, import_element352.useCallback)(
       (node) => {
         if (focusOnMount && node) {
           node.focus();
@@ -111441,16 +111440,16 @@ ${content}
       "."
     ] }) : (0, import_i18n276.__)("is now live.");
     return /* @__PURE__ */ (0, import_jsx_runtime570.jsxs)("div", { className: "post-publish-panel__postpublish", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime570.jsxs)(import_components204.PanelBody, { className: "post-publish-panel__postpublish-header", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(import_components204.ExternalLink, { ref: postLinkRef, href: link, children: (0, import_html_entities27.decodeEntities)(post2.title) || (0, import_i18n276.__)("(no title)") }),
+      /* @__PURE__ */ (0, import_jsx_runtime570.jsxs)(import_components202.PanelBody, { className: "post-publish-panel__postpublish-header", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(import_components202.ExternalLink, { ref: postLinkRef, href: link, children: (0, import_html_entities27.decodeEntities)(post2.title) || (0, import_i18n276.__)("(no title)") }),
         " ",
         postPublishNonLinkHeader
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime570.jsxs)(import_components204.PanelBody, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime570.jsxs)(import_components202.PanelBody, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime570.jsx)("p", { className: "post-publish-panel__postpublish-subheader", children: /* @__PURE__ */ (0, import_jsx_runtime570.jsx)("strong", { children: (0, import_i18n276.__)("What\u2019s next?") }) }),
         /* @__PURE__ */ (0, import_jsx_runtime570.jsxs)("div", { className: "post-publish-panel__postpublish-post-address-container", children: [
           /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(
-            import_components204.TextControl,
+            import_components202.TextControl,
             {
               className: "post-publish-panel__postpublish-post-address",
               readOnly: true,
@@ -111467,7 +111466,7 @@ ${content}
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime570.jsxs)("div", { className: "post-publish-panel__postpublish-buttons", children: [
           !isScheduled && /* @__PURE__ */ (0, import_jsx_runtime570.jsxs)(
-            import_components204.Button,
+            import_components202.Button,
             {
               variant: "primary",
               href: link,
@@ -111486,7 +111485,7 @@ ${content}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(
-            import_components204.Button,
+            import_components202.Button,
             {
               variant: isScheduled ? "primary" : "secondary",
               __next40pxDefaultSize: true,
@@ -111550,17 +111549,17 @@ ${content}
       };
     }, []);
     const { disablePublishSidebar: disablePublishSidebar2, enablePublishSidebar: enablePublishSidebar2 } = (0, import_data162.useDispatch)(store);
-    const cancelButtonRef = (0, import_element354.useRef)(null);
+    const cancelButtonRef = (0, import_element353.useRef)(null);
     const wrapperRef = (0, import_compose68.useMergeRefs)([
       (0, import_compose68.useFocusReturn)(),
       (0, import_compose68.useConstrainedTabbing)()
     ]);
-    (0, import_element354.useEffect)(() => {
+    (0, import_element353.useEffect)(() => {
       cancelButtonRef.current?.focus();
     }, []);
-    const prevPostIdRef = (0, import_element354.useRef)(currentPostId);
+    const prevPostIdRef = (0, import_element353.useRef)(currentPostId);
     const stableOnClose = (0, import_compose68.useEvent)(onClose);
-    (0, import_element354.useEffect)(() => {
+    (0, import_element353.useEffect)(() => {
       const postChanged = currentPostId !== prevPostIdRef.current;
       prevPostIdRef.current = currentPostId;
       if (postChanged || isPublished && !isSaving && isDirty) {
@@ -111591,7 +111590,7 @@ ${content}
         ...propsForPanel,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime571.jsx)("div", { className: "editor-post-publish-panel__header", children: isPostPublish ? /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
-            import_components205.Button,
+            import_components203.Button,
             {
               size: "compact",
               onClick: onClose,
@@ -111600,7 +111599,7 @@ ${content}
             }
           ) : /* @__PURE__ */ (0, import_jsx_runtime571.jsxs)(import_jsx_runtime571.Fragment, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime571.jsx)("div", { className: "editor-post-publish-panel__header-cancel-button", children: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
-              import_components205.Button,
+              import_components203.Button,
               {
                 ref: cancelButtonRef,
                 accessibleWhenDisabled: true,
@@ -111622,10 +111621,10 @@ ${content}
           /* @__PURE__ */ (0, import_jsx_runtime571.jsxs)("div", { className: "editor-post-publish-panel__content", children: [
             isPrePublish && /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(prepublish_default, { children: PrePublishExtension && /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(PrePublishExtension, {}) }),
             isPostPublish && /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(PostPublishPanelPostpublish, { focusOnMount: true, children: PostPublishExtension && /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(PostPublishExtension, {}) }),
-            isSaving && /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(import_components205.Spinner, { "data-testid": "post-publish-panel-spinner" })
+            isSaving && /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(import_components203.Spinner, { "data-testid": "post-publish-panel-spinner" })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime571.jsx)("div", { className: "editor-post-publish-panel__footer", children: /* @__PURE__ */ (0, import_jsx_runtime571.jsx)(
-            import_components205.CheckboxControl,
+            import_components203.CheckboxControl,
             {
               label: (0, import_i18n277.__)("Always show pre-publish checks."),
               checked: isPublishSidebarEnabled2,
@@ -111638,26 +111637,26 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-saved-state/index.mjs
-  var import_components208 = __toESM(require_components(), 1);
+  var import_components206 = __toESM(require_components(), 1);
   var import_compose70 = __toESM(require_compose(), 1);
   var import_data166 = __toESM(require_data(), 1);
-  var import_element356 = __toESM(require_element(), 1);
+  var import_element355 = __toESM(require_element(), 1);
   var import_i18n280 = __toESM(require_i18n(), 1);
   var import_keycodes13 = __toESM(require_keycodes(), 1);
   var import_preferences14 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/post-status/index.mjs
-  var import_components207 = __toESM(require_components(), 1);
+  var import_components205 = __toESM(require_components(), 1);
   var import_i18n279 = __toESM(require_i18n(), 1);
   var import_data165 = __toESM(require_data(), 1);
-  var import_element355 = __toESM(require_element(), 1);
+  var import_element354 = __toESM(require_element(), 1);
   var import_core_data102 = __toESM(require_core_data(), 1);
   var import_block_editor59 = __toESM(require_block_editor(), 1);
   var import_compose69 = __toESM(require_compose(), 1);
 
   // packages/editor/build-module/components/post-sticky/index.mjs
   var import_i18n278 = __toESM(require_i18n(), 1);
-  var import_components206 = __toESM(require_components(), 1);
+  var import_components204 = __toESM(require_components(), 1);
   var import_data164 = __toESM(require_data(), 1);
 
   // packages/editor/build-module/components/post-sticky/check.mjs
@@ -111684,7 +111683,7 @@ ${content}
     }, []);
     const { editPost: editPost2 } = (0, import_data164.useDispatch)(store);
     return /* @__PURE__ */ (0, import_jsx_runtime572.jsx)(PostStickyCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime572.jsx)(
-      import_components206.CheckboxControl,
+      import_components204.CheckboxControl,
       {
         className: "editor-post-sticky__checkbox-control",
         label: (0, import_i18n278.__)("Sticky"),
@@ -111752,14 +111751,14 @@ ${content}
       },
       []
     );
-    const [showPassword, setShowPassword] = (0, import_element355.useState)(!!password);
+    const [showPassword, setShowPassword] = (0, import_element354.useState)(!!password);
     const passwordInputId = (0, import_compose69.useInstanceId)(
       PostStatus,
       "editor-change-status__password-input"
     );
     const { editEntityRecord } = (0, import_data165.useDispatch)(import_core_data102.store);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element355.useState)(null);
-    const popoverProps = (0, import_element355.useMemo)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element354.useState)(null);
+    const popoverProps = (0, import_element354.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -111808,14 +111807,14 @@ ${content}
       });
     };
     return /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(post_panel_row_default, { label: (0, import_i18n279.__)("Status"), ref: setPopoverAnchor, children: canEdit ? /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(
-      import_components207.Dropdown,
+      import_components205.Dropdown,
       {
         className: "editor-post-status",
         contentClassName: "editor-change-status__content",
         popoverProps,
         focusOnMount: true,
         renderToggle: ({ onToggle, isOpen: isOpen2 }) => /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(
-          import_components207.Button,
+          import_components205.Button,
           {
             className: "editor-post-status__toggle",
             variant: "tertiary",
@@ -111846,9 +111845,9 @@ ${content}
                 event.preventDefault();
                 onClose();
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime573.jsxs)(import_components207.__experimentalVStack, { spacing: 4, children: [
+              children: /* @__PURE__ */ (0, import_jsx_runtime573.jsxs)(import_components205.__experimentalVStack, { spacing: 4, children: [
                 /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(
-                  import_components207.RadioControl,
+                  import_components205.RadioControl,
                   {
                     className: "editor-change-status__options",
                     hideLabelFromVision: true,
@@ -111866,14 +111865,14 @@ ${content}
                   }
                 ) }),
                 status !== "private" && /* @__PURE__ */ (0, import_jsx_runtime573.jsxs)(
-                  import_components207.__experimentalVStack,
+                  import_components205.__experimentalVStack,
                   {
                     as: "fieldset",
                     spacing: 4,
                     className: "editor-change-status__password-fieldset",
                     children: [
                       /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(
-                        import_components207.CheckboxControl,
+                        import_components205.CheckboxControl,
                         {
                           label: (0, import_i18n279.__)(
                             "Password protected"
@@ -111886,7 +111885,7 @@ ${content}
                         }
                       ),
                       showPassword && /* @__PURE__ */ (0, import_jsx_runtime573.jsx)("div", { className: "editor-change-status__password-input", children: /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(
-                        import_components207.TextControl,
+                        import_components205.TextControl,
                         {
                           label: (0, import_i18n279.__)(
                             "Password"
@@ -111918,7 +111917,7 @@ ${content}
   // packages/editor/build-module/components/post-saved-state/index.mjs
   var import_jsx_runtime574 = __toESM(require_jsx_runtime(), 1);
   function PostSavedState({ forceIsDirty }) {
-    const [forceSavedMessage, setForceSavedMessage] = (0, import_element356.useState)(false);
+    const [forceSavedMessage, setForceSavedMessage] = (0, import_element355.useState)(false);
     const isLargeViewport = (0, import_compose70.useViewportMatch)("small");
     const {
       isAutosaving,
@@ -111961,7 +111960,7 @@ ${content}
     const isPending = postStatus === "pending";
     const { savePost: savePost2 } = (0, import_data166.useDispatch)(store);
     const wasSaving = (0, import_compose70.usePrevious)(isSaving);
-    (0, import_element356.useEffect)(() => {
+    (0, import_element355.useEffect)(() => {
       let timeoutId;
       if (wasSaving && !isSaving) {
         setForceSavedMessage(true);
@@ -111998,7 +111997,7 @@ ${content}
       text = shortLabel;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime574.jsxs)(
-      import_components208.Button,
+      import_components206.Button,
       {
         className: isSaveable || isSaving ? clsx_default({
           "editor-post-save-draft": !isSavedState,
@@ -112006,7 +112005,7 @@ ${content}
           "is-saving": isSaving,
           "is-autosaving": isAutosaving,
           "is-saved": isSaved,
-          [(0, import_components208.__unstableGetAnimateClassName)({
+          [(0, import_components206.__unstableGetAnimateClassName)({
             type: "loading"
           })]: isSaving
         }) : void 0,
@@ -112038,18 +112037,18 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-schedule/panel.mjs
-  var import_components209 = __toESM(require_components(), 1);
+  var import_components207 = __toESM(require_components(), 1);
   var import_i18n281 = __toESM(require_i18n(), 1);
-  var import_element357 = __toESM(require_element(), 1);
+  var import_element356 = __toESM(require_element(), 1);
   var import_data168 = __toESM(require_data(), 1);
   var import_jsx_runtime575 = __toESM(require_jsx_runtime(), 1);
   function PostSchedulePanel() {
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element357.useState)(null);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element356.useState)(null);
     const postType2 = (0, import_data168.useSelect)(
       (select9) => select9(store).getCurrentPostType(),
       []
     );
-    const popoverProps = (0, import_element357.useMemo)(
+    const popoverProps = (0, import_element356.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -112067,14 +112066,14 @@ ${content}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(PostScheduleCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(post_panel_row_default, { label: (0, import_i18n281.__)("Publish"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
-      import_components209.Dropdown,
+      import_components207.Dropdown,
       {
         popoverProps,
         focusOnMount: true,
         className: "editor-post-schedule__panel-dropdown",
         contentClassName: "editor-post-schedule__dialog",
         renderToggle: ({ onToggle, isOpen: isOpen2 }) => /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
-          import_components209.Button,
+          import_components207.Button,
           {
             size: "compact",
             className: "editor-post-schedule__dialog-toggle",
@@ -112098,10 +112097,10 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-switch-to-draft-button/index.mjs
-  var import_components210 = __toESM(require_components(), 1);
+  var import_components208 = __toESM(require_components(), 1);
   var import_i18n282 = __toESM(require_i18n(), 1);
   var import_data169 = __toESM(require_data(), 1);
-  var import_element358 = __toESM(require_element(), 1);
+  var import_element357 = __toESM(require_element(), 1);
   var import_deprecated15 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime576 = __toESM(require_jsx_runtime(), 1);
   function PostSwitchToDraftButton() {
@@ -112109,7 +112108,7 @@ ${content}
       since: "6.7",
       version: "6.9"
     });
-    const [showConfirmDialog, setShowConfirmDialog] = (0, import_element358.useState)(false);
+    const [showConfirmDialog, setShowConfirmDialog] = (0, import_element357.useState)(false);
     const { editPost: editPost2, savePost: savePost2 } = (0, import_data169.useDispatch)(store);
     const { isSaving, isPublished, isScheduled } = (0, import_data169.useSelect)((select9) => {
       const { isSavingPost: isSavingPost2, isCurrentPostPublished: isCurrentPostPublished2, isCurrentPostScheduled: isCurrentPostScheduled2 } = select9(store);
@@ -112136,7 +112135,7 @@ ${content}
     };
     return /* @__PURE__ */ (0, import_jsx_runtime576.jsxs)(import_jsx_runtime576.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(
-        import_components210.Button,
+        import_components208.Button,
         {
           __next40pxDefaultSize: true,
           className: "editor-post-switch-to-draft",
@@ -112152,7 +112151,7 @@ ${content}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(
-        import_components210.__experimentalConfirmDialog,
+        import_components208.__experimentalConfirmDialog,
         {
           isOpen: showConfirmDialog,
           onConfirm: handleConfirm,
@@ -112185,7 +112184,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-taxonomies/index.mjs
-  var import_element359 = __toESM(require_element(), 1);
+  var import_element358 = __toESM(require_element(), 1);
   var import_data171 = __toESM(require_data(), 1);
   var import_core_data103 = __toESM(require_core_data(), 1);
   var import_jsx_runtime578 = __toESM(require_jsx_runtime(), 1);
@@ -112209,7 +112208,7 @@ ${content}
     );
     return visibleTaxonomies.map((taxonomy) => {
       const TaxonomyComponent = taxonomy.hierarchical ? hierarchical_term_selector_default : flat_term_selector_default;
-      return /* @__PURE__ */ (0, import_jsx_runtime578.jsx)(import_element359.Fragment, { children: taxonomyWrapper(
+      return /* @__PURE__ */ (0, import_jsx_runtime578.jsx)(import_element358.Fragment, { children: taxonomyWrapper(
         /* @__PURE__ */ (0, import_jsx_runtime578.jsx)(TaxonomyComponent, { slug: taxonomy.slug }),
         taxonomy
       ) }, `taxonomy-${taxonomy.slug}`);
@@ -112238,7 +112237,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-taxonomies/panel.mjs
-  var import_components211 = __toESM(require_components(), 1);
+  var import_components209 = __toESM(require_components(), 1);
   var import_data173 = __toESM(require_data(), 1);
   var import_jsx_runtime579 = __toESM(require_jsx_runtime(), 1);
   function TaxonomyPanel({ taxonomy, children }) {
@@ -112263,7 +112262,7 @@ ${content}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
-      import_components211.PanelBody,
+      import_components209.PanelBody,
       {
         title: taxonomyMenuName,
         opened: isOpened,
@@ -112284,7 +112283,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-text-editor/index.mjs
-  var import_element360 = __toESM(require_element(), 1);
+  var import_element359 = __toESM(require_element(), 1);
   var import_i18n284 = __toESM(require_i18n(), 1);
   var import_core_data105 = __toESM(require_core_data(), 1);
   var import_data174 = __toESM(require_data(), 1);
@@ -112402,9 +112401,9 @@ ${content}
   var import_jsx_runtime580 = __toESM(require_jsx_runtime(), 1);
   function PostTextEditor() {
     const instanceId = (0, import_compose71.useInstanceId)(PostTextEditor);
-    const textareaRef = (0, import_element360.useRef)();
-    const previousValueRef = (0, import_element360.useRef)();
-    const selectionRef = (0, import_element360.useRef)();
+    const textareaRef = (0, import_element359.useRef)();
+    const previousValueRef = (0, import_element359.useRef)();
+    const selectionRef = (0, import_element359.useRef)();
     const { value, type, id } = (0, import_data174.useSelect)((select9) => {
       const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2, getEditedPostContent: getEditedPostContent2 } = select9(store);
       return {
@@ -112414,7 +112413,7 @@ ${content}
       };
     }, []);
     const { editEntityRecord } = (0, import_data174.useDispatch)(import_core_data105.store);
-    (0, import_element360.useLayoutEffect)(() => {
+    (0, import_element359.useLayoutEffect)(() => {
       const textarea = textareaRef.current;
       const previousValue = previousValueRef.current;
       previousValueRef.current = value;
@@ -112491,7 +112490,7 @@ ${content}
 
   // packages/editor/build-module/components/post-title/index.mjs
   var import_i18n285 = __toESM(require_i18n(), 1);
-  var import_element363 = __toESM(require_element(), 1);
+  var import_element362 = __toESM(require_element(), 1);
   var import_html_entities28 = __toESM(require_html_entities(), 1);
   var import_data177 = __toESM(require_data(), 1);
   var import_block_editor60 = __toESM(require_block_editor(), 1);
@@ -112505,22 +112504,22 @@ ${content}
   var REGEXP_NEWLINES = /[\r\n]+/g;
 
   // packages/editor/build-module/components/post-title/use-post-title-focus.mjs
-  var import_element361 = __toESM(require_element(), 1);
+  var import_element360 = __toESM(require_element(), 1);
   var import_data175 = __toESM(require_data(), 1);
   function usePostTitleFocus(forwardedRef) {
-    const ref = (0, import_element361.useRef)();
+    const ref = (0, import_element360.useRef)();
     const { isCleanNewPost: isCleanNewPost2 } = (0, import_data175.useSelect)((select9) => {
       const { isCleanNewPost: _isCleanNewPost } = select9(store);
       return {
         isCleanNewPost: _isCleanNewPost()
       };
     }, []);
-    (0, import_element361.useImperativeHandle)(forwardedRef, () => ({
+    (0, import_element360.useImperativeHandle)(forwardedRef, () => ({
       focus: () => {
         ref?.current?.focus();
       }
     }));
-    (0, import_element361.useEffect)(() => {
+    (0, import_element360.useEffect)(() => {
       if (!ref.current) {
         return;
       }
@@ -112537,7 +112536,7 @@ ${content}
 
   // packages/editor/build-module/components/post-title/use-post-title.mjs
   var import_data176 = __toESM(require_data(), 1);
-  var import_element362 = __toESM(require_element(), 1);
+  var import_element361 = __toESM(require_element(), 1);
   var import_core_data106 = __toESM(require_core_data(), 1);
   function usePostTitle() {
     const { postType: postType2, postId: postId2, previousTitle } = (0, import_data176.useSelect)((select9) => {
@@ -112563,7 +112562,7 @@ ${content}
       "title",
       postId2
     );
-    const value = (0, import_element362.useMemo)(
+    const value = (0, import_element361.useMemo)(
       () => previousTitle === void 0 ? title : diffRevisionHTML(title, previousTitle),
       [title, previousTitle]
     );
@@ -112573,7 +112572,7 @@ ${content}
   // packages/editor/build-module/components/post-title/index.mjs
   var import_jsx_runtime581 = __toESM(require_jsx_runtime(), 1);
   var { useRichText } = unlock(import_rich_text4.privateApis);
-  var PostTitle = (0, import_element363.forwardRef)((_, forwardedRef) => {
+  var PostTitle = (0, import_element362.forwardRef)((_, forwardedRef) => {
     const { placeholder, isEditingContentOnlySection, isPreview } = (0, import_data177.useSelect)(
       (select9) => {
         const { getSettings: getSettings12, getEditedContentOnlySection } = unlock(
@@ -112588,10 +112587,10 @@ ${content}
       },
       []
     );
-    const [isSelected2, setIsSelected] = (0, import_element363.useState)(false);
+    const [isSelected2, setIsSelected] = (0, import_element362.useState)(false);
     const { ref: focusRef } = usePostTitleFocus(forwardedRef);
     const { title, setTitle: onUpdate } = usePostTitle();
-    const [selection, setSelection] = (0, import_element363.useState)({});
+    const [selection, setSelection] = (0, import_element362.useState)({});
     const { clearSelectedBlock: clearSelectedBlock2, insertBlocks: insertBlocks2, insertDefaultBlock: insertDefaultBlock2 } = (0, import_data177.useDispatch)(import_block_editor60.store);
     const decodedPlaceholder = (0, import_html_entities28.decodeEntities)(placeholder) || (0, import_i18n285.__)("Add title");
     const {
@@ -112703,15 +112702,15 @@ ${content}
       )
     );
   });
-  var post_title_default = (0, import_element363.forwardRef)((_, forwardedRef) => /* @__PURE__ */ (0, import_jsx_runtime581.jsx)(post_type_support_check_default, { supportKeys: "title", children: /* @__PURE__ */ (0, import_jsx_runtime581.jsx)(PostTitle, { ref: forwardedRef }) }));
+  var post_title_default = (0, import_element362.forwardRef)((_, forwardedRef) => /* @__PURE__ */ (0, import_jsx_runtime581.jsx)(post_type_support_check_default, { supportKeys: "title", children: /* @__PURE__ */ (0, import_jsx_runtime581.jsx)(PostTitle, { ref: forwardedRef }) }));
 
   // packages/editor/build-module/components/post-title/post-title-raw.mjs
-  var import_components212 = __toESM(require_components(), 1);
+  var import_components210 = __toESM(require_components(), 1);
   var import_i18n286 = __toESM(require_i18n(), 1);
   var import_html_entities29 = __toESM(require_html_entities(), 1);
   var import_data178 = __toESM(require_data(), 1);
   var import_block_editor61 = __toESM(require_block_editor(), 1);
-  var import_element364 = __toESM(require_element(), 1);
+  var import_element363 = __toESM(require_element(), 1);
   var import_jsx_runtime582 = __toESM(require_jsx_runtime(), 1);
   function PostTitleRaw(_, forwardedRef) {
     const { placeholder } = (0, import_data178.useSelect)((select9) => {
@@ -112721,7 +112720,7 @@ ${content}
         placeholder: titlePlaceholder
       };
     }, []);
-    const [isSelected2, setIsSelected] = (0, import_element364.useState)(false);
+    const [isSelected2, setIsSelected] = (0, import_element363.useState)(false);
     const { title, setTitle: onUpdate } = usePostTitle();
     const { ref: focusRef } = usePostTitleFocus(forwardedRef);
     function onChange(value) {
@@ -112739,7 +112738,7 @@ ${content}
     });
     const decodedPlaceholder = (0, import_html_entities29.decodeEntities)(placeholder) || (0, import_i18n286.__)("Add title");
     return /* @__PURE__ */ (0, import_jsx_runtime582.jsx)(
-      import_components212.TextareaControl,
+      import_components210.TextareaControl,
       {
         ref: focusRef,
         value: title,
@@ -112756,13 +112755,13 @@ ${content}
       }
     );
   }
-  var post_title_raw_default = (0, import_element364.forwardRef)(PostTitleRaw);
+  var post_title_raw_default = (0, import_element363.forwardRef)(PostTitleRaw);
 
   // packages/editor/build-module/components/post-trash/index.mjs
   var import_i18n287 = __toESM(require_i18n(), 1);
-  var import_components213 = __toESM(require_components(), 1);
+  var import_components211 = __toESM(require_components(), 1);
   var import_data180 = __toESM(require_data(), 1);
-  var import_element365 = __toESM(require_element(), 1);
+  var import_element364 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/components/post-trash/check.mjs
   var import_data179 = __toESM(require_data(), 1);
@@ -112803,7 +112802,7 @@ ${content}
       };
     }, []);
     const { trashPost: trashPost3 } = (0, import_data180.useDispatch)(store);
-    const [showConfirmDialog, setShowConfirmDialog] = (0, import_element365.useState)(false);
+    const [showConfirmDialog, setShowConfirmDialog] = (0, import_element364.useState)(false);
     if (isNew || !postId2) {
       return null;
     }
@@ -112815,7 +112814,7 @@ ${content}
     };
     return /* @__PURE__ */ (0, import_jsx_runtime583.jsxs)(PostTrashCheck, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime583.jsx)(
-        import_components213.Button,
+        import_components211.Button,
         {
           __next40pxDefaultSize: true,
           className: "editor-post-trash",
@@ -112828,7 +112827,7 @@ ${content}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime583.jsx)(
-        import_components213.__experimentalConfirmDialog,
+        import_components211.__experimentalConfirmDialog,
         {
           isOpen: showConfirmDialog,
           onConfirm: handleConfirm,
@@ -112848,10 +112847,10 @@ ${content}
   // packages/editor/build-module/components/post-url/index.mjs
   var import_data181 = __toESM(require_data(), 1);
   var import_url21 = __toESM(require_url(), 1);
-  var import_element366 = __toESM(require_element(), 1);
+  var import_element365 = __toESM(require_element(), 1);
   var import_block_editor62 = __toESM(require_block_editor(), 1);
   var import_i18n288 = __toESM(require_i18n(), 1);
-  var import_components214 = __toESM(require_components(), 1);
+  var import_components212 = __toESM(require_components(), 1);
   var import_notices28 = __toESM(require_notices(), 1);
   var import_core_data108 = __toESM(require_core_data(), 1);
   var import_compose73 = __toESM(require_compose(), 1);
@@ -112888,7 +112887,7 @@ ${content}
     }, []);
     const { editPost: editPost2 } = (0, import_data181.useDispatch)(store);
     const { createNotice } = (0, import_data181.useDispatch)(import_notices28.store);
-    const [forceEmptyField, setForceEmptyField] = (0, import_element366.useState)(false);
+    const [forceEmptyField, setForceEmptyField] = (0, import_element365.useState)(false);
     const copyButtonRef = (0, import_compose73.useCopyToClipboard)(permalink, () => {
       createNotice("info", (0, import_i18n288.__)("Copied Permalink to clipboard."), {
         isDismissible: true,
@@ -112904,15 +112903,15 @@ ${content}
           onClose
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime584.jsxs)(import_components214.__experimentalVStack, { spacing: 3, children: [
-        isEditable && /* @__PURE__ */ (0, import_jsx_runtime584.jsx)("p", { className: "editor-post-url__intro", children: (0, import_element366.createInterpolateElement)(
+      /* @__PURE__ */ (0, import_jsx_runtime584.jsxs)(import_components212.__experimentalVStack, { spacing: 3, children: [
+        isEditable && /* @__PURE__ */ (0, import_jsx_runtime584.jsx)("p", { className: "editor-post-url__intro", children: (0, import_element365.createInterpolateElement)(
           (0, import_i18n288.__)(
             "<span>Customize the last part of the Permalink.</span> <a>Learn more.</a>"
           ),
           {
             span: /* @__PURE__ */ (0, import_jsx_runtime584.jsx)("span", { id: postUrlSlugDescriptionId }),
             a: /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(
-              import_components214.ExternalLink,
+              import_components212.ExternalLink,
               {
                 href: (0, import_i18n288.__)(
                   "https://wordpress.org/documentation/article/page-post-settings-sidebar/#permalink"
@@ -112924,11 +112923,11 @@ ${content}
         /* @__PURE__ */ (0, import_jsx_runtime584.jsxs)("div", { children: [
           isEditable && /* @__PURE__ */ (0, import_jsx_runtime584.jsxs)(import_jsx_runtime584.Fragment, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(
-              import_components214.__experimentalInputControl,
+              import_components212.__experimentalInputControl,
               {
-                prefix: /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(import_components214.__experimentalInputControlPrefixWrapper, { children: "/" }),
-                suffix: /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(import_components214.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(
-                  import_components214.Button,
+                prefix: /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(import_components212.__experimentalInputControlPrefixWrapper, { children: "/" }),
+                suffix: /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(import_components212.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(
+                  import_components212.Button,
                   {
                     icon: copy_small_default,
                     ref: copyButtonRef,
@@ -112973,7 +112972,7 @@ ${content}
             /* @__PURE__ */ (0, import_jsx_runtime584.jsxs)("p", { className: "editor-post-url__permalink", children: [
               /* @__PURE__ */ (0, import_jsx_runtime584.jsx)("span", { className: "editor-post-url__permalink-visual-label", children: (0, import_i18n288.__)("Permalink:") }),
               /* @__PURE__ */ (0, import_jsx_runtime584.jsxs)(
-                import_components214.ExternalLink,
+                import_components212.ExternalLink,
                 {
                   className: "editor-post-url__link",
                   href: postLink,
@@ -112988,7 +112987,7 @@ ${content}
             ] })
           ] }),
           !isEditable && /* @__PURE__ */ (0, import_jsx_runtime584.jsx)(
-            import_components214.ExternalLink,
+            import_components212.ExternalLink,
             {
               className: "editor-post-url__link",
               href: postLink,
@@ -113042,9 +113041,9 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-url/panel.mjs
-  var import_element367 = __toESM(require_element(), 1);
+  var import_element366 = __toESM(require_element(), 1);
   var import_data184 = __toESM(require_data(), 1);
-  var import_components215 = __toESM(require_components(), 1);
+  var import_components213 = __toESM(require_components(), 1);
   var import_i18n289 = __toESM(require_i18n(), 1);
   var import_url23 = __toESM(require_url(), 1);
   var import_core_data110 = __toESM(require_core_data(), 1);
@@ -113062,8 +113061,8 @@ ${content}
         isFrontPage: siteSettings?.page_on_front === _id
       };
     }, []);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element367.useState)(null);
-    const popoverProps = (0, import_element367.useMemo)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element366.useState)(null);
+    const popoverProps = (0, import_element366.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -113077,7 +113076,7 @@ ${content}
     const label = isFrontPage ? (0, import_i18n289.__)("Link") : (0, import_i18n289.__)("Slug");
     return /* @__PURE__ */ (0, import_jsx_runtime585.jsx)(PostURLCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime585.jsxs)(post_panel_row_default, { label, ref: setPopoverAnchor, children: [
       !isFrontPage && /* @__PURE__ */ (0, import_jsx_runtime585.jsx)(
-        import_components215.Dropdown,
+        import_components213.Dropdown,
         {
           popoverProps,
           className: "editor-post-url__panel-dropdown",
@@ -113104,7 +113103,7 @@ ${content}
     }, []);
     const decodedSlug = (0, import_url23.safeDecodeURIComponent)(slug);
     return /* @__PURE__ */ (0, import_jsx_runtime585.jsx)(
-      import_components215.Button,
+      import_components213.Button,
       {
         size: "compact",
         className: "editor-post-url__panel-toggle",
@@ -113127,7 +113126,7 @@ ${content}
       };
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime585.jsx)(
-      import_components215.ExternalLink,
+      import_components213.ExternalLink,
       {
         className: "editor-post-url__front-page-link",
         href: postLink,
@@ -113148,9 +113147,9 @@ ${content}
 
   // packages/editor/build-module/components/table-of-contents/index.mjs
   var import_i18n293 = __toESM(require_i18n(), 1);
-  var import_components216 = __toESM(require_components(), 1);
+  var import_components214 = __toESM(require_components(), 1);
   var import_data190 = __toESM(require_data(), 1);
-  var import_element369 = __toESM(require_element(), 1);
+  var import_element368 = __toESM(require_element(), 1);
   var import_block_editor64 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/table-of-contents/panel.mjs
@@ -113176,7 +113175,7 @@ ${content}
   var import_data187 = __toESM(require_data(), 1);
   var import_i18n291 = __toESM(require_i18n(), 1);
   var import_wordcount3 = __toESM(require_wordcount(), 1);
-  var import_element368 = __toESM(require_element(), 1);
+  var import_element367 = __toESM(require_element(), 1);
   var import_jsx_runtime587 = __toESM(require_jsx_runtime(), 1);
   var AVERAGE_READING_RATE2 = 189;
   function TimeToRead() {
@@ -113188,9 +113187,9 @@ ${content}
     const minutesToRead = Math.round(
       (0, import_wordcount3.count)(content, wordCountType) / AVERAGE_READING_RATE2
     );
-    const minutesToReadString = minutesToRead === 0 ? (0, import_element368.createInterpolateElement)((0, import_i18n291.__)("<span>< 1</span> minute"), {
+    const minutesToReadString = minutesToRead === 0 ? (0, import_element367.createInterpolateElement)((0, import_i18n291.__)("<span>< 1</span> minute"), {
       span: /* @__PURE__ */ (0, import_jsx_runtime587.jsx)("span", {})
-    }) : (0, import_element368.createInterpolateElement)(
+    }) : (0, import_element367.createInterpolateElement)(
       (0, import_i18n291.sprintf)(
         /* translators: %s: the number of minutes to read the post. */
         (0, import_i18n291._n)(
@@ -113298,7 +113297,7 @@ ${content}
       []
     );
     return /* @__PURE__ */ (0, import_jsx_runtime589.jsx)(
-      import_components216.Dropdown,
+      import_components214.Dropdown,
       {
         popoverProps: {
           placement: repositionDropdown ? "right" : "bottom"
@@ -113306,7 +113305,7 @@ ${content}
         className: "table-of-contents",
         contentClassName: "table-of-contents__popover",
         renderToggle: ({ isOpen: isOpen2, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime589.jsx)(
-          import_components216.Button,
+          import_components214.Button,
           {
             __next40pxDefaultSize: true,
             ...props,
@@ -113330,16 +113329,16 @@ ${content}
       }
     );
   }
-  var table_of_contents_default = (0, import_element369.forwardRef)(TableOfContents);
+  var table_of_contents_default = (0, import_element368.forwardRef)(TableOfContents);
 
   // packages/editor/build-module/components/unsaved-changes-warning/index.mjs
   var import_i18n294 = __toESM(require_i18n(), 1);
-  var import_element370 = __toESM(require_element(), 1);
+  var import_element369 = __toESM(require_element(), 1);
   var import_data191 = __toESM(require_data(), 1);
   var import_core_data111 = __toESM(require_core_data(), 1);
   function UnsavedChangesWarning() {
     const { __experimentalGetDirtyEntityRecords } = (0, import_data191.useSelect)(import_core_data111.store);
-    (0, import_element370.useEffect)(() => {
+    (0, import_element369.useEffect)(() => {
       const warnIfUnsavedChanges = (event) => {
         const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
         if (dirtyEntityRecords.length > 0) {
@@ -113359,12 +113358,12 @@ ${content}
 
   // packages/editor/build-module/components/deprecated.mjs
   var import_deprecated16 = __toESM(require_deprecated(), 1);
-  var import_element371 = __toESM(require_element(), 1);
+  var import_element370 = __toESM(require_element(), 1);
   var import_block_editor65 = __toESM(require_block_editor(), 1);
   var import_server_side_render = __toESM(require_server_side_render(), 1);
   var import_jsx_runtime590 = __toESM(require_jsx_runtime(), 1);
   function deprecateComponent(name2, Wrapped, staticsToHoist = []) {
-    const Component3 = (0, import_element371.forwardRef)((props, ref) => {
+    const Component3 = (0, import_element370.forwardRef)((props, ref) => {
       (0, import_deprecated16.default)("wp.editor." + name2, {
         since: "5.3",
         alternative: "wp.blockEditor." + name2,
@@ -113577,7 +113576,7 @@ ${content}
   );
 
   // packages/editor/build-module/hooks/media-upload.mjs
-  var import_element372 = __toESM(require_element(), 1);
+  var import_element371 = __toESM(require_element(), 1);
   var import_hooks56 = __toESM(require_hooks(), 1);
   var import_deprecated17 = __toESM(require_deprecated(), 1);
   var import_data192 = __toESM(require_data(), 1);
@@ -113607,7 +113606,7 @@ ${content}
       }
     );
   }
-  var MediaUploadModalWrapper = class extends import_element372.Component {
+  var MediaUploadModalWrapper = class extends import_element371.Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -113746,10 +113745,10 @@ ${content}
   // packages/editor/build-module/hooks/navigation-link-view-button.mjs
   var import_hooks58 = __toESM(require_hooks(), 1);
   var import_compose75 = __toESM(require_compose(), 1);
-  var import_element373 = __toESM(require_element(), 1);
+  var import_element372 = __toESM(require_element(), 1);
   var import_i18n295 = __toESM(require_i18n(), 1);
   var import_block_editor67 = __toESM(require_block_editor(), 1);
-  var import_components218 = __toESM(require_components(), 1);
+  var import_components216 = __toESM(require_components(), 1);
   var import_data194 = __toESM(require_data(), 1);
   var import_jsx_runtime593 = __toESM(require_jsx_runtime(), 1);
   var SUPPORTED_BLOCKS = ["core/navigation-link", "core/navigation-submenu"];
@@ -113760,7 +113759,7 @@ ${content}
       (select9) => select9(import_block_editor67.store).getSettings().onNavigateToEntityRecord,
       []
     );
-    const onViewPage = (0, import_element373.useCallback)(() => {
+    const onViewPage = (0, import_element372.useCallback)(() => {
       if (kind === "post-type" && type === "page" && id && onNavigateToEntityRecord) {
         onNavigateToEntityRecord({
           postId: id,
@@ -113771,8 +113770,8 @@ ${content}
     if (kind !== "post-type" || type !== "page" || !id || !onNavigateToEntityRecord || blockEditingMode !== "contentOnly") {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime593.jsx)(import_block_editor67.__unstableBlockToolbarLastItem, { children: /* @__PURE__ */ (0, import_jsx_runtime593.jsx)(import_components218.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime593.jsx)(
-      import_components218.ToolbarButton,
+    return /* @__PURE__ */ (0, import_jsx_runtime593.jsx)(import_block_editor67.__unstableBlockToolbarLastItem, { children: /* @__PURE__ */ (0, import_jsx_runtime593.jsx)(import_components216.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime593.jsx)(
+      import_components216.ToolbarButton,
       {
         name: "view",
         title: (0, import_i18n295.__)("View"),
@@ -113800,10 +113799,10 @@ ${content}
   // packages/editor/build-module/hooks/template-part-navigation-edit-button.mjs
   var import_hooks59 = __toESM(require_hooks(), 1);
   var import_compose76 = __toESM(require_compose(), 1);
-  var import_element374 = __toESM(require_element(), 1);
+  var import_element373 = __toESM(require_element(), 1);
   var import_i18n296 = __toESM(require_i18n(), 1);
   var import_block_editor68 = __toESM(require_block_editor(), 1);
-  var import_components219 = __toESM(require_components(), 1);
+  var import_components217 = __toESM(require_components(), 1);
   var import_data195 = __toESM(require_data(), 1);
   var import_jsx_runtime594 = __toESM(require_jsx_runtime(), 1);
   var NAVIGATION_BLOCK_NAME = "core/navigation";
@@ -113841,7 +113840,7 @@ ${content}
       },
       [clientId]
     );
-    const onEditNavigation = (0, import_element374.useCallback)(() => {
+    const onEditNavigation = (0, import_element373.useCallback)(() => {
       if (firstNavigationBlockId) {
         registry.batch(() => {
           selectBlock2(firstNavigationBlockId);
@@ -113863,8 +113862,8 @@ ${content}
     if (!hasNavigationBlocks || !isNavigationEditable) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime594.jsx)(import_block_editor68.__unstableBlockToolbarLastItem, { children: /* @__PURE__ */ (0, import_jsx_runtime594.jsx)(import_components219.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime594.jsx)(
-      import_components219.ToolbarButton,
+    return /* @__PURE__ */ (0, import_jsx_runtime594.jsx)(import_block_editor68.__unstableBlockToolbarLastItem, { children: /* @__PURE__ */ (0, import_jsx_runtime594.jsx)(import_components217.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime594.jsx)(
+      import_components217.ToolbarButton,
       {
         label: (0, import_i18n296.__)("Edit navigation"),
         onClick: onEditNavigation,
@@ -113897,10 +113896,10 @@ ${content}
   var import_hooks61 = __toESM(require_hooks(), 1);
   var import_compose77 = __toESM(require_compose(), 1);
   var import_block_editor69 = __toESM(require_block_editor(), 1);
-  var import_components221 = __toESM(require_components(), 1);
+  var import_components219 = __toESM(require_components(), 1);
   var import_i18n299 = __toESM(require_i18n(), 1);
   var import_blocks30 = __toESM(require_blocks(), 1);
-  var import_element377 = __toESM(require_element(), 1);
+  var import_element376 = __toESM(require_element(), 1);
   var import_data196 = __toESM(require_data(), 1);
   var import_notices29 = __toESM(require_notices(), 1);
   var import_core_data114 = __toESM(require_core_data(), 1);
@@ -113927,13 +113926,13 @@ ${content}
   }
 
   // packages/editor/build-module/hooks/push-changes-to-global-styles/apply-globally-modal.mjs
-  var import_components220 = __toESM(require_components(), 1);
+  var import_components218 = __toESM(require_components(), 1);
   var import_i18n298 = __toESM(require_i18n(), 1);
   var import_blocks29 = __toESM(require_blocks(), 1);
-  var import_element376 = __toESM(require_element(), 1);
+  var import_element375 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/hooks/push-changes-to-global-styles/use-review-rows.mjs
-  var import_element375 = __toESM(require_element(), 1);
+  var import_element374 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/hooks/push-changes-to-global-styles/style-labels.mjs
   var import_i18n297 = __toESM(require_i18n(), 1);
@@ -114111,7 +114110,7 @@ ${content}
     return formatStyleValue(value);
   }
   function useReviewRows(rows, merged, name2) {
-    return (0, import_element375.useMemo)(() => {
+    return (0, import_element374.useMemo)(() => {
       const resolve = (value) => getValueFromVariable(merged, name2, value);
       return rows.map((row) => {
         const currentValue = getStyle(
@@ -114153,10 +114152,10 @@ ${content}
   }) {
     const { merged } = useGlobalStyles();
     const reviewRows = useReviewRows(rows, merged, name2);
-    const [selection, setSelection] = (0, import_element376.useState)(
+    const [selection, setSelection] = (0, import_element375.useState)(
       () => reviewRows.map((row) => row.id)
     );
-    const [view, setView] = (0, import_element376.useState)(() => ({
+    const [view, setView] = (0, import_element375.useState)(() => ({
       type: "pickerTable",
       titleField: "label",
       fields: ["current", "new"],
@@ -114164,7 +114163,7 @@ ${content}
       perPage: reviewRows.length,
       layout: { enableMoving: false }
     }));
-    const fields2 = (0, import_element376.useMemo)(
+    const fields2 = (0, import_element375.useMemo)(
       () => [
         {
           id: "label",
@@ -114196,7 +114195,7 @@ ${content}
       ],
       []
     );
-    const actions2 = (0, import_element376.useMemo)(
+    const actions2 = (0, import_element375.useMemo)(
       () => [
         {
           id: "apply",
@@ -114213,7 +114212,7 @@ ${content}
     );
     const blockTitle = (0, import_blocks29.getBlockType)(name2)?.title;
     return /* @__PURE__ */ (0, import_jsx_runtime595.jsxs)(
-      import_components220.Modal,
+      import_components218.Modal,
       {
         title: (0, import_i18n298.sprintf)(
           // translators: %s: Title of the block e.g. 'Heading'.
@@ -114505,7 +114504,7 @@ ${content}
       [name2]
     );
     const blockUserConfig = userConfig?.styles?.blocks?.[name2];
-    return (0, import_element377.useMemo)(
+    return (0, import_element376.useMemo)(
       () => getChangesToPush(supports, attributes, blockUserConfig),
       [supports, attributes, blockUserConfig]
     );
@@ -114551,10 +114550,10 @@ ${content}
   }) {
     const { user: userConfig, setUser: setUserConfig } = useGlobalStyles();
     const rows = useChangesToPush(name2, attributes, userConfig);
-    const [isModalOpen, setIsModalOpen] = (0, import_element377.useState)(false);
+    const [isModalOpen, setIsModalOpen] = (0, import_element376.useState)(false);
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data196.useDispatch)(import_block_editor69.store);
     const { createSuccessNotice } = (0, import_data196.useDispatch)(import_notices29.store);
-    const pushChanges = (0, import_element377.useCallback)(
+    const pushChanges = (0, import_element376.useCallback)(
       (rowsToPush) => {
         const update4 = getStylesUpdate({
           rowsToPush,
@@ -114603,7 +114602,7 @@ ${content}
       ]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime596.jsxs)(
-      import_components221.BaseControl,
+      import_components219.BaseControl,
       {
         className: "editor-push-changes-to-global-styles-control",
         help: (0, import_i18n299.sprintf)(
@@ -114614,9 +114613,9 @@ ${content}
           (0, import_blocks30.getBlockType)(name2).title
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime596.jsx)(import_components221.BaseControl.VisualLabel, { children: (0, import_i18n299.__)("Styles") }),
+          /* @__PURE__ */ (0, import_jsx_runtime596.jsx)(import_components219.BaseControl.VisualLabel, { children: (0, import_i18n299.__)("Styles") }),
           /* @__PURE__ */ (0, import_jsx_runtime596.jsx)(
-            import_components221.Button,
+            import_components219.Button,
             {
               __next40pxDefaultSize: true,
               variant: "secondary",
@@ -114677,7 +114676,7 @@ ${content}
 
   // packages/editor/build-module/components/collab-sidebar/format.mjs
   var import_i18n300 = __toESM(require_i18n(), 1);
-  var import_element378 = __toESM(require_element(), 1);
+  var import_element377 = __toESM(require_element(), 1);
   var import_data197 = __toESM(require_data(), 1);
   var noteFormat = {
     title: (0, import_i18n300.__)("Note"),
@@ -114693,7 +114692,7 @@ ${content}
     const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data197.useSelect)(store));
     const { selectNote: selectNote2 } = unlock((0, import_data197.useDispatch)(store));
     const noteId = activeAttributes?.["data-id"];
-    (0, import_element378.useEffect)(() => {
+    (0, import_element377.useEffect)(() => {
       if (!isActive || !noteId) {
         return;
       }
@@ -114718,17 +114717,17 @@ ${content}
   (0, import_rich_text5.registerFormatType)(NOTE_FORMAT_NAME, noteFormat);
 
   // packages/editor/build-module/components/header/back-button.mjs
-  var import_components222 = __toESM(require_components(), 1);
+  var import_components220 = __toESM(require_components(), 1);
   var import_jsx_runtime597 = __toESM(require_jsx_runtime(), 1);
   var slotName = "__experimentalMainDashboardButton";
   var useHasBackButton = () => {
-    const fills = (0, import_components222.__experimentalUseSlotFills)(slotName);
+    const fills = (0, import_components220.__experimentalUseSlotFills)(slotName);
     return Boolean(fills && fills.length);
   };
-  var { Fill: Fill10, Slot: Slot10 } = (0, import_components222.createSlotFill)(slotName);
+  var { Fill: Fill10, Slot: Slot10 } = (0, import_components220.createSlotFill)(slotName);
   var BackButton = Fill10;
   var BackButtonSlot = () => {
-    const fills = (0, import_components222.__experimentalUseSlotFills)(slotName);
+    const fills = (0, import_components220.__experimentalUseSlotFills)(slotName);
     return /* @__PURE__ */ (0, import_jsx_runtime597.jsx)(
       Slot10,
       {
@@ -114743,7 +114742,7 @@ ${content}
   // packages/editor/build-module/components/editor/index.mjs
   var import_data272 = __toESM(require_data(), 1);
   var import_core_data151 = __toESM(require_core_data(), 1);
-  var import_components273 = __toESM(require_components(), 1);
+  var import_components271 = __toESM(require_components(), 1);
   var import_i18n368 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/editor-interface/index.mjs
@@ -114752,7 +114751,7 @@ ${content}
   var import_preferences25 = __toESM(require_preferences(), 1);
   var import_block_editor88 = __toESM(require_block_editor(), 1);
   var import_compose94 = __toESM(require_compose(), 1);
-  var import_element406 = __toESM(require_element(), 1);
+  var import_element405 = __toESM(require_element(), 1);
   var import_html_entities30 = __toESM(require_html_entities(), 1);
   var import_notices32 = __toESM(require_notices(), 1);
   var import_theme = __toESM(require_theme(), 1);
@@ -114762,12 +114761,12 @@ ${content}
   var import_data209 = __toESM(require_data(), 1);
   var import_compose83 = __toESM(require_compose(), 1);
   var import_preferences22 = __toESM(require_preferences(), 1);
-  var import_element392 = __toESM(require_element(), 1);
+  var import_element391 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/components/collapsible-block-toolbar/index.mjs
   var import_block_editor70 = __toESM(require_block_editor(), 1);
-  var import_element379 = __toESM(require_element(), 1);
-  var import_components223 = __toESM(require_components(), 1);
+  var import_element378 = __toESM(require_element(), 1);
+  var import_components221 = __toESM(require_components(), 1);
   var import_i18n301 = __toESM(require_i18n(), 1);
   var import_data198 = __toESM(require_data(), 1);
   var import_jsx_runtime598 = __toESM(require_jsx_runtime(), 1);
@@ -114780,7 +114779,7 @@ ${content}
     }, []);
     const hasBlockToolbar = useHasBlockToolbar();
     const hasBlockSelection = !!blockSelectionStart;
-    (0, import_element379.useEffect)(() => {
+    (0, import_element378.useEffect)(() => {
       if (blockSelectionStart) {
         onToggle(false);
       }
@@ -114798,9 +114797,9 @@ ${content}
           children: /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(import_block_editor70.BlockToolbar, { hideDragHandle: true })
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(import_components223.Popover.Slot, { name: "block-toolbar" }),
+      /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(import_components221.Popover.Slot, { name: "block-toolbar" }),
       /* @__PURE__ */ (0, import_jsx_runtime598.jsx)(
-        import_components223.Button,
+        import_components221.Button,
         {
           className: "editor-collapsible-block-toolbar__toggle",
           icon: isCollapsed ? next_default : previous_default,
@@ -114819,8 +114818,8 @@ ${content}
   var import_data199 = __toESM(require_data(), 1);
   var import_i18n302 = __toESM(require_i18n(), 1);
   var import_block_editor71 = __toESM(require_block_editor(), 1);
-  var import_components224 = __toESM(require_components(), 1);
-  var import_element380 = __toESM(require_element(), 1);
+  var import_components222 = __toESM(require_components(), 1);
+  var import_element379 = __toESM(require_element(), 1);
   var import_keyboard_shortcuts6 = __toESM(require_keyboard_shortcuts(), 1);
   var import_preferences15 = __toESM(require_preferences(), 1);
   var import_jsx_runtime599 = __toESM(require_jsx_runtime(), 1);
@@ -114863,11 +114862,11 @@ ${content}
     };
     const isWideViewport = (0, import_compose78.useViewportMatch)("wide");
     const toolbarAriaLabel = (0, import_i18n302.__)("Document tools");
-    const toggleListView = (0, import_element380.useCallback)(
+    const toggleListView = (0, import_element379.useCallback)(
       () => setIsListViewOpened2(!isListViewOpen),
       [setIsListViewOpened2, isListViewOpen]
     );
-    const toggleInserter = (0, import_element380.useCallback)(
+    const toggleInserter = (0, import_element379.useCallback)(
       () => setIsInserterOpened2(!isInserterOpened2),
       [isInserterOpened2, setIsInserterOpened2]
     );
@@ -114893,7 +114892,7 @@ ${content}
           variant: "unstyled",
           children: /* @__PURE__ */ (0, import_jsx_runtime599.jsxs)("div", { className: "editor-document-tools__left", children: [
             !isDistractionFree && /* @__PURE__ */ (0, import_jsx_runtime599.jsx)(
-              import_components224.ToolbarButton,
+              import_components222.ToolbarButton,
               {
                 ref: inserterSidebarToggleRef2,
                 className: "editor-document-tools__inserter-toggle",
@@ -114910,7 +114909,7 @@ ${content}
             ),
             (isWideViewport || !showIconLabels) && /* @__PURE__ */ (0, import_jsx_runtime599.jsxs)(import_jsx_runtime599.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime599.jsx)(
-                import_components224.ToolbarItem,
+                import_components222.ToolbarItem,
                 {
                   as: undo_default2,
                   showTooltip: !showIconLabels,
@@ -114919,7 +114918,7 @@ ${content}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime599.jsx)(
-                import_components224.ToolbarItem,
+                import_components222.ToolbarItem,
                 {
                   as: redo_default2,
                   showTooltip: !showIconLabels,
@@ -114928,7 +114927,7 @@ ${content}
                 }
               ),
               !isDistractionFree && /* @__PURE__ */ (0, import_jsx_runtime599.jsx)(
-                import_components224.ToolbarButton,
+                import_components222.ToolbarButton,
                 {
                   className: "editor-document-tools__document-overview-toggle",
                   icon: list_view_default,
@@ -114952,7 +114951,7 @@ ${content}
   var document_tools_default = DocumentTools;
 
   // packages/editor/build-module/components/header/header-skeleton.mjs
-  var import_components225 = __toESM(require_components(), 1);
+  var import_components223 = __toESM(require_components(), 1);
   var import_jsx_runtime600 = __toESM(require_jsx_runtime(), 1);
   var toolbarVariations = {
     distractionFreeDisabled: { y: "-50px" },
@@ -114977,7 +114976,7 @@ ${content}
     const hasBackButton = useHasBackButton();
     return /* @__PURE__ */ (0, import_jsx_runtime600.jsxs)("div", { className: clsx_default("editor-header edit-post-header", className), children: [
       hasBackButton && /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
-        import_components225.__unstableMotion.div,
+        import_components223.__unstableMotion.div,
         {
           className: "editor-header__back-button",
           variants: backButtonVariations,
@@ -114986,7 +114985,7 @@ ${content}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
-        import_components225.__unstableMotion.div,
+        import_components223.__unstableMotion.div,
         {
           variants: toolbarVariations,
           className: "editor-header__toolbar",
@@ -114995,7 +114994,7 @@ ${content}
         }
       ),
       center && /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
-        import_components225.__unstableMotion.div,
+        import_components223.__unstableMotion.div,
         {
           variants: toolbarVariations,
           className: "editor-header__center",
@@ -115004,7 +115003,7 @@ ${content}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime600.jsx)(
-        import_components225.__unstableMotion.div,
+        import_components223.__unstableMotion.div,
         {
           variants: toolbarVariations,
           transition: { type: "tween" },
@@ -115018,7 +115017,7 @@ ${content}
   // packages/editor/build-module/components/more-menu/index.mjs
   var import_i18n306 = __toESM(require_i18n(), 1);
   var import_data203 = __toESM(require_data(), 1);
-  var import_components229 = __toESM(require_components(), 1);
+  var import_components227 = __toESM(require_components(), 1);
   var import_preferences17 = __toESM(require_preferences(), 1);
   var import_keycodes14 = __toESM(require_keycodes(), 1);
 
@@ -115045,8 +115044,8 @@ ${content}
   }
 
   // packages/editor/build-module/components/more-menu/more-menu-item.mjs
-  var import_components226 = __toESM(require_components(), 1);
-  var import_element381 = __toESM(require_element(), 1);
+  var import_components224 = __toESM(require_components(), 1);
+  var import_element380 = __toESM(require_element(), 1);
   var import_primitives99 = __toESM(require_primitives(), 1);
   var import_jsx_runtime602 = __toESM(require_jsx_runtime(), 1);
   function adaptShortcut(shortcut) {
@@ -115085,13 +115084,13 @@ ${content}
     const description = info ? /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(menu_exports.ItemDescription, { children: info }) : null;
     let prefix2;
     if (icon) {
-      prefix2 = (0, import_element381.isValidElement)(icon) && (icon.type === "svg" || icon.type === import_primitives99.SVG) ? /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(
+      prefix2 = (0, import_element380.isValidElement)(icon) && (icon.type === "svg" || icon.type === import_primitives99.SVG) ? /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(
         menu_exports.PrefixIcon,
         {
           icon,
           className: icon.props.className
         }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(import_components226.Icon, { icon });
+      ) : /* @__PURE__ */ (0, import_jsx_runtime602.jsx)(import_components224.Icon, { icon });
     }
     const itemShortcut = adaptShortcut(shortcut);
     const checked2 = isSelected2 ?? (ariaChecked === true || ariaChecked === "true");
@@ -115155,7 +115154,7 @@ ${content}
       }
     );
   }
-  var more_menu_item_default = (0, import_element381.forwardRef)(UnforwardedMoreMenuItem);
+  var more_menu_item_default = (0, import_element380.forwardRef)(UnforwardedMoreMenuItem);
 
   // packages/editor/build-module/components/mode-switcher/index.mjs
   var import_i18n304 = __toESM(require_i18n(), 1);
@@ -115301,11 +115300,11 @@ ${content}
   }
 
   // packages/editor/build-module/components/more-menu/more-menu-submenu.mjs
-  var import_element382 = __toESM(require_element(), 1);
+  var import_element381 = __toESM(require_element(), 1);
   var import_jsx_runtime605 = __toESM(require_jsx_runtime(), 1);
   function toMenuItems(fills) {
-    return import_element382.Children.map(fills, (fill) => {
-      if (!(0, import_element382.isValidElement)(fill) || fill.type === more_menu_item_default) {
+    return import_element381.Children.map(fills, (fill) => {
+      if (!(0, import_element381.isValidElement)(fill) || fill.type === more_menu_item_default) {
         return fill;
       }
       const label = /* @__PURE__ */ (0, import_jsx_runtime605.jsx)(menu_exports.ItemLabel, { children: null });
@@ -115324,16 +115323,16 @@ ${content}
   }
 
   // packages/editor/build-module/components/more-menu/tools-more-menu-group.mjs
-  var import_components227 = __toESM(require_components(), 1);
-  var { Fill: ToolsMoreMenuGroup, Slot: Slot11 } = (0, import_components227.createSlotFill)(
+  var import_components225 = __toESM(require_components(), 1);
+  var { Fill: ToolsMoreMenuGroup, Slot: Slot11 } = (0, import_components225.createSlotFill)(
     /* @__PURE__ */ Symbol("ToolsMoreMenuGroup")
   );
   ToolsMoreMenuGroup.Slot = Slot11;
   var tools_more_menu_group_default = ToolsMoreMenuGroup;
 
   // packages/editor/build-module/components/more-menu/view-more-menu-group.mjs
-  var import_components228 = __toESM(require_components(), 1);
-  var { Fill: ViewMoreMenuGroup, Slot: Slot12 } = (0, import_components228.createSlotFill)(
+  var import_components226 = __toESM(require_components(), 1);
+  var { Fill: ViewMoreMenuGroup, Slot: Slot12 } = (0, import_components226.createSlotFill)(
     /* @__PURE__ */ Symbol("ViewMoreMenuGroup")
   );
   ViewMoreMenuGroup.Slot = Slot12;
@@ -115356,7 +115355,7 @@ ${content}
       menu_exports.Trigger,
       {
         render: /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(
-          import_components229.Button,
+          import_components227.Button,
           {
             size: "compact",
             icon: more_vertical_default,
@@ -115548,7 +115547,7 @@ ${content}
 
   // packages/editor/build-module/components/post-view-link/index.mjs
   var import_i18n307 = __toESM(require_i18n(), 1);
-  var import_components230 = __toESM(require_components(), 1);
+  var import_components228 = __toESM(require_components(), 1);
   var import_core_data115 = __toESM(require_core_data(), 1);
   var import_data205 = __toESM(require_data(), 1);
   var import_preferences18 = __toESM(require_preferences(), 1);
@@ -115570,7 +115569,7 @@ ${content}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime608.jsx)(
-      import_components230.Button,
+      import_components228.Button,
       {
         icon: external_default,
         label: label || (0, import_i18n307.__)("View post"),
@@ -115584,7 +115583,7 @@ ${content}
 
   // packages/editor/build-module/components/preview-dropdown/index.mjs
   var import_compose81 = __toESM(require_compose(), 1);
-  var import_components231 = __toESM(require_components(), 1);
+  var import_components229 = __toESM(require_components(), 1);
   var import_i18n308 = __toESM(require_i18n(), 1);
   var import_data206 = __toESM(require_data(), 1);
   var import_core_data116 = __toESM(require_core_data(), 1);
@@ -115701,7 +115700,7 @@ ${content}
         menu_exports.Trigger,
         {
           render: /* @__PURE__ */ (0, import_jsx_runtime609.jsx)(
-            import_components231.Button,
+            import_components229.Button,
             {
               className: clsx_default("editor-preview-dropdown__toggle", {
                 "is-responsive-editing": isResponsiveEditing
@@ -115818,9 +115817,9 @@ ${content}
   }
 
   // packages/editor/build-module/components/zoom-out-toggle/index.mjs
-  var import_components232 = __toESM(require_components(), 1);
+  var import_components230 = __toESM(require_components(), 1);
   var import_i18n309 = __toESM(require_i18n(), 1);
-  var import_element383 = __toESM(require_element(), 1);
+  var import_element382 = __toESM(require_element(), 1);
   var import_data207 = __toESM(require_data(), 1);
   var import_block_editor73 = __toESM(require_block_editor(), 1);
   var import_preferences20 = __toESM(require_preferences(), 1);
@@ -115847,7 +115846,7 @@ ${content}
     const { registerShortcut, unregisterShortcut } = (0, import_data207.useDispatch)(
       import_keyboard_shortcuts8.store
     );
-    (0, import_element383.useEffect)(() => {
+    (0, import_element382.useEffect)(() => {
       registerShortcut({
         name: "core/editor/zoom",
         category: "global",
@@ -115884,7 +115883,7 @@ ${content}
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime610.jsx)(
-      import_components232.Button,
+      import_components230.Button,
       {
         accessibleWhenDisabled: true,
         disabled: disabled2,
@@ -115901,8 +115900,8 @@ ${content}
   var zoom_out_toggle_default = ZoomOutToggle;
 
   // packages/editor/build-module/components/collaborators-presence/index.mjs
-  var import_components235 = __toESM(require_components(), 1);
-  var import_element391 = __toESM(require_element(), 1);
+  var import_components233 = __toESM(require_components(), 1);
+  var import_element390 = __toESM(require_element(), 1);
   var import_core_data121 = __toESM(require_core_data(), 1);
   var import_i18n315 = __toESM(require_i18n(), 1);
 
@@ -115929,22 +115928,22 @@ ${content}
   };
 
   // packages/editor/build-module/components/collaborators-presence/avatar/component.mjs
-  var import_components233 = __toESM(require_components(), 1);
-  var import_element385 = __toESM(require_element(), 1);
+  var import_components231 = __toESM(require_components(), 1);
+  var import_element384 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/components/collaborators-presence/avatar/use-image-loading-status.mjs
-  var import_element384 = __toESM(require_element(), 1);
+  var import_element383 = __toESM(require_element(), 1);
   function useImageLoadingStatus(src) {
-    const [prevSrc, setPrevSrc] = (0, import_element384.useState)(src);
-    const [status, setStatus] = (0, import_element384.useState)(
+    const [prevSrc, setPrevSrc] = (0, import_element383.useState)(src);
+    const [status, setStatus] = (0, import_element383.useState)(
       src ? "loading" : "idle"
     );
     if (prevSrc !== src) {
       setPrevSrc(src);
       setStatus(src ? "loading" : "idle");
     }
-    const handleLoad = (0, import_element384.useCallback)(() => setStatus("loaded"), []);
-    const handleError = (0, import_element384.useCallback)(() => setStatus("error"), []);
+    const handleLoad = (0, import_element383.useCallback)(() => setStatus("loaded"), []);
+    const handleError = (0, import_element383.useCallback)(() => setStatus("error"), []);
     return { status, handleLoad, handleError };
   }
 
@@ -115974,7 +115973,7 @@ ${content}
     const imageLoaded = imageStatus === "loaded";
     const showBadge = variant === "badge" && !!name2;
     const initials = name2 ? name2.split(/\s+/).slice(0, 2).map((word) => word[0]).join("").toUpperCase() : void 0;
-    const nameColor = (0, import_element385.useMemo)(
+    const nameColor = (0, import_element384.useMemo)(
       () => borderColor && A(borderColor).isReadable(GRAY_900, {
         level: "AA",
         size: "normal"
@@ -116017,7 +116016,7 @@ ${content}
             ),
             !imageLoaded && initials
           ] }),
-          dimmed && !!statusIndicator && /* @__PURE__ */ (0, import_jsx_runtime611.jsx)("span", { className: "editor-avatar__status-indicator", children: /* @__PURE__ */ (0, import_jsx_runtime611.jsx)(import_components233.Icon, { icon: statusIndicator }) }),
+          dimmed && !!statusIndicator && /* @__PURE__ */ (0, import_jsx_runtime611.jsx)("span", { className: "editor-avatar__status-indicator", children: /* @__PURE__ */ (0, import_jsx_runtime611.jsx)(import_components231.Icon, { icon: statusIndicator }) }),
           showBadge && /* @__PURE__ */ (0, import_jsx_runtime611.jsx)("span", { className: "editor-avatar__name", children: label || name2 })
         ]
       }
@@ -116033,7 +116032,7 @@ ${content}
   var component_default = Avatar;
 
   // packages/editor/build-module/components/collaborators-presence/avatar-group/component.mjs
-  var import_element386 = __toESM(require_element(), 1);
+  var import_element385 = __toESM(require_element(), 1);
   var import_i18n310 = __toESM(require_i18n(), 1);
   var import_jsx_runtime612 = __toESM(require_jsx_runtime(), 1);
   function AvatarGroup({
@@ -116042,7 +116041,7 @@ ${content}
     children,
     ...props
   }) {
-    const childArray = import_element386.Children.toArray(children);
+    const childArray = import_element385.Children.toArray(children);
     const visible = childArray.slice(0, max4);
     const overflowCount = childArray.length - max4;
     return /* @__PURE__ */ (0, import_jsx_runtime612.jsxs)(
@@ -116077,7 +116076,7 @@ ${content}
 
   // packages/editor/build-module/components/collaborators-presence/list.mjs
   var import_i18n313 = __toESM(require_i18n(), 1);
-  var import_components234 = __toESM(require_components(), 1);
+  var import_components232 = __toESM(require_components(), 1);
   var import_a11y16 = __toESM(require_a11y(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/get-avatar-url.mjs
@@ -116510,7 +116509,7 @@ ${content}
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime613.jsx)(
-      import_components234.Popover,
+      import_components232.Popover,
       {
         anchor: popoverAnchor,
         placement: "bottom",
@@ -116524,7 +116523,7 @@ ${content}
               /* @__PURE__ */ (0, import_jsx_runtime613.jsx)("span", { children: activeCollaborators.length })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime613.jsx)("div", { className: "editor-collaborators-presence__list-header-action", children: /* @__PURE__ */ (0, import_jsx_runtime613.jsx)(
-              import_components234.Button,
+              import_components232.Button,
               {
                 __next40pxDefaultSize: true,
                 icon: close_small_default,
@@ -116635,7 +116634,7 @@ ${content}
 
   // packages/editor/build-module/components/collaborators-overlay/overlay.mjs
   var import_compose82 = __toESM(require_compose(), 1);
-  var import_element390 = __toESM(require_element(), 1);
+  var import_element389 = __toESM(require_element(), 1);
   var import_i18n314 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/collaborator-styles.mjs
@@ -116909,14 +116908,14 @@ ${content}
   // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
   var import_core_data119 = __toESM(require_core_data(), 1);
   var import_block_editor75 = __toESM(require_block_editor(), 1);
-  var import_element388 = __toESM(require_element(), 1);
+  var import_element387 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/use-debounced-recompute.mjs
-  var import_element387 = __toESM(require_element(), 1);
+  var import_element386 = __toESM(require_element(), 1);
   function useDebouncedRecompute(delayMs) {
-    const [recomputeToken, setRecomputeToken] = (0, import_element387.useState)(0);
-    const timeoutRef = (0, import_element387.useRef)(null);
-    const rerenderAfterDelay = (0, import_element387.useCallback)(() => {
+    const [recomputeToken, setRecomputeToken] = (0, import_element386.useState)(0);
+    const timeoutRef = (0, import_element386.useRef)(null);
+    const rerenderAfterDelay = (0, import_element386.useCallback)(() => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
@@ -116932,16 +116931,16 @@ ${content}
     return [recomputeToken, rerenderAfterDelay];
   }
   function useRequestAnimationFrameRecompute() {
-    const [recomputeToken, setRecomputeToken] = (0, import_element387.useState)(0);
-    const requestAnimationFrameRef = (0, import_element387.useRef)(null);
-    (0, import_element387.useEffect)(() => {
+    const [recomputeToken, setRecomputeToken] = (0, import_element386.useState)(0);
+    const requestAnimationFrameRef = (0, import_element386.useRef)(null);
+    (0, import_element386.useEffect)(() => {
       return () => {
         if (requestAnimationFrameRef.current !== null) {
           cancelAnimationFrame(requestAnimationFrameRef.current);
         }
       };
     }, []);
-    const rerenderOnNextFrame = (0, import_element387.useCallback)(() => {
+    const rerenderOnNextFrame = (0, import_element386.useCallback)(() => {
       if (requestAnimationFrameRef.current !== null) {
         cancelAnimationFrame(requestAnimationFrameRef.current);
       }
@@ -117409,7 +117408,7 @@ ${content}
   var { isElementVisible: isElementVisible3 } = unlock(import_block_editor75.privateApis);
   var { SelectionType: SelectionType3 } = unlock(import_core_data119.privateApis);
   function useBlockHighlighting(overlayElement, blockEditorDocument, postId2, postType2, delayMs) {
-    const highlightedBlockIds = (0, import_element388.useRef)(/* @__PURE__ */ new Set());
+    const highlightedBlockIds = (0, import_element387.useRef)(/* @__PURE__ */ new Set());
     const userStates = useActiveCollaborators(
       postId2 ?? null,
       postType2 ?? null
@@ -117418,12 +117417,12 @@ ${content}
       postId2 ?? null,
       postType2 ?? null
     );
-    const [highlights, setHighlights] = (0, import_element388.useState)(
+    const [highlights, setHighlights] = (0, import_element387.useState)(
       []
     );
     const [recomputeToken, rerenderHighlightsAfterDelay] = useDebouncedRecompute(delayMs);
     const [resizeToken, rerenderHighlightsOnResize] = useRequestAnimationFrameRecompute();
-    (0, import_element388.useEffect)(() => {
+    (0, import_element387.useEffect)(() => {
       if (!blockEditorDocument) {
         setHighlights([]);
         return;
@@ -117670,7 +117669,7 @@ ${content}
   // packages/editor/build-module/components/collaborators-overlay/use-render-cursors.mjs
   var import_core_data120 = __toESM(require_core_data(), 1);
   var import_data208 = __toESM(require_data(), 1);
-  var import_element389 = __toESM(require_element(), 1);
+  var import_element388 = __toESM(require_element(), 1);
   var import_preferences21 = __toESM(require_preferences(), 1);
   var { useActiveCollaborators: useActiveCollaborators2, useResolvedSelection: useResolvedSelection2 } = unlock(import_core_data120.privateApis);
   var { SelectionType: SelectionType4 } = unlock(import_core_data120.privateApis);
@@ -117687,12 +117686,12 @@ ${content}
       (select9) => select9(import_preferences21.store).get("core", "showCollaborationCursor"),
       []
     );
-    const [cursorPositions, setCursorPositions] = (0, import_element389.useState)(
+    const [cursorPositions, setCursorPositions] = (0, import_element388.useState)(
       []
     );
     const [recomputeToken, rerenderCursorsAfterDelay] = useDebouncedRecompute(delayMs);
     const [resizeToken, rerenderCursorsOnResize] = useRequestAnimationFrameRecompute();
-    (0, import_element389.useEffect)(() => {
+    (0, import_element388.useEffect)(() => {
       if (!overlayElement || !blockEditorDocument) {
         setCursorPositions([]);
         return;
@@ -117831,7 +117830,7 @@ ${content}
     postType: postType2,
     cursorRegistry
   }) {
-    const [overlayElement, setOverlayElement] = (0, import_element390.useState)(null);
+    const [overlayElement, setOverlayElement] = (0, import_element389.useState)(null);
     const { cursors, rerenderCursorsAfterDelay, rerenderCursorsOnResize } = useRenderCursors(
       overlayElement,
       blockEditorDocument ?? null,
@@ -117850,12 +117849,12 @@ ${content}
       postType2 ?? null,
       RERENDER_DELAY_MS
     );
-    const onResize = (0, import_element390.useCallback)(() => {
+    const onResize = (0, import_element389.useCallback)(() => {
       rerenderCursorsOnResize();
       rerenderHighlightsOnResize();
     }, [rerenderCursorsOnResize, rerenderHighlightsOnResize]);
     const resizeObserverRef = (0, import_compose82.useResizeObserver)(onResize);
-    (0, import_element390.useEffect)(() => {
+    (0, import_element389.useEffect)(() => {
       const cleanupCursors = rerenderCursorsAfterDelay();
       const cleanupHighlights = rerenderHighlightsAfterDelay();
       return () => {
@@ -117863,7 +117862,7 @@ ${content}
         cleanupHighlights();
       };
     }, [rerenderCursorsAfterDelay, rerenderHighlightsAfterDelay]);
-    (0, import_element390.useEffect)(() => {
+    (0, import_element389.useEffect)(() => {
       if (cursors.length === 0) {
         return;
       }
@@ -117876,8 +117875,8 @@ ${content}
       setOverlayElement,
       resizeObserverRef
     ]);
-    const cursorRefsMap = (0, import_element390.useRef)(/* @__PURE__ */ new Map());
-    (0, import_element390.useEffect)(() => {
+    const cursorRefsMap = (0, import_element389.useRef)(/* @__PURE__ */ new Map());
+    (0, import_element389.useEffect)(() => {
       if (!cursorRegistry) {
         return;
       }
@@ -117897,7 +117896,7 @@ ${content}
       }
       return () => cursorRegistry.removeAll();
     }, [cursors, highlights, cursorRegistry]);
-    const setCursorRef = (0, import_element390.useCallback)(
+    const setCursorRef = (0, import_element389.useCallback)(
       (clientId) => (el) => {
         if (el) {
           cursorRefsMap.current.set(clientId, el);
@@ -118021,7 +118020,7 @@ ${content}
     const otherActiveCollaborators = activeCollaborators.filter(
       (c6) => !c6.isMe
     );
-    const collaboratorsForList = (0, import_element391.useMemo)(() => {
+    const collaboratorsForList = (0, import_element390.useMemo)(() => {
       return [...activeCollaborators].sort((a2, b2) => {
         if (a2.isMe && !b2.isMe) {
           return -1;
@@ -118032,9 +118031,9 @@ ${content}
         return 0;
       });
     }, [activeCollaborators]);
-    const [cursorRegistry] = (0, import_element391.useState)(createCursorRegistry);
-    const [isPopoverVisible, setIsPopoverVisible] = (0, import_element391.useState)(false);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element391.useState)(
+    const [cursorRegistry] = (0, import_element390.useState)(createCursorRegistry);
+    const [isPopoverVisible, setIsPopoverVisible] = (0, import_element390.useState)(false);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element390.useState)(
       null
     );
     if (otherActiveCollaborators.length === 0) {
@@ -118044,7 +118043,7 @@ ${content}
     return /* @__PURE__ */ (0, import_jsx_runtime616.jsxs)(import_jsx_runtime616.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime616.jsxs)("div", { className: "editor-collaborators-presence", children: [
         /* @__PURE__ */ (0, import_jsx_runtime616.jsx)(
-          import_components235.Button,
+          import_components233.Button,
           {
             size: "compact",
             className: "editor-collaborators-presence__button",
@@ -118160,7 +118159,7 @@ ${content}
       };
     }, []);
     const canBeZoomedOut = ["post", "page", "wp_template"].includes(postType2) && hasSectionRootClientId;
-    const [isBlockToolsCollapsed, setIsBlockToolsCollapsed] = (0, import_element392.useState)(true);
+    const [isBlockToolsCollapsed, setIsBlockToolsCollapsed] = (0, import_element391.useState)(true);
     const hasCenter = !isTooNarrowForDocumentBar && (!hasFixedToolbar || hasFixedToolbar && (!hasBlockSelection || isBlockToolsCollapsed));
     return /* @__PURE__ */ (0, import_jsx_runtime617.jsx)(
       HeaderSkeleton,
@@ -118242,7 +118241,7 @@ ${content}
   var import_data210 = __toESM(require_data(), 1);
   var import_block_editor78 = __toESM(require_block_editor(), 1);
   var import_compose84 = __toESM(require_compose(), 1);
-  var import_element393 = __toESM(require_element(), 1);
+  var import_element392 = __toESM(require_element(), 1);
   var import_preferences23 = __toESM(require_preferences(), 1);
   var import_keycodes16 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime618 = __toESM(require_jsx_runtime(), 1);
@@ -118283,12 +118282,12 @@ ${content}
     const { setIsInserterOpened: setIsInserterOpened2 } = (0, import_data210.useDispatch)(store);
     const { disableComplementaryArea: disableComplementaryArea2 } = (0, import_data210.useDispatch)(store3);
     const isMobileViewport = (0, import_compose84.useViewportMatch)("medium", "<");
-    const libraryRef = (0, import_element393.useRef)();
-    const closeInserterSidebar = (0, import_element393.useCallback)(() => {
+    const libraryRef = (0, import_element392.useRef)();
+    const closeInserterSidebar = (0, import_element392.useCallback)(() => {
       setIsInserterOpened2(false);
       inserterSidebarToggleRef2.current?.focus();
     }, [inserterSidebarToggleRef2, setIsInserterOpened2]);
-    const closeOnEscape = (0, import_element393.useCallback)(
+    const closeOnEscape = (0, import_element392.useCallback)(
       (event) => {
         if (event.keyCode === import_keycodes16.ESCAPE && !event.defaultPrevented) {
           event.preventDefault();
@@ -118325,28 +118324,28 @@ ${content}
   var import_compose85 = __toESM(require_compose(), 1);
   var import_data211 = __toESM(require_data(), 1);
   var import_dom37 = __toESM(require_dom(), 1);
-  var import_element394 = __toESM(require_element(), 1);
+  var import_element393 = __toESM(require_element(), 1);
   var import_i18n317 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts9 = __toESM(require_keyboard_shortcuts(), 1);
   var import_keycodes17 = __toESM(require_keycodes(), 1);
 
   // packages/editor/build-module/components/list-view-sidebar/list-view-outline.mjs
-  var import_components236 = __toESM(require_components(), 1);
+  var import_components234 = __toESM(require_components(), 1);
   var import_i18n316 = __toESM(require_i18n(), 1);
   var import_jsx_runtime619 = __toESM(require_jsx_runtime(), 1);
   function ListViewOutline() {
     return /* @__PURE__ */ (0, import_jsx_runtime619.jsxs)(import_jsx_runtime619.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime619.jsxs)("div", { className: "editor-list-view-sidebar__outline", children: [
         /* @__PURE__ */ (0, import_jsx_runtime619.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime619.jsx)(import_components236.__experimentalText, { children: (0, import_i18n316.__)("Characters:") }),
-          /* @__PURE__ */ (0, import_jsx_runtime619.jsx)(import_components236.__experimentalText, { children: /* @__PURE__ */ (0, import_jsx_runtime619.jsx)(CharacterCount, {}) })
+          /* @__PURE__ */ (0, import_jsx_runtime619.jsx)(import_components234.__experimentalText, { children: (0, import_i18n316.__)("Characters:") }),
+          /* @__PURE__ */ (0, import_jsx_runtime619.jsx)(import_components234.__experimentalText, { children: /* @__PURE__ */ (0, import_jsx_runtime619.jsx)(CharacterCount, {}) })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime619.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime619.jsx)(import_components236.__experimentalText, { children: (0, import_i18n316.__)("Words:") }),
+          /* @__PURE__ */ (0, import_jsx_runtime619.jsx)(import_components234.__experimentalText, { children: (0, import_i18n316.__)("Words:") }),
           /* @__PURE__ */ (0, import_jsx_runtime619.jsx)(WordCount, {})
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime619.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime619.jsx)(import_components236.__experimentalText, { children: (0, import_i18n316.__)("Time to read:") }),
+          /* @__PURE__ */ (0, import_jsx_runtime619.jsx)(import_components234.__experimentalText, { children: (0, import_i18n316.__)("Time to read:") }),
           /* @__PURE__ */ (0, import_jsx_runtime619.jsx)(TimeToRead, {})
         ] })
       ] }),
@@ -118360,11 +118359,11 @@ ${content}
   function ListViewSidebar() {
     const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data211.useDispatch)(store);
     const { getListViewToggleRef: getListViewToggleRef2 } = unlock((0, import_data211.useSelect)(store));
-    const closeListView = (0, import_element394.useCallback)(() => {
+    const closeListView = (0, import_element393.useCallback)(() => {
       setIsListViewOpened2(false);
       getListViewToggleRef2().current?.focus();
     }, [getListViewToggleRef2, setIsListViewOpened2]);
-    const closeOnEscape = (0, import_element394.useCallback)(
+    const closeOnEscape = (0, import_element393.useCallback)(
       (event) => {
         if (event.keyCode === import_keycodes17.ESCAPE && !event.defaultPrevented) {
           event.preventDefault();
@@ -118373,11 +118372,11 @@ ${content}
       },
       [closeListView]
     );
-    const [dropZoneElement, setDropZoneElement] = (0, import_element394.useState)(null);
-    const [tab, setTab] = (0, import_element394.useState)("list-view");
-    const sidebarRef = (0, import_element394.useRef)();
-    const tabsRef = (0, import_element394.useRef)();
-    const listViewRef = (0, import_element394.useRef)();
+    const [dropZoneElement, setDropZoneElement] = (0, import_element393.useState)(null);
+    const [tab, setTab] = (0, import_element393.useState)("list-view");
+    const sidebarRef = (0, import_element393.useRef)();
+    const tabsRef = (0, import_element393.useRef)();
+    const listViewRef = (0, import_element393.useRef)();
     const listViewContainerRef = (0, import_compose85.useMergeRefs)([
       listViewRef,
       setDropZoneElement
@@ -118435,16 +118434,16 @@ ${content}
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-header.mjs
   var import_data213 = __toESM(require_data(), 1);
-  var import_components238 = __toESM(require_components(), 1);
+  var import_components236 = __toESM(require_components(), 1);
   var import_i18n319 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-slider.mjs
   var import_data212 = __toESM(require_data(), 1);
-  var import_components237 = __toESM(require_components(), 1);
+  var import_components235 = __toESM(require_components(), 1);
   var import_core_data122 = __toESM(require_core_data(), 1);
   var import_i18n318 = __toESM(require_i18n(), 1);
   var import_date22 = __toESM(require_date(), 1);
-  var import_element395 = __toESM(require_element(), 1);
+  var import_element394 = __toESM(require_element(), 1);
   var import_compose86 = __toESM(require_compose(), 1);
   var import_jsx_runtime621 = __toESM(require_jsx_runtime(), 1);
   function ConnectedRevisionsSlider() {
@@ -118495,13 +118494,13 @@ ${content}
     setRevisionPage: setRevisionPage2
   }) {
     const setFocusOnMountRef = (0, import_compose86.useFocusOnMount)(true);
-    const initialActiveElementRef = (0, import_element395.useRef)();
-    const loadingRef = (0, import_element395.useCallback)((node) => {
+    const initialActiveElementRef = (0, import_element394.useRef)();
+    const loadingRef = (0, import_element394.useCallback)((node) => {
       if (node && initialActiveElementRef.current === void 0) {
         initialActiveElementRef.current = node.ownerDocument.activeElement;
       }
     }, []);
-    const focusOnMountRef = (0, import_element395.useCallback)(
+    const focusOnMountRef = (0, import_element394.useCallback)(
       (node) => {
         if (!node) {
           setFocusOnMountRef(null);
@@ -118518,7 +118517,7 @@ ${content}
     );
     const isLoading = !rawRevisions;
     const totalPages = Math.ceil(totalRevisions / perPage) || 1;
-    const revisions = (0, import_element395.useMemo)(
+    const revisions = (0, import_element394.useMemo)(
       () => rawRevisions && [...rawRevisions].reverse(),
       [rawRevisions]
     );
@@ -118541,7 +118540,7 @@ ${content}
     };
     const showPagination = totalPages > 1;
     if (isLoading && !showPagination) {
-      return /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(import_components237.Spinner, { ref: loadingRef });
+      return /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(import_components235.Spinner, { ref: loadingRef });
     }
     if (!isLoading && !revisions?.length) {
       return /* @__PURE__ */ (0, import_jsx_runtime621.jsx)("span", { className: "editor-revisions-header__no-revisions", children: (0, import_i18n318.__)("No revisions found.") });
@@ -118559,8 +118558,8 @@ ${content}
         end
       );
     };
-    const sliderOrSpinner = isLoading || selectedIndex === -1 ? /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(import_components237.Spinner, { ref: loadingRef }) : /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(
-      import_components237.RangeControl,
+    const sliderOrSpinner = isLoading || selectedIndex === -1 ? /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(import_components235.Spinner, { ref: loadingRef }) : /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(
+      import_components235.RangeControl,
       {
         ref: focusOnMountRef,
         "aria-valuetext": renderTooltipContent(selectedIndex),
@@ -118581,7 +118580,7 @@ ${content}
     }
     return /* @__PURE__ */ (0, import_jsx_runtime621.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", style: { flex: 1 }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(
-        import_components237.Button,
+        import_components235.Button,
         {
           icon: chevron_left_default,
           label: revisionPage2 < totalPages ? getPageRangeLabel(revisionPage2 + 1) : (0, import_i18n318.__)("No older revisions"),
@@ -118604,7 +118603,7 @@ ${content}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(
-        import_components237.Button,
+        import_components235.Button,
         {
           icon: chevron_right_default,
           label: revisionPage2 > 1 ? getPageRangeLabel(revisionPage2 - 1) : (0, import_i18n318.__)("No newer revisions"),
@@ -118645,7 +118644,7 @@ ${content}
       {
         className: "editor-revisions-header",
         toolbar: /* @__PURE__ */ (0, import_jsx_runtime622.jsx)(
-          import_components238.Button,
+          import_components236.Button,
           {
             __next40pxDefaultSize: true,
             size: "compact",
@@ -118659,7 +118658,7 @@ ${content}
         settings: /* @__PURE__ */ (0, import_jsx_runtime622.jsxs)(import_jsx_runtime622.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime622.jsx)(PostPreviewButton, { className: "editor-header__post-preview-button" }),
           /* @__PURE__ */ (0, import_jsx_runtime622.jsx)(
-            import_components238.Button,
+            import_components236.Button,
             {
               __next40pxDefaultSize: true,
               icon: (0, import_i18n319.isRTL)() ? drawer_left_default : drawer_right_default,
@@ -118680,7 +118679,7 @@ ${content}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime622.jsx)(
-            import_components238.Button,
+            import_components236.Button,
             {
               __next40pxDefaultSize: true,
               variant: "secondary",
@@ -118690,7 +118689,7 @@ ${content}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime622.jsx)(
-            import_components238.Button,
+            import_components236.Button,
             {
               __next40pxDefaultSize: true,
               accessibleWhenDisabled: true,
@@ -118710,17 +118709,17 @@ ${content}
   var revisions_header_default = RevisionsHeader;
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-canvas.mjs
-  var import_components241 = __toESM(require_components(), 1);
+  var import_components239 = __toESM(require_components(), 1);
   var import_block_editor87 = __toESM(require_block_editor(), 1);
   var import_data222 = __toESM(require_data(), 1);
-  var import_element401 = __toESM(require_element(), 1);
+  var import_element400 = __toESM(require_element(), 1);
   var import_hooks64 = __toESM(require_hooks(), 1);
   var import_blocks34 = __toESM(require_blocks(), 1);
   var import_i18n323 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/visual-editor/index.mjs
   var import_block_editor85 = __toESM(require_block_editor(), 1);
-  var import_element399 = __toESM(require_element(), 1);
+  var import_element398 = __toESM(require_element(), 1);
   var import_data220 = __toESM(require_data(), 1);
   var import_blocks33 = __toESM(require_blocks(), 1);
   var import_core_data125 = __toESM(require_core_data(), 1);
@@ -118729,9 +118728,9 @@ ${content}
   // packages/editor/build-module/components/visual-editor/edit-template-blocks-notification.mjs
   var import_data214 = __toESM(require_data(), 1);
   var import_core_data123 = __toESM(require_core_data(), 1);
-  var import_element396 = __toESM(require_element(), 1);
+  var import_element395 = __toESM(require_element(), 1);
   var import_i18n320 = __toESM(require_i18n(), 1);
-  var import_components239 = __toESM(require_components(), 1);
+  var import_components237 = __toESM(require_components(), 1);
   var import_jsx_runtime623 = __toESM(require_jsx_runtime(), 1);
   function EditTemplateBlocksNotification({ contentRef }) {
     const { onNavigateToEntityRecord, templateId: templateId2 } = (0, import_data214.useSelect)((select9) => {
@@ -118748,8 +118747,8 @@ ${content}
       }),
       []
     );
-    const [isDialogOpen, setIsDialogOpen] = (0, import_element396.useState)(false);
-    (0, import_element396.useEffect)(() => {
+    const [isDialogOpen, setIsDialogOpen] = (0, import_element395.useState)(false);
+    (0, import_element395.useEffect)(() => {
       const handleDblClick = (event) => {
         if (!canEditTemplate) {
           return;
@@ -118772,7 +118771,7 @@ ${content}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime623.jsx)(
-      import_components239.__experimentalConfirmDialog,
+      import_components237.__experimentalConfirmDialog,
       {
         isOpen: isDialogOpen,
         confirmButtonText: (0, import_i18n320.__)("Edit template"),
@@ -118982,17 +118981,17 @@ ${content}
   var import_blocks32 = __toESM(require_blocks(), 1);
   var import_core_data124 = __toESM(require_core_data(), 1);
   var import_block_editor84 = __toESM(require_block_editor(), 1);
-  var import_components240 = __toESM(require_components(), 1);
+  var import_components238 = __toESM(require_components(), 1);
   var import_hooks63 = __toESM(require_hooks(), 1);
-  var import_element398 = __toESM(require_element(), 1);
+  var import_element397 = __toESM(require_element(), 1);
   var import_i18n321 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/sync-connection-error-modal/use-retry-countdown.mjs
-  var import_element397 = __toESM(require_element(), 1);
+  var import_element396 = __toESM(require_element(), 1);
   function useRetryCountdown(connectionStatus) {
-    const [secondsRemaining, setSecondsRemaining] = (0, import_element397.useState)();
-    const hasRetriedRef = (0, import_element397.useRef)(false);
-    (0, import_element397.useEffect)(() => {
+    const [secondsRemaining, setSecondsRemaining] = (0, import_element396.useState)();
+    const hasRetriedRef = (0, import_element396.useRef)(false);
+    (0, import_element396.useEffect)(() => {
       if (!connectionStatus) {
         return;
       }
@@ -119049,9 +119048,9 @@ ${content}
   var { retrySyncConnection } = unlock(import_core_data124.privateApis);
   var INITIAL_DISCONNECTED_DEBOUNCE_MS = 2e4;
   function SyncConnectionErrorModal() {
-    const [hasInitialized, setHasInitialized] = (0, import_element398.useState)(false);
-    const [showModal, setShowModal] = (0, import_element398.useState)(false);
-    const [isManualRetryAvailable, setIsManualRetryAvailable] = (0, import_element398.useState)(false);
+    const [hasInitialized, setHasInitialized] = (0, import_element397.useState)(false);
+    const [showModal, setShowModal] = (0, import_element397.useState)(false);
+    const [isManualRetryAvailable, setIsManualRetryAvailable] = (0, import_element397.useState)(false);
     const { connectionStatus, isCollaborationEnabled, postType: postType2 } = (0, import_data219.useSelect)(
       (selectFn) => {
         const { getSyncConnectionStatus, getPostType } = unlock(
@@ -119072,13 +119071,13 @@ ${content}
       const blocks = (0, import_data219.select)(import_block_editor84.store).getBlocks();
       return (0, import_blocks32.serialize)(blocks);
     });
-    (0, import_element398.useEffect)(() => {
+    (0, import_element397.useEffect)(() => {
       const timeout = setTimeout(() => {
         setHasInitialized(true);
       }, INITIAL_DISCONNECTED_DEBOUNCE_MS);
       return () => clearTimeout(timeout);
     }, []);
-    (0, import_element398.useEffect)(() => {
+    (0, import_element397.useEffect)(() => {
       if ("connecting" === connectionStatus?.status) {
         return;
       }
@@ -119087,7 +119086,7 @@ ${content}
       );
     }, [connectionStatus]);
     const canRetry = connectionStatus && "disconnected" === connectionStatus.status && (connectionStatus.canManuallyRetry || connectionStatus.willAutoRetryInMs);
-    (0, import_element398.useEffect)(() => {
+    (0, import_element397.useEffect)(() => {
       if ("connected" === connectionStatus?.status) {
         setShowModal(false);
         return;
@@ -119134,7 +119133,7 @@ ${content}
       editPostHref = `edit.php?post_type=${postType2.slug}`;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime624.jsx)(BlockCanvasCover2.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime624.jsx)(
-      import_components240.Modal,
+      import_components238.Modal,
       {
         overlayClassName: "editor-sync-connection-error-modal",
         isDismissible: false,
@@ -119144,12 +119143,12 @@ ${content}
         shouldCloseOnEsc: false,
         size: "medium",
         title: messages.title,
-        children: /* @__PURE__ */ (0, import_jsx_runtime624.jsxs)(import_components240.__experimentalVStack, { spacing: 6, children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime624.jsxs)(import_components238.__experimentalVStack, { spacing: 6, children: [
           /* @__PURE__ */ (0, import_jsx_runtime624.jsx)("p", { children: messages.description }),
           retryCountdownText && /* @__PURE__ */ (0, import_jsx_runtime624.jsx)("p", { className: "editor-sync-connection-error-modal__retry-countdown", children: retryCountdownText }),
-          /* @__PURE__ */ (0, import_jsx_runtime624.jsxs)(import_components240.__experimentalHStack, { justify: "right", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime624.jsxs)(import_components238.__experimentalHStack, { justify: "right", children: [
             /* @__PURE__ */ (0, import_jsx_runtime624.jsx)(
-              import_components240.Button,
+              import_components238.Button,
               {
                 __next40pxDefaultSize: true,
                 href: editPostHref,
@@ -119163,7 +119162,7 @@ ${content}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime624.jsx)(
-              import_components240.Button,
+              import_components238.Button,
               {
                 __next40pxDefaultSize: true,
                 ref: copyButtonRef,
@@ -119172,7 +119171,7 @@ ${content}
               }
             ),
             manualRetry && /* @__PURE__ */ (0, import_jsx_runtime624.jsx)(
-              import_components240.Button,
+              import_components238.Button,
               {
                 __next40pxDefaultSize: true,
                 accessibleWhenDisabled: true,
@@ -119327,16 +119326,16 @@ ${content}
         isZoomedOut: _isZoomOut()
       };
     }, []);
-    const localRef = (0, import_element399.useRef)();
+    const localRef = (0, import_element398.useRef)();
     const [globalLayoutSettings] = (0, import_block_editor85.useSettings)("layout");
-    const [containerSize, setContainerSize] = (0, import_element399.useState)();
+    const [containerSize, setContainerSize] = (0, import_element398.useState)();
     const containerRef = (0, import_compose92.useResizeObserver)((entries) => {
       const { width, height } = entries[0].contentRect;
       setContainerSize(
         (size4) => size4?.width === width && size4?.height === height ? size4 : { width, height }
       );
     });
-    const fallbackLayout = (0, import_element399.useMemo)(() => {
+    const fallbackLayout = (0, import_element398.useMemo)(() => {
       if (renderingMode2 !== "post-only" || isDesignPostType) {
         return { type: "default" };
       }
@@ -119350,7 +119349,7 @@ ${content}
       globalLayoutSettings,
       isDesignPostType
     ]);
-    const newestPostContentAttributes = (0, import_element399.useMemo)(() => {
+    const newestPostContentAttributes = (0, import_element398.useMemo)(() => {
       if (!editedPostTemplate?.content && !editedPostTemplate?.blocks && postContentAttributes) {
         return postContentAttributes;
       }
@@ -119364,7 +119363,7 @@ ${content}
       editedPostTemplate?.blocks,
       postContentAttributes
     ]);
-    const hasPostContentAtRootLevel = (0, import_element399.useMemo)(() => {
+    const hasPostContentAtRootLevel = (0, import_element398.useMemo)(() => {
       if (!editedPostTemplate?.content && !editedPostTemplate?.blocks) {
         return false;
       }
@@ -119391,7 +119390,7 @@ ${content}
       "core/post-content",
       ".block-editor-block-list__layout.is-root-container"
     );
-    const postContentLayout = (0, import_element399.useMemo)(() => {
+    const postContentLayout = (0, import_element398.useMemo)(() => {
       return layout && (layout?.type === "constrained" || layout?.inherit || layout?.contentSize || layout?.wideSize) ? { ...globalLayoutSettings, ...layout, type: "constrained" } : { ...globalLayoutSettings, ...layout, type: "default" };
     }, [
       layout?.type,
@@ -119402,8 +119401,8 @@ ${content}
     ]);
     const blockListLayout = newestPostContentAttributes ? postContentLayout : fallbackLayout;
     const postEditorLayout = blockListLayout?.type === "default" && !hasPostContentAtRootLevel ? fallbackLayout : blockListLayout;
-    const titleRef = (0, import_element399.useRef)();
-    (0, import_element399.useEffect)(() => {
+    const titleRef = (0, import_element398.useRef)();
+    (0, import_element398.useEffect)(() => {
       if (!autoFocus || !isCleanNewPost2()) {
         return;
       }
@@ -119431,7 +119430,7 @@ ${content}
     const canvasHeight = shouldConstrainCanvasHeight ? getCanvasHeight(canvasWidth2, containerSize) : "100%";
     const centerContentCSS = `display:flex;align-items:center;justify-content:center;`;
     const iframeBodyMinHeightCSS = hasCanvasWidth && !isResizablePostType ? "min-height:100vh;" : "";
-    const iframeStyles = (0, import_element399.useMemo)(() => {
+    const iframeStyles = (0, import_element398.useMemo)(() => {
       return [
         ...styles ?? [],
         {
@@ -119605,7 +119604,7 @@ ${content}
   var visual_editor_default = VisualEditor;
 
   // packages/editor/build-module/components/post-revisions-preview/diff-markers.mjs
-  var import_element400 = __toESM(require_element(), 1);
+  var import_element399 = __toESM(require_element(), 1);
   var import_compose93 = __toESM(require_compose(), 1);
   var import_data221 = __toESM(require_data(), 1);
   var import_block_editor86 = __toESM(require_block_editor(), 1);
@@ -119647,17 +119646,17 @@ ${content}
     };
   }
   function DiffMarkerButton({ clientId, status, subscribe: subscribe5 }) {
-    const blockRef = (0, import_element400.useRef)();
+    const blockRef = (0, import_element399.useRef)();
     useBlockElementRef(clientId, blockRef);
-    const [position, setPosition] = (0, import_element400.useState)(
+    const [position, setPosition] = (0, import_element399.useState)(
       () => calculatePosition(blockRef.current)
     );
-    (0, import_element400.useEffect)(() => {
+    (0, import_element399.useEffect)(() => {
       return subscribe5(() => {
         setPosition(calculatePosition(blockRef.current));
       });
     }, [subscribe5]);
-    (0, import_element400.useEffect)(() => {
+    (0, import_element399.useEffect)(() => {
       setPosition(calculatePosition(blockRef.current));
     }, [status]);
     if (!position) {
@@ -119685,14 +119684,14 @@ ${content}
     ] });
   }
   function useDiffMarkers() {
-    const [isMounted, setIsMounted] = (0, import_element400.useState)(false);
-    const subscribersRef = (0, import_element400.useRef)(/* @__PURE__ */ new Set());
+    const [isMounted, setIsMounted] = (0, import_element399.useState)(false);
+    const subscribersRef = (0, import_element399.useRef)(/* @__PURE__ */ new Set());
     const blocks = (0, import_data221.useSelect)(
       (select9) => select9(import_block_editor86.store).getBlocks(),
       []
     );
-    const diffBlocks = (0, import_element400.useMemo)(() => collectDiffBlocks(blocks), [blocks]);
-    const subscribe5 = (0, import_element400.useCallback)((callback) => {
+    const diffBlocks = (0, import_element399.useMemo)(() => collectDiffBlocks(blocks), [blocks]);
+    const subscribe5 = (0, import_element399.useCallback)((callback) => {
       subscribersRef.current.add(callback);
       return () => subscribersRef.current.delete(callback);
     }, []);
@@ -119813,7 +119812,7 @@ ${content}
     }
   }
   function BlockDiffLabelProvider({ status, name: name2, attributes, children }) {
-    const context = (0, import_element401.useContext)(PrivateBlockContext);
+    const context = (0, import_element400.useContext)(PrivateBlockContext);
     const blockTitle = (0, import_data222.useSelect)(
       (select9) => {
         const { getActiveBlockVariation, getBlockType: getBlockType7 } = select9(import_blocks34.store);
@@ -119885,7 +119884,7 @@ ${content}
     ] });
   }
   function RevisionsCanvas() {
-    (0, import_element401.useEffect)(() => {
+    (0, import_element400.useEffect)(() => {
       registerDiffFormatTypes();
       return () => {
         unregisterDiffFormatTypes();
@@ -119903,14 +119902,14 @@ ${content}
     return revision ? /* @__PURE__ */ (0, import_jsx_runtime627.jsxs)(import_jsx_runtime627.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime627.jsx)(DiffStyleOverrides, { showDiff }),
       /* @__PURE__ */ (0, import_jsx_runtime627.jsx)("div", { className: "editor-revisions-canvas__content", children: /* @__PURE__ */ (0, import_jsx_runtime627.jsx)(CanvasContent, { showDiff }) })
-    ] }) : /* @__PURE__ */ (0, import_jsx_runtime627.jsx)("div", { className: "editor-revisions-canvas__loading", children: /* @__PURE__ */ (0, import_jsx_runtime627.jsx)(import_components241.Spinner, {}) });
+    ] }) : /* @__PURE__ */ (0, import_jsx_runtime627.jsx)("div", { className: "editor-revisions-canvas__loading", children: /* @__PURE__ */ (0, import_jsx_runtime627.jsx)(import_components239.Spinner, {}) });
   }
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-code-diff.mjs
-  var import_components242 = __toESM(require_components(), 1);
+  var import_components240 = __toESM(require_components(), 1);
   var import_core_data126 = __toESM(require_core_data(), 1);
   var import_data223 = __toESM(require_data(), 1);
-  var import_element402 = __toESM(require_element(), 1);
+  var import_element401 = __toESM(require_element(), 1);
   var import_i18n324 = __toESM(require_i18n(), 1);
   var import_jsx_runtime628 = __toESM(require_jsx_runtime(), 1);
   var MAX_DIFF_EDIT_LENGTH = 1e3;
@@ -120030,7 +120029,7 @@ ${content}
     showDiff,
     isPreviousRevisionLoading
   }) {
-    const rows = (0, import_element402.useMemo)(() => {
+    const rows = (0, import_element401.useMemo)(() => {
       if (!revision || isPreviousRevisionLoading) {
         return [];
       }
@@ -120041,7 +120040,7 @@ ${content}
       );
     }, [revision, previousRevision, showDiff, isPreviousRevisionLoading]);
     if (!revision || isPreviousRevisionLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime628.jsx)("div", { className: "editor-revisions-canvas__loading", children: /* @__PURE__ */ (0, import_jsx_runtime628.jsx)(import_components242.Spinner, {}) });
+      return /* @__PURE__ */ (0, import_jsx_runtime628.jsx)("div", { className: "editor-revisions-canvas__loading", children: /* @__PURE__ */ (0, import_jsx_runtime628.jsx)(import_components240.Spinner, {}) });
     }
     const label = showDiff ? (0, import_i18n324.__)("Code changes") : (0, import_i18n324.__)("Revision code");
     return /* @__PURE__ */ (0, import_jsx_runtime628.jsx)(
@@ -120093,7 +120092,7 @@ ${content}
 
   // packages/editor/build-module/components/collaborators-presence/use-collaborator-notifications.mjs
   var import_data224 = __toESM(require_data(), 1);
-  var import_element403 = __toESM(require_element(), 1);
+  var import_element402 = __toESM(require_element(), 1);
   var import_i18n325 = __toESM(require_i18n(), 1);
   var import_notices31 = __toESM(require_notices(), 1);
   var import_core_data127 = __toESM(require_core_data(), 1);
@@ -120158,7 +120157,7 @@ ${content}
     useOnCollaboratorJoin(
       joinPostId,
       joinPostType,
-      (0, import_element403.useCallback)(
+      (0, import_element402.useCallback)(
         (collaborator, me) => {
           if (!shouldShowJoinNotifications) {
             return;
@@ -120188,7 +120187,7 @@ ${content}
     useOnCollaboratorLeave(
       leavePostId,
       leavePostType,
-      (0, import_element403.useCallback)(
+      (0, import_element402.useCallback)(
         (collaborator) => {
           if (!shouldShowLeaveNotifications) {
             return;
@@ -120215,7 +120214,7 @@ ${content}
     useOnPostSave(
       postSavePostId,
       postSavePostType,
-      (0, import_element403.useCallback)(
+      (0, import_element402.useCallback)(
         (saveEvent, saver, prevEvent) => {
           if (!shouldShowPostSaveNotifications || !postStatus) {
             return;
@@ -120241,12 +120240,12 @@ ${content}
 
   // packages/editor/build-module/components/save-publish-panels/index.mjs
   var import_data225 = __toESM(require_data(), 1);
-  var import_components243 = __toESM(require_components(), 1);
+  var import_components241 = __toESM(require_components(), 1);
   var import_i18n326 = __toESM(require_i18n(), 1);
-  var import_element404 = __toESM(require_element(), 1);
+  var import_element403 = __toESM(require_element(), 1);
   var import_core_data128 = __toESM(require_core_data(), 1);
   var import_jsx_runtime629 = __toESM(require_jsx_runtime(), 1);
-  var { Fill: Fill11, Slot: Slot13 } = (0, import_components243.createSlotFill)("ActionsPanel");
+  var { Fill: Fill11, Slot: Slot13 } = (0, import_components241.createSlotFill)("ActionsPanel");
   var { EntitiesSavedStates: EntitiesSavedStates2 } = unlock(import_core_data128.privateApis);
   function SavePublishPanels({
     setEntitiesSavedStatesCallback,
@@ -120276,7 +120275,7 @@ ${content}
         hasOtherEntitiesChanges: _hasOtherEntitiesChanges
       };
     }, []);
-    const openEntitiesSavedStates = (0, import_element404.useCallback)(
+    const openEntitiesSavedStates = (0, import_element403.useCallback)(
       () => setEntitiesSavedStatesCallback(true),
       []
     );
@@ -120293,7 +120292,7 @@ ${content}
       );
     } else if (isPublishable && !hasOtherEntitiesChanges) {
       unmountableContent = /* @__PURE__ */ (0, import_jsx_runtime629.jsx)("div", { className: "editor-layout__toggle-publish-panel", children: /* @__PURE__ */ (0, import_jsx_runtime629.jsx)(
-        import_components243.Button,
+        import_components241.Button,
         {
           __next40pxDefaultSize: true,
           variant: "secondary",
@@ -120304,7 +120303,7 @@ ${content}
       ) });
     } else {
       unmountableContent = /* @__PURE__ */ (0, import_jsx_runtime629.jsx)("div", { className: "editor-layout__toggle-entities-saved-states-panel", children: /* @__PURE__ */ (0, import_jsx_runtime629.jsx)(
-        import_components243.Button,
+        import_components241.Button,
         {
           __next40pxDefaultSize: true,
           variant: "secondary",
@@ -120331,11 +120330,11 @@ ${content}
   }
 
   // packages/editor/build-module/components/text-editor/index.mjs
-  var import_components244 = __toESM(require_components(), 1);
+  var import_components242 = __toESM(require_components(), 1);
   var import_data226 = __toESM(require_data(), 1);
   var import_i18n327 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts10 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_element405 = __toESM(require_element(), 1);
+  var import_element404 = __toESM(require_element(), 1);
   var import_jsx_runtime630 = __toESM(require_jsx_runtime(), 1);
   function TextEditor({ autoFocus = false }) {
     const { switchEditorMode: switchEditorMode2 } = (0, import_data226.useDispatch)(store);
@@ -120347,8 +120346,8 @@ ${content}
         isRichEditingEnabled: getEditorSettings2().richEditingEnabled
       };
     }, []);
-    const titleRef = (0, import_element405.useRef)();
-    (0, import_element405.useEffect)(() => {
+    const titleRef = (0, import_element404.useRef)();
+    (0, import_element404.useEffect)(() => {
       if (autoFocus) {
         return;
       }
@@ -120358,7 +120357,7 @@ ${content}
       isRichEditingEnabled && /* @__PURE__ */ (0, import_jsx_runtime630.jsxs)("div", { className: "editor-text-editor__toolbar", children: [
         /* @__PURE__ */ (0, import_jsx_runtime630.jsx)("h2", { children: (0, import_i18n327.__)("Editing code") }),
         /* @__PURE__ */ (0, import_jsx_runtime630.jsx)(
-          import_components244.Button,
+          import_components242.Button,
           {
             __next40pxDefaultSize: true,
             variant: "tertiary",
@@ -120469,7 +120468,7 @@ ${content}
     const { setShowRevisionDiff: setShowRevisionDiff2 } = unlock((0, import_data227.useDispatch)(store));
     const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data227.useDispatch)(store);
     const registry = (0, import_data227.useRegistry)();
-    (0, import_element406.useLayoutEffect)(() => {
+    (0, import_element405.useLayoutEffect)(() => {
       const isMediumOrBigger = window.matchMedia("(min-width: 782px)").matches;
       const { get } = registry.select(import_preferences25.store);
       setIsListViewOpened2(
@@ -120481,8 +120480,8 @@ ${content}
     const secondarySidebarLabel = isListViewOpened2 ? (0, import_i18n328.__)("Document Overview") : (0, import_i18n328.__)("Block Library");
     const shouldShowStylesCanvas = showStylebook2 || stylesPath2?.startsWith("/revisions");
     const shouldShowBlockEditor = !shouldShowStylesCanvas;
-    const [entitiesSavedStatesCallback, setEntitiesSavedStatesCallback] = (0, import_element406.useState)(false);
-    const closeEntitiesSavedStates = (0, import_element406.useCallback)(
+    const [entitiesSavedStatesCallback, setEntitiesSavedStatesCallback] = (0, import_element405.useState)(false);
+    const closeEntitiesSavedStates = (0, import_element405.useCallback)(
       (arg) => {
         if (typeof entitiesSavedStatesCallback === "function") {
           entitiesSavedStatesCallback(arg);
@@ -120607,29 +120606,29 @@ ${content}
   var import_data241 = __toESM(require_data(), 1);
 
   // packages/editor/build-module/components/post-card-panel/index.mjs
-  var import_components248 = __toESM(require_components(), 1);
+  var import_components246 = __toESM(require_components(), 1);
   var import_core_data133 = __toESM(require_core_data(), 1);
   var import_data233 = __toESM(require_data(), 1);
-  var import_element411 = __toESM(require_element(), 1);
+  var import_element410 = __toESM(require_element(), 1);
   var import_i18n332 = __toESM(require_i18n(), 1);
   var import_dom38 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/post-actions/index.mjs
   var import_data232 = __toESM(require_data(), 1);
-  var import_element410 = __toESM(require_element(), 1);
+  var import_element409 = __toESM(require_element(), 1);
   var import_i18n331 = __toESM(require_i18n(), 1);
-  var import_components247 = __toESM(require_components(), 1);
+  var import_components245 = __toESM(require_components(), 1);
   var import_core_data132 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-actions/actions.mjs
   var import_data231 = __toESM(require_data(), 1);
-  var import_element409 = __toESM(require_element(), 1);
+  var import_element408 = __toESM(require_element(), 1);
   var import_core_data131 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-actions/set-as-homepage.mjs
   var import_i18n329 = __toESM(require_i18n(), 1);
-  var import_element407 = __toESM(require_element(), 1);
-  var import_components245 = __toESM(require_components(), 1);
+  var import_element406 = __toESM(require_element(), 1);
+  var import_components243 = __toESM(require_components(), 1);
   var import_data229 = __toESM(require_data(), 1);
   var import_core_data129 = __toESM(require_core_data(), 1);
   var import_notices33 = __toESM(require_notices(), 1);
@@ -120708,11 +120707,11 @@ ${content}
       modalWarning
     ).trim();
     const modalButtonLabel = (0, import_i18n329.__)("Set homepage");
-    return /* @__PURE__ */ (0, import_jsx_runtime633.jsx)("form", { onSubmit: onSetPageAsHomepage, children: /* @__PURE__ */ (0, import_jsx_runtime633.jsxs)(import_components245.__experimentalVStack, { spacing: "5", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime633.jsx)(import_components245.__experimentalText, { children: modalText }),
-      /* @__PURE__ */ (0, import_jsx_runtime633.jsxs)(import_components245.__experimentalHStack, { justify: "right", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime633.jsx)("form", { onSubmit: onSetPageAsHomepage, children: /* @__PURE__ */ (0, import_jsx_runtime633.jsxs)(import_components243.__experimentalVStack, { spacing: "5", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime633.jsx)(import_components243.__experimentalText, { children: modalText }),
+      /* @__PURE__ */ (0, import_jsx_runtime633.jsxs)(import_components243.__experimentalHStack, { justify: "right", children: [
         /* @__PURE__ */ (0, import_jsx_runtime633.jsx)(
-          import_components245.Button,
+          import_components243.Button,
           {
             __next40pxDefaultSize: true,
             variant: "tertiary",
@@ -120725,7 +120724,7 @@ ${content}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime633.jsx)(
-          import_components245.Button,
+          import_components243.Button,
           {
             __next40pxDefaultSize: true,
             variant: "primary",
@@ -120750,7 +120749,7 @@ ${content}
         pageForPosts: siteSettings?.page_for_posts
       };
     });
-    return (0, import_element407.useMemo)(
+    return (0, import_element406.useMemo)(
       () => ({
         id: "set-as-homepage",
         label: (0, import_i18n329.__)("Set as homepage\u2026"),
@@ -120779,8 +120778,8 @@ ${content}
 
   // packages/editor/build-module/components/post-actions/set-as-posts-page.mjs
   var import_i18n330 = __toESM(require_i18n(), 1);
-  var import_element408 = __toESM(require_element(), 1);
-  var import_components246 = __toESM(require_components(), 1);
+  var import_element407 = __toESM(require_element(), 1);
+  var import_components244 = __toESM(require_components(), 1);
   var import_data230 = __toESM(require_data(), 1);
   var import_core_data130 = __toESM(require_core_data(), 1);
   var import_notices34 = __toESM(require_notices(), 1);
@@ -120835,11 +120834,11 @@ ${content}
       modalWarning
     );
     const modalButtonLabel = (0, import_i18n330.__)("Set posts page");
-    return /* @__PURE__ */ (0, import_jsx_runtime634.jsx)("form", { onSubmit: onSetPageAsPostsPage, children: /* @__PURE__ */ (0, import_jsx_runtime634.jsxs)(import_components246.__experimentalVStack, { spacing: "5", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime634.jsx)(import_components246.__experimentalText, { children: modalText }),
-      /* @__PURE__ */ (0, import_jsx_runtime634.jsxs)(import_components246.__experimentalHStack, { justify: "right", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime634.jsx)("form", { onSubmit: onSetPageAsPostsPage, children: /* @__PURE__ */ (0, import_jsx_runtime634.jsxs)(import_components244.__experimentalVStack, { spacing: "5", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime634.jsx)(import_components244.__experimentalText, { children: modalText }),
+      /* @__PURE__ */ (0, import_jsx_runtime634.jsxs)(import_components244.__experimentalHStack, { justify: "right", children: [
         /* @__PURE__ */ (0, import_jsx_runtime634.jsx)(
-          import_components246.Button,
+          import_components244.Button,
           {
             __next40pxDefaultSize: true,
             variant: "tertiary",
@@ -120852,7 +120851,7 @@ ${content}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime634.jsx)(
-          import_components246.Button,
+          import_components244.Button,
           {
             __next40pxDefaultSize: true,
             variant: "primary",
@@ -120877,7 +120876,7 @@ ${content}
         pageForPosts: siteSettings?.page_for_posts
       };
     });
-    return (0, import_element408.useMemo)(
+    return (0, import_element407.useMemo)(
       () => ({
         id: "set-as-posts-page",
         label: (0, import_i18n330.__)("Set as posts page\u2026"),
@@ -120950,10 +120949,10 @@ ${content}
     const setAsHomepageAction = useSetAsHomepageAction();
     const setAsPostsPageAction = useSetAsPostsPageAction();
     const { registerPostTypeSchema: registerPostTypeSchema2 } = unlock((0, import_data231.useDispatch)(store));
-    (0, import_element409.useEffect)(() => {
+    (0, import_element408.useEffect)(() => {
       registerPostTypeSchema2(postType2);
     }, [registerPostTypeSchema2, postType2]);
-    return (0, import_element409.useMemo)(() => {
+    return (0, import_element408.useMemo)(() => {
       let actions2 = [...defaultActions];
       if (shouldShowHomepageActions) {
         actions2.push(setAsHomepageAction, setAsPostsPageAction);
@@ -121028,7 +121027,7 @@ ${content}
   // packages/editor/build-module/components/post-actions/index.mjs
   var import_jsx_runtime636 = __toESM(require_jsx_runtime(), 1);
   function PostActions({ postType: postType2, postId: postId2, onActionPerformed }) {
-    const [activeModalAction, setActiveModalAction] = (0, import_element410.useState)(null);
+    const [activeModalAction, setActiveModalAction] = (0, import_element409.useState)(null);
     const { item, permissions } = (0, import_data232.useSelect)(
       (select9) => {
         const { getEditedEntityRecord, getEntityRecordPermissions } = unlock(select9(import_core_data132.store));
@@ -121043,14 +121042,14 @@ ${content}
       },
       [postId2, postType2]
     );
-    const itemWithPermissions = (0, import_element410.useMemo)(() => {
+    const itemWithPermissions = (0, import_element409.useMemo)(() => {
       return {
         ...item,
         permissions
       };
     }, [item, permissions]);
     const allActions = usePostActions({ postType: postType2, onActionPerformed });
-    const actions2 = (0, import_element410.useMemo)(() => {
+    const actions2 = (0, import_element409.useMemo)(() => {
       return allActions.filter((action) => {
         return !action.isEligible || action.isEligible(itemWithPermissions);
       });
@@ -121061,7 +121060,7 @@ ${content}
           menu_exports.Trigger,
           {
             render: /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(
-              import_components247.Button,
+              import_components245.Button,
               {
                 size: "small",
                 icon: more_vertical_default,
@@ -121105,7 +121104,7 @@ ${content}
   function ActionModal2({ action, items, closeModal: closeModal2 }) {
     const label = typeof action.label === "string" ? action.label : action.label(items);
     return /* @__PURE__ */ (0, import_jsx_runtime636.jsx)(
-      import_components247.Modal,
+      import_components245.Modal,
       {
         title: action.modalHeader || label,
         __experimentalHideHeader: !!action.hideModalHeader,
@@ -121151,7 +121150,7 @@ ${content}
     onActionPerformed,
     onClose
   }) {
-    const postIds = (0, import_element411.useMemo)(
+    const postIds = (0, import_element410.useMemo)(
       () => Array.isArray(postId2) ? postId2 : [postId2],
       [postId2]
     );
@@ -121215,23 +121214,23 @@ ${content}
     } else if (postTitle) {
       title = (0, import_dom38.__unstableStripHTML)(postTitle);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime637.jsxs)(import_components248.__experimentalVStack, { spacing: 1, className: "editor-post-card-panel", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime637.jsxs)(import_components246.__experimentalVStack, { spacing: 1, className: "editor-post-card-panel", children: [
       /* @__PURE__ */ (0, import_jsx_runtime637.jsxs)(
-        import_components248.__experimentalHStack,
+        import_components246.__experimentalHStack,
         {
           spacing: 2,
           className: "editor-post-card-panel__header",
           alignment: "flex-start",
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime637.jsx)(
-              import_components248.Icon,
+              import_components246.Icon,
               {
                 className: "editor-post-card-panel__icon",
                 icon
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime637.jsxs)(
-              import_components248.__experimentalText,
+              import_components246.__experimentalText,
               {
                 numberOfLines: 2,
                 truncate: true,
@@ -121252,7 +121251,7 @@ ${content}
               }
             ),
             onClose && /* @__PURE__ */ (0, import_jsx_runtime637.jsx)(
-              import_components248.Button,
+              import_components246.Button,
               {
                 size: "small",
                 icon: close_default,
@@ -121263,7 +121262,7 @@ ${content}
           ]
         }
       ),
-      postIds.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime637.jsx)(import_components248.__experimentalText, { className: "editor-post-card-panel__description", children: (0, import_i18n332.sprintf)(
+      postIds.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime637.jsx)(import_components246.__experimentalText, { className: "editor-post-card-panel__description", children: (0, import_i18n332.sprintf)(
         // translators: %s: Name of the plural post type e.g: "Posts".
         (0, import_i18n332.__)("Changes will be applied to all selected %s."),
         labels?.name?.toLowerCase()
@@ -121272,11 +121271,11 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-content-information/index.mjs
-  var import_components249 = __toESM(require_components(), 1);
+  var import_components247 = __toESM(require_components(), 1);
   var import_data234 = __toESM(require_data(), 1);
   var import_i18n333 = __toESM(require_i18n(), 1);
   var import_wordcount5 = __toESM(require_wordcount(), 1);
-  var import_element412 = __toESM(require_element(), 1);
+  var import_element411 = __toESM(require_element(), 1);
   var import_core_data134 = __toESM(require_core_data(), 1);
   var import_jsx_runtime638 = __toESM(require_jsx_runtime(), 1);
   var AVERAGE_READING_RATE3 = 189;
@@ -121301,7 +121300,7 @@ ${content}
   }
   function PostContentInformationUI({ postContent }) {
     const wordCountType = (0, import_i18n333._x)("words", "Word count type. Do not translate!");
-    const wordsCounted = (0, import_element412.useMemo)(
+    const wordsCounted = (0, import_element411.useMemo)(
       () => postContent ? (0, import_wordcount5.count)(postContent, wordCountType) : 0,
       [postContent, wordCountType]
     );
@@ -121319,7 +121318,7 @@ ${content}
       (0, import_i18n333._n)("%s minute", "%s minutes", readingTime),
       readingTime.toLocaleString()
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime638.jsx)("div", { className: "editor-post-content-information", children: /* @__PURE__ */ (0, import_jsx_runtime638.jsx)(import_components249.__experimentalText, { children: (0, import_i18n333.sprintf)(
+    return /* @__PURE__ */ (0, import_jsx_runtime638.jsx)("div", { className: "editor-post-content-information", children: /* @__PURE__ */ (0, import_jsx_runtime638.jsx)(import_components247.__experimentalText, { children: (0, import_i18n333.sprintf)(
       /* translators: 1: How many words a post has. 2: the number of minutes to read the post (e.g. 130 words, 2 minutes read time.) */
       (0, import_i18n333.__)("%1$s, %2$s read time."),
       wordsCountText,
@@ -121328,10 +121327,10 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-format/panel.mjs
-  var import_components250 = __toESM(require_components(), 1);
+  var import_components248 = __toESM(require_components(), 1);
   var import_i18n334 = __toESM(require_i18n(), 1);
   var import_data235 = __toESM(require_data(), 1);
-  var import_element413 = __toESM(require_element(), 1);
+  var import_element412 = __toESM(require_element(), 1);
   var import_block_editor89 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime639 = __toESM(require_jsx_runtime(), 1);
   function PostFormat2() {
@@ -121345,8 +121344,8 @@ ${content}
     const activeFormat = POST_FORMATS2.find(
       (format7) => format7.id === postFormat
     );
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element413.useState)(null);
-    const popoverProps = (0, import_element413.useMemo)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element412.useState)(null);
+    const popoverProps = (0, import_element412.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -121358,13 +121357,13 @@ ${content}
       [popoverAnchor]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(PostFormatCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(post_panel_row_default, { label: (0, import_i18n334.__)("Format"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-      import_components250.Dropdown,
+      import_components248.Dropdown,
       {
         popoverProps,
         contentClassName: "editor-post-format__dialog",
         focusOnMount: true,
         renderToggle: ({ isOpen: isOpen2, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime639.jsx)(
-          import_components250.Button,
+          import_components248.Button,
           {
             size: "compact",
             variant: "tertiary",
@@ -121394,7 +121393,7 @@ ${content}
   var panel_default4 = PostFormat2;
 
   // packages/editor/build-module/components/post-last-edited-panel/index.mjs
-  var import_components251 = __toESM(require_components(), 1);
+  var import_components249 = __toESM(require_components(), 1);
   var import_data236 = __toESM(require_data(), 1);
   var import_i18n335 = __toESM(require_i18n(), 1);
   var import_date23 = __toESM(require_date(), 1);
@@ -121407,7 +121406,7 @@ ${content}
     if (!modified) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime640.jsx)("div", { className: "editor-post-last-edited-panel", children: /* @__PURE__ */ (0, import_jsx_runtime640.jsx)(import_components251.__experimentalText, { children: (0, import_i18n335.sprintf)(
+    return /* @__PURE__ */ (0, import_jsx_runtime640.jsx)("div", { className: "editor-post-last-edited-panel", children: /* @__PURE__ */ (0, import_jsx_runtime640.jsx)(import_components249.__experimentalText, { children: (0, import_i18n335.sprintf)(
       // translators: %s: Human-readable time difference, e.g. "2 days ago".
       (0, import_i18n335.__)("Last edited %s."),
       (0, import_date23.humanTimeDiff)(modified)
@@ -121415,10 +121414,10 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-panel-section/index.mjs
-  var import_components252 = __toESM(require_components(), 1);
+  var import_components250 = __toESM(require_components(), 1);
   var import_jsx_runtime641 = __toESM(require_jsx_runtime(), 1);
   function PostPanelSection({ className, children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime641.jsx)(import_components252.__experimentalVStack, { className: clsx_default("editor-post-panel__section", className), children });
+    return /* @__PURE__ */ (0, import_jsx_runtime641.jsx)(import_components250.__experimentalVStack, { className: clsx_default("editor-post-panel__section", className), children });
   }
   var post_panel_section_default = PostPanelSection;
 
@@ -121445,8 +121444,8 @@ ${content}
   var import_data238 = __toESM(require_data(), 1);
   var import_core_data136 = __toESM(require_core_data(), 1);
   var import_html_entities32 = __toESM(require_html_entities(), 1);
-  var import_components253 = __toESM(require_components(), 1);
-  var import_element414 = __toESM(require_element(), 1);
+  var import_components251 = __toESM(require_components(), 1);
+  var import_element413 = __toESM(require_element(), 1);
   var import_block_editor90 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime643 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_OBJECT4 = {};
@@ -121474,8 +121473,8 @@ ${content}
       },
       []
     );
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element414.useState)(null);
-    const popoverProps = (0, import_element414.useMemo)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element413.useState)(null);
+    const popoverProps = (0, import_element413.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -121496,13 +121495,13 @@ ${content}
     };
     const decodedTitle = (0, import_html_entities32.decodeEntities)(postsPageTitle);
     return /* @__PURE__ */ (0, import_jsx_runtime643.jsx)(post_panel_row_default, { label: (0, import_i18n337.__)("Blog title"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime643.jsx)(
-      import_components253.Dropdown,
+      import_components251.Dropdown,
       {
         popoverProps,
         contentClassName: "editor-blog-title-dropdown__content",
         focusOnMount: true,
         renderToggle: ({ isOpen: isOpen2, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime643.jsx)(
-          import_components253.Button,
+          import_components251.Button,
           {
             size: "compact",
             variant: "tertiary",
@@ -121525,7 +121524,7 @@ ${content}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime643.jsx)(
-            import_components253.__experimentalInputControl,
+            import_components251.__experimentalInputControl,
             {
               placeholder: (0, import_i18n337.__)("No title"),
               value: postsPageTitle,
@@ -121546,8 +121545,8 @@ ${content}
   var import_i18n338 = __toESM(require_i18n(), 1);
   var import_data239 = __toESM(require_data(), 1);
   var import_core_data137 = __toESM(require_core_data(), 1);
-  var import_components254 = __toESM(require_components(), 1);
-  var import_element415 = __toESM(require_element(), 1);
+  var import_components252 = __toESM(require_components(), 1);
+  var import_element414 = __toESM(require_element(), 1);
   var import_block_editor91 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime644 = __toESM(require_jsx_runtime(), 1);
   function PostsPerPage() {
@@ -121565,8 +121564,8 @@ ${content}
         postsPerPage: siteSettings?.posts_per_page || 1
       };
     }, []);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element415.useState)(null);
-    const popoverProps = (0, import_element415.useMemo)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element414.useState)(null);
+    const popoverProps = (0, import_element414.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -121586,13 +121585,13 @@ ${content}
       });
     };
     return /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(post_panel_row_default, { label: (0, import_i18n338.__)("Posts per page"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(
-      import_components254.Dropdown,
+      import_components252.Dropdown,
       {
         popoverProps,
         contentClassName: "editor-posts-per-page-dropdown__content",
         focusOnMount: true,
         renderToggle: ({ isOpen: isOpen2, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(
-          import_components254.Button,
+          import_components252.Button,
           {
             size: "compact",
             variant: "tertiary",
@@ -121611,7 +121610,7 @@ ${content}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime644.jsx)(
-            import_components254.__experimentalNumberControl,
+            import_components252.__experimentalNumberControl,
             {
               placeholder: 0,
               value: postsPerPage,
@@ -121635,8 +121634,8 @@ ${content}
   var import_i18n339 = __toESM(require_i18n(), 1);
   var import_data240 = __toESM(require_data(), 1);
   var import_core_data138 = __toESM(require_core_data(), 1);
-  var import_components255 = __toESM(require_components(), 1);
-  var import_element416 = __toESM(require_element(), 1);
+  var import_components253 = __toESM(require_components(), 1);
+  var import_element415 = __toESM(require_element(), 1);
   var import_block_editor92 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime645 = __toESM(require_jsx_runtime(), 1);
   var COMMENT_OPTIONS2 = [
@@ -121672,8 +121671,8 @@ ${content}
       },
       []
     );
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element416.useState)(null);
-    const popoverProps = (0, import_element416.useMemo)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element415.useState)(null);
+    const popoverProps = (0, import_element415.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -121693,13 +121692,13 @@ ${content}
       });
     };
     return /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(post_panel_row_default, { label: (0, import_i18n339.__)("Discussion"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(
-      import_components255.Dropdown,
+      import_components253.Dropdown,
       {
         popoverProps,
         contentClassName: "editor-site-discussion-dropdown__content",
         focusOnMount: true,
         renderToggle: ({ isOpen: isOpen2, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(
-          import_components255.Button,
+          import_components253.Button,
           {
             size: "compact",
             variant: "tertiary",
@@ -121717,12 +121716,12 @@ ${content}
               onClose
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime645.jsxs)(import_components255.__experimentalVStack, { spacing: 3, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(import_components255.__experimentalText, { children: (0, import_i18n339.__)(
+          /* @__PURE__ */ (0, import_jsx_runtime645.jsxs)(import_components253.__experimentalVStack, { spacing: 3, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(import_components253.__experimentalText, { children: (0, import_i18n339.__)(
               "Changes will apply to new posts only. Individual posts may override these settings."
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime645.jsx)(
-              import_components255.RadioControl,
+              import_components253.RadioControl,
               {
                 className: "editor-site-discussion__options",
                 hideLabelFromVision: true,
@@ -121804,10 +121803,10 @@ ${content}
   var import_i18n343 = __toESM(require_i18n(), 1);
   var import_data246 = __toESM(require_data(), 1);
   var import_core_data140 = __toESM(require_core_data(), 1);
-  var import_element418 = __toESM(require_element(), 1);
+  var import_element417 = __toESM(require_element(), 1);
 
   // packages/views/build-module/use-view.mjs
-  var import_element417 = __toESM(require_element(), 1);
+  var import_element416 = __toESM(require_element(), 1);
   var import_data242 = __toESM(require_data(), 1);
   var import_preferences26 = __toESM(require_preferences(), 1);
 
@@ -121852,7 +121851,7 @@ ${content}
   var import_i18n341 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/dataviews/fields/revisions/revisions-view.mjs
-  var import_components256 = __toESM(require_components(), 1);
+  var import_components254 = __toESM(require_components(), 1);
   var import_data245 = __toESM(require_data(), 1);
   var import_i18n340 = __toESM(require_i18n(), 1);
   var import_url24 = __toESM(require_url(), 1);
@@ -121880,7 +121879,7 @@ ${content}
       })
     } : { onClick: () => setCurrentRevisionId2(lastRevisionId) };
     return /* @__PURE__ */ (0, import_jsx_runtime647.jsx)(
-      import_components256.Button,
+      import_components254.Button,
       {
         ...buttonProps,
         variant: "link",
@@ -121947,7 +121946,7 @@ ${content}
         pageAttributesEnabled: isEditorPanelEnabled2("page-attributes")
       };
     }, []);
-    const visibleForm = (0, import_element418.useMemo)(() => {
+    const visibleForm = (0, import_element417.useMemo)(() => {
       if (!form.fields?.length) {
         return form;
       }
@@ -122081,7 +122080,7 @@ ${content}
       },
       [postType2]
     );
-    const data = (0, import_element418.useMemo)(() => {
+    const data = (0, import_element417.useMemo)(() => {
       if (!record) {
         return record;
       }
@@ -122093,7 +122092,7 @@ ${content}
     }, [record, entityRecords, availableTemplates]);
     const { editEntityRecord } = (0, import_data246.useDispatch)(import_core_data140.store);
     const registry = (0, import_data246.useRegistry)();
-    const fieldNamespaces = (0, import_element418.useMemo)(() => {
+    const fieldNamespaces = (0, import_element417.useMemo)(() => {
       const map = {};
       for (const [namespace, entity] of Object.entries(
         ENTITIES[postType2] ?? {}
@@ -122105,7 +122104,7 @@ ${content}
       return map;
     }, [postType2]);
     const _fields = post_fields_default({ postType: postType2 });
-    const fields2 = (0, import_element418.useMemo)(
+    const fields2 = (0, import_element417.useMemo)(
       () => _fields?.map((field) => {
         const namespace = fieldNamespaces[field.id];
         if (namespace) {
@@ -122196,7 +122195,7 @@ ${content}
 
   // packages/editor/build-module/components/sidebar/post-revision-summary.mjs
   var import_data249 = __toESM(require_data(), 1);
-  var import_components258 = __toESM(require_components(), 1);
+  var import_components256 = __toESM(require_components(), 1);
   var import_i18n346 = __toESM(require_i18n(), 1);
   var import_url25 = __toESM(require_url(), 1);
 
@@ -122204,7 +122203,7 @@ ${content}
   var import_data247 = __toESM(require_data(), 1);
   var import_core_data141 = __toESM(require_core_data(), 1);
   var import_date24 = __toESM(require_date(), 1);
-  var import_element419 = __toESM(require_element(), 1);
+  var import_element418 = __toESM(require_element(), 1);
   var import_i18n344 = __toESM(require_i18n(), 1);
   var import_jsx_runtime649 = __toESM(require_jsx_runtime(), 1);
   var PAGE_SIZE2 = 10;
@@ -122236,7 +122235,7 @@ ${content}
   }
   function PostRevisionsTimeline() {
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data247.useDispatch)(store));
-    const [view, setView] = (0, import_element419.useState)(baseView);
+    const [view, setView] = (0, import_element418.useState)(baseView);
     const { revisions, revisionKey, currentRevisionId } = (0, import_data247.useSelect)(
       (select9) => {
         const { getCurrentPostType: getCurrentPostType2 } = select9(store);
@@ -122260,7 +122259,7 @@ ${content}
       []
     );
     const isLoading = !revisions;
-    const fields2 = (0, import_element419.useMemo)(
+    const fields2 = (0, import_element418.useMemo)(
       () => [
         {
           id: "date",
@@ -122315,11 +122314,11 @@ ${content}
       ],
       [revisionKey, currentRevisionId]
     );
-    const { data: shownRevisions, paginationInfo } = (0, import_element419.useMemo)(
+    const { data: shownRevisions, paginationInfo } = (0, import_element418.useMemo)(
       () => filterSortAndPaginate(revisions || EMPTY_ARRAY18, view, fields2),
       [revisions, view, fields2]
     );
-    (0, import_element419.useEffect)(() => {
+    (0, import_element418.useEffect)(() => {
       if (!currentRevisionId || !revisions) {
         return;
       }
@@ -122332,11 +122331,11 @@ ${content}
       const page = Math.floor(index3 / view.perPage) + 1;
       setView((v3) => v3.page === page ? v3 : { ...v3, page });
     }, [currentRevisionId, revisions, revisionKey, view.perPage]);
-    const selection = (0, import_element419.useMemo)(
+    const selection = (0, import_element418.useMemo)(
       () => currentRevisionId ? [String(currentRevisionId)] : EMPTY_ARRAY18,
       [currentRevisionId]
     );
-    const onChangeSelection = (0, import_element419.useCallback)(
+    const onChangeSelection = (0, import_element418.useCallback)(
       (newSelection) => {
         if (newSelection.length === 0) {
           return;
@@ -122346,7 +122345,7 @@ ${content}
       },
       [setCurrentRevisionId2]
     );
-    const getItemId3 = (0, import_element419.useCallback)(
+    const getItemId3 = (0, import_element418.useCallback)(
       (item) => String(item[revisionKey]),
       [revisionKey]
     );
@@ -122373,11 +122372,11 @@ ${content}
 
   // packages/editor/build-module/components/revision-fields-diff/index.mjs
   var import_data248 = __toESM(require_data(), 1);
-  var import_element420 = __toESM(require_element(), 1);
+  var import_element419 = __toESM(require_element(), 1);
   var import_i18n345 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/revision-diff-panel/index.mjs
-  var import_components257 = __toESM(require_components(), 1);
+  var import_components255 = __toESM(require_components(), 1);
   var import_jsx_runtime650 = __toESM(require_jsx_runtime(), 1);
   function RevisionDiffPanel({
     title,
@@ -122411,7 +122410,7 @@ ${content}
       }
       return /* @__PURE__ */ (0, import_jsx_runtime650.jsx)("span", { children: part.value }, index3);
     }) }) }, key));
-    return /* @__PURE__ */ (0, import_jsx_runtime650.jsx)(import_components257.PanelBody, { title, initialOpen, children: /* @__PURE__ */ (0, import_jsx_runtime650.jsx)("div", { className, children: fields2 }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime650.jsx)(import_components255.PanelBody, { title, initialOpen, children: /* @__PURE__ */ (0, import_jsx_runtime650.jsx)("div", { className, children: fields2 }) });
   }
 
   // packages/editor/build-module/components/revision-fields-diff/index.mjs
@@ -122438,7 +122437,7 @@ ${content}
         previousRevision: getPreviousRevision2()
       };
     }, []);
-    const entries = (0, import_element420.useMemo)(() => {
+    const entries = (0, import_element419.useMemo)(() => {
       if (!revision) {
         return null;
       }
@@ -122489,10 +122488,10 @@ ${content}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime652.jsxs)(import_jsx_runtime652.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime652.jsx)(post_panel_section_default, { className: "editor-post-summary", children: /* @__PURE__ */ (0, import_jsx_runtime652.jsxs)(import_components258.__experimentalVStack, { spacing: 4, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime652.jsx)(post_panel_section_default, { className: "editor-post-summary", children: /* @__PURE__ */ (0, import_jsx_runtime652.jsxs)(import_components256.__experimentalVStack, { spacing: 4, children: [
         /* @__PURE__ */ (0, import_jsx_runtime652.jsx)(PostCardPanel, { postId: postId2, hideActions: true }),
         /* @__PURE__ */ (0, import_jsx_runtime652.jsx)(
-          import_components258.ExternalLink,
+          import_components256.ExternalLink,
           {
             href: (0, import_url25.addQueryArgs)("revision.php", {
               revision: revisionId2
@@ -122509,14 +122508,14 @@ ${content}
   // packages/editor/build-module/components/post-transform-panel/index.mjs
   var import_data251 = __toESM(require_data(), 1);
   var import_core_data143 = __toESM(require_core_data(), 1);
-  var import_components259 = __toESM(require_components(), 1);
+  var import_components257 = __toESM(require_components(), 1);
   var import_i18n347 = __toESM(require_i18n(), 1);
   var import_block_editor93 = __toESM(require_block_editor(), 1);
   var import_blocks36 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/components/post-transform-panel/hooks.mjs
   var import_data250 = __toESM(require_data(), 1);
-  var import_element421 = __toESM(require_element(), 1);
+  var import_element420 = __toESM(require_element(), 1);
   var import_core_data142 = __toESM(require_core_data(), 1);
   var import_blocks35 = __toESM(require_blocks(), 1);
   var import_patterns11 = __toESM(require_patterns(), 1);
@@ -122573,7 +122572,7 @@ ${content}
         currentThemeStylesheet: select9(import_core_data142.store).getCurrentTheme().stylesheet
       };
     }, []);
-    return (0, import_element421.useMemo)(() => {
+    return (0, import_element420.useMemo)(() => {
       const mergedPatterns = [
         ...blockPatterns || [],
         ...restBlockPatterns || []
@@ -122637,7 +122636,7 @@ ${content}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime653.jsx)(
-      import_components259.PanelBody,
+      import_components257.PanelBody,
       {
         title: (0, import_i18n347.__)("Design"),
         initialOpen: postType2 === TEMPLATE_PART_POST_TYPE,
@@ -122698,8 +122697,8 @@ ${content}
   var import_data253 = __toESM(require_data(), 1);
   var import_core_data144 = __toESM(require_core_data(), 1);
   var import_block_editor94 = __toESM(require_block_editor(), 1);
-  var import_components260 = __toESM(require_components(), 1);
-  var import_element422 = __toESM(require_element(), 1);
+  var import_components258 = __toESM(require_components(), 1);
+  var import_element421 = __toESM(require_element(), 1);
   var import_i18n349 = __toESM(require_i18n(), 1);
   var import_html_entities34 = __toESM(require_html_entities(), 1);
   var import_keycodes18 = __toESM(require_keycodes(), 1);
@@ -122711,8 +122710,8 @@ ${content}
       (select9) => select9(store).getCurrentTemplateId(),
       []
     );
-    const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element422.useState)(false);
-    const [isSwapModalOpen, setIsSwapModalOpen] = (0, import_element422.useState)(false);
+    const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element421.useState)(false);
+    const [isSwapModalOpen, setIsSwapModalOpen] = (0, import_element421.useState)(false);
     const availableTemplates = useAvailableTemplates();
     const hasSwapTargets = !!availableTemplates?.length;
     const {
@@ -122802,7 +122801,7 @@ ${content}
     };
     return /* @__PURE__ */ (0, import_jsx_runtime655.jsxs)(import_jsx_runtime655.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime655.jsx)(
-        import_components260.PanelBody,
+        import_components258.PanelBody,
         {
           title: (0, import_i18n349.sprintf)(
             /* translators: %s: template name */
@@ -122810,11 +122809,11 @@ ${content}
             templateName
           ),
           initialOpen: false,
-          children: /* @__PURE__ */ (0, import_jsx_runtime655.jsxs)(import_components260.__experimentalVStack, { children: [
+          children: /* @__PURE__ */ (0, import_jsx_runtime655.jsxs)(import_components258.__experimentalVStack, { children: [
             renderPreview(),
-            canCreateTemplate && /* @__PURE__ */ (0, import_jsx_runtime655.jsxs)(import_components260.__experimentalHStack, { children: [
+            canCreateTemplate && /* @__PURE__ */ (0, import_jsx_runtime655.jsxs)(import_components258.__experimentalHStack, { children: [
               onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime655.jsx)(
-                import_components260.Button,
+                import_components258.Button,
                 {
                   className: "editor-template-actions-panel__action",
                   __next40pxDefaultSize: true,
@@ -122830,7 +122829,7 @@ ${content}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime655.jsx)(
-                import_components260.Button,
+                import_components258.Button,
                 {
                   className: "editor-template-actions-panel__action",
                   __next40pxDefaultSize: true,
@@ -122862,8 +122861,8 @@ ${content}
   var import_data254 = __toESM(require_data(), 1);
   var import_core_data145 = __toESM(require_core_data(), 1);
   var import_block_editor95 = __toESM(require_block_editor(), 1);
-  var import_components261 = __toESM(require_components(), 1);
-  var import_element423 = __toESM(require_element(), 1);
+  var import_components259 = __toESM(require_components(), 1);
+  var import_element422 = __toESM(require_element(), 1);
   var import_i18n350 = __toESM(require_i18n(), 1);
   var import_html_entities35 = __toESM(require_html_entities(), 1);
   var import_notices36 = __toESM(require_notices(), 1);
@@ -122874,7 +122873,7 @@ ${content}
       (select9) => select9(store).getCurrentTemplateId(),
       []
     );
-    const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element423.useState)(false);
+    const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element422.useState)(false);
     const {
       onNavigateToEntityRecord,
       canCreateTemplate,
@@ -122928,7 +122927,7 @@ ${content}
     const previewContent = !!blocks?.length && /* @__PURE__ */ (0, import_jsx_runtime656.jsx)(import_block_editor95.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime656.jsx)(import_block_editor95.BlockPreview, { blocks }) });
     return /* @__PURE__ */ (0, import_jsx_runtime656.jsxs)(import_jsx_runtime656.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime656.jsx)(
-        import_components261.PanelBody,
+        import_components259.PanelBody,
         {
           title: template2 ? (0, import_i18n350.sprintf)(
             /* translators: %s: template name */
@@ -122936,14 +122935,14 @@ ${content}
             templateName
           ) : (0, import_i18n350.__)("Template"),
           initialOpen: false,
-          children: /* @__PURE__ */ (0, import_jsx_runtime656.jsxs)(import_components261.__experimentalVStack, { children: [
-            !templateId2 && /* @__PURE__ */ (0, import_jsx_runtime656.jsx)(import_components261.__experimentalText, { children: (0, import_i18n350.__)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime656.jsxs)(import_components259.__experimentalVStack, { children: [
+            !templateId2 && /* @__PURE__ */ (0, import_jsx_runtime656.jsx)(import_components259.__experimentalText, { children: (0, import_i18n350.__)(
               "This page uses a classic template. To edit this template with blocks, create a block template."
             ) }),
             template2 && previewContent && /* @__PURE__ */ (0, import_jsx_runtime656.jsx)("div", { className: "editor-template-actions-panel__preview", children: previewContent }),
-            /* @__PURE__ */ (0, import_jsx_runtime656.jsxs)(import_components261.__experimentalHStack, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime656.jsxs)(import_components259.__experimentalHStack, { children: [
               template2 && onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime656.jsx)(
-                import_components261.Button,
+                import_components259.Button,
                 {
                   className: "editor-template-actions-panel__action",
                   __next40pxDefaultSize: true,
@@ -122959,7 +122958,7 @@ ${content}
                 }
               ),
               canCreateTemplate && /* @__PURE__ */ (0, import_jsx_runtime656.jsx)(
-                import_components261.Button,
+                import_components259.Button,
                 {
                   className: "editor-template-actions-panel__action",
                   __next40pxDefaultSize: true,
@@ -122997,7 +122996,7 @@ ${content}
   // packages/editor/build-module/components/template-content-panel/index.mjs
   var import_data255 = __toESM(require_data(), 1);
   var import_block_editor96 = __toESM(require_block_editor(), 1);
-  var import_components262 = __toESM(require_components(), 1);
+  var import_components260 = __toESM(require_components(), 1);
   var import_i18n351 = __toESM(require_i18n(), 1);
   var import_jsx_runtime658 = __toESM(require_jsx_runtime(), 1);
   var { BlockQuickNavigation } = unlock(import_block_editor96.privateApis);
@@ -123017,7 +123016,7 @@ ${content}
     if (clientIds.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(import_components262.PanelBody, { title: (0, import_i18n351.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(import_components260.PanelBody, { title: (0, import_i18n351.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(
       BlockQuickNavigation,
       {
         clientIds,
@@ -123045,10 +123044,10 @@ ${content}
 
   // packages/editor/build-module/components/template-part-content-panel/index.mjs
   var import_data256 = __toESM(require_data(), 1);
-  var import_element424 = __toESM(require_element(), 1);
+  var import_element423 = __toESM(require_element(), 1);
   var import_blocks37 = __toESM(require_blocks(), 1);
   var import_block_editor97 = __toESM(require_block_editor(), 1);
-  var import_components263 = __toESM(require_components(), 1);
+  var import_components261 = __toESM(require_components(), 1);
   var import_i18n352 = __toESM(require_i18n(), 1);
   var import_jsx_runtime659 = __toESM(require_jsx_runtime(), 1);
   var { BlockQuickNavigation: BlockQuickNavigation2 } = unlock(import_block_editor97.privateApis);
@@ -123057,7 +123056,7 @@ ${content}
       const { getBlockTypes: getBlockTypes6 } = select9(import_blocks37.store);
       return getBlockTypes6();
     }, []);
-    const themeBlockNames = (0, import_element424.useMemo)(() => {
+    const themeBlockNames = (0, import_element423.useMemo)(() => {
       return blockTypes.filter((blockType) => {
         return blockType.category === "theme";
       }).map(({ name: name2 }) => name2);
@@ -123072,7 +123071,7 @@ ${content}
     if (themeBlocks.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime659.jsx)(import_components263.PanelBody, { title: (0, import_i18n352.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime659.jsx)(BlockQuickNavigation2, { clientIds: themeBlocks }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime659.jsx)(import_components261.PanelBody, { title: (0, import_i18n352.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime659.jsx)(BlockQuickNavigation2, { clientIds: themeBlocks }) });
   }
   function TemplatePartContentPanel() {
     const postType2 = (0, import_data256.useSelect)((select9) => {
@@ -123113,7 +123112,7 @@ ${content}
 
   // packages/editor/build-module/components/provider/use-auto-switch-editor-sidebars.mjs
   var import_data258 = __toESM(require_data(), 1);
-  var import_element425 = __toESM(require_element(), 1);
+  var import_element424 = __toESM(require_element(), 1);
   var import_block_editor99 = __toESM(require_block_editor(), 1);
   var import_preferences30 = __toESM(require_preferences(), 1);
   function useAutoSwitchEditorSidebars() {
@@ -123125,7 +123124,7 @@ ${content}
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data258.useSelect)(store3);
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data258.useDispatch)(store3);
     const { get: getPreference } = (0, import_data258.useSelect)(import_preferences30.store);
-    (0, import_element425.useEffect)(() => {
+    (0, import_element424.useEffect)(() => {
       const activeGeneralSidebar = getActiveComplementaryArea2("core");
       const isEditorSidebarOpened = [
         "edit-post/document",
@@ -123235,21 +123234,21 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_i18n364 = __toESM(require_i18n(), 1);
   var import_data268 = __toESM(require_data(), 1);
-  var import_element436 = __toESM(require_element(), 1);
+  var import_element435 = __toESM(require_element(), 1);
   var import_compose101 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts13 = __toESM(require_keyboard_shortcuts(), 1);
   var import_block_editor109 = __toESM(require_block_editor(), 1);
   var import_preferences31 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/notes.mjs
-  var import_element433 = __toESM(require_element(), 1);
+  var import_element432 = __toESM(require_element(), 1);
   var import_i18n361 = __toESM(require_i18n(), 1);
   var import_data265 = __toESM(require_data(), 1);
   var import_block_editor105 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
-  var import_element431 = __toESM(require_element(), 1);
-  var import_components267 = __toESM(require_components(), 1);
+  var import_element430 = __toESM(require_element(), 1);
+  var import_components265 = __toESM(require_components(), 1);
   var import_compose99 = __toESM(require_compose(), 1);
   var import_i18n359 = __toESM(require_i18n(), 1);
   var import_data263 = __toESM(require_data(), 1);
@@ -123258,7 +123257,7 @@ ${content}
 
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_i18n357 = __toESM(require_i18n(), 1);
-  var import_element429 = __toESM(require_element(), 1);
+  var import_element428 = __toESM(require_element(), 1);
   var import_compose98 = __toESM(require_compose(), 1);
   var import_data262 = __toESM(require_data(), 1);
   var import_block_editor102 = __toESM(require_block_editor(), 1);
@@ -123387,15 +123386,15 @@ ${content}
   }
 
   // packages/editor/build-module/components/collab-sidebar/note-form.mjs
-  var import_element428 = __toESM(require_element(), 1);
-  var import_components265 = __toESM(require_components(), 1);
+  var import_element427 = __toESM(require_element(), 1);
+  var import_components263 = __toESM(require_components(), 1);
   var import_i18n356 = __toESM(require_i18n(), 1);
   var import_compose97 = __toESM(require_compose(), 1);
   var import_keycodes20 = __toESM(require_keycodes(), 1);
   var import_dom39 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-mention-completer.mjs
-  var import_element426 = __toESM(require_element(), 1);
+  var import_element425 = __toESM(require_element(), 1);
   var import_data261 = __toESM(require_data(), 1);
   var import_core_data147 = __toESM(require_core_data(), 1);
   var import_jsx_runtime664 = __toESM(require_jsx_runtime(), 1);
@@ -123414,7 +123413,7 @@ ${content}
         },
         [filterValue]
       );
-      const options = (0, import_element426.useMemo)(
+      const options = (0, import_element425.useMemo)(
         () => users ? users.map((user) => ({
           key: `note-mention-${user.slug}`,
           value: user,
@@ -123434,9 +123433,9 @@ ${content}
   var note_mention_completer_default = noteMentionCompleter;
 
   // packages/editor/build-module/components/collab-sidebar/rich-text-control/index.mjs
-  var import_components264 = __toESM(require_components(), 1);
+  var import_components262 = __toESM(require_components(), 1);
   var import_compose96 = __toESM(require_compose(), 1);
-  var import_element427 = __toESM(require_element(), 1);
+  var import_element426 = __toESM(require_element(), 1);
   var import_keycodes19 = __toESM(require_keycodes(), 1);
   var import_rich_text8 = __toESM(require_rich_text(), 1);
 
@@ -123500,7 +123499,7 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/rich-text-control/index.mjs
   var import_jsx_runtime666 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedContentEditableControl: RichTextControlShell } = unlock(
-    import_components264.privateApis
+    import_components262.privateApis
   );
   var {
     useRichText: useRichText2,
@@ -123532,14 +123531,14 @@ ${content}
     focusOnMount,
     completers = EMPTY_COMPLETERS
   }) {
-    const [selection, setSelection] = (0, import_element427.useState)({
+    const [selection, setSelection] = (0, import_element426.useState)({
       start: void 0,
       end: void 0
     });
-    const [isSelected2, setIsSelected] = (0, import_element427.useState)(false);
-    const anchorRef = (0, import_element427.useRef)(void 0);
-    const inputEvents = (0, import_element427.useRef)(/* @__PURE__ */ new Set());
-    const keyboardShortcuts = (0, import_element427.useRef)(
+    const [isSelected2, setIsSelected] = (0, import_element426.useState)(false);
+    const anchorRef = (0, import_element426.useRef)(void 0);
+    const inputEvents = (0, import_element426.useRef)(/* @__PURE__ */ new Set());
+    const keyboardShortcuts = (0, import_element426.useRef)(
       /* @__PURE__ */ new Set()
     );
     const focusOutside = (0, import_compose96.__experimentalUseFocusOutside)(() => setIsSelected(false));
@@ -123565,7 +123564,7 @@ ${content}
       __unstableDisableFormats: disableFormats,
       allowedFormats: adjustedAllowedFormats,
       withoutInteractiveFormatting,
-      __unstableFormatTypeHandlerContext: (0, import_element427.useMemo)(
+      __unstableFormatTypeHandlerContext: (0, import_element426.useMemo)(
         () => ({
           richTextIdentifier: id,
           blockClientId: clientId
@@ -123576,16 +123575,16 @@ ${content}
     function onFocus() {
       anchorRef.current?.focus();
     }
-    const eventListenersPropsRef = (0, import_element427.useRef)({
+    const eventListenersPropsRef = (0, import_element426.useRef)({
       keyboardShortcuts,
       inputEvents
     });
-    const inputRulePropsRef = (0, import_element427.useRef)({
+    const inputRulePropsRef = (0, import_element426.useRef)({
       formatTypes,
       getValue: getValue3,
       onChange: onRichTextChange
     });
-    (0, import_element427.useInsertionEffect)(() => {
+    (0, import_element426.useInsertionEffect)(() => {
       inputRulePropsRef.current = {
         formatTypes,
         getValue: getValue3,
@@ -123666,7 +123665,7 @@ ${content}
       },
       [isSelected2]
     );
-    const { ref: autocompleteRef, ...autocompleteProps } = (0, import_components264.__unstableUseAutocompleteProps)(
+    const { ref: autocompleteRef, ...autocompleteProps } = (0, import_components262.__unstableUseAutocompleteProps)(
       {
         completers,
         record: value,
@@ -123705,7 +123704,7 @@ ${content}
             setIsSelected(true);
             focusOutside.onFocus(event);
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime666.jsxs)(import_components264.SlotFillProvider, { children: [
+          children: /* @__PURE__ */ (0, import_jsx_runtime666.jsxs)(import_components262.SlotFillProvider, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime666.jsx)(
               RichTextControlShell,
               {
@@ -123758,10 +123757,10 @@ ${content}
   ];
   var NOTE_COMPLETERS = [note_mention_completer_default];
   function NoteForm({ onSubmit, onCancel, note, labels }) {
-    const [inputComment, setInputComment] = (0, import_element428.useState)(
+    const [inputComment, setInputComment] = (0, import_element427.useState)(
       note?.content?.raw ?? ""
     );
-    const [isSubmitting, setIsSubmitting] = (0, import_element428.useState)(false);
+    const [isSubmitting, setIsSubmitting] = (0, import_element427.useState)(false);
     const inputId = (0, import_compose97.useInstanceId)(NoteForm, "comment-input");
     const trimmedPlainText = sanitizeNoteContent((0, import_dom39.__unstableStripHTML)(inputComment));
     const isDisabled = isSubmitting || inputComment === note?.content?.raw || !trimmedPlainText.length;
@@ -123826,17 +123825,17 @@ ${content}
               wrap: "wrap",
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime667.jsx)(
-                  import_components265.Button,
+                  import_components263.Button,
                   {
                     size: "compact",
                     variant: "tertiary",
                     onClick: onCancel,
                     shortcut: "Escape",
-                    children: /* @__PURE__ */ (0, import_jsx_runtime667.jsx)(import_components265.__experimentalTruncate, { children: (0, import_i18n356.__)("Cancel") })
+                    children: /* @__PURE__ */ (0, import_jsx_runtime667.jsx)(import_components263.__experimentalTruncate, { children: (0, import_i18n356.__)("Cancel") })
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime667.jsx)(
-                  import_components265.Button,
+                  import_components263.Button,
                   {
                     size: "compact",
                     accessibleWhenDisabled: true,
@@ -123844,7 +123843,7 @@ ${content}
                     type: "submit",
                     disabled: isDisabled,
                     shortcut: import_keycodes20.displayShortcut.primary("Enter"),
-                    children: /* @__PURE__ */ (0, import_jsx_runtime667.jsx)(import_components265.__experimentalTruncate, { children: labels?.submit ?? (0, import_i18n356.__)("Add note") })
+                    children: /* @__PURE__ */ (0, import_jsx_runtime667.jsx)(import_components263.__experimentalTruncate, { children: labels?.submit ?? (0, import_i18n356.__)("Add note") })
                   }
                 )
               ]
@@ -123902,7 +123901,7 @@ ${content}
     const { toggleBlockSpotlight } = unlock((0, import_data262.useDispatch)(import_block_editor102.store));
     const { selectNote: selectNote2 } = unlock((0, import_data262.useDispatch)(store));
     const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data262.useSelect)(store));
-    const isSubmittingRef = (0, import_element429.useRef)(false);
+    const isSubmittingRef = (0, import_element428.useRef)(false);
     const focusOutside = (0, import_compose98.__experimentalUseFocusOutside)((event) => {
       if (event.relatedTarget?.closest(
         ".editor-collab-sidebar-panel__add-note"
@@ -123968,8 +123967,8 @@ ${content}
   }
 
   // packages/editor/build-module/components/collab-sidebar/note.mjs
-  var import_element430 = __toESM(require_element(), 1);
-  var import_components266 = __toESM(require_components(), 1);
+  var import_element429 = __toESM(require_element(), 1);
+  var import_components264 = __toESM(require_components(), 1);
   var import_i18n358 = __toESM(require_i18n(), 1);
   var import_jsx_runtime670 = __toESM(require_jsx_runtime(), 1);
   function NoteActionsMenu({ items, buttonRef }) {
@@ -123983,7 +123982,7 @@ ${content}
             menu_exports.Trigger,
             {
               render: /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(
-                import_components266.Button,
+                import_components264.Button,
                 {
                   ref: buttonRef,
                   size: "small",
@@ -124014,18 +124013,18 @@ ${content}
     onDeleteNote,
     onResolve
   }) {
-    const [actionState, setActionState] = (0, import_element430.useState)(null);
-    const actionButtonRef = (0, import_element430.useRef)(null);
-    const commentRef = (0, import_element430.useRef)(null);
+    const [actionState, setActionState] = (0, import_element429.useState)(null);
+    const actionButtonRef = (0, import_element429.useRef)(null);
+    const commentRef = (0, import_element429.useRef)(null);
     const rawContent = note?.content?.raw;
-    const [prevContent, setPrevContent] = (0, import_element430.useState)(rawContent);
-    const [isExpanded, setIsExpanded] = (0, import_element430.useState)(false);
-    const [isOverflowing, setIsOverflowing] = (0, import_element430.useState)(false);
+    const [prevContent, setPrevContent] = (0, import_element429.useState)(rawContent);
+    const [isExpanded, setIsExpanded] = (0, import_element429.useState)(false);
+    const [isOverflowing, setIsOverflowing] = (0, import_element429.useState)(false);
     if (prevContent !== rawContent) {
       setPrevContent(rawContent);
       setIsExpanded(false);
     }
-    (0, import_element430.useLayoutEffect)(() => {
+    (0, import_element429.useLayoutEffect)(() => {
       const commentElement = commentRef.current;
       if (commentElement) {
         setIsOverflowing(
@@ -124119,7 +124118,7 @@ ${content}
     }
     const actions2 = isSelected2 ? /* @__PURE__ */ (0, import_jsx_runtime670.jsxs)(import_jsx_runtime670.Fragment, { children: [
       canResolve && onResolve && /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(
-        import_components266.Button,
+        import_components264.Button,
         {
           label: (0, import_i18n358._x)("Resolve", "Mark note as resolved"),
           size: "small",
@@ -124146,7 +124145,7 @@ ${content}
         children: [
           body,
           actionState === "delete" && /* @__PURE__ */ (0, import_jsx_runtime670.jsx)(
-            import_components266.__experimentalConfirmDialog,
+            import_components264.__experimentalConfirmDialog,
             {
               isOpen: true,
               onConfirm: () => {
@@ -124197,18 +124196,18 @@ ${content}
       toggleBlockHighlight,
       50
     );
-    const floatingRef = (0, import_element431.useRef)(null);
-    const isKeyboardTabbingRef = (0, import_element431.useRef)(false);
+    const floatingRef = (0, import_element430.useRef)(null);
+    const isKeyboardTabbingRef = (0, import_element430.useRef)(false);
     const registerThread = floating?.registerThread;
     const unregisterThread = floating?.unregisterThread;
-    (0, import_element431.useEffect)(() => {
+    (0, import_element430.useEffect)(() => {
       const floatingEl = floatingRef.current;
       if (floatingEl && registerThread) {
         registerThread(note.id, relatedBlockElement, floatingEl);
       }
       return () => unregisterThread?.(note.id);
     }, [relatedBlockElement, note.id, registerThread, unregisterThread]);
-    (0, import_element431.useEffect)(() => {
+    (0, import_element430.useEffect)(() => {
       if (!isSelected2 || note.id === "new") {
         return;
       }
@@ -124322,7 +124321,7 @@ ${content}
         "aria-expanded": isSelected2,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime671.jsx)(
-            import_components267.Button,
+            import_components265.Button,
             {
               className: "editor-collab-sidebar-panel__skip-to-note",
               variant: "secondary",
@@ -124367,7 +124366,7 @@ ${content}
               justify: "space-between",
               className: "editor-collab-sidebar-panel__more-reply-separator",
               children: /* @__PURE__ */ (0, import_jsx_runtime671.jsx)(
-                import_components267.Button,
+                import_components265.Button,
                 {
                   size: "compact",
                   variant: "tertiary",
@@ -124433,7 +124432,7 @@ ${content}
             }
           ) }),
           !!note.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime671.jsx)(
-            import_components267.Button,
+            import_components265.Button,
             {
               className: "editor-collab-sidebar-panel__skip-to-block",
               variant: "secondary",
@@ -124453,7 +124452,7 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/hooks.mjs
   var import_a11y17 = __toESM(require_a11y(), 1);
   var import_i18n360 = __toESM(require_i18n(), 1);
-  var import_element432 = __toESM(require_element(), 1);
+  var import_element431 = __toESM(require_element(), 1);
   var import_compose100 = __toESM(require_compose(), 1);
   var import_core_data148 = __toESM(require_core_data(), 1);
   var import_data264 = __toESM(require_data(), 1);
@@ -124650,7 +124649,7 @@ ${content}
         clientIds: getClientIdsWithDescendants2()
       };
     }, []);
-    const { notes, unresolvedNotes } = (0, import_element432.useMemo)(() => {
+    const { notes, unresolvedNotes } = (0, import_element431.useMemo)(() => {
       if (!threads || threads.length === 0) {
         return { notes: [], unresolvedNotes: [] };
       }
@@ -124909,7 +124908,7 @@ ${content}
   }
   function useEnableFloatingSidebar(enabled = false) {
     const registry = (0, import_data264.useRegistry)();
-    (0, import_element432.useEffect)(() => {
+    (0, import_element431.useEffect)(() => {
       if (!enabled) {
         return;
       }
@@ -124958,15 +124957,15 @@ ${content}
       }
       selectNote2(pickPrimaryNote(blockThreads)?.id);
     });
-    const prevBlockIdRef = (0, import_element432.useRef)(selectedBlockClientId);
-    (0, import_element432.useEffect)(() => {
+    const prevBlockIdRef = (0, import_element431.useRef)(selectedBlockClientId);
+    (0, import_element431.useEffect)(() => {
       if (prevBlockIdRef.current === selectedBlockClientId) {
         return;
       }
       prevBlockIdRef.current = selectedBlockClientId;
       syncWithBlock(selectedBlockClientId);
     }, [selectedBlockClientId, syncWithBlock]);
-    (0, import_element432.useEffect)(() => {
+    (0, import_element431.useEffect)(() => {
       if (!noteFocused || !selectedNote2) {
         return;
       }
@@ -124986,15 +124985,15 @@ ${content}
     isFloating,
     sidebarRef
   }) {
-    const [store4] = (0, import_element432.useState)(createBoardStore);
-    const { heights, anchorRects, canvas, frameOffset } = (0, import_element432.useSyncExternalStore)(
+    const [store4] = (0, import_element431.useState)(createBoardStore);
+    const { heights, anchorRects, canvas, frameOffset } = (0, import_element431.useSyncExternalStore)(
       isFloating ? store4.subscribe : subscribeNoop,
       store4.getSnapshot
     );
-    (0, import_element432.useLayoutEffect)(() => {
+    (0, import_element431.useLayoutEffect)(() => {
       store4.requestMeasure();
     }, [store4, threads]);
-    const notePositions = (0, import_element432.useMemo)(
+    const notePositions = (0, import_element431.useMemo)(
       () => calculateNotePositions({
         threads,
         selectedNoteId,
@@ -125003,7 +125002,7 @@ ${content}
       }).positions,
       [threads, selectedNoteId, anchorRects, heights]
     );
-    (0, import_element432.useLayoutEffect)(() => {
+    (0, import_element431.useLayoutEffect)(() => {
       const panel = sidebarRef?.current;
       if (!isFloating || !panel || !canvas) {
         return;
@@ -125023,7 +125022,7 @@ ${content}
         panel.style.removeProperty("--canvas-scroll");
       };
     }, [sidebarRef, isFloating, canvas]);
-    (0, import_element432.useLayoutEffect)(() => {
+    (0, import_element431.useLayoutEffect)(() => {
       const panel = sidebarRef?.current;
       if (!isFloating || !panel) {
         return;
@@ -125067,7 +125066,7 @@ ${content}
     );
     useNoteSelection({ notes, sidebarRef });
     const relatedBlockElement = useBlockElement3(selectedBlockClientId);
-    const threads = (0, import_element433.useMemo)(() => {
+    const threads = (0, import_element432.useMemo)(() => {
       if (!isFloating || selectedNote2 !== "new") {
         return notes;
       }
@@ -125191,7 +125190,7 @@ ${content}
               sidebarRef
             }
           ),
-          threads.map((thread, index3) => /* @__PURE__ */ (0, import_jsx_runtime672.jsxs)(import_element433.Fragment, { children: [
+          threads.map((thread, index3) => /* @__PURE__ */ (0, import_jsx_runtime672.jsxs)(import_element432.Fragment, { children: [
             index3 === firstResolvedIndex && /* @__PURE__ */ (0, import_jsx_runtime672.jsx)(
               Stack,
               {
@@ -125231,7 +125230,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/collab-sidebar/add-note-menu-item.mjs
-  var import_components268 = __toESM(require_components(), 1);
+  var import_components266 = __toESM(require_components(), 1);
   var import_i18n362 = __toESM(require_i18n(), 1);
   var import_block_editor106 = __toESM(require_block_editor(), 1);
   var import_data266 = __toESM(require_data(), 1);
@@ -125263,7 +125262,7 @@ ${content}
       infoText = (0, import_i18n362.__)("Convert to blocks to add notes.");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime673.jsx)(
-      import_components268.MenuItem,
+      import_components266.MenuItem,
       {
         onClick,
         "aria-haspopup": "dialog",
@@ -125289,9 +125288,9 @@ ${content}
   }
 
   // packages/editor/build-module/components/collab-sidebar/note-indicator-toolbar.mjs
-  var import_components269 = __toESM(require_components(), 1);
+  var import_components267 = __toESM(require_components(), 1);
   var import_i18n363 = __toESM(require_i18n(), 1);
-  var import_element434 = __toESM(require_element(), 1);
+  var import_element433 = __toESM(require_element(), 1);
   var import_block_editor107 = __toESM(require_block_editor(), 1);
   var import_data267 = __toESM(require_data(), 1);
   var import_jsx_runtime674 = __toESM(require_jsx_runtime(), 1);
@@ -125332,7 +125331,7 @@ ${content}
     ] });
   }
   function NoteAvatarIndicator({ onClick, note }) {
-    const threadParticipants = (0, import_element434.useMemo)(() => {
+    const threadParticipants = (0, import_element433.useMemo)(() => {
       if (!note) {
         return [];
       }
@@ -125356,7 +125355,7 @@ ${content}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(NoteIconToolbarSlotFill.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
-      import_components269.ToolbarButton,
+      import_components267.ToolbarButton,
       {
         className: "editor-note-indicator",
         label: (0, import_i18n363.__)("View notes"),
@@ -125368,7 +125367,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/collab-sidebar/note-highlight-styles.mjs
-  var import_element435 = __toESM(require_element(), 1);
+  var import_element434 = __toESM(require_element(), 1);
   var import_block_editor108 = __toESM(require_block_editor(), 1);
   var REST_ALPHA = "40";
   var ACTIVE_ALPHA = "80";
@@ -125394,7 +125393,7 @@ ${content}
     return rules.join("");
   }
   function NoteHighlightStyles({ threads, selectedId }) {
-    const css = (0, import_element435.useMemo)(
+    const css = (0, import_element434.useMemo)(
       () => buildHighlightCss(threads, selectedId),
       [threads, selectedId]
     );
@@ -125412,7 +125411,7 @@ ${content}
     );
     const { selectNote: selectNote2 } = unlock((0, import_data268.useDispatch)(store));
     const isLargeViewport = (0, import_compose101.useViewportMatch)("medium");
-    const sidebarRef = (0, import_element436.useRef)(null);
+    const sidebarRef = (0, import_element435.useRef)(null);
     const { clientId, noteId, isClassicBlock } = (0, import_data268.useSelect)((select9) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select9(import_block_editor109.store);
       const _clientId = getSelectedBlockClientId2();
@@ -125575,17 +125574,17 @@ ${content}
   }
 
   // packages/editor/build-module/components/global-styles-sidebar/index.mjs
-  var import_components272 = __toESM(require_components(), 1);
+  var import_components270 = __toESM(require_components(), 1);
   var import_i18n367 = __toESM(require_i18n(), 1);
   var import_data271 = __toESM(require_data(), 1);
-  var import_element437 = __toESM(require_element(), 1);
+  var import_element436 = __toESM(require_element(), 1);
   var import_preferences34 = __toESM(require_preferences(), 1);
   var import_compose102 = __toESM(require_compose(), 1);
   var import_core_data150 = __toESM(require_core_data(), 1);
   var import_block_editor110 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/global-styles/menu.mjs
-  var import_components270 = __toESM(require_components(), 1);
+  var import_components268 = __toESM(require_components(), 1);
   var import_data269 = __toESM(require_data(), 1);
   var import_i18n365 = __toESM(require_i18n(), 1);
   var import_preferences32 = __toESM(require_preferences(), 1);
@@ -125618,7 +125617,7 @@ ${content}
         menu_exports.Trigger,
         {
           render: /* @__PURE__ */ (0, import_jsx_runtime676.jsx)(
-            import_components270.Button,
+            import_components268.Button,
             {
               icon: more_vertical_default,
               label: (0, import_i18n365.__)("More"),
@@ -125651,7 +125650,7 @@ ${content}
 
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
   var import_data270 = __toESM(require_data(), 1);
-  var import_components271 = __toESM(require_components(), 1);
+  var import_components269 = __toESM(require_components(), 1);
   var import_i18n366 = __toESM(require_i18n(), 1);
   var import_preferences33 = __toESM(require_preferences(), 1);
 
@@ -125689,7 +125688,7 @@ ${content}
     }
     const welcomeLabel = (0, import_i18n366.__)("Welcome to Styles");
     return /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
-      import_components271.Guide,
+      import_components269.Guide,
       {
         className: "editor-welcome-guide guide-styles",
         contentLabel: welcomeLabel,
@@ -125757,7 +125756,7 @@ ${content}
                 ),
                 " ",
                 /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
-                  import_components271.ExternalLink,
+                  import_components269.ExternalLink,
                   {
                     href: (0, import_i18n366.__)(
                       "https://wordpress.org/documentation/article/styles-overview/"
@@ -125825,7 +125824,7 @@ ${content}
     const isRevisionsStyleBookOpened = stylesPath2.startsWith("/revisions") && showStylebook2;
     const previousActiveArea = (0, import_compose102.usePrevious)(activeComplementaryArea);
     const hasRequestedPath = stylesPath2 !== "/" && !shouldResetNavigation;
-    (0, import_element437.useEffect)(() => {
+    (0, import_element436.useEffect)(() => {
       if (activeComplementaryArea === "edit-site/global-styles" && previousActiveArea !== "edit-site/global-styles" && !hasRequestedPath) {
         resetStylesNavigation2();
       }
@@ -125835,7 +125834,7 @@ ${content}
       hasRequestedPath,
       resetStylesNavigation2
     ]);
-    (0, import_element437.useEffect)(() => {
+    (0, import_element436.useEffect)(() => {
       if (shouldResetNavigation) {
         resetStylesNavigation2();
       }
@@ -125884,7 +125883,7 @@ ${content}
                     gap: "xs",
                     children: [
                       !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime679.jsx)(
-                        import_components272.Button,
+                        import_components270.Button,
                         {
                           icon: seen_default,
                           label: (0, import_i18n367.__)("Style Book"),
@@ -125896,7 +125895,7 @@ ${content}
                         }
                       ),
                       /* @__PURE__ */ (0, import_jsx_runtime679.jsx)(
-                        import_components272.Button,
+                        import_components270.Button,
                         {
                           label: (0, import_i18n367.__)("Revisions"),
                           icon: backup_default,
@@ -126002,7 +126001,7 @@ ${content}
     );
     return /* @__PURE__ */ (0, import_jsx_runtime680.jsxs)(import_jsx_runtime680.Fragment, { children: [
       hasLoadedPost && !post2 && /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(
-        import_components273.Notice,
+        import_components271.Notice,
         {
           status: !!error2 ? "error" : "warning",
           isDismissible: false,
@@ -126045,7 +126044,7 @@ ${content}
   var import_i18n370 = __toESM(require_i18n(), 1);
   var import_compose103 = __toESM(require_compose(), 1);
   var import_data275 = __toESM(require_data(), 1);
-  var import_element439 = __toESM(require_element(), 1);
+  var import_element438 = __toESM(require_element(), 1);
   var import_preferences37 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.mjs
@@ -126072,8 +126071,8 @@ ${content}
   var import_data274 = __toESM(require_data(), 1);
   var import_preferences36 = __toESM(require_preferences(), 1);
   var import_blocks39 = __toESM(require_blocks(), 1);
-  var import_element438 = __toESM(require_element(), 1);
-  var import_components274 = __toESM(require_components(), 1);
+  var import_element437 = __toESM(require_element(), 1);
+  var import_components272 = __toESM(require_components(), 1);
   var import_i18n369 = __toESM(require_i18n(), 1);
   var import_block_editor111 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime682 = __toESM(require_jsx_runtime(), 1);
@@ -126094,7 +126093,7 @@ ${content}
         hiddenBlockTypes: select9(import_preferences36.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY20
       };
     }, []);
-    const allowedBlockTypes = (0, import_element438.useMemo)(() => {
+    const allowedBlockTypes = (0, import_element437.useMemo)(() => {
       if (_allowedBlockTypes === true) {
         return blockTypes;
       }
@@ -126146,7 +126145,7 @@ ${content}
           numberOfHiddenBlocks
         ),
         /* @__PURE__ */ (0, import_jsx_runtime682.jsx)(
-          import_components274.Button,
+          import_components272.Button,
           {
             __next40pxDefaultSize: true,
             variant: "link",
@@ -126202,7 +126201,7 @@ ${content}
     );
     const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data275.useDispatch)(store);
     const { set: setPreference } = (0, import_data275.useDispatch)(import_preferences37.store);
-    const sections = (0, import_element439.useMemo)(
+    const sections = (0, import_element438.useMemo)(
       () => [
         {
           name: "general",
@@ -127074,12 +127073,12 @@ ${content}
 
   // packages/editor/build-module/components/upload-progress-snackbar/index.mjs
   var import_data277 = __toESM(require_data(), 1);
-  var import_element440 = __toESM(require_element(), 1);
+  var import_element439 = __toESM(require_element(), 1);
   var import_i18n374 = __toESM(require_i18n(), 1);
   var import_a11y18 = __toESM(require_a11y(), 1);
   var import_upload_media3 = __toESM(require_upload_media(), 1);
   var import_notices39 = __toESM(require_notices(), 1);
-  var import_components275 = __toESM(require_components(), 1);
+  var import_components273 = __toESM(require_components(), 1);
   var import_jsx_runtime685 = __toESM(require_jsx_runtime(), 1);
   var NOTICE_ID = "upload-progress";
   var COMPLETION_DISPLAY_MS = 3e3;
@@ -127099,10 +127098,10 @@ ${content}
     {
       className: "editor-upload-progress-snackbar__spinner",
       "aria-hidden": "true",
-      children: /* @__PURE__ */ (0, import_jsx_runtime685.jsx)(import_components275.Spinner, {})
+      children: /* @__PURE__ */ (0, import_jsx_runtime685.jsx)(import_components273.Spinner, {})
     }
   );
-  var UPLOAD_DONE = /* @__PURE__ */ (0, import_jsx_runtime685.jsx)("span", { className: "editor-upload-progress-snackbar__check", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime685.jsx)(import_components275.Icon, { icon: check_default }) });
+  var UPLOAD_DONE = /* @__PURE__ */ (0, import_jsx_runtime685.jsx)("span", { className: "editor-upload-progress-snackbar__check", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime685.jsx)(import_components273.Icon, { icon: check_default }) });
   function UploadProgressSnackbar() {
     const { items, csmFailureCount } = (0, import_data277.useSelect)((select9) => {
       const { getItems } = select9(import_upload_media3.store);
@@ -127113,7 +127112,7 @@ ${content}
       };
     }, []);
     const tracker = useTracker();
-    const csmOriginals = (0, import_element440.useMemo)(
+    const csmOriginals = (0, import_element439.useMemo)(
       () => items.filter((item) => !item.parentId),
       [items]
     );
@@ -127121,20 +127120,20 @@ ${content}
     const trackedRemaining = tracker ? tracker.total - tracker.completed : 0;
     const remaining = csmRemaining + trackedRemaining;
     const sessionTotal = csmRemaining + (tracker ? tracker.total : 0);
-    const peakRef = (0, import_element440.useRef)(0);
+    const peakRef = (0, import_element439.useRef)(0);
     const { createNotice, removeNotice } = (0, import_data277.useDispatch)(import_notices39.store);
-    const dismissedRef = (0, import_element440.useRef)(false);
-    const wasUploadingRef = (0, import_element440.useRef)(false);
-    const failuresAtStartRef = (0, import_element440.useRef)(0);
-    const completionTimeoutRef = (0, import_element440.useRef)(null);
-    (0, import_element440.useEffect)(() => {
+    const dismissedRef = (0, import_element439.useRef)(false);
+    const wasUploadingRef = (0, import_element439.useRef)(false);
+    const failuresAtStartRef = (0, import_element439.useRef)(0);
+    const completionTimeoutRef = (0, import_element439.useRef)(null);
+    (0, import_element439.useEffect)(() => {
       return () => {
         if (completionTimeoutRef.current) {
           clearTimeout(completionTimeoutRef.current);
         }
       };
     }, []);
-    (0, import_element440.useEffect)(() => {
+    (0, import_element439.useEffect)(() => {
       const isUploading = remaining > 0;
       const failures = csmFailureCount + getFailureCount();
       if (isUploading && !wasUploadingRef.current) {
