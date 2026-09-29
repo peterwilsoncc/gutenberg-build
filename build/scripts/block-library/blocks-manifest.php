@@ -416,6 +416,9 @@ return array(
 					'gradient' => true
 				)
 			),
+			'dimensions' => array(
+				'minHeight' => true
+			),
 			'html' => false,
 			'spacing' => array(
 				'margin' => true,

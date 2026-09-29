@@ -5827,6 +5827,9 @@ var wp;
           gradient: true
         }
       },
+      dimensions: {
+        minHeight: true
+      },
       html: false,
       spacing: {
         margin: true,
