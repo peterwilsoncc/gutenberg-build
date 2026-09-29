@@ -68929,6 +68929,11 @@ ${text}
           link: true
         }
       },
+      spacing: {
+        padding: true,
+        margin: true,
+        blockGap: true
+      },
       layout: {
         allowSwitching: false,
         allowInheriting: false,
