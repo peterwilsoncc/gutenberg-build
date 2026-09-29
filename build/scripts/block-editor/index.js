@@ -73502,6 +73502,7 @@ var wp;
       getBlockListSettings: getBlockListSettings2,
       getBlocks: getBlocks2,
       getBlockIndex: getBlockIndex2,
+      getBlockName: getBlockName2,
       getDraggedBlockClientIds: getDraggedBlockClientIds2,
       getBlockNamesByClientId: getBlockNamesByClientId2,
       getAllowedBlocks: getAllowedBlocks2,
@@ -73543,9 +73544,7 @@ var wp;
             return;
           }
           const allowedBlocks = getAllowedBlocks2(targetRootClientId);
-          const targetBlockName = getBlockNamesByClientId2([
-            targetRootClientId
-          ])[0];
+          const targetBlockName = getBlockName2(targetRootClientId);
           const draggedBlockNames = getBlockNamesByClientId2(
             draggedBlockClientIds
           );
@@ -73555,7 +73554,13 @@ var wp;
             draggedBlockNames,
             targetBlockName
           );
-          if (!isBlockDroppingAllowed) {
+          const isParentDropTargetValid = !!dropZoneElement && isDropTargetValid(
+            getBlockType33,
+            getAllowedBlocks2(parentBlockClientId),
+            draggedBlockNames,
+            getBlockName2(parentBlockClientId)
+          );
+          if (!isBlockDroppingAllowed && !isParentDropTargetValid) {
             return;
           }
           const sectionRootClientId = getSectionRootClientId2();
@@ -73565,7 +73570,7 @@ var wp;
           const blocks2 = getBlocks2(targetRootClientId).filter((block) => {
             return !((0, import_blocks48.hasBlockSupport)(block.name, "visibility", true) && block.attributes?.metadata?.blockVisibility === false);
           });
-          if (blocks2.length === 0) {
+          if (blocks2.length === 0 && isBlockDroppingAllowed) {
             registry.batch(() => {
               setDropTarget({
                 index: 0,
@@ -73596,13 +73601,16 @@ var wp;
             { x: event.clientX, y: event.clientY },
             getBlockListSettings2(targetRootClientId)?.orientation,
             {
-              dropZoneElement,
+              dropZoneElement: isParentDropTargetValid ? dropZoneElement : void 0,
               parentBlockClientId,
               parentBlockOrientation: parentBlockClientId ? getBlockListSettings2(parentBlockClientId)?.orientation : void 0,
               rootBlockIndex: getBlockIndex2(targetRootClientId)
             }
           );
           const [targetIndex, operation, nearestSide] = dropTargetPosition;
+          if (!isBlockDroppingAllowed && !["before", "after"].includes(operation)) {
+            return;
+          }
           const isTargetIndexEmptyDefaultBlock = blocksData[targetIndex]?.isUnmodifiedDefaultBlock;
           if (isZoomOut2() && !isTargetIndexEmptyDefaultBlock && operation !== "insert") {
             return;
@@ -73653,17 +73661,19 @@ var wp;
         },
         [
           isDragging3,
-          getAllowedBlocks2,
-          targetRootClientId,
-          getBlockNamesByClientId2,
           getDraggedBlockClientIds2,
+          targetRootClientId,
+          getBlockParents2,
+          getAllowedBlocks2,
+          getBlockName2,
+          getBlockNamesByClientId2,
           getBlockType33,
+          dropZoneElement,
+          parentBlockClientId,
           getSectionRootClientId2,
           isZoomOut2,
           getBlocks2,
           getBlockListSettings2,
-          dropZoneElement,
-          parentBlockClientId,
           getBlockIndex2,
           registry,
           startDragging2,
